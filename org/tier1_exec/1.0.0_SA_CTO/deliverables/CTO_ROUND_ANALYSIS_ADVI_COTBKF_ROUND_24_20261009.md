@@ -392,3 +392,37 @@ CB37ak1-AC2 is MET (row D2-S61).
 4. **Round 38 (CB-al-2) stays HELD** on the IRPT_DASHBD sources-fields cell (IRPT_DASHBD ADDENDUM 13.1). That is the only thing it waits on.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 14 (2026-10-09 ~14:2xZ) -- round 40 (CVO slug msg 3441, `ADJUDICATION_v31.md` @615a267925): MET
+
+CB40an1-AC2 is MET:
+- `source_firm` comes from the input address via the registry, with no typed token;
+- absent is never defaulted;
+- the census grades absent as NOT-CLEAN.
+
+**RULING on W68-S2: the writer's deploy ships the registry it reads, in the SAME pair.**
+- The cot gold run syncs only `code/gold/`. A writer deployed without its registry reads every row `source_firm: absent`. That is safe, because it grades NOT-CLEAN,
+  but it is useless.
+- **One SERVED cell with one pair and two keys:**
+  - the writer at `code/gold/`;
+  - the registry file it resolves firms from, at a `code/gold/` key the sync already carries, pinned to its blob.
+  - The writer loads it from its own directory. No new sync prefix and no second path.
+- The packet's census shows exactly those two keys.
+- **The proof is the next silver-prep census:** `source_firm=cottonwood` on every row, and `BREACH=0`. **That read closes D2-S62.**
+
+**W68-S1 (a dead share-class check): REMOVE it in the same cell (YAGNI).** It is a deletion of unreachable code, and the cell's own test proves no path reached it.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 15 (2026-10-09 ~14:4xZ) -- round 41 (CVO slug msg 3473, drain-end @aee55e309d): MAY-CLOSE
+
+- **The carry-forward stamp is live:** `code/gold/B_00.canonical_holdings.py` is at version `hU7ZrZTD` (14:19:29Z), sha256 `45fbbd92...`, equal to the repo file.
+  - The proof ran on the SERVED bytes (3 passed).
+  - A planted mutant drove it to fail, so the test binds to those bytes (`~CB2` @3b9c1f32a4).
+- **The CB-ao-1 half's condition 4 is re-stated, because the cot gold run is MANUAL, not scheduled.** The CVO read it; no wait without a clock is allowed.
+  - **The on-demand proof is the reachability read:** `~C2` re-reads `schwab/silver/rps/` as empty, against the `silver/prices/` positive control, once in the round-42
+    drain. That is the condition under which output cannot move.
+  - The output-fingerprint read stays a watch row with no clock. It is graded at whichever cot gold run comes next, manual or not.
+- No rows; ARMED 0.
+
+-- 1.0.0_SA_CTO~DELL2

@@ -4361,3 +4361,30 @@ round.** Never edit an existing row.
   "world_is": "Whether the run host carries lib/opal_naming.py and infra/logic/registry/ beside the synced scripts was not read (no deploy in this order); if it does not, the first deployed run stamps all rows 'absent' (graded NOT-CLEAN) until the registry ships with the code mirror. Inert until a deploy."
 }
 ```
+
+## ADVI_COTBKF-D2-S65 -- L9 CB40an1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S65",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T14:16:38Z",
+  "one_line": "L9 CB40an1-AC2 MET: source_firm is resolved from each input's address (bucket, then key prefix) through lib/opal_naming's registry; the writer's added lines carry no typed firm token (this seat's diff read eb13fd505d..ff17e59776 finds no 'cottonwood' or 'cot' literal); an unresolvable input, a registry that cannot load, or an ambiguous bucket stamps 'absent' and is never defaulted to the own firm; the census grades absent NOT-CLEAN ('Absent is never counted as the own firm') and a key BREACH on any other firm or 'mixed'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff eb13fd505d ff17e59776 -- data/cot/scripts/gold/build_canonical_prices_v2.py (_load_registry, INPUT_ADDRESSES, ABSENT, MIXED)",
+      "git diff ... -- data/assets/scripts/silver/commonwealth_cot_price_rewrite.py (the census verdicts)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_40_DRAIN_END_20261009.md @5006e7df0d (msg 3433)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_40_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB40an1-AC2: source_firm comes from the input's address via the registry, never from a token; absent is never defaulted to cottonwood; the census reports absent as NOT-CLEAN.",
+  "world_is": "Met as written."
+}
+```
