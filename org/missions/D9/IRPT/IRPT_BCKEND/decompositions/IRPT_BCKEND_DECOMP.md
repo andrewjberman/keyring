@@ -2516,3 +2516,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r105/p105_cells.py`: every criterion 
 | `IB-pr-404` | land IB-pr-402's three narrow per-firm holdings bundles on ~IB2; replay on uploaded bytes; first-fire read | FWD-14 | WORLD | IB-pr-402 drained; pair GIVEN | P105-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one apply cell. Assignee: 0.7.0_AE_CloudOps~IB2.
+
+## 99. ROUND 106, WORKSTREAM ~P (2026-10-09 ~10:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 3088 / IRPT_DASHBD ADDENDUM 9.2 (2))
+
+IRPT_DASHBD's custody-statement runner must stop reading irpt-requests directly. The CTO refused a table grant. IRPT's owned read returns
+the persist inputs, re-authorized per request, and svc-custody-statement reads them for cottonwood only. Released later under ~P's pair.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r106/p106_cells.py`: AC1 and AC3 FAIL at base; AC2 is the suite control (PASS, one
+pre-existing failure excused by name, row IRPT_BCKEND-D2-S43).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-405` | owned read returns persist_inputs; svc-custody-statement cottonwood-only; release packet | FWD-2 (IRPT_DASHBD DB-b-85) | WORLD | none | P106-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~268.
