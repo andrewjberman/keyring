@@ -5973,6 +5973,54 @@ carries none.
     "spec_asserts": "Order act 1: rank so that a need entry whose own text the ask names comes first, before a channel artifact selected by a looser keyword.",
     "world_is": "The ranking is by own-text overlap rather than need-always-first; a need that the ask names more weakly than a silver or portal row does not lead.",
     "notes": "Q05, Q07 and Q22 were misses at base 24 of 27 (a tool-name versus key comparison in run_routing.py); not changed here."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S87",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-09T08:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W28-S4",
+      "NFRA_MCPINDEX-Z-W28-S5",
+      "NFRA_MCPINDEX-Z-W28-S6"
+    ],
+    "one_line": "RULES MX-d-8's three rows at its drain (@4b29d72cc3): S4 CONFIRMED (the two need-local folds and the one-word fallback stand; moving the words into E-9/E-19 example text is a catalog enrichment for a later catalog cell, not a defect); S5 CONFIRMED (need matches show to opal-internal principals only, which keeps the firm cross-firm test and C7 intact; Alyssa and the operations lead are internal); S6 CONFIRMED (own-text overlap ranking with ties to the dataset; the original 27 stay 24 of 27 with the same misses Q05, Q07, Q22).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "d8.AC1 re-run at the drain on wk-NFRA_MCPINDEX-28 @182203f735: present 9 of 9, routed 9 of 9 first try; original 24 of 27 (floor 24). d8.AC2: 3 of 3 named tests. proof-of-spec-check VALID rc=0.",
+        "Q05 routes first to NEED:E-13 (SERVED, tool mdpf_get_model_benchmarks); it is a harness MISS only because the harness compares to a dataset key."
+      ]
+    },
+    "spec_asserts": "The issuer rules every row inside its own decomposition at the drain.",
+    "world_is": "All three are judgment calls inside MX-d-8's paths that the order did not specify; none widens a grant or a served surface.",
+    "notes": "Carry to the round-8 slug: Q05's harness key should accept a need id once needs route (an instrument repair, batched)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S88",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-09T08:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The opal-gateway test suite is RED at the round-8 base: 33 of 34 named failures (schwab_*, asker_scope, portal_grant, data_entitlement_*, principal_cutover, local_acceptance) fail identically at base 27b37e99b3 and on MX-d-8's branch; MX-d-8 adds no failure. The full suite reads 34 failed / 657 passed on the branch; the 34th (test_asker_binding::test_resolve_asker_class) passes in isolation on both, so it is order-dependent and sorts before every discover test.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest tests (opal-gateway) on wk-NFRA_MCPINDEX-28 @182203f735: 34 failed, 657 passed, 306s.",
+        "The 34 last-failed ids re-run at 27b37e99b3 (worktree wk-mcpindex-r8-29): 33 failed, 1 passed; the same run on the branch: 33 failed, 1 passed (test_asker_binding::test_resolve_asker_class passes in both).",
+        "Sample signatures: test_schwab_wiring 'Unknown tool: schwab_query'; \"'str' object has no attribute 'get'\"."
+      ]
+    },
+    "spec_asserts": "The drain runs the touched surface's suite once; a red there is a row under the COO's serial.",
+    "world_is": "The red predates round 8 and sits outside NFRA_MCPINDEX's cells (Schwab and entitlement surfaces). MX-r-9's release must not read it as its own regression, and its owner must be named.",
+    "notes": "Owner to name at the round-8 slug: the opal-gateway release-train holder 2.0.0_SA_COO~O. Not a gate on MX-r-9; MX-r-9 PHASE A reads the same denominator before and after."
   }
 ]
 ```
