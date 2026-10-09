@@ -752,3 +752,24 @@ three registry files), so the packet is RE-CUT at HEAD before any half is signed
 | `DB-b-69` | the release ask: the S32 read on the kit (classify_and_sum vs the tested version; returns old pin vs HEAD; DB-b-43 on 2.2.3), one full kit run's refusal count for S33, and the packet re-cut at HEAD with both halves UNSIGNED | WORLD | DB-b-67 (merged) + the kit (relay @7aea38af1e) | B35-1 |
 
 fanout: 1 of 1 chains, cap 8, reason: one packet over one release. Worker 0.9.0_WK_IRPT_DASHBD~46, cut from box/dell2. On its drain the issuer reads the packet and signs or withholds the COO half; the CTO signs its half on it.
+
+
+## 38. ROUND 36, WORKSTREAM B (2026-10-09 ~03:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-35 ADDENDUM 4, on ADJUDICATION_v20 @e9d4ac3755, and PRD v0.8 FWD-11 @e8b44a8379, amended @3eb7dbcf36)
+
+**Where round 35 left things.**
+- Round 35 is closed MAY-CLOSE.
+- The activity-and-lot release is signed on both halves: COO @cbad72eb7b, CTO @75acbfcb50.
+- The rollback anchor is recorded @3285eae1a5.
+- Row S37 holds the W23-S1 bucket-admission read.
+
+**FWD-11 (Andrew-direct ~03:3xZ):** every client firm, each through its own adapter. Each firm's served release later goes under its own
+never-widen pair.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-70` | E1, FWD-4: the 49F R35 release APPLY (pins, rebuild, plan 0/3/0, safe-apply, dry_run under 85%, A1 to A6 on the first fire, A4 DELTA=0 before any second fire) | WORLD | both halves (given) | B36-1 |
+| `DB-b-71` | E2, FWD-11: Cottonwood's adapter returns, offline on a sample, tied out against its own reported source (Commonwealth, PRD v0.8 @3eb7dbcf36) | LOCAL | none | B36-2 |
+| `DB-b-72` | E3, FWD-11: Inflection's adapter returns from Orion, offline on a sample, tied out against its own reported source; lots NO_LOTS until Eclipse lots are shown populated | LOCAL | none | B36-3 |
+
+**fanout:** 3 of 3 chains, cap 8. Reason: three independent cells (one release, two firm adapters) with disjoint write surfaces.
+Workers 0.9.0_WK_IRPT_DASHBD~47, ~48 and ~49, each cut from box/dell2.
