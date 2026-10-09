@@ -44,6 +44,13 @@ stale hints; with all four, stale_hints stays 0 and the mdpf hole closes.
 
 ## The two retired roots
 
-The tracked files of `canonical-schwab-si2-schedule` and `opal-assets-absence` are removed in the commit after this one
-(R10-4: both states hold 0 resources). Each box's untracked leftovers in those folders (stray `org/`, `.build/`, a
-`.tfplan`) are a recursive delete, which waits on Andrew's word; they hold no Terraform and do not count as a root.
+CORRECTION ~10:0xZ: the removal is NOT in this seat's commits. The commit gate refused this seat on
+`infra/aws/terraform/` (the CloudOps lane), and the three files were restored unchanged. The act R10-4 names (`git rm` of
+`canonical-schwab-si2-schedule/main.tf`, `canonical-schwab-si2-schedule/.terraform.lock.hcl`, `opal-assets-absence/main.tf`;
+both states hold 0 resources) belongs to a CloudOps seat, cut by the round's issuer. Each box's untracked leftovers in those
+folders (stray `org/`, `.build/`, a `.tfplan`) are a recursive delete, which waits on Andrew's word.
+
+**advi/billing-read: why source `advi`, not dell1 `4.0.0_SA_CRO~DELL1`'s draft `schwab`** (@5f8299e053, the same entry
+otherwise). The root's one store is `advi/49financial/gold/advi_billing/`, a key whose own source segment is `advi`
+(`{source}/{scope}/...`): advi's gold, computed from Schwab silver. The entry's source is the source of the root's keys, so
+`schwab` would disagree with the root's own key. `fills ["system"]` because the artifact name carries no scope.

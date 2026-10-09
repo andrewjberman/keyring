@@ -1,0 +1,10 @@
+# Drive log 2.0.0_SA_COO~Q1 -- MDPF_DEMQUE, 2026-10-09 09Z (desktop-hk1uu7n)
+
+Decisions closed: round 4 CLOSED @a32c0cb89f (CVO L8/L9 @0f652707c8); round 5 issued @73cae9cfe6 from the CTO analysis @91f3ee9da6; t15/t16/t17 merged (@bee96f0d84, @48e4983c26, @0aa91a7a96); first standing state written paused; row D1-S3; t18 amended @5622357580 on ~ZQ's refusal. Rows verbatim from the runtime tick log.
+
+## tick 41 -- 2026-10-09T09:26:30Z | MDPF_DEMQUE | L5-L7 | 4->5 | 0/4 | DRIVE FORWARD: CVO L8/L9 @0f652707c8 (W9-S1 dismissed); round 4 CLOSED @a32c0cb89f; CTO analysis @91f3ee9da6 -> ONE issuance round 5 @73cae9cfe6 (t15 ceilings ~13, t16 standing ~14, t17 TR comparison ~15, t18 meter ~ZQ); 3 workers spawned; wake ORDER XB cb23 to MSTR to carry | result=work |
+## tick 42 -- 2026-10-09T09:27:34Z | MDPF_DEMQUE | L7 | 5 | 0/4 | workers ~13/~14/~15 running (spawned ~09:25Z, no commits yet); XB cb23 not yet committed by MSTR (ask sent 09:26Z) | result=nothing |
+## drain -- 2026-10-09T09:32:21Z | MDPF_DEMQUE | t16 complete @e476d56f90 (~14): STAND-OK, SSEAM-OK re-run in worktree; write set = grant; safe-merge refused twice (B1 merge in progress, then M1 staged deploy files) -- retry next tick | work |
+## drain -- 2026-10-09T09:37:55Z | MDPF_DEMQUE | t16 merged @48e4983c26, t15 merged @bee96f0d84; base: 65 tests pass, ruff clean, CEIL-OK, QFIN-OK (ref 10-09, model_block 10-13, history 10-13, all held), STAND-OK, SSEAM-OK; row D1-W13-S1 (history reserve covers stated names only); 2 of 4 terminal; t17 running, t18 at site Z | work |
+## tick 43 -- 2026-10-09T09:42:56Z | MDPF_DEMQUE | L7/drain | 5 | 3/4 | DRIVE FORWARD: t17 merged @0aa91a7a96; real runs: first standing state written paused, read back paused; TRCMP-OK reproduced; 68 tests; row D1-S3 @ff5a594e54; ROUND5_REAL_RUN.md drafted; t18 cb23 delivered to ~ZQ (msg 2202) | result=work |
+## tick 44 -- 2026-10-09T09:48:37Z | MDPF_DEMQUE | L7 | 5 | 3/4 | RULE: ~ZQ refusal on t18 (@655ca4250d, BLOCKING Z-W1-S3: sentinel row vs ungranted exact-count tests) = issuer defect; amended @5622357580 granting test_demque_bbg_ledger_upload.py; RESUME ORDER XB 3eb7 to MSTR to carry | result=work |

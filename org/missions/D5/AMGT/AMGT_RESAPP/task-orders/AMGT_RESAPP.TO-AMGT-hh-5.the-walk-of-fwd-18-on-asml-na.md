@@ -75,3 +75,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>pending -- GO 2026-10-09T09:5xZ by the issuer: AMGT-hh-4's ASML NA gate passed, read by the issuer on the live function: r81_store AC1 YES (S1-S3) and AC2 YES (status 200, 23 served locations, 6 from Item 4.B, refusal sentence 0). PORTAL_REF: e6fb269c83 (portal DEV head at the GO). Worktree ~333 provisioned with that portal ref. Graded by no gate limb (a modification).</status>
