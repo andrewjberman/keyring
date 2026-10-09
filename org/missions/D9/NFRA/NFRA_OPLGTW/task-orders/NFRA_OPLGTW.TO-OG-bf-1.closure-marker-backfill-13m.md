@@ -70,6 +70,43 @@ date before you plan; the ask must state, per branch, what one historical record
 
 `W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~41/`.
 
+### AMENDMENT A1 (issuer, 2026-10-09 ~00:4xZ) -- what is signed, and the 08335338 leg
+
+**Phase B is SIGNED for master 08242234 ONLY** (option W). COO half
+`deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_HALF_COO_OG-bf-1_20261009.md` @35ca8013bb; CTO half
+`deliverables/1.0.0_SA_CTO~O/NEVER_WIDEN_HALF_CTO_OG-bf-1_20261009.md` @f9b1f1fd31 (read both with `git show <commit>:<path>`;
+they are not on your branch). The write set is the ask's section 2 for 08242234: 256 records + 256 manifests, nothing else.
+Run order, per the CTO half: newest date first; one invocation in flight; outside 09:30-10:30Z, 12:40-13:00Z and
+21:30-22:30Z and away from the 12:15Z sweep; STOP on the first record that is not QUALIFIED and on any Lambda error,
+throttle or timeout. In `backfill_record.json`, list 08335338's dates under `unavailable` with the reason
+`held: 49F accelerator; Y leg pending (A1)` until Phase D writes them; never under `backfilled`.
+
+**PHASE C -- the Y leg build (ruled by the CTO half section 2; NO deploy by you).** In
+`infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/lambda_function.py`, inside the existing accelerator branch, AFTER
+the qualified check and BEFORE any EC2 or SSM call: parse the record's date from its key (`date=YYYY-MM-DD`; the key may
+arrive URL-encoded, `date%3D`); compare it with the T-1 trading date that `chain_49f_entrypoint.py --production` would
+take at invocation, computed by the estate's one frontier `lib/trading_calendar.py` PACKAGED INTO THE ZIP (a byte copy
+placed beside `lambda_function.py`, with a test that it equals `lib/trading_calendar.py`; never a re-derivation). If they
+differ, return `dispatched: false` with `skip_reason: "accelerator marker date=<D> is not the production T-1 <T>;
+historical record, not dispatched"`. If the calendar cannot be read, SKIP. The floor (scheduled) path and its source are
+unchanged; a non-qualified record still SKIPs on the qualified check first.
+- Tests: `infra/aws/lambda/opal-assets/tests/test_advi_49f_gold_dispatch_dategate.py`, named exactly
+  `test_ogbf1y_ac01` .. `test_ogbf1y_ac04` as the header of
+  `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/bf1.AC4.sh` lists them, in the style of
+  `tests/test_advi_49f_gold_dispatch_remedy.py`. That existing file must still pass whole: if a test there fails only
+  because its marker date (2026-09-25) is not today's T-1, pin the production T-1 in a fixture or setUp (patch the
+  packaged calendar's "today"), never change an assertion, and name each such test in your report.
+- Write `W/NEVER_WIDEN_ASK_OG-bf-1-Y.md` (the form of the first ask): the one Lambda's code change, `CodeSha256` before
+  (`TjIWGFWkbUswLkA+mUac9NS+LRZ1q7o6lR1iQLb0kI4=`) and the built zip's after, the rollback (the previous zip), the deploy
+  path (Terraform `module.advi_49f_gold_dispatch` by `0.7.0_AE_CloudOps~Z` under a NEVER-2 ledger), and the proof both
+  arms on the deployed function (a synthetic historical qualified record SKIPs with no EC2/SSM call in its log; the next
+  daily T-1 record dispatches as today). Commit, report, STOP.
+
+**PHASE D -- 08335338 (only after the Y leg's ledger is closed, its read-back committed, and a fresh pair of halves on
+the 08335338 write set is at HEAD; the issuer's continuation names all three).** The ask's section 2 write set for
+08335338 under the same run rules. The CTO half allows a first set limited to dates on or after 2026-04-08 (the earliest
+Tax roster inception); the issuer's continuation says which.
+
 ## 2. BOUNDS
 
 - Phase B writes completion records ONLY: no bronze or silver object is written, copied, deleted or rewritten (AC2).
@@ -81,6 +118,9 @@ date before you plan; the ask must state, per branch, what one historical record
 ## 3. SURFACES
 
 <paths>
+infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/
+infra/aws/lambda/opal-assets/tests/test_advi_49f_gold_dispatch_dategate.py
+infra/aws/lambda/opal-assets/tests/test_advi_49f_gold_dispatch_remedy.py
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-oplgtw-og-bf-1-marker-backfill.json
 org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~41/
@@ -95,6 +135,7 @@ Rows: id `NFRA_OPLGTW-Z-W41-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
   <criterion id="AC1" cell_refs="OG-bf-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/bf1.sh AC1; echo "exit=$?"</invocation><expect>(?s)08242234: window .*open 0; backfilled-but-not-qualified 0.*08335338: window .*open 0; backfilled-but-not-qualified 0.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-bf-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/bf1.sh AC2; echo "exit=$?"</invocation><expect>(?s)backfilled dates [1-9]\d*; served objects checked [1-9]\d*.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OG-bf-1" judgment="true"/>
+  <criterion id="AC4" cell_refs="OG-bf-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/bf1.AC4.sh; echo "exit=$?"</invocation><expect>(?s)dategate: pytest rc=0; named tests passed 4 of 4.*remedy: pytest rc=0 .*removed or renamed 0.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: every silver date in each master's 13-month window is now QUALIFIED or named unavailable with a reason.
@@ -102,6 +143,8 @@ Rows: id `NFRA_OPLGTW-Z-W41-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - `AC3` (judgment, graded by `3.0.0_SA_CVO~Z` at L9): what the backfill caused downstream (the 49F accelerator and
   any other consumer) matches the signed ask's statement, read from the consumers' own logs. Record it in the
   instance under `UNVERIFIABLE-BY-INSTRUMENT` with `status_reason` naming the CVO; never PASS or FAIL it yourself.
+- `AC4` (A1; a fourth mechanical criterion because the Y leg is a code build this order now carries): the dispatcher's
+  date gate, both arms and the unreadable-calendar arm, and the OG-m-2a suite unchanged.
 
 ## 5. WHEN YOU ARE DONE
 
@@ -118,9 +161,13 @@ Rows: id `NFRA_OPLGTW-Z-W41-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
   gateway's `calendar_months` grant mode) is `OG-cm-1`.
 - The judgment criterion exists because the downstream effect of historical records on the 49F chain is a served-output
   question no single instrument here can settle.
+- A1 (2026-10-09): Phase B signed for 08242234 only (W; halves @35ca8013bb, @f9b1f1fd31); Phase C carries the Y leg the
+  CTO half ruled (NFRA_OPLGTW owns it; placed here, not round 33, so 08335338's 13 months is not held behind the round
+  close); Phase D writes 08335338 after Y's ledger closes and fresh halves land. AC4 added (bf1.AC4 base: FAIL as
+  expected, test file absent; remedy arm PASS 6 of 6). Graded by no gate limb as a modification (placeholders NONE).
 - Pre-cut: see the issuance commit.
 
-<status>staged</status>
+<status>pending</status>
 <round>32</round>
 <slot>~41</slot>
 <fabric>site-z</fabric>
