@@ -9541,3 +9541,55 @@ fanout:
   no_s3_deletes: true
   egress: jj-1 (one model run), jj-2 (SEC + one model run, NU); no Bloomberg call in any order
 ```
+
+## 94. ROUND 86 -- THE NAME LIST'S RESEARCH FOLDERS, THE DESCRIPTION FROM THE BUSINESS ITEM, NU'S THREE SENTENCES, ISSUER IDS IN THE WRITERS, THE FRESH-DRAW YIELD. Five orders
+
+**Input:** the CTO~DELL1 round-85 analysis `ledger/ROUND_ANALYSIS.round85.md` @2b173f8e66 (R1-R5). Grounded in
+`deliverables/2.0.0_SA_COO~R1/round86_prep/` (GROUP_REPUBLISH_NOTES, GROUP_DESCRIPTION_NOTES, GROUP_YIELD_NOTES). R2's check half (bare
+years are not figures) was a direct act @f36289abfa; `r85_sentences` / `r85_repair` gained `--exclude-section` (and a base file) at the cut.
+
+### 94a. MEASURED AT THE CUT
+
+- **R1:** `crosswalk/v1/2026-10-09.json` carries research_universe absent (10-07: 97 folders); dell1 has no research-library root
+  (LibraryAbsentError -> absent, crosswalk.py:975-990); `--write-pool` overwrites today's key on a content change. r85_crosswalk C5 NO.
+- **R5:** drafting_build.py:66-67 fills company_description by item CLASS; live 24 of 25 description sentences cite Item 5 / 3.D;
+  the two 10-K names are already empty. r86_description NO. company_description IS a drafted section (counted by r85_sentences), so the
+  no-loss arm for the store act runs outside it, against a pre-act base (ASML 16, BABA 19, NU 28, PBR 22, SAP 13).
+- **R4:** a fresh NU draft serves 22, 0 wholly verbatim; 15 of 17 held items cite a passage holding the filing's own sentence. r86_yield NO.
+
+### 94b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-kk-1` | republish today's list with research folders (R1) | `0.7.0_AE_CloudOps~RA1` (box named at GO) | seat order | WORLD | one crosswalk key | W341-S1 |
+| `AMGT-kk-2` | description from the business item only (R5, code) | `~342` | worker | LOCAL | `filings/drafting_build.py`, one test | R5 (future drafts) |
+| `AMGT-kk-3` | five stored drafts: description in place + NU's 3 sentences (R5, R2) | `~343` | worker | WORLD | five drafting keys; ledger | R5, R2 |
+| `AMGT-kk-4` | issuer sources in the two writers (R3) | `~344` | worker-light | LOCAL | `identity/add_security.py`, `build_universe.py`, one test | W340-S2 |
+| `AMGT-kk-5` | the fresh-draw verbatim yield (R4) | `~345` | worker | LOCAL (one model run) | `filings/drafting_build.py`, one test | W338-S1 |
+
+**Not cut:** FWD-16 (Andrew's hold); the key rotation (Andrew's act).
+
+### 94c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: R1-R5. R1 -> kk-1; R2 -> direct act + kk-3; R3 -> kk-4; R4 -> kk-5; R5 -> kk-2 (code) + kk-3 (stored). Uncovered:
+  FWD-16 only.
+- **(ii) Same grain:** one module or one act per cell; kk-3 joins two in-place edits of the same five keys under one pair.
+- **(iii) Intent:** kk-2 and kk-5 both write `drafting_build.py` -- chained, never parallel.
+- **(iv) What a cell does NOT move:** kk-1 moves only research_universe and its denominators (C5); kk-2 moves only company_description in
+  future drafts; kk-3 moves only company_description in five keys and three NU sentences; kk-4 adds no request-path call; kk-5 writes no
+  store.
+
+### 94d. EDGES AND FAN-OUT
+```
+kk-2 --> kk-5
+kk-1, kk-3, kk-4 independent
+fanout:
+  cap: 8
+  orders_total: 5
+  chains_total: 4
+  wave_0: [kk-2 ~342, kk-4 ~344]   # LOCAL roots
+  wave_0 staged: [kk-1 (the GO names the box + library root), kk-3 (a NEW pair for five drafting keys)]
+  wave_1: [kk-5 ~345 (staged: kk-2 merged)]
+  no_s3_deletes: true
+  egress: kk-5 (one model run); no Bloomberg call in any order
+```
