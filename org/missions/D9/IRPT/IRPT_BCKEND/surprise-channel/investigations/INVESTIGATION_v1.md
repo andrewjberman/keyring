@@ -23675,3 +23675,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-W265-S1 -- the scheduled holdings producer runs the per-firm standalone bundles, not investor-reporting.tar.gz: FWD-14's release is the three standalone bundles
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W265-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~265",
+  "surfaced_at": "2026-10-09T07:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The scheduled holdings producer does not run holdings_snapshot.py from investor-reporting.tar.gz: it fetches three per-firm standalone bundles (irpt_holdings_<short>), so a release of the named key alone does not put FWD-14's gate on any scheduled fire.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live Lambda irpt-holdings-refresh-lambda (CodeSha256 SGwrvwLH..., LastModified 2026-09-26) IRPT_HOLDINGS_BUNDLE_MAP = s3://opal-data-{49financial,cottonwood,inflection}/irpt/<firm>/code/gold/investor-reporting-holdings.tar.gz; schedule irpt-holdings-snapshot ENABLED cron(15 10 ? * MON-FRI *) targets it (aws scheduler get-schedule, read 2026-10-09T07:5xZ)",
+      "infra/aws/lambda/investor-reporting/holdings_refresh/refresh_dispatch.py:65-75: aws s3 cp <that firm's bundle_uri>, tar -xzf, sha256sum -c SHA256SUMS, then python3 $R/holdings_snapshot.py --firms <firm> --upload; .tools/safe_deploy_core.py:468-568 STANDALONE_BUNDLES (explicit --mint-bundle only, never commit-routed) holds 44 members per firm including holdings_snapshot.py",
+      "the named bundle investor-reporting.tar.gz (12 members) carries holdings_snapshot.py but NOT its imports (holdings_49f, holdings_inf, source_inputs, publication, opal_naming, ...), so nothing runs holdings_snapshot.py from it",
+      "BUILD_ONLY twice at 6cbf2707cf: named bundle built sha256 0d595983..., 1 of 12 members changed vs live W2Wragr (holdings_snapshot.py, owners 9af6811b61 + ce6e2a218e); standalone built sha256 230d59e7... (identical for all 3 firms) vs live 7a400c14 (49f, cot) / 2b94e928 (inf) ETag: 18 of 44 members changed, 17 of them not FWD-14 (ids.py, lib/trading_calendar.py, lib/opal_naming.py, the registry, CurrencyAuthorities, HoldingsSnapshot.schema.json, build_cottonwood_mdpf_slice.py, dim_mdpf_aum_metrics.py, mdpf_category_registry.py, schwab_account_codes.json, firm_registry.json, NAMING_SCHEMA.json)"
+    ]
+  },
+  "spec_asserts": "The order (TO-IB-pr-400 WORKER FACE): FWD-14's gate ships in the runner bundle s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz, live W2Wragr, and the packet is modelled on IB-pr-389's for that key.",
+  "world_is": "That key's holdings_snapshot.py copy is not what the scheduled fire executes. The three per-firm standalone bundles are, they were last minted 2026-10-04/05 (49f 3Q_W49U7..., inf SuRm8tIY..., cot NZIQjid2...), and minting them is an explicit --mint-bundle act carrying 17 non-FWD-14 member changes owned by other projects. The packet states both artifacts and the replay runs the standalone trees (the consumers); a Branch A on the named key alone would read as released while the first scheduled fire still ran the ungated producer, and S392 would retire on a fire that cannot REFUSE. Disarm: the issuer rules which artifact the pair covers (or recuts the pair on the three standalone bundles) before either half signs.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
