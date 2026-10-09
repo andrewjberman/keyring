@@ -339,6 +339,51 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "spec_asserts": "TO-APPLY-W2-b: deploy the matcher FIRST, then the schemas, 'one file per invocation', the second 'only after 1 verifies'; and on a refusal 'stop before any upload and report the refusal line; do not use --allow-stale and do not hand-copy with aws s3 cp'.",
     "world_is": "The deployed state is consistent again and the immediate hazard is gone. WHAT IS NOT FIXED: the matcher is still 404, so the forward wiring has not shipped, and the structural cause stands -- a push gate that carries one file of an import-coupled PAIR and skips the other as a first-mint can always leave the deployed prefix broken, whatever order a task order specifies, because the gate is not sequence-aware across a pair. The issuer says it is re-cutting the forward fix with the matcher's owning lane (Rule 13: DS owns QA-deploy of data/*/scripts/silver). Worth more than this order: any import-coupled pair shipped through that gate carries the same risk.",
     "notes": "Filed on the issuer's explicit instruction after a collision: the issuer had appended its own row under this same id, the gate refused the commit as both a duplicate and a FOREIGN-ROW (surfaced_by 2.0.0_SA_COO~S1 committed by this seat), and msg 2606 then withdrew the duplicate and said 'your row D1-S4 stands; commit it'. This seat reverted its working copy so the issuer's commit could land clean first -- the shared append-only file race CLAUDE.md 14b predicts -- and re-filed from a printed denominator. Standing is INERT rather than ARMED because the disarm landed before this row was written; the window it was live is 14:51:14Z to 14:58:45Z."
+  },
+  {
+    "id": "MDPF_STRATID-D1-S5",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+    "surfaced_at": "2026-10-09T15:12:03Z",
+    "one_line": "A deploy-ledger AUTHORSHIP HANDOVER does not clear safe-deploy's OPEN-DEPLOY seat-gate: the handover lands in the sentinel JSON's author field, which deploy_ledger.py check renders, but the gate reads the change_management ENTRY's '**Authored by:**' line, which the handover does not rewrite. The gate still named the old author and returned verdict=STOP; the act proceeded only because that limb is in WARN mode, and under ENFORCE an authorized act would have been blocked.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMENDMENT 2 @f150585b25 states the intent in its own words: 'The ledger mdpf-stratid-w2-wiring-silver is now AUTHORED BY YOU (handed over so your seat gate does not stop on it).'",
+        "THE HANDOVER DID LAND IN THE SENTINEL: .open_deploys/mdpf-stratid-w2-wiring-silver.json author reads 0.7.0_AE_CloudOps~DELL1 BOTH at HEAD and in the worktree (git show HEAD:<path> and the worktree file, both read with jq), and deploy_ledger.py check renders 'author=0.7.0_AE_CloudOps~DELL1'.",
+        "THE GATE DISAGREED ANYWAY: safe-deploy printed 'safe-deploy: [seat-gates] STOP: 1 hit(s) in OPEN-DEPLOY -- first: OPEN-DEPLOY: open deploy mdpf-stratid-w2-wiring-silver (author 2.0.0_SA_COO~S1, status OPEN, opened 2026-10-09T14:44:28.884670+00:00) names a carried file' and 'open_deploy=hit verdict=STOP'.",
+        "WHERE THE GATE'S STRING COMES FROM: the change_management ENTRY 20261009T1444Z_mdpf-stratid-w2-wiring-silver_deploy_completion.md still reads '**Authored by:** 2.0.0_SA_COO~S1' at line 5, with 4 occurrences of that serial in the file. The gate's string matches the ENTRY, not the sentinel field.",
+        "WHY IT DID NOT STOP THE ACT: 'safe-deploy: WARN [seat-gates] would stop under ENFORCE ( crossbox-deploy:data/assets ); WARN mode proceeds.' So the authorized deploy landed on the WARN mode, not on the handover having worked.",
+        "THE FIRST INVOCATION OF THE SAME GATE, before the handover, printed the identical author string -- so nothing about the gate's reading changed when the sentinel changed, which is the discriminating observation rather than a single reading."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The amendment asserts that handing the ledger's authorship to the applying seat stops the seat gate from stopping on it. deploy_ledger.py check corroborates the handover by rendering the new author.",
+    "world_is": "Two carriers hold the same fact and the gate reads the one the handover does not touch. The practical consequences: (a) an authorship handover intended to clear a seat-gate silently fails to clear it; (b) deploy_ledger.py check rendering 'author=<me>' is NOT evidence the gate sees me, so no seat should cite it as one; and (c) this only stayed harmless because the crossbox-deploy limb is in WARN -- the same sequence under ENFORCE blocks an act the issuer and the CTO had both authorized. REMEDY, for the gate's owner: either have the gate read the sentinel's author field (the one deploy_ledger.py actually maintains), or have the handover rewrite the entry's 'Authored by:' header as well, so the two carriers cannot disagree. Not fixed here: the gate and the ledger renderer are both outside this order's paths.",
+    "notes": "Found while executing AMENDMENT 2's acts A-C, which all passed; this row is about the instrument, not the act. Distinct from D1-S4 (the import-coupled pair shipping out of order) and D1-S3 (the unversioned opal-data-etfs bucket). Id taken from a printed denominator -- 16 ids at HEAD, max bare D1-S index 4 -- after a truncated census in this same channel earlier produced a duplicate and a foreign-row refusal."
+  },
+  {
+    "id": "MDPF_STRATID-D1-S6",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-09T15:12:00Z",
+    "one_line": "DISARM of MDPF_STRATID-D1-S4: the live silver code is consistent again -- opal_strategy_matcher.py first-minted 15:05:53Z, then rebalancer_schemas.py re-shipped 15:06:59Z, both byte-equal to ff8b8452f0; an import of both S3 copies from an empty directory resolves. The broken window was 14:51:14Z-14:58:45Z (rolled back by 0.0.0_AB_MSTR~DELL1 on 1.0.0_SA_CTO~DELL1 msg 2601).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "issuer re-read 15:1xZ: s3://opal-data-mdpf/code/scripts/silver/opal_strategy_matcher.py 4296 B 15:05:53Z and rebalancer_schemas.py 15970 B 15:06:59Z, each == git show ff8b8452f0:data/assets/scripts/silver/<file>; py_compile OK; isolated import OK, STRATEGY_CONFIG_SOURCE None before first call",
+        "ledger mdpf-stratid-w2-wiring-silver L1 and L2 CLOSED (L2 by 0.7.0_AE_CloudOps~DELL1 under TO-APPLY-W2-b AMENDMENT 2 @f150585b25, msg 2634)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row D1-S4: the deployed rebalancer_schemas.py imports a module absent from S3.",
+    "world_is": "Both modules are present and import; the hazard is disarmed. Whether the next scheduled silver run reads the S3 list cleanly is ledger L3."
   }
 ]
 ```
