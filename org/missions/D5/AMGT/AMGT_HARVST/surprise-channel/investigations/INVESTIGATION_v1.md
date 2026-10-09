@@ -8345,6 +8345,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S4",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-09T13:48:41Z",
+     "one_line": "Extends D1-S3: no FWD-18 source has written a silver listing_hit or article part since the runner was activated at 08:57Z; the newest are bloomberg article 10-08 16:04Z, wsj 10-07, barrons 10-07, seeking-alpha 10-09 01:04Z.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "PRD v0.22 FWD-18: each cycle stores each new article once; ACCEPT, an analyst reads the articles its publishers carried since the last cycle.",
+     "world_is": "Read at 13:48Z: LISTs under store.table_prefix(<source>,'silver',<table>) for bloomberg, wsj, barrons and seeking-alpha, listing_hit and article, count 0 parts written since 2026-10-09T08:57Z for all eight (denominators: 4, 731, 5, 416, 224, 64, 1486 and 1312 parts). The run records at 13:47Z now show bbg 99 runs with 0 fetched; wsj, barrons and sa are unchanged from D1-S3. So FWD-18's runner, active more than 4 hours, has stored no new article. NOT measured: whether any publisher published in the window (its listing would say) and the cycle records' stopped reasons; HVST-bu-1 (AMENDMENT 1 @addae4d821) reads them at site Z. Owner: 2.0.0_SA_COO~W1.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round77/silver_parts_census.py",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round77/silver_parts_census.out",
+       "AMGT_HARVST-D1-S3 @db4e94d393"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
