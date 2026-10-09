@@ -5052,3 +5052,55 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W76-S1 -- W73-S2 resolved without a producer fix: 98 BD-side by a two-sided read, 25 by exclusion; the binary disposition hides that
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W76-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~76",
+  "surfaced_at": "2026-10-09T15:40:00Z",
+  "one_line": "W73-S2: no producer defect found in 123 segments; 98 are BD-side by a two-sided read, 25 by exclusion only (large-flow days, one unresolved); the binary disposition hides that",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-101: each of the 123 W73-S2 segments is either a fix of account_return_daily.py with a test, or a Black Diamond-side finding on a two-sided read.",
+  "world_is": "Read both sides for all 123 (served gold, landed bronze point). In all 123 the served daily returns re-link from the served market value and external flow (END convention) to within 0.05 pp of the served link: the producer is self-consistent with the dollars that tie, so no producer change and no producer test were written. Causes (resolve_w73_s2.py, W73_S2_EVIDENCE.json): BD_FEE_TIMING_ENVELOPE 74 (served return inside the gross-up envelope of 15 fee-base and compounding variants; BD gives one fee total, no fee dates), DUST_BASE_FEE_ADDBACK 9 (balance under $5, both returns ~0, gap made by the tie-out's gross-up of a BD fee the size of the balance), BD_FEE_FIGURE_EXTREME 6 (BD fee at least 5% of the mean balance or a credit), FLOW_TIMING_START_OF_DAY 7 and FLOW_TIMING_MID_DAY 2 (the V2 and W73 relink kept the segment's first day as served; with it included START or MID lands within 0.35 pp), LARGE_FLOW_DAY_SENSITIVITY 24 (a day's flow is at least 50% of the prior balance, so the day return is a ratio on a base the flow dwarfs; no variant reaches BD), UNRESOLVED_BY_EXCLUSION 1. The check admits only PRODUCER_FIX or BD_SIDE, so all 123 carry BD_SIDE; for the 25 in the last two causes that is attribution by exclusion (producer shown consistent, BD's daily path not in the landed point), not a finding that BD's figure is wrong. Two of the causes (fee gross-up, first-day relink) live in the tie-out's grading method, outside this order's paths. Separately, 59 of the 123 span 2025-01-09: BD daysHeld is one more than the served linked days because the served series carries no row for that market closure in any of the 5252 accounts and BD counts the day; it moves no return.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~76/W73_S2_EVIDENCE.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~76/W73_S2_RESOLUTION.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~76/resolve_w73_s2.py",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~73/UNEXPLAINED_CLASSIFIED.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W74-S1 -- DB-b-99: the two named "mechanical" reasons do not read Black Diamond's own transaction or income dates
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W74-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~74",
+  "surfaced_at": "2026-10-09T15:30:00Z",
+  "one_line": "FLOW_TIMING and INCOME_DATE are flagged mechanical in SENSITIVITY.json as the order names them, but V2's test re-links Opal's own dated series against BD's return; no BD-side date is read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 4: the MECHANICAL reasons are two-sided reads (flow timing or an income date read from both sides' transaction dates); only those inferred reasons can realize FWD-8.",
+  "world_is": "V2's FLOW_TIMING evidence is a START-timing re-link of Opal's flow-bearing days closing the gap to BD's return; INCOME_DATE is a link with Opal's income days removed. The classifier landed no BD transaction or income date, so neither is read from both sides. SENSITIVITY.json carries mechanical true for both with mechanical_basis stating this; whether that satisfies the CTO's 'two-sided' test is the CTO's to grade, not this worker's. All nine settings leave both reasons' counts constant (449, 26) because V2, not the thresholds, assigns them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~35/TIEOUT_COMPOUND_V2.json evidence strings for FLOW_TIMING and INCOME_DATE",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~74/SENSITIVITY.json final.reasons"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

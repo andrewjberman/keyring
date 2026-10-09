@@ -1035,3 +1035,16 @@ Round 49 is already issued, so the CTO's sizing ruling is cut in its own round.
 Monday 2026-10-12 07:41 ET stays the acceptance, kept as a row with that clock.
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~78`, cut from box/dell2.
+
+
+## 53. ROUND 51, WORKSTREAM B (2026-10-09 ~15:2xZ, issuer 2.0.0_SA_COO~D2, on laptop 4.0.0_SA_CRO's naming ruling, MSTR msg 3555)
+
+Rule 30 conformance of DB-b-91's status key. It is inside the issuer's own decomposition, a repair of a drained cell.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-104` | E1, FWD-4: the lots status key is built by `address()`, never a typed suffix, with its bytes unchanged | WORLD (served-handler floor) | DB-b-97 | B51-1 |
+
+It rides the next gold release with DB-b-97 (CTO ADDENDUM 16 item 1).
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~79`, cut from box/dell2.

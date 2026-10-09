@@ -24748,3 +24748,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   and deleted exactly the technical terms that carried the meaning. That is the same hazard as the
   `1 client(s)` parenthesis break earlier in this session, and it is what CLAUDE.md 14a's NON-SHELL
   WRITER requirement prevents. Repaired from a script file, which no shell parses.
+
+## IRPT_BCKEND-D2-S58 -- Resolves D2-S24: safe-deploy's summary now counts minted bundles (@dd78f5dd5e)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S58",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T15:18:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S24. Fixed on the laptop by the tooling owner 1.0.0_SA_CTO @dd78f5dd5e (CTO~DELL2 msg 3553): safe-deploy's summary now counts minted bundles, so a bundle-only push reads 'N bundle(s) minted and uploaded' instead of reporting nothing deployed. The fix reaches dell2 at the next integrate.",
+  "one_line": "D2-S24 resolved: safe-deploy's summary counts minted bundles (@dd78f5dd5e, laptop tooling owner).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 3553",
+      "laptop commit dd78f5dd5e (tooling owner 1.0.0_SA_CTO)"
+    ]
+  },
+  "spec_asserts": "safe-deploy's summary states what a push deployed.",
+  "world_is": "It does, for bundle-only pushes, from @dd78f5dd5e."
+}
+```
+
+## IRPT_BCKEND-D2-S59 -- S392 read 2026-10-09: inflection + cottonwood NO-WORSE, 49financial unmoved (SIGKILL) -- S392 does not retire
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S59",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T15:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "S392 NO-WORSE read after the 2026-10-09 14:15Z fire: inflection and cottonwood Branch A; 49financial did not move (its producer was SIGKILLed, D2-S56) -- S392 does NOT retire; no regression.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "e62e56_post_fire_read.py read --pins s392/S392_pins_20261009.json -> s392/S392_read_20261009.json, rc 0",
+      "inflection: moved=True 2026-10-08 rev 2e9fc0dcc454; reconcile/multi_asset/six_class/no_held_security_lost_class all True; unclassified 4 (pin 4); BRANCH A",
+      "cottonwood: moved=True 2026-10-08 rev 4077bdc4ddb8; all checks True; unclassified 74 (pin 74); BRANCH A",
+      "49financial: moved=False, still 2026-10-07 rev 61537f666d00 (= pin); BRANCH NOT -- the 14:15Z producer run was SIGKILLed before any verdict (row D2-S56)"
+    ]
+  },
+  "spec_asserts": "CTO ruling UB-32d8 AMENDMENT 1.2: S392 retires when all 3 firms read NO-WORSE (Branch A) on the post-fire read.",
+  "world_is": "2 of 3 firms read NO-WORSE; 49financial has no post-fire publication to read. S392 stays OPEN; it is re-read on 49financial's next publication (Monday 2026-10-12 fire, after IB-pr-414's fix or the 49F-only Branch B per IB-pr-404 AMENDMENT 2). Per row D2-S37 the read is graded only on a fire after the narrow bundles land -- inflection and cottonwood now satisfy that.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
