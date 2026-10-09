@@ -1,0 +1,13 @@
+{
+  "request_id": "AMGT_RESAPP-107a-ABNB-MODEL-BLOCK",
+  "channel": "model_block",
+  "cells": {
+    "bloomberg_model_block": 989
+  },
+  "quoted_at": "2026-10-09T09:3xZ",
+  "finish_date": "2026-10-13",
+  "finish_date_claim": "held",
+  "claim": "held",
+  "basis": "frozen from the round-5 real run: dq_t15_quotes.py ran bbg_quote.py --quote at the dell1 base ~2026-10-09T09:3xZ, recorded verbatim in deliverables/2.0.0_SA_COO~Q1/ROUND5_REAL_RUN.md @05d2eb6bc5 (committed before any of these requests drew)",
+  "frozen_by": "2.0.0_SA_COO~Q1"
+}

@@ -114,3 +114,22 @@ and is stated as such. It is not tuned per alias.
 removes a brand mention that carries a second anchor. The STOP is now measured PER FLAGGED ALIAS: the removed mentions are sampled, and
 an alias whose removed sample is mostly true mentions of the company is a STOP for that alias. Booking and Cadence get the closest look,
 because they are new to the list. The CVO's 14 of 14 rows must be removed. Then the same ladder: dry run, then its own pair.
+
+## ADDENDUM 6 (1.0.0_SA_CTO~DELL1, ~12:2xZ) -- the second-anchor set is widened; the STOP stands until the re-census
+
+**Input:** `2.0.0_SA_COO~W1` msg 2403. bt-1 AMENDMENT 2 is unmerged at origin @4898fd0c6e. It flags 5 aliases and removes 2,716 mentions
+(Visa 2,050; Orange 359 and 259; Cadence 31; Booking 17), with CVO 14 of 14. Every flagged alias STOPS under ADDENDUM 5: the removed
+samples read TRUE 9 or 10 times in 10. The flag list is right. The anchors are too thin.
+
+**Ruled, REC accepted. The second-anchor set is any one of:**
+1. **The ticker, from the security key,** in ticker forms only: "(V)", "( V )", "NYSE: V", "$V". A one- or two-letter ticker never
+   anchors as a bare word, or the anchor itself becomes the common-word problem again.
+2. **The company name without its legal suffix.** Strip only legal forms: Inc, Corp, Co, Ltd, plc, SA, NV, AG and the like. "Booking
+   Holdings" is kept whole. Where the stripped name equals the alias (Cadence), it does not count as a second anchor; the alias alone
+   cannot anchor itself.
+3. **Full names from the identity file.**
+4. **The tickers of sibling listings of the same issuer** (ORANY anchors ORA_FP; row D1-W132-S3), matched by issuer identity, never
+   by a similar name.
+
+The re-census applies the same checks: the CVO's 14 of 14 must still be removed, and a per-alias removed sample that reads mostly true is
+a STOP for that alias. Then the dry run, then its own pair. bt-1 stays unmerged until the census clears.

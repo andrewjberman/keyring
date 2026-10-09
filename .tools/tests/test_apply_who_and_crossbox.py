@@ -952,6 +952,20 @@ def _():
     return ok, "%s %s %s" % (field(out0, "open_call"), field(out1, "open_call"), field(out2, "open_call"))
 
 
+@case("OPEN-CALL, files mode on a NON-Terraform root (row D1-S23): a call naming only the shared root token hits root-only, and does not when the carried file is another; a call naming the carried file still hits")
+def _():
+    fx = fresh("LAPTOP")
+    root = "data/pipea"
+    put(fx / "org/devices/crossbox/c1.json", call_doc(subject="about data/pipea in general"))
+    put(fx / "org/devices/crossbox/c1.body.md", "the data/pipea root, nothing about a file\n")
+    rc0, out0 = cross(fx, root=root)
+    rc1, out1 = cross(fx, "--files", "data/pipea/scripts/gold/x.py", root=root)
+    put(fx / "org/devices/crossbox/c1.body.md", "x.py in data/pipea/scripts/gold is being rewritten\n")
+    rc2, out2 = cross(fx, "--files", "data/pipea/scripts/gold/x.py", root=root)
+    ok = field(out0, "open_call") == "hit" and field(out1, "open_call") == "clear" and field(out2, "open_call") == "hit"
+    return ok, "%s %s %s" % (field(out0, "open_call"), field(out1, "open_call"), field(out2, "open_call"))
+
+
 def open_deploy_race(listing_after, tree_exists, fail_reread=False):
     """Drive measure_open_deploy with a stub git: the list names a ghost worktree, its ls-tree fails (rc=128)."""
     import importlib.util

@@ -18,3 +18,17 @@ leg exit 0 (manifest written with 0 failures; the exit code itself is site-Z-onl
 
 FWD-1 (TO-SH-t3): HTHIY and TOELF are the newly held securities the acceptance read grades on Positioning after the ~13:01Z
 publish (the check requires the served file to post-date the manifest). Worker ~4 spawns then.
+
+## 12Z -- L3 closed, upgraded to measured; SH-t-4 live at site Z; READ order graded
+
+- Ledger `mdpf-sechist-sh-t1-sitez-etf-daily-pull-20261007` CLOSED 12:1xZ (all 3 legs). Post-close: TO-READ-R2-L3 evidence
+  @b2f35b9159 (0.7.0_AE_CloudOps~Z) MEASURES LastTaskResult 0 (LastRunTime 11:00:13Z) and the ledger line
+  `{"mode": "backfill", "rows": 514, "batch_id": "etf_history_backfill_2026-10-08"}` -- relayed/inferred claims now measured.
+- Issuer grade of TO-READ-R2-L3: AC1 `grep -c '^## budget ledger$'` -> 1 PASS; AC2 PASS; AC3-AC5 NOT EXERCISED. The order's
+  status flip is REFUSED by to-pipeline-gate layer 1 (no proof-of-spec instance beside it -- the executor wrote evidence, not an
+  instance). This seat does not author an instance under another seat's serial; the order stays `pending` with this grade on
+  record. Owed by 0.7.0_AE_CloudOps~Z if the flip is wanted.
+- Site Z's 12:00Z restore put HEAD (SH-t-4, blob 73735f44d6) on the working tree (MSTR~Z relay, msg 2398). Ledger
+  `mdpf-sechist-sh-t4-sitez-run-record-20261009` opened @236613d91d; L1 (origin CLOUD ancestor) and L2 (relayed blob) closed
+  @fb9382867c; L3 grades the 2026-10-12 scheduled run.
+- TO-SH-t3: worker ~4 worktree pre-cut at C:\Dev\wk-mdpf_sechist-r2-4 from HEAD; spawn on the ~13:01Z publish.
