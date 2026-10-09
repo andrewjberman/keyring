@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~223</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -94,6 +94,19 @@ Today, `infra/aws/lambda/investor-reporting/reports/generate_installed.py` (`Rou
 - AC2: `split=0`, PASS;
 - AC3: `missing=0`, PASS.
 
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~03:1xZ, on rows D2-W223-S1..S3).**
+- **S1 (AC3):** `checks/r71/symbol_closure.py` now treats an ImportFrom inside an `except ImportError` / `ModuleNotFoundError`
+  handler as an OPTIONAL fallback, when every ImportFrom in that try's body resolves in the package. ~M2's
+  `holdings_publication_port.py:8-11` is that shape: the primary `holdings_publication` resolves. The negative control is a synthetic
+  zip in which an unguarded missing import and a guarded one with a failing primary are still MISSING. AC3 is unchanged as written.
+- **S2:** `opal-data-assets` is SSE-S3 (AES256, `get-bucket-encryption`), so NO KMS statement is owed. Keep the silver grant at
+  the two cottonwood tables, the module's default `admitted_firms`.
+- **S3:** `<paths>` now admits `reports/tests/test_generate_installed.py`. Update ONLY
+  `test_both_branches_refuse_by_name_with_the_public_code_not_ready`: its custody arm asserted `CustodyFactoryRequired`, which this
+  cell deliberately removes. Assert instead that a no-`input_id` body reaches the custody factory (or refuses through the custody
+  reader), and keep the prospect arm as it is. Both test files must pass.
+- Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block. No deploy, no upload (BUILD_ONLY only), no terraform plan or apply, no AWS writes, no downloads or
@@ -109,6 +122,7 @@ Today, `infra/aws/lambda/investor-reporting/reports/generate_installed.py` (`Rou
 <paths>
 infra/aws/lambda/investor-reporting/reports/generate_installed.py
 infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed_custody.py
+infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py
 infra/aws/lambda/ci/lambda-source-map.json
 infra/aws/terraform/investor-reporting/ycharts/generate.tf
 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~223/
