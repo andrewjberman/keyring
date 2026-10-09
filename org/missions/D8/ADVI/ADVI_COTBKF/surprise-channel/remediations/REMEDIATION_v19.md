@@ -21,11 +21,11 @@ Graduated at round 27's L9 (ADJUDICATION_v21.md), round label v28: 5 rows, OPEN.
   "owner": "2.0.0_SA_COO~C2",
   "round": "v28",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v28"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "ADVI_COTBKF-D2-W50-S2",
@@ -42,11 +42,11 @@ Graduated at round 27's L9 (ADJUDICATION_v21.md), round label v28: 5 rows, OPEN.
   "owner": "2.0.0_SA_COO~C2",
   "round": "v28",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v28"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "ADVI_COTBKF-D2-W50-S3",
@@ -63,11 +63,11 @@ Graduated at round 27's L9 (ADJUDICATION_v21.md), round label v28: 5 rows, OPEN.
   "owner": "2.0.0_SA_COO~C2",
   "round": "v28",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v28"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "ADVI_COTBKF-D2-W51-S1",
@@ -105,11 +105,11 @@ Graduated at round 27's L9 (ADJUDICATION_v21.md), round label v28: 5 rows, OPEN.
   "owner": "2.0.0_SA_COO~C2",
   "round": "v28",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v28"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

@@ -4185,3 +4185,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W56-S1 -- The face said copy round 37's adapter and make it read the keys; reading the gross from the landed silver (no live CSVs) left the fee-slice and miss-c
+
+```json
+{
+  "id": "IRPT_DASHBD-W56-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~56",
+  "surfaced_at": "2026-10-09T07:30:00Z",
+  "one_line": "The face said copy round 37's adapter and make it read the keys; reading the gross from the landed silver (no live CSVs) left the fee-slice and miss-class code with no input, so ~56's adapter omits them and they remain in ~53's copy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 2: copy round 37's adapter into ~56 and make it read account_boundary from the ratified file; step 3: gross from the landed silver, net from the landed net, same sample.",
+  "world_is": "MEASURED 2026-10-09: round 37's adapter read four live Orion CSVs (gross, net control, Unified Account Dim fees, Billing Dim). With no live pull, the gross and net come from landed parquet, and the fee-slice section (Unified/Billing CSVs, supervision flag) and the live-gross miss classes have no landed input, so ~56/orion_account_return_daily.py does not carry them and orion_sources.json drops fee_sources. They are unchanged in ~53/. Ran from the repo root with --registry-key inflection --end 2026-10-08: 562 account-windows, gross 418 and net 421 within 0.35 pp; the net equals round 36's published headline and the gross equals round 37's plus_departing variant, so the landed gross reproduces the live gross on this sample. The headline flow set is now the ratified file's (NNA entries plus account_boundary entries, tax pair on the before-tax basis); the NNA-only counts (net 293, gross 291) are printed beside it as flow_set_probe. DB-b-81 (fee slices) should copy from ~53/, not ~56/.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~56/INF_TIEOUT_R38.json (flow_set_probe, gross, net)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~53/INF_GROSS_FEE_TIEOUT.json (flow_variant_within plus_departing 418)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

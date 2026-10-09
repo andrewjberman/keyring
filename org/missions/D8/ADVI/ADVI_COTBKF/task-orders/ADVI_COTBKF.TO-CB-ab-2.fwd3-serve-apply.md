@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CB2</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -36,6 +36,8 @@ served output. Round 27 withdrew this act (CB-aa-4) because split, distribution 
 2. Open the change-management ledger entry in `org/critical_paths/change_management/` (and `.open_deploys/`), per CLAUDE.md NEVER-2.
 3. From the drained trunk, after CB-ab-1 drains VALID with `regressions=0`: re-run the default re-grade into `.scratch/advi_cotbkf/r28` (`commonwealth_sweep_regrade.py --before-list v1 --after-list v1 --before-cash-leg method_r26 --data-dir .scratch/advi_cotbkf/r28 --out .scratch/advi_cotbkf/r28_out`), then `--build --cash-leg method_r28` and `--dry-run`; the dry run's three addresses must equal the pair's three keys, else stop.
 4. Run `--apply`, then `--verify`. Close the ledger with the read-back.
+
+**SUPERSEDED (issuer, 2026-10-09 ~07:3xZ, never spawned).** The CTO's ADDENDUM 4 (msg 2789) recuts the mint into round 29's ONE issuance; it continues as `TO-CB-ac-1` on the same lane, unchanged in substance.
 
 ### ACCEPTANCE
 

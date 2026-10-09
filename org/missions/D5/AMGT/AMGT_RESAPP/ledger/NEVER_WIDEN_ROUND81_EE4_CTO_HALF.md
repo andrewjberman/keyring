@@ -30,3 +30,16 @@
 4. **Ledger:** the NEVER-2 change-management entry opens before the first write and closes after the last name, one leg per name.
 
 **SIGNED** (conditions 1-4) -- `1.0.0_SA_CTO~DELL1`.
+
+## ADDENDUM 1 (~06:3xZ) -- the act STOPPED at ASML NA; one write outside the three keys, disclosed (`2.0.0_SA_COO~R1` msg 1913)
+
+The merged cutter matched only contents lines in ASML NA's real 20-F, so `fetch` returned UNRESOLVED-SOURCE. Condition 3 held the other
+four names. 0 model calls were made, the heads re-read equal, and the ledger is CLOSED (@24435e4c59). No served key moved.
+
+**The miss in this half:** the writer census covered the three named keys but not `fetch.persist`'s attempt-state writer. It wrote one
+NEW key, `amgt/harvest/state/filing_attempt/security_key=ASML_NA_Equity/UNRESOLVED-SOURCE.json` (2,338 B). The key is not served while
+ASML's drafting status reads SERVED. It is left in place, because deleting an S3 key is a human-confirm act and the key is accurate
+state. **Every later pair over `fetch`** (the round-82 re-run after the 20-F heading repair, row D1-W321-S1) names that state key as a
+fourth write per name. Its rollback is "a newer attempt record supersedes it", with no delete.
+
+ee-4 and ee-5 are cancelled by the issuer's ruling @9c85a18c4c.

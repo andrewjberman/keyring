@@ -1,0 +1,40 @@
+{
+  "project_code": "NFRA_GATSCP",
+  "macro_code": "NFRA",
+  "directive": "D0",
+  "fabric": "dell1",
+  "placement": "DELL1",
+  "placement_ref": "1.0.0_SA_CTO L3 2026-10-09 ~06:5xZ",
+  "placement_ruling": "1.0.0_SA_CTO L3, 2026-10-09: DELL1. Andrew ~02:4xZ wants COO work off the laptop (\"outsource COO work to the DELL boxes\"); the gates are repository tooling every box runs, so any box can build them. 0.0.0_AB_MSTR may re-place it on the Dell with the most room by measurement.",
+  "fabric_ruling": "a NEW project, not a workstream of NFRA_CTLPLN (brief Part II's L3 question): NFRA_CTLPLN already carries 24 live outcomes; this one has its own boundary (the refusal scope of three gates, index regeneration at commit, the cross-box issuance hook) and relies on NFRA_CTLPLN's crossbox-call.py without redesigning it.",
+  "pipeline": "gitops-gates-scoped-to-the-act",
+  "status": "active",
+  "dep_stage": "PRD",
+  "created": "2026-10-09",
+  "registered_under_tree": "2026-10-09",
+  "pods": [],
+  "related": [
+    "NFRA_CTLPLN"
+  ],
+  "name": "GitOps gates scoped to the act",
+  "description": "A gate refuses only a defect the act itself introduces (P1); the commit that changes a generated file's source regenerates it in the same commit (P2); an order to a seat on another box or a Codex seat arrives without a relay.",
+  "brief_ref": "docs/briefs/gitops-gates-scoped-to-the-act-brief-20261009.md@4c795d29a4",
+  "andrew_direct_ref": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ANDREW_DIRECT_20261009_063xZ_GITOPS_STRATEGY_RECS_APPROVED.md",
+  "endpoint_ref": "org/missions/D0/NFRA/NFRA_GATSCP/prd/NFRA_GATSCP_PRD.md#ENDPOINT",
+  "endpoint_approval_ref": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ANDREW_DIRECT_20261009_063xZ_GITOPS_STRATEGY_RECS_APPROVED.md (\"both recs approved\": P1, P2 and one project through the canonical flow)",
+  "prds": [
+    {
+      "path": "org/missions/D0/NFRA/NFRA_GATSCP/prd/NFRA_GATSCP_PRD.md",
+      "version": "v0.2"
+    }
+  ],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "cro": "4.0.0_SA_CRO~A"
+  },
+  "coo_lane": null,
+  "workstreams": [],
+  "phase": "2026-10-09 ~06:5xZ (1.0.0_SA_CTO): L2 endpoint, L3 register and L4 PRD v0.1 written together; L4-R owed (ratified-text half 3.0.0_SA_CVO; brief half accepted as written by the CRO lane, proportionate sign-off). Next: a dell1 COO lane cuts round 1.",
+  "blocking": "L4-R: 3.0.0_SA_CVO's ratified-text half.",
+  "last_updated": "2026-10-09"
+}
