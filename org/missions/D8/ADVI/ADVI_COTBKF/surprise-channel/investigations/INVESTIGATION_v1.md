@@ -3182,3 +3182,29 @@ round.** Never edit an existing row.
   "world_is": "The ruling widened the grant by that one path; the equality and its trailing comment were changed and nothing else in the file. S1 is unedited; its armed hazard no longer has a red test behind it."
 }
 ```
+
+## ADVI_COTBKF-D2-W53-S6 -- CB-ab-1 AMENDMENT 1: the serve builder's re-derivation did not reproduce a method_r28 run until it applied the run's repair sidecar; fixed in the builder, no repair rule changed
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W53-S6",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~53",
+  "surfaced_at": "2026-10-09T06:45Z",
+  "one_line": "commonwealth_fwd3_serve.py --build refused on the method_r28 run (re-derived day values differ from the run's, blank mismatches 13) because rederive() ignored the run's repair_days.parquet; it now applies the DVR_CLOSE_STEP days, and a holding-day carrying a reason is never valued",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first --build on .scratch/advi_cotbkf/r28 at fc9435beb0 plus the ABSENT edit: 'refused: the re-derived day values differ from the run's (blank mismatches 13, worst abs diff 0.000e+00)'",
+      "commonwealth_daily_valuation.py run() blanks av with blank_account_days(av, dvr_close_step_days(...)) and writes the sidecar; commonwealth_sweep_regrade.py chain() passes repair=dv.read_repair(data_dir) to daily_returns; the builder did neither",
+      "second --build after the fix: day_values_rows_checked=1691729, month_grades_rows_checked=82593, absent_months=4, rc 0 (the build REFUSES unless both reproduce the run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1: the serve build takes its ABSENT list from the persisted grades of the AC2 run and its default cash leg is method_r28; CB-aa-3's builder was written against method_r26 and was assumed to re-derive any default run.",
+  "world_is": "The builder's rederive() now reads the run's sidecar for method_r28 (blanks the account-days, passes repair to the daily returns) and marks those account-days' holding rows with blank_reason DVR_CLOSE_STEP and a null value; the account_day_value table gained a nullable blank_reason column (also carrying REGRESSED_UNDER_R28). No method_r28 rule, test of a rule or grade was changed. The built tables carry run_commit fc9435beb098, the HEAD the build ran on, which precedes the commit that holds this builder change."
+}
+```
