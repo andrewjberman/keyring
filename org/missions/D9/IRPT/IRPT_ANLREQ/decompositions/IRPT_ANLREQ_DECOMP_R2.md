@@ -24,6 +24,12 @@ FWD-1 is NOT REALIZED: the code is complete but not live. PRD v0.3. Round 1's in
 | I7 (W62-S4) | `commentary_ref` and `pdf_ref` are structured: `{"artifact_id", "sha256", "version_id"}`. On I5's string fields each travels as its canonical JSON (sorted keys, no spaces; at most 512 chars, `PACKAGE_REF_MAX_CHARS`). Producer (`AR-t-21`), packager (`AR-g-22`) and reader (`AR-v-21`) each carry a contract test that round-trips the same sample. |
 | I5' (W62-S3) | For a custody-lane request, `original_ref` is `null` on I5, and the ticket page shows the one sentence "No original file: this report was built from custody data." The other three refs stay required. |
 
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~07:3xZ, on `2.0.0_SA_COO~G2` msg 2799): ONE I7 sample.**
+- I7's shared sample is `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json` @beb1d1466d.
+- The contract tests of `AR-g-22`, `AR-t-21` and `AR-v-21` each read THAT file, so all three lanes test the same bytes. `AR-t-21` is
+  complete; ~T2 re-points its test in its next order in scope.
+- Gate limb: none (a decomposition document).
+
 ## Cells (round 2)
 
 | cell | lane | item (analysis) | what EXISTS at the end |
