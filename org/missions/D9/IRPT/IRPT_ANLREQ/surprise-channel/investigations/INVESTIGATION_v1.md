@@ -1368,3 +1368,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W7-S3 -- AMENDMENT 7 dispositions for D2-W7-S1 and D2-W7-S2, and a stale expectation in test_status_installed.py
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W7-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~7",
+  "surfaced_at": "2026-10-09T15:30:00Z",
+  "one_line": "D2-W7-S1 disposed: status_installed.py now derives the revision from the packaged registry and no longer imports the constant, so resident_installed.py stays at 80a79a7462. D2-W7-S2 disposed: the fake active_policy flips only the X10 id. Also, test_status_installed.py asserted 6 operations/routes though the AR-y-22 original route makes 7; I updated those expectations to pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 7: test_status_installed.py's 7 tests pass after the fake is changed; no other expectation changes.",
+  "world_is": "The file holds 4 tests (7 was the count with the 3 revisions-file tests); test_the_boundary_installs asserted 6 operations and 6 routes and a 5-entry owner_read_modes, stale against the analysis-request-original route (AR-y-22). Adding that route to the three expectations makes the 4 pass; the revisions file now has 6 tests (3 new arms).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/reports/tests/test_status_installed.py -> 4 passed",
+      "3e59dc5d6e"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
