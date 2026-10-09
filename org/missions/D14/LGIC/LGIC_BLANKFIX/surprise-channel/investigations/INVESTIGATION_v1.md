@@ -1933,7 +1933,6 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
 }
 ```
 
-
 ## LGIC_BLANKFIX-D1-W2-S1 -- the apply gate's pre-plan (directory) stage can never print a placement refusal, so the pre-plan wiring has no producer today
 
 ```json
@@ -1981,5 +1980,56 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "BF-x-4 build 1 and its paths block: safe-commit appends one audit line to org/naming-place-override-audit.log, a path inside the write grant.",
   "world_is": "The file is created at first use and is never tracked, like the older git-author-override audit log the cell modelled it on; the gate's check is local to the box and the 600-second window, so nothing needs the line to travel. I did not create the file, add a negation to .gitignore (outside the grant) or commit a placeholder. Whether the override rows should be tracked for review is the owner's call."
+}
+```
+
+## LGIC_BLANKFIX-D1-S2 -- the scope test pins uncounted as the ALL-ROOTS line's last field, so BF-x-5's appended field reads red at the drain
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-S2",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-09T07:04:59Z",
+  "one_line": "the scope test pins uncounted as the ALL-ROOTS line's last field, so BF-x-5's appended field reads red at the drain",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain hygiene on wk-LGIC_BLANKFIX-1 @467d08b99b: 'FAIL: the estate run counts uncounted at the end of its last line: other_holes=2 stale_hints=0 uncounted=0 counted_at_caller=17' / 'SCOPE-TEST ok=False assertions=831'; the trunk reads SCOPE-TEST ok=True assertions=831",
+      "lib/tests/test_opal_naming_scope.py:370 asserts last.split()[-1].startswith('uncounted='); TO-BF-x-5 build item 1 told the cell to append counted_at_caller after uncounted, and its grant did not name the scope test"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every lib/tests/test_opal_naming_*.py script that passes at the base passes after the build (each order's CONTEXT bar).",
+  "world_is": "The cut asked for a new trailing field and named the one reader it knew (the rootcheck test), not the scope test that reads the same line by position. Issuer's cut defect; ruled by TO-BF-x-5 AMENDMENT 2 (grant the scope test; read uncounted by key)."
+}
+```
+
+## LGIC_BLANKFIX-D1-W1-S1 -- BX1-AC2 cannot read ok=True: hole_before is read from the round-8 ALL-ROOTS line (hole=10, mapped=63) but the live run is mapped=78
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W1-S1",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T06:20:50Z",
+  "one_line": "BX1-AC2 cannot read ok=True: hole_before is read from the round-8 ALL-ROOTS line (hole=10, mapped=63) but the live run is mapped=78",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ALL_ROOTS_round8.txt last line: 'ALL-ROOTS ok=True roots_total=87 mapped=63 unmapped=24 ... hole=10 ... other_holes=10'",
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/check_h8_rule.py -> ten names NOT-ASKED; 'H8-RULE ok=False owned=10 not_asked=10 hole_before=10 hole_after=41 mapped=78'",
+      "the order's CONTEXT gives the base reading hole=51 mapped=78; 51 minus the ten H8 holes is 41 = hole_after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BX1-AC2: hole_before is read from ALL_ROOTS_round8.txt and hole_after < hole_before holds once the ten H8 names read NOT-ASKED.",
+  "world_is": "The round-8 file was taken with 63 roots mapped; the live run maps 78, so hole_before=10 is not comparable with hole_after=41. The build holds (10 of 10 names NOT-ASKED, hole fell 51 to 41 on the same 78 roots) but the order's own comparison reads false. Not weakened; the order stays open for the issuer to name the right baseline (the CONTEXT's hole=51)."
 }
 ```

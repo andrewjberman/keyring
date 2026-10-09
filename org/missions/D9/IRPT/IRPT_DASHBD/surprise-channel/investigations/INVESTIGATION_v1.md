@@ -4184,3 +4184,78 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W57-S1 -- The Orion session token had 6 minutes left at the pull, under round 37's 30-minute floor, so the copied script's floor was lowered to 2 minutes for th
+
+```json
+{
+  "id": "IRPT_DASHBD-W57-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~57",
+  "surfaced_at": "2026-10-09T07:00:00Z",
+  "one_line": "The Orion session token had 6 minutes left at the pull, under round 37's 30-minute floor, so the copied script's floor was lowered to 2 minutes for this one read-only call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 1: start from round 37's orion_gross_fee_pull.py; that script refuses a token with under 30 minutes (MIN_JWT_MINUTES) left.",
+  "world_is": "MEASURED 2026-10-09T06:56Z reading only the non-secret fields of s3://<legacy bucket>/orion/jwt/current.json: issued 2026-10-08T21:01:50Z, expires 2026-10-09T07:02:50Z (ttl_seconds 36060). The floor refused at 0:06:32. orion_gross_silver.py in ~57 sets pull.MIN_JWT_MINUTES from a --min-jwt-minutes argument (default 30) and was run once with 2; one Generate call completed (3,129 rows) before expiry. The copied pull script is unedited. The token is a ~10 hour browser capture, so any later pull in this window will find it expired until it is re-captured; no credential was refreshed or written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~57/orion_gross_silver.py (--min-jwt-minutes)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~57/ORION_GROSS_SILVER.json (pulled_at_utc 2026-10-09T06:58Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W57-S2 -- address() for master 4698 silver resolves to opal-data-assets, a third bucket beside the legacy Orion silver bucket (opal-data-inf) and the firm bucke
+
+```json
+{
+  "id": "IRPT_DASHBD-W57-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~57",
+  "surfaced_at": "2026-10-09T07:00:00Z",
+  "one_line": "address() for master 4698 silver resolves to opal-data-assets, a third bucket beside the legacy Orion silver bucket (opal-data-inf) and the firm bucket (opal-data-inflection), so a reader of the gross silver must take the address from the builder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 2: resolve the silver address with lib/opal_naming.py address() for master 4698; the scope row's own note says the Orion bytes land under the routed legacy alias bucket opal-data-inf.",
+  "world_is": "MEASURED 2026-10-09: address('orion','4698','silver','account_performance_gross','snapshot_date=2026-10-08') printed s3://opal-data-assets/orion/4698/silver/account_performance_gross/snapshot_date=2026-10-08; the two objects (data.parquet 41,091 bytes, manifest.json 852 bytes) were listed there after the write. The landed account performance the adapter reads is under opal-data-inf (silver/api_dims/performance/). The write used the builder output as printed; nothing was typed. A consumer that derives the bucket from the legacy alias (as round 37's adapter does for positions) will not find this table; the tie-out cell should read the record's address.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~57/ORION_GROSS_SILVER.json (builder_call, objects_listing)",
+      "infra/logic/registry/scopes.json (key 4698 note)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W56-S1 -- The face said copy round 37's adapter and make it read the keys; reading the gross from the landed silver (no live CSVs) left the fee-slice and miss-c
+
+```json
+{
+  "id": "IRPT_DASHBD-W56-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~56",
+  "surfaced_at": "2026-10-09T07:30:00Z",
+  "one_line": "The face said copy round 37's adapter and make it read the keys; reading the gross from the landed silver (no live CSVs) left the fee-slice and miss-class code with no input, so ~56's adapter omits them and they remain in ~53's copy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 2: copy round 37's adapter into ~56 and make it read account_boundary from the ratified file; step 3: gross from the landed silver, net from the landed net, same sample.",
+  "world_is": "MEASURED 2026-10-09: round 37's adapter read four live Orion CSVs (gross, net control, Unified Account Dim fees, Billing Dim). With no live pull, the gross and net come from landed parquet, and the fee-slice section (Unified/Billing CSVs, supervision flag) and the live-gross miss classes have no landed input, so ~56/orion_account_return_daily.py does not carry them and orion_sources.json drops fee_sources. They are unchanged in ~53/. Ran from the repo root with --registry-key inflection --end 2026-10-08: 562 account-windows, gross 418 and net 421 within 0.35 pp; the net equals round 36's published headline and the gross equals round 37's plus_departing variant, so the landed gross reproduces the live gross on this sample. The headline flow set is now the ratified file's (NNA entries plus account_boundary entries, tax pair on the before-tax basis); the NNA-only counts (net 293, gross 291) are printed beside it as flow_set_probe. DB-b-81 (fee slices) should copy from ~53/, not ~56/.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~56/INF_TIEOUT_R38.json (flow_set_probe, gross, net)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~53/INF_GROSS_FEE_TIEOUT.json (flow_variant_within plus_departing 418)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

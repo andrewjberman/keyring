@@ -5,7 +5,9 @@
 Reads the `aws_iam_role_policy.cot_rebalancer_runner_write` block and checks:
   - exactly one statement grants s3:GetObject;
   - that statement is Effect Allow with the single resource
-    "arn:aws:s3:::${local.monolith_bucket}/blackdiamond/cottonwood/meta/*-result.json";
+    "arn:aws:s3:::${local.monolith_bucket}/blackdiamond/${one(local.monolith_source_scopes.blackdiamond)}/meta/*-result.json"
+    (CTO ruling H @1af255b7da: the firm segment is read from monolith.tf's grammar, after the naming gate refused a typed
+    'cottonwood' -- row MDPF_HEALGAP-D1-S9);
   - the three statements already present (WriteOwnCottonwoodBronzeMeta, ListCottonwoodForLandingGuard,
     DenyBlackdiamond49fFirmSep) are still present, and no other s3 action is added.
 Last line: IAM-OK or IAM-BAD <reason>. Static text read; no AWS call.
@@ -16,7 +18,7 @@ import re
 import sys
 
 TF = "infra/aws/terraform/opal-assets/cot_rebalancer_runner.tf"
-WANT = '"arn:aws:s3:::${local.monolith_bucket}/blackdiamond/cottonwood/meta/*-result.json"'
+WANT = '"arn:aws:s3:::${local.monolith_bucket}/blackdiamond/${one(local.monolith_source_scopes.blackdiamond)}/meta/*-result.json"'  # CTO ruling H @1af255b7da: firm read from the grammar, no NEW carrier (row D1-S9)
 KEEP = ("WriteOwnCottonwoodBronzeMeta", "ListCottonwoodForLandingGuard", "DenyBlackdiamond49fFirmSep")
 
 

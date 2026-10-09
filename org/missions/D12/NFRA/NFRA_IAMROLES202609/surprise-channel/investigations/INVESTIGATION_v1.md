@@ -991,6 +991,137 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
     "spec_asserts": "The L10 precondition holds that a slug waits until every task order under the project is terminal, read from each order's `<status>` tag at HEAD.",
     "world_is": "The gate's first-match regex captures a `<status>` string occurring in an order's PROSE, so an order describing markup is graded on the description; all 18 orders are terminal on their actual status tags.",
     "notes": "⛔ NOTHING IS ASKED OF ANY LANE BEYOND THE ROUTING, and no order was edited. This is the SECOND gate defect this seat has routed today (Z-S12 was the first) and both are the same family the estate met all day: AN INSTRUMENT ANSWERING CONFIDENTLY ABOUT THE WRONG OBJECT -- there the wrong PLANE, here the wrong OCCURRENCE. ⭐ AND THE GENERAL FORM IS WORTH MORE THAN THE REGEX: A FIRST-MATCH READ OF A STRUCTURED FIELD IS A GUESS THAT THE FIELD APPEARS BEFORE ANY DISCUSSION OF IT. That holds for most documents and fails for exactly the documents that are ABOUT the field -- which are the ones a governance estate writes when it starts auditing its own markup."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W10-S1",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~10",
+    "surfaced_at": "2026-10-09T06:42:47Z",
+    "one_line": "missions-tree-index check reports INDEX-DRIFT on org/projects/NFRA_OPSWKF.json (dep_stage index='PRD' tree='EXECUTING') and the commit-time missions-tree-check refuses every commit in this worktree, including this order's completion commit.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~ZI -- regenerate the flat index row via missions-tree-index derive (0.0.0_AB_MSTR lane for the index); not touched by this worker (outside <paths>).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/missions-tree-index.py check in /c/tmp/wk-iamroles-10 at 44eb421ef6: '[INDEX-DRIFT] org/projects/NFRA_OPSWKF.json: dep_stage: index=PRD tree=EXECUTING', RESULT: 1 violation(s); tree=49 projects valid."
+      ]
+    },
+    "spec_asserts": "A worker commit inside its <paths> lands through safe-commit.",
+    "world_is": "safe-commit's missions-tree-check refuses the staged set on an unrelated project's index drift, so the order's proof, deliverables and complete flip could not be committed.",
+    "notes": "Work product is complete and in the worktree; only the commit is blocked."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S1",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T06:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "safe-commit REFUSED TO-IAM-u-2's deliverables commit: missions-tree-check reports INDEX-DRIFT org/projects/NFRA_OPSWKF.json dep_stage index='PRD' tree='EXECUTING', a defect in ANOTHER project's register carrier that the worker's write grant cannot touch.",
+    "spec_asserts": "A worker commit of files under its own deliverables folder is graded on those paths.",
+    "world_is": "The tree validator grades the whole project tree; a drift on NFRA_OPSWKF (register row at PRD, tree project at EXECUTING) fails every commit from every worktree branched from this base. Two attempts, same single violation (1 violation, 49 of 49 tree projects valid).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit run twice at worktree HEAD 50428b904f: [INDEX-DRIFT] org/projects/NFRA_OPSWKF.json: dep_stage: index='PRD' tree='EXECUTING'; RESULT: 1 violation(s)",
+        "tool names the remedy as R5 = the register members list, 0.0.0_AB_MSTR's lane; never bypass"
+      ]
+    },
+    "notes": "No bypass was taken. The partial deliverables (rerun-population.sh, compare-runs.py, permission-cold-raw-bundle.round4.PARTIAL.json) sit UNCOMMITTED in /c/tmp/wk-iamroles-11 on branch wk-NFRA_IAMROLES202609-11; commit them once the drift is cleared."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S2",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T06:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Live list-roles read 290 roles = 280 at Path '/' + 10 service-linked (Path '/aws-service-role/<service>/'); round 3 read 219 + 10. The population rule's 'Path /aws-service-role/' is a PREFIX, not an equality: an exact-equality exclusion matched 0 of the 10.",
+    "spec_asserts": "Round 3's rule: the 10 roles at Path '/aws-service-role/' are excluded and named.",
+    "world_is": "Those 10 roles carry Path '/aws-service-role/<service>.amazonaws.com/'; rerun-population.sh was corrected to a startswith test before the bundle was assembled. Members rose 219 -> 280 (+61) in the interval.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws iam list-roles via .tools/aws grouped by Path in worktree .scratch/r4work/list-roles.json: 280 at '/', 10 under '/aws-service-role/<service>/', 0 other (290 total)",
+        "round 3 bundle ~8 population_rule: 219 at '/', 10 excluded"
+      ]
+    }
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S3",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T07:39:51Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The reseat brief's '195 per-role files' was 65 roles x 3 files (.json/.err/.rc), so 215 of 280 roles remained, not about 85; the sweep resumed from the 65 rc0-verified roles and ran the 215 in one background pass.",
+    "spec_asserts": "The reseat brief: .scratch/r4work/roles holds 195 per-role files at the issuer's count; about 85 roles remain.",
+    "world_is": "roles/ held 195 files = 65 .json + 65 .err + 65 .rc; all 65 had rc 0 and parsed with a rows key; 215 roles were not yet attempted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls .scratch/r4work/roles | sed to strip the extension | sort | uniq -c -> 65 err, 65 json, 65 rc",
+        "final run: attempted=280 returned_rc0=280 results=280, no rc != 0 role"
+      ]
+    }
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S4",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T07:39:51Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "26 permissions on opal-drift-producer-codebuild-role (iotevents:*, evidently:*) read never-used in round 3 and unobservable in round 4 ('service not present in Access Advisor response') with byte-identical instrument code and the grant unchanged.",
+    "spec_asserts": "Same instrument blobs, same rule and lookback give a comparable per-permission status for an unchanged grant.",
+    "world_is": "For that role the Access Advisor response in the 2026-10-09 run no longer lists the iotevents and evidently services, which moves 26 rows never-used -> unobservable; the cause inside AWS is not determinable from the bundles.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "compare-runs.py over ~8 round-3 bundle and the round-4 bundle: 'never-used -> unobservable : 26', all on opal-drift-producer-codebuild-role",
+        "instrument_blobs equal across the two bundles (COMPARABLE: yes)"
+      ]
+    }
   }
+]
+```
+
+## Z-W12-S1 -- safe-commit refuses IAM-u-3's deliverable on an unrelated NFRA_OPSWKF index drift
+
+```json
+[
+{
+  "id": "NFRA_IAMROLES202609-Z-W12-S1",
+  "project": "NFRA_IAMROLES202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~12",
+  "surfaced_at": "2026-10-09T06:31:56Z",
+  "one_line": "safe-commit REFUSES this worker's deliverable commit on a missions-tree INDEX-DRIFT in a different project (org/projects/NFRA_OPSWKF.json dep_stage index=PRD tree=EXECUTING); the refusal is outside this order's paths and the remedy is the register's.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR~Z -- the refusal text names R5, the register's members list, as 0.0.0_AB_MSTR's lane; not edited here and not bypassed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh -- BLOCKED: missions-tree-check, RESULT: 1 violation(s), '[INDEX-DRIFT] org/projects/NFRA_OPSWKF.json: dep_stage: index=PRD tree=EXECUTING', denominators 'tree=49 project(s)... 49 valid'. Observed at worktree base 50428b904f (branch wk-NFRA_IAMROLES202609-12), rc=1, run twice; git log confirms no commit by this serial.",
+      "The staged set was only org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~12/CONDITION_AXIS_EXERCISED.md; the violating file is in no order path of this worker."
+    ]
+  },
+  "spec_asserts": "The order expects the worker to commit its deliverable, proof and status flip to its own branch via safe-commit within its <paths>.",
+  "world_is": "The commit gate refuses on a tree-wide index drift unrelated to the staged file, so the deliverable stands uncommitted in the worktree (CONDITION_AXIS_EXERCISED.md, AC1=3, AC2=1, AC3 pin matches).",
+  "disposition": "UNDER_INVESTIGATION"
+}
 ]
 ```

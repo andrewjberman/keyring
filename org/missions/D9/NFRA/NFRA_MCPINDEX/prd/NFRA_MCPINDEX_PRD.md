@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v0.7",
+  "prd_version": "v0.8",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -24,7 +24,8 @@
     "FWD-15",
     "FWD-16",
     "FWD-17",
-    "FWD-18"
+    "FWD-18",
+    "FWD-19"
   ],
   "status": "DRAFT"
 }
@@ -278,6 +279,19 @@ FWD-18  Each entry names the browser workflow it retires (v0.7)
          PROOF      the count, denominator 14
          SOURCE     as FWD-11; brief O8
 
+FWD-19  The operations lead's trade reconciliation and billing are answerable in Claude from one server (v0.8)
+         DONE WHEN  EXERCISED -- discover routes "trade rec" and "billing" to their readers, and
+                    each reader answers from its named served source under an admitted principal
+         ACCEPT     each reader's rows carry the OW-k-1 fixture fields (trade rec: account,
+                    custodian, trade_date, symbol, side, quantity, opal_status, custodian_status,
+                    matched; billing: account, household, billing_period, aum, fee_rate_bps,
+                    fee_amount, status) inside the C4 envelope; a fixture is never served as data;
+                    a reader with no served source is a GAP entry naming its owner; read only
+         PROOF      per reader: the discover call, one live answer with as-of and row count, and
+                    the same count read from the source by a second instrument
+         SOURCE     Andrew-direct 2026-10-09 ~05:0xZ (record @709da7cded, line 9); option A
+                    record @1740ba55ec; fixtures tools/ops_kit/fixtures/ @cc539738c6
+
 ## CONTRACTS
 
 **C1 -- ONE catalog, versioned, EXACTLY ONE writer -- and naming that writer is S1's FIRST ACT, because today nothing
@@ -484,3 +498,40 @@ FWD-17. FWD-16 follows NFRA_OPLGTW's serve dates.
 
 **Sign-off.** ENDPOINT and CONTRACTS change. The ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half is
 `4.0.0_SA_CRO~Z`'s, accepted as written by the CRO (rule 27, PROPORTIONATE SIGN-OFF).
+
+### v0.8 addendum (2026-10-09 ~07:3xZ, 1.0.0_SA_CTO~O) -- the operations lead's readers (FWD-19)
+
+**Input.** Andrew-direct 2026-10-09 ~05:0xZ at the `2.0.0_SA_COO~O2` terminal (dell2),
+`org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/2.0.0_SA_COO~O2/ANDREW_DIRECT_20261009_05xxZ_TICKET_CENTER_TRADE_INTAKE_AND_FIT_READ.md`
+@709da7cded, line 9: "MCPINDEX on the sitez box as far as how claude gets the data in question". Option A (one server
+his Claude pulls from): `ANDREW_DIRECT_20261009_05xxZ_OPS_LEAD_LOCALHOST_DASHBOARD.md` @1740ba55ec, same folder. Shape:
+OW-k-1's fixtures, `tools/ops_kit/fixtures/trade_rec.json` and `billing.json` @cc539738c6. Asked by `2.0.0_SA_COO~MI`
+(msg 32435), the owner ruled by `1.0.0_SA_CTO~Z` (msg 32430).
+
+**Contract changes:**
+
+1. **FWD-19 serves two readers: trade reconciliation and billing.** Their row fields are the fixtures' fields, so the
+   ops kit's one adapter (NFRA_OPSWKF, dell2) swaps a fixture for a live read with no field mapping. The fixtures are
+   the SHAPE and a test input only. A fixture value is never served as data.
+2. **The source is found, never assumed.** Each reader's first cell names its served source by census: every
+   candidate producer, with its denominator, and the surviving source read once. This is C1's bar. Candidates to test
+   include the trade engine's statuses against custodian silver transactions (trade rec) and the Black Diamond fees
+   read behind `blackdiamond_list_fees` (billing). They are candidates only. A reader with no served source ships as a
+   GAP entry naming its owner (v0.7 item 1), and FWD-19 is then not done.
+3. **The C4 envelope and C7 isolation apply unchanged.** Every answer states its firm or master scope, its as-of and
+   its completeness. Nothing is summed across firms or masters.
+4. **Read only. No alert, notification or monitor.** The operations lead's other four items are catalogued as GAP
+   entries, `unowned`, with no tool: post model update rec, high cash account alert FA, assets transfer alert FA and
+   restricted account alert FA. The three FA alerts are under the standing moratorium until Andrew names an alert.
+   Trade-request intake and its C-NO-SEND fence are NFRA_OPSWKF's, not this project's.
+5. **Admission is Andrew's act (C8).** The operations lead becomes a beta user only on Andrew's admission. Once he is
+   admitted, he is the first user beyond Andrew and Alyssa. FWD-9's per-user scoping clause therefore binds from his
+   admission, and his grant is written before his first data call. FWD-19 is proven on demand under an already
+   admitted principal; his own session is the organic arm, not the proof.
+
+**Order.** Round 9, after round 8 drains, as `2.0.0_SA_COO~MI` proposed. FWD-19 is disjoint from the FWD-11 thread's write
+surface: new reader modules and new catalog entries.
+
+**Sign-off.** ENDPOINT and CONTRACTS change. The ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The input is an
+Andrew-direct record and no CRO brief, so the brief half is owed by `4.0.0_SA_CRO~Z`, or by a live COO that does not
+hold the round (rule 27).

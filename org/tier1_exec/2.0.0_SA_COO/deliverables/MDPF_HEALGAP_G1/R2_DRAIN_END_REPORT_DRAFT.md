@@ -22,7 +22,7 @@ Before FINAL: `round-close-check.py --project MDPF_HEALGAP --round 2` must read 
 
 | act | entry | state |
 |---|---|---|
-| 1 runner code (HG-t-3 + `induce` drop-feed) | `20261008T1618Z_healgap-r2-act1-runner-code-20261008` | L1-L3 proven 16:18-16:20Z (CodeSha256 `NFG8dbEL..` = build); L4 HELD on the 06:00Z fire. `PENDING`: `meta/2026-10-09-result.json` COMPLETE, stamp, silver fired, satellites as_of 2026-10-09 |
+| 1 runner code (HG-t-3 + `induce` drop-feed) | `20261008T1618Z_healgap-r2-act1-runner-code-20261008` | CLOSED 2026-10-09 07:1xZ, 4 of 4 legs. L4 (`R2_CHECKS/hg_r2_act1_l4.py --date 2026-10-09`): L4-OK -- result COMPLETE, 3 feeds arrived (the first result object written live); stamp 3 feeds, model_detail 93; silver first event 06:01:03Z; satellites as_of 2026-10-09 at 07:00:19Z. Controls: 10-08 L4-BAD; 10-07 SILVER/STAMP ok. Act 3 precondition (branch A) MET |
 | 2a event age 900 (HG-t-4) | `20261008T1611Z_healgap-r2-act2a-event-age-20261008` | CLOSED 16:13Z |
 | 2b fire time (HG-t-5) | -- | HELD, not applied (above) |
 | 3 induced PARTIAL + same-day repair (FWD-2, FWD-3), 2026-10-10 | half @1f10c367ce, CTO half msg 1013 | `PENDING`. Precondition: act 1 L4 reads branch A. Step 1 ~2026-10-09 20:00Z (announce to `0.0.0_AB_MSTR~DELL1`, `PutTargets` drop-feed:rebalancer_accounts). Staged read 2026-10-09 01:2xZ: daily rule has 1 target, input `{"mode":"pull"}` |

@@ -3050,3 +3050,296 @@ round.** Never edit an existing row.
   "world_is": "CB27aa1-AC3: two of three clauses met, 'nothing forced' not met for the three months between the 0.5 and 1.0 caps. Remedy: re-run at the pre-registered 0.5, or keep 1.0 and label those three months 'traced at a cap set after the results'; either way flow_value is not an earned class until a month reaches under a cap fixed before it was seen. CB27aa2-AC3 and CB27aa3-AC3 met, with notes in the grade file."
 }
 ```
+
+## ADVI_COTBKF-D2-W53-S1 -- CB-ab-1: a test outside the order's paths asserts the superseded default and fails now that method_r28 is the default
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W53-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~53",
+  "surfaced_at": "2026-10-09T06:10Z",
+  "one_line": "tests/test_commonwealth_unlisted_types.py:134 asserts CASH_LEG_DEFAULT == CASH_LEG_METHOD_R26 and fails with method_r28 the default; the file is outside the order's <paths>, so it was not edited",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q data/assets/scripts/silver/tests @8137a94e91: 1 failed, 717 passed, 11 skipped; the failure is test_commonwealth_unlisted_types.py::test_method_is_unchanged_and_stays_selectable, assert 'method_r28' == 'method_r26' at :134",
+      "the three same-kind asserts that ARE in <paths> (test_commonwealth_carried_levels.py:57, test_commonwealth_cash_leg.py:305, test_commonwealth_method.py:227) were moved to method_r28 in commit 8fe7ffd558"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order makes method_r28 the DEFAULT and lists the test files it may edit; it asks for python -m pytest -q data/assets/scripts/silver/tests at the end.",
+  "world_is": "A fourth test (test_commonwealth_unlisted_types.py, :134, also :135-136 read) pins the round-26 default and is not in <paths>. The suite therefore ends with exactly that one failure; no behaviour is wrong. The one-line change is `CASH_LEG_METHOD_R26` -> `CASH_LEG_METHOD_R28` on :134, for a seat whose paths include the file. Armed because a drain that runs the silver suite fails on it."
+}
+```
+
+## ADVI_COTBKF-D2-W53-S2 -- CB-ab-1: the split repair's premise (stored closes are split-adjusted) fails for store-sourced splits of 464287614 / 464287481-class series; found by run 1 (regressions=61), corrected after it, disclosed
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W53-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~53",
+  "surfaced_at": "2026-10-09T06:10Z",
+  "one_line": "Run 1 of the AC2 invocation gave regressions=61 (3 accounts) because dell1's store names a 4-for-1 of 464287614 on 2026-04-29 while the chain's stored closes for it are as traded; the first version scaled every earlier day x4. A continuity test on the store-sourced split was added AFTER run 1 (commit 8137a94e91) and run 2 was made",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~53/run1_pre_continuity/ac2_stdout.log: months_after=3078/893/78622 regressions=61, R28-REPAIRS splits_applied=36 disagreements=1",
+      "run 1 regressions by account: 0QF880382 30, B3S804888 22, B3S804864 5, B3S728506 2, B3S728504 2; the first three hold 464287614 / 464287481 (store-sourced); 0QF880382's value on 2021-02-25 went 302,074.91 -> 596,039.55 under method_r28 against method_r26 (the same day, same cache)",
+      "the order says a disagreement between the account rows and the store is printed and a split that cannot be confirmed is left as it is, named; the rows-sourced path required a continuous close across the day (commonwealth_diff_trace.confirm_splits), the store-sourced path did not -- an omission in this worker's rule, found through the grade, not through a second look at the stored closes first",
+      "commit 8137a94e91 message: states the correction follows run 1 and is the only change after it; commits 8fe7ffd558, 34a595ecc0, 2ef83474dd preceded run 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order item 1: for each confirmed split value every day before the split with the stored close x the cumulative ratio of later splits; where dell1's store holds the CUSIP its split history is the source; a split that cannot be confirmed leaves its days as they are, named. The order's premise: the stores' closes are split-adjusted over their whole history.",
+  "world_is": "For some CUSIPs the chain's stored close is NOT split-adjusted across the store's split day (the close drops by the ratio, or has no row that day). Scaling such a series doubles or quadruples an account's value. Run 1 is kept unedited in the deliverables folder; run 2 (continuity applied to both sources) is the reported AC2 run. The CVO should read this as a rule changed after a run: whether it is an implementation correction of 'confirmed' or a fit is the L9 call (CB28ab1-AC3). Run 2's 61 -> 4 regressions are the effect, recorded; no further change was made."
+}
+```
+
+## ADVI_COTBKF-D2-W53-S3 -- CB-ab-1: CB28ab1-AC2 NOT MET -- the AC2 invocation ends regressions=4 (B3S728504 and B3S728506, 2023-05 and 2023-06), not 0
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W53-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~53",
+  "surfaced_at": "2026-10-09T06:10Z",
+  "one_line": "AC2 (python data/assets/scripts/silver/commonwealth_sweep_regrade.py --before-list v1 --after-list v1 --before-cash-leg method_r26 --after-cash-leg method_r28 ...) ends 'regressions=4' against the expected 'regressions=0'; the refusal clause applies, nothing further was tuned",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "last line of the AC2 run (rc 0) @8137a94e91: SWEEP-REGRADE sweeps=2 rejected=517 double_drop_months=0 fixed=0 months_before=3098/886/78609 months_after=3133/838/78622 control_same=True regressions=4 movers_back=139 year_chain_same=True r22_named=25/25 dividend_both=NA",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~53/sweep_regrade.md: the four months, MATCH under method_r26 and DIFF under method_r28 (computed before -> after, reported): B3S728504 2023-05 0.1418 -> 0.1813 (0.10), 2023-06 4.8344 -> 5.2399 (4.81); B3S728506 2023-05 0.1493 -> 0.1894 (0.11), 2023-06 4.8943 -> 5.2853 (4.86)",
+      "the two accounts hold 808524102 (splits 2022-03-11 x2 and 2024-10-11 x3, rows-sourced, close continuous) and 808524839 (2024-10-11 x3): the repair raises B3S728504's value on 2023-04-28 from 11,121.73 to 27,199.01; the month's MATCH under method_r26 was within 0.0418 of the 0.05 band",
+      "INFERRED, not measured: the larger weight now exposes a dividend-dating difference (pay date against ex-date; the cross-month dividend months are NOT GRADED, no ex-date source) that the smaller weight hid; no other repair of the three touches these accounts (the dvr rule only blanks, producing UNGRADABLE, and MATCH -> UNGRADABLE is 0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB28ab1-AC2: the AC2 invocation ends regressions=0 ('the repairs regress no month that matched under method_r26').",
+  "world_is": "regressions=4 after one disclosed correction (see D2-W53-S2); run 1 gave 61. Other effects of run 2: MATCH 3098 -> 3133, DIFF 886 -> 838, UNGRADABLE 78609 -> 78622 (13 DIFF -> UNGRADABLE by the dvr rule); movers_back 139; the 73 round-27 traced months: MATCH 27, DIFF 42, UNGRADABLE 4. No rule was changed to remove the four; choosing one by its effect on the grade is forbidden by the order. The SERVED mint (CB-ab-2) stays held at the COO half's condition."
+}
+```
+
+## ADVI_COTBKF-D2-W53-S4 -- CB-ab-1: 28 of 61 detected splits cannot be confirmed (their earlier days stay on the stored basis, named), and the dvr close-step cause remains INFERRED
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W53-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~53",
+  "surfaced_at": "2026-10-09T06:10Z",
+  "one_line": "method_r28 detects 61 split events over the accounts' rows and the store (round 27's trace named 14 for the traced months); 33 are applied, 28 are UNCONFIRMED (close not continuous across the day, or no row that day) and left as they are, named; 1086 account-days on 35 distribution close-step security-days are blank (DVR_CLOSE_STEP), the cause of that step is not measured",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 run 2 stdout: R28-REPAIRS splits_applied=33 splits_not_applied=28 disagreements=0 dvr_close_step_security_days=35 dvr_account_days_blank=1086; every unconfirmed split is printed as an R28-SPLIT line and in org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~53/sweep_regrade.md",
+      "the store-versus-rows disagreement is one CUSIP: 00162Q866, store 0.2 on 2020-05-18, the account rows show no such split, the stored close is not continuous across it: not applied",
+      "the 28 include FCNTX 316071109 (10.0 on 2018-08-10), AAPL 037833100 (7.0 on 2014-06-09), and the 2026-04-21 events of 921910816 / 92204A702 / 922908629 / 922908736",
+      "dvr: 309,330 dvr rows on non-cash CUSIPs; 2,173 security-days evaluated; the signature (close step 0.5..1.5 x the per-share distribution, the distribution at least 2 percent of the close) fired on 35; 13 DIFF months became UNGRADABLE, 0 MATCH months did"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order items 1 and 2: a split that cannot be confirmed leaves its days as they are, named; where the close step of a dvr day cannot be separated the day is blank with reason DVR_CLOSE_STEP.",
+  "world_is": "The unconfirmed splits' earlier days are still valued at the stored close x the as-traded quantity, which is wrong if the stored series is adjusted for them and unchanged if it is as traded; the plan cannot tell. The dvr signature was fixed from the rows and closes before the run; whether the store is dividend-shifted is not shown. The COO half's condition on CB-ab-2 (D2-S39: no known-wrong day served) should read the plan table, not assume the 14."
+}
+```
+
+## ADVI_COTBKF-D2-W53-S5 -- CB-ab-1: S1's red test is fixed under the issuer ruling (@e8bdbd5c38): test_commonwealth_unlisted_types.py:134 now asserts method_r28
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W53-S5",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~53",
+  "surfaced_at": "2026-10-09T06:18Z",
+  "one_line": "the equality at test_commonwealth_unlisted_types.py:134 moved from CASH_LEG_METHOD_R26 to CASH_LEG_METHOD_R28, so D2-W53-S1's failing test passes; silver suite 718 passed, 11 skipped, 0 failed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q data/assets/scripts/silver/tests on wk-ADVI_COTBKF-53: 718 passed, 11 skipped, 0 failed",
+      "the order's <paths> gained data/assets/scripts/silver/tests/test_commonwealth_unlisted_types.py, identical to the trunk amendment e8bdbd5c38"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row D2-W53-S1: a fourth test pins the round-26 default and is outside the order's paths, so the silver suite ends with one failure.",
+  "world_is": "The ruling widened the grant by that one path; the equality and its trailing comment were changed and nothing else in the file. S1 is unedited; its armed hazard no longer has a red test behind it."
+}
+```
+
+## ADVI_COTBKF-D2-W53-S6 -- CB-ab-1 AMENDMENT 1: the serve builder's re-derivation did not reproduce a method_r28 run until it applied the run's repair sidecar; fixed in the builder, no repair rule changed
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W53-S6",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~53",
+  "surfaced_at": "2026-10-09T06:45Z",
+  "one_line": "commonwealth_fwd3_serve.py --build refused on the method_r28 run (re-derived day values differ from the run's, blank mismatches 13) because rederive() ignored the run's repair_days.parquet; it now applies the DVR_CLOSE_STEP days, and a holding-day carrying a reason is never valued",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first --build on .scratch/advi_cotbkf/r28 at fc9435beb0 plus the ABSENT edit: 'refused: the re-derived day values differ from the run's (blank mismatches 13, worst abs diff 0.000e+00)'",
+      "commonwealth_daily_valuation.py run() blanks av with blank_account_days(av, dvr_close_step_days(...)) and writes the sidecar; commonwealth_sweep_regrade.py chain() passes repair=dv.read_repair(data_dir) to daily_returns; the builder did neither",
+      "second --build after the fix: day_values_rows_checked=1691729, month_grades_rows_checked=82593, absent_months=4, rc 0 (the build REFUSES unless both reproduce the run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1: the serve build takes its ABSENT list from the persisted grades of the AC2 run and its default cash leg is method_r28; CB-aa-3's builder was written against method_r26 and was assumed to re-derive any default run.",
+  "world_is": "The builder's rederive() now reads the run's sidecar for method_r28 (blanks the account-days, passes repair to the daily returns) and marks those account-days' holding rows with blank_reason DVR_CLOSE_STEP and a null value; the account_day_value table gained a nullable blank_reason column (also carrying REGRESSED_UNDER_R28). No method_r28 rule, test of a rule or grade was changed. The built tables carry run_commit fc9435beb098, the HEAD the build ran on, which precedes the commit that holds this builder change."
+}
+```
+
+## ADVI_COTBKF-D2-S41 -- L9 round 28: CB28ab1-AC3 NOT MET as written, the continuity rule a FIX; CB28ab3-AC3 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S41",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T07:21:34Z",
+  "one_line": "L9 round 28: CB28ab1-AC3 NOT MET as written ('decided ... before the run' fails for one rule), but the post-run continuity rule is a FIX, not a fit -- it extends the row path's existing 0.7..1.4 stored-close continuity test to store-sourced splits, reads only stored closes (never the reported return), carries its own test, and run 1 is kept unedited; the other repairs (splits, DVR_CLOSE_STEP, INKIND_UNDERSTATED) were committed before run 1 and blank with reasons. CB28ab3-AC3 MET: cap 0.5 (the value pre-registered before round 27's exploratory runs, per D2-S40), the 3 months traced only at 1.0 named with their 0.5 remainders, and nothing else in the rules changed (diff 4624627872..HEAD: the cap, the last line's cap= field, report layout only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 8137a94e91 (the continuity rule, disclosed; test_a_store_split_on_a_series_that_is_as_traded_across_the_day_is_not_applied)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~53/run1_pre_continuity/",
+      "git diff 4624627872 HEAD -- data/assets/scripts/silver/commonwealth_diff_trace.py (this seat's read)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~54/diff_trace.md:665-674",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_28_DRAIN_END_20261009.md @57d5583a6f",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_28_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB28ab1-AC3 and CB28ab3-AC3 (round 28's judgment criteria); CB28ab1-AC3 carries the CTO's fit-vs-fix grade (msg 2671).",
+  "world_is": "CB28ab1-AC3: fix, not fit -- the condition for CB-ab-2's mint (CTO msg 2671) reads FIX. The literal clause fails for one disclosed rule. CB28ab3-AC3 met."
+}
+```
+
+## ADVI_COTBKF-D2-W56-S1 -- CB-ac-3: 3 of 28 unconfirmed splits are confirmable on the store's own close; 25 CUSIPs are not in the store (32 rows, newest as_of 2026-06-23); the 3 were unconfirmed because the chain's close, not the store's, failed continuity
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W56-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~56",
+  "surfaced_at": "2026-10-09T07:40Z",
+  "one_line": "SPLIT-RECOUNT unconfirmed=28 now_confirmable=3 store_rows=32 store_as_of=2026-06-23: 00162Q866 (2020-05-18 x0.2), 464287614 (2026-04-29 x4), 464288646 (2018-08-08 x2) are in the store, its splits.parquet names the split, and the store's close_served is continuous across the day; the other 25 splits' CUSIPs are not in the store",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~56/split_recount.md, from python data/assets/scripts/silver/commonwealth_split_recount.py (rc 0)",
+      "the same 3 were already store-sourced in the round-28 plan and failed continuity there on the chain's own nine-store close series (commonwealth_daily_valuation.split_plan), which the price fill does not change"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-ac-3: print for each of the 28 whether the continuity condition would now hold, i.e. whether the split is now confirmable.",
+  "world_is": "The recount tests continuity on the store's close_served, the only series the fill adds. The apply-time condition in split_plan tests the chain's series (the nine stores), so now_confirmable=3 is an upper bound: those 3 become applicable only if the chain reads the store's close for them. Nothing was applied."
+}
+```
+
+## ADVI_COTBKF-D2-W55-S1 -- CB-ac-2: no source holds the ex-dates of 808524102 / 808524839; the 4 months are untraced by the rule
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W55-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~55",
+  "surfaced_at": "2026-10-09T08:00:00Z",
+  "one_line": "CB-ac-2: neither ex-date source holds the two dividend CUSIPs of the 4 regressed months (808524102, 808524839), so the ex-dated return cannot be computed; all 4 months class untraced by the pre-committed rule",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~55/div_dating_trace.md (DIV-TRACE months=4 dividend_dating=0 other=0 untraced=4)",
+      "git show 9de2bd74ef (the class rule, committed before the run)",
+      "EXDATES_ADVI_COTBKF_20261009.csv: 39 rows, no 8085 CUSIP; dell1 price_history store: 32 cusip= partitions listed, none 8085*"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's cell: ex-dates are available from dell1's price store and the 39-row EXDATES csv, so the month's return at the ex date can be computed.",
+  "world_is": "Neither source holds 808524102 or 808524839, the only two dividend CUSIPs of both accounts in the window. Also read: r28/r26 account day value ratio is 2.44-2.47 in all four months (a split-scaled position since 2022-10-12), and the largest pay-ex gap in the csv is 26 days, which widens the candidate bound to about 0.41 pp against regressions of 0.04-0.41 pp. Ex-dates for the two Schwab CUSIPs would settle the dating question."
+}
+```
+
+## ADVI_COTBKF-D2-S42 -- CB-ac-1: step 3's regressions=0 precondition is stale; the pair and the order's own later paragraph require regressions=4 NAMED and BLANKED
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S42",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~CB2",
+  "surfaced_at": "2026-10-09T08:20:00Z",
+  "one_line": "TO CB-ac-1 step 3 still gates the mint on CB-ab-1 draining with regressions=0, a precondition the round-28 rulings and both halves of its own never-widen pair had already replaced with regressions=4 NAMED and BLANKED; read literally the step is an unsatisfiable wait",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the order's step 3: 'From the drained trunk, after CB-ab-1 drains VALID with regressions=0'",
+      "the order's own later paragraph, which disagrees with it: 'The build to apply carries method_r28 with exactly 4 account-months ABSENT (B3S728504, B3S728506; 2023-05, 2023-06): your --dry-run must print the same 4 and absent_months=4, or stop'",
+      "CTO half AMENDMENT 1 @478334e021: 'condition 1 relaxed to regressions = 4 NAMED and BLANKED'; COO half section 3 gives on that same basis",
+      "CB-ab-1's own AC2 was amended @5c9e31b2be to EXPECT regressions=4 (a fifth voids the amendment), and it delivered @15e50bfbc1 on that expectation",
+      "this seat's re-grade at its own HEAD, rc 0: SWEEP-REGRADE ... control_same=True regressions=4 year_chain_same=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-ac-1 step 3: the mint proceeds after CB-ab-1 drains VALID with regressions=0.",
+  "world_is": "regressions=0 is unreachable for method_r28 by RULING, not by defect. The order carries both readings at HEAD; the act was graded against the pair and the order's later paragraph, which agree with each other and with the measured world (regressions=4, absent_months=4, the four being exactly B3S728504 and B3S728506 at 2023-05 and 2023-06, each served BLANKED with reason REGRESSED_UNDER_R28 and never valued). Nothing was weakened and nothing was waited on. The stale clause cost this seat nothing because it read the pair first, but a seat reading step 3 alone would hold a SERVED act forever on a condition no build at the chain's own default cash leg can meet."
+}
+```
+
+## ADVI_COTBKF-D2-S43 -- CB-ac-1: the order's WCB2 row-id form is unparseable by proof-of-spec-check.py's SURPRISE_ID_RE
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S43",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~CB2",
+  "surfaced_at": "2026-10-09T08:22:00Z",
+  "one_line": "TO CB-ac-1's refusal clause names the row id form ADVI_COTBKF-D2-WCB2-S<k>, which proof-of-spec-check.py's SURPRISE_ID_RE cannot parse, so a row filed exactly as the order instructs makes the instance INVALID and blocks the complete flip",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the order's refusal clause: 'a NEW surprise row (id ADVI_COTBKF-D2-WCB2-S<k>, \"fabric\": \"dell2\")'",
+      ".tools/proof-of-spec-check.py:1206 SURPRISE_ID_RE = ^\\s*([A-Z0-9_]+-(?:(?!W[0-9]*-|C-)[A-Z][0-9]*-)?(?:W[0-9]+-|C-)?S[0-9]+)\b -- the W arm is W[0-9]+, so W followed by letters does not match",
+      "measured both forms against that regex: ADVI_COTBKF-D2-WCB2-S1 REJECTED, ADVI_COTBKF-D2-S42 PARSES",
+      "channel census, denominator printed: 125 row ids in ADVI_COTBKF's channel, of which 21 are the non-worker D2-S<n> form, max n = 41"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A row this seat files under the order's named id form is a valid citation in the proof-of-spec instance.",
+  "world_is": "It is not. SURPRISE_ID_RE admits a lane segment only as a single letter plus digits ([A-Z][0-9]*) or as W<digits> / C, so WCB2 falls outside both arms and the checker reports 'surprises[0] carries NO row id'. The gate is the mechanical authority named in the order's own <proof_of_spec> block, so these two rows were filed in the project's existing non-worker namespace (D2-S42, D2-S43) rather than under the order's prose form, and this row records the departure instead of silently renaming. The order's intent -- a NEW row from this seat, fabric dell2 -- is met. A future ~<lane> seat told to mint W<non-numeric> ids hits the same wall; the fix is the issuer's to make, either in the clause or in the regex."
+}
+```

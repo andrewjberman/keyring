@@ -725,3 +725,269 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W2-S1 -- AR-y-21: the order's regex-able rows are not unique per path; one pin edit was first applied to a second function's rows and reverted with `git checkout --`
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W2-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~2",
+  "surfaced_at": "2026-10-09T07:25:00Z",
+  "one_line": "submission.py and acceptance.py each appear in two functions' staged_from lists (irpt-status at 80a79a7462, irpt-ycharts-generate at 283f7e7700); my first path-keyed edit also re-pinned the second function's rows, and I undid it with `git checkout --` on the uncommitted file, a verb the standing rules bar.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order names three rows, two of them under irpt-status, and says change no other row; it does not say the same repo_paths recur under irpt-ycharts-generate with a different pin.",
+  "world_is": "Before the revert the diff showed 8 changed lines pairs (10 value lines), including two 283f7e7700 pins; the file had no committed change of mine, so the checkout restored HEAD bytes only. Re-applied keyed on the old pin: 3 matches, 6 insertions and 6 deletions, committed at 3f7f1610fb. The 283f7e7700 rows of irpt-ycharts-generate are untouched (their sha256 already equals HEAD's blob).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json lines 5471, 5483 (irpt-status) and 6563, 6569 (irpt-ycharts-generate) @ 3f7f1610fb"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S4 -- disposition of W11-S1 (ARMED): the portal reader admits ticket_id beside input_id on DEV
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T07:30:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W11-S1"
+  ],
+  "one_line": "W11-S1 is disarmed: readSubmissionRequest admits ticket_id (^TCK-\\d{8}-[0-9a-f]{8}$) only beside input_id, and the wire type is regenerated from the schema, on portal DEV since 9988b426 (AR-v-11 AMENDMENT 2); the I1 step-3 body now passes the closed reader on the DEV build.",
+  "spec_asserts": "CTO round-1 analysis (msg 2770): 'W11-S1 (~V2): a disposition row names the portal reader fix, which landed on DEV as 9988b426. A ticket_id body passes the closed reader on the DEV build.'",
+  "world_is": "Portal origin/DEV 536d51da (which carries 9988b426) passes the issuer's re-run of ar_v_checks.py v11-form at ~06:5xZ: V11-FORM-OK pass=7, including 'the client admits ticket_id only beside input_id'. The test drives the real readSubmissionRequest: a body with input_id and a well-formed ticket_id is accepted; ticket_id without input_id, or malformed, is refused.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "investigation row(s) IRPT_ANLREQ-D2-W11-S1",
+      "portal 9988b426: src/pages/InvestorReporting/contracts/submission-request.ts (+3/-1), contracts/wire/AnalysisSubmissionRequest.ts (regenerated, source sha256 a6f224cd = docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json), __tests__/analysis-form-i1.test.tsx (+21)",
+      "issuer re-run on a detached worktree of portal origin/DEV 536d51da: V11-FORM-OK pass=7; V13-OPEN-OK pass=4"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Fixed in the portal client by AR-v-11 AMENDMENT 2 (DEV 9988b426), and the fixed reader is proven on the DEV build by the named test."
+}
+```
+
+## IRPT_ANLREQ-D2-S5 -- disposition of W11-S2: the I1 filing is marked on the ticket (source ticketcenter:i1); the date gate is gone
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T07:30:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W11-S2"
+  ],
+  "one_line": "W11-S2 is answered: the I1 ticket CREATE sends source 'ticketcenter:i1', which the ticket service already stores; 'Request report' hides only on that marker; I1_FILING_SINCE is removed; a failed step 3 shows 'Retry analysis request' (portal DEV 7ce44f94, AR-v-11 AMENDMENT 1).",
+  "spec_asserts": "CTO round-1 analysis (msg 2770) ruling 5: 'W11-S2, record the filing path on the ticket: DONE by AR-v-11 AMENDMENT 1 (source marker ticketcenter:i1, DEV 9988b426). ~V2 files the disposition.'",
+  "world_is": "Portal DEV carries 7ce44f94 (marker, button gate, retry) under 9988b426. The ticket service accepts any source except the reserved dashboard_form: prefix, so no backend change was needed. The issuer re-run on DEV 536d51da passes 'never shows a Request report button on a new filing' and 'retries the analysis step without refiling' (V11-FORM-OK pass=7).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "investigation row(s) IRPT_ANLREQ-D2-W11-S2",
+      "portal 7ce44f94 (AR-v-11 AMENDMENT 1): source ticketcenter:i1; the date constant removed",
+      "infra/aws/lambda/ticket_center/lambda_function.py: SUBMIT_SOURCE_PREFIX = 'dashboard_form:' (:137) is the only reserved source; any other source is accepted",
+      "issuer re-run on portal origin/DEV 536d51da: V11-FORM-OK pass=7"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Answered by a durable marker the ticket already stores, replacing the date gate the worker flagged; the CTO ruled it DONE."
+}
+```
+
+## IRPT_ANLREQ-D2-S6 -- round 2: "the ticket page opens all four package files" has no server reader for Commentary or Original file
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T07:40:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "DECOMP_R2 AR-v-21 says the ticket page 'opens all four package files', but irpt-status serves owned reads for only two of them (analysis-request-read and analysis-request-pdf, keyed by requestId); no IRPT route reads the Commentary artifact or the Original file, so a portal-only cell can open the Report and the Branded PDF and must leave Commentary and Original labelled '(no reader yet)'. FWD-1's grading run (the four files opened from the ticket) cannot pass until a server reader exists for both, or the CTO narrows hop 9.",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (driver: route the two readers to the IRPT lane that owns irpt-status, or ask the CTO to narrow hop 9)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/entry.py:218-225 at box/dell2 651316fe8d: the irpt-status route map adds exactly three analysis routes -- analysis-request-history, analysis-request-read, analysis-request-pdf; none reads commentary or an original upload",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:107 read() and :153 pdf() are both keyed by request_id; neither takes commentary_ref or original_ref",
+      "row IRPT_ANLREQ-D2-S1 (round 1) already named this split: the PDF is a portal route entry; commentary and original need an IRPT-side reader (disarm owners ~Y2 / ~G2)",
+      "IRPT_ANLREQ_DECOMP_R2.md @cff0872f0f cell AR-v-21 and the closing line 'FWD-1 is then graded on ONE live journey: ... the package's four files opened from the ticket'"
+    ]
+  },
+  "spec_asserts": "DECOMP_R2 AR-v-21: 'Portal: the ticket page opens all four package files, including the branded PDF reader (route analysis-request-pdf)'; FWD-1 grading opens all four.",
+  "world_is": "Two of the four files have a server reader. AR-v-21 is cut to open those two and to name the other two honestly; no cell of round 2 builds a commentary or original-file reader.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W3-S1 -- AR-y-22: the served signer (ops/pdf_link.py PdfSigner) refuses every ORIGINAL_HOLDINGS / ORIGINAL_CSV key, so the new route answers a refusal once released
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W3-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~3",
+  "surfaced_at": "2026-10-09T08:10:00Z",
+  "one_line": "The order has `original` sign through the same `signer` the pdf route uses, but PdfSigner.sign admits only keys matching irpt/<firm>/state/vendor_documents/ART-<64>/<sha>.pdf and asks the builder for family ORIGINAL_VENDOR_PDF, so with the real signer every original key (state/original_holdings/... .csv|.xlsx, state/prospect_inputs/... .csv) raises PDF_LINK_KEY_BINDING; my reader surfaces it as RequestReadRefused (INVALID_INPUT) and the route serves no link.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (cut a cell that lets ops/pdf_link.py sign the ORIGINAL_HOLDINGS and ORIGINAL_CSV families through opal_naming.reporting_destination, then release the irpt-status pair)",
+  "spec_asserts": "AR-y-22 item 1: 'release one Opal-signed link to the request's original upload', 'on the same pattern' as pdf, signing through `signer`; item 4 treats the read as needing only IAM, and pdf_link.py is not in the order's <paths>.",
+  "world_is": "Offline probe: PdfSigner(client_factory=..., destination=...).sign('cottonwood', 'irpt/cottonwood/state/original_holdings/ART-<a*64>/<b*64>.csv', 'b'*64) raises PdfLinkRefused PDF_LINK_KEY_BINDING. The reader, the operation and the route are complete and tested with a signer double (ops/tests/test_original_reader.py, 14 passed); the one served step that will not work is the real signer, outside this worker's write grant. Nothing leaks: the failure is a refusal, not a link to the wrong object.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/pdf_link.py:19-21 STORED_KEY and FAMILY = ORIGINAL_VENDOR_PDF; :59-64 the key and destination bindings",
+      "infra/logic/registry/reporting_policies.json: ORIGINAL_HOLDINGS (state/original_holdings, csv) and ORIGINAL_CSV (state/prospect_inputs, csv) rows",
+      "infra/aws/terraform/investor-reporting/ops/iam.tf:85 already lists both families for GetObject and GetObjectVersion, so the IAM side needs no change"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W3-S2 -- AR-y-22: the new routes.json entry carries no response schema and no consumer operation, because the order's grant names neither path
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W3-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~3",
+  "surfaced_at": "2026-10-09T08:12:00Z",
+  "one_line": "'Copy the pdf route's entry shape exactly' cannot reach response_schema: the pdf entry points at responses/analysis-request-pdf.response.schema.json, whose operation is a const naming analysis-request-pdf and whose data is AnalysisRequestPdf.schema.json, and the order's <paths> allows no new contract file; the original route's entry therefore sets consumer_operation and response_schema to null, each with its absent_reason (the form routes.json already uses for the comparison catalogue and reporting-read).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-22 item 3: add the same route to routes.json, 'Copy the pdf route's entry shape exactly'.",
+  "world_is": "The entry is key-for-key the pdf entry's (route_key, handler irpt-status, cell, status DECLARED, note, operation, consumer_operation, response_schema) plus the two *_absent_reason keys. The wire data is the pdf data shape (download_route {url, expires_at}, sha256, byte_length). A response schema for the original, and the portal's consumer operation, are the next cell's files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json: the analysis-request-pdf entry and the analysis/comparisons entry (consumer_operation null with consumer_operation_absent_reason)",
+      "docs/contracts/investor-reporting/v1/responses/analysis-request-pdf.response.schema.json: operation const analysis-request-pdf"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W3-S3 -- AR-y-22: <owned_cells> still names AR-y-21 but no criterion of the amended order references it, so no VALID proof instance can exist
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W3-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~3",
+  "surfaced_at": "2026-10-09T08:40:00Z",
+  "one_line": "The amended order declares <owned_cells>AR-y-21 AR-y-22</owned_cells> but its only criteria (AR22-y-AC1..3) carry cell_refs=\"AR-y-22\", so proof-of-spec-check refuses every instance for it with 'declared cell AR-y-21 ... NO criterion references it'; the order cannot reach a VALID proof, and so cannot be flipped to complete, until the issuer reconciles owned_cells with the criteria.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order: write and validate the new proof instance, to_id the full id, 'validated ... BEFORE the flip to complete'; <owned_cells>AR-y-21 AR-y-22</owned_cells> (AR-y-21 complete, its AR21-y criteria recorded VALID by ~2).",
+  "world_is": "All three criteria PASS by output (AR22-y-AC1 14 passed; AC2 275 passed, 22 skipped; AC3 AR21-y-AC3 PASS). The instance at deliverables/0.9.0_WK_IRPT_ANLREQ~3/ validates schema and invocation alignment (3/3) and fails on one line only: VIOLATION alignment: declared cell 'AR-y-21' is named in the TO's <owned_cells> but NO criterion references it (.tools/proof-of-spec-check.py:1189-1191, a DELIMITED <owned_cells> is graded backward). I did not edit owned_cells or any cell_refs: both are the issuer's criteria face, and changing what the gate reads to make it pass is not a worker act. Status stays pending.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.md: <owned_cells> line and the three <criterion ... cell_refs=\"AR-y-22\"> lines @a30b01837a",
+      "python .tools/proof-of-spec-check.py <instance> AR22-y-AC1,AR22-y-AC2,AR22-y-AC3 -> INVALID (rc=1), one VIOLATION",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~2/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.proof_of_spec.json: the AR-y-21 criteria's own VALID instance"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W65-S1 -- round 2: the lane tell in validate_public_request (input_id) is not stored on the acceptance record; the packager reads the stored owner shape instead
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W65-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~65",
+  "surfaced_at": "2026-10-09T08:10:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-AR-g-22 says to decide the custody lane the way validate_public_request does (an input_id basis is prospect, client_id/snapshot_id/account_ids is custody), but DynamoAcceptance.accept stores only browser_sha256, never the browser body, so the packager cannot read input_id; it decides from the stored owner instead (custody-owner-v1 + non-empty account_ids + no prospect_input_id = custody; anything else without prospect_input_id refuses ORIGINAL_REF_ABSENT). Two consequences: a non-OPAL custody owner without schema_version custody-owner-v1 would refuse rather than send I5', and test (f)'s bare-owner fixture still refuses ORIGINAL_REF_ABSENT by this rule.",
+  "spec_asserts": "TO-AR-g-22 cell item 3: 'Read how ycharts/generate/submission.py validate_public_request (:45) tells a custody basis from a prospect input_id basis, and what the stored record keeps of it. ... If the record cannot tell the lanes apart, file a row and refuse.'",
+  "world_is": "The record keeps owner (the verified owner: schema_version 'custody-owner-v1' with account_ids and snapshot_id on a custody request, 'prospect-owner-v1' with prospect_input_id and account_ids [] on a prospect request, per _scope/custody.py:82, reports/request_composition.py:43-59 and submission.py:132-158) and browser_sha256, but not the browser body. The owner tells the two OPAL lanes apart, so the packager neither guesses nor refuses on those; the only unplaced case is a record whose owner is neither shape, which refuses by name.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py:107-112: the stored record is identity, owner, browser_sha256, composition_ref, accepted_at (plus ticket_id); no browser body",
+      "infra/aws/lambda/investor-reporting/reports/request_composition.py:40-59: an OPAL_GLOBAL custody owner is custody-owner-v1 with account_ids and no prospect_input_id; a prospect owner is prospect-owner-v1 with prospect_input_id",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_packager_i7.py test_e_*: custody sends original_ref null; prospect, bare-owner, empty-accounts and mixed-schema owners refuse ORIGINAL_REF_ABSENT"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_ANLREQ-D2-W3-S4..S5 -- dispositions of this worker's rows S1 and S3 (AMENDMENT 2, 0.9.0_WK_IRPT_ANLREQ~3)
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W3-S4",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~3",
+    "surfaced_at": "2026-10-09T08:40:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved by AMENDMENT 2: PdfSigner.sign takes family (default ORIGINAL_VENDOR_PDF) and admits exactly ORIGINAL_VENDOR_PDF, ORIGINAL_HOLDINGS, ORIGINAL_CSV, bound to reporting_destination; any other family refuses PDF_LINK_FAMILY; nothing is owed on S1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of IRPT_ANLREQ-D2-W3-S1 (ARMED, signer refuses original keys): disarmed in-cell by AMENDMENT 2, landed in the commit after 614dde2cb2.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ops/pdf_link.py FAMILIES and PdfSigner.sign(family=) on branch wk-IRPT_ANLREQ-3",
+        "infra/aws/lambda/investor-reporting/ops/tests/test_original_reader.py test_e2_*, test_e3_* (real PdfSigner, stub S3): 16 passed"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 2 item 2: sign admits exactly three families, key must equal reporting_destination, any other family refuses PDF_LINK_FAMILY.",
+    "world_is": "With the real signer a builder-shaped ORIGINAL_HOLDINGS key signs; NORMALIZED_PORTFOLIO, EXPORT_PDF, ANALYSIS, an unknown name and None refuse PDF_LINK_FAMILY; the vendor-PDF key still signs with and without the family argument; the reader passes the resolved family. The release of the irpt-status pair remains the issuer's."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W3-S5",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~3",
+    "surfaced_at": "2026-10-09T08:40:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved by AMENDMENT 2 item 1: <owned_cells> is AR-y-22 only, so the proof instance (AR22 criteria, cell_refs AR-y-22) validates; nothing is owed on S3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of IRPT_ANLREQ-D2-W3-S3 (owned_cells named AR-y-21): resolved by AMENDMENT 2, owned_cells is AR-y-22 only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.md <owned_cells>AR-y-22</owned_cells> @614dde2cb2"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 2 item 1: owned_cells is AR-y-22 only.",
+    "world_is": "The proof instance is re-validated with proof-of-spec-check after the last commit."
+  }
+]
+```

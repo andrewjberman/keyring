@@ -5904,3 +5904,114 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED: found while preparing the e60 release (XA-20261009T034917Z-0eb1). The test's owner is the deploy tool's lane, not this seat; the remedy is the CVO's to route. e60's pair will name this test as the one pre-existing failure."
 }
 ```
+
+## MDPF_SECCLASS-D1-S20 -- SUBSTRATE_CARD/proof_of_spec kind enum has no member for a DynamoDB row write, and only s3_object skips git resolution
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S20",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+  "surfaced_at": "2026-10-09T06:33Z",
+  "one_line": "proof-of-spec-check's artifacts_produced/kind enum is ['script','s3_object','terraform','config_data','schedule','iam','test','doc','frontend_component'] -- no member names rows written to a DynamoDB table, and the resolver demands every non-s3_object row name a (commit, path) pair git can resolve at the pin. A DEPLOY-genre order whose whole product IS table rows therefore cannot declare its artifact truthfully: the only kind that skips git resolution is s3_object, which would be a false declaration of substrate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Exercised 2026-10-09 ~06:3xZ on box/dell1 while closing MDPF_SECCLASS.TO-SC-e71b (proof_genre DEPLOY, product = 15 rows of etf-classifications in us-east-1). `python .tools/proof-of-spec-check.py <instance> AC1` with kind 'ddb_rows' returned INVALID (rc=1) on two limbs: \"schema: artifacts_produced/0/kind: 'ddb_rows' is not one of ['script', 's3_object', 'terraform', 'config_data', 'schedule', 'iam', 'test', 'doc', 'frontend_component']\" and \"artifact-resolution: 'dynamodb://us-east-1/etf-classifications ...' does NOT exist at its declared pin 021a6a33f7 -- the row names a (commit, path) pair git refutes\".",
+      ".tools/proof-of-spec-check.py:417 `if a.get('kind') == 's3_object': ...` and :402 `a.get('kind') != 's3_object'` -- s3_object is the ONLY kind the git resolver skips; its own report line reads 'n s3_object (not a git ref; skipped)'.",
+      "Denominator for the precedent read: `comp-find 'dynamodb://' org/tier2_senior org/missions/D8 --limit 15` returns 1 hit across 9,352 files scanned, and that one hit is this seat's own instance -- so no prior instance in either tree records a DynamoDB write as an artifact, and there is no house convention to copy."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "artifacts_produced/kind is MECE over the artifacts an agent can produce, so every DEPLOY-genre order can name its product with the true substrate and still validate.",
+  "world_is": "The enum covers repo artifacts plus one cloud substrate (S3). A DynamoDB table write -- the whole product of a seed or remap order, of which this project has run several -- has no member, and the resolver's git check makes the nearest member unusable. The two ways out are both wrong: declare s3_object and lie about the substrate, or pin the row to a repo file this order did not produce. What this seat did instead is recorded in the instance itself: the row pins the seed source the act materialized, kind config_data, and its deploy_evidence states in full that the artifact produced is the 15 table rows and why the kind is a stand-in.",
+  "notes": "SURFACED, NOT CHASED: found at the close of TO-SC-e71b, after the act had landed and been verified (AC1 ok=True, signed-delta read-back 15 of 15 with 0 unsigned moves). It moves no data and gates no deploy -- it degrades the RECORD, not the world, which is why it is INERT rather than ARMED. The schema's owner is not this seat and the enum edit would be a value-enum proposal under CLAUDE.md rule 24, needing its four-postulate record plus a word-boundary token census; remediation is the CVO's to route. Related: [[MDPF_SECCLASS-D1-S18]] is also a seed-script record defect rather than a data defect."
+}
+```
+
+## MDPF_SECCLASS-D1-S21 -- the e75 pair censused multi_asset only; C_06's retained reclass moves every class outside the six (one relationship outside the signed set moved)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S21",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-09T06:42Z",
+  "one_line": "The e75 never-widen pair (COO half by 2.0.0_SA_COO~M1, CTO half @0ca2c444c7) censused only the retired class multi_asset (141 holdings / 36 envelopes), but C_06 reclassify_retained moves ANY retained holding whose class is outside SERVED_HOLDING_CLASSES. The 2026-10-09 04:00Z fire reclassed 298 holdings: the predicted 141 plus 157 'other'->commodities (PDBC) in z08296368, a relationship outside the signed set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run log gold_incremental_2026-10-09_20261009_061917.log: 'C06-RETAINED-RECLASS entries=262 holdings=298', COMPLETE exit 0.",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py reclassify_retained (:273-307): `bad = [h for h in entry.get('holdings', []) if h.get('asset_class') not in SERVED_HOLDING_CLASSES]` -- any non-served class.",
+      "R13_CHECKS/e75_retained_reclass_diff.py over 18,176 envelopes vs previous version: changed_envelopes=37, in_signed_set=36, outside_signed_set=1; transitions multi_asset->equity 84, multi_asset->fixed_income 57, other->commodities 157 (all gold/entities/clients/z08296368.json, PDBC); record E75_RETAINED_RECLASS_DIFF_20261009.json."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A never-widen pair's blast radius counts every key the producer's own rule can move, read from that rule at signing (CLAUDE.md NEVER-1).",
+  "world_is": "The census was keyed on the targeted class (multi_asset) while the writer keys on the complement of the served set; one relationship outside the signed 36 moved. Ruled KEEP after the fact by 1.0.0_SA_CTO~DELL1 (CTO half ADDENDUM 1 @786720019c, msg 1918) with a matching COO addendum; the move is correct (PDBC is a commodity ETF).",
+  "notes": "Named seat, per the ruling: 2.0.0_SA_COO~M1 signed the COO half with the single-class census. Forward rule: later pairs over this writer census every class outside the six. (Id D1-S20 was already taken by another row; this is D1-S21.)"
+}
+```
+
+## MDPF_SECCLASS-W41-S5 -- SC-e-60 moves the served top-level mix keys: lower-case `unclassified`/`other` leave, `Unclassified` arrives, and no reader of the key was censused
+
+```json
+{
+  "id": "MDPF_SECCLASS-W41-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~41",
+  "surfaced_at": "2026-10-07T14:07:57Z",
+  "one_line": "TO-SC-e60 says serve the residual as an `Unclassified` line; D_04's served top-level mix already carried C_06's own lower-case `unclassified` and `other` classes as keys (CTO batch 99/117), so the same weight now moves from those keys to a new title-case key, and the manifest maps no portal endpoint or component to platinum/firm/mix_summary.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/D_04.client_portal_summary.py@35365ec33c _firm_top_level_mix and build_firm_mix_summary",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py:178-183 MIX_ASSET_CLASSES carries unclassified and other",
+      "comp-pipescript io D_04: platinum/firm/mix_summary.json is a terminal write, no PORTAL CONSUMERS entry for it",
+      "NEVER_WIDEN_HALF_REQUEST_SECCLASS_D04_UNCLASSIFIED_20261007.md (Blast radius, readers; both branches)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e60: the residual is served as its own `Unclassified` line and the served mix sums to 1.0.",
+  "world_is": "Before the change the served mix summed to 1.0 only when C_06's classes covered its total, and carried the unknown as lower-case `unclassified`. The candidate puts the unknown, `other` and any uncarried dollars on one `Unclassified` key (the order's named key) and stops serving the two lower-case keys; the composition donut is unchanged. A reader keyed on the lower-case spelling would not find it after the next D_04 run. The served bytes and the 49F reader are not readable from dell1 (W25-S1), so the reader side is inferred, not measured.",
+  "notes": "The signers decide whether the key stays `Unclassified` or reads `unclassified` (one constant, UNCLASSIFIED_LINE, plus the test). Held off CLOUD until the half signs."
+}
+```
+
+
+## MDPF_SECCLASS-D1-S22 -- safe-deploy's OPEN-DEPLOY limb is unresolvable during any concurrent worktree removal: it lists a worktree, then ls-trees one that is already gone
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S22",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+  "surfaced_at": "2026-10-09T07:13Z",
+  "one_line": "crossbox-deploy-check.py's OPEN-DEPLOY limb reads `git worktree list --porcelain` and then ls-trees each worktree it listed. The two reads are not atomic, so a worktree another seat's drain removes in between returns rc=128 and the limb reports 'not readable, not clear' naming a path that no longer exists. It is correct not to call that clear -- the defect is that on a box running concurrent drains the limb is unresolvable by construction, and its message points the reader at a path they cannot inspect.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Exercised 2026-10-09T07:07:36Z on box/dell1 during TO-SC-e60b's ship. safe-deploy printed: \"[seat-gates] STOP: 1 hit(s) in OPEN-DEPLOY -- first: OPEN-DEPLOY: worktree C:/dev/drain-dell1-audit3: ls-tree rc=128 (not readable, not clear)\" and \"[seat-gates] mode=WARN CROSSBOX-DEPLOY ... open_deploy=hit verdict=STOP\", then \"WARN [seat-gates] would stop under ENFORCE ( crossbox-deploy:data/black_diamond ); WARN mode proceeds.\"",
+      "Measured minutes later: C:/dev/drain-dell1-audit3 is ABSENT from disk (`test -d` false), ABSENT from .git/worktrees/, and ABSENT from `git worktree list --porcelain` -- which is the gate's own instrument (.tools/crossbox-deploy-check.py:326-327 lists, :333-335 ls-trees and appends the 'not readable, not clear' hit). So the worktree existed at the list and was gone at the ls-tree.",
+      "The churn is independently visible: two successive `git worktree list --porcelain` reads minutes apart returned 37 then 38 live worktrees on this box. A foreign drain had also held a merge in the shared worktree ~20 minutes earlier (safe-commit refused on MERGE_HEAD fa1dc46e9d, 0.9.0_WK_ETFS_RIVALS~26), so concurrent drains are the normal state here, not an edge case.",
+      "The question the limb could not answer was then answered completely, the NEVER-2 way: every live worktree ls-tree'd with the per-tree denominator printed -- 38 worktrees, 0 UNREADABLE, 63 distinct sentinels, 42 of them on a worktree branch and not in the shared tree. Sentinels naming D_04, client_portal, bd-gold, gold-layer or e60: ZERO. The gate's hit was an instrument race and not a world conflict, and e60b's ship was clean on a 188-key pre/post watch set (MOVED=1, the target)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The OPEN-DEPLOY limb returns either clear or a real contention, so a deploy is gated on world state and a gate verdict is reproducible by its reader.",
+  "world_is": "On a box running concurrent drains the limb can return 'not clear' for a worktree that no longer exists, and the reader cannot reproduce the hit because the named path is gone. Today that is INERT: the limb is in WARN mode and the deploy proceeds. IT ARMS THE MOMENT THE MODE FLIPS TO ENFORCE -- then any deploy racing any drain is STOPPED by a vanished worktree, and the operator's only way forward is an override, which is the shape that trains people to override a gate that is sometimes right. The fix is small and belongs to the tool, not to its callers: treat an ls-tree rc=128 on a worktree that `git worktree list` no longer reports as PRUNED-NOT-UNREADABLE and re-list once before calling it unclear.",
+  "notes": "SURFACED, NOT CHASED, and not absorbed as a passing WARN: a could-not-check is not a checked-clean, so this seat resolved the limb's question itself before closing leg D, and leg D's proof records both the hit and its resolution. The gate's owner is the deploy tool's lane, not this seat; remediation is the CVO's to route. Related: [[MDPF_SECCLASS-D1-S4]] is the same family -- deploy_ledger grading a foreign device's entry against the local fetch -- and [[MDPF_SECCLASS-D1-S14]] is the ledger's missing state for an entry held behind a gate."
+}
+```
