@@ -2103,7 +2103,7 @@ def drives_check(inst: dict, to_text: str | None = None, to_label: str | None = 
 #       DID-NOT-DISCRIMINATE makes the instance INVALID, as DID-NOT-FIRE does a mutant. And a NAMED rollback: `rollback`
 #       present and non-empty.
 # A BUILD instance (genre absent or BUILD) returns ([], []) and prints nothing, so its run reads exactly as before.
-PROOF_GENRE_ELEMENT_RE = re.compile(r"^[ \t]*<proof_genre>\s*([A-Za-z]+)\s*</proof_genre>[ \t]*$", re.M)
+PROOF_GENRE_ELEMENT_RE = re.compile(r"^[ \t]*<proof_genre>\s*([A-Za-z]+)\s*</proof_genre>[ \t]*\r?$", re.M)
 RISK_ELEMENT_RE = re.compile(r"^\s*<risk>\s*([A-Za-z]+)\s*</risk>", re.I | re.M)  # GATE (xii)'s reader (to-pipeline-gate.py)
 
 
