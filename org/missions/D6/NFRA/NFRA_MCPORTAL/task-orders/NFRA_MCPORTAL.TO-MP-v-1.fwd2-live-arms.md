@@ -6,6 +6,7 @@
 <decomp_doc>org/missions/D6/NFRA/NFRA_MCPORTAL/decompositions/NFRA_MCPORTAL_DECOMP.md</decomp_doc>
 <owned_cells>MP-v-1</owned_cells>
 </decomp_ref>
+<to_id>NFRA_MCPORTAL.TO-MP-v-1</to_id>
 <issued_to>0.9.0_WK_NFRA_MCPORTAL~3</issued_to>
 <issued_by>2.0.0_SA_COO~MP</issued_by>
 <placeholders>NONE</placeholders>
@@ -98,7 +99,7 @@ census at 5; AC2 PASSES on 3 `/sprint` 200s.
 SPAWN ONLY when **G-2ND** holds: Andrew (or a person he names) is at the box, ready to sign in as Opal Bloomberg in the
 window the worker opens. This is ONE card to Andrew.
 
-<status>staged</status>
+<status>superseded -- CLOSED for round 3 by the issuer 2.0.0_SA_COO~MP, 2026-10-09 ~01:0xZ, on the round-2 precedent (MP-a-1). HELD, never spawned. G-2ND has not landed: no Andrew word; a person must sign in as Opal Bloomberg in the worker's headed Edge window. Holding it open deadlocks the project-grain L10 (3.0.0_SA_CVO~Z @110c291f33: 'L10 precondition NOT MET at the project grain -- MP-c-1 and MP-v-1 are staged'). NOTHING IS RE-GRADED BY THIS CLOSE. Superseded by its re-cut, UNCHANGED and STAGED on the same gate, in round 5's one issuance. Was: staged.</status>
 <round>3</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
