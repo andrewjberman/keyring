@@ -1729,3 +1729,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The served keys of the portal bucket are folder trees (family/subfamily/file) and the platinum grammar reads one table level and then entity partitions. The drafted canonicals are CONFORMANT but are not a folder-for-folder move, so a served-output act that follows them also renames the portal's request paths. Whether the grammar should admit a sub-folder, or the registry's owner prefers the gold tier for these keys, is the CRO's and the CTO's call; every such row says it is a target name only."
 }
 ```
+
+## LGIC_BLANKFIX-W3-S11 -- round 8 BF-w-4: recorded own-token exception lists omit LAMBDA names and one new mdpf policy
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S11",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-09T03:18:10Z",
+  "one_line": "The own-token exception lists entered in round 6/7 omit LAMBDA-type names (inf-pipeline 1, harvest 2) and one newer mdpf-pipeline policy, so the recorded lists are shorter than the same method gives on today's census.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round 8 measurement (same method as the round-6 section: opal_naming.grade canonical form leads with a systems.json key other than the root's default) via lib/opal_naming_scope.root_names + opal_naming.grade at wk-LGIC_BLANKFIX-3: inf-pipeline (default advi) lists 46, infra/logic/registry/root_map.json holds 45 -- the missing one is LAMBDA inf-api-eclipse (eclipse); harvest (default harvest) lists 13, MAP_ENTRIES_round7.json holds 11 -- missing LAMBDA amgt-resapp-chatter-axis and LAMBDA opal-amgt-scoped-api (amgt); mdpf-pipeline (default mdpf) lists 1, MAP_ENTRIES_round7.json holds [] -- IAM_POLICY gateway-taxsma-workbook-bearer-read-policy (gateway, infra/aws/terraform/mdpf-pipeline/iam.tf:1274)",
+      "ROOTCHECK prints identical lines with or without an exception unless the name still carries a {system} blank (row LGIC_BLANKFIX-W3-S10), so no printed line moves"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The round-6/7 entries' exceptions are 'every name of the root graded with opal_naming.grade whose canonical form leads with a systems.json key other than the default'.",
+  "world_is": "Three roots' recorded lists are one to two names short on the current census (LAMBDA names, and a policy added to mdpf-pipeline after the round-6 measurement). I kept the round-7 lists for the entries whose exceptions the round-7 file already decided, and measured the new lists for the 15 entries I decided (they include LAMBDA names). The registry owner may add the three LAMBDA names and the mdpf policy; nothing prints differently."
+}
+```
