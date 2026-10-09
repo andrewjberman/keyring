@@ -2646,3 +2646,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r114/p114_cells.py`: every criterion 
 | `IB-pr-413` | land IB-pr-410's 49F bundle on ~IB2; replay on uploaded bytes; first-fire read with wall time | FWD-2 (SECCLASS e56 acceptance 1) | WORLD | ~M1 half filed; IB-pr-404 ledger CLOSED | P114-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one gated apply cell. Assignee: 0.7.0_AE_CloudOps~IB2.
+
+## 108. ROUND 115, WORKSTREAM ~P (2026-10-09 ~14:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ADDENDUM 19.1 (msg 3478))
+
+IB-pr-404's first fire published inflection and cottonwood, but the 49financial producer was SIGKILLed on the 4 GiB runner box (row D2-S56).
+49F still serves its prior publication. The CTO ruled: no rollback now; IB-pr-410/413 HELD; one cell measures the 49F producer's peak RSS
+(pre-404 / 404 / 410) against an 85%-of-4-GiB line and fixes the gate's memory under it (a bigger box is not the fix). If no fix is signed by
+Monday 13:00Z, 404's Branch B runs on the 49F key only.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r115/p115_cells.py`: AC1 and AC3 FAIL at base; AC2 is the control (PASS).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-414` | 49F producer peak RSS on 4 trees + FWD-14 gate memory fix + gate-decision replay at 3 firms | FWD-14 | WORLD | none | P115-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~276.
