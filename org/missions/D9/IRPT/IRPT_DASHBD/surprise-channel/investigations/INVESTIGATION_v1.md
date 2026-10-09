@@ -3285,3 +3285,77 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W40-S1 -- Two earlier modules no longer run at HEAD: ~39 large_flow_e3.py and ~35 crossover_e1.py call a fee-base name that round 32's promotion to the reader removed from their namespace.
+
+```json
+{
+  "id": "IRPT_DASHBD-W40-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~40",
+  "surfaced_at": "2026-10-09T01:37:00Z",
+  "one_line": "Two earlier modules no longer run at HEAD: ~39 large_flow_e3.py and ~35 crossover_e1.py call a fee-base name that round 32's promotion to the reader removed from their namespace.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-63: port the two rules from ~39's module; the ~35 and ~36 importers still run unchanged.",
+  "world_is": "MEASURED: large_flow_e3.py line 117 and 279 call uc.mean_daily_value, which unexplained_classes.py defined before 096c2a2f76 and no longer does (only daily_mean_value, a functools.partial of the reader's); large_flow_e3.py therefore raises AttributeError at HEAD. crossover_e1.py calls v2.daily_mean_value , which tieout_compound_v2.py no longer defines after the promotion; it raises AttributeError at HEAD, before and after this task order's edit (the edit touches neither name). tieout_compound_v2.py and unexplained_classes.py DO run and re-write byte-identical records. The ~39 rules were ported from its source; the reader uses its one daily_mean_value (positive values) where ~39 used the pre-promotion non-zero mean, and the 26 BD_FEE_FIELD_IS_FLOW segments grade 23 within, the count round 32 recorded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~39/large_flow_e3.py",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~35/crossover_e1.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W40-S2 -- FIRST_DAY_FLOW_AT_START is gated here on a structural predicate, not on ~39's landing-within-tolerance test; it fires on 144 segments, ties 15 more and loses 14.
+
+```json
+{
+  "id": "IRPT_DASHBD-W40-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~40",
+  "surfaced_at": "2026-10-09T01:37:30Z",
+  "one_line": "FIRST_DAY_FLOW_AT_START is gated here on a structural predicate, not on ~39's landing-within-tolerance test; it fires on 144 segments, ties 15 more and loses 14.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-63: gate each fix by a predicate stated in the code; ~39 recorded 4 segments, 4 tie.",
+  "world_is": "MEASURED on the 9,078: ~39's test for the class was 'the largest flow is on the first day AND START on that day lands within 0.35 pp of BD', a test on BD's own figure, which would make those segments within by selection. The reader's predicate is structural: the first day's flow is at least 25% of the served value just before the segment and the START denominator clears the 2% guard. It fires on 144 segments: the 4 of round 32 all tie; 96 stay within; 15 more move OUTSIDE to WITHIN; 14 move WITHIN to OUTSIDE (the in_to_out list, reason FIRST_DAY_START_NOT_BD: BD does not land on START timing for those segments). Net +1 from this rule. Adding ~39's 'no later day holds a larger large flow' lowered within by 4 and in_to_out by 2, and was not kept. The CTO may re-set the predicate; the cost of the outcome-gated form is that the grade is no longer a test on those segments.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/tieout/tieout_reader.py first_day_flow_start",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~40/REGRADE_FIXES_E1.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W40-S3 -- BD_FEE_FIELD_IS_FLOW fires on 85 segments of the 9,078, not the 26 round 32 found in the large-flow class; 69 move OUTSIDE to WITHIN and none move the other way.
+
+```json
+{
+  "id": "IRPT_DASHBD-W40-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~40",
+  "surfaced_at": "2026-10-09T01:38:00Z",
+  "one_line": "BD_FEE_FIELD_IS_FLOW fires on 85 segments of the 9,078, not the 26 round 32 found in the large-flow class; 69 move OUTSIDE to WITHIN and none move the other way.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-63: the fix is gated by a stated predicate; ~39 found 26 segments, 23 tie.",
+  "world_is": "MEASURED on the 9,078: the predicate (fees negative and equal to minus netAdditions within the larger of 1.00 and 0.2% of netAdditions) was written for the 170 large-flow misses; applied to the whole population it fires on 85 segments (the 26 plus 59 elsewhere). Against round 32's flow-start re-grade: 69 OUTSIDE to WITHIN, 11 stay within, 5 stay outside, 0 WITHIN to OUTSIDE. The reader grades such a segment on BD's landed gain over the mean daily value against the reader's own (flow-start) Opal link. The 59 outside the large-flow class are a finding of this re-grade, not of round 32.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~40/REGRADE_FIXES_E1.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
