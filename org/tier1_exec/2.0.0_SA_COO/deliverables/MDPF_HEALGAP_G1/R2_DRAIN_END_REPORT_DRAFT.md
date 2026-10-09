@@ -22,7 +22,7 @@ Before FINAL: `round-close-check.py --project MDPF_HEALGAP --round 2` must read 
 
 | act | entry | state |
 |---|---|---|
-| 1 runner code (HG-t-3 + `induce` drop-feed) | `20261008T1618Z_healgap-r2-act1-runner-code-20261008` | L1-L3 proven 16:18-16:20Z (CodeSha256 `NFG8dbEL..` = build); L4 HELD on the 06:00Z fire. `PENDING`: `meta/2026-10-09-result.json` COMPLETE, stamp, silver fired, satellites as_of 2026-10-09 |
+| 1 runner code (HG-t-3 + `induce` drop-feed) | `20261008T1618Z_healgap-r2-act1-runner-code-20261008` | CLOSED 2026-10-09 07:1xZ, 4 of 4 legs. L4 (`R2_CHECKS/hg_r2_act1_l4.py --date 2026-10-09`): L4-OK -- result COMPLETE, 3 feeds arrived (the first result object written live); stamp 3 feeds, model_detail 93; silver first event 06:01:03Z; satellites as_of 2026-10-09 at 07:00:19Z. Controls: 10-08 L4-BAD; 10-07 SILVER/STAMP ok. Act 3 precondition (branch A) MET |
 | 2a event age 900 (HG-t-4) | `20261008T1611Z_healgap-r2-act2a-event-age-20261008` | CLOSED 16:13Z |
 | 2b fire time (HG-t-5) | -- | HELD, not applied (above) |
 | 3 induced PARTIAL + same-day repair (FWD-2, FWD-3), 2026-10-10 | half @1f10c367ce, CTO half msg 1013 | `PENDING`. Precondition: act 1 L4 reads branch A. Step 1 ~2026-10-09 20:00Z (announce to `0.0.0_AB_MSTR~DELL1`, `PutTargets` drop-feed:rebalancer_accounts). Staged read 2026-10-09 01:2xZ: daily rule has 1 target, input `{"mode":"pull"}` |
@@ -45,14 +45,18 @@ Before FINAL: `round-close-check.py --project MDPF_HEALGAP --round 2` must read 
 `PENDING` -- act 1 L4 (2026-10-09 06:00Z/07:00Z) and act 3 (2026-10-10): FWD-2 read of the PARTIAL result object, FWD-3 repair
 read (COMPLETE, R2-2 before/after key sets of the two present feeds), the 11:3xZ SKIP, the 13:30Z floor and 13:50Z reader.
 
-## For the round-2 analysis (enrichment candidates)
+## For the round-2 analysis (enrichment list, three items already ruled ahead of the slug)
 
-- **R2-1 (D1-W3-S1):** one grant, `s3:GetObject` on `arn:aws:s3:::opal-data-assets/blackdiamond/cottonwood/meta/*-result.json` for
-  `cot-rebalancer-runner-role`. Route: `0.7.0_AE_CloudOps~DELL1` (Andrew-direct ~22:0xZ, msg 1204; Step F applied 23:24:52Z).
-  Step F before-rule pre-checked 2026-10-09 01:2xZ: the role is used by 1 of 232 us-east-1 Lambda functions (`cot-rebalancer-runner`
-  only), so no other box's pipeline assumes it; the change is reported after the fact to `0.0.0_AB_MSTR~DELL1` (msgs 1245/1255).
-  Scope of that read: Lambda in us-east-1; ECS/EC2 principals were not swept.
-- **FWD-5 / D1-S7 (b):** the stamp chain for the satellites producer, or withdraw HG-t-5 -- the CTO's addendum.
-- **FWD-6 residuals:** the four pulls above, each either a round-3 heal cell (FWD-1's pattern) or a ruled NOT-EXPOSED with a reason.
+- **R2-1 (D1-W3-S1) -- PULLED FORWARD, not round 3:** decomposition round 2 amendment A1 (cell HG-t-8), carried by
+  `org/tier2_senior/0.7.0_AE_CloudOps~DELL1/task_orders/ADHOC.healgap-r2-1-runner-reads-own-result.md` @15091a3a96 (operator's word at
+  this terminal ~05:3xZ; the round-2 issuance was closed to new files). Apply after 07:10Z, before act 3. `PENDING`: the apply's proof.
+- **D1-S7 (b) -- RULED** (CTO batch @6c538a0bfd section D): the satellites producer keeps cron(0 7) and gains ONE scheduled 12:00Z fire
+  that reads the runner's completion stamp and rebuilds only when today's bronze has landed (else one log line, nothing served).
+  HG-t-5 is freed under it. Round-3 cells: the 12:00Z fire (producer owner 0.6.2_AE_PartnerETL's code; apply by
+  0.7.0_AE_CloudOps~DELL1), then HG-t-5's apply. Negative arm: a day the runner lands after 07:00Z serves the fresh registry from 12:00Z.
+- **FWD-6 residuals -- RULED** (section E): round-3 heal cells for `bd-asset-dim-pipeline-trigger` and `astn-wsjft-3am-run` (a
+  re-attempt after the session mint, FWD-1's pattern); the two `canonical-schwab-si2` pulls are a KNOWN MANUAL EXPOSURE named on FWD-6's
+  grade, the person's re-login listed on open-calls when owed, not a cell.
 - For the next cut: an order's surprise-row id format names the fabric coordinate (D1-W6-S3); a half counts every reader of the
-  runner's same-day bronze (D1-S7: the satellites producer was missed by every round-1 half).
+  runner's same-day bronze (D1-S7: the satellites producer was missed by every round-1 half); a late-round cell cannot be added to a
+  closed issuance as a new file (HG-t-8 went by a CloudOps carrier under an audited override).

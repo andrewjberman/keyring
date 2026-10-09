@@ -23045,6 +23045,194 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
+## IRPT_BCKEND-D2-W200-S1 -- The live runner bundle is already the built refuse-drop bundle (W2Wragr), not OxaIJns0
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W200-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~200",
+  "surfaced_at": "2026-10-09T05:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order names the live runner bundle as version OxaIJns0 (IB-pr-383), but the live object is already W2WragrP52i8M7MfL22oXVPuHsTjyVLO (04:16:44Z), byte-identical to the bundle built at the pin: the IB-pr-384 refuse-drop runner is already in the world with no signed pair.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-object-versions opal-data-mdpf code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz at 2026-10-09T05:1xZ: latest W2WragrP52i8M7MfL22oXVPuHsTjyVLO 2026-10-09T04:16:44Z 112861 bytes ETag 5547fa5e6601c042beef7146c0064def; previous OxaIJns0x1vkrd924gLPTyOMGzL_KQxK 03:42:25Z 112575 bytes",
+      "get-object of W2Wragr: sha256 f6d48603a6496f78733312e49b0e279b0907288db3423575f735835e896a0118 == the bundle built twice at pin 45c061c282 with safe_deploy_core.build_bundle_payload (byte-identical); its member directory_runner.py sha256 23b7eaf6f278 == git blob of HEAD, while OxaIJns0 carries 08e5e1abc92a (the IB-pr-381 runner)",
+      "org/safe-deploy-bypass-audit.log: HELD-DEPLOY lines for test_directory_runner_refuse_drop.py at 2026-10-09T04:16:26Z (18 s before the put); the repo does not name the actor that minted W2Wragr",
+      "replay: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~200/IB97-2_release_replay.json -- live_current vs built identical on all 9 arms; live_prior (OxaIJns0) vs built differs only on the drop fixture (lands 2 puts without the entry; built refuses with 0 puts)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-389: the live bundle is version OxaIJns0 (from IB-pr-383); the built bundle changes member directory_runner.py against it; the release is signed as a pair after IB-pr-383 closes; nothing is applied.",
+  "world_is": "The refuse-drop runner is already the live bundle, so against live_before W2Wragr the build has 0 changed members and Branch A is a no-op at the object. The packet records live_before = W2Wragr, records the OxaIJns0 comparison (changed member directory_runner.py, owner c7b401e8f7) beside it, and replays both. The refusal can only narrow what the runner lands (no landing differs while nothing is dropped, 9 of 9 arms). Who minted W2Wragr and under which ledger entry is not in the repo; the issuer or the CTO decides whether the pair is still signed or closed as already applied."
+}
+```
+
+## IRPT_BCKEND-D2-S28 -- IB-pr-384's runner change reached the LIVE bundle at 04:16:44Z without its own pair: the push deploy hook let it ride IB-pr-383's open ledger
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S28",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T05:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The live runner bundle (s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz) is version W2WragrP52i8M7MfL22oXVPuHsTjyVLO, written 04:16:44Z. It is byte-identical to IB-pr-389's build of IB-pr-384 (the refuse-drop runner, drained @1895f16a0b ~04:1xZ), and no pair was signed for 384. The 04:16:26Z box-sync push by 0.0.0_AB_MSTR~DELL2 ran the deploy-on-push hook, which HELD paths with no open ledger but let directory_runner.py through, because IB-pr-383's OPEN ledger names that bundle. A ledger names paths, not a pin, so any later drained change to a ledgered path rides the open ledger.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (rule keep vs roll back to OxaIJns0, and route the hook fix: a ledger binds the pin/blob it signed, not the path) with 0.0.0_AB_MSTR~DELL2 (the push hook's owner)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api head-object version W2WragrP52i8M7MfL22oXVPuHsTjyVLO: LastModified 2026-10-09T04:16:44Z, directory-runner-sha256 23b7eaf6...; IB-pr-389 census: live_before == built f6d48603... (0 changed), and against the 383 version OxaIJns0 one member changes (directory_runner.py, owner c7b401e8f7)",
+      "org/safe-deploy-bypass-audit.log 2026-10-09T04:16:26Z: HELD-DEPLOY 0.0.0_AB_MSTR~DELL2 ref=box/dell2 for paths with 'no-open-ledger-name'; directory_runner.py not held",
+      "IB-pr-383 ledger OPEN since 03:29Z (@f520ab353a), legs B1 = this bundle",
+      "IB-pr-389 replay: 18 arms -- the live bundle is identical to built on real inputs at 3 firms; it refuses a dropped-source-entry build with 0 puts (fail-safe)"
+    ]
+  },
+  "spec_asserts": "NEVER move served output without never-widen sign-off; IB-pr-384 releases under its own pair after IB-pr-383 closes (CTO msgs 2151, 2507).",
+  "world_is": "IB-pr-384 is live without a pair. The effect measured by the replay is fail-safe (refuses a build that drops a source entry; identical otherwise), but the mechanism lets any drained change to a path named by any open ledger deploy on the next push."
+}
+```
+
+## IRPT_BCKEND-D2-S30 -- Resolves D2-S28: the unsigned runner bundle is ratified (both retroactive halves); the ledger entry is opened and closed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S30",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T05:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S28 against the CTO's retroactive half on IB-pr-389 (msg 2588, deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_IB_pr_389_RUNNER_REFUSE_DROP_CTO_HALF_RETROACTIVE.md) and this seat's retroactive COO half (deliverables/2.0.0_SA_COO~P2/NEVER_WIDEN_IB_pr_389_RUNNER_REFUSE_DROP_COO_HALF_RETROACTIVE.md), both against packet blob fe4589432d. The live bundle W2Wragr (ETag 5547fa5e, 112,861 bytes, re-read 05:4xZ) equals the packet's build. The replay is identical on real inputs at all 3 firms and fail-safe on a dropped source entry. KEPT. The ledger entry 20261009T0546Z_irpt-runner-refuse-drop-retroactive-20261009 (APPLIED-UNSIGNED-THEN-RATIFIED, naming the hook) is opened and closed. Carried conditions: every scheduled landing at all 3 firms is read, and a refusal is a BLOCKING row the same morning (cottonwood OVER_AGE 2026-10-12); never roll back through a dropping window. The mechanism fix (a ledger binds the pin it signed, not the path) is asked of MSTR~DELL2 by the CTO.",
+  "one_line": "Ratified and kept under both retroactive halves; the scheduled-landing reads are carried; the hook fix is MSTR's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api head-object 05:4xZ: W2WragrP52i8M7MfL22oXVPuHsTjyVLO, ETag 5547fa5e6601c042beef7146c0064def, 112861",
+      "deploy_ledger.py close: 'CLOSED ... all 1 legs proven; sentinel removed'",
+      "p97_release.py IB97-2-AC1 and AC2 PASS (issuer re-grade)"
+    ]
+  },
+  "spec_asserts": "No served move without a never-widen pair.",
+  "world_is": "The move is now covered by both halves after the fact, its ledger is closed, and its live behaviour is measured as identical/fail-safe."
+}
+```
+
+## IRPT_BCKEND-D2-S29 -- the runner bundle moved at 04:16:44Z and the ONE changed member is directory_runner.py, so IB-pr-383's cleared replay no longer describes what the host would pull
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S29",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T05:48Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps~DELL2",
+  "one_line": "The grants for IB-pr-383's seeding landed at 05:39:17Z and S1/S2/V1 were released to resume, but the runner bundle was overwritten at 04:16:44Z (version W2WragrP52i8M7MfL22oXVPuHsTjyVLO, sha256 f6d48603) after this seat landed OxaIJns0 (sha256 2e3e6648) at 03:42:25Z; the ONE changed member of 12 is directory_runner.py, the only writer of the seeded keys, so the replay arm that cleared the apply graded a script the host would no longer run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "list-object-versions on code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz: W2WragrP52i8M7MfL22oXVPuHsTjyVLO IsLatest=true 112861 bytes 2026-10-09T04:16:44Z; OxaIJns0x1vkrd924gLPTyOMGzL_KQxK IsLatest=false 112575 bytes 2026-10-09T03:42:25Z",
+      "both versions downloaded BY VERSION ID and hashed: mine sha256 2e3e6648312f5daa (the value TO-IB-pr-383 and the packet declare), latest sha256 f6d48603a6496f78",
+      "member-by-member diff over the UNION of 12 member names: 0 added, 0 removed, exactly 1 CHANGED -- data/assets/scripts/gold/investor_reporting/directory_runner.py, 08e5e1abc92ad38b (replay-graded) vs 23b7eaf6f2788c61 (host would pull)",
+      "unified diff of that member: 1239 -> 1254 lines, 27 diff lines, adding a refusal attributed in its own comment to TO IB-pr-384 (row D2-W189-S4): 'BUILD_DROPS_SOURCE_ENTRY: %d previous client(s) are still in the source snapshot but missing from this build; nothing is landed', which on an upload or local-mirror call RAISES RuntimeError before any put, and on a dry run records carried_forward.refused and fails main()",
+      "this seat's replay measured held_in_source 0 on BOTH seeded arms (inflection and cottonwood) and 1 on both negative arms, i.e. the new refusal would not have fired on the path the replay exercised"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-383 step 4 declares the bundle sha256 2e3e6648312f5daad1da91f0c3aaeb4736a81b16cc9bb0dd4f43e5e93886b968, its refusal clause lists 'a built sha other than the packet's' and 'a failed replay' as STOP conditions, and its step 2 requires the replay to run against 'the artifacts actually in play'.",
+  "world_is": "The artifact actually in play is no longer the one the replay graded. The seeding run executes directory_runner.py from whatever version of this bundle the host pulls at run time, and that is now f6d48603 carrying a runner this seat has never replayed. The behavioural delta is not cosmetic: it is a NEW TERMINAL STATE on exactly the call the seeding makes, --upload. On the state the replay measured it would be inert, because held_in_source was 0 on both seeded arms, but that measurement is 2.5 hours old and the refusal fires on LIVE source state, not on replayed state, so its inertness cannot be asserted for the run that matters. The asymmetry decides it: if the refusal fires at inflection the run lands nothing and is recoverable, but if it fires at COTTONWOOD after inflection has already landed, the result is a half-landed seeding across two firms, which is the one state NEVER-2 forbids and which this order's own Branch B is written to undo key by key. So the resume is refused on the order's own terms rather than on preference. Two consequences for the record: ledger leg B1 remains TRUE as history (this seat did land 2e3e6648 and proved it on the object) but it no longer describes the newest version of that key, and the row is ARMED rather than INERT because a resume message is already outstanding and a seat acting on it without reading this row would run the ungraded script. Disarm is this seat's: either re-run the replay arm against f6d48603 and have the issuer re-clear it, or have the issuer rule that IB-pr-384's refusal is in scope for 383 and re-declare the bundle sha."
+}
+```
+
+## IRPT_BCKEND-D2-W202-S1 -- The new function has no entry in lambda-source-map.json at the pin, so release-census.py exits 2 for it and BUILD_ONLY needs a scratch-map override pl
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W202-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~202",
+  "surfaced_at": "2026-10-09T05:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The new function has no entry in lambda-source-map.json at the pin, so release-census.py exits 2 for it and BUILD_ONLY needs a scratch-map override plus BAU_PARITY_SKIP=1; the built sha256 is of a DRAFT entry the release pair must register unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/lambda/ci/release-census.py irpt-commentary-composition-read-lambda --pin 9c995243f7c41d0850024a451b71a4536d6dd91e -> 'ERROR: function ... is not in the source map at 9c995243f7' rc=2",
+      "aws lambda get-function --function-name irpt-commentary-composition-read-lambda -> ResourceNotFoundException (live_before ABSENT)",
+      "BUILD_ONLY=1 BAU_PARITY_SKIP=1 BAU_SOURCE_MAP_OVERRIDE=<scratch map outside the worktree> bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-commentary-composition-read-lambda -> rc 0 twice, byte-identical; source_dir infra/aws/lambda/investor-reporting/reports holds 7 other top-level modules (build_resident_package, currency_authority, custody_write, generate_installed, request_composition, resident_installed, status_installed) the ADHC_DRIFTD.002 parity check would flag",
+      "Draft entry (16 members, 12 staged_from rows pinned at the last commit touching each path) beside the census: deliverables/0.9.0_WK_IRPT_BCKEND~202/IB97-4_source_map_entry.json; companion row IRPT_BCKEND-D2-W197-S2 (registration is outside the cell-386 paths)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-391 step 1-2: run release-census.py for every function the code reaches and BUILD_ONLY the artifacts at the pin; the new function is built by the repo's builder.",
+  "world_is": "The builder and census read only the committed source map, which has no row for the new function (W197-S2 left registration to the release pair). The worker built it from a copy of the map with one drafted entry, kept outside the worktree, with BAU_PARITY_SKIP=1 because source_dir is the shared reports/ package. The built zip (16 members, 136840 bytes) is reproducible only if the pair registers that exact entry (files[], staged_from rows and pins) and builds with the parity skip or lists the seven other modules; any other member set builds a different sha256. The packet states the entry and the condition."
+}
+```
+
+## IRPT_BCKEND-D2-W202-S2 -- The IB-pr-386 repository.py change reaches NO existing function at the pin: all four functions that package reports/repository.py stage it from an old
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W202-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~202",
+  "surfaced_at": "2026-10-09T05:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The IB-pr-386 repository.py change reaches NO existing function at the pin: all four functions that package reports/repository.py stage it from an older pinned blob, so the census of 'every existing function whose packaged repository.py changed' is empty.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "release-census.py at 9c995243f7: irpt-export-render changed_members=0; irpt-performance-adapter 2 changed (holdings_gold.py, loaders.py); irpt-ycharts-generate 5 (generate_installed.py + 4 added custody modules); irpt-status 4 (canonical_profile_reads.py, loaders.py, maintained_sources.py, served.py) -- none is repository.py",
+      "staged_from pins for reports/repository.py in lambda-source-map.json: irpt-performance-adapter b905df2c60, irpt-ycharts-generate 605c4cd4ac, irpt-export-render 2aa217ec58, irpt-status 80a79a7462; live repository.py sha256 prefixes f255335beb26 (status, performance) and f01fcf549e8e (export-render, ycharts) equal their pinned blobs"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-391: census every existing function whose packaged reports/repository.py changed.",
+  "world_is": "None changed: the staged rows pin the blob, so the new rule in repository.py/retention.py ships only in the new function until a cell re-pins one of the four rows. The other changed members the census prints belong to other cells (not this release) and are not listed as this release's changed members. A later re-pin of any of the four is a separate release with its own pair."
+}
+```
+
+### IRPT_BCKEND-D2-W260-S1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W260-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~260",
+  "surfaced_at": "2026-10-09T07:00:00Z",
+  "one_line": "The CTO ruling file the worker face names is not in the worktree; read from commit 19c5067e12 instead",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IRPT_BCKEND_IB_pr_388_H1_WITHDRAWN_20261009.md in the worktree: No such file",
+      "git ls-tree -r 19c5067e12 lists the file; git show 19c5067e12:<path> read in full: no instruction to remove the stream or the requests_stream_arn output"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ruling file is at org/tier1_exec/1.0.0_SA_CTO/deliverables/ in the worktree.",
+  "world_is": "The worktree branch does not carry the file; it exists at 19c5067e12. The stream and requests_stream_arn output were therefore kept."
+}
+```
+
 ## IRPT_BCKEND-D2-W201-S1 -- AMENDMENT 1 (ALL never admits an internal caller) cannot be committed: served.py and two test files are in no non-terminal order's <paths> at HEAD
 
 ```json
@@ -23217,5 +23405,107 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   },
   "spec_asserts": "The order: every changed member must be owned by its cell's commit.",
   "world_is": "Owners of served.py per function are in IB97-3_release_census.json (owner_commits). The replay covers the narrowing and svc arms, not IB-pr-366's on-behalf create guard nor IB-pr-357's envelope field; the signer should read them as part of the release."
+}
+```
+
+## IRPT_BCKEND-D2-W201-S8 -- AMENDMENT 1 asks the packet to name the follow-up cell for irpt-holdings and irpt-narrative, and no such cell exists at this pin
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T06:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The packet's held-out section cannot cite a follow-up cell id: the decomposition carries IB-pr-390 and IB-pr-391 for section 90 and no cell for releasing served.py to irpt-holdings (row S5) or irpt-narrative (row S6).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md lines 2381-2382 (IB-pr-390, IB-pr-391 are the last IB-pr rows); task-orders listing has no IB-pr-39x beyond 390 and 391"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1 item 3: the packet lists every route each held-out host serves as NOT YET NARROWED, and names the follow-up cell.",
+  "world_is": "The packet lists the two held-out routes (GET .../holdings/{accountSetId}, GET .../narrative/{reportId}) as NOT YET NARROWED and states that the follow-up cell is UNCUT, to be cut by 2.0.0_SA_COO~P2 with the scope of rows S5 and S6. The worker did not invent a cell id."
+}
+```
+
+## IRPT_BCKEND-D2-W261-S1 -- FWD-14's multi_asset condition cannot fire through run_firm today: the v1 contract rejects multi_asset at validation, before the gate.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W261-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~261",
+  "surfaced_at": "2026-10-09T06:43:32Z",
+  "one_line": "FWD-14's multi_asset condition cannot fire through run_firm today: the v1 contract rejects multi_asset at validation, before the gate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py ASSET_CLASS_VALUES (SC-e-56 comment: multi_asset left) and classify_security raising on a class outside it",
+      "run_firm with the real validator on a multi_asset fixture: RuntimeError 'asset_class: multi_asset is not one of [equity, fixed_income, alternatives, structured, commodities, cash, other, unclassified]' (tests/test_holdings_publish_gate.py, the arms that stand validation aside)"
+    ]
+  },
+  "spec_asserts": "PRD FWD-14 ACCEPT: WORSE is any multi_asset; on WORSE the index does not move and one refusal record names the condition, count and ids.",
+  "world_is": "Today a multi_asset class is stopped upstream as a build defect (a bare raise, no refusal record) because the published contract enum and the classifier both exclude it. The gate refuses it WITH a record only if validation ever admits it; the tests prove that arm by standing validate_snapshot aside. No decision asked: reported so a reader does not take the arm for exercised-in-production."
+}
+```
+
+## IRPT_BCKEND-D2-W261-S2 -- The v0.32 closed-account exemption reads the landed directory's TERMINATED marking; Cottonwood's source records none, so a closed COT account would still freeze that firm.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W261-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~261",
+  "surfaced_at": "2026-10-09T06:43:32Z",
+  "one_line": "The v0.32 closed-account exemption reads the landed directory's TERMINATED marking; Cottonwood's source records none, so a closed COT account would still freeze that firm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:815 and :824 -- cottonwood fact_allocations carries no account status column at this vintage -> termination UNKNOWN on every entry",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:623 (49F: RELATIONSHIP entry TERMINATED only when every account is closed) and :725 (INF: only when no row is_active)",
+      "holdings_snapshot.py closed_account_ids(): collects account ids of entries whose termination.indicator == TERMINATED; an absent directory names none (fails closed)"
+    ]
+  },
+  "spec_asserts": "PRD v0.32: an account the firm's source records as closed or terminated is LISTED, never refused, so an ordinary closure cannot freeze the firm.",
+  "world_is": "The exemption is exactly as wide as the source's own closure marking. 49F account-level closures and fully closed relationships are recognized; a partly closed 49F relationship is not (its entry stays ACTIVE); Cottonwood has no closure column at all, so a closed COT account that leaves the candidate is REFUSED as account_lost and every later fire refuses too until the source gains a closure fact. Left alone this is the freeze v0.32 was written to prevent, for COT. Disarm: a cell that gives COT (and partly closed 49F relationships) a source closure marking, or a CTO ruling on another source."
+}
+```
+
+## IRPT_BCKEND-D2-W262-S1 -- irpt-narrative's fixed build is a wide release: 22 changed members and internal firm selection that live does not honour
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W262-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~262",
+  "surfaced_at": "2026-10-09T06:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The fixed irpt-narrative build is correct on its error path but is a wide release: 22 changed members (8 added) against live, and its boundary starts honouring selected_tenant for Opal internal callers, which live irpt-narrative ignores.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "replay arm 'unrelated Opal internal caller with NO profile row, selecting inflection': irpt-narrative built reaches inflection with the Opal roster, live reaches opal-capital (selection not honoured); irpt-holdings identical",
+      "release-census irpt-narrative at c18b5fec74: changed_members=22 (14 changed, 8 added), every one owned; live CodeSha256 es/S9azussVLY2DfTj6hRjV1pqhZ8EaVCnaVcELqhPc="
+    ]
+  },
+  "spec_asserts": "The order: restage errors.py (the smaller change) so the new served.py error path no longer raises TypeError, keeping every other host unchanged.",
+  "world_is": "The TypeError is fixed by restaging errors.py bc3727b3a3 -> 74a62fb46c (adds public_line(admitted=)) and served.py to 74a62fb46c; 4 tests -k served_error_path pass incl. a control that sees the TypeError on the old blob. But live irpt-narrative runs an older boundary: releasing ANY current served.py there adds the internal firm selection (IB-pr-387 narrowing and, for a caller with no profile row, any-firm reach) that live does not have, plus the 21 other members the map already stages for it. This is the S6 finding made measurable; the packet carries it as a signer decision, per-route table and Branch A/B. Disarmed when the signer reads the narrative row of the packet and signs or strikes irpt-narrative from the pair.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```

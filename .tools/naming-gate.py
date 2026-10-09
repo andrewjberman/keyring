@@ -61,11 +61,25 @@ check's own decision for the name, on the post-image of the diff:
       now), is larger than at HEAD
     a name outside every root, RIGHT, NOT-ASKED, PATTERN, CARDED    grade() alone
 The mode is the switch file org/mcp/naming-place.enforce (beside naming-gate.enforce; this build does not create it):
-PRESENT -> the step refuses (rc=1, whatever naming-gate.enforce says); ABSENT -> it prints the same lines, marks them
+PRESENT -> the step refuses (rc=1, whatever naming-gate.enforce says, and a `NAMING-PLACE: REFUSE <n>` line is printed before the
+summary: safe-commit.sh blocks on that line while the switch is present); ABSENT -> it prints the same lines, marks them
 would-refuse and the verdict is unchanged. There is no date and no ramp, and no environment value turns the step off.
 A root's files live under infra/aws/ (its .tf folder and its Lambda folders), so a commit with no .tf file and no NEW stored
 name under infra/aws/ never loads the placement step; one that does costs about 13 s per root (at most 8 roots are placed).
 If the step cannot run it prints NAMING PLACE ERROR and, with the switch present, refuses.
+
+THE PLACEMENT OVERRIDE (LGIC_BLANKFIX FWD-6, round 9 BF-x-4, row W1-S21). While the switch is present a creator whose name the
+canon cannot yet place needs a way through. The way is `# naming-place-override: <reason>` as a line of the commit message
+(reason required, non-empty), read by .tools/safe-commit.sh ONLY. safe-commit is the ONLY setter of the variable
+NAMING_PLACE_OVERRIDE: it first appends one line to org/naming-place-override-audit.log
+(`<UTC time> NAMING-PLACE-OVERRIDE  <author>  id=<id>  reason=<reason>  names=<refused names, comma separated>`), then exports the
+line's `<id>` and runs this gate once more. THE GATE REQUIRES THE AUDIT ROW (this is the choice the cell asked to be stated): a
+PLACE-REFUSE row is printed as `NAMING OVERRIDDEN <file>:<line> <string> -> <form>` and does not block only when the variable
+names an id for which the audit log holds a row with a non-empty reason, written within the last 600 seconds, whose names list holds
+the row's string. A variable set by hand, with no such row, passes nothing (`NAMING-PLACE-OVERRIDE: IGNORED <why>` is printed and the
+refusal stands). The limit, stated: the log is the trust base -- a seat that can append to it can forge a row; the row is the audit
+record, not a signature. safe-merge.sh and every other path write no such row, so they have no override. The older limb's REFUSE is
+not affected by the override.
 
 Standard library only. ASCII only.
 """
@@ -93,6 +107,8 @@ ENFORCE_FILE = os.path.join(REPO, "org", "mcp", "naming-gate.enforce")
 VERDICT_LOG = os.path.join(REPO, "org", "mcp", "naming-gate-verdicts.log")
 PLACE_FILE = os.path.join(REPO, "org", "mcp", "naming-place.enforce")  # the placement step's switch: present = refuse
 PLACE_PREVIEW = os.environ.get("NAMING_PLACE_PREVIEW") == "1"  # run the step while the switch is absent (its rows only WARN)
+OVERRIDE_AUDIT = os.path.join(REPO, "org", "naming-place-override-audit.log")  # written by safe-commit.sh only
+OVERRIDE_WINDOW_S = 600  # an audit row older than this passes nothing
 PLACE_MAP = "infra/logic/registry/root_map.json"
 PLACE_PATH_PREFIX = "infra/aws/"
 PLACE_ROOT_CAP = 8  # roots placed per commit; each costs about two root-check runs (about 10 s)
@@ -1033,6 +1049,25 @@ def _changelog_name_position(post_lines, line_no, value):
     return False
 
 
+_SOURCE_MAP_FUNCS = []
+
+
+def _source_map_functions():
+    """The `functions` keys of lambda-source-map.json at HEAD (the deployed functions it already records); empty when unreadable,
+    so nothing extra passes. 1.0.0_SA_CTO ruling on 0.0.0_AB_MSTR msg 107746 (4.0.0_SA_CRO's proposal,
+    AMGT_RESAPP_D1S6_ANSWER_20261009.md): a changelog that names such a function cites it and mints nothing."""
+    if not _SOURCE_MAP_FUNCS:
+        names = set()
+        try:
+            p = subprocess.run(["git", "show", "HEAD:" + SOURCE_MAP_PATH], cwd=REPO, capture_output=True)
+            if p.returncode == 0:
+                names = set((json.loads(p.stdout.decode("utf-8")).get("functions") or {}).keys())
+        except Exception:  # noqa: BLE001 -- unreadable = no extra citations
+            names = set()
+        _SOURCE_MAP_FUNCS.append(names)
+    return _SOURCE_MAP_FUNCS[0]
+
+
 def _changelog_name_citations(mod, path, lits, post_text):
     """3.0.0_SA_CVO ruling (msg 104898, appended to CVO_RULING_NAMING_LIMB_SOURCE_MAP_CITATION_NOT_MINT_20261004.md, on 2.0.0_SA_COO~P
     104894 / row W115-S1): in infra/aws/terraform/*/CHANGELOG.json (record-terraform-deploy.sh's generated record), a literal in
@@ -1041,10 +1076,16 @@ def _changelog_name_citations(mod, path, lits, post_text):
     if not _CHANGELOG_RE.match(path or ""):
         return
     post_lines = (post_text or "").split("\n")
+    root_folder = path.split("/")[3]
     for lit in lits:
-        if not lit.permitted and _changelog_name_position(post_lines, lit.line, lit.value) \
-                and _builder_reproduces(mod, lit.value):
-            lit.permitted = True
+        if lit.permitted:
+            continue
+        if _changelog_name_position(post_lines, lit.line, lit.value) \
+                and (_builder_reproduces(mod, lit.value) or lit.value in _source_map_functions()):
+            lit.permitted = True  # the builder's name, or (1.0.0_SA_CTO, msg 107746) a function the source map already holds
+        elif lit.value == root_folder and 1 <= lit.line <= len(post_lines) and re.match(
+                r'^\s*"_pipeline"\s*:\s*%s\s*,?\s*$' % re.escape(json.dumps(lit.value)), post_lines[lit.line - 1]):
+            lit.permitted = True  # (1.0.0_SA_CTO, msg 107746) `_pipeline` naming the changelog's own root folder cites it
 
 
 def _source_map_name_citations(mod, path, added, lits, post_text=""):
@@ -1945,13 +1986,57 @@ def decide_exit(rows, enforce):
     refused = sum(1 for r in rows if r[6] == "REFUSE")
     place_ref = sum(1 for r in rows if r[6] == "PLACE-REFUSE")
     warned = sum(1 for r in rows if r[6] == "WARN")
+    overridden = sum(1 for r in rows if r[6] == "OVERRIDDEN")
     if (refused and enforce) or place_ref:
         summary = "REFUSE"
-    elif refused or warned:
+    elif refused or warned or overridden:
         summary = "WARN"
     else:
         summary = "PASS"
     return summary, refused, warned, place_ref, 1 if ((refused and enforce) or place_ref) else 0
+
+
+_AUDIT_ROW = re.compile(r"^(\S+) NAMING-PLACE-OVERRIDE  (.*?)  id=(\S+)  reason=(.*)  names=(\S*)$")
+
+
+def override_valid(ident, audit_path=None, now=None):
+    """(names, why): names is the set of refused names the audit row for `ident` covers, or None with the reason it passes
+    nothing. The row must exist in the audit log, carry a non-empty reason and be younger than OVERRIDE_WINDOW_S."""
+    audit_path = audit_path or OVERRIDE_AUDIT
+    if not ident or not ident.strip():
+        return None, "the variable is empty"
+    try:
+        with open(audit_path, "r", encoding="utf-8") as fh:
+            lines = fh.read().splitlines()
+    except OSError:
+        return None, "no audit log %s" % os.path.basename(audit_path)
+    for ln in lines:
+        m = _AUDIT_ROW.match(ln)
+        if not m or m.group(3) != ident.strip():
+            continue
+        if not m.group(4).strip():
+            return None, "the audit row for %s carries an empty reason" % ident
+        try:
+            when = datetime.datetime.strptime(m.group(1), "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=datetime.timezone.utc)
+        except ValueError:
+            return None, "the audit row for %s has an unreadable time" % ident
+        now = now or datetime.datetime.now(datetime.timezone.utc)
+        age = (now - when).total_seconds()
+        if age > OVERRIDE_WINDOW_S or age < -60:
+            return None, "the audit row for %s is %d s from now (window %d s)" % (ident, int(age), OVERRIDE_WINDOW_S)
+        return set(n for n in m.group(5).split(",") if n), ""
+    return None, "no audit row has id %s (safe-commit.sh is the only setter of this variable)" % ident
+
+
+def apply_override(rows, names):
+    """The rows with every PLACE-REFUSE row whose string the audit row names turned into an OVERRIDDEN row (counts OVERRIDDEN)."""
+    out = []
+    for r in rows:
+        if r[6] == "PLACE-REFUSE" and r[3] in names:
+            out.append(("OVERRIDDEN", r[1], r[2], r[3], r[4], "%s [placement refusal overridden, audited]" % r[5], "OVERRIDDEN"))
+        else:
+            out.append(r)
+    return out
 
 
 def place_step(rows, meta):
@@ -2126,6 +2211,48 @@ def place_self_test():
     return ok
 
 
+def override_self_test():
+    """The override's arms on plain data in a temporary audit log: the audited id passes a placement row and is logged as
+    OVERRIDDEN; no row, an empty reason, a stale row, an uncovered name and the empty variable pass nothing. True when all hold."""
+    import tempfile
+    now = datetime.datetime.now(datetime.timezone.utc)
+    fmt = "%Y-%m-%dT%H:%M:%SZ"
+    old = (now - datetime.timedelta(seconds=OVERRIDE_WINDOW_S + 120)).strftime(fmt)
+    new = now.strftime(fmt)
+    rows = [("REFUSE", "f.tf", 3, "irpt-x-newjob", "irpt-x-newjob-daily", "owed", "PLACE-REFUSE"),
+            ("REFUSE", "g.tf", 4, "other-name", "-", "owed", "PLACE-REFUSE")]
+    with tempfile.TemporaryDirectory(prefix="naming_gate_override_selftest_") as td:
+        audit = os.path.join(td, "audit.log")
+        with open(audit, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write("%s NAMING-PLACE-OVERRIDE  a <a@x>  id=good  reason=the canon has no row yet  names=irpt-x-newjob\n" % new)
+            fh.write("%s NAMING-PLACE-OVERRIDE  a <a@x>  id=blank  reason=  names=irpt-x-newjob\n" % new)
+            fh.write("%s NAMING-PLACE-OVERRIDE  a <a@x>  id=stale  reason=r  names=irpt-x-newjob\n" % old)
+        good, _w = override_valid("good", audit)
+        missing, why_missing = override_valid("handset", audit)
+        blank, _w2 = override_valid("blank", audit)
+        stale, _w3 = override_valid("stale", audit)
+        empty, _w4 = override_valid("", audit)
+        nolog, _w5 = override_valid("good", os.path.join(td, "absent.log"))
+    through = apply_override(rows, good or set())
+    refused = apply_override(rows, set())
+    arms = [
+        ("an audited id: the row it names is OVERRIDDEN, exits 0 and is not refused; the row it does not name stays refused",
+         through[0][0] == "OVERRIDDEN" and through[1][6] == "PLACE-REFUSE" and decide_exit(through[:1], False)[4] == 0
+         and decide_exit(through[:1], False)[0] == "WARN" and decide_exit(through, False)[4] == 1),
+        ("the same rows with no names (the difference control): both stay PLACE-REFUSE and exit 1",
+         refused == rows and decide_exit(refused, False)[4] == 1),
+        ("a variable set by hand (no audit row for its id) passes nothing", missing is None and "no audit row" in why_missing),
+        ("an audit row with an empty reason passes nothing", blank is None),
+        ("an audit row older than the window passes nothing", stale is None),
+        ("an empty variable and a missing audit log pass nothing", empty is None and nolog is None),
+    ]
+    ok = True
+    for label, held in arms:
+        ok = ok and bool(held)
+        print("SELF-TEST override arm %s: %s" % (label, "ok" if held else "FAIL"))
+    return ok
+
+
 def self_test():
     """--self-test: judge() on a NEW group-A name takes the fourth verdict and passes, and (the difference control) a NEW
     group-B name is still refused. Reads no diff, writes no log. Returns 0 when both arms hold."""
@@ -2139,6 +2266,7 @@ def self_test():
         print("SELF-TEST arm %s %s -> %s %s: %s" % (name, typ, got[0] if got else None, got[3] if got else None,
                                                     "ok" if arm else "FAIL"))
     ok = place_self_test() and ok
+    ok = override_self_test() and ok
     print("NAMING-GATE-SELF-TEST: %s" % ("PASS" if ok else "FAIL"))
     return 0 if ok else 1
 
@@ -2163,6 +2291,13 @@ def main(argv=None):
         if not enforce:
             print("  (WARN window: the limb's own error never blocks a commit; enforce is off)")
         return 1 if enforce else 0
+    ident = os.environ.get("NAMING_PLACE_OVERRIDE", "")
+    if ident and any(r[6] == "PLACE-REFUSE" for r in rows):
+        names, why = override_valid(ident)
+        if names is None:
+            meta.append("NAMING-PLACE-OVERRIDE: IGNORED %s" % why)
+        else:
+            rows = apply_override(rows, names)
     for ln in meta:
         print(ln)
     rows.sort(key=lambda r: (r[1], r[2], r[3]))
@@ -2180,6 +2315,12 @@ def main(argv=None):
     if would:
         print("  (placement step: %d would-refuse verdict(s) did not block; the step refuses while org/mcp/naming-place.enforce"
               " exists, and that switch is absent)" % would)
+    if place_ref:
+        # The placement step's own refusal, told apart from the older limb's REFUSE: safe-commit.sh blocks on this line while
+        # org/mcp/naming-place.enforce is present, whatever naming-gate.enforce says (LGIC_BLANKFIX BF-x-3, row W1-S19).
+        pline = "NAMING-PLACE: REFUSE %d" % place_ref
+        print(pline)
+        verdict_lines.append(pline)
     last = "NAMING-GATE: %s %d graded" % (summary, len(rows))
     print(last)
     log_lines(verdict_lines + [last], mode)

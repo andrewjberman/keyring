@@ -22581,3 +22581,146 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Ledger amgt-resapp-r80-dd4-scoped-api-dell1: L1,L2,L3,L4,L5,L7 closed with proof; L6 alone open and NOT closed, because the record it names is half absent. The deploy is NOT half-landed -- the function is live, correct and independently verified; L6 is bookkeeping, so the open leg should not be read as a live deploy hazard. infra/aws/terraform/harvest/CHANGELOG.json is deliberately left UNTRACKED in the shared tree so the recorder's entry for this deploy is not lost before someone adds the registry row. For the issuer: the artifact_sha256 gap looks like a defect in reconcile-deployed's parity classification for a NULL recorded sha, which would affect every one of the 41 no-record functions, not just this one."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S7",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~RA1",
+  "surfaced_at": "2026-10-09T05:45Z",
+  "one_line": "record-terraform-deploy.sh structurally cannot move last_deployed_commit for opal-amgt-scoped-api on a code-only deploy: it sets the field from the function's source_dir, and this function's real code is the vendored delegate under lib/research/, which source_dir does not contain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ee-6's deploy itself is complete and independently verified -- this row is about the RECORD only. Live CodeSha256 moved OUOsYXaJSklKJ65vpIe2jWfcXm9jvP0bCyia15F8Bxs= -> aAkcp2l1TkaeMnZKjpeg/U6og+p0WR12O1YKp53Pvyc= at 2026-10-09T05:23:48Z, untargeted re-plan 'No changes', AC1 R81 DEPLOYED: YES 2 of 2, AC2 R80 YES 1 of 1 and R79 YES 1 of 1.",
+      "The recorder RAN, scoped by the applied plan: bash infra/aws/lambda/ci/record-terraform-deploy.sh harvest --plan C:/tmp/ee6-build/ee6.tfplan --author 0.7.0_AE_CloudOps~RA1 --deploy-ledger amgt-resapp-r81-ee6-scoped-api-dell1 --code-sha256 aAkcp2l1... -> rc=0, committed @5abece293838b0e6413bbfe47a2791f37db0453b, 3 files changed 43 insertions 3 deletions.",
+      "WHAT LANDED, read back from the entry: artifact_sha256 aAkcp2l1TkaeMnZKjpeg/U6og+p0WR12O1YKp53Pvyc=, deployed_code_sha256 the same, last_deployed_at 2026-10-09T05:31:17Z, deploy_ledger amgt-resapp-r81-ee6-scoped-api-dell1, recorded_by record-terraform-deploy.sh.",
+      "WHAT DID NOT: last_deployed_commit still reads 271e8f8b432f811c548f065d88981583eb0f1f91 -- dd-4's value -- naming neither this deploy nor its build pin 881540dcfd. The recorder's commit SUBJECT reads 'ci: record deploy harvest @ 447e4af8', so the subject's figure and the field's figure are two different things and the subject is the misleading one to quote.",
+      "THE MECHANISM, read from the script's own head rather than inferred: ':2. Sets last_deployed_commit = the last commit touching that function's source_dir -- NOT HEAD, NOT the ledger commit, NOT a files[]-derived value (verify-local.sh:136 diffs over source_dir, so files[] makes it report non-packaged deploy-relevant files as undeployed change).' The entry's source_dir is infra/aws/lambda/research/scoped_amgt_api.",
+      "WHY THAT CANNOT WORK FOR THIS FUNCTION: all five members ee-6 moved live under lib/research/ -- scoped_amgt.py, filings/section_coverage.py, freshness/collector_record.py, lists/owner_line.py, freshness/long_day.py (ADDED). None is under source_dir. The entry's own _note says so in as many words: 'source POINTS AT THE VENDORED DELEGATE ON PURPOSE ... The package entrypoint deliberately holds no boto3: every AWS call this function makes originates in lib/research/api/scoped_amgt.py, which is vendored into the zip.' So source_dir holds the 1-file entrypoint and the code that actually ships is elsewhere by design.",
+      "SCOPE OF THE CLAIM, stated rather than widened: this is measured on ONE function. Whether other entries whose 'source' key points outside 'source_dir' share the shape was NOT swept, and no denominator for that population is printed here.",
+      "SIDE READ, relevant to row D1-S6: the naming limb that REFUSED dd-4's recorder commit on infra/aws/terraform/harvest/CHANGELOG.json did NOT fire this run -- '[naming-gate] DENOMINATOR: 2 path(s) ... NAMING-GATE: PASS 0 graded' -- and CHANGELOG.json committed normally. And artifact_sha256 DID land here where it did not at dd-4, because --code-sha256 was passed explicitly, which does not go through the NULL-recorded-sha 'already-in-parity' branch D1-S6 describes: reconcile printed '0 reconciled, 1 first-recorded, 0 HELD, 0 left unrecorded, 0 already-in-parity' with [FIRST-RECORD] opal-amgt-scoped-api: none -> aAkcp2l1TkaeMnZK.. (live == S3 artifact). That narrows where D1-S6 bites; it does not repair it, and D1-S6 stays with its owner."
+    ]
+  },
+  "spec_asserts": "CTO half NEVER_WIDEN_ROUND81_EE6_CTO_HALF.md@1e8dff07a6 condition 5: 'The deploy runs record-terraform-deploy.sh so the source-map entry carries last_deployed_commit.'",
+  "world_is": "The recorder ran and the entry carries last_deployed_commit, so the condition's text is met -- but the VALUE is dd-4's, not this deploy's, and no invocation of this tool can change that for this function. The field tracks commits under source_dir; this function's shipped code is the vendored delegate under lib/research/, which source_dir excludes on purpose. For opal-amgt-scoped-api, last_deployed_commit is therefore a stale-by-construction field on any code-only deploy, while artifact_sha256 and deployed_code_sha256 do pin the exact deployed bytes. A reader who treats last_deployed_commit as 'the commit this function is running' will be wrong for this entry, and verify-local.sh's source_dir diff will read no undeployed change while lib/research/ has moved.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Nothing is half-landed and nothing is owed on ee-6's behalf: ledger amgt-resapp-r81-ee6-scoped-api-dell1 is CLOSED with all 9 legs proven, leg L7 closing with this gap named rather than glossed. No fix attempted and no name or field hand-edited -- the remedy is a decision, not an edit: either the entry grows a second field naming the build pin of the last applied artifact, or last_deployed_commit's rule gains a vendored-closure arm, or the field is documented as source_dir-scoped so no reader reads it as code currency. For the issuer: CLAUDE.md rule 22a's CODE layer already says to diff deployed bytes against the BUILD INPUT and never by filename, and this field is exactly the filename-shaped instrument that rule warns about -- which is why the sha fields, not this one, are cited as ee-6's currency evidence."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S8",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~RA1",
+  "surfaced_at": "2026-10-09T05:45Z",
+  "one_line": "The /cloud-ops skill's on-box wrapper table names the deploy recorder at .tools/record-terraform-deploy.sh, a path that does not exist; the script lives at infra/aws/lambda/ci/record-terraform-deploy.sh.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The skill's text, quoted from .claude/skills/cloud-ops/SKILL.md's 'THE ON-BOX WRAPPER SET' table: '| deploy-completion ledger | org/critical_paths/change_management/ |' sits beside '| Terraform apply (HALTGT checkpoint) | .tools/safe-apply.sh |', and the Failure-handling section names the recorder as 'record-terraform-deploy.sh tooling failure: known issue (CHANGELOG.json writer + owned-paths-hook on Andrew identity)' with no path, while CLAUDE.md's own wrapper discussion and the skill's commit-hygiene section place every wrapper under .tools/.",
+      "Measured absence with a named-path read, not a search: `ls -la .tools/record-terraform-deploy.sh` -> 'cannot access: No such file or directory'. A directory listing of .tools/ filtered for 'record' returns exactly one row, mstr-record-check.py.",
+      "The real location, found in one comp-find round-trip: comp-find 'record-terraform-deploy' --files -> HEAD band (query in the FILE NAME) lists infra/aws/lambda/ci/record-terraform-deploy.sh, with DENOMINATOR 5868 hits across 73193 files scanned printed beside it. A sibling recorder infra/aws/lambda/ci/record-resource-deploy.sh exists at the same home.",
+      "It is the right script: it ran from that path and did the work (rc=0, commit @5abece2938, source-map entry updated), so this is a wrong-path claim and not a missing tool.",
+      "SCOPE OF THE CLAIM: measured on this one entry of that table. The table's other rows -- .tools/safe-apply.sh, .tools/safe-deploy.sh, infra/aws/ec2/safe-ec2-deploy.sh, infra/aws/ec2/verify-ec2.sh -- were NOT each stat'd, so no denominator is printed for 'how many rows of that table are wrong'."
+    ]
+  },
+  "spec_asserts": "/cloud-ops is the canonical home of the deployment rules and is loaded at launch by every AE cloud seat; its wrapper table is the place a seat looks up which tool to run and where it lives. Its own header says 'THIS SECTION IS CANONICAL -- it is not a refresher and not a mirror.'",
+  "world_is": "One row of that canonical table points at a path with nothing on it. A seat that trusts it gets a 'No such file or directory' at the moment it is trying to close a deploy record, which is the worst moment to be hunting for a tool. The class is the one that skill already carries a correction for in its own text -- the watcher line that instructed a banned relaunch and read as authoritative because it was scoped and specific. Cost of the miss here was one comp-find round-trip and no deploy risk.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Not fixed by this seat: .claude/skills/cloud-ops/SKILL.md is outside this order's <paths>, and the skill is a shared launch surface whose edit belongs to whoever owns it (its own refresh line names 1.0.0_SA_CTO~X, Andrew-direct 2026-08-25). Filed and kept working, per the surprise-channel rule. Suggested minimal edit, for whoever owns it: name the recorder's real path in the wrapper table beside the ledger row, and stat the table's other four rows while in there so the fix carries a denominator rather than a single-row patch."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S9",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~RA1",
+  "surfaced_at": "2026-10-09T06:16Z",
+  "one_line": "to-check.py reads the FIRST paired <status> in an order file while the fabric's convention APPENDS each new status, so 331 of 5020 tracked task orders whose terminal line says complete/superseded/cancelled are reported ACTIVE -- including this round's ee-6 and round 80's dd-4.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Noticed on my own closed order and then measured rather than generalized from it: after AMGT_RESAPP.TO-AMGT-ee-6 was flipped and committed @0e2bbc65ab, `python .tools/to-check.py --all --assignee 0.7.0_AE_CloudOps~RA1` still reads '1 active TOs ... Status: staged'.",
+      "The parse rule, read at the bytes rather than inferred: .tools/to-check.py:120 is `m = re.search(r\"<status>(.*?)</status>\", masked, re.DOTALL | re.IGNORECASE)` -- the FIRST paired element after inline code spans are masked. Its own comment block at :76-95 (FIX C) documents that choice deliberately, and FIX C was aimed at UNPAIRED backticked mentions of the tag in worker-face prose, not at files carrying several real status elements.",
+      "The convention it meets: this project's orders APPEND a new <status> element per GO / amendment / close and never edit the first one, so the first paired element stays the record-face original (`staged`) for the life of the order. ee-6 carries 4 status elements: staged, pending (AMENDMENT 1 + GO), pending (AMENDMENT 2), complete.",
+      "CONTROL, which is what moves this off 'my file is malformed': round 80's AMGT_RESAPP.TO-AMGT-dd-4 -- landed, ledger closed 7 of 7, terminal line 'complete -- landed by 0.7.0_AE_CloudOps~DELL1' -- also reads '[ACTIVE] ... AMGT_RESAPP.TO-AMGT-dd-4' under to-check. Two files, same shape, same misread, and the second one was not written by me.",
+      "DENOMINATOR, printed: 5020 tracked task-order .md files scanned under org/missions, org/tier1_exec, org/tier2_senior and org/tier3_junior (both the task_orders/ and task-orders/ spellings). Of those, 331 carry two or more paired <status> elements whose LAST is terminal (complete / superseded / cancelled) while the FIRST is not. Every one of those 331 reads ACTIVE through this instrument. Masking matched to-check's own rule (inline code spans blanked) so the count is measured against the same text the tool sees, not against raw bytes.",
+      "The 331 are not one project's habit: the sample spans NFRA_REPORT and AMGT_CORPUS as well as AMGT_RESAPP, i.e. the append convention is fabric-wide.",
+      "NOT A PARSE ERROR, which is why it is quiet: the same run reports `parse_errors=0`. The tool is doing exactly what it says; the two conventions simply disagree about which element is authoritative."
+    ]
+  },
+  "spec_asserts": "org/XXX.md's task-order section: statuses are `staged` / `pending` / `complete` / `superseded` / `cancelled`, and `/to-check` is described as the 'Active task-order view ... never drops a file', which a reader uses to answer what is still open. AMGT_RESAPP.TO-AMGT-ee-6 section 5: 'Flip `<status>` to `complete` only if every criterion PASSES.'",
+  "world_is": "Both halves are behaving as written and the result is still wrong for a reader. The order files append; the instrument reads the first element. So 331 of 5020 orders whose own terminal line says they are finished are counted ACTIVE, with parse_errors=0 and no warning anywhere -- a closed order and an open one read identically through the one view whose job is to tell them apart. The failure direction is the unsafe one for a drive tick or a round-close read: it over-reports open work, so a COO or CVO reading to-check sees obligations that do not exist, and the signal gets discounted. WHAT THIS ROW DOES NOT ESTABLISH: which element the fabric INTENDS to be authoritative. That is a convention ruling, not a measurement -- either the instrument should read the LAST paired status, or orders should edit the first element in place instead of appending. Both are coherent; picking one is the issuer's or the CTO's call, and nothing here was changed to pre-empt it.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Found off-task, immediately after ee-6's own close, and filed rather than chased -- nothing was edited. ee-6 itself is genuinely complete regardless of how this is ruled: terminal <status> complete at 0e2bbc65ab, proof-of-spec instance VALID rc=0, ledger amgt-resapp-r81-ee6-scoped-api-dell1 CLOSED 9 of 9 @ee05683b1c, AC1 R81 DEPLOYED YES 2 of 2 and AC2 R80/R79 YES. Cost of the measurement: one scripted read, no live calls. Routed to the issuer rather than to the tool's owner because the convention side of the disagreement is the project's, and a one-line fix to to-check.py without that ruling would silently re-classify 331 orders across several projects at once."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W321-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~321",
+  "surfaced_at": "2026-10-09T06:23Z",
+  "one_line": "AMGT-ee-4 stopped at ASML NA step 2: the merged cutter (opal-filings-fetch/2.0.0) cut NO item (business, risk or mdna) from ASML's live 20-F, so the fetch returned UNRESOLVED-SOURCE and wrote a state marker instead of a silver part; AC1/AC2/AC3 read NO and the other four names were not touched (condition 3).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Invocation (py 3.12.10, anthropic 0.84.0, tree wk-AMGT_RESAPP-321 @a3cf190f46): `py -3.12 -m lib.research.filings.fetch --security-key ASML_NA_Equity --form 20-F --cik 937966 --write-pool --cache-dir .scratch/r81cache` at 2026-10-09T06:20:43Z, rc=0, printed 'UNRESOLVED-SOURCE: ASML_NA_Equity -- the 20-F primary document asml-20251231.htm parsed to 1374962 chars but no named item (business, risk, mdna) could be cut from it'.",
+      "Per-item reasons printed: business: 'item4[.,:;-]*b[.,:;-]*businessoverview' 0 raw matches, 'b[.,:;-]*businessoverview' 1 raw match which is a contents line (0 qualified); risk: 'item3...d...riskfactors' 0 raw, 'd...riskfactors' 2 raw, 1 not at line start and 1 contents line (0 qualified); mdna: 'item5...operatingandfinancialreview' 0 raw, 'operatingandfinancialreviewandprospects' 1 raw, a contents line (0 qualified).",
+      "The send output: 'OK: uploaded s3://opal-data-harvest/amgt/harvest/state/filing_attempt/security_key=ASML_NA_Equity/UNRESOLVED-SOURCE.json ContentLength=2338'. list_object_versions on that prefix reads ONE version, XCTQo1uW9rvomS3k12_BqMRLq4EFm81B (2026-10-09T06:20:48Z), IsLatest True: the key is NEW, so it has no prior VersionId to copy back and rolling it back would be a delete, which the order bars.",
+      "Re-read after the stop: silver sec filing_source still holds ONE part (date=2026-09-22/part-20260922T033157Z.parquet); ASML analysis key head VersionId WIU.oSeIh8NKMhy2DfqsJmRwGOusYTxs and drafting key head VersionId FWeloN5.zr6pvN1NWUXScK5RakjwF1qV, both equal to the pre-act record. No model call was made.",
+      "Criteria at the stop: AC1 'R81 STORE AC1 SERVED: NO' exit=1 (S1-S3 FAIL); AC2 'R81 STORE AC2 SERVED: NO' exit=1 (T1 PASS, T2 FAIL refusal sentence x2, T3 FAIL 0 Item 4.B locations); AC3 'R81 EE4 CENSUS: NO' exit=1 (E1 PASS, E2-E4 FAIL, all five still at parser 1.0.0)."
+    ]
+  },
+  "spec_asserts": "AMGT-ee-4 order section 1 and the COO half's EXPECTED OUTCOME: the merged cutter 'cuts a business section from its own heading'; the two branches named are 'heading present: business text is served' and 'heading absent: business FAILED with its reason in the stored source, risk/mdna as today's patterns cut them'. The COO half's blast radius is three keys per name and 'NO other key'.",
+  "world_is": "A third outcome, which neither branch names: on ASML's 2025 20-F all three items fail to cut, so build_source_object returns UNRESOLVED-SOURCE (no silver row is built at all) and fetch.persist routes that object to STATE (amgt/harvest/state/filing_attempt/...), a fourth key outside the pair's blast radius. That key is write-once and was empty before; it is served only when a name's drafting status is ABSENT (scoped_amgt.py read_thesis_bundle), and ASML's drafting is SERVED, so the live page is unchanged (AC2 T1 200, refusal sentence still x2). I did not delete it (R2). The silver, analysis and drafting keys were not written, so there is nothing to roll back for ASML NA; the BABA, NU, PBR and SAP names were not fetched. The cut for ASML needs a pattern that reads this filing's own headings (the business item's only match is a contents line), which is a producer change outside this order's paths.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Change-management entry amgt-resapp-r81-ee4-store-half-dell1: legs closed with the STOPPED proof, no leg claims a rewrite. Open for the issuer: whether the new ASML UNRESOLVED-SOURCE.json state key is acceptable to leave in place (it makes a future CHANGED outcome for ASML write a held marker, and would surface its reason if ASML's drafting ever went ABSENT), and whether the BABA, NU, PBR and SAP cuts should be dry-run (build_source_object without --write-pool) before any further write, since the same cutter would now be applied to them. I made no dry run: the order's act is the write."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W327-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~327",
+  "surfaced_at": "2026-10-09T07:20:41Z",
+  "one_line": "AMGT-gg-5 AC1 cannot read YES on the worker's commit: the order forbids editing scoped_amgt.py, and the route serves price_series only once the issuer's one wiring line passes the loader",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The order's AC1 invocation runs the in-process handler (scoped_amgt.handler) on the tree. scoped_amgt.py:6728 calls timeline_api.get_timeline without price_loader; the order (section 1 item 4) reserves that line for the issuer at the merge, so the worker commit serves no price_series and AC1 prints 'FAIL T2 price_series: None', 'FAIL T3 ... source named: ''', 'R82 TIMELINE AC1 SERVED: NO', exit=1.",
+      "Control that the reader and route do the work: the same check re-run in a scratch wrapper (.scratch/wired.py, not committed) that binds price_loader=lib.research.price.price_history.timeline_price_loader onto timeline_api.get_timeline, against the live stored objects (read only) printed 'PASS T2 price_series: 192 points, 2026-01-02 .. 2026-10-07', 'PASS T3 prices inside 2026-01-01..2026-10-08 and source named', 'R82 TIMELINE AC1 SERVED: YES', exit=0.",
+      "The reader's own tests (lib/research/price/tests/test_price_history.py, 14 plants incl. the route with and without a loader) pass; the price folder is 56 passed."
+    ]
+  },
+  "spec_asserts": "The order's AC1 expects 'R82 TIMELINE AC1 SERVED: YES; and exit=0' from the worker's commit, while its section 1 item 4 forbids the worker to edit scoped_amgt.py, the only place the loader is passed.",
+  "world_is": "Two clauses of one order cannot both hold at the worker's HEAD: AC1 reads NO and exits 1 until the issuer adds the wiring line at the merge; it reads YES the moment the line is in (measured through a scratch wrapper doing exactly that).",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Wiring line for the issuer: in scoped_amgt.py _serve_timeline_body, the get_timeline call (~:6728-6735) gains `price_loader=__import__('lib.research.price.price_history', fromlist=['x']).timeline_price_loader,` after `word_cloud_builder=_word_cloud_block,` -- or the same via a normal `from lib.research.price import price_history` in the function and `price_loader=price_history.timeline_price_loader`. No IAM change (bloomberg/harvest/bronze/* already read). A raising loader turns the whole timeline into the route's error envelope, as the word-cloud builder does; AC1 should be re-run at the merge."
+}
+```

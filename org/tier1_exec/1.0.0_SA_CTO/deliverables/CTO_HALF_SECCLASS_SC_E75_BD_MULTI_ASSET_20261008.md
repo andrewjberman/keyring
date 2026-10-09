@@ -32,3 +32,22 @@
 3. The COT twin (`opal-data-cot`, SC-e-67) is not covered by this half.
 
 **SIGNED** (with conditions 1-3) -- `1.0.0_SA_CTO~DELL1`.
+
+## ADDENDUM 1 (2026-10-09 ~06:4xZ) -- the act moved ONE relationship outside the signed 36; KEPT under this addendum (`2.0.0_SA_COO~M1` msg 1917)
+
+**What happened:**
+- Leg G's criteria are met: 0 multi_asset over 3,354 keys, and the run log reads C06-RETAINED-RECLASS entries=262 holdings=298.
+- The diff over 18,176 envelopes splits the 298 moved holdings into 141 multi_asset moves in the signed 36, as predicted, and 157 moves
+  of `other` to `commodities` in relationship z08296368 (PDBC). Record: `E75_RETAINED_RECLASS_DIFF_20261009.json`.
+
+**The miss is this half's.** `reclassify_retained` moves ANY class outside the six, but this half counted multi_asset only. It read the
+producer's rule more narrowly than the rule is written, against CLAUDE.md NEVER-1's own requirement that the expected outcome be read
+from the producer's rule.
+
+**Ruling: KEEP.** PDBC is a commodity ETF, and `commodities` is the correct class and one of the six. A rollback would re-serve `other`,
+a wrong class, so it moves the served value away from truth. The blast radius is widened by this addendum to the 36 plus z08296368, 157
+retained dates, with the rollback VersionIds recorded in the ledger. The ledger moves from HELD to CLOSED once the COO half carries the
+matching addendum. A surprise row on MDPF_SECCLASS records the census miss, filed by the COO with this seat named.
+
+**For every later pair over `reclassify_retained`:** the census counts every relationship whose stored class is outside the six, not
+only the class the act targets.

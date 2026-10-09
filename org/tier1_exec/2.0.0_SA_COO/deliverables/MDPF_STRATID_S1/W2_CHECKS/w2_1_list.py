@@ -45,7 +45,8 @@ def main() -> int:
         return {m for rx, m in compiled if rx.search(name)}
 
     probes = [("Pathfinder Disciplined Equity", {"pfde"}), ("Pathfinder Focused Opportunity", {"pfoe"}),
-              ("Opal_Muni_Income", {None})]
+              ("Opal_Muni_Sleeve", {None}),
+              ("Opal_Muni_Income", set())]  # A7: Andrew-direct ~05:3xZ, Opal_Muni_Income is a Custom model, no rule
     for name, want in probes:
         if members(name) != want:
             return bad("rules give %r for %r, want %r" % (members(name), name, want))

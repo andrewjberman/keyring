@@ -55,6 +55,15 @@ Do, in `infra/aws/ec2/opal-gateway/` (read `app/tools.py` lines ~1030-1220 first
 6. Run, each in its own process, and state totals: the new file, the three Teams suites, the three identity-scope suites,
    `tests/test_tool_classification_composition.py`.
 
+**AMENDMENT A1 (issuer, 2026-10-09 ~05:1xZ; your rows Z-W44-S1 and S3).** Three more tests pin the concierge as scoped
+and are now in `<paths>`: `tests/test_teams_reader_fallback.py` (line 75 reads `_SEED[...]`), `tests/test_transcript_tools.py`
+(`test_scoped_and_restricted_principals_denied`) and `tests/test_login_admit_r24.py` (`test_oglg1_ac05`). Move ONLY the
+pinned expectation in each, the same way you moved the identity-scope suites (a fixture address carrying the old seed
+where the test's subject is "a scoped identity"; the real concierge where its subject is the concierge); name each line;
+delete or rename no test. Then re-run both criteria and every suite you ran. The fail-closed channel path for the
+concierge (no `User.ReadBasic.All`, no `ChannelMember.Read.All` consented) and the re-consent are ACCEPTED as written;
+they go into r30's halves, not this cell.
+
 `W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~44/`.
 
 ## 2. BOUNDS
@@ -75,6 +84,9 @@ infra/aws/ec2/opal-gateway/tests/test_opal_users_gate.py
 infra/aws/ec2/opal-gateway/tests/test_identity_scope.py
 infra/aws/ec2/opal-gateway/tests/test_identity_scope_status_row.py
 infra/aws/ec2/opal-gateway/tests/test_scoped_consent_r253.py
+infra/aws/ec2/opal-gateway/tests/test_teams_reader_fallback.py
+infra/aws/ec2/opal-gateway/tests/test_transcript_tools.py
+infra/aws/ec2/opal-gateway/tests/test_login_admit_r24.py
 org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~44/
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -105,10 +117,12 @@ Rows: id `NFRA_OPLGTW-Z-W44-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - Round 32, workstream GATE-R30: the issuer held Andrew's Bloomberg mirror out of r29 (OG-rl-15 A6 @38f240bdab) because
   it must ship WITH this gate ("same release or neither"); this cell builds both for r30, cut right after r29 drains.
 - The data-grant half of the mirror is a release-time operator write under r30's halves.
+- A1 (2026-10-09): three seed-pinning tests added to <paths> (rows Z-W44-S1, S3); channel fail-closed and re-consent
+  carried to r30's halves. Graded by no gate limb as a modification.
 - Pre-cut: tg1.AC1 base FAIL as expected (test file absent); tg1.AC2 base PASS as expected (teams_format 35, reader_fallback
   5, route 21, none removed; identity_scope 10, status_row 4, scoped_consent 7 rc 0).
 
-<status>pending</status>
+<status>complete</status>
 <round>32</round>
 <workstream>GATE-R30</workstream>
 <slot>~44</slot>

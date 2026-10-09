@@ -153,3 +153,92 @@ too." The PRD is amended to v0.8 with **FWD-11** @e8b44a8379. The CVO's re-sign 
 Each firm's served release later goes under its own pair.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 5 (2026-10-09 ~05:2xZ) -- round 36 (CVO slug msg 2545, `ADJUDICATION_v21.md` @37daf4f637)
+
+**Measured:**
+- MAY-CLOSE, ARMED 0.
+- The R35 rollback was measured live: the code is at the anchor, and the role policy is returns-only.
+- 7 rows are OPEN for round 37.
+
+**RULED, W48-S1 (Cottonwood's tie-out is 0 of 61 by structure):**
+- No Commonwealth window overlaps Black Diamond's value coverage, and Black Diamond is Cottonwood's own registered master, so a BD tie-out would
+  be circular. Today there is NO independent overlap source.
+- FWD-11's Cottonwood tie-out clause is graded **NOT MEASURABLE**, carried as a named gap. It is not passed and it is not waited on.
+  - Owner: ADVI_COTBKF (`~C2`), whose Commonwealth rebuild extends the history.
+  - Un-park condition: any window where a Commonwealth-sourced value series and Opal's series both exist.
+- Cottonwood's other FWD-11 clauses (the page, the gold tables, the stated gaps) proceed now.
+- No cross-firm data is used to manufacture an overlap (the cross-firm rule).
+
+**RULED, W49-S3 (two Inflection flow classes depart from the ratified `orion_cashflow_taxonomy.yaml` by measurement):**
+- The ratified taxonomy governs until it is amended. A measurement does not overrule it inside a worker cell.
+- `~D2` cuts ONE cell to write the amendment proposal under the taxonomy law (rule 24): the four-postulate record, a word-boundary token census,
+  and the two classes' measured effect on the returns.
+- Until then the adapter maps by the ratified taxonomy, and the output flags those two classes with their counts. This seat rules on the
+  proposal when it lands.
+
+**Round 37:** `~D2`'s re-cut as listed (the lots key, HEAD pins, the Orion registry row, a like-for-like compounded fee tie-out for Inflection),
+plus the W49-S3 proposal cell.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 6 (2026-10-09 ~06:5xZ) -- round 37 (CVO slug msg 2703, `ADJUDICATION_v22.md` and `REMEDIATION_v18.md` @153e101791)
+
+Round 37 MAY-CLOSE: 5 orders, 0 judgment criteria, ARMED 0, 4 rows OPEN.
+
+### Decision 1: W49-S3, the Orion flow taxonomy -- the proposal is ADOPTED (option 4, additive keys)
+
+Read: `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~54/ORION_TAXONOMY_AMENDMENT_PROPOSAL.md`, the rule-24 record. It covers:
+- MECE by subtraction from 48 entries, after a falsified domain read over 64,024 files;
+- SAME GRAIN;
+- INTENT COHERENCE;
+- STATE COHERENCE, naming each value that does not move.
+
+1. **The four entries gain `account_boundary`:** Internal Account Journal In (`in`), Out (`out`), and Federal and State Tax Withheld (`out`).
+   - The two tax entries also gain `account_boundary_when: before_tax_return`.
+   - No `bucket` and no `nna_direction` moves. Served NNA does not move, and the 2026-05-11 ratification Items 1 and 2 stand.
+2. **The tax pair is IN scope.**
+   - **Why:** it is a property of the return BASIS (the vendor figure is before-tax), which the qualifier states.
+   - A consumer on an after-tax basis ignores the key, so it is not a fit dressed as a rule.
+3. **The three declared-unmeasured members** (Foreign Tax Withheld, Foreign Dividend Tax, Tax Credit) **stay inside the value,** untagged.
+   - They are measured first when a sample carries them. This is an enrichment item, not a guess.
+4. **The return adapter reads the keys from the ratified file** and drops `orion_sources.json`'s `inter_account_comment` and
+   `tax_withheld_comment` departure. One source of truth; this was W49-S3's defect.
+5. **Measured effect, one sample (562 account-windows, 0.35 pp):**
+   - like-for-like gross (Orion's gross figure): 291 to 418;
+   - net: 293 to 421.
+   This is a fit at one snapshot. The scheduled tie-out re-reads it on every landing.
+6. **W54-S1 rides the same edit:** the taxonomy's title, comment and `total_type_desc_entries_v2` read 48.
+7. **NOT ruled here:** whether the estate wants ONE account-grain TWR flow axis (the `a05` `gips_class` and `c00` default). That is a later
+   proposal, and none is ordered.
+
+### Decision 2: W53-S1, Orion's gross read live -- ADOPTED as remedied
+
+Orion's gross-of-fees return lands as a silver input with its own as-of, at an `address()` output. The tie-out reads the landed figure, never a
+live pull per run. Egress is open for this pull (law 4d77a9c3ea); Orion is not Bloomberg.
+
+### Decision 3: W53-S2, the Inflection fee slices -- PARTIAL is stated
+
+The supervised and billed slices print as PARTIAL, naming 526 of 562 with `IncludedInBilling` unreadable. A slice is never shown as complete. A
+readable billing flag is an enrichment item.
+
+### Decision 4: D2-W51-S1, the R37 apply -- signed
+
+The CTO half is GIVEN @e64eb96736. The root restore to `efeb21df71` is precondition 2. The Lambda `dry_run` REPORT under the 85% line gates the
+first fire.
+
+### Enrichment list (round 38)
+
+1. **The R37 apply,** under both halves, with A1 to A7 read.
+2. **The taxonomy edit:**
+   - the four keys plus the 48 header count, by the taxonomy's owner lane;
+   - the adapter reads the keys from the ratified file, and the `orion_sources.json` departure is removed;
+   - the tie-out is re-read on both bases.
+3. **Land Orion gross** as silver with its as-of (W53-S1); the tie-out reads it.
+4. **The fee slices print PARTIAL,** with the denominator (W53-S2).
+
+**Carried, not cut:**
+- the svc-custody-statement mint and CU-g-2a on `~DB2`, which wait on IB-pr-385 and release 6 being live (an ordering of other seats' acts);
+- FWD-8's tolerance, at Andrew's word.
+
+-- 1.0.0_SA_CTO~DELL2

@@ -1,0 +1,12 @@
+{
+  "prd": "NFRA_GATSCP_PRD.md",
+  "prd_version": "v0.2",
+  "prd_pin": "7cb6183997e71bc49e8d68a092fdfd297ad29aea",
+  "half": "ratified-text",
+  "half_hash": "94803c445122efefcbc41a8b3c5c19266ad86749c1a121fe2dd5b8624eecf835",
+  "endpoint_hash": "5d2bbeaf8a8462fe4937d0198a0f2b277d76b35a3bd63a284320c451fe499975",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_GATSCP_v0.1_L4R_RATIFIED_TEXT_REVIEW_20261009.md@1b2002595e",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-10-09T06:52:27Z"
+}

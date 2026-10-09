@@ -2382,3 +2382,90 @@ Checks:
 | `IB-pr-391` | release packet: svc-commentary composition-read Lambda (IB-pr-386) | NFRA_TRNSPT FWD-10 H2 | WORLD | IB-pr-386 drained | P97-d |
 
 fanout: 4 of 4 chains, cap 8, reason: independent artifacts. Assignees: 0.9.0_WK_IRPT_BCKEND~199, ~200, ~201, ~202.
+
+## 91. ROUND 98, WORKSTREAM ~P (2026-10-09 ~06:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 2621 and 2655)
+
+Two cells:
+- **H1 is WITHDRAWN** (CTO msg 2621, rescinding msg 2507 (a), on ~Y2 msg 2610). IRPT_ANLREQ's I3 queue is the one trigger, so IB-pr-388's
+  mapping and grant are removed before any apply. Nothing was ever planned or applied.
+- **FWD-14, the holdings publish gate**, is admitted at v0.32 with both halves signed (CTO msg 2655; Andrew-direct @f8e7d992dd). It is
+  folded into ~P after the ~M Holdings workstream closed. S392 retires once FWD-14 is deployed and its first scheduled fire is read; until
+  then today's manual read stands (armed, 14:47Z).
+
+Workers come from ~P's agreed block ~260..~299 (~M2 msg 2557, ~Y2 msg 2560). Checks: `deliverables/2.0.0_SA_COO~P2/checks/r98/p98_h1_withdraw.py`
+(AC1 FAILs at base, AC2 PASSes) and `.../r98/p98_fwd14.py` (AC1 and AC2 FAIL at base).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-392` | H1 withdrawn: delete ready_trigger.tf (mapping + kms grant) | NFRA_TRNSPT FWD-10 | WORLD | IB-pr-388 drained | P98-a |
+| `IB-pr-393` | FWD-14 holdings publish gate: WORSE does not re-point; refusal record at address(); closed account listed | FWD-14 | WORLD | none | P98-b |
+
+fanout: 2 of 2 chains, cap 8, reason: independent cells. Assignees: 0.9.0_WK_IRPT_BCKEND~260 and ~261. The FWD-14 deploy is a never-widen
+pair after the cell.
+
+## 93. ROUND 100, WORKSTREAM ~P (2026-10-09 ~06:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 2726 and Andrew's release-now)
+
+IB-pr-390's pair is complete: COO half @567612e686, CTO half @b97ebb6b98 (msg 2726), with conditions:
+- the replay is re-run before the ledger;
+- the ledger states the pin and the six sha256;
+- after-read 2 is satisfied by the replay, with no profile edit;
+- the two held hosts stay held.
+
+Andrew's word (via ~V2 msg 2536) releases it now and standalone. MSTR seated `0.7.0_AE_CloudOps~IB2` for it (msg 2725). Round 98's IB-pr-393
+(FWD-14) is complete and drained @42793c81fc; its row W261-S2 (cottonwood closed-account marking) is asked of the CTO before its pair.
+Check `deliverables/2.0.0_SA_COO~P2/checks/r100/p100_apply_390.py`: AC1 and AC2 FAIL at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-395` | apply IB-pr-390 on 6 hosts (replay before ledger; held hosts untouched) | FWD-2 / IRPT_ANLREQ FWD-1 | WORLD | IB-pr-390 pair GIVEN | P100-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one release. Assignee: 0.7.0_AE_CloudOps~IB2.
+
+## 94. ROUND 101, WORKSTREAM ~P (2026-10-09 ~07:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 2738)
+
+IB-pr-393 (FWD-14 gate) is graded 2/2 PASS and drained @42793c81fc. Its row W261-S2 found that the v0.32 closed-account exemption cannot fire
+for a firm whose directory marks no closures: cottonwood is all UNKNOWN. The CTO ruled PRD v0.33 (@13ee60595d), and the CVO admitted it
+(msg 2744): for such a firm, account_lost is LISTED and never refuses alone. One follow-up cell builds it; the FWD-14 release pair follows.
+IB-pr-395 (the 390 release on 6 hosts) is out to 0.7.0_AE_CloudOps~IB2. Check `deliverables/2.0.0_SA_COO~P2/checks/r101/p101_v033.py`:
+AC1 PASSes at base as a regression guard (the 15 existing gate tests plus the suite); AC2 FAILs.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-396` | FWD-14 v0.33: all-UNKNOWN firm's account_lost listed, not refusing | FWD-14 | WORLD | IB-pr-393 drained | P101-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one change. Assignee: 0.9.0_WK_IRPT_BCKEND~263.
+
+## 92. ROUND 99, WORKSTREAM ~P (2026-10-09 ~06:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 2690 via ~V2 msg 2691)
+
+IB-pr-390 (385+387 release packet, under AMENDMENT 1) holds two of the eight served.py hosts out:
+- irpt-holdings: parity gate, row W201-S5;
+- irpt-narrative: TypeError on the new served.py, row W201-S6.
+
+The CTO orders their fix and release as the next cell, because IRPT_ANLREQ FWD-1's seat run starts only when every route reads ONE. The
+cell branches from IB-pr-390's code pin (@74a62fb46c), so it builds on the new served.py. Round 98 is drained (@1aad66a284); IB-pr-392 (H1
+withdrawn) is complete @f8b570d0f4. Check `deliverables/2.0.0_SA_COO~P2/checks/r99/p99_held_hosts.py`: AC1 and AC2 FAIL at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-394` | irpt-narrative TypeError + irpt-holdings parity gate fixed, restaged, release packet | FWD-2 | WORLD | IB-pr-390 code pin @74a62fb46c | P99-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, two hosts on the same served.py. Assignee: 0.9.0_WK_IRPT_BCKEND~262.
+
+## 95. ROUND 102, WORKSTREAM ~P (2026-10-09 ~07:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 2748 and 2765)
+
+The CTO's halves are given for IB-pr-391 (the composition reader, standalone after 395, @a946f8b829) and for IB-pr-394's irpt-holdings
+(@7f294053f0). irpt-narrative is HELD: its rebuild widens a no-row internal caller (row W262-S1). ~V2 has amended svc-commentary's pair,
+which meets 391's precondition. IB-pr-396 (FWD-14 v0.33) is graded 2/2 PASS and drained @5eeef73870. FWD-14's release packet is now
+cuttable (msg 2748). IB-pr-395 (the 390 release) is applying on ~IB2.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r102/p102_cells.py`: every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-397` | apply the composition reader (391) on ~IB2 | NFRA_TRNSPT FWD-10 H2 | WORLD | IB-pr-395 closed | P102-a |
+| `IB-pr-398` | apply irpt-holdings only (394) on ~IB2; narrative untouched | FWD-2 | WORLD | IB-pr-395 closed | P102-a |
+| `IB-pr-399` | narrative TypeError fix keeping the opal-capital binding (no widening) + release packet | FWD-2 | WORLD | IB-pr-394 drained | P102-b |
+| `IB-pr-400` | FWD-14 release packet (runner bundle carrying the publish gate) | FWD-14 | WORLD | IB-pr-393, IB-pr-396 drained | P102-c |
+
+fanout: 3 of 3 chains, cap 8, reason: lane ~IB2 runs 397 then 398 in order; two independent worker cells. Assignees:
+0.7.0_AE_CloudOps~IB2 (397, 398), 0.9.0_WK_IRPT_BCKEND~264 (399), ~265 (400).

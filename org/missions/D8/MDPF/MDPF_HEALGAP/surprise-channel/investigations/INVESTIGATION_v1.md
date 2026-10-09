@@ -559,6 +559,32 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "D1-S7: the served satellites registry reads as_of 2026-10-07 on 2026-10-08.",
     "world_is": "Served keys read as_of 2026-10-08 from 16:07:36Z. The structural cause (a 07:00Z cron coupled to the runner's fire time) remains until the stamp chain lands."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S9",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+    "surfaced_at": "2026-10-09T07:21:10Z",
+    "one_line": "R2-1 / HG-t-8 cannot be committed as written: the naming commit limb REFUSES the order's own verbatim statement text. naming-gate.py grades the added Resource literal a NEW hand-kept carrier of the firm token 'cottonwood' and demands it be read through lookup('cottonwood') -- a form a .tf file cannot express. The three identical literals already in the same resource are graded EXISTING and only WARN, so the refusal turns on the line being new, not on the name being wrong.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit 2026-10-09 ~07:13Z: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' NAMING REFUSE infra/aws/terraform/opal-assets/cot_rebalancer_runner.tf:94 arn:aws:s3:::{x}/blackdiamond/cottonwood/meta/*-result.json -> lookup('cottonwood'); why: NEW hand-kept carrier (context rule). NAMING-GATE: REFUSE 1 graded, denominator 1 of 1 seen.",
+        "naming-gate.py:1737 returns REFUSE for a NEW hand-kept carrier and :1738 returns WARN for an EXISTING one, so newness alone is the discriminator. The same file already carries the literal at :85, :86 and :102 (grep over the one named file, 7 'cottonwood' hits).",
+        "The gate's only sanctioned admission for this shape is the R20 DECLARED EXCEPTION at naming-gate.py:1721-1731, 'THE ONE CONSUMPTION POINT', which needs a waiver entry whose read_context.kind is r20_exception with a register_ref row id, an occurrence count, a cutoff, an owner, and an authority{record,pin} that authority_ok() (:1295) verifies by resolving a full 40-hex pin and finding the ruling id as a whole token in the blob at that pin. CLAUDE.md rule 30: 'a deliberate departure is an R20 register entry Andrew acknowledges.'",
+        "CLAUDE.md rule 30 non-application reads 'existing pipelines -- each reaches conformance through its own migration project (R19), never as a rider', and opal-assets/cot_rebalancer_runner is an existing pipeline: the doctrine exempts this edit while the mechanical gate still refuses it.",
+        "No declared carrier exists to reference instead: monolith.tf:58-59 declares only locals.monolith_bucket = 'opal-data-assets', and :89 a firms-per-tree map blackdiamond = ['cottonwood']; there is no local holding the cottonwood key prefix.",
+        "THE WORLD IS UNTOUCHED AND THE SHARED TREE IS CLEAN. No ledger was opened (nothing began, so an OPEN entry with stranded legs would itself be the drift class). Live get-role-policy cot-rebalancer-runner-write-cot reads 3 statements, no GetObject. The edit was reverted and the revert proven: git diff 0 bytes, 0 occurrences of ReadOwnRunResult in the worktree, and C1 back to its base reading 'IAM-BAD statements granting s3:GetObject: 0 (want 1)'. The refused patch is kept at org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/healgap_r2_1_ReadOwnRunResult_REFUSED_BY_NAMING_GATE.patch (925 B) so the act is one apply away once the call clears.",
+        "The apply side would have refused too (safe-apply.sh:183 the naming limb, :262 and :321 BLOCKED), so no bypass of the commit limb would have landed this either."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's own conditions: 'Naming gate REFUSES hand-typed names (rule 30, msg 1355): no new name or address here; a refusal is a missing registry row to report, never a workaround.' Scope 2 gives the statement text verbatim and says 'Touch nothing else. Commit via safe-commit.'",
+    "world_is": "There is no missing registry row to add: 'cottonwood' is already a known firm segment, which is exactly why carrier() flags it. The gate wants the literal read through the builder, and Terraform has no such call, so the order as written cannot pass its own stated commit path. Nothing this seat may do clears it: safe-commit --force covers contamination only, never a lane or limb refusal, and an R20 entry needs an authority record Andrew acknowledges. CALL, routed to 2.0.0_SA_COO~G1 and 1.0.0_SA_CTO~DELL1: either (a) land an R20 declared-exception entry for this literal under Andrew's word, (b) rule that rule 30's existing-pipeline non-application admits it and have an authorised seat carry the waiver, or (c) re-cut the act so no new firm-token literal is typed. The order is P1 and must land before ~20:00Z, so the call is time-boxed.",
+    "notes": "Reported, not worked around. Distinct from MDPF_HEALGAP-D1-S7/S8, which concern the satellites producer's clock coupling, not the naming limb. The same class will refuse any future new firm-token literal in an existing pipeline's .tf, so the disposition is worth more than this one order."
   }
 ]
 ```

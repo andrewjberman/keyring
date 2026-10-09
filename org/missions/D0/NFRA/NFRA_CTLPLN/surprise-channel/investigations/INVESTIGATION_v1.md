@@ -5856,3 +5856,326 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "No prefix is refused at the S3 identity layer, so the order's rule changes nothing in the transcripts root. The write path also needs the key: the bucket encrypts every object under the transcripts key and the key policy lets the Dell users decrypt only (Andrew-direct 2026-10-07). The two earlier TO-RUN orders ran under the laptop identity for that reason. Nothing was widened; whether dell2's own seat should hold kms:GenerateDataKey and kms:Encrypt on that key is the CTO's call and a never-widen act."
 }
 ```
+
+## NFRA_CTLPLN-W14-S45 -- AMENDMENT 25 asks for dell1's PutObject arm to read refused, but dell1's S3 identity leg on the jobs prefix reads allowed (the group's S3 policy), so the arm can only be refused as the composed SSE-KMS write (S3 leg AND key leg); 
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S45",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T04:12:19Z",
+  "one_line": "AMENDMENT 25 asks for dell1's PutObject arm to read refused, but dell1's S3 identity leg on the jobs prefix reads allowed (the group's S3 policy), so the arm can only be refused as the composed SSE-KMS write (S3 leg AND key leg); the check composes the two and prints both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py -> 'PUT cloudops-dell1-agent-user s3:PutObject (identity leg) on arn:aws:s3:::opal-data-transcripts/teams/transcripts/silver/research_meeting/date=2026-10-08/x.parquet -> allowed ; kms:GenerateDataKey (key leg) -> implicitDeny ; SSE-KMS PutObject composed (both legs) -> refused'; the same line for the dell2 user reads allowed, allowed, allowed.",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~14/NFRA_CTLPLN.TO-CT-a-1.amendment24.transcripts_and_controls.outputs.txt: the LIVE principal s3:PutObject is allowed for dell2 by cloudops-dell-agent-deploy-policy, a group policy, so dell1 holds the same S3 allow."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 25 item 2: dell1_generate_refused=True is 'the same two arms for dell1, refused (the negative control)': kms:GenerateDataKey on the key and a PutObject on one key under teams/transcripts/silver/research_meeting/.",
+  "world_is": "The group's S3 policy lets both Dells put under the opal buckets, so dell1's PutObject is refused only at the key, not at S3. The field dell1_generate_refused reads True when dell1's GenerateDataKey is not allowed AND the composed write (S3 leg and key leg) is refused; the S3 leg stays allowed and is printed. Row NFRA_CTLPLN-W14-S44 (dell2's write failing at GenerateDataKey) is resolved by amendment 25 for dell2 once applied; dell1's real PutObject still fails at the key, by the CTO's ruling (b), 'dell1 is not asked'."
+}
+```
+
+## NFRA_CTLPLN-W14-S46 -- The transcripts root carries another cell's undeployed changes (commentary.tf: a new terraform_remote_state data source, the commentary policy and function), so an UNTARGETED plan or apply of the root
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T04:44:44Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S46",
+  "one_line": "The transcripts root carries another cell's undeployed changes (commentary.tf: a new terraform_remote_state data source, the commentary policy and function), so an UNTARGETED plan or apply of the root moves more than the one key policy this order builds; the apply of the key policy should be targeted at aws_kms_key.transcripts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "resource-address diff of infra/aws/terraform/transcripts between 5c1d0af92c (the state whose key policy is live) and this branch: added data.terraform_remote_state.irpt_core; body-changed aws_iam_policy.commentary, aws_lambda_function.commentary and aws_kms_key.transcripts; the first three arrive with box/laptop commit 424998b161 (NFRA_TRNSPT TO-TR-c17, 'DESIRED, not applied').",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~14/NFRA_CTLPLN.TO-CT-a-1.amendment26.plan_by_reading.txt"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 26 item 6: plan note section O gives the expected plan by reading for each root (identity, transcripts), and 'nothing else may move'.",
+  "world_is": "For the identity root the diff against the last applied state is exactly one added resource. For the transcripts root the tree also holds NFRA_TRNSPT's pending commentary changes, so 'nothing else moves' holds for this order's edit (only aws_kms_key.transcripts changed by it) but not for the root as a whole; section O says so and names the target. INERT: every apply of the root carries those changes whether or not this order's edit is applied."
+}
+```
+
+## NFRA_CTLPLN-W14-S47 -- KMS returns the principal list of a key-policy statement in no fixed order, so check_transcripts_dell_decrypt.py's 'live key policy equals the render' guard read False on one run and True on the next 
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T04:44:44Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S47",
+  "one_line": "KMS returns the principal list of a key-policy statement in no fixed order, so check_transcripts_dell_decrypt.py's 'live key policy equals the render' guard read False on one run and True on the next with the live key unchanged; the comparison now treats a principal list as a set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "same command, same live key policy, two consecutive runs on 2026-10-09: live_same False then True before the fix; the saved normalised statement showed principals [dell2, dell1] in one read and [dell1, dell2] in another.",
+      "after the fix (norm_statement sorts list values): three consecutive runs read live_same True."
+    ]
+  },
+  "spec_asserts": "Row NFRA_CTLPLN-W14-S40 and AMENDMENT 6 item 2 treat the guard's False as the apply having happened ('false after the apply by construction').",
+  "world_is": "A False from this guard has a second cause that needs no apply: principal-list order. A False read before the fix was therefore not by itself evidence that the key policy had been applied. Fixed in tests/check_transcripts_dell_decrypt.py (norm_statement); the guard is unchanged otherwise."
+}
+```
+
+## NFRA_CTLPLN-W14-S48 -- A shell on mdpf-daily-runner runs as mdpf-daily-runner-ec2-role, whose census verdict is NO (own policies only) but which the directory runner uses to assume the 49 Financial source principal role; and IAM lets both Dells send the
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T05:21:18Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S48",
+  "one_line": "A shell on mdpf-daily-runner runs as mdpf-daily-runner-ec2-role, whose census verdict is NO (own policies only) but which the directory runner uses to assume the 49 Financial source principal role; and IAM lets both Dells send the two resident documents to the same host beside the shell (cross-pair).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/reached_roles_census.json:1679-1694 (host i-02448edb624a7a7cf, role mdpf-daily-runner-ec2-role, NO-ROUTE-FOUND) and :6046-6060 (the role's row: status READ, no iam/trail/delete reach).",
+      "infra/aws/terraform/investor-reporting/directory/principal_49f.tf:1-12: the 49 Financial source set 'reads through THIS role, assumed by the host for that firm only', because the host role itself must never hold those reads (cross-firm fence).",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~14/NFRA_CTLPLN.TO-CT-a-1.amendment28.a27_cross_pairs.outputs.txt: both Dells, irpt-ycharts-run and irpt-ycharts-deploy sent to i-02448edb624a7a7cf -> allowed (per-resource allowed, allowed); a group-Allow document to the same host -> implicitDeny."
+    ]
+  },
+  "spec_asserts": "AMENDMENT 27 item 2: 'AWS-RunShellScript on that host joins the standing shell Allow'; item 1: STOP only if an explicit Deny names the host on purpose. The census verdict NO for the host's role is the grant's precondition as ruled for the resident host (resident_host_role=NO).",
+  "world_is": "No Deny names the host (read at nfra-ctlpln-identity: no instance ARN in any Deny of any policy file or in routes.tf/modules/routes_policy), so the grant was written as ruled. Two facts a signer may want beside it: (1) the census verdict reads the role's own attached policies, and a shell on the host also holds whatever the host can assume (principal_49f.tf), which the census does not follow; (2) the new statement names the instance and the shell document, and IAM authorises instance and document separately, so irpt-ycharts-run and irpt-ycharts-deploy (fixed-text resident documents) can now be sent to this host as well; a shell makes that moot in power, not in record. Nothing is applied: INERT until the apply."
+}
+```
+
+## NFRA_CTLPLN-S9106 -- round-close-check prints MAY-CLOSE while a round order is pending, and never counts a round's orders that live under a tier2 home
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9106",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-09T07:28:00Z",
+  "one_line": ".tools/round-close-check.py --project NFRA_CTLPLN --round 6 prints verdict=MAY-CLOSE with TO-CT-t-3 still pending, and its orders=9 omits TO-CT-x-1 and TO-CT-x-2, which live under org/tier2_senior/0.7.0_AE_CloudOps~CT1/task_orders/",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run 2026-10-09 ~07:2xZ at box/laptop by 2.0.0_SA_COO~C: `python .tools/round-close-check.py --project NFRA_CTLPLN --round 6` LAST line `ROUND-CLOSE project=NFRA_CTLPLN device=laptop reviewer=present orders=9 judgment=2 graded=2 ungraded=0 self_graded=0 verdict=MAY-CLOSE` while TO-CT-t-3 reads pending.",
+      "read_orders() globs only `<project dir>/task-orders/*.md` (CT-s-8 build, AMENDMENT 2 @ee22806754), so an order issued to a Tier-2 seat's own home is never read.",
+      "Reported by 1.0.0_SA_CTO msg (20261009T072659Z) as the round-6 L10 wait; not measured by this row: whether any other project's round closed MAY-CLOSE over a pending order."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 27 L10: one slug only after every task order of the round is terminal; round-close-check is the tool that says whether a round may close (CT-s-8).",
+  "world_is": "The verdict reads only grades and proofs, so a pending order sits outside it, and a round's orders under org/tier2_senior/*/task_orders/ are invisible, so the tool can say MAY-CLOSE on a round that is not terminal.",
+  "notes": "The CTO puts the fix on the next round's list: a TERMINAL limb (every order of the round, wherever it lives, read by <project> and <round> tags, at its LAST status tag) that REFUSES while any is non-terminal."
+}
+```
+
+## NFRA_CTLPLN-W53-S1 -- The gate's FABRIC_ENUM must stay a literal list of the four box values: .tools/missions-tree-index.py resolves it by ast.literal_eval through org/standards/PROJECT_TREE.contract.json value_enums, and 
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~53",
+  "surfaced_at": "2026-10-09T07:30Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W53-S1",
+  "one_line": "The gate's FABRIC_ENUM must stay a literal list of the four box values: .tools/missions-tree-index.py resolves it by ast.literal_eval through org/standards/PROJECT_TREE.contract.json value_enums, and neither file is in CT-t-3's grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/missions-tree-index.py:57-74 (_resolve_enum: ast.literal_eval, SystemExit on a non-literal)",
+      ".tools/missions-tree-index.py:103-108 (reads value_enums per the contract)",
+      "org/standards/PROJECT_TREE.contract.json:77-90 (value_enums, fabric symbol FABRIC_ENUM, source .tools/to-pipeline-gate.py)",
+      ".tools/box-list-census.py run 2026-10-09 after the edits: HAND-LISTED .tools/to-pipeline-gate.py:93"
+    ]
+  },
+  "spec_asserts": "CT-t-3 BUILD 2 and AC1 case 3: the census over the real tree, after the edits, lists none of the worker's files; the gate changes only how it obtains the box list.",
+  "world_is": "The gate now DECIDES on lib/devices.py placement_values() (check_project_stage and the --sweep flag), but FABRIC_ENUM at .tools/to-pipeline-gate.py:93 remains a literal because _resolve_enum (.tools/missions-tree-index.py:57-74) literal_evals the module-level assignment and exits (SystemExit) on any other form, and that read runs from the missions-tree-check git hook and from test_fabric_enum_dell.py. The census therefore still lists the gate (hand_listed=8 after the edits, 11 before). The test holds the literal equal to the register-derived values (no drift). To close it, a seat with .tools/missions-tree-index.py and org/standards/PROJECT_TREE.contract.json in its grant must make the index read the register (or the contract name a register symbol), after which the literal can be deleted. Until then a sixth register box is admitted by the gate but a project row naming it is refused by the index with ROW-ENUM."
+}
+```
+
+## NFRA_CTLPLN-W53-S2 -- .tools/agentbus-sqs.sh still lists boxes by hand at line 360 and is not in CT-t-3's paths, so it was not edited.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~53",
+  "surfaced_at": "2026-10-09T07:30Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W53-S2",
+  "one_line": ".tools/agentbus-sqs.sh still lists boxes by hand at line 360 and is not in CT-t-3's paths, so it was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/agentbus-sqs.sh:360 (HAND-LISTED line from `python .tools/box-list-census.py`, 2026-10-09)"
+    ]
+  },
+  "spec_asserts": "CT-t-3 BUILD 2: a file the census lists AND that is in <paths> is edited; a census file NOT in <paths> is not edited, and one row names it.",
+  "world_is": "box-list-census.py run on the real tree 2026-10-09 lists .tools/agentbus-sqs.sh:360 -- a shell case arm `laptop|sitez)` choosing the device from the first argument; the two Dells are not in it. FWD-2 ('nobody edits a script that lists boxes by hand') is not met for this file until a later order grants it and replaces the list with a read of lib/devices.py (placement_values, names, resolve, seat_serial)."
+}
+```
+
+## NFRA_CTLPLN-W53-S3 -- .tools/box-sync-schedule.ps1 still lists boxes by hand at line 31 and is not in CT-t-3's paths, so it was not edited.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~53",
+  "surfaced_at": "2026-10-09T07:30Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W53-S3",
+  "one_line": ".tools/box-sync-schedule.ps1 still lists boxes by hand at line 31 and is not in CT-t-3's paths, so it was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/box-sync-schedule.ps1:31 (HAND-LISTED line from `python .tools/box-list-census.py`, 2026-10-09)"
+    ]
+  },
+  "spec_asserts": "CT-t-3 BUILD 2: a file the census lists AND that is in <paths> is edited; a census file NOT in <paths> is not edited, and one row names it.",
+  "world_is": "box-list-census.py run on the real tree 2026-10-09 lists .tools/box-sync-schedule.ps1:31 -- a $Slots hashtable keyed by the four box names holding Minute, Serial and Modes. FWD-2 ('nobody edits a script that lists boxes by hand') is not met for this file until a later order grants it and replaces the list with a read of lib/devices.py (placement_values, names, resolve, seat_serial)."
+}
+```
+
+## NFRA_CTLPLN-W53-S4 -- .tools/directives-check.py still lists boxes by hand at line 61 and is not in CT-t-3's paths, so it was not edited.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~53",
+  "surfaced_at": "2026-10-09T07:30Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W53-S4",
+  "one_line": ".tools/directives-check.py still lists boxes by hand at line 61 and is not in CT-t-3's paths, so it was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/directives-check.py:61 (HAND-LISTED line from `python .tools/box-list-census.py`, 2026-10-09)"
+    ]
+  },
+  "spec_asserts": "CT-t-3 BUILD 2: a file the census lists AND that is in <paths> is edited; a census file NOT in <paths> is not edited, and one row names it.",
+  "world_is": "box-list-census.py run on the real tree 2026-10-09 lists .tools/directives-check.py:61 -- device_of() loops over the tuple (\"LAPTOP\", \"SITEZ\") to read a placement prefix; the Dells are absent. FWD-2 ('nobody edits a script that lists boxes by hand') is not met for this file until a later order grants it and replaces the list with a read of lib/devices.py (placement_values, names, resolve, seat_serial)."
+}
+```
+
+## NFRA_CTLPLN-W53-S5 -- .tools/git-hooks/one-writer-check.py still lists boxes by hand at line 120 and is not in CT-t-3's paths, so it was not edited.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~53",
+  "surfaced_at": "2026-10-09T07:30Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W53-S5",
+  "one_line": ".tools/git-hooks/one-writer-check.py still lists boxes by hand at line 120 and is not in CT-t-3's paths, so it was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/one-writer-check.py:120 (HAND-LISTED line from `python .tools/box-list-census.py`, 2026-10-09)"
+    ]
+  },
+  "spec_asserts": "CT-t-3 BUILD 2: a file the census lists AND that is in <paths> is edited; a census file NOT in <paths> is not edited, and one row names it.",
+  "world_is": "box-list-census.py run on the real tree 2026-10-09 lists .tools/git-hooks/one-writer-check.py:120 -- self_test() builds a names dict of five labels (three boxes) as a fixture for the resolver. FWD-2 ('nobody edits a script that lists boxes by hand') is not met for this file until a later order grants it and replaces the list with a read of lib/devices.py (placement_values, names, resolve, seat_serial)."
+}
+```
+
+## NFRA_CTLPLN-W53-S6 -- .tools/integrate-directives.py still lists boxes by hand at line 68 and is not in CT-t-3's paths, so it was not edited.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~53",
+  "surfaced_at": "2026-10-09T07:30Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W53-S6",
+  "one_line": ".tools/integrate-directives.py still lists boxes by hand at line 68 and is not in CT-t-3's paths, so it was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/integrate-directives.py:68 (HAND-LISTED line from `python .tools/box-list-census.py`, 2026-10-09)"
+    ]
+  },
+  "spec_asserts": "CT-t-3 BUILD 2: a file the census lists AND that is in <paths> is edited; a census file NOT in <paths> is not edited, and one row names it.",
+  "world_is": "box-list-census.py run on the real tree 2026-10-09 lists .tools/integrate-directives.py:68 -- a loop over (\"LAPTOP\", \"SITEZ\") reading a placement prefix; the Dells are absent. FWD-2 ('nobody edits a script that lists boxes by hand') is not met for this file until a later order grants it and replaces the list with a read of lib/devices.py (placement_values, names, resolve, seat_serial)."
+}
+```
+
+## NFRA_CTLPLN-W53-S7 -- .tools/unblock.py still lists boxes by hand at line 70 and is not in CT-t-3's paths, so it was not edited.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~53",
+  "surfaced_at": "2026-10-09T07:30Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W53-S7",
+  "one_line": ".tools/unblock.py still lists boxes by hand at line 70 and is not in CT-t-3's paths, so it was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/unblock.py:70 (HAND-LISTED line from `python .tools/box-list-census.py`, 2026-10-09)"
+    ]
+  },
+  "spec_asserts": "CT-t-3 BUILD 2: a file the census lists AND that is in <paths> is edited; a census file NOT in <paths> is not edited, and one row names it.",
+  "world_is": "box-list-census.py run on the real tree 2026-10-09 lists .tools/unblock.py:70 -- CRO_OF = {laptop: ..., sitez: ...} maps a box to its CRO serial; the Dells have no entry (CVO_OF at :71 lists the laptop only). FWD-2 ('nobody edits a script that lists boxes by hand') is not met for this file until a later order grants it and replaces the list with a read of lib/devices.py (placement_values, names, resolve, seat_serial)."
+}
+```
+
+## NFRA_CTLPLN-W53-S8 -- .tools/xadj.py still lists boxes by hand at line 56 and is not in CT-t-3's paths, so it was not edited.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~53",
+  "surfaced_at": "2026-10-09T07:30Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W53-S8",
+  "one_line": ".tools/xadj.py still lists boxes by hand at line 56 and is not in CT-t-3's paths, so it was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/xadj.py:56 (HAND-LISTED line from `python .tools/box-list-census.py`, 2026-10-09)"
+    ]
+  },
+  "spec_asserts": "CT-t-3 BUILD 2: a file the census lists AND that is in <paths> is edited; a census file NOT in <paths> is not edited, and one row names it.",
+  "world_is": "box-list-census.py run on the real tree 2026-10-09 lists .tools/xadj.py:56 -- PRIMARY, BACKUP = \"laptop\", \"sitez\" fixes the cross-adjudication pair as two box names. FWD-2 ('nobody edits a script that lists boxes by hand') is not met for this file until a later order grants it and replaces the list with a read of lib/devices.py (placement_values, names, resolve, seat_serial)."
+}
+```

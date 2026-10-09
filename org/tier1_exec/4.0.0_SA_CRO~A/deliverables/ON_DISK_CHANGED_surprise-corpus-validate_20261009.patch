@@ -1,0 +1,103 @@
+diff --git a/.tools/surprise-corpus-validate.py b/.tools/surprise-corpus-validate.py
+index 306be71f26..2e6b3f6211 100644
+--- a/.tools/surprise-corpus-validate.py
++++ b/.tools/surprise-corpus-validate.py
+@@ -133,7 +133,10 @@ def _channel_docs(root: str) -> list:
+             if _CHANNEL_REL_RE.search(rel):
+                 found.append(os.path.join(root, rel.replace("/", os.sep)))
+     _channel_docs.last_source = source
+-    return sorted(p for p in found if CHANNEL_FILE_RE.search(os.path.basename(p)))
++    docs = sorted(p for p in found if CHANNEL_FILE_RE.search(os.path.basename(p)))
++    _channel_docs.blobs = (_index_blobs(root, [os.path.relpath(p, root).replace("\\", "/") for p in docs])
++                           if source == "index" else {})
++    return docs
+ 
+ 
+ # STOP: adjudications/ WAS MISSING FROM BOTH LISTS UNTIL 2026-09-04. The tree patterns named
+@@ -172,22 +175,56 @@ def _index_paths(root: str):
+         return None
+ 
+ 
++def _index_blobs(root: str, rels: list) -> dict:
++    """{rel: text} for every rel's INDEX blob, in ONE `git cat-file --batch` call (329 documents
++    measured 2026-10-09; a subprocess per document would cost seconds on Windows). `:<path>` resolves
++    against the index and honors GIT_INDEX_FILE. A rel the index cannot resolve is left out, so the
++    caller's fallback decides; a batch that fails outright returns {} and every read falls back."""
++    if not rels:
++        return {}
++    try:
++        p = subprocess.run(["git", "cat-file", "--batch"], cwd=root, capture_output=True,
++                           input="".join(":%s\n" % r for r in rels).encode("utf-8"))
++    except Exception:  # noqa: BLE001
++        return {}
++    if p.returncode != 0:
++        return {}
++    out, pos, blobs = p.stdout, 0, {}
++    for rel in rels:
++        nl = out.find(b"\n", pos)
++        if nl < 0:
++            break
++        header = out[pos:nl].split()
++        pos = nl + 1
++        if len(header) == 3 and header[1] == b"blob":
++            size = int(header[2])
++            blobs[rel] = out[pos:pos + size].decode("utf-8", "replace")
++            pos += size + 1
++    return blobs
++
++
+ def _read_doc(root: str, path: str, rel: str) -> str:
+-    """A document's text: the working tree when the file is there, else the INDEX blob.
++    """A document's text: the INDEX blob when the path list came from the index, else the working tree.
+ 
+     The path list is the index (`_index_paths`). Under box-sync the index is the MERGED index
+-    (GIT_INDEX_FILE), which can hold a file the merge brings in before the working tree has it, so a
+-    bare open() raised FileNotFoundError and fail-closed the whole pass (0.0.0_AB_MSTR msg 107739).
+-    `git cat-file -p :<path>` reads the staged blob and honors GIT_INDEX_FILE; a read that fails there
+-    too still raises, so an unreadable document is never graded as empty."""
++    (GIT_INDEX_FILE). A file the merge brings in is not yet on disk (0.0.0_AB_MSTR msg 107739, fixed
++    at 1316dbad26); a file the merge CHANGES is on disk at its PRE-merge bytes, so reading the disk
++    graded the wrong rows (0.0.0_AB_MSTR msg 107776). The index blob is the merge's bytes in both
++    cases, and at an ordinary commit it is the staged bytes, which is what the commit lands.
++    `_channel_docs` prefetches the blobs in one batch; a rel missing from the batch falls back to
++    `git cat-file -p`, then the disk. A read that fails everywhere still raises, so an unreadable
++    document is never graded as empty."""
++    blobs = getattr(_channel_docs, "blobs", None) or {}
++    if rel in blobs:
++        return blobs[rel]
++    if getattr(_channel_docs, "last_source", "index") == "index":
++        p = subprocess.run(["git", "cat-file", "-p", ":" + rel], cwd=root, capture_output=True)
++        if p.returncode == 0:
++            return p.stdout.decode("utf-8", "replace")
+     if os.path.exists(path):
+         with open(path, encoding="utf-8", errors="replace") as fh:
+             return fh.read()
+-    p = subprocess.run(["git", "cat-file", "-p", ":" + rel], cwd=root, capture_output=True)
+-    if p.returncode != 0:
+-        raise FileNotFoundError("%s: absent on disk and not in the index (%s)"
+-                                % (rel, p.stderr.decode("utf-8", "replace").strip()))
+-    return p.stdout.decode("utf-8", "replace")
++    raise FileNotFoundError("%s: not readable from the index and absent on disk" % rel)
+ 
+ 
+ def _tuple(doc: str, row: dict, err) -> list:
+@@ -268,8 +305,7 @@ def index(root: str) -> list:
+     lines = []
+     for path in _channel_docs(root):
+         rel = os.path.relpath(path, root).replace("\\", "/")
+-        with open(path, encoding="utf-8", errors="replace") as fh:
+-            rows, _ = _rows(fh.read(), raw_json=path.lower().endswith(".json"))
++        rows, _ = _rows(_read_doc(root, path, rel), raw_json=path.lower().endswith(".json"))
+         for row in rows:
+             rid = row.get("id")
+             if rid:
+@@ -289,8 +325,7 @@ def index_rows(root: str) -> list:
+     lines = []
+     for path in _channel_docs(root):
+         rel = os.path.relpath(path, root).replace("\\", "/")
+-        with open(path, encoding="utf-8", errors="replace") as fh:
+-            rows, _ = _rows(fh.read(), raw_json=path.lower().endswith(".json"))
++        rows, _ = _rows(_read_doc(root, path, rel), raw_json=path.lower().endswith(".json"))
+         for row in rows:
+             rid = row.get("id")
+             if rid:

@@ -61,9 +61,53 @@ table. `Opal_Muni_Income` (one account, about $64.1M) must appear, reason `RULE_
 `W2-3-AC2` -- SEAM on real data: the recorded list has SOURCE, DENOMINATOR and RESULT lines and carries the control `Opal_Muni_Income`.
 At the base: `W23-SEAM-BAD no file ...`.
 
-<expected_criteria>W2-3-AC1 W2-3-AC2</expected_criteria>
+<expected_criteria>W2-3-AC1 W2-3-AC2 W2-4-AC1 W2-4-AC2</expected_criteria>
 
 Run each invocation from your worktree root.
+
+### AMENDMENT A1/A4 (issuer, 2026-10-09 ~05:3xZ) -- cell `ST-w-4`, continued by this slot on its branch
+
+Your first pass is complete and stands. This amendment adds cell `ST-w-4` (decomposition amendment A1/A4). Re-flip `<status>` to
+`complete` only when every criterion in `<expected_criteria>` passes.
+
+`ST-w-4`. You built `unidentified_candidates` (ST-w-3). Its Cottonwood record listed 38 names, most of them ordinary Opal MODELS
+(`Opal Satellite 40..80`, `Opal Short-Term`, `Opal Fixed Income`, ...). An Opal Model is not an unidentified strategy: the PRD says
+reclassifying an Opal Model as an SMA is out of scope. Change the rule, keep everything else.
+
+**Change `data/assets/scripts/silver/opal_unidentified.py`:** `unidentified_candidates(rows, member_of, cfg, opal_models=frozenset())`.
+`opal_models` is a set of names that are Opal Model figures. A name in `opal_models` is NOT listed, unless it also matches a sleeve
+rule: a `cfg["tickers"]` entry as a whole word, a `cfg["full_names"]` name, or a `cfg["sma_name_rules"]` pattern. Matching is
+case-insensitive on stripped names. Every other behaviour stays as you built it.
+
+**Tests** in `data/assets/scripts/silver/tests/test_opal_unidentified.py`: keep the six existing tests passing and add exactly
+`test_opal_model_is_not_listed` and `test_opal_model_matching_a_sleeve_rule_is_listed`.
+
+**Re-make the record** `org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.9.0_WK_MDPF_STRATID~6/UNIDENTIFIED_STRATEGY_CANDIDATES.md`,
+same sources and method as before, with `opal_models` = the UNION of the `model_name` values where `is_opal` is true in
+`s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_model_roster/` AND in `.../fact_model_definition/` (latest `date=` partition
+of each). RULING A6 (issuer, ~05:3xZ, row D1-W6-S2): the roster alone misses five Opal models (`Opal Short-Term`, `Opal Fixed Income`,
+...) that appear only in the definition table. Add a line
+starting `EXCLUDED-AS-MODEL:` with the count and the names excluded. Keep `SOURCE:`, `DENOMINATOR:`, `RESULT:`. `Opal_Muni_Income`
+must still be listed with reason `RULE_NOT_COUNTED` (whatever `is_opal` says for it, it matches the Muni rule).
+
+The checks live in the shared tree, not on your branch: run them with the absolute path below from your worktree root (they read
+your worktree's files by relative path).
+
+<criterion id="W2-4-AC1" cell_refs="ST-w-4"><invocation>python C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_4_tests.py</invocation><expect>W24-OK</expect></criterion>
+`W2-4-AC1` -- the eight named tests pass. On your branch now: `W24-BAD not-passed=test_opal_model_is_not_listed,...`.
+
+<criterion id="W2-4-AC2" cell_refs="ST-w-4"><invocation>python C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_4_seam.py</invocation><expect>W24-SEAM-OK</expect></criterion>
+`W2-4-AC2` -- SEAM on real data: the re-made record lists neither `Opal Satellite 50` nor `Opal Short-Term`, still lists
+`Opal_Muni_Income` as `RULE_NOT_COUNTED`, and carries the four lines. On your branch now: `W24-SEAM-BAD no EXCLUDED-AS-MODEL: line`.
+
+### AMENDMENT A7 (issuer, 2026-10-09 ~05:5xZ) -- Andrew-direct: Opal_Muni_Income is a Custom model
+
+Andrew-direct ~05:3xZ, VERBATIM: "no that is a custom model, we should not be putting that in ALT Strategies." (record `org/tier1_exec/2.0.0_SA_COO~S1/deliverables/ANDREW_DIRECT_20261009_053xZ_OPAL_MUNI_INCOME_IS_A_CUSTOM_MODEL_NOT_ALT.md`).
+Re-make the Cottonwood record with the Muni rule in its cfg narrowed to `Opal_Muni_Sleeve` (member `null`), so `Opal_Muni_Income` is
+an Opal Model excluded as one (it appears in EXCLUDED-AS-MODEL) and is not listed; `Opal_Muni_Sleeve` stays listed `RULE_NOT_COUNTED`.
+Correct the EXCLUDED-AS-MODEL line to say the set is the roster+definition `is_opal` union (ruling A6). Code and tests do not change.
+`W2-3-AC2` and `W2-4-AC2` now require `Opal_Muni_Income` NOT listed and `Opal_Muni_Sleeve` listed; re-run all four criteria and re-flip
+`<status>` to `complete` only when all pass.
 
 ## BOUNDS
 
@@ -80,13 +124,14 @@ data/assets/scripts/silver/opal_unidentified.py
 data/assets/scripts/silver/tests/test_opal_unidentified.py
 org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.9.0_WK_MDPF_STRATID~6/UNIDENTIFIED_STRATEGY_CANDIDATES.md
 org/missions/D8/MDPF/MDPF_STRATID/surprise-channel/investigations/INVESTIGATION_v1.md
+org/missions/D8/MDPF/MDPF_STRATID/decompositions/MDPF_STRATID_DECOMP_W2.md
 </paths>
 
 The block is your WRITE grant (paths relative to your worktree root are the same files). Everything else named here you READ.
 
 <decomp_ref>
 <decomp_doc>org/missions/D8/MDPF/MDPF_STRATID/decompositions/MDPF_STRATID_DECOMP_W2.md</decomp_doc> (workstream 2), cell `ST-w-3`.
-<owned_cells>ST-w-3</owned_cells>
+<owned_cells>ST-w-3 ST-w-4</owned_cells>
 </decomp_ref>
 
 <proof_of_spec>

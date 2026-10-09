@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.21",
+ "prd_version": "v0.22",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26"],
@@ -28,13 +28,15 @@
 
 ```
   FWD-1  One round of one real project is issued and worked on dell1, reaches the shared trunk
-         through site Z, and is graded on the laptop -- and Andrew can see how long each step took
+         through dell1's own branch and the laptop's integrator, and is graded on the laptop -- and
+         Andrew can see how long each step took
          DONE WHEN  EXERCISED -- one real round, traced from its PRD on the laptop to its grade
          ACCEPT     a real project's round is planned on the laptop, worked and finished on dell1,
-                    published by dell1, merged and pushed by site Z, and graded on the laptop. Nobody
-                    pushes the shared trunk from dell1. Andrew reads afterwards when each step began
-                    and ended. A step done by hand on another box, or a practice round, fails it
-         SOURCE     brief PART I, the candidate thread
+                    pushed by dell1 to its own branch, merged into the shared trunk by the laptop's
+                    integrator, and graded on the laptop. Nobody on dell1 writes the shared trunk.
+                    Andrew reads afterwards when each step began and ended. A step done by hand on
+                    another box, or a practice round, fails it
+         SOURCE     brief PART I, the candidate thread; re-based v0.22
 
   FWD-2  Andrew adds a box once, in one place, and every tool knows its name and its role
          DONE WHEN  EXERCISED -- a box added that way, and a seat started on it
@@ -52,28 +54,35 @@
          SOURCE     brief O2; Andrew-direct 2026-10-06 ~14:0xZ ("only the MSTR agents are the ones that
                     communicate between boxes")
 
-  FWD-4  A finished round from any working box reaches the shared trunk without that box pushing
-         it, and no lane falls more than one round behind
-         DONE WHEN  EXERCISED -- two boxes' rounds published and merged in the order the laptop set
-         ACCEPT     each working box publishes its finished round; site Z merges published rounds in
-                    the order the laptop set and pushes. No box holds more than one unpublished round
-                    per lane
-         SOURCE     brief O3; Andrew's confirmation (headline wording)
+  FWD-4  A finished round from any working box reaches the shared trunk without that box writing
+         the trunk, and no lane falls more than one round behind
+         DONE WHEN  EXERCISED -- two boxes' rounds pushed to their own branches and merged by the
+                    integrator
+         ACCEPT     each working box pushes its finished round to its own branch; the laptop's
+                    integrator merges every box's branch into the shared trunk on its schedule, and no
+                    box writes the shared trunk itself. No box holds more than one unpushed round per
+                    lane
+         SOURCE     brief O3; re-based v0.22
 
-  FWD-5  Publishing work from any box never puts anything into production; only a deploy a box names
-         as its own act, or the push of the shared trunk, does
-         DONE WHEN  EXERCISED -- a round carrying a pipeline script published, and nothing deployed
-         ACCEPT     a published round that contains a pipeline script changes nothing in production
-                    until a box deploys it as a named act or the shared trunk is pushed
-         SOURCE     brief O4; Andrew-direct 2026-10-07 ~07:0xZ, "Definitely drop one lane cap and
-                    shared-branch wait for the dells"
+  FWD-5  Pushing work from any box never puts anything into production except what a signed change
+         names for that exact build
+         DONE WHEN  EXERCISED -- a box push carrying a pipeline script no open change names, and
+                    nothing deployed
+         ACCEPT     when a box pushes its own branch, only a script that an open signed change names,
+                    at the exact version it signed, goes live; any other script in the push is held
+                    and written down, and the push still goes through. Merging the shared trunk
+                    deploys nothing
+         SOURCE     brief O4; re-based v0.22 (the box-push deploy and the pinned-build rule)
 
-  FWD-6  Site Z pushes a routine round on its own, and waits for Andrew on any round that would put
-         something into production
-         DONE WHEN  EXERCISED -- one routine push without Andrew, one held round released by his word
-         ACCEPT     a round with no pipeline script reaches the shared trunk without Andrew at a
-                    terminal; a round with one waits until he says so
-         SOURCE     brief O5; Andrew's card 1
+  FWD-6  Routine work reaches the shared trunk with no one's word, and only a production release of a
+         page clients can open waits for Andrew
+         DONE WHEN  EXERCISED -- one routine push and merge with no one asked, and one release of a
+                    client-facing page held until his word
+         ACCEPT     a push of any box's work, and its merge into the shared trunk, happen without
+                    anyone at a terminal; a production release that changes a page a partner firm or
+                    client can open waits until Andrew says so, and a release of a staff-only page
+                    does not
+         SOURCE     brief O5; re-based v0.22 on the push law
 
   FWD-7  Anyone can see which box runs each project or workstream, and none is split across boxes
          DONE WHEN  EXERCISED -- the placement read for every live project and workstream
@@ -850,3 +859,66 @@ COMM_ASSIST was registered @b0a34bddfb.
   `2.0.0_SA_COO~R` moves with it.
 - Only the brief half changes in substance for this project; the ENDPOINT bytes of FWD-20 and FWD-26 are unchanged. Raised by
   3.0.0_SA_CVO's L4-R review of COMM_ASSIST v0.1, finding 6.
+
+## ADDENDUM v0.22 (1.0.0_SA_CTO, 2026-10-09 ~06:3xZ) -- an ENDPOINT change on Andrew's words: FWD-1, FWD-4, FWD-5 and FWD-6 re-based on the per-box trunk and the push law
+
+**Why (L10 re-entry, step F0: the outcomes were WRONG, so they are amended in place and keep their ids).** Three things Andrew ordered
+since v0.21 changed the path these four outcomes describe:
+- the per-box branches, each box pushing `box/<box>` and `0.0.0_AB_MSTR` integrating `CLOUD` by `.tools/box-sync.sh` (his word recorded
+  in `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_153xZ_TWO_PRIORITIES_GITOPS_AND_PROCESS_GC.md`; law @538f0f51a7);
+- deploys firing on the authoring box's own push (B2, same record);
+- the push law ("pushes should not require my approval ... aside from portal PROD, and only if it is touching a client-facing page",
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_044xZ_PUSHES_NEED_NO_APPROVAL_EXCEPT_CLIENT_FACING_PROD.md`, law
+  d92d08c448).
+Site Z no longer merges or pushes for the cluster, and a routine push waits for no one. Nothing is retired. FWD-6 is not obsolete: its
+promise (routine work moves alone; only what Andrew reserved waits for him) stands, re-pointed at what he reserved.
+**The ratified-text half is re-owed** (`3.0.0_SA_CVO`, L4-R), because this changes the ENDPOINT.
+
+**Placement (on `3.0.0_SA_CVO`'s v0.22 review @33879bb6bf, REFUSED on placement only):** the four re-based cards below
+REPLACE FWD-1, FWD-4, FWD-5 and FWD-6 IN PLACE in the ENDPOINT section above, so the ratified half binds the new text. This
+addendum keeps the why and the record of the change.
+
+
+```
+  FWD-1  One round of one real project is issued and worked on dell1, reaches the shared trunk
+         through dell1's own branch and the laptop's integrator, and is graded on the laptop -- and
+         Andrew can see how long each step took
+         DONE WHEN  EXERCISED -- one real round, traced from its PRD on the laptop to its grade
+         ACCEPT     a real project's round is planned on the laptop, worked and finished on dell1,
+                    pushed by dell1 to its own branch, merged into the shared trunk by the laptop's
+                    integrator, and graded on the laptop. Nobody on dell1 writes the shared trunk.
+                    Andrew reads afterwards when each step began and ended. A step done by hand on
+                    another box, or a practice round, fails it
+         SOURCE     brief PART I, the candidate thread; re-based v0.22
+
+  FWD-4  A finished round from any working box reaches the shared trunk without that box writing
+         the trunk, and no lane falls more than one round behind
+         DONE WHEN  EXERCISED -- two boxes' rounds pushed to their own branches and merged by the
+                    integrator
+         ACCEPT     each working box pushes its finished round to its own branch; the laptop's
+                    integrator merges every box's branch into the shared trunk on its schedule, and no
+                    box writes the shared trunk itself. No box holds more than one unpushed round per
+                    lane
+         SOURCE     brief O3; re-based v0.22
+
+  FWD-5  Pushing work from any box never puts anything into production except what a signed change
+         names for that exact build
+         DONE WHEN  EXERCISED -- a box push carrying a pipeline script no open change names, and
+                    nothing deployed
+         ACCEPT     when a box pushes its own branch, only a script that an open signed change names,
+                    at the exact version it signed, goes live; any other script in the push is held
+                    and written down, and the push still goes through. Merging the shared trunk
+                    deploys nothing
+         SOURCE     brief O4; re-based v0.22 (the box-push deploy and the pinned-build rule)
+
+  FWD-6  Routine work reaches the shared trunk with no one's word, and only a production release of a
+         page clients can open waits for Andrew
+         DONE WHEN  EXERCISED -- one routine push and merge with no one asked, and one release of a
+                    client-facing page held until his word
+         ACCEPT     a push of any box's work, and its merge into the shared trunk, happen without
+                    anyone at a terminal; a production release that changes a page a partner firm or
+                    client can open waits until Andrew says so, and a release of a staff-only page
+                    does not
+         SOURCE     brief O5; re-based v0.22 on the push law
+```
+

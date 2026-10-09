@@ -5,7 +5,7 @@
   "fabric": "dell1",
   "pipeline": "naming-check-blank-fixes",
   "status": "active",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "ROUND_CLOSE",
   "created": "2026-10-07",
   "registered_under_tree": "2026-10-07",
   "placement": "DELL1",
@@ -72,6 +72,10 @@
     {
       "path": "org/missions/D14/LGIC/LGIC_BLANKFIX/decompositions/LGIC_BLANKFIX_DECOMP.round8.md",
       "round": 8
+    },
+    {
+      "path": "org/missions/D14/LGIC/LGIC_BLANKFIX/decompositions/LGIC_BLANKFIX_DECOMP.round9.md",
+      "round": 9
     }
   ],
   "decomposition_lineage": [
@@ -114,6 +118,11 @@
       "round": 8,
       "date": "2026-10-08",
       "author": "2.0.0_SA_COO~G"
+    },
+    {
+      "round": 9,
+      "date": "2026-10-09",
+      "author": "2.0.0_SA_COO~B1"
     }
   ],
   "leads": {

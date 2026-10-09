@@ -13,7 +13,7 @@ the round-2 analysis on the PASS branch. On FAIL it is void (FAIL re-arms TO-SH-
 
 | # | FWD | cell | gate | write set (draft) | risk | chain |
 |---|---|---|---|---|---|---|
-| 1a | FWD-4 | `SH-r3-a` gap record, READ SIDE: per tracked security, stored range, required range, and missing/held-null days, derived from the stored partitions against each partition's `vendor_observations` (the vendor's own count, `etf_daily_pull.py:697`), never a trading calendar (`compute_returns` docstring, `etf_positioning_gold.py:855+`) | none | a new gold-side module beside `data/etfs/scripts/gold/etf_positioning_gold.py`; its S3 key is `lib/opal_naming.py address()` output (rule 30: a builder refusal is a registry row) | SERVED | A1 |
+| 1a | FWD-4 | `SH-r3-a` gap record, READ SIDE: per tracked security, stored range, required range, and missing/held-null days, derived from the stored partitions against each partition's `vendor_observations` (the vendor's own count, `etf_daily_pull.py:697`), never a trading calendar (`compute_returns` docstring, `etf_positioning_gold.py:855+`) | none | a new gold-side module beside `data/etfs/scripts/gold/etf_positioning_gold.py`; its S3 key is `lib/opal_naming.py address()` output: `address("bloomberg", "etfs", "silver", "history_gaps", "as_of=<d>")` -> `s3://opal-data-etfs/bloomberg/etfs/silver/history_gaps/as_of=<d>` (builder ACCEPTED at 04:5xZ; source `bbg` is REFUSED, not a systems.json key -- the pull's legacy `bbg/<asof>/` prefix is not re-used, and is not migrated here, rule 30 non-application) | SERVED | A1 |
 | 1b | FWD-5 | `SH-r3-b` blank over a gap: `compute_returns` blanks any window containing a day the gap record lists (an ABSENT interior day, which it compounds across today; a NULL already blanks, `:913-915`) | after 1a (data edge: the gap record) | `data/etfs/scripts/gold/etf_positioning_gold.py` + its tests | SERVED | A2 |
 | 1c | FWD-5 | pull-side fill: the pull widens its next request to the listed days | **Andrew's act, call b186** (no-modify order on `integrations/bloomberg/pipeline/`) | `etf_daily_pull.py` | WORLD (site Z take, CTO~Z half, DEMQUE quote) | not cut without b186 |
 | 2a | FWD-3 | `SH-r3-c` where each security entered: per source (Opal ETF, client account by firm, rival fund) its required depth, deepest rule governing (C-DEPTH) | none | read the table row, add the depth record beside it; never write classification (C-TABLE) | SERVED | B |
@@ -39,3 +39,32 @@ FWD-8 (goes with MDPF_SECCLASS FWD-5), FWD-2's Bloomberg backfill (Andrew's card
 - 1b: one planted absent interior day, window over it reads blank; same window with the day present reads a value.
 - 2b: `matched=<n>/4545` printed, expect `n>=234` and an unmapped list with its denominator.
 - 3: `NAME:: rows=<n> writers=<k>` printed, expect `n=5673` at the scan's vintage.
+
+## Update 05:2xZ -- the pull edits are not waiting on Andrew
+
+Andrew lifted the no-modify order for `etf_daily_pull.py` at ~23:0xZ 2026-10-08 ("No modify is lifted", site Z call
+sitez-20261008T165921Z-35ce; record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_230xZ_SITEZ_AND_DELL2_OPEN_CALLS_ANSWERED.md`,
+quote line and row printed at 05:2xZ). The order still stands for the rest of `integrations/bloomberg/pipeline/`, the vehicle and the
+sign-in. Call b186 was redundant (this seat had not read that record) and is closed by `1.0.0_SA_CTO~DELL1` (0.0.0_AB_MSTR~DELL1 msg 1761).
+So items 1c (FWD-5 widened next-run request) and 4 (FWD-9 total-return field, route 2a) join the PASS issuance as chain F: ONE pull
+cell, at most three criteria, write set `etf_daily_pull.py` and its test only, landing after a scheduled pull, each with
+`1.0.0_SA_CTO~Z`'s half and an MDPF_DEMQUE quote naming the per-run row and field delta (pre-draft AMENDMENT 2's conditions).
+Chain F depends on 1a (it reads the gap record's listed days). Fan-out (draft): 6 chains, cap 8.
+
+## Update 05:3xZ -- card A released into the queue (Andrew-direct ~05:3xZ)
+
+Andrew: "This can go into the BBG queue system that MDPF_DEMQUE is for" (record
+`org/tier1_exec/2.0.0_SA_COO/deliverables/cooH1_ANDREW_DIRECT_20261009_053xZ_SECHIST_CARD_A_GOES_TO_DEMQUE_BBG_QUEUE.md`). Request
+`MDPF_SECHIST-CARD-A-COT-BBG-HISTORY` filed @f3b5715e06. So `SH-t-5` joins round 3 as chain G: the series write of the queue's returned
+Bloomberg rows for the 1,319 Cottonwood CUSIPs (C-SERIES, C-GAP), keyed by the same CUSIP namespace as chain E's Yahoo writer, and
+joined to table keys through chain C's id map. Depends on C (the join) and on the queue's first paced draw; it draws nothing itself.
+Fan-out (draft): 7 chains, cap 8.
+
+## Update 05:5xZ -- prices are total return (PRD ADDENDUM v0.3, CTO rulings batch C @6c538a0bfd)
+
+C-SERIES now stores per security per day the as-traded price, the dividend/interest cash and the total-return value, from either source;
+C-GAP binds all three. Effect on this pre-draft: chains E (Yahoo writer) and G (card-A series write) write all three values, and the
+total-return column waits on MDPF_DEMQUE's round-5 Bloomberg-vs-Yahoo comparison cell (the method is fixed on its evidence), so E and G
+gain that dependency; their price and dividend columns do not wait. Card A's request asks PX_LAST only, so the dividend/interest leg of
+the Bloomberg share is a request amendment for Q1 once the comparison fixes the field set. Sign-off unchanged: `prd-signoff.py status
+MDPF_SECHIST` reads ADMITTED at v0.2 @6c538a0bfd (ratified-text SIGNED current; brief admitted).

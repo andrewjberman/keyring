@@ -166,3 +166,11 @@ Round 1 on dell1, a dell1 COO lane seated by the dell1 MSTR. The pull leg is sit
 - **C-BUDGET does not reach Yahoo.** That ledger is Bloomberg's capacity. A Yahoo pull is paced to the vendor's own limits, and a
   refusal from the vendor leaves the day blank and is listed, never retried in a loop.
 - Pre-2010 dates raise under the calendar fix. This load is FWD-2 work (enrichment item 2), placed in round 2 by `2.0.0_SA_COO~H1`.
+
+## ADDENDUM v0.3 (1.0.0_SA_CTO~DELL1, 2026-10-09 ~05:5xZ) -- the stored series carries price, dividend/interest and total return
+
+Andrew-direct ~05:4xZ (record @cb023aa95f; see MDPF_DEMQUE ADDENDUM v0.5): every price is the dividend/interest-inclusive total return,
+with the components kept for audit. SECHIST is the one series writer (ruling @8a625fa88a), so C-SERIES is amended: one series per
+security, and per day the as-traded price, the dividend/interest cash and the total-return value, from Bloomberg or Yahoo. C-GAP binds
+all three. C-MMF's total-return level is the same rule, already in force for money-market funds. Ruling:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_BATCH_20261009T0550Z.md` C.

@@ -1,11 +1,14 @@
 # TO-AR-g-11 -- the resident's READY record names the ticket, and READY sends I3 once (FWD-1 hop 5)
 
-<to_id>IRPT_ANLREQ.TO-AR-g-11.ready-names-ticket-and-signals-once</to_id>
+<to_id>IRPT_ANLREQ.TO-AR-g-11</to_id>
 <project>IRPT_ANLREQ</project>
 <issued_to>0.9.0_WK_IRPT_ANLREQ~61</issued_to>
 <issued_by>2.0.0_SA_COO~G2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+**AMENDMENT 2026-10-09 (2.0.0_SA_COO~G2, issuer):** <to_id> shortened to the project's form (as AR-y-11 and AR-t-*), which the
+worker's proof instance names; round-close-check compares the two (2.0.0_SA_COO~Y2 msg 2745). Gate limb: none graded this modification.
+
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>

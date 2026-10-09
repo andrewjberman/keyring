@@ -20,7 +20,7 @@ ONE PASS on box B:
   2. CLOSE-OUT = OPEN rows escalated to `xadj` whose cross-adjudication file now reads RULED (.tools/xadj.py).
   3. TO RULE = OPEN cross-adjudication files from every box, but only when B is the adjudicator of record (xadj.py
      adjudicator(): the laptop, or site Z when the laptop's heartbeat is stale or reads no live CTO).
-  4. The TARGET is B's CTO (CTO_OF[B] if its MCP process is alive, else any live 1.0.0_SA_CTO lane on B); with no CTO
+  4. The TARGET is B's CTO (the register's CTO serial for B if its MCP process is alive, else any live 1.0.0_SA_CTO lane on B); with no CTO
      live, B's MSTR (it spawns and unsticks seats) is told the CTO is absent; with neither, nothing is written and the
      heartbeat says so.
   5. One inbox file goes to the target when the three sets, together, differ from the last file sent, or RENUDGE_SEC
@@ -29,7 +29,14 @@ ONE PASS on box B:
      measurement xadj.py reads to decide whether the laptop is up.
   0. THE SWITCH first: `open-calls.py mode` (s3 .../open-calls/v1/mode.json, skill /keep-driving). `scan` off for B ->
      the pass sends nothing (sent=no:mode-off) and the heartbeat carries mode=off, so paused never reads as dead.
+  7. THE MC PORTAL'S RECORDS (NFRA_MCPORTAL FWD-15/17; 1.0.0_SA_CTO~O msg 32404; owner 4.0.0_SA_CRO). Before step 1, every
+     close REQUEST under .../open-calls/v1/box=<B>/requests/<id>.json is applied once through `open-calls.py close
+     --ruled-by andrew` (the switch never holds Andrew's closes), its verbatim ruling kept as
+     org/devices/state/<B>/rulings/close-request-<id>.md, and its RESULT put to .../box=<B>/request_results/<id>.json
+     (APPLIED or REFUSED with the writer's line). After the heartbeat, .../box=<B>/open_deploys.json carries every
+     open-deploy sentinel on disk in every worktree of B (apply_requests, open_deploys_doc).
 LAST line: OPEN-CALLS-SCAN device=<B> due=<n> closeout=<n> to_rule=<n> target=<serial|none> sent=<yes|no:<why>> ... mode=<on|off>
+           ... open_deploys=<entries>/<worktrees read>wt requests=<applied>/<refused>/<pending>
 
 Environment (tests only): OPAL_STATE_ROOT (open-calls lists), OPAL_XADJ_LOCAL (store + heartbeats), OPAL_LIVENESS_FILE,
 OPAL_INBOX_ROOT, OPAL_SCAN_STATE, OPAL_SCAN_DEVICE. Exit 0 = a pass ran (either verdict), 2 = this box unresolved,
@@ -52,8 +59,6 @@ ROOT = os.path.dirname(TOOLS)
 SCHEMA = "open-calls-scan/1"
 RENUDGE_SEC = 1800
 LIVE_MAX_AGE_SEC = 6 * 3600   # a liveness entry older than this is not trusted even if its PID resolves (PID reuse)
-CTO_OF = {"laptop": "1.0.0_SA_CTO", "sitez": "1.0.0_SA_CTO~Z", "dell1": "1.0.0_SA_CTO~DELL1", "dell2": "1.0.0_SA_CTO~DELL2"}
-MSTR_OF = {"laptop": "0.0.0_AB_MSTR", "sitez": "0.0.0_AB_MSTR~Z", "dell1": "0.0.0_AB_MSTR~DELL1", "dell2": "0.0.0_AB_MSTR~DELL2"}
 LIST_CAP = 12
 TIERS = ("tier0_exec", "tier0_utility", "tier1_exec", "tier2_senior", "tier3_junior")
 
@@ -63,6 +68,15 @@ def load_mod(name: str, rel: str):
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
+
+
+def seat_of(base: str, device: str) -> str:
+    """The serial of `base` on `device`, from the device register (lib/devices.py seat_serial); "" when the register does
+    not hold the box or cannot be read (the caller then falls back to any live lane of `base`)."""
+    try:
+        return load_mod("opal_devices", "lib/devices.py").seat_serial(base, device)
+    except Exception:  # noqa: BLE001
+        return ""
 
 
 def now_dt() -> datetime.datetime:
@@ -313,15 +327,155 @@ def unblock_pass(device: str, dry: bool, now, live: dict, cto, mstr, prev: dict,
     return mem, sent, sum(len(v) for v in items.values())
 
 
+# ---------------------------------------------------------------- the MC portal's two records (NFRA_MCPORTAL FWD-15, FWD-17)
+# 1.0.0_SA_CTO~O ruling msg 32404 (Q1 = a, Q3 = a), R6_DECOMP_DRAFT.md @54c2fd91b6; taken by 4.0.0_SA_CRO (msg 107760).
+# The gateway reads S3 only, so the box publishes what it alone can read and applies what the page asks.
+
+OD_SCHEMA = "open-deploys/1"
+REQ_SCHEMA = "open-calls-close-request/1"
+RES_SCHEMA = "open-calls-close-result/1"
+_REQ_ID = re.compile(r"^[A-Za-z0-9._-]{1,80}$")
+_OD_FIELDS = ("slug", "title", "author", "status", "opened_at", "window_hours", "entry_path")
+
+
+def worktree_paths() -> list:
+    """Every live worktree of this checkout. A worker's sentinel sits in its own worktree until the drain (CLAUDE.md
+    section 5), so the shared tree alone is not the answer."""
+    try:
+        out = subprocess.run(["git", "-C", ROOT, "worktree", "list", "--porcelain"], capture_output=True, text=True,
+                             encoding="utf-8", errors="replace", timeout=30).stdout
+    except (OSError, subprocess.SubprocessError):
+        return [ROOT]
+    paths = [ln[len("worktree "):].strip() for ln in out.splitlines() if ln.startswith("worktree ")]
+    return paths or [ROOT]
+
+
+def open_deploys_doc(device: str, now, trees=None) -> dict:
+    """FWD-15's record: every open-deploy sentinel on disk in every worktree of this box (tracked or not), one entry per
+    slug, with the worktrees that hold it. An empty `entries` with worktrees_read > 0 is a measured none, never ABSENT."""
+    trees = worktree_paths() if trees is None else trees
+    by_slug, unreadable, read = {}, [], 0
+    for wt in trees:
+        d = os.path.join(wt, "org", "critical_paths", ".open_deploys")
+        if not os.path.isdir(d):
+            continue
+        read += 1
+        for name in sorted(os.listdir(d)):
+            if not name.endswith(".json") or name.startswith("."):
+                continue
+            try:
+                s = json.load(open(os.path.join(d, name), encoding="utf-8"))
+            except (OSError, ValueError) as exc:
+                unreadable.append({"worktree": wt, "file": name, "error": type(exc).__name__})
+                continue
+            slug = str(s.get("slug") or name[:-5])
+            e = by_slug.get(slug)
+            if e is None:
+                e = dict((k, s.get(k)) for k in _OD_FIELDS)
+                e["slug"] = slug
+                e["legs"] = [{"id": g.get("id"), "kind": g.get("kind"), "target": g.get("target")}
+                             for g in (s.get("legs") or []) if isinstance(g, dict)]
+                e["worktrees"] = []
+                by_slug[slug] = e
+            e["worktrees"].append(wt)
+    return {"schema": OD_SCHEMA, "device": device, "published_at": stamp(now), "worktrees_total": len(trees),
+            "worktrees_read": read, "entries": [by_slug[k] for k in sorted(by_slug)], "unreadable": unreadable}
+
+
+def od_key(device: str) -> str:
+    return "fabric/open-calls/v1/box=%s/open_deploys.json" % device
+
+
+def req_prefix(device: str) -> str:
+    return "fabric/open-calls/v1/box=%s/requests" % device
+
+
+def res_key(device: str, rid: str) -> str:
+    return "fabric/open-calls/v1/box=%s/request_results/%s.json" % (device, rid)
+
+
+def apply_requests(device: str, dry: bool, now, xa, close=None) -> tuple:
+    """FWD-17: apply each close REQUEST the page put under box=<B>/requests/ through open-calls.py close, Andrew's word
+    (--ruled-by andrew). The request is never deleted; its RESULT object (APPLIED or REFUSED, with the writer's line) marks it
+    done, so a pass applies each request once. A request object: {schema, id, call_id, ruling, ruled_by: "andrew",
+    requested_at, requested_by}; its id equals the object's file name. Returns (applied, refused, pending, notes)."""
+    if close is None:
+        oc = load_mod("opal_open_calls", ".tools/open-calls.py")
+        close = oc.cmd_close
+    applied = refused = pending = 0
+    notes = []
+    for key in xa._list_keys(req_prefix(device)):
+        rid = key.rsplit("/", 1)[-1][:-5]
+        if xa._get(res_key(device, rid)) is not None:
+            continue
+        pending += 1
+        try:
+            req = xa._get(key)
+        except Exception as exc:  # noqa: BLE001
+            req, why = None, "request unreadable (%s)" % type(exc).__name__
+        else:
+            why = ""
+        if req is not None:
+            if not _REQ_ID.match(rid) or req.get("id") != rid:
+                why = "request id %r does not match its file name" % req.get("id")
+            elif req.get("schema") != REQ_SCHEMA:
+                why = "schema %r is not %r" % (req.get("schema"), REQ_SCHEMA)
+            elif req.get("ruled_by") != "andrew":
+                why = "ruled_by %r: the page carries Andrew's word only" % req.get("ruled_by")
+            elif not isinstance(req.get("call_id"), str) or not str(req.get("ruling") or "").strip():
+                why = "call_id and a non-empty ruling are required"
+        if dry:
+            print("DRY: request %s -> %s" % (rid, ("REFUSE: " + why) if why else "close %s" % (req or {}).get("call_id")))
+            continue
+        line = why
+        if not why:
+            rpath = os.path.join(os.environ.get("OPAL_STATE_ROOT", "").strip() or os.path.join(ROOT, "org", "devices", "state"),
+                                 device, "rulings", "close-request-%s.md" % rid)
+            os.makedirs(os.path.dirname(rpath), exist_ok=True)
+            with open(rpath, "w", encoding="utf-8", newline="\n") as fh:
+                fh.write("# Close request %s -- call %s (Andrew's word, from the MC portal)\n\nrequested_at: %s\nrequested_by: %s\n"
+                         "applied_by: open-calls-scan on %s at %s\n\n## Ruling, verbatim\n\n%s\n" % (
+                             rid, req["call_id"], req.get("requested_at"), req.get("requested_by"), device, stamp(now),
+                             str(req["ruling"]).strip()))
+
+            class _A:
+                pass
+            a = _A()
+            a.id, a.by, a.ruling, a.crossbox, a.ruled_by, a.xadj = (
+                req["call_id"], str(req.get("requested_by") or "andrew"), rpath, None, "andrew", None)
+            try:
+                close(a)
+                line = "CLOSED id=%s ruled_by=andrew ruling=%s" % (req["call_id"], rpath)
+            except Exception as exc:  # noqa: BLE001 -- the writer's refusal is the result, recorded as such
+                why = line = str(exc) or type(exc).__name__
+        state = "REFUSED" if why else "APPLIED"
+        try:
+            xa._put(res_key(device, rid), {"schema": RES_SCHEMA, "id": rid, "device": device, "state": state,
+                                           "detail": line, "at": stamp(now)})
+        except Exception as exc:  # noqa: BLE001
+            notes.append("close result %s not written (%s); it is retried next pass" % (rid, type(exc).__name__))
+        applied += state == "APPLIED"
+        refused += state == "REFUSED"
+    return applied, refused, pending, notes
+
+
 def run_pass(device: str, dry: bool, now=None, probe=pid_alive) -> tuple:
     now = now or now_dt()
     oc = load_mod("opal_open_calls", ".tools/open-calls.py")
     xa = load_mod("opal_xadj", ".tools/xadj.py")
+    notes = []
+    # FWD-17 first, so a close the page asked for is off the list before this pass reads it. Andrew's word: the
+    # keep-driving switch holds nudges, never his closes.
+    try:
+        req_applied, req_refused, req_pending, rnotes = apply_requests(device, dry, now, xa)
+        notes += rnotes
+    except Exception as exc:  # noqa: BLE001 -- a store outage must not stop the box's own nudge
+        req_applied = req_refused = req_pending = 0
+        notes.append("close requests unreadable (%s)" % type(exc).__name__)
     rows = []
     if os.path.exists(oc.list_path(device)):
         rows = oc.read_list(device)["rows"]
     due = [r for r in rows if r["state"] == "OPEN" and r.get("kind", "fork") == "fork" and not r.get("escalation")]
-    notes = []
     try:
         xdocs = xa.list_all()
     except Exception as exc:  # noqa: BLE001 -- a store outage must not stop the box's own nudge
@@ -336,7 +490,7 @@ def run_pass(device: str, dry: bool, now=None, probe=pid_alive) -> tuple:
             closeout.append((r, x))
     live = liveness()
     ep = now.timestamp()
-    cto = pick(live, CTO_OF.get(device, ""), "1.0.0_SA_CTO", ep, probe)
+    cto = pick(live, seat_of("1.0.0_SA_CTO", device), "1.0.0_SA_CTO", ep, probe)
     if device == xa.PRIMARY:   # the laptop's own pass IS the measurement its heartbeat carries
         adj, why = (xa.PRIMARY, "this pass reads the laptop CTO live") if cto else (xa.BACKUP, "this pass reads no live laptop CTO")
     else:
@@ -345,7 +499,7 @@ def run_pass(device: str, dry: bool, now=None, probe=pid_alive) -> tuple:
         except Exception as exc:  # noqa: BLE001
             adj, why = None, "adjudicator unmeasurable (%s)" % type(exc).__name__
     to_rule = [x for x in xdocs if x["state"] == "OPEN"] if adj == device else []
-    target = cto or pick(live, MSTR_OF.get(device, ""), "0.0.0_AB_MSTR", ep, probe)
+    target = cto or pick(live, seat_of("0.0.0_AB_MSTR", device), "0.0.0_AB_MSTR", ep, probe)
     fp = json.dumps([sorted(r["id"] for r in due), sorted(x["id"] for _, x in closeout), sorted(x["id"] for x in to_rule),
                      target], sort_keys=True)
     st = read_state()
@@ -375,7 +529,7 @@ def run_pass(device: str, dry: bool, now=None, probe=pid_alive) -> tuple:
                 sent = "yes"
             except OSError as exc:
                 sent = "no:deliver-failed(%s)" % exc
-    mstr = pick(live, MSTR_OF.get(device, ""), "0.0.0_AB_MSTR", ep, probe)
+    mstr = pick(live, seat_of("0.0.0_AB_MSTR", device), "0.0.0_AB_MSTR", ep, probe)
     if mode == "off":
         ub_mem, ub_sent, ub_n = ub_prev, 0, 0
     else:
@@ -383,17 +537,26 @@ def run_pass(device: str, dry: bool, now=None, probe=pid_alive) -> tuple:
     st = dict(st, unblock=ub_mem)
     hb = {"schema": SCHEMA, "device": device, "scanned_at": stamp(now), "cto_serial": cto, "cto_live": cto is not None,
           "target": target, "due": len(due), "closeout": len(closeout), "to_rule": len(to_rule), "adjudicator": adj,
-          "adjudicator_why": why, "sent": sent, "mode": mode, "unblock_items": ub_n, "unblock_sent": ub_sent}
+          "adjudicator_why": why, "sent": sent, "mode": mode, "unblock_items": ub_n, "unblock_sent": ub_sent,
+          "close_requests": {"pending": req_pending, "applied": req_applied, "refused": req_refused}}
+    od = open_deploys_doc(device, now)
+    hb["open_deploys"] = len(od["entries"])
     if not dry:
         write_state(st)
         try:
             xa.heartbeat_put(device, hb)
         except Exception as exc:  # noqa: BLE001
             notes.append("heartbeat not written (%s)" % type(exc).__name__)
+        try:
+            xa._put(od_key(device), od)
+        except Exception as exc:  # noqa: BLE001
+            notes.append("open_deploys.json not written (%s)" % type(exc).__name__)
     for note in notes:
         print("WARN: " + note)
-    line = "OPEN-CALLS-SCAN device=%s due=%d closeout=%d to_rule=%d target=%s sent=%s adjudicator=%s mode=%s unblock=%d/%d" % (
-        device, len(due), len(closeout), len(to_rule), target or "none", sent, adj or "?", mode, ub_sent, ub_n)
+    line = ("OPEN-CALLS-SCAN device=%s due=%d closeout=%d to_rule=%d target=%s sent=%s adjudicator=%s mode=%s unblock=%d/%d"
+            " open_deploys=%d/%dwt requests=%d/%d/%d") % (
+        device, len(due), len(closeout), len(to_rule), target or "none", sent, adj or "?", mode, ub_sent, ub_n,
+        len(od["entries"]), od["worktrees_read"], req_applied, req_refused, req_pending)
     return line, hb
 
 
@@ -519,6 +682,40 @@ def selftest() -> int:
         line, hb = run_pass(dev, False, now, probe)
         line2, _ = run_pass(dev, False, now + datetime.timedelta(minutes=10), probe)
         rec("the-pass-delivers-the-cro-step-once-then-holds", "unblock=1/1" in line and "unblock=0/1" in line2, line + " || " + line2)
+        # FWD-15: open_deploys.json -- every worktree, one entry per slug, a bad file named, an empty tree a measured none
+        wt1, wt2, wt3 = (os.path.join(base, w) for w in ("wt1", "wt2", "wt3"))
+        for w in (wt1, wt2):
+            os.makedirs(os.path.join(w, "org", "critical_paths", ".open_deploys"))
+        os.makedirs(os.path.join(wt3, "org", "critical_paths", ".open_deploys"))
+        sent_ = {"slug": "dep-a", "status": "OPEN", "author": "x", "legs": [{"id": "A1", "kind": "lambda", "target": "fn-a"}]}
+        for w in (wt1, wt2):
+            json.dump(sent_, open(os.path.join(w, "org", "critical_paths", ".open_deploys", "dep-a.json"), "w"))
+        json.dump(dict(sent_, slug="dep-b"), open(os.path.join(wt2, "org", "critical_paths", ".open_deploys", "dep-b.json"), "w"))
+        open(os.path.join(wt1, "org", "critical_paths", ".open_deploys", "bad.json"), "w").write("{not json")
+        od = open_deploys_doc(dev, now, trees=[wt1, wt2])
+        rec("open-deploys-unions-worktrees-one-entry-per-slug",
+            [e["slug"] for e in od["entries"]] == ["dep-a", "dep-b"] and len(od["entries"][0]["worktrees"]) == 2
+            and od["entries"][0]["legs"][0]["target"] == "fn-a" and len(od["unreadable"]) == 1, od)
+        od0 = open_deploys_doc(dev, now, trees=[wt3])
+        rec("an-empty-sentinel-dir-is-a-measured-none", od0["entries"] == [] and od0["worktrees_read"] == 1, od0)
+        # FWD-17: close requests -- applied once through the writer; a refusal and a bad request recorded, never retried
+        calls = []
+
+        def fake_close(a):
+            calls.append((a.id, a.ruled_by, os.path.isfile(a.ruling)))
+            if a.id == "c-gone":
+                raise RuntimeError("REFUSED: no call c-gone on this box's list")
+            return 0
+        reqs = {"r1": {"call_id": "c-fork"}, "r2": {"call_id": "c-gone"}, "r3": {"call_id": "c-fork", "ruled_by": "cto"}}
+        for rid, extra in reqs.items():
+            xa._put("%s/%s.json" % (req_prefix(dev), rid), dict({"schema": REQ_SCHEMA, "id": rid, "ruling": "close it",
+                                                                 "ruled_by": "andrew", "requested_by": "andrew"}, **extra))
+        a1, r1, p1, _n = apply_requests(dev, False, now, xa, close=fake_close)
+        res = dict((rid, (xa._get(res_key(dev, rid)) or {}).get("state")) for rid in reqs)
+        rec("close-requests-apply-refuse-and-record", (a1, r1, p1) == (1, 2, 3) and res == {"r1": "APPLIED", "r2": "REFUSED",
+            "r3": "REFUSED"} and calls == [("c-fork", "andrew", True), ("c-gone", "andrew", True)], (a1, r1, p1, res, calls))
+        a2, r2, p2, _n = apply_requests(dev, False, now, xa, close=fake_close)
+        rec("a-request-with-a-result-is-never-applied-twice", (a2, r2, p2) == (0, 0, 0) and len(calls) == 2, (a2, r2, p2))
     finally:
         for k, v in keep.items():
             if v is None:

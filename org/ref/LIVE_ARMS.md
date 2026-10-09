@@ -19,14 +19,15 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 
 ## Arms
 
-- `1.0.0_SA_CTO` `/self-drive 60m laptop directives` at `17 * * * *`, DIRECTED: re-armed after the 2026-10-08 laptop reboot on
+- `1.0.0_SA_CTO` `/self-drive 30m laptop directives` at `17,47 * * * *` (cron `a5054ca6`; 30m on Andrew ~06:0xZ 2026-10-09, "that should be much faster clip, like 30m"), DIRECTED: re-armed after the 2026-10-08 laptop reboot on
   Andrew's "1.) Yes." (~18:3xZ, last addendum of
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_153xZ_TWO_PRIORITIES_GITOPS_AND_PROCESS_GC.md`), terms of
   `ANDREW_DIRECT_20261007_071xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_AS_CLUSTER_CONTROL_PLANE.md`; GitOps, GC and graph coherence
   ranked first each tick. Stop: as that record. Landed by 1.0.0_SA_CTO.
 - `2.0.0_SA_COO~R` `/canonical-drive 30m COMM_ASSIST`, session cron `36340e72`, DIRECTED: Andrew ~03:5xZ 2026-10-09, VERBATIM "I see, yes
   run it on a 30m basis" (record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261009_035xZ_COO_R_CANONICAL_DRIVE_30M_COMM_ASSIST.md`).
-  Stop: the project closes, or his word. Landed by 1.0.0_SA_CTO on msg 107702.
+  Stop: the project closes, or his word. Landed by 1.0.0_SA_CTO on msg 107702. **STOPPED ~06:1xZ 2026-10-09:** Andrew took the seat
+  offline ("I took COO~R offline because there wasnt really anything happening on that thread"); cron `36340e72` died with the session.
 
 - Every fabric manager (`0.0.0_AB_MSTR`, `~Z`, `~DELL1`, `~DELL2`) `/govern 30m` at instantiation, DIRECTED. Andrew at the laptop
   `1.0.0_SA_CTO` terminal ~17:4xZ 2026-10-08, VERBATIM: "MSTR agents should have /govern on a 30m loop at instantiation." Record
@@ -79,7 +80,9 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
     stand-down.
   - `4.0.0_SA_CRO` `/ui-walk` runs plus Andrew's transcripts, ad hoc, NO cron; findings to 1.0.0_SA_CTO and
     2.0.0_SA_COO~D.
-- `1.0.0_SA_CTO~O` `/self-drive 30m` over NFRA_OPLGTW, NFRA_OPALAI, NFRA_MCPORTAL, NFRA_MCPINDEX, paired with
+- ~~`1.0.0_SA_CTO~O` `/self-drive 30m`~~ STRUCK 2026-10-09 ~07:4xZ by `1.0.0_SA_CTO~Z`: Andrew-direct "we don't need CTO~O
+  anymore, you just lead the fabric here" (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_074xZ_CTO_O_RETIRED_CTO_Z_LEADS_SITEZ_FABRIC.md`).
+  The COO half below is not touched by that word. Original row: `1.0.0_SA_CTO~O` `/self-drive 30m` over NFRA_OPLGTW, NFRA_OPALAI, NFRA_MCPORTAL, NFRA_MCPINDEX, paired with
   `2.0.0_SA_COO~O` / `~MI` / `~MP` / `~AI` `/canonical-drive <own project> 30m` (+15m). Class DIRECTED, chooser Andrew
   (his `/self-drive` invocation, 2026-09-28 ~22:2xZ); landed by 1.0.0_SA_CTO~O. Record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_222xZ_SELF_DRIVE_O_FABRIC_FOUR_PROJECTS.md`. Stop:
@@ -90,6 +93,8 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   running? ... that should entirely be covered between the CTO self-drive and the MSTR govern loops." Arming record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_043xZ_SELF_DRIVE_60M_SITEZ_NFRA_AND_PUSHES_NEED_NO_ANDREW.md`.
   Stop: DONE read from the register for all eight, HELD-AT-STOP, or his stand-down. Landed by 1.0.0_SA_CTO~Z.
+  **STRUCK 2026-10-09 ~06:1xZ by `1.0.0_SA_CTO~Z`, STOPPED-BY-OPERATOR:** "No im winding down this fabric, take a /log on current
+  status". Cron deleted. A successor does not re-arm this row.
 - `1.0.0_SA_CTO~Z` `/self-drive 60m` over AMGT_CORPUS, AMGT_HARVST, AMGT_RESAPP, DSGN_AMGTV1, ETFS_RIVALS (the
   Friday demo: PROD by 09:00 ET 2026-10-02). The driver adjudicates every open call; CRO~Z runs `/closer trace` on
   request. Paired with `2.0.0_SA_COO~X` / `~Z` / `~H` / `~D` running `/canonical-drive <own project> 30m`; `~RV`

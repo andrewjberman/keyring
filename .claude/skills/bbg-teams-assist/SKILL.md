@@ -32,8 +32,14 @@ design). The canonical arm line (Monitor tool, `timeout_ms: 1800000`). `teams-wa
 exit and run the backlog sweep (`/bbg-teams-assist`) to cover the gap:
 
 ```
-timeout 1770 python .claude/skills/teams-assist/teams-watch.py --server opal-gateway-bbg --identity opalbloomberg
+timeout 1770 python .claude/skills/teams-assist/teams-watch.py --server opal-gateway-bbg --identity 517aa5ee-b4d0-425a-b493-5a22ff77ac4f
 ```
+
+The pin is the opalbloomberg account's Entra `oid`. The old form, `--identity opalbloomberg`, could never match:
+`self_id()` reads the token's `sub` (`<tid>/<oid>`), and the token carries no `preferred_username` or `upn`. Read
+2026-10-09 by `1.0.0_SA_CTO~Z`: the `opal-gateway-bbg` record's `oid` is `517aa5ee-...` with email local part
+`opalbloomberg`; both of Andrew's records (`opal-gateway`, `opalgateway`) carry `oid` `2e21f8e5-...`. The pin cannot
+match his token.
 
 The pin is mandatory for this seat — a pin that cannot be satisfied dies loudly
 (`[TEAMS-IDENTITY-FAIL]`, exit 2) and NEVER falls back to another identity; never arm
@@ -170,4 +176,4 @@ never OPEN — nobody CHOSE to leave it pending, and the failed telling IS the f
 `/watcher` (fabric inbox — a different surface) · the identity-pinned Teams Monitor
 (the wake mechanism; prompt.md On-Launch step 3; engine
 `.claude/skills/teams-assist/teams-watch.py`, armed with
-`--server opal-gateway-bbg --identity opalbloomberg` per step 0).
+`--server opal-gateway-bbg --identity 517aa5ee-b4d0-425a-b493-5a22ff77ac4f` per step 0).

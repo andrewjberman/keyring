@@ -2305,3 +2305,65 @@ base (exit=1).
 reference 4 of 4. `battery29`: base ALL PASS; on the scratch, every harness green.
 **Rows:** `DSGN_AMGTV1-D1-W121-S<k>`, `-D1-W122-S<k>`. **Then:** the drain (tsc, eslint, battery29 on the combined candidate), a signed-in
 /security-analysis walk, and CTO review.
+
+## v58 -- ROUND 58 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~05:2xZ) -- THE FILING PANEL BESIDE A DRAWN TABLE (DIRECT ACT)
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round57.md` (msg 1757) section 4: item 1 -> cell `AV-zzj-1`; item 2 (the PROD promote) is not a
+cell (a `/prod-deploy` act under its pair, waiting on cross-box XB-20261009T052023Z-bf16).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zzj-1` DIRECT ACT (LOCAL) | FWD-27 | `SA/components/SegmentBreakdown.tsx`, `SA/tabs/ThesisTab.tsx` | ~123 (worker-light) |
+
+**Base:** portal 2d42e9b7. **Check:** `deliverables/2.0.0_SA_COO~D1/round58/checks/r58a.cjs`: base 2 of 4, scratch reference 4 of 4. battery29
+base ALL PASS. **Chains:** 1. **Fan-out:** 1 of 1.
+**Beside it:** Andrew-direct ~05:0xZ-05:1xZ (record @1725deb826) -- a deep signed-in walk of /security-analysis feeds a register and a brief
+(the news spine, the news presentation, the disclaimers) for the next rounds.
+
+## v59 -- ROUND 59 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~06:3xZ) -- ANDREW'S WALK: SPINE, NEWS, DISCLAIMERS, LAYOUT (SIX CELLS)
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round58.md` @23fec8836a: cells A-F as `deliverables/2.0.0_SA_COO~D1/round59/ROUND59_CUT_PLAN.md`
+@f37fb3dc95, with R2 (IdentityLine YES, cell C removes the tab mounts), R3 (each absence once; served reasons folded, not reworded), R4
+(spine) and R5 (one news surface) applied. Scope: the walk register SAW-01..23 (Andrew-direct ~05:0xZ-05:1xZ, record @1725deb826).
+
+| cell | SAW | owned files (`SA/`) | actor |
+|---|---|---|---|
+| `AV-zzk-1` | 01, 02, 03, 04, 08 | `components/TimelinePanel.tsx`, `components/TimelineWordCloud.tsx` | ~124 (worker) |
+| `AV-zzk-2` | 05, 07, 09 | `components/HeaderBrief.tsx`, `components/TopBand.tsx` | ~125 (worker) |
+| `AV-zzk-3` | 11 (fold), 12, 14, 20, 21 | `SecurityAnalysis.tsx`, `components/SecurityOverlay.tsx`, `components/InputProvenance.tsx`, `components/CoverageNote.tsx`, `constants.ts`, `types.ts` (tab id), new `tabs/NewsTab.tsx`; the `IdentityLine` mount line in the five tabs (R2) | ~126 (worker) |
+| `AV-zzk-4` | 10, 11 (tab), 18, 21 (tab subtitles) | `tabs/ThesisTab.tsx`, `components/DossierSections.tsx`, `tabs/PostureTab.tsx`, `components/SegmentTable.tsx` | ~127 (worker) |
+| `AV-zzk-5` | 15, 16 | `tabs/ExecManagementTab.tsx`, `tabs/PeersTab.tsx`, `cscTable.ts` | ~128 (worker-light) |
+| `AV-zzk-6` | 17, 19 (title), 22 | `tabs/ModelTab.tsx`, `components/model/WhatChangedPanel.tsx`, `modelSheet.ts`, `components/HeaderCards.tsx`, `components/StatTile.tsx`, `components/PrintExportAction.tsx` | ~129 (worker) |
+
+**Overlap by ruling (R2):** cell C edits ONE line (the `IdentityLine` mount) in five tab files that D, E and F own. Hunks are disjoint, and
+the merge reads them. **Not cut here:**
+- SAW-06: feed relevance is a RESAPP ask (R6).
+- SAW-13: the footers, cut after A-F merge.
+- SAW-23: already ruled.
+- The battery29 harness re-anchor: one batched repair cell after the merge.
+**Checks:** `round59/checks/r59.cjs <cell>` is a source-level floor. At base `c0c6f570` every build arm FAILS, and every PLANTED arm PASSES
+(each grader refuses the base form and admits a clean form). `round59/checks/hyg59.sh` (tsc + eslint) PASSES at the base. AC3 per cell is
+JUDGMENT, graded on the close walk against the register. **Chains:** 6, with no data edge. **Fan-out:** 6 of 6, cap 8.
+
+## v60 -- ROUND 60 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~07:3xZ) -- THE ROUND-59 REPAIRS (ONE BATCHED CELL)
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round59.md` @3ce363b8b2 section 3, items 1-7:
+- the battery29 re-anchor;
+- one as-of per card;
+- the description line;
+- the mixed-currency line;
+- display units in What changed;
+- ten news items at rest;
+- the spine's search bookkeeping out of the day detail.
+
+The PROD promote of rounds 58-60 follows under a pair.
+
+| cell | serves | owned files (`SA/` unless noted) | actor |
+|---|---|---|---|
+| `AV-zzl-1` repairs batched (LOCAL) | FWD-27, layout | `components/TimelinePanel.tsx`, `components/HeaderBrief.tsx`, `components/SecurityOverlay.tsx`, `tabs/PeersTab.tsx`, `components/model/WhatChangedPanel.tsx`, `__harness__/`, and `2.0.0_SA_COO~D/round24/checks/posturezero.cjs`, `round23/checks/postureharness.cjs`, `round20/checks/namecard.cjs` | ~130 (worker) |
+
+**Base:** portal 3ea5d0f9. **Checks:**
+- `deliverables/2.0.0_SA_COO~D1/round60/checks/r60.cjs`: base 1 of 7 (the build arms FAIL, PLANTED passes).
+- battery29: base FAIL (7 of 14 harnesses; three checks red). The re-anchor is this cell's last item.
+
+**Fan-out:** 1 of 1.

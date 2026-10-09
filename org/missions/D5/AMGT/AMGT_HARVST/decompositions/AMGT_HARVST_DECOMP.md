@@ -3641,6 +3641,7 @@ Issuer `2.0.0_SA_COO~W1`. Series **`bs`**.
 | `HVST-bs-2` | `bs-2` | **The installer takes `-Publishers`.** Today `install-cycle-schedule.ps1:11` passes no `--publishers`, so the runner would run its default four, sa included; placement 2 needs bbg, wsj and barrons alone. An unknown name (the FT) is refused, and with no `-Publishers` the arguments are unchanged. | SERVED | worker-light ~130 |
 | `HVST-bs-3` | `bs-3` | **The runner registered at log-on on the site Z box, bbg, wsj and barrons, against a PINNED checkout of the merged `bs-2`; acceptance per publisher is the first completed cycle record with no one at the box.** Ordered to site Z's producer seat, `0.7.0_AE_CloudOps~Z`, through `0.0.0_AB_MSTR~DELL1`. HELD until `bs-2` is merged under its pair and the issuer sends the pin. | WORLD | `0.7.0_AE_CloudOps~Z` (held) |
 | `HVST-bs-4` | `bs-4` | **The r47 Seeking Alpha backfill resumed from its own checkpoint (133 done) as a DECLARED detached job on the site Z box, with completion reported to `0.0.0_AB_MSTR~DELL1`.** WORKSTREAM `R47` (its own issuance; write surface `deliverables/0.7.0_AE_CloudOps~Z/r47/`), cut after round 75's issuance @c7909af157 on `1.0.0_SA_CTO~DELL1` msgs 1430 and 1441 and site Z `1.0.0_SA_CTO~Z` msg 32271 (MSTR msg 1436), before anything of round 75 was spawned. Its completion lets the runner add sa and meets the `bo-1`/`bp-1` pair's C-a. | WORLD | `0.7.0_AE_CloudOps~Z` |
+| `HVST-bs-5` | `bs-5` | **Rebuild #12's signing dry run: R30 served.** The baseline is rebuild #11's parts and the r75 list; every removed pair must be in br-1's R30 class (br-1's own classifier), counted beside the census's 280; any change outside the class is listed and is a STOP. WORKSTREAM `R12`, on `1.0.0_SA_CTO~DELL1` msg 1939 (ADDENDUM @745633e993). | LOCAL | worker ~131 |
 
 **Not orders (the issuer's acts, each under its own never-widen pair, in placement 3's order):** rebuild #11's served write
 on `bs-1`'s output after `3.0.0_SA_CVO~Z` grades the titles; then `br-1`'s merge (branch 126 @c868d27d87); then `bq-2`'s
@@ -3655,6 +3656,7 @@ cycle records exist (placement 4).
 - `bs-1` AC1, AC2, AC3 base: FAIL as expected (no such file).
 - `bs-2` AC1 base: FAIL as expected (the ACTION line carries no `--publishers`). AC2 base: FAIL as expected (no refusal
   printed). AC3 base: PASS as expected (ACTION ends `STOP"`, followed by WORKDIR).
+- `bs-5` AC1, AC2, AC3 base: FAIL as expected (no such file).
 - `bs-4` AC1, AC2 base: FAIL as expected (no such file; they are written on the site Z box).
 - `bs-3` AC1, AC2: not run at the base. They read a scheduled task on the site Z box, which this box cannot read; the base
   state is `TASK ABSENT` per `br-3`'s close (@ef68288dee).

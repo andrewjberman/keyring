@@ -991,6 +991,55 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
     "spec_asserts": "The L10 precondition holds that a slug waits until every task order under the project is terminal, read from each order's `<status>` tag at HEAD.",
     "world_is": "The gate's first-match regex captures a `<status>` string occurring in an order's PROSE, so an order describing markup is graded on the description; all 18 orders are terminal on their actual status tags.",
     "notes": "⛔ NOTHING IS ASKED OF ANY LANE BEYOND THE ROUTING, and no order was edited. This is the SECOND gate defect this seat has routed today (Z-S12 was the first) and both are the same family the estate met all day: AN INSTRUMENT ANSWERING CONFIDENTLY ABOUT THE WRONG OBJECT -- there the wrong PLANE, here the wrong OCCURRENCE. ⭐ AND THE GENERAL FORM IS WORTH MORE THAN THE REGEX: A FIRST-MATCH READ OF A STRUCTURED FIELD IS A GUESS THAT THE FIELD APPEARS BEFORE ANY DISCUSSION OF IT. That holds for most documents and fails for exactly the documents that are ABOUT the field -- which are the ones a governance estate writes when it starts auditing its own markup."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W10-S1",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~10",
+    "surfaced_at": "2026-10-09T06:42:47Z",
+    "one_line": "missions-tree-index check reports INDEX-DRIFT on org/projects/NFRA_OPSWKF.json (dep_stage index='PRD' tree='EXECUTING') and the commit-time missions-tree-check refuses every commit in this worktree, including this order's completion commit.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~ZI -- regenerate the flat index row via missions-tree-index derive (0.0.0_AB_MSTR lane for the index); not touched by this worker (outside <paths>).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/missions-tree-index.py check in /c/tmp/wk-iamroles-10 at 44eb421ef6: '[INDEX-DRIFT] org/projects/NFRA_OPSWKF.json: dep_stage: index=PRD tree=EXECUTING', RESULT: 1 violation(s); tree=49 projects valid."
+      ]
+    },
+    "spec_asserts": "A worker commit inside its <paths> lands through safe-commit.",
+    "world_is": "safe-commit's missions-tree-check refuses the staged set on an unrelated project's index drift, so the order's proof, deliverables and complete flip could not be committed.",
+    "notes": "Work product is complete and in the worktree; only the commit is blocked."
   }
+]
+```
+
+## Z-W12-S1 -- safe-commit refuses IAM-u-3's deliverable on an unrelated NFRA_OPSWKF index drift
+
+```json
+[
+{
+  "id": "NFRA_IAMROLES202609-Z-W12-S1",
+  "project": "NFRA_IAMROLES202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~12",
+  "surfaced_at": "2026-10-09T06:31:56Z",
+  "one_line": "safe-commit REFUSES this worker's deliverable commit on a missions-tree INDEX-DRIFT in a different project (org/projects/NFRA_OPSWKF.json dep_stage index=PRD tree=EXECUTING); the refusal is outside this order's paths and the remedy is the register's.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR~Z -- the refusal text names R5, the register's members list, as 0.0.0_AB_MSTR's lane; not edited here and not bypassed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh -- BLOCKED: missions-tree-check, RESULT: 1 violation(s), '[INDEX-DRIFT] org/projects/NFRA_OPSWKF.json: dep_stage: index=PRD tree=EXECUTING', denominators 'tree=49 project(s)... 49 valid'. Observed at worktree base 50428b904f (branch wk-NFRA_IAMROLES202609-12), rc=1, run twice; git log confirms no commit by this serial.",
+      "The staged set was only org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~12/CONDITION_AXIS_EXERCISED.md; the violating file is in no order path of this worker."
+    ]
+  },
+  "spec_asserts": "The order expects the worker to commit its deliverable, proof and status flip to its own branch via safe-commit within its <paths>.",
+  "world_is": "The commit gate refuses on a tree-wide index drift unrelated to the staged file, so the deliverable stands uncommitted in the worktree (CONDITION_AXIS_EXERCISED.md, AC1=3, AC2=1, AC3 pin matches).",
+  "disposition": "UNDER_INVESTIGATION"
+}
 ]
 ```

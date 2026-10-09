@@ -250,3 +250,34 @@ evidence files (their figures are the brief's, marked M or E as it marks them); 
 `data/etfs/scripts/rivalfunds/bbg_budget.py` + `bbg_budget.json` (the right shape, the wrong scope); the pacer note
 (the MDPF_SECHIST pacer note cited in v0.1 exists in no tree: CVO finding F2, measured 0 of 74,316 files; removed); `lambda_function_v2.py`'s batch pacing;
 `resolve_tickers.py`'s seven methods; `crosswalk.py`; `integrations/bloomberg/READ_HERE.md` (two-phase budgeted sign-in).
+
+## ADDENDUM v0.4 (1.0.0_SA_CTO~DELL1, 2026-10-09 ~05:1xZ) -- the STANDING request shape and its readable state
+
+ENDPOINT and CONTRACTS text are not edited. This addendum adds a request shape and one address; the next round cuts it.
+**Sources:** laptop XA-20261009T033809Z-8c1a, conditions 1 and 3 (one standing tier-3 request for the rival-funds history; the vehicle
+reads its state before each draw; the standing shape joins C-QUOTE). Ruling `CTO_RULING_RIVALS_D1S2_QUEUE_STATE_READER_20261009.md`
+@c5fb809173.
+
+- **Standing request:** one request file with `shape: standing`. Its quote is a PER-RUN ceiling (rival funds: 20,000 returned records per
+  run, R24), not one total. It is ranked by tier like any request, and the reserve rule applies per run (a run stops at the reserve and
+  resumes the next day). Each run's actuals reach the demand ledger the same day.
+- **Readable state, one object per standing request,** builder output (`lib/opal_naming.py address()`, run 2026-10-09):
+  `address("bloomberg","global","silver","request_state","request=<request_id>","state.json")` ->
+  `s3://opal-data-assets/bloomberg/global/silver/request_state/request=<request_id>/state.json`.
+  - It carries `state` in `active | paused | stopped`, `as_of`, and `reason`. The queue is its ONE writer.
+  - A consumer reads it before each draw, and draws nothing unless it reads `active` (fail-closed: a failed read draws nothing).
+  - For the rival-funds request: `.../request=ETFS_RIVALS-HISTORY-OWED-DAILY/state.json`.
+- **Cut at DEMQUE's next round:** the writer of the state object, plus the standing shape in C-QUOTE's checks. Negative arm: a request
+  set to `paused` reads `paused` at the address. ETFS_RIVALS' round-29 reader cell is cut against this address.
+
+## ADDENDUM v0.5 (1.0.0_SA_CTO~DELL1, 2026-10-09 ~05:5xZ) -- prices are TOTAL RETURN (Andrew-direct ~05:4xZ)
+
+**Word, VERBATIM** (record `org/tier1_exec/2.0.0_SA_COO~Q1/deliverables/ANDREW_DIRECT_20261009_054xZ_PRICES_ARE_TOTAL_RETURN_STORE_PRICE_DIVIDEND_TR_PER_DAY.md`
+@cb023aa95f): "all Yahoo finance price tables must store the price value, any dividend/interest channel, and a total return value, per
+ticker, per day. Anytime we work with prices, either from Bloomberg or from YFinance, they must be the dividend/interest-inclusive total
+return, but it is good to have it all parsed out for provenance/audit sake".
+
+- **C-PRICES amended:** each stored row carries three values: the as-traded price, the dividend/interest cash on its ex-date, and the
+  total-return value. Splits stay kept apart. Every consumer of a price reads the total-return value.
+- **First:** the round-5 comparison cell (a few clear dividend payers, Bloomberg against Yahoo under this method) runs before the
+  total-return column is built. Ruling: `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_BATCH_20261009T0550Z.md` C.

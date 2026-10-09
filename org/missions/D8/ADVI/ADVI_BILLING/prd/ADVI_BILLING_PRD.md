@@ -5,7 +5,7 @@
  "project": "ADVI_BILLING",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/q2-billing-buy-or-build-brief-20261006.md@cf7721ed30",
  "endpoint_outcomes": [
@@ -81,6 +81,30 @@ wrote the brief. **COO:** UNSEATED at registration; seating is `0.0.0_AB_MSTR`'s
 | C-NO-UPLOAD (FWD-5) | brief | The fee file is produced and checked; it is uploaded only by the person who does it today, on Andrew's word. |
 | C-SHAPE | Andrew, Q-1 call 6 | Inputs come in the custodian's shape (IRPT_CUSTDY C-SHAPE); Black Diamond's fee data is a reference, not the model. |
 | C-FIRM / C-NAMES / C-MORATORIUM | law | One firm per key; names are builder output; no alert or monitor. |
+
+## SURFACE MANIFEST (step 4 -> step 5)`
+section. The issuance of round 1 is refused by `.tools/to-pipeline-gate.py` LIMB (c) until the PRD carries one. Every row is taken
+from `decompositions/ADVI_BILLING_DECOMP.md` section 0 (measured 2026-10-09) and builder output (rule 30). It adds no outcome and
+changes no ENDPOINT text.
+
+## SURFACE MANIFEST
+
+| surface | kind | location | access | owner | serves |
+|---|---|---|---|---|---|
+| Schwab 0833 positions/values | S3 silver (read) | `s3://opal-data-assets/schwab/08335338/silver/fact_rps/` | read | ADVI 49F runners | FWD-1, FWD-3 |
+| Schwab 0833 transactions (TPFEE, SMFEE debits) | S3 silver (read) | `s3://opal-data-assets/schwab/08335338/silver/fact_trn/` | read | ADVI 49F runners | FWD-1 |
+| 49F flow ledger | S3 gold (read) | `s3://opal-data-49financial/gold/advi/canonical/flow_ledger/` | read | ADVI 49F runners | FWD-1, FWD-3 |
+| 49F households | S3 gold (read) | `s3://opal-data-49financial/gold/advi/dimensions/dim_relationship/` + crosswalk `rel_to_z_mapping.json` | read | ADVI 49F runners | FWD-1 |
+| Black Diamond fee lines (secondary reference, C-SHAPE) | S3 silver (read) | `s3://opal-data-bd/silver/fees/` | read | BD silver pipeline | FWD-1, FWD-4 |
+| SMArtX statements, Opal Billing Master | SharePoint (read, by a seat) | `Shared/Documents/Billing/` | read | Opal operations | FWD-1, FWD-2, FWD-5 |
+| Fee recompute | code (new) | `data/assets/scripts/gold/advi_billing/fee_quarter.py` | write | ADVI_BILLING | FWD-1 |
+| Fee-quarter object | S3 gold (new) | `address("advi","49financial","gold","advi_billing","quarter=<q>","<client_key>.json")` | write | ADVI_BILLING | FWD-1, FWD-3 |
+| Seam contract | standard (new) | `org/standards/ADVI_BILLING_FEE_QUARTER_CONTRACT.json` | write | ADVI_BILLING | FWD-1, FWD-3, FWD-4 |
+| Read route | Lambda + API route (new) | `name("advi","49financial","billing-read","lambda")` = `advi-49f-billing-read-lambda`; `GET /api/scoped/partners/books/relationship/{clientKey}/fee-quarter/{quarter}`; root `infra/aws/terraform/advi/billing-read/` | write (apply by the issuer) | ADVI_BILLING | FWD-1, FWD-3 |
+| Advisor fee panel | portal (new files; DEV only, client-facing page) | `portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookFeePanel.tsx`, `portal/src/api/endpoints/advi-billing.ts` | write | ADVI_BILLING | FWD-1, FWD-3 |
+| Schwab fee file | file (later round) | not yet placed | write, never uploaded (C-NO-UPLOAD) | ADVI_BILLING | FWD-5 |
+
+Added 2026-10-09 ~05:2xZ by `1.0.0_SA_CTO~DELL2` from `2.0.0_SA_COO~B2`'s proposal @a84d08dc1d (msg 2555), taken from the round-1 decomposition @b3c6b8ae1f. It adds no outcome and changes no ENDPOINT or CONTRACTS text, so it re-opens no sign-off half.
 
 ## THREAD -- FWD-1, round 1
 

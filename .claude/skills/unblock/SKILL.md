@@ -1,6 +1,6 @@
 ---
 name: unblock
-description: "A COO whose drive found nothing that advances its project for two ticks, and nothing opened on the third, writes its position, the endpoint and why it is blocked to the CRO; the CRO finds a new approach that is not blocked; the CTO synthesizes it into the workflow; the CVO signs it off; the COO resumes. One file per case, carried in S3 and nudged by each box's open-calls scan. `/unblock` (COO: write it), `/unblock propose|fold|sign|refuse <UB id>`, `/unblock list`. COO, CRO, CTO, CVO."
+description: "FIRST the COO chases any act another seat owed and did not do (peek its tab, spawn it, or relocate off a hung box; nudge until an ack, else document the workaround). A COO whose drive found nothing that advances its project for two ticks, and nothing opened on the third, writes its position, the endpoint and why it is blocked to the CRO; the CRO finds a new approach that is not blocked; the CTO synthesizes it into the workflow; the CVO signs it off; the COO resumes. One file per case, carried in S3 and nudged by each box's open-calls scan. `/unblock` (COO: write it), `/unblock propose|fold|sign|refuse <UB id>`, `/unblock list`. COO, CRO, CTO, CVO."
 ---
 
 # /unblock -- the third empty tick goes to the CRO, then the CTO, then the CVO
@@ -26,11 +26,45 @@ After `/next-calls <CODE> --drive` has run its sequence, every tick counts itsel
 Before writing to the CRO, the COO has fanned out: FREE work goes to more worker subagents, never to another COO. A deploy goes
 to a CloudOps seat as always, and needs no reminder.
 
+## FIRST: chase whoever was supposed to do it -- it cannot slide
+
+**Andrew-direct 2026-10-09 ~06:3xZ, verbatim:** *"one of the first things that should be checked is if some other agent was
+supposed to do something, and didnt."* -- *"The main thing is that it cannot be allowed to slide. The agent has to chase down
+whoever was supposed to do that work, nudge them, push until they get an ack. If they can't get an ack, like the example i
+gave, they need to figure out the workaround from there and document it."* Record:
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261009_063xZ_UNBLOCK_CHASE_THE_OWED_AGENT_FIRST.md`.
+
+A project waiting on another seat's act is not blocked: the chase is the work, every tick, until an ack. Usually it is enough
+to follow the trail of "who was supposed to be working on this" and nudge.
+
+1. **Name the owed act.** Who (full serial, box), what, where it was asked (msg id, order file and its `<issued_to>`, open-calls
+   row, deploy ledger, a handoff's "waiting on" line), and when.
+2. **Is that seat live?** Same box: `/unstick <serial> --peek`, then READ the PNG. Another box: write your box's MSTR, which
+   writes that box's MSTR, which peeks and reports what the tab shows. (`/unstick` is operator-initiated by its own text; the
+   record above is Andrew's word for its use here.)
+3. **Not present:** it is spawned (the box MSTR, `/mstr-spawn`, with the owed act as its first message).
+4. **Present but busy:** read the running query's elapsed time and tokens off the peek, then
+   `python .tools/unblock.py hung --minutes <m> --tokens <n>`. Ten minutes or more per thousand tokens (10 min on 1k) is
+   **HUNG**, and most likely its whole box is hung: a GitOps failure such as a bad surprise row, most often at site Z. Then
+   **relocate** the work to another box, preferably the box where the request came from. If it cannot move (it needs that box,
+   such as site Z's local Bloomberg files), record that it is handled when that box clears, and the condition that un-parks it.
+5. **Present and working, or idle:** nudge it (`send_message`; a Codex lane idle at input: `/unstick <serial> --keys`), and
+   push until its ack (`get_delivery_state` reads READ). Nudge again on each tick that reads no ack.
+6. **No ack possible** (HUNG, or three nudges on three ticks with no READ): work out the workaround and document it in the case
+   file (`## Owed by others`), then carry on with `open` if the project is still blocked.
+
+A chase act (a peek, a spawn ask, a nudge) counts as work on `unblock.py tick --result work` until that third unacked nudge.
+
+The case file carries the chase: `open` refuses a position without `## Owed by others` (each owed act: owner, how its liveness
+was read, the verdict LIVE / IDLE / HUNG / ABSENT, the ack msg id or none, and the relocation, park or workaround), or that
+heading reading `none` with the trail that showed no one owes an act. A CRO handed a case whose chase is open proposes the chase
+first.
+
 ## The four acts
 
 | who | act | the file must carry |
 |---|---|---|
-| COO | `python .tools/unblock.py open --project <CODE> --by <you> --body <file>` | `## Position` (where the project stands, round, what has run), `## Endpoint` (the DONE WHEN / FWD lines not yet REALIZED), `## Blocked` (each block, what was tried, why `/next-calls` finds nothing) |
+| COO | `python .tools/unblock.py open --project <CODE> --by <you> --body <file>` | `## Position` (where the project stands, round, what has run), `## Endpoint` (the DONE WHEN / FWD lines not yet REALIZED), `## Blocked` (each block, what was tried, why `/next-calls` finds nothing), `## Owed by others` (the chase above) |
 | CRO | `python .tools/unblock.py propose --id <UB> --by <you> --body <file>` | `## New approach`, `## Why it is not blocked` (each named block, answered), `## What changes for the COO` (the cells or acts it opens) |
 | CTO | write the synthesis where the COO's drive reads it (a PRD addendum, a round-N analysis, or a ruling), then `python .tools/unblock.py fold --id <UB> --by <you> --ref <that file>` | the `--ref` file exists in the tree |
 | CVO | `python .tools/unblock.py sign --id <UB> --by <you> [--note ...]`, or `refuse --id <UB> --by <you> --reason "..."` (back to the CTO) | sign writes the record; commit it |

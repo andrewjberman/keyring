@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-09T03:41:40.110024+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261009T063242Z
 **Deploy:** AMGT_HARVST gold rebuild #11: serve the AIG/OMAB list move (r75 list, as-of 2026-10-08) under pair COO @f120c51875 + CTO~DELL1 @100b9af433
 **Authored by:** 2.0.0_SA_COO~W1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -12,9 +12,12 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | activation | gold_rebuild11.act.py: two new parts under amgt/harvest/gold/{article_security_mention,chatter_daily}/date=2026-10-08/ | act record path + RULE HOLDS on written parts |  | OPEN |
-| L2 | verify | REBUILD11_CHANGED_ROWS.json exactly 22 rows; 3.0.0_SA_CVO grade accepts | grade pointer |  | OPEN |
+| L1 | activation | gold_rebuild11.act.py: two new parts under amgt/harvest/gold/{article_security_mention,chatter_daily}/date=2026-10-08/ | act record path + RULE HOLDS on written parts | act record round75/gold_rebuild11.act_20261009T034320Z.json: DONE, RULE HOLDS on written parts; written + LIVE newest (read 06:2xZ) mention part-20261009T045809Z (52,709 rows), daily part-20261009T061012Z (68,002 rows); before rebuild #10 parts; PUTS 0 at gate | CLOSED 20261009T062747Z |
+| L2 | verify | REBUILD11_CHANGED_ROWS.json exactly 22 rows; 3.0.0_SA_CVO grade accepts | grade pointer | 3.0.0_SA_CVO grade ACCEPT 22 of 22, no keys refused: org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_REBUILD11_CHANGED_ROWS_GRADE_20261009.md @b0127bd438 (relayed by 1.0.0_SA_CTO~DELL1 msg 1904) | CLOSED 20261009T063241Z |
 
 ## Log
 
 - 20261009T034140Z OPENED by 2.0.0_SA_COO~W1 with 2 leg(s)
+- 20261009T062747Z LEG L1 closed: act record round75/gold_rebuild11.act_20261009T034320Z.json: DONE, RULE HOLDS on written parts; written + LIVE newest (r
+- 20261009T063241Z LEG L2 closed: 3.0.0_SA_CVO grade ACCEPT 22 of 22, no keys refused: org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_REBUILD11_CHAN
+- 20261009T063242Z CLOSED -- all 2 legs proven

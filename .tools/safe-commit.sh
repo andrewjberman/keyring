@@ -1018,6 +1018,10 @@ fi
 # limb's own internal error (NAMING ERROR), not on a crashed interpreter -- because it sits on every
 # seat's commit path. In ENFORCE mode it is fail-closed: any non-zero exit unstages and aborts, like the
 # commit-gate above. The live flip is gate G-F, outside LGIC_ENFORCE round 1.
+# THE PLACEMENT SWITCH (LGIC_BLANKFIX FWD-6, cell BF-x-3, row W1-S19). While org/mcp/naming-place.enforce is present, a
+# refusal from the gate's PLACEMENT step blocks the commit whatever naming-gate.enforce says. The gate tells it apart from the
+# older limb's REFUSE by the line `NAMING-PLACE: REFUSE <n>` it prints (and exits 1 on); the older limb's warn window is
+# unchanged. No environment value turns this switch on or off; the file is the only switch.
 if [ -n "$IN_SCOPE" ] && [ -f "$SCRIPT_DIR/naming-gate.py" ]; then
   NGATE_FILES=()
   while IFS= read -r _nf; do
@@ -1032,13 +1036,71 @@ if [ -n "$IN_SCOPE" ] && [ -f "$SCRIPT_DIR/naming-gate.py" ]; then
     fi
     NGATE_DIFF="$(mktemp "${TMPDIR:-/tmp}/naming-gate.XXXXXX" 2>/dev/null || echo "${TMPDIR:-/tmp}/naming-gate.$$.diff")"
     NGATE_OUT=""; NGATE_RC=0
+    unset NAMING_PLACE_OVERRIDE  # an inherited value is never honoured: the override block below is the only setter
     if git diff --cached --no-color --no-ext-diff -- "${NGATE_FILES[@]}" > "$NGATE_DIFF" 2> "$NGATE_DIFF.err"; then
       NGATE_OUT="$(python "$SCRIPT_DIR/naming-gate.py" --diff "$NGATE_DIFF" --post-from-index 2>&1)" || NGATE_RC=$?
     else
       NGATE_OUT="NAMING ERROR git diff --cached failed: $(head -c 300 "$NGATE_DIFF.err" 2>/dev/null || true)"; NGATE_RC=2
     fi
+    NGATE_PLACE_HIT=0
+    if [ -e "$SCRIPT_DIR/../org/mcp/naming-place.enforce" ] && [ "$NGATE_RC" -ne 0 ] \
+       && printf '%s\n' "$NGATE_OUT" | grep -q '^NAMING-PLACE: REFUSE '; then
+      NGATE_PLACE_HIT=1
+    fi
+    # THE PLACEMENT OVERRIDE (LGIC_BLANKFIX FWD-6, cell BF-x-4, row W1-S21). The shape of `# surprise-row-override:` below: a
+    # commit-message line `# naming-place-override: <reason>` (reason required, non-empty), read from -m and -F, honoured ONLY when
+    # the placement step refused (NGATE_PLACE_HIT) and ONLY here -- safe-merge.sh and every other path read no such line. This
+    # block is the ONLY setter of NAMING_PLACE_OVERRIDE: it appends one audit line to org/naming-place-override-audit.log
+    # (UTC time, author, id, reason, the refused names), exports the audit line's id, and runs the gate once more; the gate
+    # passes the placement refusal only when that audit line exists (naming-gate.py, override_valid), so a variable set by hand
+    # passes nothing. A message line with an empty reason is no override. The variable is unset again after that one run.
+    if [ "$NGATE_PLACE_HIT" -eq 1 ]; then
+      NP_MSG=""; _npk=0
+      while [ $_npk -lt ${#COMMIT_ARGS[@]} ]; do
+        _npa="${COMMIT_ARGS[$_npk]}"; _npf=""
+        if [ "$_npa" = "-m" ] && [ $((_npk + 1)) -lt ${#COMMIT_ARGS[@]} ]; then
+          NP_MSG="${NP_MSG}"$'\n'"${COMMIT_ARGS[$((_npk + 1))]}"; _npk=$((_npk + 2)); continue
+        elif { [ "$_npa" = "-F" ] || [ "$_npa" = "--file" ]; } && [ $((_npk + 1)) -lt ${#COMMIT_ARGS[@]} ]; then
+          _npf="${COMMIT_ARGS[$((_npk + 1))]}"; _npk=$((_npk + 2))
+        elif [ "${_npa#--file=}" != "$_npa" ]; then
+          _npf="${_npa#--file=}"; _npk=$((_npk + 1))
+        else
+          _npk=$((_npk + 1)); continue
+        fi
+        if [ -n "$_npf" ] && [ "$_npf" != "-" ] && [ -f "$_npf" ]; then
+          NP_MSG="${NP_MSG}"$'\n'"$(cat -- "$_npf" 2>/dev/null || true)"
+        fi
+      done
+      NP_OVR="$(printf '%s' "$NP_MSG" | sed -n 's/^[[:space:]]*#\{0,1\}[[:space:]]*naming-place-override:[[:space:]]*//p' | head -1 | sed 's/[[:space:]]*$//' || true)"
+      if [ -n "$NP_OVR" ]; then
+        NP_NAMES="$(printf '%s\n' "$NGATE_OUT" | sed -n 's/^NAMING REFUSE [^ ]* \([^ ]*\) -> .*/\1/p' | sort -u | tr '\n' ',' | sed 's/,$//' || true)"
+        NP_ID="${ISO_TS}-$$-${RANDOM:-0}"
+        NP_LOG="$SCRIPT_DIR/../org/naming-place-override-audit.log"
+        mkdir -p "$(dirname "$NP_LOG")" 2>/dev/null || true
+        echo "${ISO_TS} NAMING-PLACE-OVERRIDE  ${AGENT}  id=${NP_ID}  reason=${NP_OVR}  names=${NP_NAMES}" >> "$NP_LOG" 2>/dev/null || true
+        export NAMING_PLACE_OVERRIDE="${NP_ID}"
+        NGATE_OUT=""; NGATE_RC=0
+        if git diff --cached --no-color --no-ext-diff -- "${NGATE_FILES[@]}" > "$NGATE_DIFF" 2> "$NGATE_DIFF.err"; then
+          NGATE_OUT="$(python "$SCRIPT_DIR/naming-gate.py" --diff "$NGATE_DIFF" --post-from-index 2>&1)" || NGATE_RC=$?
+        else
+          NGATE_OUT="NAMING ERROR git diff --cached failed: $(head -c 300 "$NGATE_DIFF.err" 2>/dev/null || true)"; NGATE_RC=2
+        fi
+        unset NAMING_PLACE_OVERRIDE
+        NGATE_PLACE_HIT=0
+        if [ "$NGATE_RC" -ne 0 ] && printf '%s\n' "$NGATE_OUT" | grep -q '^NAMING-PLACE: REFUSE '; then
+          NGATE_PLACE_HIT=1
+        elif printf '%s\n' "$NGATE_OUT" | grep -q '^NAMING OVERRIDDEN '; then
+          echo "WARN: naming placement step OVERRIDDEN (audited, id ${NP_ID}): ${NP_OVR}" >&2
+        fi
+      fi
+    fi
     rm -f "$NGATE_DIFF" "$NGATE_DIFF.err" 2>/dev/null || true
-    if [ "$NGATE_ENFORCE" -eq 1 ] && [ "$NGATE_RC" -ne 0 ]; then
+    if [ "$NGATE_PLACE_HIT" -eq 1 ] && [ "$NGATE_ENFORCE" -ne 1 ]; then
+      for _nf in "${NGATE_FILES[@]}"; do git reset -q HEAD -- "$_nf" 2>/dev/null || true; done
+      echo "ERROR: BLOCKED -- the naming limb's placement step refused (LGIC_BLANKFIX FWD-6, org/mcp/naming-place.enforce present). Commit aborted; files unstaged." >&2
+      printf '%s\n' "$NGATE_OUT" | sed 's/^/  [naming-gate] /' >&2
+      exit 1
+    elif [ "$NGATE_ENFORCE" -eq 1 ] && [ "$NGATE_RC" -ne 0 ]; then
       for _nf in "${NGATE_FILES[@]}"; do git reset -q HEAD -- "$_nf" 2>/dev/null || true; done
       echo "ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged." >&2
       printf '%s\n' "$NGATE_OUT" | sed 's/^/  [naming-gate] /' >&2

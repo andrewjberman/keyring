@@ -120,7 +120,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-1.taxsma-master-apply.proof_
   (live CodeSha256 v2Bzt..., 11 rules, 0 on the new prefix); tm1.AC3 base FAIL as expected (the new prefixes
   explicitDeny; control denials hold).
 
-<status>pending</status>
+<status>complete</status>
 <round>32</round>
 <workstream>APPLY-TM1</workstream>
 <slot>~AE</slot>
