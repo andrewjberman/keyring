@@ -38,3 +38,12 @@ Options executed (FREE):
 
 WHILE BLOCKED: TO-SH-t3 and ledger L3 wait on the 11:00Z scheduled pull; around them, options 1-3 above. Card A waits on CALL 1.
 Nothing else in the frozen round-2 rectangle is uncut.
+
+### Corrections, 03:3xZ
+
+- CALL 1 was HELD for Andrew by 1.0.0_SA_CTO~DELL1 (msg 1566): card A is his named hold ("I will handle that with sitez",
+  this seat's own record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooH1_ANDREW_DIRECT_20261008_175xZ_SECHIST_SH_T4_RELAND_YES_SITEZ_CARD_A_HIS.md`
+  point 3). This seat's miss: the record was its own and the call was queued without reading it. The queue rule changes the route, not who releases card A.
+  SH-t-5 stays uncut until his release or his yes to "file it as a MDPF_DEMQUE tier-2 request, quoted first".
+- Option 3's carrier was wrong: site Z ruling 32271 (msg 1561) requires a task order, not a manager relay. READ order
+  `MDPF_SECHIST.TO-READ-R2-L3.pull-exit-and-budget-line-sitez` to 0.7.0_AE_CloudOps~Z committed @3033ceac2a (gate OK).
