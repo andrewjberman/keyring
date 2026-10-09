@@ -8211,6 +8211,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "AMGT_HARVST-D1-W132-S1",
+  "project": "AMGT_HARVST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_HARVST~132",
+  "surfaced_at": "2026-10-09T11:55:00Z",
+  "one_line": "AMENDMENT 1 of HVST-bt-1 (common word = LOWER > CAP_MID in silver) flags 0 aliases over 413 (security, alias) rows and 20,908 silver articles, so R31 removes 0 mentions and CVO ROWS reads 0 of 14, not 14 of 14; the rule was not tuned.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-bt-1.a-common-word-alias-needs-a-second-anchor.md@24fb88cfa9 AMENDMENT 1 item 3: 'CVO ROWS: <x> of 14 removed -- it must read 14 of 14'; item 1: an alias is COMMON when LOWER > CAP_MID, counted over all silver titles and bodies.",
+  "world_is": "Counted as written (whole-word, matcher bounds, case-insensitive; LOWER = no upper-case letter in the span; CAP_MID = capital first letter and not at block start nor after '. ', '? ', '! ', or a line break) over 20,908 latest silver articles: 0 of 413 rows have LOWER > CAP_MID. Nearest: Booking LOWER 106 = CAP_MID 106 (tie, not flagged), Cadence 92 v 384, Orange 55 v 236, Visa 362 v 1628, Monster 27 v 455. Census on served rebuild #12 (50,026 tested pairs): R31 MENTIONS before 205470, after 205470, removed 0; CVO ROWS 0 of 14 removed (the 8 Visa and 6 Orange rows all keep their count). The Visa CAP_MID is 1442 body mixed-case + 8 body all-caps + 178 title uses (64 of them inside a headline capitalised throughout), so no reading of the sentence-start or headline clause reaches LOWER 362; common_word_diag.out has the split for Visa, Orange, Booking, Cadence, Monster. Per the order's instruction ('if not 14 of 14, report it and do NOT tune') the rule, the definition and the file were left as measured; the matcher, tests and census are built to the amended definition and are correct for any file the definition produces.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/common_word_aliases.json",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/bt1_census.out",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/common_word_diag.out",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/common_word_scan.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
