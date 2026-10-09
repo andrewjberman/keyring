@@ -3,11 +3,11 @@
   "schema_version": "1.0",
   "project": "DSGN_AMGTV1",
   "round": 68,
-  "written_by": "2.0.0_SA_COO",
-  "written_utc": "2026-10-09T17:11Z",
+  "written_by": "2.0.0_SA_COO~D1",
+  "written_utc": "2026-10-09T17:17Z",
   "decomposition_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/decompositions/DSGN_AMGTV1_DECOMP.md@41990c51cc",
   "denominators": {
-    "fwd_in_prd_header": 27,
+    "fwd_in_prd_header": 26,
     "cells_in_decomposition": 169,
     "task_orders": 165,
     "task_orders_terminal_with_valid_proof": 164
@@ -238,45 +238,6 @@
         }
       ],
       "claim": "COVERED"
-    },
-    {
-      "fwd_id": "FWD-3",
-      "done_when_state": "EXERCISED",
-      "done_when_text": "DONE WHEN EXERCISED -- the history view walked with ten or more names ACCEPT With ten or more names, the dates do not overlap, each line is labelled by company name, there is one legend, and the PM can pick out one name and follow it. SOURCE brief O3 (:71-75); M2, M3, M5, M14 RETIRED v0.6 (CTO~Z placement rulings R5 + R10). Andrew 2026-10-01 03:4xZ rejected the \"lines with normalized y-axis percentile ranks\" view: chatter is always the bubble chart (FWD-21), price always horizontal bars (FWD-22), no other views. The line-history view, the per-row sparkline and the highlight chart (fork F1) are removed, not built. Not graded.",
-      "cells": [
-        {
-          "cell_id": "AV-u-3",
-          "task_orders": [
-            {
-              "id": "DSGN_AMGTV1.TO-AV-u-3",
-              "status": "complete",
-              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~24/DSGN_AMGTV1.TO-AV-u-3.history-dots-mute-with-their-line.proof_of_spec.json@4996391f2e"
-            }
-          ]
-        },
-        {
-          "cell_id": "AV-v-2",
-          "task_orders": [
-            {
-              "id": "DSGN_AMGTV1.TO-AV-v-2",
-              "status": "complete",
-              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~19/DSGN_AMGTV1.TO-AV-v-2.the-history-views-pick-edge-and-colours.proof_of_spec.json@ed10c417b4"
-            }
-          ]
-        },
-        {
-          "cell_id": "AV-w-6",
-          "task_orders": [
-            {
-              "id": "DSGN_AMGTV1.TO-AV-w-6",
-              "status": "complete",
-              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~14/DSGN_AMGTV1.TO-AV-w-6.the-history-view-with-ten-names.proof_of_spec.json@bf257e3143"
-            }
-          ]
-        }
-      ],
-      "claim": "COVERED",
-      "note": "RETIRED at PRD v0.6 (CTO~Z placement rulings R5 + R10; the card reads \"Not graded\"); round-68 analysis: \"FWD-3 is RETIRED\". The row is kept because the PRD header still lists FWD-3 and the schema has no RETIRED claim; the cells are the ones that served it before retirement, as in the round-32 report."
     },
     {
       "fwd_id": "FWD-4",
