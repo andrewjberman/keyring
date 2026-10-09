@@ -209,7 +209,8 @@ def _worker_orders(root: str, code: str):
         if show.returncode != 0:
             continue   # a task order staged but absent at HEAD grants nothing yet
         text = show.stdout
-        sm = _TO_STATUS_RE.search(text)
+        _sms = list(_TO_STATUS_RE.finditer(text))   # the LAST tag governs (msg 107528)
+        sm = _sms[-1] if _sms else None
         if sm and sm.group(1).lower() in _TERMINAL_TO_WORDS:
             continue
         im = _TO_ISSUED_TO_RE.search(text)

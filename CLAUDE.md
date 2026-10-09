@@ -216,7 +216,7 @@ field -> you may NOT treat it as measured. The consuming half is the whole mecha
   so a shared-tree read of `.open_deploys/` is not evidence: read EVERY live worktree (`git worktree list --porcelain`,
   then `git -C <wt> ls-tree -r --name-only HEAD org/critical_paths/.open_deploys/`), union them, print the per-tree
   denominator, and use `ls-tree`/`ls -a` since `ls -1` hides `.unindexed_red_state.json`. Annex section NEVER-2.
-- **NEVER rebase on a shared branch** (CLOUD/DEV/PROD/main); rejected push = pull-merge, re-push. Gate:
+- **NEVER rebase on a shared branch** (CLOUD, box/*, DEV/PROD/main); rejected push = pull-merge, re-push. Gate:
   `.tools/hooks/never-rules-gate.sh`; audited override `# never-override: <reason>`. Scratch branches free.
 - **NEVER call a pipeline stale/broken until you resolve the TRADING CALENDAR -- count trading days.** Everything is
   `T-1` unless declared; Friday IS Monday's answer. One frontier: `lib/trading_calendar.py`; a `comp-freshness` entry
@@ -289,7 +289,9 @@ is current-day-only; never mint `data/bloomberg/`).
 
 ## Git
 
-- Working branch `CLOUD`; portal submodule `DEV`/`PROD`. Shims reach shells via `~/bin` FORWARDERS (profiles never
+- **Working branch = the box's `box/<box>`; `CLOUD`'s ONE writer: integrator `0.0.0_AB_MSTR`**, via each
+  box's scheduled `.tools/box-sync.sh`. Portal/opal_ai/mcportal: `DEV` trunk, `PROD` by `/prod-deploy`.
+  `/integrate`. Shims reach shells via `~/bin` FORWARDERS (profiles never
   load): on WARN run `bash .tools/provision-path-shims.sh`. AWS via the `.tools/aws` shim (+`aws.cmd`, both or
   neither); never bare `MSYS_NO_PATHCONV=1 aws`.
 - `MSYS_NO_PATHCONV=1` only for TF imports/ARN args and `git show <ref>:<path>` with a slashed ref; NEVER for `git
