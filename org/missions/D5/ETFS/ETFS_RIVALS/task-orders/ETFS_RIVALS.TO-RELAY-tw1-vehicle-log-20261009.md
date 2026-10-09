@@ -18,6 +18,14 @@
 <owned_cells>RIV-tw-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="5" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    PATH: the ruled folder `deliverables/0.0.3_BG_BBGTerminal/` is owned by that seat and refuses your commit (msg 2336). Commit the
+    two files under YOUR OWN deliverables folder instead, same names:
+    `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261009_1100Z.txt` and
+    `.../VEHICLE_LOG_20261009_1100Z.full.log`, unedited (sha256 of the full log as you measured it). Either location satisfies AC1;
+    the issuer reads both. Do not wait for 0.0.3_BG_BBGTerminal.
+  </amendment>
+
   <amendment id="4" date="2026-10-09" by="2.0.0_SA_COO~V1">
     ASSIGNEE: `0.7.0_AE_CloudOps~ZV`, LIVE, the site-Z Codex lane for ETFS_RIVALS. Site Z lifted its hold on the ~Z* lanes
     (0.0.0_AB_MSTR~DELL1 msg 1643, site Z bus 91f67522): site-bound acts go there, per 1.0.0_SA_CTO~DELL1's table
