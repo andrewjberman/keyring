@@ -74,7 +74,7 @@ had dropped the worktree's registration but failed to delete its folder. The fin
   - `portal-f1-cd3924d5`, `irpt-smoke-p-portal-20260923` and `portal-trade-vident` (not reached).
   - 30 portal worktree registrations read `prunable`.
 - **To finish (the CRO's run):**
-  1. Delete the long-path trees through the `\?\C:\Users\AndrewBerman\Desktop\<name>` prefix, so rmtree is not bound by
+  1. Delete the long-path trees through the `\\?\C:\Users\AndrewBerman\Desktop\<name>` prefix, so rmtree is not bound by
      MAX_PATH. `portal-trade-vident` has its own deep `node_modules` and needs the same prefix.
   2. Re-run the script, which skips absent targets and still unlinks `irpt-smoke`'s junction first.
   3. Run `git -C portal worktree prune`.
