@@ -23703,3 +23703,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S36 -- IB-pr-397 AMENDMENT 1 and the IB-pr-391 packet are unsatisfiable together: the signed sha256 is reachable ONLY through the parity skip the amendment forbids
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S36",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T08:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "Three arms measured: no-skip REFUSES the build outright, the packet's skip reproduces ZZmWOFSA exactly, and the parity-clean 23-member set builds a different sha -- so every path AMENDMENT 1 permits is a STOP.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ARM 1, what AMENDMENT 1 orders (REAL map, the drafted 16-member entry, no BAU_PARITY_SKIP, no BAU_SOURCE_MAP_OVERRIDE): ADHC_DRIFTD.002 parity check FAILED, 'PARTIAL -- 0 built, 1 failed'. It names 7 files present in source_dir but not in files[]: build_resident_package.py, currency_authority.py, custody_write.py, generate_installed.py, request_composition.py, resident_installed.py, status_installed.py. No artifact is produced, so there is no built sha256 to compare at all.",
+      "ARM 2, the packet's own procedure (same entry, BAU_PARITY_SKIP=1): builds sha256 ZZmWOFSA/GjO0d/cKHSm9G5+xDc5sNfEHOpbmfIabQ0=, EXACTLY the value both halves signed.",
+      "ARM 3, the remedy the gate itself proposes (register those 7 in files[], no skip): builds, import-closure OK at 15 packaged .py files instead of 8, sha256 pTdVgXqpSZq1f3aQM7pUzmJi+GQir1+Q2ffLyGUY82M= -- NOT the signed value.",
+      "the drafted entry was registered into the REAL map byte-identically (blob 024b3bea at box/dell2 HEAD; 102 lines added, 0 removed, 230 functions, nothing else in the map touched)",
+      "all three arms were BUILD_ONLY with TMPDIR outside every worktree: nothing uploaded, nothing applied. live_before still ABSENT (get-function-configuration ResourceNotFound) and the S3 key still 404 after all three.",
+      "the packet states the same thing in prose and the measurement now confirms it: 'The pair must register exactly that entry and build with the parity skip, or any other member set builds a different sha256' (and Branch A step 1: 'or list the seven other reports/*.py modules, which would change the zip')"
+    ]
+  },
+  "spec_asserts": "IB-pr-397 AMENDMENT 1 (rows W202-S1/S2): register the reader, then BUILD FROM THE REAL MAP -- no override, no BAU_PARITY_SKIP, no parity skip of any kind; the built sha256 must equal ZZmWOFSA/GjO0d/cKHSm9G5+xDc5sNfEHOpbmfIabQ0= and a different sha is a STOP and a row.",
+  "world_is": "Those two requirements cannot both hold. The function's source_dir is the SHARED reports/ package, so the parity gate compares the whole directory against files[]; the signed 16-member artifact is by construction a SUBSET of that directory, which is exactly what the gate exists to refuse. Under the amendment the only two reachable outcomes are a refused build (no artifact) or a different artifact (pTdVgXqp), and the amendment names the second a STOP. So the applier stopped: the entry is registered (step 1, a pure addition, uncontested and reversible) and NOTHING was built for upload, uploaded, or applied -- live_before stays ABSENT. ONE RULING UNBLOCKS IT, and it is the issuer's or the CTO's, not the applier's: either (a) restore the packet's BAU_PARITY_SKIP=1 for this one function with the justification in the commit message, which reproduces the signed sha exactly and keeps both halves valid as signed, or (b) accept the 23-member parity-clean artifact pTdVgXqpSZq1f3aQM7pUzmJi+GQir1+Q2ffLyGUY82M=, which is a different blast radius (15 packaged modules, 7 of them other cells' code) and so needs both halves re-signed against a new packet. Until then IB-pr-397 is BLOCKED and IB-pr-398 (irpt-holdings only) is untouched and independent of this ruling.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
