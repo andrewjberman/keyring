@@ -5856,3 +5856,28 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "No prefix is refused at the S3 identity layer, so the order's rule changes nothing in the transcripts root. The write path also needs the key: the bucket encrypts every object under the transcripts key and the key policy lets the Dell users decrypt only (Andrew-direct 2026-10-07). The two earlier TO-RUN orders ran under the laptop identity for that reason. Nothing was widened; whether dell2's own seat should hold kms:GenerateDataKey and kms:Encrypt on that key is the CTO's call and a never-widen act."
 }
 ```
+
+## NFRA_CTLPLN-W14-S45 -- AMENDMENT 25 asks for dell1's PutObject arm to read refused, but dell1's S3 identity leg on the jobs prefix reads allowed (the group's S3 policy), so the arm can only be refused as the composed SSE-KMS write (S3 leg AND key leg); 
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S45",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T04:12:19Z",
+  "one_line": "AMENDMENT 25 asks for dell1's PutObject arm to read refused, but dell1's S3 identity leg on the jobs prefix reads allowed (the group's S3 policy), so the arm can only be refused as the composed SSE-KMS write (S3 leg AND key leg); the check composes the two and prints both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py -> 'PUT cloudops-dell1-agent-user s3:PutObject (identity leg) on arn:aws:s3:::opal-data-transcripts/teams/transcripts/silver/research_meeting/date=2026-10-08/x.parquet -> allowed ; kms:GenerateDataKey (key leg) -> implicitDeny ; SSE-KMS PutObject composed (both legs) -> refused'; the same line for the dell2 user reads allowed, allowed, allowed.",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~14/NFRA_CTLPLN.TO-CT-a-1.amendment24.transcripts_and_controls.outputs.txt: the LIVE principal s3:PutObject is allowed for dell2 by cloudops-dell-agent-deploy-policy, a group policy, so dell1 holds the same S3 allow."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 25 item 2: dell1_generate_refused=True is 'the same two arms for dell1, refused (the negative control)': kms:GenerateDataKey on the key and a PutObject on one key under teams/transcripts/silver/research_meeting/.",
+  "world_is": "The group's S3 policy lets both Dells put under the opal buckets, so dell1's PutObject is refused only at the key, not at S3. The field dell1_generate_refused reads True when dell1's GenerateDataKey is not allowed AND the composed write (S3 leg and key leg) is refused; the S3 leg stays allowed and is printed. Row NFRA_CTLPLN-W14-S44 (dell2's write failing at GenerateDataKey) is resolved by amendment 25 for dell2 once applied; dell1's real PutObject still fails at the key, by the CTO's ruling (b), 'dell1 is not asked'."
+}
+```
