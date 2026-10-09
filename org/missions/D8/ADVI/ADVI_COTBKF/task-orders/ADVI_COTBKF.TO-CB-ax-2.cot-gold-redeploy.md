@@ -57,6 +57,17 @@ The cot gold run syncs only `s3://opal-data-cot/code/gold/`. The mirror today:
    - 757 overrides loaded.
 5. **Close the ledger** with every key's prior and new VersionId and sha256.
 
+**AMENDMENT 1 (issuer, 2026-10-09 ~16:2xZ; CTO ADDENDUM 23, msg 3667) -- the proof adds an IMPORT-CLOSURE read. Still held on CB-ax-1 and
+both halves.**
+
+After the write, read the full import closure of the SERVED `B_00.canonical_holdings.py` and `build_canonical_prices_v2.py`:
+- every `import` / `from ... import` at module level AND inside functions (`ast`), plus the stdlib and installed-package split;
+- check every non-stdlib, non-installed module against what `s3://opal-data-cot/code/gold/` actually carries (list it, paginated,
+  denominator printed).
+A module the mirror lacks means STOP (restore the scripts by `copy-object` of their prior versions) and file a row. Print
+`IMPORT-CLOSURE b00_modules=<n> writer_modules=<m> missing=0`. The CVO corrected its round-41 grade, which checked bytes but not
+imports. This read is the guard against that class.
+
 ### ACCEPTANCE
 
 <criterion id="CB50ax2-AC1" cell_refs="CB-ax-2"><invocation>python -m pytest data/cot/scripts/gold/tests/test_cot_gold_failclosed.py -q</invocation><expect>passed</expect></criterion>
