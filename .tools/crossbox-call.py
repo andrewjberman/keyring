@@ -13,7 +13,9 @@ directory). That is a tool writing a file for a seat on its own box, NOT a manag
 a manager from messaging a Tier-2 seat (`.tools/hooks/mstr-no-tier2-writes.sh`) is not in play and is not touched.
 
   python .tools/crossbox-call.py open --kind CALL|ORDER --to-device <d> --to-serial <s> --from-serial <s> --subject <t> --body <path> [--call-id <id>]
-  python .tools/crossbox-call.py line --id <id>                    the bus line, once the file is committed
+  python .tools/crossbox-call.py line --id <id>                    the bus line, once the file AND its body are committed and on origin
+  python .tools/crossbox-call.py issue --order <task-order path> [--to-device <d>]   open the file for an addressee on another box
+  python .tools/crossbox-call.py send-pending [--dry-run]          a 0.0.0_AB_MSTR serial only: send every admitted OPEN file on the bus
   python .tools/crossbox-call.py sent --id <id> --bus-message-id <id>
   python .tools/crossbox-call.py receive --line "<line as the consumer printed it>"
   python .tools/crossbox-call.py ack --id <id> --by <serial>       prints  CROSSBOX-ACK <id> READ by <serial> at <UTC>
@@ -43,6 +45,7 @@ import importlib.util
 import json
 import os
 import re
+import shlex
 import shutil
 import stat
 import subprocess
@@ -308,7 +311,121 @@ class Box:
         ok, why = self.tracked_clean(rel)
         if not ok:
             raise Refused("%s %s; commit it first so the other box can pull it" % (rel, why))
-        return [fmt_line(doc, self.last_commit(rel))]
+        commit = self.last_commit(rel)
+        body_commit = self.last_commit(doc["body_path"])
+        if not body_commit:
+            raise Refused("body %s has no commit in this tree; commit it first so the other box can pull it" % doc["body_path"])
+        for what, c in (("the crossbox file %s" % rel, commit), ("the body %s" % doc["body_path"], body_commit)):
+            if not self.on_origin(c):
+                raise Refused("commit %s is not on origin yet (no refs/remotes/origin/* ref contains it; %s was last changed there). "
+                              "Push it and fetch origin, then run line again; this tool does not fetch, so the other box would sit in "
+                              "PULL-FIRST." % (c, what))
+        return [fmt_line(doc, commit)]
+
+    def on_origin(self, commit: str) -> bool:
+        """True when at least one refs/remotes/origin/* ref of this root contains the commit (as last fetched or pushed)."""
+        rc, out, _ = git(self.root, "for-each-ref", "--contains", commit, "--format=%(refname)", "refs/remotes/origin/")
+        return rc == 0 and bool(out.strip())
+
+    # -- issue: a task order to an addressee on another box becomes a crossbox file
+    def issue(self, order, to_device=None) -> list:
+        dev = devmod()
+        rel = str(order or "").replace("\\", "/")
+        if re.match(r"[A-Za-z]:", rel) or rel.startswith("/"):
+            try:
+                rel = Path(rel).resolve().relative_to(self.root.resolve()).as_posix()
+            except ValueError:
+                raise Refused("--order %s is not inside this checkout (%s)" % (order, self.root))
+        if not rel or ".." in rel.split("/") or not (self.root / rel).is_file():
+            raise Refused("--order %s is not a file in this tree" % order)
+        ok, why = self.tracked_clean(rel)
+        if not ok:
+            raise Refused("--order %s %s; read the order from its commit: commit it first" % (rel, why))
+        text = (self.root / rel).read_text(encoding="utf-8", errors="replace")
+        found = {}
+        for key in ("issued_to", "issued_by"):
+            m = re.search(r"<%s>\s*(\S+)\s*</%s>" % (key, key), text)
+            if not m:
+                raise Refused("--order %s carries no <%s>" % (rel, key))
+            found[key] = m.group(1)
+        m = re.search(r"^# TO (.+?)\s*$", text, re.M)
+        if not m:
+            raise Refused("--order %s carries no '# TO ...' title line" % rel)
+        subject = re.sub(r"[^\x20-\x7e]", "?", m.group(1).replace("|", "/")).strip()[:120].strip()
+        serial = found["issued_to"]
+        if to_device:
+            target = dev.resolve(to_device)
+            if target is None:
+                raise Refused("--to-device %r is not in the device register (holds: %s)" % (to_device, ", ".join(dev.names())))
+        else:
+            target = self.device
+            lane = serial.split("~", 1)[1] if "~" in serial else ""
+            for d in dev.devices():
+                if any(lane.startswith(letter) for letter in (d.get("lane_letters") or [])):
+                    target = d["name"]
+                    break
+        if target == self.device:
+            return ["XBOX-ISSUE local %s" % serial]
+        out = self.open("ORDER", target, serial, found["issued_by"], subject, rel)
+        return ["XBOX-ISSUE opened %s %s %s" % (out[0].split()[1], target, serial)] + out
+
+    # -- send-pending: the manager sends what the line check admits
+    def acting_serial(self) -> str:
+        serial = os.environ.get("OPAL_AGENT_SERIAL", "").strip()
+        if not serial:
+            sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "").strip()
+            f = self.root / "org" / "mcp" / "sessions" / ("%s.serial" % sid)
+            if sid and re.fullmatch(r"[A-Za-z0-9._-]+", sid) and f.is_file():
+                serial = f.read_text(encoding="utf-8").strip()
+        return serial
+
+    def send_pending(self, dry_run: bool = False) -> tuple:
+        """([lines], rc). rc 0 unless a send failed (a send whose bus id could not be read is NOT recorded as sent)."""
+        actor = self.acting_serial()
+        if not re.fullmatch(r"0\.0\.0_AB_MSTR(~[A-Za-z0-9]+)?", actor):
+            raise Refused("send-pending is a manager's act: the acting serial (OPAL_AGENT_SERIAL, else the session serial file) is %r, "
+                          "not a 0.0.0_AB_MSTR serial or lane. Nothing was sent or recorded." % (actor or "unset"))
+        cmd = shlex.split(os.environ.get("CROSSBOX_SEND_CMD", "").strip() or "bash %s send" % (TOOL_ROOT / ".tools" / "agentbus-sqs.sh").as_posix())
+        lines, sent_n, held_n, failed_n, seen = [], 0, 0, 0, 0
+        cdir = self.root / REL_DIR
+        for path in sorted(cdir.glob("*.json")) if cdir.is_dir() else []:
+            try:
+                doc = check_call(json.loads(path.read_text(encoding="utf-8")), path.name)
+            except (ValueError, Refused) as exc:
+                lines.append("SKIP %s unreadable: %s" % (path.name, exc))
+                continue
+            if doc["from_device"] != self.device or derive_state(doc) != "OPEN" or doc["sent"]["bus_message_id"]:
+                continue
+            seen += 1
+            try:
+                line = self.line(doc["id"])[0]
+            except Refused as exc:
+                held_n += 1
+                lines.append("HELD %s %s" % (doc["id"], exc))
+                continue
+            if dry_run:
+                lines.append("WOULD SEND %s to %s from %s: %s" % (doc["id"], doc["to_device"], doc["from_serial"], line))
+                continue
+            try:
+                proc = subprocess.run([*cmd, doc["to_device"], doc["from_serial"], line], capture_output=True, text=True,
+                                      encoding="utf-8", errors="replace", timeout=120)
+            except (OSError, subprocess.SubprocessError) as exc:
+                failed_n += 1
+                lines.append("FAILED %s the send command did not run (%s); nothing recorded" % (doc["id"], exc))
+                continue
+            m = re.search(r"MessageId=([0-9A-Za-z-]+)", proc.stdout)
+            tail = [x.strip() for x in proc.stdout.splitlines() if x.strip()]
+            busid = m.group(1) if m else (tail[-1] if tail and BUSID_RE.fullmatch(tail[-1]) else "")
+            if proc.returncode != 0 or not busid:
+                failed_n += 1
+                lines.append("FAILED %s send command rc=%d, bus id %s; NOT recorded as sent (check the bus before resending: it may have gone out)" % (
+                    doc["id"], proc.returncode, busid or "unreadable"))
+                continue
+            self.sent(doc["id"], busid, at=stamp(now_dt()))
+            sent_n += 1
+            lines.append("SENT %s to %s (bus message %s) recorded at %s" % (doc["id"], doc["to_device"], busid, self.read(doc["id"])["sent"]["at"]))
+        lines.append("SEND-PENDING %s candidates=%d sent=%d held=%d failed=%d" % ("DRY-RUN" if dry_run else "done", seen, sent_n, held_n, failed_n))
+        return lines, (3 if failed_n else 0)
 
     def sent(self, call_id: str, bus_message_id: str, at: str | None = None) -> list:
         doc = self.read(call_id)
@@ -545,12 +662,23 @@ class Harness:
         (a_root / BODY).write_text("selftest body\n", encoding="utf-8")
         sgit(a_root, "add", BODY)
         sgit(a_root, "commit", "-q", "-m", "body")
+        origin = self.tmp / "origin.git"
+        subprocess.run(["git", *GIT_FLAGS, "init", "-q", "--bare", str(origin)], capture_output=True, text=True,
+                       env={**os.environ, **GIT_ENV}, timeout=60, check=True)
+        sgit(a_root, "remote", "add", "origin", str(origin))
+        self.push(a_root)
         subprocess.run(["git", *GIT_FLAGS, "clone", "-q", str(a_root), str(b_root)], capture_output=True, text=True,
                        env={**os.environ, **GIT_ENV}, timeout=60, check=True)
         (b_root / "org" / "tier2_senior" / SEAT).mkdir(parents=True)
         (b_root / "org" / "mcp" / "inbox" / SEAT / SEAT_LANE).mkdir(parents=True)
         self.a = Box(a_root, names[0])
         self.b = Box(b_root, names[1])
+
+    def push(self, root) -> None:
+        """Push HEAD to the scratch bare origin (what makes a commit readable by the other box); updates refs/remotes/origin/main."""
+        rc, _, err = sgit(Path(root), "push", "-q", "origin", "HEAD:refs/heads/main")
+        if rc != 0:
+            raise Refused("selftest push to the scratch origin failed: %s" % err.strip()[:120])
 
     def commit(self, box: Box, *paths) -> None:
         sgit(box.root, "add", "--", *paths)
@@ -620,6 +748,9 @@ def run_cases(tmp) -> list:
     ok, why = raises(Refused, lambda: a.line(cid), "commit it first")
     rec("line-refused-until-the-file-is-committed", ok, why)
     h.commit(a, a.rel(cid))
+    ok, why = raises(Refused, lambda: a.line(cid), "is not on origin yet")
+    rec("line-refused-while-the-commit-is-local-only", ok, why)
+    h.push(a.root)
     bus_line = a.line(cid)[0]
     rec("line-carries-the-commit-and-no-substance", re.search(r" @[0-9a-f]{7,}$", bus_line) is not None and len(bus_line.split()) < 40, bus_line)
 
@@ -727,6 +858,10 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("sent")
     p.add_argument("--id", required=True)
     p.add_argument("--bus-message-id", required=True)
+    p = sub.add_parser("issue")
+    p.add_argument("--order", required=True)
+    p.add_argument("--to-device")
+    sub.add_parser("send-pending").add_argument("--dry-run", action="store_true")
     sub.add_parser("receive").add_argument("--line", required=True)
     p = sub.add_parser("ack")
     p.add_argument("--id", required=True)
@@ -751,7 +886,7 @@ def main(argv: list) -> int:
     if args.selftest:
         return selftest()
     if not args.cmd:
-        print("usage: crossbox-call.py <open|line|sent|receive|ack|acked|close|status|list|merge> ... | --selftest", file=sys.stderr)
+        print("usage: crossbox-call.py <open|line|issue|send-pending|sent|receive|ack|acked|close|status|list|merge> ... | --selftest", file=sys.stderr)
         return 2
     try:
         dev = devmod()
@@ -760,6 +895,12 @@ def main(argv: list) -> int:
             lines = box.open(args.kind, args.to_device, args.to_serial, args.from_serial, args.subject, args.body, args.call_id)
         elif args.cmd == "line":
             lines = box.line(args.id)
+        elif args.cmd == "issue":
+            lines = box.issue(args.order, args.to_device)
+        elif args.cmd == "send-pending":
+            lines, rc = box.send_pending(args.dry_run)
+            print("\n".join(lines))
+            return rc
         elif args.cmd == "sent":
             lines = box.sent(args.id, args.bus_message_id)
         elif args.cmd == "receive":

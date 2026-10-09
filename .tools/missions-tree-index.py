@@ -396,6 +396,32 @@ class Estate:
         }
         return out
 
+    def row_problems(self, t) -> list:
+        """The row-level reasons ONE tree row cannot compose an index entry (ROW-FIELD, R1, ROW-ENUM, R4); [] when it can.
+        The register-level rules (R2 macro, R3 uniqueness, R5 members, R6 close) read other files and stay with `check`."""
+        row, out = t["row"], []
+        if not isinstance(row, dict):
+            return ["row is not a JSON object"]
+        for f in self.required:
+            if f not in row or row[f] in (None, ""):
+                out.append(f"missing required field {f!r}")
+        code = str(row.get("project_code") or "")
+        if code and not self.re_prj.match(code):
+            out.append(f"R1 project_code {code!r} fails {self.re_prj.pattern}")
+        for f, allowed in self.enums.items():
+            v = row.get(f)
+            if v not in (None, "") and self._norm(f, v) not in allowed:
+                out.append(f"ROW-ENUM {f}={v!r} not in {allowed}")
+        if str(row.get("directive")) != t["D"]:
+            out.append(f"R4 row directive {row.get('directive')!r} != folder {t['D']!r}")
+        if str(row.get("macro_code")) != t["M"]:
+            out.append(f"R4 row macro_code {row.get('macro_code')!r} != folder {t['M']!r}")
+        if code and code.split("_", 1)[0] != t["M"]:
+            out.append(f"R4 code prefix {code.split('_', 1)[0]!r} != macro folder {t['M']!r}")
+        if code != t["code"]:
+            out.append(f"R4 row project_code {code!r} != folder {t['code']!r}")
+        return out
+
     def derive(self, write: bool):
         viol, denom, valid, directives = self.check()
         flat, _ = self.load_flat()
@@ -539,6 +565,75 @@ def materialise_index(repo, dest, env=None):
         put(path, data)
     return {"contract": dest / CONTRACT_REL, "root": dest / tree_rel, "projects": dest / idx_rel,
             "directives": dest / DIRECTIVES_REL, "macros": dest / MACROS_REL, "ws": dest, "files": len(want) + 1}
+
+
+class RowCannotCompose(Exception):
+    """The staged row of one project cannot be composed into its index entry (rc 1, one-line reason)."""
+
+
+def derive_staged_one(repo, code, env=None):
+    """The index entry `derive --write` would write for ONE project, composed from the git index (GIT_INDEX_FILE /
+    GIT_DIR in `env`); the working tree is never read and no file is written. Reads only: the contract, the value-enum
+    sources it names, the project's row, and its existing flat entry (for generated_at). Returns the entry dict.
+    Raises RowCannotCompose (the row cannot be composed) or StagedReadError (the index cannot be read)."""
+    env = dict(os.environ if env is None else env)
+    ent = [e for e in _index_listing(repo, env, [CONTRACT_REL]) if e[0] != "160000"]
+    if len(ent) != 1 or ent[0][2] != "0":
+        raise StagedReadError(f"{CONTRACT_REL} is not in the git index (or is unmerged)")
+    contract_bytes = _blobs(repo, env, [ent[0][1]])[0]
+    contract = json.loads(contract_bytes.decode("utf-8"))
+    tree_rel, idx_rel = contract["root"], contract["index"]["root"]
+    row_file = contract["project_folder"]["row"]
+    srcs = [spec["source"] for f, spec in (contract.get("value_enums") or {}).items()
+            if not f.startswith("_") and isinstance(spec, dict) and not spec.get("no_enum")]
+    rows = [e for e in _index_listing(repo, env, [f"{tree_rel}/*/{code}/{row_file}"])
+            if len(e[3][len(tree_rel) + 1:].split("/")) == 4 and e[3].split("/")[-2] == code]
+    if not rows:
+        raise RowCannotCompose(f"no staged {row_file} for project {code!r} under {tree_rel}/")
+    if len(rows) != 1 or rows[0][2] != "0":
+        raise RowCannotCompose(f"{code!r}: {len(rows)} staged row entr{'y' if len(rows) == 1 else 'ies'}, "
+                               f"stage {','.join(sorted({r[2] for r in rows}))} (unmerged or duplicated)")
+    flat_rel = f"{idx_rel}/{code}.json"
+    srcl = [e for e in _index_listing(repo, env, srcs + [flat_rel]) if e[0] != "160000" and e[2] == "0"]
+    by_path = {e[3]: e[1] for e in srcl}
+    missing = [x for x in srcs if x not in by_path]
+    if missing:
+        raise StagedReadError(f"not in the git index: {missing}")
+    want = [rows[0][1]] + [by_path[x] for x in srcs] + ([by_path[flat_rel]] if flat_rel in by_path else [])
+    blobs = _blobs(repo, env, want)
+    tmp = tempfile.mkdtemp(prefix="mti-one-")
+    try:
+        for x, data in zip(srcs, blobs[1:1 + len(srcs)]):
+            f = Path(tmp) / x
+            f.parent.mkdir(parents=True, exist_ok=True)
+            f.write_bytes(data)
+        cp = Path(tmp) / CONTRACT_REL
+        cp.parent.mkdir(parents=True, exist_ok=True)
+        cp.write_bytes(contract_bytes)
+        est = Estate(cp, Path(tmp) / tree_rel, Path(tmp) / idx_rel, Path(tmp) / DIRECTIVES_REL, Path(tmp) / MACROS_REL,
+                     ws=Path(tmp), index_only_scan=False)
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    parts = rows[0][3][len(tree_rel) + 1:].split("/")
+    try:
+        row = json.loads(blobs[0].decode("utf-8"))
+    except ValueError as e:
+        raise RowCannotCompose(f"{rows[0][3]} does not parse: {e}")
+    t = {"D": parts[0], "M": parts[1], "code": parts[2], "row": row}
+    why = est.row_problems(t)
+    if why:
+        raise RowCannotCompose("; ".join(why))
+    entry = est.compose_index(t)
+    existing = {}
+    if flat_rel in by_path:
+        try:
+            existing = json.loads(blobs[-1].decode("utf-8"))
+        except ValueError:
+            existing = {}
+    keep = isinstance(existing, dict) and existing.get("generated_at") and \
+        all(existing.get(f) == entry.get(f) for f in est.compared + [est.idx_marker, "generated_from"])
+    entry["generated_at"] = existing["generated_at"] if keep else _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return entry
 
 
 # ---------- ACT SCOPE ----------
@@ -1134,7 +1229,9 @@ def main(argv=None) -> int:
     ap.add_argument("--write", action="store_true", help="derive: write generated index entries")
     ap.add_argument("--json", action="store_true", help="check: machine-readable output")
     ap.add_argument("--self-test", action="store_true")
-    ap.add_argument("--staged", action="store_true", help="check: read every input from the git index, not the working tree")
+    ap.add_argument("--staged", action="store_true", help="check: read every input from the git index, not the working tree; derive: with --only CODE --stdout")
+    ap.add_argument("--only", metavar="CODE", help="derive --staged: the one project whose index entry is composed")
+    ap.add_argument("--stdout", action="store_true", help="derive --staged --only: print the entry (the file's exact content); write nothing")
     ap.add_argument("--act", action="append", default=[], metavar="PATH", help="check: a path the act touches (repeatable); violations outside its projects print STANDING and do not refuse")
     ap.add_argument("--act-from-env", action="append", default=[], metavar="VAR", help="check: env var holding newline-separated act paths")
     for k, v in _DEFAULTS.items():
@@ -1142,8 +1239,22 @@ def main(argv=None) -> int:
     args = ap.parse_args(argv)
     if args.self_test:
         return self_test()
-    if args.staged and args.mode != "check":
-        print("ERROR: --staged applies to `check` only", file=sys.stderr)
+    if args.staged and args.mode == "derive":
+        if not (args.only and args.stdout) or args.write:
+            print("ERROR: `derive --staged` needs --only CODE --stdout and takes no --write", file=sys.stderr)
+            return 2
+        try:
+            entry = derive_staged_one(_WS, args.only)
+        except RowCannotCompose as e:
+            print(f"ERROR: {e}", file=sys.stderr)
+            return 1
+        except (StagedReadError, OSError, ValueError, KeyError) as e:
+            print(f"ERROR: {e}", file=sys.stderr)
+            return 2
+        sys.stdout.buffer.write((json.dumps(entry, indent=1, ensure_ascii=True) + "\n").encode("ascii"))
+        return 0
+    if (args.only or args.stdout) and not (args.staged and args.mode == "derive"):
+        print("ERROR: --only/--stdout apply to `derive --staged` only", file=sys.stderr)
         return 2
     try:
         return cmd_check(args) if args.mode == "check" else cmd_derive(args)
