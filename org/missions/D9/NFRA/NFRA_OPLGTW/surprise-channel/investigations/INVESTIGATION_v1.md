@@ -11491,3 +11491,103 @@ name the one known failure instead of silently inheriting it.
   "notes": "Resolves NFRA_OPLGTW-Z-W49-S5. S1 and S4 go to the E2 release cell."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W51-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~51",
+  "surfaced_at": "2026-10-09T18:07:49Z",
+  "one_line": "The release branch name the order gives, rel-nfra-oplgtw-r16, already exists locally (an old OG-rl-5 release, tip e0b90e9945); the E2 release is on rel-nfra-oplgtw-r16b.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN git log --oneline -3 rel-nfra-oplgtw-r16 (wk-oplgtw-r33-51) -> e0b90e9945 'Deploy EC2 opal-gateway @ 4b6b823fae', 4b6b823fae 'release(NFRA_OPLGTW OG-rl-5 A3...)': an earlier, deployed release",
+      "RUN git branch --list 'rel-nfra-oplgtw-r1*' -> r14, r16, r17, r17b, r17c, r19, r19b exist; precedent for a suffixed name is r17b/r17c/r19b/r28b",
+      "RUN git worktree add --no-checkout -b rel-nfra-oplgtw-r16b C:/tmp/og-rel16 1e32562729 -> HEAD 1e32562729, then three release commits e698b10bdc, e581384925, a88661b145"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 2: release worktree C:/tmp/og-rel16, branch rel-nfra-oplgtw-r16, at the live base.",
+  "world_is": "A branch of that name already exists with unrelated history; reusing or force-resetting it would move a ref that carries an earlier release, so a new name was taken. The ANNOUNCE and rl16_release.json name the branch rel-nfra-oplgtw-r16b and the sha; the sha is what the halves sign.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "ARMED only in that an applier reading the order's branch name would find the OLD release at rel-nfra-oplgtw-r16 and could deploy it. Disarm: the issuer's apply order names rel-nfra-oplgtw-r16b / release sha a88661b145 / C:/tmp/og-rel16, never the bare r16 name."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W51-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~51",
+  "surfaced_at": "2026-10-09T18:07:49Z",
+  "one_line": "E2's second count-updated test, tests/test_data_entitlement_family.py (52 -> 53 non-data tools), does not exist on the live base, so that hunk is not carried; the other, test_entitlement_admin.py 61 -> 62, applies clean.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN git cherry-pick -n cf84fd9a4d in C:/tmp/og-rel16 -> CONFLICT (modify/delete): tests/test_data_entitlement_family.py deleted in HEAD (1e32562729)",
+      "RUN git log --oneline -3 -- infra/aws/ec2/opal-gateway/tests/test_data_entitlement_family.py -> OG-pf-1's b47fc56a98 and 27e1969db3 only (box/sitez); OG-pf-1 is not on the live host",
+      "RUN pytest tests/test_entitlement_admin.py in the release tree -> 9 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 2: the carry cf84fd9a4d includes the tests and the two count-updated tests.",
+  "world_is": "On the live base only one of the two count-updated tests exists; the family test (OG-pf-1) is a later, unreleased cell. The release carries test_entitlement_admin.py (61 -> 62) and leaves the family test absent; the AC1 allow-list names the family file but no change to it appears in the release diff. When OG-pf-1 is released, its release must carry the 52 -> 53 count edit then.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Disarm: the OG-pf-1 release cut carries E2's count edit (52 -> 53) on top of its own."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W51-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~51",
+  "surfaced_at": "2026-10-09T18:07:49Z",
+  "one_line": "Commits in a sparse release worktree print 'naming-gate NAMING ERROR ... org/missions/DIRECTIVES.yaml' (the limb cannot load the registry); the commit still lands (WARN window, enforce off).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN safe-commit.sh in C:/tmp/og-rel16 (commits e581384925, a88661b145) -> '[naming-gate] NAMING ERROR lib/opal_naming.py or the registry cannot be loaded: FileNotFoundError ... org/missions/DIRECTIVES.yaml' and '(WARN window: the limb's own error never blocks a commit; enforce is off)'",
+      "RUN git sparse-checkout list in C:/tmp/og-rel16 -> .tools, infra/aws/ec2, infra/aws/lambda/mcportal, infra/aws/terraform/opal-gateway, infra/logic, lib, org/modules, org/standards (no org/missions top file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order bounds: every .py edit passes bash .tools/commit-gate.sh.",
+  "world_is": "The commit gate ran; its naming limb could not load DIRECTIVES.yaml in the sparse tree and reported WARN-only. The release's .py/.sh files add no name, address or env key typed by hand (the env root is computed from address() in deploy-to-ec2.sh), so nothing the limb would grade was ungraded by a path the order cares about. No gate was overridden.",
+  "notes": "Inert while the naming limb is in its WARN window; a release tree that must pass an enforcing naming gate needs org/missions/DIRECTIVES.yaml in its sparse set."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W51-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~51",
+  "surfaced_at": "2026-10-09T18:07:49Z",
+  "one_line": "rl16_verify.py is not a pure rl16_ copy of r29_verify.py: the r29 expectations (66->66 tools, 51->52 names, 98 files, 11 files) were edited to E2's (66->67 adding copy_site_file_to_s3, 52->53 adding ADVI_FEE_STATEMENT_S3_ROOT, 102 files, 5 files).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN diff of rl16_verify.py against r29_verify.py (W vs ~43) -> the count/name expectations, list file names and the rollback hint changed; HOST_PROG's body is unchanged; the scratch file names og_r29_verify -> og_rl16_verify",
+      "RUN python -m py_compile rl16_verify.py -> compiles; NOT run against the host in Phase A"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order cell: reuse the ~43 r29 tooling by copying to rl16_ names.",
+  "world_is": "The r29 verifier hard-codes r29's release (66->66, MAIL_SENDER_DOMAIN_TABLE, 98 files); copied unchanged it would FAIL the E2 deploy on its own. The copy was edited to E2's numbers; it is written, compiled, and untested against a deploy. rl16_ssm_prog.py, rl16_md5_host.py (its list is the BASE list) and rl16_release_md5.py are otherwise copies.",
+  "notes": "Inert until the applier runs it; the applier should run `before` first, which exits 1 if the host differs from the base list."
+}
+```
