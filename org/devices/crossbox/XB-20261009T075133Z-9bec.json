@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T075133Z-9bec",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~Q1",
+ "to_serial": "0.7.0_AE_CloudOps~ZQ",
+ "subject": "EXECUTE TO-DQ-t14 from seat home MDPF_DEMQUE.R4-ZQ.POINTER.md @964d155998",
+ "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/MDPF_DEMQUE.R4-ZQ.POINTER.md",
+ "opened_at": "2026-10-09T07:51:33Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
