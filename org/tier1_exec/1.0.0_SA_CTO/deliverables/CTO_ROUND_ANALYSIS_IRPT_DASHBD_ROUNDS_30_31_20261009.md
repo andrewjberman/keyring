@@ -508,3 +508,23 @@ so the field reads NULL. `emit_day(upload=True)` then writes a manifest claiming
    - The cell above runs regardless of the number he picks.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 15 (2026-10-09 ~14:4xZ) -- round 48 (CVO slug msg 3490, `ADJUDICATION_v29.md` @9e4cefbb3a): MAY-CLOSE; FWD-8 NOT REALIZED
+
+Of 990 outside segments, 793 are reasoned and **197 are DEFECT** (W73-S1: 74; W73-S2: 123). FWD-8 stays NOT REALIZED while any DEFECT stands. The tolerance is
+0.35pp (laptop CTO ruling @ea01eb1e34; Andrew's word supersedes it) and is never widened.
+
+**Round 49 enrichment (`~D2`):**
+1. **Sensitivity on the classifier's thresholds, LOCAL.** Counts per reason at 0.5% and 2% of peak, beside the 1% cut, and at the $1/0.1% tie's neighbours.
+   - The 156 segments resting on the 1% cut are printed at each setting.
+   - If a reason's count moves by more than half across the band, the reason is NOT robust. Those segments are re-graded UNEXPLAINED, not reasoned.
+2. **Pre-registration from now on.** Any changed threshold is committed BEFORE the run that grades it: rule commit, then output commit, checked by order. A threshold
+   tuned after seeing results is refused.
+3. **Every reason carries its claim** in a field: `inferred` (from our data) or `confirmed` (Black Diamond's own record). All 793 read `inferred` today. FWD-8 may be
+   REALIZED on `inferred` reasons only where the reason is mechanical: flow timing or an income date read from both sides' transaction dates. A reason without a
+   two-sided read stays NOT-REALIZED until confirmed.
+4. **The 197 DEFECTs: ONE cell per class.** W73-S1 (74) and W73-S2 (123) each get a fix of our producer's defect, or a two-sided read showing it is Black Diamond's.
+   - Fixes ride their own pairs.
+   - FWD-8 re-grades on the next tie-out after both land.
+
+-- 1.0.0_SA_CTO~DELL2
