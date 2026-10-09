@@ -329,9 +329,20 @@ def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
         hits.append("git worktree list failed (rc=%d): the open deploys of other seats cannot be read, so this is not clear" % rc)
         return hits, ["  HIT %s" % hits[0]]
     found = []
+    vanished = 0
     for tree in trees:
         rc, listing = git_lines(tree, "ls-tree", "-r", "HEAD", "org/critical_paths/.open_deploys/")
         if rc != 0:
+            rc2, out2 = git_lines(repo_root, "worktree", "list", "--porcelain")
+            if rc2 != 0:
+                hits.append("worktree %s: ls-tree rc=%d and the re-read of the worktree list failed (rc=%d): not clear" % (tree, rc, rc2))
+                lines.append("  HIT %s" % hits[-1])
+                continue
+            still = {ln[9:].strip() for ln in out2.splitlines() if ln.startswith("worktree ")}
+            if tree not in still and not os.path.exists(tree):
+                vanished += 1
+                lines.append("  worktree %s: VANISHED during the read (listed, then removed)" % tree.replace("\\", "/"))
+                continue
             hits.append("worktree %s: ls-tree rc=%d (not readable, not clear)" % (tree, rc))
             lines.append("  HIT %s" % hits[-1])
             continue
@@ -367,7 +378,8 @@ def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
             hits.append("open deploy %s (author %s, status %s, opened %s) %s" % (
                 doc.get("slug", path), doc.get("author"), doc.get("status"), doc.get("opened_at"), why))
             lines.append("  HIT %s" % hits[-1])
-    lines.append("  denominator: %d worktree(s), %d sentinel read(s), %d distinct (path, blob)" % (len(trees), len(found), len(seen)))
+    lines.append("  denominator: %d worktree(s), %d sentinel read(s), %d distinct (path, blob), vanished=%d" % (
+        len(trees), len(found), len(seen), vanished))
     return hits, lines
 
 
