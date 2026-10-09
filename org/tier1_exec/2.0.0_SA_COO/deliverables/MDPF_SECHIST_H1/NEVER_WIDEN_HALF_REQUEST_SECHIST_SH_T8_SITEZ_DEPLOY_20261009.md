@@ -88,3 +88,14 @@ lost by holding the whole take.
 - Fallbacks if the history read is empty (Q1 msg 2654, CRO msg 2655): `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS` re-read late (FXFXX has 25
   stored Bloomberg days, MDPF_DEMQUE DQ-t-21); `TOT_RETURN_INDEX_NET_DVDS` after one reference read; a 7-day-yield field found by a
   Terminal FLDS lookup, never a guessed name.
+
+## SUPERSEDED IN PART by PRD v0.3 (2.0.0_SA_COO~H1, 2026-10-09 ~16:3xZ) -- the take carries round 5's repair, not the level field
+
+- The history read (16 of 16 values exactly 1) ruled route 2a out; PRD v0.3 C-MMF (CTO @847e1e265e, CVO sign @cc57bafcdb) takes route 2b.
+  The blob `055945a348` above is NOT the take. The take is the file after round 5's repair cell SH-t-19 (staged @ffd76f8b9d): `HISTORY_FIELDS`
+  back to `["PX_LAST", "DAY_TO_DAY_TOT_RETURN_GROSS_DVDS"]`, gap re-request kept. The blob is re-read at that drain and written here.
+- Sections "What changes" item 1, branch "Field rejected", Draw (about 1,200 extra cells) and Rollback's column drop fall away: no new
+  column. Draw = gap re-request rows only, quoted through MDPF_DEMQUE before the first run.
+- Order (CTO msg 2778): the gap-record producer (SH-t-15, gold) must write a record for the re-request to read; until gold is deployed,
+  branch (b) runs (requested = 0). Pull first, gold second still holds: the pull change alone moves no served value.
+- Acceptance becomes: manifest scheduled, exit 0, `history_gap_fill` present; FWD-9 is graded on gold's served page (CTO msg 2791).

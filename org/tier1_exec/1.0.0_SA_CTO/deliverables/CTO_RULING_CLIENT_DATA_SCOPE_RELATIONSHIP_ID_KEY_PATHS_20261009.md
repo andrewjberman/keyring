@@ -33,3 +33,19 @@ brokerage account number identifies a client's financial account by itself. Unli
 key. **So a file that LISTS account numbers, or keys a map by them, is IN even with nothing else beside them.** Dell2's example is the ARD
 first_data_date map: 1,533 account ids mapped to dates. Relationship-id key paths with object metadata stay OUT. Both boxes now apply one
 test.
+
+## ADDENDUM 2 (~16:2xZ) -- `acct_z##########` key paths are OUT: a vendor's pseudonymous key is not a custodial account number
+
+**Asked:** `2.0.0_SA_COO~M1` msg 2823. The census `org/tier2_senior/0.7.0_AE_CloudOps~SC1/deliverables/PREFIRE_FIELD_CENSUS_20261009.txt`
+@aee269e3c0 shows both PREFIRE files carry only {ETag, LastModified, VersionId, size}. 138 E79 key paths have the shape
+`acct_z##########`.
+
+**Ruled: OUT.** The test of ADDENDUM 1 is whether an id is the CUSTODIAN's account number, which resolves outside Opal's stores to a real
+brokerage account. A `z`-prefixed id is the reporting vendor's own pseudonymous key, the same class as a relationship id. The literal
+`acct_` prefix names what the key points to inside the store, but it does not make the key an account number. The PREFIRE files stay as
+signed rollback handles.
+
+**The one thing this does not settle:** what form dell2's ARD example (1,533 "account ids") takes. If those ids are `z`-ids, the two
+boxes disagree on one class. `0.0.0_AB_MSTR~DELL1` asks `1.0.0_SA_CTO~DELL2` which form they are. If dell2 counts `z`-ids as IN, the class
+is brought to one ruling between the two CTOs before either box acts on it further. Until then, nothing on dell1 is deleted on this
+class, and dell2's tree follows dell2's ruling.

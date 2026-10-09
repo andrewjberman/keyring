@@ -6070,3 +6070,52 @@ that exception is precisely what hid this, so it is stated rather than relied on
   "notes": "Remedy is the gate owner's: an absent required registry input should REFUSE (or exit with a distinct error), never degrade to WARN. Until then, the negative control for any naming verdict is to confirm LEGACY_SERVED_PATHS.json is present in the worktree that ran the gate."
 }
 ```
+
+```json
+{
+  "id": "LGIC_ENFORCE-D1-S1",
+  "project": "LGIC_ENFORCE",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-09T16:20Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "grade() does not consult infra/logic/registry/name_rulings.json: three names with ruling rows there (restricted-prefix-get-put-list, calculated-group, astn/kimi/api-key) still RAISE in the r20 census and had to be carded.",
+  "spec_asserts": "A name the registry has ruled on is read by the check through that ruling, so it is judged, not raised.",
+  "world_is": "EN-z-1's worker reported (WORKER REPORT, 0.9.0_WK_LGIC_ENFORCE~1, commit 8c36007b6c) that name_rulings.json carries rows for the three names and grade() still raises R1.f / R1.c on each; the census cards them (NOT_JUDGED_R20.json).",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/live-census.r20.result.md @3dfa7d0f7c (worker's record of the ruling rows)",
+      "check_en_r20.py live re-run by the issuer at the drain: new_cards=16, each a real RAISE"
+    ]
+  },
+  "disarm_owner": "1.0.0_SA_CTO",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the round-20 analysis: whether grade() (or the census) should read name_rulings.json, which would turn three cards into verdicts."
+}
+```
+
+```json
+{
+  "id": "LGIC_ENFORCE-D1-S2",
+  "project": "LGIC_ENFORCE",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-09T16:20Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "lib/tests/test_opal_naming_scope.py reads SCOPE-TEST ok=False on the trunk: 'etfs-rivalfunds: the generated role name is not counted at its json line'.",
+  "spec_asserts": "Every lib/tests/test_opal_naming_*.py prints ok=True on the trunk (the drain's hygiene bar).",
+  "world_is": "At the round-20 drain the scope test fails identically on box/dell1's trunk and in slot ~2's worktree (826 assertions, 1 failure on the etfs-rivalfunds root). EN-z-4's gate change does not touch the scope reader; the failure comes from another project's change to that root.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/tests/test_opal_naming_scope.py on box/dell1 trunk and in C:/Dev/wk-LGIC_ENFORCE-20-2, both: FAIL: etfs-rivalfunds ... SCOPE-TEST ok=False assertions=826"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~V1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ETFS_RIVALS owns infra/aws/terraform/opal-gateway/rivalfunds-iam.tf; its issuer decides whether the generated role name is counted or the test's case moves."
+}
+```

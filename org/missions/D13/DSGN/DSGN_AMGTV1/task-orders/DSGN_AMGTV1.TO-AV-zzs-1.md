@@ -49,6 +49,15 @@ subject value. On 992 HK the Enterprise Value tile reads "--" (the header serves
    - AC1 is `r68.cjs`, which now has 6 arms; its new arm 5 (UNMEASURED) fails at 2be8455f. Then re-run AC2, rewrite your proof instance,
      and flip `<status>` to `complete` in the same commit.
 
+5. **AMENDMENT 2 (the CTO's grade line, msg 2816: '"--" in both places with the same reason').** Item 4's optional hover reason is
+   now REQUIRED. A subject cell that item 4 withholds carries the tile's own reason as its `title`, exactly the words the tile's
+   hover carries: "Bloomberg does not confirm this figure's currency" for an UNMEASURED-basis money figure (the tile's
+   `withheldReason` in `components/HeaderCards.tsx`), and `UNIT_NOT_RESOLVED_WORDS` for an unresolved unit. Do not type a second copy
+   of the words: export the tile's reason (or a tiny pure helper beside `isUnmeasuredBasis` in `components/StatTile.tsx`) and use it
+   in both places; that file joins your paths for this item only. A shown cell carries no such title; no new visible words.
+   - AC1 is `r68.cjs`, which now has 7 arms; its arm 6 (SAME REASON) fails at your 3278da53. Then re-run AC2, rewrite your proof
+     instance, and flip `<status>` to `complete` in the same commit.
+
 ## 2. BOUNDS
 
 1. No server, no fetch, no network, no install (`bun install`, `bun add`, `npm`, `npx` are refused here), no push, no deploy.
@@ -66,6 +75,8 @@ subject value. On 992 HK the Enterprise Value tile reads "--" (the header serves
 
 <paths>
 portal/src/pages/SecurityAnalysis/tabs/PeersTab.tsx
+portal/src/pages/SecurityAnalysis/components/StatTile.tsx
+portal/src/pages/SecurityAnalysis/components/HeaderCards.tsx
 org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~142/
 org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -75,7 +86,7 @@ Read-only: the whole repository; in particular `components/HeaderCards.tsx`, `co
 ## 4. PROOF OF SPEC (literal; timeout 1800)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AV-zzs-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D1/round68/checks/r68.cjs"; echo "exit=$?"</invocation><expect>ROUND 68 ONE FIELD PER MEASURE: 6 of 6 arms -- and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AV-zzs-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D1/round68/checks/r68.cjs"; echo "exit=$?"</invocation><expect>ROUND 68 ONE FIELD PER MEASURE: 7 of 7 arms -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AV-zzs-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round29/checks/battery29.sh" "$(git rev-parse --show-toplevel)"; echo "exit=$?"</invocation><expect>BATTERY29: ALL PASS (0 skipped) -- and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="AV-zzs-1" judgment="true"/>
 </proof_of_spec>
@@ -91,6 +102,8 @@ A row id on this project carries the dell1 infix: `DSGN_AMGTV1-D1-W142-S<k>`, wi
 Report once: the diff (per file, one line each), the output line of every criterion, the portal and outer commit hashes, and any row.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**AMENDMENT 2 (2.0.0_SA_COO~D1, 2026-10-09 ~16:3xZ):** REOPENED. The CTO confirmed the item-4 ruling (msg 2816) and set the grade line as "--" in both places with the same reason; item 4 left the reason optional and ~142 omitted it. Item 5 makes it required, one copy of the words; StatTile.tsx and HeaderCards.tsx join the paths. r68 gains arm 6 SAME REASON (6 of 7 at 3278da53). Graded by no gate limb at cut (a modification).
 
 **AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-09 ~16:2xZ):** REOPENED. The close walk (tmp/ui-walk/20261009T160722Z shot 011) shows 992 HK's EV still split: the row prints the header's UNMEASURED-basis CURR_ENTP_VAL that the tile withholds (CRPS-ao-3, FWD-20). Item 4 makes the row apply the tile's rule; r68 gains arm 5 (5 of 6 at 2be8455f). Issuer ruling: one rule, the tile's -- the row withholds; the tile is not changed (FWD-20 stands). Graded by no gate limb at cut (a modification).
 
