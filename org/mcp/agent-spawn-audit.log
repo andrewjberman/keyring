@@ -18926,3 +18926,9 @@
 2026-10-09T13:22:42Z  KILL  0.7.0_AE_CloudOps~OW2  by 0.0.0_AB_MSTR~DELL2  pid=33276  reason=reallocation
 2026-10-09T13:22:42Z  KILL  0.7.0_AE_CloudOps~OW2  by 0.0.0_AB_MSTR~DELL2  pid=31668  reason=reallocation
 2026-10-09T13:25:49.418529+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~DB2 pid=28508 reason='to=2.0.0_SA_COO~D2' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 172 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T14:20:40Z  REJECT 0.7.0_AE_CloudOps~RV1  by 0.0.0_AB_MSTR~DELL1  reason=concurrency-cap  live=20/20
+2026-10-09T14:21:25Z  FORCE-SPAWN 0.7.0_AE_CloudOps~RV1  by 0.0.0_AB_MSTR~DELL1  reason=V1 msg 2539: ETFS_RIVALS WS2/WS3 deploy needs a lane holding no other project (one project per Tier-2 seat); all 20 windows are live seats, none finished
+2026-10-09T14:21:25Z  SPAWN  0.7.0_AE_CloudOps~RV1  by 0.0.0_AB_MSTR~DELL1  pid=21480  host_pid=32088
+2026-10-09T14:22:19.154849+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~DELL1 pid=27028 reason='to=2.0.0_SA_COO~S1,0.0.0_AB_MSTR~DELL1' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 165 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T14:22:44.585796+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~RV1 pid=31808
+2026-10-09T14:23:06.877315+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~S1 pid=18760 reason='to=0.7.0_AE_CloudOps~DELL1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~S1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
