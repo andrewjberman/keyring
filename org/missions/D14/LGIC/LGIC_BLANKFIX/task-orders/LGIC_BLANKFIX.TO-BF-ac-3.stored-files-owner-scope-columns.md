@@ -58,6 +58,8 @@ with an open `{source}`/`{scope}` place stay UNDECIDED with their reason printed
    with `ok=True` when every stored-file line carries the three fields or is one of the named patterns or UNDECIDED-with-reason rows.
    Keep `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/check_fwd8_patterns.py` passing (patterns shown as patterns, none as names).
 
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-09 ~12:5xZ; row LGIC_BLANKFIX-D1-W1-S9, handed from BF-ac-1):** add build item 4 in `lib/opal_naming_rootcheck.py` `decide()`, the same file this cell owns: when the cadence reader gives NO word for a schedule whose expression is stated (BF-ac-1 @7a82774af7 now returns None with a reason for uneven or non-interval fires), and the current name carries a cadence word (not an `on-` form), rebuild the listed name on `{cadence}` so the existing H14 hole prints the partial form with the reader's reason, never the carried-over word. Case in the root-check test: an uneven twice-a-day schedule prints its partial form with the reason; the DIFFERENCE CONTROL, an evenly spaced one prints `-12h`. Six rows are expected to move (fear-greed-daily-update, trending-topics-portal-publisher-daily, keyword-drilldown-generator-daily, finbert-scoring-post-ingestion-45min, teams-global-transcripts-pull-hourly, fred-ingestion-monthly-early); report the census `hole` before and after. Criteria text unchanged; BAC3-AC2 (ROOTCHECK-TEST) covers the new case.
+
 ### ACCEPTANCE
 
 <criterion id="BAC3-AC1" cell_refs="BF-ac-3"><invocation>python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/check_fwd4_stored_r14.py</invocation><expect>FWD4-STORED-R14 ok=True</expect></criterion>
