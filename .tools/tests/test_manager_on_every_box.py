@@ -39,10 +39,11 @@ def write(path: str, text: str) -> None:
         fh.write(text)
 
 
-def order(root: str, name: str, issued_to: str, status: str, project: str = "TST_ONE") -> None:
+def order(root: str, name: str, issued_to: str, status, project: str = "TST_ONE") -> None:
+    """`status` is one word, or a tuple of words written as that many status tags in file order (the LAST one decides)."""
+    tags = "".join("<status>%s</status>\n" % word for word in ((status,) if isinstance(status, str) else status))
     write(os.path.join(root, "org", "missions", "D0", "TST", project, "task-orders", name + ".md"),
-          "# TO %s\n<issued_to>%s</issued_to>\n<issued_date>2026-10-07</issued_date>\n<status>%s</status>\n" % (
-              name, issued_to, status))
+          "# TO %s\n<issued_to>%s</issued_to>\n<issued_date>2026-10-07</issued_date>\n%s" % (name, issued_to, tags))
 
 
 def cmdline(serial: str) -> str:
@@ -207,6 +208,36 @@ def test_liveness(base: str) -> None:
          "rc=%d %s %s" % (rc3, out3, err3))
 
 
+def test_staged(base: str) -> None:
+    """AMENDMENT 2: an order's status is its LAST tag; a staged order is not open work (HUNG, DEAD, ELSEWHERE)."""
+    reg = register(base)
+    fx = os.path.join(base, "fx-staged")
+    os.makedirs(fx)
+    write(os.path.join(fx, "now"), str(NOW))
+    seats = ["2.0.0_SA_COO~S1", "2.0.0_SA_COO~S2", "2.0.0_SA_COO~S3", "2.0.0_SA_COO~S4"]
+    write(os.path.join(fx, "org", "mcp", "liveness.json"),
+          json.dumps({s: {"pid": "1", "summary": "x", "last_seen_epoch": NOW - 3600} for s in seats}))
+    write(os.path.join(fx, "processes.json"), json.dumps([cmdline(s) for s in seats]))
+    write(os.path.join(fx, "gitlog.txt"), "".join("%d\t%s\n" % (NOW - 120 * MIN, s) for s in seats))
+    write(os.path.join(fx, "org", "missions", "D0", "TST", "TST_ONE", "project.json"),
+          json.dumps({"project_code": "TST_ONE", "placement": "alpha"}))
+    order(fx, "TST_ONE.TO-S1", "2.0.0_SA_COO~S1", "staged")                       # only a staged order: QUIET
+    order(fx, "TST_ONE.TO-S2a", "2.0.0_SA_COO~S2", "staged")                      # staged beside a pending one: HUNG
+    order(fx, "TST_ONE.TO-S2b", "2.0.0_SA_COO~S2", "pending")
+    order(fx, "TST_ONE.TO-S3", "2.0.0_SA_COO~S3", ("pending", "complete"))        # last tag complete: not open
+    order(fx, "TST_ONE.TO-S4", "2.0.0_SA_COO~S4", ("complete", "pending"))        # last tag pending: open
+    rc, out, err = run_liveness(fx, reg)
+    detail = "rc=%d\n%s\n%s" % (rc, out, err)
+    case("a live, silent seat whose only order is staged reads QUIET, never HUNG, and the line carries staged=1",
+         klass_of(out, seats[0]) == "QUIET" and "staged=1" in line_of(out, seats[0]), detail)
+    case("the same seat with one pending order beside the staged one reads HUNG still",
+         klass_of(out, seats[1]) == "HUNG" and "staged=1" in line_of(out, seats[1]), detail)
+    case("an order reading pending then complete (last tag complete) is not open",
+         klass_of(out, seats[2]) == "QUIET" and "TO-S3" not in line_of(out, seats[2]), detail)
+    case("an order reading complete then pending (last tag pending) is open",
+         klass_of(out, seats[3]) == "HUNG" and "TO-S4" in line_of(out, seats[3]), detail)
+
+
 # ---------------------------------------------------------------- the skill text
 
 def prose_lines(path: str) -> list:
@@ -218,7 +249,7 @@ def prose_lines(path: str) -> list:
             continue
         if fenced or line.lstrip().startswith(">"):
             continue
-        out.append(line)
+        out.append(re.sub(r"`[^`]*\.md`", "", line))     # a cited record's file name is a citation, not a device naming
     return out
 
 
@@ -295,6 +326,7 @@ def test_record_selftest() -> None:
 def main() -> int:
     with tempfile.TemporaryDirectory(prefix="manager-on-every-box-") as base:
         test_liveness(base)
+        test_staged(base)
     test_skills()
     test_record_selftest()
     good = sum(1 for r in RESULTS if r)

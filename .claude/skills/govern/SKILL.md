@@ -37,10 +37,10 @@ a ruling, for a reviewer to judge.
   agents should have /govern on a 30m loop at instantiation." (record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_174xZ_MSTR_GOVERN_30M_LOOP_AT_INSTANTIATION.md`; it
   supersedes the 2026-06-03 "not auto-armed" word). A different cadence is still Andrew's call.
-- **Each box fires on its own minutes of the hour** (Andrew-direct ~18:0xZ, VERBATIM in section 9 of
-  `org/tier1_exec/4.0.0_SA_CRO~A/deliverables/PER_BOX_BRANCH_DESIGN_20261008.md`): laptop `:00` and `:30`, site Z `:06` and
-  `:36`, dell1 `:12` and `:42`, dell2 `:18` and `:48`. Arm the cron on those minutes (e.g. dell1 `12,42 * * * *`), never a
-  bare interval. A cycle still running when its next slot arrives skips that slot.
+> **Each box fires on its own minutes of the hour** (Andrew-direct ~18:0xZ, VERBATIM in section 9 of
+> `org/tier1_exec/4.0.0_SA_CRO~A/deliverables/PER_BOX_BRANCH_DESIGN_20261008.md`): laptop `:00` and `:30`, site Z `:06` and
+> `:36`, dell1 `:12` and `:42`, dell2 `:18` and `:48`. Arm the cron on those minutes (e.g. dell1 `12,42 * * * *`), never a
+> bare interval. A cycle still running when its next slot arrives skips that slot.
 - When Andrew invokes `/govern`, it initiates the loop at the 1-hour default (or the
   interval Andrew gives).
 - Never invoked by any agent other than a fabric manager (`0.0.0_AB_MSTR`, with or without a `~<lane>`).
@@ -122,14 +122,14 @@ cleanly." Every cycle, before Step 3b:
    Record stopped count, classes, MB freed, worktrees removed and ESCALATE rows on the GC line.
 7. **BRANCH SYNC AND OPEN CALLS, every cycle** (Andrew-direct 2026-10-08 ~20:1xZ, VERBATIM: "we need the fabric managers at each
    box to manage that"; record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_201xZ_FABRIC_MANAGERS_KEEP_THEIR_BOX_SYNCED.md`).
-   On this box's own minutes (laptop `:00/:30`, site Z `:06/:36`, dell1 `:12/:42`, dell2 `:18/:48`):
+   On this box's own minutes (the slot table quoted in the `Each box fires` bullet above):
    (a) **box-sync runs from the box's Windows scheduled task "Opal box-sync"**, never from this loop (Andrew ~20:1xZ to
    4.0.0_SA_CRO~A, "I think B is the stable long-term solution"; record
    `org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ANDREW_DIRECT_20261008_201xZ_BOX_SYNC_SCHEDULED_TASK_B.md`). This loop VERIFIES:
    `powershell -NoProfile -File .tools/box-sync-schedule.ps1 -Status`; if the task is absent, install it (`-Install`) the same
    cycle. A box branch more than one cycle behind `origin/CLOUD`, or a box the integrator HELD, is a finding on the SYNC line,
    never a quiet pass; a held box's conflict is resolved by its own manager the same cycle.
-   (b) **the integrator** (the laptop; site Z's manager on a recorded handover) reads its task's last integrate result, and
+   (b) **the integrator** (the box the integrate task runs on; another box's manager on a recorded handover) reads its task's last integrate result, and
    MEASURES EVERY BOX'S PULL (Andrew-direct ~20:2xZ, VERBATIM: "I want to make sure that every box in the organization does a
    pull from CLOUD as needed to get all the newest information onto their device"; record
    `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261008_202xZ_EVERY_BOX_PULLS_CLOUD_AS_NEEDED.md`): after

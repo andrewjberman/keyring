@@ -5758,3 +5758,51 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The pack was deleted after delivery to the issuer's intake path; the criterion has no instrument to run against. Recorded UNVERIFIABLE-BY-INSTRUMENT with that reason; the earlier pass's readback evidence is the substitute oracle."
 }
 ```
+
+## NFRA_CTLPLN-W14-S41 -- .tools/seat-list.py reads an order's status as the FIRST status tag (break after the first word in STATUS_WORDS, line 276-278), the defect AMENDMENT 2 fixes in seat-liveness.py; it also counts a staged order as open.
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S41",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T02:30:00Z",
+  "one_line": ".tools/seat-list.py reads an order's status as the FIRST status tag (break after the first word in STATUS_WORDS, line 276-278), the defect AMENDMENT 2 fixes in seat-liveness.py; it also counts a staged order as open.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/seat-list.py@ff5e6ea8a7 lines 274-281: for st in re.finditer(status tag) ... word = st.group(1).lower(); break"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2 rule 5 asks whether seat-list.py's own status reader shares the first-tag defect. CTO msg 107528 rules an order's status is its LAST status tag.",
+  "world_is": "It does: the loop breaks on the first word in STATUS_WORDS, so an order reading pending then complete counts as open, and a staged order counts as open in its per-issuer counts. Not edited (outside the grant); owner of seat-list.py to change."
+}
+```
+
+## NFRA_CTLPLN-W14-S42 -- The /govern skill at HEAD names register devices in prose (a per-box cadence bullet and two Step 7 lines), so CTs4-AC1's skill-text case failed before any AMENDMENT 2 change.
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S42",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T02:35:00Z",
+  "one_line": "The /govern skill at HEAD names register devices in prose (a per-box cadence bullet and two Step 7 lines), so CTs4-AC1's skill-text case failed before any AMENDMENT 2 change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_manager_on_every_box.py at 6df8ccb657 before edits -> 'FAIL /govern names no register device outside a quoted example' hits at laptop, dell1, dell2 (SKILL.md lines 41-42, 118, 125, 132); cases=40/41"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTs4-AC1 expects ok=True, which requires /govern to name no register device outside a quoted example or fenced block.",
+  "world_is": "Later commits to .claude/skills/govern/SKILL.md added the slot table and the Step 7 text. Minimal repair inside the grant, meaning unchanged: the cadence bullet became a blockquote (a quoted example), Step 7 line 'On this box's own minutes' and (b) now point at that quote and say 'the box the integrate task runs on'; the test ignores a backticked record file name (a citation). Whoever owns the Step 7 text should confirm the (b) wording."
+}
+```
