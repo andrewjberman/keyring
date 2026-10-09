@@ -4,7 +4,7 @@
 {
  "project": "LGIC_BLANKFIX",
  "directive": "D14",
- "fabric": "laptop",
+ "fabric": "dell1",
  "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/d14-naming-check-blank-fixes-brief-20261007.md@af5d8b6df4",

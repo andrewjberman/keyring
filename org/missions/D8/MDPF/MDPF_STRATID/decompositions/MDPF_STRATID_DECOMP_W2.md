@@ -124,3 +124,15 @@ No edge: each cell builds against the contracts above; ST-w-2's seam reads ST-w-
   13:30Z read) AND by this one: **the `~5` branch never merges without ST-w-5 on it.** ST-w-5 adds the matcher beside
   `rebalancer_schemas.py` in each carrier, continued by slot `~5` on its branch. WORLD (gate floor: infra/ and .tools/ paths); it deploys
   nothing. The live gold lambda is unaffected: its deployed package is the pin-148f715f8c build and nothing rebuilds it before the read.
+- **A6 (ruling on row `MDPF_STRATID-D1-W6-S2`, BLOCKING, the issuer's defect): `opal_models` = the union of `is_opal` model names in
+  `fact_model_roster` AND `fact_model_definition`.** Five Opal models (`Opal Short-Term`, `Opal Fixed Income`, `Opal Long-Term Aggressive`,
+  `Opal Moderate Income`, `Opal_Moderate_Income_Tax_Efficient`) appear only in the definition table, so the roster-only source left them
+  listed (`~6` @`a53204441c`: LISTED 12, W24-SEAM-BAD on `Opal Short-Term`). TO-W2-3's amendment text is changed to the union; the
+  function and tests do not change. The order's grant gains this decomposition file so the worker's branch carries cell `ST-w-4`
+  (row D1-W6-S3). Graded by: to-pipeline-gate on the modified order.
+- **A7 (Andrew-direct ~05:3xZ, record `org/tier1_exec/2.0.0_SA_COO~S1/deliverables/ANDREW_DIRECT_20261009_053xZ_OPAL_MUNI_INCOME_IS_A_CUSTOM_MODEL_NOT_ALT.md`):**
+  VERBATIM "no that is a custom model, we should not be putting that in ALT Strategies." `Opal_Muni_Income` stays a Custom model and is
+  not a strategy candidate. At the drain, before anything ships: ST-w-1's Muni rule row narrows so it no longer matches
+  `Opal_Muni_Income` (it may still match `Opal_Muni_Sleeve`, which his word did not name and which stays open under C-MUNI-VERIFY), with
+  the record cited as its source; ST-w-4's record is re-made so `Opal_Muni_Income` is excluded as an Opal Model; the W2-1/W2-3/W2-4
+  checks' Muni probes are updated to match. The issuer applies these at the drain merge and re-runs the checks; no new cell.

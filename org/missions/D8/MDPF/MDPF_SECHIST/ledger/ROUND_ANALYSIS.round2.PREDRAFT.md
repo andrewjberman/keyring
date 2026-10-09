@@ -80,3 +80,11 @@ for SH-t-4 was "for that edit only". So:
   `1.0.0_SA_CTO~Z`'s half and a DEMQUE quote;
 - neither cell is cut without his word. Until then, under PASS, FWD-5's gap record (read side, FWD-4) and the blank-over-gap serving
   are cut outside the pull. The pull-side fill and FWD-9's field wait on him.
+
+## DRAFT AMENDMENT 4 (~05:2xZ) -- Andrew had ALREADY lifted the order for `etf_daily_pull.py`
+
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_230xZ_SITEZ_AND_DELL2_OPEN_CALLS_ANSWERED.md:11` reads "5.) No modify is
+lifted", and `:24` reads "lift no-modify on etf_daily_pull.py | lifted" (site Z call sitez-20261008T165921Z-35ce, ~23:0xZ 2026-10-08).
+Amendment 3's act row (b186) is closed on that record, ruled by Andrew. The two round-3 pull cells stand as Amendment 2 stated them:
+under PASS, each with `1.0.0_SA_CTO~Z`'s never-widen half and a DEMQUE quote before its first run. The order still stands for the
+rest of `integrations/bloomberg/pipeline/`, the vehicle and the sign-in.
