@@ -44626,3 +44626,38 @@ REFUSED_20261008)
 2026-10-09T12:02:49Z LANDED-2P  2.0.0_SA_COO~AI  442d24e01d  paths=5  validate=124.24s  wait=0.59s  hold=4.64s  build=2.93s  ref=1.62s  post-commit=9.80s  attempt=1
 2026-10-09T12:03:03Z LANDED-2P  2.0.0_SA_COO~ZZ  2934fa13c8  paths=1  validate=40.49s  wait=0.30s  hold=2.93s  build=1.80s  ref=1.06s  post-commit=8.59s  attempt=1
 2026-10-09T12:07:39Z PASS  0.9.0_WK_NFRA_OPLGTW~48  4  (all paths in-lane)
+2026-10-09T12:25:51Z PASS  0.0.0_AB_MSTR~DELL1  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)
+2026-10-09T12:26:49Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=0  secs=62.71  graded=3/103  args=(--continue)  first=(WARN -- the merge commit carries file(s) the branch never touched (a status close is expected;)
+2026-10-09T12:24:07Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=4  secs=5.93  held=conflict cloud=41b6f7a039
+2026-10-09T12:24:08Z LANDED-2P  1.0.0_SA_CTO~DELL1  3f30e42354  paths=1  validate=8.13s  wait=0.08s  hold=1.03s  build=0.66s  ref=0.34s  post-commit=2.99s  attempt=1
+2026-10-09T12:24:09Z PASS  0.0.0_AB_MSTR~DELL1  1  (all paths in-lane)
+2026-10-09T12:24:18Z LANDED-2P  0.0.0_AB_MSTR~DELL1  35be410968  paths=1  validate=8.15s  wait=0.11s  hold=1.43s  build=0.86s  ref=0.52s  post-commit=3.31s  attempt=1
+2026-10-09T12:24:28Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=1  secs=9.37  graded=n/a  args=(origin/CLOUD)  first=(REFUSED -- `git merge` failed and this is NOT a conflict)
+2026-10-09T12:24:51Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
+2026-10-09T12:27:33Z PASS  2.0.0_SA_COO~W1  1  (all paths in-lane)
+2026-10-09T12:27:34Z PASS  2.0.0_SA_COO~D1  1  (all paths in-lane)
+2026-10-09T12:27:40Z LANDED-2P  2.0.0_SA_COO~W1  ac6516a0de  paths=1  validate=7.95s  wait=0.07s  hold=0.99s  build=0.61s  ref=0.36s  post-commit=2.63s  attempt=1
+2026-10-09T12:27:44Z LANDED-2P  2.0.0_SA_COO~D1  f0e896a0c6  paths=1  validate=8.91s  wait=0.08s  hold=1.05s  build=0.66s  ref=0.36s  post-commit=3.13s  attempt=1
+2026-10-09T12:28:01Z PASS  2.0.0_SA_COO~D1  3  (all paths in-lane)
+2026-10-09T12:28:19Z LANDED-2P  2.0.0_SA_COO~D1  c738ff1b78  paths=3  validate=28.32s  wait=0.10s  hold=1.22s  build=0.79s  ref=0.39s  post-commit=3.26s  attempt=1
+2026-10-09T12:29:37Z OVERRIDE  2.0.0_SA_COO~N1  6  (--author-override TREE_DELIVERABLES applied)
+2026-10-09T12:29:40Z PASS  2.0.0_SA_COO~V1  2  (all paths in-lane)
+2026-10-09T12:29:48Z LANDED-2P  2.0.0_SA_COO~N1  07cec17481  paths=12  validate=14.50s  wait=0.10s  hold=1.37s  build=0.86s  ref=0.46s  post-commit=3.93s  attempt=1
+2026-10-09T12:29:52Z LANDED-2P  2.0.0_SA_COO~V1  1411d72ef0  paths=2  validate=12.35s  wait=0.09s  hold=1.40s  build=0.87s  ref=0.47s  post-commit=3.74s  attempt=1
+2026-10-09T12:30:43Z PASS  0.9.0_WK_AMGT_RESAPP~340  8  (all paths in-lane)
+2026-10-09T12:31:06Z PASS  2.0.0_SA_COO~N1  2  (all paths in-lane)
+2026-10-09T12:31:25Z LANDED-2P  2.0.0_SA_COO~N1  70a5e67c54  paths=2  validate=25.41s  wait=0.11s  hold=1.47s  build=0.93s  ref=0.49s  post-commit=3.57s  attempt=1
+2026-10-09T12:31:39Z PASS  2.0.0_SA_COO~H1  2  (all paths in-lane)
+2026-10-09T12:31:49Z LANDED-2P  2.0.0_SA_COO~H1  0ed44a1982  paths=2  validate=10.10s  wait=0.14s  hold=1.54s  build=1.00s  ref=0.50s  post-commit=4.05s  attempt=1
+2026-10-09T12:32:09Z PASS  2.0.0_SA_COO~N1  2  (all paths in-lane)
+2026-10-09T12:32:22Z LANDED-2P  2.0.0_SA_COO~N1  4dd4b53743  paths=2  validate=16.16s  wait=0.10s  hold=1.19s  build=0.77s  ref=0.38s  post-commit=3.19s  attempt=1
+2026-10-09T12:33:16Z PASS  2.0.0_SA_COO~N1  1  (all paths in-lane)
+2026-10-09T12:33:23Z LANDED-2P  2.0.0_SA_COO~N1  32ca860fe0  paths=1  validate=6.73s  wait=0.06s  hold=0.87s  build=0.56s  ref=0.28s  post-commit=2.59s  attempt=1
+2026-10-09T12:32:57Z SURPRISE-ROW-OVERRIDE  3.0.0_SA_CVO  reason=if refused for the non-order POINTER file MDPF_DEMQUE.R4-ZQ.POINTER.md in 0.7.0_AE_CloudOps/task_orders (states it is not an order, never flipped); round-close-check reads 4 of 4 complete
+2026-10-09T12:33:30Z PASS  3.0.0_SA_CVO  2  (all paths in-lane)
+2026-10-09T12:33:59Z SURPRISE-ROW-OVERRIDE-HONOURED  3.0.0_SA_CVO  reason=if refused for the non-order POINTER file MDPF_DEMQUE.R4-ZQ.POINTER.md in 0.7.0_AE_CloudOps/task_orders (states it is not an order, never flipped); round-close-check reads 4 of 4 complete  provenance=UNVERIFIED-BY-GATE
+2026-10-09T12:34:08Z LANDED-2P  3.0.0_SA_CVO  45e86c99eb  paths=2  validate=65.51s  wait=0.11s  hold=1.36s  build=0.86s  ref=0.47s  post-commit=3.34s  attempt=1
+2026-10-09T12:34:10Z PASS  0.9.0_WK_AMGT_RESAPP~340  5  (all paths in-lane)
+2026-10-09T12:34:12Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=0  secs=9.82  took=already-current pushed=45e86c99eb
+2026-10-09T12:34:37Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
+2026-10-09T12:34:45Z LANDED-2P  1.0.0_SA_CTO~DELL1  4973512d4f  paths=1  validate=9.71s  wait=0.08s  hold=1.01s  build=0.66s  ref=0.33s  post-commit=3.09s  attempt=1
