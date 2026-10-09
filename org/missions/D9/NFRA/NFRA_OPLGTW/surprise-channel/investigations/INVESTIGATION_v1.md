@@ -10114,6 +10114,59 @@ name the one known failure instead of silently inheriting it.
 
 ```json
 {
+  "id": "NFRA_OPLGTW-Z-W41-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
+  "surfaced_at": "2026-10-09T00:15:56Z",
+  "one_line": "The 49F dispatcher ignores the marker's date: each qualified record on schwab/08335338/meta/complete/ runs the gold chain for today's T-1, so 256 historical records would not start 256 runs for past dates but up to 256 dispatches of the same T-1 run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "FILE infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/lambda_function.py:229-265 (this worktree, equal to the deployed zip, CodeSha256 TjIWGFWkbUswLkA+mUac9NS+LRZ1q7o6lR1iQLb0kI4=, evidence_dispatcher_function.json): the accelerator branch grades only closure.status of the exact marker version; send_command passes only StartedByDispatcher, no Date.",
+      "FILE infra/aws/terraform/opal-assets/advi_49f_floor.tf:244-310: with Date empty the document runs 'chain_49f_entrypoint.py --production', which derives D from the trading calendar at run time; the same file's Date-parameter comment says --production 'would run the SAME date for every iteration of the backfill'.",
+      "RUN OG-c-2 precedent, deliverables/0.9.0_WK_NFRA_OPLGTW~4/producer-deploy-replay.result.md section 3: one record for 2026-09-15 produced one chain run for date=2026-09-15 (the T-1 of the write day), 30 of 31 keys re-PUT.",
+      "FILE advi_49f_floor.tf document tail: 'if StartedByDispatcher = true ... sudo shutdown -h +2' follows the entrypoint whatever its rc, so a REFUSED sibling that found the host stopped also schedules a halt; whether that can land inside a live 145 s run has never been exercised (INFERRED)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-bf-1 'The hazard you must plan around': hundreds of historical records could start hundreds of gold runs for past dates.",
+  "world_is": "The dispatcher reads no date from the record. A qualified historical record on 08335338 dispatches the production chain for T-1 (a date that is already served), once per record; the chain's mutex refuses concurrent runs, so the count of completed runs is bounded by time, not by records. Nothing writes a historical record on that prefix today, so the hazard is standing but unfired; Phase B would fire it. NEVER_WIDEN_ASK_OG-bf-1.md section 3 and 5 state the branches and four ways to sign.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here: any change to the dispatcher, the notification set or any write to S3. The 08242234 prefix has no consumer, so its half of the backfill does not touch this."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W41-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
+  "surfaced_at": "2026-10-09T00:57:58Z",
+  "one_line": "The dispatcher date gate ships a second module (trading_calendar.py), and the Lambda builder refuses a top-level .py that is not registered in infra/aws/lambda/ci/lambda-source-map.json files[], a file outside this order's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/lambda/ci/build-and-upload.sh:412-458 (ADHC_DRIFTD.002 parity check): a top-level *.py in source_dir not in the union of files[] fails the function's build with 'Files present in source_dir but NOT in lambda-source-map.json files[]'.",
+      "FILE infra/aws/lambda/ci/lambda-source-map.json functions['advi-49f-gold-dispatch'].files = ['lambda_function.py'] (HEAD); the A1 <paths> admit only infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/ and the two test files, not the ci directory.",
+      "RUN python -m pytest on tests/test_advi_49f_gold_dispatch_dategate.py + tests/test_advi_49f_gold_dispatch_remedy.py: 11 passed, so the code is built and tested; only the packaging registration is outstanding."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 Phase C: the calendar is 'a byte copy placed beside lambda_function.py' in the zip; the order lists no path for the source map that registers it.",
+  "world_is": "Without a files[] entry for trading_calendar.py the build is refused (or, with BAU_PARITY_SKIP=1, the member is not in the zip and the gate SKIPs every accelerator record because the calendar is not loadable). So the registration is part of the deploy leg; the Y ask section 3 and 4 name it. The built zip's CodeSha256 is therefore not computed in Phase C.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here: any edit to lambda-source-map.json, any build, any deploy. An unregistered gate fails SAFE (SKIP), so a deploy that forgets the registration withholds the accelerator rather than over-dispatching."
+}
+```
+
+```json
+{
   "id": "NFRA_OPLGTW-Z-W38-S1",
   "project": "NFRA_OPLGTW",
   "fabric": "site-z",
@@ -10289,33 +10342,6 @@ name the one known failure instead of silently inheriting it.
 
 ```json
 {
-  "id": "NFRA_OPLGTW-Z-W41-S1",
-  "project": "NFRA_OPLGTW",
-  "fabric": "site-z",
-  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
-  "surfaced_at": "2026-10-09T00:15:56Z",
-  "one_line": "The 49F dispatcher ignores the marker's date: each qualified record on schwab/08335338/meta/complete/ runs the gold chain for today's T-1, so 256 historical records would not start 256 runs for past dates but up to 256 dispatches of the same T-1 run.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "INFERRED",
-    "evidence": [
-      "FILE infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/lambda_function.py:229-265 (this worktree, equal to the deployed zip, CodeSha256 TjIWGFWkbUswLkA+mUac9NS+LRZ1q7o6lR1iQLb0kI4=, evidence_dispatcher_function.json): the accelerator branch grades only closure.status of the exact marker version; send_command passes only StartedByDispatcher, no Date.",
-      "FILE infra/aws/terraform/opal-assets/advi_49f_floor.tf:244-310: with Date empty the document runs 'chain_49f_entrypoint.py --production', which derives D from the trading calendar at run time; the same file's Date-parameter comment says --production 'would run the SAME date for every iteration of the backfill'.",
-      "RUN OG-c-2 precedent, deliverables/0.9.0_WK_NFRA_OPLGTW~4/producer-deploy-replay.result.md section 3: one record for 2026-09-15 produced one chain run for date=2026-09-15 (the T-1 of the write day), 30 of 31 keys re-PUT.",
-      "FILE advi_49f_floor.tf document tail: 'if StartedByDispatcher = true ... sudo shutdown -h +2' follows the entrypoint whatever its rc, so a REFUSED sibling that found the host stopped also schedules a halt; whether that can land inside a live 145 s run has never been exercised (INFERRED)."
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "Order OG-bf-1 'The hazard you must plan around': hundreds of historical records could start hundreds of gold runs for past dates.",
-  "world_is": "The dispatcher reads no date from the record. A qualified historical record on 08335338 dispatches the production chain for T-1 (a date that is already served), once per record; the chain's mutex refuses concurrent runs, so the count of completed runs is bounded by time, not by records. Nothing writes a historical record on that prefix today, so the hazard is standing but unfired; Phase B would fire it. NEVER_WIDEN_ASK_OG-bf-1.md section 3 and 5 state the branches and four ways to sign.",
-  "disarm_owner": "2.0.0_SA_COO~O",
-  "notes": "Not done here: any change to the dispatcher, the notification set or any write to S3. The 08242234 prefix has no consumer, so its half of the backfill does not touch this."
-}
-```
-
-```json
-{
   "id": "NFRA_OPLGTW-Z-W39-S4",
   "project": "NFRA_OPLGTW",
   "fabric": "site-z",
@@ -10412,32 +10438,6 @@ name the one known failure instead of silently inheriting it.
   "world_is": "Done as A2 states: source commit 47c3c75f11 (the 4 files of data_assets_mirror.patch), silver_build_commit.schwab repinned at 7af0b6bc3d, artifact rebuilt from that pin. S4 itself is not edited; its disposition is the issuer's or the CVO's to write. The artifact is NOT uploaded and the Lambda is NOT changed; the plan shows the OPAL_BUILD_COMMIT env change as one in-place item for the applier.",
   "disarm_owner": "2.0.0_SA_COO~O",
   "notes": "S4 cited, not edited. A later source edit to either module, or a package edit, breaks the equality: the applier re-reads sha256 AzrzJS+91y57... from a build at the apply commit before uploading."
-}
-```
-
-```json
-{
-  "id": "NFRA_OPLGTW-Z-W41-S2",
-  "project": "NFRA_OPLGTW",
-  "fabric": "site-z",
-  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
-  "surfaced_at": "2026-10-09T00:57:58Z",
-  "one_line": "The dispatcher date gate ships a second module (trading_calendar.py), and the Lambda builder refuses a top-level .py that is not registered in infra/aws/lambda/ci/lambda-source-map.json files[], a file outside this order's paths.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "FILE infra/aws/lambda/ci/build-and-upload.sh:412-458 (ADHC_DRIFTD.002 parity check): a top-level *.py in source_dir not in the union of files[] fails the function's build with 'Files present in source_dir but NOT in lambda-source-map.json files[]'.",
-      "FILE infra/aws/lambda/ci/lambda-source-map.json functions['advi-49f-gold-dispatch'].files = ['lambda_function.py'] (HEAD); the A1 <paths> admit only infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/ and the two test files, not the ci directory.",
-      "RUN python -m pytest on tests/test_advi_49f_gold_dispatch_dategate.py + tests/test_advi_49f_gold_dispatch_remedy.py: 11 passed, so the code is built and tested; only the packaging registration is outstanding."
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "A1 Phase C: the calendar is 'a byte copy placed beside lambda_function.py' in the zip; the order lists no path for the source map that registers it.",
-  "world_is": "Without a files[] entry for trading_calendar.py the build is refused (or, with BAU_PARITY_SKIP=1, the member is not in the zip and the gate SKIPs every accelerator record because the calendar is not loadable). So the registration is part of the deploy leg; the Y ask section 3 and 4 name it. The built zip's CodeSha256 is therefore not computed in Phase C.",
-  "disarm_owner": "2.0.0_SA_COO~O",
-  "notes": "Not done here: any edit to lambda-source-map.json, any build, any deploy. An unregistered gate fails SAFE (SKIP), so a deploy that forgets the registration withholds the accelerator rather than over-dispatching."
 }
 ```
 
@@ -10931,5 +10931,162 @@ name the one known failure instead of silently inheriting it.
   "spec_asserts": "A6: A2, A3, A4 and A5 are withdrawn; r29 carries no Bloomberg-account change; any Bloomberg edit already made is reverted before the release commit.",
   "world_is": "No release commit existed, so the revert is of the uncommitted candidate in C:/tmp/og-rel29: rebuilt from the hand-off blobs by r29_build_candidate.py (which now restores the four Bloomberg-touched files to the live bytes) and r29_release_time_edits.py (E2, E3 only). Z-W43-S2's text stays as filed; its E1 and E4 and its allowlist part no longer apply. Z-W43-S5's third evidence line (rl15_attest.py lacking the bloomberg rule) no longer applies: the attest rules are back to the four-cell body and the stand-in exercise passes against them.",
   "notes": "The Phase A deliverables committed at d757fc5c0b describe the pre-A6 candidate; they are superseded by the files committed after this row."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W46-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~46",
+  "surfaced_at": "2026-10-09T08:03:46Z",
+  "one_line": "The Tax SMA master's source history starts 2023-10-03, not 'maybe April 2026': 758 business dates and 6002 vendor files over three years, so the order's full backfill is about 5,800 silver-converter invocations on a function with reserved concurrency 2, and the oldest 248 dates carry only rld and tcf.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/bh1_census_record.json: command_id fd109a83-6c02-4f4f-a3a9-b16a5d46a17d, lookback_days 2000 (window 2021-04-18..2026-10-09), earliest_served 2023-10-03, 758 served_dates, enumerated 6002, 16 types; bh1.sh AC1 PASS exit 0.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/ssm_invocation_census_400.json and ssm_invocation_census_800.json: each earlier window's earliest DATE is its own first day (2025-09-04; 2024-07-31), and every shared date's file count equals the 2000-day run's (0 differences).",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/bh1_plan.md section 1: eras A 2023-10-03..2024-09-26 (248 dates, 526 files, rld+tcf), B 2024-09-27..2025-10-16 (265, 2735), C 2025-10-17..2026-10-08 (245, 2741); tcf/tcfx/tnn are NAMED_HOLES (1069 files)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's cell text (Andrew-direct): 'it probably doesnt go even 1 year, i expect maybe april 2026'; the decomposition's batch sizing and the preflight's pull windows assume a short history.",
+  "world_is": "The source serves 2023-10-03..2026-10-08 for 08403355 (08335338's own bronze reaches 2023-07-12, 08242234's 2023-01-17). Nothing was written; Phase A only. The ask (W/NEVER_WIDEN_ASK_OG-bh-1.md section 7 item 1) puts era A's scope to the halves because 08335338 has no completion record before 2025-09-08 and so gives no precedent for a date holding only rld and tcf.",
+  "notes": "Not a blocker for the signed halves' decision; it changes the size of Phase B (nine batches plus a closing run), not its path."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W46-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~46",
+  "surfaced_at": "2026-10-09T08:03:46Z",
+  "one_line": "The order's design for staying under SSM's 24,000-character cap (one DATE line per date) does not hold with the puller's own log prefix: the 800-day census run (758 dates would be ~534 shown) was cut at exactly 24,000 characters and lost its per-type lines and the TASK_UNREGISTERED / COPY_DELETED lines; stripping the '[timestamp] ' prefix on the box brought the 2000-day run to 16,461 characters.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/ssm_invocation_census_800.json: StandardOutputContent length 24000, ends '---output truncated--'; command b06d7458-a301-466a-9712-a160e90e12d6 (Status Success).",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/ssm_invocation_census_2000.json: length 16461, ends 'TASK_UNREGISTERED=True / COPY_DELETED=True'; command fd109a83-6c02-4f4f-a3a9-b16a5d46a17d. The one -replace edit is unchanged; only the wrapper's Get-Content print strips the prefix.",
+      "The 800-day run's cleanup lines were cut from its output; the box state was read afterwards by SSM 1ec6a545-1b98-459a-9634-6db0f17e12d8 (Success): TASKS= (no OpalOgBh1* task registered), DIR_EXISTS=False."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order, step 1: log one 'DATE <YYYY-MM-DD> <n>' line per business date so the output stays under SSM's 24,000-character cap.",
+  "world_is": "With the Log function's '[2026-10-09T07:39:27Z] ' prefix a DATE line is 40 characters; about 530 dates fill the cap. Phase B's SSM wrappers must print compactly (batch summaries, not per-file lines) for the same reason."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S72",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-09T08:09:53Z",
+  "one_line": "The OG-da-1 ask's blast radius undercounts the READERS of the artifact key by one: a SECOND Lambda in the same Terraform root, opal-data-refresh-api-qa-scratch, reads the identical artifact_key, so the signed 'One Lambda's code ... Nothing else' is false as written. The targeted apply did NOT touch it and its live bytes are unchanged, but the root's full plan now carries a pending code update to it that any full apply of this root would land.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN terraform show -json of the POST-APPLY full root plan: 11 resource_changes, 10 no-op, exactly 1 update = module.data_refresh_api_qa_scratch.aws_lambda_function.this, changing source_code_hash E4944Imr7Y4S4//rTR6HN5sbwczbwLw5DcaH4IZ0D0E= -> qHMjXkK1/1NhmBmkK/6Q+q+WdXMRoTOprNfTixBIxaM=, s3_object_version WJQGGIAlTSMp0Vny8avvQ7LxflVuvLf6 -> f0pfQmR1BByh9jcBQHwYymYRSfZ2IKih, and last_modified.",
+      "RUN targeted re-plan of module.data_refresh_api -> 'No changes. Your infrastructure matches the configuration.' So the one pending row is NOT the resource this order deployed.",
+      "FILE infra/aws/terraform/data-refresh/qa-scratch-instance.tf module \"data_refresh_api_qa_scratch\" sets artifact_key = \"data-refresh/opal-data-refresh-api.zip\" -- byte-identical to main.tf:37's artifact_key for module.data_refresh_api. One key, two yang-lambda consumers.",
+      "LIVE aws lambda get-function-configuration opal-data-refresh-api-qa-scratch -> CodeSha256 E4944Imr7Y4S4//rTR6HN5sbwczbwLw5DcaH4IZ0D0E=, LastModified 2026-08-03T17:40:42.820+0000: UNCHANGED by this apply. NEGATIVE CONTROL, same call against the deployed function: CodeSha256 qHMjXkK1/1NhmBmkK/6Q+q+WdXMRoTOprNfTixBIxaM=, LastModified 2026-10-09T07:59:39.000+0000 -- so the read does discriminate a moved function from a still one.",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/NEVER_WIDEN_ASK_OG-da-1.md section 5 asserts 'One Lambda's code: opal-data-refresh-api, via module.data_refresh_api ... Nothing else' and names portal-time-machine as the other function in the root. It never mentions the qa-scratch module. BOTH halves (CTO~Z @93ddbb1288, COO~O @014c45557d) were signed against that text.",
+      "FILE qa-scratch-instance.tf header: the clone exists for MDLP_MONPUB.W8 (CVO ruling 172718Z) as 'a scratch-scoped clone of opal-data-refresh-api at the SAME artifact'. It shares the REAL role opal-data-refresh-lambda-role and the REAL table opal-data-refresh-executions; only BUCKET differs (opal-313476888478-yang-qa-scratch). Its teardown is recorded as the CTO's call, so it is not mine to destroy either."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ask's section 5, which both never-widen halves signed: the act touches 'One Lambda's code: opal-data-refresh-api ... Nothing else'. CLAUDE.md NEVER-1 also requires counting the writers of the named property before the act, with N printed -- here the dual is the READERS of the artifact key, and I printed N=1.",
+  "world_is": "N=2. The artifact key has two yang-lambda readers in one root, and uploading a new version of the key is therefore a change to BOTH resources' desired state, not one. Nothing outside the signed radius has been deployed: the apply was -target'd at module.data_refresh_api from a saved plan, the qa-scratch function's live CodeSha256 is still the pre-deploy value, and the deployed function read back exact. What exists is a LATENT state -- the root no longer plans clean, and a full apply by any seat would ship these bytes to the qa-scratch clone with no sign-off covering it. I did not apply it (outside the signed radius) and did not revert the signed change (its read-back is exact and the halves' rollback trigger is a caller reading REFUSED, which has not happened). Ledger nfra-oplgtw-og-da-1-data-refresh-admit is left OPEN on leg RB so the entry stays RED until the half-holders disposition the second reader. The cheap dispositions are: (a) ratify the widening and let the qa-scratch clone take the same bytes, since the change is a fail-closed tightening and that clone shares the real role and table; (b) pin the clone to the prior artifact version by giving it its own artifact_key or an explicit s3_object_version, which re-plans clean and leaves it on E4944Imr; or (c) tear it down if the W8 exercise is closed, which is the CTO's recorded call, not this seat's."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W41-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
+  "surfaced_at": "2026-10-09T05:39:10Z",
+  "one_line": "The deployed producer opal-assets-silver-schwab is no longer the build the Phase A ask read: CodeSha256 v2Bztqbu... (OPAL_BUILD_COMMIT 1f03a3f209) became AzrzJS+9... (47c3c75f11) at 2026-10-09T02:33:06Z, after Phase B.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN lambda get-function-configuration 2026-10-09T05:3xZ: CodeSha256 AzrzJS+91y57ylRdqGccFPGqWaqAGLFn/jhItkAQCzE=, LastModified 2026-10-09T02:33:06Z, env OPAL_BUILD_COMMIT 47c3c75f11; timeout 600, memory 3008 unchanged.",
+      "DIFF live zip vs the vendored package at this worktree (LF-normalised, 12 members): 10 SAME; silver_registry.py DECLARED_SCHWAB_MASTERS gains '08403355'; conversion_manifest.py gains BASIS_LABEL['08403355'], MASTER_NOT_PUBLISHED = {'08403355': ('slm',)} and a not_published branch in build_closure's non_applicable that is empty for any other master.",
+      "RUN read-only composition of build_closure for 08335338 on 2025-09-08, 2026-03-16 and 2026-09-14 with the vendored package and with the extracted live zip: closure_id identical in 3 of 3 (sha256:0d82af78..., 8b25cf0a..., bd433bf9...), all qualified."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The signed halves for Phase D read the producer as the 1f03a3f209 build (ask section 2: deployed CodeSha256 v2Bztqbu..., writers N = 2 call sites of one function).",
+  "world_is": "The function was rebuilt for the third master (08403355). For masters 08242234 and 08335338 the write path and the closure content are byte-for-byte the same by the diff and by closure_id on 3 dates, so Phase D proceeds on the signed terms; the writers are still the same 2 call sites. The sweep (12:15Z) now also covers 08403355; Phase D does not run near it.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here: any change to the producer. The halves' 'deployed code' sentence is true of the write path they signed, not of the CodeSha256 they quote."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W41-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
+  "surfaced_at": "2026-10-09T07:36:11Z",
+  "one_line": "AC2 as written (bf1.sh AC2, inner timeout 115s) exits 124 with no output once both masters are backfilled: the check now HEADs 2048 objects over 512 dates and needs ~151s.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/bf1.sh AC2; echo exit=$? twice from the worktree root (2026-10-09T07:1xZ): both printed only exit=124 (real 1m56s); bf1.sh line AC2 wraps bf1.AC2.py in timeout 115.",
+      "RUN python bf1.AC2.py backfill_record.json <root> unbounded: 'backfilled dates 512; served objects checked 2048' then 'RESULT: PASS', real 2m31s. Same reader, no bound: every served object LastModified earlier than started_utc.",
+      "bf1.sh AC1 completes in 45s: PASS, 08242234 and 08335338 each open 0, backfilled-but-not-qualified 0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's AC2 invocation is a mechanical criterion that completes inside its 115s bound and prints 'backfilled dates N; served objects checked M ... RESULT: PASS ... exit=0'. It was cut when only 08242234 (256 dates, 1024 objects) was backfilled and ran in about 76s.",
+  "world_is": "With 08335338 backfilled as well the same check doubles its HEAD count and exceeds the bound in bf1.sh, so the written invocation returns rc 124 and cannot match the expect. The work it grades is intact (unbounded run PASS). The worker cannot edit the check (it sits in 2.0.0_SA_COO~O deliverables, outside <paths>), so AC2 is recorded FAIL as written and the order stays open.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Issuer's options: raise the bound in bf1.sh (timeout 115 to about 300) or parallelise the HEADs, then re-run AC2 and flip the order. Not done here: any edit to the check."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W41-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
+  "surfaced_at": "2026-10-09T08:24:58Z",
+  "one_line": "RESOLUTION of NFRA_OPLGTW-Z-W41-S4: amendment A2 (bound 330s) applied by cherry-pick 0c54d8b8a0 of 2851a9190d; AC2 as written now PASS. The ordered 'git merge box/sitez' could not commit: the surprise-row gate refuses a duplicate id in box/sitez's own AMGT_HARVST channel.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/bf1.sh AC2; echo exit=$? after A2: 'backfilled dates 512; served objects checked 2048' / 'RESULT: PASS' / 'exit=0' (real 2m28s, bound 330s).",
+      "RUN git merge --no-edit box/sitez: one conflict in this channel only (resolved keeping both sides' rows, 443 ids, 0 duplicates); git merge --continue then ran the pre-commit hook and exited 1 with '[surprise-row-gate] BLOCKED -- 1 violation: org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md: id AMGT_HARVST-Z-S106 occurs 2 times in the staged file (HEAD carries 0)'. 'git show box/sitez:<that file>' carries the id twice, so the duplicate is on box/sitez itself, not from this worktree.",
+      "ACT git merge --abort (my own merge state), then git cherry-pick 2851a9190d -> 0c54d8b8a0 (bf1.sh and the order's A2 note only). No gate was overridden."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The issuer's ruling on S4: merge box/sitez into this worktree to receive A2.",
+  "world_is": "The merge cannot be committed in a worktree while box/sitez carries AMGT_HARVST-Z-S106 twice; every later merge of box/sitez into any worker branch will be refused the same way until that duplicate is removed. This worktree took A2 by cherry-pick instead; the eventual drain merge of this branch will meet the same cherry-picked content as an identical change.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "S4 is resolved by A2. Not done here: any edit to the AMGT_HARVST channel (outside this order's paths). The owner of that channel (see the gate's text: 1.0.0_SA_CTO) removes the duplicate."
 }
 ```

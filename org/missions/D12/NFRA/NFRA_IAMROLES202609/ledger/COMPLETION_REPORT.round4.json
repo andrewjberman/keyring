@@ -1,0 +1,102 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "NFRA_IAMROLES202609",
+  "round": 4,
+  "written_by": "2.0.0_SA_COO~ZI",
+  "written_utc": "2026-10-09T07:54Z",
+  "decomposition_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/decompositions/NFRA_IAMROLES202609_DECOMP_R4.md@2a945c56a6",
+  "denominators": {
+    "fwd_in_prd_header": 8,
+    "cells_in_decomposition": 3,
+    "task_orders": 3,
+    "task_orders_terminal_with_valid_proof": 3
+  },
+  "outcomes": [
+    {
+      "fwd_id": "FWD-1",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a reviewer has actually answered the question with that evidence attached, rather than an opinion",
+      "cells": [
+        {
+          "cell_id": "IAM-u-1",
+          "task_orders": [
+            "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-u-1.posture-number-rollup-of-the-219-role-census.md"
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "COVERED; MECHANICAL BARS MET, AC4 UNGRADED. IAM-u-1 rolled the committed 219-role round-3 census into one posture number (drained @bcb0d718fc). ISSUER REAL RUN at close: posture-rollup.py over the round-3 bundle reads roles=219 granted=5494 used=421 never-used=1437 unobservable=3636 (observable 33.8%, never-used-of-observable 77.3%), and over the NEW round-4 bundle reads roles=280 granted=5994 used=479 never-used=1486 unobservable=4029 (observable 32.8%, never-used-of-observable 75.6%), vintage 2026-10-09, both rc=0. The rollup composes with IAM-u-2's run, so a current number is one command. AC4 (judgment) is for 3.0.0_SA_CVO~Z: round-close-check's GRADED reading is false (row Z-S17)."
+    },
+    {
+      "fwd_id": "FWD-2",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "real roles have been read and their unused permissions named, over a stated lookback",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 4'S DECOMPOSITION, NOT BY THE PROJECT. Round 4's rectangle held cells for FWD-1, FWD-3 and FWD-8 only (ROUND_ANALYSIS.round3.md section 7). Standing: REALIZED at round 3."
+    },
+    {
+      "fwd_id": "FWD-3",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "at least one real policy has been surfaced as perfectly scoped and yet requiring nothing of whoever calls it",
+      "cells": [
+        {
+          "cell_id": "IAM-u-3",
+          "task_orders": [
+            "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-u-3.exercise-the-condition-axis-exhibit-live.md"
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "COVERED; MECHANICAL BARS MET, AC4 UNGRADED. IAM-u-3 moved the round-1 exhibit (estate-report-runner-role / estate-report-runner-selfstop) from DESIRED to EXERCISED: simulate allowed on arms 1-3 (no context, MFA absent, arbitrary SourceIp), implicitDeny on the control instance, reader pin 62ff401ce8 matched (drained @aebcf9cb69). ISSUER REAL RUN at close: simulate-principal-policy on the pinned instance -> allowed, on i-0000000000000000a -> implicitDeny, both rc=0. ONE POLICY; no population claim (BOUND, Part VII item 5). AC4 for 3.0.0_SA_CVO~Z."
+    },
+    {
+      "fwd_id": "FWD-4",
+      "done_when_state": "APPLIED",
+      "done_when_text": "each one is either in code or carries a named owner and a reason",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 4'S DECOMPOSITION, NOT BY THE PROJECT. Round 4's rectangle held cells for FWD-1, FWD-3 and FWD-8 only (ROUND_ANALYSIS.round3.md section 7). Standing: NOT MET at round 3, 4 of 16; blocked on the seating ask for the twelve unowned roles, not on work."
+    },
+    {
+      "fwd_id": "FWD-5",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a real narrowing has been checked in advance and the check was believed",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 4'S DECOMPOSITION, NOT BY THE PROJECT. Round 4's rectangle held cells for FWD-1, FWD-3 and FWD-8 only (ROUND_ANALYSIS.round3.md section 7). Standing: not cut by ROUND_ANALYSIS.round3.md section 7."
+    },
+    {
+      "fwd_id": "FWD-6",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "each of the known past plans has been established as done or not done, on evidence",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 4'S DECOMPOSITION, NOT BY THE PROJECT. Round 4's rectangle held cells for FWD-1, FWD-3 and FWD-8 only (ROUND_ANALYSIS.round3.md section 7). Standing: REALIZED at round 3."
+    },
+    {
+      "fwd_id": "FWD-7",
+      "done_when_state": "APPLIED",
+      "done_when_text": "the assessment reports the two differently, at permission grain",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "UNCOVERED BY ROUND 4'S DECOMPOSITION, NOT BY THE PROJECT. Round 4's rectangle held cells for FWD-1, FWD-3 and FWD-8 only (ROUND_ANALYSIS.round3.md section 7). Standing: REALIZED at round 3."
+    },
+    {
+      "fwd_id": "FWD-8",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "it has actually been re-run and produced a comparable answer",
+      "cells": [
+        {
+          "cell_id": "IAM-u-2",
+          "task_orders": [
+            "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-u-2.second-run-at-population-scale-and-the-comparison.md"
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "COVERED; MECHANICAL BARS MET, AC4 UNGRADED. IAM-u-2 built rerun-population.sh (composes list-roles + comp-iam-usage, --dry-run, no schedule) and re-ran it: 280 of 280 rc0, run 2026-10-09, lookback 90 (drained @6037269ded). ISSUER REAL RUN at close: compare-runs.py over the ~8 and ~11 bundles -> COMPARABLE: yes, INTERSECTION roles=219, rc=0; the harness --dry-run rc=0. Population 219 -> 280 (61 added, 0 removed); on the intersection 25 roles moved, 23 rows aged used -> never-used, 115 grants added (98 on opal-drift-producer-codebuild-role). Unreconciled: graph 283 IAM_ROLE nodes vs list-roles 290 (different instruments). Rows Z-W11-S3 (resume-count arithmetic), Z-W11-S4 (26 rows never-used -> unobservable on the codebuild role, cause not determinable). AC4 for 3.0.0_SA_CVO~Z."
+    }
+  ]
+}

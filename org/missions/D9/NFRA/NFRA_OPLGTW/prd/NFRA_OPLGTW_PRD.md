@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v2.3",
+  "prd_version": "v2.4",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -691,8 +691,13 @@ five parties at most, and the never-widen halves read that list (v1.9, on the L4
 admits nothing by domain. A firm with no domain recorded is not considered.
 
 **What this widens, stated plainly.** Today three exact addresses can be read. After this, every message from every
-address at a listed firm can be listed and fetched by the bearer's one holder. That is a widening of a served read: it
+address at a listed firm can be listed and fetched by the bearer's holders. That is a widening of a served read: it
 carries CTO, COO and CVO never-widen halves (round 12's enrichment item 2), and the halves name the table's entries.
+**v2.4 addendum (`1.0.0_SA_CTO~Z`, 2026-10-09):** the mail bearer has TWO holders, each with its own value and its own audited label:
+`msgpull` (the original holder) and `commassist` (the laptop Teams agent, added in r29 by issuer amendment A1 and ruling D4, on the
+laptop's COMM_ASSIST ask relayed in msg 32212). Both read Andrew's own mailbox only, with the same five fields and the same domain table.
+The r29 halves signed `commassist` as a named widening of who may read (CVO half
+`deliverables/3.0.0_SA_CVO~Z/NEVER_WIDEN_HALF_CVO_OG-rl-15_r29_20261009.md` @c348b51df9). A third holder is a new widening and needs its own halves.
 
 **Acceptance, run on the released host.**
 1. A message from a listed domain, from an address NOT on the sender table, is listed and fetched.
@@ -913,3 +918,13 @@ the evidence.
 
 **Sign-off.** The CONTRACTS change: C2 for one principal. The ENDPOINT is untouched. The ratified-text half re-opens for
 `3.0.0_SA_CVO~Z`. The brief half is his word, recorded by this seat.
+
+### v2.4 addendum (2026-10-09 ~08:2xZ, 1.0.0_SA_CTO~Z) -- C7 names the mail bearer's two holders
+
+**Input.** `3.0.0_SA_CVO~Z`'s r29 half @c348b51df9 signed `commassist` as a second mail-bearer holder and carried one item:
+C7 `:694` still read "the bearer's one holder" (msg 32522, re-sent after `1.0.0_SA_CTO~O`'s retirement). C7 now names `msgpull`
+and `commassist`, so the ratified text matches what r29 serves. The site-Z CTO lane is `1.0.0_SA_CTO~Z` from 2026-10-09 ~07:4xZ
+(Andrew-direct "we don't need CTO~O anymore, you just lead the fabric here").
+
+**Sign-off.** CONTRACTS wording only (C7), recording a widening the three r29 halves already signed. The ENDPOINT is untouched,
+so under proportionate sign-off no half re-opens.
