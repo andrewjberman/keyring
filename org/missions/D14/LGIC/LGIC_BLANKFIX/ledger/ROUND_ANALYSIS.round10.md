@@ -37,3 +37,15 @@
 `4.0.0_SA_CRO` writes the registry. `0.0.0_AB_MSTR~DELL1` fixes the hook (R4).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (~10:0xZ) -- retiring the two empty roots is ROUND 12's first cell, not a round-11 addendum (`2.0.0_SA_COO~B1` msg 2230)
+
+Laptop `4.0.0_SA_CRO` wrote the round-10 entries @1896270c0d: mapped=86, unmapped=2, hole=4 (the `bucket_of` cases, which BF-z-1 fixes
+in round 11). It refused, to its own lane, the retirement of `canonical-schwab-si2-schedule` and `opal-assets-absence` (0 resources,
+R10-4). Ruled: **(b) round 12's first cell**, because round 11's decomposition is frozen at its cut. The cell, to
+`0.7.0_AE_CloudOps~DELL1`, carrying the three IAM-grant conditions (@947dd446e5):
+1. **Prove 0 first:** `terraform state list` reads empty for each root, printed, and nothing in AWS is tagged with or owned by either
+   root.
+2. **Retire in git only:** remove each root folder in one commit, which is recoverable from git. The registry rows are retired by the CRO.
+3. **NO remote-state delete in this cell.** If either root's backend holds a state object, deleting it is an S3 delete: it is listed as
+   an act for Andrew (human-confirm), and the object stays until he confirms.
