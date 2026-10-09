@@ -1066,3 +1066,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S7 -- L9 TO-APPLY-V12 AC2 MET
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T10:40:48Z",
+  "one_line": "L9 TO-APPLY-V12 AC2 MET: live package = uploaded zip, the deployed lambda_function.py = the pin's bytes (04f5727b, built in a worktree detached at 86454002bf after the applier STOPPED on a pin..HEAD diff rather than build at HEAD), env 8 keys unchanged, unauthenticated POST 401, ItemCount 13, replan 0-diff; the plan's s3_object_version move is stated in the order this time. Ledger irpt-anlreq-v12-pkgprincipal-20261009 closed 5/5. Note: HEAD's trade_request edit (~O2) is NOT in this deploy, by design of the pin.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/deliverables/irpt_v12/V12_after_reads.json",
+      "this seat's live read ~10:4xZ: opal-ticket-api CodeSha256 IMJsVN6U8F73... (= the uploaded package), LastModified 2026-10-09T08:22:45Z, Successful, 8 env keys; git show 86454002bf:infra/aws/lambda/ticket_center/lambda_function.py sha256 04f5727bebf83e7c... (= the deployed member)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_APPLY_V12_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-APPLY-V12 AC2: deployed file 04f5727b..., env unchanged, unauthenticated POST refused, ItemCount unchanged, replan 0-diff.",
+  "world_is": "Met as written."
+}
+```
