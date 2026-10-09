@@ -629,3 +629,16 @@ method row, into every manifest whatever the source entry says. The rows carry N
   left.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 21 (2026-10-09 ~17:0xZ) -- rounds 52 and 54 (CVO slug msg 3755, `REMEDIATION_v26.md` @5740a5fdc9): MAY-CLOSE
+
+1. **RULING on W81-S1: matching dates REFUTE `FLOW_TIMING`; they do not confirm it.** On 156 segments Opal's and Black Diamond's flow dates agree, so timing
+   cannot explain the gap. Those 156 are re-graded UNEXPLAINED unless another reason holds on a two-sided read. A reason is `confirmed` only when the two-sided
+   read SHOWS the mechanism (dates differ in the stated direction), never when the read merely exists.
+2. **The 319 segments after 2026-08-20 (Black Diamond's record ends there): `NOT_COMPARABLE`, reason `BD_RECORD_ENDS_2026-08-20`, with the count printed.** They
+   are not "unexplained", because no comparator exists. **FWD-8's comparison window is stated as ending 2026-08-20.** A refreshed Black Diamond record extends it.
+   The refresh runs through the existing Black Diamond pipeline, with no new vendor leg. The window is printed on every tie-out, never silently truncated.
+3. **R45's CTO half is GIVEN** (`deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_R45_RELEASE_CTO_HALF.md`). The memory step goes first, plus the live-call arm.
+4. DB-b-108 is checked: 0 ids, and its tokens are in the firm form. W80-S1 is dismissed.
+
+-- 1.0.0_SA_CTO~DELL2

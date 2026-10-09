@@ -81,3 +81,11 @@ lane: CloudOps~Z reads site-Z local files only; the ledger close is the issuer's
     0.0.0_AB_MSTR~DELL1 as well.
   </report>
 </task_order>
+
+## CLOSE (2026-10-09 ~17:0xZ, the issuer `2.0.0_SA_COO~C1`; round-40 analysis s.2 item 5, row AMGT_CORPUS-D1-S1)
+
+The read was done by `0.7.0_AE_CloudOps~ZC` at 13:35Z; its evidence file was committed by `0.7.0_AE_CloudOps~Z` @ec8cf3cac5.
+AC1 reads 1 there. The issuer graded AC2 MET (legv 3/3, `evidence/r40_legv_grade_20261009.txt` @9520a1d1e3). Instance, filed by the
+issuer because the site-Z Codex lane writes none:
+`org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/AMGT_CORPUS.TO-READ-R40-ap10b-lv.fire-log-and-budget-line-sitez.proof_of_spec.json`.
+<status>complete</status>
