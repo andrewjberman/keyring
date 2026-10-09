@@ -1,13 +1,12 @@
 {
   "prd": "NFRA_GATSCP_PRD.md",
-  "prd_version": "v0.1",
-  "prd_pin": "cbe7c9af3559e29546c25af50ebba066f545d6b9",
+  "prd_version": "v0.2",
+  "prd_pin": "7cb6183997e71bc49e8d68a092fdfd297ad29aea",
   "half": "ratified-text",
-  "half_hash": "fe38f0bc763bc4ee4ccabab96eb79044acf6352067801f79fd654aba98cf05d3",
-  "endpoint_hash": "9fcc97a615f5522625f3df7f37c8c7c9054884132c8ab5b3806ed9410b3b94ed",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_GATSCP_v0.1_L4R_RATIFIED_TEXT_REVIEW_20261009.md@fc4e314af0",
+  "half_hash": "94803c445122efefcbc41a8b3c5c19266ad86749c1a121fe2dd5b8624eecf835",
+  "endpoint_hash": "5d2bbeaf8a8462fe4937d0198a0f2b277d76b35a3bd63a284320c451fe499975",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_GATSCP_v0.1_L4R_RATIFIED_TEXT_REVIEW_20261009.md@1b2002595e",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-09T06:49:30Z",
-  "reason": "FWD-7 'no manager relaying it' and C-DELIVER conflict with NFRA_CTLPLN FWD-3 and Andrew's 'only the MSTR agents communicate between boxes'; say the bus line stays the manager's automated path"
+  "signed_at": "2026-10-09T06:52:27Z"
 }
