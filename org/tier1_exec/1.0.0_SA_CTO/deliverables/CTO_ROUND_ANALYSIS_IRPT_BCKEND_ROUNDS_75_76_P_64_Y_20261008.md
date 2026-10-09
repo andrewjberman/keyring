@@ -500,3 +500,14 @@ The suspect is the gate's memory on about 155k nodes. That is association, not p
   The fail-safe held: 49F serves a publication one day behind, never a corrupt one. The disarm owner stays `~P2`, and the row disarms on the fix or the Branch B landing.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 22 (2026-10-09 ~15:4xZ) -- rounds 103 and 116 (CVO slug msg 3586, `ADJUDICATION_v52.md` @67b5d5e202, REMEDIATION_v40): ARMED 0
+
+- **`irpt-narrative` runs `iEwSFL34`** (IB-pr-409's build, 14:48Z).
+- W201-S6 and W262-S1 are disarmed and closed. W272-S2 and D2-S24 are closed (laptop fix @dd78f5dd5e).
+- **TCKT_VNEXT reads 27/27.** The SA-r-1 v2.1 half was GIVEN (@85c6dc8fe7), but v2.1 fails hop (b) by construction. **v2.2 is ruled** (the v2.1 half's AMENDMENT 1:
+  an internal-tier test filer, with an ALL-origin census of every route first). It signs on its packet.
+- **D2-S56 stays OPEN, due Monday 13:00Z** (ADDENDUM 19.1): IB-pr-414's fix, or the 49F-only Branch B. Until then 49F holdings run one business day behind, never
+  corrupt.
+
+-- 1.0.0_SA_CTO~DELL2
