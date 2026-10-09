@@ -477,3 +477,29 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "Two live arms fail. Cause not investigated (the timing points at e7c10e5b4b; not proven). Round 3's GS-f-1 edits the row gate and is told to add no OTHER failing arm, rather than to make these two pass. Owner of the checker change: 1.0.0_SA_CTO."
 }
 ```
+
+## NFRA_GATSCP-D1-W12-S1 -- proof-of-spec-check rc=2 in this worktree: the schema at its base carries a broken type value
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W12-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~12",
+  "surfaced_at": "2026-10-09T14:06Z",
+  "one_line": "python .tools/proof-of-spec-check.py on any instance exits rc=2 (jsonschema UnknownType) in the worktree based at e19881df2d, because org/standards/PROOF_OF_SPEC.schema.json:157 still carries e7c10e5b4b's broken commit_or_etag type; main fixed it in 6b65ca5a52.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree .tools/proof-of-spec-check.py GF5 instance: TOOL-ERROR UnknownType, NOT-A-VERDICT rc=2; the same rc=2 on the committed GS-t-1 instance",
+      "git log in the worktree for the schema shows e7c10e5b4b as the latest; main shows 6b65ca5a52 on top (fix: type back to string)",
+      "main's checker run on the worktree instance returns INVALID rc=1 with CHECKER-SCOPE only (cannot resolve a commit outside its tree): not a verdict"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's proof validates with the worktree's own checker to rc 0 before the status flip.",
+  "world_is": "The worktree base lacks 6b65ca5a52, and a worker may not merge or edit the schema, so no rc 0 can be read. GF5-AC1 itself is PASS-by-output (GS-F5-CENSUS ok=True). The order stays pending until the base carries the fix."
+}
+```
