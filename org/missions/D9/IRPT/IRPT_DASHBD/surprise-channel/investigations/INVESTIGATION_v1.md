@@ -5028,57 +5028,6 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
-## IRPT_DASHBD-D2-W75-S1 -- All 74 W73-S1 DEFECT segments read BD_SIDE
-
-```json
-{
-  "id": "IRPT_DASHBD-D2-W75-S1",
-  "project": "IRPT_DASHBD",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~75",
-  "surfaced_at": "2026-10-09T15:45:00Z",
-  "one_line": "All 74 W73-S1 DEFECT segments read BD_SIDE; 73 of the 74 turn on two conventions the producer declares (SERVICE FEE rows stay inside the return; income counts on cash receipt) and 1 on a net-zero securities transfer BD books as a withdrawal.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~75/W73_S1_EVIDENCE.json (per-segment both-sides values, custodian rows and tier)",
-      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~75/W73_S1_RESOLUTION.json",
-      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py: the classify_and_sum comment on FEE-ADMIN and the module docstring on income on cash receipt"
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "The order's cell expects each of the 74 segments to be either a producer defect with a test, or a Black Diamond-side record with evidence.",
-  "world_is": "Measured over the 74: the served series equals the custodian equity (dim_balance) on both boundary days in 74 of 74; BD's own identity (ending - beginning - netAdditions - netGains) holds to 2 cents in 74 of 74; every flow gap is matched to custodian rows (17 segments carry SERVICE FEE rows that BD books as net additions; 1 carries a net-zero securities transfer valued at the prior close); 65 boundary-value gaps are matched to income the custodian paid after the boundary day (46 as an exact row set, 18 bounded by paid income, 1 unattributed). The producer file is unchanged and no test was added, because no segment is a producer defect. The two conventions are the producer's own declared design (FEE-ADMIN stays in the return, amendment 5(d); income on cash receipt, C-METHOD), so BD_SIDE here means 'not a producer defect', not 'BD is wrong'; the CTO may want to rule whether the FWD-8 comparator should follow BD on either."
-}
-```
-
-## IRPT_DASHBD-D2-W75-S2 -- Dollars are explained for all 74 segments but the RETURN gap is not closed for most
-
-```json
-{
-  "id": "IRPT_DASHBD-D2-W75-S2",
-  "project": "IRPT_DASHBD",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~75",
-  "surfaced_at": "2026-10-09T15:45:00Z",
-  "one_line": "Dollars are explained for all 74 segments but the RETURN gap is not closed for most: restating our daily series to BD's income and service-fee convention brings the linked return within 0.35pp of the tie-out's BD gross return in only 14 of 74.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "INFERRED",
-    "evidence": [
-      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~75/W73_S1_EVIDENCE.json return_read.restated_minus_bd_gross_pp per segment",
-      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~75/resolve_w73_s1.py sim_return"
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "A named dollar cause for a segment is expected to account for its return gap (the W73-S1 definition: the dollar gap does not account for the return gap).",
-  "world_is": "The restated return (INFERRED: money-market accrual spread linearly between payments, ex-date accrual from ex-date to payment, service fees as flows on their day) differs from bd_gross_return by 0.35pp or less in 14 of 74, by more than 0.35 and up to 2pp in 30, and by more than 2pp in 30 (the large tail is windows that end on a small balance after a large withdrawal, where the tie-out's fee add-back and the flow-day convention dominate). The FWD-8 re-grade will therefore still show most of these OUTSIDE at 0.35pp unless they are re-classed (FLOW_TIMING / FLOW_CONVENTION / near-zero base) or the comparator changes. Also: 3 of the 46 exact income row sets were found among 8 or more candidate rows and could be coincidental fits; 1 end-of-window boundary gap matches no custodian row and no income bound and is recorded UNATTRIBUTED (the served series equals the custodian equity that day)."
-}
-```
-
 ## IRPT_DASHBD-D2-W78-S1 -- R44 sizing dry run read UNDER; Monday 2026-10-12 07:41 ET first scheduled fire kept as the acceptance read
 
 ```json
@@ -5153,6 +5102,83 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W80-S1 -- DB-b-105: four staged pins of the gold function differ from HEAD (R44 had one), and the live read was get-function-configuration
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W80-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~80",
+  "surfaced_at": "2026-10-09T15:58:00Z",
+  "one_line": "Over live oNgy4rnr, 4 of the 18 staged pins differ from their HEAD bytes (account_return_daily.py, sources.json, lib/opal_naming.py, reporting_policies.json); the release is built from the pins, so none is a member of R45.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order DB-b-105 step 1: exactly one member may differ and it is handler.py; any other member differing from the LIVE bundle is a row and a STOP.",
+  "world_is": "Comparing the source map's pinned bytes with HEAD, 14 of 18 staged pins equal HEAD and 4 differ (account_return_daily.py, sources.json, lib/opal_naming.py, infra/logic/registry/reporting_policies.json), moved by other seats' commits (R44 found only reporting_policies.json). The live bundle holds the PIN bytes: the builder takes staged members from the pins, and the R44 apply verified every member against the live zip (R44_APPLY_RECORD.json member_census_vs_live), the gold function's pins unchanged since upload commit f0d129281f. So no member other than handler.py differs from the live bundle, and the census lists handler.py only; the apply cell must keep the pins. The local kit of the PINNED bytes plus the new handler returns the status key byte-equal to the old one. Separately, the live read used get-function-configuration (CodeSha256, State, size and timeout) rather than get-function, which also returns a pre-signed code download URL the order's no-download bound does not want fetched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~80/R45_RELEASE_CENSUS.json members_compared",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~70/R44_APPLY_RECORD.json member_census_vs_live",
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-49f-reporting-gold-lambda.staged_from@HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W75-S1 -- All 74 W73-S1 DEFECT segments read BD_SIDE
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W75-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~75",
+  "surfaced_at": "2026-10-09T15:45:00Z",
+  "one_line": "All 74 W73-S1 DEFECT segments read BD_SIDE; 73 of the 74 turn on two conventions the producer declares (SERVICE FEE rows stay inside the return; income counts on cash receipt) and 1 on a net-zero securities transfer BD books as a withdrawal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~75/W73_S1_EVIDENCE.json (per-segment both-sides values, custodian rows and tier)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~75/W73_S1_RESOLUTION.json",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py: the classify_and_sum comment on FEE-ADMIN and the module docstring on income on cash receipt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's cell expects each of the 74 segments to be either a producer defect with a test, or a Black Diamond-side record with evidence.",
+  "world_is": "Measured over the 74: the served series equals the custodian equity (dim_balance) on both boundary days in 74 of 74; BD's own identity (ending - beginning - netAdditions - netGains) holds to 2 cents in 74 of 74; every flow gap is matched to custodian rows (17 segments carry SERVICE FEE rows that BD books as net additions; 1 carries a net-zero securities transfer valued at the prior close); 65 boundary-value gaps are matched to income the custodian paid after the boundary day (46 as an exact row set, 18 bounded by paid income, 1 unattributed). The producer file is unchanged and no test was added, because no segment is a producer defect. The two conventions are the producer's own declared design (FEE-ADMIN stays in the return, amendment 5(d); income on cash receipt, C-METHOD), so BD_SIDE here means 'not a producer defect', not 'BD is wrong'; the CTO may want to rule whether the FWD-8 comparator should follow BD on either."
+}
+```
+
+## IRPT_DASHBD-D2-W75-S2 -- Dollars are explained for all 74 segments but the RETURN gap is not closed for most
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W75-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~75",
+  "surfaced_at": "2026-10-09T15:45:00Z",
+  "one_line": "Dollars are explained for all 74 segments but the RETURN gap is not closed for most: restating our daily series to BD's income and service-fee convention brings the linked return within 0.35pp of the tie-out's BD gross return in only 14 of 74.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~75/W73_S1_EVIDENCE.json return_read.restated_minus_bd_gross_pp per segment",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~75/resolve_w73_s1.py sim_return"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A named dollar cause for a segment is expected to account for its return gap (the W73-S1 definition: the dollar gap does not account for the return gap).",
+  "world_is": "The restated return (INFERRED: money-market accrual spread linearly between payments, ex-date accrual from ex-date to payment, service fees as flows on their day) differs from bd_gross_return by 0.35pp or less in 14 of 74, by more than 0.35 and up to 2pp in 30, and by more than 2pp in 30 (the large tail is windows that end on a small balance after a large withdrawal, where the tie-out's fee add-back and the flow-day convention dominate). The FWD-8 re-grade will therefore still show most of these OUTSIDE at 0.35pp unless they are re-classed (FLOW_TIMING / FLOW_CONVENTION / near-zero base) or the comparator changes. Also: 3 of the 46 exact income row sets were found among 8 or more candidate rows and could be coincidental fits; 1 end-of-window boundary gap matches no custodian row and no income bound and is recorded UNATTRIBUTED (the served series equals the custodian equity that day)."
 }
 ```
 
