@@ -69,7 +69,7 @@ Read-only: the whole repository, in particular `portal/CLAUDE.md` and the issuer
 ## 4. PROOF OF SPEC (literal; timeout 120)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="CRPS-at-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round44/at2_check.cjs" portal</invocation><expect>(?m)^at2 build 2/2 control 1/1$</expect></criterion>
+  <criterion id="AC1" cell_refs="CRPS-at-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round44/at2_check.cjs" portal</invocation><expect>(?m)^at2 build 3/3 control 1/1$</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-at-2"><invocation>cd "$(git rev-parse --show-toplevel)/portal" &amp;&amp; node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs &gt; /dev/null 2&gt;&amp;1; echo "tabs rc=$?"</invocation><expect>(?m)^tabs rc=0$</expect></criterion>
 </proof_of_spec>
 
@@ -85,6 +85,22 @@ Read-only: the whole repository, in particular `portal/CLAUDE.md` and the issuer
 3. Only if AC1 and AC2 pass, append a new status tag reading complete at the END of this file, in the SAME outer commit as your instance.
 4. Report ONCE: the change, AC1's and AC2's lines, the typecheck exit code, the portal branch and FULL 40-character portal commit, your
    outer commit hash, any row.
+
+## 6. AMENDMENT 1 (2026-10-09 ~21:1xZ, the issuer's own, on the CTO's render review msg 3189)
+
+The CTO reviewed portal `6238145b` and found that with a team sheet `buildModelSheet` replaces ALL groups, so the margin-history group
+(4 rows) and the valuation, return and balance-sheet group (45 rows) drop -- a regression. Ruling: the team rows LEAD as the first
+group, and every other group the base builds stays BELOW, unchanged. The forecast years (2026E-2028E) already survive. The issuer's
+check gained arm b3 for this (`at2 build <b>/3`); AC1 now expects `at2 build 3/3 control 1/1`. Measured on your candidate:
+`at2 build 2/3 control 1/1` (b3: 0 of 2 groups kept).
+
+**Do, and only this:** take the amendment by merging `box/dell1` into your outer branch (`git merge --no-edit box/dell1`). In
+`modelSheet.ts`, when a team sheet is given, return the team-sheet group FIRST and then the groups the function builds without a
+team sheet, minus its first group (the hard-coded Financial Summary, which the team rows replace), unchanged and in their order.
+Commit inside `portal/` on branch `wk-AMGT_CORPUS-44-portal` (identity `-c user.name=0.9.0_WK_AMGT_CORPUS~2 -c
+user.email=0.9.0_WK_AMGT_CORPUS~2@opal.agent`). Re-run AC1 and AC2 and the typecheck, update your instance (AC1's new line), run the
+checker after your final commit, and append the status tag reading complete at the END of this file only if AC1 and AC2 pass.
+Report once with the FULL 40-character portal commit.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
