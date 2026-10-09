@@ -2487,3 +2487,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r103/p103_cells.py`: every criterion 
 
 fanout: 2 of 2 chains, cap 8, reason: ~IB2 takes 401 after its queue; one independent worker cell. Assignees:
 0.7.0_AE_CloudOps~IB2 (401), 0.9.0_WK_IRPT_BCKEND~266 (402).
+
+## 97. ROUND 104, WORKSTREAM ~P (2026-10-09 ~09:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling @03521b4de0)
+
+The CTO placed dell1's row MDPF_SECCLASS-D1-S8 with ~P (msg 2962). SC-e-56's CUSIP fallback in holdings_snapshot.py (dell1's) can fire
+only on a node that carries a CUSIP security_id, and 49F's SmartX-path SECURITY nodes carry TICKER or VENDOR only. One cell: they carry
+the source's CUSIP where it holds one and are listed where it holds none. Its release rides IRPT_BCKEND's pair AFTER dell1's SC-e-56 is
+live.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r104/p104_cells.py`: AC1 and AC3 FAIL at base; AC2 is the suite control (PASS).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-403` | 49F SmartX-path nodes carry CUSIP security_id; none -> listed, never invented | FWD-2 (SECCLASS e56 acceptance 1) | SERVED | none (release after SC-e-56 live) | P104-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~267.
