@@ -362,6 +362,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "pytest -q data/mdpf/scripts/demque -> 1 failed, 76 passed"
       ]
     }
+  },
+  {
+      "id": "MDPF_DEMQUE-D1-W19-S1",
+      "one_line": "DQ-t-22 as written (history always walks non-trading days) fails the existing test_demque_bbg.py::test_allowance_known_gives_finish_date_above_the_reserve; the quote applies the new rule only when the history ceiling is measured and the reserve is not.",
+      "spec_asserts": "TO-DQ-t22 step 2: for channel history the finish date walks calendar days adding the ceiling on each non-trading day; and 'keep every existing test_demque_*.py passing'.",
+      "world_is": "test_demque_bbg.py::test_allowance_known_gives_finish_date_above_the_reserve quotes history with ceiling 15 / reserve 5, both claim measured, and expects the weekday rule (finish 2026-10-09; 'not positive' gap at ceiling 5 reserve 5); an unconditional non-trading rule gave 2026-10-11 (1 failed, 85 passed). That file is outside <paths>. Worker choice, not in the order: bbg_quote.py applies the non-trading-day rule when history ceiling claim is measured AND history reserve claim is not measured (the real file: ceiling measured, reserve held), else the old weekday rule. Full suite 86 passed. The model_block history component still uses the weekday rule (the order names channel history only). The issuer may prefer to amend that older test and drop the reserve condition.",
+      "project": "MDPF_DEMQUE",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~19",
+      "surfaced_at": "2026-10-09T13:36:00Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disposition": "UNDER_INVESTIGATION",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "data/mdpf/scripts/demque/test_demque_bbg.py:77-88",
+              "data/mdpf/scripts/demque/bbg_quote.py history branch of quote()",
+              "pytest -q data/mdpf/scripts/demque -> 86 passed"
+          ]
+      }
   }
 ]
 ```
