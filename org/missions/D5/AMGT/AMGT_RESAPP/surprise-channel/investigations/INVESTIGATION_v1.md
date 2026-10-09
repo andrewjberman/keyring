@@ -23615,3 +23615,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not a blocker -- the audited override is the documented route and it is on the record. Surfaced because the gap is structural, not incidental: any seat that is not a 0.9.0_WK_* worker will hit it whenever an order declares a path outside its lane, and the audit log then carries an OVERRIDE row that reads like a bypass rather than an authorised write. Owner is the grantor (SoD) 0.0.0_AB_MSTR."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S17",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-09T16:58Z",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "one_line": "AMENDMENT 4 to AMGT-kk-1 resolves row AMGT_RESAPP-S1: AC1's --admit now names research_universe.source, so a republish read on the laptop can grade YES without copying site Z's path.",
+  "spec_asserts": "AMGT_RESAPP-S1 asks the issuer to admit research_universe.source in AC1, or re-cut the act to site Z.",
+  "world_is": "The issuer admitted the leaf (the source must name the box that read the library). It corrected AMENDMENT 2's statement that 2026-10-07.json was built on the laptop; it was built on site Z. Every other C1-C5 leaf on the laptop's --out candidate was already PASS or admitted (243 of 243 kept, 204 of 243 issuer.cik, folders 102).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-kk-1.republish-the-name-list-with-research-folders.md AMENDMENT 4 (this commit)",
+      "row AMGT_RESAPP-S1 @3a50c93247",
+      "resolves AMGT_RESAPP-S1"
+    ]
+  },
+  "notes": "Resolves AMGT_RESAPP-S1 (landed row not edited). Row AMGT_RESAPP-S2 (owned-paths has no route for a non-worker seat) is 0.0.0_AB_MSTR's."
+}
+```

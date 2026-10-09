@@ -22,7 +22,7 @@
 
 ### THE CELL
 
-Two methods of FWD-3's daily chain disagree on the pre-2024-10-11 price level of two CUSIPs held by accounts B3S728504 and B3S728506.
+Two methods of FWD-3's daily chain disagree on the pre-2024-10-11 price level of two CUSIPs held by accounts acct#79d02c2c and acct#4a890dd1.
 `method_r28` applied splits dated 2024-10-11 from the account rows; `method_r26` did not. On 2022-10-12 (from
 `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~57/scale_trace.md`):
 

@@ -39,7 +39,7 @@ and 75 `other:sweep_trade_day` (`.../0.9.0_WK_ADVI_COTBKF~42/mover_causes.parque
 **Your item (the CTO's round-21 ruling on D2-S32, E1).** "In the after arm, a sweep buy debits cash. The non-sweep sale that funded it
 credits no cash. So the account's value steps down and never steps back." Trace: D49141714 2019-02, arm difference a constant
 -4,010.86 on all 19 days (= the net sweep buys), value 4,061.90 before and 51.04 after, month 3.31% after against 0.04% reported;
-RGY005018 2024-12, steps of -199.98 and -188.14 on its two sweep-trade days.
+acct#65b3b3ea 2024-12, steps of -199.98 and -188.14 on its two sweep-trade days.
 1. Repair the cash leg in the chain so that the proceeds of a sale of a NON-sweep security land in cash in the v1 arm, so a sale that
    funds a sweep buy leaves the account's value continuous. Find where the round-19 change made the sweep leg debit cash without the
    matching credit, and fix it there; do not special-case these accounts. `CFNCASH` stays cash; the sweep list is unchanged.
