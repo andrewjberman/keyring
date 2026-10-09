@@ -22306,6 +22306,72 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "A citing row, not an edit of Z-S369: its standing is the CVO's to move. The sentence the row should carry until the word: 'ICT_US_Equity is named INTL CONTAINER TERM SVCS INC from the stored Bloomberg row; the IDVZ holding is the same security by its stored identifier; whether it stays a key apart from ICT_PM_Equity is not decided.' Carried to the next round's owner with the project's move to DELL1."
+},
+{
+  "id": "AMGT_RESAPP-D1-W317-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~317",
+  "surfaced_at": "2026-10-09T02:10:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "one_line": "The walker's disarm on dell1 sets the account disabled and replaces the hash, then stops at ssm:DeleteParameter (AccessDenied for cloudops-dell1-agent-user): the SSM parameter /opal/ui-walker/password stays PRESENT after both passes.",
+  "spec_asserts": "SKILL.md safety model: 'disarm <holder> ... sets it disabled, replaces the hash, deletes the parameter, and proves a login is refused.' The order: 'Then disarm.'",
+  "world_is": "Both passes' disarm printed DISARM FAILED with AccessDeniedException on ssm:DeleteParameter (reproduced once by calling the module's own _ssm().delete_parameter): 'User: arn:aws:iam::313476888478:user/cloudops-dell1-agent-user is not authorized to perform: ssm:DeleteParameter on resource: arn:aws:ssm:us-east-1:313476888478:parameter/opal/ui-walker/password because no identity-based policy allows the ssm:DeleteParameter action'. After each pass `status` reads status=disabled armed=no armedBy=none; SSM PRESENT. The row's disable ran first (its conditional write passed), so the parameter's password no longer matches the stored hash; the login-refused proof, which follows the delete in the disarm, did not run. A re-run of disarm with the holder reads REFUSED (held by nobody).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~317/data/walk_stdout_pass1.log and walk_stdout_pass2.log (the DISARM FAILED lines)",
+      "py -3.12 .claude/skills/ui-walk/ui_walker_account.py status after pass 2: 'status=disabled ... armed=no armedBy=none; SSM PRESENT'",
+      "ui_walker_account.py lines 195-199 (the delete_parameter call that raised)"
+    ]
+  },
+  "notes": "The SSM parameter is a leftover secret for a disabled account whose hash was replaced; the next arm overwrites it. Granting ssm:DeleteParameter on that one parameter to the dell1 agent user is an IAM act this worker did not take (bound: no write beyond the walker's own mechanism)."
+},
+{
+  "id": "AMGT_RESAPP-D1-W317-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~317",
+  "surfaced_at": "2026-10-09T02:10:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "one_line": "Round 79's driver launches the account script as plain `python`, which on this box lacks bcrypt; the copied instrument was edited to read the interpreter from WALK_PY.",
+  "spec_asserts": "The order: 'On this box run it with py -3.12 (the default Python lacks bcrypt)' and 'copy it into your own instrument/ and extend it there.'",
+  "world_is": "walk_ay6.mjs line 99 calls execFileSync('python', [ACCOUNT, ...]) for arm and disarm, so `py -3.12` on the command line does not reach the walker's own arm/disarm. In the copy at deliverables/0.9.0_WK_AMGT_RESAPP~317/instrument/walk_ay6.mjs that call reads process.env.WALK_PY || 'python', with WALK_PY set to the Python 3.12 interpreter. `python -c 'import bcrypt'` on this box: ModuleNotFoundError. No other line of walk_ay6.mjs changed; the shared skill's walk.mjs is untouched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~317/instrument/walk_ay6.mjs line 99",
+      "python -c 'import bcrypt' output on this box: ModuleNotFoundError: No module named 'bcrypt'"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-D1-W317-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~317",
+  "surfaced_at": "2026-10-09T02:13:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "one_line": "The order's row id form AMGT_RESAPP-R1-W317-S<k> is refused by the surprise-row gate: R1 is not a registered fabric coordinate (D1, D2, Z are); this worker's rows carry D1.",
+  "spec_asserts": "The order: 'Rows: id form AMGT_RESAPP-R1-W317-S<k>, disarm_owner 2.0.0_SA_COO~R1.'",
+  "world_is": "safe-commit's surprise-row gate blocked the first commit: 'AMGT_RESAPP-R1-W317-S1: fabric=dell1 -- the id carries the coordinate R1, which the device register does not hold; registered coordinates: D1, D2, Z'. The rows were re-minted as AMGT_RESAPP-D1-W317-S1, -S2 and this row -S3; the order's R1 form was used in no committed row. No override was used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output of the first attempt: '[surprise-row-gate] BLOCKED -- 2 violation(s) on NEW rows' naming coordinate 'R1' and the registered 'D1', 'D2', 'Z'",
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md rows AMGT_RESAPP-D1-W317-S1 and -S2"
+    ]
+  },
+  "notes": "For the issuer: a round-81 order for a worker on dell1 would carry the D1 coordinate in its id form."
 }
 ]
 ```
