@@ -1,13 +1,12 @@
 {
   "prd": "IRPT_BCKEND_PRD.md",
-  "prd_version": "v0.31",
-  "prd_pin": "6fd48e663054ff0cc9352745f8c2a17dfb5aa52a",
+  "prd_version": "v0.32",
+  "prd_pin": "97826891e91536e875a64c5824ea08cadcaa095b",
   "half": "ratified-text",
-  "half_hash": "02fc8ab1c63275485b932003123ed732e6d748e787d292206b830f7db0c0bc0b",
-  "endpoint_hash": "dad30adb2b3eb3bc9417b3ebc501163f61f381e29bb2bf6077c8e9780ea7fa36",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_PRD_v0.31_RATIFIED_TEXT_REVIEW_20261009.md@167bf4a28f",
+  "half_hash": "88795e06e75e28fbf6790ef6e3e774af1a382f475422df61e6a5d5243d38d4bd",
+  "endpoint_hash": "744935add7940dbb3ffefc8ffb48fbc6b242d2656733e2b5e3af35cf8adb59e5",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_PRD_v0.31_RATIFIED_TEXT_REVIEW_20261009.md@df8410e0f6",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-09T06:04:11Z",
-  "reason": "FWD-14 account-absent WORSE condition lacks a closed/terminated exception; one closure freezes the firm's publication permanently"
+  "signed_at": "2026-10-09T06:09:58Z"
 }
