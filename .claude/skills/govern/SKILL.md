@@ -78,6 +78,23 @@ For each open subject, capture:
 | **RESPONDED** | RESPONDED | any | Already handled; close from open-subject list |
 | **PRE-1-TURN** | not yet 1 turn old | any | Hold for current turn; re-evaluate next cycle |
 
+**A manager's own acts are PROCEED, never held for Andrew** (Andrew-direct 2026-10-09 ~03:4xZ at the dell2 terminal,
+VERBATIM: "These choices shouldnt be waiting on me, if you have /govern loop running you should be adjudicating all of
+these"; ~03:5xZ "Yes to both"; record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261009_035xZ_GOVERN_ADJUDICATES_YES_TO_BOTH.md`).
+Decide and do these the same tick, and say what you did:
+- a reviewed or CTO-approved portal DEV fast-forward;
+- deleting a ref already contained in its trunk (`git merge-base --is-ancestor <ref> <trunk>` first; no commit is lost);
+- spawn, kill, unstick and re-seat (each skill's own pre-flight stands);
+- relays and carries between boxes and seats, and the merges, pulls and pushes of Step 3a.7.
+
+RESERVED stays narrow:
+- an S3/S4 sovereign call;
+- an act CLAUDE.md names for human confirmation (a recursive delete, a delete that loses commits or data, an S3 delete,
+  stopping EC2);
+- a call Andrew has named as his.
+
+A direct "stop" or "wait" from Andrew holds until he lifts it.
+
 ## Step 3 — Execute PROCEED actions
 
 For each PROCEED-classed open subject:
