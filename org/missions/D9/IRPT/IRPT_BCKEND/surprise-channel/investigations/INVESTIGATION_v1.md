@@ -24089,3 +24089,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The opt-in keeps every existing caller key for key, so no published parser sees the member unless it asks (svc only). A contract-validating consumer that asks for it would fail the schema until the contract rows are edited by the contracts' owner. The edge/authorizer admission of the svc token on this GET route (as on the other three svc routes) is read first in the after-read."
 }
 ```
+
+## IRPT_BCKEND-D2-S45 -- Disarms D2-W268-S2: no IB-pr-405 apply until its pair rules on irpt-status's 7 foreign members
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S45",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T11:40:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_BCKEND-D2-W268-S2 by issuer ruling. The irpt-status zip built for IB-pr-405 moves 10 members versus live, 7 of them other cells' unreleased work (IB-pr-386, AR-t-12, YCD-a-7 per the packet's owner table). The hazard is a release that ships those 7 under IB-pr-405's pair. It cannot fire: no apply order for IB-pr-405 exists, and none is cut until the pair is built over a census that either (a) narrows irpt-status to IB-pr-405's 3 members plus only the re-pins report_index strictly needs, each re-pin owned and named, or (b) carries the CTO's ruling on the 7 foreign members. W268-S1 (map re-pin rows) and W268-S3 (routes.json / schema publication) ride the same packet decision.",
+  "one_line": "W268-S2 disarmed: no IB-pr-405 apply is cut until its pair rules on the 7 foreign irpt-status members.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB106-1_release_census.json @d222824692: irpt-status 10 changed members, 3 owned by IB-pr-405",
+      "no TO-IB-pr-4xx apply order for irpt-status exists at box/dell2 HEAD"
+    ]
+  },
+  "spec_asserts": "A release ships only its own cell's members (never-widen).",
+  "world_is": "The built irpt-status zip carries 7 other cells' members; no apply is cut, so nothing ships until the pair rules."
+}
+```
