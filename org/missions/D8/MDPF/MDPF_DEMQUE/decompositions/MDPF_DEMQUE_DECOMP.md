@@ -252,3 +252,9 @@ quoted-vs-drawn pair (msg 1536):** both RESAPP requests are quoted (round-3 real
 model-block cells); when site Z reports each draw's measured cells, record it with `bbg_quote.py --record ... ` WITH the quote (label
 `quoted`), the first quoted-vs-drawn pair for FWD-4; (c) AMLP and PONPX re-tested under the floor; (d) the one real run of each outcome;
 (e) close only with every BLOCKING row dispositioned and the L8 packet READ by the CVO.
+
+**Round-5 candidates noted during round 4 (issuer, not cut):** (1) retire `price_store`'s write path at the SECHIST port (CTO msg 1716,
+`CTO_RULING_YAHOO_BACKFILL_OWNER_DEMQUE_VS_SECHIST_20261009.md` ADDENDUM 1; row D1-S2) -- SECHIST's writer writes the same keys, one
+window switches the writer, dell2 re-points, same-window rollback; (2) quote a STANDING request (`bbg_quote.py` raises "request has no
+securities" on ETFS_RIVALS-HISTORY-OWED-DAILY; its file carries the run cap as a held quote); (3) the per-request state
+active/paused/stopped at a builder address (CTO msg 1640, XA condition 3).
