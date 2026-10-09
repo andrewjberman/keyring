@@ -4729,3 +4729,53 @@ round.** Never edit an existing row.
  "world_is": "It would raise ImportError: opal_naming is not deployed beside the cot gold scripts. Latent while rps is empty."
 }
 ```
+
+## ADVI_COTBKF-D2-W79-S1 -- data/assets/scripts/silver/commonwealth_signs.py line 71 holds one client account id inside a message string, 
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W79-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~79",
+  "surfaced_at": "2026-10-09T17:05:00Z",
+  "one_line": "data/assets/scripts/silver/commonwealth_signs.py line 71 holds one client account id inside a message string, after a lowercase 'cv' prefix; it is in none of the order's <paths>, so CB52az1-AC1 cannot reach 0 hits.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest data/assets/scripts/silver/tests/test_cotbkf_code_no_account_ids.py -q -s (committed e3c4c40707 at base: 71 files, 24 hits; after this worker's edits: 72 files, 1 hit, file commonwealth_signs.py line 71, token acct#80dbe306)",
+      "ACCOUNT_ID_CENSUS_HEAD_20261009.md lists 6 code files and not commonwealth_signs.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-az-1: the 6 code files listed carry every real account id in this project's commonwealth_*.py scripts and tests; moving them gives 0 hits.",
+  "world_is": "A seventh file carries one id (the census word-boundary read missed it: the id sits inside a 'cv<id>' token). The criterion needs commonwealth_signs.py edited (replace the id in the message with a synthetic or acct#<sha8> token); this worker's write grant excludes it. The test was not weakened; every other hit is cleared (24 -> 1). Needs a one-path grant (commonwealth_signs.py) on a new order or an amendment of this order's <paths>."
+}
+```
+
+## ADVI_COTBKF-D2-W79-S2 -- The three account-id shapes are a partial detector: of 1533 accounts in the private ard manifest, 924 match on
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W79-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~79",
+  "surfaced_at": "2026-10-09T17:06:00Z",
+  "one_line": "The three account-id shapes are a partial detector: of 1533 accounts in the private ard manifest, 924 match one of the shapes and 609 match none; and the unbounded shapes fire on 14 date-stamped document ids in test_commonwealth_document_index.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "private manifest first_data_date keys (1533) tested with anchored forms of the three shapes: 924 match, 609 do not",
+      "unbounded scan of the 69 commonwealth_* code and test files: 14 hits in test_commonwealth_document_index.py (STMT/REPR/NCSD stamps), 0 once the left boundary (?<![A-Z0-9]) and right (?!\\d) are added"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-az-1 / ruling item 6: the three shapes find a client account id; 0 hits means no id.",
+  "world_is": "0 hits proves absence of the three shapes only. The test bounds the shapes (no hit inside a longer capital/digit run) to drop the 14 document-id false positives; that is stated in its docstring. The tracked manifest was additionally checked by a different instrument: 0 of the private manifest's 1533 account keys occur in its text. Also: commonwealth_asf_source.py held no runtime literal (one docstring example), so it needed no private config; the runtime literal moved to config is a rejected-candidate security identifier in commonwealth_sweeps.py whose shape is account-like."
+}
+```
