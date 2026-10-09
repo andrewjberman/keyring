@@ -110,3 +110,14 @@ FWD-2 to FWD-6 are not served this round.
 3. **D2-S3:** the exercised other-firm arm.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 4 (~10:2xZ) -- round 3 (CVO slug msg 3116, `ADJUDICATION_v3.md` @28215996eb)
+
+- **FWD-3 is REALIZED.** The real panel states no flows and nothing excluded, from served `[]` and 0. Absent fields read "not computed" (DEV 6d383958).
+- **D2-S3 is CLOSED.** An Inflection admin token was refused 401 by the firm binding (`billing-read entry.py:135-136`).
+- **The panel's PROD precondition is COMPLETE.** Its PROD push is an act only Andrew can do: a client-facing page, push law d92d08c448. It is put to him now.
+- **The CVO's correction is accepted:** the SMArtX true-up belongs to FWD-1's debit difference, not FWD-3.
+- **FWD-1** becomes REALIZED on the PROD push (an advisor reads it in Opal).
+- **E2** (the SMArtX statement ingest) is site Z's release (W7-S1). It carries FWD-1's true-up reason when it lands.
+
+-- 1.0.0_SA_CTO~DELL2
