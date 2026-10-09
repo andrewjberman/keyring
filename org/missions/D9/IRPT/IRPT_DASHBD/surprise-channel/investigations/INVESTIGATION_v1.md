@@ -5180,3 +5180,57 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W80-S1 -- DB-b-105: four staged pins of the gold function differ from HEAD (R44 had one), and the live read was get-function-configuration
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W80-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~80",
+  "surfaced_at": "2026-10-09T15:58:00Z",
+  "one_line": "Over live oNgy4rnr, 4 of the 18 staged pins differ from their HEAD bytes (account_return_daily.py, sources.json, lib/opal_naming.py, reporting_policies.json); the release is built from the pins, so none is a member of R45.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order DB-b-105 step 1: exactly one member may differ and it is handler.py; any other member differing from the LIVE bundle is a row and a STOP.",
+  "world_is": "Comparing the source map's pinned bytes with HEAD, 14 of 18 staged pins equal HEAD and 4 differ (account_return_daily.py, sources.json, lib/opal_naming.py, infra/logic/registry/reporting_policies.json), moved by other seats' commits (R44 found only reporting_policies.json). The live bundle holds the PIN bytes: the builder takes staged members from the pins, and the R44 apply verified every member against the live zip (R44_APPLY_RECORD.json member_census_vs_live), the gold function's pins unchanged since upload commit f0d129281f. So no member other than handler.py differs from the live bundle, and the census lists handler.py only; the apply cell must keep the pins. The local kit of the PINNED bytes plus the new handler returns the status key byte-equal to the old one. Separately, the live read used get-function-configuration (CodeSha256, State, size and timeout) rather than get-function, which also returns a pre-signed code download URL the order's no-download bound does not want fetched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~80/R45_RELEASE_CENSUS.json members_compared",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~70/R44_APPLY_RECORD.json member_census_vs_live",
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-49f-reporting-gold-lambda.staged_from@HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-S5 -- client account data committed to git (one file already on the remote)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:56:03Z",
+  "one_line": "Client account data is committed to git: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~76/W73_S2_EVIDENCE.json (121 distinct 10-digit account numbers with begin/end values, balances, fees and flows) is on origin box/dell2 AND origin CLOUD (github Opal-Capital/ajb_workspace); org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~75/W73_S1_EVIDENCE.json (74 accounts, values, fees, gains) is committed locally @f5645bb6e9 and goes out at the next box-sync push. The issuer's own packet asked whether this is acceptable; it is not -- the estate keeps client figures out of the repo (ADVI_BILLING held its real render outside git for exactly this reason).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files: both paths tracked (169,592 and 134,559 bytes)",
+      "this seat's parse: account-like keys n=74 and n=121, fields beginning_value, ending_value, fees, gain, net_gains, amount, dust_balance, max_balance",
+      "git merge-base --is-ancestor 1ba8eafcda origin/box/dell2 and origin/CLOUD: TRUE; f5645bb6e9 origin/box/dell2: FALSE (after git fetch, ~15:5xZ)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/IRPT_DASHBD_ROUND49_B_DRAIN_END_20261009.md @dfba2660aa (msg 3603)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2 (hold the box-sync push of f5645bb6e9; remove both files from the tree) and 1.0.0_SA_CTO~DELL2; purging them from origin's history is destructive git and Andrew's word",
+  "spec_asserts": "Client figures (account numbers with balances, fees and flows) do not enter the repository or its remote.",
+  "world_is": "One file with 121 accounts is already on the remote on two branches; a second with 74 accounts is one push away."
+}
+```

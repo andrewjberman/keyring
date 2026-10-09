@@ -11,7 +11,7 @@ the third tick they do this if nothing has opened up." and "CRO figures out the 
 to synthesize that into the workflow, and it needs a sign off by the CVO." Owner 4.0.0_SA_CRO~B.
 
     python .tools/unblock.py tick --serial <COO serial> --project <CODE> --result nothing|work
-                                  [--owed-ledger <open_deploys slug> --owed-owner <serial>]
+                                  [--owed-ledger <open_deploys slug> --owed-owner <serial>] [--owed-call <open-call id>]
         the drive tick's count of consecutive `/next-calls --drive` ticks that found nothing; LAST line
         UNBLOCK-TICK serial=<s> project=<CODE> empty=<n> verdict=<KEEP-DRIVING|THIRD-EMPTY-TICK|WAITING <UB id> <state>|RESUME <UB id>
                                                               |WAITING OWED <slug> <owner> UNTIL <time>>
@@ -20,6 +20,9 @@ to synthesize that into the workflow, and it needs a sign off by the CVO." Owner
         union read; a linked worktree counts it only if its own commits touched it or it is uncommitted there, never a copy
         inherited at branch cut, msg 32766), and (c) the act is inside its declared window_hours, or 4h from opened_at when none is declared. Failing
         any one, the tick counts as before, so a hung apply still opens a case (3.0.0_SA_CVO~Z ruling @23f60a21df).
+        --owed-call: the tick's only block is ONE open call (e.g. a card held for Andrew). It reads `WAITING CALL <id> <state>`
+        only while that call's row on org/devices/state/<box>/open_calls.json reads OPEN or HELD; a CLOSED or absent call
+        counts as before (CVO @f59dbc4f71 via 1.0.0_SA_CTO~Z msg 32856 -- never tick --result work to dodge the counter).
     python .tools/unblock.py open --project <CODE> --by <COO serial> --body <position.md>     (COO, on THIRD-EMPTY-TICK)
     python .tools/unblock.py propose --id <UB> --by <CRO serial> --body <approach.md>         (CRO)
     python .tools/unblock.py fold --id <UB> --by <CTO serial> --ref <PRD addendum | round-N analysis | ruling path>   (CTO)
@@ -311,7 +314,32 @@ def open_ledger_entry(slug: str) -> tuple:
     return best, len(trees)
 
 
-def tick_verdict(empty_before: int, result: str, active, waiting=None, owed=None) -> tuple:
+CALL_WAITING_STATES = ("OPEN", "HELD")   # 1.0.0_SA_CTO~Z msg 32856 (CVO @f59dbc4f71): OPEN or HELD on the open-calls surface
+
+
+def call_waiting(row) -> tuple:
+    """PURE. (True, state) when an owed open call still stands (its row reads OPEN or HELD); (False, reason) otherwise --
+    a CLOSED or absent call counts the tick as before, so a closed card never silences the counter."""
+    if not isinstance(row, dict):
+        return False, "call-absent"
+    st = str(row.get("state", "")).upper()
+    return (True, st) if st in CALL_WAITING_STATES else (False, "call-" + (st.lower() or "no-state"))
+
+
+def open_call_row(call_id: str):
+    """The row for `call_id` on its box's open-calls surface (org/devices/state/<box>/open_calls.json; the box is the id's
+    prefix, as `open-calls.py` mints them), or None when the file or the row is absent."""
+    box = call_id.split("-", 1)[0]
+    root = os.environ.get("OPAL_OPEN_CALLS_STATE_ROOT", "").strip() or os.path.join(ROOT, "org", "devices", "state")
+    try:
+        doc = json.load(open(os.path.join(root, box, "open_calls.json"), encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    rows = doc.get("rows") if isinstance(doc, dict) else None
+    return next((r for r in (rows or []) if isinstance(r, dict) and r.get("id") == call_id), None)
+
+
+def tick_verdict(empty_before: int, result: str, active, waiting=None, owed=None, call=None) -> tuple:
     """PURE. (new empty count, verdict). A tick that found work resets the count; a SIGNED file means resume on it. With no
     file in flight, a resumed file's named event time still ahead (`waiting` = (id, until)) holds the count at 0 and reads
     WAITING, so a dated wait already folded never re-fires; the count restarts once the time has passed. An owed act in
@@ -327,6 +355,8 @@ def tick_verdict(empty_before: int, result: str, active, waiting=None, owed=None
         return 0, "WAITING %s UNTIL %s" % waiting
     if owed is not None:
         return 0, "WAITING OWED %s %s UNTIL %s" % owed
+    if call is not None:
+        return 0, "WAITING CALL %s %s" % call
     return n, ("THIRD-EMPTY-TICK" if n > EMPTY_TICKS_BEFORE else "KEEP-DRIVING")
 
 
@@ -356,7 +386,14 @@ def cmd_tick(args) -> int:
             ("until=" + why) if ok else ("reason=" + why)))
         if ok:
             owed = (args.owed_ledger, args.owed_owner, why)
-    n, verdict = tick_verdict(before, args.result, active, waiting, owed)
+    call = None
+    if args.owed_call and args.result == "nothing" and active is None and waiting is None and owed is None:
+        ok, why = call_waiting(open_call_row(args.owed_call))
+        print("OWED-CALL: id=%s counts=%s %s" % (args.owed_call, "WAITING" if ok else "EMPTY",
+                                                 ("state=" + why) if ok else ("reason=" + why)))
+        if ok:
+            call = (args.owed_call, why)
+    n, verdict = tick_verdict(before, args.result, active, waiting, owed, call)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as fh:
         json.dump({"empty": n, "at": stamp(now_dt()), "verdict": verdict}, fh)
@@ -604,6 +641,20 @@ def selftest() -> int:
         rec("an-inherited-branch-copy-of-a-ledger-does-not-count", entry_counts_on_tree(True, False, False)
             and entry_counts_on_tree(False, True, False) and entry_counts_on_tree(False, False, True)
             and not entry_counts_on_tree(False, False, False))
+        rec("owed-call-open-or-held-reads-waiting", call_waiting({"state": "OPEN"}) == (True, "OPEN")
+            and call_waiting({"state": "held"}) == (True, "HELD")
+            and tick_verdict(2, "nothing", None, None, None, ("sitez-x", "OPEN")) == (0, "WAITING CALL sitez-x OPEN"))
+        rec("owed-call-closed-or-absent-counts-empty", call_waiting({"state": "CLOSED"}) == (False, "call-closed")
+            and call_waiting(None) == (False, "call-absent"))
+        oc = os.path.join(base, "oc", "sitez")
+        os.makedirs(oc)
+        with open(os.path.join(oc, "open_calls.json"), "w", encoding="utf-8") as fh:
+            json.dump({"rows": [{"id": "sitez-20261009T150500Z-4d5a", "state": "OPEN"}]}, fh)
+        os.environ["OPAL_OPEN_CALLS_STATE_ROOT"] = os.path.join(base, "oc")
+        rec("owed-call-reads-the-boxs-open-calls-surface-by-id-prefix",
+            open_call_row("sitez-20261009T150500Z-4d5a") == {"id": "sitez-20261009T150500Z-4d5a", "state": "OPEN"}
+            and open_call_row("sitez-20261009T150500Z-ffff") is None and open_call_row("dell1-20261009T000000Z-0000") is None)
+        os.environ.pop("OPAL_OPEN_CALLS_STATE_ROOT", None)
         rec("an-open-unblock-file-still-wins-over-an-owed-act", tick_verdict(5, "nothing", d, None, ("s", "o", "t"))[1]
             == "WAITING %s OPEN" % d["id"])
         rec("record-carries-all-four-voices", all(s in render(check(g, "g")) for s in
@@ -632,6 +683,7 @@ def main(argv: list) -> int:
     t.add_argument("--result", required=True, choices=("nothing", "work"))
     t.add_argument("--owed-ledger", default="", help="slug of the owed act's org/critical_paths/.open_deploys/ entry")
     t.add_argument("--owed-owner", default="", help="serial of the seat that owes the act")
+    t.add_argument("--owed-call", default="", help="open-call id the project waits on (WAITING while OPEN or HELD)")
     o = sub.add_parser("open")
     o.add_argument("--project", required=True)
     o.add_argument("--by", required=True)

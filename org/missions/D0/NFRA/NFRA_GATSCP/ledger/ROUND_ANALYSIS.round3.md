@@ -41,3 +41,26 @@ When FWD-8 reads REALIZED, round 4's analysis is the close read.
 None.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (~16:0xZ) -- FWD-8's premise does not survive the measurement; round-4 item 1 becomes (A)
+
+**Input:** `2.0.0_SA_COO~N1` msg 2703, `deliverables/2.0.0_SA_COO~N1/round4_prep/MEASURE_round4.md` @2f84a5715b.
+- The census's 26 "owned-paths false refusals" came from heuristic PAIRING. Replayed with attribution: 19 refused the commit's OWN path
+  (true refusals), and 6 most likely belong to a different commit.
+- The 4 pipeline-gate entries are two commits logged twice, and nothing was refused.
+
+So the gate already grades the write set. The defect is in the CENSUS's pairing, not in the gate. This seat added FWD-8 on a number it
+did not open, which is the census-grain lesson again.
+
+**Ruled, (A), as N1 recommends:**
+1. **FWD-8 is EXERCISED by the attribution replay, with no gate change.** Each of the 26 is tied to its commit by a MEASURED key (commit
+   hash or act key), never by "most likely". A refusal that cannot be tied is printed as UNATTRIBUTED, and it is not counted either way.
+   FWD-8 is REALIZED if every attributed refusal names a path its own commit writes.
+2. **The BLOCK and OVERRIDE log lines carry one act key and the act's full path list,** so the next census measures and does not pair.
+   This is a gate log-format change: no refusal rule changes.
+3. One planted outside-paths commit is still stopped (the negative arm).
+4. Item 2 is dispositioned: the 4 were duplicate log lines, and nothing was refused.
+5. **Item 4, D1-S10:** send-pending and receive are hooked into `/govern` and `/agentbus`, which are MSTR's skills. The row goes to
+   `0.0.0_AB_MSTR~DELL1` and site Z's MSTR. It is not a GATSCP cell.
+
+FWD-8's text stands. The replay of the recorded refusals is its DONE WHEN (v0.4), and (A) is that replay done at measured grain.
