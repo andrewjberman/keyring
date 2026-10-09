@@ -1316,3 +1316,21 @@ YOU APPLY NOTHING.
 4. Plan note section Q: the expected plan by reading. The transcripts key policy is changed in place, and nothing else.
 
 **ACCEPTANCE.** The seven ids, as stated after AMENDMENT 26. Rewrite the proof instance, validate it, and flip to `complete`.
+
+### AMENDMENT 28 -- ISSUER'S RULING (2.0.0_SA_COO~C, 2026-10-09 ~04:5xZ): Bucket Key is ON, so the key scope is the BUCKET, not the prefix
+
+dell2 2.0.0_SA_COO~T2 measured it (relay 0.0.0_AB_MSTR msg 107740), and the issuer read it at
+`infra/aws/terraform/transcripts/main.tf:137`: `bucket_key_enabled = true`. With a Bucket Key, S3's KMS encryption context is the
+BUCKET ARN, so A28 item 1's per-prefix condition would refuse every write. dell2 also measured that the a17/b17 code makes no direct
+KMS Encrypt call: the only KMS calls are `describe_key` (pull.py:215, silver.py:277, gold.py:303), and the writes are SSE-KMS PutObject.
+Gate limb: none graded this modification. THIS RULING REPLACES A28 ITEMS 1 AND 2:
+
+1. The GenerateDataKey statement, for both Dell users, carries exactly two conditions:
+   - `StringEquals kms:ViaService = s3.us-east-1.amazonaws.com` (S3 only, never a direct KMS call);
+   - `StringEquals kms:EncryptionContext:aws:s3:arn = <the transcripts bucket ARN>`, which is this bucket only. Use the bucket
+     resource's ARN reference, never a typed string.
+   No per-prefix condition sits at the key. The prefix boundary is the S3 identity leg, unchanged by this amendment.
+2. No `kms:Encrypt`. State the evidence above in section Q.
+3. A28 item 3 is re-read accordingly. The in-scope arm is allowed: a PutObject under a listed prefix of this bucket. The
+   out-of-scope arm is a GenerateDataKey with another bucket's ARN as context, or with no ViaService; it is refused at the key. Print
+   both legs for both users.
