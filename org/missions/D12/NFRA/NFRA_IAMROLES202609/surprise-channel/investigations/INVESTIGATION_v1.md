@@ -1353,3 +1353,62 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-S21 -- an UNSCOPED PHASE B apply of smartx-pipeline carries three Lambda code deploys and three output removals that no cell authorized
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S21",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-09T18:13:01Z",
+    "one_line": "IAM-w-1 PHASE A measured the module's plan and the adoption is only part of it: an UNSCOPED safe-apply of infra/aws/terraform/smartx-pipeline would ALSO move three aws_lambda_function resources to new s3_object_versions (one also a new source_code_hash) and drop three outputs to null -- pre-existing module drift, proved pre-existing by a negative control, that an IAM custody move would carry into the world with it.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell binds PHASE B to 'a plan that equals the survey's (N to import, 0 to add, 0 to destroy, plus only the tag updates the pair names)' and BOUNDS it to 'NO PERMISSION MOVES: the role's policies, trust and usage are untouched (C-TWO-REMEDIES)'. Deployment rule 4 and NEVER-2 additionally require an IMAGE/code act to name every family it moves in a deploy-ledger entry.",
+    "world_is": "With zz_adopt_family_b.tf present the module plans 'Plan: 1 to import, 0 to add, 4 to change, 0 to destroy.' With the same file MOVED OUT and nothing else changed it plans 'Plan: 0 to add, 3 to change, 0 to destroy.' So the adoption's own delta is 1 import plus 1 tags_all change on the role, and the other 3 changes are PRE-EXISTING DRIFT: aws_lambda_function.assets_daily_pull (s3_object_version XmkW9C_XX1J_6sREU2VZ2naPbfmRQa7O -> QNIiMQgfRzxG_KrI_6mVxJDjJbZFOnsd), aws_lambda_function.jwt_refresher (lRZrP4cIcsSbeYBd8SIB6_W8No75LiDw -> HAmOeAkTP0mT6304E9OvUVTpk_GhC8hh), aws_lambda_function.rest_pull (Way7ManCnOWA8bAdT8YIAzZ0ncPu4ino -> g_1WqvOSlrPbM1uf8nFcy0uG9SB4xXwb, source_code_hash SnPiO8B8AxABQOxJ2wfoPDFaCxaVeGmcDsVPv0JrzaE= -> lM6cnuZTetkFwkGmxQqBFslExfqwGp+WhqFYOYM81xE=), plus outputs autostart_lambda_arn, autostart_role_arn and eventbridge_rule_arn going to null. PHASE A applied nothing, so nothing has landed. PHASE B needs the never-widen pair to name EITHER a '-target aws_iam_role.opal_smartx_lambda_role' scoped apply (safe-apply grades the scoped plan for a targeted apply) OR the drift resolved by the smartx pipeline's owner first. This seat applies nothing until the pair names which.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform -chdir=infra/aws/terraform/smartx-pipeline plan -input=false -lock=false, worktree /c/tmp/iam-w1 branch wk-iamroles-r6-w1 @097d3bcc3e, Terraform v1.15.8, provider hashicorp/aws v5.100.0 -- both the with-file and the negative-control runs, minutes apart against the same state",
+        "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~Z/round6/PLAN_SURVEY_family_b.md sections 3 and 5 (prepared uncommitted; see Z-S22)"
+      ]
+    },
+    "notes": "Adjacent to but distinct from Z-W13-S1 (carried in Z-S20), which is about smartx-assets-daily-pull RUN failures; this row is about the module's Terraform drift. The role's own tags_all change was separately measured as authorization-neutral (survey section 4) and is NOT part of this hazard. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
+
+## Z-S22 -- amendment A1-r6 re-addressed w-1 and w-4 to ~IR but left their deliverable write surface in ~Z's folder, which owned-paths refuses
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S22",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-09T18:13:01Z",
+    "one_line": "Both orders name deliverables/0.7.0_AE_CloudOps~Z/round6/ as this lane's write surface, but the owned-paths lane TREE_DELIVERABLES admits only the serial named by the sub-folder or a ~lane of it -- and ~IR is not a ~lane of ~Z -- so safe-commit refuses every deliverable of w-1 and w-4 from the lane the amendment addressed them to.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "w-1 step 2 writes PLAN_SURVEY_family_b.md and w-4 (a) writes DEFER_ROWS_5_16.md, both under deliverables/0.7.0_AE_CloudOps~Z/round6/, both listed in the orders' <paths>, and both told to commit under this lane's own author line. w-4 AC3 further requires 'git log --format=%an' on DEFER_ROWS_5_16.md to return exactly one line, 0.7.0_AE_CloudOps~IR, and w-4 (b) says 'Take no author override.'",
+    "world_is": "safe-commit refused with 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: ...PLAN_SURVEY_family_b.md -- lane=TREE_DELIVERABLES ...; agent=0.7.0_AE_CloudOps~IR not in permitted_agents' (clause 4, ADHC_OWNPTH.004). The refusal is the gate working as designed, not a fluke: all 8 commits ever made under deliverables/0.7.0_AE_CloudOps~Z/ were authored by 0.7.0_AE_CloudOps~Z itself, so the gate has never admitted a peer lane there. The two escapes do not apply -- --force bypasses contamination checks only and never a lane refusal (CLAUDE.md 14a), and GIT_COMMIT_AUTHOR_OVERRIDE would both break w-4 AC3 and is the author override w-4 forbids. THE THREE DELIVERABLES ARE WRITTEN AND SIT UNCOMMITTED IN THE SHARED TREE for the issuer to land as carrier, exactly as amendment A1 row Z-S19 already established for the w-4 (b) row edits: deliverables/0.7.0_AE_CloudOps~Z/round6/PLAN_SURVEY_family_b.md, .../DEFER_ROWS_5_16.md, and the two prepared row first-lines in deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md. The issuer's choices: land them as carrier (and then w-4 AC3 cannot read ~IR as the author, so the criterion needs amending with it), or amend both orders' <paths> and criteria to deliverables/0.7.0_AE_CloudOps~IR/round6/. The inert .tf.proposed was NOT affected and is committed @8b6cfcf18a -- infra/ is not a TREE_DELIVERABLES path.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the safe-commit refusal text quoted above, run in worktree /c/tmp/iam-w1 on branch wk-iamroles-r6-w1",
+        "git log --format=%an -- org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~Z/ | sort | uniq -c -> '8 0.7.0_AE_CloudOps~Z', denominator 8 of 8",
+        "amendment A1-r6 @2b2091822f, which set <issued_to> to 0.7.0_AE_CloudOps~IR on w-1..w-4 while the <paths> blocks kept 0.7.0_AE_CloudOps~Z/round6/"
+      ]
+    },
+    "notes": "Structural, not incidental: it reaches every deliverable of all four w-orders, so w-2 and w-3 will hit it on their GO too. Surfaced, not adjudicated -- the amendment is the issuer's (Andrew-direct 2026-09-24 lets the issuer amend its own task-order criteria without a CTO ruling). The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
