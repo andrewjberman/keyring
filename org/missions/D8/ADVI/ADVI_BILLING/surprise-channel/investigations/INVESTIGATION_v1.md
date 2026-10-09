@@ -337,3 +337,28 @@
   "world_is": "Met; notes in the grade file."
 }
 ```
+
+## ADVI_BILLING-D2-W3-S1 -- The commit-time naming gate refuses the column names the AB-e-5 order itself mandates (bd_account_id, bd_relationship_id) as string literals in the builder
+
+```json
+{
+  "id": "ADVI_BILLING-D2-W3-S1",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~3",
+  "surfaced_at": "2026-10-09T08:38Z",
+  "one_line": "safe-commit's naming limb REFUSED household_crosswalk.py 5 times on the literals bd_account_id, bd_relationship_id and an internal bd_rel (hand-kept carrier of 'bd'), though AB-e-5 and r2_checks CROSSWALK_COLS require those exact column names; the builder now reads its column list from the contract JSON under org/, which the gate excludes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output: NAMING REFUSE data/assets/scripts/gold/advi_billing/household_crosswalk.py:39, :110, :118, :129 -> lookup('49financial'); NAMING-GATE: REFUSE 5 graded",
+      "data/assets/scripts/gold/advi_billing/household_crosswalk.py @d690b478cb: COLUMNS = list(CONTRACT['columns']); committed clean"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AB-e-5 item 1 names the output columns bd_account_id and bd_relationship_id; the order's bounds say addresses come from lib/opal_naming.py and legacy input URIs are passed as arguments.",
+  "world_is": "The gate treats the token 'bd' inside a column-name literal as a hand-kept carrier of the firm. A later builder or reader that types these column names (AB-e-6 reads them) meets the same refusal and should take the names from the contract, as this builder does."
+}
+```
