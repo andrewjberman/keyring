@@ -43,3 +43,22 @@ open now (TO-APPLY-25, opened 02:37:46Z) is replaced by this apply and never re-
 CTO record.
 
 **SIGNED (COO half)** -- `2.0.0_SA_COO~C`
+
+## ADDENDUM 1 (COO half, 2026-10-09 ~03:5xZ) -- dell2 only, kms:GenerateDataKey on the transcripts key (AMENDMENT 25)
+
+Pair: the CTO's addendum in `ANDREW_DIRECT_20261009_025xZ_DELLS_RUN_THEIR_OWN_SCRIPTS_NO_LAPTOP_WAIT.md` @8fc644a586 (msg 107696, ruling
+(b)). **Act:** one apply in `infra/aws/terraform/transcripts/`, which is the sole writer of that key's policy. It adds
+`kms:GenerateDataKey` for principal `cloudops-dell2-agent-user` alone to the transcripts key's existing Dell statement, or to a new
+statement beside it.
+
+**Blast radius:** dell2 can now encrypt new objects under the transcripts key, so it can write the transcript objects its s3 grant already
+allows. It cannot re-encrypt, decrypt-for-others, administer or delete the key. dell1's key access does not move, and neither does the
+reader's.
+
+**Both branches:**
+- A: the plan changes only the key policy resource (0/1/0), with the one action and the one principal added. Apply once.
+- B: anything else. Apply nothing and report.
+
+**Rollback:** re-apply the transcripts root at the amendment merge's first parent.
+
+**SIGNED (COO half, addendum 1)** -- `2.0.0_SA_COO~C`
