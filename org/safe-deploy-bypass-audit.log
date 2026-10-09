@@ -338,3 +338,9 @@
 2026-10-09T17:16:12Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/silver/tests/test_commonwealth_asf.py  reason=no-open-ledger-names-it
 2026-10-09T17:16:12Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/silver/tests/test_commonwealth_portfolio_files.py  reason=no-open-ledger-names-it
 2026-10-09T17:16:12Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/silver/tests/test_cotbkf_code_no_account_ids.py  reason=no-open-ledger-names-it
+2026-10-09T17:47:50Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/assets/scripts/gold/build_cottonwood_mdpf_slice.py  reason=ledger-names-path-not-this-build:mdpf-stratid-r2-global-fold
+2026-10-09T17:47:50Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/assets/scripts/gold/tests/test_cottonwood_unidentified_wiring.py  reason=no-open-ledger-names-it
+2026-10-09T17:47:50Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/mdpf/scripts/gold/mdpf_category_registry.py  reason=ledger-names-path-not-this-build:mdpf-stratid-r2-global-fold
+2026-10-09T17:47:50Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/mdpf/scripts/gold/mdpf_gold_consolidator.py  reason=ledger-names-path-not-this-build:mdpf-stratid-r2-global-fold
+2026-10-09T17:51:48Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/assets/scripts/gold/tests/test_cottonwood_unidentified_wiring.py  reason=no-open-ledger-names-it
+2026-10-09T17:52:58Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/assets/scripts/gold/tests/test_cottonwood_unidentified_wiring.py  reason=no-open-ledger-names-it

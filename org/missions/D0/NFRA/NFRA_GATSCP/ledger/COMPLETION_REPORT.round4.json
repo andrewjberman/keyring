@@ -1,0 +1,303 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "NFRA_GATSCP",
+  "round": 4,
+  "written_by": "2.0.0_SA_COO~N1",
+  "written_utc": "2026-10-09T18:00Z",
+  "decomposition_ref": "org/missions/D0/NFRA/NFRA_GATSCP/decompositions/NFRA_GATSCP_DECOMP.round4.md@b5f9287e72",
+  "denominators": {
+    "fwd_in_prd_header": 8,
+    "cells_in_decomposition": 19,
+    "task_orders": 19,
+    "task_orders_terminal_with_valid_proof": 19
+  },
+  "outcomes": [
+    {
+      "fwd_id": "FWD-1",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- one real drain and one real box sync, both landed, both errors printed",
+      "cells": [
+        {
+          "cell_id": "GS-t-1",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-t-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~1/NFRA_GATSCP.TO-GS-t-1.corpus-pass-scoped-to-the-act.proof_of_spec.json@5d96fa512d"
+            }
+          ]
+        },
+        {
+          "cell_id": "GS-t-2",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-t-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~2/NFRA_GATSCP.TO-GS-t-2.tree-check-staged-and-scoped.proof_of_spec.json@4495e6ead3"
+            }
+          ]
+        },
+        {
+          "cell_id": "GS-t-3",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-t-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~2/NFRA_GATSCP.TO-GS-t-3.merge-graded-by-scoped-tree-check.proof_of_spec.json@3d465ade72"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-2",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- one commit landing beside another project's error, one refused on its own",
+      "cells": [
+        {
+          "cell_id": "GS-t-1",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-t-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~1/NFRA_GATSCP.TO-GS-t-1.corpus-pass-scoped-to-the-act.proof_of_spec.json@5d96fa512d"
+            }
+          ]
+        },
+        {
+          "cell_id": "GS-e-4",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-e-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~5/NFRA_GATSCP.TO-GS-e-4.baseline-reset-refused.proof_of_spec.json@07cec17481"
+            }
+          ]
+        },
+        {
+          "cell_id": "GS-f-1",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-f-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~8/NFRA_GATSCP.TO-GS-f-1.pointer-is-not-an-order.proof_of_spec.json@02c260744e"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-3",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- one commit landing beside another project's mismatch, one refused on its own",
+      "cells": [
+        {
+          "cell_id": "GS-t-2",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-t-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~2/NFRA_GATSCP.TO-GS-t-2.tree-check-staged-and-scoped.proof_of_spec.json@4495e6ead3"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-4",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- one real change of a project's stage, committed once, both files in it",
+      "cells": [
+        {
+          "cell_id": "GS-e-5",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-e-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~6/NFRA_GATSCP.TO-GS-e-5.commit-regenerates-index-entry.proof_of_spec.json@07cec17481"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-5",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- one standing error printed by someone else's act and found by its owner",
+      "cells": [
+        {
+          "cell_id": "GS-e-1",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-e-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~3/NFRA_GATSCP.TO-GS-e-1.sync-shows-standing.proof_of_spec.json@07cec17481"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-6",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- one merge and one shared-folder commit, each judged on its own contents",
+      "cells": [
+        {
+          "cell_id": "GS-t-3",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-t-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~2/NFRA_GATSCP.TO-GS-t-3.merge-graded-by-scoped-tree-check.proof_of_spec.json@3d465ade72"
+            }
+          ]
+        },
+        {
+          "cell_id": "GS-e-6",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-e-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~7/NFRA_GATSCP.TO-GS-e-6.close-gate-reads-staged.proof_of_spec.json@07cec17481"
+            }
+          ]
+        },
+        {
+          "cell_id": "GS-f-2",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-f-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~9/NFRA_GATSCP.TO-GS-f-2.crlf-reads-like-lf.proof_of_spec.json@a487026109"
+            }
+          ]
+        },
+        {
+          "cell_id": "GS-f-3",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-f-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~10/NFRA_GATSCP.TO-GS-f-3.close-check-reads-the-order.proof_of_spec.json@32a21277f3"
+            }
+          ]
+        },
+        {
+          "cell_id": "GS-f-6",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-f-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~13/NFRA_GATSCP.TO-GS-f-6.continue-refuses-a-partial-commit.proof_of_spec.json@52077f86ca"
+            }
+          ]
+        },
+        {
+          "cell_id": "GS-h-3",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-h-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~16/NFRA_GATSCP.TO-GS-h-3.continue-catches-a-reset-both-ways.proof_of_spec.json@709428981d"
+            }
+          ]
+        },
+        {
+          "cell_id": "GS-x-1",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-x-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~17/NFRA_GATSCP.TO-GS-x-1.close-gate-grades-the-round-being-closed.proof_of_spec.json@7d6c43c991"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "GS-x-1 is a direct act (row D1-S15, 1.0.0_SA_CTO~DELL1 msg 2776): the commit-time close gate grades the round being closed, a read of what the close commit carries."
+    },
+    {
+      "fwd_id": "FWD-7",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- one order to a seat on another box and one to a Codex seat, each found in the receiver's inbox",
+      "cells": [
+        {
+          "cell_id": "GS-e-2",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-e-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.7.0_AE_CloudOps~ZG/NFRA_GATSCP.TO-GS-e-2.sitez-live-read-no-copy.proof_of_spec.json@ca0eb9da91"
+            }
+          ]
+        },
+        {
+          "cell_id": "GS-e-3",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-e-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~4/NFRA_GATSCP.TO-GS-e-3.crossbox-delivery-on-origin.proof_of_spec.json@07cec17481"
+            }
+          ]
+        },
+        {
+          "cell_id": "GS-f-4",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-f-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~11/NFRA_GATSCP.TO-GS-f-4.crossbox-record-custody.proof_of_spec.json@59d0bfc9f8"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-8",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- the census's 30 recorded refusals replayed against the fixed gates, every one read",
+      "cells": [
+        {
+          "cell_id": "GS-f-5",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-f-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~12/NFRA_GATSCP.TO-GS-f-5.seven-gate-census.proof_of_spec.json@c233d2de94"
+            }
+          ]
+        },
+        {
+          "cell_id": "GS-h-1",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-h-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~14/NFRA_GATSCP.TO-GS-h-1.owned-paths-attribution-replay.proof_of_spec.json@f95c647336"
+            }
+          ]
+        },
+        {
+          "cell_id": "GS-h-2",
+          "task_orders": [
+            {
+              "id": "NFRA_GATSCP.TO-GS-h-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~15/NFRA_GATSCP.TO-GS-h-2.block-and-override-carry-the-act.proof_of_spec.json@ade077ddb3"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "GS-f-5 is the round-3 census that raised FWD-8 (row D1-S7); GS-h-1 is the attribution replay its DONE WHEN names; GS-h-2 makes the next census measure by act key."
+    }
+  ]
+}
