@@ -170,7 +170,7 @@ Rows: id `NFRA_OPLGTW-Z-W41-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
   HEADs 2048 objects (~151s unbounded); the old bound returned rc 124 with no output (row Z-W41-S4). The check's
   predicate and expect are unchanged. Graded by no gate limb as a modification (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>32</round>
 <slot>~41</slot>
 <fabric>site-z</fabric>

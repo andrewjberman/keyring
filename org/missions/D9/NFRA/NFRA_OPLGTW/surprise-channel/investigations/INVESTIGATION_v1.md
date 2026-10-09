@@ -10216,3 +10216,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Issuer's options: raise the bound in bf1.sh (timeout 115 to about 300) or parallelise the HEADs, then re-run AC2 and flip the order. Not done here: any edit to the check."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W41-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
+  "surfaced_at": "2026-10-09T08:24:58Z",
+  "one_line": "RESOLUTION of NFRA_OPLGTW-Z-W41-S4: amendment A2 (bound 330s) applied by cherry-pick 0c54d8b8a0 of 2851a9190d; AC2 as written now PASS. The ordered 'git merge box/sitez' could not commit: the surprise-row gate refuses a duplicate id in box/sitez's own AMGT_HARVST channel.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/bf1.sh AC2; echo exit=$? after A2: 'backfilled dates 512; served objects checked 2048' / 'RESULT: PASS' / 'exit=0' (real 2m28s, bound 330s).",
+      "RUN git merge --no-edit box/sitez: one conflict in this channel only (resolved keeping both sides' rows, 443 ids, 0 duplicates); git merge --continue then ran the pre-commit hook and exited 1 with '[surprise-row-gate] BLOCKED -- 1 violation: org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md: id AMGT_HARVST-Z-S106 occurs 2 times in the staged file (HEAD carries 0)'. 'git show box/sitez:<that file>' carries the id twice, so the duplicate is on box/sitez itself, not from this worktree.",
+      "ACT git merge --abort (my own merge state), then git cherry-pick 2851a9190d -> 0c54d8b8a0 (bf1.sh and the order's A2 note only). No gate was overridden."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The issuer's ruling on S4: merge box/sitez into this worktree to receive A2.",
+  "world_is": "The merge cannot be committed in a worktree while box/sitez carries AMGT_HARVST-Z-S106 twice; every later merge of box/sitez into any worker branch will be refused the same way until that duplicate is removed. This worktree took A2 by cherry-pick instead; the eventual drain merge of this branch will meet the same cherry-picked content as an identical change.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "S4 is resolved by A2. Not done here: any edit to the AMGT_HARVST channel (outside this order's paths). The owner of that channel (see the gate's text: 1.0.0_SA_CTO) removes the duplicate."
+}
+```
