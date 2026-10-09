@@ -72,8 +72,8 @@ refused IAM write. `CT-x-2` installs one checked package and makes one refused d
 | `CT-t-3` | no hand-listed boxes: a census of every script and data file that lists boxes, each moved onto `lib/devices.py`; a fixture box then needs no edit | FWD-2 | LOCAL | `~53` |
 | `CT-t-4` | the manager-day read: `mstr-record-check.py` over one day of each box manager's record, written as a read file; JUDGMENT criterion "no project ruling", graded by 3.0.0_SA_CVO | FWD-21 | LOCAL | `~54` |
 | `CT-t-5` | `.tools/box-sync-conflicts.py`: box-sync merge conflicts per shared file and per box over a window, with the writers named | FWD-8 | LOCAL | `~55` |
-| `CT-x-1` | one deliberate Dell deploy of a commit no other box has merged, read back byte for byte, plus one real IAM write the Denies refuse | FWD-10, FWD-5 | WORLD | `0.7.0_AE_CloudOps~DELL1` |
-| `CT-x-2` | the click route finished on a Dell: receive, verify, prove, receipt, the lane's work run, outbound counted, one deliberate blocked install | FWD-15, FWD-17, FWD-18, FWD-19 | WORLD | `0.7.0_AE_CloudOps~DELL1` |
+| `CT-x-1` | one deliberate Dell deploy of a commit no other box has merged, read back byte for byte, plus one real IAM write the Denies refuse | FWD-10, FWD-5 | WORLD | `0.7.0_AE_CloudOps~CT1` (dell1) |
+| `CT-x-2` | the click route finished on a Dell: receive, verify, prove, receipt, the lane's work run, outbound counted, one deliberate blocked install | FWD-15, FWD-17, FWD-18, FWD-19 | WORLD | `0.7.0_AE_CloudOps~CT1` (dell1) |
 
 ## Dependency chains and fan-out
 
@@ -108,3 +108,10 @@ There is no chain. `fanout: 7` (5 workers, run at most 3 at once for laptop disk
 - **W14-S40:** compare to the post-edit render.
 - **W13-S31:** dismissed.
 - **The 9 INBOUND rows:** move to COMM_ASSIST.
+
+## RE-ADDRESS at issuance (~06:5xZ)
+
+`to-decomp-ref-lint.py`'s seating check refused `0.7.0_AE_CloudOps~DELL1` for `CT-x-1` and `CT-x-2`, because it holds an open ETFS_RIVALS
+order (one project per Tier-2 seat instance). 0.0.0_AB_MSTR assigned a fresh lane, `0.7.0_AE_CloudOps~CT1` on dell1 (msg 107809), and
+0.0.0_AB_MSTR~DELL1 spawns it. Both orders moved to `org/tier2_senior/0.7.0_AE_CloudOps~CT1/task_orders/`. Their text is unchanged except
+the seat.
