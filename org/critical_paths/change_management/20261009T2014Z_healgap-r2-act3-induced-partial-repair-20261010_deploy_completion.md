@@ -14,7 +14,7 @@
 |---|---|---|---|---|---|
 | L1 | activation | daily target input -> drop-feed induce | PutTargets + list-targets-by-rule read-back | PutTargets 20:15:06Z FailedEntryCount 0; read-back 20:15:19Z: 1 target cot-rebalancer-runner-daily -> cot-rebalancer-runner, Input {"mode":"pull","induce":"drop-feed:rebalancer_accounts"}; rule cron(0 6 * * ? *) ENABLED; hg_r2_act3.py --restored reads RESTORED-BAD (negative arm). Runner CodeSha256 NFG8dbEL.. Successful. MSTR~DELL1 told 20:14Z, backup check armed ~06:08Z (msg 3120). | CLOSED 20261009T201540Z |
 | L2 | verify | FWD-2 PARTIAL read 2026-10-10 | hg_r2_act3.py --partial 2026-10-10 PARTIAL-OK |  | OPEN |
-| L3 | activation | restore daily input to mode pull | PutTargets + read-back {"mode":"pull"}; hg_r2_act3.py --restored RESTORED-OK |  | OPEN |
+| L3 | activation | restore daily input to mode pull | PutTargets + read-back {"mode":"pull"}; hg_r2_act3.py --restored RESTORED-OK | RESTORED BY 1.0.0_SA_CTO (laptop) 2026-10-10T20:28:38Z under NEVER-2 as the ledger's own declared rollback: dell1 seats and MSTR~DELL1 down since ~23:02Z Oct 9, 12:00Z restore deadline missed. Live read BEFORE: Input {"mode":"pull","induce":"drop-feed:rebalancer_accounts"}. aws events put-targets FailedEntryCount 0; read-back Input {"mode":"pull"}, byte-equal to TF jsonencode({mode="pull"}) at infra/aws/terraform/opal-assets/cot_rebalancer_runner.tf:194. Rule cron(0 6 * * ? *) ENABLED unchanged. The 06:00Z Oct 10 induced run fired (Lambda bucket 06Z: 4 invocations, 3 errors). L2, L4, L5 (PARTIAL read, FWD-3 repair, satellites) are NOT done: 2.0.0_SA_COO~G1 owns them on dell1's return. | CLOSED 20261010T202956Z |
 | L4 | verify | FWD-3 repair | repair.py manifest + --execute; hg_r2_act3.py --repaired 2026-10-10 REPAIRED-OK (healed_at non-null); --diff before/after |  | OPEN |
 | L5 | verify | satellites 07:00Z as_of 2026-10-10 + 11:3xZ SKIP | registry as_of 2026-10-10; re-attempt SKIP-IDEMPOTENT |  | OPEN |
 
@@ -22,3 +22,4 @@
 
 - 20261009T201425Z OPENED by 2.0.0_SA_COO~G1 with 5 leg(s)
 - 20261009T201540Z LEG L1 closed: PutTargets 20:15:06Z FailedEntryCount 0; read-back 20:15:19Z: 1 target cot-rebalancer-runner-daily -> cot-rebalancer-run
+- 20261010T202956Z LEG L3 closed: RESTORED BY 1.0.0_SA_CTO (laptop) 2026-10-10T20:28:38Z under NEVER-2 as the ledger's own declared rollback: dell1 seats 
