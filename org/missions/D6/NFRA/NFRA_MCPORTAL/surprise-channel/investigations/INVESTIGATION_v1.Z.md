@@ -1245,6 +1245,35 @@
     "spec_asserts": "Z-S31 ARMED: every .py commit on site Z is blocked by the gate's inability to run ruff. Z-S30: the overlap cold read exceeded 30 s.",
     "world_is": "Z-S31 blocks commits but corrupts nothing (fail-closed). This project holds rather than bypasses, and the owner fix is routed. Z-S30's remedy is measured and meets the tightened bar.",
     "notes": "The remedy halves the cold read but does not make it constant: the record count still grows through the day (Z-S27). A boot-time cache warm stays an enrichment for the next analysis."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S34",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MP",
+    "surfaced_at": "2026-10-09T20:03Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S31"
+    ],
+    "one_line": "CORRECTS Z-S31's DIAGNOSIS, which has already been routed to 0.0.0_AB_MSTR~Z. It is NOT 'python -m ruff is blocked' and NOT device-wide: Python311 `-m ruff` WORKS (ruff 0.15.11, rc=0) and only Python314 `-m ruff` is refused (WinError 4551). commit-gate.sh:59 runs `exec python ...`, and on this box `python` resolves to C:\\Program Files\\Python314 while ruff is installed for Python311. So the gate picks an interpreter whose bundled ruff.exe the policy refuses. The fix is a one-line interpreter/binary resolution, not an IT policy change.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MP",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, both interpreters, same shell, minutes apart. `python -m ruff --version` (python -> C:\\Program Files\\Python314\\python.exe, 3.14.7) -> OSError [WinError 4551] An Application Control policy has blocked this file. `python3 -m ruff --version` (python3 -> C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe, 3.11.9) -> 'ruff 0.15.11', rc=0. So the SAME `-m ruff` launch succeeds or fails purely by which interpreter runs it.",
+        "THE MODULE IS PRESENT UNDER BOTH, which rules out 'not installed for 3.14' as the cause: `importlib.util.find_spec('ruff')` returns True under Python314 AND under Python311. What differs is the bundled ruff executable each site-packages carries -- the policy admits Python311's and refuses Python314's. The directly-invoked `ruff` on PATH that works is Python311's Scripts\\ruff.",
+        "THE GATE'S INTERPRETER IS THE LINK, read from the source: .tools/commit-gate.sh:59 is `exec python \"$SCRIPT_DIR_WIN/commit_gate_runner.py\" \"$@\"`, and commit_gate_runner.py:145-148 then spawns [sys.executable, '-m', 'ruff', ...]. sys.executable is therefore whatever bare `python` resolved to -- Python314 here -- so the gate reaches for the one ruff the policy refuses.",
+        "THIS EXPLAINS A SYMPTOM Z-S31's DIAGNOSIS DID NOT COVER, which is why it should be preferred: this seat committed a .py through the SAME gate about an hour earlier (354d58bc30, '[commit-gate] All checks passed!'). 'An OS policy changed in the last hour' had to assume an unobserved policy edit; 'bare python resolves to Python314' explains it if PATH resolution differed for that invocation, and needs no unobserved change.",
+        "SCOPE IS NARROWER THAN Z-S31 CLAIMED, and the claim is retracted: Z-S31 said it blocks EVERY .py commit on this box. Measured truth is that it blocks any seat whose bare `python` resolves to Python314; a seat resolving to Python311 passes the gate. That scope is PATH-dependent per shell and was NOT measured across other seats -- Z-S31 inferred device-wide from 'OS policy', which is the wider population than the one sample supported.",
+        "NOTHING ABOUT THE REMEDY OR ITS MEASUREMENT CHANGES: AMENDMENT 5's bar is still met (12 of 12 cold samples, max 13.828 s), the file still passes ruff's exact check through the working binary, the edit is still UNCOMMITTED with no override taken, and the issuer has ruled it stays that way until the gate can execute ruff."
+      ]
+    },
+    "spec_asserts": "Z-S31 asserted that commit-gate's ruff limb cannot execute because 'a Windows Application Control policy now refuses `python -m ruff`', and that the block reaches every .py commit on this device.",
+    "world_is": "The refusal is interpreter-specific, not launch-mode-specific: Python311's `-m ruff` runs and Python314's does not. commit-gate's bare `python` is Python314 on this box, so the gate alone trips it while a hand-run ruff succeeds. The blast radius is every seat whose `python` resolves to Python314, which is a PATH property of each shell rather than a property of the device, and it was not measured outside this session.",
+    "notes": "Routed for 0.0.0_AB_MSTR~Z, who already holds Z-S31 -- this row is the correction that makes it cheap to fix. Preferred fix, smallest first: (a) have commit_gate_runner resolve the ruff BINARY (shutil.which('ruff')) and only fall back to [sys.executable, '-m', 'ruff'], exactly how .tools/safe-apply.sh resolves terraform device-agnostically -- one function, and it makes the gate correct wherever ruff is installed at all; (b) add a RUFF env override, same shape as SAFE_APPLY_TERRAFORM; (c) pin commit-gate.sh:59 to the interpreter that owns the pinned ruff (python3 / Python311 here) rather than bare `python`, which also removes the silent dependence on PATH order; (d) independently of all three, make the gate distinguish 'ruff could not be EXECUTED' from 'ruff REPORTED findings' -- the present wording, 'BLOCKED: ruff check failed on <file>', sends the author looking for a lint problem in correct code, and that is the part that cost this cell the most time. An IT policy change is NOT needed for any of (a)-(d)."
   }
 ]
 ```
