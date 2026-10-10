@@ -381,11 +381,11 @@ def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, k
     Investigation-file rows: only a CVO-kind author counts (a doer's own surprise rows name criteria all the time and are
     not grades); a CVO-kind doer is a self-grade."""
     pat = re.compile(r"(?<![A-Za-z0-9])%s(?![A-Za-z0-9])" % re.escape(crit_id))
-    # A generic id (AC3) is a substring of every order's AC3 and of any check-script name (rl9.AC3.sh): the row must
+    # A generic id (AC3, J2) is a substring of every order's AC3/J2 and of any check-script name (rl9.AC3.sh): the row must
     # also name THIS order (its to_id or the short id after "TO-"), or a stale row from another round grades it.
     short = order["id"].split(".TO-", 1)[-1]
     order_pat = None
-    if re.fullmatch(r"AC\d+[a-z]?", crit_id):
+    if re.fullmatch(r"(?:AC|J)\d+[a-z]?", crit_id):
         names = [re.escape(order["id"]), "TO-" + re.escape(short)] + ([re.escape(short)] if re.search(r"[A-Za-z]", short) else [])
         order_pat = re.compile(r"(?<![A-Za-z0-9])(?:%s)(?![A-Za-z0-9])" % "|".join(names))
     doers = {base_of(order["issued_by"]), base_of(order["issued_to"])} - {""}
@@ -580,6 +580,19 @@ def selftest() -> int:
         stale["adjudicates"] = "TEST_PROJ.TO-1 AC2"
         w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md", "```json\n%s\n```\n" % json.dumps([stale]))
         case("a generic AC id with the order named grades", run(), "graded=1", "verdict=MAY-CLOSE")
+        # A generic J id (J2) is scoped the same way: a CVO row from ANOTHER round's order must not grade this one.
+        reset()
+        w(base + "/task-orders/TEST_PROJ.TO-1.one.md", order.replace("T1-AC2", "J2"))
+        w(base + "/deliverables/0.9.0_WK_TEST_PROJ~1/TEST_PROJ.TO-1.one.proof_of_spec.json", json.dumps(
+            {"to_id": "TEST_PROJ.TO-1", "acceptance": [
+                {"criterion_id": "T1-AC1", "status": "PASS"},
+                {"criterion_id": "J2", "status": "UNVERIFIABLE-BY-INSTRUMENT", "judgment": True}]}))
+        other = {"id": "TEST_PROJ-C-S8", "surfaced_by": "3.0.0_SA_CVO", "adjudicates": "TEST_PROJ.TO-9 J2"}
+        w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md", "```json\n%s\n```\n" % json.dumps([other]))
+        case("a generic J id graded on another round's order does not grade", run(), "graded=0", "ungraded=1", "verdict=REFUSED")
+        other["adjudicates"] = "TEST_PROJ.TO-1 J2"
+        w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md", "```json\n%s\n```\n" % json.dumps([other]))
+        case("a generic J id with the order named grades", run(), "graded=1", "verdict=MAY-CLOSE")
         reset(seen=NOW - 100000)
         case("a CVO seat gone stale is ABSENT", run(), "reviewer=ABSENT", "verdict=REFUSED")
         reset(proof=False)
