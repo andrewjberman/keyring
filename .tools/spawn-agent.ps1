@@ -60,7 +60,15 @@ param(
 # An EXPLICIT -Model/-Effort ALWAYS WINS -- this only fills an unset flag, so
 # it is a default, not an override, and never a gate on anyone's choice.
 $tierDefaulted = @()
-if ($Serial -match '^0\.([0-9]+)\.[0-9]+_' -and [int]$Matches[1] -gt 0) {
+# MODEL POLICY MP-20261010 (org/ref/MODEL_POLICY.json): on a TREATMENT device a role-matched serial
+# is resolved by ajb.ps1 from the policy, so this pre-policy tier default must NOT fill -Model/-Effort
+# (a filled flag reads as explicit downstream and would override the policy). Control devices: unchanged.
+. (Join-Path $PSScriptRoot 'model-policy.ps1')
+$mpSpawn = Get-OpalModelPolicy -Serial $Serial
+if ($mpSpawn) {
+    Write-Host "[spawn-agent] $($mpSpawn.PolicyId) $($mpSpawn.Role) on $($mpSpawn.Device): tier default skipped; ajb applies --model $($mpSpawn.Model) --effort $($mpSpawn.Effort) unless -Model/-Effort is given"
+}
+elseif ($Serial -match '^0\.([0-9]+)\.[0-9]+_' -and [int]$Matches[1] -gt 0) {
     if (-not $Model)  { $Model  = 'claude-opus-5'; $tierDefaulted += 'model=claude-opus-5' }
     if (-not $Effort) { $Effort = 'xhigh';         $tierDefaulted += 'effort=xhigh' }
 }

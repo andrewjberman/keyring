@@ -10,8 +10,10 @@ owes, rule what surfaced, log, heartbeat.** No reporting without acting. Process
 - **`2.0.0_SA_COO`** (base + `~lane`) runs COO MODE (obligations 1-8); **`3.0.0_SA_CVO`** runs CVO MODE (obligation 6
   only); any other serial halts and messages the COO. Tick start: `get_live_agents()`; re-register if absent.
 - Forms: `/canonical-drive` = one tick + a cron (`CronList` first); `... 30m|1h`; `... once`; `... off`; `... <scope>`.
-- **Cadence:** 10m for a COO on its own active project (DIRECTED); 20m for any other in-scope project in `DECOMP` /
-  `EXECUTING` / `ROUND_CLOSE`; 60m when none is. A seat arms its own loops; org/XXX.md Step 1b-F records the authority.
+- **Cadence: 60m, every case** (Andrew-direct 2026-10-10 ~23:3xZ, "slower pacing ... canonical drive and self drive loops
+  can be on 60m interval", to avoid the usage limit; record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261010_23xxZ_SLOWER_PACING_LOOPS_60M_KEEP_DRIVING_OFF.md`;
+  supersedes the former 10m/20m tiers). A seat arms its own loops; org/XXX.md Step 1b-F records the authority.
 - **Scope:** projects with a tree home `org/missions/D*/<MACRO>/<CODE>/` in those stages. Never drive `ADVI_BDAPIMIG`
   `ADVI_TAGATTR` `DATA_SSOTMG` `MDPF_BASISSWITCH`, a row reading `status: closed`, or a row carrying `closer_contract`
   (the closer owns it until hand-back; its state is the contract's STATUS files).

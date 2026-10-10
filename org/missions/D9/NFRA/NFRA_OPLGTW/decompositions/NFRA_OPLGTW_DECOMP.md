@@ -1953,3 +1953,15 @@ market_update), built on OG-ab-1, released WITH E2 under one pair naming both ad
 | `OG-ap-5` | -- | Deploy the converter's D-tag routing (one Lambda, Terraform), then re-run ONLY the six held 08403355 dates; all 758 qualify. | WORLD | ~AE | worker |
 
 **fanout:** 1 start, cap 8.
+
+## ADDENDUM R3-T.41 (2.0.0_SA_COO~O, 2026-10-10 ~23:4xZ) -- round 33, workstream APPLY-E2
+
+**Source.** OG-rl-16's three halves (CTO @5e258448d2, COO @153e507b79, CVO @9b6003cd3b), cut at MP-r-2's close (COO~MP msg
+33064; live ref 2a5966dfbd). Applied by `0.7.0_AE_CloudOps~Z`. B1 (re-cut + plan read) now; B2 (policy, then deploy) on the
+issuer's GO after the three halves re-pin at the re-cut sha (CTO C1).
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-6` | -- | Re-cut E2's three commits on 2a5966dfbd and prove the patch-ids equal; then the one PutObject policy and the gateway deploy under their own ledgers. | WORLD | ~AE | worker |
+
+**fanout:** 1 start, cap 8.

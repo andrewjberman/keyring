@@ -310,7 +310,21 @@ function ajb {
         # inferred. The 08-24 word said "tier2"; 0.6.2_AE_PartnerETL~A is Tier 3 by ORG_CHART
         # grammar and came up without the default while four Tier-2 peers had it. TIER 1 IS
         # STILL NOT WIDENED INTO -- he was offered that option and did not take it.
-        if ($modelBySerial.ContainsKey($base)) {
+        # MODEL POLICY MP-20261010 (Andrew-direct 2026-10-10; org/ref/MODEL_POLICY.json, reader
+        # .tools/model-policy.ps1). On a TREATMENT device a serial matching a role takes the policy's
+        # model/effort and SKIPS the pre-policy table and tier rule below; on a control device, or for
+        # an unmatched serial, those apply unchanged. An explicit -Model/-Effort still wins: the policy
+        # then adds nothing, so claude never sees two --model flags.
+        . (Join-Path $PSScriptRoot 'model-policy.ps1')
+        $mp = Get-OpalModelPolicy -Serial $Serial
+        if ($mp -and -not $Model -and -not $Effort) {
+            $claudeArgs += @('--model', $mp.Model, '--effort', $mp.Effort)
+            Write-Host "[ajb] $($mp.PolicyId) $($mp.Role) on $($mp.Device) for ${base}: --model $($mp.Model) --effort $($mp.Effort)" -ForegroundColor Cyan
+        }
+        elseif ($mp) {
+            Write-Host "[ajb] $($mp.PolicyId): explicit -Model/-Effort given for ${base}; policy $($mp.Role) not applied (override)" -ForegroundColor Yellow
+        }
+        elseif ($modelBySerial.ContainsKey($base)) {
             $claudeArgs += $modelBySerial[$base]
             Write-Host "[ajb] model default for ${base}: $($modelBySerial[$base] -join ' ')" -ForegroundColor Cyan
         }
