@@ -44,8 +44,16 @@ PHASE A -- no apply:
 PHASE B -- only on the issuer's GO, after both halves are SIGNED:
   4. Open a deploy-ledger entry named `iamroles-r6-family-e` (one per module) in org/critical_paths/change_management/
      with its .open_deploys/ marker.
-  5. Rename each `.tf.proposed` to `.tf` and `safe-apply` with `-target=` on the adopted aws_iam_role resource(s)
-     ONLY (amendment A2-r6, row Z-S21: the module carries pre-existing Lambda drift an unscoped apply would deploy).
+  5. Rename each `.tf.proposed` to `.tf` and COMMIT the rename on your worktree branch BEFORE any import (amendment
+     A4-r6, row Z-S27: an import that lands before its declaration is committed leaves a DESTROY planned in the shared
+     tree). That commit carries ONLY the renamed `.tf` and the placement override's audit row. Its message file carries
+     `# naming-place-override: <role name(s), live CreateDate, row Z-S25>`, and it runs under
+     `GIT_COMMIT_AUTHOR_OVERRIDE=GOVERNANCE_AUDIT` (rows Z-S25, Z-S26). An adopted role is pre-existing and keeps its
+     live name: CLAUDE.md Rule 30's existing-pipeline non-application. The ledger, proof and POST_APPLY files land in
+     separate commits under neither override. Then `safe-apply` with `-target=` on the adopted aws_iam_role resource(s)
+     ONLY (amendment A2-r6, row Z-S21: the module carries pre-existing Lambda drift an unscoped apply would deploy),
+     and drain the branch into box/sitez in the same session as the apply. After the drain, run the untargeted module
+     plan in the shared tree and record that it reads 0 to destroy.
      Apply only a targeted plan that equals the pair's: N to import, 0 to add, 0 to destroy, and only the role's
      tags_all update the pair names. Anything else: stop, file a row, do not apply. AC2's POST-APPLY-PLAN line is
      the TARGETED re-plan; record the untargeted module plan beside it, so the pre-existing drift is visible.
