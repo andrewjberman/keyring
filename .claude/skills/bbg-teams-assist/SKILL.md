@@ -32,8 +32,12 @@ design). The canonical arm line (Monitor tool, `timeout_ms: 1800000`). `teams-wa
 exit and run the backlog sweep (`/bbg-teams-assist`) to cover the gap:
 
 ```
-timeout 1770 python .claude/skills/teams-assist/teams-watch.py --server opal-gateway-bbg --identity 517aa5ee-b4d0-425a-b493-5a22ff77ac4f
+timeout 1770 python .claude/skills/teams-assist/teams-watch.py --server opal-gateway-bbg --identity 517aa5ee-b4d0-425a-b493-5a22ff77ac4f --channels .claude/skills/teams-assist/channels.json
 ```
+
+`--channels` is mandatory: without it the engine watches ZERO Team channels and says nothing (`channels = []`,
+teams-watch.py:511). The arm banner must print `channels=1 watched (Opal Client Tickets)`; a banner with no
+`channels=` clause is an unwatched tickets channel. Add a channel by adding a row to `channels.json` (ids, never names).
 
 The pin is the opalbloomberg account's Entra `oid`. The old form, `--identity opalbloomberg`, could never match:
 `self_id()` reads the token's `sub` (`<tid>/<oid>`), and the token carries no `preferred_username` or `upn`. Read
