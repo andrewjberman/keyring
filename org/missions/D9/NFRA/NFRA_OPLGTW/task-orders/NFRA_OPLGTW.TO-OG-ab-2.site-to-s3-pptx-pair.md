@@ -94,7 +94,7 @@ Rows: id `NFRA_OPLGTW-Z-W49-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
   admitted pairs (CVO half included), at E2's slot after MP-x-4, the allowlist and MX-r-9.
 - Pre-cut: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>33</round>
 <workstream>ADVI-E2-PPTX</workstream>
 <slot>~49</slot>
