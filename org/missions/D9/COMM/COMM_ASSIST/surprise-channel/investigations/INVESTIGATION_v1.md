@@ -259,3 +259,32 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Resolves Z-S5's open question (the listing). What remains is FWD-4's exercise: one party mail whose body names Andrew. If the 19:30Z driver mail did name him, the body_no_andrew test is the defect. That is the discriminating question for the round-12 analysis, and only the sender or the CVO's flag judgment can answer it without this seat reading content."
 }
 ```
+
+## COMM_ASSIST-Z-S8 -- round 13 E1: no seat can send the driven mail from a non-Andrew Opal mailbox; routed to Andrew
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S8",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZZ",
+  "surfaced_at": "2026-10-10T23:30Z",
+  "one_line": "Round 13 E1 needs ONE mail to Andrew from an Opal mailbox other than his own. The issuer names opalbloomberg@opalinvest.com, but no seat can send from it today: the estate's only application-credential path (irpt/graph/app-registration) does not exist, and the gateway's Graph access is delegated per user, with this seat's identity reading Andrew@opalinvest.com.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws secretsmanager describe-secret --secret-id irpt/graph/app-registration at ~23:1xZ 2026-10-10: ResourceNotFoundException.",
+      "opalgateway whoami from this seat at ~23:0xZ: userPrincipalName Andrew@opalinvest.com.",
+      "infra/aws/lambda/investor-reporting/intake/graph_client.py auth_state(): the gateway's Graph model is DELEGATED per user and establishes no application grant.",
+      "check_e1_body_considered.py at base a89f5575b1: the driven body passes considered() as ok in plain-text and HTML shapes; the nameless control is refused as body_no_andrew."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round-12 analysis E1: a seat sends ONE mail from an Opal-domain mailbox other than Andrew's; if no seat can send from one, the cell's first act records that and the row goes to Andrew.",
+  "world_is": "No seat holds a sending identity other than Andrew's. The send needs Andrew's hand: either an Opal colleague sends the exact text in decompositions/COMM_ASSIST_DECOMP.round13.md (cell CA-e-1) to Andrew@opalinvest.com, or he names or signs in a sending identity a seat may use. The rest of the round (E2, E3) does not wait on it.",
+  "notes": "Routed to Andrew through 0.0.0_AB_MSTR~Z as one ask. On the send, the issuer runs check_e1_mail_day.py for the send day and resolves this row with a new citing row."
+}
+```
