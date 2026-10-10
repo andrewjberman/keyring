@@ -1469,3 +1469,98 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-S25 -- the naming gate reads an ADOPTED pre-existing resource name as NEW, so every FWD-4 adoption cell is refused at commit
+
+```json
+[
+{
+    "id": "NFRA_IAMROLES202609-Z-S25",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-10T22:15:00Z",
+    "one_line": "naming-gate.py decides NEW from the FILE'S PRE-IMAGE (judge(): new = pre_text is None or not _in_pre(lit, pre_text)), and an adoption's declaration is necessarily new text, so opal-smartx-lambda-role -- live in AWS since 2025-11-20 -- was graded 'NEW name the canon places as FIX. Owed: use smartx-lambda-role' and REFUSED at commit, although that commit was a pure R100 rename of bytes already at HEAD; w-2 (bd-merge-daily-lambda-role, bd-pipeline-task-role) and w-3 (Family E) will hit the same refusal.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Rule 30: every resource name is lib/opal_naming.py name() output, a builder REFUSAL is a missing registry row to add under infra/logic/registry/ and never a hand-typed workaround, and a deliberate departure is an R20 register entry Andrew acknowledges -- with the stated NON-APPLICATION that existing pipelines reach conformance through their own migration project (R19), never as a rider. The w-1 cell's BOUNDS are custody-only, NO PERMISSION MOVES, and the signed never-widen pair (COO @f2c325cac8, CTO @f5444083a8) signs exactly one import plus four default tags.",
+    "world_is": "The gate cannot see that the resource pre-exists. judge() computes new from whether the literal appears in the graded file's PRE-IMAGE, not from whether the name exists in AWS or at HEAD. An adoption declares an existing resource for the first time, so its literal is new to that file by construction -- here the file was the same bytes renamed .tf.proposed to .tf (git records R100), and the gate still read NEW and placed it as FIX owing smartx-lambda-role. The mitigation for exactly this shape EXISTS in the gate but is unreachable from this branch: _carried_at_head() (lines 978-999) is consulted only under verdict == RAISE (lines 1930-1942, whose own comment cites Rule 30 and says copying an existing pre-LGIC key into a new file mints nothing); the OUT-OF-PATTERN/placement branch that fires here has no such check. Renaming the live role is not available to this cell: an IAM role cannot be renamed in place, so it is a create-plus-delete WORLD act outside the cell's BOUNDS and outside the signed pair. Nor is the durable fix in this lane's write surface -- the registry row or the R20 register entry lives under infra/logic/registry/, which the order's <paths> does not name. LANDED UNDER THE AUDITED PLACEMENT OVERRIDE (id 2026-10-10T22:09:49Z-449882-20584) at c942b684bc, reason recorded in the commit message and in org/audit/naming-place-override-audit.jsonl. NOT CLAIMED: this seat did NOT exercise the EXISTING branch. The follow-up header commit b41c3a9e29 graded 0 literals (NAMING-GATE: PASS 0 graded) because the role name sits on lines that commit did not touch, so it is NOT a control for the EXISTING verdict and is not offered as one; the finding rests on the measured NEW-and-refused reading alone.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "safe-commit refusal, verbatim: '[naming-gate] NAMING REFUSE infra/aws/terraform/smartx-pipeline/zz_adopt_family_b.tf:41 opal-smartx-lambda-role -> smartx-lambda-role' / 'why: NEW name the canon places as FIX. Owed: use smartx-lambda-role. Build it with name() or edit the literal; nothing else is owed.' / 'NAMING-PLACE: REFUSE 2'",
+            "git diff --cached -M --name-status: R100 infra/aws/terraform/smartx-pipeline/zz_adopt_family_b.tf.proposed -> zz_adopt_family_b.tf, bytes cmp-identical to HEAD:zz_adopt_family_b.tf.proposed",
+            "aws iam get-role opal-smartx-lambda-role: CreateDate 2025-11-20T14:43:02Z, RoleLastUsed 2025-12-30T23:24:50Z -- pre-existing, not minted by this diff",
+            ".tools/naming-gate.py:1891 (new = pre_text is None or not _in_pre(...)); :1930-1942 (_carried_at_head consulted only on RAISE); :1946 (NEW and OUT-OF-PATTERN -> REFUSE, with no carried-at-head check)",
+            "org/audit/naming-place-override-audit.jsonl at c942b684bc; header commit b41c3a9e29 reading 'NAMING-GATE: PASS 0 graded'"
+        ]
+    },
+    "notes": "Routed to the issuer for a registry/R20 disposition BEFORE w-2 and w-3 cut their PHASE B, so those two do not each spend an override. Cites Z-S26 (the override's own lane blocker) and Z-S27 (the ordering hazard this refusal created). The channel's dispositions stay the CVO's at L9."
+}
+]
+```
+
+## Z-S26 -- the audited naming-place override cannot be used by any seat that is not on owned-paths lane GOVERNANCE_AUDIT -- which is every Tier-2 seat that writes infra
+
+```json
+[
+{
+    "id": "NFRA_IAMROLES202609-Z-S26",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-10T22:16:00Z",
+    "one_line": "safe-commit.sh implements the '# naming-place-override:' escape by writing a row to org/audit/naming-place-override-audit.jsonl and STAGING IT INTO THE SAME COMMIT, but that path is owned-paths lane GOVERNANCE_AUDIT whose permitted agents are MSTR and the execs -- so the override refuses the very commit it just authorised, for every seat not on that lane.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "naming-gate.py's header (THE PLACEMENT OVERRIDE, LGIC_BLANKFIX FWD-6 round 9 BF-x-4, row W1-S21) states the purpose plainly: while the switch is present a creator whose name the canon cannot yet place needs a way through. Round 10 BF-y-1 made the audit row ride the landed commit ON PURPOSE -- the landed commit carries its own audit row -- and the gate reads it from the INDEX (git show :<path>), so staging it is not optional. CLAUDE.md 14a: --force bypasses only contamination checks, never a lane refusal; the escape for a lane refusal is GIT_COMMIT_AUTHOR_OVERRIDE=<LANE>, AUDITED.",
+    "world_is": "The two mechanisms contradict each other for exactly the population the override exists to serve. A creator whose name the canon cannot yet place is by definition a seat writing infra -- a Tier-2 DT or AE lane -- and no such lane sits in GOVERNANCE_AUDIT's permitted agents, whose own stated rationale is that the file is tamper-sensitive and NOT world-writable, because a log anyone may rewrite is not a log. That rationale is sound for hand edits and is exactly wrong for this row, which no seat authors: safe-commit writes it, hashes it against the message it is about to commit, and stages it. Measured here: the naming limb PASSED (NAMING-GATE: WARN 2 graded, both rows printed NAMING OVERRIDDEN) and the SAME invocation then died on the lane violation. So the override is not merely awkward from this lane, it is unusable alone. This seat landed c942b684bc by stacking the second audited escape, GIT_COMMIT_AUTHOR_OVERRIDE=GOVERNANCE_AUDIT, on top of the first; the --author line stayed 0.7.0_AE_CloudOps~IR so authorship is not misattributed, and both overrides are in their audit logs. STATED AS A LIMIT rather than papered over: needing two stacked audited overrides to land one signed act is a WORSE control than one, because the second one's exit covers the ENTIRE staged set rather than the single path that needed it (CLAUDE.md 14a: its exit covers the entire staged set, so ONE LANE PER COMMIT is a discipline, not a mechanism) -- every other path in that commit rode an override it did not need. The clean fix is a path rule admitting this one override row from any seat, since no seat authors it.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "safe-commit run 1, verbatim: 'WARN: naming placement step OVERRIDDEN (audited, id 2026-10-10T22:07:56Z-444192-20062)' then 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: org/audit/naming-place-override-audit.jsonl -- lane=GOVERNANCE_AUDIT ... agent=0.7.0_AE_CloudOps~IR not in permitted_agents' and 'ERROR: safe-commit did NOT commit (rc=1)'",
+            "safe-commit run 2 with GIT_COMMIT_AUTHOR_OVERRIDE=GOVERNANCE_AUDIT: same naming override (id 2026-10-10T22:09:49Z-449882-20584), NAMING-GATE: WARN 2 graded, committed c942b684bc, 5 files changed, 'create mode 100644 org/audit/naming-place-override-audit.jsonl'",
+            ".tools/naming-gate.py header THE PLACEMENT OVERRIDE block: safe-commit.sh is the ONLY setter of NAMING_PLACE_OVERRIDE, and the row is read from the index, never from a file on disk only",
+            "the lane's own text as printed by the owned-paths hook: permitted agents are MSTR plus the execs, rationale 'NOT world-writable: this is tamper-sensitive evidence'"
+        ]
+    },
+    "notes": "Cites Z-S25, whose refusal forced the override. The ask is one path rule, not a lane widening: the row is machine-written by safe-commit and bound to its own commit's message hash, so admitting it from any seat does not make the file hand-writable. The channel's dispositions stay the CVO's at L9."
+}
+]
+```
+
+## Z-S27 -- an adoption whose IMPORT lands before its declaration can be committed stages the imported resource for DESTRUCTION in the shared tree -- measured at 1 to destroy on a live IAM role, and closed the same session
+
+```json
+[
+{
+    "id": "NFRA_IAMROLES202609-Z-S27",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-10T22:17:00Z",
+    "one_line": "Between the PHASE B apply and the drain of its declaration, the shared tree held the role in remote state with NO configuration, so terraform plan in smartx-pipeline read 'Plan: 0 to add, 3 to change, 1 to destroy' with 'aws_iam_role.opal_smartx_lambda_role will be destroyed (because it is not in configuration)' on a live role carrying three inline policies; w-2 and w-3 must prove their declaration COMMITS before they import, not after.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell's step order is 4 open the ledger, 5 rename and -target apply, 6 re-plan and record, then close -- which reads as though the only irreversible moment is the apply. NEVER-2: never leave a confirmed deploy half-landed; finish in-session or roll back and escalate loud.",
+    "world_is": "The apply writes the import to the SHARED remote state immediately, while the declaration that justifies it lives only in the actor's worktree until a commit and a drain. Terraform's rule is that a resource in state with no configuration is a planned DESTROY, so the gap between those two events is a window in which any peer running an unscoped apply in that module deletes the adopted role. The window was not theoretical: the naming gate (Z-S25) and then the owned-paths lane (Z-S26) both refused the commit AFTER the apply had landed, which is precisely the ordering that opens it. The module made it sharper than a quiet window -- smartx-pipeline already carries three pending Lambda code changes its owner may apply at any time (Z-S21, Z-S20), and that apply would have carried the destroy with it. MEASURED on both sides from the shared tree: with the declaration absent, 'Plan: 0 to add, 3 to change, 1 to destroy'; after the drain 9458756ca0 put zz_adopt_family_b.tf in the shared tree, 'Plan: 0 to add, 3 to change, 0 to destroy' -- byte-identical to PHASE A's negative-control baseline, so the window is CLOSED and the residue is only the pre-existing drift. THE INSTANCE IS CLOSED; THE CLASS IS NOT. The prescription for w-2 and w-3, which adopt three more pre-existing roles into bd-pipeline and Family E's module and will meet the same two refusals: prove the commit path end to end BEFORE touching AWS -- run the real safe-commit invocation on the renamed .tf and read whether it lands, then import -- because a declaration committed bare without its import plans a CREATE and is not a safe intermediate state either. This seat did it in the other order and paid for it.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "shared tree with the declaration absent, verbatim: '# aws_iam_role.opal_smartx_lambda_role will be destroyed' / '# (because aws_iam_role.opal_smartx_lambda_role is not in configuration)' / 'Plan: 0 to add, 3 to change, 1 to destroy.'",
+            "terraform -chdir=infra/aws/terraform/smartx-pipeline state list, grepped: aws_iam_role.opal_smartx_lambda_role present in SHARED remote state while the shared tree carried only the .tf.proposed",
+            "shared tree after the drain 9458756ca0: 'Plan: 0 to add, 3 to change, 0 to destroy.' with the three aws_lambda_function in-place updates as its whole content",
+            "PHASE A negative control for comparison, PLAN_SURVEY_family_b.md at 4dff2b348a section 3: 'Plan: 0 to add, 3 to change, 0 to destroy.'",
+            "the two refusals that opened the window: Z-S25 and Z-S26"
+        ]
+    },
+    "notes": "The w-1 instance is CLOSED by the drain and the post-drain plan read above; the row stays ARMED for w-2 and w-3, which have not cut PHASE B. Cites Z-S25, Z-S26, Z-S21. The channel's dispositions stay the CVO's at L9."
+}
+]
+```

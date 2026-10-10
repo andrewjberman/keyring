@@ -8505,6 +8505,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-Z-S111",
+     "project": "AMGT_HARVST",
+     "fabric": "site-z",
+     "surfaced_by": "0.0.0_AB_MSTR~Z",
+     "surfaced_at": "2026-10-10T22:20:00Z",
+     "one_line": "The /govern worktree GC (worktree_gc.py --go) force-removed both harvest-runner pin worktrees while the scheduled runner was executing from them; the runner died at 22:01:29Z and was restored and restarted at 22:15:26Z.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "FWD-18: the runner cycles the publishers without end. The GC rule (govern Step 3a.6) removes MERGED worktrees idle >= 24 h and never touches a locked tree.",
+     "world_is": "wk-harvest-runner-pin-b5a7a3a4b6 (the task's WorkingDirectory, code) and wk-harvest-runner-pin-c1be67f53c (state) were both unlocked, merged into box/sitez and read idle 25.8 h and 36.8 h, so GC classed them MERGED and ran git worktree remove --force. GC idleness is git activity only; it cannot see that a live process or scheduled task runs from the tree. The checkouts were deleted except the cwd directory and .runtime. cycle_runner.log 22:01:29Z: 'No module named lib.opal_data_harvest', cycle 20261010T204810Z stopped, completed false. Remedy 22:1xZ by 0.0.0_AB_MSTR~Z: both worktrees re-added at their exact pins (.runtime state moved aside and back, intact), both locked with a reason, task restarted; new runner PID 21512, PLAN lines from 22:15:27Z. Also locked: opal-pinned/amgt-induction-daily/7580fe909cf3 (the amgt-induction-daily task's pin). Not fixed: worktree_gc.py still has no check for a tree that a process or scheduled task uses, and other boxes' pins are unchecked.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-c1be67f53c/.runtime/harvest-cycle/state/cycle_runner.log (lines at 22:01:29Z and 22:15:27Z)",
+       ".tools/worktree_gc.py --go output 2026-10-10 ~21:4x-22:0xZ: MERGED rows for both pins, WARN remove refused (Permission denied / Directory not empty)",
+       "Get-ScheduledTask 'Opal Data Harvest - Continuous Cycle' action: WorkingDirectory wk-harvest-runner-pin-b5a7a3a4b6"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
