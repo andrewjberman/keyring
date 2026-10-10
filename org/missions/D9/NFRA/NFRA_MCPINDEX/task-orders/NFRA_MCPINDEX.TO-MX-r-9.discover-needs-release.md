@@ -225,6 +225,7 @@ J1 is the thread run, the round's one essential wait: Alyssa's act, booked throu
 
 <status>issued</status>
 <status>pending</status>
+<status>complete</status>
 <round>8</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
