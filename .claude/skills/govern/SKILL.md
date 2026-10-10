@@ -32,15 +32,16 @@ a ruling, for a reviewer to judge.
 
 ## When to invoke
 
-- **Armed at instantiation, every 30 minutes.** Every fabric manager (`0.0.0_AB_MSTR`, with or without a `~<lane>`) arms
-  `/govern 30m` at load, after `/watcher`, `/agentbus` and `/integrate`. Andrew-direct 2026-10-08 ~17:4xZ, VERBATIM: "MSTR
-  agents should have /govern on a 30m loop at instantiation." (record
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_174xZ_MSTR_GOVERN_30M_LOOP_AT_INSTANTIATION.md`; it
-  supersedes the 2026-06-03 "not auto-armed" word). A different cadence is still Andrew's call.
-> **Each box fires on its own minutes of the hour** (Andrew-direct ~18:0xZ, VERBATIM in section 9 of
-> `org/tier1_exec/4.0.0_SA_CRO~A/deliverables/PER_BOX_BRANCH_DESIGN_20261008.md`): laptop `:00` and `:30`, site Z `:06` and
-> `:36`, dell1 `:12` and `:42`, dell2 `:18` and `:48`. Arm the cron on those minutes (e.g. dell1 `12,42 * * * *`), never a
-> bare interval. A cycle still running when its next slot arrives skips that slot.
+- **Armed at instantiation, every 60 minutes.** Every fabric manager (`0.0.0_AB_MSTR`, with or without a `~<lane>`) arms
+  `/govern 60m` at load, after `/watcher`, `/agentbus` and `/integrate`. The arm-at-instantiation is Andrew-direct
+  2026-10-08 ~17:4xZ (`ANDREW_DIRECT_20261008_174xZ_MSTR_GOVERN_30M_LOOP_AT_INSTANTIATION.md`). The 60m cadence is
+  Andrew-direct 2026-10-10 ~23:3xZ, VERBATIM "in govern loop too", after "we need slower pacing ... 60m interval" (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261010_23xxZ_SLOWER_PACING_LOOPS_60M_KEEP_DRIVING_OFF.md`).
+  A different cadence is still Andrew's call.
+> **Each box fires on its own minute of the hour**, the first slot of section 9 of
+> `org/tier1_exec/4.0.0_SA_CRO~A/deliverables/PER_BOX_BRANCH_DESIGN_20261008.md`: laptop `:00`, site Z `:06`, dell1 `:12`,
+> dell2 `:18`. Arm the cron on that minute (e.g. dell1 `12 * * * *`), never a bare interval. A cycle still running when
+> its next slot arrives skips that slot.
 - When Andrew invokes `/govern`, it initiates the loop at the 1-hour default (or the
   interval Andrew gives).
 - Never invoked by any agent other than a fabric manager (`0.0.0_AB_MSTR`, with or without a `~<lane>`).
