@@ -1593,3 +1593,36 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-S29 -- bd-pipeline CANNOT PLAN at HEAD: a cross-project config edit broke the module's comprehension, so w-2 PHASE A's PLAN line has no value to record
+
+```json
+[
+{
+    "id": "NFRA_IAMROLES202609-Z-S29",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-10T22:45:00Z",
+    "one_line": "infra/aws/terraform/bd-pipeline CANNOT PLAN AT HEAD -- 4 x 'Error: Unsupported attribute' in bd-served-vintage-alarm.tf lines 30 and 32 -- because NFRA_MCPINDEX commit 3d7fb62105 (2026-10-01) added freshness_basis: trading-day-frontier to bd_silver_allocations and bd_silver_unrealized in data/black_diamond/scripts/gold/gold_freshness_config.yaml without the as_of_field and frontier_page_trading_days attributes the module's comprehension reads unguarded; w-2 PHASE A's PLAN: line is therefore BLOCKED and w-2's never-widen pair has no plan to be written against.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IAM-w-2 PHASE A step 2 requires running safe-apply's PLAN only and recording 'PLAN: <module>: <the plan summary line, verbatim>' in PLAN_SURVEY_family_a.md, and step 3 says the never-widen pair ledger/NEVER_WIDEN_ROUND6_W-2_{COO,CTO}_HALF.md is written against that survey. Both presuppose the module produces a plan.",
+    "world_is": "The module produces no plan at all, with or without this cell's adoption file. bd-served-vintage-alarm.tf builds a map by comprehension over every entry of data/black_diamond/scripts/gold/gold_freshness_config.yaml, filters on try(e.freshness_basis, \"\") == \"trading-day-frontier\", and then reads e.as_of_field (line 30) and e.frontier_page_trading_days (line 32) UNGUARDED -- the try() protects the filter key only. Commit 3d7fb62105 (2026-10-01, 0.9.0_WK_NFRA_MCPINDEX~25, cell MX-f-1, 'weekly trading-day-frontier basis for the two weekly BD silver tables') moved bd_silver_allocations and bd_silver_unrealized to cadence: weekly and added freshness_basis: trading-day-frontier to each, without either attribute the consumer reads. Those two entries now pass the filter carrying neither key. BEFORE/AFTER, counted by the FIELD and not by substring: at 3d7fb62105~1 there were 5 trading-day-frontier entries and 0 missing either attribute, so the module planned; at HEAD there are 7 and 2 are missing both. 2 entries x 2 attributes = 4, reconciling exactly with Terraform's 4 errors. THREE CONTROLS, because three different things could have produced this reading and only one of them is the world: (1) NEGATIVE CONTROL -- with zz_adopt_family_a.tf moved out of the module and nothing else changed, the same 4 errors appear, so this cell's file is not implicated; (2) CHECKOUT CONTROL -- an earlier attempt failed instead on 'no file exists at .../gold_freshness_config.yaml', which WAS an artifact of this seat's sparse cone, and the 4 Unsupported-attribute errors were then reproduced in the SHARED TREE's full checkout, so the finding is about the repository and not about a working copy; (3) COUNT RECONCILIATION -- a first YAML pass read 7 entries / 2 offending and a second read 8 / 3, so neither was quoted until the disagreement was resolved: the second matched the string 'trading-day-frontier' anywhere in an entry block and wrongly caught bd_gold_ticker_resolution, whose only match is inside a COMMENT. The field-anchored count is correct and is the one that reconciles with the error count. OWNERSHIP IS CROSS-PROJECT AND NOT THIS LANE'S: the consumer bd-served-vintage-alarm.tf belongs to the BD pipeline, the breaking edit belongs to NFRA_MCPINDEX cell MX-f-1 whose author 0.9.0_WK_NFRA_MCPINDEX~25 is a worker and cannot be messaged (its COO is 2.0.0_SA_COO~MI), and a cross-fabric call is not an AE's to adjudicate. This cell changed NOTHING in either file and proposes no fix here; the obvious candidates -- guard both reads with try(), or add the two attributes to the two weekly entries -- differ in meaning (a try() default silently drops the two tables from the alarm's served-key coverage, which is a freshness-coverage decision and not a syntax fix), so the choice belongs to the two owners and not to this seat. WHAT IT DOES NOT BLOCK, so the cell is not reported as more blocked than it is: the declaration, the two roles' live reads, the label-collision census, the STATE_KEY, the DEFAULT_TAGS and the whole tag-authorization read were all delivered and are in the survey.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "terraform -chdir=infra/aws/terraform/bd-pipeline plan, verbatim: 'Error: Unsupported attribute / on bd-served-vintage-alarm.tf line 30, in locals: / 30:       as_of_field    = e.as_of_field / This object does not have an attribute named \"as_of_field\".' and the same for line 32 / frontier_page_trading_days; 4 errors total",
+            "NEGATIVE CONTROL: the same plan with zz_adopt_family_a.tf moved out of the module -> grep -c '^Error: Unsupported attribute' = 4 (identical)",
+            "CHECKOUT CONTROL: the 4 errors reproduce in the SHARED tree's full checkout, not only in the sparse worktree; the earlier 'no file exists at .../gold_freshness_config.yaml' error was a sparse-cone artifact and was fixed by widening the cone",
+            "git show 3d7fb62105 -- data/black_diamond/scripts/gold/gold_freshness_config.yaml: two entries gain '+ cadence: weekly' and '+ freshness_basis: trading-day-frontier' and neither gains as_of_field or frontier_page_trading_days",
+            "field-anchored census at 3d7fb62105~1 vs HEAD: 5 trading-day-frontier entries / 0 offending, versus 7 / 2 (bd_silver_allocations line 107, bd_silver_unrealized line 131)",
+            "infra/aws/terraform/bd-pipeline/bd-served-vintage-alarm.tf lines 24-34 (the comprehension, with try() on the filter key only)"
+        ]
+    },
+    "notes": "Routed to 2.0.0_SA_COO~ZI for a cross-project disposition with 2.0.0_SA_COO~MI and the BD pipeline's owner named; the remedy is a choice between two options with different meanings, not a typo fix. It gates w-2 PHASE B's never-widen pair, which has no plan to be written against until the module plans. Cites Z-S28 (A4-r6's ruled order of acts, which still stands and is unaffected). The channel's dispositions stay the CVO's at L9."
+}
+]
+```
