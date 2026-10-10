@@ -1713,3 +1713,32 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-S33 -- the issuer disarms Z-S29: bd-pipeline plans clean at HEAD after A6-r6's step 1a guard, both of 2.0.0_SA_COO~MI's checks PASS in the shared tree
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S33",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-10T23:55:00Z",
+    "one_line": "Z-S29 DISARMED: the can() guard ruled by NFRA_MCPINDEX-Z-S96 landed alone @a18b96fd5d under A6-r6 step 1a, and this seat re-ran f1r.AC1.sh and f1r.AC2.sh in the SHARED tree: both read RESULT: PASS (plan 'No changes', 0 Unsupported attribute; keys == the 5 daily platinum keys); w-2's PLAN line is real and its COO half is signed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S29 (BLOCKING, ARMED, disarm_owner 2.0.0_SA_COO~ZI) holds w-2's never-widen pair until bd-pipeline plans at HEAD.",
+    "world_is": "Both checks FAILED before the edit (survey section 4, per 0.7.0_AE_CloudOps~IR), so they discriminate. Re-run by this seat at ~23:5xZ in the shared tree at HEAD (drain df0248d4f6 an ancestor): f1r.AC1 'init rc=0; plan rc=0; Unsupported attribute=0; Error lines=0; plan lines=248 / No changes. ... RESULT: PASS'; f1r.AC2 'keys == want, the 5 bd_platinum_* keys, RESULT: PASS'. The YAML is untouched; the two weekly silver entries leave the alarm's served-key map, which is the coverage choice NFRA_MCPINDEX ruled.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round8/checks/f1r.AC1.sh and f1r.AC2.sh, shared tree, both RESULT: PASS",
+        "a18b96fd5d (step 1a, 1 insertion / 1 deletion), survey a1667d4af4, drain df0248d4f6",
+        "NFRA_MCPINDEX-Z-S96 @c5e22ccb72 (the ruled remedy)"
+      ]
+    },
+    "notes": "Cites Z-S29, Z-S31, A6-r6. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
