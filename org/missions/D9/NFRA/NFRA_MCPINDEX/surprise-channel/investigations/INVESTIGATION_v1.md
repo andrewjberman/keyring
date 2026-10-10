@@ -6276,6 +6276,29 @@ carries none.
     "spec_asserts": "MX-f-1's cell ruled 'no change to whether the gate blocks' and touched one YAML file; no other module's plan was to move.",
     "world_is": "A second reader of that YAML, a dead Terraform comprehension, reads the two new frontier entries' missing fields unguarded, and bd-pipeline cannot plan. The guard restores the 5-key map that held before 3d7fb62105.",
     "notes": "The checks f1r.AC1.sh (plan: 0 Unsupported attribute, rc 0 or 2) and f1r.AC2.sh (exactly the 5 bd_platinum_* keys) are in deliverables/2.0.0_SA_COO~MI/round8/checks/ for the w-2 amendment to cite. Adding the two fields to the YAML instead was rejected: it would assert an as_of_field the weekly silver parquet does not carry. This row disarms when bd-pipeline plans clean at HEAD; ~ZI owns Z-S29's disarm."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S97",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.0.0_AB_MSTR~Z",
+    "surfaced_at": "2026-10-10T23:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": ".tools/tests/test_round_close_and_research.py reads CLOSE-GATES-TEST 19/24 at box/sitez a163c61b93. 5 failures already exist without the Z-C-S42 fix: 4 cases call rcc.read_orders(d, None, None) against the 4-argument read_orders(src, proj_dir, rnd, ws), and 1 ENFORCE case reads rc=0 where a refusal is expected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~C",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "With a163c61b93: CLOSE-GATES-TEST cases=19/24 ok=False; FAIL lines: ENFORCE 'reviewer present but a judgment criterion ungraded is refused' (rc=0), and four TypeError: read_orders() missing 1 required positional argument: 'ws' (no to_id; to_id present; pending then complete; complete then pending).",
+        "With only the a163c61b93 regex reverted: the same 5 FAIL lines plus the round-close-check --selftest case (the new J2 case), 18/24; so the 5 are not caused by a163c61b93.",
+        "read_orders gained its ws parameter in 8902e8bc26 (NFRA_CTLPLN.TO-CT-s-8, 2026-10-08); the test calls it with 3 arguments at .tools/tests/test_round_close_and_research.py:279."
+      ]
+    },
+    "spec_asserts": "The round-close gate's own outer test suite passes, so a regression in round-close-check.py shows as a failing case.",
+    "world_is": "5 of 24 cases fail on HEAD for reasons unrelated to any recent fix, so a new regression in this tool would be hidden among standing failures.",
+    "notes": "Routed by 1.0.0_SA_CTO~Z (msg 33071) to the Z-C-S42 family owner. Disarms when the suite reads 24/24 (or each case is re-scoped with a reason)."
   }
 ]
 ```
