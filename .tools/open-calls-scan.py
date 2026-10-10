@@ -54,7 +54,18 @@ import subprocess
 import sys
 import tempfile
 
-TOOLS = os.path.dirname(os.path.abspath(__file__))
+# The scan runs under pythonw from a 10-minute Scheduled Task: it has no console, so every console child (git, aws) it
+# or a module it loads spawns would open a new visible window. Give every child CREATE_NO_WINDOW, process-wide.
+if sys.platform.startswith("win"):
+    _popen_init = subprocess.Popen.__init__
+
+    def _popen_no_window(self, *args, **kwargs):
+        kwargs["creationflags"] = kwargs.get("creationflags", 0) | 0x08000000
+        _popen_init(self, *args, **kwargs)
+
+    subprocess.Popen.__init__ = _popen_no_window
+
+TOOLS =os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(TOOLS)
 SCHEMA = "open-calls-scan/1"
 RENUDGE_SEC = 1800
