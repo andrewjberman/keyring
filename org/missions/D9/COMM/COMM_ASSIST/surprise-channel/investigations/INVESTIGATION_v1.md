@@ -231,3 +231,31 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "NOT this seat's and NOT part of CA-d-2: step 8's rollback fires on an AFTER failure CAUSED by the act, and the control shows this is not one, so the deploy correctly stood. Filed because a per-invocation failure that never escalates is exactly the FWD-3 silent-refusal shape. Owner is the COMM ingress's issuer; routed by filing rather than by message, since the CTO is copied on decisions only."
 }
 ```
+
+## COMM_ASSIST-Z-S7 -- cites Z-S5: the mail route LISTS (the zero was organic); the one mail considered was refused before the model as body_no_andrew; FWD-4 still not exercised
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S7",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZZ",
+  "surfaced_at": "2026-10-10T21:05Z",
+  "one_line": "Z-S5's falsifier read: the mail route is NOT blind. Full day 2026-10-09 lists 42 and fetches 1; that one mail reached the considered step and was refused before the model as considered_body_no_andrew, so texted_ok=0. Day 2026-10-10 (to ~21:0xZ) lists 246 across 246 poll lines and fetches 0. FWD-4 stays APPLIED, not EXERCISED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~ZZ/r12/checks/d2_mail_day.py --day 2026-10-09 at ~21:05Z 2026-10-10: poll_lines=64 domains=256 listed=42 fetched=1 sent=1 calls=253 refused=0 failed=0 considered_lines=1 considered_ok=0 considered_body_no_andrew=1; MAIL-CLOSE texted_ok=0 refused_before_model=1 exercised=False.",
+      "Same reader, --day 2026-10-10: poll_lines=246 domains=984 listed=246 fetched=0 sent=0 calls=984 refused=0 failed=0 considered_lines=0; exercised=False.",
+      "Counted from log lines only; no mail content was read (the reader counts, never reads)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-4: mail from the five parties naming Andrew reaches the poller and is texted to him.",
+  "world_is": "The route lists and fetches, so Z-S5's 'mailbox or cursor is the defect' branch is falsified and its zero was organic. The single considered mail failed the names-Andrew test. Whether that mail was the 19:30Z driver mail is NOT established from counts. The 10-10 shape (listed equals poll lines, fetched 0) reads as one already-seen message re-listed each poll and skipped, and is unconfirmed.",
+  "notes": "Resolves Z-S5's open question (the listing). What remains is FWD-4's exercise: one party mail whose body names Andrew. If the 19:30Z driver mail did name him, the body_no_andrew test is the defect. That is the discriminating question for the round-12 analysis, and only the sender or the CVO's flag judgment can answer it without this seat reading content."
+}
+```
