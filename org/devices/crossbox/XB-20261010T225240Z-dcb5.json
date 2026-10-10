@@ -10,7 +10,7 @@
  "subject": "naming-gate.py refuses a name ADOPTED from live AWS as NEW (NFRA_IAMROLES202609 Z-S25)",
  "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_CALL_NAMING_GATE_ADOPTED_NAME_REFUSED_20261010.md",
  "opened_at": "2026-10-10T22:52:40Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-10T22:54:35Z",
   "bus_message_id": "31b62cc2-bfc2-4a5d-8041-b5be06b691f3"
@@ -21,8 +21,8 @@
   "bus_message_id": "2b61155f-28ea-4b16-ace2-2565f54ea00d"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-10T23:12:24Z",
+  "from_by": "0.0.0_AB_MSTR~Z",
   "to_at": "2026-10-10T22:58:32Z",
   "to_by": "1.0.0_SA_CTO"
  }
