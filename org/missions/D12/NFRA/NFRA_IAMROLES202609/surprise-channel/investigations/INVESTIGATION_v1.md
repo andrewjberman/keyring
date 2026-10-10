@@ -1564,3 +1564,32 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
 }
 ]
 ```
+
+## Z-S28 -- the issuer rules Z-S25, Z-S26 and Z-S27 for w-2 and w-3 (amendment A4-r6): commit the declaration before the import, one override commit carrying only the .tf and its audit row; the gate defects go to the fabric CTO
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S28",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-10T22:40:00Z",
+    "one_line": "Issuer's ruling on Z-S25/Z-S26/Z-S27 (disarm_owner this seat): an adopted role keeps its live name; w-2 and w-3 PHASE B commit the renamed .tf on the worker branch BEFORE any import, in a commit carrying only that .tf plus the placement override's audit row, then -target apply and drain the same session; the two gate defects are not this project's to fix and are routed to 1.0.0_SA_CTO~Z.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S25, Z-S26 and Z-S27 are ARMED with disarm_owner 2.0.0_SA_COO~ZI and ask for a ruling before w-2 or w-3 cuts PHASE B.",
+    "world_is": "Z-S25: renaming a live role is a create-plus-delete WORLD act outside every round-6 cell and outside the signed pairs. CLAUDE.md Rule 30's NON-APPLICATION (existing pipelines reach conformance through their own migration project, never as a rider) covers an adopted pre-existing name. The R20 declared exception is Andrew's to acknowledge and is not taken here. So w-2 and w-3 use the gate's own sanctioned escape, the audited placement override, with a reason naming the role, its live CreateDate and this row. The durable fix is in the naming gate (naming-gate.py: _carried_at_head is consulted only on RAISE, never on the NEW+OUT-OF-PATTERN branch, and nothing asks whether the name already exists live). The gate is LGIC tooling outside this decomposition, so the fix is routed. Z-S26: until the audit row gets a path rule, the second override (GIT_COMMIT_AUTHOR_OVERRIDE=GOVERNANCE_AUDIT) is confined to a commit holding exactly the renamed .tf and the audit row, so its whole-staged-set exit covers nothing it does not need. The ledger, proof and POST_APPLY land under neither override. The path rule is routed with Z-S25. Z-S27: the order is commit, then import, then drain. A commit on the worker branch proves both gates before AWS is touched, and no peer applies from a worker branch. The apply and the drain fall in one session, and the shared-tree untargeted plan reading 0 to destroy is recorded after the drain. Amendment A4-r6 writes this into step 5 of both orders. All three rows are DISARMED for w-2 and w-3 by A4-r6; the w-1 instance of Z-S27 was already CLOSED by drain 9458756ca0.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S25, Z-S26, Z-S27 as filed by 0.7.0_AE_CloudOps~IR @b8ee7b889c (msg 33036)",
+        ".tools/naming-gate.py judge(): the RAISE branch consults _carried_at_head; the NEW and OUT-OF-PATTERN branch returns REFUSE without it",
+        "CLAUDE.md Rule 30 NON-APPLICATION line; the w-2 and w-3 step 5 text as amended in this commit"
+      ]
+    },
+    "notes": "Cites Z-S25, Z-S26, Z-S27, Z-S21. Gate limb: none graded A4-r6 (an edit; GATE viii not engaged). The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
