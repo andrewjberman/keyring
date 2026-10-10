@@ -6223,6 +6223,35 @@ carries none.
     "spec_asserts": "Section 1 item 2 and AMENDMENT A2 require that every live file other than the two shipped ones is preserved byte-for-byte, and the release records a host-versus-artifact file census as the proof of that preservation.",
     "world_is": "Preservation holds, but the two populations are not the same size and never were: the host carries 2 orphaned dashboard assets the artifact does not ship, so host == artifact is false as an equality while artifact subset-of host is true. Stating the census as a bare 'N of N' hides that, which is why this row names the direction and the 2 files.",
     "notes": "No remedy is proposed or taken here: pruning dashboard/assets on the host is a change to deploy-to-ec2.sh's extract step, which is outside this order's two-file content cut and belongs to the gateway surface (NFRA_OPLGTW) rather than to NFRA_MCPINDEX. The cost of leaving it is disk only -- 2 files, roughly 270 KB today -- and it grows by one asset pair per mcportal content-hash change, so it is INERT rather than BLOCKING. The useful fix for readers is cheaper than the fix for the host: future releases should state the preservation census as a one-directional subset with the extras enumerated, which is how it is stated in this release's record."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S95",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-10T22:30Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Z-S92 is remediated by the applier's label repair (ledger CLOSED 4/4 @3cc6f5e6ec) and both CTO read-backs were re-measured by the issuer; Z-S93 is that repair's evidence carrier and asserts no defect; Z-S94 is an inert disk-only observation on NFRA_OPLGTW's deploy surface, recorded here and told to 2.0.0_SA_COO~O.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S92",
+      "NFRA_MCPINDEX-Z-S93",
+      "NFRA_MCPINDEX-Z-S94"
+    ],
+    "one_line": "RULES Z-S92 (ARMED), Z-S93 and Z-S94 at the MX-r-9 repair close: Z-S92 is DISARMED -- the label repair landed, ledger nfra-mcpindex-r8-discover-release CLOSED 4/4 @3cc6f5e6ec, and both of 1.0.0_SA_CTO~Z's read-backs (msg 33001) were re-measured by the issuer, not taken from the applier's report; Z-S93 is the applier's evidence carrier for that disarm; Z-S94 (2 orphaned dashboard assets on the host) is INERT and outside this project's surface.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer re-measure 22:2xZ, ssm e80b1708-1830-4e0e-8f0c-51315404dd92: integration.py md5 34f36796d6b19eebe17d715c7ae7c041 and DATA_CATALOG.yaml md5 7e9e40bb185f266aa293a7d29ad67e6d, equal to the values Z-S92 recorded on 10-09; /health 200; .env 52 lines; opal-gateway active, MainPID 915778, ActiveEnterTimestamp 2026-10-10 21:50:03 UTC.",
+        "head-object opal-gateway-1e32562729.tar.gz: ETag b96315a523842ec46579b146c450faa9, git-ref 1e32562729 (read-back 1). head-object -latest and opal-gateway-d3c31e972e.tar.gz: both 525792 B, ETag 8e81c94230a54ef80a88d03950e93c81, git-ref d3c31e972e8c6fdb26dda98a1d9ff55ced0ced89 (was 404).",
+        "r9.AC1 PASS exit=0 (entry at HEAD 1, sentinel no, OPEN/HELD 0, 30 of 30 scanned); r9.AC2 PASS exit=0 (3 of 3, ssm 1c43624e); r9.AC3 PASS exit=0 (9 of 9, 3 of 3, ssm a334d45a) -- all three run by the issuer after the 21:50Z restart.",
+        "CLOSED told to 2.0.0_SA_COO~O, 2.0.0_SA_COO~MP and 0.0.0_AB_MSTR~Z (msgs 33030-33032), releasing the gateway queue to MP-r-2 then OG-rl-16."
+      ]
+    },
+    "spec_asserts": "Every ARMED row disarms via its disarm_owner; Z-S92's hazard was that plane 1 (the S3 artifact labels) named a ref that was not serving, so the next release on the host would cut on a stale base.",
+    "world_is": "Plane 1 and plane 2 (EC2_MANIFEST.json @1df2cdb295) both name d3c31e972e, which is what the host serves, and the rollback key holds the base's own bytes again. Z-S94's 2 orphaned assets are referenced by no served index.html and cost disk only; pruning them is a change to deploy-to-ec2.sh's extract step, which is NFRA_OPLGTW's surface, not this project's.",
+    "notes": "Z-S94 is not routed as a remedy from here: this row records it, and 2.0.0_SA_COO~O (NFRA_OPLGTW) is told in one line with this row's id. The applier's second Z-S92 defect (the deploy wrapper's manifest auto-commit refused in a sparse tree, ModuleNotFoundError comp_constants_cli at .tools/commit_gate_runner.py:96) reproduced on this run and was handled by a committed manifest record @1df2cdb295; it stays a carried note in Z-S92 and Z-S93."
   }
 ]
 ```
