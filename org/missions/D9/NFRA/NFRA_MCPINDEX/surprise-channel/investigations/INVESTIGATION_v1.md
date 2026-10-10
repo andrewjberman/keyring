@@ -6252,6 +6252,30 @@ carries none.
     "spec_asserts": "Every ARMED row disarms via its disarm_owner; Z-S92's hazard was that plane 1 (the S3 artifact labels) named a ref that was not serving, so the next release on the host would cut on a stale base.",
     "world_is": "Plane 1 and plane 2 (EC2_MANIFEST.json @1df2cdb295) both name d3c31e972e, which is what the host serves, and the rollback key holds the base's own bytes again. Z-S94's 2 orphaned assets are referenced by no served index.html and cost disk only; pruning them is a change to deploy-to-ec2.sh's extract step, which is NFRA_OPLGTW's surface, not this project's.",
     "notes": "Z-S94 is not routed as a remedy from here: this row records it, and 2.0.0_SA_COO~O (NFRA_OPLGTW) is told in one line with this row's id. The applier's second Z-S92 defect (the deploy wrapper's manifest auto-commit refused in a sparse tree, ModuleNotFoundError comp_constants_cli at .tools/commit_gate_runner.py:96) reproduced on this run and was handled by a committed manifest record @1df2cdb295; it stays a carried note in Z-S92 and Z-S93."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S96",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-10T23:18Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "RULES the remedy for NFRA_IAMROLES202609-Z-S29 (routed here by its Z-S31): MX-f-1 (3d7fb62105) gave bd_silver_allocations and bd_silver_unrealized freshness_basis: trading-day-frontier without as_of_field or frontier_page_trading_days, so infra/aws/terraform/bd-pipeline/bd-served-vintage-alarm.tf cannot plan (4 x Unsupported attribute). REMEDY: guard the comprehension's if clause with can(e.as_of_field) && can(e.frontier_page_trading_days); the YAML and alarm coverage do not change. WRITE: inside NFRA_IAMROLES202609.TO-IAM-w-2 by its issuer's amendment, because this project has no lawful slot for it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Negative arm at box/sitez HEAD, shared tree: f1r.AC1 -> init rc=0, plan rc=1, Unsupported attribute=4, Error lines=4, RESULT: FAIL; f1r.AC2 -> 7 keys (5 bd_platinum_* + bd_silver_allocations + bd_silver_unrealized) where 5 are wanted, RESULT: FAIL.",
+        "Census of gold_freshness_config.yaml: 37 entries, 7 trading-day-frontier; the 5 daily platinum entries carry both fields, the 2 weekly silver entries carry neither.",
+        "No resource in infra/aws/terraform/bd-pipeline reads local.bd_served_vintage_keys or local.bd_served_keys_json (Grep: 2 hits, both their own definitions at bd-served-vintage-alarm.tf:26 and :38). The served-vintage alarm stack was destroyed by 9781bbb266 (2026-07-17), so the guard changes no resource by construction.",
+        "Why not this project: to-pipeline-gate refused a MX-f-1r order three ways -- LOCAL is below the WORLD floor an infra path infers; a direct act must be LOCAL; round 7 already has its one issuance; and round 9 waits on round 8's L10 by 1.0.0_SA_CTO~Z's ruling (call 9c9d)."
+      ]
+    },
+    "spec_asserts": "MX-f-1's cell ruled 'no change to whether the gate blocks' and touched one YAML file; no other module's plan was to move.",
+    "world_is": "A second reader of that YAML, a dead Terraform comprehension, reads the two new frontier entries' missing fields unguarded, and bd-pipeline cannot plan. The guard restores the 5-key map that held before 3d7fb62105.",
+    "notes": "The checks f1r.AC1.sh (plan: 0 Unsupported attribute, rc 0 or 2) and f1r.AC2.sh (exactly the 5 bd_platinum_* keys) are in deliverables/2.0.0_SA_COO~MI/round8/checks/ for the w-2 amendment to cite. Adding the two fields to the YAML instead was rejected: it would assert an as_of_field the weekly silver parquet does not carry. This row disarms when bd-pipeline plans clean at HEAD; ~ZI owns Z-S29's disarm."
   }
 ]
 ```
