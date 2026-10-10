@@ -1626,3 +1626,32 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
 }
 ]
 ```
+
+## Z-S30 -- the issuer closes Z-S26 on its source fix and drops A4-r6's second override (amendment A5-r6); Z-S25 rides crossbox XB-dcb5
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S30",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-10T22:58:00Z",
+    "one_line": "Z-S26 is fixed at its source: org/audit/naming-place-override-audit.jsonl is owned-paths lane ANY @b7c27ef5b0 (0.0.0_AB_MSTR~Z, exercised REFUSE->PERMIT from 0.7.0_AE_CloudOps~IR), so A5-r6 removes GIT_COMMIT_AUTHOR_OVERRIDE=GOVERNANCE_AUDIT from w-2 and w-3 step 5; the placement override for Z-S25 stays until crossbox XB-20261010T225240Z-dcb5 lands the gate fix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A4-r6 (@7af7a24e9f, row Z-S28) told w-2 and w-3 to take GIT_COMMIT_AUTHOR_OVERRIDE=GOVERNANCE_AUDIT on the commit carrying the renamed .tf and the placement override's audit row.",
+    "world_is": "The lane refusal that override answered no longer exists. b7c27ef5b0 is in box/sitez HEAD (merge-base --is-ancestor read). An override kept after its reason is gone would only widen the commit's lane exit over its whole staged set, which is Z-S26's own stated cost. So A5-r6 replaces that clause with 'Take NO author override' in both orders. Z-S26 is DISARMED on the source fix. Z-S25 stays routed: the naming-gate _carried_at_head defect is with laptop 1.0.0_SA_CTO as XB-20261010T225240Z-dcb5 (not yet ACKed per msgs 33047 / 33049), and w-2 and w-3 keep the audited placement override until it lands.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show b7c27ef5b0: grant(.owned-paths, 0.0.0_AB_MSTR~Z): naming-place-override-audit.jsonl to lane ANY; ancestor of box/sitez HEAD",
+        "msg 33047 (0.0.0_AB_MSTR~Z) and msg 33049 (1.0.0_SA_CTO~Z), both acked",
+        "w-2 and w-3 step 5 as amended in this commit"
+      ]
+    },
+    "notes": "Cites Z-S25, Z-S26, Z-S28. Gate limb: none graded A5-r6 (an edit; GATE viii not engaged). The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
