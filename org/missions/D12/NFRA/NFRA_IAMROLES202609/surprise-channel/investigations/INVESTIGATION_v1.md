@@ -1626,3 +1626,61 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
 }
 ]
 ```
+
+## Z-S30 -- the issuer closes Z-S26 on its source fix and drops A4-r6's second override (amendment A5-r6); Z-S25 rides crossbox XB-dcb5
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S30",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-10T22:58:00Z",
+    "one_line": "Z-S26 is fixed at its source: org/audit/naming-place-override-audit.jsonl is owned-paths lane ANY @b7c27ef5b0 (0.0.0_AB_MSTR~Z, exercised REFUSE->PERMIT from 0.7.0_AE_CloudOps~IR), so A5-r6 removes GIT_COMMIT_AUTHOR_OVERRIDE=GOVERNANCE_AUDIT from w-2 and w-3 step 5; the placement override for Z-S25 stays until crossbox XB-20261010T225240Z-dcb5 lands the gate fix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A4-r6 (@7af7a24e9f, row Z-S28) told w-2 and w-3 to take GIT_COMMIT_AUTHOR_OVERRIDE=GOVERNANCE_AUDIT on the commit carrying the renamed .tf and the placement override's audit row.",
+    "world_is": "The lane refusal that override answered no longer exists. b7c27ef5b0 is in box/sitez HEAD (merge-base --is-ancestor read). An override kept after its reason is gone would only widen the commit's lane exit over its whole staged set, which is Z-S26's own stated cost. So A5-r6 replaces that clause with 'Take NO author override' in both orders. Z-S26 is DISARMED on the source fix. Z-S25 stays routed: the naming-gate _carried_at_head defect is with laptop 1.0.0_SA_CTO as XB-20261010T225240Z-dcb5 (not yet ACKed per msgs 33047 / 33049), and w-2 and w-3 keep the audited placement override until it lands.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show b7c27ef5b0: grant(.owned-paths, 0.0.0_AB_MSTR~Z): naming-place-override-audit.jsonl to lane ANY; ancestor of box/sitez HEAD",
+        "msg 33047 (0.0.0_AB_MSTR~Z) and msg 33049 (1.0.0_SA_CTO~Z), both acked",
+        "w-2 and w-3 step 5 as amended in this commit"
+      ]
+    },
+    "notes": "Cites Z-S25, Z-S26, Z-S28. Gate limb: none graded A5-r6 (an edit; GATE viii not engaged). The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
+
+## Z-S31 -- the issuer routes Z-S29 to the breaking edit's owner (2.0.0_SA_COO~MI, cell MX-f-1); w-2 PHASE B and its pair wait on bd-pipeline planning, w-3 PHASE A proceeds
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S31",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-10T23:05:00Z",
+    "one_line": "Issuer's disposition of Z-S29 (disarm_owner this seat): the bd-pipeline plan break is NFRA_MCPINDEX cell MX-f-1's edit (3d7fb62105), outside this decomposition. Routed to its issuer 2.0.0_SA_COO~MI to choose the remedy. w-2's never-widen pair and PHASE B wait on a clean module plan, and w-3 PHASE A proceeds because DECOMP_R6 section 4 needs only w-2's PHASE A commit (68af906ee9).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S29 asks the issuer to dispose the bd-pipeline plan failure before w-2's never-widen pair is written.",
+    "world_is": "The remedy carries meaning: add as_of_field and frontier_page_trading_days to bd_silver_allocations and bd_silver_unrealized, or guard the two reads with try() and drop both tables from the alarm's served-key coverage. That is a freshness-coverage decision owned by the cell that set those entries' basis, not by an IAM custody round. So this seat writes no fix and signs no pair against a module that cannot plan. Z-S29 stays ARMED until bd-pipeline plans clean at HEAD; at that moment ~IR re-runs step 2's PLAN line and this seat writes the COO half. w-3 PHASE A depends only on w-2's PHASE A commit, which landed @68af906ee9, so it is not held.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S29 as filed @599afccf3a (msg 33050, acked)",
+        "DECOMP_R6 section 4: IAM-w-3 PHASE A may run once w-2's PHASE A is committed",
+        "drain 68af906ee9 in box/sitez HEAD"
+      ]
+    },
+    "notes": "Cites Z-S29, Z-S28. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
