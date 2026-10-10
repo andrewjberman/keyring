@@ -288,3 +288,32 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Routed to Andrew through 0.0.0_AB_MSTR~Z as one ask. On the send, the issuer runs check_e1_mail_day.py for the send day and resolves this row with a new citing row."
 }
 ```
+
+## COMM_ASSIST-Z-W7-S1 -- cites Z-S6: channel_poll 59 of 59 failed; dependent outcome is channel @mentions reaching Andrew's phone
+
+```json
+{
+  "id": "COMM_ASSIST-Z-W7-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~7",
+  "surfaced_at": "2026-10-10T23:30Z",
+  "one_line": "Cites COMM_ASSIST-Z-S6: channel_poll failed on 59 of 59 invocations in the last hour (calls=1, channels=0); the call most plausibly failing is teams (GET /teams). The code now names and raises it; the cure is unknown until the error field is read after deploy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "logs filter-log-events, /aws/lambda/teams-global-chat-assist-ingress-lambda, us-east-1, last 3600 s, pattern channel_poll: 59 lines, 59 of 59 failed=1, all calls=1 channels=0 read=0 mentions=0 (max-items 200, not cut short).",
+      "data/transcripts/scripts/teams_chat/channel_mentions.py poll(): calls=1 with an empty team list is the gw.teams() call; the deployed code logs no error text, so the call is inferred, not read.",
+      "infra/aws/ec2/opal-gateway/app/teams_route.py and server.py:1118-1121: the teams, channels and channel_messages routes exist in source; their deployed state and ALB routing are not established.",
+      "deliverables/0.9.0_WK_COMM_ASSIST~7/CHANNEL_POLL_RULING.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "COMM_ASSIST-Z-S6 / FWD-3: no refusal fails silently; channel @mentions of Andrew reach his phone.",
+  "world_is": "The outcome that depends on the channels step is FWD-3's 'every Teams message reaches his phone' for channel @mentions: 0 channel mentions are read while channel_poll fails 59 of 59 per hour. After the next deploy the channel_poll line carries error and the step logs ingress_step_failed; whether the cure is COMM's own code or the gateway (another project) is not established until that error is read.",
+  "notes": "The order named id COMM_ASSIST-W7-S1; the row gate requires the site-z coordinate, so it is filed as Z-W7-S1. Z-S6 is cited, not edited. Ruling file in the worker deliverables folder."
+}
+```
