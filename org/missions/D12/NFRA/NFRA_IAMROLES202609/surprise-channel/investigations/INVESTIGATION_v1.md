@@ -1655,3 +1655,32 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-S31 -- the issuer routes Z-S29 to the breaking edit's owner (2.0.0_SA_COO~MI, cell MX-f-1); w-2 PHASE B and its pair wait on bd-pipeline planning, w-3 PHASE A proceeds
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S31",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-10T23:05:00Z",
+    "one_line": "Issuer's disposition of Z-S29 (disarm_owner this seat): the bd-pipeline plan break is NFRA_MCPINDEX cell MX-f-1's edit (3d7fb62105), outside this decomposition. Routed to its issuer 2.0.0_SA_COO~MI to choose the remedy. w-2's never-widen pair and PHASE B wait on a clean module plan, and w-3 PHASE A proceeds because DECOMP_R6 section 4 needs only w-2's PHASE A commit (68af906ee9).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S29 asks the issuer to dispose the bd-pipeline plan failure before w-2's never-widen pair is written.",
+    "world_is": "The remedy carries meaning: add as_of_field and frontier_page_trading_days to bd_silver_allocations and bd_silver_unrealized, or guard the two reads with try() and drop both tables from the alarm's served-key coverage. That is a freshness-coverage decision owned by the cell that set those entries' basis, not by an IAM custody round. So this seat writes no fix and signs no pair against a module that cannot plan. Z-S29 stays ARMED until bd-pipeline plans clean at HEAD; at that moment ~IR re-runs step 2's PLAN line and this seat writes the COO half. w-3 PHASE A depends only on w-2's PHASE A commit, which landed @68af906ee9, so it is not held.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S29 as filed @599afccf3a (msg 33050, acked)",
+        "DECOMP_R6 section 4: IAM-w-3 PHASE A may run once w-2's PHASE A is committed",
+        "drain 68af906ee9 in box/sitez HEAD"
+      ]
+    },
+    "notes": "Cites Z-S29, Z-S28. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
