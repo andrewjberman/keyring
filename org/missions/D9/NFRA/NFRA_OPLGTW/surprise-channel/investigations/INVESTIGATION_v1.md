@@ -11746,3 +11746,59 @@ name the one known failure instead of silently inheriting it.
   "notes": "Next read: CloudTrail sqs:ReceiveMessage/DeleteMessage/PurgeQueue on opal-assets-silver-dlq 15:39Z-16:17Z. INERT because nothing incomplete was served and OG-pn-1 re-runs the six dates by its own path."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S78",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-10T21:26:19Z",
+  "one_line": "OG-ap-5 cannot meet CTO condition C2 as written: C2 requires silver_build_commit.schwab to name the commit whose data/assets/scripts/silver/ tree equals the package dir, but that value lives in infra/aws/terraform/opal-assets/silver.tf, which is NOT in the order's <paths>; and moving it adds an environment row to the plan, which step 3 calls a STOP.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half @d66a0fb956 (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_OPLGTW_OG_PN1_DTAG_ROUTING_20261009_Z.md), C2: 'The deploy runs by Terraform through safe-apply. The prior artifact VersionId and source_code_hash are recorded before the swap, and silver_build_commit.schwab names the commit whose data/assets/scripts/silver/ tree equals the package directory.'",
+      "ASK section 2 @6a27bceca1: 'local.silver_build_commit.schwab (silver.tf, outside this cell's paths) moves to the commit whose data/assets/scripts/silver/ tree equals the package dir (rollback pin 47c3c75f11).' The ask itself names the path as outside the cell.",
+      "ORDER <paths> (NFRA_OPLGTW.TO-OG-ap-5.converter-dtag-routing-apply.md): five entries, none of them infra/aws/terraform/opal-assets/silver.tf. Measured: grep -c 'silver.tf' over the order file = 0.",
+      "ORDER step 3: 'the plan reads 1 resource changed, code fields only; any other row is a STOP.' OPAL_BUILD_COMMIT is an environment variable, so moving the pin yields an environment row in addition to s3_object_version + source_code_hash.",
+      "MEASURED, both planes agree the pin has NOT moved: live get-function-configuration Environment.Variables.OPAL_BUILD_COMMIT = 47c3c75f11; silver.tf:84-86 local.silver_build_commit = { schwab = \"47c3c75f11\" }.",
+      "MEASURED, the value C2 wants is b3e481b261: git log b3e481b261..HEAD -- data/assets/scripts/silver/ = 0 commits, and -- infra/aws/lambda/opal-assets/opal-assets-silver-schwab/ = 0 commits, so the silver tree equals the package dir at that commit. Source and Lambda copy are the same blob f9b65e2e74 at HEAD, working tree clean."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-5 step 3 + CTO half C2: the apply moves silver_build_commit.schwab to the built commit AND the targeted plan carries code fields only.",
+  "world_is": "The two cannot both hold under this order's write surface. Three options, no recommendation acted on: (a) the issuer widens <paths> to include infra/aws/terraform/opal-assets/silver.tf and rules that the environment row is an expected code-provenance field rather than a STOP; (b) the pin move is cut to a seat that owns silver.tf and sequenced into the same apply; (c) the apply runs code-only (s3_object_version + source_code_hash), leaving OPAL_BUILD_COMMIT asserting 47c3c75f11 over the b3e481b261 bytes -- a FALSE provenance claim baked into the live function, and it also collapses the rollback pin onto the forward pin, so the CTO-half and ask rollback step 'silver_build_commit.schwab back to 47c3c75f11' becomes a no-op that cannot be distinguished from the rolled-forward state. This seat does not pick (c) on its own.",
+  "notes": "Nothing has been built, uploaded, applied or invoked. The apply is also time-gated: the COO half @d41a3068cd decision 3 and the order's preflight both bar the apply and the re-run inside [09:15,11:35), [12:00,12:50) and [21:15,23:35) UTC, and the EventBridge rules were read to confirm the windows bind on a Saturday (canonical-schwab-si2-08335338-daily-pull cron(45 9,21 * * ? *), schwab-canonical-si2-08403355-pull-daily cron(45 10,22 * * ? *), canonical-schwab-si2-08242234-daily-pull cron(15 10,22 * * ? *), opal-assets-silver-schwab-sweep-daily cron(15 12 * * ? *) -- all day-of-week '*', not weekday-only). So the ruling is not on the critical path until 23:35Z. ID FORM: the order prescribes NFRA_OPLGTW-Z-AE-S<k>, which SURPRISE_ID_RE (.tools/proof-of-spec-check.py:1206) and surprise-row-gate.py ID_RE (:108) cannot match -- the optional infix is ONE capital letter plus digits, so a two-letter 'AE' is unrepresentable. Continuing the Z-S series per this project's own settled precedent (rows Z-S68, Z-S69, Z-S70, each of which recorded the same finding). Max Z-S in channel read 77 over 77 distinct ids, not off a page."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S79",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-10T21:26:19Z",
+  "one_line": "lambda-source-map.json's opal-assets-silver-schwab entry asserts memory_size 10240 while BOTH Terraform and the live function read 3008, and the entry's own _note claims the opposite ('memory_size corrected 3008->10240 to match TF ... + live config -- the prior 3008 was map drift').",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json (entry opal-assets-silver-schwab): 'memory_size': 10240, and _note asserting the 3008->10240 correction.",
+      "infra/aws/terraform/opal-assets/silver.tf:599: schwab = { memory = 3008, timeout = 600, ... } with an inline comment recording the deliberate 10240 -> 3008 delta-6 resize under CTO GO 183008Z.",
+      "LIVE: aws lambda get-function --function-name opal-assets-silver-schwab -> MemorySize 3008, Timeout 600, State Active, LastUpdateStatus Successful, LastModified 2026-10-09T02:33:06Z."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Deployment rule 4: every Lambda carries an entry in lambda-source-map.json pairing it with its repo dir and its deploy fields.",
+  "world_is": "The map's memory_size is stale in the direction its own note denies, so a reader who trusts the note reads 10240 as the TF-and-live value. It is NOT a plan hazard: the plan reads TF, so the targeted plan carries no memory row. Named because OG-ap-5 step 5 already requires this seat to update this entry to the deployed build, and the memory field will be corrected to 3008 in that same commit with the correction named in the message rather than changed silently.",
+  "notes": "Related to row Z-S69, which named this same entry's artifact_sha256 and last_deployed_commit as owed by whoever updates it; this row adds the memory_size field and the self-contradicting _note. No deploy depends on it."
+}
+```

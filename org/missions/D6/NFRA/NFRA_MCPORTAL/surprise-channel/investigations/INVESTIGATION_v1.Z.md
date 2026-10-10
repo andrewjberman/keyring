@@ -1274,6 +1274,33 @@
     "spec_asserts": "Z-S31 asserted that commit-gate's ruff limb cannot execute because 'a Windows Application Control policy now refuses `python -m ruff`', and that the block reaches every .py commit on this device.",
     "world_is": "The refusal is interpreter-specific, not launch-mode-specific: Python311's `-m ruff` runs and Python314's does not. commit-gate's bare `python` is Python314 on this box, so the gate alone trips it while a hand-run ruff succeeds. The blast radius is every seat whose `python` resolves to Python314, which is a PATH property of each shell rather than a property of the device, and it was not measured outside this session.",
     "notes": "Routed for 0.0.0_AB_MSTR~Z, who already holds Z-S31 -- this row is the correction that makes it cheap to fix. Preferred fix, smallest first: (a) have commit_gate_runner resolve the ruff BINARY (shutil.which('ruff')) and only fall back to [sys.executable, '-m', 'ruff'], exactly how .tools/safe-apply.sh resolves terraform device-agnostically -- one function, and it makes the gate correct wherever ruff is installed at all; (b) add a RUFF env override, same shape as SAFE_APPLY_TERRAFORM; (c) pin commit-gate.sh:59 to the interpreter that owns the pinned ruff (python3 / Python311 here) rather than bare `python`, which also removes the silent dependence on PATH order; (d) independently of all three, make the gate distinguish 'ruff could not be EXECUTED' from 'ruff REPORTED findings' -- the present wording, 'BLOCKED: ruff check failed on <file>', sends the author looking for a lint problem in correct code, and that is the part that cost this cell the most time. An IT policy change is NOT needed for any of (a)-(d)."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S35",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-10T21:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S34",
+      "NFRA_MCPORTAL-Z-S31"
+    ],
+    "one_line": "DISARMS Z-S34 for this project, and narrows its diagnosis. The ruff refusal is INTERMITTENT, not deterministic per interpreter: Python314 `-m ruff --version` was refused once at 20:57Z and then read rc=0 in 6 of 6 runs from the same seat minutes later. `.tools/commit-gate.sh` passed the AMENDMENT 5 file (clean 1 of 1, rc=0), and the applier committed it through the gate @ea58e3662d with no override. MP-r-2 is no longer blocked by the toolchain; it waits only on MX-r-9's ledger close.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED 2026-10-10 ~20:57Z, issuer seat, shared tree: `python -m ruff --version 2>&1 | head -2` printed a Traceback (`<frozen runpy>` line 203). Bare `ruff --version` (Python311 Scripts) read 'ruff 0.15.11'.",
+        "MEASURED ~21:0xZ, the same seat: `python` -> C:\\Program Files\\Python314\\python.exe. `python -m ruff --version` read 'ruff 0.15.11' rc=0 in 6 of 6 runs (5 looped, 1 piped). Python311 `-m ruff` read 'ruff 0.15.11'.",
+        "MEASURED ~21:0xZ in C:/tmp/mp-r2: `bash .tools/commit-gate.sh infra/aws/ec2/opal-gateway/app/admin_fabric.py` -> 'All checks passed!' and 'OK: pre-commit gate clean for 1 of 1 file(s)', rc=0.",
+        "git -C C:/tmp/mp-r2 log: ea58e3662d (0.7.0_AE_CloudOps~MP, 17:13:54 -0400) fix(... MP-r-2 AMENDMENT 5 ...); the worktree is clean afterwards."
+      ]
+    },
+    "spec_asserts": "Z-S34: Python314's bundled ruff is refused by Application Control and Python311's is admitted, so a gate whose bare `python` is Python314 always fails.",
+    "world_is": "The same Python314 `-m ruff` launch failed once and passed 6 times within about 10 minutes. The refusal is a time- or state-dependent property of the policy or its cache, not a fixed property of the interpreter. This also explains Z-S34's own unexplained symptom (354d58bc30 passed the same gate an hour before the refusal) without needing a PATH difference.",
+    "notes": "No act owed by this project. Z-S34's fix (a), resolving the ruff binary before falling back to `-m ruff`, still reduces exposure and stays with 0.0.0_AB_MSTR~Z as gate owner. Z-S34(d), telling 'could not EXECUTE ruff' apart from 'ruff REPORTED findings', is the part that matters for an intermittent fault: on a refusal, re-run once before you look for a lint defect."
   }
 ]
 ```
