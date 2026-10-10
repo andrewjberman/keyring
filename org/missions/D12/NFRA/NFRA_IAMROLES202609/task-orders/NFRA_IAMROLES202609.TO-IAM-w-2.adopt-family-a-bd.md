@@ -31,6 +31,13 @@ PHASE A -- no apply:
   1. Read each role live (get-role, list-role-policies, list-attached-role-policies, list-role-tags) and write the
      declaration as `infra/aws/terraform/bd-pipeline/zz_adopt_family_a.tf.proposed`: one aws_iam_role + one import block per role, labels namespaced to the role name
      (round 2's candidate infra/aws/terraform/data-refresh/zz_adoption_candidate.tf.proposed is the shape).
+  1a. (amendment A6-r6, rows Z-S29 / NFRA_MCPINDEX-Z-S96 @c5e22ccb72) Before step 2, change the `if` clause of
+     `local.bd_served_vintage_keys` in infra/aws/terraform/bd-pipeline/bd-served-vintage-alarm.tf to exactly:
+       if try(e.freshness_basis, "") == "trading-day-frontier" && can(e.as_of_field) && can(e.frontier_page_trading_days)
+     Change nothing else in that file and nothing in the YAML. Commit it ALONE under your own author line, then run
+     org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round8/checks/f1r.AC1.sh and f1r.AC2.sh (both
+     FAIL at HEAD before the edit) and record both results in the survey. Then re-run step 2 and replace the BLOCKED
+     PLAN line with the real one.
   2. In YOUR OWN worktree, copy each file to a `.tf` name and run `safe-apply`'s PLAN only (no apply). Record in
      org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round6/PLAN_SURVEY_family_a.md, one line each per module, exactly:
        PLAN: <module>: <the plan summary line, verbatim>
@@ -81,6 +88,7 @@ G-21: no alert, monitor or schedule.  G-25: no Access Analyzer.
 <paths>
 infra/aws/terraform/bd-pipeline/zz_adopt_family_a.tf.proposed
 infra/aws/terraform/bd-pipeline/zz_adopt_family_a.tf
+infra/aws/terraform/bd-pipeline/bd-served-vintage-alarm.tf
 org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round6/
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
