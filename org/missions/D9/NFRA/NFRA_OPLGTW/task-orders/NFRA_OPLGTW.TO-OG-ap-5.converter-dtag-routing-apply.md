@@ -27,7 +27,10 @@ ONLY the six held 08403355 dates. READ the ask and both halves; they BIND.
 1. **Ledger** `nfra-oplgtw-og-pn-1-converter`, entry AND sentinel committed before the act (CTO C3).
 2. **Record the prior** (CTO C2): the live `CodeSha256` and the artifact `VersionId` the function runs now.
 3. **Build and apply** through the converter's Terraform path with `bash .tools/safe-apply.sh`, `-target` to that one
-   function; the plan reads 1 resource changed, code fields only; any other row is a STOP. Never
+   function, after moving `local.silver_build_commit.schwab` in `infra/aws/terraform/opal-assets/silver.tf` from
+   `47c3c75f11` to `b3e481b261` (CTO C2; the rollback pin stays `47c3c75f11`). The plan reads 1 resource changed: the code
+   fields (`s3_object_version`, `source_code_hash`) and the one environment value `OPAL_BUILD_COMMIT` `47c3c75f11` ->
+   `b3e481b261`; any other row, or any other environment key, is a STOP. Never
    `aws lambda update-function-code`. Read back `CodeSha256` = the built hash, State Active, LastUpdateStatus Successful.
    Write `W/ap5_build.json` = `{"code_sha256", "prior_code_sha256", "prior_artifact_version"}`.
 4. **Re-run the six held dates** by ONE direct invoke naming exactly the six bronze keys
@@ -37,7 +40,8 @@ ONLY the six held 08403355 dates. READ the ask and both halves; they BIND.
    `fact_rps` and `dim_position` the pinned 0-row partition. Record every written key's VersionId in
    `W/ap5_rerun.json` (rollback per key, completion records first).
 6. Close the ledger and commit, then run AC1 and AC2. A read-back that disagrees: roll the code back to the prior artifact
-   version by the same Terraform path, delete the re-run's keys by version, ARMED row naming `2.0.0_SA_COO~O`.
+   version AND `silver_build_commit.schwab` back to `47c3c75f11` by the same Terraform path, delete the re-run's keys by
+   version, ARMED row naming `2.0.0_SA_COO~O`.
 
 `W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/`.
 
@@ -55,9 +59,10 @@ org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-oplgtw-og-pn-1-converter.json
 org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/terraform/opal-assets/silver.tf
 </paths>
 
-Rows: id `NFRA_OPLGTW-Z-AE-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ` at filing.
+Rows: id `NFRA_OPLGTW-Z-S<k>` (the next free number), fabric `site-z`, disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ` at filing.
 
 ## 4. PROOF OF SPEC (literal; run from the repo root after the ledger close is committed)
 
@@ -81,6 +86,13 @@ entry to the deployed build (its own commit). Report once to `2.0.0_SA_COO~O`.
 - Workstream APPLY-PN1, round 33. Halves COO @d41a3068cd, CTO @d66a0fb956; CTO C1 met by @b3e481b261 (drained @a4c8b3d53d).
 - After AC2 PASS, OG-bh-1's worker re-runs its AC2 and flips that order (the issuer continues it).
 - Pre-cut: ap5.AC1 base FAIL as expected (0 entries; ap5_build.json absent); bh1.sh AC2 base reads qualified 752, open 6.
+- AMENDMENT 1 (2026-10-10 ~21:4xZ, issuer ruling on row Z-S78, option (a)): `<paths>` gains `silver.tf`; step 3 moves
+  `silver_build_commit.schwab` to `b3e481b261` and admits the one `OPAL_BUILD_COMMIT` environment row as the provenance
+  field CTO C2 requires; step 6's rollback restores the pin. The blast radius is unchanged: the same one function under
+  the signed halves, whose ask section 2 already names the pin move. Option (c), code-only, is refused because it would
+  bake a false provenance into the live function. The row-id form is corrected to `Z-S<k>`, which is what the gates
+  match (`.tools/proof-of-spec-check.py:1206`, `surprise-row-gate.py:108`). Every other step, bound and criterion
+  stands, as does the time gate.
 
 <status>pending</status>
 <round>33</round>
