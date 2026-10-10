@@ -10,12 +10,16 @@
  "subject": "worktree_gc.py deletes a worktree a live process or scheduled task runs from (row AMGT_HARVST-Z-S111)",
  "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_CALL_WORKTREE_GC_IN_USE_CHECK_20261010.md",
  "opened_at": "2026-10-10T22:27:33Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-10T22:28:53Z",
   "bus_message_id": "ad48d478-1d7c-4194-8817-7039153b2619"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-10T22:36:36Z",
+  "by": "0.0.0_AB_MSTR",
+  "bus_message_id": "8c86377d-5c08-4a93-99ed-43097c736be3"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
