@@ -11802,3 +11802,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "Related to row Z-S69, which named this same entry's artifact_sha256 and last_deployed_commit as owed by whoever updates it; this row adds the memory_size field and the self-contradicting _note. No deploy depends on it."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S80",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-10T21:36:13Z",
+  "one_line": "Resolves NFRA_OPLGTW-Z-S78 by issuer ruling, option (a): OG-ap-5 AMENDMENT 1 adds infra/aws/terraform/opal-assets/silver.tf to <paths>, moves silver_build_commit.schwab 47c3c75f11 -> b3e481b261 (CTO C2), and admits the one OPAL_BUILD_COMMIT environment row as the provenance field C2 requires; rollback restores 47c3c75f11.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_OPLGTW_OG_PN1_DTAG_ROUTING_20261009_Z.md @d66a0fb956, C2: silver_build_commit.schwab names the commit whose data/assets/scripts/silver/ tree equals the package directory",
+      "ROW NFRA_OPLGTW-Z-S78 @0ef74efddc: measured b3e481b261 as that commit (0 commits since on the silver tree and the package dir); live OPAL_BUILD_COMMIT and silver.tf both read 47c3c75f11",
+      "ORDER org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-5.converter-dtag-routing-apply.md AMENDMENT 1 (this commit); no other non-terminal order names silver.tf (3 orders name it, all complete)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The conflict between C2 and the order's write surface is removed by amending the order. The blast radius is unchanged: the same one function under the signed halves, whose ask section 2 already names the pin move. Code-only (option c) is refused because it would bake a false provenance claim into the live function and collapse the rollback pin onto the forward pin.",
+  "spec_asserts": "Z-S78: OG-ap-5 step 3 (code fields only) and CTO C2 (pin moves to the built commit) cannot both hold under the order's <paths>.",
+  "world_is": "After AMENDMENT 1 both hold: the plan carries the code fields plus exactly one environment value, OPAL_BUILD_COMMIT -> b3e481b261; any other row or environment key is still a STOP. The time gate [21:15,23:35)Z still binds.",
+  "notes": "Citing row; Z-S78's own text is untouched. Z-S79 (source-map memory_size) is corrected in the assignee's step-5 source-map commit, as that row states."
+}
+```

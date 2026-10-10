@@ -1301,6 +1301,36 @@
     "spec_asserts": "Z-S34: Python314's bundled ruff is refused by Application Control and Python311's is admitted, so a gate whose bare `python` is Python314 always fails.",
     "world_is": "The same Python314 `-m ruff` launch failed once and passed 6 times within about 10 minutes. The refusal is a time- or state-dependent property of the policy or its cache, not a fixed property of the interpreter. This also explains Z-S34's own unexplained symptom (354d58bc30 passed the same gate an hour before the refusal) without needing a PATH difference.",
     "notes": "No act owed by this project. Z-S34's fix (a), resolving the ruff binary before falling back to `-m ruff`, still reduces exposure and stays with 0.0.0_AB_MSTR~Z as gate owner. Z-S34(d), telling 'could not EXECUTE ruff' apart from 'ruff REPORTED findings', is the part that matters for an intermittent fault: on a refusal, re-run once before you look for a lint defect."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S36",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MP",
+    "surfaced_at": "2026-10-10T21:31:53Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S35",
+      "NFRA_MCPORTAL-Z-S34",
+      "NFRA_MCPORTAL-Z-S31"
+    ],
+    "one_line": "CORROBORATES Z-S35 on a wider denominator and adds the part neither prior row has: the refusal is recorded in NEITHER Windows log, so an empty event log CANNOT grade the fix. Python314 `-m ruff --version` read rc=0 in 20 of 20 trials -- superseding Z-S35's 6 of 6 and finishing the falsification of Z-S34's interpreter-split mechanism -- Python311 20 of 20, and the real `.tools/commit-gate.sh` on the AMENDMENT 5 file 5 clean of 5. Over the 1,185 `Microsoft-Windows-CodeIntegrity/Operational` events spanning the whole 30-hour refusal window, 0 name ruff or python. Whoever grades 0.0.0_AB_MSTR~Z's fix must grade it by EXECUTING ruff over a printed denominator, never by reading these logs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED 2026-10-10 21:1x-21:2xZ, applier seat, each figure beside its denominator: `python -m ruff --version` under C:/Program Files/Python314/python.exe (3.14.7, what bare `python` resolves to here) -> 20 rc=0, 0 WinError 4551, DENOMINATOR 20. Under Python311 -> 20 rc=0, 0 WinError 4551, DENOMINATOR 20. So the interpreter is NOT the discriminator, and Z-S34's deterministic mechanism is falsified on the very interpreter it named.",
+        "THE REAL CONSUMER, not a proxy: `bash .tools/commit-gate.sh infra/aws/ec2/opal-gateway/app/admin_fabric.py` run 5 times in C:/tmp/mp-r2 -> 5 rc=0, 0 refusals, DENOMINATOR 5. The gate is what Rule 14 binds, so it is the oracle; `-m ruff --version` alone is only its precondition.",
+        "THE INSTRUMENT DOES NOT SEE THIS FAULT, which is the reusable finding. `Microsoft-Windows-CodeIntegrity/Operational` over the 30 hours from 2026-10-09 15:22Z (spanning the first refusal ~2026-10-09 20:0xZ, the 20:57Z refusal and the clean window): 1,185 events, 790 Id=3089 and 395 Id=3033, and 0 of 1,185 name ruff or python. The 395 Id=3033 blocks are ALL SentinelOne's `SentinelAmsi64.dll` refused into `svchost.exe` with status 0xC0000428 -- a separate standing condition, not this fault and not this project's to own.",
+        "THE SECOND LOG IS ALSO SILENT: `Microsoft-Windows-AppLocker/EXE and DLL` holds only Id=8001 policy-application notices (2026-10-10 20:49:42Z, 2026-10-09 07:01:06Z, 2026-10-08 20:58:15Z) and no block event; `AppLocker/MSI and Script` returned no events at all. So BOTH candidate instruments read clean while the fault WAS occurring.",
+        "ONE CORRELATE, NAMED AS A CORRELATE AND NOT A CAUSE: the AppLocker policy application at 2026-10-10T20:49:42Z sits 8 minutes before the last observed refusal (20:57Z) and ~13 minutes before the clean window. But the ONSET -- between 354d58bc30 passing the gate and the 2026-10-09 20:0xZ refusals -- has NO corresponding event in either log, so the pair is a coincidence in time and not a mechanism. Stating it as a cause would be the error this row exists to prevent.",
+        "DOWNSTREAM STATE, measured not assumed: the AMENDMENT 5 remedy is committed @ea58e3662d through safe-commit with no override, the suite at the committed bytes read 58 passed / 0 failed, and the cell's record is superseded in place @73547dcfd1 (`deliverables/0.7.0_AE_CloudOps~MP/MP-r-2_PRE_ACT_RECORD.md`). Nothing was deployed: live `FETCH_THREADS` is still 8 and no entry exists for slug `nfra-mcportal-cp2-release`."
+      ]
+    },
+    "spec_asserts": "A Windows Application Control refusal of an executable is recorded by the OS, so the code-integrity and AppLocker logs can be read to confirm whether the fault is still occurring -- and an empty log over the window grades it absent.",
+    "world_is": "Neither log recorded it. 0 of 1,185 CodeIntegrity events over the 30-hour window naming ruff or python, and no AppLocker block event, while the fault demonstrably occurred twice inside that window (2026-10-09 ~20:0xZ and 2026-10-10 20:57Z). A clean log here is an ABSENT reading from an instrument that cannot see the object, which is not a negative -- the exact shape CLAUDE.md's ABSENT != EXERCISED-AGAINST corollary names.",
+    "notes": "No act owed by this project; MP-r-2 waits on MX-r-9's ledger close alone. For 0.0.0_AB_MSTR~Z as gate owner: (1) grade any fix by EXECUTING ruff N times with N printed, never by reading the event logs, because this row shows they are blind to it; (2) a non-reproduction over 45 clean trials is NOT a fix -- the fault's rate is unmeasured at the low end and one refusal in seven was real an hour earlier; (3) under an INTERMITTENT fault, Z-S34's fix (d) -- telling 'ruff could not be EXECUTED' apart from 'ruff REPORTED findings' -- is worth more than before, because the correct response to a refusal is to re-run once, and the present wording sends the author hunting a lint defect in correct code instead. Fix (a), resolving the ruff BINARY before falling back to `-m ruff`, still reduces exposure and costs one function."
   }
 ]
 ```
