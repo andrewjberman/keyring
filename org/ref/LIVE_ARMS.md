@@ -6,6 +6,17 @@ lives outside the law lock because it changes as arms start and stop (Andrew-dir
 `1.0.0_SA_CTO` lands and strikes rows, naming the chooser and the record. A seat never writes its own row. On DONE the
 lane deletes its cron and the row is struck; a struck row's record stays in git. A row absent here arms nothing.
 
+## PACING -- governs every row below (Andrew-direct 2026-10-10 ~23:3xZ)
+
+Every live `/canonical-drive`, `/self-drive` and `/govern` arm runs at **60m**, whatever cadence its row names. Every
+re-arm also takes 60m. `/keep-driving` is **OFF** on all four boxes (cloud switch set 23:33:52Z by 1.0.0_SA_CTO, read back
+scan=off empty_tick=off). VERBATIM: "yeah we need slower pacing, i think canonical drive and self drive loops can be on 60m
+interval and /keep-driving OFF for now, no need to be so aggressive. This is to avoid the usage limit and try to scale
+productivity correctly." then "in govern loop too". Record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261010_23xxZ_SLOWER_PACING_LOOPS_60M_KEEP_DRIVING_OFF.md`.
+Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. `/govern` fires on each box's first slot only: laptop `:00`, `~Z`
+`:06`, `~DELL1` `:12`, `~DELL2` `:18`.
+
 ## Holds
 
 - `2.0.0_SA_COO` (base): D2 off until Andrew lifts it.

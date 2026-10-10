@@ -18,7 +18,7 @@ Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ctoZ_ANDREW_DIRECT_20260824_LO
 
 | form | behavior |
 |---|---|
-| `/self-drive <scope>` | resolve the scope, arm the loop at the default cadence (30m), run tick 1 now |
+| `/self-drive <scope>` | resolve the scope, arm the loop at the default cadence (60m), run tick 1 now |
 | `/self-drive [Nm] <scope>` | same, cadence N minutes (`[30m]` / `30m` / `every 30m` all accepted) |
 | `/self-drive status` | the armed scope(s), tick count, last log, completion-test state — changes nothing |
 | `/self-drive off [<scope>]` | cancel the cron, append the stop to the arming record (§5), write the final log as STOPPED-BY-OPERATOR |

@@ -250,12 +250,12 @@ in the worker face and the task order is defective.
 
 ⛔ **Do NOT use `/mstr-spawn`.** That provisions a SEAT. A worker is a subagent and is registered nowhere.
 
-⛔ **MODEL AND EFFORT COME FROM THE AGENT DEFINITION, AND THE SPAWN CALL PASSES NO `model` ARGUMENT.** On site Z that
-is `sonnet` at `effort: high` (`.claude/agents/worker.md` frontmatter), per Andrew-direct 2026-09-16 ~20:2xZ: *"we need to
-make workers use sonnet moving forward ... make sure they are sonnet agents with high effort"*. **An explicit `model`
-on the Agent call OVERRIDES the frontmatter**, which is how round 12's spawns ran on Opus while this line said "the
-cheaper one". There is no per-order override to a larger model; a cell too hard for a Sonnet worker is a surprise row
-and a re-cut, not a model upgrade.
+⛔ **MODEL: `org/ref/MODEL_POLICY.json` (MP-20261010, Andrew-direct 2026-10-10).** On a `treatment_devices` box
+(`python lib/devices.py this`: laptop, dell1) spawn every `worker`/`worker-light` with `model: "haiku"`, `effort: "high"`
+(expected `claude-haiku-5-5`): a worker executes a fully specified order, so it needs no reasoning. On a control box
+(sitez, dell2) pass NO `model`: the frontmatter governs (Sonnet, high; Andrew-direct 2026-09-16). An explicit `model`
+overrides the frontmatter, so pass one only on a treatment box. A cell a worker cannot do is a surprise row and a re-cut,
+never a model upgrade.
 
 ⛔⛔ **THE TASK ORDER IS THE WORKER'S GRANT — SO THE `<paths>` BLOCK IS A PERMISSION, NOT A HINT.**
 Andrew-direct 2026-09-04 ~04:58Z, "recs approved" on the CTO's card, RULING 1 shape **(c)**: a worker
