@@ -23772,3 +23772,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Options for the issuer or CTO: (A) dismiss D1-S18 as designed (the route has no client-selectable tenant; round-87 prep recommendation A); (B) a cell that first provisions a roster source (SSM read grant plus a parameter) and a firm list in the package, and rules the status (403 is the in-package precedent for a refusal), then mirrors. Narrative/entry.py _held_to_verified_firm shows another route DROPS an Opal internal caller's off-firm selection rather than refusing it, so 'the other routes refuse' is not uniform across the investor-reporting functions."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~AMG",
+  "surfaced_at": "2026-10-10T00:30Z",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "AC3's guard closes ONE of the THREE doors into crosswalk.write_pool: add_security.py carries a byte-for-byte twin of the swallowing disclosure helper and can still publish research_universe ABSENT over a served count.",
+  "class": "OBSERVATION",
+  "spec_asserts": "CTO~DELL1 msg 2572, folded into kk-1 by AMENDMENT 1, scopes the guard to the CLI: 'in lib/research/identity/crosswalk.py, main REFUSES to publish (--write-pool: a nonzero exit with a printed reason, no store write) ... it never writes ABSENT over a served count'. CLAUDE.md NEVER-1 is wider than that scope: 'First count the writers of the named property: N writers = N rules read, and N is printed.'",
+  "world_is": "crosswalk.py:1528 names the writers itself: 'write_pool is the one function every production crosswalk write passes through (crosswalk.main's --write-pool CLI, add_security.py's _persist_registration_and_pool, build_universe.py's union_main all call it)'. N = 3, and the guard landed at f2dbac84a4 sits only in crosswalk.main. add_security.py:347 _research_folders_disclosure() is a byte-for-byte twin of crosswalk's _research_folders_for_disclosure -- same try, same `except Exception: return None, None`, and a docstring that states the same intent ('a failure here NEVER fails the build; the fields go absent-with-reason instead'). Its _build_document (:365-382) passes those folders into build_crosswalk, whose research_universe is computed PURELY from the research_folders argument with an unconditional else-branch writing {'absent': ...} (crosswalk.py:975-990); the union-first _carry_served carries RECORDS, not the top-level disclosure fields. So an add_security run on a library-less box writes research_universe absent over the served 102 and nothing refuses it. build_universe.py's union_main writes a different document shape under a different prefix ('never a crosswalk.schema.json document', same comment) and is NOT believed to be a crosswalk-pool writer.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "lib/research/identity/crosswalk.py:1528 (the code's own enumeration of the three write_pool callers)",
+      "lib/research/identity/add_security.py:347-358 (_research_folders_disclosure, the twin swallowing helper) and :365-382 (_build_document passes them through)",
+      "lib/research/identity/crosswalk.py:975-990 (research_universe from the argument alone; unconditional absent else-branch)",
+      "lib/research/identity/crosswalk.py:1698-1720 (the landed guard, inside main only)"
+    ]
+  },
+  "notes": "CLAIM CLASS: inferred, not measured. This is a source read of the add_security path; this seat did NOT run add_security, so no put was exercised through it. The guard as landed is CORRECT AS ORDERED -- msg 2572 scoped it to main, and AC3 grades exactly that -- so this is the ORDER'S SCOPE, not a defect in the delivered cell, and kk-1 is rightly terminal. Surfaced by this seat against its own work: the kk-1 report should have counted the writers of research_universe per NEVER-1 rather than only the callers of the disclosure helper, which is the census it actually ran (comp-find, one caller). Candidate remedy for the owner: lift the refusal from main into write_pool itself, where all N=3 doors converge and the served document is already in hand -- one rule instead of three. Not done here: add_security.py is in no order's <paths> for this seat and kk-1 is closed."
+}
+```
