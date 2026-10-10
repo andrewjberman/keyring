@@ -8,7 +8,9 @@ ANDREW_DIRECT_20261008_173xZ_GC_FOUR_CALLS_ANSWERED_WORKTREE_OWNER_MUST_ASSESS.m
 
 THE RULE (one class per linked worktree):
   SKIP      the main worktree; a worktree locked with `git worktree lock` (the fence: never touched);
-            a `drain-*` worktree.
+            a `drain-*` worktree; a CLEAN or MERGED worktree whose path a running process command line or a
+            scheduled task's Execute / Arguments / WorkingDirectory names (IN USE; row AMGT_HARVST-Z-S111: git
+            idleness cannot see a scheduled runner). If that read fails, every removal candidate is SKIP.
   ACTIVE    git activity (commit, checkout, or an edited file) within --clean-hours (24 h).
   CLEAN     HEAD is merged into the trunk, nothing modified or untracked, no ignored files beyond build caches,
             idle >= 24 h  ->  removed by --go (`git worktree remove`). Nothing is lost: every committed byte is
@@ -220,6 +222,37 @@ def classify(wt: dict, trunk: str, clean_h: float, held_h: float, live: set[str]
     return row
 
 
+_IN_USE_PS = (
+    "$ErrorActionPreference='Stop';"
+    "Get-CimInstance Win32_Process | ForEach-Object { $_.CommandLine };"
+    "Get-ScheduledTask | ForEach-Object { $_.Actions } | ForEach-Object { $_.Execute; $_.Arguments; $_.WorkingDirectory }"
+)
+
+
+def in_use_text() -> str | None:
+    """Every running process command line and scheduled-task action, lowercased with forward slashes.
+    None when the read failed: the caller then removes nothing."""
+    if sys.platform != "win32":
+        res = subprocess.run(["ps", "-eo", "args"], capture_output=True, text=True, errors="replace")
+    else:
+        res = subprocess.run(["powershell", "-NoProfile", "-Command", _IN_USE_PS], capture_output=True, text=True,
+                             encoding="utf-8", errors="replace")
+    if res.returncode != 0 or not res.stdout.strip():
+        return None
+    return res.stdout.replace("\\", "/").lower()
+
+
+def path_in_use(path: str, text: str) -> bool:
+    """True when the worktree path, in Windows, MSYS or cygwin spelling, appears whole in text.
+    An 8.3 spelling (C:/Users/ANDREW~1/...) is not matched."""
+    p = path.replace("\\", "/").rstrip("/").lower()
+    forms = {p}
+    m = re.match(r"^([a-z]):/(.*)$", p)
+    if m:
+        forms |= {f"/{m.group(1)}/{m.group(2)}", f"/cygdrive/{m.group(1)}/{m.group(2)}"}
+    return any(re.search(re.escape(f) + r"(?=$|[/\"'\s;,])", text, re.M) for f in forms)
+
+
 def load_state() -> dict:
     try:
         return json.loads(state_path().read_text(encoding="utf-8"))
@@ -231,6 +264,15 @@ def run(args: argparse.Namespace) -> int:
     now = time.time()
     live = live_serials()
     rows = [classify(w, args.trunk, args.clean_hours, args.held_hours, live, now) for w in worktrees()[1:]]
+    if any(r["class"] in ("CLEAN", "MERGED") for r in rows):
+        text = in_use_text()
+        for r in rows:
+            if r["class"] not in ("CLEAN", "MERGED"):
+                continue
+            if text is None:
+                r.update({"class": "SKIP", "reason": "in-use read failed (process/scheduled-task list); not removed"})
+            elif path_in_use(r["path"], text):
+                r.update({"class": "SKIP", "reason": "IN USE: a running process or scheduled task names this path"})
     prev = load_state().get("held", {})
     held_out = {}
     print(f"=== worktree_gc {'GO' if args.go else 'DRY-RUN'} -- trunk {args.trunk}, clean {args.clean_hours} h, "
@@ -296,8 +338,10 @@ def selftest() -> int:
     import shutil
     import tempfile
     global _REPO
-    base = Path(tempfile.mkdtemp(prefix="wtgc_"))
+    base = Path(tempfile.mkdtemp(prefix="wtgc_")).resolve()   # long spelling, as git worktree list prints it
     main_tree, wa, wb = base / "main", base / "wk-merged", base / "wk-unmerged"
+    wc = base / "wk-in-use"
+    holder = None
     ok = []
     try:
         def g(*a, cwd=main_tree):
@@ -310,6 +354,9 @@ def selftest() -> int:
         g("commit", "-q", "-m", "c0")
         g("worktree", "add", "-q", "-b", "wk-a", str(wa), "CLOUD")
         g("worktree", "add", "-q", "-b", "wk-b", str(wb), "CLOUD")
+        g("worktree", "add", "-q", "-b", "wk-c", str(wc), "CLOUD")
+        # a live process whose command line names wk-in-use, as a scheduled runner's would
+        holder = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(120)", str(wc)])
         (wb / "g.txt").write_text("y\n", encoding="ascii")
         g("add", "g.txt", cwd=wb)
         g("commit", "-q", "-m", "unlanded", cwd=wb)
@@ -321,14 +368,18 @@ def selftest() -> int:
         run(ns)
         ok.append(("merged+dirty -> removed", not wa.exists()))
         ok.append(("unmerged+dirty -> kept (HELD)", wb.is_dir() and (wb / "scratch.tmp").exists()))
+        ok.append(("merged+clean but named by a live process -> kept (SKIP IN USE)", wc.is_dir()))
     finally:
+        if holder is not None:
+            holder.kill()
+            holder.wait()
         _REPO = None
         shutil.rmtree(base, ignore_errors=True)
     for name, res in ok:
         print(f"  {'PASS' if res else 'FAIL'}  {name}")
     passed = sum(1 for _, r in ok if r)
-    print(f"WORKTREE-GC-SELFTEST cases={passed}/{len(ok)} ok={passed == len(ok) == 2}")
-    return 0 if passed == len(ok) == 2 else 1
+    print(f"WORKTREE-GC-SELFTEST cases={passed}/{len(ok)} ok={passed == len(ok) == 3}")
+    return 0 if passed == len(ok) == 3 else 1
 
 
 def main() -> int:
