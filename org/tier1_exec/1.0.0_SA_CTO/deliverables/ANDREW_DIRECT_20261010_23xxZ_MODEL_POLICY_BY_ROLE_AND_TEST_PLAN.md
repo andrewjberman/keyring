@@ -9,8 +9,33 @@
 > default in all cases, and the 5.5 models in each case. I want to assess whether this actually works in practice, but we
 > need to start somewhere. Let's discuss how to get this implemented and tested across the system.
 
-**Status:** DISCUSSION. Nothing is implemented by this record. The dell1/dell2 hold stays in place until Andrew lifts it.
-He named "two things first"; the second is not yet stated.
+**Status:** DECIDED and IMPLEMENTED as `MP-20261010` (`org/ref/MODEL_POLICY.json`) on Andrew's answers below. The
+dell1/dell2 hold stays until Andrew lifts it.
+
+**Andrew's answers (same terminal, the next message), VERBATIM:**
+
+> The premise is that worker agents are just being told what to do and have strict deliverables that they just adhere to,
+> i.e. proof of spec, so they shouldnt need reasoning, they are told exactly what to do. Sonnet agents need some degree of
+> reasoning to coordinate and field issues. Opus agents need high degree of reasoning because they are doing
+> architecture/governance/validation. Yeah also to your point regarding tier2/3 seats, those are always going to be sonnet
+> 5.5 at high effort. on call 2, yes out of scope for now. on call 3, yes laptop goes first, and also Dell1. WE can compare
+> and contrast with sitez and Dell2. The second item was the rollout/testing.
+
+**What the answers settle:**
+- Tier-2/3 seats are always Sonnet 5.5 at high.
+- Codex seats are out of scope for now.
+- TREATMENT arm = laptop + dell1. CONTROL arm = sitez + dell2, which keep their pre-policy defaults so the two arms can be
+  compared.
+- The "second thing first" is this rollout and testing.
+
+**Not named by him, so unchanged:** the BG seat `0.0.3_BG_BBGTerminal` and any other 0.0.N utility seat keep their
+pre-policy pins.
+
+**How it is built (MP-20261010):**
+- Launchers: `.tools/model-policy.ps1` reads the policy; `.tools/ajb.ps1` and `.tools/spawn-agent.ps1` both use it.
+- Workers: on a treatment device the dispatch skill spawns workers with `model: "haiku"` and `effort: "high"`. The worker
+  frontmatter stays as it is for the control arm.
+- Measurement: `.tools/model-census.py`.
 
 ## The policy as given
 
