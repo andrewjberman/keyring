@@ -1677,6 +1677,9 @@ paths:
   # A census BY REMEMBERED NAME found 4 logs; a sweep BY PATTERN found 13 -- and the nine missed included
   # MASS-DELETION, SOVEREIGN-OVERRIDE, DEPLOY-BYPASS and HALT-GATE. They are SMALL *because* they record the
   # rarest acts, which is exactly why they were forgotten and exactly why they matter most.
+  "org/audit/naming-place-override-audit.jsonl":
+    lane: ANY
+    note: "The naming-gate override audit FILE ONLY. safe-commit.sh writes and STAGES one JSON row here inside the committing seat's own commit whenever that seat uses NAMING_PLACE_OVERRIDE (.tools/naming-gate.py OVERRIDE_AUDIT_REL), so the file's real writer is every seat that may override, and GOVERNANCE_AUDIT refused every Tier-2 seat's own audit row (rows NFRA_IAMROLES202609-Z-S26, ruled Z-S28). Added 2026-10-10 by 0.0.0_AB_MSTR~Z as infrastructure owner on 1.0.0_SA_CTO~Z msg 33040. Append-only shape unchanged; the row stays machine-written. No incumbent displaced (ANY is '*'). SCOPE: this one file; the rest of org/audit/** stays GOVERNANCE_AUDIT."
   "org/audit/**":
     lane: GOVERNANCE_AUDIT
     note: "Immutable dated snapshots of the audit trail. TRACK BEFORE YOU CLEAN -- deleting from an untracked file is unrecoverable, and this snapshot is what makes Andrew's phantom-override cleanup provably lossless. CADENCE STATE (CTO 2026-07-16): snapshots exist for 2026-07-13 + 2026-07-16 ONLY -- do not read two entries as a working cadence (a second data point makes a dead cadence look alive, 0.7.0~B). INTERIM PRACTICE: manual snapshot at any exec's package close, VALID UNTIL 2026-07-23 -- after that date the absence of an automated invoker is ITSELF A FINDING (no suppression without an expiry). Invoker design owned by 0.7.0~B at CTO gate; the alarm must fire on now()-max(snapshot timestamp), NEVER on existence or count -- an existence check passes forever after snapshot #1, a count check after #2; only age can fail, and a check that cannot fail is not a check."
