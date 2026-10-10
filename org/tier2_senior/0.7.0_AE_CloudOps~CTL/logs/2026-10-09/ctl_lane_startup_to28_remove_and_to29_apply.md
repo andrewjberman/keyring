@@ -193,3 +193,52 @@ open in total), every REMOVE on G2's call ahead of its own armed alarm. Live `sv
 occurrences 0); the two Dell IAM policies carry exactly the one action and one ARN TO-APPLY-29 authorised.
 Zero `GetSecretValue` calls by this seat all session. One self-reported FAIL control. Scratch deleted at
 each close.
+
+---
+
+## TO-APPLY-31 -- the Teams drafting contract, round 8 (CT-i-14)
+
+**archetype:** DEPLOY
+
+ONE targeted `safe-apply` of `module.ldo_001` in `infra/aws/terraform/transcripts`, code only, under both
+signed halves (COO @`082e0d865a`, CTO @`c2fa3eb0b4`), both read in full first. **LIVE 23:03Z** (handler
+`LastModified` 23:03:08Z, ingress 23:03:14Z, CloudTrail `b53e84c8...` / `df95ca40...` at the same times).
+Branch A exactly: `0 add / 2 change / 0 destroy`, hash only, verified by `check_plan.py` rather than
+eyeballed. Commit `3af6f043b3`; report + 26 evidence files in
+`deliverables/teams_r8_20261009/`. Issuer closed it `complete` and graded both deviations ACCEPTED.
+
+**Three things the next seat should not re-derive.**
+
+1. **The method is reusable and it is in the estate.** `0.7.0_AE_CloudOps`'s `teams_r7_20261008/` carries
+   `read_evidence.py` and `check_plan.py`. Both were copied and used; only one line needed changing --
+   `read_evidence.py` baked `dt.datetime(2026, 10, 8, 21, 45)` for the End of Day boundary, now derived from
+   the read time. Build the packaged-path list from `build.sh` itself, never from the order's prose: it names
+   nine path groups, and the order's three-file summary is a diff, not the set.
+
+2. **The root cannot be planned without a foreign `-var`.** `readers.tf` declares
+   `second_reader_trust_principal_arns` with no default BY DESIGN ("WHO may assume this role is NOT decided
+   in this file"), and that file post-dates the r7 deploy, so the inherited method does not mention it.
+   The sanctioned handling is the issuer's A3 ruling on `COMM_ASSIST.TO-CA-d-2`: pass that ONE `-var` at its
+   LIVE value read at the act (`aws iam get-role` on `teams-global-transcripts-second-reader-role`), never
+   typed from an order, never a second `-var`. Its A4 is the warning: `~CA`'s first run with the var read
+   `1 add / 3 change`, pulling in `aws_iam_role.silver_reader` and the KMS key policy as dependencies of
+   `module.ldo_001`. Both are applied now (silver reader CreateDate 14:07:25Z), which is the only reason this
+   plan read a clean `0/2/0`. **`comp-find` is what surfaced that precedent** -- the rail denied two blind
+   greps and the census (35 hits over 245,926 files, banded) put the CA-d-2 order in front of me.
+
+3. **The 60-minute End of Day window is not self-validating.** It returned **0 lines and a positive control
+   of 0** tonight. `unmatched_eod=0` on a read that sees nothing is not a clean gate, and the script's own
+   `gate_clear` correctly refuses it. Widen on a ladder until `REPORT` fires -- 180 minutes gave 56 lines,
+   control 8, 0 unmatched -- and keep the whole ladder in the artifact, not just the passing rung.
+
+**One safety check worth repeating before committing a plan:** `plan.json` embeds 110 environment variable
+VALUES. Classify them by SHAPE before committing (no value printed): `MAIL_BEARER_SECRET` holds an ARN
+pointer and `BEARER_SECRET_NAME` a secret NAME, so nothing in it is a credential. Inheriting the
+predecessor's "it was fine last time" is not the same as checking.
+
+## Session total (final)
+
+Four orders held, four terminal and flipped by the issuer. **Seven** ledger entries opened and closed, zero
+sentinels of this lane. Four secret-reader windows (eight legs) plus one code deploy. Zero `GetSecretValue`
+calls, zero function invocations, zero test sends, zero untargeted applies all session. One self-reported
+FAIL (TO-30 window 5's relay ordering) whose remedy TO-31's step 5 then exercised at 85 seconds.
