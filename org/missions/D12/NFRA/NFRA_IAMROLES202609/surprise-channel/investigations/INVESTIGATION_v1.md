@@ -1439,3 +1439,33 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   "world_is": "As written, the role's S3 and secret grants reach nothing. Either the Lambdas run on another role, or they fail on read, or the buckets and secret were renamed (LGIC). This does not touch the w-1 tag act and does not hold it. The issuer reads which Lambdas assume this role and routes the grant repair to smartx-pipeline's owner."
 }
 ```
+
+## Z-S24 -- the issuer disarms Z-S21 and Z-S22 (ruled in A2-r6) and rules Z-S23: opal-smartx-lambda-role is an orphan no Lambda assumes
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S24",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-10T21:12:00Z",
+    "one_line": "Issuer's disarm of Z-S21 and Z-S22 (disarm_owner this seat, both ruled by A2-r6 @3293b97a90) and ruling on Z-S23: the dead S3/secret grants sit on a role no Lambda assumes, so they reach nothing because nothing runs on them; w-1's tag act is unaffected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S21 and Z-S22 are ARMED with disarm_owner 2.0.0_SA_COO~ZI; Z-S23 asks the issuer to read which Lambdas assume opal-smartx-lambda-role and route the grant repair to smartx-pipeline's owner.",
+    "world_is": "Z-S22: A2-r6 moved every round-6 deliverable path to deliverables/0.7.0_AE_CloudOps~IR/round6/; ~IR committed PLAN_SURVEY_family_b.md and DEFER_ROWS_5_16.md there under its own author line @4dff2b348a, and w-4 closed complete @55d980ad2c -- the refusal cannot recur, DISARMED. Z-S21: A2-r6 binds PHASE B step 5 of w-1, w-2 and w-3 to a -target apply on the adopted aws_iam_role resource(s) only; the never-widen pair for w-1 (COO @f2c325cac8, CTO @f5444083a8) names '-target only'; at 21:0xZ 2026-10-10 list-role-tags on opal-smartx-lambda-role reads Tags [] and no IAMROLES deploy-ledger entry is open, so nothing has landed and the three Lambda drifts cannot ride PHASE B, DISARMED. The drift itself stays with smartx-pipeline's owner on Z-S20's route. Z-S23: no Lambda assumes the role. The served graph (vintage 2026-10-10 12:57Z, 2893 nodes) shows opal-smartx-lambda-role with LAMBDA=0, against a positive control: smartx-assets-pull-role reads LAMBDA=1. The module declares four functions on four other roles (assets_pull, ingestion_lambda, jwt_refresher, rest_pull), and live smartx-assets-daily-pull runs on smartx-assets-pull-role. RoleLastUsed is 2025-12-30. So there is no grant repair to route: the role's honest remedy is RETIRE, a WORLD act outside round 6's cells. It goes to 1.0.0_SA_CTO~Z in round 6's L10 slug as an enrichment candidate. It does not hold w-1, which adopts and tags the role as it stands.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 3293b97a90 (A2-r6), 4dff2b348a, 55d980ad2c, f2c325cac8, f5444083a8",
+        "aws iam list-role-tags --role-name opal-smartx-lambda-role -> {\"Tags\": []}; get-role RoleLastUsed 2025-12-30T23:24:50Z",
+        "comp-find 'opal-smartx-lambda-role' --corpus aws -> 4 hits / 2893 nodes, BANDS IAM_POLICY=3 IAM_ROLE=1; control comp-find 'smartx-assets-pull-role' --corpus aws -> BANDS IAM_POLICY=2 IAM_ROLE=1 LAMBDA=1",
+        "infra/aws/terraform/smartx-pipeline/{assets-pull-lambda,lambdas,rest-pull}.tf role = lines; aws lambda get-function-configuration smartx-assets-daily-pull -> role/smartx-assets-pull-role"
+      ]
+    },
+    "notes": "Cites Z-S21, Z-S22, Z-S23. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
