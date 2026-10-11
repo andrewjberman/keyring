@@ -3752,3 +3752,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "MEASURED 2026-10-11T09:06:26Z-09:06:49Z by 2.0.0_SA_COO~G2: (1) the running resident root e606008994-st27 BINDS the generation queue: its packaged reports/resident_bindings.json reads queue_url https://sqs.us-east-1.amazonaws.com/313476888478/irpt-generation (read from the st27 tar), and the unit runs resident_main.py --factory resident_installed:build_resident_runtime (org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_b8/BRAND_LISTING_HOST.txt line 3). The bindings the resident lacks are commentary_ready_queue_url and analysis_ready_queue_url, a different queue each. (2) get-queue-attributes on irpt-generation: ApproximateNumberOfMessages 0, NotVisible 0, Delayed 0; RedrivePolicy maxReceiveCount 5 to irpt-generation-dlq; VisibilityTimeout 900; retention 345600 s. (3) irpt-generation-dlq: ApproximateNumberOfMessages 8, NotVisible 0. So run 3's accepted request is NOT waiting on the generation queue: it was consumed, or it is one of the 8 dead letters, or it was never enqueued. Which of the three is NOT established: the request and job rows are behind the kms fence for this seat, and the dead letters were not received."
 }
 ```
+
+## IRPT_YCDGEN-D2-S46 -- The package gate fails a correct whole-tree build on the map member: it applies the recorded map source only in named-list mode; and two runs gave two tar hashes
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S46",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T10:01:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "The package gate fails a correct whole-tree build on the map member: it applies the recorded map source only in named-list mode; and two runs gave two tar hashes",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-11 by 2.0.0_SA_COO~G2 on the package built at pin 37210c771a with --research and --opal-map and NO --base-pin: resident_package_gate.py in whole-tree mode printed G2 291 of 292, DIFFERS ycharts/research/overview_map.json, GATE FAIL (rc 1). The member is correct: its sha256 21a8f6d690bbd28c equals `git show 37210c771a:org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json`, the source the bindings record under provenance.opal_map_source, and equals the running st27 member. The gate compared it to infra/aws/lambda/investor-reporting/ycharts/research/overview_map.json, a path that does not exist at the pin, because line 110 reads `opal_source = provenance.get(\"opal_map_source\") if base_pin else None`. The same package passed (G2 292 of 292, rc 0) in named-list mode with --base-pin 37210c771a and an EMPTY --files-from list. Second observation, same two runs: the tar's sha256 differed between them (22d40e9678428a6a, then e5a6b6251b0e5e97) at the same byte length 999816, so the tar is not reproducible run to run and the install script, which embeds the tar's sha256, differs too."
+    ]
+  },
+  "notes": "INERT: the gate fails closed, so the defect refuses a good package and admits no bad one. The st30 packet states the workaround (section 1, gate note) and the CTO accepted it (msg 4644). Not fixed here: the gate lives under org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/, the base COO's tool. The tar hash is read from the staged copy at staging, so the run-to-run difference binds nothing wrong; which input varies (the gzip header time is the likely one) was NOT read.",
+  "spec_asserts": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/live_walk/resident_package_gate.py docstring: G2 holds when every member equals its blob at the pin, and the opal_map member is read from the bindings' provenance.opal_map_source at the pin; the gate writes the tarball with members in sorted order, mtime 0.",
+  "world_is": "MEASURED 2026-10-11 by 2.0.0_SA_COO~G2 on the package built at pin 37210c771a with --research and --opal-map and NO --base-pin: resident_package_gate.py in whole-tree mode printed G2 291 of 292, DIFFERS ycharts/research/overview_map.json, GATE FAIL (rc 1). The member is correct: its sha256 21a8f6d690bbd28c equals `git show 37210c771a:org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json`, the source the bindings record under provenance.opal_map_source, and equals the running st27 member. The gate compared it to infra/aws/lambda/investor-reporting/ycharts/research/overview_map.json, a path that does not exist at the pin, because line 110 reads `opal_source = provenance.get(\"opal_map_source\") if base_pin else None`. The same package passed (G2 292 of 292, rc 0) in named-list mode with --base-pin 37210c771a and an EMPTY --files-from list. Second observation, same two runs: the tar's sha256 differed between them (22d40e9678428a6a, then e5a6b6251b0e5e97) at the same byte length 999816, so the tar is not reproducible run to run and the install script, which embeds the tar's sha256, differs too."
+}
+```
