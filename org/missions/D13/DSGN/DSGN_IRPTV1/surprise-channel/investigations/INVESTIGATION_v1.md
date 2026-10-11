@@ -5798,3 +5798,54 @@
   "notes": "Not investigated."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S20",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T18:00:09Z",
+  "one_line": "L8 round 23 (two of three cells), no judgment criterion. Worker row D2-W59-S2 is right and this seat confirmed it on the router: the Investor Reporting page is staff-only (an admin, an Opal-internal and a Dev user) on portal PROD and DEV. The order and the project's standing statement called it client-facing, and so did this seat in IRPT_ANLREQ; corrected there in row IRPT_ANLREQ-D2-S56. So the PROD candidate of cell IV-e-106 changes an Opal-internal page, and under the push law it does not wait on Andrew's word.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 5485 (IRPT_DASHBD rounds 71 and 72 drained; DSGN_IRPTV1 round 23, two of three cells drained, portal DEV ca23f110)",
+      "this seat's read of portal src/App.tsx on origin/PROD 37aa1247 and origin/DEV ca23f110: line 462 routes /investor-reporting through ProtectedRoute requireAdmin requireInternal requireDev, and lines 460-461 cite Andrew-direct 2026-09-22",
+      "investigation row DSGN_IRPTV1-D2-W59-S2"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md, Agent Autonomy: a portal PROD push that changes a CLIENT-FACING page waits on Andrew's word; an Opal-internal page does not.",
+  "world_is": "Read on the router. Not read by this seat: the PROD candidate record, the Holdings labels, any rendered page. Two cells of round 23 are still running.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-W60-S3 -- IV-e-110: a producer CASH node is a listed row on this page, so cash-only sleeves are not the unlisted ones; and TARGET rows count as listed
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W60-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~60",
+  "surfaced_at": "2026-10-11T17:59:00Z",
+  "one_line": "IV-e-110: the page folds a producer CASH node into kind 'security', so a cash-only sleeve (CASH child) IS listed in the table; the order's 'most cash only' unlisted sleeves are, on this page, listed as a Cash row, and what stays unlisted is a withheld drill (the 'DRILL WITHHELD' capability fact) or a zero-amount sleeve.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ portal/src/pages/InvestorReporting/contracts/index.ts:821 (cashNode: 'True when the wire node_kind is CASH (folded into security for the render)') and tabs/holdings/SecurityList.tsx securityRowsFrom (every kind security with amount !== 0 lists)",
+      "READ org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~298/IB138-1_SLEEVE_LEAF_READ.md section 2: the 1,229 are counted against strict SECURITY nodes; 1,216 of them have CASH children only, 8 'DRILL WITHHELD' with no child",
+      "READ tabs/holdings/slices.ts:270-304 and contracts/adapt.ts:1177: the 'DRILL WITHHELD' fact reaches classification.capabilityFacts on a sleeve; a cash-only sleeve carries no mark"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: 'most cash only, 8 labelled as a withheld drill'; the sentence names both reasons for the money the table does not itemise.",
+  "world_is": "The amount is computed as the order says (card total less the listed rows) and the sentence names both reasons without apportioning, because no served node says cash-only (only a withheld drill is marked). Two consequences left to the CTO: (1) on this page a cash-only sleeve's CASH child is a listed row, so the cash-only reason will seldom be the cause of a gap the sentence reports; (2) the listed rows include TARGET-basis securities under Models sleeves (producer record: 5,957 sleeves hold only TARGET securities), so a gap or a surplus can also come from target rows not summing to their sleeve; the sentence is not shown when the rows reach or exceed the total.",
+  "notes": "No act taken beyond the sentence as ordered."
+}
+```
