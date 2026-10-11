@@ -27260,3 +27260,26 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both hold as of this row. Rollback target: the version id above, by content. This row is written in IRPT_BCKEND's channel and not into the IRPT_ANLREQ rows themselves, which are another project's append-only record; 2.0.0_SA_COO~Y2 carries this id on the build map's entry. PARKED: owner 2.0.0_SA_COO~P2 (cell IB-s-6). Un-parks when the poller is next changed for a reason; that release's order must (1) GENERATE the firm registry at build from infra/logic/registry/scopes.json, never commit it as a served copy; (2) read the transport's refusal first, because a reached read of a missing file raises (keys.py:293, :155); (3) name this version id as the rollback."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W306-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~306",
+  "surfaced_at": "2026-10-11T19:33:26Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "JSOSX, one of the six the face calls outside the first witness with no anchor, is carried by the anchor on 75 of the 87 axis days (the same security is in the overlap table); the anchor_carries_it answer is true for it and false for the other five.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~306/IB145-1_first_moved_bar.json the_six.JSOSX (anchor_carries_it true, anchor_days_carrying_it_of_the_axis 75, rows_held_on_moved_days 23 against 2 in the IB-pr-445 sizing)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~303/IB142-1_UNMOVED_BAR_GUARD_READ.md section 3 (JSOSX 58 of 75 in the overlap, and 67 of 85 among the Inst securities outside)"
+    ]
+  },
+  "spec_asserts": "The face says the six are OUTSIDE the first witness, so no anchor exists for them, and asks anchor_carries_it per ticker from the anchor read.",
+  "world_is": "Five of the six have no anchor close on any of the 87 axis days; JSOSX has one on 75 of them and is outside the first witness only on the days the anchor lacks it, so it is both in the overlap table and in the Inst set outside. Its moved-day rows (23) are all held rows priced from the holdings table, not only the 2 the IB-pr-445 sizing held as outside the first witness. The count is stated per ticker; nothing is re-graded."
+}
+```
