@@ -27572,3 +27572,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Seven did not. A dotted class-share ticker returns nothing; whether the reader would return bars for the dash form (BRK-B) was not asked, so it is inferred only that the spelling is the cause. A security of the nine pairs with no bar stays ungraded by the second witness and its rows block their account-days (BRK.A is in the outside list). Not measured: the account-days that wait on these five outside-list tickers."
 }
 ```
+
+## IRPT_BCKEND-D2-W312-S1 -- The source map's artifact_sha256 for irpt-commentary-draft-store-lambda is not the live CodeSha256 and its _build_note still says DESIRED, not built; the other three entries' digests equal live
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W312-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~312",
+  "surfaced_at": "2026-10-11T22:38:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The source map's artifact_sha256 for irpt-commentary-draft-store-lambda is not the live CodeSha256 and its _build_note still says DESIRED, not built; the other three entries' digests equal live",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json @e7bb7e923a entry irpt-commentary-draft-store-lambda: artifact_sha256 begins xyROb11e, _build_note 'DESIRED, not built and not applied ... No artifact_s3_key/artifact_sha256 yet'",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/IB152-1_live_reads.json function irpt-commentary-draft-store-lambda: live CodeSha256 begins AsKY+KWL (lambda get-function-configuration, read 2026-10-11T22:04Z), LastModified 2026-10-11T04:12:31Z, equal to the sha256 of the downloaded package and to the S3 version ToWX4K7... of the function's own artifact key",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/IB152-1_release_read.json functions[2]: map_artifact_sha256_equals_live_code_sha256 false; the minimal candidate built from this entry differs from the live package in 2 of 16 members, so the live package was built from these pins; the entries for irpt-ycharts-generate, irpt-status and irpt-commentary-composition-read-lambda read true"
+    ]
+  },
+  "spec_asserts": "The map entry describes the package that would be built and its digest; build-and-upload.sh and record-terraform-deploy.sh keep artifact_sha256 equal to the object and the live digest (CTO half 87d92b7c3b condition 4 asks that a stale field of an entry be corrected in the record step).",
+  "world_is": "For this one entry the recorded digest is a different package from the live one and the note says nothing was built; the function is live (Active, handler commentary_draft_store.lambda_handler). Not established: which build the map digest names, or whether a Terraform plan on this function's module reads the map digest."
+}
+```
+
+## IRPT_BCKEND-D2-W312-S2 -- For irpt-ycharts-generate two of the three changed members are NATIVE to its source_dir, so no map row pins them: a minimal candidate re-pins only the schema row, and two riders move that no row can hold back
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W312-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~312",
+  "surfaced_at": "2026-10-11T22:38:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "For irpt-ycharts-generate two of the three changed members are NATIVE to its source_dir, so no map row pins them: a minimal candidate re-pins only the schema row, and two riders move that no row can hold back",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json @e7bb7e923a entry irpt-ycharts-generate: staged_from has a row for contracts/AnalysisSubmissionRequest.schema.json (pin 5be2acd7cc) and NO row for submission.py or acceptance.py; the builder reads a native member from the worktree (build-and-upload.sh stage step and the zip step)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/candidate_repins.json: 7 rows re-pinned over 4 functions, 1 of them in irpt-ycharts-generate",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/IB152-1_release_read.json functions[0].moved_members: 5 members move; durable_job.py (3acafb3f45) and submission_service.py (2f7cc7be42) are native, not IB-pr-455's, and are riders"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-456 face: the candidate map re-pins 'ONLY the rows that pin one of the three members' in the function's entry, and IB-pr-455's worker named entries that package the members through staged_from rows.",
+  "world_is": "In irpt-ycharts-generate the row pins only the schema. Its submission.py and acceptance.py are native, so they move because the build tree is the base; so do the other native members that differ from live (durable_job.py, submission_service.py). Holding either back would need a new staged_from row pinned to the live commit, which the face forbids; the word recorded is RIDERS_MOVE_WITH_THEM. acceptance.py cannot be separated from submission_service.py (replay controls: TypeError, 0 writes)."
+}
+```
+
+## IRPT_BCKEND-D2-W312-S3 -- The resident_worker.py inside the irpt-ycharts-generate zip, live and built, has neither producer_for nor send_ready_if_ticketed, so the Opal-producer branch and the I3 gate AMENDMENT 1 leans on are not in this package; the host's installed package was not read
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W312-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~312",
+  "surfaced_at": "2026-10-11T22:38:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The resident_worker.py inside the irpt-ycharts-generate zip, live and built, has neither producer_for nor send_ready_if_ticketed, so the Opal-producer branch and the I3 gate AMENDMENT 1 leans on are not in this package; the host's installed package was not read",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/IB152-1_replay.json arm 'the zip's resident_worker.py is the OLD one': hasattr(resident_worker, 'send_ready_if_ticketed') and hasattr(resident_worker, 'producer_for') are False on the live and the built tree (identical)",
+      "infra/aws/lambda/ci/lambda-source-map.json @e7bb7e923a entry irpt-ycharts-generate: resident_worker.py staged at the live bytes (pin bb1eb7f92b), so the minimal candidate does not move it",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py @e7bb7e923a:121-133,189-200,700-704 holds OPAL_PRODUCER_PRINCIPALS, producer_for and send_ready_if_ticketed in the tree"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-456 AMENDMENT 1 (CTO msg 5904): an Opal-producer job can exercise the function past acceptance without a vendor call, and the worker half that reads the member is merged and dormant.",
+  "world_is": "The producer switch and the I3 gate are in the tree and in the one-tree candidate's scope, not in the live package and not in the minimal candidate. What the resident host runs is its own installed package (install-resident.sh), which this order's AWS reads cannot see, so whether the host takes the Opal branch for an allow-listed principal today is not established here."
+}
+```
