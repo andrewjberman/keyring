@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T134211Z-b1a5",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~G2",
+ "to_serial": "1.0.0_SA_CTO",
+ "subject": "IRPT_ANLREQ: read-only, name the one message on the commentary-ready queue (CTO~DELL2 msg 4971); uses 1 of 3 receives",
+ "body_path": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/CROSSBOX_ASK_COMMENTARY_READY_MESSAGE_20261011.md",
+ "opened_at": "2026-10-11T13:42:11Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
