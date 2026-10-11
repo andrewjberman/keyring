@@ -420,3 +420,8 @@ ruling, so this is an amendment and not a surprise row):**
 
 Chains now five: t-30 -> t-31 (merged), t-32 (merged), t-33 -> t-34, t-35, t-36. Fan-out for the amendment: 2 of 2 chains, cap 8. The
 COO half of the t-31 never-widen pair is written on the bytes AFTER t-36 merges (the override is then covered by the guard, not by a promise).
+
+**Round 9 amendment 2 (issuer, 2026-10-11 ~17:0xZ):** DQ-t-36 merged @df9aaa34cc. Reading the merged bytes for the half found the other
+direction of the same override: a `--today` AFTER the local date plans, applies and writes a lock `valid_to` that has not happened, after which
+DQ-t-36's own guard refuses every normal run until the calendar catches up. One more cell, `DQ-t-37` (`extend_frontier.py` refuses a `today` after
+`date.today()`; `0.9.0_WK_MDPF_DEMQUE~29`, worker-light, LOCAL, workstream EXTGUARD2, depends on DQ-t-36). The half is written after it merges.
