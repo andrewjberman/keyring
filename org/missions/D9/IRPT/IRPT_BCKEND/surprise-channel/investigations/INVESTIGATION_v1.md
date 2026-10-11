@@ -27093,3 +27093,99 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "With the five earlier one-day-off days and the guard together, every type meets that rule (Inst and RIC/BDC Not Available included, which v0.39 left out on their one-day-off days); the v0.39 test also needs days equal on which the close moved, so the json adds a second list of 11 (Cash has 0 such days). No class is admitted by this cell."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W304-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~304",
+  "surfaced_at": "2026-10-11T19:07:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The time ycharts/session/current was last changed (2026-10-05T10:04Z) is not the time of the last capture: since st12 the resident rewrites that secret on every cookie rotation, so the read 'no capture has written a bundle in six days' does not follow from it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/session/operation_lease.py:257-292 _keep_rotation writes the secret through persist() whenever rotated_cookies names a changed cookie",
+      "git show 9718ac5c87 (2026-10-02): st12, 'a cookie the vendor rotates is written back to ycharts/session/current at once'; installed 2026-10-02 per org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/ST12/INSTALL_OUTPUT_20261002.txt",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/close/YCD-R4-20261005T0552Z_host_run.txt lines 4-5, 17-18: IRPT_SESSION_ROTATION kept=1 versions written on 2026-10-05",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB129-1_capture_failure_read.json stored_state.session_secret_inference and last_ready.separate_measured_bound"
+    ]
+  },
+  "spec_asserts": "IB129-1 reads the secret's last-changed time as the last capture: 'A successful capture is what writes a fresh bundle back, so no capture has succeeded in writing a session bundle since 2026-10-05T10:04Z', and the order's premise is that captures worked until then.",
+  "world_is": "Two kinds of writer change the secret since 2026-10-02: a capture (ycharts_session.js persistSession) and the resident's cookie-rotation write-back. The record does not say which wrote at 10:04Z. The last scripted sign-in success found in the records is 2026-10-02 ~09:45Z (SIGNIN_C/OUTCOME_SIGNIN_C_20261002.md), the last seed-only capture 2026-10-03T16:33Z (change_management/20261003T1631Z_irpt-signin-har-20261003_deploy_completion.md), and NO_AUTHENTICATED_PROBE is already in the journal on 2026-10-03T00:31Z."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W304-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~304",
+  "surfaced_at": "2026-10-11T19:07:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A successful capture writes no journal line, so the extract of 11 capture failures in 14 days cannot show how many captures succeeded, and 'failures before 2026-10-05 exist' cannot be set against a success count from that extract.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py:413 capture() returns {'captured': True} with no print; run_capture prints nothing on success",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB129-1_journal_capture_attempts.txt lines 12-27: only CAPTURE_FAILED and SESSION_REFRESH_ALREADY_USED lines appear"
+    ]
+  },
+  "spec_asserts": "The order and IB129-1 treat the journal's capture lines as the record of capture attempts, with failures starting late September and captures working until 2026-10-05.",
+  "world_is": "The journal carries failures only; a success leaves the secret's change time (see W304-S1), a READY count that is undivided between the vendor path and the Opal producer, and nothing else. The denominator of successes in the same 14 days is not recoverable from the extract."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W304-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~304",
+  "surfaced_at": "2026-10-11T19:07:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The probe's transport is stated in code to be 'the resident's own client class' but is a different program from the resident's client (Node https against Python urllib), with a different Referer and a different cookie selection; whether they look alike to the vendor has no record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js:291-301 the comment, :314 the headers, :833 the probe headers with Referer base + /indices, :800 context.cookies() sent without domain or path filtering",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py:468-494 urllib opener with a domain and path matched jar; :473-485 headers_for with Referer BASE + /dashboard/; :397 aws-waf-token never sent",
+      "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md:51 a session is usable only after verification from the transport that will use it"
+    ]
+  },
+  "spec_asserts": "The probe (a Node client) verifies a session 'from the transport that will use it' by being the resident's client class (ycharts_session.js:291-300).",
+  "world_is": "The Node probe and the Python replay are two clients; the literal replay transport is verified only after a capture (broker.py:198-210), a step the fifth run never reached. Equivalence of the two on the wire is neither measured nor excluded."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W304-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~304",
+  "surfaced_at": "2026-10-11T19:07:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A change on our side since 2026-10-04 that is not in the capture code: the host's Python path made research-runner calls on the same account and stored session from 2026-10-04T18:42Z to 2026-10-05T13:01Z, three runs stopped by a 202 with a waf action at the 7th call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/close/YCD-R1-20261004T1924Z_host_run.txt, YCD-R1-20261004T1944Z_host_run.txt, YCD-R3-20261005T0219Z_host_run.txt: RUN status=STOPPED stop_reason=WAF_REFRESH_REQUIRED at step 7, status=202",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/WAF_WINDOW/WAF-PROBE-W330_host_run.txt: 12 calls 2026-10-05T12:54Z to 13:01Z at 410 s spacing, COMPLETE",
+      "git show f9f0d95cad (2026-10-04): 'run 2 was WAF-challenged at its 7th call at ~1.5 s spacing'; infra/aws/lambda/investor-reporting/ycharts/research/runner.py MAX_REQUESTS_PER_WINDOW = 6"
+    ]
+  },
+  "spec_asserts": "The question behind the order is whether something of ours changed between the last good bundle and the first challenged probe, looking at the capture library, the wrapper and the host's releases.",
+  "world_is": "The library, wrapper and probe did not change (see the read file), but the host's vendor traffic did: research runs began on the same account and session 2026-10-04T18:42Z, before the 2026-10-05T14:41Z failure. The records do not say whether that traffic bears on the vendor's treatment of the session; it is a change on our side that a read of the capture code alone would miss."
+}
+```
