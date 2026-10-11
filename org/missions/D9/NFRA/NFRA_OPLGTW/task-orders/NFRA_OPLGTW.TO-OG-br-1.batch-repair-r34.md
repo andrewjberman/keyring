@@ -88,7 +88,7 @@ not do it.
 - Pre-cut: br1.AC1 base FAIL as expected (rb.AC2 FAIL; 6 of 10 checksums differ; note claims the member).
   br1.AC2 base FAIL as expected (no release before exit; 0 array wraps; parse errors 0).
 
-<status>pending</status>
+<status>complete</status>
 <round>34</round>
 <slot>~54</slot>
 <fabric>site-z</fabric>
