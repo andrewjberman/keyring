@@ -7,10 +7,10 @@
 **Task Order:** `NFRA_IAMROLES202609.TO-IAM-w-1` (PHASE B, now `complete`),
 `NFRA_IAMROLES202609.TO-IAM-w-2` (PHASE A + step 1a) and `NFRA_IAMROLES202609.TO-IAM-w-3` (PHASE A) --
 the last two stopped at step 3 as their orders direct
-**Status:** **w-1 and w-3 PHASE B COMPLETE** -- three roles adopted across three modules, all applied and
-verified live. w-2 PHASE A delivered in full; **w-2 PHASE B STOPPED AT STEP 5 WITH NOTHING APPLIED**, a
-different naming limb refuses it and the audited override cannot reach it (`Z-S34`), ledger HELD-PRE-APPLY
-on that named gate pending a sovereign R20 call.
+**Status:** **ALL FOUR ORDERS TERMINAL. FIVE ROLES NOW IN CODE across four modules**, every one applied
+and verified live. w-1, w-2 and w-3 PHASE B complete this session; w-4 was complete earlier. Zero ledger
+entries of this lane open or held. The one sovereign item, `Z-S34`, was answered by Andrew mid-session and
+the act it blocked then landed.
 
 **Lane:** `0.7.0_AE_CloudOps~IR` (no `~IR` agent folder exists; filed under the base folder with the
 lane in the title, per `/log` Step 0)
@@ -164,6 +164,34 @@ planned for destruction), the override's own lane (`b7c27ef5b0`, after it refuse
 authorised), and the override's scope (A5-r6 dropping the stacked author override). The work left was
 grading two modules without letting either one's numbers contaminate the other.
 
+### w-2 PHASE B -- held, unblocked by Andrew, then landed; the round's hardest cell
+
+| Step | Act | Result |
+|---|---|---|
+| -- | **First attempt**: ledger opened, rename committed... | **REFUSED 4x** on the carrier limb; `Z-S34`; **nothing in AWS** |
+| -- | Ledger HELD-PRE-APPLY on the named gate | `47955fd728`; hold re-run after the first write was discarded |
+| -- | Reported the hold as correctly standing, on a MEASURED zero | `comp-find` over `infra/logic`: 0 hits across 29 files |
+| -- | **Surfaced Andrew's dropped qualifier** | relay said "yes"; record says `YES, the exception, "for now"` |
+| -- | CTO landed R20 X17 entries, **cutoff 2026-12-31** -- carrying his qualifier | `bd2cacee69`, ancestry verified here with a positive control |
+| 4 | Hold RELEASED, committed in the same step as the mutation | `b0fdae1419` |
+| 5 | Rename committed, **NO override of any kind** | `869c01686c`; **DECLARED-EXCEPTION at all 4 sites**, WARN 4 graded |
+| 5 | Two-address targeted plan, saved, graded per attribute | 2 non-no-op, 1 attribute each, 4 keys exact-match, **0 other addresses** |
+| 5 | Apply | 2 imported, 2 changed, 0 destroyed -- **confirmed from live reads + `state list`**, not from the producer |
+| 5 | Drain, same session | `401e211747` |
+| 5 | **Post-drain untargeted plan, SHARED tree** | **"No changes"** |
+| 6 | `POST_APPLY_family_a.md`, ledger closed, proof VALID rc=0 | `ee46dead92`, `beeb07f26c` |
+
+**THE ROUND'S SHARPEST PIECE OF EVIDENCE sits in this cell: two step-5 commits on IDENTICAL BYTES.**
+The first, carrying a valid audited placement override, read `NAMING-GATE: REFUSE 4 graded`. The second,
+carrying **no override at all** but with register entry X17 at HEAD, read `DECLARED-EXCEPTION` at all four
+sites. Same file, same seat, one variable -- which is what makes `Z-S34` a finding and the R20 route a
+demonstrated remedy rather than an inference.
+
+**Three external unblocks, none of them this lane's to grant, each resolved by its owner once named:**
+`Z-S29` (the module could not plan for nine days; ruled by `2.0.0_SA_COO~MI`, carried as A6-r6 step 1a,
+landed here with zero plan delta), `Z-S34` (Andrew's R20 word plus the CTO's register entry), and in
+between, my own first ledger hold failing to persist.
+
 ---
 
 ## Postmortem -- I proved the apply was safe and did not prove the commit was possible
@@ -259,53 +287,35 @@ identically to a true LOCAL).
 
 ## Blockers
 
-**ONE, and it is sovereign-class: `Z-S34`.** Everything else this lane found was fixed inside the session.
+**NONE. All four orders are terminal and nothing of this lane's is open or held.** Every blocker this
+session hit was resolved inside it, and the one sovereign item was answered by Andrew mid-session.
 
-- **`Z-S34` -- w-2 PHASE B cannot commit its declaration, and the audited override cannot lift it.** The
-  naming gate has TWO refusal limbs reached by different names. w-1's role and BOTH of w-3's take the
-  PLACEMENT path, which `# naming-place-override:` converts. w-2's two take the OLDER limb instead,
-  because `judge()` finds a CARRIER -- `bd` is a firm token for `49financial` -- and that branch sits above
-  the placement path and counts as plain REFUSE. Measured rather than read off the source: two runs with a
-  valid override line printed `NAMING-GATE: REFUSE 4 graded` and **no `NAMING-PLACE` line at all**, so the
-  override is inapplicable rather than denied; the same override text in the same session converted w-3's
-  four rows. The canonical forms the gate asks for are unreachable anyway -- an IAM role cannot be renamed
-  in place. The remedy the canon itself names is the R20 DECLARED EXCEPTION, which `judge()` consumes above
-  every NEW branch; it lives under `infra/logic/registry/`, outside this order's `<paths>`, and Rule 30
-  makes it a departure **Andrew** acknowledges. **Owner `1.0.0_SA_CTO~Z`; it is not an AE's call and not
-  the issuer's alone.** The ledger entry is HELD-PRE-APPLY on that named gate, with its re-read event.
-
-- **`Z-S29` -- RAISED AND CLOSED, by three seats in about forty minutes.** w-2 PHASE A could not produce
-  its `PLAN:` line because `bd-pipeline` would not plan at all: 4 x `Error: Unsupported attribute` in
-  `bd-served-vintage-alarm.tf`, because `NFRA_MCPINDEX` commit `3d7fb62105` (2026-10-01) gave two BD
-  silver entries `freshness_basis: trading-day-frontier` without the two attributes that file's
-  comprehension reads unguarded. I filed the row with its controls and owners and **proposed no fix**,
-  because the two candidates differ in meaning -- a `can()`/`try()` default silently drops two tables
-  from the alarm's served-key coverage, which is a coverage decision, not a syntax fix.
-  `2.0.0_SA_COO~MI` ruled the remedy (`NFRA_MCPINDEX-Z-S96` @`c5e22ccb72`), `2.0.0_SA_COO~ZI` carried it
-  into this order as step 1a (A6-r6 @`59d56f3848`) because MCPINDEX had no open slot, and this lane
-  landed the one clause. Its disarm stays the issuer's; I did not touch the row.
-- **`Z-S26` -- CLOSED AT SOURCE.** The audited placement override was unusable from any Tier-2 lane
-  because it stages its own audit row into lane `GOVERNANCE_AUDIT`. `0.0.0_AB_MSTR~Z` made that path
-  lane ANY @`b7c27ef5b0` on `1.0.0_SA_CTO~Z`'s word, and A5-r6 @`f37fb5892d` dropped the stacked author
-  override from w-2/w-3 step 5. The ask was one path rule and that is exactly what landed.
-- **`Z-S25` -- open, and correctly not mine.** The naming gate reads an ADOPTED pre-existing role name as
-  NEW. The issuer ruled that adopted roles keep their live names (Rule 30's existing-pipeline
-  non-application) and routed the gate fix to `1.0.0_SA_CTO~Z`, where it is parked at dell1. PHASE B of
-  w-2 and w-3 carries the audited placement override in the meantime, by ruled instruction.
-- **`Z-S27` -- instance closed, class answered by mechanism.** See the Postmortem. A4-r6 turned the
-  ordering into step 5 of both remaining orders, so it is no longer discipline.
-- **`Z-S35` -- my own error, filed against myself.** My gate "probe" for w-3 used the REAL `safe-commit`
-  invocation; the gate passed those names, so it committed two live PHASE B declarations with no GO and
-  under w-2's message. Reverted (not reset, so nothing is hidden), local only, never drained, nothing
-  applied. The ambiguity is in **my own** row `Z-S27`'s prescription, which w-3 PHASE B will read next:
-  "run the real safe-commit invocation and read whether it lands" describes an act whose success condition
-  IS the landing, so it has no probe-shaped version. A dry run must differ from the act in MECHANISM, not
-  in intent. The row carries a suggested re-wording for the issuer, who owns `Z-S27`.
-- **Owned elsewhere, each named with its owner, none stranded:** all three never-widen pairs are now
-  SIGNED (w-2 @`1ad6f36ca2`/@`dadc1ec69a`, w-3 @`9586e0106b`/@`8453026444`); w-1's AC4 (`3.0.0_SA_CVO~Z`, judgment);
-  the three `smartx-pipeline` Lambda drifts (`smartx-pipeline`'s owner, row `Z-S20`'s route); the five
-  pre-existing `terraform fmt` failures in `bd-pipeline`, `portfolio-management` and `news-pipeline`
-  (surfaced in the surveys, outside this order's `<paths>`, not touched).
+- **`Z-S34` -- RAISED AND CLOSED.** The naming gate's OLDER carrier limb refuses a name carrying a firm
+  token (`bd` -> `49financial`), and the audited placement override does NOT reach that limb -- measured
+  on two runs printing no `NAMING-PLACE` line at all, against the same override text converting four rows
+  for w-3 in the same session. Resolved by the route the canon itself names: Andrew answered
+  `YES, the exception, "for now"` (@`5e10dd2dc5` item 4) and `1.0.0_SA_CTO~Z` landed R20 entries
+  NFRA-IAMROLES-R20-01/02 (@`bd2cacee69`, register X17, **cutoff 2026-12-31**, carrying his qualifier).
+  **I surfaced that qualifier** because the relay to me had compressed it to "yes" and an R20 entry carries
+  a cutoff; it landed in the cutoff. The act then took no override at all.
+- **`Z-S29` -- RAISED AND CLOSED by three seats.** `bd-pipeline` could not plan at all for nine days after
+  an `NFRA_MCPINDEX` config edit. I filed it with four controls and its owners named and **proposed no
+  fix**, because the candidates differ in meaning. `2.0.0_SA_COO~MI` ruled it, `2.0.0_SA_COO~ZI` carried
+  the ruling in as A6-r6 step 1a, and I landed the one clause with a measured zero plan delta.
+- **`Z-S26` -- CLOSED AT SOURCE** by `0.0.0_AB_MSTR~Z` (@`b7c27ef5b0`), exactly the one path rule asked for.
+- **`Z-S27` -- FIXED AND THEN TWICE VINDICATED.** It became A4-r6's rewritten step 5, and the two PHASE Bs
+  that followed both hit refusals at precisely that step with nothing in AWS. The hazard it describes --
+  w-1's live IAM role planned for destruction -- never recurred.
+- **`Z-S25` -- open and correctly not mine.** The gate fix is `1.0.0_SA_CTO~Z`'s, parked at dell1. Its
+  practical effect is now bounded: three of the four names clear via the placement override and the
+  fourth pair via R20 X17 until 2026-12-31.
+- **`Z-S35` -- my own error, closed.** Reverted, local-only, nothing applied. Its lesson was applied in the
+  very next cell: w-2's step-5 commit WAS the probe, run in its proper place in the ruled order, so its
+  refusal cost nothing and needed no separate dry run.
+- **Owned elsewhere, none stranded:** w-1's, w-2's and w-3's AC4 (`3.0.0_SA_CVO~Z`, judgment); the five
+  rows' dispositions and disarms (`2.0.0_SA_COO~ZI`); the three `smartx-pipeline` Lambda drifts
+  (`Z-S20`'s route); the pre-existing `fmt -check` failures and `naming-apply-gate` WARNs on unrelated
+  files in three modules (surfaced in the surveys and records, outside every order's `<paths>`).
 
 ## Current State
 
@@ -331,28 +341,32 @@ Written for a reader with zero prior context.
   daily platinum keys). Both FAILed before the edit, so they discriminate rather than always passing.
   The guard's own plan delta is ZERO, which is what confirms ~MI's premise that nothing consumes those
   locals. **The YAML was NOT touched** -- the remedy was ruled to be the guard, not the data.
-- **THREE declarations are live and ONE is still inert:** `smartx-pipeline/zz_adopt_family_b.tf`,
-  `portfolio-management/zz_adopt_family_e.tf` and `news-pipeline/zz_adopt_row3.tf` are applied;
-  `bd-pipeline/zz_adopt_family_a.tf.proposed` stays inert, waiting on `Z-S34`. Every `.tf` copy used for a
+- **ALL FOUR declarations are live:** `smartx-pipeline/zz_adopt_family_b.tf`,
+  `bd-pipeline/zz_adopt_family_a.tf`, `portfolio-management/zz_adopt_family_e.tf` and
+  `news-pipeline/zz_adopt_row3.tf`. No `.tf.proposed` of this round remains. Every `.tf` copy used for a
   PHASE A plan run was removed and none was committed.
 - **Worktree `C:/tmp/iam-w1b`** holds branch `wk-iamroles-r6-w2-1a` and a completed `terraform init` for
   ALL FOUR modules (`smartx-pipeline`, `bd-pipeline`, `portfolio-management`, `news-pipeline`). Its
   sparse cone is `.tools`, `infra`, `lib`, `org` and `data/black_diamond/scripts/gold` -- the last few
   added one at a time as gates and then the module itself demanded paths outside the cone. Keeping it
   saves four inits; nothing is lost if it is removed, since every branch is drained.
-- **THREE roles are now in code, across three modules, and that is the whole of what this session changed
+- **FIVE roles are now in code, across four modules, and that is the whole of what this session changed
   in the world:** `opal-smartx-lambda-role` (4 tags), `portfolio-management-lambda-role` (**3** tags, no
   `System` key) and `codebuild-semantic-clustering-role` (4 tags incl. `System=NewsPipeline`). Each was
   imported into its module's state and each carries exactly its module's `default_tags` set, where all
-  three carried zero before. **No permission moved anywhere:** every role's policies, trust, path,
-  description, max session and boundary are identical to the pre-act reads, and row 11's attached
-  `AWSLambdaBasicExecutionRole` -- the one managed attachment in the program -- survived its import.
-- **w-2's two roles are UNTOUCHED.** PHASE B applied nothing because it was refused at the commit, before
-  AWS: `bd-pipeline` state holds 0 of its 2 roles against a positive control of 17 `aws_iam_role` entries,
-  and both roles still read `Tags []`. No instance or Lambda moved in any module.
-- **Four ledger entries, three CLOSED and one deliberately HELD** -- `iamroles-r6-family-b` (w-1) and
-  `iamroles-r6-family-e-portfolio-management` / `-news-pipeline` (w-3) are closed with all legs proven;
-  `iamroles-r6-family-a` is HELD, not open and not closed:
+  five carried zero before -- plus `bd-merge-daily-lambda-role` and `bd-pipeline-task-role`, 4 tags each.
+  **No permission moved anywhere:** every role's policies, trust, path, description, max session and
+  boundary are identical to the pre-act reads; row 11's attached `AWSLambdaBasicExecutionRole` -- the one
+  managed attachment in the program -- survived its import; and `bd-pipeline-task-role`'s
+  `ecs-tasks.amazonaws.com` trust and absent description are unchanged. **Live tag counts: 4, 4, 4, 3, 4**
+  -- the 3 is `portfolio-management`, whose module declares no `System` key.
+- **One clause of `bd-served-vintage-alarm.tf` also changed** (step 1a's `can()` guard, `a18b96fd5d`),
+  which is what made `bd-pipeline` plannable at all. Zero plan delta, measured. No instance, Lambda,
+  alarm, schedule or notification moved in any module.
+- **Four ledger entries, ALL FOUR CLOSED with every leg proven** -- `iamroles-r6-family-b` (w-1),
+  `iamroles-r6-family-e-portfolio-management` and `-news-pipeline` (w-3), and `iamroles-r6-family-a`
+  (w-2), which is the only one that travelled OPEN -> HELD-PRE-APPLY -> OPEN -> CLOSED. Nothing of this
+  lane's is open or held. On that last entry:
   HELD-PRE-APPLY on the `Z-S34` gate (`47955fd728`, verified at HEAD rather than on the working tree,
   because my first hold wrote the file and was then discarded by a revert before it was ever committed --
   the tool's OK line described a change that no longer existed). `iamroles-r6-family-b` is CLOSED. Nothing
@@ -360,9 +374,10 @@ Written for a reader with zero prior context.
 - Lane LIVE, PID 30260, registered, one inbox watcher (re-armed at each 30-minute expiry, same turn, one
   call -- four arms this session). **Zero crons**; no row naming this seat in `org/ref/LIVE_ARMS.md`.
   Session serial file at `org/mcp/sessions/3e0af293-5c41-461e-b262-eb250e87c3cb.serial`.
-- MCP: **6 messages in, all READ-acked** -- 33017 the re-seat, 33038 the A4-r6 ruling, 33054 the w-3 PHASE A
-  GO, 33067 the A6-r6 step-1a amendment, 33097 the w-2 PHASE B GO, 33102 the w-3 PHASE B GO; **8 reports
-  out**. Message 33067 is worth noting for a successor: its
+- MCP: **8 messages in, all READ-acked** -- 33017 re-seat, 33038 A4-r6, 33054 w-3 PHASE A GO, 33067 A6-r6
+  step 1a, 33097 w-2 PHASE B GO, 33102 w-3 PHASE B GO, 33158 Andrew's R20 answer, 33162 the RESUME;
+  **11 reports out**. Every arrival was acted on in the turn it landed, which is why eight rulings and
+  amendments could be absorbed mid-round without a restart. Message 33067 is worth noting for a successor: its
   `[INBOX]` event fired while BOTH probes read empty (the LD-0099 ferry case), and it was read from the
   `read/` dir newest-first exactly as `org/XXX.md` Step 1b B directs. Every arrival was acted on in the
   same turn it landed, which is why four separate rulings could be absorbed mid-cell without a restart.
