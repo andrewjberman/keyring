@@ -4692,3 +4692,57 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-W53-S1 -- IV-e-95 part 2 (the smoke map at 22) STOPPED: the order's premise that custody-report-read and custody-report-persist have no producer fixture is fals
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T10:35:01Z",
+  "one_line": "IV-e-95 part 2 (the smoke map at 22) STOPPED: the order's premise that custody-report-read and custody-report-persist have no producer fixture is false at the base, and 22 keys with two routes excused is not reachable (22 DECLARED routes minus 2 excused = 20 entries).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json @63ab2ba116: _denominator.declared 22, routed_elsewhere 2, total 24; the three DECLARED routes with response_schema null are custody-report-read, custody-report-persist, analysis-request-original",
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/custody-report-read.response.valid.json and custody-report-persist.response.valid.json EXIST, committed 5020b450a7 (2026-10-09, IB-pr-412, 0.9.0_WK_IRPT_BCKEND~275), with docs/contracts/investor-reporting/v1/responses/custody-report-read.response.schema.json and custody-report-persist.response.schema.json; the order says they have none 'until IRPT_BCKEND publishes one'",
+      "the producer fixtures list at the base holds NO fixture and NO response schema file for analysis-request-original (routes.json response_schema_absent_reason: 'No response schema file is authored by AR-y-22'); its note says its data member is the analysis-request-pdf data shape",
+      "portal fixtures/smoke/default.json at 3bf0d731 holds 12 keys; fe-s-1/fixtures.test.ts:131-172 requires keys == _denominator.declared (22) and exactly one key per DECLARED route; p17_round17.py IV95-AC2 requires smoke_map.keys == 22 AND excused == exactly two",
+      "fe-s-14/published-map.test.ts:121 does JSON.parse(readV1(route.response_schema)) per key, so a key for a route whose routes.json response_schema is null cannot pass that test as written (routes.json row W167-S1 keeps it null)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IV-e-95 part 2: exactly TWO routes (custody-report-read, custody-report-persist) have no producer fixture and are excused by name; the map holds 22 keys; the test fails if a third route is missing or an excused route gains an entry.",
+  "world_is": "MEASURED: (1) the two named routes DO have producer fixtures and response schemas since 2026-10-09, so the reason 'no producer fixture until IRPT_BCKEND publishes one' is false for them; the one DECLARED route with no fixture and no response schema is analysis-request-original. (2) 22 DECLARED routes with two excused entries is 20 keys, not 22; with the custody entries built from their fixtures it is 22 keys and 0 excused (or 21 and 1 if analysis-request-original is excused). No reading of the order gives 22 keys and 2 excused. This worker built nothing for part 2 (no default.json edit, no fe-s-1 or published-map edit); it could not write a reason it measured to be false, nor invent a body for analysis-request-original. Parts 1, 3 and 4 are done and committed. IV95-AC2 cannot pass as written.",
+  "notes": "BLOCKING for IV95-AC2 only. The ten routes with no key today: selection-create, directory-browse, custody-report-read, custody-report-persist, analysis-input-upload, analysis-request-history, comparison-catalogue, analysis-request-read, analysis-request-pdf, analysis-request-original; producer fixtures exist for nine of them. Owner of the decision: 2.0.0_SA_COO~D2 (which routes are excused, and the key count the check wants). The producer pin CONSUMER_SMOKE_ENTRIES (test_seam_paired.py:116) stays 12 and is 2.0.0_SA_COO~P2's."
+}
+```
+
+## DSGN_IRPTV1-D2-W53-S2 -- iv-e-69.performance-finished.test.tsx carries one raw NUL byte (offset 16025, in the fallback of formatPageDate(...) ?? '<NUL>'), so ripgrep and Grep 
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T10:35:01Z",
+  "one_line": "iv-e-69.performance-finished.test.tsx carries one raw NUL byte (offset 16025, in the fallback of formatPageDate(...) ?? '<NUL>'), so ripgrep and Grep report the file as binary and skip it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the blob at portal 3bf0d731 (before this worker's edit) holds 1 NUL byte; byte count read with python rb; Grep on the file answered 'binary file matches (found NUL byte around offset 16025)'",
+      "this worker's re-gold of the file (portal 21011a47) was a bytes-level replace of one phrase; the NUL count is 1 before and after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A test source file is text a search tool reads.",
+  "world_is": "The test source holds a raw NUL where a '\\x00' escape was probably meant; the file still runs. A search over the scope with a text-only tool skips it silently. Not changed (outside the order)."
+}
+```
