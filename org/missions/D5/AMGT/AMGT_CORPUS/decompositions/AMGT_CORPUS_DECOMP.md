@@ -1,4 +1,4 @@
-# AMGT_CORPUS -- L5 decomposition v48.0 -- ROUND 48 (the round-47 analysis's enrichment list: the served read that grades FWD-12 and FWD-20, the Thesis payload census by key, the FactSet label read)
+# AMGT_CORPUS -- L5 decomposition v48.1 -- ROUND 48 (the round-47 analysis's enrichment list: the served read that grades FWD-12 and FWD-20, the Thesis payload census by key, the FactSet label read)
 
 **Issuer:** `2.0.0_SA_COO~C1` (dell1), 2026-10-11 ~21:0xZ.
 
@@ -8,7 +8,7 @@ REALIZED 20 of 22; open FWD-12 and FWD-20 (both BUILT, not served). PRD v0.11 (A
 
 ## 0. What this round IS
 
-Every cell is the issuer's own READ or a carried act; no worker order is cut (the round's work is measurement, and its one act, the redeploy, is AMGT_RESAPP's).
+Cells 1 to 3 are the issuer's own READS; cell 4 is a carried act (AMGT_RESAPP's); cell 5 is the one worker order, cut after the ax-3 read (AMENDMENT 1).
 
 | # | item (analysis s.3) | cell | executor | risk |
 |---|---|---|---|---|
@@ -17,7 +17,10 @@ Every cell is the issuer's own READ or a carried act; no worker order is cut (th
 | 3 | the 394 "FactSet line" rows: one read of whether the team's other workbooks label any of the 50 FactSet codes unambiguously, raising the measured share; no inference | `CRPS-ax-3` | the issuer's read over the stored own workbooks and the SharePoint templates (`checks/round48/ax3_label_read.py`) | LOCAL (read) |
 | 4 | the carried act: the /13 redeploy of `opal-amgt-scoped-api` from the merged pin, AMGT_RESAPP round 98's first cell, under `NEVER_WIDEN_ROUND47_AW4_*` (COO half @56f0d97d08, CTO half SIGNED with ADDENDUM 1) | `CRPS-ax-4` (carried; not this issuance's act) | `2.0.0_SA_COO~R1` / `0.7.0_AE_CloudOps~RA1` | SERVED |
 
-**Chains:** `ax-4 -> ax-1`; `ax-2`, `ax-3` independent (read now). `fanout: 0 of 0 worker chains (no order is cut; cap 8)`.
+| 5 | (AMENDMENT 1, CTO round-47 analysis ADDENDUM 1, msg 4113, on the ax-3 read) a FactSet code's single label across the team's workbooks is served, claim HELD, cited "N workbooks agree, 0 disagree"; the own sheet's measured label wins; the three shares printed; method /14 | `CRPS-ax-5` | worker `~1` (continued): `lib/research/corpus/` | LOCAL |
+| 6 | the /14 dossier write over the 95 names, its own never-widen pair, and the redeploy that carries /14 (AMGT_RESAPP round 98, in place of /13 if the CTO so rules) | `CRPS-ax-6` | the issuer's paired served act, then `2.0.0_SA_COO~R1` / `0.7.0_AE_CloudOps~RA1` | SERVED |
+
+**Chains:** `ax-4 -> ax-1`; `ax-2`, `ax-3` independent (read, DONE); `ax-5 -> ax-6 -> ax-1`. `fanout: 1 of 1 worker chains (ax-5), cap 8` (ax-5 amends the round: round 48 carried no order at the issuance, so GATE (x) admits it).
 
 ## 1. The reads (what each prints)
 
