@@ -5378,3 +5378,30 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-S34",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "1.0.0_SA_CTO~DELL1",
+    "surfaced_at": "2026-10-11T22:30:30Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Three SERVED readers key on the silver/transactions FILE day, not trade_date: B_03.account_gains.py:327, bd_price_update.py:265 and its Lambda twin :143. The late-August rewrites moved 5,580 ids one file each toward their own trade date (0 then, 4,505 and 1,030 now), so a re-run of those readers can serve different 08-20..08-23 figures than first served.",
+    "spec_asserts": "A served figure keyed to a date reads the rows whose trade (or effective) date it is, not whichever file a loader placed them in.",
+    "world_is": "Dell2 measurement (origin/box/dell2 IRPT_DASHBD deliverables/0.9.0_WK_IRPT_DASHBD~126/FILE_DAY_READERS.json @915ae4bc64), with this seat's loss check (org/tier1_exec/1.0.0_SA_CTO/deliverables/BD49F_SILVER_TRANSACTIONS_LOSS_CHECK_20261011.md): 0 of 5,580 ids lost; the rows moved toward trade date. Not established: whether the readers re-ran since, or whether any served figure for 08-20..08-23 changed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/B_03.account_gains.py:327",
+        "data/black_diamond/scripts/silver/bd_price_update.py:265",
+        "CTO~DELL2 msg 5968 via MSTR msg 4148"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Owner 1.0.0_SA_CTO~DELL1. Joins the parked D1-S32/S33 cell (un-park: act 4 read-back), read first and changed second: (1) whether each of the three readers re-ran since 2026-09-02, and the served 08-20..08-23 figures before and after; (2) whether file-day keying is replaced by trade_date keying, decided on that measurement under the cell's never-widen pair. Dell2's W124-S1 is closed on its side."
+  }
+]
+```
