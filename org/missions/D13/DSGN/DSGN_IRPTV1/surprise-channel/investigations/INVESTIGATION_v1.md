@@ -3947,3 +3947,57 @@
   "notes": "Outside this cell's scope (the order changes one Holding cell)."
 }
 ```
+
+## DSGN_IRPTV1-D2-S2 -- The S61 recut's comment in ProspectComposer.tsx says the Holding cell states the analysed security 'as the disclosure list below does'; in the live re
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T06:33:24Z",
+  "one_line": "The S61 recut's comment in ProspectComposer.tsx says the Holding cell states the analysed security 'as the disclosure list below does'; in the live render the disclosure list is ABOVE the table. A wrong word in a code comment; the page is right.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit 1cd1cf25, src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx:569 (the comment line containing 'as the disclosure list below does'); the list is rendered at :545, before the table",
+      "deliverables/0.9.0_WK_DSGN_IRPTV1~46/review_region_crop_1cd1cf25.png: the two disclosure bullets render above 'Normalized total' and the table",
+      "1.0.0_SA_CTO~DELL2 msg 4278: fix the word when the file is next touched"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A comment describes the page it sits in.",
+  "world_is": "The comment says below; the list renders above.",
+  "notes": "Ruled by the CTO (msg 4278): not a blocker; fixed when ProspectComposer.tsx is next touched."
+}
+```
+
+## DSGN_IRPTV1-D2-S3 -- The upload review's disclosure sentence reads '<from> is analysed as <to>, a proxy you named.' for EVERY served correction. For a typo correction (APP
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T06:33:24Z",
+  "one_line": "The upload review's disclosure sentence reads '<from> is analysed as <to>, a proxy you named.' for EVERY served correction. For a typo correction (APPL to AAPL) the advisor accepted a suggested fix and named no proxy, so the sentence is false for that kind. Pre-existing; the S61 recut did not touch it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_DSGN_IRPTV1~46/review_region_crop_1cd1cf25.png: 'APPL is analysed as AAPL, a proxy you named.'",
+      "portal commit 1cd1cf25, src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx:545: the one sentence template rendered over disclosures.corrections",
+      "1.0.0_SA_CTO~DELL2 msg 4278 names it; msg 4223 established that the list carries both typo corrections and proxy substitutions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A disclosure on a served page states what happened to the holding.",
+  "world_is": "One sentence template serves two kinds of correction and is true of only one. Whether the served disclosure carries a kind the page could read is not established.",
+  "notes": "A served-page wording defect on a client-facing page. Whether the remedy is a kind on the served disclosure (IRPT_ANLREQ's) or a kind-neutral sentence is the CTO's call at the next analysis."
+}
+```
