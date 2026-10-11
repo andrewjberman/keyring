@@ -9777,3 +9777,69 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order
 ```
+
+## 98. ROUND 90 -- THE UNITED STATES PEER CURRENCY (PURE HALF), THE MERGE EXEMPTION, TWO READS DONE AT THE CUT, THE WHOLE-PAGE READ. Two worker orders + one staged cell + three issuer acts
+
+**Input:** the CTO~DELL1 round-89 analysis `ledger/ROUND_ANALYSIS.round89.md` @34a0c14300 (items 1-5; msg 3518). Prep in
+`deliverables/2.0.0_SA_COO~R1/round90_prep/checks/` (r90_merge_head.sh, r90_currency_answered.py) and `round90_prep/ISSUER_READS.md`
+(with `reads/`). Both checks were dry-run at the base on 2026-10-11: r90_merge_head.sh FAILs B1 and PASSes B2, B3;
+r90_currency_answered.py FAILs C1-C4 and PASSes C5; each PASSes every arm against a candidate held outside the tree.
+
+### 98a. MEASURED AT THE CUT
+
+- **Item 2 (D1-S14, non-US rows): the pool resolves 0 of 1,816 on the scanner's own ticker, and at most 7 after a country-to-exchange
+  form is built.** The identity pool holds 243 records (188 under a `US` form, 55 non-US); the scanner's 1,816 non-US rows are the
+  denominator. 138 of the 1,038 US rows resolve under `<T> US`, and those already take their currency from the model block through
+  nn-2 and `price_currency_fields`. The ruled cell would move 0 rows, so NO build cell is cut (ISSUER_READS.md, oo-4). The call that
+  remains (accept the honest absence, or widen the DEMQUE request once an identifier form is stored) is the CTO's.
+- **Item 3 (Z-W266-S3): LOCATOR 4, EXCERPT 1 of 5 held points** on BABA, PBR and SAP (ISSUER_READS.md, oo-2). The LOCATOR defects
+  (a period label emitted as `FY2025` where the filing prints `2025` / `March 31, 2025`; a value in an inline parenthetical outside
+  its label's block; a decimal that `_WHOLE_NUMBER_RE` splits into two integers) are in `lib/research/filings/analyze.py`, inside this
+  project's write surface; they are the ROUND-91 cell the analysis names.
+- **Item 4 (MERGE_HEAD):** measured in a throwaway repository: a merge with 4 staged deletions in a linked worktree gets hook exit 1
+  and a BLOCKED row; the same merge in the main worktree exits 0. `git rev-parse --git-path MERGE_HEAD` resolves the per-worktree path
+  (MERGE_HEAD present, rc 0 under the candidate).
+- **Item 1 (D1-S14, US rows):** the DEMQUE request `AMGT_RESAPP-S14-CRNCY-SCANNER-US` (@b6e42f51a8) carries no quote and no answer; the
+  PRD does not state the answer's address or shape. The consumption function can be built against an argument now; the reader cannot.
+  138 of its 1,038 rows are held names whose currency is already served.
+- **Item 5 (whole-page read):** the served plane for ASML and two more names; read after the issuance (it is an issuer act).
+
+### 98b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-oo-1` | the whole-page read: peer identity and every dated figure's vintage for ASML and two more names (item 5) -- ISSUER ACT | `2.0.0_SA_COO~R1` | issuer act | LOCAL (reads) | `round90_prep/OO1_WHOLE_PAGE_READ_*.md` | FWD-8, FWD-38 |
+| `AMGT-oo-2` | Z-W266-S3: classify each lost driver point LOCATOR or EXCERPT, count per class (item 3) -- ISSUER READ, DONE at the cut | `2.0.0_SA_COO~R1` | issuer read | LOCAL (reads) | `round90_prep/ISSUER_READS.md` | Z-W266-S3 |
+| `AMGT-oo-3` | the mass-deletion gate exempts a merge in a linked worktree (item 4) | `~361` | worker-light, direct act | LOCAL | `.tools/git-hooks/mass-deletion-check.sh` | S4 neighbour |
+| `AMGT-oo-4` | D1-S14 non-US: the count the pool resolves, printed against 1,816 (item 2) -- ISSUER READ, DONE at the cut; no build | `2.0.0_SA_COO~R1` | issuer read | LOCAL (reads) | `round90_prep/ISSUER_READS.md` | D1-S14 |
+| `AMGT-oo-5` | a United States peer the answer covers serves its currency as MEASURED -- the PURE half (item 1) | `~362` | worker-light | LOCAL | `lib/research/peers/price_currency.py`, one new test | D1-S14 |
+| `AMGT-oo-6` | the reader of the DEMQUE answer and its wiring at the route (item 1) -- STAGED, its order cut at the GO | `~362` (re-seat) | worker | LOCAL until it rides a redeploy | `lib/research/api/scoped_amgt.py` | D1-S14 |
+
+**Uncovered, with its owner:** the 1,816 non-US rows' currency (no build; the CTO's decision, 98a); the LOCATOR cell (round 91, this
+seat); FWD-16, the PROD promote of the 46 DEV commits (`AMGT-nn-6`) and the model API key rotation -- Andrew (analysis section 4).
+
+### 98c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: analysis items 1-5. 1 -> oo-5 + oo-6; 2 -> oo-4; 3 -> oo-2; 4 -> oo-3; 5 -> oo-1. Printed denominator 5 of 5
+  items placed (oo-1..oo-6: 2 worker orders cut, 1 staged cell without an order, 3 issuer acts or reads).
+- **(ii) Same grain.** oo-3 is a one-file edit; oo-5 a one-function edit and its test; oo-6 one reader and one call site.
+- **(iii) Intent coherence.** oo-1, oo-2 and oo-4 READ; oo-3 and oo-5 are code; oo-6 is code that waits on another project.
+- **(iv) What a cell does NOT move.** oo-3 leaves the audit root, the count, the attribution and the modes untouched; oo-5 changes
+  only the answered United States member's currency fields and leaves every other output byte-equal; oo-6 serves no currency when the
+  read fails; no cell here moves the served function (SERVED reach waits for a redeploy another product cell needs).
+
+### 98d. EDGES AND FAN-OUT
+```
+oo-5 --> oo-6              (oo-6 consumes the `answered` parameter oo-5 adds; one write surface family, one slot)
+oo-6 waits on the DEMQUE answer landing (a dependency between two projects), then an AMENDMENT/order cut at the GO
+oo-3 independent
+oo-1, oo-2, oo-4 are issuer acts or reads
+fanout:
+  cap: 8
+  orders_total: 2          (oo-3, oo-5; oo-6 has no order until the GO)
+  chains_total: 2          (oo-3 ; oo-5 -> oo-6)
+  wave_0: [oo-3 ~361, oo-5 ~362]
+  wave_1 staged: [oo-6 (the DEMQUE answer landed, its address and shape read, oo-5 merged)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order (the queue's producer draws at site Z)
+```

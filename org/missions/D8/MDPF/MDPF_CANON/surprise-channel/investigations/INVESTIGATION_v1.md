@@ -703,3 +703,73 @@
   "notes": "Evidence row, no defect asserted: records that row MDPF_CANON-D1-W9-S7's hand step was performed and measured. Disposition of S7 and of this row is the COO's and CVO's; the old bronze prefix is not deleted (an S3 delete needs a human's confirmation)."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S13",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T05:50:00Z",
+  "one_line": "DISARM OF D1-W8-S2 BY ITS DISARM OWNER (CTO, per REMEDIATION_v3): the two carried zero-firm entries (opal_growth_sma, opal_div_sma) are SMA-cohort per-model lines that feed no headline and no trend-stack figure; the fold fix is cut in round 4.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "D1-W8-S2: the global fold re-emits by_model entries no firm holds at the date, with counts frozen at 49financial's 2026-07-17 values, on every run.",
+  "world_is": "Served global aggregate-aua-timeseries 2026-10-08 (read 05:4xZ): both entries carry cohort_class 'sma' (45 / 40 accounts; 3,974,709.60 / 17,079,326.24). opal_aggregate_aua 2,147,378,054.74 equals model_aua 1,828,584,618.68 + non_model_aua 289,570,622.57 + sma_additive_aua 410,420.98 (pfde) + tax_additive_aua 28,812,392.51 (tax), so the two carried lines are in no headline sum. The portal Global trend stack builds from non-SMA keys only (ModelPortfolios.tsx nonSmaKeys, cohort_class !== 'sma'). What remains exposed is the two per-model lines wherever a by_model listing includes the SMA cohort. Placement: round-4 cell on the global fold (drop or null a by_model entry no firm holds at the date) under its never-widen pair; Andrew's X2 call dell1-20261011T053810Z-fe9b option A would also fold them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api get-object opal-data-assets portal/gold/mdpf/global/aggregate-aua-timeseries/2026-10-08.json (read-only, 1.0.0_SA_CTO~DELL1 2026-10-11T05:4xZ)",
+      "portal/src/pages/ModelPortfolios.tsx nonSmaKeys filter (Global VALUE re-point block)",
+      "org/missions/D8/MDPF/MDPF_CANON/ledger/ROUND_ANALYSIS.round3.md section 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S14",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T05:50:00Z",
+  "one_line": "DISARM OF D1-W8-S3 BY ITS DISARM OWNER (CTO): no front-end band is derived as total minus model; the Global stack reads non_model_aua as a field, so the additive gap shows as stack-below-line by pfde + tax (about 1.4%) on 24 dates, never as a mislabelled band.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "D1-W8-S3: the fold docstring states opal_aggregate_aua == model_aua + non_model_aua at every date and says the front end derives the non-model band as total minus model.",
+  "world_is": "portal/src/pages/ModelPortfolios.tsx: the (oaa - model_aua) client re-derive is retired (:80); the Global aggregate line is a FIELD READ of opal_aggregate_aua (:789) and the Non-Model band a FIELD READ of non_model_aua (:1872, :2071). So the band is the producer's non_model_aua. On the 24 dates where the headline carries sma_additive_aua + tax_additive_aua, the model bars plus the band sum below the aggregate line by that amount (2026-10-08: 29,222,813.49 of 2,147,378,054.74). Placement: round-4 LOCAL cell corrects the fold docstring to the additive identity; a portal cell renders the two additive components as their own band so the stack meets the line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/ModelPortfolios.tsx:80, :789, :1872, :2071 (main-tree portal pin)",
+      "served global aggregate-aua-timeseries 2026-10-08, the same read as D1-S13"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S15",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T05:50:00Z",
+  "one_line": "DISARM OF D1-W8-S5 BY ITS DISARM OWNER (CTO): the X2 re-read is put to Andrew as open call dell1-20261011T053810Z-fe9b, HELD for him (X2 is his grant); FWD-3 stays NOT REALIZED until he answers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "D1-W8-S5: 06_CONFORMANCE_LEDGER X2 stands GRANTED on the round-2 basis while the round-3 basis reads by_model min firms 0 and non-model series min firms 1.",
+  "world_is": "Open call dell1-20261011T053810Z-fe9b (fork, REC option A: fold by_model entries held at fewer than 2 firms into one line and keep the one-firm series out of global; B: accept and rewrite FWD-3), published to s3 box=dell1 and HELD for Andrew. No served output moves before his word.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/state/dell1/open_calls.json row dell1-20261011T053810Z-fe9b",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~8/X2_GLOBAL_BASIS.md @945e1add0c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
