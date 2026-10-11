@@ -5435,3 +5435,57 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W88-S1 -- DB-b-113: the returns table is NOT hash-equal between the live-pinned members and HEAD's on the 2026-10-08 kit day -- one column, method_version, goes
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W88-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~88",
+  "surfaced_at": "2026-10-11T03:30:00Z",
+  "one_line": "DB-b-113: the returns table is NOT hash-equal between the live-pinned members and HEAD's on the 2026-10-08 kit day -- one column, method_version, goes from 2 to null on all 6,901 rows -- because HEAD's account_return_daily.py carries DB-b-96 and DB-b-102 (outside the release's expected commits) while the staged sources.json stays at its pin; four other tables are byte-equal.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Face step 1: any commit in a member's list outside DB-b-97, DB-b-104, DB-b-110 or the redaction that changes an executable statement means a row and a STOP on that member, named in the packet as an open question. Step 2: the five hashes are equal between the live-pinned run and the HEAD run, under the pinned thresholds. The old packet and the CTO ruling msg 3940 expected three members and DB-b-110's cut only.",
+  "world_is": "account_return_daily.py has 4 commits since its live pin ba544b6064: 08194d1e33 (DB-b-96, manifest reads valuation_source, fee_treatment, price_basis from the source entry) and 26a3f3a38b (DB-b-102, method_version from the source entry, absent when none; METHOD_ROWS) change executable statements, plus 19ba6fe341 (DB-b-110) and 354214c55f (docstring). The source map keeps sources.json at pin efeb21df71, which names no method_version, so method_version_of(src) is absent and the returns row column is null. Kit day 2026-10-08, pinned thresholds sha256 551920f0c364: live-pinned returns sha256 9e5d6e92... (equals DB-b-110's record), HEAD returns a5a3921b...; class, account_activity_daily, account_lot_realized and account_lot_unrealized_daily are equal. Read from the code, not run: handler.py :579 and :620 call ard.emit_day without src, so the returns manifest would also state method_version, valuation_source, fee_treatment and price_basis as the literal absent. Nothing edited; no producer or pin moved; the order's rule is record, row, STOP. The packet names the member as an open question for the halves; whether sources.json moves with it (and with it the dim_return_method row) is for the CTO and COO, not decided here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~88/R45_REFRESH_DELTA0.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~88/R45_REFRESH_CENSUS.json",
+      "git show 08194d1e33 and 26a3f3a38b on data/assets/scripts/gold/irpt_reporting/account_return_daily.py (method_fields, method_version_of, build_manifest, emit_day, compute_range)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:579,620",
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-49f-reporting-gold-lambda.staged_from (sources.json pin efeb21df71)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W88-S2 -- DB-b-113: five staged pins now differ from HEAD and stay at their pins -- sources.json, lib/opal_naming.py and reporting_policies.json as the old cens
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W88-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~88",
+  "surfaced_at": "2026-10-11T03:32:00Z",
+  "one_line": "DB-b-113: five staged pins now differ from HEAD and stay at their pins -- sources.json, lib/opal_naming.py and reporting_policies.json as the old census said, plus infra/logic/registry/scopes.json and MEASURED_THRESHOLDS_R1.json (no file at its repo path at HEAD) which the old census did not list; DB-b-110's private thresholds copy matches the pinned sha256.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 1: sources.json, lib/opal_naming.py and reporting_policies.json differ from HEAD while staying at their pins; any OTHER differing member is a row.",
+  "world_is": "Comparing all 18 staged pins to HEAD bytes: 11 equal; 7 differ -- the two members this release changes (account_return_daily.py, account_activity_lots.py) and 5 that stay at their pins: sources.json, lib/opal_naming.py, scopes.json (last touched by commits since the old census, newest a15fb36a4c), reporting_policies.json, and MEASURED_THRESHOLDS_R1.json whose repo path holds no file at HEAD (only its SUPERSEDED names; the pin 6be02af162 blob is the pinned file, sha256 551920f0c364). The two extras are not members of this release (the bundle is built from the pins); they are named in the census so the halves see them. DB-b-110's private copy of the thresholds (row D2-W85-S1) has the same sha256 as the pinned blob, read now.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~88/R45_REFRESH_CENSUS.json members_compared",
+      "git show 6be02af162eaeff01ca19d2e5b228ffce6091cc7:org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.4.0_DS_ClientPlatform~S/MEASURED_THRESHOLDS_R1.json (sha256 551920f0...)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
