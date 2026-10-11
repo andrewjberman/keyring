@@ -12022,3 +12022,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "The wrapper path was not exercised; a real caller-identity call would need a user token and is outside this order's bounds."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S86",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-10-11T14:20Z",
+  "one_line": "NFRA_OPLGTW.TO-OG-o-5 (round 16, complete since 2026-10-03) has NO parseable <status> tag at HEAD: the worker's A1 fix commit bfe0028826 replaced the order's instruction sentence through its status line, so '<status>complete</status>' now sits inside an unclosed backtick span on line 97. surprise-row-gate counts the order non-terminal project-wide and refuses every new remediation row, which blocks round 33's slug.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "Every terminal task order carries exactly one parseable <status> tag (the order's own step 3: 'edit this order's ONE <status> tag IN PLACE').",
+  "world_is": "git show of the order at each commit: 101cfbc5f4 has a real tag at line 84 ('<status>complete</status>'); 0da94bba7c has a real tag at line 107 ('<status>pending -- A1 ...</status>'); bfe0028826 and HEAD have line 97 reading '3. If AC1 PASSes, edit this order's ONE `<status>complete</status>' and no other status line. The A1 re-cut's work itself is committed (bfe0028826 'runbook 7.3 re-cut'). Gate output on this seat's round-33 slug: 'NEW remediation row while 1 of 150 task order(s) under NFRA_OPLGTW are NOT terminal at HEAD: NFRA_OPLGTW.TO-OG-o-5.runbook-section7-remedy.md [<no status tag>]'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show {101cfbc5f4,0da94bba7c,bfe0028826,HEAD}:org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-o-5.runbook-section7-remedy.md | grep -n '<status>'",
+      "safe-commit surprise-row-gate refusal on REMEDIATION_v16.md, 2026-10-11 ~14:1xZ"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Remedy, the issuer's: restore step 3's sentence as written at 0da94bba7c line 97, and put ONE '<status>complete</status>' on its own line where the tag stood (after A1's AC1 re-run; o5.AC1.sh is the instrument). Re-run it first if A1's PASS is not on record. This seat's round-33 slug is held at org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPLGTW_REMEDIATION_v16_HELD_20261011.md and lands on the repair."
+}
+```
