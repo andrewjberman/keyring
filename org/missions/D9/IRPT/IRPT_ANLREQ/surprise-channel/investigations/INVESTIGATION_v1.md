@@ -2060,3 +2060,186 @@
   "notes": "The remedy for the composition reader is the mechanism AR-y-33 built: an outside_package declaration on its entry. It is a second function, not in that cell's text, so it is not folded in silently; it goes to the CTO's next analysis as one line. irpt-intake-poller's missing member is workstream-agnostic and may be another lane's."
 }
 ```
+
+## IRPT_ANLREQ-D2-S35 -- QUEUED: persist_inputs.report_index's two empty members get a type (CTO ruling, next cell)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S35",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T08:10:00Z",
+  "one_line": "QUEUED for this workstream's next cell, by CTO ruling: the two empty members of persist_inputs.report_index in OwnedAnalysisRequest.schema.json get a type (IRPT_YCDGEN row D2-W10-S7); the portal generator does not change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "1.0.0_SA_CTO~DELL2 msg 4456, citing section 2 of org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_YCDGEN_ROUND_9_20261011.md @eeb799ce72: 'the two empty members of persist_inputs.report_index in OwnedAnalysisRequest.schema.json get a type, in your next cell; the portal generator does not change.'",
+  "world_is": "INHERITED from that message; the analysis file and row IRPT_YCDGEN-D2-W10-S7 were NOT opened by this seat, and the schema's two members were not read. Round 3's issuance is cut and its cell AR-y-32 is told NOT to change OwnedAnalysisRequest.schema.json (the single read gains nothing), so this is not folded into it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 4456"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "PARKED on the project's channel for the next IRPT_ANLREQ workstream-Y issuance, owner 2.0.0_SA_COO~Y2. It is a contract-document change to the single read's schema and ships with whatever irpt-status release follows it."
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S1 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T07:34:27Z",
+  "one_line": "AR-y-32: two files that pin the OLD history-row wire are outside this order's <paths> and now fail: ops/tests/fixtures/owned_request_history.json (history and next_page items lack client_id) and ops/tests/test_owned_entry.py (history arm compares data to _public(record), no client_id). AR32-y-AC3 cannot print Y32-CONTRACT-OK until they change.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/tests/fixtures/owned_request_history.json (the paired fixture the actual reader regenerates; its history.items[0] and next_page items need client_id null)",
+      "infra/aws/lambda/investor-reporting/ops/tests/test_owned_entry.py:40 (history arm: data == {items:[r.requests._public(r.record)], next_cursor:None}; each item now also has client_id, so the expected row must add client_id None)",
+      "Measured on the worktree after the change, ops/tests: 2 failed, 294 passed, 22 skipped -- test_owned_entry.py::test_actual_entry_current_owner_serves_typed_data_without_custody_input[history] and test_owned_requests.py::test_paired_fixture_is_regenerated_by_actual_reader (the second is in paths, the fixture it reads is not). _contracts: the failing set is the two base ids PLUS _contracts/test_owned_request_contracts.py::test_actual_reader_projections_and_filtered_continuation, which validates that same fixture against the new history schema (client_id required)."
+    ]
+  },
+  "spec_asserts": "The order's Part C says the _contracts failing set stays exactly the two base ids and names only IR/_contracts and docs/contracts/investor-reporting/v1 as places a fixture may change; paths grants no file under ops/tests/fixtures/ and not test_owned_entry.py.",
+  "world_is": "The history schema now requires client_id on every row (the order asks for it), and the one fixture and the one entry test that hold a history row without it are outside the grant. Left unedited: both fail, and the _contracts failing set is three, not two. The fix is two small edits: add client_id null to the fixture's history and next_page items, and expect client_id None in the entry test's history arm.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S2 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T07:34:27Z",
+  "one_line": "AR-y-32: retained_ref is OPTIONAL at the top level of AnalysisReport (all three schema documents) and of the analysis-report response data, not required as the face says: the schema also validates the STORED report, which cannot carry its own receipt.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_repository.py:18 and ops/tests/test_owned_report.py: SCHEMA = docs/contracts/investor-reporting/v1/AnalysisReport.schema.json is the typed validator the tests inject as reports.validate, which reports/repository.py:195 (persist) and :256 (read) apply to the stored report; a top-level required retained_ref would refuse every report at persist, because the receipt (report_id, revision) is issued by that persist",
+      "docs/contracts/investor-reporting/v1/PerformanceReport.schema.json: retained_ref is a property, not in the top-level required list; the node's own required list (all five members) is what the face's required is carried as, and is member-for-member the Performance node",
+      "The analysis-report response data stays optional too: the paired-seam positive control builds data from AnalysisReport.valid.json, which cannot hold a receipt"
+    ]
+  },
+  "spec_asserts": "Part A: Whether it is required there: required, since read refuses a READY report with no receipt.",
+  "world_is": "Served: every analysis-report answer carries retained_ref (sections raises READY_REPORT_RECEIPT_REQUIRED if it has none). Declared: optional on the document schemas and on the response data. A consumer type generated from the schema will read it as optional; making it required on the RESPONSE only needs a response-shaped fixture for the paired-seam control, which is a decision for the cell's owner.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S3 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T07:34:27Z",
+  "one_line": "AR-y-32: three consequences of the schema edits the release must carry: (1) docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json (outside paths, inside Part C's must-change-to-conform clause) gained retained_ref; (2) AnalysisReport.schema.json sha256 moved 1bd0dc85... to b4cd72fe..., so lambda-source-map.json (not touched) carries the old digest; (3) the response contract still lists only the v1 members, so an OPAL_ENGINE sections answer does not conform to it (pre-existing).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "_contracts/test_owned_outer_contracts.py::test_actual_entry_success_and_refusal_families failed with 'retained_ref was unexpected' against the response data (additionalProperties false) until the response schema listed it",
+      "git grep 1bd0dc85847690b: infra/aws/lambda/ci/lambda-source-map.json:4251 and :4930 record the old digest of the packaged AnalysisReport.schema.json; the order forbids editing the source map. _contracts/tests/test_analysisreport_v2.py V1_SHA256 is updated to b4cd72fe13832d145455a4703265a63e5b19f575386303ab8aa3cfebd4b7397a (the pinned v1 copy is byte-equal to the published one, test_v1_untouched)",
+      "responses/analysis-report.response.schema.json data.required lists extraction_validation and no computation_validation or provider: the Opal form never conformed to it"
+    ]
+  },
+  "spec_asserts": "Part C: change any fixture or paired-seam table that must change and say so; the source map is not edited.",
+  "world_is": "The published AnalysisReport contract is now a different file than the one the source map digests; the release that packages it must refresh that digest, and the response contract's Opal gap is untouched.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S4 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T07:34:27Z",
+  "one_line": "AR-y-32: stating client_id on each history row means the unfiltered history page now reads the selection from every row's retained composition, so one composition that names no selection refuses the page (COMPOSITION_SELECTION_BINDING), as the filtered page already did; two existing tests' premises were updated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/tests/test_owned_requests.py::test_all_page_candidates_recheck_access_after_last_artifact_io patched artifacts.head to count a row's read; a row's one read is now the get that also names the client (head is get(...)['ref']), so it patches get; same two reads, same revocation point",
+      "infra/aws/lambda/investor-reporting/ops/tests/test_owned_requests.py::test_the_frozen_composition_is_read_only_when_asked asserted unfiltered history still answers with a browser half of None/{}/'x'; it now asserts history refuses 'x' with COMPOSITION_SELECTION_BINDING and answers on the real composition. Reads per row measured by the fake: before 1.0 (no filter, via head) and 1.0 (filter); after 1.0 and 1.0.",
+      "infra/aws/lambda/investor-reporting/ops/tests/test_history_pool.py (outside paths) patches reader._materialize and passes unchanged: the unfiltered screen still goes through _materialize(..., with_client=True)"
+    ]
+  },
+  "spec_asserts": "Part B: Use ONE read per row in both cases.",
+  "world_is": "One read per row in both cases, as asked. The unfiltered page gained a refusal path it did not have (a malformed or selection-less composition), because a row cannot state a client it cannot read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S1 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-11T07:35:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The 34 custody tests are not order-dependent state: they make a LIVE DynamoDB profile read through the directory Entry, which passes only with working credentials and no netguard; test_receipt_ledger.py (import run_offline_suite -> netguard.install()) is the file that makes it fail in the full run, and invalid keys make it fail alone",
+  "spec_asserts": "TO-AR-y-36 cell text: the same two custody files run ALONE pass 42 of 42, so an earlier test file leaves state that the custody tests then trip on.",
+  "world_is": "MEASURED at base 1c40c646ed with AWS_ACCESS_KEY_ID=x AWS_SECRET_ACCESS_KEY=y: test_custody_retained.py ALONE gives 32 errors and test_custody_entry.py + test_custody_retained.py gives 2 failed, 32 errors (the face's own key setting reproduces the failure without any polluter). Cause by pdb: served.py:1225 _internal_allowed_firms, load_service_profile unset, builds boto3.client('dynamodb') and reads the caller's profile row live (served.py:1146-1151); with invalid keys the call raises ClientError UnrecognizedClientException, and after test_receipt_ledger.py:11 imports run_offline_suite (line 37 netguard.install(), never undone) it raises HTTPClientError 'NETGUARD: refused external connection to dynamodb.us-east-1.amazonaws.com:443'; served.py:1226-1227 turns either into FIRM_BINDING. So 'passes alone' held only where the box had working credentials and an open network, i.e. the custody tests made a live AWS read. Fixed in the tests (load_service_profile injected as lambda email: None in test_custody_entry.py harness and test_custody_retained.py); the reproducer [test_receipt_ledger.py, test_custody_retained.py] failed at base (2 passed, 32 errors) and now passes. Not established: a real-credential run of the pair alone, which would be a live call and was not made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1138-1151 and :1224-1229 (the live lookup and its FIRM_BINDING mapping)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/run_offline_suite.py:35-37 and tests/netguard.py:56-80 (install() patches socket at import)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_receipt_ledger.py:11 (module-level import of run_offline_suite)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~54/S31_REPRODUCER.json"
+    ]
+  },
+  "notes": "Other GT test files that build a served.Entry without load_service_profile would have the same live read; only the two custody files were changed, per the cell."
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S2 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-11T07:45:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The required acting_principal_id keyword on DynamoAcceptance.accept breaks one setup helper in ops/tests, which is outside this order's grant, and with it 199 tests in eleven ops/tests files and 36 in ycharts/generate/tests",
+  "spec_asserts": "TO-AR-y-37 build step 7: existing tests that call accept(...) directly get a synthetic principal id and nothing else changes; the grant lists ycharts/generate/tests/ only.",
+  "world_is": "MEASURED: infra/aws/lambda/investor-reporting/ops/tests/test_owned_requests.py:57-58 (setup) calls acceptance_module.DynamoAcceptance.accept(owner, dict(body, request_id=token), ref, ingestion_revision='v1', destination_revision='offline-v1') directly. With the new required keyword it raises TypeError 'missing 1 required keyword-only argument: acting_principal_id'. setup() is imported by other ops tests, so `pytest ops/tests` at this worktree gives 38 failed, 161 errors (all 199 carry that TypeError) in test_history_client_scope.py, test_history_pool.py, test_original_reader.py, test_owned_entry.py, test_owned_report.py, test_owned_requests.py, test_owned_status.py, test_pdf_link.py, test_persist_inputs.py, test_prospect_dates.py, test_read_memo.py. The same helper also fails 36 tests inside ycharts/generate/tests (test_publisher.py 25, test_publication_worker.py 11, all the same TypeError; the whole folder gives 36 failed, 461 passed, 30 skipped, 1 xfailed, 0 custody failures). Every other direct caller of accept (4 files under ycharts/generate/tests/) was updated. The fix is one added keyword in ops/tests/test_owned_requests.py:58: add acting_principal_id='synthetic-principal-one' to that call. Not made: the file is not in the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/tests/test_owned_requests.py:50-61 (setup)",
+      "pytest -q infra/aws/lambda/investor-reporting/ops/tests at the worktree after the acceptance.py change: 38 failed, 94 passed, 22 skipped, 161 errors, 199 of 199 carrying the TypeError"
+    ]
+  },
+  "notes": "The release that ships the acceptance.py writer must ship that one-line test edit in the same act; the issuer may re-cut it into a seat whose grant holds ops/tests. No production caller is affected: the only production call of accept is submission_service.py, updated."
+}
+```
