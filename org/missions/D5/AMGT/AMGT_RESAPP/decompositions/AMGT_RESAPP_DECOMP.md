@@ -10125,3 +10125,71 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order
 ```
+
+## 103. ROUND 95 -- THE VERIFIER LOCATES A POINT BY ITS STATED VALUE, NO FIELD OF A DISAGREEING TABLE ROW IS SERVED, THE COMPARE 500s READ TO THEIR CAUSE, A SHORT INITIALISM KEEPS ITS CAPITALS. Three worker orders (two on one slot's queue), one read-only seat order, one staged seat order, one staged cell
+
+**Input:** the CTO~DELL1 round-94 analysis `ledger/ROUND_ANALYSIS.round94.md` section 3 (items 1-5; msg 3969; CVO ADJUDICATION_v114, REMEDIATION_v38, L9 HOLDS on the CVO's own runs at
+VNcX9ntm and on a browser walk of portal DEV cb76f857). Prep in `deliverables/2.0.0_SA_COO~R1/round95_prep/` (checks `r95_reverify_idempotent.py`, `r95_classification_census.py`,
+`r95_casing.py`, `r95_casing_deployed.py`, `r95_reading_check.py`; the round-94 checks `r94_rescale_table.py`, `r94_name_census.py`, `r94_display_name.py` are reused). Every check was
+dry-run at the base on 2026-10-11 and each build arm FAILs while its controls PASS; each worker-order check was also run against a throwaway candidate held outside the tree
+(r95_reverify_idempotent 6 of 6, r94_rescale_table YES with 12 of 12 equal, r95_classification_census 5 of 5 with 2 ranked rows, 2 series and 3 chatter rows withheld,
+r95_casing 5 of 5). The cells are prefixed `aa` (every doubled-letter pair `bb`..`zz` was used; `aa` was free in this decomposition).
+
+### 103a. MEASURED AT THE CUT
+
+- **Item 1 (D1-S24):** `reverify_stored_thesis_driver` builds its raw claim from each stored point's `value`; a rescaled point stores `value` 13.745 beside `stated_value` 13745, the
+  passage prints 13,745, and a re-verification of SAP's written object expects 1 of 3 (`r94_rescale_table.py`: SAP stored 3, expected 1; the fix, applied to a throwaway copy of
+  the function, reads 12 of 12 equal). The two raw-claim lines are the only change; `held_uncited` the same.
+- **Item 2 (D1-S26):** the classifications table row for the bare ticker `CSL` is 'Carlisle Cos Inc' / 'US Large Cap' (`classified_by` scheduled, 2026-09-30); `SAN` is 'Banco Santander
+  S.A. ADR' with sub-asset class 'Health Care' (`classified_by` legacy, 2026-09-29). Over the 243 measured subjects exactly those two rows disagree with their registered name
+  (`names_read.names_disagree`). Served today under that row: SAN FP's classification on ranked row 67 of both PRICE lists, both rank series and the three collected-chatter windows.
+  CSL AU is on no ranked list and in no chatter window today (the census finds 0), so its Carlisle classification reaches only a caller that asks the timeseries for the ticker.
+  No per-security route (overlay, thesis, peers, coverage, compare, timeline) serves a subject classification (the peers' members carry their own companies' sectors).
+- **Item 3 (C-S82):** the CVO's walk netlog carries method, status and path only; the failing paths are `/api/scoped/amgt/security/ROG/compare` and `.../BA/compare`; the dev proxy
+  forwards `/api/scoped/*` to `d2n2nzpeqf34ge.cloudfront.net`; the function logged 0 errors over the window. Which layer raised the 500 is NOT measured: it is the cell.
+- **Item 4:** of the 68 registered names exactly two carry an initialism missing from `DISPLAY_NAME_ACRONYMS`: CSL ('CSL LTD' -> 'Csl Ltd') and JD ('JD.COM INC-ADR' -> 'Jd.Com Inc');
+  `JD_US_Equity` is served from the table's mixed-case 'JD.com Inc' and does not move.
+- **Item 5 (pp-4):** staged on the DEMQUE answer; no quote, no answer.
+
+### 103b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-aa-1` | the verifier locates a stored point by its `stated_value` (item 1) | `~390` | worker | LOCAL | `lib/research/filings/analyze.py`, one new test | D1-S24 |
+| `AMGT-aa-2` | no field of a table row whose name disagrees with the registered name is served (item 2) | `~391` | worker | LOCAL until aa-5 | `lib/research/api/scoped_amgt.py`, `monthly_chatter.py`, one new test | D1-S26 |
+| `AMGT-aa-3` | READ the two `/compare` 500s to their cause (item 3) -- a seat order, nothing changed | `0.7.0_AE_CloudOps~RA1` | seat order | LOCAL (a record) | one reading file | C-S82 |
+| `AMGT-aa-4` | a short initialism the registered name prints in capitals keeps its capitals (item 4) | `~391` (queued behind aa-2) | worker | LOCAL until aa-5 | `lib/research/api/scoped_amgt.py` (the declared list), one new test | the CTO's cosmetic note |
+| `AMGT-aa-5` | the ONE redeploy carrying aa-2 and aa-4 -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger | D1-S26 |
+| `AMGT-aa-6` | the DEMQUE answer's reader and wiring (item 5) -- STAGED, no order | -- | worker | LOCAL until a redeploy | `lib/research/api/scoped_amgt.py` | D1-S14 |
+
+**Uncovered, with its owner:** portal PROD promote (call `dell1-20261011T033643Z-e7f2`), FWD-16, the model API key -- Andrew (analysis section 4); `D1-W381-S1` (dell1's client-account
+hash list) -- `0.0.0_AB_MSTR~DELL1`; a fix for C-S82 -- cut only after aa-3's reading, as its own cell.
+
+### 103c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: analysis items 1-5. 1 -> aa-1; 2 -> aa-2 then aa-5; 3 -> aa-3; 4 -> aa-4 then aa-5; 5 -> aa-6. Printed denominator 5 of 5 items placed (3 worker orders,
+  1 read-only seat order, 1 staged seat order, 1 staged cell). aa-2 and aa-4 share ONE file (`scoped_amgt.py`) and so ONE slot's queue; they are two cells because they have two
+  grains (a served rule; a declared word list).
+- **(ii) Same grain.** aa-1 two lines of one function; aa-2 three places that each read the table by ticker; aa-3 one reading; aa-4 one declared set; aa-5 one code leg.
+- **(iii) Intent coherence.** aa-1, aa-2, aa-4 are code; aa-3 is a measurement and changes nothing; aa-5 is the one served act; aa-6 waits on an answer.
+- **(iv) What a cell does NOT move.** aa-1 changes which figure the passage is searched for when a stored point carries a stated value (a point without one is located exactly as
+  before) and rewrites no stored object; aa-2 withholds `classification`, `sector` (and says why) only for a row whose NAME disagrees with the registered name, moves no name, score,
+  rank or member, and does not touch the table read or its cache; aa-3 writes nothing in any system; aa-4 adds two words to a declared list, so only an all-caps registered name that
+  carries one of them changes, and the census arm states which; aa-5 moves only the function's code, each member admitted by blob and its table measured route by route first.
+
+### 103d. EDGES AND FAN-OUT
+```
+aa-2 --> aa-4              (one file: the second order of slot ~391's queue, handed when aa-2 is terminal and merged)
+aa-2, aa-4 --> aa-5        (the redeploy carries what is merged; the pair from the route-by-route measurement)
+aa-1 independent (producer-side; no served write; lifts the procedural hold on re-verifying SAP at its merge)
+aa-3 independent (read-only; its reading may cut a fix cell in round 96)
+aa-6 on the DEMQUE answer
+fanout:
+  cap: 8
+  orders_total: 5          (aa-1, aa-2, aa-4 worker orders; aa-3 a read-only seat order; aa-5 a staged seat order)
+  chains_total: 3          (aa-1 ; aa-2 -> aa-4 -> aa-5 ; aa-3)
+  wave_0: [aa-1 ~390, aa-2 ~391 (then aa-4 on the same slot), aa-3 RA1]
+  wave_1 staged: [aa-5 RA1 (aa-2 and aa-4 merged, the pair from the route-by-route measurement)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```
