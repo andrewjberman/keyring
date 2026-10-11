@@ -115,6 +115,24 @@ already admitted to the request is told the ticket does not match."
 AC1 now requires the seven named tests and the census file (the check `y71-bind` is amended). AC2 is unchanged. Update the proof
 instance, validate it after its commit, and flip back to `complete` only then.
 
+---
+
+**AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~13:5xZ): a PATH GRANT of one file for ONE added value, by CTO ruling
+(`1.0.0_SA_CTO~DELL2` msg 5045, on your row `IRPT_ANLREQ-D2-W52-S6`).** Gate limb that graded this amendment: read from this commit's
+own output.
+- `<paths>` gains `infra/aws/lambda/investor-reporting/_authz/served.py`. The grant is for ONE change: the value
+  `"REPORT_TICKET_MISMATCH"` added to the tuple `BOUNDARY_ADDITIONS` (your patch
+  `deliverables/0.9.0_WK_IRPT_ANLREQ~52/r7/served_py_boundary_addition.patch`, exactly). ANY other byte of that file moving is a
+  refusal at the issuer's drain: `git diff --numstat` of the file must read `1 1`.
+- The file is lane IRPT_LIVE_SCOPE_P's (`2.0.0_SA_COO~P2`), told and asked to object before the drain. EIGHT functions package it and
+  each meets the value at its own next re-pin, where its pair lists it among the moved members: `irpt-performance-adapter`,
+  `irpt-directory-search`, `irpt-narrative`, `irpt-ycharts-generate`, `irpt-export-render`, `irpt-holdings`, `irpt-status`,
+  `irpt-49f-reporting-read-lambda` (the issuer's read of the source map). It rides no pair already signed. Do not touch
+  `infra/aws/lambda/ci/`.
+- Then re-run both criteria on the committed tree, update the proof instance to what they print NOW, validate it after its commit,
+  and flip to `complete`. Row `IRPT_ANLREQ-D2-W52-S7` (the portal's contract-set test) is regenerated in this round by the portal
+  cell `AR-y-72`; it is not yours.
+
 ### ACCEPTANCE
 
 <criterion id="AR71-y-AC1" cell_refs="AR-y-71"><invocation>python C:/dev/wk-irpt-anlreq-52/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r7/ar7_checks.py y71-bind --root C:/dev/wk-irpt-anlreq-52</invocation><expect>Y71-BIND-OK</expect></criterion>
@@ -135,6 +153,7 @@ The issuer runs the `_contracts`, `_authz` and `reports` test folders and a BUIL
 
 <paths>
 infra/aws/lambda/investor-reporting/ops/
+infra/aws/lambda/investor-reporting/_authz/served.py
 infra/aws/lambda/investor-reporting/_contracts/
 docs/contracts/investor-reporting/v1/
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
