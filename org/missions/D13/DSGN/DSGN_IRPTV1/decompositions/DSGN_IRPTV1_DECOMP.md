@@ -647,3 +647,22 @@ The producer is not changed (withholding a drill is its rule). The fixture was h
 answer (2.0.0_SA_COO~P2 msg 5438, relayed in the ruling; not re-read by this seat).
 
 fanout: 1 of 1 chains, cap 8.
+
+## v25 -- round 25 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~17:5xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2's ruling msg 5494
+
+IV-e-106's record showed the PROD-to-DEV range is not this project's alone (67 of 127 commits are other projects', on pages partner
+firms can open), and that the Investor Reporting route on PROD is behind admin, the Opal firm and user type Dev while the print route
+admits a render claim. The CTO ruled the whole range out and ordered ONE cut.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-111 | ONE candidate cut off portal PROD holding only what release 5's return needs: the history reader, the two missing irpt-status reads, `retained_ref`; every changed file under src/pages/InvestorReporting or the one endpoints file; none in the print route's import closure, shown from the build's chunk graph, or the candidate waits on Andrew | D2-W56-S2, D2-W56-S3, D2-W59-S2 | SERVED | C ~61 (a third worktree pair, its portal half at PROD with its own install) | portal/src/pages/InvestorReporting/contracts/, portal/src/api/endpoints/investor-reporting.ts |
+
+"CI green" (the ruling's third condition) is read on the candidate's own branch after the worker returns; a worker cannot push. The
+record `PROD_CANDIDATE.json` of IV-e-106 stands as the census of the whole range and is not re-pointed.
+
+**Rule 24:** `verdict` takes CLEAR or WAITS_ON_ANDREW over the declared domain "candidates whose print closure was computed with a found
+control": one grain (the candidate), one intent (may it go without his word), and the one remedy that moves it is removing the file from
+the candidate or from the closure.
+
+fanout: 1 of 1 chains, cap 8.

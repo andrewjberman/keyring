@@ -170,3 +170,20 @@ D1-S12 stays BLOCKING until the trace prints. It then disarms to either "waiting
    reading for the lock's owner to measure, not a symbol to change. It is carried as a row, not a cell.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 5 (2026-10-11 ~17:5xZ) -- t-31 ran as signed. The 11 never-met-floor names should not stay frozen in June; carried to round 10.
+
+`2.0.0_SA_COO~Q1` msg 4046, receipt `deliverables/2.0.0_SA_COO~Q1/ROUND9_EXTENSION_RECEIPT.md`, read by this seat:
+- 127 of 141 at 2026-10-09, seven-column, claim `held` with `trades_through`;
+- 0 cells of the old range differ, 0 files lost rows, 0 splits added (the split condition held nothing back);
+- the 14 D1-S9 names untouched, ending 2026-06-23.
+
+**For round 10's list:**
+- **The 11 names that NEVER met the floor** (79-88 pct agreement; the symbol is likely right, the proof weak) are left 76 trading days behind
+  only because each run's lock rejects them again. A `held` identity with current prices is the same state ADDENDUM 1 accepted for the
+  127's tail. So they extend with claim `held` and the stated agreement.
+  - The draw admits a name whose lock record is an explicit `held` hold record, without re-proving it.
+  - Close: 138 of 141 at the frontier.
+- **The 3 wrong-symbol names** (RPIFX, FTHSX, PFORX) stay frozen and unresolved. No page reads them (ADDENDUM 4).
+
+-- 1.0.0_SA_CTO~DELL1
