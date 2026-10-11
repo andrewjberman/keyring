@@ -1331,6 +1331,31 @@
     "spec_asserts": "A Windows Application Control refusal of an executable is recorded by the OS, so the code-integrity and AppLocker logs can be read to confirm whether the fault is still occurring -- and an empty log over the window grades it absent.",
     "world_is": "Neither log recorded it. 0 of 1,185 CodeIntegrity events over the 30-hour window naming ruff or python, and no AppLocker block event, while the fault demonstrably occurred twice inside that window (2026-10-09 ~20:0xZ and 2026-10-10 20:57Z). A clean log here is an ABSENT reading from an instrument that cannot see the object, which is not a negative -- the exact shape CLAUDE.md's ABSENT != EXERCISED-AGAINST corollary names.",
     "notes": "No act owed by this project; MP-r-2 waits on MX-r-9's ledger close alone. For 0.0.0_AB_MSTR~Z as gate owner: (1) grade any fix by EXECUTING ruff N times with N printed, never by reading the event logs, because this row shows they are blind to it; (2) a non-reproduction over 45 clean trials is NOT a fix -- the fault's rate is unmeasured at the low end and one refusal in seven was real an hour earlier; (3) under an INTERMITTENT fault, Z-S34's fix (d) -- telling 'ruff could not be EXECUTED' apart from 'ruff REPORTED findings' -- is worth more than before, because the correct response to a refusal is to re-run once, and the present wording sends the author hunting a lint defect in correct code instead. Fix (a), resolving the ruff BINARY before falling back to `-m ruff`, still reduces exposure and costs one function."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S37",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-11T14:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S27"
+    ],
+    "one_line": "The live Git state handler's cold read is climbing steadily toward R-13's 30 s bar: 3.854 s (2026-10-09), 10.586 s (2026-10-10 23:0xZ, at MP-r-2's act) and 16.7 s now (2026-10-11 14:1xZ, r2.AC3 on the live host). Its population, git history across boxes, does not drain overnight the way the activity store does, so the margin does not reset. At about 6 s per day it reaches 30 s in roughly 2 days. No breach today. The other three surfaces hold: overlap 6.8 s, calls 0.4 s, boxes covered by AMENDMENT 5.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED 2026-10-11 ~14:1xZ: `bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/cp2/checks/r2.AC3.sh` -> ssm f869ff97-830c-43f0-987f-6652d2a4042a Success; /health 200; overlap/gitstate/calls/close(POST) all 401 with no identity; overlap_s=6.8, gitstate_s=16.7, calls_s=0.4; RESULT: PASS.",
+        "PRIOR POINTS: 3.854 s, the A5 re-measure, MP-r-2_PRE_ACT_RECORD.md (2026-10-09); 10.586 s at the act, EC2_MANIFEST opal-gateway release_note @9a072fa60a (2026-10-10 23:0xZ). Three cold reads, each one sample; different instruments (cold-interpreter host probe vs the AC3 probe), so this is a trend in sign, not a precise rate.",
+        "CP2 SURVIVED TWO LATER RELEASES: the live deployed_commit c3af8687e4 (MX-r-10, 2026-10-11T13:27:13Z, over E2 6aadf7db37) descends from 2a5966dfbd, and all 6 CP2 gateway files have the same blob at c3af8687e4 and 2a5966dfbd. So the rise is not a code change to the handler."
+      ]
+    },
+    "spec_asserts": "R-13: every Control Plane surface's cold read stays at or under 30 s. MP-r-2 met it at the act (all eight samples at or under 10.6 s).",
+    "world_is": "Today it holds (16.7 s), but the Git state read grows with an undrained population and has risen about 4x in two days. It is the surface most likely to breach the bar next, and AMENDMENT 5's thread-pool remedy covers the activity fetch path, not this one.",
+    "notes": "For the next round-N analysis (the CTO's enrichment list): the candidates are a bounded window on the git-state population, a boot-time cache warm, or a per-box incremental index. No act is owed now. The issuer re-reads r2.AC3 at each Andrew-gated close run (MP-q-1) and adds a row if a sample passes 25 s."
   }
 ]
 ```
