@@ -2967,3 +2967,29 @@
   "notes": "Same class as S45. Remedy by that ruling's own rule would be to pin commentary_composition.py in the entry at the commit whose bytes are live until the gate's release (which carries the two policy edits). Not done by this seat: it is a new member pin on another function; asked of 1.0.0_SA_CTO~DELL2 the same turn. Until ruled: no build-and-upload of irpt-commentary-composition-read-lambda by any seat."
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~ANL",
+  "surfaced_at": "2026-10-11T16:50:00Z",
+  "one_line": "The packager secret opal/ticketing/svc-irpt-packager is readable by user/Andrew_Berman, the identity every agent session on the laptop runs as, so 'no agent can read it' holds for fleet roles and not for a laptop agent session.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "spec_asserts": "Order XB-20261011T163203Z-3fc2 and the CTO half condition 2: the secret joins no agent-readable listing, shown by one simulate on an agent identity; COO half 3.2: the resident host's role reads it and no other, with the caveat that 'no other' is true only of the principals simulated.",
+  "world_is": "MEASURED 2026-10-11 ~16:4xZ by this seat with iam simulate-principal-policy, one resource per call: secretsmanager:GetSecretValue on the real secret ARN reads allowed for role/irpt-ycharts-runner-role, implicitDeny for role/outlook-global-commentary-draft-role and role/agentbus-alyssa01-fleet-andrew-role, and allowed for user/Andrew_Berman (also allowed on the ARN pattern BEFORE the grant). sts get-caller-identity on the laptop reads user/Andrew_Berman; its group is AdministratorAccessOpalCapital and its attached policies include OpalSecretsReader. The token was never read back, printed or written by this seat. NOT measured: whether any other laptop or dell identity can read it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "iam simulate-principal-policy, three principals plus the user control, read by this seat",
+      "aws sts get-caller-identity; aws iam list-groups-for-user and list-attached-user-policies for Andrew_Berman",
+      "org/tier2_senior/0.7.0_AE_CloudOps~ANL/deliverables/PACKAGER_MINT_RETURN_XB-20261011T163203Z-3fc2.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Same standing condition as every other secret in the account for a laptop session (the human operator identity is an administrator); not created by this act. Surfaced because the pair's 'no other reader' claim is about roles simulated. Not acted on: no policy was changed to narrow it."
+}
+```
