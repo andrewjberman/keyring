@@ -79,11 +79,11 @@ Graduated, round label v83: 6 rows, OPEN, INERT, all owned on another box by the
   "owner": "1.0.0_SA_CTO~DELL1",
   "round": "v83",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL1",
    "round": "v83"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_DASHBD-D2-W125-S1",
