@@ -75,6 +75,18 @@ so `one()` fails and every plan of the `shared-infra` root fails. `masters` was 
 - **Refusal clause.** If a criterion cannot be met as written, stop. Write the reason in your report and a NEW surprise row (id
   `ADVI_COTBKF-D2-W88-S<k>`, `"fabric": "dell2"`, its `surfaced_at` read from the clock). Do not weaken a check.
 
+**AMENDMENT 1 (issuer, 2026-10-11 ~06:0xZ) -- the schema owner's terms (laptop `1.0.0_SA_CTO`, relayed by `0.0.0_AB_MSTR~DELL2` msg 4232, bus cbed2121).**
+The answer to the ruling's item 4 is YES, on terms that bind this cell:
+- ONE new VIEW field on the firm's `scopes.json` row, valued as a LIST of `systems.json` keys (for example
+  `restricted_prefix_hosts: ["commonwealth"]`), NOT a boolean naming the CRM. The spelling is this cell's to propose under rule 24.
+- The selector keeps `one()` over the managed rows whose list contains the system token the `.tf` already carries.
+- `_about.view_fields` in `scopes.json` names the field; `lib/opal_naming.py` validate passes. `lib/` is not granted: a validator
+  failure that needs a `lib/` edit is the refusal clause.
+- The record carries `value_domain`, and a postulate checks every listed value is a `systems.json` key.
+- `CB61bi1-AC1` is unchanged. The report adds the validate output line and the `_about.view_fields` diff.
+The laptop's rulings file (`CTO_RULINGS_CLUSTER_TICK4_20261011_0557Z.md` @30646c2598, on origin box/laptop) is not on this box yet;
+the terms above are the relay's text, not a read of that file.
+
 <paths>
 infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf
 infra/logic/registry/scopes.json
