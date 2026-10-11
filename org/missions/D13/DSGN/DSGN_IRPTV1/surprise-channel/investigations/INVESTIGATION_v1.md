@@ -5798,3 +5798,58 @@
   "notes": "Not investigated."
 }
 ```
+
+## DSGN_IRPTV1-D2-W59-S3 -- IV-e-109: running gen-corpus.ts rewrites 19 tracked fixture files in the working tree (18 request records and fe-s-14-print-v1.json) with LF endings while git's normalised view shows no change; the rewrite is line endings only
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W59-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~59",
+  "surfaced_at": "2026-10-11T18:03:00Z",
+  "one_line": "IV-e-109: running gen-corpus.ts rewrites 19 tracked fixture files in the working tree (18 request records and fe-s-14-print-v1.json) with LF endings while git's normalised view shows no change; the rewrite is line endings only",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this session, after the _captured fix (portal 70bb186d), two runs of gen-corpus.ts from a clean tree: git status --short listed 19 files as M (18 under fixtures/wire/requests, plus fixtures/smoke/fe-s-14-print-v1.json) and git diff --quiet returned rc 0 (no content difference); git hash-object --path of comparison-catalogue.request.json equals HEAD:src/pages/InvestorReporting/fixtures/wire/requests/comparison-catalogue.request.json (64002f1df749dbb8384379606f8c943552684a21)",
+      "git ls-files --eol: i/lf w/lf for the written file; core.autocrlf is true, so a checked-out tracked text file is CRLF and the generator writes LF (writeFileSync with a literal \\n)",
+      "the three other files the generator writes (smoke/default.json, fe-s-13-wire.json, the published map) also gave the LF-over-CRLF warning but did not list as M in the first run",
+      "log: C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~59/gen_corpus_run.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: if the generator also rewrites other tracked files to different bytes with no source change, say which and why and file a row; do not commit a churned file.",
+  "world_is": "It rewrites those 19 working-tree files to different BYTES (LF where the checkout holds CRLF) and the same content: git shows them M by stat but diff-clean. Nothing was committed from the run; every file was put back with git checkout -- (none held work of mine). The generator was not changed to write CRLF, because the writer is shared by the checked-in LF index and a CRLF write would be the platform-specific logic the portal rules refuse.",
+  "notes": "The status noise is the observed effect; whether a blanket git add of those files would commit nothing was not tested."
+}
+```
+
+## DSGN_IRPTV1-D2-W59-S4 -- IV-e-109: the order asks that a fixtures file answer a POST by more than its URL where the script already matches bodies; ui-smoke.mjs matches no request body anywhere, so I did not add it
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W59-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~59",
+  "surfaced_at": "2026-10-11T18:03:30Z",
+  "one_line": "IV-e-109: the order asks that a fixtures file answer a POST by more than its URL where the script already matches bodies; ui-smoke.mjs matches no request body anywhere, so I did not add it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep of portal/scripts/ui-smoke.mjs @d4d20e108e for postData|postDataJSON|method(): only the --netlog lines (req.method() printed) and the OPTIONS preflight check read the method; no line reads a body",
+      "scripts/ui-smoke.mjs matchFixture(url) picks the longest fixture key contained in the URL; the method and body are never consulted",
+      "the picked-client screenshot: FIXTURES-MATCH matched 5 of 5 with the one static POST /selections body (ui-smoke.client-picked.run.txt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order, item 3: let a fixtures file answer a POST by more than its URL where the script already matches bodies, or say exactly why not.",
+  "world_is": "The script does not match bodies today, so the condition 'where the script already matches bodies' does not hold; adding a body-aware fixture key is a new feature. It is not needed to pick a client: the single static answer to POST /selections serves the client pick (both accounts shown). It is needed to pick an ACCOUNT, because a one-account read must differ from the client read; that is why the ~58 driver models the server itself.",
+  "notes": "Not added; a later order that must walk an account pick through ui-smoke would add it."
+}
+```
