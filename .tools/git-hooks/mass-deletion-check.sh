@@ -114,11 +114,13 @@ ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
 
 # AUDIT path only. A LINKED worktree's --show-toplevel dies with the worktree, so the
 # verdict row goes to the common dir's parent (the main worktree). Falls back to ROOT.
+# A SUBMODULE's common dir is <super>/.git/modules/<name>, whose parent holds no .git
+# entry and is not a worktree: that parent is refused, so the row stays with ROOT.
 AUDIT_ROOT="$ROOT"
 _GCD="$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null || true)"
 if [ -n "$_GCD" ]; then
   _GCD_PARENT="$(dirname "$_GCD")"
-  if [ -d "$_GCD_PARENT" ]; then AUDIT_ROOT="$(cd "$_GCD_PARENT" && pwd)"; fi
+  if [ -d "$_GCD_PARENT" ] && [ -e "$_GCD_PARENT/.git" ]; then AUDIT_ROOT="$(cd "$_GCD_PARENT" && pwd)"; fi
 fi
 
 # A merge commit's deletions come from the merged branch, not from this
