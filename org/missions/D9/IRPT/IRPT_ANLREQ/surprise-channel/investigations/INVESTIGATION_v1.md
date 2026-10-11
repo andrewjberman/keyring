@@ -2794,3 +2794,26 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-11T13:04:00Z",
+  "one_line": "AR-y-61: the face says reuse requestReport's revision handling and do not write it twice, and also says do not change requestReport; both cannot hold, so requestReport's inline revision block was replaced by a call to one shared helper, behaviour unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal wk-IRPT_ANLREQ-51-portal-r6 d99cb10d, src/pages/TicketCenter/analysisRequest.ts: reportRefBody(requestId, requestRevision) holds the Number() / isFinite / null handling that requestReport carried inline; requestReport and the new recordStep both call it. The signature, throw behaviour and body sent by requestReport are unchanged.",
+      "The existing analysis-form-i1.test.tsx was edited where the new behaviour forced it: wire() gives the record stub a ticket carrying report_ref, the expected call order gains 'record', the old assertion that recordTicketReport is called 0 times by the filing now expects 1, and the retry result is read as step.analysis.ok. No test was renamed."
+    ]
+  },
+  "spec_asserts": "Face: reuse requestReport's revision handling without writing it twice; do not change requestReport.",
+  "world_is": "Reusing the logic without duplicating it required touching requestReport's body (one inline block became one helper call). Choice made: no duplicate, behaviour of requestReport unchanged; the issuer may prefer the other reading.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
