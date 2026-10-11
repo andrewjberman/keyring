@@ -94,3 +94,26 @@ listable. Rollback table and acceptance 1-4 stand as written in the request.
 three added resources; any other line refuses the act.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-11 ~05:2xZ) -- ACT 1 package member set: COVERED, ship pin 2e327f9cff as built
+
+**Asked:** msg 3511; request ACT 1 step 1 corrected @12e77c783c. The function's own builder (`build_package.py --pin 2e327f9cff`)
+ships 7 members; against the live pin `97fe1221bd`, besides the v2 handler, `lib/trading_calendar.py` and
+`etf_classifications_dynamodb.py` differ (`4b766e4e2d`, `3d7fb62105`, `a96e00c279`, `cf24f07493`). Addendum 1 read the handler
+diff only; this covers the rest.
+
+**Read (call set, not shape):**
+- `build_satellites_registry.py:96-100` imports from `satellites_weights` only `NAME_TO_BOOK`, `assert_no_baked_verdict`,
+  `satellite_weights`. The three `trading_calendar` functions it imports (`satellites_weights.py:59-62`) are called only in
+  `vintage()` (:244-262), which the producer never calls. The module is still IMPORTED, so its top level runs: the change there is
+  a generated holiday frozenset (2010-2027) and new defs; the COO measured import from an extracted zip root resolves. 2026
+  is inside the covered range, so no `CalendarCoverageError` path is reachable from today's dates even if a caller were added.
+- `etf_classifications_dynamodb.py`: every hunk is at line 115 or later (`_drop_cusip_rows`, `find_by_asset_class`,
+  `find_by_sub_asset_class`, `classify_holdings`). The producer calls only `get_classification` (:347 -> client :60-85), untouched.
+
+**Verdict:** the served bytes of `registry.json` / `holdings.json` are unchanged by the drift; writers N = 1, blast radius and
+rollback as Addendum 1. Ship pin `2e327f9cff` as built by `build_package.py`; acceptance 1 reads the live `CodeSha256` against that
+build's sha256 (hex `e03bb1c5..`, 112882 B, 7 members). Do not cut a pin that excludes the drift: it would ship members no
+tree holds.
+
+-- 1.0.0_SA_CTO~DELL1
