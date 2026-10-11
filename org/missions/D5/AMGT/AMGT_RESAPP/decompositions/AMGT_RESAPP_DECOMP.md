@@ -9998,3 +9998,68 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order
 ```
+
+## 101. ROUND 93 -- THE CAVEAT ON THE PAGE, THE SCALE RULE, THE SELF-PEER RULE; SAP'S WRITE, THE UNIVERSE KEY AND THE PEERS REBUILD STAGED. Three worker orders + three staged seat orders + one staged cell
+
+**Input:** the CTO~DELL1 round-92 analysis `ledger/ROUND_ANALYSIS.round92.md` @1edd8be57d (items 1-5; msg 3732; CVO ADJUDICATION_v112, REMEDIATION_v36).
+Prep in `deliverables/2.0.0_SA_COO~R1/round93_prep/` (checks `r93_caveat_rendered.cjs`, `r93_scale_set.py`, `r93_scale_table.py`, `r93_self_peer.py`,
+`r93_universe_pool.py`, `r93_self_peer_census.py`; the fixture of live payloads; `PEERS_BASELINE_20261011.json`). Every check was dry-run at the base on
+2026-10-11 and each build arm FAILs while its controls PASS; each worker-order check was also run against a throwaway candidate held outside the tree
+(r93_caveat_rendered 4 of 4, r93_scale_set 5 of 5, r93_scale_table YES, r93_self_peer 7 of 7). The cells are prefixed `ss` (the prefix `rr` was used
+in an earlier round).
+
+### 101a. MEASURED AT THE CUT
+
+- **Item 1 (FWD-38):** the deployed `/peers` serves `subject.cross_vintage_caveat` and `market_cap_vintage` on ASML, BA and ROG; `portal/src` names neither
+  field outside fixtures; the page prints the two dates and not why they differ (round 92's qq-6 read).
+- **Item 2 (D1-S22):** the three re-verified SAP points are 13,745 and 18,078 ("million") and 21.05 ("billion"); the verifier keeps all three because it
+  asks only whether the digits are in the period's block. Over the 12 stored objects the rule moves SAP (3 -> 0 points) and no other name.
+- **Item 3 (D1-S21):** 10 of 243 subjects list their own company (BZLFY, NOVN, ORA, PBR, ROG, SAN, ST, TSM, UBSG, ZURN); the model block's name and the
+  scanner's differ ('ROCHE HOLDING AG-GENUSSCHEIN' / 'Roche Holding Ltd'), so the engine's exact-name and share-class arms miss them; only the held-name index
+  names them.
+- **Item 4:** the pool holds the candidate universe only at `date=2026-08-06` (one version, `D.ZdXaKfQXNoHYeZ7.58h0t7peUmVcKB`); the loader REFUSES it
+  against the scanner at 2026-10-02 (`CSC carry scanner vintage differs for sp500`), so every rebuild since round 91 ran from a local cache file.
+- **Item 5 (pp-4):** staged on the DEMQUE answer; no quote, no answer.
+
+### 101b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-ss-1` | the peers table says, in one plain sentence, that the subject's cap and the peers' caps are not on one date (item 1) | `~384` | worker (portal) | LOCAL until the DEV landing | `portal/.../PeersTab.tsx`, `types.ts` | FWD-38 |
+| `AMGT-ss-2` | a driver point set whose figures are stated on different scales is held as a set (item 2) | `~385` | worker | LOCAL | `lib/research/filings/analyze.py`, one new test | D1-S22 |
+| `AMGT-ss-3` | a candidate row that is the subject's own company, by held identity, is excluded at the ranker; the batch builds the index (item 3) | `~386` | worker | LOCAL | `lib/research/peers/engine.py`, one new test | D1-S21 |
+| `AMGT-ss-4` | SAP's stored driver re-verified under the scale rule and spliced (item 2) -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | `filings/v1/` and `drafting/v1/` (1 name, overwrites with VersionIds); ledger | SAP's chart |
+| `AMGT-ss-5` | the candidate universe takes the scanner's vintage as its own new dated key (item 4) -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | one new key under `candidate_universe/`; ledger | the rebuild's input |
+| `AMGT-ss-6` | the peers objects rebuilt without the self peer (item 3) -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | 243 new `peers/v1/<key>/<partition>.json`; ledger | D1-S21 |
+| `AMGT-ss-7` | the DEMQUE answer's reader and wiring (item 5) -- STAGED, no order | -- | worker | LOCAL until a redeploy | `lib/research/api/scoped_amgt.py` | D1-S14 |
+
+**Uncovered, with its owner:** `AMGT-nn-6`, FWD-16, the model API key -- Andrew (analysis section 4); `D1-W381-S1` (dell1's client-account hash list)
+-- `0.0.0_AB_MSTR~DELL1` (the CTO's ruling, analysis section 2).
+
+### 101c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: analysis items 1-5. 1 -> ss-1; 2 -> ss-2 then ss-4; 3 -> ss-3 then ss-6; 4 -> ss-5; 5 -> ss-7. Printed denominator 5 of 5 items
+  placed (3 worker orders, 3 staged seat orders, 1 staged cell).
+- **(ii) Same grain.** ss-1 one component and a type; ss-2 one function of the verifier; ss-3 one ranker and its batch; ss-4/5/6 one write each.
+- **(iii) Intent coherence.** ss-1..ss-3 are code; ss-4..ss-6 the three served writes, each on its own store prefix; ss-7 waits on an answer.
+- **(iv) What a cell does NOT move.** ss-1 changes only one added sentence, shown only when the caveat is served; ss-2 narrows what the verifier keeps (a
+  held set), rewrites no stored object and rescales nothing; ss-3 changes which candidate rows are graded and nothing about a served object's shape beyond
+  one additive denominators key; ss-4 writes one name's driver; ss-5 writes one new key and touches the old one not at all; ss-6 writes new partition
+  objects and no existing one.
+
+### 101d. EDGES AND FAN-OUT
+```
+ss-2 --> ss-4              (SAP's write runs only after the scale rule is merged)
+ss-3 --> ss-6              (the rebuild carries what is merged)
+ss-5 --> ss-6              (the universe key before or with the rebuild, never after it: item 4)
+ss-4, ss-5 and ss-6 never share a window (the CTO's sequencing rule: the later one re-measures against the state the earlier one left)
+ss-1 independent; ss-7 on the DEMQUE answer
+fanout:
+  cap: 8
+  orders_total: 6          (ss-1, ss-2, ss-3 spawned; ss-4, ss-5, ss-6 staged seat orders)
+  chains_total: 3          (ss-1 ; ss-2 -> ss-4 ; ss-3 + ss-5 -> ss-6)
+  wave_0: [ss-1 ~384, ss-2 ~385, ss-3 ~386]
+  wave_1 staged: [ss-4 RA1 (ss-2 merged, the pair from the re-read), ss-5 RA1 (the pair), ss-6 RA1 (ss-3 merged and ss-5 landed, the pair from a member-by-member dry run)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```
