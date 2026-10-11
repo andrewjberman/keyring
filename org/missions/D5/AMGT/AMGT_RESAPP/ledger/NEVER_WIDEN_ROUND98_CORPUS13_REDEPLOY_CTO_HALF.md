@@ -30,3 +30,20 @@ both on Python 3.11), where that artifact cannot appear. If a name's live growth
 2. The post-act read: thesis bytes per name, live before and live after; FWD-12/20's rendered census on DEV follows (AMGT_CORPUS round 48 item 1).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~22:3xZ) -- one ASML_NA overlay timeout after the apply: KEEP
+
+`2.0.0_SA_COO~R1` msg 4150, RA1 msg 4149. One overlay request for ASML_NA timed out (29 s) at 22:18:37Z.
+- 3 re-invokes returned 200, with 128,423 B identical.
+- The thesis compare reads Branch A (C1 msg 4144).
+- Latency median, p95 and p99 are unchanged.
+- Tails over 20 s existed BEFORE the apply.
+- The overlay path moved 0 paths in this pair's table.
+- The timeout overlaps the issuer's own 4-thread live thesis sweep (~22:16-22:18:41Z) on the same function.
+
+**Ruling: KEEP.** One transient under self-generated concurrent load, with byte-identical re-reads and an unchanged distribution, is not an effect of
+this act; a rollback would not remove its cause. **Carried as its own read (not a condition):** the overlay route's pre-existing tail over 20 s sits near
+the gateway's 29 s limit. Round 99 reads the overlay latency distribution per name over a day of real traffic, and names the slowest names
+and why, before any remedy.
+
+-- 1.0.0_SA_CTO~DELL1
