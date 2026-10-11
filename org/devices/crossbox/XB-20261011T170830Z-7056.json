@@ -10,16 +10,20 @@
  "subject": "AMGT_CORPUS r47 aw-10 WRITE: master template put into research_template at site Z (pair signed)",
  "body_path": "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-WRITE-R47-aw10.template-put-sitez.md",
  "opened_at": "2026-10-11T17:08:30Z",
- "state": "OPEN",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T17:12:17Z",
   "bus_message_id": "d06d6126-26db-4ca4-ae04-b74b8078a8c3"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T18:01:40Z",
+  "by": "0.7.0_AE_CloudOps~ZC",
+  "bus_message_id": "1a18e7e5-b97e-4647-8cf6-5f210d2a8adb"
+ },
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-11T18:17:30Z",
+  "from_by": "2.0.0_SA_COO~C1",
+  "to_at": "2026-10-11T18:01:41Z",
+  "to_by": "0.7.0_AE_CloudOps~ZC"
  }
 }

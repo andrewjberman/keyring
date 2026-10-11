@@ -12128,6 +12128,33 @@ name the one known failure instead of silently inheriting it.
 }
 ```
 
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W57-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~57",
+  "surfaced_at": "2026-10-11T16:11:24Z",
+  "one_line": "The unknown opal-assets-silver-dlq consumer is a DAILY job: it refills 12 at 13:07Z and deletes all of them at about 16:00Z (2026-10-09 6, 10-10 12, 10-11 12); it fired live at 2026-10-11T16:00Z while OG-dq-1 was reading, and the next fire is 2026-10-12T16:00Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN cloudwatch get-metric-statistics AWS/SQS opal-assets-silver-dlq: Sent 12 at 2026-10-10T13:07Z and 2026-10-11T13:07Z; Deleted 12 (max 1 per datapoint) at 2026-10-11T16:00Z, Visible 12 -> 0 at 16:00Z; 10-10 Deleted 12 in the 5-min period from 15:57Z; 10-09 Deleted 6 at 16:00Z",
+      "RUN sqs get-queue-attributes at 2026-10-11T16:01Z: ApproximateNumberOfMessages 0, NotVisible 0 (12 distinct messages had been read non-destructively at ~15:55Z)",
+      "RUN cloudtrail lookup-events (ResourceName and EventSource=sqs.amazonaws.com, window) -> 0 events, with a positive control; lambda list-event-source-mappings on the queue ARN -> []",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~57/DQ1_READ.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S77: six held RPS messages left the DLQ in one window (15:39Z-16:17Z, 2026-10-09) by an unknown actor; the cell expects the queue's held messages to be readable afterwards.",
+  "world_is": "Not a one-off: the same consumer deletes the queue's whole content around 16:00Z every day, one DeleteMessage per message. Each day's eclipse inflection model_composition_*/portfolios_*/models.json failure records (Lambda RetriesExhausted, RuntimeError, opal-assets-silver-eclipse) are destroyed within hours, unread by the owner. Its principal is unnamed: SQS Receive/Delete are data events and are not logged here.",
+  "notes": "Next step is the CTO's call (data-event logging on the queue before 2026-10-12T16:00Z, or a read of 16:00Z schedulers naming it). This worker changed nothing; its 156 receive calls used visibility-timeout 0 and deleted nothing."
+}
+```
+
 
 ```json
 {
@@ -12177,33 +12204,6 @@ name the one known failure instead of silently inheriting it.
   "spec_asserts": "OG-db-1 step 2(b): the manifest-commit import closure includes org/modules/graph/compproof/manifest_check_cli.py.",
   "world_is": "That path is absent at HEAD; the module is org/modules/graph/manifest_check_cli.py. The worker used the real path (the closure's intent is the import set), not the order's literal text.",
   "notes": "Order text unchanged by the worker; the issuer may amend step 2(b)."
-}
-```
-
-```json
-{
-  "id": "NFRA_OPLGTW-Z-W57-S1",
-  "project": "NFRA_OPLGTW",
-  "fabric": "site-z",
-  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~57",
-  "surfaced_at": "2026-10-11T16:11:24Z",
-  "one_line": "The unknown opal-assets-silver-dlq consumer is a DAILY job: it refills 12 at 13:07Z and deletes all of them at about 16:00Z (2026-10-09 6, 10-10 12, 10-11 12); it fired live at 2026-10-11T16:00Z while OG-dq-1 was reading, and the next fire is 2026-10-12T16:00Z.",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "2.0.0_SA_COO~O",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "RUN cloudwatch get-metric-statistics AWS/SQS opal-assets-silver-dlq: Sent 12 at 2026-10-10T13:07Z and 2026-10-11T13:07Z; Deleted 12 (max 1 per datapoint) at 2026-10-11T16:00Z, Visible 12 -> 0 at 16:00Z; 10-10 Deleted 12 in the 5-min period from 15:57Z; 10-09 Deleted 6 at 16:00Z",
-      "RUN sqs get-queue-attributes at 2026-10-11T16:01Z: ApproximateNumberOfMessages 0, NotVisible 0 (12 distinct messages had been read non-destructively at ~15:55Z)",
-      "RUN cloudtrail lookup-events (ResourceName and EventSource=sqs.amazonaws.com, window) -> 0 events, with a positive control; lambda list-event-source-mappings on the queue ARN -> []",
-      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~57/DQ1_READ.json"
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "Z-S77: six held RPS messages left the DLQ in one window (15:39Z-16:17Z, 2026-10-09) by an unknown actor; the cell expects the queue's held messages to be readable afterwards.",
-  "world_is": "Not a one-off: the same consumer deletes the queue's whole content around 16:00Z every day, one DeleteMessage per message. Each day's eclipse inflection model_composition_*/portfolios_*/models.json failure records (Lambda RetriesExhausted, RuntimeError, opal-assets-silver-eclipse) are destroyed within hours, unread by the owner. Its principal is unnamed: SQS Receive/Delete are data events and are not logged here.",
-  "notes": "Next step is the CTO's call (data-event logging on the queue before 2026-10-12T16:00Z, or a read of 16:00Z schedulers naming it). This worker changed nothing; its 156 receive calls used visibility-timeout 0 and deleted nothing."
 }
 ```
 
@@ -12310,5 +12310,56 @@ name the one known failure instead of silently inheriting it.
   "spec_asserts": "Z-W55-S1: test_ogab2_ac02 pins the superseded name-in-key form, so AC1 cannot pass inside the order's paths.",
   "world_is": "After Amendment 1 added the file to <paths>, the assertion is re-pinned and AC1 passes (3 of 3 named, 27 of 27, 3 of 3).",
   "notes": "Citing row; Z-W55-S1's text is untouched. The disposition of Z-W55-S1 is the issuer's. One edit beyond the literal assertion line, inside the same test: the existing-key refusal probe passes now=<same put date>, else it hits a different day's key and does not raise."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W57-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~57",
+  "surfaced_at": "2026-10-11T17:36:27Z",
+  "one_line": "OG-bd-1 STOPS at step 2: the caller census of blackdiamond_list_fees finds 2 distinct callers (5 calls, 2026-10-01..10-08), both unprofiled. Denying the tool to unprofiled principals would deny a real user; an Andrew admission call (C8) is owed.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~57/BD1_CENSUS.json: window audit/dt=2026-06-24..2026-10-11 (110 day partitions), 255023 records scanned, 0 malformed, 0 errors; 5 blackdiamond_list_fees records; 2 callers; unprofiled 2",
+      "RUN bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r34/checks/bd1.AC1.sh -> '... distinct callers of blackdiamond_list_fees 2; unprofiled 2 / RESULT: FAIL / exit=1'",
+      "RUN boto3 scan + strong get of POLICY#<tid>#<oid>/principal_profile in gateway-access-state-table: caller A principal 6810043e-d171-4adc-9975-068b35e179da/2e21f8e5-55ca-45c1-91b9-a4607bf28d4f (4 calls, tier master_admin, outcome ok, 2026-10-01 x3 and 2026-10-06) has NO profile; the store holds 1 principal_profile in 859 items, owned by another oid"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Ruling @135719d313 / order step 1: every caller of blackdiamond_list_fees is a profiled principal, so the deny breaks no one; the census names each principal by '<tid>/<oid>'.",
+  "world_is": "Caller A (principal above, 4 calls, tier master_admin) is unprofiled: the deny would end its access. Caller B (1 call, 2026-10-08, tier standard, outcome denied by the tier gate) has no recorded principal and matches no profile; counted unprofiled because profiled is not established. The audit record of this tool carries NO principal key (integrations/base.py log_call passes none), so a principal had to be recovered from gw_login records by email digest (caller A: 2 gw_login records; caller B: 0).",
+  "notes": "Owed: Andrew's admission call (C8, per the CTO ruling step 3) naming principal A (4 calls) and caller B (1 call, unresolved principal); this worker grants and profiles nothing. No deny built; tests/test_og_bd1.py not written; order left pending. A separate fix (not this order's): pass principal into audit.log_call in integrations/base.py, so the next census needs no digest join."
+}
+```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S92",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T18:05:01Z",
+  "one_line": "The Teams bearer secret gateway/teams/bearer is readable by the gateway, COMM_ASSIST's Lambda, group cloudops-dell-agents-group and admin. OG-ap-7's three /hx/teams/* channel-read routes therefore extend what every holder of that bearer can read; they do not change who holds it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MSG 1.0.0_SA_CTO~Z msg 33350, read at signing OG-ap-7's CTO half @4f49f40bd0: the readers of gateway/teams/bearer are the gateway, COMM_ASSIST's Lambda, cloudops-dell-agents-group and admin"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-7's blast radius is the three /hx/teams/* GET routes only.",
+  "world_is": "The routes are the only code change, but a group grant (cloudops-dell-agents-group) holds the same bearer, so any member of it gains channel read with this release.",
+  "notes": "CTO ruling: name the dell consumer of the teams bearer, then either narrow the group's grant or give that consumer its own bearer. A cell for a later round. Not a rollback trigger for OG-ap-7 (the CTO signed with this known)."
 }
 ```
