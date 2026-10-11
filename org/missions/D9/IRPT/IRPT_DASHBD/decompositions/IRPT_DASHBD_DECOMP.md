@@ -1446,3 +1446,33 @@ half as this project's. Round 80 (DB-b-154, DB-b-155) is running; this ruling ar
 | `DB-b-156` | msg 5937: does any reader the tie-out or the served dashboard uses key on the file's day and not the transaction's own date; for the two sampled days, the ids' own dates against the files they now sit in. Read-only, counts only. The row closes on it | LOCAL | DB-b-151 | B81-1 |
 
 **fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~126`, in a fresh worktree cut from box/dell2.
+
+## 84. ROUND 82, WORKSTREAM B (2026-10-11 ~22:2xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 5955)
+
+The CTO accepted the renamed first axis and its two tokens and, on row D2-W121-S4, removed TIMING_END (a value that cannot occur).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-157` | msg 5955: the proposal record carries the class set as ruled -- TIMING holds three values, the three retired tokens are listed together, the ruling is recorded; by the serial that owns the record | LOCAL | DB-b-155 | B82-1 |
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~121` (worker-light), in a fresh worktree cut from box/dell2.
+
+## 85. ROUND 83, WORKSTREAM B (2026-10-11 ~22:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-83 ANALYSIS @3f7c91e682)
+
+Rounds 78 to 82 are terminal and MAY-CLOSE. The analysis: END, the served flow convention, closes in 0 of 51; START 50, MID 48, both
+47. END is refuted as the other system's convention; between START and MID the data does not decide; matching the other system is not
+a proof of accuracy. Its section 3 lists what the CTO needs before it writes the addendum. All read-only; counts and bands only. The
+served convention stays END.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-158` | item 1: the accounts and flow-bearing days behind the 51, printed (ruling 24's bar) | LOCAL | DB-b-157 | B83-1 |
+| `DB-b-159` | item 2: the size of a change both ways, per account-day and per served window, on a private copy; END reproduced first as the control | LOCAL | none | B83-2 |
+| `DB-b-160` | item 3: how the guard's two flags move under START and MID, and the fallback days that move with them | LOCAL | DB-b-159 (its private table) | B83-2 |
+| `DB-b-161` | item 4: what the custodian and Black Diamond publish about when a flow arrives, quoted with source and time; public reads only | LOCAL | none | B83-3 |
+
+Item 5 (the 39 that close under no timing: 31 accrual-class, 8 unclassed) is not a cell: it is a required member of every record of
+this round, checked by each criterion, so no number is quoted without it.
+
+**fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~127` (DB-b-158), `~128` (DB-b-159), `~130` (DB-b-161) now; `~129`
+(DB-b-160) when DB-b-159 has drained.

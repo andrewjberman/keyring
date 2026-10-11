@@ -2006,3 +2006,32 @@ denominator.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+### TCKT_VNEXT-D2-S46 -- any holder of lambda:InvokeFunction on a function behind the portal authorizer can be any caller to it
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S46",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T22:43:51Z",
+  "one_line": "Any holder of lambda:InvokeFunction on a function behind the portal authorizer can be any caller to it: a direct invoke goes around the authorizer and the function believes the event's own caller context.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (its own word, msg 6001: 'one row in this project's channel, owner me')",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:300-309 (_actor): the caller's email, userType, firmId and allowedFirmIds are taken from event.requestContext.authorizer.lambda and from nowhere else; nothing in the handler checks that the event came through API Gateway",
+      "aws lambda get-policy on opal-ticket-api (this seat, 2026-10-11 22:4xZ): the RESOURCE policy has one statement, the API Gateway service with the portal API's source ARN; it does not bound identity-based grants",
+      "iam simulate-principal-policy for arn:aws:iam::313476888478:user/cloudops-dell2-agent-user on that function's ARN (this seat, same minute): lambda:InvokeFunction allowed, lambda:GetFunction allowed",
+      "1.0.0_SA_CTO~DELL2 msg 5396: an administrator identity reads every secret and the laptop's agent sessions run as it; by the same reasoning it may invoke any function. NOT read by this seat: which other identities hold lambda:InvokeFunction on this or any other function behind the authorizer",
+      "scope: ONE function read (opal-ticket-api) and ONE identity simulated; the sentence about 'a function behind the portal authorizer' in general is the CTO's and is inferred for every other function"
+    ]
+  },
+  "spec_asserts": "The portal authorizer is the only identity source of the ticket service (the handler's own docstring at line 301).",
+  "world_is": "It is the only identity source the handler READS, and a direct invoke supplies it. An agent identity on this box can therefore call the ticket service as any internal person, any client or any service subject, read and write, with no token. The round-6 direct-invoke act (TO-RUN-R6-fn1) uses exactly this, for five GETs under a signed pair. No grant is added by this project; whether the invoke permission should be narrower is the owner's.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

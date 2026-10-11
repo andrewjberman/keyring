@@ -5,7 +5,7 @@
  "project": "NFRA_OPSWKF",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.9",
+ "prd_version": "v0.10",
  "step": 4,
  "brief_ref": "docs/briefs/q3-trade-submission-ops-workflow-brief-20261006.md@c41e705220",
  "endpoint_outcomes": [
@@ -17,7 +17,8 @@
   "FWD-6",
   "FWD-7",
   "FWD-8",
-  "FWD-9"
+  "FWD-9",
+  "FWD-10"
  ],
  "status": "RATIFIED"
 }
@@ -116,6 +117,19 @@ wrote the brief. **COO:** UNSEATED at registration; seating is `0.0.0_AB_MSTR`'s
                     mail them; an Opal staff member submits as before
          SOURCE     NFRA_OPSWKF cell OW-s-1's record `deliverables/0.9.0_WK_NFRA_OPSWKF~7/FOUR_FUNCTIONS_WHAT_A_NON_INTERNAL_CALLER_CAN_DO.md`
                     (code read, nothing called), under the laptop CTO's ruling cited at FWD-8. Not an Andrew-direct word
+
+  FWD-10 The trade functions have one door, the portal's
+         DONE WHEN  EXERCISED -- no request through the second API (`trade-submission-api`) reaches any function: its public
+                    endpoint answers no caller; shown ON THE DEPLOYED API by ONE request that touches no function and carries no
+                    credential (a route the API does not have), answered by the API itself BEFORE the act and refused at the
+                    endpoint AFTER it; by the API's domain mappings read, none or each closed the same way; and by the invocation
+                    counts of its sign-in function and its authorizer read flat across the act. NO request is EVER made to its
+                    sign-in route, by any seat, before or after. The closing act is one reversible setting, recorded with the
+                    value that restores it
+         ACCEPT     nobody on the internet can try passwords against the portal's users through that API, and nothing reaches the
+                    trade workflow function except through the portal; Opal staff use the trade pages as before
+         SOURCE     `0.7.0_AE_CloudOps~DELL2`'s record `NFRA_OPSWKF_SECOND_DOOR_AUTHORIZER_BYTES_AND_TRAFFIC_20261011.md` @855e7e938e
+                    (deployed bytes and metrics read; nothing called), on row NFRA_OPSWKF-D2-S11. Not an Andrew-direct word
 ```
 
 ## CONTRACTS
@@ -304,5 +318,33 @@ backlog in their numbered order.
   read of the mail service's own log.
 - The invoke is made under an amendment to the release's pair (who may invoke, the two events, both answers of each), by the applier
   that made the release. CONTRACTS unchanged. The CVO re-signs the ratified-text half.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM (2026-10-11 ~23:1xZ, `1.0.0_SA_CTO~DELL2`): FWD-10, the second door is closed (L10; ENDPOINT changed)
+
+- **Source:** the record cited at FWD-10 (175 lines, read whole by this seat), ordered by this seat's msg 5959 on row D2-S11. Its
+  readings are of the DEPLOYED packages, since neither function's source is in the repository. Nothing was called.
+- **What the door is.** A second HTTP API, created 2026-01-06, live, outside CloudFront and the portal's origin gate; the tree calls
+  it dormant. It fronts three trade functions under its own authorizer, and one sign-in route with no authorization.
+- **What today's two releases already did there:** its authorizer's context carries exactly `email`, `name` and `role`, so the
+  dashboard and submit functions refuse every caller of that door since 19:30Z and 21:27Z. That was a consequence, not a design.
+- **What is still open, and why it is not left for a later round:**
+  1. **The sign-in route accepts an email and a password from anyone on the internet and checks them against the portal's own
+     users table,** any active user, with no rate limit, no lockout and no origin check. Whatever it was built for, it is a place to
+     try passwords against every portal user, clients included, that none of the portal's own protections stand in front of.
+     On a match it issues a 24-hour credential under a key of its own.
+  2. The trade workflow function (approve, reject, execute) sits behind that door unchanged, deciding by its own rule.
+- **Traffic:** no API metric exists for it; its sign-in function and its authorizer each read 0 invocations over 30 days, beside
+  controls that read 54,824 and 7. Access logging is off, so there is no second record. Nothing in the estate is shown to use it.
+- **The outcome is the door closed, by the smallest reversible act, now.** The pair names the one setting and reads first what else
+  carries the API (a domain mapping). Closing is reversible and narrows; it is cut today. **DELETING the API, its two functions and
+  their key is a different act, unrecoverable, and is Andrew's:** it is listed for him and is not part of FWD-10.
+- **No seat tests the sign-in route.** A request to it is a credential presented to a live password check; the proof uses a route the
+  API does not have, which touches no function.
+- **Not in FWD-10:** how many users hold a password that route would accept (no row was read, and none is to be); whether it was ever
+  called before the metric window; a review of the workflow function's own rule (it is reached only through the portal after this).
+- **Carried, the same hour, to the owner of the portal's users table:** that this route existed in front of it for nine months.
+- **CONTRACTS unchanged. ENDPOINT changed:** the CVO re-signs the ratified-text half.
 
 -- 1.0.0_SA_CTO~DELL2

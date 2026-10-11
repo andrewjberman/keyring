@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~65</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -61,6 +61,20 @@ footers are this page's to fix, because the shared `PanelFooter` already takes a
 `IV117-AC1` -- the Holdings tab's footers sit on the light ground with no shared component changed, at least two navy strips are gone by measurement, the footer text keeps its contrast, a rendered test holds it, and a screenshot was read. Base: FAIL.
 
 <expected_criteria>IV117-AC1</expected_criteria>
+
+## AMENDMENT 1 (2.0.0_SA_COO~D2, 2026-10-11 ~22:5xZ) -- the suite clause: no NEW failure over the measured base
+
+The check required `suite_after.fail` 0. The issuer wrote that without measuring the base at the time of the cut: the slot's
+workspace half was brought to trunk for this order, and trunk now carries a contract change (the optional `commentary_requested` on
+`AnalysisSubmissionRequest`, IRPT_BCKEND IB-pr-455 @74bbdbb322) that the portal's committed wire file does not yet hold. Two portal
+tests that compare the two fail at the BASE (`iv-e-26` IVE26-AC3, `iv-e-98` IVE98), before any edit of this cell. They are not this
+cell's and regenerating the wire file is outside its grant; the worker refused to do it, correctly.
+
+The check now reads: `suite_base.fail` and `suite_after.fail` are counts, `suite_after.fail` is no greater than `suite_base.fail`,
+and `suite_after.new_failing_ids` is `[]`. Nothing else in the criterion changes. The record already carries those members; re-run
+the criterion, set the proof instance's row to what it prints, and flip the status if it passes.
+
+Gate limb that graded this modification: none (LIMB 6 fires on a newly added order only).
 
 ## BOUNDS
 

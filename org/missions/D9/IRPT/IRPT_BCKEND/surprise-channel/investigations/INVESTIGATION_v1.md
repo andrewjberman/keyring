@@ -27572,3 +27572,160 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Seven did not. A dotted class-share ticker returns nothing; whether the reader would return bars for the dash form (BRK-B) was not asked, so it is inferred only that the spelling is the cause. A security of the nine pairs with no bar stays ungraded by the second witness and its rows block their account-days (BRK.A is in the outside list). Not measured: the account-days that wait on these five outside-list tickers."
 }
 ```
+
+## IRPT_BCKEND-D2-W313-S1 -- A search of the repo by the gold's table name finds 34 files; the readers that reach the gold by the producer's table constant are 4 more, one of them a reader the name search missed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W313-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~313",
+  "surfaced_at": "2026-10-11T22:33:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A search of the repo by the gold's table name finds 34 files; the readers that reach the gold by the producer's table constant are 4 more, one of them a reader the name search missed",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_comparison.py:213 reads the gold through opal_naming.address(..., hp.TABLE_DAILY, ...) and :223 keeps status OK rows; the string holdings_performance_daily is not in that file",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~313/IB153-1_producer_design_read.json consumers.files_naming_the_member_or_the_gold: total 38 = 14 consumers + 8 writers + 16 neither; searched_for names both passes",
+      "PRD ADDENDUM v0.34: 'the release that first serves this gold names every reader of the holdings gold and of the performance route with its key policy'"
+    ]
+  },
+  "spec_asserts": "A name search of the repo for the gold's table string names every reader of the holdings gold.",
+  "world_is": "It named 34 files and missed one reader (a producer's comparison) that builds the address from the module's TABLE_DAILY; the second pass (module name and TABLE_DAILY) added it and 3 namesake files for a different table. A reader that builds the table name from a variable in a way neither pass matched would also be missed: the census is two name passes, not a proof. The portal pages that render the route's returns were not classified."
+}
+```
+
+## IRPT_BCKEND-D2-W313-S2 -- The existing 07:30 and 07:41 America/New_York fires are before the entry's partition usually lands (11:46Z) while daylight time holds; a producer for the entry that reused those times would grade a day before its partition exists
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W313-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~313",
+  "surfaced_at": "2026-10-11T22:33:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The existing 07:30 and 07:41 America/New_York fires are before the entry's partition usually lands (11:46Z) while daylight time holds; a producer for the entry that reused those times would grade a day before its partition exists",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf:92 cron(30 7 ? * MON-FRI *) America/New_York, described live (State ENABLED, input source names the first-witness entry): 11:30Z in daylight time, 12:30Z in standard time",
+      "infra/aws/terraform/investor-reporting/reporting-gold/schedule.tf:10-14 chosen_cron cron(41 7 ? * MON-FRI *): 11:41Z in daylight time",
+      "S3 LastModified of the entry's silver partitions since 2026-09-10: 19 of 22 at 11:46Z the next day, 3 at 3 to 5 days after the date; anchor partitions: 21 of 22 at 09:46Z the next day. Earlier partitions: 46 of 69 entry and 23 of 64 anchor partitions show a last write more than a day after their date",
+      "the times are the S3 LastModified of the objects, recorded in the _meta of each cached partition by ib433_fetch.py (deliverables/0.9.0_WK_IRPT_BCKEND~308); counts of partitions only"
+    ]
+  },
+  "spec_asserts": "PRD ADDENDUM v0.34: 'a scheduled producer runs after both' the anchor (about 09:46Z) and the entry's partition (about 11:46Z the next day).",
+  "world_is": "No schedule exists for the entry. The two schedules that would be copied are before 11:46Z while daylight time holds (to 2026-11-01), and 3 of 22 partitions landed days late. Not measured: whether the partition's S3 LastModified is its first landing (earlier partitions were rewritten)."
+}
+```
+
+## IRPT_BCKEND-D2-W313-S3 -- The performance route's holdings reader skips a non-OK day and chains the remaining days (a partial absence, not a refusal), so a blank account-day written as a non-OK status would be chained over
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W313-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~313",
+  "surfaced_at": "2026-10-11T22:33:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The performance route's holdings reader skips a non-OK day and chains the remaining days (a partial absence, not a refusal), so a blank account-day written as a non-OK status would be chained over",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/holdings_gold.py:246-247 keeps status OK rows and counts the rest as excluded; :314-317 adds the 'excluded_rows' absence with the PARTIAL marker and the figure is served; :259 raises only on a non-finite chain",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1016-1019 and data/assets/scripts/gold/irpt_holdings_performance/holdings_comparison.py:223 key on status OK and do not chain",
+      "PRD ADDENDUM v0.34: 'a return for an account-day only when that day and the prior trading day each read OWN_DATE or NOTHING_TO_GRADE. Any other account-day is blank ... Nothing is shifted, repaired or inferred'"
+    ]
+  },
+  "spec_asserts": "A blank account-day is not served as a return by any reader of the holdings gold.",
+  "world_is": "The route's reader serves a figure chained over the non-OK days with a partial absence named on it. Nothing is served for the date basis today, so nothing is wrong yet; how the producer writes a blank decides whether the route serves one. The read through the route that would show it is named in the design read, not run."
+}
+```
+
+## IRPT_BCKEND-D2-W312-S1 -- The source map's artifact_sha256 for irpt-commentary-draft-store-lambda is not the live CodeSha256 and its _build_note still says DESIRED, not built; the other three entries' digests equal live
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W312-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~312",
+  "surfaced_at": "2026-10-11T22:38:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The source map's artifact_sha256 for irpt-commentary-draft-store-lambda is not the live CodeSha256 and its _build_note still says DESIRED, not built; the other three entries' digests equal live",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json @e7bb7e923a entry irpt-commentary-draft-store-lambda: artifact_sha256 begins xyROb11e, _build_note 'DESIRED, not built and not applied ... No artifact_s3_key/artifact_sha256 yet'",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/IB152-1_live_reads.json function irpt-commentary-draft-store-lambda: live CodeSha256 begins AsKY+KWL (lambda get-function-configuration, read 2026-10-11T22:04Z), LastModified 2026-10-11T04:12:31Z, equal to the sha256 of the downloaded package and to the S3 version ToWX4K7... of the function's own artifact key",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/IB152-1_release_read.json functions[2]: map_artifact_sha256_equals_live_code_sha256 false; the minimal candidate built from this entry differs from the live package in 2 of 16 members, so the live package was built from these pins; the entries for irpt-ycharts-generate, irpt-status and irpt-commentary-composition-read-lambda read true"
+    ]
+  },
+  "spec_asserts": "The map entry describes the package that would be built and its digest; build-and-upload.sh and record-terraform-deploy.sh keep artifact_sha256 equal to the object and the live digest (CTO half 87d92b7c3b condition 4 asks that a stale field of an entry be corrected in the record step).",
+  "world_is": "For this one entry the recorded digest is a different package from the live one and the note says nothing was built; the function is live (Active, handler commentary_draft_store.lambda_handler). Not established: which build the map digest names, or whether a Terraform plan on this function's module reads the map digest."
+}
+```
+
+## IRPT_BCKEND-D2-W312-S2 -- For irpt-ycharts-generate two of the three changed members are NATIVE to its source_dir, so no map row pins them: a minimal candidate re-pins only the schema row, and two riders move that no row can hold back
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W312-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~312",
+  "surfaced_at": "2026-10-11T22:38:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "For irpt-ycharts-generate two of the three changed members are NATIVE to its source_dir, so no map row pins them: a minimal candidate re-pins only the schema row, and two riders move that no row can hold back",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json @e7bb7e923a entry irpt-ycharts-generate: staged_from has a row for contracts/AnalysisSubmissionRequest.schema.json (pin 5be2acd7cc) and NO row for submission.py or acceptance.py; the builder reads a native member from the worktree (build-and-upload.sh stage step and the zip step)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/candidate_repins.json: 7 rows re-pinned over 4 functions, 1 of them in irpt-ycharts-generate",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/IB152-1_release_read.json functions[0].moved_members: 5 members move; durable_job.py (3acafb3f45) and submission_service.py (2f7cc7be42) are native, not IB-pr-455's, and are riders"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-456 face: the candidate map re-pins 'ONLY the rows that pin one of the three members' in the function's entry, and IB-pr-455's worker named entries that package the members through staged_from rows.",
+  "world_is": "In irpt-ycharts-generate the row pins only the schema. Its submission.py and acceptance.py are native, so they move because the build tree is the base; so do the other native members that differ from live (durable_job.py, submission_service.py). Holding either back would need a new staged_from row pinned to the live commit, which the face forbids; the word recorded is RIDERS_MOVE_WITH_THEM. acceptance.py cannot be separated from submission_service.py (replay controls: TypeError, 0 writes)."
+}
+```
+
+## IRPT_BCKEND-D2-W312-S3 -- The resident_worker.py inside the irpt-ycharts-generate zip, live and built, has neither producer_for nor send_ready_if_ticketed, so the Opal-producer branch and the I3 gate AMENDMENT 1 leans on are not in this package; the host's installed package was not read
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W312-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~312",
+  "surfaced_at": "2026-10-11T22:38:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The resident_worker.py inside the irpt-ycharts-generate zip, live and built, has neither producer_for nor send_ready_if_ticketed, so the Opal-producer branch and the I3 gate AMENDMENT 1 leans on are not in this package; the host's installed package was not read",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/IB152-1_replay.json arm 'the zip's resident_worker.py is the OLD one': hasattr(resident_worker, 'send_ready_if_ticketed') and hasattr(resident_worker, 'producer_for') are False on the live and the built tree (identical)",
+      "infra/aws/lambda/ci/lambda-source-map.json @e7bb7e923a entry irpt-ycharts-generate: resident_worker.py staged at the live bytes (pin bb1eb7f92b), so the minimal candidate does not move it",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py @e7bb7e923a:121-133,189-200,700-704 holds OPAL_PRODUCER_PRINCIPALS, producer_for and send_ready_if_ticketed in the tree"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-456 AMENDMENT 1 (CTO msg 5904): an Opal-producer job can exercise the function past acceptance without a vendor call, and the worker half that reads the member is merged and dormant.",
+  "world_is": "The producer switch and the I3 gate are in the tree and in the one-tree candidate's scope, not in the live package and not in the minimal candidate. What the resident host runs is its own installed package (install-resident.sh), which this order's AWS reads cannot see, so whether the host takes the Opal branch for an allow-listed principal today is not established here."
+}
+```

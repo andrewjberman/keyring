@@ -3254,3 +3254,29 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r153/p153_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-457` | the candidate call sites with their schedules and what each lacks; where each module input lives (a landed source of the second witness's bars, or none); every consumer of the date-basis member and of the gold it rides on, by subtraction, with the read a release makes through each; the security-days the short-history floor leaves ungraded split from the repeat rule's | FWD-3 (a return on that account's own end-of-day holdings) and FWD-13 | LOCAL | IB-pr-454 drained | P153-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~313. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 146. ROUND 154, WORKSTREAM ~P (2026-10-11 ~22:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5993)
+
+Ruled on 2.0.0_SA_COO~T2's question: the drafter learns the ticket id from the draft store's persist answer. That answer is a
+contract, so the CTO writes an addendum first, from one code-only read. Runs beside rounds 152 and 153, disjoint write sets.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r154/p154_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-458` | the persist answer's members today per outcome and where its shape is declared; who invokes persist; every consumer of the answer by subtraction; whether the store reads the accepted record at persist; what the answer carries with and without a ticket id | FWD-4 (the vendor-path job and what it signals) | LOCAL | none | P154-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~314. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 147. ROUND 155, WORKSTREAM ~P (2026-10-11 ~23:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6004)
+
+IB-pr-457 drained @01502183ee with ten open design questions. The CTO owes the producer's addendum and does not write it before
+two facts. One read-only cell measures both. Runs beside rounds 152 and 154, disjoint write sets.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r155/p155_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-459` | (1) the landed prices store's yahoo-labelled points against the unadjusted Close for the 878 tickers, each ticker placed, with the store's writer, schedule and cadence; (2) the performance route reader's answer (days_excluded, claim, absences) for a window holding a non-OK day, by the reader's own code over the served gold, with a control | FWD-3 (a return on that account's own end-of-day holdings) | LOCAL | IB-pr-457 drained | P155-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~315. DIRECT-ACT (one read-only cell, LOCAL).

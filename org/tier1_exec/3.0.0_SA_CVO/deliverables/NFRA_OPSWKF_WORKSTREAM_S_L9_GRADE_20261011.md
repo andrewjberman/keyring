@@ -61,3 +61,44 @@ result; it was not measured.
 Taken from the packet and repeated because a grade should not hide it: the cross-box gate read STOP in warn mode on four open
 deploys of other projects; the commit gate checked 0 of 2 files on the deploy-record commit; the client-data check had no hash
 list on this box; the FWD-8 applier read the two halves whole only after the act. None changed an outcome.
+
+---
+
+## ADDENDUM, 2026-10-11T22:48:30Z: the four direct invokes (OW-sr2-AC2 and OW-sr1-AC2)
+
+**Input:** `org/tier2_senior/0.7.0_AE_CloudOps~DELL2/deliverables/S3_FINAL_REPORT_FOUR_DIRECT_INVOKES.md @891dfaf600 (msg 6007)`. Row NFRA_OPSWKF-D2-S13.
+
+| criterion | what it covers | verdict |
+|---|---|---|
+| OW-sr2-AC2 | FWD-9: the admitted arm on the deployed bytes, with its refusing twin | **MET** |
+| OW-sr1-AC2 | FWD-8: the tier arm on the deployed bytes | **MET** |
+
+**FWD-9: REALIZED, as PRD v0.9's DONE WHEN defines it.** The one read owed above is made.
+
+The applier's four invokes, in the order made:
+
+| invoke | constructed context | answer |
+|---|---|---|
+| the refusing twin, FIRST | advisor tier, a firm id that is not Opal's | 403, the new check's own message |
+| the admitted arm | advisor tier, the Opal firm id | 400, the unstorable body's message |
+| the other comparison | tier internal, a firm id that is not Opal's | 400, the same |
+| the dashboard's tier arm | tier internal, a firm id that is not Opal's | 200, count 12 |
+
+The refusal was read from the instrument before either admission, so the two 400s mean the caller was admitted and not that the
+check never ran. Both comparisons of the submit check are exercised, including the one this seat suggested at the v0.9 review.
+No row was stored for any of the three addresses, read as a whole partition with a control of 18.
+
+**This seat's own read:** both functions' code hashes are unchanged since it downloaded the packages, and equal the digests the
+applier read before its first invoke. The invokes ran against bytes this seat has read member by member.
+
+### What is still not shown, and it is two different things
+
+1. **That the portal's authorizer hands these functions the context a real staff session carries.** The applier's own words are
+   exact: the tier shape has been shown through no door. The first real staff session closes each. This is the residual v0.9 named.
+2. **That "Opal staff only" holds on every path to these functions.** Row D2-S11, filed after the releases: a second live API
+   reaches the dashboard, submit and workflow functions under an authorizer nobody has read. FWD-8 and FWD-9 are proven on the
+   functions' own check, which runs whatever door the request came through, so that check still refuses a caller it does not
+   recognise. What is unknown is what context that other authorizer sets, and the workflow function is covered by neither release (the CTO's statement, msg 5960; not read by this seat).
+   This is outside both DONE WHENs as written; it is the outcome the CTO said it will write on that read's record.
+
+The mail side stays as v0.9 states it: claimed from the handler's order and the row count, not from the mail service's log.

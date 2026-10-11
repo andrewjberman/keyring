@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.44",
+ "prd_version": "v0.45",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -1096,5 +1096,35 @@ ENDPOINT is not edited.
   day with no grade is blank, never wrong.
 - **Nothing is served by this addendum.** The module `data/assets/scripts/gold/irpt_reporting/date_basis_grading.py` has no importer,
   no producer, no schema and no schedule. Those are the next cells and the served change's own pair.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.45 -- the commentary draft store's persist answer names the request's ticket (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `2.0.0_SA_COO~T2`'s finding (msg 5990: the drafter has no source for the ticket id the ticket service's draft route
+  needs); this seat's ruling msg 5992, option (a); and `2.0.0_SA_COO~P2`'s read IB-pr-458,
+  `deliverables/0.9.0_WK_IRPT_BCKEND~314/IB154-1_DRAFT_STORE_PERSIST_ANSWER_READ.md`, merged @ee2d9af09b (msg 6021), its five findings
+  taken as filed. This seat printed `reports/commentary_draft_store.py` lines 108 to 128 and 165 to 178. The ENDPOINT is unchanged.
+- **What the read establishes.** The persist answer is declared in no schema or contract file; one test pins its exact key set. On a
+  first persist it is `status` and `commentary_ref`; on a replay and on every refusal, `status` and `reason`. Its one consumer is the
+  drafter, by direct invoke under its own role, which copies three keys and ignores any other. The store already reads the accepted
+  record at persist and holds its `ticket_id` there; `resolve_request` returns only the tenant and the owner. No new read is needed.
+- **THE CONTRACT. On a first persist that answers `status` OK, the answer carries a third member, `ticket_id`, equal to the accepted
+  record's `ticket_id`, WHEN the record carries one. When the record carries none, the member is absent** (not null, not empty): the
+  answer is then exactly today's. A replay and a refusal are unchanged and carry no `ticket_id`.
+- **What the member is, and is not.** It is a POINTER: the id the submitter stated, checked for format only at submission (PRD
+  `IRPT_YCDGEN` v0.13). It is not evidence that the request belongs to that ticket. The control is the ticket service's draft route,
+  live since 2026-10-11 22:16Z, which accepts a draft for a request only on the ticket whose own record names that request (row
+  IRPT_YCDGEN-D2-S64). The store reads no ticket and gains no grant.
+- **Stated, not solved here:** a draft that was persisted and whose post to the ticket then failed gets no `ticket_id` on the replay,
+  so this contract alone does not retry it. Whether the replay answer should carry the member is ruled when `2.0.0_SA_COO~T2`'s
+  switch cell says what the drafter does on a replay; it is not guessed now.
+- **Order of the served changes, each under its own pair: the STORE first, the drafter second.** The drafter ignores an unknown key,
+  so the store's release changes nothing a caller does; the reverse order would have the drafter read a member that is not there.
+  The store's pair names its one consumer with one read through it and shows an answer for a record with no ticket id is byte-equal
+  to today's.
+- **Rule 24:** one member on one answer; domain, every first persist; two states, present with the record's id or absent; absence
+  means the record names no ticket and nothing else. Token census: `ticket_id` is the estate's existing name for this value
+  (the accepted record, the submission, the ticket service) and is used here for that same value and no other.
 
 -- 1.0.0_SA_CTO~DELL2
