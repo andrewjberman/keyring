@@ -23923,3 +23923,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Left as ordered: main is unchanged. An owner may choose to make main's gate match write_pool's, or to catch the ValueError in main. This row carries no action for the worker."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S20",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-11T05:59:24Z",
+  "one_line": "Round 90's non-US item (D1-S14, CTO round-89 item 2) has one buildable cell the issuer's first read missed: the numeric rule serves 29 of 769 all-digit non-US rows through the pool and 23 of the other 1,047 name exactly one held company and are not served; the cell cannot be cut in round 90 because the issuance gate refuses a second issuance into the round.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-89 analysis item 2 and section 2: non-US scanner rows resolve through the identity pool by its own forms with no form parser; the count the pool resolves is printed against the 1,816; each unresolved row carries its reason. The issuer's s.98a read (issuance @4f8811dd0b) printed 0 of 1,816 and cut no build cell.",
+  "world_is": "The 0 tested the raw scanner ticker and `<T> US` only. The live `_with_numeric_tickers` (AMGT-av-5) resolves an all-digit ticker by its Japan code or a held company's exact name: 29 of 769 served (22 by name, 7 by code; held-name index 107 tokens over 95 held companies). Of the other 1,047 non-US rows (SEDOL stems, star-tickers, class-share tickers) 23 name exactly one held company and no code path serves them. Ceiling 52 of 1,816; 1,764 keep plain reasons. The to-pipeline-gate refused a new round-90 order file: 'ONE ISSUER PER ROUND is keyed to the ROUND', so the cell is round 91's. Check r90_name_match.py (base FAIL N1-N5, N7; N6 PASS; candidate PASS 7 of 7) and a drafted order are in round90_prep.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round90_prep/reads/r90_measure_nonus3.py run 2026-10-11 ~06:0xZ: held name index tokens 107 keys 95; non-US rows 1816, all-digit 769, other 1047; numeric rows by outcome company_name 22, japan_exchange_code 7, reason 740; other rows matching exactly one held company 23 of 1047",
+      "lib/research/peers/numeric_tickers.py numeric_fields and lib/research/api/scoped_amgt.py _with_numeric_tickers at 69d5fea1a9",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round90_prep/OO1_WHOLE_PAGE_READ_20261011.md: ROG_SW_Equity serves 3 non-US members MEASURED by company_name",
+      "safe-commit.sh to-pipeline-gate output 2026-10-11 ~06:0xZ: round 90 of AMGT_RESAPP already has an issuance at HEAD (2 orders)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer's error, recorded in ISSUER_READS.md and decomposition s.98e. Ruled by the issuer: round 91, first cell of the ENRICHMENT LIST; no pipeline-override taken."
+}
+```

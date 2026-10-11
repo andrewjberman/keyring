@@ -100,3 +100,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+<status>complete -- issuer close 2026-10-11T06:0xZ (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-362 @34167321f0 (code 4872a357ff) merged @a423f1d667, proof instance VALID (worker run and issuer re-run); issuer re-run in the worktree: AC1 R90 CURRENCY ANSWERED YES (C1-C5), AC2 42 passed; drain checks py_compile rc 0, ruff clean, 122 passed over the peers folder and the two api tests. The pure half only: the reader and its wiring are AMGT-oo-6 (staged on the DEMQUE answer). Rows: none.</status>
