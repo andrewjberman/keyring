@@ -1495,3 +1495,30 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S32",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-11T08:54:30Z",
+  "one_line": "Branch E's instruction cannot be satisfied as written: hop (d) served NOT_READY, but /aws/lambda/irpt-ycharts-generate logs NO reason for that call -- the token NOT_READY appears nowhere in the group's 41 events for the window, and the only two reason-bearing events are census arms that both precede the journey ticket's creation.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run 3 trace hop d_analysis: POST /api/scoped/investor-reporting/analysis, status 200, request_id null, refused_reason NOT_READY, result BRANCH_E_SUBMISSION_REFUSED, idempotency_token r2tr1run3-a5e6c43e3bbe069d00ef4894",
+      "full read of /aws/lambda/irpt-ycharts-generate over the token window 2026-10-11T08:12:32Z..08:42:32Z: 41 events; a token census over all 41 returns INIT_START, LATEST, UNEXPECTED, NOT_AUTHORIZED, REPORT, MISSING_REQUEST_FIELD, INVALID_INPUT and nothing else -- the token NOT_READY does not occur",
+      "exactly TWO events carry a public_reason_code, and both are census arms: 08:12:47.288Z operation analysis-input-upload code NOT_AUTHORIZED (corr-81d4c714ebf8), and 08:14:05.686Z operation analysis-requests code INVALID_INPUT with internal MISSING_REQUEST_FIELD (corr-193f487e4169)",
+      "the journey ticket TCK-20261011-61631267 has created_at 2026-10-11T08:14:27.233Z, and hop (d) necessarily follows hops (b) and (c) -- so BOTH reason-bearing events precede hop (d), whichever invocation served it; the conclusion does not depend on identifying that invocation, which matters because the trace records no correlation id for hop (d)",
+      "for completeness, the only invocation in the group after the ticket's creation is START 08:14:32.028Z / END 08:14:37.587Z, 5558 ms, the longest in the window, and it logged neither an irpt_error nor an irpt_internal line"
+    ]
+  },
+  "spec_asserts": "TO-RUN-R2-tr1 AMENDMENT 2 @f0d4c2db95 defines branch E as a RESULT whose handling is to 'record the served code, read the service's own refusal reason from /aws/lambda/irpt-ycharts-generate for that minute (tokens only), no retry, no second submission'; CTO half AMENDMENT 3 part 1 restates it as 'the refusal's reason token is read from the service log and stated'.",
+  "world_is": "The served code is recorded (NOT_READY, HTTP 200, a public-code shape) and the no-retry rule was honoured, but the second half of the instruction has nothing to read. For the refusals the service DOES log, the pattern is an irpt_error event carrying operation and public_reason_code, as both census arms show; hop (d) produced no such event. So on this surface a refusal that logs its reason and one that does not are indistinguishable, and the served code is the only available account of why the submission was refused. This is the third instrument in this pair whose evidence the condition written against it cannot produce -- after the zero-call control and the WE_CLIENT_SENT recipient -- and unlike those two it was not foreseeable from the tree, because the service's own refusal path was assumed to log uniformly. Worth separating: NOT_READY is a DIFFERENT refusal from run 2's INVALID_INPUT, so the per-run idempotency token the amendment shipped did work and the CHANGED_INPUTS_SAME_REQUEST_ID collision is gone; what replaced it is unexplained from the log.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No retry, no second submission, no widening -- the pair forbids all three and none was done. No act proposed and none available to this seat: reading why the submission is NOT_READY needs either the handler's source for that path or a reason on the log line, and neither is in this order's <paths>. There is no fourth run under this half (CTO AMENDMENT 3 part 1: 'If run 3 stops short of hop (g), the next act is the round's slug, not another GO'), so this row is input to the round's slug rather than to another attempt. Companions, both of which CLOSE on run 3: [[TCKT_VNEXT-D2-S29]] -- the zero-call read now reads ZERO_CALLS_PROVEN (NO_INVOCATION_IN_WINDOW) with the CTO's two conditions printed; [[TCKT_VNEXT-D2-S30]] -- condition 3 met on the agreed basis of the code read plus per-ticket WE_CLIENT_* counts, with no recipient inferred. [[TCKT_VNEXT-D2-S31]] closed when branch E was added."
+}
+```
