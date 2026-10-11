@@ -501,3 +501,30 @@
   "notes": "The generator output is committed-candidate bytes, not hand-edited. A CTO or CloudOps ruling decides whether the committed locals are regenerated in a separate commit. No apply or plan was run."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W9-S7",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~9",
+  "surfaced_at": "2026-10-11T04:05:46Z",
+  "one_line": "The runner-code SHIP claim for data/mdpf/config/ and data/mdpf/scripts/ is measured from the dispatch sync lines, but nothing in the repo copies the repo tree to the runner's code/ prefix: the copy is a hand step, so the new Stage-0 config reaches the runner only when someone syncs it. Plane not widened; the claim is the measured sync.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (with CloudOps): hand-sync data/mdpf/config/bronze_homes.json to s3://opal-data-mdpf/code/config/ and data/mdpf/scripts/ to code/scripts/ before the first post-deploy daily run",
+  "spec_asserts": "TO CN-c-2 amendment 3, S5: classify data/mdpf/config/ and data/mdpf/scripts/ as SHIP on a runner-code plane, MEASURED from infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh :125 and :130; if the measured sync differs from the plane (for example, nothing automated copies the repo dir to code/), file a row and do not widen the plane.",
+  "world_is": "The measured sync is real (dispatch :125 'aws s3 sync s3://${MDPF_BUCKET}/${CODE_PREFIX}/scripts/', :130 the same for config/, CODE_PREFIX=\"code\", MDPF_BUCKET=\"opal-data-mdpf\"), and the plane is classified SHIP runner-code in targets (rc=0). But no tracked script writes the code/ prefix: a grep of .tools/ and infra/aws/ec2/ for 's3 sync' finds only the runner's reads (dispatch :125, :130, mdpf-dim-backfill-20260729.sh :41, mdpf-catchup-etlfix-ws3.sh :40) and a comment in .tools/safe_deploy_core.py :85. infra/aws/terraform/mdpf-pipeline/iam.tf :196 says the code/ prefix is about 20 commits behind HEAD. The new script raises when /opt/mdpf/config/bronze_homes.json is missing (no fallback, by spec), so a script deployed without its config sync fails Stage 0 of the daily chain.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:28-29, :125, :130 (read; CODE_PREFIX and MDPF_BUCKET assignments and the two sync lines)",
+      "python lib/opal_naming.py targets, worktree C:/Dev/wk-canon-9 at 4d304235d5 plus uncommitted, 2026-10-11T04:05Z: 'SHIP runner-code data/mdpf/config/bronze_homes.json ... :130', TARGETS 14, rc=0",
+      "Native grep of .tools/ and infra/aws/ec2/ for 's3 sync' (no repo writer of the code/ prefix), 2026-10-11T04:05Z",
+      "infra/aws/terraform/mdpf-pipeline/iam.tf:196 (read; the code/ prefix is about 20 commits behind HEAD)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The plane claim stays as the runner's own sync list says (the order forbids widening it). Whether the repo-to-code copy should be automated is a CTO or CloudOps ruling; this row does not propose the mechanism. The ARMED hazard is the missing config sync at deploy, not the classification."
+}
+```
