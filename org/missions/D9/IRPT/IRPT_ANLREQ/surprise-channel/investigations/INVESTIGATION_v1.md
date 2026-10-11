@@ -1927,3 +1927,29 @@
   "notes": "PARKED PRECONDITION, on the project's channel so the seat that cuts I3 meets it in the order it writes, not in another seat's notes. Un-parks when the attach release is live and reads a consumed commentary_ready. Row S26's message is not drained by release 4."
 }
 ```
+
+## IRPT_ANLREQ-D2-S31 -- the ycharts/generate suite is order-dependent: 34 custody tests fail only inside the full run
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S31",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T06:42:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "The ycharts/generate test suite is order-dependent: 34 custody tests pass alone and fail inside the full run, on the base and on the release 4 pin alike",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED on dell2, 2026-10-11 06:37Z-06:45Z, Python 3.14.7, PyMuPDF 1.27.1: `python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests -q` ends 2 failed, 32 errors on box/dell2 @fe28500304 (461 passed) and on the release 4 pin eb72753aad (462 passed). All 34 are in test_custody_entry.py (2) and test_custody_retained.py (32, KeyError: 'data'). The same two files run ALONE pass 42 of 42 (2 skipped) on both trees. Evidence: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/release4/FITZ_LEGS_PIN_eb72753aad_20261011.md."
+    ]
+  },
+  "notes": "INERT for release 4: the base fails the same 34 without the release's change. A full-suite rc of 1 cannot be read as a release failure, nor a green subset as the suite passing. Which earlier test leaves the state is not established. The suite's files are workstream Y's.",
+  "spec_asserts": "HANDOVER.md (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/release390/): the whole ycharts/generate/tests passes before the build ships; the original commit ran 403 passed / 30 skipped on the laptop.",
+  "world_is": "MEASURED on dell2, 2026-10-11 06:37Z-06:45Z, Python 3.14.7, PyMuPDF 1.27.1: `python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests -q` ends 2 failed, 32 errors on box/dell2 @fe28500304 (461 passed) and on the release 4 pin eb72753aad (462 passed). All 34 are in test_custody_entry.py (2) and test_custody_retained.py (32, KeyError: 'data'). The same two files run ALONE pass 42 of 42 (2 skipped) on both trees. Evidence: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/release4/FITZ_LEGS_PIN_eb72753aad_20261011.md."
+}
+```
