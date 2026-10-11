@@ -24763,3 +24763,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Ruled by the issuer inside its own decomposition: ff-1 AMENDMENT 3 (the helper _rank_series_names, check arms D10-D12, census arm C4) rides the one redeploy under ff-4's pair. The sector of the two names (the table row's other fields) stays unmoved and is stated in the pair."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S26",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-11T14:21:40Z",
+  "one_line": "The classification the page serves for CSL_AU_Equity (sub-asset class 'US Large Cap', sector null) is Carlisle's, the same bare-ticker collision as the name; the name redeploy does not move it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "CTO round-93 analysis item 1 states the classification sector of the two names is the same table's row and is NOT moved by that cell (stated in the pair).",
+  "world_is": "Read 2026-10-11 ~14:2xZ on the live function (SOzAz9/gfKE..): the rank timeseries and the ranked join serve `classification` for ticker `CSL AU` as {asset_class equity, sub_asset_class 'US Large Cap', sector null, sector_reason 'the classification's sub-asset class is not one of the 11 GICS sectors'} from the etf-classifications row keyed by the bare ticker `CSL`, whose name is 'Carlisle Cos Inc'. `SAN FP` serves 'Health Care' (equity) from the row keyed `SAN`, whose name reads 'Banco Santander S.A. ADR'. After the AMGT-ff-4 redeploy the NAME of both is the registered company's and CSL's classification is still another company's. The overlay and header sector for CSL read from this object.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the issuer's live Lambda invoke of /lead-panel/timeseries/TRENDING/PRICE?tickers=SAN FP,CSL AU at 14:2xZ: series classification objects as above"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not in ff-1's cell (a name rule). The repair belongs to the CTO's round-94 analysis: a classification served for a security whose registered name disagrees with the table row's name must not be served as that security's (the same names_disagree test over the same two names), with its reason; the table's row itself is a data owner's repair (MDPF_SECCLASS), not this project's."
+}
+```

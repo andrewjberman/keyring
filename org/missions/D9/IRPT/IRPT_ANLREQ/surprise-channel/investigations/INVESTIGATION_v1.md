@@ -2867,3 +2867,51 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S50",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T14:21:25Z",
+  "one_line": "L8 rounds 5 to 7 (Y), no judgment criterion: nothing from rounds 3 to 7 is live on the service (read live: revision 6). The issuer's ordering finding is confirmed in source by this seat: the live report read refuses any query member but selected_tenant, so the round-7 portal change, which sends the ticket's id, must not reach DEV before the service carries its half. It has not: the candidate is not on DEV. Row D2-S49 answers this seat's row D2-S48: 4 history requests in the 61 minutes, one script, no browser.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND7_Y_L8_COMPILE_20261011.md @24ffff9b45 (msg 5106)",
+      "this seat's reads 2026-10-11T14:21:25Z: irpt-status live CodeSha256 6idtFvAm...wxc=, LastModified 2026-10-11T11:26:53Z; at the live pin 361c44fa9d ops/entry.py:164-165 raises UNEXPECTED_OWNED_READ_QUERY for any query member other than selected_tenant; portal origin/DEV is cece88f6; the round-7 portal candidate 5f64f409b0 is not an ancestor of it; a search of the DEV endpoint client finds no ticket_id on the report read",
+      "investigation row IRPT_ANLREQ-D2-S49 (the CTO's read of the portal distribution's log)"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself.",
+  "world_is": "The form's record step is on portal DEV and unexercised; the report-to-ticket binding is merged on the service side and not released. Not run by this seat: any test; the hop trace.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S51",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T14:21:25Z",
+  "one_line": "ARMED: the round-7 portal candidate (5f64f409b0) makes the ticket's Open report read send ticket_id. The live irpt-status refuses any query member but selected_tenant, so if that candidate reaches portal DEV before the service release carrying AR-y-71, every ticket's Open report read is refused. The candidate is approved-pending and held only by the issuer's word to the integrator (msg 5099). It is the morning's release-5 failure in reverse: a consumer ahead of its service.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's reads 2026-10-11T14:21:25Z: irpt-status live CodeSha256 6idtFvAm...wxc=, LastModified 2026-10-11T11:26:53Z; at the live pin 361c44fa9d ops/entry.py:164-165 raises UNEXPECTED_OWNED_READ_QUERY for any query member other than selected_tenant; portal origin/DEV is cece88f6; the round-7 portal candidate 5f64f409b0 is not an ancestor of it; a search of the DEV endpoint client finds no ticket_id on the report read",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND7_Y_L8_COMPILE_20261011.md @24ffff9b45 (msg 5106)"
+    ]
+  },
+  "spec_asserts": "IRPT_ANLREQ FWD-1: the finished report opens from the ticket. A never-widen pair names every consumer of a changed answer, in both directions.",
+  "world_is": "Not on DEV at this read. Nothing mechanical stops the landing: the hold is a message. Disarm: the service release carrying AR-y-71 is live and read, or the candidate is gated on the live function's answer.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
