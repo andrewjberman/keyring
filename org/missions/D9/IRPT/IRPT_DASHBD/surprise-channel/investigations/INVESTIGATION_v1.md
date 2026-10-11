@@ -5649,3 +5649,85 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W93-S1 -- DB-b-118: the six threshold-claim columns make the dim_return_method contract (0.3.0) and its round-10 check disagree with the producer's row
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W93-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~93",
+  "surfaced_at": "2026-10-11T04:54:00Z",
+  "one_line": "DB-b-118: emit_method_row now emits six more columns (five <value>_claim plus threshold_claims_source) that org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json (0.3.0) does not declare, and the round-10 check p10_1_ac1 equates the contract's columns to the row literal's keys, so it now fails.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the issuer lands a contract bump in org/standards, outside this order's <paths>; the check pins version 0.3.0 and is re-pinned or retired with it)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r10/p10_1_ac1_method_contract_matches_row.py:48-53 (cols != keys -> fail), read at the cited lines",
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json:2 (contract_version 0.3.0) and :12 (columns), read at the cited lines",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py emit_method_row row literal, six added keys (threshold_claims_of, TO-DB-b-118)",
+      "the other readers of dim_return_method found (107 files carry the term; 246 hits in 68,573 scanned) do not read the row's column set: p1_1_ac1 needs a subset of contract columns, p1_3_ac2 reads flow_convention of the served row, p2_prewindow lists keys; reporting-publish reads method_version from the returns rows"
+    ]
+  },
+  "spec_asserts": "The order: emit_method_row writes the claims, with a known-cost note that the contract is outside the grant; hiding the new keys from the literal to keep the check green was not an option.",
+  "world_is": "The contract declares the row's earlier columns; the producer's row literal now has six more keys. The contract is not bumped, the served schema_hash pin in it will not match a landed row 3, and p10_1_ac1 reports contract-only/row-only differences. No served object moved.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W93-S2 -- DB-b-118: an all-absent threshold row lands the five value columns as null-typed parquet columns
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W93-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~93",
+  "surfaced_at": "2026-10-11T04:55:00Z",
+  "one_line": "DB-b-118: emit_method_row builds the parquet with pa.Table.from_pydict({k: [v]}), so a null threshold value types its column as arrow null, not double; the row ADVI_COTBKF writes for Cottonwood (five values absent) would land five null-typed columns, as tieout_tolerance_proposed already does when no --tieout is passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the producer's table build for the method row is this lane's; the typing of the five columns is decided in the Cottonwood write's own pair, not here)",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py emit_method_row: table = pa.Table.from_pydict({k: [v] for k, v in row.items()}), unchanged by this order",
+      "this seat's own call pa.Table.from_pydict({'a':[None],'b':['absent']}).schema.types -> [DataType(null), DataType(string)]",
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json:175 (schema_hash_provenance already records that a null tieout column changes the hash)",
+      "NOT established: whether any reader of the landed parquet (a Glue/Athena table, the contract's hash check) mishandles a null-typed column; no object was read or written"
+    ]
+  },
+  "spec_asserts": "The order: a row written from thresholds whose five claims are absent with null values states that; nothing about the parquet type of a null value.",
+  "world_is": "The row dict is correct (claims 'absent', values null) and the unit test shows it. The arrow type of the five value columns for that case is null, which this order did not change and which the contract's double-typed hash does not describe.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W93-S3 -- DB-b-118: the contract lists method rows 1 and 2 while METHOD_ROWS holds row 3
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W93-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~93",
+  "surfaced_at": "2026-10-11T05:30:00Z",
+  "one_line": "DB-b-118 AMENDMENT 1: the dim_return_method contract's method_versions lists rows 1 and 2, while the producer's METHOD_ROWS holds rows 2 and 3 (row 3 from DB-b-102); the contract at 0.4.0 does not list row 3, as ordered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:115 METHOD_ROWS, read by importing the module: keys [2, 3]",
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json method_versions: method_version 1 (landed 2026-10-01) and 2; no 3",
+      "AMENDMENT 1 item 2 of IRPT_DASHBD.TO-DB-b-118 orders row 3 not added here and this one row filed"
+    ]
+  },
+  "spec_asserts": "The contract's method_versions enumerates the method versions the producer can write.",
+  "world_is": "The contract lists versions 1 and 2; the producer's METHOD_ROWS writes 2 and 3 (version 1 is the landed legacy row, no longer in METHOD_ROWS). A reader taking method_versions as the set of rows a producer can emit misses row 3. Inert: no row 3 is written by this order, and ADVI_COTBKF writes it under its own pair.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
