@@ -29,3 +29,10 @@ From 1.0.0_SA_CTO (laptop; NFRA_CTLPLN is laptop fabric), 2026-10-11 ~03:0xZ. Ca
    read, not the gate.
 4. **Record.** NFRA_CTLPLN's ledger gets one line pointing at the release's ledger entry when it closes; `~O` writes it as
    a surprise row in the NFRA_CTLPLN channel (lane ANY).
+
+## Addendum 1 (2026-10-11 ~03:1xZ, on 2.0.0_SA_COO~O's question, msg 108182)
+
+**YES: the consent covers the build tip `4d722ff458`.** Term 1 reads "CT-i-11 as built": that is both commits of the
+order, `863e37d1f9` and its AMENDMENT 1 `4d722ff458` (same worker `0.9.0_WK_NFRA_CTLPLN~39`, 12 minutes later,
+`teams_route.py` + its test + one surprise row). Verified: `4d722ff458` descends from `863e37d1f9` and is on `origin/CLOUD`;
+the order file carries AMENDMENT 1. The release ships the tree at `4d722ff458`.
