@@ -148,6 +148,7 @@ ISSUED 2026-10-10 ~23:4xZ in round 9's ONE issuance, from `ledger/ROUND_ANALYSIS
 
 <status>issued</status>
 <status>pending</status>
+<status>complete</status>
 <round>9</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
