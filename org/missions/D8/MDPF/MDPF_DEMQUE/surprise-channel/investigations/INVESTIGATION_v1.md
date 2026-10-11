@@ -864,6 +864,26 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/mdpf/scripts/demque/test_demque_quote_remaining.py test_complete_row_closes_the_request_and_sets_the_drawn_date (r-done ON_TIME on the finish day, r-late LATE)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S12",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-11T16:00:23Z",
+    "one_line": "Three of the 14 rejected names (FTHSX 40.7 pct, PFORX 42.9, RPIFX 39.2) are classed wrong-symbol by the cause rule, and FTHSX and PFORX are held by 4 and 11 accounts in the positions snapshot -- a client page may value those holdings with a possibly wrong security's prices.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "ROUND_ANALYSIS.round8.md R2: the near-40 pct names are read for whether any client page values a holding with them; if one does, that is a BLOCKING row to the CTO BEFORE any page change (a PROD change to a client-facing page waits on Andrew's word).",
+    "world_is": "2026-10-11 ~16:0xZ: lock_cause.py over the 14 (ROUND9_LOCK_CAUSE_14.md): agreement old == new for every name; RPIFX 39.2, FTHSX 40.7, PFORX 42.9 (all Mutual Fund, 513 to 651 trade dates) class wrong-symbol (both below 60). silver/positions/date=2026-06-23 (the only partition, AsOfDate 2026-06-23): FTHSX 4 accounts, PFORX 11 accounts, RPIFX 0, Account_Status 0 on every row. Whether a client page values those positions through these price files was NOT traced; the three names serve unchanged with claim held and this reason. No page was changed.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/ROUND9_LOCK_CAUSE_14.md",
+        "boto3 + pyarrow read of silver/positions/date=2026-06-23/part-00000.parquet, Cusip in (14064D865, 693390882, 77958B402) (this seat, 2026-10-11)"
+      ]
+    }
   }
 ]
 ```
