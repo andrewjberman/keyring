@@ -1850,3 +1850,32 @@ write: **1 row** (`S1`).
   }
 ]
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-f-8, phase B, step 0 gate)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S11",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-11T07:36:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-8 step 0 STOPS: shared-advisor-router/tier_policy.mjs, which the router bundles, reads 19 non-ASCII bytes (10 chars, all on comment lines); neither pair half names that file and the order's gate reads 'router and guard sources must read 0 non-ASCII bytes'.",
+  "spec_asserts": "TO-FB-f-8 section 1a step 0: the repository's router and guard sources must read 0 non-ASCII bytes (FB-f-8 phase A merged); if any is not so, STOP, a BLOCKING row, no write to AWS. The CTO half's precondition names two hand-written files (the router and guard index.mjs) and accepts the generated _shared/firm-config.mjs as is.",
+  "world_is": "At HEAD (59fa47b54b): infra/aws/lambda-edge/shared-advisor-router/index.mjs 0 bytes, shared-advisor-router-response/index.mjs 0 bytes (phase A holds). infra/aws/lambda-edge/shared-advisor-router/tier_policy.mjs, imported by the router at index.mjs line 83, reads 10 characters / 19 bytes above 127 on lines 2, 4, 6, 9, 10, 11, 12, 39, 42, 54, every one inside a comment (em dash, arrow, section sign). It was last touched by 1c76daba93 (ADVI_ROLGAT.DT1) and no phase-A commit reached it. A local bun build --minify of each entry (same flags as build-nodejs-lambda.sh, no upload) reads router 7509 bytes with 0 non-ASCII and guard 3538 bytes with 0 non-ASCII, so the DEPLOYED artifact is all-ASCII either way; only the SOURCE reading of the step 0 gate fails.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/lambda-edge/shared-advisor-router/tier_policy.mjs decoded as utf-8: bytes 2451, byte_delta 19, chars 10, lines [2,4,6,9,10,11,12,39,42,54]",
+      "git show HEAD:infra/aws/lambda-edge/shared-advisor-router/index.mjs and ...-response/index.mjs: byte_delta 0 each; _shared/firm-config.mjs byte_delta 9, chars 5, lines [7,10,11,14,15] (the CTO half's accepted generated file)",
+      "infra/aws/lambda-edge/shared-advisor-router/index.mjs:83 import { requiredTierForUri, canAccess } from ./tier_policy.mjs",
+      "bun build --target=node --format=esm --minify --external @aws-sdk/client-sns, outfile in the session scratchpad: router.mjs 7509 bytes non_ascii 0, guard.mjs 3538 bytes non_ascii 0",
+      "infra/aws/lambda/ci/build-nodejs-lambda.sh lines 276-281 bundle with --minify"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the call: the issuer 2.0.0_SA_COO~B1 (it owns the order's criteria and its gate text); the CTO half's precondition is the CTO's to restate if the issuer reads it as covering comment-only characters. Two clean exits: (a) the issuer amends step 0 to read the BUNDLED artifact (0 non-ASCII bytes, measured above) and states that tier_policy.mjs and firm-config.mjs ship as comment-only exceptions; or (b) a cell makes tier_policy.mjs all-ASCII in one commit (comment edits, no decision moves; the file is outside this order's <paths>). This seat took no AWS write, opened no ledger entry and built no artifact; the order stays pending. Local scratch only: the two minified bundles in the session scratchpad."
+}
+```
