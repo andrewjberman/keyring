@@ -6,7 +6,9 @@ A5-r6 fix (commit the renamed `.tf` first, then import, then drain the same sess
 `deliverables/0.7.0_AE_CloudOps~IR/round6/PLAN_SURVEY_family_e.md` @`8361e51c56` (drained @`f219486b2a`), with
 `portfolio-management/zz_adopt_family_e.tf.proposed` and `news-pipeline/zz_adopt_row3.tf.proposed` at the same commit |
 **The other half:** `1.0.0_SA_CTO~Z`, `ledger/NEVER_WIDEN_ROUND6_W-3_CTO_HALF.md`. No PHASE B GO until both halves are
-files, AND w-2's PHASE B has landed (DECOMP_R6 section 4; plan order).
+files. (Originally also: AND w-2's PHASE B has landed, by plan order. RELEASED by A7-r6 2026-10-11, row Z-S36: w-2 PHASE B
+is held on the sovereign R20 call of row Z-S34, and portfolio-management / news-pipeline share no state with bd-pipeline.
+The blast radius signed below is unchanged.)
 
 **Verdict:** SIGNED for the two blast radii below, each on its own, and ONLY them. **The two modules write DIFFERENT
 tag sets (survey section 2): THREE keys on row 11, FOUR on row 3.** Neither number carries to the other module.

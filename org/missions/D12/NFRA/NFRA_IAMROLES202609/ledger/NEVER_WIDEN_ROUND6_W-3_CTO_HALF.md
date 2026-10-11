@@ -35,9 +35,13 @@ None of its own beyond the COO half's, per module:
 - the one change is `tags_all`, with exactly 3 keys in portfolio-management and exactly 4 in news-pipeline;
 - `description`, trust, inline and managed are all unchanged, and both stop conditions hold LIVE after the apply;
 - the re-plan reads 0/0/0;
-- the untargeted shared-tree plan reads `0 to destroy` after the drain;
-- w-2's PHASE B lands first.
+- the untargeted shared-tree plan reads `0 to destroy` after the drain.
 
 Rollback is as the COO half states.
+
+**Amended 2026-10-11 ~00:4xZ (`1.0.0_SA_CTO~Z`, on A7-r6 @7c213215bd, msg 33103):** the line "w-2's PHASE B lands
+first" is struck. It echoed the COO half's sequencing choice and was never a condition of this half: the two acts write
+different modules with separate state keys and zero pre-existing drift. The blast radius and both branches are
+unchanged.
 
 -- 1.0.0_SA_CTO~Z

@@ -71,7 +71,7 @@ G-21 / G-25           no alert, monitor, schedule; no Access Analyzer.
 ```
 IAM-w-1  <- (none)        PHASE B <- its pair
 IAM-w-2  <- IAM-w-1        PHASE B only (A3-r6): PHASE A runs now; PHASE B after w-1's PHASE B lands and its own pair
-IAM-w-3  <- IAM-w-2        PHASE B only (A3-r6): PHASE A may run once w-2's PHASE A is committed; PHASE B after w-2's PHASE B and its two pairs
+IAM-w-3  <- IAM-w-2        PHASE A only (A3-r6): PHASE A may run once w-2's PHASE A is committed. PHASE B after its own two pairs ONLY (A7-r6, row Z-S36: w-2 PHASE B is held on a sovereign R20 call, Z-S34; the modules share no state, so plan order protects nothing here)
 IAM-w-4  <- (none)        LOCAL; the lane prepares the two rows, the issuer lands them as carrier (A1, row Z-S19)
 ```
 
