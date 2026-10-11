@@ -4213,3 +4213,31 @@
   "notes": "BLOCKING for FWD-1's grade, not armed: nothing served is wrong, a page refuses. The split being one layer in is a separate page question for the reviewer against FWD-1's words. Owner of the next act: 1.0.0_SA_CTO~DELL2 at the next analysis (which project's cell serves the firm's returns to the Performance tab)."
 }
 ```
+
+## DSGN_IRPTV1-D2-W51-S1 -- the page already binds the reporting reads to the picked client's firm; the reporting-read function is one-firm (49financial), so a Cottonwood client is refused FIRM_BINDING
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W51-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~51",
+  "surfaced_at": "2026-10-11T08:05:00Z",
+  "one_line": "The premise of TO-IV-e-93 does not hold at the walked commit: the page DOES bind the reporting summary and manifest requests to the picked client's own firm (selected_tenant=<firm tenant>); the FIRM_BINDING comes from the reporting-read function's ONE-firm bucket map (49financial only), at served.py:1214.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@ab697ba120a6452bdcb634038d8114b88f18e4a9 src/pages/InvestorReporting/dashboard/reportingRead.ts:27,133,85; tabs/reporting/ReportingTab.tsx:537,581,586,626; index.tsx:232; contracts/directory-context.ts:82 (read by content with git show)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1207-1214 and _authz/loaders.py:59-69 at 19e6e9faa9",
+      "infra/aws/terraform/investor-reporting/reporting-read/locals.tf:35-38,57-59 and lambda.tf:49 (one firm) against holdings/lambda.tf:38-41,86 (every enabled client firm) at 19e6e9faa9",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~51/FIRM_BINDING_PLACED.json; the wire itself and the deployed environment variable were not observed (no live call)"
+    ]
+  },
+  "spec_asserts": "TO-IV-e-93 and CTO msg 4427 assume the walk left the firm selector at Global (All) and that the page may be sending the reporting reads bound to no single firm, which would be the page's defect. IRPT_DASHBD_PRD.md:118-122 (FWD-11) and DSGN_IRPTV1_PRD.md:44-47 (FWD-1) assume a Cottonwood account reads the same reporting as a 49 Financial account.",
+  "world_is": "By code at the walked commit the page sends selected_tenant=<the picked client's firm tenant> on the manifest, series and summary requests, the same firm word it sends on holdings and the directory browse. The reporting-read function accepts one firm (49financial); the Cottonwood tenant is not in its IRPT_DIRECTORY_BUCKET_MAP and is refused FIRM_BINDING before any storage read. A fix on the page side would change nothing; the service-side coverage of Cottonwood is the open act (a defect against FWD-11, or FWD-11 not yet built for the reading route: the CTO names which). Not measured: the deployed environment variable, the wire query string, and whether Cottonwood platinum reporting files are published (each named in the record with the one read that measures it).",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the next act: 1.0.0_SA_CTO~DELL2 at the round analysis (which project's cell widens reporting-read to the Cottonwood firm: IRPT_DASHBD FWD-11 or IRPT_BCKEND). Related, not duplicated: DSGN_IRPTV1-D2-S7 (the walk's break) and the OBJECT_NOT_COVERED vendor gate placed by 2.0.0_SA_COO~P2."
+}
+```
