@@ -50,6 +50,14 @@ inflection 1). The 49financial history reads answer FIRM_BINDING or NOT_FOUND on
 
 ---
 
+**AMENDMENT 1 (@f4176d55a2) and the root fix (@e678c59c59), 11:0xZ.** The issuer fixed `apply5_checks.py` line 52 to `parents[9]`; the
+criterion now prints `APPLY5-READS-OK` run verbatim, no `--root`. Added `reads.R2.section_unit_read` over the 14 READY reports: 988
+sections, units pct 513 / number 224 / ratio 102 / chart 51 / count 46 / years 22 / score 15 / price 15 (sum 988); value types number
+937, string 0, null 51 (the 51 chart sections); the percent unit is `pct`: 88 values with abs below 1 (includes any zero), 425 with abs
+1 or more. Counts and unit strings only. The proof instance records the verbatim invocation and the amended order's vintage.
+
+---
+
 ## Decisions Made
 
 | Decision | Rationale |
