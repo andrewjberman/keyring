@@ -92,6 +92,13 @@ reads correctly at HEAD; it is the ordinary concurrent-agent contamination class
   `cce1bd67b6`) because other seats commit to the shared tree, and `build.sh` copies from the WORKING TREE, not from
   git. Capturing HEAD immediately before the build, re-reading it after, and re-running the 10-member diff at that
   exact HEAD is what makes "built from the pin" a measurement.
+- **Failed, mine, fixed in-session.** Appending the surprise row with python's `Path.write_text` rewrote the whole
+  channel file to CRLF, so commit `4be4ae8aff` read as `4157 ++++----` instead of a 27-line append (parent blob: 2065
+  bare LF, 0 CRLF; committed blob: 2092 CRLF, 0 bare LF). Restored to LF-only in the follow-up commit, after which the
+  diff against `4be4ae8aff~1` is exactly 27 insertions and 0 deletions. This is the already-recorded line-endings
+  class in this channel's own `ROWS_FROM_LAPTOP_COMM_ASSIST_TRANSCRIPTS_PULL_LINE_ENDINGS_20261008.md`, so it is
+  logged here rather than re-filed as a row. The lesson for the next append: write the channel in binary, or pass
+  `newline=""`.
 - **Failed, twice, harmlessly.** A `python -c` reading `/tmp/...` returned `FileNotFoundError` while MSYS tools read
   the same path fine: Git Bash's `/tmp` and Windows python's `/tmp` are different directories. Everything moved to the
   session scratchpad with an explicit `C:/...` path for python. Separately, a `find`-based census was denied by the
