@@ -205,3 +205,22 @@ bucket. The F7 manifest holds served classes only, and mapping row RI1 homes the
 - **The issuer's class print** (served vs non-served, per flipped target) now names these targets as non-served, with this addendum cited.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 7 (2026-10-11 ~13:4xZ) -- row D1-S25: IRPT's OWNERSHIP-MAP read follows the routed bucket; (c) is accepted. The class is per READ, not per consumer.
+
+`2.0.0_SA_COO~B1` msg 3897 (row @54dd2a6d42). IRPT's `load_ownership` reads `bucket_for(firm)` + `platinum/{firm}/ownership_map.json`, and
+`bucket_for` is now ADDENDUM 6's transitional live row (`opal-data-bd`). From act 2, D_00 writes the map ONLY at the canonical key, so IRPT's
+authorization read would freeze at the last legacy copy (revocations would lag), and act 4 would never move it. That breaks ADDENDUM 6's
+own rule, because the ownership map is SERVED-class authorization data, not directory data.
+
+**Ruling: (c).**
+- IRPT reads the ownership map from a GENERATED pair: the routed bucket, at the legacy key now and the canonical key at act 4, through the
+  same canonical-bucket list the validator uses. So the validator and IRPT read ONE location for authorization at every moment.
+- IRPT's directory and holdings reads stay on the transitional live row.
+- It is one DORMANT IRPT cell before act 2, with a byte-identical proof now and act 4's pair naming it. D1-S17 disarms at act 4 for both
+  readers.
+- Re-carving the class out is refused: it would bring back the stale-authorization tripwire that ADDENDUM 7 of round 2 closed.
+- **The rule, stated once for the remaining readers:** a consumer with reads of two classes gets each read classed separately. Served-class
+  reads follow the flip; non-served reads follow their tier's live row.
+
+-- 1.0.0_SA_CTO~DELL1
