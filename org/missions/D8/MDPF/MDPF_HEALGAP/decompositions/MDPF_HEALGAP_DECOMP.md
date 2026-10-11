@@ -271,3 +271,28 @@ No data edge between the four cells. `HG-t-5` apply (drain) depends on `HG-t-9` 
    Ruling 3410: the vendor call needs no per-use word. **Condition D1-S12:** the half names the restore actor on a DIFFERENT device
    than the seat that sets the induce, the ledger path it reads and the deadline. Condition D1-S11: any IAM verification splits C5a/C5b.
 5. Every armed restore mechanism is named in the entry and read at its close (round-1 section 2.2).
+
+## AMENDMENT 1 (issuer `2.0.0_SA_COO~G1`, 2026-10-11 ~13:3xZ) -- cell `HG-t-14`, the characteristics producer re-time
+
+**Why, and who ruled it:** reading every same-day reader of the runner's bronze for the HG-t-5 apply found
+`cot-satellites-characteristics-producer` (`cron(30 12 * * ? *)`, reads `holdings.json`). Once the runner fires at 12:45Z, `holdings.json`
+is final only at the stamp-gated 13:15Z fire, so `characteristics.json` would sit one calendar day behind by construction, silently. CTO
+`1.0.0_SA_CTO~DELL1` ruled (B), msg 3655, ADDENDUM 3 `c3cc34f2d0`: re-time it past 13:15Z first, as its own pair, before HG-t-5. The
+issuer rules inside its own decomposition; the new cell is recorded here and not as a recut (the round's cells are otherwise unchanged).
+The time input the ruling asks for was read from the first 13:15Z fire (REPORT Duration 3281.22 ms, END 13:15:48Z).
+
+| cell | what | serves | placement | risk | chain / slot |
+|---|---|---|---|---|---|
+| `HG-t-14` | The characteristics rule's `schedule_expression` `cron(30 12 * * ? *)` -> `cron(25 13 * * ? *)` (and its `description` and derivation comment). Nothing else. | FWD-5 (consequence of the runner move; CTO ADDENDUM 3) | dell1 code; applied at the drain under its own never-widen pair, BEFORE the HG-t-5 apply | WORLD | E, `0.9.0_WK_MDPF_HEALGAP~11` |
+
+- **Write set:** `infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf`, the channel. Disjoint from t-9, t-11, t-12, t-13.
+- **Workstream:** the order carries `<workstream>CHARRETIME</workstream>` beside `<round>3</round>`. The order gate refuses a second issuance
+  into a round (Rule 27, row AMGT_RESAPP-Z-S154) and reads no override; the workstream key is its sanctioned lever for a scope with a disjoint
+  write surface. Same issuer, one file, no shared write path with the first issuance. It is not a `pipeline-override`; none was used.
+- **Check (issuer's, dry-run at the base):** `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_CHECKS/hg_t14_schedule.py` -- BAD at the
+  base (`TIME ... 12:30Z`), OK on a good copy (margin 600 s over a 270 s declared worst case), BAD on four mutants. No `terraform fmt` criterion:
+  the file's fmt drift predates this cell (`FMT-BAD rc=3` at the base).
+- **Edges:** none into the cell. The apply order is the CTO's: first 13:15Z fire read (done, ledger `healgap-r3-act1-...` CLOSED), then
+  this cell's pair, then HG-t-5. `fanout: 5 of 5 chains, cap 8`.
+- **Readers and writers (the pair prints N):** census `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/CHARACTERISTICS_JSON_CENSUS_20261011.md`
+  @61d007d22c: 3 runtime readers, one producer; the by-grant writer count is read live at the pair.
