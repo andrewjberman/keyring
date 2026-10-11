@@ -391,15 +391,15 @@ This slug lands under the gate's audited override, citing that clause.
     "owner": "2.0.0_SA_COO~D",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~D",
       "round": "v3"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~D",
-      "at": null
+      "at": "2026-10-11T06:41:10Z"
     }
   },
   {
@@ -472,15 +472,15 @@ This slug lands under the gate's audited override, citing that clause.
     "owner": "2.0.0_SA_COO~D",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~D",
       "round": "v3"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO",
-      "at": null
+      "at": "2026-10-11T06:41:10Z"
     }
   },
   {
