@@ -1978,3 +1978,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-11T07:25:00Z",
+  "one_line": "AR-y-35 step 4 STOP: AnalysisRequestFields is mounted in portal TicketCenter.tsx:406 (outside the order's paths), and TicketCenter holds no list of the firms the caller's profile allows; the only served list lives in Investor Reporting page state behind a live resolveDirectoryContext call. Nothing built.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:406-413 (portal branch wk-IRPT_ANLREQ-51-portal @eb735c6c): the only mount of AnalysisRequestFields; passes form, onChange, onFile, fileName, disabled, models. Holds analysisForm.firm as typed text (:198 catalogueFirm = analysisForm.firm.trim()) and no list of firms. Not in the order's paths.",
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx (in paths): the Firm input and answersFromForm; holds no firm list, receives none.",
+      "portal/src/contexts/AuthContext.tsx:36,818-823 and AuthContext.context.ts:32: claims carry one firmId (opal-capital for internal users) and canAccessFirm(firmId) returns true for any firm for an internal caller; there is no list of allowed firms.",
+      "portal/src/pages/InvestorReporting/header/firm.ts:1-60 (firmOptions, selectableFirmIds) and contracts/adapt.ts:713-718: the served list is ResolvedScope.permittedFirms, adapted from permitted_firm_catalogue; it is obtained by InvestorReportingApi.resolveDirectoryContext (src/api/endpoints/investor-reporting.ts:1238) and held in the Investor Reporting page's own state (src/pages/InvestorReporting/index.tsx, imports at :34-35). No shared provider or hook exposes it: comp-find for ScopeProvider/ScopeContext/useScope over portal/src returned 0 of 1414 files.",
+      "Reaching it from the ticket page needs a new fetch (resolveDirectoryContext with a ResolveScopeRequest) plus a state hook in TicketCenter.tsx, or a new shared hook; the order forbids inventing a new fetch, endpoint or constant list, so steps 1-3, 5 and 6 were not built (a firms prop with no supplier would leave the form disabled on 'Loading firms...' in production)."
+    ]
+  },
+  "spec_asserts": "AR-y-35 step 4: the portal already holds the firms the signed-in caller may act for, and the list can be passed in from the component that mounts AnalysisRequestFields, which is AnalysisRequestParts.tsx itself.",
+  "world_is": "The mount is TicketCenter.tsx (outside paths). The served list (ResolvedScope.permittedFirms) exists only inside the Investor Reporting page after a live scope-resolve call; TicketCenter has no list and no hook to it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
