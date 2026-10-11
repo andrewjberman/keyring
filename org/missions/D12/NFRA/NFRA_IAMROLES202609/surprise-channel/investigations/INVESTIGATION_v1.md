@@ -2254,3 +2254,36 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-S50 -- the served yield curve's `data_as_of` is the GENERATION date, not the data's as-of date: a value that does not carry its claim, in a portal artifact, and today's unfreeze makes a previously-frozen mislabel start moving again
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S50",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-11T23:25:00Z",
+    "one_line": "s3://opal-data-portal-v2/json/macro/yield_curve_fred.json carries data_as_of = 2026-10-11 while the newest observation in every one of its ten tenors is 2026-10-08. data_as_of is written as the RUN date (it equals generated_at's date in both versions of the object), so a consumer reading it believes the curve is three calendar days (one trading day) fresher than it is. PRE-EXISTING, not a regression of IAM-z-6: the frozen 2026-08-05 version shows the identical shape (data_as_of 2026-08-05, newest observation 2026-08-04). What IAM-z-6 changes is that the field stops being frozen and starts advancing daily again.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IAM-z-6's own grade line is `SERVED-KEY: LastModified=<iso> as_of=<date in the object>`, which takes the object's as_of at face value as the artifact's data date; the CTO half asks whether the curve carries '10 valued tenors as of the last trading day'. Both readings assume a field named data_as_of states the data's as-of date. A portal page rendering a macro yield curve has the same expectation of a field with that name.",
+    "world_is": "THE FIELD IS THE GENERATION TIMESTAMP'S DATE, IN BOTH VERSIONS OF THE OBJECT. Measured on the object written by the 23:00:58Z fire (VersionId iPk91o5i_rip1lrwK0gxVcCmRzSiKtdO, 672091 bytes): data_as_of = '2026-10-11', generated_at = '2026-10-11T23:00:57.164270+00:00', and the newest observation across all ten Treasury tenors = '2026-10-08', uniformly (len(set(newest_per_tenor)) == 1). Measured on the FROZEN predecessor read by version id (4B7uNcT9Rli6_4LWUQORdWyhoBaABq.l, 2026-08-05T23:02:30Z, 675314 bytes): data_as_of = '2026-08-05', generated_at = '2026-08-05T23:02:29', newest observation = '2026-08-04'. In both, data_as_of equals generated_at's date and DIFFERS from the newest observation, so the field has never meant what its name says. THE GAP IS ONE TRADING DAY, NOT THREE CALENDAR DAYS, and resolving that is the whole reason this is a label defect rather than a staleness incident: lib/trading_calendar.py (calendar_source NYSE/hardcoded-fallback-2010-2027) gives is_trading_day 2026-10-09 Fri = True, 2026-10-10 Sat = False, 2026-10-11 Sun = False; expected_last_trading_day at the fire = 2026-10-09; trading_days_behind('2026-10-08') = 1. The frozen version computes to the same 1 (newest obs Tue 2026-08-04, written Wed 2026-08-05). So the DATA is one trading day behind the frontier in both, which is FRED's H.15 publication lag -- the DGS series posts one business day late -- and the uniformity across all ten tenors is what distinguishes a publisher frontier from a per-series fetch defect. The log confirms every tenor returned 497 observations on attempt 1/3, so the fetches got everything FRED held. WHY THIS IS WORTH A ROW RATHER THAN A LINE IN THE PROOF. (1) IT IS A SERVED ARTIFACT. Whoever renders the portal's macro yield curve reads this object, and CLAUDE.md's A VALUE MUST CARRY ITS CLAIM is about exactly this shape: a field a consumer can reject on, carrying measured/inferred/held/absent. data_as_of carries no claim and names the wrong thing, so a consumer cannot tell a fresh curve from a one-day-stale one, and cannot tell either from a curve whose tenors were carried forward (preserved_tenors is a separate field, empty here, which is the only honest freshness signal the object has). (2) IT WAS INERT AND IS NOT ANY MORE. For 67 days the field read 2026-08-05 and the object never moved, so anyone looking at the portal curve could see it was stale from the number alone. From today the field advances to the run date every night while the observations stay one trading day behind, which is the configuration in which a mislabel actually misleads: it will always look current. The act that fixed the freeze is the act that activates this. (3) THE FIX IS NOT MINE AND NOT OBVIOUS. The field is written by ingest_yield_curve_fred.py, outside IAM-z-6's <paths> (only lambda_fred_ingestion.py changes) and outside its BOUNDS. And the right fix is a judgment about a served contract, not a one-liner: renaming the field breaks any consumer reading it, while changing its VALUE to the newest observation date silently changes a number the portal may already be displaying. Either way it needs whoever owns the macro page, which is why this is parked with an owner rather than swept in.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api get-object opal-data-portal-v2 json/macro/yield_curve_fred.json -> data_as_of 2026-10-11, generated_at 2026-10-11T23:00:57, 10 tenors x 497 obs, newest 2026-10-08, preserved_tenors []",
+        "s3api get-object --version-id 4B7uNcT9Rli6_4LWUQORdWyhoBaABq.l (the frozen predecessor, as a control) -> data_as_of 2026-08-05, generated_at 2026-08-05T23:02:29, newest 2026-08-04",
+        "lib/trading_calendar.py: expected_last_trading_day(2026-10-11T23:00:58Z) = 2026-10-09; trading_days_behind('2026-10-08') = 1; the same computation on the frozen version also = 1",
+        "ingest_yield_curve_fred.py (the writer of the field; :256-299 run(), :229-251 upload_to_s3) -- outside IAM-z-6's <paths>",
+        "run log 73f2db9d: 'Successfully fetched 10/10 series', every tenor 497 observations on attempt 1/3, 0 PRESERVE lines",
+        "deliverables/0.7.0_AE_CloudOps~IR/round9/fred/POST_APPLY.md, the data_as_of table and the trading-calendar block"
+      ]
+    },
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "notes": "THE GENERAL LESSON IS THAT A FRESHNESS FIELD MUST BE READ AGAINST THE DATA, NEVER AGAINST ITS OWN NAME. I only found this because the two halves named an expected observation date (Friday 2026-10-09) and the artifact disagreed, which forced me to open the object and look at the observations rather than accept its as_of. Had the halves not named a date, I would have recorded `as_of=2026-10-11` from the field, it would have satisfied the grade line verbatim, and the mislabel would have shipped inside a signed record as evidence of freshness. The cheap generalisation: for any artifact whose job is to be current, the freshness assertion is the MAX OF THE DATA's own timestamps, and the artifact's self-declared as-of is a claim to be checked against it -- they are two different numbers and only one of them is evidence. SECOND, SMALLER LESSON, ON THE CONTROL THAT MADE THIS SAFE TO REPORT: reading the frozen predecessor BY VERSION ID is what turned 'did my change break freshness' into 'this shape predates my change'. A versioned bucket hands you the negative control for free, and without it I could only have reported a 1-day lag with no way to say whether I had caused it. Cites Z-S45, Z-S48. Dispositions stay the CVO's at L9."
+  }
+]
+```
