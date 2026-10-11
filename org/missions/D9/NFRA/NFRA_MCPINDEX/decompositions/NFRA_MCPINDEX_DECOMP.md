@@ -1259,3 +1259,30 @@ L10 slug says so.
 **Bounds inlined at L6:** every round-8 bound (ONE catalog writer; builder-output names; no tool without its catalog
 entry and class; vendor calls limited to the named reads). Also: a fixture value is never served as data; every answer
 carries the C4 envelope.
+
+## ROUND 9 AMENDED AT THE CUT (2.0.0_SA_COO~MI, 2026-10-10 ~23:4xZ) -- the round-8 L10 analysis's enrichment list
+
+Source: `ledger/ROUND_ANALYSIS.round8.md` @d2eb6c471b (`1.0.0_SA_CTO~Z`, msg 33065), section 4, E1-E3. E1 is the four
+cells above, unchanged. The analysis adds two items:
+- **E2** (one catalog cell plus a release) is FOLDED into the cells that already hold those write sets. The round has
+  ONE catalog writer and ONE release, so E2 rides MX-c-7 and MX-r-10 rather than adding a second writer.
+- **E3** (the batch repair) is one new cell.
+
+| Cell | Serves | What | Base | Risk |
+|---|---|---|---|---|
+| `MX-c-7` (widened) | FWD-19 catalog, plus E2: FWD-18, FWD-11 | Adds E2 in the same one-writer pass. Drop C1 from E-25's retires. Add C3 to E-4, E-5 and E-9 (all GAP), so FWD-18 reads 3 of 14 with C3 carried (measured 4 of 14 at the base). Move "statement" and "S&P YTD" into E-9 and E-19's `example_questions` and retire the two discover word folds (`_YTD`, `_AMP_WORD`); one general exact-example rule is allowed, a word-specific mapping is not. Put E-13's unknown-model guidance in its `note` and surface it in discover's match (ruling 2a) | after MX-o-1, MX-o-2 and MX-x-6 | WORLD |
+| `MX-r-10` (widened) | FWD-19 live, plus E2 live | Ships c-7's discover change too, under ruling 2c's procedure: the deploy tree's HEAD IS the deploy-only commit, and the stamped label is read back before the first leg closes. The live read adds "statement" -> E-9, "S&P YTD" -> E-19, FWD-18 3 of 14 from the deployed catalog, and an unknown model name reaching E-13 with the five model codes | after MX-c-7 drains | WORLD |
+| `MX-x-6` (new, E3) | -- (repair) | Two repairs. The emitter refuses a `--census-dir` outside its own checkout (row Z-W29-S1). The gateway suite gets a failing-ID baseline per tree shape (full, sparse) and `suite_delta.py`, so drains grade by ID delta, never by count (rows Z-S88, Z-W28-S8). The schwab and grant failing IDs go to `2.0.0_SA_COO~O` at the drain | at issuance | WORLD (infra floor) |
+
+**Chains (fan-out 3 of 3 chains at the cut, cap 8):** [MX-o-1 -> MX-c-7 -> MX-r-10], [MX-o-2 -> MX-c-7] and
+[MX-x-6 -> MX-c-7]. The x-6 -> c-7 edge is a data dependency: c-7 runs the emitter that x-6 changes. Write sets stay
+disjoint:
+- x-6: the emitter, its test file and the gateway suite baseline;
+- c-7: the catalog sources, the emitted catalog and discover;
+- each reader: its own new folder.
+
+**Not cells (analysis section 4):**
+- J1 waits on Alyssa, booked through `0.0.0_AB_MSTR~Z` (HELD at Andrew).
+- The deploy-wrapper fix for Z-S92 and Z-S94 belongs to `2.0.0_SA_COO~O`.
+- Z-C-S42 belongs to `2.0.0_SA_COO~C`.
+- Round 7 stays open on MX-s-19.
