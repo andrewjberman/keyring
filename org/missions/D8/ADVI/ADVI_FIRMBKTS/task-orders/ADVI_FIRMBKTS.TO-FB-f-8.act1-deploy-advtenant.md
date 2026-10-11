@@ -173,7 +173,7 @@ merged (@acf8a16706); the pair SIGNED in both halves (@d30c5fe203); the actor's 
 write (step 1). Not in this act: the staged `FB-f-9` (producers' mode), `FB-f-10` (delta copy), `FB-f-11` (list entry, map
 value, F6 deploy). The window's order puts this act first and it changes nothing a user can see.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-8</to_id>
 <slot>~FBL</slot>

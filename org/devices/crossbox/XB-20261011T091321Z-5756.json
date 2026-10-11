@@ -10,12 +10,16 @@
  "subject": "ADVI_FIRMBKTS TO-FB-f-8 close: CTO Branch A read and ACL waiver are filed; amendment 7 corrects AC4",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-8.act1-deploy-advtenant.md",
  "opened_at": "2026-10-11T09:13:21Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
-  "at": null,
+  "at": "2026-10-11T09:14:38Z",
+  "bus_message_id": "08ba275b-abb7-4296-887a-0afc5f261de9"
+ },
+ "ack": {
+  "at": "2026-10-11T09:17:25Z",
+  "by": "0.7.0_AE_CloudOps~FBL",
   "bus_message_id": null
  },
- "ack": null,
  "closed": {
   "from_at": null,
   "from_by": null,
