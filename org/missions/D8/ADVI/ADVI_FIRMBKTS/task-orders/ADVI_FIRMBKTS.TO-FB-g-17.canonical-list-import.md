@@ -90,7 +90,7 @@ alias marker; the regenerated `firm-config.mjs` and `loaders.py` carry the new r
 router, validator and IRPT ownership read engage the canonical keys together. The router and validator are protected
 edge functions: their deploy is the laptop lane's, in act 4.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>CANONLIST</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-17</to_id>

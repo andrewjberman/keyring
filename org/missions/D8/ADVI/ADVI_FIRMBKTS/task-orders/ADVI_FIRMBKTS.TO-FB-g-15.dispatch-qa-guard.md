@@ -85,7 +85,7 @@ the commit hash.
 `QAGUARD`; the dispatcher is one of act 2's 20 permitted objects, so the permitted set is unchanged in count and the block
 that act 2 deploys is larger by this guard (act 2's pair addendum names it). Class WORLD like its sibling FB-f-9 phases.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>QAGUARD</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-15</to_id>

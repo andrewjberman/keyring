@@ -182,7 +182,9 @@ TARGET_REGISTRY_KEYS = {
     "portal/src/pages/InvestorReporting/header/vendorDisplayNames.generated.ts": ("systems",),
     # platinum_prefix (ADVI_FIRMBKTS FB-g-13) -- _platinum_prefixes() reads the platinum rows and key() (the source's
     # systems.json key, the scope's scopes.json long form), and _home_bucket() reads tiers.json (the bucket).
-    LOCALS_PATH: ("scopes", "exemptions", "tiers", "feeds", "platinum_destinations", "systems"),
+    # ownership_key (ADVI_FIRMBKTS FB-g-20, CTO ADDENDUM 8) -- _ownership_owners() reads the ownership legacy rows
+    # (legacy_addresses), and _ownership_canonical() the platinum rows, key() and _home_bucket() as above.
+    LOCALS_PATH: ("scopes", "exemptions", "tiers", "feeds", "platinum_destinations", "systems", "legacy_addresses"),
     BRONZE_HOMES_PATH: ("scopes", "tiers", "feeds"),
     # PLATINUM_DESTINATIONS (ADVI_FIRMBKTS FB-f-9, CTO ADDENDUM 3) -- _platinum_build() reads the row, key() reads
     # systems.json (the source) and scopes.json (the long form), and _home_bucket() reads tiers.json (the bucket).
@@ -690,9 +692,13 @@ def validate(reg_dir=None, systems_file=None):
             acts, pre = r["actions"], r["prefix"]
             if not (isinstance(acts, list) and acts and all(isinstance(a, str) and a in scoped_actions for a in acts)):
                 refuse(rwhere, "actions", "a non-empty list drawn from the closed read set %s" % ", ".join(scoped_actions))
-            if not (isinstance(pre, str) and pre.endswith("/") and not pre.startswith("/") and not re.search(r"[*?]", pre)):
-                refuse(rwhere, "prefix", "a literal key prefix ending in /, no leading / and no * or ?")
-            elif len(pre.split("/")) < 3 or pre.split("/")[1] != bucket_firm.get(bucket):
+            # FB-g-19 (CTO round-3 ADDENDUM 9): prefix is one string or a non-empty list of strings; every member is held to
+            # the rules of the string form, and the firm token is checked on every member
+            pres = pre if isinstance(pre, list) else [pre]
+            if not (isinstance(pre, (str, list)) and pres and all(
+                    isinstance(p, str) and p.endswith("/") and not p.startswith("/") and not re.search(r"[*?]", p) for p in pres)):
+                refuse(rwhere, "prefix", "a literal key prefix ending in /, no leading / and no * or ?, or a non-empty list of them")
+            elif any(len(p.split("/")) < 3 or p.split("/")[1] != bucket_firm.get(bucket) for p in pres):
                 refuse(rwhere, "prefix", "its second path segment must be the firm token of this bucket (%r)" % bucket_firm.get(bucket))
             if not (isinstance(raw_who, str) and raw_who.startswith("arn:") and not re.search(r"[*?]", raw_who)):
                 refuse(rwhere, "arn", "a scoped row names exactly one principal by its exact ARN (no * or ?)")
@@ -1470,6 +1476,8 @@ def _gen_locals(reg, h16):
         "  bronze_homes = " + _hcl(_bronze_homes(reg), 2),
         "  # every scope the destination registry places: long form -> its bucket's canonical served-platinum prefix (_platinum_prefixes())",
         "  platinum_prefix = " + _hcl(_platinum_prefixes(reg), 2),
+        "  # every scope with a registered ownership-map address: long form -> the canonical key of that address (_ownership_canonical(), the _blk_ownership_keys derivation)",
+        "  ownership_key = " + _hcl({o: _ownership_canonical(reg, t) for o, t in sorted(_ownership_owners(reg).items())}, 2),
         "}",
     ]
     return "\n".join(parts) + "\n"

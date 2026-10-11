@@ -1796,3 +1796,26 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S41",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T14:33:12Z",
+  "one_line": "The issuer lists fourteen BLOCKING or ARMED rows still reading UNDER_INVESTIGATION. Read against this channel's own files: five of them already carry this seat's disposition (D2-W3-S2, D2-S8, D2-S10, D2-W6-S1, D2-W6-S2); nine did not, and are adjudicated now. Beyond the fourteen, 40 INERT rows of rounds 1 to 3 have never been compiled by this seat: in this project the issuer wrote its own slug files and this seat was asked for grades only. That compile is owed and waits on the two pending orders.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R4_RUN/STALE_ROW_DISPOSITIONS_FOR_CVO_20261011.md @5719b01097 (msg 5123)",
+      "this seat's subtraction over the channel: 49 rows undispositioned before this compile, by id against every adjudication and remediation file"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27): the CVO compiles the channel and its one send is the slug; a COO's drain-end packet is a different artifact sharing the label.",
+  "world_is": "Nine rows are dispositioned on the issuer's quoted slug lines; this seat re-measured three of them (D2-S18, D2-S28, D2-S34) on its own earlier reads and none of the other six.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
