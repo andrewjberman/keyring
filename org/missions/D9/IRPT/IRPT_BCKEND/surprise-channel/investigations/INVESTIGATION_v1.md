@@ -25763,3 +25763,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-W288-S1 -- DATA: the holdings source carries valued rows the instrument cannot price (no CUSIP, or negative Units); they decide the NOT_GRADED split
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W288-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~288",
+  "surfaced_at": "2026-10-11T11:54:00Z",
+  "one_line": "Across the 91 blackdiamond_z09 silver partitions read, 11,837 non-cash rows carry Units and Market Value above zero but no CUSIP, and 4,084 carry Units and Market Value below zero; the instrument's price filter (CUSIP present, Units and Market Value above zero) leaves both out, so under AMENDMENT 1 they are 'priced securities the instrument cannot grade' that the face did not list, and counting them moves the alternative rule's blank share from 14.3 to 25.0 percent (7,930 account-days ungradeable for no_cusip, 255 for negative_position).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB127-1_account_day_claims.json not_graded_split.ungradeable.by_holdings_class: outside_anchor 8,380; no_cusip 7,930; neither_row 923; negative_position 255 (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~288/, this cell's commit)",
+      "IB127-1_account_day_claims.json not_graded_split_two_kinds_only and serving_rule_alternative_two_kinds_only: the same split and rule counting only outside_anchor and neither_row (9,303 ungradeable account-days; 10,825 blank of 75,796 eligible, 14.3 percent) against 17,488 and 18,931 (25.0 percent) with the two added kinds",
+      "row-kind census over the 91 cached partitions (counts only, run in memory): CUSIP absent with Units and Market Value above zero and Cash Equivalent false 11,837; Units and Market Value below zero and Cash Equivalent false 4,084 (3,811 with a CUSIP, 273 without)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1 lists the ungradeable holdings classes as outside_anchor (a priced security the anchor does not carry), neither_row, 'or any other reason you meet', and the nothing_to_grade classes as cash_only, did_not_move, no_priced_row ('no row with a price at all').",
+  "world_is": "Rows exist that have a price (Market Value over Units) but that the instrument does not price: no CUSIP, or negative Units. Read as 'no row with a price', they would be nothing_to_grade; read as 'a priced security the instrument cannot grade', they are ungradeable. This cell counted them ungradeable (the order's own definition: nothing in the account could be on the wrong date) under two new named classes, and gives the two-kinds-only count beside it. No judgment was made about which reading the CTO intends. The claim itself (OWN_DATE, PRIOR_CLOSE, NOT_GRADED) and the first rule's counts do not depend on it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
