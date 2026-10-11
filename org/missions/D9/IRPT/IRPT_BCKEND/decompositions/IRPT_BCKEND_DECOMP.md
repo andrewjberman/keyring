@@ -3225,3 +3225,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r151/p151_cells.py`: AC1 FAIL, AC2 FA
 | `IB-pr-455` | the submission's closed set admits the optional boolean `commentary_requested` and refuses any other type; acceptance copies it into the accepted record only when sent; the public contract declares it; a submission without it is accepted exactly as today | FWD-4 (the vendor-path job and what it signals) | WORLD (L6 floor: paths under infra/; nothing released) | the worker half merged @dddafd6832 | P151-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~311.
+
+## 144. ROUND 152, WORKSTREAM ~P (2026-10-11 ~21:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5863)
+
+IB-pr-455 drained @0322231fc8: the submission admits commentary_requested and acceptance carries it; nothing released. Its release
+pair names every function, every moved member and every reader. One build-only cell with AWS reads is that read; no apply order
+is cut here and none follows without a signed pair. Known entanglement: irpt-ycharts-generate's one-tree rebuild (IB-pr-426) is
+merged and held on the CTO's word.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r152/p152_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-456` | every source-map entry packaging one of the three changed members (by subtraction), each built from a minimal candidate map and set beside live: moved members, riders, the minimal-release word; the entanglements; every reader of the accepted record re-counted at base with the pair's read through each; replay arms; the packet | FWD-4 (the vendor-path job and what it signals) | WORLD (live reads and builds; nothing uploaded) | IB-pr-455 drained | P152-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~312.
