@@ -4769,3 +4769,30 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "No action taken by this worker: the order's keep-every-other-line bound was followed literally. The wording of these comments belongs to the issuer."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-f-14, act 3b apply, the seat gate)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S30",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-11T15:29:21Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cross-box seat gate reports an OPEN deploy (iamroles-r7-narrow-portal-s3, 0.7.0_AE_CloudOps~IR) that reads CLOSED in this tree's change-management entry and whose sentinel is in none of the 50 worktrees read, and it names the shared-infra root by path token alone; with a cross-box call naming the same root, the gate read STOP in WARN mode for a one-resource apply that touches neither.",
+  "spec_asserts": "safe-apply's seat gates: crossbox-deploy-check reports OPEN-CALL and OPEN-DEPLOY hits when a live cross-box call or an OPEN deploy names the root by token, and under ENFORCE a STOP blocks the apply; the check's own OVERLAP and --files-vs-trunk modes read file and resource overlap.",
+  "world_is": "2026-10-11 15:25Z, crossbox-deploy-check for root infra/aws/terraform/shared-infra with --files-vs-trunk and --target aws_s3_bucket_policy.opal_data_49financial: OVERLAP clear (0 files differ from the merge base d54eecad2b), UPSET clear, OPEN-CALL hit XB-20261011T082334Z-282f (state ACKED, dell2 to laptop; its report names s3-lgic-firm-buckets.tf, a different file and a different bucket-policy resource), OPEN-DEPLOY hit iamroles-r7-narrow-portal-s3 (author 0.7.0_AE_CloudOps~IR, opened 11:02Z). That entry's change-management file in this tree reads 'CLOSED -- nothing stranded -- closed 20261011T113448Z', mentions neither opal-data-49financial nor aws_s3_bucket_policy, and its sentinel is in none of the 50 worktrees that git worktree list returns (the gate reads a view this lane could not locate). Verdict STOP in WARN mode; the act proceeded after both hits were read and found disjoint from the one resource.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act3b/apply_safe-apply.out (the seat-gate lines)",
+      "python .tools/crossbox-deploy-check.py --root infra/aws/terraform/shared-infra --serial 0.7.0_AE_CloudOps~FB1 --files-vs-trunk --target aws_s3_bucket_policy.opal_data_49financial, 2026-10-11T15:25Z",
+      "org/critical_paths/change_management/20261011T1102Z_iamroles-r7-narrow-portal-s3_deploy_completion.md line 3 (Status: CLOSED)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only; nothing armed. For the gate owner: (1) a sentinel the gate counts as OPEN while the entry reads CLOSED is the DRIFT class the ledger's own check names; the sentinel's location is the open question. (2) The match is by root path token, so a disjoint one-resource apply and an unrelated cross-box call read as a STOP. This lane's practice at this act: --dry-seat-gates first, then read each hit's resource set before the apply."
+}
+```

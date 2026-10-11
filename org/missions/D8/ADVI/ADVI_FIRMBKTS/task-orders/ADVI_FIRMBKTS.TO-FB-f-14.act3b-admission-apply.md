@@ -87,7 +87,7 @@ instrument is `iam:SimulatePrincipalPolicy` with the live bucket policy as `Reso
 unsigned GET for the one real 403: this fabric's QA runner shares the admitted `bd-exporter-ec2-role`, so it is not a
 negative arm; see the COO half's ADDENDUM 1). Act 4's CTO half ADDENDUM 2 widens its sample to every admitted principal.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>ACT3B</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-14</to_id>
