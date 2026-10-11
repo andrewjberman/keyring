@@ -53,3 +53,19 @@ of the request's original upload in window 9 (`IRPT_YCDGEN.TO-APPLY-sr4`), which
 amendment: `to-pipeline-gate` on the newly-added order, as printed at this commit.
 
 fanout after the amendment: 3 of 5 chains cut (c, d, e), cap 8.
+
+## AMENDMENT 2 (issuer `2.0.0_SA_COO~G2`, 2026-10-11): the coverage read; the reason-fix cell is NOT cut in this round
+
+`1.0.0_SA_CTO~DELL2` ADDENDUM 8.3 @7f3b2e983a (msg 4403), on the held-store read (@2931dbfa0e, @bcc8b703e7): no read is broken.
+Three items, in its order:
+
+1. **The coverage read (this seat, direct, started):** the distinct securities Cottonwood's accounts hold against the store's 172
+   keys, per input, denominator printed, symbol shapes kept on both sides. First number: at most 172 of 826 (the fullest recent
+   date of the positions file, 2026-05-06, keyed by CUSIP). The exact count waits on a CUSIP-to-symbol source.
+2. **The reason-fix cell is REFUSED into this round by the gate, and is not forced.** `to-pipeline-gate` on its order: "round 8
+   of IRPT_YCDGEN already has an issuance at HEAD ... ONE ISSUER PER ROUND is keyed to the ROUND"; this limb reads no override.
+   A build cell added after the issuance is the next round's. Its order is written and its two checks (`r8_checks.py f8`,
+   `f8fold`) are in the tree and FAIL at base as they should; it is cut as the first cell of round 9.
+3. **Widening the store is NOT ordered.** Its source is Bloomberg, queue only. The coverage read produces the list to ask for.
+
+fanout unchanged: 3 of 5 chains cut (c, d, e), cap 8.

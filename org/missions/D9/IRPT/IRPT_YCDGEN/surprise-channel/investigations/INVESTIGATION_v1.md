@@ -3402,3 +3402,255 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_YCDGEN-D2-S40 -- row S14's world changed -- ssm:SendCommand on the resident host now succeeds for dell2
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S40",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~YC2",
+  "surfaced_at": "2026-10-11T07:08:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "Row IRPT_YCDGEN-S14's world has CHANGED: ssm:SendCommand on resident host i-0167fd745ad906a66 now SUCCEEDS for the dell2 applier, where S14 records it as AccessDenied -- filed so a reader of S14 does not act on a stale denial.",
+  "spec_asserts": "IRPT_YCDGEN-S14 as filed (UNDER_INVESTIGATION, surfaced 2026-10-07T09:12Z): 'ssm:SendCommand on resident host i-0167fd745ad906a66 is denied to cloudops-dell2-agent-user, so dell2 cannot read the host ... or ship the next resident build', measured as AccessDeniedException with nothing running on the host. Separately, IRPT_YCDGEN.TO-APPLY-b8's comp-iam preflight asserts the opposite for today: 'the command runs under the applier's existing SSM grant on this one instance'. Those two cannot both be current.",
+  "world_is": "MEASURED 2026-10-11, and the live call was used as the oracle rather than simulate-principal-policy, which has four documented false-deny modes and one false-allow mode. aws ssm send-command on i-0167fd745ad906a66 (AWS-RunShellScript, read-only) was ACCEPTED and the host RAN it: CommandId 6b892609-8f09-4d75-8637-4995133b3ad4, get-command-invocation Status Success, ResponseCode 0, StandardErrorContent empty, with real stdout (the unit's ExecStart, the derived root, a directory listing and two sha256 lines). So the grant exists now and S14's world_is no longer describes the world. WHAT THIS ROW DOES NOT CLAIM: it does not identify WHICH remediation closed the gap, because this seat did not read the IAM policy -- the order's bounds and its NOT-APPLICABLE comp-iam preflight keep this seat off that plane. It records only that the denial S14 measured is gone, as of a successful read-only invocation at 2026-10-11T07:08:3xZ. The ACCEPTANCE of the send alone would NOT have been sufficient evidence (SSM accepting a request says nothing about the instance running it), which is why the invocation was read separately.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_b8/BRAND_LISTING_HOST.txt -- line 1 carries the command id and instance id; the body is the host's own stdout",
+      "aws ssm get-command-invocation --command-id 6b892609-8f09-4d75-8637-4995133b3ad4 --instance-id i-0167fd745ad906a66: Status Success, ResponseCode 0, empty stderr",
+      "IRPT_YCDGEN-S14 in this channel (surfaced 2026-10-07T09:12:00Z, disposition UNDER_INVESTIGATION)",
+      "IRPT_YCDGEN.TO-APPLY-b8 <preflight> comp-iam line, which asserts the grant exists"
+    ]
+  },
+  "notes": "Filed off the back of an ordered act rather than an investigation: the order required the SSM call, so the measurement was free. The reason to write it down is that S14 reads as current to anyone who finds it, and a stale ACCESS-DENIED row is the kind of thing that makes a future seat route around a capability it actually has. Whoever owns S14 can now close it or point at the remediation."
+}
+```
+
+## IRPT_YCDGEN-D2-S41 -- TO-APPLY-b8 AC2 is ungradeable by a VALID proof: its expect admits only a bare integer, which the gate refuses as thin
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S41",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~YC2",
+  "surfaced_at": "2026-10-11T07:24:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "IRPT_YCDGEN.TO-APPLY-b8 criterion AC2 cannot be graded PASS by a VALID proof_of_spec: its expect '^[0-9]+$' admits only a bare integer, and proof-of-spec-check.py refuses a bare integer as thin output_evidence -- both branches were run and both were refused.",
+  "spec_asserts": "TO-APPLY-b8 AC2: 'The listing states the brand directory's files or its absence', invocation grep -c -E '^BRAND ' <artifact>, expect '^[0-9]+$'. The order requires a proof_of_spec instance at a named path, and the fabric's contract is that a mechanical criterion is decided by the match, not by the worker.",
+  "world_is": "MEASURED, both branches exercised against .tools/proof-of-spec-check.py on 2026-10-11. (a) output_evidence '2' -- the only value that can match '^[0-9]+$', since the pattern is anchored at both ends -> 'VIOLATION: acceptance[AC2]: PASS with thin/empty output_evidence -- a bare value; INVALID'. (b) output_evidence carrying the count plus the two BRAND lines it counts -> 'VIOLATION: acceptance[AC2]: status=PASS but output_evidence does NOT match expect ^[0-9]+$'. There is no third value: any string containing the matched lines fails the anchored pattern, and any string that satisfies the pattern is a bare value. So AC2 as written is UNGRADEABLE by a valid instance, independently of whether the act succeeded. SCOPE, STATED PRECISELY: this is a defect in the CRITERION, not in the act or the artifact. The act ran, the host answered, and the artifact carries the two BRAND lines with their sha256 and a count that agrees with the directory listing -- AC2's substance is satisfied and is recorded in the instance's denominator and in control ac2_count_matches_the_directory_listing. SECOND, SEPARABLE WEAKNESS worth the issuer's attention while amending: '^[0-9]+$' is also satisfied by ZERO, so AC2 as written would read PASS on an EMPTY brand directory, which is the order's stated finding case rather than its success case. A criterion that passes on both branches of its own question is not deciding anything.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "both gate runs, with their exact VIOLATION lines, against org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_b8/IRPT_YCDGEN.TO-APPLY-b8.resident-host-brand-listing-dell2.proof_of_spec.json",
+      "the order's AC2 expect pattern at org/tier2_senior/0.7.0_AE_CloudOps~YC2/task_orders/IRPT_YCDGEN.TO-APPLY-b8.resident-host-brand-listing-dell2.md",
+      "BRAND_LISTING_HOST.txt: 2 BRAND lines, 2 regular files in the ls block, 0 BRAND-DIR-ABSENT lines"
+    ]
+  },
+  "notes": "The act is DONE and its evidence is committed; what is blocked is only the instance reading VALID, and with it the order's status flip. This seat did NOT trim the evidence to a digit to buy a green verdict, and did not flip the order on an INVALID proof. The remedy is the issuer's and is one line: under the spine the issuer amends its own task-order criteria without a CTO ruling. Suggested amendment, offered not assumed -- make the invocation print the lines rather than count them (grep -E for the BRAND and BRAND-DIR-ABSENT prefixes, with expect anchored on '^BRAND '), which fixes the thin-evidence conflict and the passes-on-zero weakness together. Row IRPT_YCDGEN-D2-S25 is the precedent for this shape: a criterion whose PASS does not depend on the thing it names."
+}
+```
+
+## IRPT_YCDGEN-D2-W10-S1 -- RESOLVES IRPT_YCDGEN-W6-S1 (the generator now reads v2 and its output is byte-identical to the committed AnalysisReport.ts)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W10-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~10",
+  "surfaced_at": "2026-10-11T07:23:26Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-W6-S1: AnalysisReport.ts at the portal pin is the generator's own output from the v2 schema, byte for byte; the hand-added OPAL block and the edited v1 schema the row measured no longer exist",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cmp of the committed portal wire/AnalysisReport.ts blob at portal gitlink c96efe1714784162c4134450da33ce6fd6226b60 against the generator's renderModule('AnalysisReport') output run in .scratch/pt on this worktree's v2 schema: BYTE-IDENTICAL, both sha256 ef5f9eb62e6d4d716cb33e418fe58cb14ca6c925d109fc8138954e61d0234144 (org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IRPT_YCDGEN~10/w10_evidence.txt)",
+      "sha256sum of docs/contracts/investor-reporting/v1/AnalysisReport.schema.json and _contracts/AnalysisReport.schema.json: both 1bd0dc85847690b277e3a3011bcbe500a02820792cd53a38a1201fc3c55d153f, 0 OPAL_ENGINE hits; v2 file 748cdd90..., which the committed header cites as 'Source sha256: 748cdd900b45074ee2a1dd84f8ff599a192acbac414c009c621aeb383bc64503'"
+    ]
+  },
+  "spec_asserts": "IRPT_YCDGEN-W6-S1 as filed (ARMED): with the OPAL_ENGINE branch added to the v1 schema, no regeneration can equal the committed AnalysisReport.ts, which carries 43 lines the generator cannot emit.",
+  "world_is": "MEASURED today. (1) The v1 schema was not changed: docs/contracts/investor-reporting/v1/AnalysisReport.schema.json and _contracts/AnalysisReport.schema.json are both sha256 1bd0dc85..., 0 OPAL_ENGINE hits. (2) gen-wire.ts (portal pin c96efe17, SERVED_V2_SCHEMAS at lines 109-115) reads AnalysisReport from _contracts/AnalysisReport.v2.schema.json (sha256 748cdd90...). (3) renderModule('AnalysisReport') run into .scratch/pt/out1 (not the tracked tree) produces a file cmp-identical to the committed blob at the pin, 144 lines, sha256 ef5f9eb6...; the committed file has 0 hits for AnalysisReportAnyWire, 'Hand-added' and AnalysisSectionNotAvailableReason and exports only 'export type AnalysisReportWire' (generator renders the top-level oneOf as a type alias, isPlainObjectBody at gen-wire.ts line ~445). Landed by portal 5edaa0b5 and 1c306eb3 (YCD-v-6). The row's premise (a v1 schema edit) and its conclusion (the committed file holds declarations the generator cannot emit) are both gone. Not measured: the portal is a submodule not checked out in this worktree (ls -A portal is empty), so the generator was read from the gitlink pin through the main checkout's object store (read-only git show/archive) and run in a temporary tree.",
+  "notes": "Side measurement, not this row's claim: generate() over every schema fails in this tree on OwnedAnalysisRequest.schema.json (see row IRPT_YCDGEN-D2-W10-S7); renderModule for AnalysisReport alone is unaffected. ExportBundle.ts and ExportReceipt.ts at the pin also differ from fresh output (their schemas moved), listed in the same row.",
+  "dismissal_reason": "Measured today: committed AnalysisReport.ts at the portal pin is byte-identical to the generator's output from the v2 schema (sha256 ef5f9eb6...), and the v1 schema is unchanged (sha256 1bd0dc85...), so no condition of the row remains."
+}
+```
+
+## IRPT_YCDGEN-D2-W10-S2 -- RESOLVES IRPT_YCDGEN-W6-S2 (the v1 schema was never changed, so no reader is red against it)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W10-S2",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~10",
+  "surfaced_at": "2026-10-11T07:23:26Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-W6-S2: the readers the row names are green because v1 is byte-frozen at 1bd0dc85 and the OPAL form lives in the separate v2 file; the lambda source map's two pins match the docs schema",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest 25 passed on _contracts/tests/test_analysisreport_v2.py export/tests/test_packaged_contracts_match_docs.py ycharts/extract/tests/test_publication.py, run from infra/aws/lambda/investor-reporting (org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IRPT_YCDGEN~10/w10_evidence.txt)",
+      "infra/aws/lambda/ci/lambda-source-map.json lines 4248-4251 and 4927-4930: repo_path docs/contracts/investor-reporting/v1/AnalysisReport.schema.json, sha256 1bd0dc85847690b277e3a3011bcbe500a02820792cd53a38a1201fc3c55d153f",
+      "bun test content-pins.test.ts in .scratch/pt (portal pin c96efe17 + this worktree's docs): 2 pass 3 fail, 0 AnalysisReport findings, 3 failures on unprojected_grant only"
+    ]
+  },
+  "spec_asserts": "IRPT_YCDGEN-W6-S2 as filed (ARMED): with the OPAL_ENGINE branch in the v1 schema, 5 python tests, 2 portal content pins and the lambda source map's schema sha256 pin are newly red.",
+  "world_is": "MEASURED today. The premise is absent: both v1 copies are sha256 1bd0dc85847690b277e3a3011bcbe500a02820792cd53a38a1201fc3c55d153f with 0 OPAL_ENGINE hits. pytest (from infra/aws/lambda/investor-reporting) on the three modules the row names: test_analysisreport_v2.py::test_v1_untouched PASSED, test_packaged_contracts_match_docs.py[AnalysisReport.schema.json] PASSED, test_publication.py::test_committed_three_variant_pdfs_preserve_denominators_and_undated_rows[overview], [comparison], [multicomp] PASSED; 25 passed in the three modules. infra/aws/lambda/ci/lambda-source-map.json lines 4248-4251 and 4927-4930 pin the docs AnalysisReport schema at 1bd0dc85..., equal to the file's sha256. Portal fe-s-13/content-pins.test.ts, run with bun test in a temporary tree built from the portal pin against this worktree's docs: 2 pass 3 fail, and 0 of the findings mention AnalysisReport; the 3 failures all name 'unprojected_grant' on comparison-catalogue and analysis-request-pdf, the failure the row itself lists as failing at base. Not run: the other three modules the row names green (test_undated_analysis, test_owned_report, test_repository) and the portal's producer-fixtures and fe-s-1 tests; only the readers the row names red were re-measured.",
+  "notes": "The portal content-pin run is a temporary copy, not the portal's own suite run in its checkout (not checked out here).",
+  "dismissal_reason": "Measured today: v1 AnalysisReport schema unchanged (sha256 1bd0dc85...), the named python readers pass (25 of 25), the source map pins equal the file's sha256, and the portal content pin shows no AnalysisReport finding."
+}
+```
+
+## IRPT_YCDGEN-D2-W10-S3 -- RESOLVES IRPT_YCDGEN-D2-W6-S3 (the generator emits a type alias for a union and the pinned wire folder typechecks)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W10-S3",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~10",
+  "surfaced_at": "2026-10-11T07:23:26Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-D2-W6-S3: gen-wire.ts renders a top-level union as 'export type', wire/responses.ts derives the two members by Extract, and tsc over the pinned wire folder returns rc 0",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tsc --noEmit --strict --skipLibCheck over the pinned wire/*.ts: rc 0; negative control on 'export interface X {..} | {..}': rc 2 TS1109 (org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IRPT_YCDGEN~10/w10_evidence.txt)",
+      "portal pin c96efe17 contracts/wire/responses.ts lines 151-153 (Extract of the generated union) and wire/index.ts line 25",
+      "bun test iv-e-17.gen-oneof.test.ts: 1 pass 0 fail"
+    ]
+  },
+  "spec_asserts": "IRPT_YCDGEN-D2-W6-S3 as filed (ARMED): the generator emits 'export interface AnalysisReportWire {..} | {..}', the committed AnalysisReport.ts fails the portal typecheck with 35 errors, and wire/index.ts and wire/responses.ts name the hand-added types.",
+  "world_is": "MEASURED today, at the portal pin (the portal is not checked out in this worktree; run from a git archive of the pin in .scratch/pt). (1) gen-wire.ts renderModule chooses by isPlainObjectBody(body): a union body renders 'export type AnalysisReportWire = {' (committed AnalysisReport.ts line 12). (2) wire/index.ts line 25 re-exports only AnalysisReportWire; wire/responses.ts lines 151-153 define AnalysisReportYchartsWire and AnalysisReportOpalWire as Extract<AnalysisReportWire, {provider}>; the four hand-added names (AnalysisReportOpalWire exported, AnalysisReportAnyWire, AnalysisReportOpalSectionWire, AnalysisSectionNotAvailableReason) are not exported anywhere under wire/. (3) tsc 5.9.3 --noEmit --strict over wire/*.ts: rc 0; the same tsc on a file holding 'export interface X {..} | {..}' returns rc 2 (TS1109), so the check can see the old fault. (4) iv-e-17.gen-oneof.test.ts (bun test): 1 pass 0 fail. (5) The side finding: iv-e-26.wire-regen.test.ts now writes to a per-run temp dir (mkdtempSync, line 86, portal fd345aef), so the suite no longer rewrites contracts/wire/. NOT measured: the full portal 'tsc -b --noEmit' and iv-e-17.regenerated.test.ts (it runs tsc over the whole portal, which is not checked out here and may not be installed); the typecheck here covers the wire folder only, and the consumers (adapt.ts, contracts/index.ts) were not compiled. The tsc binary was borrowed read-only from the main checkout's node_modules.",
+  "notes": "iv-e-26.wire-regen.test.ts is RED in this tree for a different reason (generate() cannot render OwnedAnalysisRequest.schema.json report_index); that is filed as row IRPT_YCDGEN-D2-W10-S7, not here.",
+  "dismissal_reason": "Measured today at the portal pin: union bodies render as 'export type', the four hand-added names are gone from wire/, tsc over the wire folder returns rc 0 with a negative control returning rc 2; the full-portal typecheck was not run."
+}
+```
+
+## IRPT_YCDGEN-D2-W10-S4 -- RE-CUTS IRPT_YCDGEN-D2-W7-S1 (the resident builder's --research filter still omits .svg)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W10-S4",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~10",
+  "surfaced_at": "2026-10-11T07:23:26Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RE-CUTS IRPT_YCDGEN-D2-W7-S1: build_resident_package.py line 58 still reads RESEARCH_EXT = ('.py', '.json', '.sh', '.md', '.cjs'); research_wanted() still returns False for the Opal logo svg, so a --research build does not package it",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I import of build_resident_package.py: RESEARCH_EXT ('.py', '.json', '.sh', '.md', '.cjs'); research_wanted(svg)= False (org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IRPT_YCDGEN~10/w10_evidence.txt)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py:58 and :83-87 at HEAD 673de3e606; git log: last change c1dd9ada9c 2026-10-05"
+    ]
+  },
+  "spec_asserts": "R21: the resident package builder's --research packages both brand files (tracked, non-test files under ycharts/research/).",
+  "world_is": "MEASURED today. The file org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py is unchanged since commit c1dd9ada9c (2026-10-05), before the row was filed; RESEARCH_EXT is at line 58 and research_wanted() at lines 83-87. Importing the module and calling it: research_wanted('infra/aws/lambda/investor-reporting/ycharts/research/brand/Opal-Capital-Logo-Full-Color.svg') = False, although the svg is tracked at HEAD. The same selection the builder's --research branch (lines 161-164) makes over git ls-tree of ycharts/research at HEAD: 36 tracked files, 11 selected, the svg not among them; brand.json (ycharts/research/brand/brand.json) IS selected. RESEARCH_EXT occurs in no other .py file in the worktree. Not run: a real build (it needs the core state from S3 or --state-json, and this order allows no AWS call); the --research selection was reproduced by calling the builder's own tracked_under() and research_wanted(). The row's other leg (a --member build packages the logo and the Opal layout renders) was not re-run.",
+  "notes": "Disarm unchanged from the old row: add '.svg' to RESEARCH_EXT in the builder (a cell with that path), or pass --member ycharts/research/brand/Opal-Capital-Logo-Full-Color.svg=infra/aws/lambda/investor-reporting/ycharts/research/brand/Opal-Capital-Logo-Full-Color.svg on the release build and read the package listing. This cell measures and does not repair."
+}
+```
+
+## IRPT_YCDGEN-D2-W10-S5 -- RESOLVES IRPT_YCDGEN-D2-W6-S1 (committed AnalysisReport.ts is the generator's output, not a hand-edited file)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W10-S5",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~10",
+  "surfaced_at": "2026-10-11T07:23:27Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-D2-W6-S1: the generated body equals the committed one; the committed file holds no annotation, optional provider or hand-added OPAL types",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cmp of the committed portal wire/AnalysisReport.ts blob at portal gitlink c96efe1714784162c4134450da33ce6fd6226b60 against the generator's renderModule('AnalysisReport') output run in .scratch/pt on this worktree's v2 schema: BYTE-IDENTICAL, both sha256 ef5f9eb62e6d4d716cb33e418fe58cb14ca6c925d109fc8138954e61d0234144 (org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IRPT_YCDGEN~10/w10_evidence.txt)",
+      "sha256sum of docs/contracts/investor-reporting/v1/AnalysisReport.schema.json and _contracts/AnalysisReport.schema.json: both 1bd0dc85847690b277e3a3011bcbe500a02820792cd53a38a1201fc3c55d153f, 0 OPAL_ENGINE hits; v2 file 748cdd90..., which the committed header cites as 'Source sha256: 748cdd900b45074ee2a1dd84f8ff599a192acbac414c009c621aeb383bc64503'"
+    ]
+  },
+  "spec_asserts": "IRPT_YCDGEN-D2-W6-S1 as filed (BLOCKING, INERT): with gen-wire.ts reading AnalysisReport from the v2 schema the generated body differs from the committed file, which is hand-edited (annotation, optional provider, three hand-added OPAL types).",
+  "world_is": "MEASURED today. The same measurement as the row IRPT_YCDGEN-D2-W10-S1, because both old rows claim the committed file differs from the generator's output: cmp of the committed wire/AnalysisReport.ts blob at the portal pin c96efe17 against renderModule('AnalysisReport') over _contracts/AnalysisReport.v2.schema.json (sha256 748cdd90...) run in a temporary tree: BYTE-IDENTICAL, sha256 ef5f9eb62e6d4d716cb33e418fe58cb14ca6c925d109fc8138954e61d0234144, 144 lines. The committed file's line 12 is 'export type AnalysisReportWire = {' with 'readonly provider: 'YCHARTS'' required, as the generator emits it; it has 0 hits for AnalysisReportAnyWire, 'Hand-added' and AnalysisSectionNotAvailableReason. Portal commits 5edaa0b5 and 1c306eb3 (YCD-v-6) made the committed file the generator's output and the consumers read the union. Not measured: whether every consumer compiles (full portal typecheck not run; see row IRPT_YCDGEN-D2-W10-S3).",
+  "notes": "The old row was already INERT; this row closes it.",
+  "dismissal_reason": "Measured today: committed AnalysisReport.ts at the portal pin is byte-identical to the generator's output from the v2 schema (sha256 ef5f9eb6...)."
+}
+```
+
+## IRPT_YCDGEN-D2-W10-S6 -- RESOLVES IRPT_YCDGEN-D2-W6-S2 (the three named python tests pass in this tree)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W10-S6",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~10",
+  "surfaced_at": "2026-10-11T07:23:27Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-D2-W6-S2: the two route-count tests and the Opal-layout test all pass; the brand spec and logo are committed under ycharts/research/brand/ and routes.json is read at its current length",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest 26 passed over test_opal_producer.py, test_owned_request_contracts.py, test_upload_contract.py (org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IRPT_YCDGEN~10/w10_evidence.txt)",
+      "git log: 63ab2ba116 (routes.json last change 2026-10-09) and 730e5cabf9 (brand.json 2026-10-08); ls infra/aws/lambda/investor-reporting/ycharts/research/brand lists Opal-Capital-Logo-Full-Color.svg and brand.json"
+    ]
+  },
+  "spec_asserts": "IRPT_YCDGEN-D2-W6-S2 as filed (BLOCKING, INERT): three python tests fail for causes outside the AnalysisReport schemas, 'assert 19 == 20' in two route-count tests and 'LayoutRefused: brand asset absent' in one.",
+  "world_is": "MEASURED today. pytest from infra/aws/lambda/investor-reporting over ycharts/research/tests/test_opal_producer.py, _contracts/test_owned_request_contracts.py and _contracts/test_upload_contract.py: 26 passed, 0 failed, including test_public_routes_are_declared_against_the_installed_status_handler, test_route_denominators_are_measured_and_upload_is_declared_against_generate and test_the_real_layout_renders_the_pdf_with_the_not_in_this_version_line. Likely cause, not traced test by test: docs/contracts/investor-reporting/v1/routes.json now holds 24 routes (last changed 63ab2ba116, 2026-10-09, IB-pr-408, whose subject is the _contracts red list); ycharts/research/brand/brand.json and Opal-Capital-Logo-Full-Color.svg are tracked (commit 730e5cabf9, 2026-10-08, YCD-w-6, 'the Opal layout reads its brand spec and logo from the package first'), while deck_generation/brand_spec/ is still absent from the worktree, so the layout no longer needs it. Not run: the 17 other tests of the original 20-test census.",
+  "notes": "A deployed resident package still needs the logo shipped (row IRPT_YCDGEN-D2-W10-S4); this row concerns only the tests in the tree.",
+  "dismissal_reason": "Measured today: the three named tests pass (26 of 26 in their modules)."
+}
+```
+
+## IRPT_YCDGEN-D2-W10-S7 -- the portal wire generator cannot render OwnedAnalysisRequest.schema.json after IB-pr-411 and its regeneration test is red at the portal pin
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W10-S7",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~10",
+  "surfaced_at": "2026-10-11T07:23:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "gen-wire.ts generate() cannot render OwnedAnalysisRequest.schema.json since persist_inputs.report_index was added (report_id and revision are empty schemas), so iv-e-26.wire-regen.test.ts is red at the portal pin and ExportBundle.ts and ExportReceipt.ts at the pin differ from fresh output",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test iv-e-26.wire-regen.test.ts in .scratch/pt: 'UnrenderableSchemaError: UNRENDERABLE SCHEMA at OwnedAnalysisRequest.schema.json#/properties/persist_inputs/properties/report_index/alternatives/1/properties/report_id'; 0 pass 1 fail (org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IRPT_YCDGEN~10/w10_evidence.txt)",
+      "diff of out1/ExportReceipt.ts and out1/ExportBundle.ts against the pin's blobs: source sha256 header lines differ and the members named above are added"
+    ]
+  },
+  "spec_asserts": "IRPT_YCDGEN-D2-W6-S3 (the generator and its regeneration test are in a state the next regeneration can use): generate() over the docs schemas completes and the committed wire folder equals its output.",
+  "world_is": "MEASURED today, worker 0.9.0_WK_IRPT_YCDGEN~10, in a temporary tree built from the portal pin c96efe17 and this worktree's docs and _contracts. generate() throws UnrenderableSchemaError at OwnedAnalysisRequest.schema.json#/properties/persist_inputs/properties/report_index/alternatives/1/properties/report_id ('no $ref, const, enum or type this generator can render'); the schema (docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json, added by aff85bff09, IB-pr-411, 2026-10-09) has 'report_id': {} and 'revision': {} inside a oneOf [null, object]. renderModule run per contract writes 24 of 25 files; the 25th, OwnedAnalysisRequest, throws. Of the 24, 22 are identical to the committed blobs at the pin and 2 differ: ExportReceipt.ts (the new covered_account_ids member) and ExportBundle.ts (custody_report_ref, narrative_state, narrative_reason), whose schemas moved after the pin's last regeneration. bun test iv-e-26.wire-regen.test.ts: 0 pass 1 fail on that error; iv-e-17.gen-oneof: 1 pass. AnalysisReport.ts is unaffected. The gitlink pin may lag a later portal commit that already handles this; only the pin was measured.",
+  "notes": "No repair here. The portal wire folder is its owner's to regenerate once the generator renders an empty-schema property or the schema names report_id and revision as types."
+}
+```

@@ -276,17 +276,42 @@ G3. **A refusal at hop (d) is its own named result (row TCKT_VNEXT-D2-S31).** Wh
     UNREACHABLE; cleanup runs in the signed order. It is a RESULT: no retry, no second submission with another token.
     The other named results keep their names.
 
+G4. **The zero-call rule, final (CTO half AMENDMENT 3 @4a0e63f033; rows TCKT_VNEXT-D2-S29 and D2-S7's successor).** The live run
+    showed AMENDMENT 4's control can never pass: the ticket API does not log the caller's address, so "the control finds the
+    filer" is always 0. It also measured something stronger: the data-refresh group held 442 streams and 0 had an event in the
+    token's window. Replace AMENDMENT 4's F2 verdict rule with this:
+    - the read runs NO EARLIER than `exp` + 300 seconds (wait through the replaceable sleep; logs can land late). The cleanup
+      order of AMENDMENT 2 is unchanged and comes first;
+    - it records, for `/aws/lambda/opal-data-refresh-api`: `streams_in_group`, `streams_active_in_window` (last event at or
+      after `iat`), and `latest_event_time` (the newest last-event time across all streams, as an ISO string). The last one is
+      the positive control: it shows the group is readable and has a history;
+    - `ZERO_CALL_VOID` when the group cannot be described (`GROUP_NOT_DESCRIBABLE`) or holds 0 streams (`GROUP_EMPTY`);
+    - otherwise `streams_active_in_window == 0` is `ZERO_CALLS_PROVEN` with `proof: NO_INVOCATION_IN_WINDOW`: the function was not
+      invoked by anyone in the window, and no filter or second group is read;
+    - otherwise (a stream WAS active) read the filter for the filer's address over `iat`..`exp`, all pages: `matches > 0` is
+      `NON-ZERO`. If `matches == 0`, run the control over `/aws/lambda/opal-ticket-api` keyed on THE RUN'S TICKET IDS (which
+      that function does log), not on the filer's address: the control finding at least one run ticket id makes it
+      `ZERO_CALLS_PROVEN` with `proof: FILTER_AND_TICKET_ID_CONTROL`; a control that finds none is `ZERO_CALL_VOID`
+      (`CONTROL_FOUND_NO_RUN_TICKET`).
+    Update the AMENDMENT 2-4 zero-call tests to this rule, keeping their names.
+
 <criterion id="R2-rn1-AC9" cell_refs="R2-rn-1"><invocation>python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py rn-token</invocation><expect>RN-TOKEN-OK</expect></criterion>
 `R2-rn1-AC9`: tests `test_idempotency_token_differs_between_two_runs`, `test_idempotency_token_fits_the_contract_pattern`,
 `test_no_token_is_derived_from_the_file_hash_alone` (two runs, same file, different `iat`: neither the submission token nor the
 upload token repeats), `test_hop_d_refusal_is_its_own_named_branch` exist and pass. AC1-AC8 must still pass.
 
-Dry-run at base: AC9 FAIL (missing tests) as expected; AC1-AC8 PASS.
+<criterion id="R2-rn1-AC10" cell_refs="R2-rn-1"><invocation>python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py rn-zero3</invocation><expect>RN-ZERO3-OK</expect></criterion>
+`R2-rn1-AC10`: tests `test_no_invocation_in_window_is_proven_without_the_filter_control`,
+`test_zero_call_read_waits_five_minutes_past_exp`, `test_zero_call_block_prints_the_latest_event_time`,
+`test_active_stream_falls_back_to_the_filter_and_a_ticket_id_control` exist and pass. Ten criteria on this order: each amendment
+changed what the runner must do, and AC1-AC8 must still pass (their zero-call tests updated to G4, names kept).
 
-Proof: add AC9 and re-validate with ids `R2-rn1-AC1,...,R2-rn1-AC9` comma-separated. Flip to `complete` only when all nine pass.
+Dry-run at base: AC9 and AC10 FAIL (missing tests) as expected; AC1-AC8 PASS.
+
+Proof: add AC9 and AC10 and re-validate with ids `R2-rn1-AC1,...,R2-rn1-AC10` comma-separated. Flip to `complete` only when all ten pass.
 Rows, if needed: `TCKT_VNEXT-D2-W8-S<k>` with k from 10 upward.
 
-<expected_criteria>R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7 R2-rn1-AC8 R2-rn1-AC9</expected_criteria>
+<expected_criteria>R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7 R2-rn1-AC8 R2-rn1-AC9 R2-rn1-AC10</expected_criteria>
 
 Dry-run at base: all three FAIL (absent), as expected.
 
@@ -316,7 +341,7 @@ org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7 R2-rn1-AC8 R2-rn1-AC9. The instance is at
+Criterion ids: R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7 R2-rn1-AC8 R2-rn1-AC9 R2-rn1-AC10. The instance is at
 `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~8/TCKT_VNEXT.TO-R2-rn1.fwd1-runner-reads-the-served-request-id.proof_of_spec.json`.
 Validate it with `python .tools/proof-of-spec-check.py <instance> R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3` before the flip.
 </proof_of_spec>

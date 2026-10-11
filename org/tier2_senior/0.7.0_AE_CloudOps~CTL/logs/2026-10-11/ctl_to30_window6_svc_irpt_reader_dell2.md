@@ -61,3 +61,17 @@ G2 R done 07:13:59Z. REMOVE put 07:16:18-07:16:19Z on the CTO R-DONE (108242), r
 07:16:21Z, dell2 and dell1 explicitDeny, walker allowed, AC1 present. Window open 7 min 51 s. Ledger closed.
 REMOVE time sent to MSTR (108244) and the CTO (108245). No GetSecretValue by this seat.
 Next: `[2.0.0_SA_COO~C]` record windows 6, 7 and 8 on TO-APPLY-30's closure block.
+
+## Window 9 (same terms, no start hold, ONE GET: held-characteristics coverage count k of N)
+
+**archetype:** DEPLOY
+
+Consent `CTO_CONSENT_SVC_IRPT_READER_WINDOW9_DELL2_20261011.md`. Ledger `svc-irpt-served-read-w9-laptop-20261011`
+opened 07:29Z. Live == BEFORE at 07:29:44Z and 07:29:56Z. ADD put 07:29:57-07:29:59Z, read back set-equal to ADD
+07:30:01Z, PUT TIME to MSTR 07:30:07Z (6 s after the read-back). Simulated with the live policy attached: dell2
+allowed, dell1 explicitDeny, walker allowed. G2 R done 07:34:44Z. REMOVE put 07:37:09-07:37:11Z on the CTO R-DONE
+(108257), read back set-equal to BEFORE 07:37:12Z, dell2 and dell1 explicitDeny, walker allowed, AC1 present.
+Window open 7 min 12 s. Ledger closed. REMOVE time sent to MSTR (108258) and the CTO (108259). No GetSecretValue.
+The CTO's consent note asks dell2 to choose, before a fifth ask, between one batched window and a standing
+status-only read path; not a condition on this seat.
+Next: `[2.0.0_SA_COO~C]` record windows 6-9 on TO-APPLY-30's closure block.
