@@ -1872,3 +1872,29 @@
   "notes": "Resolves IRPT_ANLREQ-D2-S23. The process defect behind it stands as a lesson: a precondition on another seat's act goes on that seat's order."
 }
 ```
+
+## IRPT_ANLREQ-D2-S29 -- release 4 cannot attach: the packager's live attach and ticket-read ports are stubs (PACKAGER_PRINCIPAL_UNSET)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S29",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T06:36:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "Release 4 as the tree stands cannot attach: the packager's live attach and ticket-read ports are stubs that raise PACKAGER_PRINCIPAL_UNSET, and no cell builds them",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED at box/dell2 @fd54804907, 2026-10-11: infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:188-197 live_attach and live_ticket_package each consist of one statement, raise PackagerRefused('PACKAGER_PRINCIPAL_UNSET'); no code path calls POST /api/scoped/tickets/{ticket_id}/package or reads a ticket. W62-S1 IS closed in the tree: infra/aws/lambda/investor-reporting/reports/repository.py:34-35 registers svc-irpt-packager for ANALYSIS_COMMENTARY. In handle_commentary_ready (:134-184) ticket_package is called after the record checks and before any read, render or attach. So a resident built from this tree that binds commentary_ready_queue_url ends EVERY well-formed message whose records pass at PACKAGER_PRINCIPAL_UNSET; infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:901-924 re-raises that (not a terminal outcome, not a message refusal), the message is kept, redelivered and reaches the DLQ. Nothing is rendered or attached. No order in the tree names the live attach or the svc-irpt-packager credential as its cell (decomposition R2 lists AR-g-21, AR-g-22, AR-g-23 for workstream G)."
+    ]
+  },
+  "notes": "ARMED only if release 4 binds commentary_ready_queue_url: then every real commentary_ready message goes to the DLQ, loudly, with no package. Disarm: release 4 ships WITHOUT that binding (the resident does not poll), or a cell builds the two live ports and a pair mints svc-irpt-packager first. Scope call sent to 1.0.0_SA_CTO~DELL2.",
+  "spec_asserts": "org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R2.md cell AR-g-23: 'The resident release packet with the packager mint (W62-S1, W62-S2), cut after ~T2's commentary apply'; FWD-1 hops 7 and 8 are the render and the I5 attach.",
+  "world_is": "MEASURED at box/dell2 @fd54804907, 2026-10-11: infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:188-197 live_attach and live_ticket_package each consist of one statement, raise PackagerRefused('PACKAGER_PRINCIPAL_UNSET'); no code path calls POST /api/scoped/tickets/{ticket_id}/package or reads a ticket. W62-S1 IS closed in the tree: infra/aws/lambda/investor-reporting/reports/repository.py:34-35 registers svc-irpt-packager for ANALYSIS_COMMENTARY. In handle_commentary_ready (:134-184) ticket_package is called after the record checks and before any read, render or attach. So a resident built from this tree that binds commentary_ready_queue_url ends EVERY well-formed message whose records pass at PACKAGER_PRINCIPAL_UNSET; infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:901-924 re-raises that (not a terminal outcome, not a message refusal), the message is kept, redelivered and reaches the DLQ. Nothing is rendered or attached. No order in the tree names the live attach or the svc-irpt-packager credential as its cell (decomposition R2 lists AR-g-21, AR-g-22, AR-g-23 for workstream G)."
+}
+```
