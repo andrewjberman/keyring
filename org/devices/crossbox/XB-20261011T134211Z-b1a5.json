@@ -10,16 +10,20 @@
  "subject": "IRPT_ANLREQ: read-only, name the one message on the commentary-ready queue (CTO~DELL2 msg 4971); uses 1 of 3 receives",
  "body_path": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/CROSSBOX_ASK_COMMENTARY_READY_MESSAGE_20261011.md",
  "opened_at": "2026-10-11T13:42:11Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
-  "at": null,
+  "at": "2026-10-11T13:45:19Z",
+  "bus_message_id": "8e92d876-ba94-4835-9bd6-025a2d17b40b"
+ },
+ "ack": {
+  "at": "2026-10-11T13:47:29Z",
+  "by": "1.0.0_SA_CTO",
   "bus_message_id": null
  },
- "ack": null,
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T13:48:50Z",
+  "to_by": "1.0.0_SA_CTO"
  }
 }
