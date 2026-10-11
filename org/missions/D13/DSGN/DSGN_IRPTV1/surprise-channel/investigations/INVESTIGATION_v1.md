@@ -3838,3 +3838,57 @@
   "notes": "Candidate portal commit 2639743c on branch wk-dsgn-irptv1-r11-46 (LOCAL). Limit: a row is shown corrected only when a served correction matches its uploaded symbol."
 }
 ```
+
+## DSGN_IRPTV1-D2-W46-S2 -- Export on the Analysis tab needs the retained Analysis report's id, revision and sha256 served to the browser; no served Analysis response carries them
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W46-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~46",
+  "surfaced_at": "2026-10-11T06:03:00Z",
+  "one_line": "TO-IV-e-85 (W35-S2): the Analysis tab cannot publish an export target because the browser holds no retained Analysis report identity. The server's submit-export resolves exactly one retained report by the body's authorized_report_revisions[0].report_id and .revision (export/retained_export.py:95-99) and pins it as analysis_report_ref {report_id, revision, sha256} (export/submit_service.py:71-76). The Performance wire carries that identity as retained_ref {report_id, revision, sha256, report_kind} and the page forwards it (tabs/reporting/ReportingTab.tsx:268-277); the served Analysis report (wire/AnalysisReport.ts) and the owned-history slice (AnalysisReportSliceView) carry request_id and attempt_id only. Missing: a served member on the Analysis report response (the analysis-report sections route, or the owned-report read) naming the retained report: report_id, revision and sha256, plus the report_kind ANALYSIS, for the request being shown. With it the page could set reportRefs, sourceRevision and analysis_report_ref the way Performance does.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/contracts/wire/PerformanceReport.ts:64-68 (retained_ref {report_id, revision, sha256, report_kind: 'PERFORMANCE'}) versus contracts/wire/AnalysisReport.ts:12-24 and :85-92 (request_ref, vendor_artifact, release.released_revision, protected_pdf_ref with a server-only storage key; no retained report id)",
+      "portal/src/pages/InvestorReporting/contracts/index.ts:1408-1412 (AnalysisReportSliceView: requestId, attemptRef, sections, validation; no revision, no hash) and tabs/analysis/OwnedRequestHistory.tsx:236 (the report the advisor sees after Generate lives in this component's state, not AnalysisTab's)",
+      "infra/aws/lambda/investor-reporting: retained_ref is emitted only by performance/entry.py:282,300-301 and performance/retained.py (git grep of the package, non-test files: 2 files)",
+      "portal/src/pages/InvestorReporting/index.tsx:319 (with no override, an analysis Export would name reportRefs [selectedScopeRef.revision], the client scope revision, which is not a retained report id) and export/ExportButton.tsx:239 (buildSubmitRequest only; buildAnalysisSubmitRequest, export/submit.ts:116-130, is called by no production file) and contracts/adapt.ts:1573-1577 (analysis_report_ref is written only when bundle.analysisReportRef is set; no production file sets it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IV-e-85 step 2: EXPORT_WIRED if the page already holds everything the export needs; else NEEDS_SERVED_ROUTE with a row naming the missing route and what it would return.",
+  "world_is": "The page holds the request id and, on the legacy path, a releasedRevision and artifactHash that are not the retained report's revision and sha256 (the server reads authorization_ref from the retained row, retained_export.py:124-125). Whether the producer already holds an Analysis retained id that a route could return is not established here; no producer handler returns one today. No product file changed; Export stays closed on the Analysis tab (index.tsx:311).",
+  "notes": "Also needed once the identity is served and the CTO rules the contract (outside this order, outside its grant): a publish callback from the tab mounted at TabShell.tsx:164-172, state beside index.tsx:216, the gate at index.tsx:311, and export/ExportButton.tsx pinning analysis_report_ref. The tab shows more than one report source (the legacy request list, which the live client refuses at api/endpoints/investor-reporting.ts:1274-1276, and the owned-history dialog), so the contract should name which one Export follows."
+}
+```
+
+## DSGN_IRPTV1-D2-W46-S3 -- TO-IV-e-85 grant names InvestorReportingPage.tsx, which does not exist; the page is index.tsx, which the grant omits
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W46-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~46",
+  "surfaced_at": "2026-10-11T06:03:30Z",
+  "one_line": "The order's <paths> lists portal/src/pages/InvestorReporting/InvestorReportingPage.tsx; that file is absent in the portal worktree. The page component (the Export control, its gates and the state a tab publishes into) is src/pages/InvestorReporting/index.tsx, and the tab mount is tabs/TabShell.tsx; neither is in the grant, so an EXPORT_WIRED edit could not have been made inside it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "directory listing of portal/src/pages/InvestorReporting at HEAD 2639743c: __tests__, components, contracts, dashboard, export, fixtures, format.ts, global, header, index.tsx, render, state, tabs, tests (no InvestorReportingPage.tsx)",
+      "portal/src/pages/InvestorReporting/index.tsx:70 (export function InvestorReporting) and :312 (the one Export control)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's <paths> block grants InvestorReportingPage.tsx and header/ as the page surface.",
+  "world_is": "The grant's page file does not exist; the decision in this order did not depend on it because the finding is a missing served identity, not a missing prop.",
+  "notes": "A later EXPORT_WIRED cut should grant index.tsx, tabs/TabShell.tsx and export/ by name."
+}
+```
