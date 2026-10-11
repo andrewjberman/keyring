@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-11T02:45:53Z",
+ "written_at": "2026-10-11T03:05:19Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1439,6 +1439,37 @@
    "rec": "Yes: no seat can send as a client firm, so the alternative is a planted mail from outside Opal, which is worse. The organic client mail is the proof, and the COO reads it the day it lands.",
    "scope": {
     "measured_at": "2026-10-11T01:27:54Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261011T030519Z-058e",
+   "project": "COMM_ASSIST",
+   "subject": "Have one Opal colleague (not you) email you the test text in COMM_ASSIST_DECOMP.round13.md cell CA-e-1, or name a mailbox a seat may send from",
+   "asked_by": "2.0.0_SA_COO~ZZ",
+   "source": "org/missions/D9/COMM/COMM_ASSIST/surprise-channel/remediations/REMEDIATION_v2.Z.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-11T03:05:19Z",
+   "kind": "act",
+   "context": "FWD-4 (client mail naming Andrew reaches his phone) is APPLIED and has never been exercised. Its internal branch needs one mail from an Opal mailbox other than Andrew's. No seat can send: 0.0.3_BG_BBGTerminal holds the opalbloomberg session but declined under its seat hold (msg 33123).",
+   "rec": "Ask any colleague to send it once. It takes a minute, and it proves the mail-to-text path end to end, which no other act can.",
+   "scope": {
+    "measured_at": "2026-10-11T03:05:19Z",
     "paths": "clear",
     "placement": "clear",
     "resources": "clear",
