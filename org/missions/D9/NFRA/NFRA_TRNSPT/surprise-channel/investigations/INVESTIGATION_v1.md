@@ -1987,3 +1987,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S29",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-11T08:00:00Z",
+  "hazard_standing": "INERT",
+  "one_line": "The gateway's OneDrive search tool fails a positive control: it returns none of five files that a folder listing shows in the same drive, so its zero is not an absence. The file tools also cannot read another user's drive.",
+  "class": "OBSERVATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "gateway list_onedrive folder Recordings (signed-in user Andrew@opalinvest.com), 2026-10-11 ~07:0xZ: 5 files, each named '<title>-<date>_<time>-Meeting Recording.mp4', dated 2026-07-07 to 2026-08-19",
+      "gateway search_files query 'Meeting Recording', same session: 4 hits, all unrelated workspace files, 0 of the 5 listed files",
+      "record org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/R23_TR_OM23_FOUR_MONDAYS_OTHER_ROUTE_20261011.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "search_files: 'Search the user's OneDrive for files by name/content.' A file whose name contains the query, in that drive, is returned.",
+  "world_is": "Five files named with the query phrase sit in the user's own Recordings folder and the search returns none of them. Why is not measured (an index lag, a folder excluded from search, or a ranking cut are all possible). Separately, by design, no file tool reads another user's drive, so a meeting organizer's recordings are out of reach of every tool.",
+  "notes": "For the gateway's owner (NFRA_OPLGTW, site Z), on the CTO's word (msg 4439). Any consumer that reads a search zero as 'no such file' is exposed: TR-om-23 and the Research Meeting folder read both met it. File names, counts and dates only; no file was opened."
+}
+```
