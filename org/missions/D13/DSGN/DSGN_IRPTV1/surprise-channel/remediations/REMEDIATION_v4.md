@@ -29,15 +29,15 @@ per C-S60.
     "owner": "2.0.0_SA_COO~D",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~D",
       "round": "v4"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~D",
-      "at": null
+      "at": "2026-10-11T06:41:10Z"
     }
   },
   {
