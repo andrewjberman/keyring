@@ -100,3 +100,17 @@ This order touches none of them.
 <round>79</round>
 <slot>site-z</slot>
 <fabric>dell1</fabric>
+
+**COMPLETE 2026-10-11 ~10:2xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** `0.7.0_AE_CloudOps~ZW` @625de3ec4f (on box/dell1 HEAD at this flip), under AMENDMENTS 1 and 2. Cycle `20261010T221526Z`
+  ended 09:39:22Z: asked 242, attempted 242, new 6, already_held 0, failed 8, completed true, stopped none. Proof VALID rc 0 at box/dell1 HEAD
+  (`proof-of-spec-check.py --governing-order` run by this seat).
+- **AC1 PASS, AC2 PASS** (REQUEUED lists 6 keys). **AC3 is the CVO's judgment and is NOT graded here:** clauses 1 and 2 (242 of 242
+  attempted, a stop only on the consecutive cap) measure satisfied; clause 3 (each failure carries its own detail) measures
+  present-but-empty, 8 of 8 failure entries with detail equal to status `error` (row AMGT_HARVST-D1-S7). It goes to the L8 packet
+  with that measurement.
+- **Process tree (AMENDMENT 1, row D1-S5):** RUNNERS 1, PID 21512 at both reads; PID 37816 absent at both. Disposition of D1-S5 is the CVO's.
+- **Carried:** ledger `harvst-bw1-zw-repin-20261009` leg CYCLE (the C-d of bw-1); bs-3 AC3 for bbg now has a completed cycle record, wsj and barrons
+  have none; the empty failure detail goes to the round-79 L10 slug as an ENRICHMENT item.
+
+<status>complete</status>
