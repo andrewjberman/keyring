@@ -5491,3 +5491,56 @@ round.** Never edit an existing row.
  "world_is": "A fresh checkout without .scratch/advi_cotbkf/tx_cache or fwd3_serve_r34 gets REFUSED from the mint and the build, where before it did not; the S3 silver account_day_value is assumed to carry the cusip column the local copy carries."
 }
 ```
+
+## ADVI_COTBKF-D2-S88 -- Disarms D2-S60 by citation of the CTO half's AMENDMENT 1
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S88",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T05:35:00Z",
+ "one_line": "DISARMS ADVI_COTBKF-D2-S60, by citation, as the CTO round-58 analysis @1c27ce4263 section 3 asks of this seat: the row's disarm_owner (1.0.0_SA_CTO~DELL2) disarmed it on 2026-10-09 in AMENDMENT 1 of its own R36 half, and no channel row had carried that until now.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_R36_COT_PRICE_REWRITE_CTO_HALF.md line 44, read at HEAD: '## AMENDMENT 1 (~13:4xZ, ... row D2-S60 @f550170df0): condition 2's reading -- GO'; the file's last commit is fa3cabc1ea",
+   "the same amendment, lines 46 to 52: condition 2 reaches only a writer beyond the half's own census; 107 mirror objects read one at a time, exactly 1 writer, the named builder's deployed copy; scheduled writers 0; readers of another firm's prices 0; 'Condition 2 is MET, and D2-S60 is disarmed by this amendment'",
+   "CTO round-58 analysis section 3: D2-S60 does not gate CB-al-2; this seat appends the row citing the amendment"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "An ARMED hazard disarms via its disarm_owner, and the channel carries the disarm.",
+ "world_is": "The disarm was made by its owner in a deliverable two days ago; this row is the channel's copy of it. The issuer did not re-read the 107 mirror objects."
+}
+```
+
+## ADVI_COTBKF-D2-S87 -- Round 58 closed by the issuer run; the bond count's zero has a positive control
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S87",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T05:35:00Z",
+ "one_line": "Round 58 (CB-bf-1, the bond-day guard and the count at the mint) drained @154e0e5a3a and closed by the issuer's run. The zero is not vacuous: the same join that finds 0 measured rows on bond-holding days finds all 141,555 bond-holding account-days in the day files, every one NOT_MEASURABLE. That also re-derives round 57's count by a second instrument.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer run at 154e0e5a3a, default day directory: ARD-COTTONWOOD-BOND-CHECK days=3325 rows=1691729 measured_rows=107316 measured_rows_on_bond_days=0 fixed_income_cusips=778, rc 0 (each of 3,325 files re-hashed against the manifest first)",
+   "issuer positive control over the same files and the same loader: holdings carry 141,555 bond-holding account-days over 208 accounts; the day files carry 1,533 distinct account ids, 208 of them among the bond accounts; day-file rows of ANY basis on a bond-holding account-day: 141,555, return_basis NOT_MEASURABLE on all of them",
+   "tests at the same HEAD, variable unset: test_commonwealth_ard_bond_guard.py 8 passed; silver suite 781 passed, 12 skipped",
+   "issuer read of the adapter diff @86119c13dc: apply_days runs bond_check after its sha check and before any S3 client exists and raises BondDayMeasuredError when the count is not 0; build calls guard_bond_days before a day is written, under method_version 3 only"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO msg 4131 and round-58 analysis section 4 item 1: the count is re-read at the mint on the exact files, 0 or it stops; a guard with a test refuses a measured row on a bond-holding day under method_version 3.",
+ "world_is": "Both are in the tree at 154e0e5a3a. NOT exercised: build() itself was not run (only its guard function is tested, on synthetic frames), and whether the SERVED account_day_value table carries the cusip column the build now reads was not checked (no S3 read was made); the local copy has it. --apply was not run."
+}
+```

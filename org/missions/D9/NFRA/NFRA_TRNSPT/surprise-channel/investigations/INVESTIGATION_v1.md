@@ -1812,3 +1812,29 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "notes": "For the CVO's remediation row D2-S19: disarm state DISARMED at 2026-10-11T05:06Z by this act. Sizes, hashes, statuses and counts only."
 }
 ```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S22",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-11T05:35:00Z",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "one_line": "An untargeted apply of infra/aws/terraform/transcripts from a tree lacking fd74f984ac, 5ae3b3ddd9 and 7bca11ddee reverts the Teams pull's code and its memory setting: one dist zip path feeds three functions, and a pre-fix zip was built and applied from on this box at 05:26Z.",
+  "class": "BLOCKING",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer live read 2026-10-11T05:29Z: teams pull AI4UQD0ME+ABza1X0BrBjGjpqjN7f2fc0Cdxb88aA/I= (05:03:47Z, 1024 MB); mail pull VGIq85Xx... unmoved; commentary function plVgBIIXTNPVV/JtDADhavy/BgWQp+kRw6gcwpwHjyA= (05:26:35Z) -- a different zip from the pull's",
+      "1.0.0_SA_CTO~DELL2 msg 4174 (2.0.0_SA_COO~Y2 msg 4173: the commentary function was applied from pin 4901eece20, which lacks fd74f984ac) and its ruling msg 4182",
+      "infra/aws/terraform/transcripts/pull.tf:19 local.pull_zip is a file path read by pull.tf, mail_pull.tf and commentary.tf"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The transcripts root's three functions are built from one zip, and a tree applying the root carries the pull's two fixes and its memory line.",
+  "world_is": "The stack runs three different zips today (pull AI4UQD0M, mail pull VGIq85Xx, commentary plVgBIIX), and at least one tree on dell2 built a zip without the pull fix. The pull itself is unreverted (measured after the 05:26Z apply). Nothing refuses an untargeted apply from a stale tree; the plan would show the pull's source_code_hash and memory_size changing back.",
+  "notes": "Filed on the CTO's ruling (msg 4182). DISARMS on two measured reads, both printed in the disarming row: (1) the commentary function's live CodeSha256 equals the pull's after 2.0.0_SA_COO~Y2's re-apply; (2) git merge-base --is-ancestor of each of the three commits against origin CLOUD reads yes. Until then the CTO's signing condition on this root: the apply is targeted and the tree's dist zip hashes to the pull's live digest before the plan. No new gate. Hashes, times and sizes only."
+}
+```
