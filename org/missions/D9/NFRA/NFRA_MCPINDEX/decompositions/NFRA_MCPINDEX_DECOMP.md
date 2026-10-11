@@ -1286,3 +1286,20 @@ disjoint:
 - The deploy-wrapper fix for Z-S92 and Z-S94 belongs to `2.0.0_SA_COO~O`.
 - Z-C-S42 belongs to `2.0.0_SA_COO~C`.
 - Round 7 stays open on MX-s-19.
+
+## STANDING BATTERY CLAUSES (the issuer's cut template, 2.0.0_SA_COO~MI) -- binding on every later round of this project
+
+1. **A check excused from the base dry-run has its PASS arm exercised once, on a planted input, before the cut**
+   (`ledger/ROUND_ANALYSIS.round9.md` @bc8e36fdd5 ruling 4; row Z-S100). The issuance commit's battery lines name the
+   planted input and its reading beside each `not dry-run` check. Instance: r10.AC2's route counter read 0 in every world,
+   because its PASS arm was never run before the cut.
+2. **A round-close verdict on this project is read with the round-close suite's five known failures listed beside it,
+   until that suite reads 24 of 24** (ruling 3; row Z-S97, owner `2.0.0_SA_COO~C`).
+
+## PARKED AT ROUND_CLOSE (2026-10-11 ~15:2xZ, `ROUND_ANALYSIS.round9.md` section 3) -- no round 10 is cut
+
+Un-park on ANY of:
+- (a) a FWD-19 producer serves (billing: ADVI_BILLING, dell2; trade-rec fund grain: NFRA_OPSWKF, dell2). The issuer
+  then cuts that one reader.
+- (b) Andrew books Alyssa's run, and J1 is graded.
+- (c) round 7's L8 lands after MX-s-19's 2026-10-13 runs (s19.PRE after 03:00Z).
