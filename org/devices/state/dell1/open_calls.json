@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-11T04:52:43Z",
+ "written_at": "2026-10-11T05:38:26Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -1523,6 +1523,44 @@
     "at": "2026-10-11T04:05:20Z",
     "by": "0.0.0_AB_MSTR~DELL1",
     "reason": "client-facing portal PROD promote: /advisor-intelligence carries the ADVI_BILLING fee panel and is in FIRM_ALLOWED_PATHS for all three partner firms; only Andrew's word releases it (laptop CTO msg 108193)"
+   }
+  },
+  {
+   "id": "dell1-20261011T053810Z-fe9b",
+   "project": "MDPF_CANON",
+   "subject": "X2 re-read: the combined all-firms MDPF figure carries 21 one-firm entries (some 1-3 accounts, value equal to that firm's) and by_model entries no firm holds. (A) fold every by_model entry held at fewer than 2 firms into one 'other models' line and keep the two one-firm series out of global, or (B) keep them and rewrite FWD-3 to say what they reveal? REC (A)",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~8/X2_GLOBAL_BASIS.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-11T05:38:10Z",
+   "kind": "fork",
+   "context": "Round-3 basis (X2_GLOBAL_BASIS @945e1add0c, as-of 2026-10-08) reads by_model min firms 0 and non-model series min firms 1; X2 was GRANTED 2026-09-15 on the round-2 basis 'aggregate counts only'. Row MDPF_CANON-D1-W8-S5 (ARMED). Gates FWD-3 and the global fold cell.",
+   "rec": "A. Headline sums are unchanged (3 firms); only per-model lines held at one firm, which reveal one firm's book (one account in several), are folded. It is a served change under never-widen sign-off with every global leaf read before and after. B changes the ENDPOINT and re-signs the ratified half.",
+   "scope": {
+    "measured_at": "2026-10-11T05:38:10Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-11T05:38:26Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "X2 is Andrew's own grant (06_CONFORMANCE_LEDGER X2, decider Andrew 2026-09-15); its written basis is now false, so only he re-grants or withdraws it"
    }
   }
  ]
