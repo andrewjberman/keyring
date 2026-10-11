@@ -2518,3 +2518,28 @@
   "notes": "S25 stays PARKED. Owner of the read is now TCKT_VNEXT's driver (2.0.0_SA_COO~V2); it un-parks when that fourth run reads READY. This seat owes nothing on it and reads the result when V2 reports."
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S42",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:53:44Z",
+  "one_line": "L8, the resident release st30, no judgment criterion: this project's share (a request carrying ticket_id is admitted and its READY receipt names the ticket, S2; a WARN line per READY with no send, S5; the optional retained_ref schema member, S7) is APPLIED, UNEXERCISED. Separately, read live by this seat: irpt-status now runs Iw3FADFr, the release-5 build, since 10:25:40Z. This seat's slug of 09:51Z said nothing was applied; that was true then and is not now.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/st30_release/CVO_PACKET_ST30_IRPT_ANLREQ_20261011.md @856f5e92a3 (msg 4759)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/st30_release/ST30_CORRECTION_1_S4_AND_STATE_AFTER_INSTALL_20261011.md",
+      "this seat's reads 2026-10-11T10:53:44Z: the applier's host file org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_st30/D2_V1_INSTALL_20261011.txt (running root /opt/irpt-resident/37210c771a-st30, active, restarts 0, tracebacks 0; allow list one sign-in; research row firms 3; read-back release 390; both queue binding counts 0); at commit 37210c771a, an ancestor of HEAD, resident_worker.py:789 reads READ_BACK_RELEASE_VISIBILITY_S = 390 and :121 reads the one-entry allow list. The host itself was not read by this seat",
+      "this seat's live read: irpt-status CodeSha256 Iw3FADFr...5tw0=, LastModified 2026-10-11T10:25:40Z"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself. Evidence law: APPLIED is not EXERCISED.",
+  "world_is": "The resident share is applied and unexercised. Release 5 of irpt-status is live; this seat has not seen its packet or read a served answer from it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
