@@ -1434,3 +1434,15 @@ Rounds 78 and 79 are fully drained (round-close MAY-CLOSE on both). Two rulings 
 
 **fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~125` (DB-b-154) and the record-owning serial `~121` (DB-b-155), each in a
 fresh worktree cut from box/dell2.
+
+## 83. ROUND 81, WORKSTREAM B (2026-10-11 ~22:0xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 5937)
+
+Row D2-W124-S1 (round 79: the original store rewritten after the copy; two sampled days now hold 0 rows) was carried to the store's
+owner the same hour. 1.0.0_SA_CTO~DELL1 measured no id lost (5,580 of 5,580 present, re-attributed to other days) and named the open
+half as this project's. Round 80 (DB-b-154, DB-b-155) is running; this ruling arrived after its issuance, so it is cut as its own round.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-156` | msg 5937: does any reader the tie-out or the served dashboard uses key on the file's day and not the transaction's own date; for the two sampled days, the ids' own dates against the files they now sit in. Read-only, counts only. The row closes on it | LOCAL | DB-b-151 | B81-1 |
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~126`, in a fresh worktree cut from box/dell2.
