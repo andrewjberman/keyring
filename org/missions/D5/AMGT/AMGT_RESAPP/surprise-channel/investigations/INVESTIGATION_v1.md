@@ -24989,3 +24989,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not acted on beyond the candidate. The cell's rule is implemented as written (classification stays withheld; sector served by key). AC2 is recorded FAIL and the order stays open. Disposition of the r95 K1 sector clause (amend the census to the round-97 rule, or retire K1's sector-null arm) belongs to the issuer and the CTO. Hazard INERT: a red prep check, no served harm through normal operation."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W394-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~394",
+  "surfaced_at": "2026-10-11T21:35:49Z",
+  "one_line": "The model-block key sweep for AMGT-be-2 assumes a property-path read of model.fiscal_year_figures; in both builds the only reads are dotted string paths walked at runtime by CardFooter, and ThesisModelBlock declares no such field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-be-2 order section 1: classify each site of fiscal_year_figures as a read of the top-level payload key or of model.fiscal_year_figures (model. as a property path, a destructure of model, a local alias), and count only reads of the served payload.",
+  "world_is": "At origin/DEV 44ec7e70a97476fdafc8620beae4d2bfbdc41101 and origin/PROD 37aa1247ee4ba487e5610dc5b78d65ae28468a99 there is no property access, destructure or local alias of model.fiscal_year_figures in src/. The model-block reads are two dotted STRING paths, model.fiscal_year_figures[].vintage and model.fiscal_year_figures[].source, inside footerFor.model at CardFooter.tsx lines 187 and 188, walked by values(). ThesisModelBlock (types.ts 1129 in DEV, 1124 in PROD) declares no fiscal_year_figures field, so a property-path search finds zero reads of the key on the model block.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "native Grep for model.fiscal_year_figures over origin/DEV src (44ec7e70a97476fdafc8620beae4d2bfbdc41101): CardFooter.tsx:187 and :188 only; the top-level grep hits are ModelTab.tsx:593 and :602",
+      "native Grep for model.fiscal_year_figures over origin/PROD src (37aa1247ee4ba487e5610dc5b78d65ae28468a99): CardFooter.tsx:187 and :188 only",
+      "CardFooter.tsx lines 135-153 values() walks dotted and [] paths; ModelTab.tsx:897 (DEV) and :815 (PROD) call footerFor.model(data) on the top-level ThesisBundle",
+      "native Grep for fiscal_year_figures in DEV types.ts returns line 1286 (ThesisBundle) only, so ThesisModelBlock at types.ts:1129 declares no such field"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~394 during the AMGT-be-2 read. The reading records READ-BY-BOTH for the model-block key on the string-path reads. A later cell that drops the key must search the string form as well as the property form."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W394-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~394",
+  "surfaced_at": "2026-10-11T21:35:49Z",
+  "one_line": "CardFooter.whatChangedSources names fiscal_year_figures[].source (top level) in both builds, but no component calls it, so that path is a definition with no served read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-be-2 order section 1: count only reads of the served payload; a site that a served page does not exercise is not a read of the key.",
+  "world_is": "CardFooter.tsx lines 191-192 define whatChangedSources (identical in origin/DEV and origin/PROD) with the paths header_figures[].source, model.forecast_figures[].source and fiscal_year_figures[].source. A native Grep of whatChangedSources finds the definition only: no src/ .ts or .tsx file imports or calls it, and no file under src/pages/SecurityAnalysis in any type names a call. The reading does not count CardFooter.tsx:192 as a read of the key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "native Grep for whatChangedSources over origin/DEV src/ *.ts and *.tsx (44ec7e70a97476fdafc8620beae4d2bfbdc41101): CardFooter.tsx:191 only",
+      "native Grep for whatChangedSources over origin/PROD src/ *.ts and *.tsx (37aa1247ee4ba487e5610dc5b78d65ae28468a99): CardFooter.tsx:191 only",
+      "native Grep for footerFor. and whatChanged over src/pages/SecurityAnalysis in both builds: footerFor.model is called at ModelTab.tsx:897 (DEV) and :815 (PROD); whatChangedSources has no call site"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~394 during the AMGT-be-2 read. Not a removal question. A later cell that drops the top-level key must also decide this dead definition at CardFooter.tsx:192, which the reading does not count."
+}
+```
