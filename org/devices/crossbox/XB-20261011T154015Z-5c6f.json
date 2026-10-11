@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T154015Z-5c6f",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~Q1",
+ "to_serial": "0.7.0_AE_CloudOps~ZQ",
+ "subject": "MDPF_DEMQUE.TO-DQ-t34 -- round 9 DQ-t-34: the standing drawer closes a request whose every security reached its end date",
+ "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t34.sitez-drawer-closes-completed-requests.md",
+ "opened_at": "2026-10-11T15:40:15Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-11T15:41:52Z",
+  "bus_message_id": "810de348-4ff9-4118-9997-4320c2bcb6eb"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
