@@ -5137,3 +5137,58 @@
   "notes": "The print/export document is the one a principal could be handed; whether it needs the same treatment is the issuer's and the CTO's call."
 }
 ```
+
+## DSGN_IRPTV1-D2-W57-S3 -- IV-e-102: with no client in the header the owner's history is read for the firm the Prospect request was sent to; whether the live history route answers that read is not measured here (no live call)
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W57-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~57",
+  "surfaced_at": "2026-10-11T14:25:00Z",
+  "one_line": "The fix mounts OwnedRequestHistory after an accepted Prospect Generate and reads it with selected_tenant = the tenant the submission used (the card's firm for an internal viewer); the page itself is reachable only by an Opal-internal admin Dev user",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/AnalysisTab.tsx @01d35ad2 (portal worktree wk-dsgn-irptv1-r21-57): `{hasClient || prospectIssued !== null ? (` and `selectedTenant={hasClient ? (selectedScopeRef ?? scopeRef).selectedTenant : prospectIssued?.tenant}`",
+      "portal/src/App.tsx lines 462 and 614 @01d35ad2: /investor-reporting is `<ProtectedRoute requireAdmin requireInternal requireDev>`, so every viewer of this page is internal and its Prospect card names a firm (ProspectComposer.tsx firmDecision)",
+      "portal/src/api/endpoints/investor-reporting.ts lines 1136-1143 @01d35ad2: the history read sends only limit, cursor and selected_tenant; no client member exists on it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IV-e-102 item 3: the opener mounts for the prospect owner and lists that owner's requests through the SAME history read the page already makes; STOP if it would show one owner another owner's requests or needs a change to what the service returns.",
+  "world_is": "The read the page makes is the same one (same operation, same query members). Nothing in the portal code ties it to a client, so no other owner's requests can be added by this change. What was not measured: that the live service answers a history read for selected_tenant = the card's firm when no client was ever selected in this session (a picked-client read for an internal viewer sends the picked client's firm as selected_tenant). The rendered read used synthetic fixtures; no live request was made. If the service refuses it, the page shows its existing 'Request history could not be confirmed.' panel, not a wrong list.",
+  "notes": "Needs one live read by a seat allowed to make it (the history route's tenant handling for an internal viewer) before the sitting; the portal side is a one-line change to revert."
+}
+```
+
+## DSGN_IRPTV1-D2-W57-S4 -- bun test in this portal: a DOM test is not isolated by file -- bun shares one module registry across the files of a run, so dom-env.ts can serve one file only, and a DOM-loaded headlessui or a mock.module changes how LATER files render; and a static import of react-dom/client in a DOM file never delivers typed input
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W57-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~57",
+  "surfaced_at": "2026-10-11T14:25:00Z",
+  "one_line": "IV-e-102's first form (a real-DOM test in the suite's process) added three failing ids to the whole-scope run (IVE138 (e), S60 'Use AAPL', an unnamed afterAll) and typed input did nothing until react-dom/client was loaded dynamically after the DOM was registered; the rendered arms now run in their own bun process",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "whole-scope run of IV-e-102's first form (portal e9e19a2a): 1149 pass, 5 fail, the 5 being the 2 base ids plus IVE138 (e) comparison picker, S60 upload-press-did-you-mean ('ReferenceError: document is not defined') and an unnamed 'Failed to unregister. Happy DOM has not previously been globally registered' from releaseDom; evidence file iv102_after_suite.txt in the private evidence folder",
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/dom-env.ts lines 23-29 @01d35ad2: the registrator is loaded by top-level await in a module the registry caches, so a second importing file does not register again and the first file's afterAll(releaseDom) unregisters for everyone",
+      "measured in a throwaway test (deleted): in a minimal controlled input under the registrator, a static `import { createRoot } from 'react-dom/client'` left state unchanged after input events (the container did receive them); `const { createRoot } = await import('react-dom/client')` after the registrator made state follow the value",
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-102.prospect-open.test.tsx and iv-e-102.prospect-open.domrun.tsx @01d35ad2: the outer test spawns `bun test ./<domrun file>` and asserts its exit code and VERDICT line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "dom-env.ts's header: the DOM is registered per file and released in afterAll, so no other file sees it.",
+  "world_is": "That holds only while exactly one file imports dom-env and no later file renders anything that reads module-load-time environment. A second DOM file, or a DOM file whose imports load headlessui or a module mock, breaks other files. Also: HeroDialog (a headlessui Transition) throws 'Did you forget to passthrough the ref' under happy-dom when it opens, so the IV-e-102 DOM test replaces HeroDialog with a plain wrapper through mock.module (inside its own process) and the real dialog is read in a browser (prospect-open.after-open.png).",
+  "notes": "dom-env.ts is outside this order's cell and was not changed. Any later cell that wants a typed-input or dialog test should use the same child-process form."
+}
+```
