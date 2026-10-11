@@ -3217,3 +3217,27 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S59",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T19:16:34Z",
+  "one_line": "L8 round 11, no judgment criterion. A hold with nothing behind it but text: portal commit b8bc5169 on branch wk-IRPT_ANLREQ-51-portal-r11 removes the ticket page's fallback, and if it lands before release 5's return and its after-reads, every ticket's Open report read is refused. The hold is written in the order and the pair; no gate enforces it. This is the same shape as row D2-S51, in the other direction. Also compiled: the live intake poller serves bytes the tree cannot reproduce (21 of its 28 members equal no blob in git).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND11_Y_L8_COMPILE_20261011.md @7de33686e4 (msg 5619)",
+      "the packet's section 3, in the issuer's words: 'The hold is text in the order and in the pair; nothing mechanical enforces it.' This seat made no read of its own for this compile"
+    ]
+  },
+  "spec_asserts": "The never-widen pair for release 5's return: the fallback's removal lands only after the release's after-reads pass.",
+  "world_is": "The branch is local, not pushed and not sent for landing (the issuer's statement). Release 5's return is not applied; its PROD precondition waits on Andrew's word (CTO msg 5603). Disarms when the branch lands in order or is dropped.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
