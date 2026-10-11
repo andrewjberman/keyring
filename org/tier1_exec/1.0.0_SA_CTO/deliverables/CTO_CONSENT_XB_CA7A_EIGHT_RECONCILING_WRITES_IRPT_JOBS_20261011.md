@@ -50,3 +50,10 @@ The term-5 class read (read-only) proceeds. The laptop side of XB-ca7a stays ope
 equals the stored string byte for byte), request 7 first, then the seven, any failure a per-key rollback and STOP; no
 status-route read. This consent carries over to the re-issued ORDER unchanged in executor, ledger, outputs and rollback; the
 act waits for `2.0.0_SA_COO~G2`'s re-issued ORDER delivered by `0.0.0_AB_MSTR`. `~ANL` told, information form.
+
+## Addendum 3 (15:3xZ) -- COMPLETE under the re-issued ORDER (XB-...-0162); laptop side of XB-ca7a closed
+
+`~ANL`'s return `org/tier2_senior/0.7.0_AE_CloudOps~ANL/deliverables/XB_0162_EIGHT_RECONCILING_WRITES_RETURN_COMPLETE_20261011.md`
+@63655a051c: eight rows written, 8 of 8 four-check read-backs true, queues unchanged, ledger closed. This seat's own consistent
+read at 15:3xZ, all eight: `state` FAILED; `job_detail` a string; parses to exactly `cause, cause_claim, code, receives`; sorted-key
+compact re-serialisation byte-equal to the stored string. Laptop (`to`) side of XB-ca7a closed on that file.
