@@ -7120,3 +7120,26 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W129-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~129",
+  "surfaced_at": "2026-10-11T21:17:17Z",
+  "one_line": "The valuation chain cannot be pointed at a copied basis-census file by a flag or an environment variable: the path is the module constant BASIS_CENSUS in commonwealth_daily_valuation.py (load_basis_classes(path=None) falls back to it and the chain passes no path). Both CB-bv-3 builds were run through a scratch wrapper that sets that constant before calling the regrade main; no product file was edited. Separately: of the 19 moved funds only 5 are held on any account-day measured in both builds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py lines 200-201 (BASIS_CENSUS), 214-221 (load_basis_classes), 305 (apply_price_basis calls load_basis_classes() with no path); no argparse flag or os.environ read names the census (grep of the file for census, environ, getenv).",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~129/RETURN_CHANGE.md section 2 (wrapper, command lines) and RETURN_CHANGE.json variant.made_by, variant.measured_in_both_account_days_holding_fund (ANCFX 312, BALCX 426, CAIBX 49, CWGIX 361, FCNTX 1102; the other 14 moved funds 0)."
+    ]
+  },
+  "spec_asserts": "The order, item 2: the variant is the same chain run against a COPY of the census file; if the chain cannot be pointed at a copy without a code change, STOP and say which constant binds it.",
+  "world_is": "The chain can be pointed at a copy only by a wrapper that sets the module constant (the issuer's alternative ii); the same wrapper ran the baseline with the original path and the baseline equals the served returns exactly. Not established: whether a flag for the census path is wanted; why 14 of the 19 moved funds have no measured-in-both account-day.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

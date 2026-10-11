@@ -6764,3 +6764,119 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W122-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~122",
+  "surfaced_at": "2026-10-11T21:20:57Z",
+  "one_line": "DB-b-149: on one day, 34 of the 160 per-asset medians the two price paths take over the original Black Diamond store change when each transaction id is counted once (26 under 0.1 percent, 6 between 0.1 and 1 percent, 2 over 1 percent); the Lambda path serves them, so the owner decides which weighting a price should carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-149 item 3: a path whose served price moves when ids are counted once is ONE ROW naming its owner; this cell corrects nothing. ORIGINAL_STORE_SHAPE.json (W116) said the effect of the un-deduplicated median on a served price was not measured.",
+  "world_is": "Day 2026-10-09 object silver/transactions/2026-10-09.parquet: 5216 rows, 1156 distinct ids, 1006 priced ids carry more than one row, every one of them with the same per-row price in all its copies; 160 per-asset medians; with each id counted once (drop_duplicates on transaction_id, either keep) 34 moved at 8-decimal precision and 126 did not, no asset appeared or vanished. The two paths share one function (bd_price_update.py 327-344; bd-price-update lambda_function.py 185-202), so this is one comparison for both. The Lambda path (event-chained, newest log event 2026-10-11T00:19Z) lets this median outrank Yahoo for every asset it prices; the script path lets overrides and Yahoo outrank it and its schedule is not established. INERT, not ARMED: the cell does not show the deduplicated price is the right one, nor that a moved median is the price that reached canonical_prices (the gold silver-prep S_00 rebuild may replace it). Owner: Black Diamond pipeline lambda (infra/aws/lambda/bd-pipeline) and Black Diamond silver pipeline (data/black_diamond/scripts/silver); no owned-paths row found. Counts only; no price value.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~122/PRICE_PATHS_MEDIAN.json (medians, paths)",
+      "data/black_diamond/scripts/silver/bd_price_update.py lines 263-271, 327-344, 778, 821",
+      "infra/aws/lambda/bd-pipeline/bd-price-update/lambda_function.py lines 141-149, 185-202, 301-304, 610, 653"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W122-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~122",
+  "surfaced_at": "2026-10-11T21:20:57Z",
+  "one_line": "DB-b-149: infra/aws/ec2/EC2_MANIFEST.json says the bd_price_update.py script is invoked at the end of the opal-bd-allocation-download SSM sequence, but the repo's SSM document has no price step, and the live Lambda it 'replaces' is the one that ran on 2026-10-11.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-149 item 1: each path's `scheduled` is read from the Terraform or scheduler definition (DESIRED) and said apart from what is APPLIED.",
+  "world_is": "EC2_MANIFEST.json lines 318-331 (service bd-price-runner) states a weekday trigger at the end of the opal-bd-allocation-download sequence and says it replaces the bd-price-update Lambda 'after EC2 migration verified'. infra/aws/ssm/opal-bd-allocation-download.json contains no occurrence of 'price' (0 hits). The Lambda is still Active (last modified 2026-04-06), has no resource-based policy, and logged at 2026-10-11T00:19Z. The script's schedule is therefore recorded `scheduled: false` as 'no schedule definition found', NOT_ESTABLISHED as to whether it runs; the SSM document as APPLIED was not read (outside the order's allowed reads). The deployed Lambda bytes were not compared with the repo file either. Owner of the manifest: the EC2 manifest's service owner (not named in the file).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/EC2_MANIFEST.json lines 318-331",
+      "infra/aws/ssm/opal-bd-allocation-download.json (Grep price, 0 hits)",
+      "live: lambda get-function-configuration / get-policy / logs describe-log-streams on bd-price-update, 2026-10-11 (read through .tools/aws)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "IRPT_DASHBD-D2-W121-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~121",
+  "surfaced_at": "2026-10-11T21:30:00Z",
+  "one_line": "DB-b-148: the producer sha256 CONTESTED_51_MEANING.json records for x1_crosstab.py does not match the tracked file's bytes; the tracked file reproduces the record's counts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONTESTED_51_MEANING.json producer: file x1_crosstab.py, sha256 86507b8f3e7f76c13ca093b1d2399d43615660373747338058e1bb23d2c03668 (a hash of the producer of the cross-tabulation).",
+  "world_is": "git show HEAD:<path of ~120/x1_crosstab.py> hashes to 5af12eb885c14ae0a825eb97e9b70744b62c77c75f6662a41f0dfaadda6361c6, and the same after removing carriage returns, so line endings do not explain it. Running a copy of the tracked file (only its output folder repointed to ~121's private folder, since the file writes into ~120's) printed outcomes 25/14/12, timing both 47 / START only 3 / MID only 1, groups 43/4/3/1 and cells summing 51: every count in the record. The script that was hashed and the script that is tracked are therefore different bytes with the same counts; the record's owner (~120) amends it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~120/CONTESTED_51_MEANING.json (producer.sha256)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~120/x1_crosstab.py (sha256 5af12eb8...)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~121/TIMING_CLASSES_PROPOSAL.json (placement.re_derived)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W121-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~121",
+  "surfaced_at": "2026-10-11T21:30:00Z",
+  "one_line": "DB-b-148: the three within 0.35 pp each close under BOTH START and MID, so they are among the segments where more than one timing closes, and the ruling's list of such segments (32, 11, the fee-row day) leaves them out.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO msg 5835 item 2: 'Where more than one closes (32, 11, the fee-row day) ... timing not determined' and item 3: the 3 within 0.35 points need first to be asked whether any closes; if none, they alone stay contested.",
+  "world_is": "Recomputed from worker 108's per-segment tables: for each of the 3, START and MID close the return within 0.35 pp and END does not (END is 0.02 to 0.18 pp outside the tolerance). Closing set across the 51: START+MID 47, START only 3, MID only 1. The 47 = 3 + 32 + 11 + 1. The three do not stay contested; placed by the rule they are RECONCILES_YES and TIMING_NOT_DETERMINED. Not an error in the ruling's frame: it asked the question first; the list in its item 2 was not exhaustive.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~121/TIMING_CLASSES_PROPOSAL.json (the_three, placement)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~121/y1_place.py (output lines on the three and on the closing sets)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W121-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~121",
+  "surfaced_at": "2026-10-11T21:30:00Z",
+  "one_line": "DB-b-148: comp-find -i with word boundaries over the repo from the worktree root did not return within the 120 s bound (rc 124); the token census was taken with native Grep.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order names comp-find -i with word boundaries, or the native Grep tool over the tracked tree, for the census of each new token.",
+  "world_is": "The first token's comp-find census did not finish in 120 s; the run was moved to the background and not awaited. The six censuses were taken with the native Grep tool over the worktree (case-insensitive, word boundaries); the denominator is not printed by Grep, so it is taken as git ls-files (76096) plus untracked-not-ignored (1) = 76097 files, the corpus Grep honours. Gitignored files are not in it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~121/TIMING_CLASSES_PROPOSAL.json (census_instrument_note, token_census)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

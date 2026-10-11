@@ -121,3 +121,10 @@ lane: the worker's deliverables; read-only on the intake folder and on the porta
   at all"). `AR132-y-AC1` base: FAIL as expected (no record).
 - The build is cut from this record at the next issuance; `2.0.0_SA_COO~V2` is sent this order's id.
 - Seating: slot ~52 is reused; its earlier orders are terminal.
+- **CORRECTION by the issuer, 2026-10-11 ~21:4xZ (CTO round-14 analysis item 7; cell `AR-y-146`; row `IRPT_ANLREQ-D2-W52-S9`):** this
+  order's WORKER FACE names `parse.py` twice as the normalizer the form's upload reaches (the "Why" paragraph, and the member name
+  `how_the_parser_would_see_it`). That is WRONG and was this seat's error, copied from the ruling and the earlier read: the form
+  reaches `infra/aws/lambda/investor-reporting/intake/template_reader.py`; the deployed service refuses the `parse.py` lane by name
+  (`CSV_LANE_NOT_COMPOSED`). The worker found this and its record says so. The face is left as it was issued (the order is
+  terminal); this note is the correction. No criterion changes.
+

@@ -1406,3 +1406,19 @@ Round 77 is drained @f09dfcb6d9 (round-close MAY-CLOSE). Two rulings, three cell
 DB-b-148 is a PROPOSAL: no class is applied in any record until the CTO rules on it.
 
 **fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~121`, `~122`, `~123`, each cut from box/dell2.
+
+## 81. ROUND 79, WORKSTREAM B (2026-10-11 ~21:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-78 ANALYSIS @bf620b7e50)
+
+The analysis answers REMEDIATION_v33 @7c237a67ec with a five-item list. Items 2 and 5 were issued as round 78 on the CTO's msgs 5827
+and 5835 (DB-b-149, DB-b-150, DB-b-148, running). **Item 1 is the issuer's own act and carries no order**
+(`deliverables/2.0.0_SA_COO~D2/ISSUER_RUNS_ROUND78_ITEM1.md`: the tracked recount script run once by this seat reads 89 of 90, which by
+the analysis's rule closes row D2-W114-S1; five of the 33 readers re-read by this seat, five agree). The rest:
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-151` | item 3: the copy against the original on the three sampled days, metadata and row counts only; whether the original was rewritten after the copy was taken; and all 42 figures named with the store each was read from (row W116-S2) | LOCAL | DB-b-143, DB-b-145 | B79-1 |
+| `DB-b-152` | item 4: the two withdrawn figures marked withdrawn in the 244 record, by the serial that owns it (row W118-S1) | LOCAL | DB-b-145 | B79-2 |
+| `DB-b-153` | item 4: the one withdrawn figure marked withdrawn in the 18 record, by the serial that owns it (row W118-S1) | LOCAL | DB-b-145 | B79-3 |
+
+**fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~124` (DB-b-151), and the record-owning serials `~104` (DB-b-152) and
+`~113` (DB-b-153), each in a fresh worktree cut from box/dell2.
