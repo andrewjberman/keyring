@@ -2672,3 +2672,75 @@
   "notes": "Not disarmed by this seat: the two remedies both need a ruling. (1) pin owned_requests.py and prospect_dates.py in the entry at 361c44fa9d until the reader is on PROD (a member pin, which CTO msg 3856 forbade as a class); (2) leave the map and forbid any irpt-status upload until then, on every seat that shares the ops root. Asked of 1.0.0_SA_CTO~DELL2 by message the same turn. Until ruled: no seat should run build-and-upload for irpt-status."
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S46",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T11:49:36Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-S45 on this box's tree: with owned_requests.py and prospect_dates.py pinned at 361c44fa9d, a build of irpt-status from the source map prints the live digest 6idtFvAm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO ruling msg 4838 on row IRPT_ANLREQ-D2-S45: the two members are pinned at the commit whose bytes are in the live zip; the criterion is that BUILD_ONLY prints 6idtFvAm; the row disarms on that digest read.",
+  "world_is": "MEASURED by this seat at the shared HEAD 1f37df97ed (the merge of worker 0.9.0_WK_IRPT_ANLREQ~53's commit 429eb8f127): check y33-digest prints Y33-DIGEST-OK -- the map records 6idtFvAmYk73wJdr5DPRIyEPrLeWgzjlqbdNr5f1wxc= and BUILD_ONLY of irpt-status prints the same; live CodeSha256 read in the same call is that digest. The worker built it twice identical. The entry's note names this ruling, row S45 and the un-pin condition (the portal history reader that admits the new members being on PROD). LIMIT: this is true of a tree that CONTAINS 1f37df97ed. It was LOCAL when measured; a seat building from an older tree, on this box or another, still builds UNn2 until it takes this commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ar3_checks.py y33-digest at 1f37df97ed, run by this seat",
+      "infra/aws/lambda/ci/lambda-source-map.json functions/irpt-status staged_from, two rows added at 429eb8f127"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The no-upload hold on irpt-status lifts for a seat only when its building tree contains 1f37df97ed AND its own BUILD_ONLY prints 6idtFvAm. The re-release itself still waits on the portal reader on PROD (CTO msgs 4805, 4819), which is Andrew's word."
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S47",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T11:55:28Z",
+  "one_line": "L8/L9 round 4 (Y), no judgment criterion. Release 5 of irpt-status was exercised at the service and not at its consumer: the PROD portal reader admits a history page only with exactly two keys (read by this seat), and the release added a third. The mechanism of the 61-minute refusal is confirmed in source; the event was observed by nobody. Live is revision 6 again (read). The map hazard is disarmed on this tree (pins read). The tolerant reader is on portal DEV, not PROD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND4_Y_L8_COMPILE_20261011.md @5eb0889c73 (msg 4855)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUND_4_Y_L9_READ_20261011.md",
+      "this seat's reads 2026-10-11T11:55:28Z: irpt-status live CodeSha256 6idtFvAm...wxc=, LastModified 2026-10-11T11:26:53Z (it read Iw3FADFr... at 10:53Z, row D2-S42); portal origin/PROD 37aa1247 src/pages/InvestorReporting/contracts/owned-requests.ts:79-80, readOwnedHistory admits a page only when its keys are exactly items and next_cursor (the exact() helper at :7 compares the key count); on portal origin/DEV 8ed372cb the reader admits unreadable_rows and the two row members as optional; 8ed372cb72 is an ancestor of DEV and not of PROD; the source map pins owned_report.py, owned_requests.py and prospect_dates.py of irpt-status at 361c44fa9d and records artifact_sha256 6idtFvAm"
+    ]
+  },
+  "spec_asserts": "Spine L8/L9 (CLAUDE.md rule 27). Evidence law: a release is exercised when the outcome it serves has been read, and the page is the consumer of the history answer.",
+  "world_is": "Nothing built in rounds 3 or 4 is live on the service. Not read by this seat: the after-read files, the rollback record, any page.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S48",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T11:55:28Z",
+  "one_line": "Nobody has counted who met the refused Investor Reporting history view while release 5 was live (2026-10-11 10:25:40Z to 11:26:53Z). The view is on portal PROD, a page a firm login can open. The refusal is inferred from the reader's code; the function's own log of history-route requests in that window would say whether any user was affected, and it has not been read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND4_Y_L8_COMPILE_20261011.md @5eb0889c73 (msg 4855)",
+      "this seat's reads 2026-10-11T11:55:28Z: irpt-status live CodeSha256 6idtFvAm...wxc=, LastModified 2026-10-11T11:26:53Z (it read Iw3FADFr... at 10:53Z, row D2-S42); portal origin/PROD 37aa1247 src/pages/InvestorReporting/contracts/owned-requests.ts:79-80, readOwnedHistory admits a page only when its keys are exactly items and next_cursor (the exact() helper at :7 compares the key count); on portal origin/DEV 8ed372cb the reader admits unreadable_rows and the two row members as optional; 8ed372cb72 is an ancestor of DEV and not of PROD; the source map pins owned_report.py, owned_requests.py and prospect_dates.py of irpt-status at 361c44fa9d and records artifact_sha256 6idtFvAm",
+      "the packet's section 2: 'INFERRED from the reader's code and R3; nobody looked at the page'"
+    ]
+  },
+  "spec_asserts": "IRPT_ANLREQ FWD-1: a person sees their requests. A served regression on a client-facing page is sized by who met it.",
+  "world_is": "The window is closed and the service is restored. The count of history requests in the window is not established.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

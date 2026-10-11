@@ -1745,3 +1745,27 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S39",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T12:05:17Z",
+  "one_line": "L9 round 3: TO-RUN-R3-tr1 AC2 NOT MET. Run 4 is the first past the submission (accepted, queued, the service's own request id), but no read returned a finished report (40 polls, each NOT_FOUND) and the two ticket hops did not run. The job's fate is unknown; the generation dead-letter queue still reads 8, so it was not dead-lettered by the grade. irpt-status changed build 8 minutes into the polling; both builds answered the same.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/ledger/L8_PACKET.R3_TR1.md @92c34457f2 (msg 4877)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_R3_TR1_L9_GRADE_20261011.md",
+      "this seat's read 2026-10-11T12:05:17Z of org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r3_tr1/r3_tr1_run4_trace.json (the applier's file, claim measured): hops a, b, c answered 200, 201, 200; hop d answered 200, QUEUED, with a request id of the service's own form; hop e made 40 polls, last code NOT_FOUND, outcome NOT_READY, last poll 2026-10-11T11:38:55Z; hops f and g carry status 0, UNREACHABLE, report_opened false; report_route_arms is empty; result is null. This seat's live read at the grade: the generation dead-letter queue holds 8 messages, as it did before the run. irpt-status changed build at 11:26:53Z (this seat's reads of 10:53Z and 11:5xZ), inside the polling window"
+    ]
+  },
+  "spec_asserts": "TO-RUN-R3-tr1 AC2 (JUDGMENT, graded by the CVO at L9 on the trace): FWD-1's ACCEPT -- the report is made from the filed file, and the finished report opens from the same ticket, shown by hop (e) and hop (g) reading the finished report for the id the service issued and the ticket holds; one firm only.",
+  "world_is": "No finished report was read and no report opened from the ticket. Not re-read by this seat: the route census, the zero-call proof. The order is still pending on its row-delete step.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
