@@ -67,6 +67,26 @@ threw "Invalid owned request history". The service is being rolled back to the t
 
 <expected_criteria>IV99-AC1,IV99-AC2</expected_criteria>
 
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~11:3xZ): RULED (B) -- the reader takes BOTH answers; the stop clause of item 2 is lifted (1.0.0_SA_CTO~DELL2 msg 4818, row DSGN_IRPTV1-D2-W55-S1)
+
+The worker stopped before any code because the contract makes `unreadable_rows`, `client_id` and `client_claim` REQUIRED; that stop was
+right. The CTO ruled: "(B) now, (A) in a named cell after ... The reader admits the two-key answer and the contract's answer, the new members
+typed as the contract types them when present, any other key refused. The history row gets its own reader ...; the single-request reader is
+not widened." So:
+
+- Item 2's STOP on a required member no longer applies. In the READER ONLY the three members are optional: when present each is checked
+  exactly as the contract types it (`unreadable_rows` an integer >= 0; `client_id` a string matching the contract's pattern, or null;
+  `client_claim` one of the contract's enum values); when absent it stays absent (never defaulted, never coalesced).
+- **The history ROW gets its OWN reader.** `readOwnedRequest` is shared with the single-request read and is NOT changed: it must not gain
+  `client_id` or `client_claim`. The history row reader admits the row's two-key-era keys (what `readOwnedRequest` admits today) plus the two
+  new members, and refuses any other key. A test shows `readOwnedRequest` still refuses a body carrying `client_id`.
+- State in the code, in one comment at the reader, that this tolerance is TRANSITIONAL (CTO msg 4818) and that the contract-exact reader is
+  a named later cell cut after release 5 has been live again and read through the page. Record that under `transitional` in the record.
+- The live two-key answer's row shape is not measured; the reader's two-key-era row is exactly what the reader admitted before this cell.
+- `readOwnedRequest` lacking `persist_inputs` is a separate gap: not this cell.
+
+Criteria and their checks are unchanged. **Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited.
