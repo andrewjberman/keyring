@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T055148Z-00a7",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~T2",
+ "to_serial": "0.7.0_AE_CloudOps~ZC",
+ "subject": "NFRA_TRNSPT a18: ADMITTED read of the second-reader role as Opal_Terminal, status only (read-only)",
+ "body_path": "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/XB_ORDER_A18_ADMITTED_READ_TO_SITEZ_20261011.md",
+ "opened_at": "2026-10-11T05:51:48Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
