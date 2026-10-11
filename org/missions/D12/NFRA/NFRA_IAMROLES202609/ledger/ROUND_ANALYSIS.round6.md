@@ -36,3 +36,17 @@ owned"). The work below enriches FWD-4 and does not re-open it.
 The batch repair at the drain is the five disposition tokens.
 
 -- 1.0.0_SA_CTO~Z
+
+## Addendum 1 (2026-10-11 ~05:0xZ) -- Z-S21 gets a carrier: E4, read-only
+
+`0.0.0_AB_MSTR~Z` (msg 33183) found no seated owner for `infra/aws/terraform/smartx-pipeline`. Its history is mostly the
+CloudOps lane (`0.7.0_AE_CloudOps`) plus `0.5.0_AE_OpalETL`, and no project holds the smartx pipeline today. A Tier-2 seat
+hears an act only as a task order, so routing to a lane with no issuer would park the row with nobody to act on it. This
+project already applies `-target` in that module, so it carries the diagnosis:
+
+| # | cell | rows | done when |
+|---|---|---|---|
+| E4 | **READ-ONLY**: for each of the three drifts (`assets_daily_pull`, `jwt_refresher`, `rest_pull`), name the source commit that moved the package or object version, whether that code ever ran live (CodeSha256 and LastModified vs the commit date), and a deploy-or-revert recommendation with its reason; plus the three null outputs' cause | Z-S21 | a per-Lambda table, with each row's evidence read live; nothing applied |
+
+The deploy-or-revert act that follows is NOT this round's. This seat rules it on E4's table, and it runs under its own
+never-widen pair.
