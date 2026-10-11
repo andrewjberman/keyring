@@ -12179,3 +12179,30 @@ name the one known failure instead of silently inheriting it.
   "notes": "Order text unchanged by the worker; the issuer may amend step 2(b)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W57-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~57",
+  "surfaced_at": "2026-10-11T16:11:24Z",
+  "one_line": "The unknown opal-assets-silver-dlq consumer is a DAILY job: it refills 12 at 13:07Z and deletes all of them at about 16:00Z (2026-10-09 6, 10-10 12, 10-11 12); it fired live at 2026-10-11T16:00Z while OG-dq-1 was reading, and the next fire is 2026-10-12T16:00Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN cloudwatch get-metric-statistics AWS/SQS opal-assets-silver-dlq: Sent 12 at 2026-10-10T13:07Z and 2026-10-11T13:07Z; Deleted 12 (max 1 per datapoint) at 2026-10-11T16:00Z, Visible 12 -> 0 at 16:00Z; 10-10 Deleted 12 in the 5-min period from 15:57Z; 10-09 Deleted 6 at 16:00Z",
+      "RUN sqs get-queue-attributes at 2026-10-11T16:01Z: ApproximateNumberOfMessages 0, NotVisible 0 (12 distinct messages had been read non-destructively at ~15:55Z)",
+      "RUN cloudtrail lookup-events (ResourceName and EventSource=sqs.amazonaws.com, window) -> 0 events, with a positive control; lambda list-event-source-mappings on the queue ARN -> []",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~57/DQ1_READ.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S77: six held RPS messages left the DLQ in one window (15:39Z-16:17Z, 2026-10-09) by an unknown actor; the cell expects the queue's held messages to be readable afterwards.",
+  "world_is": "Not a one-off: the same consumer deletes the queue's whole content around 16:00Z every day, one DeleteMessage per message. Each day's eclipse inflection model_composition_*/portfolios_*/models.json failure records (Lambda RetriesExhausted, RuntimeError, opal-assets-silver-eclipse) are destroyed within hours, unread by the owner. Its principal is unnamed: SQS Receive/Delete are data events and are not logged here.",
+  "notes": "Next step is the CTO's call (data-event logging on the queue before 2026-10-12T16:00Z, or a read of 16:00Z schedulers naming it). This worker changed nothing; its 156 receive calls used visibility-timeout 0 and deleted nothing."
+}
+```
