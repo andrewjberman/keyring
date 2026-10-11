@@ -1,0 +1,12 @@
+{
+ "what": "pointer to the private sweeps config of ADVI_COTBKF on this box; a path and a sha256, never the content",
+ "variable": "COTBKF_SWEEPS_CONFIG",
+ "path_on_this_box": "C:/dev/_cotbkf_private_evidence_20261009/config/commonwealth_sweeps.json",
+ "sha256": "b1d93408f64a996b2a9659bbed9ca0863fbf0d0db348e1397e1a7e184910a89d",
+ "sha256_claim": "measured",
+ "measured_at": "2026-10-11T05:27:41Z",
+ "measured_by": "1.0.0_SA_CTO~DELL2 (sha256sum at the commit; 2.0.0_SA_COO~C2 wrote the file at 05:25:02Z with the same hash)",
+ "pinned_in": "data/assets/scripts/silver/commonwealth_sweeps.py SWEEPS_CONFIG_SHA256",
+ "read_by": "no script; a run order cites this path on its invocation line",
+ "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_ADVI_COTBKF_ROUND_58_20261011.md section 3, row ADVI_COTBKF-D2-S84"
+}
