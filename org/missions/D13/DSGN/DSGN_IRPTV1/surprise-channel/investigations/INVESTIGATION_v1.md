@@ -3812,3 +3812,138 @@
   "notes": "Local branch wk-dsgn-irptv1-r11-44 only; nothing pushed."
 }
 ```
+
+## DSGN_IRPTV1-D2-W46-S1 -- the served upload row has no display symbol for the corrected security; the corrected name is read from disclosures.corrections
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W46-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~46",
+  "surfaced_at": "2026-10-11T05:56:24Z",
+  "one_line": "The served upload-review row carries no display symbol for the corrected security: row.security_id is the provider id (the symbol, or \"M:<ticker>\" for a fund), so it cannot name a corrected fund and cannot tell a corrected row from an uncorrected fund row. The corrected display symbol is served only in portfolio.disclosures.corrections[].to_value, which S61's fix reads by matching a row's uploaded symbol to from_value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:418-423 (provider_id may be \"M:\"+symbol) and :490-492 (row = original, security_id, analysis_dollars, price, provider_receipt_sha256: no display-symbol field) and :511 (disclosures.corrections from_value/to_value, upper-case) in the ~46 worktree",
+      "portal ProspectComposer.tsx reads the row as record(item) (AnalysisUploadResult.ts:30 types portfolio as Record<string, unknown>): the row has no declared type"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IV-e-83 step 1: both values come from the served row; if the served row lacks the corrected security's display symbol, STOP with a row naming the missing field.",
+  "world_is": "The row lacks a display-symbol field, but the same served portfolio carries the corrected symbol in disclosures.corrections. The fix used that served disclosure (an exact match, nothing derived, security_id not read) and did not stop; whether the CTO wants a per-row display field on the producer instead is open.",
+  "notes": "Candidate portal commit 2639743c on branch wk-dsgn-irptv1-r11-46 (LOCAL). Limit: a row is shown corrected only when a served correction matches its uploaded symbol."
+}
+```
+
+## DSGN_IRPTV1-D2-W46-S2 -- Export on the Analysis tab needs the retained Analysis report's id, revision and sha256 served to the browser; no served Analysis response carries them
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W46-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~46",
+  "surfaced_at": "2026-10-11T06:03:00Z",
+  "one_line": "TO-IV-e-85 (W35-S2): the Analysis tab cannot publish an export target because the browser holds no retained Analysis report identity. The server's submit-export resolves exactly one retained report by the body's authorized_report_revisions[0].report_id and .revision (export/retained_export.py:95-99) and pins it as analysis_report_ref {report_id, revision, sha256} (export/submit_service.py:71-76). The Performance wire carries that identity as retained_ref {report_id, revision, sha256, report_kind} and the page forwards it (tabs/reporting/ReportingTab.tsx:268-277); the served Analysis report (wire/AnalysisReport.ts) and the owned-history slice (AnalysisReportSliceView) carry request_id and attempt_id only. Missing: a served member on the Analysis report response (the analysis-report sections route, or the owned-report read) naming the retained report: report_id, revision and sha256, plus the report_kind ANALYSIS, for the request being shown. With it the page could set reportRefs, sourceRevision and analysis_report_ref the way Performance does.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/contracts/wire/PerformanceReport.ts:64-68 (retained_ref {report_id, revision, sha256, report_kind: 'PERFORMANCE'}) versus contracts/wire/AnalysisReport.ts:12-24 and :85-92 (request_ref, vendor_artifact, release.released_revision, protected_pdf_ref with a server-only storage key; no retained report id)",
+      "portal/src/pages/InvestorReporting/contracts/index.ts:1408-1412 (AnalysisReportSliceView: requestId, attemptRef, sections, validation; no revision, no hash) and tabs/analysis/OwnedRequestHistory.tsx:236 (the report the advisor sees after Generate lives in this component's state, not AnalysisTab's)",
+      "infra/aws/lambda/investor-reporting: retained_ref is emitted only by performance/entry.py:282,300-301 and performance/retained.py (git grep of the package, non-test files: 2 files)",
+      "portal/src/pages/InvestorReporting/index.tsx:319 (with no override, an analysis Export would name reportRefs [selectedScopeRef.revision], the client scope revision, which is not a retained report id) and export/ExportButton.tsx:239 (buildSubmitRequest only; buildAnalysisSubmitRequest, export/submit.ts:116-130, is called by no production file) and contracts/adapt.ts:1573-1577 (analysis_report_ref is written only when bundle.analysisReportRef is set; no production file sets it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IV-e-85 step 2: EXPORT_WIRED if the page already holds everything the export needs; else NEEDS_SERVED_ROUTE with a row naming the missing route and what it would return.",
+  "world_is": "The page holds the request id and, on the legacy path, a releasedRevision and artifactHash that are not the retained report's revision and sha256 (the server reads authorization_ref from the retained row, retained_export.py:124-125). Whether the producer already holds an Analysis retained id that a route could return is not established here; no producer handler returns one today. No product file changed; Export stays closed on the Analysis tab (index.tsx:311).",
+  "notes": "Also needed once the identity is served and the CTO rules the contract (outside this order, outside its grant): a publish callback from the tab mounted at TabShell.tsx:164-172, state beside index.tsx:216, the gate at index.tsx:311, and export/ExportButton.tsx pinning analysis_report_ref. The tab shows more than one report source (the legacy request list, which the live client refuses at api/endpoints/investor-reporting.ts:1274-1276, and the owned-history dialog), so the contract should name which one Export follows."
+}
+```
+
+## DSGN_IRPTV1-D2-W46-S3 -- TO-IV-e-85 grant names InvestorReportingPage.tsx, which does not exist; the page is index.tsx, which the grant omits
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W46-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~46",
+  "surfaced_at": "2026-10-11T06:03:30Z",
+  "one_line": "The order's <paths> lists portal/src/pages/InvestorReporting/InvestorReportingPage.tsx; that file is absent in the portal worktree. The page component (the Export control, its gates and the state a tab publishes into) is src/pages/InvestorReporting/index.tsx, and the tab mount is tabs/TabShell.tsx; neither is in the grant, so an EXPORT_WIRED edit could not have been made inside it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "directory listing of portal/src/pages/InvestorReporting at HEAD 2639743c: __tests__, components, contracts, dashboard, export, fixtures, format.ts, global, header, index.tsx, render, state, tabs, tests (no InvestorReportingPage.tsx)",
+      "portal/src/pages/InvestorReporting/index.tsx:70 (export function InvestorReporting) and :312 (the one Export control)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's <paths> block grants InvestorReportingPage.tsx and header/ as the page surface.",
+  "world_is": "The grant's page file does not exist; the decision in this order did not depend on it because the finding is a missing served identity, not a missing prop.",
+  "notes": "A later EXPORT_WIRED cut should grant index.tsx, tabs/TabShell.tsx and export/ by name."
+}
+```
+
+## DSGN_IRPTV1-D2-W46-S4 -- The order's script steps (route, Analysis tab, upload input, upload fixture) do not reach the review table for
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W46-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~46",
+  "surfaced_at": "2026-10-11T06:25:10Z",
+  "one_line": "The order's script steps (route, Analysis tab, upload input, upload fixture) do not reach the review table for the stubbed Dev admin: the Prospect card is in internal firm-choice mode, its 'Review portfolio' button stays disabled with no firm, and the firm list comes only from a GLOBAL directory/resolve body. The run therefore also stubs directory/resolve with the repo's Global wire, chooses a firm in the card, and renames the two tenants to synthetic names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first run (stub resolve = fixtures/smoke/fe-s-14-global.json): FIRM-SELECT options [[\"\",\"Choose a firm\"]] only; the 'Review portfolio' click timed out at 10000 ms (button disabled by prospectFirmDecision, stagedProspect.ts)",
+      "second run (stub resolve = tests/opal-scope/server-wire.json context, tenants renamed firm-alpha/firm-beta): options firm-alpha, firm-beta; firm-alpha picked; upload POST ...analysis/inputs?selected_tenant=firm-alpha answered from the fixture; review table reached",
+      "portal/src/pages/InvestorReporting/contracts/directory-context.ts:61-100 (a GLOBAL context needs context_kind GLOBAL with per-firm scopes; a single-scope resolve body yields no catalogue); index.tsx:105 (firm starts at 'global'); AnalysisTab.tsx:122 (card firm null on Global)",
+      "run log org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~46/review_table_shot.run.txt; script review_table_shot.mjs in the same folder"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 3 step 2: the script opens the route, reaches the prospect composer, sets the CSV on the upload input and answers the upload request; load-time bodies come from existing fixtures.",
+  "world_is": "A firm choice and a Global resolve body are also needed; both were sourced from the repo (server-wire.json context, tenant strings replaced by firm-alpha/firm-beta so no real firm name reaches a PNG), no product file edited. Ten same-origin API reads had no fixture and answered 404 (listed in the run log); the page showed a red 'client list is unavailable' line for the two firms' browse reads, unrelated to the review table.",
+  "notes": "A later live-render cut can reuse review_table_shot.mjs as written."
+}
+```
+
+## DSGN_IRPTV1-D2-W46-S5 -- In the live render of the upload review table the 'Original amount' and 'Analysis dollars' columns are left-al
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W46-S5",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~46",
+  "surfaced_at": "2026-10-11T06:25:40Z",
+  "one_line": "In the live render of the upload review table the 'Original amount' and 'Analysis dollars' columns are left-aligned (plain <td>, no text-right), against DESIGN.md C2 'Figures right-align in a column'; tabular-nums is on (computed font-variant-numeric tabular-nums). The Holding-cell change does not touch these cells; the left alignment predates it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "review_table_crop_1cd1cf25.png in deliverables/0.9.0_WK_DSGN_IRPTV1~46/: $5,700.00 / $900.00 / $250.00 and 5700 USD / 900 USD / 250 USD start at the same left edge of their columns",
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx:576-577 (<td>{amount.trim()}</td><td>{formatMoney(...)}</td>, no alignment class)",
+      "portal/DESIGN.md C2 (line 220-223)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IV83-AC2 judgment: 'tabular numerals in the dollars column' and DESIGN.md C2 (figures right-align in a column).",
+  "world_is": "Tabular numerals present; right-alignment absent in both figure columns of the review table. Not changed by this order; reported for the L9 grader.",
+  "notes": "Outside this cell's scope (the order changes one Holding cell)."
+}
+```
