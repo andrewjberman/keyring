@@ -240,7 +240,7 @@ field -> you may NOT treat it as measured. The consuming half is the whole mecha
 14a. **Commit via `.tools/safe-commit.sh --author "{serial} <{serial}@opal.agent>" -F <msgfile> -- <paths>`; do NOT
     pre-`git add`; `-F` not `-m`; the message file is written by a NON-SHELL writer** (Write tool / python). `--force`
     bypasses only contamination checks, never a lane refusal; that escape is `GIT_COMMIT_AUTHOR_OVERRIDE=<LANE>`,
-    AUDITED (`org/git-author-override-audit.log` is the instrument). The override's value is not validated and its exit
+    AUDITED (`org/git-author-override-audit.<device>.log`, one file per box, is the instrument). The override's value is not validated and its exit
     covers the entire staged set, so ONE LANE PER COMMIT is a discipline, not a mechanism.
     `docs/architecture/ADHC_OWNPTH.md`.
 14b. **While other seats are LIVE, commit anything bigger than a one-file edit in YOUR OWN linked worktree and merge it
