@@ -6458,3 +6458,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W109-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~109",
+  "surfaced_at": "2026-10-11T17:05:00Z",
+  "one_line": "DB-b-136: the census of ten readers of the returns manifest misses an eleventh (test_si_anchor_bounded.py:97), and three silver-adapter readers sit at other lines than the census gives.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "~94's RETURNS_MANIFEST_READERS.json lists ten readers of the returns manifest, each at the line given (file and line).",
+  "world_is": "data/assets/scripts/gold/irpt_custody/tests/test_si_anchor_bounded.py:97 loads the same fixture manifest as test_si_anchor.py:67, updates first_data_date and writes it back; it is not in the census. The three silver/commonwealth_account_return_daily.py readers the census puts at :425, :427 and :437 are at :604, :606 and :616 in this tree. The record names the census lines as asked and the new places beside them. No reader found passes the 24-key thresholds object onward; one (the :427 reader) passes the whole manifest dict, with a null thresholds member, into the adapter's build manifest file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_custody/tests/test_si_anchor_bounded.py:97",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py:604",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~109/MANIFEST_COUNT_AND_READERS.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
