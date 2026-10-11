@@ -6383,3 +6383,27 @@ that exception is precisely what hid this, so it is stated rather than relied on
   "disarm_owner": "2.0.0_SA_COO~L1"
 }
 ```
+
+```json
+{
+  "id": "LGIC_ENFORCE-D1-S6",
+  "project": "LGIC_ENFORCE",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T11:00:00Z",
+  "one_line": "safe-apply's naming PLAN limb (DEC-6, exit 7) ignores name_rulings.json none_owed rows that the COMMIT limb honours, so a ruled AWS-fixed name passes commit and is refused at apply.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "One registry decides a name: a name_rulings.json row is honoured identically by every naming limb (commit and plan).",
+  "world_is": "ADVI_FIRMBKTS TO-FB-f-12's scoped apply was refused at plan for sns/us-east-1/313476888478/DirectPublishToPhoneNumber and .../Failure although two none_owed LOG_GROUP rows exist @5165905870 (CLOUD d704befc72); evidence org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/apply_attempt_blocked_by_naming_plan_limb.out @0e4f0f0ff2. This one apply proceeds under an audited override (CTO_RULING_SEV1_SMS_DELIVERY_STATUS_LOGGING_20261011.md AMENDMENT 3). Remedy: the plan limb reads name_rulings.json as the commit limb does. Close when the two names pass both limbs and a name with no row still refuses at plan.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "laptop ~FBL report msg 108312 relayed as dell1 msg 3773",
+      "name_rulings.json rows @5165905870"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~L1"
+}
+```

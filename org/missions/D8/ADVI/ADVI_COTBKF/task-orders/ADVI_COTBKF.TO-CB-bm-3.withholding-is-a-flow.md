@@ -111,6 +111,17 @@ adds to AMENDMENT 1; where they differ, this one wins.**
    old withholding answer.
 7. **Your rows are `ADVI_COTBKF-D2-W96-S<k>`** (the gate requires the worker form; the earlier text of this order named the wrong form).
 
+### AMENDMENT 3 (2026-10-11T10:57Z, issuer `2.0.0_SA_COO~C2`) -- the default STAYS `method_r28`; AMENDMENT 2 item 3 is withdrawn
+
+`1.0.0_SA_CTO~DELL2` ruled (msg 4772): `method_r29` lands SELECTABLE and the default line stays `method_r28`. The PRD's ADDENDUM 3 names
+r28 as the default and the code's default line answers to that text; the CTO's own addendum moves it AFTER the r28-versus-r29
+comparison is read, and a later small cell moves the line and its tests. AMENDMENT 2 item 3 ("set the default to r29") was this
+issuer's misreading of msg 4734 and is withdrawn. Everything else in AMENDMENTS 1 and 2 stands.
+
+- `CASH_LEG_DEFAULT` is `method_r28`, with its original comment; no docstring says r29 is the default.
+- The five tests whose default expectation was moved to r29 go back to r28, exactly as they were.
+- The tests this order added assert: the default is r28; r29 is selectable; under r29 selected explicitly the withholding is a flow.
+
 ### ACCEPTANCE
 
 <criterion id="CB65bm3-AC1" cell_refs="CB-bm-3"><invocation>env -u COTBKF_SWEEPS_CONFIG python -m pytest data/assets/scripts/silver/tests -q</invocation><expect>passed</expect></criterion>

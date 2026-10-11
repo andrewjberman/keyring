@@ -25688,3 +25688,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The arm's failure set is reachable only by a defect that fires BEFORE or AT authorization. IB-pr-420's defect was of that kind -- an Enforcer kwarg mismatch raised while constructing the request -- so the identical arm reproduced it on the pre-apply control and genuinely discriminated. IB-pr-423's change was the opposite kind: it altered what an ADMITTED request does after authorization succeeds. A synthetic caller never gets there, so the arm returned the same typed NOT_AUTHORIZED before and after, read clean, and the release passed its own check while serving three real Cottonwood users a Black Diamond figure against ratified FWD-3. THIS IS NOT A COMPLAINT ABOUT THE ORDER OR THE PAIR, and not the reason the release was wrong -- the order was wrong on the ENDPOINT, which is 2.0.0_SA_COO~P2's escalation and the CTO's ruling. It is a claim about the INSTRUMENT, and it generalises past this release: any future never-widen pair whose change takes effect after authorization will get a clean reading from this arm shape, because the arm cannot see that far. The applier cannot close the gap from where it stands: no seat on this fabric can mint a verified internal subject, which is why both this seat and ~281 hit the same ceiling independently. WHAT WOULD ACTUALLY DISCRIMINATE, offered as options rather than a chosen design: an admitted-caller probe driven by whoever can mint a verified subject, which on this estate appears to be the laptop's product walk; or a post-promote read of the SERVED plane for the affected firms over a short window, counting served outcomes rather than log errors, which would have shown 3 within minutes instead of 44; or an explicit statement in the pair that the arm proves only that the function answers, with the real evidence named and scheduled. The third already exists in part: the COO half said the first real evidence is the laptop's re-walk and that until then the outcome is ABSENT -- the gap is that nothing made the release wait for it. OWNER: 1.0.0_SA_CTO~DELL2 and 2.0.0_SA_COO~P2, as the authors of the arm's specification. Nothing here holds any order: IB-pr-424 is complete and the path is back to its refusal."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S80",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:53:44Z",
+  "one_line": "L8, the resident release st30, no judgment criterion: this project's share (a pending read-back releases its message for 390 s, S3; refusals raise subclasses that declare a public reason, S6) is APPLIED, UNEXERCISED. Read against the outcome, as this seat now does on every served change: neither changes which figure or answer a reader is served; S3 is a queue timing and S6 a reason code on a refusal. The rolled-back vendor performance release is not in the package (the issuer's count: 0 of 294 members under performance/).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/st30_release/CVO_PACKET_ST30_IRPT_BCKEND_20261011.md @856f5e92a3 (msg 4759)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/st30_release/ST30_CORRECTION_1_S4_AND_STATE_AFTER_INSTALL_20261011.md",
+      "this seat's reads 2026-10-11T10:53:44Z: the applier's host file org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_st30/D2_V1_INSTALL_20261011.txt (running root /opt/irpt-resident/37210c771a-st30, active, restarts 0, tracebacks 0; allow list one sign-in; research row firms 3; read-back release 390; both queue binding counts 0); at commit 37210c771a, an ancestor of HEAD, resident_worker.py:789 reads READ_BACK_RELEASE_VISIBILITY_S = 390 and :121 reads the one-entry allow list. The host itself was not read by this seat"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself. Evidence law: APPLIED is not EXERCISED.",
+  "world_is": "Applied and unexercised. Not read by this seat: the package's member list; the ENDPOINT text beyond what each change touches.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

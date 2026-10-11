@@ -6226,6 +6226,29 @@ round.** Never edit an existing row.
 }
 ```
 
+```json
+{
+  "id": "ADVI_COTBKF-D2-W95-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~95",
+  "surfaced_at": "2026-10-11T10:35:43Z",
+  "one_line": "Criterion CB65bm2-AC2 of ADVI_COTBKF.TO-CB-bm-2 names an invocation that cannot run as written: its path variable D is set to 'DIorg/missions/.../~95/PRICE_REQUESTS.json' (a stray 'DI' prefix and the file name PRICE_REQUESTS.json where the folder was meant), so D+'PRICE_REQUEST_YAHOO.md' is a path that does not exist.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-bm-2.price-requests.md line 74 (the CB65bm2-AC2 invocation), read at HEAD 5d51ad0c54 on branch wk-ADVI_COTBKF-95",
+      "run as written, the invocation raises FileNotFoundError on 'DIorg/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~95/PRICE_REQUESTS.jsonPRICE_REQUEST_YAHOO.md'; run with D='org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~95/' (the folder) the same print line runs and its expectation holds; both outputs are in the worker's proof_of_spec instance"
+    ]
+  },
+  "spec_asserts": "CB65bm2-AC2 is a command that prints PRICE-REQUESTS-STATUS yahoo_not_sent=True bloomberg_not_sent=True.",
+  "world_is": "The command as written fails before printing. The criterion's meaning (both request documents exist, are marked written and not sent, and each csv has its rows) was checked with the one-token correction of D; no other change. The order was not amended by this worker.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## ADVI_COTBKF-D2-S111 -- CB-bm-3 could not be met in one file; the withholding rule reaches 7 measured days, not 2
 
 ```json
@@ -6280,5 +6303,33 @@ round.** Never edit an existing row.
  "disposition": "UNDER_INVESTIGATION",
  "spec_asserts": "CB-bm-3 AMENDMENT 1: method_r29 is r28 plus the one withholding change and drops nothing r28 does; the grant covers commonwealth_flows.py, commonwealth_daily_returns.py, commonwealth_sweeps.py and the tests.",
  "world_is": "r28's split repair and dvr close-step blanking live in commonwealth_daily_valuation.py behind cash_leg == CASH_LEG_METHOD_R28. A method_r29 cash leg would run the valuation WITHOUT them, so r29 would be weaker than r28 in the mint path, which the amendment forbids. The file is outside the grant, so the order needs a widened grant (lines 875, 886, 888, 898, 939 and the docstring at 859 would take r29 beside r28) or a different design: for example the CTO may rule that r29 is a flow-rule version only, selected independently of the cash leg. Not established: whether other callers outside the three granted files and the two read files select behaviour by the r28 leg."
+}
+```
+
+## ADVI_COTBKF-D2-S112 -- Answers D2-S108: the served method row states income absent by design; read back by the issuer
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S112",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T10:51:05Z",
+ "one_line": "ANSWERS ADVI_COTBKF-D2-S108: Cottonwood's method row (version 3) no longer states an income basis. IRPT_DASHBD's cell DB-b-123 rewrote it at 10:38Z under its own pair; this issuer read both served objects back and ran the mint's verify. The round-65 analysis's carried item 4 is done.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer live read at 2026-10-11T10:46:15Z of s3://opal-data-cottonwood/irpt/cottonwood/gold/dim_return_method/method_version=3/data.parquet: ETag 9c774f3770e82ed5e7e6b2a4ebe3e7d3, 11641 bytes, version hcqKO1hmuZIFPMKZrRF6gw7jS0mY4xnU, modified 10:38:24Z; 1 row, 31 columns; method_version 3; income_basis null (string); income_basis_claim 'absent'; income_basis_reason 'FWD-3 does not separate income: it sits inside the value through the cash leg, so this method states no income basis (its income columns are null on every row)'",
+   "issuer diff against the prior version, fetched by version id .MnBtIEprWTsvzhZSqkuRkJCU1n4SehQ: 29 common columns; moved = income_basis (was 'cash_when_received') and measured_at; 0 type changes; 2 new columns (income_basis_claim, income_basis_reason); 0 dropped",
+   "issuer read of the manifest.json BODY: ETag 6d5aabdd1e0f3cc9ff2a6c544bd327fd, 2037 bytes, version 9mFo70MiWTNgg3u8xC24yvm3pmOsxQw6; 32 keys against the prior 30; changed = income_basis and measured_at; new = the same two",
+   "issuer run at 2026-10-11T10:48Z of the mint's verify against the stamped manifest: 'ARD-COTTONWOOD-VERIFY days=3325 match=3325/3325 sidecar=match method_row=match manifests=3325/3325'",
+   "the act's own record (not this issuer's): org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~98/METHOD_ROW3_APPLY.json; ledger irpt-dashbd-db-b-123-method-row3-income-20261011 reported closed by 2.0.0_SA_COO~D2 msg 4744, not read here"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO msgs 4615 and 4633: version 3's method row states income ABSENT by design with its reason; versions 1 and 2 unchanged; 2.0.0_SA_COO~C2's verify reads it back.",
+ "world_is": "Read back as ruled for version 3. NOT read by this issuer: the method rows of versions 1 and 2 (other firms' or other channels' objects; the test that shows them unchanged is IRPT_DASHBD's), the ledger entry, and whether any consumer cached the old row (0 readers of the Cottonwood mint are known). The mint's verify compares the method row's version and its five threshold claims, so its 'match' does not by itself prove the income members; the direct read above does."
 }
 ```

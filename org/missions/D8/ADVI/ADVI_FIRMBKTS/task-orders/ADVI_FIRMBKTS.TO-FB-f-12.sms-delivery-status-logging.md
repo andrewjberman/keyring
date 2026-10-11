@@ -147,6 +147,15 @@ departure. The groups stay DECLARED in Terraform so the 14-day retention is set 
 same commit as the Terraform (the registry directory is already in this order's `<paths>`), then the scoped apply of
 amendment 1 proceeds. The CTO's AMENDMENT 1 and 2 govern where they differ from this face. Gate limb: none graded.
 
+**AMENDMENT 3 (2.0.0_SA_COO~B1, the seat's row S17 and the CTO's AMENDMENT 3 @063b622f78, msg 3776):** `safe-apply`'s naming PLAN
+limb (DEC-6, exit 7) refused the scoped apply: the plan stage grades the two SNS log groups as additions that raise and does not read
+the CRO's `none_owed` rows (@5165905870), which only the commit stage honours. Ruled by the CTO: ONE audited override of the plan
+limb for THIS apply, on the saved five-address plan unchanged, the gate's own audited override carrying a reason that cites
+AMENDMENT 3, the two rows @5165905870 and row S17. It admits ONLY the two SNS log group additions: any other naming finding in
+the plan is a STOP and the override is not used. The plan limb itself is fixed under `LGIC_ENFORCE-D1-S6` (`2.0.0_SA_COO~L1`);
+this override does not wait for that fix and is not reused. Your steps are otherwise unchanged (amendments 1 and 2): the
+scoped apply on the five addresses, the read-backs AC1 to AC4, the entry, the instance, the flip. Gate limb: none graded.
+
 <status>pending</status>
 <round>3</round>
 <workstream>SEV1_SMS</workstream>
