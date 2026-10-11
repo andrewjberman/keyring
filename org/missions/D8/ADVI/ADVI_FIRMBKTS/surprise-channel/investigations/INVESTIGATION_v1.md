@@ -4598,3 +4598,51 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not a prerequisite of act 3b: nothing in the act depends on this instrument reading ok=True. It stands as a broken regression instrument for the fence module; an owner (the NFRA_CTLPLN lane that built it) repairs or retires it. Surfaced, not chased."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W43-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~43",
+  "surfaced_at": "2026-10-11T14:53:59Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The pre-commit risk reflex printed HOLD on infra/aws/terraform/modules/opal_name/main.tf citing deploy-completion notes about other roots' main.tf files (a basename match); the commit landed rc=0 on c64a667818.",
+  "spec_asserts": "The pre-commit risk reflex (comp-pulse diff) names a HOLD only for a touched node that a recorded claim is written about.",
+  "world_is": "The HOLD cites org/critical_paths/change_management/20260616T2001Z_nfra-infrpt-dr-snapshot-backup_deploy_completion.md:35, which is about main.tf of the portal_lambda_ec2_snapshot permissions, a different Terraform root. The reflex matched the bare name main.tf across six roots (9 claims each), not the touched opal_name/main.tf. The same match was filed as ADVI_FIRMBKTS-D1-W42-S1 on acb073608a.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit c64a667818: '[HOLD] infra/aws/terraform/modules/opal_name/main.tf -> file:infra/aws/terraform/aaii-v2-bucket-lifecycle/main.tf (9 recorded claim(s))' and five further roots",
+      "org/critical_paths/change_management/20260616T2001Z_nfra-infrpt-dr-snapshot-backup_deploy_completion.md:35 read at the worktree: '- **main.tf:** fix portal_lambda_ec2_snapshot (EC2SnapshotPermissions)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken; the commit was not blocked and the cited claim is not this cell's. Repeat of the W42-S1 observation for the reflex's owner."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W43-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~43",
+  "surfaced_at": "2026-10-11T14:53:59Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "safe-commit printed WARN that the client-data check could not run (hashed account-id list absent on this device); commit c64a667818 was not checked for client account ids.",
+  "spec_asserts": "The commit gate runs the client-data check (hashed account-id list) on every commit it admits.",
+  "world_is": "The hashed list is absent at C:\\Users\\Test\\.opal\\account_id_hashes.txt on dell1 and OPAL_ACCOUNT_ID_HASHES is unset, so the check printed WARN and skipped the list comparison. Absent is not empty. The committed diff carries no 12-digit number (git show c64a667818 added lines matching 12 digits: 0), so no client account id entered the commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit c64a667818: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids",
+      "git show c64a667818 with added lines matched against a 12-digit pattern: 0 at the worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken by this worker; the list is a per-device input, not this cell's. Filed for the owner of the client-data check to judge whether dell1 needs the list placed."
+}
+```
