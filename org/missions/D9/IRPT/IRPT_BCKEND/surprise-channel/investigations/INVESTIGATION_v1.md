@@ -26121,3 +26121,112 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The expiry is assigned to IRPT_BCKEND by another fabric's analysis and reached this seat as an information-only relay. PARKED here: owner 2.0.0_SA_COO~P2 (workstream ~P) until a lane is named for the RI1 move; un-parks when the RI1 move of the IRPT directory is cut as a cell, whose face must name this row and retire the transitional read. Whether RI1 is in any current decomposition of IRPT_BCKEND was not read."
 }
 ```
+
+## IRPT_BCKEND-D2-S85 -- The YCharts capture receipt is NOT persisted, and the one explicit diagnosis for the observed condition is unreachable after a submission
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S85",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T13:18:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The capture's full receipt (login_submission, probe_pair, warmup, login_path, screen) is consumed in process by run_capture and written nowhere, so the only surviving host evidence is eight step lines in a per-run-truncated stderr file; and the library's explicit SIGNED_OUT_APP_CHROME diagnosis for exactly the condition those step lines show is gated on `!filled`, so after a submission the same condition degrades to the uninformative NO_AUTHENTICATED_PROBE.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "host_capture.py run_capture(): on a non-zero exit it calls failure_code(output) and keeps only failure_class plus record.reason, with the comment 'Do not propagate host log/message/record fields across this boundary'; nothing writes the stdout receipt to disk",
+      "host_capture.py STDERR_NAME = 'last-capture.stderr', stderr_sink() opens it O_TRUNC at every run and keep_tail() cuts it to 65536 bytes after; measured on the host at 454 bytes, 8 lines, mode 600, mtime 2026-10-11 11:19:18 +0000",
+      "the grep for reason|failure_class|max_steps|otp_branch|login_path|password_visible_wait|login_submission|probe_pair|warmup|unexpected_challenge over that file returned NOTHING: no receipt JSON is in it",
+      "ycharts_session.js:1041 `if (!probe.authenticated && probe.reason === 'NO_IDENTITY_COOKIE' && !filled)` -- the SIGNED_OUT_APP_CHROME throw, with its DOM evidence, is gated on !filled",
+      "ycharts_session.js:1042-1050, the MEASURED 2026-09-24 comment describing the same shape: the public page satisfies the app-chrome selector model, every step reads CH-AUTHENTICATED, the probe can never pass without an identity cookie",
+      "the surviving step list: step 0 CH-SIGNIN_FORM then steps 1-7 CH-AUTHENTICATED, against MAX_STEPS=8 at ycharts_session.js:126",
+      "host sha256 857d90b81960d69a7a6700be6fffe33d86628694aef95f8cfb64aca7a82cb839 for ycharts_session.js EQUALS the repo bytes at box/dell2 HEAD, so the gating quoted above is the gating that ran"
+    ]
+  },
+  "spec_asserts": "host_capture.py's stderr_sink docstring states the reason the file exists: 'The runner's own step lines go to stderr and were discarded, so a failed sign-in left nothing to read on the host' (CTO rulings batch 70 item 5). The intent is that a failed sign-in leaves something readable.",
+  "world_is": "That fix captured the STEP LINES and stopped there. The receipt members the IB-pr-431 order asks for by name are still unrecoverable, for this attempt and for the ten others in the 14-day window, because the file is truncated at every run. The practical cost is exact and was paid by this read: the step list proves the form was submitted at step 0 and that every later step classified CH-AUTHENTICATED while the probe never passed, but it cannot distinguish (a) the submission succeeded and the probe or identity-cookie leg is broken from (b) the submission failed and the vendor served a signed-out page that matches app chrome. login_submission -- whether the posted fields equalled the secret's, and the vendor's reply status -- is precisely the member that separates them, and it is thrown away. So the cause of a YCharts sign-in failure is structurally INFERRED on this host, never measured, and will stay so. The second half compounds it: the library already knows this condition by name and fails explicitly for it with the DOM evidence 'the next model needs', but only before a submission; after one, the same screen state produces a generic MAX_STEPS exhaustion. Two cheap remedies are named rather than chosen: persist the thrown record's non-secret members beside the step lines (the file already exists and is 0600), and extend the SIGNED_OUT_APP_CHROME condition to the filled case, or give the filled case its own named reason. OWNER: IRPT_BCKEND's runner cells under 2.0.0_SA_COO~P2 and 1.0.0_SA_CTO~DELL2; neither change is in this read-only order's grant and neither was made."
+}
+```
+
+## IRPT_BCKEND-D2-S86 -- An SSM send whose script was empty returned Status Success with rc 0: acceptance read as execution
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S86",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T13:18:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A send-command whose local shell quoting had already failed handed SSM the empty string; SSM accepted it, ran nothing, and reported Status Success with ResponseCode 0 and empty output, so a CommandId and a Success both existed for a read that never happened.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ssm command id a6f50ae7-fe10-43d3-b86d-db3b9154e71e, get-command-invocation: Status Success, ResponseCode 0, StandardOutputContent empty, StandardErrorContent empty",
+      "ssm list-commands Parameters.commands for that id records exactly [\"\"] -- the empty string, read back from SSM rather than assumed",
+      "the local call printed 'sed: -e expression #1, char 13: unknown option to `s'' BEFORE the send, and still produced a CommandId"
+    ]
+  },
+  "spec_asserts": "The order states it directly: 'Every host command's script is recorded verbatim; its status is read with get-command-invocation (a CommandId alone proves only that SSM accepted it).' CLAUDE.md rule 22a carries the same class.",
+  "world_is": "The order's warning is about a CommandId versus a status. This case is one layer worse and the layer is worth recording: the STATUS was Success too. Success means the document ran to completion, and a document whose command list is one empty string completes immediately and cleanly. Nothing was read, nothing was written, no bound was touched, and had the operator not checked the output content the finding would have been reported as read-and-empty rather than never-read. What makes it a trap rather than a slip is that the two obvious oracles -- a CommandId exists, and the status is Success -- BOTH read healthy. The sound oracle is the output content, or the recorded parameters. GENERAL REMEDY, which this read adopted after the fact: build the parameters as a JSON file and pass it with --cli-input-json rather than interpolating a script into a shell string, so a quoting failure cannot produce a well-formed empty send. OWNER: no one but this seat; recorded for the next operator on this host, and because AC3 of this order enumerates host commands by their script and a void send has none to enumerate."
+}
+```
+
+## IRPT_BCKEND-D2-S87 -- BLOCKING for AC3 only: the bounds regex matches a two-file sha256sum that executes nothing
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S87",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T13:18:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB129-1-AC3's forbidden pattern (bash|sh|node|nodejs)\\s+\\S*(run-ycharts-session|ycharts_session) fires on `sha256sum /opt/.../run-ycharts-session.sh /opt/.../ycharts_session.js`, because the alternative `sh` matches the TAIL of the first filename and \\S* then walks to the second path; the command executes nothing, and AC3 FAILs on a read that honoured every bound.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p129_cells.py IB129-1-AC3 run at the record: 'FAIL: host command 44e8d106-6deb-4bfd-8f41-9df61eaf9e51 matches the forbidden pattern' with that regex; IB129-1-AC1 PASS and IB129-1-AC2 PASS at the same record",
+      "the match demonstrated locally: re.search returns the text 'sh /opt/investor-reporting-ycharts/ycharts_session' -- the .sh tail of argument one, the space, then argument two",
+      "CONTROL, same pattern: 'bash /opt/.../run-ycharts-session.sh' matches (the real execution case it exists to catch), while hashing each file in its OWN command matches neither",
+      "the command's actual effect: sha256sum of two files, whose output was the two digests later shown EQUAL to the repo bytes -- a pin check, not an invocation"
+    ]
+  },
+  "spec_asserts": "AC3 grades that no host command 'starts, stops or restarts a unit, runs the session runner, reads or writes a secret value, touches a queue or calls the vendor'. The order also says: never weaken a check, do not edit p129_cells.py, and if a criterion cannot be met as written, file a row and report.",
+  "world_is": "The pattern is sound for what it targets and the wording of AC3 is satisfied in substance: nothing ran the runner. It is the REGEX that cannot tell `sha256sum a.sh b.js` from `sh b.js`, because it anchors on no word boundary and allows \\S* to cross an argument boundary. The collision is not exotic: HostCapture pins exactly these two files and verifies both before every capture, so hashing or stat-ing the pair in one command is the natural way to check the pin, and any future cell that does it will fail AC3 the same way. NOTHING WAS DONE ABOUT IT HERE: the check was not edited, the record was not doctored to hide the command, and the command is listed verbatim as the order requires, so AC3 reads FAIL and the order's status stays pending. The narrow fix is a word boundary and a tighter separator, for example (^|\\s)(bash|sh|node|nodejs)\\s+[^\\s]*(run-ycharts-session|ycharts_session), which still catches the execution case and no longer matches the two-file hash. OWNER: 2.0.0_SA_COO~P2 as the check's author. The remaining read is unaffected: AC1 and AC2 pass and the findings stand on their own evidence."
+}
+```
+
+## IRPT_BCKEND-D2-S88 -- This seat cannot read the irpt-jobs lease rows: kms:Decrypt is denied to its user, and the read was taken through the host's role instead
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S88",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T13:18:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A GetItem on the irpt-jobs lease row from this seat's own session is denied -- kms:Decrypt on the table's CMK is not granted to cloudops-dell2-agent-user -- so the lease and job rows that hold the capture cooldown and the refresh intent are unreadable from the operator side; the row was read through the host's own role, which holds the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws dynamodb get-item on irpt-jobs, key tenant=_opal job=ycharts-session, from this seat: AccessDeniedException, 'kms:Decrypt on resource arn:aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111 because no identity-based policy allows the kms:Decrypt action', principal arn:aws:iam::313476888478:user/cloudops-dell2-agent-user",
+      "the same GetItem through SSM on i-0167fd745ad906a66, ssm command id c045516c-6d6b-4c05-9e7c-adc123c2cc61, Status Success: the item returned with fence_token 27, lease_expires_at 0, lease_owner irpt-ycharts-runner/866356",
+      "the order's own preflight anticipates this: 'comp-iam: DECLARED-NOT-APPLICABLE -- the applier's existing SSM and describe rights are used, and a refusal is a row'"
+    ]
+  },
+  "spec_asserts": "The order's step 3 asks for the runner's stored state by describe calls and listings, and permits reading the refresh marker's current value where it is not a secret.",
+  "world_is": "Two consequences, one small and one worth a decision. The small one: no grant was sought or added, and no bound was bent -- the read was taken through the instance's own role, which the order names as the read path for that host, and it wrote nothing. The one worth a decision: an operator diagnosing this host cannot see the operational rows that decide its behaviour -- capture_not_before, which gates whether another sign-in can be attempted, and intent_session_refresh, which is the per-job one-shot that bounds lock-out -- without going through the instance. That is a real diagnostic handicap for any cell asked to read this subsystem, and it is the reason this read reports the cooldown's EFFECT, measured five times from journal spacing, rather than the attribute's value. It is not obviously wrong that an operator user lacks the data key; it is a choice, and it should be a deliberate one rather than a surprise met mid-incident. OWNER: 1.0.0_SA_CTO~DELL2 to say whether the operator role should hold kms:Decrypt on that key for read, or whether host-mediated reads are the intended and only path. Nothing here holds the order."
+}
+```
