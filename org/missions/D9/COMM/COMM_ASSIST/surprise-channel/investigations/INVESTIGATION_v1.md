@@ -405,3 +405,28 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Routed as one ask to NFRA_OPLGTW's issuer. Resolves when one hour of ingress reads channel_poll failed=0 and one real channel @mention reaches Andrew (D2's done-when)."
 }
 ```
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S12",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-10-11T22:45Z",
+  "one_line": "Cites COMM_ASSIST-Z-S10 and Z-S6: channel_poll is HEALTHY since the gateway's /hx/teams release -- 29 of 29 channel_poll events in the 30 minutes to ~22:4xZ 2026-10-11 read failed=0 with channels=8, after failing every minute on route=teams status=404.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ",
+  "spec_asserts": "Z-S10's remedy: a gateway release that serves the teams and channels routes; then COMM reads D2's done-when (an hour of channel_poll failed=0 and one real channel @mention reaching Andrew).",
+  "world_is": "NFRA_OPLGTW OG-ap-7 released CT-i-11's /hx/teams/* (release 28ba9532b6, GET /hx/teams/teams 200; NFRA_OPLGTW round-34 packet @fd3f189ece). COMM's ingress log now reads failed=0 with 8 channels listed. This seat read 30 minutes, not the hour D2 names, and read no mention; the mention half is the issuer's read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events /aws/lambda/teams-global-chat-assist-ingress-lambda, filter channel_poll, last 1800 s at ~22:4xZ: 29 x 'failed': 0, 29 x 'channels': 8",
+      "NFRA_OPLGTW ADJUDICATION_v25.Z.md header (this seat, @8503c3f3e8)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the CVO as a carrier: this seat cannot message the issuer. The issuer's D2 read (one hour, one mention) resolves Z-S10 and Z-S6 with a citing row."
+}
+```
