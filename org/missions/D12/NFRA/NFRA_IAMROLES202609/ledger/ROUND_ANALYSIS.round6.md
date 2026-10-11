@@ -55,6 +55,23 @@ Row 7's "Andrew's word first" is lifted by
 laptop CTO's YES. Nothing pins the role (never assumed, 0 functions, 0 references account-wide), and its definition is saved
 for re-creation. E3 runs under that ruling's terms.
 
+## Addendum 3 (2026-10-11 ~09:2xZ) -- Z-S39, a LIVE squatting hazard, is added to round 7 as E5
+
+`opal-portal-lambda-role` runs **12 Lambda functions**. Its inline `opal-portal-s3-read`, Sid `S3ReadWrite`, grants
+`s3:GetObject`, `s3:PutObject`, `s3:DeleteObject` and `s3:ListBucket` on 8 buckets. This seat classified each one live:
+**6 read 404, so they do not exist** (`opal-data-smartx`, `opal-data-smartx-v2`, `opal-portal-data`, `opal-data-portal-s3`,
+`opal-market-data-v2`, `opal-data-aaii-sentiment`), and 2 are ours (`opal-data-portal-v2`, `opal-data-news-v2`). It is the E2
+class with WRITE and DELETE on a production role. If anyone creates one of those six names, a portal Lambda still
+addressing it would write Opal data into their bucket. That makes it more urgent than E2's targets.
+
+| # | cell | rows | done when |
+|---|---|---|---|
+| E5 | **FIRST, read-only:** for each of the six names, count references in the 12 functions' environment variables and in their deployed code (from the package manifest or source map, never by filename). **THEN narrow at resource grain**, as in x-2 target 3: the six names (bucket and `/*`) leave the statement; the two live buckets and all four actions stay. Its own never-widen pair, rollback document saved first | Z-S39 | the reference count is printed per name with a positive control (`opal-data-portal-v2` is found); the live document differs from the rollback by exactly the 12 removed ARNs; one invocation of a portal function succeeds after the change |
+
+**A reference found is not a reason to keep the grant.** It means a Lambda is addressing a bucket that does not exist,
+which is a broken feature hidden by the grant. Such a name is narrowed anyway, and the reference is filed as its own row
+for the function's owner.
+
 ## Addendum 1 note
 
 The deploy-or-revert act that follows is NOT this round's. This seat rules it on E4's table, and it runs under its own
