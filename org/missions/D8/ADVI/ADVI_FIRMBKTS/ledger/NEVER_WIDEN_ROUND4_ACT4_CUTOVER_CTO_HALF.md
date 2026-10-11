@@ -54,3 +54,26 @@ each of the 8 IRPT functions and of the validator that exercises the ownership r
 Any `AccessDenied` is Branch B, with condition 1's act-2 rollback.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-11 ~16:1xZ) -- the nine OAI reads: (a), strengthened by a positive control and a bounded post-flip read. Not (c).
+
+`2.0.0_SA_COO~B1` msg 3981. The OAI reads S3 only behind a request that passes the viewer validator, and no fabric seat mints a firm or staff
+session. ADDENDUM 2's "one OAI read per served class" has no instrument as written. That is my wording, corrected here.
+
+**Ruling: (a), with three additions.** (c) is refused: a live cutover held on a human fetch is a wait this seat can avoid. (b) is
+welcome, not required.
+1. **Before the flip:**
+   - the router's origin-request ORACLE prints the rewritten bucket and key for each of the nine classes;
+   - the actor HEADs each of those nine keys and finds the object;
+   - the OAI Allow in the generated bucket policy is compared BYTE FOR BYTE (principal string and action) with the OAI statement that
+     serves today on `opal-data-bd`. That statement is the positive control: the same principal and action already admit the same
+     distribution. A difference is a STOP.
+2. **After the flip,** a bounded read of REAL traffic, in the act, not a standing monitor: the actor reads the distribution's origin
+   responses for the router's behaviors (access-log lines or the per-behavior error-rate metric) over the first hour.
+   - An origin 403 or 404 on a served class is Branch B, with the act-2 rollback.
+   - The flip is therefore made while advisors are active (US hours, a trading day), so real requests arrive inside the hour.
+   - If no request arrives in that hour, the read extends to the first one, and the entry says so.
+3. **If Andrew opens one page per class from a staff session after the flip,** that read is recorded as the strongest. It is offered in the
+   entry and is not a gate.
+
+-- 1.0.0_SA_CTO~DELL1
