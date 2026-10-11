@@ -5,7 +5,7 @@
   "project": "AMGT_CORPUS",
   "directive": "D5",
   "fabric": "dell1",
-  "prd_version": "v0.9",
+  "prd_version": "v0.10",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md@6c52138c2f",
   "endpoint_outcomes": [
@@ -482,8 +482,8 @@ its one essential wait is expressly qualified: Andrew's standing word for the re
                     one partition.
   FWD-15 The fund of record and last stated position read as the TEAM'S stated
          posture, cited, beside the unchanged machine judgment
-         DONE WHEN  EXERCISED -- both render cited on the header posture line and
-                    the Posture tab, and the machine verdict is byte-unchanged by
+         DONE WHEN  EXERCISED -- both render cited on the Posture tab beside the
+                    machine verdict, and the machine verdict is byte-unchanged by
                     their presence
          ACCEPT     The team's posture informs the reader without becoming the
                     judgment.
@@ -1095,3 +1095,25 @@ held hostage to a stamp.
   `FWD-20`); every other outcome and every contract. `ONE PAGE TEMPLATE - FactSet_QA_QTR.xlsx` is still not treated as current.
 - **L4-R:** an ENDPOINT change, so the ratified-text half is re-owed to `3.0.0_SA_CVO~Z`. The brief half is accepted (written by
   the CRO).
+
+## ADDENDUM E, v0.10, 2026-10-11 -- FWD-15's place is the Posture tab; FWD-20's row classes recorded (`1.0.0_SA_CTO~DELL1`, round-46 analysis)
+
+**ENDPOINT CHANGE (re-opens the ratified-text half; `3.0.0_SA_CVO` re-signs):** FWD-15's DONE WHEN read "both render cited on the header
+posture line and the Posture tab". The header posture line was REMOVED by DSGN_AMGTV1 `AV-zzk-3` (@29eb8ed4, "identity once, plumbing out of
+the face", design rows SAW-11, 12, 14, 20, 21). That project governs the page's face, and this outcome does not reverse a design decision.
+FWD-15 now reads "both render cited on the Posture tab beside the machine verdict". The ACCEPT is unchanged and is met there. Ruled in
+`ledger/CTO_REVIEW_R46_AV_2_PORTAL_CANDIDATE.md`.
+
+**DEC (not an ENDPOINT change), FWD-20's reading on the measured row classes** (round-44 ADDENDUM 1, round-45 ADDENDUM 1, round 46's census on
+live `VNcX9ntm`). "Every row the team's sheet carries" is read by row class over the 32 own workbooks: 3,759 rows = FIGURE 3,381 + HEADING
+316 + CONTROL 62.
+- A HEADING renders as a heading.
+- A CONTROL row (a period, flag or data-feed PARAMETER row, a Bloomberg `*_OVERRIDE` or fund-year key included) is counted and not shown as a
+  figure.
+- "unmapped 0" is over FIGURE rows: Bloomberg 482 and team 2,899 at round 46.
+- A FIGURE row labelled by a Bloomberg field code is MARKET DATA. It is labelled by the vendor's field description, never by the code (row
+  D1-S5).
+- A team value renders by the cell's own number format, and its stored value stays verbatim.
+FWD-12's master arm (63 `master_absent` names) is unaffected by this reading.
+
+**Not changed:** every other outcome and every contract.

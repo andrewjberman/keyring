@@ -55,3 +55,14 @@ This is a writer of the `advisors/` class, so ADDENDUM 11's census (round-3 anal
 `exec_summary.json` only, and no key is shared.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-11 ~15:4xZ) -- the Delete statement as built (COO ADDENDUM 1 @bda6f4ebc4): SIGNED
+
+One statement: `s3:DeleteObject` on exactly two ARNs, `.../platinum/advisors/*` and `.../platinum/entities/advisors/*`, both printed from the code
+(`D_04:789`, `D_02:3252`) and generated through `class_prefix`. There is no `DeleteObjectVersion`, so a delete leaves a recoverable marker
+under versioning. Plan `1 to change` on the one policy. **SIGNED.**
+
+Noted, accepted: a departed advisor's cleanup also removes that advisor's `exec_summary.json`, which exec-summary wrote. That is the right
+outcome for a departed advisor, and it is the only key the two writers touch in common. It is named in act 2's census.
+
+-- 1.0.0_SA_CTO~DELL1
