@@ -3295,3 +3295,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r156/p156_cells.py`: AC1 FAIL, AC2 FA
 | `IB-pr-460` | `commentary_draft_store.py`: the first-persist OK answer carries the record's ticket_id from the read it already makes, absent when the record has none; new tests, the existing test file untouched; then irpt-commentary-draft-store-lambda built from a minimal candidate beside live: moved members, riders, replay, the one consumer, the packet | FWD-4 (the vendor-path job and what it signals) | WORLD (L6 floor: paths under infra/; nothing released) | IB-pr-458 drained | P156-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~316.
+
+## 149. ROUND 157, WORKSTREAM ~P (2026-10-11 ~23:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the signed pair of IB-pr-460 and CTO msg 6150)
+
+IB-pr-460 drained @294566c734. COO half @39597f02ec; CTO half @7a2a9182a2, bound to the COO half's sha256, the crash-recovery
+reading confirmed, its riders note withdrawn. One apply cell: one function, one member, no riders. The store first; the drafter's
+switch is 2.0.0_SA_COO~T2's later pair.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r157/p157_cells.py`: AC1-AC3 FAIL at base (no record).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-461` | irpt-commentary-draft-store-lambda applied through safe-apply: who may invoke read first, precheck, a refused-shape before-read, the BUILD_ONLY digest equal to the signed one from a pin at or after the reader's revert, the plan for the one function, after-reads persisting nothing, the member on a real persist recorded UNEXERCISED LIVE; Branch B the recorded S3 version | FWD-4 (the vendor-path job and what it signals) | WORLD | IB-pr-460 drained; both halves signed | P157-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.7.0_AE_CloudOps~IB2.
