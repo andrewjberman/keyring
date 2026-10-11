@@ -5,7 +5,7 @@
  "project": "NFRA_OPSWKF",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.6",
+ "prd_version": "v0.7",
  "step": 4,
  "brief_ref": "docs/briefs/q3-trade-submission-ops-workflow-brief-20261006.md@c41e705220",
  "endpoint_outcomes": [
@@ -16,7 +16,8 @@
   "FWD-5",
   "FWD-6",
   "FWD-7",
-  "FWD-8"
+  "FWD-8",
+  "FWD-9"
  ],
  "status": "RATIFIED"
 }
@@ -98,6 +99,19 @@ wrote the brief. **COO:** UNSEATED at registration; seating is `0.0.0_AB_MSTR`'s
          SOURCE     the laptop CTO's ruling of 2026-10-11 on row IRPT_YCDGEN-D2-S60 (its record
                     `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_XB_74E2_TRADE_DASHBOARD_API_SERVES_ANY_PORTAL_LOGIN_20261011.md`
                     @8e9ca364d7, relayed verbatim). Not an Andrew-direct word: a security defect ruled MEDIUM and placed here by its owner
+
+  FWD-9  A trade submission is made by Opal staff only
+         DONE WHEN  EXERCISED -- the trade submission route refuses a verified caller who is not OPAL-INTERNAL (FWD-8's meaning)
+                    BEFORE any table read, table write or mail, and admits one who is; shown by the handler run on the authorizer's
+                    own context for an Opal-internal, a client-tier and a service-tier caller, with the table and the mail client
+                    asserted untouched on each refusal; and, AFTER THE RELEASE, ON THE DEPLOYED SERVICE, by BOTH arms on ONE body that
+                    cannot be stored (a malformed `ticket_id`): a caller who is not Opal-internal answered 403, and an Opal-internal
+                    caller answered 400 `ticket_id is malformed`; no submission row and no mail from either; the deployed bytes diffed
+                    against the build input, member by member
+         ACCEPT     a person signed in as a client or as another firm's user cannot put a trade in front of Opal's approvers or
+                    mail them; an Opal staff member submits as before
+         SOURCE     NFRA_OPSWKF cell OW-s-1's record `deliverables/0.9.0_WK_NFRA_OPSWKF~7/FOUR_FUNCTIONS_WHAT_A_NON_INTERNAL_CALLER_CAN_DO.md`
+                    (code read, nothing called), under the laptop CTO's ruling cited at FWD-8. Not an Andrew-direct word
 ```
 
 ## CONTRACTS
@@ -225,5 +239,25 @@ backlog in their numbered order.
 - **The negative arm's caller** (v0.5's addendum) is one who fails BOTH comparisons: a tier that is not `internal` and a firmId that is not
   `opal-capital`. A synthetic identity under the pair, as before. A service token, which carries no firm claim, is such a caller.
 - **ENDPOINT changed.** The CVO re-signs the ratified-text half.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM (2026-10-11 ~19:4xZ, `1.0.0_SA_CTO~DELL2`): FWD-9, the trade submission route (L10; ENDPOINT changed)
+
+- **Source:** cell OW-s-1's record (merged @3fe09e448f), its first section read by this seat; and the handler's entry read by this seat at
+  `infra/aws/lambda/trade-pipeline/trade-submission-handler/src/submission_handler.py` lines 158 to 205.
+- **What the code does today:** it decides on two things only, that the authorizer's context carries an email and that a body
+  `initiator_email` equals it. Tier, firm and user type are never read. So any portal login with an email can store a
+  PENDING_APPROVAL submission and cause a mail to the approvers group. The record also says such a caller cannot approve, reject or
+  execute (those need a trade-users row and a group). NOT established: deployed bytes; whether a service token carries an email.
+- **Admitted as FWD-9, the same remedy as FWD-8 on the same stack:** the estate's Opal-internal rule, first in the handler, before the
+  trade-users read, the write and the mail.
+- **The proof on the deployed service writes nothing and mails nobody.** A real submission by a synthetic caller would store a row and
+  mail the approvers, so neither arm makes one. Both arms post ONE body whose `ticket_id` is malformed: the handler answers that with 400
+  before any table is touched (line 199 to 201, read by this seat), and the new check sits before it. Refused reads 403; admitted
+  reads 400. **There is NO read before the release:** the defect on the deployed service is not demonstrated by storing a row.
+- **Not in FWD-9:** the page's own guard; a rule for WHICH staff may submit (the trade-users table is still not consulted to admit a
+  submission, as today); the three other functions of that record, which are not this project's (carried to their owner).
+- **CONTRACTS unchanged. ENDPOINT changed:** the CVO re-signs the ratified-text half.
 
 -- 1.0.0_SA_CTO~DELL2
