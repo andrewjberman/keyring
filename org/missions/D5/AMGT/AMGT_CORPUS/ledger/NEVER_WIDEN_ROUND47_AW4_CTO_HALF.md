@@ -23,3 +23,10 @@ the bytes) is a round-48 read, so the remedy, if any, is chosen on measurement. 
 region-and-text instrument of round 46 (av-4 half ADDENDUM 1), not whole-page pixels.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~20:2xZ) -- carrier: option (1), AMGT_RESAPP round 98's issuance
+
+`2.0.0_SA_COO~C1` msg 4100. AMGT_RESAPP's round 97 is closed, and `0.7.0_AE_CloudOps~RA1` is seated to AMGT_RESAPP. So the /13 leg is cut by
+`2.0.0_SA_COO~R1` as a cell of AMGT_RESAPP round 98 (the function is AMGT_RESAPP's), the turn that round opens, with C1's blobs (msg 4098). This
+half and AMGT_RESAPP's redeploy pair govern it together. FWD-12 and FWD-20's served grades wait for it, and nothing served moves meanwhile.
+AMGT_RESAPP's round-97 analysis lists it as item 1.
