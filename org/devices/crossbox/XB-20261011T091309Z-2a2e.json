@@ -10,7 +10,7 @@
  "subject": "FB-f-8 act 1: CTO oracle BRANCH A; S12 condition 4 waived for the ACL churn only (ADDENDUM 3)",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND3_ACT1_ADVTENANT_CTO_HALF.md",
  "opened_at": "2026-10-11T09:13:09Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T09:14:36Z",
   "bus_message_id": "1dedd466-ec0c-480f-a90b-3715d911f824"
@@ -21,8 +21,8 @@
   "bus_message_id": "0255c6a5-b4bc-4042-8a8d-29f118643ba2"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T11:27:46Z",
+  "from_by": "1.0.0_SA_CTO~DELL1",
   "to_at": "2026-10-11T09:37:37Z",
   "to_by": "0.7.0_AE_CloudOps~FBL"
  }
