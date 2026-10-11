@@ -14,8 +14,8 @@ files.** Round 3 landed every cell it cut, and one more hop this project owned (
 
 | item | value | instrument |
 |---|---|---|
-| round-3 task orders, project tree | 3 of 3 complete (TO-R3-pc1, TO-R3-rn1, TO-R3-rf1) | `round-close-check --round 3`: orders=7, verdict=MAY-CLOSE; it counts judgment=0 for a round with one judgment criterion (list item 6 of round 2 stands) |
-| applier orders (flat folder) | TO-RECORD-R3-sm1 and TO-APPLY-R3-rf2 complete; TO-RUN-R3-tr1: SEE THE LAST LINE OF THIS SLUG | `<status>` of each face |
+| round-3 task orders, project tree | 3 of 3 complete (TO-R3-pc1, TO-R3-rn1, TO-R3-rf1) | `round-close-check --round 3` at 14:1xZ: orders=7, judgment=1, graded=1, ungraded=0, verdict=MAY-CLOSE |
+| applier orders (flat folder) | TO-RECORD-R3-sm1, TO-APPLY-R3-rf2 and TO-RUN-R3-tr1: 3 of 3 complete (the run order closed by the applier after AMENDMENT 1, read at 14:1xZ) | `<status>` of each face |
 | judgment criteria | TO-RUN-R3-tr1 AC2 NOT MET | CVO grade @5126c19d7a; packet `ledger/L8_PACKET.R3_TR1.md` @92c34457f2 |
 | `opal-ticket-api` live | CodeSha256 `20v0+vfe...`, 2026-10-11T13:34:27Z; deployed handler `dc0cd973` | `get-function-configuration`; `clamp_precheck.py` (downloads the package) |
 | the firm clamp on 27 routes | `READ27 27/27`, the ticket host decided from the source map (artifact `20v0+vfe`, commit `8446fdfa05`) | `clamp_precheck.py`, live at 13:55Z |
@@ -89,11 +89,15 @@ slug and the channel's `disposition` field was not updated, which is the CVO's f
    the form's follow-on cell.
 4. **Run 3's and run 4's requests** recorded with their job states in this project's result files, once a seat that can read the
    request table returns them.
-5. `round-close-check` still counts no judgment criterion on an applier's flat order (row D2-S23).
+5. `round-close-check` counted this round's one judgment criterion once the run order closed (judgment=1, graded=1); row D2-S23
+   can be re-read against that.
 6. Carried, untouched since round 1: FWD-3's one-account check; FWD-6 "same ticket"; FWD-2's other-firm refusal; FWD-5's queue type
    and age; the read grant that reaches dell1 and the rotation runbook; a recipient digest on the client mail log line.
 7. Andrew's crawl, on his word.
 
 **Closer:** you ruled no closer while every stopped hop has an owner (msg 4921). Three rounds, thread n: I do not re-pitch it.
 
-**State of TO-RUN-R3-tr1 at the send:** see the message that carries this slug.
+**Ruled after this slug was drafted (your msg 5094, on 2.0.0_SA_COO~G2's code read):** one cell for the next issuance -- for
+`svc-irpt-packager` only, the package door reads its admitted firms from an env list, an absent or empty list admitting nothing;
+build only, its deploy a pair of its own; the packager's mint waits on that deploy. It is item 0 of the list above: I cut it in
+round 4's issuance on your analysis, or sooner as a round-3 workstream cell if you say the mint should not wait for the analysis.
