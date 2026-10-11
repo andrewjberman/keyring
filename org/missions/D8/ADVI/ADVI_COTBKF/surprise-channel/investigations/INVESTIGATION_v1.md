@@ -7027,3 +7027,27 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W124-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~124",
+  "surfaced_at": "2026-10-11T19:37:42Z",
+  "one_line": "CB-bu-2 item 1 says the key whose conditional put is refused prints NOT-WRITTEN; items 2 and 5 and the issuer's brief say it prints CHANGED-BY-ANOTHER-WRITER. The mode follows items 2 and 5: a refused key prints CHANGED-BY-ANOTHER-WRITER, and NOT-WRITTEN is kept for a key whose version is still the capture's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-bu-2.remint-edges.md WORKER FACE item 1 (the key 'prints NOT-WRITTEN with the reason') against item 2 and item 5 (the key 'prints CHANGED-BY-ANOTHER-WRITER' and 'is never WRITTEN')",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py _remint_state @22d276fe02: a key whose version moved with no put of this run returned for it is CHANGED-BY-ANOTHER-WRITER; a key still at the capture's version is NOT-WRITTEN",
+      "data/assets/scripts/silver/tests/test_commonwealth_ard_remint.py::test_edge1_a_second_writer_in_the_gap_is_refused_and_never_read_as_this_runs_write[7 cases] @22d276fe02: the planted key prints CHANGED-BY-ANOTHER-WRITER; the refusal's ERROR line says the put was refused and nothing was stored for it"
+    ]
+  },
+  "spec_asserts": "CB-bu-2 worker face item 1: a key changed by anyone after the capture check fails its put, the run stops, and the key prints NOT-WRITTEN with the reason.",
+  "world_is": "The refused key's version has MOVED (the other writer's put), so NOT-WRITTEN (version unchanged from the capture) would be false for it; the same face's item 2 and item 5 name CHANGED-BY-ANOTHER-WRITER for exactly this key. Built to items 2 and 5; the ERROR line carries the reason item 1 asks for (the put was refused, nothing was stored for it).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
