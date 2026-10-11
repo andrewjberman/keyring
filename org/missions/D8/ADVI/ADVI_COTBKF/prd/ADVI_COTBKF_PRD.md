@@ -4,7 +4,7 @@
 {
  "project": "ADVI_COTBKF",
  "directive": "D8",
- "fabric": "laptop",
+ "fabric": "dell2",
  "prd_version": "v0.4",
  "step": 4,
  "brief_ref": "docs/briefs/cottonwood-commonwealth-10y-backfill-brief-20261006.md@902feb3a4f",
