@@ -10,16 +10,20 @@
  "subject": "Row D2-S92: dell2 agent user denied 2 reads on opalinvest-portal; a dell2 shared-infra plan reads it deleted",
  "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/XB_CALL_D2_S92_DELL2_AGENT_USER_PORTAL_BUCKET_READS_20261011.md",
  "opened_at": "2026-10-11T09:36:32Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-11T09:37:45Z",
   "bus_message_id": "83d69f21-1fe2-4db9-b54a-707059fac7a2"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T09:43:16Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T09:43:16Z",
+  "to_by": "1.0.0_SA_CTO"
  }
 }
