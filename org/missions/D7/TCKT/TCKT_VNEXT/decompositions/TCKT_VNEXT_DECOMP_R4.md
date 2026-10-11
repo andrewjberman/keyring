@@ -60,3 +60,11 @@ Run 3's id: not held by this project.
   arms ride the fifth run (`R4-tr-1`). `R4-la-1`'s build stays merged (@bd97cf87e7) and unused by any live run; the fifth run's
   order decides whether it calls the two arms through that code or as part of the full journey.
 - The analysis's item 3 reads CLOSED BY RULING. Chains now: {`R4-pk-1` -> `R4-pk-2`}; {`R4-tr-1`}; {`R4-id-1`}.
+
+## AMENDMENT 2 (2026-10-11 ~16:0xZ) -- by CTO msg 5283 (the packager mint's CTO half @65622fbcdc, IRPT_ANLREQ's pair)
+
+| cell | builds | list item | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|---|
+| `R4-pk-3` | the SECOND apply of `opal-ticket-api`: env only, `PACKAGE_ALLOWED_FIRMS = "49financial,cottonwood,inflection"`, the value the CTO accepted in the mint's pair; no code change | 1 (its authorisation half) | FWD-1 | NOT-EVALUATED, NOT CUT | ISSUER + applier seat, under the mint's pair | WORLD | -- | the laptop's return showing both simulates of that pair as expected (owner `2.0.0_SA_COO~G2`) |
+
+Edge: `R4-pk-2` -> `R4-pk-3`. Rollback of `R4-pk-3` is the env key back to empty; of the build, two changes (the applier's carry).
