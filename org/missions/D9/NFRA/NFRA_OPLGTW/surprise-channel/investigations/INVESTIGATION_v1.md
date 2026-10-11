@@ -11916,3 +11916,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "Citing row; Z-S81 and Z-S82 texts are untouched. Option (a) of Z-S81 (re-cut onto HEAD) is refused: it would carry box/sitez's unreleased gateway app changes into the deploy."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S84",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-11T12:00:05Z",
+  "one_line": "EC2_MANIFEST.json's opal-gateway file_checksums is stale on 8 of its 10 entries, and 6 of those are files the E2 release never touched (server.py, config.py, audit.py, tier.py, guard.py, graph.py) -- pre-existing drift accumulated across earlier releases, so the field cannot be trusted as a record of the deployed bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Compared all 10 file_checksums entries against ap6_release_md5.txt (the deployed release bytes): 8 DIFFER, 2 are SAME (ssavail_contract.py, teams_format.py). Denominator printed: 10 of 10 entries checked.",
+      "Of the 8 differing, only TWO are files this release changed (app/tools.py, app/destructive_ops.py). The other SIX -- app/server.py, app/config.py, app/audit.py, app/tier.py, app/guard.py, app/graph.py -- are untouched by E2's 11-file diff, so their entries were already wrong before this act.",
+      "The release list is confirmed to equal the DEPLOYED bytes independently: the deploy's own host read printed '037fd3a8f9bb657a8ba63aa8d859496f  /opt/opal-gateway/app/server.py', which equals ap6_release_md5.txt's value for app/server.py, while the manifest carried a101f27ea37009d73cb19b247eef26e7.",
+      "Also measured: ap6_verify.py after read shipped md5 106 of 106 identical against the release list, so the host runs exactly those bytes and it is the MANIFEST FIELD that is stale, not the release list."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Deployment rule 8: infra/aws/ec2/EC2_MANIFEST.json is the source of truth for every EC2 service, and CI/CD depends on it.",
+  "world_is": "A reader trusting file_checksums for opal-gateway would get the wrong md5 for 6 files that this release did not touch. NOT corrected wholesale here, deliberately: OG-ap-6 step 9 names deployed_commit and this seat corrected only the fields its own act moved (deployed_commit, deployed_at, deployed_by, previous_deployed_commit, _last_updated, release_note) plus the TWO checksum entries for files THIS release changed, so no knowingly-false record of this act is left behind. Refreshing the other six is someone's cell with its own evidence, not a rider on a release order -- and silently rewriting them here would have claimed a verification of 6 files this order never read.",
+  "notes": "Related in kind to the manifest defects MP-r-2 and MP-x-4 already recorded for this same service (the release tree carrying its own stale vintage, and safe-ec2-deploy.sh writing a stale previous_deployed_commit). Those two were about the deployed_* fields and are handled; this row is about file_checksums, which neither covered. Cheap fix for whoever owns it: regenerate the 10 entries from the deployed release bytes at the next gateway release, or drop the field if nothing consumes it -- this seat did not establish whether anything reads it, and says so rather than assuming."
+}
+```
