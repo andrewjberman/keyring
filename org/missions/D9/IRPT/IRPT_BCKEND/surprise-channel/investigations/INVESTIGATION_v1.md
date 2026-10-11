@@ -26771,3 +26771,48 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The described parts cannot be four nodes: one account, two sleeves and two security nodes make five. The check only needs control.planted equal to control.read, which holds; no check reads the node count."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W299-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~299",
+  "surfaced_at": "2026-10-11T17:08:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The face did not say what a security-day is when the anchor does not carry the security that day, nor which fund trades the reader window can grade; this cell counts a security-day only where the anchor carries the security (anchor_days_not_carried is kept per type) and grades only trades with a Trade Date inside the 85 days (6,149 of 6,280 priced fund trades; the 131 earlier trades are not compared), and the settle-date line leaves out 322 trades whose settle date is outside the window.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~299/IB138-2_type_overlap_and_fund_check.json overlap_by_type (anchor_days_not_carried), fund_trades.count_check, fund_trades.by_settle_date",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~299/ib441_measure.py classify_day / run()"
+    ]
+  },
+  "spec_asserts": "Order Table 1: for each security and each of the 85 trading days compare the reader's bar for day t with the anchor's close for day t; Table 2: every priced fund trade; the reader window is fixed at 2026-06-05 to 2026-10-13.",
+  "world_is": "A security the anchor carries on some days only has no anchor close on the others, so no comparison exists for them; trades dated before 2026-06-10 have no prior-day bar in the fixed window. Both were set aside and counted, not classed, so the sums in the json equal the compared population and the choice can be re-cut by the CTO."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W299-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~299",
+  "surfaced_at": "2026-10-11T17:08:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "All 54 securities the type join puts under MIXED pair the transactions table's value 'Not Available' with one stated value on other rows of the same CUSIP (38 with the exchange-traded value, 16 with the registered-investment-company value); under the order's rule they sit in MIXED, and none is one_day_off, so the type key depends on whether a stated value is taken over 'Not Available'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~299/IB138-2_type_overlap_and_fund_check.json type_join.mixed_combinations and overlap_by_type.MIXED (54 securities, 3,633 security-days, one_day_off 0)"
+    ]
+  },
+  "spec_asserts": "Order Table 1: say how the type of a security is taken when its transaction rows disagree; put the security under MIXED and list the combinations.",
+  "world_is": "The disagreement is a stated value against 'Not Available', not two stated kinds; no security was found with two different stated kinds. The alternative rule (stated value over 'Not Available') was not applied."
+}
+```

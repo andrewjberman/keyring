@@ -82,7 +82,7 @@ entries and of invokable ones, `classes_not_read`, any entry with `invoke_recomm
 classes' keys". The exec-summary's read is `r4_execeq.py` (its handler cannot be invoked read-only). Workstream `PEVENTS`.
 Class LOCAL (read-only).
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>PEVENTS</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-36</to_id>
