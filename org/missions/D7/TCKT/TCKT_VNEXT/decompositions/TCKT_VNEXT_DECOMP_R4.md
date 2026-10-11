@@ -68,3 +68,16 @@ Run 3's id: not held by this project.
 | `R4-pk-3` | the SECOND apply of `opal-ticket-api`: env only, `PACKAGE_ALLOWED_FIRMS = "49financial,cottonwood,inflection"`, the value the CTO accepted in the mint's pair; no code change | 1 (its authorisation half) | FWD-1 | NOT-EVALUATED, NOT CUT | ISSUER + applier seat, under the mint's pair | WORLD | -- | the laptop's return showing both simulates of that pair as expected (owner `2.0.0_SA_COO~G2`) |
 
 Edge: `R4-pk-2` -> `R4-pk-3`. Rollback of `R4-pk-3` is the env key back to empty; of the build, two changes (the applier's carry).
+
+## AMENDMENT 3 (2026-10-11 ~16:4xZ) -- by CTO msg 5327 (st32 is installed; write the fifth run's pair now)
+
+`R4-tr-1`'s pair is written: `deliverables/2.0.0_SA_COO~V2/R4_RUN/R4_TR1_FIFTH_RUN_PAIR.md`, COO half signed ahead of its conditions.
+Writing it showed the runner cannot file the form's one-step path (it claims the ticket and submits without `ticket_id`), so the
+run needs one more build cell:
+
+| cell | builds | list item | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|---|
+| `R4-rn-2` | the runner gains a one-step mode: the form's four calls (upload; ticket with source `ticketcenter:i1`, no claim; ONE submission with `ticket_id` and the `tckt-` request id; the creator's record and its repeat), the two arms before the submission, at most one submission per process | 4 (its instrument) | FWD-1 (instrument) | cut | dell2 worker, slot 17, workstream RN | LOCAL | worker | none |
+
+Edge: `R4-rn-2` -> `R4-tr-1`. `R4-tr-1` also still waits on the CTO half and on `2.0.0_SA_COO~G2`'s two reads at the GO.
+Dry-run at the base: os-mode FAIL (missing tests) and os-regress FAIL (61 below 68), as expected.
