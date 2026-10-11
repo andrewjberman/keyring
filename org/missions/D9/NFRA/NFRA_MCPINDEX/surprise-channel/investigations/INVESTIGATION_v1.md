@@ -6367,6 +6367,34 @@ carries none.
     "spec_asserts": "A GAP census marks a candidate served=true only if its objects are served today, and a GAP verdict means no served source carries both statuses.",
     "world_is": "Six candidates have served prefixes and a schedule yet lack the statuses, so under the order's literal definition they read served=true and the instrument refuses the GAP verdict; the census had to read `served` as 'is a source of the shape'. Judgment of which reading is intended is the issuer's.",
     "notes": "No effect on the verdict: under either reading no candidate carries both statuses at the fixture grain. MX-c-7 should cite the census's verdict, owner and per-candidate reason, not its served flags alone."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S98",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-11T00:58Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "W30-S1 and W31-S1: the reading is confirmed and no defect is asserted. W32-S1: its hazard is removed by recording the measured baselines and the sparse-run flag as the drain's procedure.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W30-S1",
+      "NFRA_MCPINDEX-Z-W31-S1",
+      "NFRA_MCPINDEX-Z-W32-S1"
+    ],
+    "one_line": "RULES the three round-9 worker rows at their drains. W30-S1 and W31-S1 (INERT): CONFIRMED. In a census, served means a producer survives as a source of the reader's SHAPE; the literal facts stay in served_prefix and producer_scheduled. Both verdicts are GAP either way: trade-rec owner unowned, billing owner ADVI_BILLING. W32-S1 (ARMED): DISARMED. The measured baselines (full 41 failing IDs, sparse 99) replace the analysis's '34-38'. A sparse-tree drain must pass --continue-on-collection-errors, or collection aborts on 14 modules and runs nothing (rc 2).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MX-o-1 drained @bac72d2e3a: o1.AC1 PASS (8 candidates, verdict GAP), AC2/AC3 PASS by branch, re-run by the issuer in the worker tree; instance VALID.",
+        "MX-o-2 drained @92dc842a98: o2.AC1 PASS (6 candidates, verdict GAP, owner ADVI_BILLING), AC2/AC3 PASS by branch; instance VALID.",
+        "MX-x-6 drained @ea11910486: x6.AC1 2 of 2 named tests (12 of 12 in the file; the worker's revert control failed only the refusal test); x6.AC2 SELF-TEST PASS; instance VALID. Baselines: tests/baseline/failing_ids_full.txt (41), failing_ids_sparse.txt (99)."
+      ]
+    },
+    "spec_asserts": "ROUND_ANALYSIS.round8.md section 3 cites the gateway suite red at 34-38 failures; the census contract defines served as 'objects served today'.",
+    "world_is": "The full-tree suite reads 41 failing IDs and the sparse tree 99, 50 of them collection errors from a missing org/standards/NFRA_OPLGTW_CONTRACT.json. Under a GAP verdict the census validator needs served=false, so served carries the shape-survival meaning.",
+    "notes": "Both FWD-19 readers are GAP, so MX-c-7 catalogues E-30 GAP (unowned) and E-31 GAP (ADVI_BILLING), and MX-r-10 ships only the catalog and E2's discover change. FWD-19 is NOT done, and the L10 slug says so. The schwab (24 full) and grant (2 full, 9 sparse) failing IDs go to 2.0.0_SA_COO~O."
   }
 ]
 ```
