@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-11T03:39:03Z",
+ "written_at": "2026-10-11T05:26:26Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1499,6 +1499,65 @@
     }
    },
    "closed": null
+  },
+  {
+   "id": "sitez-20261011T044822Z-0dd7",
+   "project": "NFRA_IAMROLES202609",
+   "subject": "Retire (delete) IAM role lambda-test-role (row 7) -- an irreversible delete; round 7 E3 is cut only on your yes",
+   "asked_by": "2.0.0_SA_COO~ZI",
+   "source": "org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round6.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-11T04:48:22Z",
+   "kind": "act",
+   "context": "Created 2026-02-19, never used (RoleLastUsed absent at 04:5xZ 10-11). Three planes read 0 references: GOVERNANCE_DISPOSITION.md row 7 and section THE MEMBER -- lambda-test-role (line 676). A re-created role gets a new role id, so a delete cannot be undone; gates E3 only",
+   "rec": "Yes: delete lambda-test-role in round 7 E3, under its own never-widen pair, with the three-plane zero re-read immediately before and after",
+   "scope": {
+    "measured_at": "2026-10-11T04:48:22Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/shared-infra",
+     "infra/aws/terraform/smartx-pipeline",
+     "infra/aws/terraform/news-pipeline"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/terraform/shared-infra/zz_adopt_family_c_row6.tf.proposed overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/terraform/shared-infra)",
+      "infra/aws/terraform/shared-infra/zz_adopt_family_c_row6.tf overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/terraform/shared-infra)",
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+109), also declared by root infra/aws/terraform/shared-infra named by LGIC_ENFORCE on dell1",
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by MDPF_HEALGAP on dell1",
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/cot-pipeline named by MDPF_HEALGAP on dell1",
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/smartx-pipeline declares s3-access, also declared by root infra/aws/terraform/bd-pipeline named by MDPF_HEALGAP on dell1",
+      "root infra/aws/terraform/news-pipeline declares SecretsManagerAccess, cross-firm-secret-deny, also declared by root infra/aws/terraform/shared-infra named by LGIC_ENFORCE on dell1"
+     ],
+     "shared": [
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-11T05:26:26Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IAMROLES_ROW7_LAMBDA_TEST_ROLE_DELETE_20261011_Z.md",
+    "crossbox": "XB-20261011T051234Z-3e48",
+    "ruled_by": "cto",
+    "xadj": null
+   }
   }
  ]
 }
