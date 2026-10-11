@@ -5306,3 +5306,29 @@ round.** Never edit an existing row.
  "world_is": "Every importer is hand-run on dell2 today and takes the variable from the operator's shell or not at all. That includes commonwealth_fwd3_serve, which writes served keys when run with its apply flag by 0.7.0_AE_CloudOps~CB2. The apply for CB-al-2 is not run before this row is dispositioned."
 }
 ```
+
+## ADVI_COTBKF-D2-W83-S1 -- the AC3 regrade needs the gitignored Yahoo cache, which a fresh worktree lacks
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W83-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~83",
+ "surfaced_at": "2026-10-11T03:59:32Z",
+ "one_line": "The SWEEP-REGRADE invocation of CB56bd1-AC3 needs 3,580 cached Yahoo pull files under <worktree>/.scratch/advi_cotbkf/yahoo_census (commonwealth_daily_valuation.YAHOO_CACHE, root-relative, gitignored); a fresh worker worktree has none, so the first before-run stopped with FileNotFoundError after the store loads. The worker copied that directory (250 MB, read-only input) from the base checkout's .scratch into its own worktree .scratch and re-ran; the order does not name this input.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "first before-run log last line: FileNotFoundError, as_traded needs the cached Yahoo pulls; the worktree's .scratch/advi_cotbkf/yahoo_census is not a directory (no fallback to the store's points)",
+   "commonwealth_daily_valuation.py line 202: YAHOO_CACHE = _ROOT / .scratch / advi_cotbkf / yahoo_census",
+   "base checkout directory holds 3,580 entries; the worker copy holds 3,580 entries; copied with cp -r, nothing written under the base checkout"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB56bd1-AC3 names one invocation and its expected last line; the face lists no input other than --data-dir and the private config.",
+ "world_is": "The invocation also reads a gitignored per-checkout cache that a fresh worktree lacks. Any worker re-running AC3 in a new worktree needs the same copy."
+}
+```
