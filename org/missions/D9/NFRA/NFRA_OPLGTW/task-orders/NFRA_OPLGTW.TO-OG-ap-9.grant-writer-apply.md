@@ -85,7 +85,7 @@ to `complete` only if both PASS.
 - Pre-cut: ap9.AC1 and ap9.AC2 base FAIL as expected (records absent). Control: _tfplan.py read OG-gw-1's saved plan as
   0/1/0 at rc=0 on the one address (PASS), and FAILED when asked for 1/0/0.
 
-<status>pending</status>
+<status>complete</status>
 <round>34</round>
 <workstream>APPLY-R34</workstream>
 <slot>~AE</slot>

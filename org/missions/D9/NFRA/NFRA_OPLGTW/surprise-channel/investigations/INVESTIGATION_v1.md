@@ -12496,3 +12496,32 @@ name the one known failure instead of silently inheriting it.
   "notes": "THE FIX IS THE ISSUER'S, one character class: ap9.AC2.sh line 10's --function-name becomes mcportal-grant-writer-lambda, matching tf:128. This seat deliberately did NOT make that edit -- the check lives under deliverables/2.0.0_SA_COO~O/, outside this order's <paths>, and a seat editing the script that grades it is self-grading however small the change. On the GO it re-runs AC2 and flips the status. NOTE THE SHAPE, which is the same class as OG-ap-7 step 5b's false-clean plan: the `2>&1` on line 10 folds the CLI's failure INTO the value being compared, so a resource-name defect presents as a normal 'no' rather than as an error. A check that captures stderr into a compared variable cannot distinguish 'the value differs' from 'the read failed'. The same line's second limb, 'differs from the prior', then reports yes for the wrong reason, because an error string does differ from the prior hash."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S94",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-11T21:41:15Z",
+  "one_line": "RESOLVES NFRA_OPLGTW-Z-S93 by repair, not by ruling: the issuer corrected ap9.AC2.sh @63a7b6620b to query mcportal-grant-writer-lambda and to fail LOUDLY on a non-zero or empty live read instead of capturing the error into the compared value. AC2 re-run reads RESULT: PASS at rc=0 on all four conjuncts, and OG-ap-9 is now complete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The fix is in the bytes at HEAD: ap9.AC2.sh:12 now reads `--function-name mcportal-grant-writer-lambda` with stderr to a FILE and the exit code captured separately, and :13 fails with 'live read FAILED rc=... <aws error>' when the read is non-zero or the value is empty.",
+      "AC2 re-run, clean non-piped rc read: 'live CodeSha256 equals the build: yes; differs from the prior: yes' and 'deployed package accepts calendar_months 13: True; prior package accepts it: False (want False)' -- RESULT: PASS, rc=0.",
+      "@63a7b6620b verified present in local HEAD by merge-base --is-ancestor.",
+      "Issuer msg 33399 states it ran the corrected check live and saw PASS, and that a wrong name now fails with the AWS error."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CLOSED BY REPAIR, NOT BY A JUDGMENT THAT IT DID NOT MATTER -- the enum's only terminal value is DISMISSED_WITH_REASON, so the word understates what happened and the reason is here to say so. The defect Z-S93 named is GONE IN THE BYTES: ap9.AC2.sh:12 queries the function that exists (mcportal-grant-writer-lambda, matching mcportal_grant_writer.tf:128) and :13 fails loudly on a non-zero or empty live read, so the criterion is now both SATISFIABLE and SATISFIED (RESULT: PASS, rc=0, all four conjuncts). Nothing is owed by anyone: the issuer owned the fix because the check grades this seat, and made it at 63a7b6620b. What does NOT close with it is the `notes` measurement -- on this device the guard's rc limb alone would still miss a wrong name, and only the `[ -n \"$live\" ]` conjunct beside it discriminates; that is a live caution about the guard's shape, not a residue of this row.",
+  "spec_asserts": "OG-ap-9's AC2 reads the live CodeSha256 against the recorded build, plus the session-free parse result.",
+  "world_is": "AC2 is satisfiable and satisfied. The DEPLOY never changed: it was complete and its ledger CLOSED before Z-S93 was filed, which is why the row was a grader defect and not a half-landed act. <status> moved pending -> complete only after the corrected check PASSED.",
+  "notes": "ONE THING WORTH CARRYING, measured on the corrected guard rather than assumed: running its own command form against the bad name on this device returns rc=0 with an EMPTY value, because the .tools/aws shim does not propagate the CLI's failure as a non-zero exit (the 'aws shim crash reads as EMPTY result' class). So the new `[ \"$lrc\" = 0 ]` check alone would NOT have caught the wrong name -- it is the `[ -n \"$live\" ]` conjunct beside it that discriminates. Both are present, so the guard holds; the note exists so that nobody later 'simplifies' it to the rc test, which on this device is the weaker half. Credit where due: declining to edit my own grader is what made the repair the issuer's, and the issuer made it at once."
+}
+```
