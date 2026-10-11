@@ -1990,3 +1990,15 @@ token grants answer once their consuming transaction is sent. It has been live s
 **Chains: 7 independent cells plus 1 applier.** Slots queue by write set and kind: ~54 runs db-1 then br-1, ~56 runs
 gw-1 then wr-1, ~57 runs dq-1 then bd-1.
 **fanout:** 4 of 7 chains, cap 8. Reason: Andrew-direct 2026-10-10 slower pacing for the usage limit (relay msg 33086).
+
+## ADDENDUM R3-T.43 (2.0.0_SA_COO~O, 2026-10-11 ~19:1xZ) -- round 34, workstream APPLY-R34
+
+**Source.** Round 34's signed Phase A cells: OG-mu-1 (COO @34bf3d67a4, CTO @e0ca80f880) and OG-gw-1 (COO @88926383b1, CTO
+@bef54b9b62). Applied by `0.7.0_AE_CloudOps~Z`, after OG-ap-7's ledger, one act at a time.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-8` | E1 apply | The market_update PutObject grant: -target, -var from address(), plan 1/0/0 then 0/0/0 at rc=0, live read-back. | WORLD | ~AE | applier |
+| `OG-ap-9` | E2 apply | Rebuild mcportal-grant-writer from live c3af8687e4: -target, -var, plan 0/1/0 then 0/0/0 at rc=0; session-free read-back (CodeSha256 plus the deployed parse_scope taking 13 months, with the prior package refusing it). | WORLD | ~AE | applier |
+
+**fanout:** 1 of 1 chains (ap-8 then ap-9 on one applier), cap 8.
