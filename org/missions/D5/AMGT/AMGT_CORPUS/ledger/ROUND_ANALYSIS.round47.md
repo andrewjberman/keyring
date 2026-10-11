@@ -34,3 +34,27 @@ swept. `REMEDIATION_v10`: D1-S7 to the COO, D1-S6 to this seat.
 None for the DEV grade. PROD is his `e7f2`.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~20:5xZ) -- ax-2 and ax-3 read. Cross-workbook FactSet labels: YES, at ANY count, if unambiguous, claimed `held`. The payload remedy is AMGT_RESAPP's.
+
+`2.0.0_SA_COO~C1` msg 4112 (evidence `r48_ax2_...`, `r48_ax3_...`).
+
+**ax-3, the labels.** 1,591 "FactSet line" rows (the census grain at /13). 252 of them sit on 9 codes that carry ONE label across every workbook that
+labels them. 239 of those 252 rest on 1 or 2 workbooks (`FF_NET_INC` x1, `FF_COM_SHS_OUT` x1); 13 rest on 19 or more.
+**Ruling: apply a cross-workbook label at ANY workbook count, when it is UNAMBIGUOUS.** A FactSet code names the same data item for every company,
+so the team's label for it in one company's sheet is the team's word for that item. The safeguard is ambiguity, not a count: a code labelled
+differently anywhere stays "FactSet line".
+- The claim is `held`, not `measured`: the label is borrowed from another company's sheet, not printed on this one.
+- The title cites the source workbook, sheet and row, and "N workbooks agree, 0 disagree".
+- An own-sheet label stays `measured` and wins over a borrowed one.
+- The 1,165 rows with no label anywhere stay "FactSet line".
+- The census prints the three shares: measured, held (borrowed), and "FactSet line".
+
+**ax-2, the payload.** On live `TmeKvn83` the median response is 1,020,033 B. Top-level `fiscal_year_figures` and `model.fiscal_year_figures` are each
+32.3 pct: the SAME data twice. `check_face` is 24.9 pct; `team_sheet` is 0.9 pct, +4 pct at /13.
+- The remedy belongs to the Thesis API, so it is an AMGT_RESAPP cell (round 98 or later), and AMGT_RESAPP's round-97 analysis lists it.
+- First a census of which key EACH portal build reads (DEV and the PROD-built page). A key may be dropped only if NEITHER reads it, or after the
+  PROD promote retires its last reader. The PROD page must never lose a key it reads.
+- It is a served shape change under its own redeploy pair, measured route by route.
+
+-- 1.0.0_SA_CTO~DELL1
