@@ -6764,3 +6764,72 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+```json
+{
+  "id": "IRPT_DASHBD-D2-W121-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~121",
+  "surfaced_at": "2026-10-11T21:30:00Z",
+  "one_line": "DB-b-148: the producer sha256 CONTESTED_51_MEANING.json records for x1_crosstab.py does not match the tracked file's bytes; the tracked file reproduces the record's counts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONTESTED_51_MEANING.json producer: file x1_crosstab.py, sha256 86507b8f3e7f76c13ca093b1d2399d43615660373747338058e1bb23d2c03668 (a hash of the producer of the cross-tabulation).",
+  "world_is": "git show HEAD:<path of ~120/x1_crosstab.py> hashes to 5af12eb885c14ae0a825eb97e9b70744b62c77c75f6662a41f0dfaadda6361c6, and the same after removing carriage returns, so line endings do not explain it. Running a copy of the tracked file (only its output folder repointed to ~121's private folder, since the file writes into ~120's) printed outcomes 25/14/12, timing both 47 / START only 3 / MID only 1, groups 43/4/3/1 and cells summing 51: every count in the record. The script that was hashed and the script that is tracked are therefore different bytes with the same counts; the record's owner (~120) amends it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~120/CONTESTED_51_MEANING.json (producer.sha256)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~120/x1_crosstab.py (sha256 5af12eb8...)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~121/TIMING_CLASSES_PROPOSAL.json (placement.re_derived)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W121-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~121",
+  "surfaced_at": "2026-10-11T21:30:00Z",
+  "one_line": "DB-b-148: the three within 0.35 pp each close under BOTH START and MID, so they are among the segments where more than one timing closes, and the ruling's list of such segments (32, 11, the fee-row day) leaves them out.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO msg 5835 item 2: 'Where more than one closes (32, 11, the fee-row day) ... timing not determined' and item 3: the 3 within 0.35 points need first to be asked whether any closes; if none, they alone stay contested.",
+  "world_is": "Recomputed from worker 108's per-segment tables: for each of the 3, START and MID close the return within 0.35 pp and END does not (END is 0.02 to 0.18 pp outside the tolerance). Closing set across the 51: START+MID 47, START only 3, MID only 1. The 47 = 3 + 32 + 11 + 1. The three do not stay contested; placed by the rule they are RECONCILES_YES and TIMING_NOT_DETERMINED. Not an error in the ruling's frame: it asked the question first; the list in its item 2 was not exhaustive.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~121/TIMING_CLASSES_PROPOSAL.json (the_three, placement)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~121/y1_place.py (output lines on the three and on the closing sets)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W121-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~121",
+  "surfaced_at": "2026-10-11T21:30:00Z",
+  "one_line": "DB-b-148: comp-find -i with word boundaries over the repo from the worktree root did not return within the 120 s bound (rc 124); the token census was taken with native Grep.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order names comp-find -i with word boundaries, or the native Grep tool over the tracked tree, for the census of each new token.",
+  "world_is": "The first token's comp-find census did not finish in 120 s; the run was moved to the background and not awaited. The six censuses were taken with the native Grep tool over the worktree (case-insensitive, word boundaries); the denominator is not printed by Grep, so it is taken as git ls-files (76096) plus untracked-not-ignored (1) = 76097 files, the corpus Grep honours. Gitignored files are not in it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~121/TIMING_CLASSES_PROPOSAL.json (census_instrument_note, token_census)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
