@@ -66,6 +66,52 @@ morning was rolled back after 61 minutes because its record named no consumer of
 4. `not_read`: a list. Write `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r14/UPLOAD_DOOR_RELEASE_CENSUS.json`
    and commit it.
 
+---
+
+**SPAWN AMENDMENT (AMENDMENT 1, issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~22:3xZ): `TO-AR-y-143` is merged. The built state, and three
+things ruled or found since this face was written that bind the census.** Gate limb that graded this amendment: read from this
+commit's own output.
+
+**The built state (merged into your branch; shared head at the merge `50a044b1b1`):**
+- `infra/aws/lambda/investor-reporting/intake/template_reader.py` (cell `AR-y-142`, commit `d95cf11106`): four new finding codes --
+  `ACCOUNT_COLUMN_SEVERAL_VALUES`, `HEADER_ROW_REPEATED`, `TOTAL_ROW_PRESENT` (severity ERROR) and `SHEETS_NOT_READ` (NOTICE, on an
+  accepted sheet) -- each with its words in a new optional `description` member on the finding.
+- `infra/aws/lambda/investor-reporting/intake/uploads.py` (cell `AR-y-143`, commit `4215d98f26`): `CORRECTION_WORDS` grows from 4 codes
+  to 28; and the POST (`_defer`) now ANSWERS `NEEDS_CORRECTION`, reason `TEMPLATE_FINDINGS`, with the reader's findings when any has
+  severity ERROR, publishing nothing and sending nothing to the resident. A sheet with no reader ERROR answers `RESOLVING` first,
+  as before.
+- `infra/aws/lambda/investor-reporting/ops/status.py` (same commit; a words-only edit): the same 24 sentences, because two tests lock
+  the pair. **Its served effect:** `build_envelope` adds `{"action": "CORRECT", "safe": true, "description": <words>}` to the
+  envelope's `actions` when the state is NEEDS_CORRECTION and the reason is one of 24 codes that had no words before. That is a
+  FOURTH new shape, beside the three the face lists: name every reader of an envelope's `actions` and say whether it admits it.
+- Tests: intake folder 304 passed (292 at the round's base).
+
+**1. The reader runs in TWO runtimes, and the source map shows only one** (record of cell `AR-y-141`,
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r14/TOTAL_LABEL_PROVIDER_ASK.json`, your own earlier order):
+the `irpt-ycharts-generate` Lambda runs the POST half; the RESIDENT process on the runner host runs the reader again for a sheet
+that went on to `RESOLVING`, from its own installed package. Add a member **`resident_runtime`**: how the resident's package is
+built and installed (which script or document, read from the repository; no live call to the host), whether a release of the
+Lambda alone leaves the resident on the OLD reader, and what a person then sees for each new finding in that half-released state
+(for example: is the `SHEETS_NOT_READ` line ever shown if only the Lambda is released? does the resident's old reader still accept
+a totals row that the new POST would have turned back -- can such a sheet reach it at all?). The census check does not grade this
+member; the issuer reads it.
+
+**2. The after-read is bound by CTO ruling msg 5911.** "A synthetic upload there writes the same rows and the same undeletable
+original, and its ticker check is a vendor call. So the pair's after-read does NOT include one unless the pair shows, from the
+code, which provider the ticker check calls and that it is not the stopped YCharts path." Add a member **`ticker_check_provider`**:
+`{"file_function": "...", "calls": "<host and path, with file:line>", "is_the_stopped_ycharts_path": true|false|"cannot_tell_from_code",
+"evidence": "<the lines>", "after_read_without_any_provider": "<what a seat can read after the release that needs no provider and
+no upload -- for example the deployed package's bytes compared member by member with the build, or the reader's refusal run in
+process against the deployed zip's own template_reader.py>"}`. If the provider IS the stopped path, the census says so plainly:
+the release's only live evidence is that the deployed bytes equal the build.
+
+**3. Row `IRPT_ANLREQ-D2-W52-S14` (closed by the build):** a caller that assumed the POST's first answer is always `RESOLVING` now
+sees `NEEDS_CORRECTION`. The earlier seating found three callers of the create path (the form's route; `build_upload_entry`;
+`deferred_upload_service` in `upload_resolution.py`) and ran no full census. Yours is the full one.
+
+The portal's form on DEV (`6eb13c5e875f`) already re-posts only on `RESOLVING` and shows a first-answer finding at once; PROD's form
+does not. Read both refs.
+
 ### ACCEPTANCE
 
 <criterion id="AR145-y-AC1" cell_refs="AR-y-145"><invocation>python C:/dev/wk-irpt-anlreq-53/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r14/ar14_checks.py y145-census --root C:/dev/wk-irpt-anlreq-53</invocation><expect>Y145-CENSUS-OK</expect></criterion>
