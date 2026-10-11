@@ -3375,3 +3375,30 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "MEASURED, window 7, 2026-10-11T05:29:50Z, irpt-status rev 6 (CodeSha256 6idtFvAm...): GET /api/scoped/investor-reporting/status/REQ-5e4149d2863aea31cc87d660?selected_tenant=49financial WITH header X-IRPT-Status-Dates: prospect-v1 returns HTTP 200, ok false, state UNAVAILABLE, public_reason_code INVALID_INPUT (record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R6_STATUS_JOB_OPT_IN_REV6_20261011.json). CloudWatch /aws/lambda/irpt-status, correlation corr-62e36c245412: exception_type RequestReadRefused, exception_text SECTION_DATE_CENSUS_INVALID, operation status-job; TypeError 0. Source: infra/aws/lambda/investor-reporting/ops/prospect_dates.py:30-42 section_dates() refuses a report whose `sections` member holds a row without an ISO as_of_date; an undated row is legal only under `undated_sections` with date_claim NONE. The served OPAL_ENGINE report of this request (window-6 record R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf) holds 257 rows under `sections`: 6 with an ISO as_of_date, 251 with as_of_date null; no row carries date_claim and the document has no undated_sections member. The same read WITHOUT the header (04:52:49Z) answers ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE."
 }
 ```
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S39",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T06:46:30Z",
+  "one_line": "L9 round 7: FWD-1 is NOT MET by the run of record. A service account read an existing request three times under the tenant 49financial; nothing was submitted, Andrew did not sign in, no page was opened, and 251 of 257 sections read NOT_AVAILABLE. What the run establishes is the served read path on irpt-status revision 6: live on 6idtFvAm, 30 invocations, 0 TypeError, 0 RetentionRefused (this seat's read), where revisions 3 to 5 each failed to serve the same report.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/ROUND7_DRAIN_END_READ_20261011.md @6505291224 (msg 4282)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_ROUND_7_L9_GRADE_20261011.md",
+      "this seat's live reads 2026-10-11T06:46:30Z: irpt-status CodeSha256 6idtFvAm..., LastModified 2026-10-11T04:44:47Z; its log from the promote to 06:22Z: 30 invocations, 0 TypeError, 0 Traceback, 0 RetentionRefused, 0 lines naming ycharts",
+      "this seat's read of the run record's calls: POST /auth/login as a service account; GET status, GET analysis sections and GET original for REQ-5e4149d2863aea31cc87d660, each with selected_tenant=49financial, each 200; no POST that submits a portfolio. The history read (R3) is the one call under selected_tenant=cottonwood",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/prd/IRPT_YCDGEN_PRD.md:42-50 (FWD-1 DONE WHEN and ACCEPT), read at the cited lines"
+    ]
+  },
+  "spec_asserts": "FWD-1 ACCEPT: Andrew, signed in as himself, submits a real Cottonwood portfolio the way he does today and opens an Opal-branded Overview without coming back to it later; nothing was asked of YCharts; a step that used a saved example fails the outcome.",
+  "world_is": "The read path is APPLIED and exercised by a seat. The journey FWD-1 names has not been run. The issuer withheld this grade and says so in its packet.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
