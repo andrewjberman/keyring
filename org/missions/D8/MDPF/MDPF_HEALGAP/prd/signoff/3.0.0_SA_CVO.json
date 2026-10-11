@@ -1,12 +1,13 @@
 {
   "prd": "MDPF_HEALGAP_PRD.md",
-  "prd_version": "v0.2",
-  "prd_pin": "4d5c4ef70efe15db44031cedd9230fa01d78b5fc",
+  "prd_version": "v0.3",
+  "prd_pin": "1974b85f4e4e8f71cef72f74e404070d471a1539",
   "half": "ratified-text",
-  "half_hash": "a5a9e126c4680c3002f8a9cdb2060fd5146538ae86573f9f6e87ce1b1df91b2a",
-  "endpoint_hash": "4d38fefa7b3876752f1f45af5e12279fa6e1d6fd9dd3eb643c473fa1b570d461",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_HEALGAP_PRD_V02_RATIFIED_TEXT_REVIEW_20261008.md@47830cb367",
+  "half_hash": "1692ea4504692ac07c841c6b1ba4eb96216a887fff7b3de92f56284a2e311cbc",
+  "endpoint_hash": "4caa8a14b7d98e2985be80dab4692d1c3e1b9bd32d7b2a6392d514c44f0a658e",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_HEALGAP_PRD_V03_RATIFIED_TEXT_REVIEW_20261011.md@748a9a676d",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-08T14:47:02Z"
+  "signed_at": "2026-10-11T02:57:50Z",
+  "reason": "C-VENDOR and ACTS 1-2 bind the per-use vendor rule retired by ANDREW_DIRECT_20261009_024xZ; re-word to current law"
 }
