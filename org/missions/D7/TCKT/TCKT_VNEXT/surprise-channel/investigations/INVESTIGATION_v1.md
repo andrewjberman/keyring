@@ -909,3 +909,54 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S1",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T03:40:00Z",
+  "one_line": "R2-rn-1: the request-list history item carries no ticket id and no input_id, so the order's 'match on the ticket id or input_id' cannot be done; the runner matches on a before/after difference of REQ ids instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json (properties list)",
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequestHistory.schema.json",
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:229-231 _public, :313-363 history (tree HEAD of this worktree, not diffed against deployed bytes)",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~8/fwd1_runner/fwd1_run.py hop_d_analysis; test_fwd1_runner.py test_falls_back_to_request_list_when_answer_has_no_id, test_ambiguous_request_list_is_a_named_failure"
+    ]
+  },
+  "spec_asserts": "TO TCKT_VNEXT.TO-R2-rn1 rule 2: when the submission answer has no id, pick the ONE row of GET .../analysis/requests that belongs to this submission, matching on a field that ties it to this run (the journey ticket id or the uploaded input_id, whichever the schema carries).",
+  "world_is": "OwnedAnalysisRequestHistory.schema.json items are OwnedAnalysisRequest, whose only properties are identity{tenant_firm_id, request_id, revision, immutable, ingestion_gate_revision, destination_policy_revision}, accepted_at, and (single read only) comparisons, composition, persist_inputs; the history omits composition (_public returns {identity, accepted_at}). Neither ticket_id nor input_id is on a history item. fwd1_run.py hop_d_analysis therefore reads the list just BEFORE the submission and just after it and takes the ONE REQ id present only in the second (0 or >1 is REQUEST_ID_UNRESOLVED). This ties by novelty, not by an identifier of this run: a concurrent submission by the same firm in the window makes it ambiguous (a named failure, never a wrong id).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S2",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T03:40:00Z",
+  "one_line": "R2-rn-1: the single-request read the runner polls (analysis-request-read) is OwnedAnalysisRequest, which has no `stage` property, so hop (e) as ordered cannot observe a stage on the served read; the runner names STAGE_ABSENT after one poll.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/responses/analysis-request-read.response.schema.json (grep -c \"stage\" = 0)",
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json (grep -c \"stage\" = 0)",
+      "docs/contracts/investor-reporting/v1/AnalysisRequest.schema.json properties.stage enum",
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:233-255 read, :229-231 _public",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~8/fwd1_runner/test_fwd1_runner.py test_missing_stage_is_a_named_failure_not_a_pass"
+    ]
+  },
+  "spec_asserts": "TO TCKT_VNEXT.TO-R2-rn1 rule 3: poll GET .../analysis/requests/<REQ id> and read the contract field `stage` (AnalysisRequest.schema.json: RECEIVED, PARSED, NEEDS_CORRECTION, READY, SUBMITTING, GENERATED, RELEASED, FAILED); poll while in flight, GENERATED or RELEASED ends the hop OK.",
+  "world_is": "responses/analysis-request-read.response.schema.json refs OwnedAnalysisRequest.schema.json (data), and neither file contains the string \"stage\" (grep -c = 0 on both); owned_requests.py read() returns {identity, accepted_at} plus optional comparisons/composition only. `stage` lives on AnalysisRequest.schema.json, which the owned read route does not serve. So a live poll can read no stage; a 200 with no stage is recorded by fwd1_run.py as the named failure STAGE_ABSENT after ONE poll (not polled 40 times, not read as a pass). The runner's tests pass against canned bodies that carry `stage`; whether the deployed irpt-status adds `stage` to the read is NOT measured here (no AWS or network call was made).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
