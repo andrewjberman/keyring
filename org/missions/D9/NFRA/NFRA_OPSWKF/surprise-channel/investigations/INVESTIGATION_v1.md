@@ -262,3 +262,31 @@ adjudication rows live in `../adjudications/` as `NFRA_OPSWKF-C-S<k>`.
   "notes": "Disarm: the issuer does not cut the release pair (OW-s-d-1) and does not merge wk-NFRA_OPSWKF-8 until 1.0.0_SA_CTO~DELL2 rules what 'internal' is for FWD-8; the ENDPOINT's wording is the CTO's. The issuer's recommendation: tier internal OR firmId exactly opal-capital, as the owner's ruling line 27 and data_refresh already have it, with the probe gaining an arm for an advisor-tier opal-capital caller (served) and an advisor-tier caller of another firm (refused). Found while building the pair's caller census, not by the order's checks: both of the order's checks pass on the branch."
 }
 ```
+
+## NFRA_OPSWKF-D2-S7 -- data-refresh admits a test-filer whose firmId is opal-capital: the release pair's expected refusal was the issuer's error
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S7",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~O2",
+  "surfaced_at": "2026-10-11T19:46:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The FWD-8 release pair expected data-refresh to REFUSE a userType test-filer caller; the deployed service ADMITTED synthetic caller IN-F (firmId opal-capital, tier advisor, userType test-filer) on GET /api/scoped/data-refresh/history. The code at HEAD says it should: data_refresh admits Dev OR any Opal-internal principal, and firmId opal-capital is Opal-internal. The expectation was the issuer's error, copied from an older pair without re-reading.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20261011T1909Z_opswkf-fwd8-trade-dashboard-api-20261011_deploy_completion.md leg L6 (0.7.0_AE_CloudOps~DELL2, closed 19:44:10Z): 7(f) IN-F on GET /api/scoped/data-refresh/history?limit=1 answered HTTP 200 from the API (apigw-requestid present, application/json, top-level key executions); field names only were recorded",
+      "infra/aws/lambda/data_refresh/lambda_function.py:209-216 @HEAD: userType Dev admits; otherwise is_opal_internal(context) admits; :142-165: is_opal_internal is tier internal OR firmId exactly opal-capital. userType test-filer is neither refused nor read past that point",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R1_RUN/TV_R1_SEAT_ARM_PLAN_AND_PAIR.md:110-116: the premise this pair copied (data_refresh lambda_function.py:165-167 admits only an empty userType or Dev) describes bytes that the file at HEAD no longer carries",
+      "the same ledger leg L2: both tokens carry ONE absolute exp, 2026-10-11T19:56:21Z, held in the executor's memory only"
+    ]
+  },
+  "spec_asserts": "Release pair OW_S_D1_RELEASE_PAIR_20261011.md section 4 and CTO half condition (the data-refresh read by IN-F): expect refused; an admit is a STOP and cleanup.",
+  "world_is": "Admitted, by the function's own rule. This is not a defect of the FWD-8 release (trade-dashboard-api does not serve the route; R0, R1, R3, R4 and the bytes all read as expected) and not a new opening in data-refresh: an opal-capital principal is who that service is for. What it does change: (1) a synthetic test identity given firmId opal-capital is NOT kept out of data-refresh by a userType, so any pair that mints one must count the data-refresh routes in its blast radius; this run's IN-F had that reach from mint (19:2xZ) to exp 19:56:21Z and used it once, a GET with limit=1; (2) TCKT_VNEXT's synthetic filer carries firmId opal-capital and the same userType, and its pair rests on the same premise. NOT read by this seat: whether the data-refresh write routes (trigger, rollback, upload) pass through the same validate_user_type; the deployed bytes of data-refresh.",
+  "notes": "Ruled by the issuer for its own decomposition (msg to 0.7.0_AE_CloudOps~DELL2 answering 5693): K1 stays in place, the applier records the deploy and runs the cleanup as written, no further call with either token. Routed in the round's slug to 1.0.0_SA_CTO~DELL2, whose half carried the expectation and who holds TCKT_VNEXT's halves; nothing is asked of TCKT_VNEXT's seats by this row."
+}
+```
