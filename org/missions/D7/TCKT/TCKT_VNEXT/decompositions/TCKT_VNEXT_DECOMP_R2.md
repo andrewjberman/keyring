@@ -41,3 +41,19 @@ route changes, not at this cut.
 
 Dry-run at the base (box/dell2, 2026-10-11 ~03:4xZ): rn-submit-id, rn-stage, rn-ticket, rr-shape, ts-guard FAIL absent as expected;
 tc-regress PASS as expected (passed=147).
+
+## ADDENDUM 1 (2026-10-11 ~04:0xZ) -- round 2 gains a page cell, by CTO ruling msg 4026 on row TCKT_VNEXT-D2-S24
+
+The portal's ticket link opened the accepted request record, not a report (row D2-S24 @655e71ea5a). The CTO ruled (a): "the ticket
+link opens the finished report; round 2 gains the page cell", and that it "outranks everything left in round 2". The CTO also ruled
+(msg 4015, then 4026) that `R2-tr-1`'s oracle is the read the ticket's own link performs returning the report; the served request read
+carries no `stage`, so `R2-rn-1`'s stage poll does not grade the journey and the runner takes that oracle in the `R2-tr-1` pair.
+
+| cell | builds | list item | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|---|
+| `R2-pg-1` | portal Ticket Center: `openReport` reads the finished report for the ticket's request id by the read the Investor Reporting page uses for a generated analysis; a report not yet generated shows a stated waiting state; the request record is never presented as the report. The candidate goes to the CTO before portal DEV | ruling 4026 | FWD-1 | NOT-EVALUATED | dell2 worker, slot ~11 | LOCAL | worker | -- |
+
+**Edge added:** `R2-pg-1` -> `R2-tr-1` (the re-run is graded on the link this cell repairs). Chains stay M = 3; the first chain gains
+this cell. Write set: `portal/src/pages/TicketCenter/` (four files), disjoint from every other cell.
+
+Dry-run at the base (portal DEV dbeb6764ea): pg-open FAIL absent as expected; pg-existing PASS as expected (pass=4).
