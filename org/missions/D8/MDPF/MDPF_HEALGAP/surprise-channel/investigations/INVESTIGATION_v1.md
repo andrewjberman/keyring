@@ -789,6 +789,88 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "HG-t-9 build text: 'the naming gate refuses a new hand-kept cottonwood literal', so the handler derives the bucket and prefix from producer constants and the rule name is built by opal_name.",
     "world_is": "The handler carries no typed key (it derives the prefix from producer.ROSTER_KEY). The Terraform does carry the literal in locals cot_meta_prefix, because HCL cannot import the Python constant. The gate grades that line as a WARN on a pre-LGIC key, not a refusal. The rule-name line is CONFORMANT as built by name().",
     "notes": "Recorded only: the patch is the issuer's, the refusal clause is not triggered (no refusal), and no name was changed by this worker. Whether the literal should come from a generated local is for the CVO's L9 read."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W9-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~9",
+    "surfaced_at": "2026-10-11T04:09:27Z",
+    "one_line": "HG-t-12 grades the outlook transcripts pull EXPOSED-MANUAL, where round 2 graded it RECOVERS: it and the Teams pull share one gateway Microsoft sign-in, which only a person renews when it lapses. The PRD v0.3 addendum's list of person-renewed pulls names neither.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_TRNSPT/STATUS.md:82 read at d08867926c: 'gateway sign-in (the laptop's has lapsed; renewing it is a person act)'",
+        "infra/aws/lambda/transcripts-pull/mail_handler.py:3-5, :9-10 and infra/aws/terraform/transcripts/pull.tf:27-30 read at d08867926c: the mail and transcript routes both read the gateway bearer and sit on the gateway's sign-in",
+        "live list-rules outlook-global-transcripts-pull-daily cron(30 23) and teams-global-transcripts-pull-hourly cron(0 13-22 ? * MON-FRI *) read 2026-10-11T03:59Z-04:09Z; PRD v0.3 addendum (prd/MDPF_HEALGAP_PRD.md:201-203) names four person-renewed pulls and neither"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-6 round 2 graded the outlook pull RECOVERS (its 7-day window refills missed days with nobody acting). The PRD v0.3 addendum names the two canonical-schwab SI2 pulls, schwab-canonical-si2-08403355-pull-daily and astn-wsjft-3am-run as the pulls whose login no machine renews.",
+    "world_is": "A missed day on the outlook pull refills with nobody acting only after a person renews the gateway's Microsoft sign-in. The RECOVERS answer and the EXPOSED-MANUAL answer describe the same login at two points in its life. This census grades both outlook and teams EXPOSED-MANUAL for consistency. The CVO rules which answer stands for outlook. Teams is also unbuilt upstream (the gateway transcript tools are not landed; handler.py:9-10 raises GatewayToolsAbsent by design), so its answer rests on source and STATUS, not on a run."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W9-S2",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~9",
+    "surfaced_at": "2026-10-11T04:09:27Z",
+    "one_line": "bd-asset-dim-pipeline-trigger is graded EXPOSED-MANUAL today, but its 49F login is machine-minted at 00:00Z, 04:35Z and 22:20Z. The v0.3 third answer says only a person can renew the login, so the answer grammar does not describe this row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ssm/opal-bd-asset-dim-download.json:3 and :20-24 read at d08867926c: the REST module mints a bearer from the session secret blackdiamond/49f/session that bd-49f-auto-login already maintains",
+        "infra/aws/lambda/bd-pipeline/bd-49f-session-trigger/lambda_function.py:274-299 read at d08867926c: the full re-mint runs the auto-login OTP when the cookie is not positive-live",
+        "bd-49f-keepalive lambda_function.py:12 and :17-18 read at d08867926c: the keepalive extends the session in place and mints no cookie; live list-rules bd-asset-dim-pipeline-trigger cron(10 22 ? * MON-FRI *) read 2026-10-11"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.3 FWD-6: the third answer, EXPOSED-MANUAL, is for a pull whose login only a person can renew. The answer set is RECOVERS, NOT-EXPOSED because <reason>, or EXPOSED-MANUAL because <reason>.",
+    "world_is": "A machine renews this login at 00:00Z, 04:35Z and 22:20Z. The keepalive extends it between mints without minting. Nothing machine-side renews between the 04:35Z mint and the 22:10Z fire; the fire has no re-attempt, and its as-of is computed at run time. Read today the row is EXPOSED. The census types it EXPOSED-MANUAL because the grammar has no third exposed value, and it names the person's act (re-capture the cookie if the keepalive reports it dead, then re-run the missed as-of). The CVO rules whether 'only a person can renew' should read 'no machine renews before the pull'. RECOVERS is claimed only by the HG-t-11 re-attempt once applied, and is not claimed here."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W9-S3",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~9",
+    "surfaced_at": "2026-10-11T04:09:27Z",
+    "one_line": "The 49F keepalive's dead-cookie alert tells a person to re-capture the .bd.identity cookie, while the session trigger's full mint re-issues the cookie automatically. The two sources disagree on whether a person renews the 49F login.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/bd-pipeline/bd-49f-keepalive/lambda_function.py:12, :17-18, :22-26 and :128-146 read at d08867926c: the keepalive extends in place and mints no cookie; on 401/403 it publishes 'ACTION (D, ~30s): capture a fresh .bd.identity'",
+        "infra/aws/lambda/bd-pipeline/bd-49f-session-trigger/lambda_function.py:274-299 read at d08867926c: the full mint with auto-login OTP runs when the cookie is not positive-live"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The 49F rows of the census assume a machine renews the 49F login at 00:00Z, 04:35Z and 22:20Z. The keepalive alert assumes a dead cookie needs a person.",
+    "world_is": "Both can hold only if a mint can fail to re-issue a dead cookie. The census grades the 04:35Z-anchored 49F rows NOT-EXPOSED on the mint, and bd-asset-dim EXPOSED-MANUAL on the gap between mints. If the keepalive alert is current, a dead cookie before 06:30Z needs a person and residual R1 is a person's act, not a machine's. The CVO rules which text describes current behaviour."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W9-S4",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~9",
+    "surfaced_at": "2026-10-11T04:09:27Z",
+    "one_line": "The open-calls list that PRD v0.3 names as the place an EXPOSED-MANUAL act is listed when owed has no file path located in this worktree. The census names 1.0.0_SA_CTO's open calls as the place, unverified.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_HEALGAP/prd/MDPF_HEALGAP_PRD.md:207-208 read at d08867926c: 'where that act is listed when owed (the open-calls list)'",
+        "Grep 'open.?call|OPEN_CALLS' under org/missions/D8/MDPF/MDPF_HEALGAP returns the task order and the PRD only; Glob **/*open*call* under org/tier1_exec/1.0.0_SA_CTO returns one logs file (logs/2026-08-24/session_1510-1800Z_open_calls_rulings_49f_program_registered.md), not a standing list"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-6 v0.3: an EXPOSED-MANUAL row names where the person's act is listed when owed (the open-calls list).",
+    "world_is": "No standing open-calls file was located, so the 'listed on' cell for the seven EXPOSED-MANUAL rows names a queue this worker could not read. The CVO or 1.0.0_SA_CTO names the file the list lives in. This worker wrote to no list."
   }
 ]
 ```
