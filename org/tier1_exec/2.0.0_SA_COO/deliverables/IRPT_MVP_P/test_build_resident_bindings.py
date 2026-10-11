@@ -12,7 +12,7 @@ fn = builder.optional_bindings
 
 Q1 = "https://sqs.us-east-1.amazonaws.com/000000000000/example-analysis-ready"
 Q2 = "https://sqs.us-east-1.amazonaws.com/000000000000/example-commentary-ready"
-PK = {"api_base": "https://example.invalid", "email": "svc-example@example.invalid", "secret_name": "example/name"}
+PK = {"api_base": "https://example.invalid", "secret_name": "example/name"}
 
 
 def test_none_given_gives_the_empty_dict():
@@ -37,7 +37,7 @@ def test_a_bad_queue_url_is_refused_with_its_key(key, value):
 
 
 @pytest.mark.parametrize("packager", [
-    "x", [], {}, {"api_base": PK["api_base"]}, {**PK, "extra": "1"}, {**PK, "email": ""}, {**PK, "secret_name": " "},
+    "x", [], {}, {"api_base": PK["api_base"]}, {**PK, "extra": "1"}, {**PK, "email": "svc-example@example.invalid"}, {**PK, "email": ""}, {**PK, "secret_name": " "},
     {**PK, "api_base": "http://example.invalid"}, {**PK, "api_base": 5}])
 def test_a_malformed_packager_is_refused(packager):
     with pytest.raises(ValueError) as raised:
@@ -60,11 +60,14 @@ def test_a_packager_without_a_commentary_queue_is_refused():
     assert str(raised.value) == "BINDING_PACKAGER_WITHOUT_QUEUE"
 
 
-def test_the_packager_flag_text_parses_to_the_three_keys():
-    text = "api_base=https://example.invalid,email=svc-example@example.invalid,secret_name=example/name"
+def test_the_packager_flag_text_parses_to_the_two_keys_and_an_email_pair_is_refused():
+    text = "api_base=https://example.invalid,secret_name=example/name"
     assert builder.parse_packager(text) == PK
     with pytest.raises(ValueError) as raised:
-        fn(commentary_ready_queue_url=Q2, packager=builder.parse_packager("api_base=https://example.invalid,email"))
+        fn(commentary_ready_queue_url=Q2, packager=builder.parse_packager(text + ",email=svc-example@example.invalid"))
+    assert str(raised.value) == "BINDING_PACKAGER_KEYS"
+    with pytest.raises(ValueError) as raised:
+        fn(commentary_ready_queue_url=Q2, packager=builder.parse_packager("api_base=https://example.invalid,secret_name"))
     assert str(raised.value) == "BINDING_PACKAGER_KEYS"
 
 

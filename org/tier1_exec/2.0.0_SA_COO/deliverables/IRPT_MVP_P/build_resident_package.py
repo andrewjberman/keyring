@@ -121,13 +121,13 @@ def core_outputs(state_json=None):
     return state["serial"], outputs
 
 
-PACKAGER_KEYS = ("api_base", "email", "secret_name")
+PACKAGER_KEYS = ("api_base", "secret_name")
 
 
 def optional_bindings(analysis_ready_queue_url=None, commentary_ready_queue_url=None, packager=None):
     """IRPT_ANLREQ AR-g-41: the three OPTIONAL resident bindings, validated by the runtime's own rule; {} when none is given.
 
-    A queue url is an https://sqs. string; `packager` is exactly api_base/email/secret_name (non-empty strings, api_base
+    A queue url is an https://sqs. string; `packager` is exactly api_base/secret_name (non-empty strings, api_base
     https://). secret_name is a NAME: nothing here reads a secret or calls AWS. A bound commentary queue needs the packager
     principal (without it every message dead-letters), and a packager needs the queue it serves."""
     queues = (("analysis_ready_queue_url", analysis_ready_queue_url),
@@ -150,7 +150,7 @@ def optional_bindings(analysis_ready_queue_url=None, commentary_ready_queue_url=
 
 
 def parse_packager(text):
-    """`api_base=<url>,email=<address>,secret_name=<name>` -> dict; a malformed pair gives a dict optional_bindings refuses."""
+    """`api_base=<url>,secret_name=<name>` -> dict; a malformed pair gives a dict optional_bindings refuses."""
     pairs = {}
     for part in text.split(","):
         key, sep, value = part.partition("=")
@@ -184,7 +184,7 @@ def main(argv=None):
                         help="optional binding: the I3 queue a READY job sends to (https://sqs. URL)")
     parser.add_argument("--commentary-ready-queue-url", default=None, metavar="URL",
                         help="optional binding: the I4 queue the resident polls into the packager; needs --packager")
-    parser.add_argument("--packager", default=None, metavar="api_base=URL,email=ADDRESS,secret_name=NAME",
+    parser.add_argument("--packager", default=None, metavar="api_base=URL,secret_name=NAME",
                         help="optional binding: the packager principal (a secret NAME, never read here); needs "
                              "--commentary-ready-queue-url")
     args = parser.parse_args(argv)
