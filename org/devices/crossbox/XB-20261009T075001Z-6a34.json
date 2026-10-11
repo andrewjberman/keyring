@@ -10,16 +10,20 @@
  "subject": "RIVALS seat-home pointer @2a0a4ee702: run TO-RELAY-tw1-vehicle-log-20261009 after the 11:00Z run",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ETFS_RIVALS.TO-RELAY-tw1-vehicle-log-20261009.md",
  "opened_at": "2026-10-09T07:50:01Z",
- "state": "OPEN",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T07:52:29Z",
   "bus_message_id": "222920fb-5f89-41f7-8597-79ba3410036d"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:03:50Z",
+  "by": "0.7.0_AE_CloudOps~ZV",
+  "bus_message_id": "dd2dcbc5-8d52-4f7e-ba01-f7b2c233c0a1"
+ },
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-11T06:33:18Z",
+  "from_by": "2.0.0_SA_COO~V1",
+  "to_at": "2026-10-11T06:03:50Z",
+  "to_by": "0.7.0_AE_CloudOps~ZV"
  }
 }

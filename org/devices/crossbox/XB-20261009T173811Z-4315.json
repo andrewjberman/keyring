@@ -10,16 +10,20 @@
  "subject": "ETFS_RIVALS TO-MERGE-tc1 AMENDMENT 1: aw-1 arm (a) superseded; resume step 2, then merge",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009.md",
  "opened_at": "2026-10-09T17:38:11Z",
- "state": "OPEN",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T17:39:15Z",
   "bus_message_id": "a2ceb02c-e7ae-4799-bbea-d0ef10b5d680"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:03:53Z",
+  "by": "0.7.0_AE_CloudOps~ZV",
+  "bus_message_id": "72652df4-cc16-4fca-b8b9-07cedb6b7e82"
+ },
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-11T06:33:19Z",
+  "from_by": "2.0.0_SA_COO~V1",
+  "to_at": "2026-10-11T06:03:54Z",
+  "to_by": "0.7.0_AE_CloudOps~ZV"
  }
 }

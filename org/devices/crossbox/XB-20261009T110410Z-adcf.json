@@ -10,16 +10,20 @@
  "subject": "WAKE NOW: run XB-20261009T075001Z-6a34 (TO-RELAY-tw1-vehicle-log-20261009) once the 11:00Z run exits",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ETFS_RIVALS.TO-RELAY-tw1-vehicle-log-20261009.md",
  "opened_at": "2026-10-09T11:04:10Z",
- "state": "OPEN",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T11:05:04Z",
   "bus_message_id": "9c5d8a2c-84e4-44ef-ad80-03709b9a5c6b"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:03:52Z",
+  "by": "0.7.0_AE_CloudOps~ZV",
+  "bus_message_id": "e67c428c-8f7f-416c-8d04-65114d920a0f"
+ },
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-11T06:33:19Z",
+  "from_by": "2.0.0_SA_COO~V1",
+  "to_at": "2026-10-11T06:03:52Z",
+  "to_by": "0.7.0_AE_CloudOps~ZV"
  }
 }

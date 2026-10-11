@@ -10,7 +10,7 @@
  "subject": "AMGT_HARVST HVST-bs-3: register FWD-18's cycle runner at log-on on bbg,wsj,barrons from a pinned checkout of c1be67f53c",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round75/XB_ORDER_BS3_TO_ZW.md",
  "opened_at": "2026-10-09T05:46:01Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T05:53:26Z",
   "bus_message_id": "d79f659e-70e4-47fb-908b-d3b0659fd832"
@@ -21,8 +21,8 @@
   "bus_message_id": null
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T06:33:14Z",
+  "from_by": "2.0.0_SA_COO~W1",
   "to_at": "2026-10-11T06:02:54Z",
   "to_by": "0.7.0_AE_CloudOps~ZW"
  }
