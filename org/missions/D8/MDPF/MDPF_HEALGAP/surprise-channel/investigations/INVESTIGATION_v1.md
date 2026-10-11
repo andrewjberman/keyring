@@ -871,6 +871,30 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "FWD-6 v0.3: an EXPOSED-MANUAL row names where the person's act is listed when owed (the open-calls list).",
     "world_is": "No standing open-calls file was located, so the 'listed on' cell for the seven EXPOSED-MANUAL rows names a queue this worker could not read. The CVO or 1.0.0_SA_CTO names the file the list lives in. This worker wrote to no list."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W8-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~8",
+    "surfaced_at": "2026-10-11T04:04:00Z",
+    "one_line": "HG3-t11-AC2's checker cannot fail its failed-read arm: a mutant whose guard skips the pull on rc 1 and 2 still prints SSMGUARD-OK, so AC2 is not evidence for the negative arm.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Checker org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_CHECKS/hg_t11_assetdim.py@287ef0d2ee lines 107-110 test only 'pull_bd_asset_dim_rest.py' in run['calls'] for rc 1 and 2. Document line 41 (infra/aws/ssm/opal-bd-asset-dim-download.json, staging 'aws s3 cp .../code/bronze/pull_bd_asset_dim_rest.py') writes that substring to the calls log before any guard line runs, so the test is always true.",
+        "Mutant .scratch/mutant_always_skip.json (line 80-87 guard test changed from -eq 0 to -ge 0) through the checker's own harness: guard_rc=1 script_rc=0 pull_ran=False; guard_rc=2 script_rc=0 pull_ran=False. Run 'HG_T11_DOC=.scratch/mutant_always_skip.json python hg_t11_assetdim.py --ssm' printed 'SSMGUARD-OK ... rc=0'. The negative arm did NOT fire.",
+        "Control .scratch/mutant_noshutdown.json (skip-path 'shutdown -h +2 &' removed) printed 'SSMGUARD-BAD guard read OK but the shutdown was not armed', rc=1: the skip arm discriminates, so the defect is confined to the failed-read arm.",
+        "The patched real document through the same harness: guard_rc=0 gives no RUNUSER pull line, SHUTDOWN armed, script rc 0; guard_rc=1 and guard_rc=2 each give 'RUNUSER -l ec2-user -c cd ... python3 data/black_diamond/scripts/bronze/pull_bd_asset_dim_rest.py pull'. The document meets the bar; the invocation does not evidence it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG3-t11-AC2 (order MDPF_HEALGAP.TO-HG-t11): the document's own shell, run with the instance's tools stubbed: 'guard read failed (rc 1 and 2) -> the pull runs'. Invocation 'hg_t11_assetdim.py --ssm', expect SSMGUARD-OK. The refusal clause: a criterion that cannot be met as written is a stop and a row, and no check is weakened.",
+    "world_is": "The invocation's failed-read arm is satisfied by the staging line, so a regression that makes a failed guard read skip the download still prints SSMGUARD-OK and AC2 cannot gate it. The patched document itself runs the pull on rc 1 and 2 (measured by the same harness). The defect is in the check, not the guard. The checker is outside this order's <paths> grant and was not edited.",
+    "notes": "Owner of the fix is the issuer, 2.0.0_SA_COO~G1: a failed-read arm that reads the RUNUSER pull line, as the skip arm reads its SHUTDOWN line. Nothing was sent; no AWS act; the two patches are committed LOCAL on branch wk-MDPF_HEALGAP-8 for the drain, with no apply."
   }
 ]
 ```
