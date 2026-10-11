@@ -12363,3 +12363,105 @@ name the one known failure instead of silently inheriting it.
   "notes": "CTO ruling: name the dell consumer of the teams bearer, then either narrow the group's grant or give that consumer its own bearer. A cell for a later round. Not a rollback trigger for OG-ap-7 (the CTO signed with this known)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W56-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~56",
+  "surfaced_at": "2026-10-11T16:45:07Z",
+  "one_line": "OG-gw-1 step 2 names mcportal_owner_key_claim and mcportal_owner_key as two required Terraform variables to supply by TF_VAR_ env; at box/sitez HEAD neither is a declared variable, the opal-gateway root reads both from gateway/principals/rosters inside the configuration, so the plan ran with no TF_VAR_ set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/terraform/opal-gateway/main.tf:59-109 declares only region, name, vpc_id, ec2_subnet_id, alb_subnet_ids, certificate_arn, route53_zone_id, hostname, gateway_port (each with a default); no mcportal_owner_* variable",
+      "FILE infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf: data.aws_secretsmanager_secret_version.mcportal_owner_config + local.mcportal_owner_config feed the function environment",
+      "RUN terraform plan -target=aws_lambda_function.mcportal_grant_writer in C:/tmp/og-tf-gw1 (box/sitez 6f523f89c9): rc=0, 'Plan: 0 to add, 1 to change, 0 to destroy.', no variable prompt (-input=false)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-gw-1 step 2: the two required variables mcportal_owner_key_claim and mcportal_owner_key come from the secret by TF_VAR_ env only.",
+  "world_is": "The configuration reads the secret itself (round-14 CTO ruling R2 shape); the variables do not exist, so the order's TF_VAR_ instruction had nothing to bind to and was not performed. The plan shows no diff on the function's environment.",
+  "notes": "Cut-time text written against an older shape of the root; the plan result is unaffected."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W56-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~56",
+  "surfaced_at": "2026-10-11T16:50:17Z",
+  "one_line": "gw1.AC2.sh cannot print PASS for any plan: its changed-address grep -E '^\\s*# [a-z_.\\[\\]\"0-9-]+ will be' has a malformed bracket expression (the class ends at the first ']'), so it matches zero lines and reports 'changed addresses 0', while the saved plan at rc=0 reads exactly 'Plan: 0 to add, 1 to change, 0 to destroy.' with the one address aws_lambda_function.mcportal_grant_writer.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r34/checks/gw1.AC2.sh -> 'plan rc=0; summary: Plan: 0 to add, 1 to change, 0 to destroy.; changed addresses 0:  ' RESULT: FAIL exit=1",
+      "RUN positive control, GNU grep 3.0: printf '  # aws_x.y will be updated' | grep -cE '^\\s*# [a-z_.\\[\\]\"0-9-]+ will be' -> 0; the same plan text with grep -E '^\\s*# [a-z_.]+ will be' -> 1 line, 'aws_lambda_function.mcportal_grant_writer'",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~56/gw1_plan.txt and gw1_plan.rc (rc 0): 'Plan: 0 to add, 1 to change, 0 to destroy.'; one '# ... will be updated in-place' line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-gw-1 AC2: 'plan rc=0; summary: Plan: 0 to add, 1 to change, 0 to destroy.; changed addresses 1: aws_lambda_function.mcportal_grant_writer ... RESULT: PASS'.",
+  "world_is": "The criterion's script is written as the order says but its address regex counts 0 on any plan, so AC2 reads FAIL on a plan that satisfies its own stated test. The script is outside this worker's <paths>; it was not edited and the plan file was not altered to fit it. AC2 is recorded FAIL by output.",
+  "notes": "The fix is one character class, e.g. [][a-z_.0-9\"-]+ or [a-z_.]+ (the address here has no index). Other r34 check scripts may carry the same pattern; not swept."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W56-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~56",
+  "surfaced_at": "2026-10-11T17:15:55Z",
+  "one_line": "Resolution of NFRA_OPLGTW-Z-W56-S2: the issuer fixed gw1.AC2.sh at b237fbf925; re-run against the saved plan it prints 'changed addresses 1: aws_lambda_function.mcportal_grant_writer', RESULT: PASS, exit=0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash gw1.AC2.sh at b237fbf925 -> 'plan rc=0; summary: Plan: 0 to add, 1 to change, 0 to destroy.; changed addresses 1: aws_lambda_function.mcportal_grant_writer ' RESULT: PASS exit=0",
+      "COMMIT b237fbf925 (issuer ruling relayed in the coordinator message: the regex defect was the issuer's)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row Z-W56-S2: gw1.AC2.sh cannot print PASS for any plan.",
+  "world_is": "After the fix the script counts the one address and passes. The plan file was not changed between the FAIL and the PASS (same gw1_plan.txt as committed at 3f8d4d7a6e).",
+  "notes": "Citing row; Z-W56-S2's text is untouched."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W56-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~56",
+  "surfaced_at": "2026-10-11T17:59:33Z",
+  "one_line": "OG-wr-1: the first (cold) 13-month pass per master took 146.9 s (m0) and 142.5 s (m1) on dim_asset, not the 221-235 s the order cites from W43-S7; the other three datasets of a master then read in about 10 s cold, because the snapshot is stored per master and date, not per dataset.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN SSM 095a641c-3227-40a3-bc30-e59fa0758897 (Success): WR1_PAIR lines in wr1_host.out; 8 pairs, window_dates 274 and primed_dates 274 on every pair; cold_seconds 146.9/10.8/10.0/10.1 (m0) and 142.5/10.6/9.9/9.8 (m1); warm_seconds 9.6 to 12.1",
+      "READ infra/aws/ec2/opal-gateway/app/integrations/schwab/catalog.py snapshot(): the stored snapshot is keyed (master, date, closure identity), with no dataset in the key"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-wr-1 section 1: a cold 13-month read costs about 221-235 s per master (row W43-S7).",
+  "world_is": "The pass measured here paid 142-147 s per master, at 17:50Z on 2026-10-11, with the host's service running beside it. This program did not measure how many of the 274 snapshots already existed before the pass (an earlier 30-day read stores some), so the gap to 221-235 s is not attributed. The warm read is about 10 s per pair, which is the cost of 274 completion-record reads plus 274 stored-snapshot reads, not a free cache hit.",
+  "notes": "The pass wrote the missing snapshots write-once to the real access-state table, as the order says; nothing else was written."
+}
+```
