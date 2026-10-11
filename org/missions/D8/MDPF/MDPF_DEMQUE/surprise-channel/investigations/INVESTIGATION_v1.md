@@ -927,6 +927,30 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "python data/mdpf/scripts/demque/extend_frontier.py --plan --today 2026-06-30 (worktree, guard built): rc=0, end 2026-06-30, symbols 141"
       ]
     }
+  },
+{
+    "id": "MDPF_DEMQUE-Z-S4",
+    "one_line": "TO-DQ-t34's precondition oracle dq_t33_real.py is once-only in the SAME way Z-S1 recorded for dq_t26_real.py: its arms[supersedes_new] demands the re-freeze TRANSITION, which DQ-t-33's real act already consumed, so it reads QR-REAL-BAD while three of its four arms confirm the end state it wanted.",
+    "spec_asserts": "TO-DQ-t34 THE CELL: 'Start only after DQ-t-33's commit is in your tree (python .../R9_CHECKS/dq_t33_real.py prints QR-REAL-OK there; bbg_quote.record_actual accepts outcome=\"COMPLETE\").'",
+    "world_is": "dq_t33_real.py prints 'QR-REAL-BAD arms=supersedes_new'. Measured cause: the REAL requests folder already holds BOTH superseded quotes -- DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.quote.superseded-2026-10-11.json (t26's re-freeze) and ...-2026-10-11-2.json (t33's chained re-freeze) -- and the live quote's `supersedes` already names the -2 file. The check copies that finished folder to a tempdir and re-runs refreeze.py, which correctly returns {\"status\": \"ALREADY_REFROZEN\"} and writes nothing, so `added = set(after) - set(before)` is EMPTY and the arm's `len(added) == 1` is False. Reproduced in isolation with the file names printed before and after. THE ASYMMETRY IS THE TELL: arms[second_superseded] (rc == 0 and exactly 2 superseded files) PASSES on the same re-freeze, because it reads the END STATE, while arms[supersedes_new] fails because it reads the DELTA. The other three arms all pass and together confirm t33 landed: cells 15120 == want 15120 (history now priced on TRADING days, which is Z-S3's remedy), cells_remaining 3404, finish_date 2026-10-17, label a remaining-cells quote, and quote_vs_actual OPEN printing both superseded finishes. SUBSTANCE FOR THIS CELL IS MET AND WAS EXERCISED, NOT INFERRED: bbg_quote.record_actual(..., outcome='COMPLETE') is ACCEPTED (a DRAWN positive control ran first so the call shape was right), the CLI carries --outcome {DRAWN,STOPPED,COMPLETE} and --actuals, and bbg_quote.py is at 00ca5a6f1e (DQ-t-33, 0.9.0_WK_MDPF_DEMQUE~26) with t33's own order at status complete. t34 therefore proceeded on the substance; dq_t33_real.py was NOT weakened and is outside this order's <paths> (R9_CHECKS is the issuer's). SECONDARY, AND THE REASON AN EARLIER READ OF MINE WAS WRONG: at 2026-10-11T15:52Z this check failed differently, with 'unrecognized arguments: --actuals' and a usage line reading --outcome {DRAWN,STOPPED}, because t33 was NOT YET in this tree -- it arrived at box-sync 83722b5786 (12:23 local / 16:23Z). A precondition measured against a tree a scheduled integrate is still moving can read BAD for a reason that evaporates minutes later, so the arrival commit is worth naming whenever a dependency check is quoted.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZQ",
+    "surfaced_at": "2026-10-11T16:40:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .../R9_CHECKS/dq_t33_real.py -> 'QR-REAL-BAD arms=supersedes_new' with cells=15120 want=15120 remaining=3404 finish=2026-10-17 label=remaining-cells and superseded_files=2",
+        "isolated reproduction: BEFORE 2 superseded files, refreeze rc=0 {\"status\": \"ALREADY_REFROZEN\"}, AFTER 2, added=[] so len(added)==1 is False",
+        "the live quote's supersedes already names DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.quote.superseded-2026-10-11-2.json",
+        "record_actual(..., outcome='COMPLETE') ACCEPTED under a DRAWN positive control; guard reads (\"DRAWN\", \"STOPPED\", \"COMPLETE\")",
+        "git log: bbg_quote.py at 00ca5a6f1e (DQ-t-33); arrival here at box-sync 83722b5786, 2026-10-11 12:23 local",
+        "dq_t33_real.py:60-68, the arms dict, where second_superseded reads the end state and supersedes_new reads the delta"
+      ]
+    }
   }
 ]
 ```
