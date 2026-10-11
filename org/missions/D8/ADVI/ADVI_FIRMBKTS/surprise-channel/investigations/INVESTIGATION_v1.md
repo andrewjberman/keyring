@@ -1185,3 +1185,31 @@ write: **1 row** (`S1`).
   }
 ]
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~17 (FB-f-7, equivalence-class build, commit 4e68fb82b0)
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W17-S6",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~17",
+    "surfaced_at": "2026-10-11T07:08:15Z",
+    "one_line": "The hand-written header of _shared/firm-config.mjs (outside the generated block) still states the alias pair as mockadv -> {49financial}; the generated block now lists one equivalence class per scope.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The header comment of _shared/firm-config.mjs (line 59), which quotes the CTO ruling: 'mockadv -> {49financial}', describing the advTenant remedy's alias pair.",
+    "world_is": "The generated FIRM_CONFIG block, regenerated at 4e68fb82b0 under the issuer's equivalence-class ruling (6aab08c6f5), lists 49financial and mockadv each as [49financial, mockadv]. The header line therefore describes the superseded single-entry alias pair. No decision moves because of the header: it is a comment, and the generated block is what the router and the guard read.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda-edge/_shared/firm-config.mjs@4e68fb82b0 line 59: the header comment 'mockadv -> {49financial}' (hand-written, outside the GENERATED markers)",
+        "infra/aws/lambda-edge/_shared/firm-config.mjs@4e68fb82b0 lines 70 and 85: the generated advTenant lines for 49financial and mockadv, both [49financial, mockadv]"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Form only. Not edited by this cell: the header is design history quoted from the CTO ruling, and its wording is the owner's to restate. Owner of the wording: the issuer 2.0.0_SA_COO~B1 or the CTO who ruled the header text."
+  }
+]
+```
