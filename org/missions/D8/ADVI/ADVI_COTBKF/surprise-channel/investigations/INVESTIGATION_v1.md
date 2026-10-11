@@ -6588,3 +6588,29 @@ round.** Never edit an existing row.
  "world_is": "In the local silver cache the store does not step down; it steps as Yahoo does. The 0.8132 family is the with-factor price table's step (served x factor), so 'Yahoo ratio over cottonwood ratio = factor' recovers the factor by construction. The events remain real by the custodian's acca/lica rows; the price test did not show it. Not changed here."
 }
 ```
+
+## ADVI_COTBKF-D2-W101-S1 -- A third clean-checkout input of the as_traded regrade is untracked and has no flag: the Yahoo Close cache
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W101-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~101",
+ "surfaced_at": "2026-10-11T13:57:44Z",
+ "one_line": "A third clean-checkout input of the as_traded regrade is untracked and has no flag: the Yahoo Close cache read from a fixed path <root>/.scratch/advi_cotbkf/yahoo_census (YAHOO_CACHE), 3580 files, 250 MB.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/silver/commonwealth_daily_valuation.py: YAHOO_CACHE = _ROOT / '.scratch' / 'advi_cotbkf' / 'yahoo_census'; apply_price_basis(cache_dir=None) uses it and raises FileNotFoundError 'as_traded needs the cached Yahoo pulls; ... is not a directory (no fallback to the store's points)' when a ticker needs it and the directory is absent; neither the valuation main nor the regrade main has a flag for it",
+   "C:/dev/wk-cotbkf-83 (clean worktree, no .scratch) has no such directory; the pinned copy is C:/dev/ajb_workspace/.scratch/advi_cotbkf/yahoo_census (3580 entries, 250M); the round-67 Proof A worktree C:/dev/wk-cotbkf-81 held its own copy at the same relative path",
+   "worker ~101 copied the pinned directory into its own worktree at .scratch/advi_cotbkf/yahoo_census (gitignored) before the clean run; no foreign worktree's scratch was on any command line"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bp-1 item 3: the regrade runs from a clean checkout with no extra flag, the pinned local caches under C:/dev/ajb_workspace/.scratch/advi_cotbkf being the only inputs, and the price cache copied into the worker's scratch as SPLIT_STORE_PIN.json describes.",
+ "world_is": "The as_traded price basis also needs the Yahoo Close cache at a default path under the checkout's own .scratch; a truly empty checkout stops there with FileNotFoundError before any table. The order does not name this copy; it was made by cp -r from the pinned directory, read-only on the source. Not changed here (a flag or a tracked pointer would be new surface outside the order). Not established: that the pinned directory is the one the served round-34 run read."
+}
+```
