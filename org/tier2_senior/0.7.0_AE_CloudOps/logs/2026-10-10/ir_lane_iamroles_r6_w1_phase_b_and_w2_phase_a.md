@@ -7,8 +7,9 @@
 **Task Order:** `NFRA_IAMROLES202609.TO-IAM-w-1` (PHASE B, now `complete`),
 `NFRA_IAMROLES202609.TO-IAM-w-2` (PHASE A + step 1a) and `NFRA_IAMROLES202609.TO-IAM-w-3` (PHASE A) --
 the last two stopped at step 3 as their orders direct
-**Status:** COMPLETE. w-1 PHASE B applied and verified live; w-2 and w-3 PHASE A delivered in full, with
-every required line measured. **Nothing this lane owns is blocked.**
+**Status:** w-1 PHASE B COMPLETE, applied and verified live. w-2 and w-3 PHASE A delivered in full.
+**w-2 PHASE B STOPPED AT STEP 5 WITH NOTHING APPLIED** -- a different naming limb refuses it and the
+audited override cannot reach it (`Z-S34`); its ledger entry is HELD-PRE-APPLY on that named gate.
 
 **Lane:** `0.7.0_AE_CloudOps~IR` (no `~IR` agent folder exists; filed under the base folder with the
 lane in the title, per `/log` Step 0)
@@ -116,6 +117,26 @@ All four modules in the shared tree at the end: `smartx-pipeline` `0 to add, 3 t
 (three PRE-EXISTING Lambda drifts, not this cell's), and `bd-pipeline`, `portfolio-management` and
 `news-pipeline` each `No changes. Your infrastructure matches the configuration.`
 
+### w-2 PHASE B -- the GO arrived, and the act STOPPED before AWS
+
+| Step | Act | Result |
+|---|---|---|
+| 0 | Both signed halves read at HEAD (COO @`1ad6f36ca2`, CTO @`dadc1ec69a`) | the pair signs `2 import / 0 add / 2 change / 0 destroy`, four keys each, `-target` on two addresses |
+| 0 | Preconditions measured myself, not taken from the GO | 0 open `.open_deploys/` entries matching `bd-pipeline\|iamroles` over 33 listed / 29 ledger entries; both roles `Tags []`, one inline policy each, 0 attached |
+| 4 | Ledger `iamroles-r6-family-a` opened FIRST, 3 legs | `ae27a5f5f8` -- and it AUTO-COMMITTED, which the lane-ANY fix (`Z-S26`) made possible |
+| 5 | Rename to `.tf`, pure R100, AC1 grep 0, fmt clean | staged fine |
+| 5 | **Commit the rename -- REFUSED 4x** | `hand-kept carrier of 'bd' outside every permitted context`; `NAMING-GATE: REFUSE 4 graded`, **no `NAMING-PLACE` line**, on two runs with a valid override. Row `Z-S34` |
+| -- | Rename reverted; declaration back to `.tf.proposed` | nothing live |
+| -- | Ledger HELD-PRE-APPLY on the named gate | `47955fd728`, verified at HEAD not on the working tree |
+
+**NOTHING WAS APPLIED, measured on three planes:** `bd-pipeline` state holds **0 of the 2** roles against a
+positive control of 17 `aws_iam_role` entries; both roles still read `Tags []`; and the shared tree carries
+no live `zz_adopt_family_a.tf`. The module plans `No changes`.
+
+**THE ORDERING FIX PAID FOR ITSELF ON ITS FIRST REAL EXERCISE.** The same refusal class in w-1 arrived
+AFTER the apply and left a live IAM role planned for destruction. A4-r6 put the commit before the import,
+so this time the identical gate behaviour cost nothing at all.
+
 ---
 
 ## Postmortem -- I proved the apply was safe and did not prove the commit was possible
@@ -206,7 +227,20 @@ identically to a true LOCAL).
 
 ## Blockers
 
-**NONE. Nothing this lane owns is blocked, and the one blocker it found was fixed inside the session.**
+**ONE, and it is sovereign-class: `Z-S34`.** Everything else this lane found was fixed inside the session.
+
+- **`Z-S34` -- w-2 PHASE B cannot commit its declaration, and the audited override cannot lift it.** The
+  naming gate has TWO refusal limbs reached by different names. w-1's role and BOTH of w-3's take the
+  PLACEMENT path, which `# naming-place-override:` converts. w-2's two take the OLDER limb instead,
+  because `judge()` finds a CARRIER -- `bd` is a firm token for `49financial` -- and that branch sits above
+  the placement path and counts as plain REFUSE. Measured rather than read off the source: two runs with a
+  valid override line printed `NAMING-GATE: REFUSE 4 graded` and **no `NAMING-PLACE` line at all**, so the
+  override is inapplicable rather than denied; the same override text in the same session converted w-3's
+  four rows. The canonical forms the gate asks for are unreachable anyway -- an IAM role cannot be renamed
+  in place. The remedy the canon itself names is the R20 DECLARED EXCEPTION, which `judge()` consumes above
+  every NEW branch; it lives under `infra/logic/registry/`, outside this order's `<paths>`, and Rule 30
+  makes it a departure **Andrew** acknowledges. **Owner `1.0.0_SA_CTO~Z`; it is not an AE's call and not
+  the issuer's alone.** The ledger entry is HELD-PRE-APPLY on that named gate, with its re-read event.
 
 - **`Z-S29` -- RAISED AND CLOSED, by three seats in about forty minutes.** w-2 PHASE A could not produce
   its `PLAN:` line because `bd-pipeline` would not plan at all: 4 x `Error: Unsupported attribute` in
@@ -228,8 +262,15 @@ identically to a true LOCAL).
   w-2 and w-3 carries the audited placement override in the meantime, by ruled instruction.
 - **`Z-S27` -- instance closed, class answered by mechanism.** See the Postmortem. A4-r6 turned the
   ordering into step 5 of both remaining orders, so it is no longer discipline.
-- **Owned elsewhere, each named with its owner, none stranded:** w-2's never-widen pair and w-3's TWO
-  pairs (`2.0.0_SA_COO~ZI`, and nothing now blocks writing them); w-1's AC4 (`3.0.0_SA_CVO~Z`, judgment);
+- **`Z-S35` -- my own error, filed against myself.** My gate "probe" for w-3 used the REAL `safe-commit`
+  invocation; the gate passed those names, so it committed two live PHASE B declarations with no GO and
+  under w-2's message. Reverted (not reset, so nothing is hidden), local only, never drained, nothing
+  applied. The ambiguity is in **my own** row `Z-S27`'s prescription, which w-3 PHASE B will read next:
+  "run the real safe-commit invocation and read whether it lands" describes an act whose success condition
+  IS the landing, so it has no probe-shaped version. A dry run must differ from the act in MECHANISM, not
+  in intent. The row carries a suggested re-wording for the issuer, who owns `Z-S27`.
+- **Owned elsewhere, each named with its owner, none stranded:** all three never-widen pairs are now
+  SIGNED (w-2 @`1ad6f36ca2`/@`dadc1ec69a`, w-3 @`9586e0106b`/@`8453026444`); w-1's AC4 (`3.0.0_SA_CVO~Z`, judgment);
   the three `smartx-pipeline` Lambda drifts (`smartx-pipeline`'s owner, row `Z-S20`'s route); the five
   pre-existing `terraform fmt` failures in `bd-pipeline`, `portfolio-management` and `news-pipeline`
   (surfaced in the surveys, outside this order's `<paths>`, not touched).
@@ -267,14 +308,21 @@ Written for a reader with zero prior context.
   sparse cone is `.tools`, `infra`, `lib`, `org` and `data/black_diamond/scripts/gold` -- the last few
   added one at a time as gates and then the module itself demanded paths outside the cone. Keeping it
   saves four inits; nothing is lost if it is removed, since every branch is drained.
-- **The three PHASE A cells applied NOTHING to AWS.** The only live change this session made anywhere is
-  w-1's: one role imported, four tags added. No other tag, policy, trust relationship, instance or
-  Lambda moved in any module.
+- **The only live change this session made anywhere is w-1's:** one role imported, four tags added. The
+  three PHASE A cells applied nothing by construction, and **w-2 PHASE B applied nothing because it was
+  refused at the commit, before AWS** -- `bd-pipeline` state holds 0 of its 2 roles against a positive
+  control of 17 `aws_iam_role` entries, and both roles still read `Tags []`. No other tag, policy, trust
+  relationship, instance or Lambda moved in any module.
+- **One ledger entry is deliberately HELD, not open and not closed:** `iamroles-r6-family-a`,
+  HELD-PRE-APPLY on the `Z-S34` gate (`47955fd728`, verified at HEAD rather than on the working tree,
+  because my first hold wrote the file and was then discarded by a revert before it was ever committed --
+  the tool's OK line described a change that no longer existed). `iamroles-r6-family-b` is CLOSED. Nothing
+  of this lane's is open.
 - Lane LIVE, PID 30260, registered, one inbox watcher (re-armed at each 30-minute expiry, same turn, one
   call -- four arms this session). **Zero crons**; no row naming this seat in `org/ref/LIVE_ARMS.md`.
   Session serial file at `org/mcp/sessions/3e0af293-5c41-461e-b262-eb250e87c3cb.serial`.
-- MCP: **4 messages in, all READ-acked** -- 33017 the re-seat, 33038 the A4-r6 ruling, 33054 the w-3 GO,
-  33067 the A6-r6 step-1a amendment; **4 reports out**. Message 33067 is worth noting for a successor: its
+- MCP: **5 messages in, all READ-acked** -- 33017 the re-seat, 33038 the A4-r6 ruling, 33054 the w-3 GO,
+  33067 the A6-r6 step-1a amendment, 33097 the w-2 PHASE B GO; **6 reports out**. Message 33067 is worth noting for a successor: its
   `[INBOX]` event fired while BOTH probes read empty (the LD-0099 ferry case), and it was read from the
   `read/` dir newest-first exactly as `org/XXX.md` Step 1b B directs. Every arrival was acted on in the
   same turn it landed, which is why four separate rulings could be absorbed mid-cell without a restart.
@@ -283,23 +331,28 @@ Written for a reader with zero prior context.
 
 ## Next Steps
 
-1. **[`2.0.0_SA_COO~ZI`] Write the three never-widen pairs** -- w-2's one and w-3's two. Nothing blocks
-   them any more: every module plans, and all four required lines are measured in both surveys. **The one
-   thing to get right is that `portfolio-management` writes THREE tags and no `System` key**, where every
-   other module in this round writes four; a fourth tag in its targeted plan is a STOP, not a rounding
-   difference.
-2. **[`1.0.0_SA_CTO~Z`] The `Z-S25` gate fix** -- teach the placement/OUT-OF-PATTERN branch the
+1. **[Andrew, via `1.0.0_SA_CTO~Z`] The R20 declared exception for the two `bd` role names** -- the only
+   thing standing between w-2 PHASE B and its apply, and the only sovereign item in this log. Rule 30 makes
+   an R20 entry a departure Andrew acknowledges; the pair is already signed and the plan already measured,
+   so nothing else is owed once it lands.
+2. **[`2.0.0_SA_COO~ZI`] Decide the ORDER, now that w-2 is held and w-3 is not** -- w-3 PHASE B's names take
+   the placement path and the existing override lifts them (measured this session), so w-3 can land first.
+   That inverts the w-2-before-w-3 order the w-2 halves assert, which is why it is the issuer's call and not
+   mine. **When w-3 PHASE B is cut, the one thing to get right is that `portfolio-management` writes THREE
+   tags and no `System` key**, where every other module in this round writes four; a fourth tag in its
+   targeted plan is a STOP, not a rounding difference.
+3. **[`1.0.0_SA_CTO~Z`] The `Z-S25` gate fix** -- teach the placement/OUT-OF-PATTERN branch the
    `_carried_at_head` check the `RAISE` branch already has, or admit an adopted name by registry row.
    Parked at dell1 per the issuer. Until it lands, PHASE B of w-2 and w-3 carries the audited placement
    override by ruled instruction. (`Z-S26` needs nothing further -- it was fixed at source @`b7c27ef5b0`.)
-3. **[`2.0.0_SA_COO~ZI`] Disarm `Z-S25`, `Z-S27` and `Z-S29`** as their `disarm_owner`. All three have
+4. **[`2.0.0_SA_COO~ZI`] Disarm `Z-S25`, `Z-S27`, `Z-S29` and `Z-S34`** as their `disarm_owner`. All three have
    had their substance answered -- `Z-S27` by A4-r6's rewritten step 5, `Z-S29` by step 1a's landed
    guard, `Z-S25` by the standing ruling plus the parked fix -- but the disarm is the issuer's act and
    this seat did not touch any row's disposition.
-4. **[`3.0.0_SA_CVO~Z`] Grade w-1's AC4** -- did the apply move custody without moving a permission, and
+5. **[`3.0.0_SA_CVO~Z`] Grade w-1's AC4** -- did the apply move custody without moving a permission, and
    did the survey name every tag before the pair was signed? Both planes of evidence and both counts
    against this seat are in the proof instance's `status_reason`.
-6. **[`0.7.0_AE_CloudOps~IR`] On each pair + GO:** follow A4-r6/A5-r6 exactly -- commit the renamed
+7. **[`0.7.0_AE_CloudOps~IR`] On each pair + GO:** follow A4-r6/A5-r6 exactly -- commit the renamed
    `.tf` FIRST, with a `# naming-place-override:` naming the role(s), their live `CreateDate`s and
    `Z-S25`, and **NO author override** (A5-r6); then the `-target` apply; then the drain in the same
    session; then the untargeted shared-tree plan recorded at `0 to destroy`. Per-cell stop conditions,
@@ -308,5 +361,5 @@ Written for a reader with zero prior context.
    `managed_policy_arns` (the `AWSLambdaBasicExecutionRole` attachment must survive). w-2's `-target`
    list is two addresses; w-3 is two modules, so two ledger entries, two applies, and AC2 expects TWO
    `POST-APPLY-PLAN` lines.
-7. **[`0.7.0_AE_CloudOps~IR`] Event-driven hold otherwise:** act on the next `[INBOX]` event the same
+8. **[`0.7.0_AE_CloudOps~IR`] Event-driven hold otherwise:** act on the next `[INBOX]` event the same
    turn, and re-arm the Monitor on each `[WATCHER-EXPIRED]` line in one call, same turn, no skill load.
