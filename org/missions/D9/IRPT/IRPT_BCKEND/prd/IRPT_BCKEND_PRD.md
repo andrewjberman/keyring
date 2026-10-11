@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.40",
+ "prd_version": "v0.41",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -1001,5 +1001,15 @@ ENDPOINT is not edited.
   tolerance stays relative 1e-4.
 - **Rule 24:** no value is added to any set. The guard is a predicate on one witness: domain, every security-day `YAHOO_CLOSE` would
   grade; two outcomes, graded or not graded; it moves no claim of `SCHWAB_ANCHOR`.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.41 -- the guard when the prior bar is absent (L10; CONTRACTS changed by one sentence)
+
+- **Source:** `3.0.0_SA_CVO`'s note on v0.40 (msg 5635, review @fa35adfef4): the guard did not say what happens when the reader has no
+  bar for the prior trading day, and a bar carried across a gap would then pass.
+- **The sentence: where `YAHOO_CLOSE` has no bar for the trading day before t, it gives NO grade for that security on t.** The guard can
+  compare nothing, and a comparison it cannot make is not a pass. The prior trading day is `lib/trading_calendar.py`'s, not the prior row.
+- Not sized: how many security-days this un-grades. The next cell (v0.40's) prints that count beside its table.
 
 -- 1.0.0_SA_CTO~DELL2
