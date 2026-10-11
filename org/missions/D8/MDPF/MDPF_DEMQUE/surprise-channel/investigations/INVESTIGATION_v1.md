@@ -1029,6 +1029,68 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "python .tools/proof-of-spec-check.py <instance> DQ9-t35-AC1 (rc 1) and <instance> DQ9-t35-AC1,DQ9-t35-AC2 (rc 0), this seat 2026-10-11"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W27-S7",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~27",
+    "surfaced_at": "2026-10-11T16:48:09Z",
+    "one_line": "The production bucket is opal-data-cot, not the provisioned firm bucket: the cottonwood gold SSM document exports BD_S3_BUCKET=opal-data-cot and its chain does not run B_01 holdings_lots, so gold/timeseries/holdings_lots/ is empty by design and D_04 skips its account and advisor-position steps.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-DQ-t35 item 1: the production bucket is established before hops 2-6 are read; the trace expected the lot-valuation artifact gold/timeseries/holdings_lots/ to be produced by the production run.",
+    "world_is": "infra/aws/terraform/cot-pipeline/ssm.tf (this seat, @53842ab400): SSM document opal-cot-gold-run exports BD_S3_BUCKET=opal-data-cot and FIRM_ID=cottonwood (L304-331); the COT silver merge document exports the same (L233); the COT v1 chain comment excludes B_01/B_01b/B_02/B_03 lots (L294), and run_gold does not list B_01 (L375-404). opal-data-cottonwood holds none of silver/historical_prices.parquet, config/ticker_lookup.json, silver/prices/canonical_prices.parquet (HeadObject 404) or gold/timeseries/holdings_lots/ (no objects). D_04 L1304-1307 prints WARN and skips when no holdings_lots object exists.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/cot-pipeline/ssm.tf@53842ab400 L233, L294, L304-331, L375-404",
+        "data/cot/scripts/gold/D_04.client_portal_summary.py@53842ab400 L1304-1307",
+        "aws s3api head-object and list-objects-v2 on opal-data-cottonwood and opal-data-cot (this seat, 2026-10-11)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W27-S8",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~27",
+    "surfaced_at": "2026-10-11T16:48:09Z",
+    "one_line": "In production the page value of the FTHSX and PFORX holdings is the BD snapshot market value per unit, not a Yahoo or canonical close; the price-file path does not set those page values, and the canonical name-keyed prices for these names are interpolated and end 2026-06-09.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-DQ-t35 item 1 hop 5: the value artifact prices the position from the price file (the chain as written in the order).",
+    "world_is": "gold/canonical/holdings/2026-10-09.parquet (opal-data-cot, read this seat): FULLERTHALER BEHAVIORAL SM-CP EQ INST 188 accounts, price 57.57-57.67, source bd_snapshot; PFORX-family (USD-HDG) INSTL 334 accounts, price 9.45-9.46, bd_snapshot. B_00 L171-173 sets price = market_value / units and source bd_snapshot. silver/prices/canonical_prices.parquet (read this seat): for the five FTHSX/PFORX-family names the sources are linear_interpolation and transaction_observed only (no yahoo_finance row), last date 2026-06-09 for every row of the file (11,289,398 rows).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/cot/scripts/gold/B_00.canonical_holdings.py@53842ab400 L163-175",
+        "aws s3 cp opal-data-cot/gold/canonical/holdings/2026-10-09.parquet and silver/prices/canonical_prices.parquet; pandas read, source and price columns (this seat)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W27-S9",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~27",
+    "surfaced_at": "2026-10-11T16:48:09Z",
+    "one_line": "The bridge at 2026-06-23 links none of the 15 custodian positions: the crosswalk and account_links carry no MATCHED or LINKED row for them; two AWAITING_PERSON near matches and three unapplied exact-units candidates exist, and their served compositions name none of the three CUSIPs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-DQ-t35 item 2: the custodian AccountNumber maps to the served account_id and household through the estate's crosswalk; a link is applied only where the estate marks it MATCHED.",
+    "world_is": "commonwealth/cottonwood/silver/crosswalk/date=2026-06-23/crosswalk.parquet (1533 rows, 471 MATCHED): the 11 PFORX-holding numbers and the 4 FTHSX-holding numbers are all NOT_MATCHED; 0QF883612 AWAITING_PERSON (near match 0.765 to z0927234221) and RGY003642 AWAITING_PERSON (0.765 to z0927303741); the others NO_CURRENT_ACCOUNT_HOLDS_POSITIONS or NO_SECURITY_POSITIONS. account_links date=2026-06-23 (1450 rows, 212 LINKED) has none of the 15 numbers. Unapplied exact-units matches on the 2026-10-09 production holdings: 0QF883612 FTHSX 35.963 to z0927234221, B3S606732 FTHSX 52.158 to z0927284761, B3S734752 FTHSX 39.659 to z0927344311 (no exact match on 2026-06-23). The served platinum/clients composition.json of the four candidate households (z09305579, z09305700, z09305639, z09311697) names none of FTHSX, PFORX or RPIFX in its top 9; detail.json is NoSuchKey.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3 cp commonwealth/cottonwood/silver/crosswalk/date=2026-06-23/crosswalk.parquet and account_links/date=2026-06-23/account_links.parquet (this seat)",
+        "aws s3 cp opal-data-cot/gold/canonical/holdings/2026-10-09.parquet; exact-units test at 0.001 tolerance (this seat)",
+        "aws s3 cp opal-data-cot/platinum/clients/<rel>/composition.json for the four candidate households (this seat)"
+      ]
+    }
   }
 ]
 ```
