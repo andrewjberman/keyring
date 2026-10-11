@@ -94,7 +94,7 @@ entry to the deployed build (its own commit). Report once to `2.0.0_SA_COO~O`.
   match (`.tools/proof-of-spec-check.py:1206`, `surprise-row-gate.py:108`). Every other step, bound and criterion
   stands, as does the time gate.
 
-<status>pending</status>
+<status>complete</status>
 <round>33</round>
 <workstream>APPLY-PN1</workstream>
 <slot>~AE</slot>
