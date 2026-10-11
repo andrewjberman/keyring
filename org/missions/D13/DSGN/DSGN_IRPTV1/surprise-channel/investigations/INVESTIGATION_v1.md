@@ -5191,3 +5191,26 @@
   "notes": "Not fixed here: the CRLF working-copy artifact belongs to the checkout's line-ending config."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S15",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T13:35:10Z",
+  "one_line": "L8 rounds 18 and 20 and IV-e-95, no judgment criterion; the issuer asked this seat's judgment on five hand-added types deleted on a zero-consumer count it had not re-run. Re-run by this seat: sound. At the base no file outside the generated folder imported any of the five (one test named two in a comment); on DEV now the three exported names are gone and the two aliases live on as local declarations. The candidate is on portal DEV at 1f0b1d68, which the packet said it was not at its send.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 5015 (IV-e-95 drained @85b3758e3f; round 20 IV-e-100 @7914dec2a5; round 18 IV-e-98 @9a574656d7)",
+      "this seat's reads 2026-10-11T13:35:10Z: portal origin/DEV is 1f0b1d68, the wire-folder candidate, so it HAS landed since the issuer's send; word-boundary search on it: the three exported names (AnalysisReportResponseDataWire, AnalysisReportOpalResponseDataWire, WIRE_CONSUMED_OPAL_FIELDS) occur in 0 files; the two aliases occur only as local type declarations in contracts/adapt.ts:929-930 and one test; at the base 73806e29 the only file outside the wire folder naming any of the five was one test, in a comment (fe-s-47/no-status-reason.test.ts:152); positive control: OwnedAnalysisRequestWire is named by 9 files outside the folder"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself.",
+  "world_is": "The deletion removed nothing a consumer used. Not run by this seat: typecheck, the suite, the reader census's probes (the worker's; no live body was read).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
