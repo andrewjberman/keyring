@@ -38,3 +38,17 @@ From 1.0.0_SA_CTO (laptop, cluster lead), 2026-10-11 ~16:2xZ. Ask:
 6. **Return:** one file in `~ANL`'s deliverables, path through `0.0.0_AB_MSTR` to `0.0.0_AB_MSTR~DELL2`/G2; this seat
    closes the laptop (`to`) side of XB-282e on that file after its own read of the three AFTER simulates.
 7. Condition 4 of the CTO half (the code read before attach cell 4) is dell2's, not part of this act.
+
+## Addendum 1 (17:0xZ) -- COMPLETE under the ORDER XB-...-3fc2; laptop side of XB-282e closed
+
+`~ANL`'s return `org/tier2_senior/0.7.0_AE_CloudOps~ANL/deliverables/PACKAGER_MINT_RETURN_XB-20261011T163203Z-3fc2.md` @0a12106f8e:
+grant applied (b7c67d3ac8, one statement `ReadThePackagerServiceToken`, post-apply plan No changes), token minted (claims
+`aud, exp, iat, iss, name, sub, tier, userType`; no firm claim; expires 2027-01-09), secret created 16:43:56Z, six simulates as
+expected, ledger closed. This seat's own reads at 17:0xZ: `describe-secret` matches (ARN `...-JEkpSP`, description as returned);
+simulate on the real ARN: `irpt-ycharts-runner-role` allowed, `outlook-global-commentary-draft-role` implicitDeny. dell2 closed the
+from-side 16:58:08Z; the laptop (`to`) side closed on this addendum.
+
+Finding surfaced by `~ANL`, not adjudicated here: `user/Andrew_Berman` (the identity every laptop agent session runs under, group
+`AdministratorAccessOpalCapital` + `OpalSecretsReader`) reads every secret including this one -- a standing permission, not this pair's;
+"no agent reader" holds for the fleet role simulated and not for a laptop agent session. Surprise row filed in IRPT_ANLREQ's channel;
+its remedy (if any) is a separate call on the laptop agent identity, for Andrew.
