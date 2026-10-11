@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 3,
  "rectangle": "the enrichment list (items 1-5) plus the remediations the CVO's REMEDIATION_v3 names to this seat: the cutover window's four acts (the advTenant remedy deployed, the platinum producers repointed, the delta copy, the list entry + map value + all-ASCII router + F6 deploy), the compare instrument (item 2), the table repair under the grain ruling (item 3), two project-free blind readers (item 4), F4's own-firm admit exercised (item 5); and the two measurement cells the window's blast radius needs: the producer census and the advTenant build with its Rule-24 record",
- "cells": 11,
- "chains": 8,
+ "cells": 12,
+ "chains": 9,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/L5_FACTS.md (read-only measurement 2026-10-11 ~05:2xZ-06:0xZ)",
  "frozen": true
@@ -43,12 +43,13 @@
 | `FB-f-9` act 2: producers repoint | 1 (step 2) | FWD-5, FWD-4 | F10 | the writers `FB-f-6` names | `FB-f-6` | ~16 (queue) | WORLD, STAGED |
 | `FB-f-10` act 3: the delta copy | 1 (step 3) | FWD-4 | F7 | `deliverables/0.9.0_WK_ADVI_FIRMBKTS~11/` (second manifest), the destination keys | `FB-f-1` | ~11 (queue) | WORLD, STAGED |
 | `FB-f-11` act 4: list entry, map value, all-ASCII router, F6 deploy | 1 (step 4) | FWD-4, FWD-3 | F6, F7 | `shared-advisor-router/index.mjs`, the registry map value, the Terraform apply | -- | ~18 worker | WORLD, STAGED |
+| `FB-f-12` SMS delivery-status logging for the SEV1 page path (added by the CTO's order msg 3682) | surprise rows D1-S15, D1-S16 | -- | -- | the role and the account SMS preference, `infra/aws/terraform/inf-pipeline/` | -- | `0.7.0_AE_CloudOps~FBL` (laptop) | WORLD, STAGED |
 
 No two cells write one file. The only shared reads are `mapping.json`, `census.json`, `mapping_v2.json` (never edited) and
 the round-2 F7 manifest.
 
 **Chains** (cells joined by a real data dependency are one chain): `{FB-f-1, FB-f-10}`, `{FB-f-6, FB-f-9}`,
-`{FB-f-7, FB-f-8}`, `{FB-f-11}`, `{FB-f-2}`, `{FB-f-3}`, `{FB-f-4}`, `{FB-f-5}`. M = 8.
+`{FB-f-7, FB-f-8}`, `{FB-f-11}`, `{FB-f-2}`, `{FB-f-3}`, `{FB-f-4}`, `{FB-f-5}`, `{FB-f-12}`. M = 9.
 
 **The window's order is a sequence, not an edge.** Acts 1-4 run in the CTO's order (`FB-f-8`, `FB-f-9`, `FB-f-10`,
 `FB-f-11`), each opened by its own never-widen pair and its change-management entry opened first; that order is
@@ -86,3 +87,11 @@ changes nothing; a `split` verdict changes no key. The advTenant record is itsel
 ## Placement
 
 Every cell executes on dell1 (`fabric: dell1`).
+
+## Amendment 1 (2.0.0_SA_COO~B1, 2026-10-11 ~09:3xZ): one cell added mid-round by the CTO's order
+
+The decomposition is frozen mid-round; the only off-spec act is a surprise ROW. Rows `ADVI_FIRMBKTS-D1-S15` and `D1-S16`
+filed during act 1's oracle read the SEV1 page path (the shared topic's one SMS subscription delivered 0 of 28 in 14 days)
+and the CTO ruled the remedy and ordered it cut under this project (msg 3682, `CTO_RULING_SEV1_SMS_DELIVERY_STATUS_LOGGING_20261011.md`).
+Cell `FB-f-12` is that order: one act, executed by the laptop CloudOps lane, no write surface shared with another cell.
+Cells 11 -> 12, chains 8 -> 9. Acts 4b and 4c of the CTO's act-2 ADDENDUM 1 are phases of `FB-f-11` (act 4), not new cells.

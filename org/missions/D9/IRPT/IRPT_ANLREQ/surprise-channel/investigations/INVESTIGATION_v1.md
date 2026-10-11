@@ -2321,3 +2321,54 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W51-S4 -- worker row, amendment 4
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-11T09:07:34Z",
+  "one_line": "AR-y-35 amendment 4: the order asks firm-choice-loaded.png be re-taken as a plain firm caller, but /ticket-center is internal-only, so a firm caller never reaches the form; that state was not captured and no other was substituted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/App.tsx:500-507 @212b801a: the /ticket-center route is wrapped in ProtectedRoute requireInternal; portal/src/contexts/AuthContext.tsx:786-787 isInternal() is firmId === 'opal-capital'.",
+      "Measured: scripts/ui-smoke.mjs ticket-center ... --dist dist --fixtures fixtures-loaded.json --firm F-49F (userType Advisor, firmId F-49F) printed FIXTURES-MATCH 0 of 5 and saved a blank light-canvas PNG; the driver with --firm F-49F timed out waiting for the New Ticket button (30000 ms).",
+      "Measured: the old firm-choice-loaded command (internal Dev session, fixtures-loaded.json, a non-Global resolve) on build 212b801a now shows the Firm control reading 'Firms not loaded', disabled (FIRM-OPTIONS [\"Firms not loaded\"]): an internal caller given a non-Global answer is a failed load by design of amendment 4."
+    ]
+  },
+  "spec_asserts": "AMENDMENT 4 step 4: re-take firm-choice-loaded.png as a FIRM caller with fixtures-loaded.json (the script documents how to make the stubbed session a plain partner/firm user).",
+  "world_is": "The firm-caller form cannot be reached through the page: the route admits only internal sessions, so the firm branch of loadAllowedFirms (internal false) is exercised by the unit tests only. firm-choice-loaded.png stays as the capture from build 21cac46b (internal session, non-Global fixture) and is marked in MANIFEST.json as not reproducible on the current build.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S5 -- worker row, amendment 4
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-11T09:07:34Z",
+  "one_line": "AR-y-35 amendment 4 step 2: TicketCenter.tsx read no auth before; the internal flag is now read by adding useAuth (the Investor Reporting page's own source) in the same file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx @df345498: no useAuth, isInternal or isDev reference (Grep of the file returned none), so 'how TicketCenter already reads auth' had no answer.",
+      "portal/src/pages/InvestorReporting/index.tsx:71,90 @212b801a: const auth = useAuth(); internal={auth.isInternal() || auth.isDev()}. TicketCenter.tsx @212b801a now holds the same two lines; useAuth is imported from '@/hooks/useAuth', the hook that file imports. The page is mounted inside the app's AuthProvider (App.tsx:500-507) and no TicketCenter test mounts the page, so no test needed a provider."
+    ]
+  },
+  "spec_asserts": "AMENDMENT 4 step 2: find how TicketCenter already reads auth and use that.",
+  "world_is": "It did not read auth; the same source was added to the one product file already in the grant, with no third product file touched.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

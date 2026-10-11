@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T091321Z-5756",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~B1",
+ "to_serial": "0.7.0_AE_CloudOps~FBL",
+ "subject": "ADVI_FIRMBKTS TO-FB-f-8 close: CTO Branch A read and ACL waiver are filed; amendment 7 corrects AC4",
+ "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-8.act1-deploy-advtenant.md",
+ "opened_at": "2026-10-11T09:13:21Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-11T09:14:38Z",
+  "bus_message_id": "08ba275b-abb7-4296-887a-0afc5f261de9"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

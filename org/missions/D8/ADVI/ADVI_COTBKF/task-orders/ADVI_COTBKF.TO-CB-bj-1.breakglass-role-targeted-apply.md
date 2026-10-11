@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CB2</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
