@@ -114,6 +114,15 @@ D. Criteria: the order now carries a FOURTH mechanical criterion, AC4 (reason: t
    Do NOT edit `dossier.py` again (the method stays `/13`); no real S3 write, only the fake client. Row ids `AMGT_CORPUS-D1-W1-S<k>` as
    before. The issuer's check is `.../checks/round47/aw9_check.py` (copied into your worktree, uncommitted).
 
+**AMENDMENT 3 (issuer, 2026-10-11 ~19:4xZ; a master answer carries no team values).** The template is now stored (`research_template`, 1 key) and the
+master arm reads it: the live census gives 63 names class `master`, each 135 rows (FIGURE 126, HEADING 4, CONTROL 5). The template workbook is filled with
+ONE sample company's figures (its info panel reads `Ticker: CPA-US`), so the master answer's `row_values` would put that company's numbers on 63 other names
+as "team model". Change `_answer` (or the master branch of `_read_name`): when the class is `master`, `row_values` is a list of None as long as `rows`,
+`row_formats` is a list of None as long as `rows`, and `periods` is `[]`; `rows`, `row_classes`, `row_numbers`, `row_counts`, `row_labels`, `sheet`,
+`workbook_key` and `model_rows_beside` are unchanged (the template's rows, classes and labels, cited). An own-workbook answer is unchanged. The
+issuer's `aw9_check.py` arm b2 now asserts it (the current code reads `aw9 build 3/4 control 2/2`); add a test to `test_template_round47.py`. Do not touch
+`dossier.py`. Re-run AC1-AC4, rewrite the instance, withhold the complete tag (the issuer flips it); report the live census's class and labels lines.
+
 **Then, in `lib/research/corpus/dossier.py`:** the stored field is the whole `rows_for` answer, so the new keys flow with no change to `build`.
 Bump `METHOD_VERSION` from `amgt-corpus-dossier/12` to `amgt-corpus-dossier/13`, add the comment line `# /13 (CRPS-aw-1): team_sheet carries
 row labels in words, override and fund-year rows are CONTROL, and each team cell's number format.` above it, and update ONLY that literal in the
@@ -191,4 +200,3 @@ Read-only: the whole repository, in particular `integrations/bloomberg/research/
 <round>47</round>
 <slot>~1</slot>
 <fabric>dell1</fabric>
-<status>complete</status>
