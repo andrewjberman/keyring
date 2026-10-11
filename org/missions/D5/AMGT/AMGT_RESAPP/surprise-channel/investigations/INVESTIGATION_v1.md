@@ -24863,3 +24863,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "No failure and no error: AC3's expectation (no failed, no error) holds. Not acted on by the worker. The skip reflects an unpopulated submodule in the new worktree, not a change in this order's code. The issuer may choose to populate portal/ in the worktree or accept the skip."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W391-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~391",
+  "surfaced_at": "2026-10-11T17:15:30Z",
+  "one_line": "The order's literal proof invocations cd into C:/dev/wk-resapp-391, which no longer exists after the re-seat; the worker ran them from C:/dev/wk-resapp-391c, as instructed, so the recorded invocation and the run differ by that path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-aa-2 AC1-AC3 (amended order, section 4): each invocation begins cd C:/dev/wk-resapp-391 && PYTHONPATH=\"$(pwd)\" ...; the placeholders declared are NONE.",
+  "world_is": "Measured 2026-10-11 17:15Z: C:/dev/wk-resapp-391 does not exist (ls: cannot access); git worktree list shows the re-seated worktree C:/dev/wk-resapp-391c on branch wk-AMGT_RESAPP-391. The three criteria were run from C:/dev/wk-resapp-391c with the coordinator's instruction to use 391c in the cd. proof-of-spec-check reads the recorded invocation as INVALID when it differs from the order's text, so the instance records the order's text and states the run path in each denominator.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -d C:/dev/wk-resapp-391 returns 'No such file or directory' at 2026-10-11T17:15:30Z",
+      "git worktree list in C:/dev/wk-resapp-391c: C:/dev/wk-resapp-391c on wk-AMGT_RESAPP-391 (no wk-resapp-391 entry)",
+      "proof-of-spec-check run on the instance with the 391c invocations: VIOLATION invocation-alignment[AC1], [AC2], [AC3]; INVALID (rc=1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not acted on beyond the recorded denominators. The issuer may restate the order's cd path to the live worktree, or accept the substitution. No criterion's output is affected."
+}
+```
