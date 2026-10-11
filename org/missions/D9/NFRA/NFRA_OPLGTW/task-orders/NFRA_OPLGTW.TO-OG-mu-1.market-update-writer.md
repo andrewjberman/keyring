@@ -52,6 +52,10 @@ NOT released).
    - rollback per act;
    - the residual: one deck placed on two different dates lands under two keys.
 5. Run AC1 and AC2, commit, REPORT, STOP.
+6. **(A1)** `tests/test_og_ab2_pairs.py::test_ogab2_ac02` asserts the OLD `.pptx` key form
+   (`date=<arg>/<sanitized name>.pptx`), which step 1's ruling replaces (row Z-W55-S1). Re-pin ONLY that assertion to the
+   content-addressed form: `date=<UTC put date>/deck_<sha16>.pptx`, the original name in `Metadata`. Change nothing
+   else in that file; its other two tests stay as they are.
 
 ## 2. BOUNDS
 
@@ -64,6 +68,7 @@ NOT released).
 <paths>
 infra/aws/ec2/opal-gateway/app/integrations/advi_billing/
 infra/aws/ec2/opal-gateway/tests/test_og_mu1.py
+infra/aws/ec2/opal-gateway/tests/test_og_ab2_pairs.py
 infra/aws/terraform/opal-gateway/advi_billing_gateway_iam.tf
 infra/aws/terraform/opal-gateway/variables.tf
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -94,6 +99,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-mu-1.market-update-writer.proof
   registry row is owed.
 - Pre-cut: mu1.AC1 base FAIL as expected (test file absent); mu1.AC2 base FAIL as expected (no variable; validate
   Success).
+- A1 (issuer, 2026-10-11 ~17:0xZ, on row Z-W55-S1): the issuer's defect. The cut left `tests/test_og_ab2_pairs.py` out of
+  `<paths>`, yet E1's ruling replaces the key form its `test_ogab2_ac02` pins, so AC1 could not pass. The file is added
+  with step 6 (re-pin that one assertion). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>34</round>
