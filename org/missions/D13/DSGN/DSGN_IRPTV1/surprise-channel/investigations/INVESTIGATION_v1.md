@@ -6145,3 +6145,84 @@
   "notes": "Not repaired (a read cell). The served-answer read that would close the deployed-vs-tree gap is in SECTION_TITLE_UNIT.json served_answer_how for 2.0.0_SA_COO~P2."
 }
 ```
+
+## DSGN_IRPTV1-D2-W62-S2 -- IV-e-114: the colgroup whitespace warning is in the shared HoldingsBreakdownTable (src/components/holdings/, outside the order's grant); five same-line JSX comments after the col elements leave five text nodes in the colgroup
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W62-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~62",
+  "surfaced_at": "2026-10-11T19:52:00Z",
+  "one_line": "IV-e-114: the React colgroup warning is reproduced in a development build and traced to portal/src/components/holdings/HoldingsBreakdownTable.tsx:294-298, a shared component outside this order's grant, so present_after false cannot be met by an edit this order permits",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/measure-dev-before.json (consoleAll entry, type error, text begins 'In HTML, whitespace text nodes cannot be a child of')",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/measure-prod-before.json measured.colgroupText [{children 11, textNodes 5}]",
+      "portal a124694c src/components/holdings/HoldingsBreakdownTable.tsx:293-300",
+      "portal a124694c src/pages/InvestorReporting/tabs/holdings/SecurityList.tsx:429-430,607"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's item 1: find the colgroup whose JSX leaves a whitespace text node, fix it, show it gone (present_after false); the grant is portal/src/pages/InvestorReporting/ only.",
+  "world_is": "The only colgroup the Holdings tab renders is HoldingsBreakdownTable.tsx:293-300 (a search of src/pages/InvestorReporting for colgroup outside tests: 0 hits; the Securities table in SecurityList.tsx:607 renders that shared component). Lines 294-298 each read `<col style={{...}} /> {/* Asset Class */}`: the single space between the slash-angle and the comment brace is on the same line, so JSX keeps it as a text child (a space with no newline is not trimmed). Measured on the built page: the table's colgroup has 11 child nodes, 5 of them text nodes (one per comment line), the 6th col being extra?.cols from SecurityList.tsx:430. React's development build prints 'In HTML, whitespace text nodes cannot be a child of <%s> ... This will cause a hydration error. colgroup' (measure-dev-before.json consoleAll); the production build prints nothing (measure-prod-before.json: 0 console entries containing 'whitespace'), so the warning is development-only. The page-side callers cannot change it: the whitespace is in the shared component's own JSX before extra?.cols. The one-line repair, outside the grant and NOT made: put each comment inside its col element or on its own line.",
+  "notes": "Needs the shared file in a grant (the CTO, or the owner of src/components/holdings/); IV114-AC1 reads FAIL on colgroup_warning.present_after at this record."
+}
+```
+
+## DSGN_IRPTV1-D2-W62-S3 -- IV-e-114: design ruling asked -- the Holdings tab draws five navy panel strips (3 PanelHeader, 2 PanelFooter) plus the Total Assets hero; portal/CLAUDE.md already names the strips as the known divergence from C3
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W62-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~62",
+  "surfaced_at": "2026-10-11T19:52:00Z",
+  "one_line": "IV-e-114: the Holdings tab renders 5 full-width #0A1733 strips from shared PanelHeader/PanelFooter on Panel variant nested, plus the Total Assets hero (6 dark surfaces); a design ruling is asked on whether a panel strip is a C3 band; nothing restyled",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/measure-prod-before.json measured.bands (7 entries: the 5 strips plus two td #111827 'Other' cells of the asset-class column, which are cell fills, not full-width)",
+      "portal/DESIGN.md C3 (read at a124694c)",
+      "portal/CLAUDE.md Color law, Known divergence paragraph"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "portal/DESIGN.md C3: 'band | palette.darkField #0A1733 | ONE deliberate full-bleed band per page, never the default container' and 'Navy #163372 is text and hairline only, never a container fill. A dark card sitting on the light canvas, a panel inside a panel inside a panel, or a second band on one page violates this clause.'",
+  "world_is": "Measured on the built page (computed background-color #0A1733, width 200px or more): 5 strips, each 1326px wide inside a 1392px main column, drawn by the shared PanelHeader (portal/src/ui/components/panels/PanelHeader.tsx:62, bg-[hsl(var(--bg-header))]) x3 -- Identity (IdentityCard.tsx:532), Securities map (HoldingsTreemap.tsx:550), Securities (SecurityList.tsx:552) -- and the shared PanelFooter (PanelFooter.tsx:108, `!light && bg-header`, ground 'band' is the default) x2 -- HoldingsTreemap.tsx:620 and SecurityList.tsx:623; each on Panel variant nested. A sixth dark surface is the Total Assets hero (src/components/CategoryViewTree.tsx, a gradient, called from DrillTree.tsx; its AD-01 comment: 'navy ground (the CTO recorded the C3 departure)'). portal/CLAUDE.md 'Known divergence' says PanelHeader, DarkCard and NestedCard are band-valued and 'A page can therefore render several bands where C3 allows one. C3 is the law and such a page is the defect.' So by the written law the page is the defect, but the fix is the shared Panel family (src/ui; that note counts 4,887 dependent idioms, row DSGN_REBRND-W1-S9), outside this grant and not unambiguously this page's. PanelFooter already takes ground='light' (a hairline, no band): a lever that would remove 2 of the 5 if the ruling is that footers are bands. Nothing restyled.",
+  "notes": "Ruling asked of the CTO: is a panel header or footer strip a band under C3 (then the shared Panel family needs a light variant and 5 strips go), or is C3's band the one deliberate full-bleed section (then the strips are chrome and the walk's count of 5 reads the page wrongly)?"
+}
+```
+
+## DSGN_IRPTV1-D2-W62-S4 -- IV-e-114: the walk's 32-36 under-3:1 texts are not reproduced when the backdrop under the Total Assets hero's gradient is sampled; reading computed background-color alone gives 26, all on the hero
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W62-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~62",
+  "surfaced_at": "2026-10-11T19:52:00Z",
+  "one_line": "IV-e-114: with the hero's gradient backdrop sampled from pixels, 0 of 72 visible Holdings texts are under 3:1 (lowest 4.82); a computed-style-only read paints the hero as the light canvas and yields 26 false failures, the same shape as the walk's 32-36",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/measure-prod-before.json measured.texts (72, each with fg, bg, ratio, and a sampled flag on the 10 gradient texts)",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/hygiene-driver.mjs (the measuring driver)",
+      "portal/CLAUDE.md Color law (the hero is the band; light ink is legal on it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row DSGN_IRPTV1-D2-S23: 32 to 36 text elements under 3:1 contrast, the lavender eyebrow such as ALL CATEGORIES on the light canvas.",
+  "world_is": "Naive method (computed color against the first opaque ancestor background-color, as a contrast checker that ignores background-image would): 27 texts under 3:1 on the built page at 1440 wide, 26 of them inside holdings-drill-tree / category-peers (#C5B9FD, #FFFFFF, #F4F6FA read against #F4F6FA), 1 an opacity-0 sidebar label. That region is the Total Assets hero, a navy gradient (background-image, background-color transparent), so the computed backdrop is the canvas by artefact. Sampled method (every text made transparent, full-page screenshot, pixels read under each text's own range rectangle, worst of lightest and darkest pixel kept): 72 texts, 0 under 3:1 and 0 under 4.5:1; lowest 4.82 (#111827 on #3B82F6, 'Equity'); the 'All Categories' eyebrow passes on the hero. I did not see the walker's script, so that it made the same error is INFERRED, not shown. No contrast edit was made; failing_before 0 and failing_after 0 by the sampled method. Not measured: the one-account (picker) and no-client states, hover previews and dialogs; this render is the client-picked all-accounts state on a synthetic fixture."
+}
+```
