@@ -1,0 +1,51 @@
+diff --git a/infra/aws/terraform/bd-pipeline/eventbridge.tf b/infra/aws/terraform/bd-pipeline/eventbridge.tf
+--- a/infra/aws/terraform/bd-pipeline/eventbridge.tf
++++ b/infra/aws/terraform/bd-pipeline/eventbridge.tf
+@@ -170,6 +170,47 @@
+ }
+ 
+ # -----------------------------------------------------------------------------
++# 1e-2. HG-t-11 (MDPF_HEALGAP FWD-6): the asset-dim RE-ATTEMPT, after the 22:20Z
++#     49F session mint (bd-49f-fees-session-daily). The 22:10Z fire above can run
++#     on a session that has lapsed and is minted ten minutes later; this fire runs
++#     the same trigger at 22:40Z. A complete day no-ops in the SSM document's guard.
++# -----------------------------------------------------------------------------
++
++module "asset_dim_reattempt_rule_name" {
++  source   = "../modules/opal_name"
++  system   = "blackdiamond"
++  scope    = "49financial"
++  function = "asset-dim-reattempt"
++  kind     = "daily"
++}
++
++resource "aws_cloudwatch_event_rule" "bd_asset_dim_reattempt" {
++  name                = module.asset_dim_reattempt_rule_name.name
++  description         = "BD asset-dim re-attempt after the 22:20Z session mint -- Mon-Fri 22:40 UTC; the document guard no-ops a complete day"
++  schedule_expression = "cron(40 22 ? * MON-FRI *)"
++  state               = "ENABLED"
++
++  tags = {
++    Name   = module.asset_dim_reattempt_rule_name.name
++    System = "BDPipeline"
++  }
++}
++
++resource "aws_cloudwatch_event_target" "bd_asset_dim_reattempt_target" {
++  rule      = aws_cloudwatch_event_rule.bd_asset_dim_reattempt.name
++  target_id = "1"
++  arn       = module.asset_dim_trigger.function_arn
++}
++
++resource "aws_lambda_permission" "eventbridge_asset_dim_reattempt" {
++  statement_id  = "EventBridgeInvokeAssetDimReattempt"
++  action        = "lambda:InvokeFunction"
++  function_name = module.asset_dim_trigger.function_name
++  principal     = "events.amazonaws.com"
++  source_arn    = aws_cloudwatch_event_rule.bd_asset_dim_reattempt.arn
++}
++
++# -----------------------------------------------------------------------------
+ # 2. Transaction Pipeline — starts bd-transactions EC2 instance
+ # -----------------------------------------------------------------------------
+ 

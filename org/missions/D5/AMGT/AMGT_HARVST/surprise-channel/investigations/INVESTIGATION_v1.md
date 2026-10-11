@@ -8550,6 +8550,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-Z-S113",
+     "project": "AMGT_HARVST",
+     "fabric": "site-z",
+     "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+     "surfaced_at": "2026-10-11T04:05:00Z",
+     "one_line": "The r47 sa backfill driver classifies its own stop status 'error' as transport-class and retries it, but the failing pairs carry rc 3221225794 (0xC0000142, STATUS_DLL_INIT_FAILED) and run_id null, which is a local collector LAUNCH failure with no upstream conversation to have failed. The label and the measured mechanism disagree, and the label is what decides whether the leg retries.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "HVST-bs-4 step 2 and step 8 branch on whether the stop is transport-class, and the driver's own rule is the source that answers: r47_sa_run2.out lines 117 and 121 read 'RESUME sa: error is a transport-class stop; resuming after the collector cooldown (1 of 2)' and '(2 of 2)'. The driver's --auto-resume-transient budget exists so a transient upstream fault does not end a leg.",
+     "world_is": "Measured from the leg's own output. The three retry rows in r47_sa_checkpoint.json each read last_status 'error' with last_run_id NULL, and r47_sa_run2.out lines 113-124 show every one of them as 'JOB sa <key> status=error run_id=None stored=0' followed by 'UPLOAD sa <key> cap=209 rc=3221225794'. 3221225794 is 0xC0000142, the Windows STATUS_DLL_INIT_FAILED: the collector process could not INITIALIZE. A process that never started cannot have had a transport failure, and run_id=None says no run record was produced, so there was no upstream conversation at all. All 4 uploads of that session failed (run summary uploads: count 4, failed 4) with the same rc. The driver nevertheless spent both of its --auto-resume-transient retries on this status and then stopped the leg at 134 of 242 ('STOP sa: error', line 125). CONSEQUENCE, which is why this is filed rather than left in a log: the retry budget is being spent on a class it cannot fix, and a reader who takes the label at face value will keep relaunching into a local fault. WHAT THIS ROW DOES NOT CLAIM: that the relaunch was wrong. The condition appears to have cleared -- the live bbg cycle's uploads read rc=0 at 2026-10-11T02:41:47Z -- and the issuer's AMENDMENT 1 branch resolves to transport-class by the driver's own rule, so the relaunch was executed on that rule (declared job dj-20261011T040137Z-1679536, driver PID 13220, resumed at 135 of 242 by subtraction, r47/bs4_resumed_2.out). It had printed no JOB line yet at this read, so whether the launch failure recurs is unmeasured. NOT DONE: nothing in the driver's classifier was changed; a code change there is the project's call, not this seat's.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       ".runtime/harvest-backfill/r47_sa_run2.out lines 113-125 (device-local, quoted verbatim in the record below)",
+       ".runtime/harvest-backfill/r47_sa_checkpoint.json retry map and stopped map",
+       ".runtime/harvest-backfill/r47_sa_checkpoint.run_summary.json uploads and publishers.sa fields",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/r47/bs4_stop_reason.out sections 5 and 6",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/r47/bs4_resumed_2.out",
+       "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-c1be67f53c/.runtime/harvest-cycle/state/cycle_runner.log at 2026-10-11T02:41:47Z (UPLOAD bbg ... rc=0, the cleared-condition read)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```

@@ -32,3 +32,18 @@ MDPF_CANON round 2, post-fire read.
 | CN-c-2 code commit and iam.tf grant (uncommitted in C:/Dev/wk-canon-9) | 2.0.0_SA_COO~D1 | the CTO rules the registry path (lib generate target or a permitted generated context, plus the tier-bucket output) |
 | CN-c-3 (the feeder repoint) | 2.0.0_SA_COO~D1 | CN-c-2 lands (it reads the same generated file) |
 | the Monday 2026-10-12 13:30Z fire read | 2.0.0_SA_COO~D1 | the fire has run; `r2_daily.py read --fire 2026-10-12T13:30:00Z` |
+
+## 04Z: CN-c-2 on the CTO's generate-target ruling (msg 3431)
+
+- Amendment 2 @dac583381b (and @9f933161c4 on wk-MDPF_CANON-9). Slot ~9 re-seated a third time: the lib target, the carrier, the
+  Terraform local and module output, the runner grant and the script are built and green (writer 3/3, homes 3/3, 8 new lib tests);
+  UNCOMMITTED in C:/Dev/wk-canon-9; rows W9-S4..S6 @2963e30c14.
+- AC3 libs reads 2 of 3: two lib tests fail because `targets` prints the carrier UNCLASSIFIED (W9-S5); the naming limb refuses the
+  feed literals in lib (W9-S4); S6 records drift in generated_locals.tf that predates us. One ask sent to the CTO (inbox file
+  20261011T034955Z_2.0.0_SA_COO_D1_CN-c-2_on_your_3431_ruling__two_more_ref.md), REC given for both.
+
+| item | owner | un-parks when |
+|---|---|---|
+| CN-c-2 code commit (wk-canon-9, uncommitted), then CN-c-3 | 2.0.0_SA_COO~D1 | the CTO rules S4 and S5 |
+| the Sunday 2026-10-11 13:30Z and Monday 2026-10-12 13:30Z fire reads | 2.0.0_SA_COO~D1 | each fire has run |
+| drain-end message to the CTO (armed rows W8-S2, W8-S3, W8-S5) | 2.0.0_SA_COO~D1 | every order of the round is terminal |

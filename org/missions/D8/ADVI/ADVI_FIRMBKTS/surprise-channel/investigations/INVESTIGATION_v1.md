@@ -563,3 +563,28 @@ write: **1 row** (`S1`).
   "notes": "FB-e-6 builds the path gated on the registry's own map (FIRM_BUCKET_MAP[scope] === resolved bucket), so no request changes until the map does. The cutover is the CTO's, with F10 and the advTenant remedy."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S8",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T03:55:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARM OF D1-S4 AND D1-S7 BY THEIR DISARM OWNER: F6'S FLIP, THE F10 PRODUCER REPOINT, A DELTA COPY AND THE advTenant REMEDY ARE ONE CUTOVER WINDOW, PLACED IN ROUND 3; UNTIL THEN THE COPY IS INERT AND THE F6 PATH IS GATED ON THE REGISTRY MAP",
+  "spec_asserts": "D1-S4: a router flip before the producers repoint serves a day-old copy. D1-S7: an ungated bucket-keyed rewrite would change the ?firm=49financial staff proxy with no registry edit, and firm-config.mjs forbids a shared-bucket value change before the advTenant remedy.",
+  "world_is": "Neither hazard can fire in round 2. F6 is built dormant and not deployed. FB-e-6 gates the canonical path on FIRM_BUCKET_MAP[scope] === the resolved bucket, so no request changes until the map does (D1-S7 notes: 193 of 193 identical on the gated build). F7's copy is NEW keys only and nothing reads them (CTO half, condition 2). Placement: round 3 carries ONE cutover family, and nothing of it is cut before F7 reads COPY-COMPLETE and F6 is built. The family, in order inside one window, each with its own never-widen pair: (1) the advTenant remedy lands first; (2) the F10 platinum producers repoint to address() keys in opal-data-49financial; (3) a delta copy against a fresh manifest reads COPY-COMPLETE; (4) the FIRM_CONFIG map value moves and F6 deploys. No window leaves both homes written or both read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND2_F7_COPY_CTO_HALF.md (conditions 1-3; the D1-S4 section)",
+      "ADVI_FIRMBKTS-D1-S4 notes: un-park on the CTO placing F10's repoint or a resync inside the flip window, plus the advTenant remedy if a map value changes",
+      "ADVI_FIRMBKTS-D1-S7 notes and evidence: FB-e-6 gated build 193 of 193 identical; the cutover named as the CTO's, with F10 and the advTenant remedy"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolves D1-S4 and D1-S7 as hazards (the D1-S8 shape used elsewhere for a disarm); GRADUATED stays the CVO's L9 field. The round-3 enrichment list carries the cutover family as one item."
+}
+```
