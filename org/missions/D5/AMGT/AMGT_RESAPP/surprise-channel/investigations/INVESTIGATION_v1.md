@@ -23799,3 +23799,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "CLAIM CLASS: inferred, not measured. This is a source read of the add_security path; this seat did NOT run add_security, so no put was exercised through it. The guard as landed is CORRECT AS ORDERED -- msg 2572 scoped it to main, and AC3 grades exactly that -- so this is the ORDER'S SCOPE, not a defect in the delivered cell, and kk-1 is rightly terminal. Surfaced by this seat against its own work: the kk-1 report should have counted the writers of research_universe per NEVER-1 rather than only the callers of the disclosure helper, which is the census it actually ran (comp-find, one caller). Candidate remedy for the owner: lift the refusal from main into write_pool itself, where all N=3 doors converge and the served document is already in hand -- one rule instead of three. Not done here: add_security.py is in no order's <paths> for this seat and kk-1 is closed."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W351-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~351",
+  "surfaced_at": "2026-10-11T03:44:04Z",
+  "one_line": "AMGT-nn-3 specifies a stored-cap refresh for an unreadable or absent model block but names no arm for a derivation that raises; the decorator folds that case into UNREADABLE rather than let the route fail.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AMGT-nn-3 step 2: if the block is None, or the read raises, the stored cap fields are served unchanged with cap_refresh UNREADABLE (read raised or POOL_READ_FAILED) or ABSENT. The order does not say what happens when engine._subject_from_model_block itself raises on a block that was read.",
+  "world_is": "lib/research/api/scoped_amgt.py _with_subject_cap (new, after _with_subject_display_name) wraps the read AND the engine._subject_from_model_block derivation in one try. A derivation that raises is served as UNREADABLE with a plain reason naming the derivation, and the stored cap is served unchanged. Without this arm the exception would propagate to read_peer_set and fail the whole /peers route. No test in the order exercises a raising derivation; the added test test_a_read_that_raises_during_derivation_is_named_unreadable covers it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py _with_subject_cap (commit of this order; the try block spans _read_model_block_pool and engine._subject_from_model_block)",
+      "lib/research/peers/engine.py:337 _subject_from_model_block (no try inside)",
+      "lib/research/api/tests/test_peer_subject_cap.py test_a_read_that_raises_during_derivation_is_named_unreadable"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Judgment, not a defect: the order's UNREADABLE arm was read as covering any failure to obtain the subject's cap from its own block. The owner may prefer a propagating exception on a derivation fault (a route 500 is loud) to a named UNREADABLE (served, and says why). The choice is one line in _with_subject_cap and is the issuer's to rule."
+}
+```
