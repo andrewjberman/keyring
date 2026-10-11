@@ -57,16 +57,17 @@ The CTO's ruling (`ledger/ROUND_ANALYSIS.round2.md` ADDENDUM 2), which binds eve
    `legacy_addresses.json`), a validation rule (a row is refused for a missing or extra field, an unknown bucket or
    scope, a prefix not ending in `/`, a repeated prefix, or a destination `address()` refuses), and one new generated
    WHOLE-FILE view (read how `BRONZE_HOMES_PATH` is wired in `VIEWS`, `WHOLE_FILE_TARGETS`, `TARGET_REGISTRY_KEYS` and
-   `_blk_bronze_homes`) emitted to `data/black_diamond/scripts/gold/lib/platinum_dest_view.json`, carrying the standard
+   `_blk_bronze_homes`) emitted to `data/black_diamond/scripts/gold/lib/platinum_dest_view.py`, carrying the standard
    GENERATED mark. The view holds, per class, the legacy prefix and the destination bucket and key template as
    `address()` builds them (never typed). Generate it with `python lib/opal_naming.py generate --out <dir> --target
-   data/black_diamond/scripts/gold/lib/platinum_dest_view.json` and place the output at that path.
+   data/black_diamond/scripts/gold/lib/platinum_dest_view.py` and place the output at that path.
 2. **The module.** Create `data/black_diamond/scripts/gold/lib/platinum_dest.py` exposing `destination(legacy_key,
    mode=None) -> (bucket, key)`:
    - mode `None` reads the environment variable `BD_PLATINUM_MODE` (unset means `legacy`);
    - `legacy`: returns `(S3_BUCKET, legacy_key)` unchanged (import `S3_BUCKET` from `lib.config`);
-   - `canonical`: for a key of a served class returns the destination from the VIEW (the JSON file beside the module,
-     read once and memoized; the module imports nothing from `lib/opal_naming.py`, which is not on the gold runner);
+   - `canonical`: for a key of a served class returns the destination from the VIEW (the generated module beside it,
+     imported, the data a generated Python literal; the module imports nothing from `lib/opal_naming.py`, which is not on
+     the gold runner);
      for any other key returns `(S3_BUCKET, legacy_key)` unchanged;
    - any other mode raises `ValueError`.
    The earlier uncommitted table `lib/platinum_dest_table.json` and generator `lib/gen_platinum_dest_table.py` are
@@ -81,9 +82,18 @@ The CTO's ruling (`ledger/ROUND_ANALYSIS.round2.md` ADDENDUM 2), which binds eve
 3. Add a test file `data/black_diamond/scripts/gold/tests/test_platinum_dest.py` (unittest style, no new dependency) for:
    legacy identity, canonical equality with a sample of each of the 11 classes, non-platinum identity, an unknown mode
    refused.
-3a. Amend `deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json` and `.md` to 62 writer lines (add the four served
+3a. Amend `deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json` and `.md` to every served write you routed: the 62
+   of the ruling PLUS the writes your own rows S11 (D_03 line 870) and S12 (the D_04 split-branch writes, including
+   `platinum/firm/fee_efficiency.json`) name; say the new total in the census (add the four served
    writes, with their lines and key text re-read from the files), so `r3_census.py` still reads 3 of 3.
-4. Run AC1-AC4 (section 4). Read each line they print. Repair only what they name.
+3b. **The view is a Python module, not JSON** (issuer ruling, see the record face): the repository's deploy plane ships
+   only `.py` files of `scripts/gold[/lib]/` (`safe_deploy_core.file_to_s3_target`), and `python lib/opal_naming.py
+   targets` exits 1 (row D1-W16-S13) for a target no plane claims. Re-cut the generated view as
+   `data/black_diamond/scripts/gold/lib/platinum_dest_view.py`, a WHOLE-FILE generated module (a literal the module
+   imports; the standard GENERATED mark in its header as a comment), through the same emitter and wiring. Then
+   `python lib/opal_naming.py targets` must exit 0 with the view classified SHIP on the s3 plane, never UNCLASSIFIED.
+   Delete the JSON view you committed. Never edit `safe_deploy_core.py` or the plane classifier.
+4. Run AC1-AC5 (section 4). Read each line they print. Repair only what they name.
 5. Print, per writer script, one line: `<script>: platinum write lines routed=<n>, literal bucket names=0` from your own
    `grep` over the script (denominator: the amended census's writer-line count for that script; 62 in all).
 
@@ -105,7 +115,7 @@ The CTO's ruling (`ledger/ROUND_ANALYSIS.round2.md` ADDENDUM 2), which binds eve
 <paths>
 infra/logic/registry/platinum_destinations.json
 lib/opal_naming.py
-data/black_diamond/scripts/gold/lib/platinum_dest_view.json
+data/black_diamond/scripts/gold/lib/platinum_dest_view.py
 data/black_diamond/scripts/gold/lib/platinum_dest.py
 data/black_diamond/scripts/gold/lib/gold_utils.py
 data/black_diamond/scripts/gold/tests/test_platinum_dest.py
@@ -135,16 +145,18 @@ Read-only: the rest of the repository, the census, the manifest, `mapping.json`,
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.proof_of_spec.json`.
   <criterion id="AC1" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-16 &amp;&amp; timeout 115 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_producers.py --arms static --root /c/dev/wk-firmbkts-16; echo "exit=$?"</invocation><expect>ROUND 3 PRODUCERS STATIC: 4 of 4 arms</expect></criterion>
-  <criterion id="AC2" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-16 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_view_sync.py --root /c/dev/wk-firmbkts-16; echo "exit=$?"</invocation><expect>VIEW IN SYNC: data/black_diamond/scripts/gold/lib/platinum_dest_view.json</expect></criterion>
+  <criterion id="AC2" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-16 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_view_sync.py --root /c/dev/wk-firmbkts-16; echo "exit=$?"</invocation><expect>VIEW IN SYNC: data/black_diamond/scripts/gold/lib/platinum_dest_view.py</expect></criterion>
   <criterion id="AC3" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-16 &amp;&amp; timeout 100 python lib/opal_naming.py validate; echo "exit=$?"</invocation><expect>VALIDATE: OK .* over all 15 registry file</expect></criterion>
   <criterion id="AC4" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-16 &amp;&amp; timeout 110 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_census.py --census org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json --root /c/dev/wk-firmbkts-16; echo "exit=$?"</invocation><expect>ROUND 3 PRODUCER CENSUS: 3 of 3 arms</expect></criterion>
+  <criterion id="AC5" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-16 &amp;&amp; timeout 100 python lib/opal_naming.py targets &gt; /dev/null 2&gt;&amp;1; echo "targets-exit=$?"</invocation><expect>targets-exit=0</expect></criterion>
 </proof_of_spec>
 
 AC1 carries its own difference control (D4: non-platinum keys unchanged in canonical mode) and its dormancy proof (D1:
 legacy identity over all 52,910 manifest keys, canonical equal to the F7 placement). AC2 is the view being the builder's
 own output (the naming gate grades it through its mark); AC3 the registry validating with the new file; AC4 the census
 re-read at 62 lines (AC3 and AC4 read PASS at base only by the file count and the census as they stand: AC3 reads 14
-files at base and FAILS as it should; AC4 reads the 58-line census and PASSES as a control). Four criteria are carried
+files at base and FAILS as it should; AC4 reads the 58-line census and PASSES as a control). AC5 is the builder's own plane classification
+of its targets (the view is a SHIP target, not UNCLASSIFIED; PASS at base, FAIL on the first JSON cut). Five criteria are carried
 because the registry file and the view are the CTO's ADDENDUM 3 deliverables and nothing else reads them. Each
 invocation terminates inside its bound.
 
@@ -178,6 +190,17 @@ source and of D_00f's sentinel) and S9 (D_00f follows `BD_S3_BUCKET` after the s
 and its legs, not phase A's. A generated view's mark carries the registry hash, so it goes stale when scopes.json or
 tiers.json moves (the existing bronze_homes.json is stale that way today): AC2 is re-read at the merge. Gate limb: GATE
 viii read `<placeholders>` at HEAD (`NONE`) and the added invocations carry no token.
+
+**AMENDMENT 3 (2.0.0_SA_COO~B1, after the worker's second report, rows D1-W16-S11..S14):** the worker's build passed
+AC1-AC4 and the issuer's own read found what they do not see: (1) `python lib/opal_naming.py targets` exits 1 with the
+JSON view UNCLASSIFIED (row S13), a builder gate this merge would leave failing; (2) the deploy plane's
+`file_to_s3_target` ships `.py` files only, so a JSON view in the gold lib directory would NOT reach the runner at
+phase B's code sync and `canonical` mode would have no table there. Both end if the generated view is a `.py`
+module in the same directory: it is then a SHIP target on the s3 plane by the plane's own rule. The CTO's ADDENDUM 3
+ruled the form (a registry file and a generated whole-file view), not the extension; this is the issuer's ruling
+inside the cell. S11 and S12 (served writes outside the ruled 62) are folded into the census; S14 (AC4 binds the
+census to line numbers) is accepted as the cost of an honest re-read. Gate limb: GATE viii read `<placeholders>`
+(`NONE`) and the added invocation carries no token.
 
 **PHASE B (STAGED; NOT A FACE).** Un-park conditions, all required, each read from a file at HEAD:
 1. Phase A merged with AC1 `4 of 4`, and `FB-f-8` (act 1, the advTenant deploy) is `complete`.
