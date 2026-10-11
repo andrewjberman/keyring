@@ -2950,3 +2950,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r133/p133_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-435` | the securities behind OUTSIDE_ANCHOR ranked by account-days with the half and ninety-percent counts; the cash rule counted; whether a held price store carries each security's close | FWD-3 (Cottonwood's figure on a basis somebody measured) | LOCAL | IB-pr-429 AMENDMENT 2 (its instrument, read from its branch) | P133-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~293. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 126. ROUND 134, WORKSTREAM ~P (2026-10-11 ~14:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5157)
+
+IB-pr-435's read (branch wk-IRPT_BCKEND-293 @497c7628fd): 734 securities behind OUTSIDE_ANCHOR, 9 mutual funds cover half; the
+four market-close stores find 144 of 45,216 needed security-days; only the custodian's own mark covers them. The CTO ruled the
+custodian's mark is not the anchor, and the next cell reads an independent daily NAV for the nine funds from a source the estate
+already runs: the gateway's YCharts series tools first (403 on the issuer's two calls, not retried), then the Yahoo reader
+ADVI_COTBKF runs (named by 2.0.0_SA_COO~C2, msg 5159). No Bloomberg. Nothing is re-graded.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r134/p134_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-436` | nine funds by 85 days: per fund, the days the custodian's mark equals the NAV of the day, of the prior day, of both, of neither; a control on a security the anchor carries; the account-day effect as an upper bound | FWD-3 (Cottonwood's figure on a basis somebody measured) | LOCAL | IB-pr-435 (its ranking and instrument, read from its branch) | P134-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~294. DIRECT-ACT (one read-only cell, LOCAL).

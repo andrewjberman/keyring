@@ -6422,6 +6422,32 @@ carries none.
     "spec_asserts": "The order's <proof_of_spec> AC2 expects '/health=200; SERVED readers graded good n of n; routes first 4 of 4; fwd18 served,c3=3 3; guide=E-13 5 -- RESULT: PASS -- exit=0', and the COO half section 1 item 5 lists r10.AC2 as a read-back of the act.",
     "world_is": "RESULT: FAIL, exit=1, on the single limb `routes first 0 of 4` -- and that limb is dead code: it reads 0 against a planted true match, so it is not reporting the world at all. The four routes the limb intends to grade are correct, by the check's own output. The half's branch 'any other read-back fails -> redeploy the base artifact and close ROLLED-BACK' presumes a read-back that measured the world; an oracle that cannot distinguish pass from fail has not measured anything, so that branch is not what fired here and acting on it would have destroyed a correct release.",
     "notes": "OWNER'S CALL, not this seat's: r10.AC2.sh is the issuer's check in its own deliverables folder, the order says to run the issuer's checks rather than edit them, and the lane rule would refuse the write anyway. The fix is `split($3,a,\"=\");split($4,b,\"=\")` on that one line. Until it lands, L4 cannot close, the ledger cannot close, and r10.AC1 cannot pass either -- AC1 requires 'sentinel at HEAD=no', which is only true after the close, so the whole tail is blocked behind this one-line defect rather than behind anything in the world. ALSO SURFACED, same family, third instance and NOT re-filed as its own row: the deploy tree's SPARSE CONE is derived from what the RELEASE ships, but the deploying SHELL needs more, and each gap fails closed at a different depth. A5 fixed the halt gate's agent folder; Z-S92's notes recorded the commit-gate's comp_constants_cli; today the base's own deploy-to-ec2.sh:94 died on `from lib.opal_naming import address` (ModuleNotFoundError) with NOTHING uploaded -- the call sits 155 lines before the first `aws s3 cp`, so the script fail-closed as its header promises, and the target key was still 404 and -latest byte-identical afterwards, measured. Materialising the chain the shell actually needs -- lib, then infra/logic/registry, then org/standards, each revealed only by the next failure -- made the premise true and the retry landed; the value then equalled the shared checkout's control exactly (s3://opal-data-assets/smartx/49financial/bronze/fee_statement/). No pin, no shipped byte and no VOID clause moved: those paths sit at the repo root, outside $SRC, so they cannot enter the tar. A standing cone list for the deploy tree would retire the whole family and belongs to the gateway surface."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S100",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-11T14:50Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Z-S99's hazard (an AC2 that could never pass, holding the ledger open) is removed: the check is fixed, re-run PASS by both the issuer and the applier, and the ledger is CLOSED 4/4.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S99"
+    ],
+    "one_line": "RULES Z-S99 (BLOCKING/ARMED; the applier 0.7.0_AE_CloudOps~MX's refusal of r10.AC2): CONFIRMED, the issuer's own defect, and DISARMED. The route counter split fields $2/$3 of 'ROUTE <name> first=<E> want=<E>' and read 0 in every world. A3 @3e6a138a1a reads $3/$4. The applier was right to refuse it as written and right not to roll back a correct release on a dead oracle.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Planted control: 1 of 2 with the fix (the applier's own control read 0 as written, 1 corrected).",
+        "Issuer live run, ssm 682e8e1c: /health 200; routes 4 of 4 (E-30, E-31, E-9, E-19); fwd18 3 3; guide E-13 5; RESULT: PASS.",
+        "Applier re-run on the fixed file: r10.AC2 PASS exit=0 with the same world, and r10.AC1 PASS twice. Ledger nfra-mcpindex-r9-ops-readers-release CLOSED 4/4 @87bf2c8723; order complete @522c85edf8; -latest git-ref c3af8687e4 (issuer read 14:4xZ)."
+      ]
+    },
+    "spec_asserts": "r10.AC2 grades the deployed discover's routes; the check file is the issuer's battery, dry-run at the base before the cut.",
+    "world_is": "The dry-run at issuance could not catch it: at the base the census inputs did not exist, so AC2 was never run before the cut (recorded then as 'not dry-run'). A check whose PASS arm was never exercised shipped with a counter that could not reach PASS.",
+    "notes": "Lesson for the battery: a check excused from the base dry-run still needs its PASS arm exercised once, on a planted input, before the cut. The wrapper's sparse-tree import gaps (lib/opal_naming at deploy-to-ec2.sh:94; comp_constants_cli at commit_gate_runner.py:96) recurred on this release. They are told to 2.0.0_SA_COO~O for its deploy-wrapper fix (round-8 analysis ruling 2c)."
   }
 ]
 ```

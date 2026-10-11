@@ -6055,3 +6055,75 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W100-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~100",
+  "surfaced_at": "2026-10-11T14:39:28Z",
+  "one_line": "DB-b-125 (the CTO's item 3): the 49 Financial thresholds file states no claim for any of its five thresholds, so the producer writes every one as held and the method row's threshold_claims_source as defaulted_no_claims, though two of the five are measured and one is derived.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A value must carry its claim in a field a consumer can reject on (CLAUDE.md section 4); DB-b-118 gave the thresholds input a threshold_claims object for exactly this, and the CTO's round-68 item 3 expects the live file to use it.",
+  "world_is": "Read at wk-irpt-dashbd-68-100 at 0db7244334: the last tracked blob of MEASURED_THRESHOLDS_R1.json (df127f168c^) has 24 top-level keys, none of them threshold_claims; the lambda source map (infra/aws/lambda/ci/lambda-source-map.json:6062-6066) records that same blob's sha256 as the one packaged into irpt-49f-reporting-gold-lambda. With no threshold_claims, threshold_claims_of (account_return_daily.py:1915-1918) returns held for every non-null value and the source defaulted_no_claims. The live package itself was not read (see W100-S2). The measurement record that produced the numbers is commit 6be02af162 (TO-DB-b-1 amendment 5 (h)): tolerance is a p99 over 708 account-days, large_flow_share a p99 over 1,098, the band the PRD default, the ceiling tolerance/max|band| per amendment 6.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1915-1918",
+      "infra/aws/lambda/ci/lambda-source-map.json:6062-6066",
+      "commit 6be02af162 (message body)",
+      "commit df127f168c^ (blob read by key names and counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W100-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~100",
+  "surfaced_at": "2026-10-11T14:39:28Z",
+  "one_line": "DB-b-125: the handler reads the thresholds only from a local file (the bundled path, then a repo path); no served S3 object exists, so 'the served copy' is the file inside the live function's code package, which this order does not download, and the equal-to-served question reads NOT_ESTABLISHED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order for DB-b-125 expects one served thresholds object the handler reads, with an address from the handler's code or the builder, to be head-objected and get-objected once.",
+  "world_is": "handler.py:122-132 (thresholds_path) tries two local paths and raises SystemExit if neither is a file; load_thresholds (:135-141) reads that file; no s3 call, no opal_naming address and no bucket key appears in either (Grep of handler.py for threshold beside s3, get_object, bucket, address, key: 0 hits). No AWS call was made. The only record of what the live package carries is the source map: infra/aws/lambda/ci/lambda-source-map.json:6062-6066 stages the repo path (which df127f168c deleted) as the packaged path with sha256 551920f0c364..., and the blob at 6be02af162 and at df127f168c^ both hash to that value (git show, hashed locally). That is the build input, not the running bytes (CLAUDE.md 22a: running bytes older than built pass every rung).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:122-141",
+      "infra/aws/lambda/ci/lambda-source-map.json:6062-6066"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W100-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~100",
+  "surfaced_at": "2026-10-11T14:39:28Z",
+  "one_line": "DB-b-125: the whole thresholds object is copied into every returns manifest.json (build_manifest) and into the method-row manifest (emit_method_row), so whatever the live thresholds file carries beyond the five values is served; the last tracked blob carried 24 keys, two of them holding account-number-shaped digit runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Client data stays out of what is served beyond the declared contract; the manifest states the thresholds the run graded against.",
+  "world_is": "account_return_daily.py:1866 writes \"thresholds\": thresholds into build_manifest and :2055 writes {**row, \"thresholds\": thresholds} to the method manifest.json, with the object as loaded. The last tracked blob (df127f168c^) had 24 keys; counted by key and regex only, nothing printed: two of its keys held digit runs of 8 or more (6 each), the ones named per_account_day_quality and per_account_short_position. If the live package carries that blob, those keys ride into served manifests; whether they do was NOT established (no served read, and the manifests were not opened). The tracked file this cell places carries only the keys the handler and producer read, so a release that packages it narrows the manifest.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1866",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:2055",
+      "commit df127f168c^ (blob read by key names and counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
