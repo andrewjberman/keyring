@@ -141,3 +141,51 @@ is a louder carrier than a message, and rule 31 sends an FYI to the record rathe
 
 **Still open and owned here:** HVST-bw-2's steps 1-6 (waiter armed), HVST-bs-4 step 6 on the driver's own
 completion line, and step 5's re-declaration if the leg runs past the 48-hour marker.
+
+---
+
+## Addendum 2, 09:4xZ: HVST-bw-2 is read and filed -- 242 of 242 attempted
+
+The waiter fired on its success arm: `CYCLE-ENDED 20261010T221526Z`. The record reads `completed true`,
+`stopped null`, started 2026-10-10T22:15:26Z, ended 2026-10-11T09:39:22Z -- 11h23m -- and it is the first
+cycle after the GC-killed `20261010T204810Z`, so it is the read AMENDMENT 2 names and no clock was
+involved in deciding that.
+
+```
+BBG CYCLE 20261010T221526Z: asked 242, attempted 242, new 6, already_held 0, failed 8, completed true, stopped none
+```
+
+Steps 1-6 are `round79/bw2_bbg_cycle.out`, 791 lines, with the record copied beside it byte-for-byte and
+step 7's SECOND process-tree read appended. Instance filed at the serial root; bound checker **VALID
+(rc=0)**, coverage 3 of 3, pin-drift 0, invocation-alignment 2 of 2 comparable. Committed `625de3ec4f`.
+
+`attempted` is not a field in the record. The order defines it as the pairs the run summary shows done or
+failed, `never_started` excluded, so it is computed and the file prints its basis beside it:
+`pairs_done 234 + retry 8 + gave_up 0` = 242. A number whose definition lives in the order, not the data,
+is the kind that gets quoted without its basis later.
+
+**AC3, measured and not self-graded, including the clause that does not measure favourably.** 242 of 242
+attempted with 0 never_started: satisfied. A stop only on the consecutive cap: satisfied in the strong
+direction, since there was no stop at all and the runner opened the next bbg cycle 22 seconds later, so
+the end is a boundary and not a halt. Each failure carries its own detail: **present but empty of
+content** -- all 8 entries have a `detail` field, each with its own `key` and a `floor`, but every
+`detail` value is the string `error`, identical to that entry's own `status`. The file says so in a
+DETAIL READING line rather than reporting "failures with their detail" and letting the grader assume.
+Repairing what the harvester writes there is the project's call.
+
+**Step 7's two reads legitimately differ, and the record says why.** RUNNERS stayed 1 (PID 21512 both
+times) and PID 37816 was ABSENT both times, which is the hazard the amendment was cut to test. But
+MATCHED_TOTAL went 2 to 4, because between the reads this seat started bs-4's r47 leg (PID 13220 plus its
+upload child) -- processes I caused, not a second runner. A reader comparing the two totals without that
+sentence would read a drift that is not there.
+
+**One defect of mine, caught before it reached the deliverable.** I exercised the assembler against the
+GC-killed record first as a negative control. That run printed `FAILURE 0: error -- error`: the first
+version keyed each failure by its LIST INDEX, because `failures` is a list of dicts each carrying its own
+`key`, and `enumerate` threw that key away. Run straight on the real record it would have produced a
+plausible file that was wrong about which eight securities failed. Fixed to use the entry's key and to
+append the remaining fields verbatim, then regenerated.
+
+**Still open and owned here:** only HVST-bs-4 step 6, on the driver's own PAIRS completion line. That leg
+is clean at this read -- 11 JOB lines, 0 `rc=3221225794`, 0 `run_id=None` -- and step 5's re-declaration
+is owed if it runs past its 48-hour marker (declared 2026-10-11T04:01:38Z).
