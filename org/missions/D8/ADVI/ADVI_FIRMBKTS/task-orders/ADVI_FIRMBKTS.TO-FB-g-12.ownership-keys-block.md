@@ -34,15 +34,18 @@ deployed and every other byte of the file stays as it is.
 
    `export const OWNERSHIP_KEYS = Object.freeze({ "<tenant>": Object.freeze({ legacy: "<key>", canonical: "<key>" }), ... });`
 
-   with one entry per tenant FIRM_CONFIG lists (same order, from `_tenants(reg)`):
-   - `legacy`: `platinum/<tenant>/ownership_map.json`, built from one builder constant for the object name and the
-     tenant (never typed per firm). For 49financial the builder asserts it equals the template of the registered legacy
-     address `blackdiamond-platinum-49financial-ownership-map` (`legacy_addresses.json`; read it with the file's own
-     accessor) and raises `RegistryError` if it does not.
+   with one entry per firm that OWNS A REGISTERED legacy ownership-map address, and only those. The set is read, never
+   typed: the rows of `legacy_addresses.json` whose `key` ends `-ownership-map` and whose `shape` is `object`; a row's
+   firm is the `scope` of the destination class (`platinum_destinations.json`) whose `legacy_prefix` starts the row's
+   `template`; a row no class owns is a `RegistryError` (a registry row to fix). Today that is one entry, 49financial.
+   A firm with no registered address gets NO entry (the validator throws for it and fails closed, as it did on the 404 of
+   a key no producer wrote). Each entry's `firmId` must be a tenant `FIRM_CONFIG` lists (`_tenants(reg)`), or
+   `RegistryError`.
+   - `legacy`: the row's `template`, exactly. No key template is built or typed in the builder (the naming gate refused
+     a `platinum/%s/%s` format string at line ~1002: row D1-W33-S3).
    - `canonical`: the producers' seam's destination key for that legacy key, derived from the destination registry the
      builder already reads for `platinum_dest_view.py` (`_platinum_build`; read that function): the class whose legacy
-     prefix starts the key, its key template with the tail filled. A tenant no class owns keeps `canonical` equal to
-     `legacy` (the identity, as the seam does).
+     prefix starts the key, its key template with the tail filled.
 2. **Dormant.** Every line of `infra/aws/lambda-edge/_shared/firm-config.mjs` at base stays, in order; the only additions are the block (with its own
    `GENERATED ... [OWNERSHIP_KEYS]` mark and `END GENERATED` lines) and the mark line's changed registry list. Regenerate with
    the builder (`python lib/opal_naming.py generate --out /c/dev/wk-firmbkts-33 --target infra/aws/lambda-edge/_shared/firm-config.mjs`), never by hand.
@@ -94,6 +97,15 @@ outputs and the commit hash.
 D1-W24-S3, D1-W25-S1); workstream `OWNKEYS`; follows FB-g-11 (same builder file). FB-g-1 is re-seated on this cell's merge
 and reads `OWNERSHIP_KEYS` from `_shared/firm-config.mjs`, which the validator already imports. The block is an addition: the
 deployed router, guard and validator are unchanged until act 4 deploys every regenerated target.
+
+**AMENDMENT 1 (2.0.0_SA_COO~B1, after the worker's report: rows D1-W33-S1 to S3):** the builder's own `platinum/%s/%s`
+template was refused by the naming gate as a NEW out-of-pattern S3 key (S3), and no builder path yields a per-tenant
+legacy key: the only registered address is 49financial's. Ruled by the issuer inside this decomposition and the CTO's
+ADDENDUM 4: render only the firms that own a REGISTERED legacy ownership-map address, and take `legacy` from the row (a
+registry fact, not a builder format). No registry row is added (a per-tenant row for a firm with no such object would be a
+false statement). `r4_okeys.py` O1 to O3 read this rule (entries are exactly the registered owners). Row S1 (the block's
+placement after FIRM_CONFIG in a hand-kept mjs: an `AFTER_BLOCK` anchor in `_render_view`) is accepted as built. Gate limb:
+GATE viii read `<placeholders>NONE</placeholders>` at HEAD and no token in the invocations (unchanged).
 
 <status>pending</status>
 <round>4</round>
