@@ -4084,3 +4084,109 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Owner: issuer 2.0.0_SA_COO~B1 to confirm the added child rows and the moving flags at the round-4 analysis."
 }
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~33 (FB-g-12, ownership-key block)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W33-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~33",
+  "surfaced_at": "2026-10-11T12:54:43Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-g-12 asked for a new OWNERSHIP_KEYS block after FIRM_CONFIG in the hand-kept carrier firm-config.mjs, but the renderer had no path to place a block that the file does not hold yet: the first generate would stop at the span lookup, which requires an existing export. The worker added a narrow anchor rule (AFTER_BLOCK) to _render_view in lib/opal_naming.py; the block is generated, not hand-typed.",
+  "spec_asserts": "TO-FB-g-12 1a.2: 'Regenerate with the builder ... never by hand', with the block added after FIRM_CONFIG and every base line kept in order; the order lists the builder file as the only builder change (block renderer, dispatcher, TARGET_REGISTRY_KEYS row).",
+  "world_is": "lib/opal_naming.py@0b9b0b1c4e _render_view takes a block's span from its own marks, else from an existing `export const <TAG>` line (_mjs_span), raising RegistryError when neither exists. A new block name in an mjs carrier therefore cannot be placed by the builder at base. The worker's edit adds AFTER_BLOCK = {'OWNERSHIP_KEYS': 'FIRM_CONFIG'} and an anchor branch in _render_view that places the new block at the anchor's END line on first generation only. All other lines are unchanged; AC1 O4 reads 108 of 108 base lines kept in order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@0b9b0b1c4e lines 1218-1226 (_mjs_span) and 1229-1252 (_render_view, before the edit): span raised RegistryError when no export line exists",
+      "lib/opal_naming.py in the worker's uncommitted diff: AFTER_BLOCK and the anchor branch in _render_view",
+      "r4_okeys.py --arms block at the worker tree: 5 of 5 arms, exit 0; O4 base lines kept in order 108 of 108, lines outside the block 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The mechanism is in the builder file this order owns; the spec did not name it. Issuer to confirm the anchor rule is the intended way to place a block into a hand-kept mjs carrier (the alternative is a whole-file target, which this carrier is not)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W33-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~33",
+  "surfaced_at": "2026-10-11T12:54:43Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The FB-g-12 flip rehearsal (r4_flip.py --arms flip) names perfrp_firm_pin.py as a value-changing reader that the CTO's list requires, yet the flip does not move it; the check's F3 still passes on the four-target set, so the printed mismatch is informational and not a failure of this cell.",
+  "spec_asserts": "TO-FB-g-12 AC2 (r4_flip.py, expect 'ROUND 4 FLIP FLIP: 4 of 4 arms'): the flip's value-changing set must stay the four served-tier targets.",
+  "world_is": "At the worker tree (base 0b9b0b1c4e plus the builder edit) the flip changes exactly four targets: firm_registry.json, firm-config.mjs, directory_runner.py, holdings_snapshot.py. The printed line 'not value-changing readers named by the CTO's list: [data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py]' says the CTO's list names perfrp_firm_pin.py as a reader that should change. perfrp_firm_pin.py is not among the four moved targets and its value did not change under the flip (its cause is not traced here). Result: 4 of 4 arms, exit 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r4_flip.py --arms flip --root /c/dev/wk-firmbkts-33 output, worker tree: 'generated targets=17; value changes under the flip (mark lines excluded)=4'",
+      "r4_flip.py output line: 'not value-changing readers named by the CTO's list: [data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py]'",
+      "F3 PASS and F4 PASS in the same run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Read-only observation for the issuer: the CTO list and the flip's printed expectation may disagree about perfrp_firm_pin.py. Not changed by this worker: the check and the CTO list are outside this order's paths."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W33-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~33",
+  "surfaced_at": "2026-10-11T12:54:43Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The commit of the FB-g-12 builder change was REFUSED by the naming gate (LGIC_ENFORCE DEC-6, ENFORCE): lib/opal_naming.py:1002 builds the legacy ownership key as the literal template platinum/%s/%s, which the gate reads as a NEW S3 key outside the registry. The worker did not override, force, or re-spell the template to slip past the detector. The worker tree holds the builder change and the regenerated firm-config.mjs, uncommitted.",
+  "spec_asserts": "TO-FB-g-12 1a.1: the legacy key is 'platinum/<tenant>/ownership_map.json', built from one builder constant for the object name and the tenant (never typed per firm); 2.2: a firm token is permitted in the builder only inside a key()/address()/name()/lookup() call or a registry file; 2.3: if the naming gate refuses the commit, do not override or force: file a BLOCKING row with the gate's lines and stop.",
+  "world_is": "The commit attempt printed: 'NAMING REFUSE lib/opal_naming.py:1002 platinum/%s/%s -> {source}/{scope}/platinum/%s/%s', 'why: NEW and OUT-OF-PATTERN as S3Key: REFUSE', 'NAMING-GATE: REFUSE 1 graded', and 'ERROR: BLOCKED -- the naming limb refused ... Commit aborted'. No builder call in the tree emits a legacy platinum/<tenant>/ key: key() emits canonical keys, and legacy_address() reads legacy_addresses.json rows, of which the only ownership row is the 49financial one (blackdiamond-platinum-49financial-ownership-map). A per-tenant legacy key therefore has no registered source; the registry is read-only under this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at the worker tree, 2026-10-11 ~12:5xZ: 'NAMING REFUSE lib/opal_naming.py:1002' and 'NAMING-GATE: REFUSE 1 graded' (exit 1, commit aborted)",
+      "git status after the refusal: lib/opal_naming.py and infra/aws/lambda-edge/_shared/firm-config.mjs modified and unstaged; the channel file staged; HEAD 0b9b0b1c4e",
+      "lib/opal_naming.py in the worker's uncommitted diff, lines ~995-1005: _ownership_legacy returns the literal template",
+      "infra/logic/registry/legacy_addresses.json@0b9b0b1c4e: the 49financial ownership row is the only legacy row with an ownership-map template (platinum/49financial/ownership_map.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer decision needed, one of: (a) a registered legacy row per tenant in legacy_addresses.json (the registry's owner is 4.0.0_SA_CRO; a READ address) that the block reads through legacy_address(); or (b) a CTO ruling on whether the gate admits the legacy platinum/<tenant>/ownership_map.json shape as an out-of-registry literal. Also observed: the safe-commit refusal printed 'files unstaged', but the channel file stayed staged in the worker index; the worker left that as it was."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~33 (FB-g-12, amendment 1 re-run)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W33-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~33",
+  "surfaced_at": "2026-10-11T13:03:15Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "AC3 (r4_scope.py) reads FAIL, 9 changed, 5 outside, because the scope check diffs the branch against the merge-base with the primary checkout (0b9b0b1c4e). The five OUTSIDE paths are the issuer's amendment commits caed07e6f0 and d5b9d4a803 on this branch (r4_grant.py, r4_modgrant.py, r4_okeys.py, r4_validator.py, the TO file). The worker's own writes since the amendment are the two code files.",
+  "spec_asserts": "TO-FB-g-12 AC3 (r4_scope.py, expect 'ROUND 4 SCOPE: OK'): the changed files are inside the order's paths, the required files are changed.",
+  "world_is": "At the worker tree: 'ROUND 4 SCOPE: FAIL 9 changed, 5 outside, 0 required missing', exit=1. The five outside paths equal the file list of git show --name-only caed07e6f0 d5b9d4a803. git diff --name-only d5b9d4a803 (the worker's writes since the amendment) lists lib/opal_naming.py and infra/aws/lambda-edge/_shared/firm-config.mjs only. The check takes no base argument, so it cannot exclude issuer commits on the branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r4_scope.py --root /c/dev/wk-firmbkts-33 output, 2026-10-11 ~13:02Z: 'ROUND 4 SCOPE: FAIL 9 changed, 5 outside, 0 required missing'",
+      "git show --name-only --format= caed07e6f0 d5b9d4a803: the five amended paths",
+      "git diff --name-only d5b9d4a803: lib/opal_naming.py, infra/aws/lambda-edge/_shared/firm-config.mjs (the worker's writes)",
+      "git merge-base HEAD <primary HEAD> = 0b9b0b1c4e, the base the check diffs against"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed by the worker: the check and the amendment commits are outside this order's paths. Issuer decision needed: the check should diff from the amendment (or exclude issuer commits), or the amendment should land on the primary checkout. The worker's AC3 result is recorded as FAIL, not re-measured against a different base."
+}
+```

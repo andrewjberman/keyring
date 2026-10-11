@@ -96,7 +96,7 @@ _PROBE_P, _PROBE_O = "zzprobep", "zzprobeo"
 # rewritten by key, so it names none.
 VIEWS = (
     ("data/firm_registry.json", "json", ()),
-    ("infra/aws/lambda-edge/_shared/firm-config.mjs", "mjs", ("FIRM_CONFIG",)),
+    ("infra/aws/lambda-edge/_shared/firm-config.mjs", "mjs", ("FIRM_CONFIG", "OWNERSHIP_KEYS")),
     ("data/assets/scripts/gold/investor_reporting/directory_runner.py", "py", ("firm_bucket_map",)),
     ("data/assets/scripts/gold/investor_reporting/holdings_snapshot.py", "py", ("firm_bucket_map",)),
     ("infra/aws/lambda/investor-reporting/_authz/loaders.py", "py", ("bucket_for",)),
@@ -110,6 +110,10 @@ VIEWS = (
     (PLATINUM_DEST_VIEW_LAMBDA_PATHS[0], "py", ("PLATINUM_DESTINATIONS",)),
     (PLATINUM_DEST_VIEW_LAMBDA_PATHS[1], "py", ("PLATINUM_DESTINATIONS",)),
 )
+
+# A block that a hand-kept carrier does not hold yet lands right after its anchor block (the first generate only;
+# every later generate finds the block by its own marks). OWNERSHIP_KEYS follows FIRM_CONFIG (FB-g-12).
+AFTER_BLOCK = {"OWNERSHIP_KEYS": "FIRM_CONFIG"}
 
 # Targets the generator owns WHOLE: the file is nothing but its generated block(s), so _render_view builds it
 # from the blocks alone and never reads a base (the first generate creates it). Every other VIEWS carrier is a
@@ -147,7 +151,11 @@ WHOLE_FILE_TARGETS = (
 #     mechanically resolvable: the mark format requires at least one file, and the true read set is empty).
 TARGET_REGISTRY_KEYS = {
     "data/firm_registry.json": ("scopes",),
-    "infra/aws/lambda-edge/_shared/firm-config.mjs": ("scopes",),
+    # OWNERSHIP_KEYS (ADVI_FIRMBKTS FB-g-12, CTO ADDENDUM 4) -- _blk_ownership_keys() reads the ownership legacy
+    # address rows (legacy_addresses), the platinum class rows (platinum_destinations, through
+    # _platinum_build()), the tenants (scopes), and key()/_home_bucket() reads systems and tiers.
+    "infra/aws/lambda-edge/_shared/firm-config.mjs": ("legacy_addresses", "platinum_destinations", "scopes", "systems",
+                                                      "tiers"),
     "data/assets/scripts/gold/investor_reporting/directory_runner.py": ("scopes",),
     "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py": ("scopes",),
     "infra/aws/lambda/investor-reporting/_authz/loaders.py": ("scopes",),
@@ -988,6 +996,63 @@ def _blk_firm_config(reg, h16, path):
     return _block("FIRM_CONFIG", h16, "//", path, "\n".join(lines))
 
 
+def _ownership_canonical(reg, legacy):
+    """The producers' seam's canonical key for a legacy key (lib/platinum_dest.py, canonical mode): the class whose
+    legacy prefix starts the key, its key template with the tail filled. A key no class owns is its own identity."""
+    for row in sorted(_platinum_rows(reg), key=lambda r: r["legacy_prefix"]):
+        if legacy.startswith(row["legacy_prefix"]):
+            _bucket, tmpl = _platinum_build(reg, row)
+            return tmpl.replace(PLATINUM_TAIL, legacy[len(row["legacy_prefix"]):])
+    return legacy
+
+
+def _ownership_owners(reg):
+    """{firm: legacy template} for every REGISTERED legacy ownership-map address: the legacy_addresses.json rows whose
+    key ends -ownership-map with shape object. A row's owner is the scope of the destination class (platinum_destinations
+    .json) whose legacy_prefix starts the row's template. A row no class owns, or an owner FIRM_CONFIG does not list, is a
+    RegistryError. Nothing is typed per firm and no key template is built here (ADVI_FIRMBKTS FB-g-12, amendment 1)."""
+    doc = reg.get("legacy_addresses")
+    if not isinstance(doc, dict):
+        raise RegistryError("infra/logic/registry/legacy_addresses.json is absent from this package")
+    tenants = [tid for tid, _s, _t, _own in _tenants(reg)]
+    classes = sorted(_platinum_rows(reg), key=lambda r: r["legacy_prefix"])
+    owners = {}
+    for row in doc.get("legacy_addresses", []):
+        if not (str(row.get("key", "")).endswith("-ownership-map") and row.get("shape") == "object"):
+            continue
+        tmpl = row["template"]
+        cls = next((c for c in classes if tmpl.startswith(c["legacy_prefix"])), None)
+        if cls is None:
+            raise RegistryError("legacy address %r (template %r) is owned by no platinum destination class"
+                                % (row["key"], tmpl))
+        owner = cls["scope"]
+        if owner not in tenants:
+            raise RegistryError("legacy address %r is owned by %r, which FIRM_CONFIG does not list"
+                                % (row["key"], owner))
+        if owner in owners:
+            raise RegistryError("firm %r owns two registered ownership-map addresses" % owner)
+        owners[owner] = tmpl
+    return owners
+
+
+def _blk_ownership_keys(reg, h16, path):
+    """Firm -> {legacy, canonical} ownership-map keys for the validator (ADVI_FIRMBKTS FB-g-12; CTO ADDENDUM 4; amendment
+    1): one entry per firm that owns a registered legacy ownership-map address, in FIRM_CONFIG order, and no other firm.
+    legacy is the registered row's template exactly; canonical is the producers' seam destination for it."""
+    owners = _ownership_owners(reg)
+    lines = ["export const OWNERSHIP_KEYS = Object.freeze({"]
+    for tid, _s, _t, _own in _tenants(reg):
+        if tid not in owners:
+            continue
+        legacy = owners[tid]
+        lines += ["  %s: Object.freeze({" % _js_str(tid),
+                  "    legacy:    %s," % _js_str(legacy),
+                  "    canonical: %s," % _js_str(_ownership_canonical(reg, legacy)),
+                  "  }),"]
+    lines.append("});")
+    return _block("OWNERSHIP_KEYS", h16, "//", path, "\n".join(lines))
+
+
 def _blk_firm_bucket_map(reg, h16, path):
     m = {tid: _routed_bucket(s) for tid, s, _t, _own in _tenants(reg)}
     body = ('def firm_bucket_map() -> "dict[str, str]":\n'
@@ -1184,6 +1249,7 @@ BLOCKS = {
     "BRONZE_HOMES": _blk_bronze_homes,
     "PLATINUM_DESTINATIONS": _blk_platinum_destinations,
     "FIRM_CONFIG": _blk_firm_config,
+    "OWNERSHIP_KEYS": _blk_ownership_keys,
     "firm_bucket_map": _blk_firm_bucket_map,
     "bucket_for": _blk_bucket_for,
     "FIRM_TREES": _blk_firm_trees,
@@ -1247,7 +1313,14 @@ def _render_view(path, syntax, tags, reg, h16):
     text = base
     for tag in tags:
         lines = text.split("\n")
-        found = _find_marked(lines, tag, comment) or span(text, tag)
+        found = _find_marked(lines, tag, comment)
+        if found is None and tag in AFTER_BLOCK:
+            # first generation of a block that follows its anchor block: it lands right after the anchor's END line
+            anchor = _find_marked(lines, AFTER_BLOCK[tag], comment)
+            if anchor is None:
+                raise RegistryError("%s: no [%s] block to follow for [%s]" % (path, AFTER_BLOCK[tag], tag))
+            found = (anchor[1], anchor[1])
+        found = found or span(text, tag)
         text = "\n".join(lines[:found[0]] + BLOCKS[tag](reg, h16, path) + lines[found[1]:])
     if syntax == "py":
         ast.parse(text)
