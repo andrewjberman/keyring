@@ -38,5 +38,12 @@ Battery: `comp-schedule` RUN (the act creates no schedule; the ingress keeps its
 - the ~60 `ingress_step_failed` lines an hour read as a regression (named in the half as intended);
 - the import-time registry read (named in the half; same failure outcome).
 
+**A1 (2026-10-11 ~02:5xZ) -- D2's stated precondition is MET, and the cell is cut as a ROUTE.** CA-f-1 APPLIED (`c583d4f9e5`; live
+`nIQW+3Xv...` 02:17Z). Its `error` field reads `route=teams status=404` on every invocation (rows Z-S10, Z-S11). COMM's client path
+equals the gateway source's route, and the same prefix's chats route is served. So the cause is the deployed gateway not
+serving `/hx/teams/teams`, which is outside COMM's write surface. Per the analysis ("or routes it to the owner the error names"),
+`CA-f-2` is a route to NFRA_OPLGTW's issuer, with no COMM order. Its done-when is unchanged: an hour of `failed=0` and one real
+channel @mention reaching Andrew, read by the issuer after the gateway serves the route.
+
 **The issuer's real run at close (not a cell):** `d1_errorfield.py` naming the cause, which decides D2. E1's read on the send
 day. The FWD-3 full-day read after D1.

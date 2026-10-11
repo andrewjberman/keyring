@@ -4134,5 +4134,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "notes": "Disarm: a re-write with fitz loading (the at-1 /10 write, or a re-pin of the API to /7 by AMGT_RESAPP) -- put to 1.0.0_SA_CTO~DELL1 at 21:27Z. Every future dell1 write runs only where `import fitz` loads for real; a stub is for read-only recompose.",
   "disarm_owner": "2.0.0_SA_COO~C1"
 }
+,
+{
+  "id": "AMGT_CORPUS-Z-S91",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~ZC",
+  "surfaced_at": "2026-10-11T02:50:22Z",
+  "one_line": "TO-READ-R44-at-4 names its evidence path under deliverables/0.7.0_AE_CloudOps~Z/ but is issued_to 0.7.0_AE_CloudOps~ZC, so the lane gate BLOCKs the ordered path and the file lands only under the audited author override.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-READ-R44-at-4.fence14-and-store-match-sitez.md: <issued_to>0.7.0_AE_CloudOps~ZC</issued_to>; step 5 and the AC1 invocation both name org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.7.0_AE_CloudOps~Z/evidence/r44_at4_fence14_store_match_sitez.txt",
+      "org/git-author-override-audit.log:50106 (2026-10-11T02:49:21Z) BLOCK 0.7.0_AE_CloudOps~ZC -- 'lane=TREE_DELIVERABLES ... owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it); agent=0.7.0_AE_CloudOps~ZC not in permitted_agents', rc=1, nothing committed",
+      "org/git-author-override-audit.log:50107-50109: OVERRIDE (--author-override 0.7.0_AE_CloudOps~Z applied) then LANDED-2P 2274227184; git log -1 2274227184 reads author=0.7.0_AE_CloudOps~ZC <0.7.0_AE_CloudOps~ZC@opal.agent>, so authorship was NOT misstated -- only the lane check was lifted"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The seat named in <issued_to> can perform step 5 as written: commit the evidence file at the path the order names, which is also the path AC1's grep invocation reads.",
+  "world_is": "~ZC is a SIBLING lane of ~Z, not a lane of it, so ADHC_OWNPTH.004 refuses every path under deliverables/0.7.0_AE_CloudOps~Z/. The order's two halves cannot both be satisfied without the escape: honour the path and the lane gate refuses; honour the lane and AC1's invocation reads a path that does not exist. This executor honoured the path (AC1 must remain runnable verbatim for the grader) and used GIT_COMMIT_AUTHOR_OVERRIDE, which is the documented, audited escape for a lane refusal (CLAUDE.md 14a).",
+  "notes": "Disarm is a one-line choice by the issuer, either direction: cut the path as deliverables/<issued_to>/ and move the AC1 invocation with it, or issue the cell to 0.7.0_AE_CloudOps~Z. GENERALISES beyond this cell -- any AMGT_CORPUS order that names a ~Z deliverables path while issuing to a sibling ~Z* lane hits the same refusal, and the refusal is silent in the cut (the gate fires only at the executor's commit, after the work is done). This row records the defect; it builds no gate and changes no order.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+}
 ]
 ```

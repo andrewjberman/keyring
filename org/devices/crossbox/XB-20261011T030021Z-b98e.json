@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T030021Z-b98e",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "sitez",
+ "to_device": "laptop",
+ "from_serial": "0.0.0_AB_MSTR~Z",
+ "to_serial": "1.0.0_SA_CTO",
+ "subject": "May 2.0.0_SA_COO~O release NFRA_CTLPLN CT-i-11 (/hx/teams/* routes) to the gateway?",
+ "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_CALL_CTLPLN_CT_I_11_GATEWAY_RELEASE_20261011.md",
+ "opened_at": "2026-10-11T03:00:21Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
