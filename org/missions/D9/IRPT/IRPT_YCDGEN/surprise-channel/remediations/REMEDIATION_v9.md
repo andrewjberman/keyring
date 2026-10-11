@@ -78,11 +78,11 @@ who finds one already met closes it with the evidence.
   "owner": "2.0.0_SA_COO~G2",
   "round": "v11",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~G2",
    "round": "v11"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_YCDGEN-D2-S47",
@@ -183,11 +183,11 @@ who finds one already met closes it with the evidence.
   "owner": "2.0.0_SA_COO~G2",
   "round": "v11",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~G2",
    "round": "v11"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_YCDGEN-W1-S9",
@@ -288,11 +288,11 @@ who finds one already met closes it with the evidence.
   "owner": "2.0.0_SA_COO~G2",
   "round": "v11",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~G2",
    "round": "v11"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_YCDGEN-W3-S18",
@@ -309,11 +309,11 @@ who finds one already met closes it with the evidence.
   "owner": "2.0.0_SA_COO~G2",
   "round": "v11",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~G2",
    "round": "v11"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_YCDGEN-W2-S14",
@@ -540,11 +540,11 @@ who finds one already met closes it with the evidence.
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v11",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v11"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_YCDGEN-D2-S25",

@@ -25927,3 +25927,101 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W289-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~289",
+  "surfaced_at": "2026-10-11T12:20:11Z",
+  "one_line": "TO-IB-pr-430 step 2: no fixture under _contracts/fixtures holds a whole response envelope for the four routes; the custody-report-read and custody-report-persist 'response' fixtures (and AnalysisRequestPdf, ComparisonCatalogue) hold the route's `data` document only, so adding unprojected_grant to the four schemas made no fixture fail and none was edited for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/custody-report-read.response.valid.json and custody-report-persist.response.valid.json: top-level members are _fixture, _source, _expect, instance; instance holds report_kind/report_id/revision/(report|sha256) with no contract_version, operation, firm_id or data (read at the worktree HEAD of this cell's commit)",
+      "python -m pytest _contracts from infra/aws/lambda/investor-reporting: base 2 failed, 203 passed; after the four schema changes 2 failed, 203 passed, the same two analysis-request-original failures",
+      "the three-envelope check for the four routes (deliverables/0.9.0_WK_IRPT_BCKEND~289/ib128_validate.py) builds each valid envelope with served.response_envelope around the route's data fixture, since no stored envelope exists"
+    ]
+  },
+  "spec_asserts": "The face (step 2) expects fixtures under _contracts that hold a whole RESPONSE ENVELOPE for one of the four routes and names fixtures/custody-report-read.response.valid.json and its persist sibling as examples.",
+  "world_is": "Those named fixtures are wrapped data documents ({_fixture,_source,_expect,instance}) validated only against the data $def, so the new required member breaks none of them; the 'what this makes false' set for the fixtures is empty. The only fixtures edited are the two the face's step 6 names (DirectoryPage.valid.json, AnalysisUploadResult.valid.json).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W289-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~289",
+  "surfaced_at": "2026-10-11T12:25:32Z",
+  "one_line": "TO-IB-pr-430: the commit-time naming gate (LGIC_ENFORCE, ENFORCE mode) REFUSES the handler-made AnalysisUploadResult.valid.json because the NORMALIZED answer's portfolio.owner.firm_id is the registry spelling '49financial' (fixtures/AnalysisUploadResult.valid.json:58); the criteria all PASS but the commit is refused, so the order is left open and nothing is committed except this row.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh ... -- <the order's paths>: 'NAMING REFUSE infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisUploadResult.valid.json:58 49financial -> lookup(49financial); why: NEW hand-kept carrier (context rule)'; NAMING-GATE: REFUSE 1 graded; commit aborted, files unstaged (denominator: 12 paths in the diff, 2 in the declaration domain)",
+      "the value is the handler's own output: intake/uploads.py _normalized_response returns portfolio.owner.firm_id from the owner record built by the test's in-memory fake (intake/tests/test_deferred_resolution.py, run unaltered); DirectoryPage.valid.json _source states the same gate ('no registry firm spelling: a new JSON carrier of one is refused at commit')",
+      "IB128-1-AC1..AC4 print PASS and the proof-of-spec instance validates (rc=0) with the fixture as made; the worktree holds the unstaged work"
+    ]
+  },
+  "spec_asserts": "The face (step 6) says the fixture instance is the handler's own `data`, written as it comes and never by hand, with synthetic test values only; the order's grant is the fixtures folder.",
+  "world_is": "The handler's answer for a NORMALIZED upload carries the registry firm spelling in portfolio.owner.firm_id, and the naming gate refuses a new JSON carrier of that spelling. Making the commit pass needs either a hand edit of that one value in the fixture (the face forbids hand-editing to pass), a different test fake that issues an opaque firm id (a test edit outside the grant), or an R20 register entry / gate exemption (not a worker's call). No override was used and no value was edited.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W289-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~289",
+  "surfaced_at": "2026-10-11T12:34:22Z",
+  "one_line": "TO-IB-pr-430 AMENDMENT 1 stop condition: the handler path refuses the synthetic firm id F-49F at infra/aws/lambda/investor-reporting/_scope/prospect.py:34 (`firm not in firm_ids()`), because F-49F is not in the firm registry, so the upload answer cannot reach NORMALIZED with it; stopped, no other spelling tried, no hand edit.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/prospect.py line 34: `if principal_class not in {\"FIRM_ADVISOR\", \"FIRM_OPERATIONS\"} or firm not in firm_ids() or not subject:` then line 35 `raise ProspectOwnershipRefused(\"verified firm advisor or operations owner required\")`; resolve_prospect_owner is called by intake/tests/test_uploads.py UploadIntegrationTests.setUp (line 42) and by the guarded entry on every request (prospect.py lines 78 and 92)",
+      "firm_ids() is infra/aws/lambda/investor-reporting/_ids/ids.py lines 145-155: the enabled kind=client firms of data/firm_registry.json (located by _find_registry, ids.py lines 112-140, env IRPT_FIRM_REGISTRY first); measured at this worktree it returns ('49financial', 'cottonwood', 'inflection'), F-49F in registry: False",
+      "probe .scratch/probe_f49f.py (rc 0, run from the worktree root): resolve_prospect_owner(claims with x-firm-id F-49F) raised ProspectOwnershipRefused 'verified firm advisor or operations owner required'; control, same call with the source test's own claims, returned firm_id 49financial",
+      "the five sibling fixtures carrying F-49F are data documents validated against schemas; none passes through resolve_prospect_owner, so their use of the id does not show the handler path accepts it"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1 of TO-IB-pr-430 expects the handler path to accept the synthetic principal firm id F-49F (carried by five sibling fixtures) and the upload answer to reach NORMALIZED with it; its stop clause says: if the handler path refuses a firm id that is not in the firm registry, STOP and file a row saying exactly which line refuses.",
+  "world_is": "The handler path refuses F-49F at _scope/prospect.py:34 because the firm registry holds only 49financial, cottonwood and inflection as enabled client firms. Getting a NORMALIZED answer with a non-registry firm id would need either a registry that lists F-49F (IRPT_FIRM_REGISTRY pointing at a synthetic registry file, a second difference from the source test the amendment does not authorize) or an edit to _scope/prospect.py or the registry (outside the order's paths). The worktree still holds the unstaged four schema files, the two fixtures (AnalysisUploadResult.valid.json still carries the registry spelling at line 58) and the deliverables folder; nothing but this row is committed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W289-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~289",
+  "surfaced_at": "2026-10-11T12:45:03Z",
+  "one_line": "TO-IB-pr-430 AMENDMENT 2 stop condition: the capture reached NORMALIZED with the synthetic registry and principal F-49F, but the commit-time naming gate refuses infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisUploadResult.valid.json:58 because F-49F is itself a registered alias of a real client firm; stopped, no override, no hand edit, no other spelling tried.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~289/ib128_capture_upload.py (rc 0, run from the worktree root): 'OK: captured operation=analysis-input-upload state=NORMALIZED firm=F-49F registry=<deliverables>/ib128_synthetic_firm_registry.json'; the handler path honoured IRPT_FIRM_REGISTRY (ids._find_registry() and ids.firm_ids() asserted in the script); keys.py reads the same variable",
+      "bash .tools/safe-commit.sh ... -- <the order's paths>: 'NAMING REFUSE infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisUploadResult.valid.json:58 F-49F -> lookup('49financial'); why: NEW hand-kept carrier (context rule)'; 'NAMING-GATE: REFUSE 1 graded'; commit aborted, files unstaged. Line 58 is `\"firm_id\": \"F-49F\"` = portfolio.owner.firm_id, the handler's own copy of the principal's firm id",
+      "the only registry-spelling hit in the captured data, by a word-boundary census of the three client rows' firm_id, tree_token, aliases and e-mail domain label against the envelope: '49f' (inside F-49F); the registry's alias list for the first client row therefore holds the spelling F-49F or a token of it, which is what the gate resolves through lookup('49financial'). The five sibling fixtures that carry F-49F predate or sit outside this gate's NEW-carrier rule",
+      "the worktree holds the unstaged four schema files, both fixtures, the synthetic registry and capture script in the deliverables folder; the order is still <status>pending</status>; nothing but this row is committed"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 2 of TO-IB-pr-430 expects the capture with the synthetic principal F-49F and registry to yield a fixture that commits; its stop clause says to stop with a row if the naming gate refuses any file of the commit, and not to widen the method further.",
+  "world_is": "The naming gate treats F-49F as a hand-kept carrier of the real firm 49financial (F-49F resolves through lookup('49financial')), so any NEW file holding that spelling is refused regardless of the synthetic registry. The handler copies the principal's firm id into portfolio.owner.firm_id, so a NORMALIZED answer necessarily carries whatever firm id the principal has; the id must be an enabled client firm of the registry the handler reads, and must not be a spelling the gate resolves to a real firm. A synthetic id of that kind (for example an opaque id the gate does not resolve) would need to be ruled by the issuer; this worker did not try another spelling.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
