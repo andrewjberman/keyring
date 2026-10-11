@@ -58,6 +58,15 @@ moved (2 subjects); the overlay's `display_name` still reads 'Banco Santander S.
 `r94_display_name.py` gains arms D7-D9 for exactly these two paths and `r94_name_census.py --where local` now reads the overlay's name path. Add tests for D7-D9
 to `lib/research/api/tests/test_names_read_agreement.py`. Edit `scoped_amgt.py` minimally: do not reformat it and touch nothing else in it.
 
+### 1c. AMENDMENT 2 -- one existing test pins the superseded precedence (the issuer's ruling on row `AMGT_RESAPP-D1-W387-S3`)
+
+`lib/research/api/tests/test_lead_list_names_and_places_moved.py::test_name_from_ranked_source_keeps_its_label_and_crosswalk_fills_the_rest` registers the sentinel name
+"SHOULD NOT WIN" for `BA_US_Equity` against the table's "Boeing Co" and asserts the table's name is kept: it pins the OLD precedence for a DISAGREEING pair, which is
+exactly what this cell changes (the CTO's ruling: the registered name wins on disagreement). Your reading of S3 is correct and the production code is right. The test's intent
+is the precedence for an AGREEING pair. Change that ONE fixture value in that file from `"SHOULD NOT WIN"` to `"BOEING CO SHOULD NOT WIN"` (it shares the token `boeing` with
+"Boeing Co", so the names agree and the table's name still wins; the sentinel still proves the precedence), and change nothing else in that file. The file joins `<paths>`.
+Re-run AC1-AC3 and rewrite the instance with AC3 PASS; the new D9 arm and your D7-D9 tests already cover the disagreeing case.
+
 Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: id form `AMGT_RESAPP-D1-W387-S<k>`, `disarm_owner` `2.0.0_SA_COO~R1`.
 
 ## 2. BOUNDS
@@ -73,6 +82,7 @@ Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: i
 lib/research/api/names_read.py
 lib/research/api/scoped_amgt.py
 lib/research/api/tests/test_names_read_agreement.py
+lib/research/api/tests/test_lead_list_names_and_places_moved.py
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~387/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -111,4 +121,4 @@ The `<status>` flip is the issuer's.
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>complete -- issuer close 2026-10-11T12:59Z (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-387 @05e912764e (code @fdc8659371) merged @dc40353618, proof instance VALID; issuer re-run in the worktree: AC1 R94 DISPLAY NAME YES (6 of 6), AC2 R94 NAME CENSUS YES (243 of 243 judged: registered name 68, legal_name 211, folder 96, model block 100; 0 unjudged; 0 different companies; 35 spelling variants listed), AC3 105 passed; drain checks py_compile rc 0, ruff clean, 540 passed over filings, peers and the names tests. names_read.py +26/-4: `names_agree` and the disagreement test inside `display_names`. The census flips exactly SAN_FP_Equity (Sanofi for Banco Santander) and CSL_AU_Equity (CSL Ltd for Carlisle Cos Inc) of 243. NOT SERVED until AMGT-ff-4. Worker rows ruled: S1 (the check's docstring said four letters, the order and census two characters: the code follows the order; docstring corrected) stands; S2 (ARMED: the channel header's one-fenced-block instruction would mis-append, the file holds one row per block; appended in the file's existing shape) stands, disarmed: no action is owed.</status>
-<status>pending -- REOPENED 2026-10-11T13:23Z by the issuer (2.0.0_SA_COO~R1): the first cut @dc40353618 changed the chain (the peers subject's name) and not the overlay's header name or a ranked row's name; the table of the redeploy pair read it. AMENDMENT 1 in section 1b of the face; the worker is re-seated on slot ~387 with its merged commits fdc8659371..05e912764e as inherited state.</status>
+<status>pending -- REOPENED 2026-10-11T13:38Z by the issuer (2.0.0_SA_COO~R1): the first cut @dc40353618 changed the chain and not the overlay's header name or a ranked row's name; AMENDMENT 1 (section 1b) was cut by W387 @7d4c006daa (AC1 9 of 9, AC2 YES; AC3 1 failed of 158: an existing test pins the superseded precedence, row D1-W387-S3, RULED by AMENDMENT 2 in section 1c: a one-value fixture edit, the production code is right). Re-seat of slot ~387 with 7d4c006daa..734e500b9f inherited.</status>
