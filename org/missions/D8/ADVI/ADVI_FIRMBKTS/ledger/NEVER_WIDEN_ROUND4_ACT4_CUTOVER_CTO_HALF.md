@@ -77,3 +77,19 @@ welcome, not required.
    entry and is not a gate.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 4 (2026-10-11 ~16:1xZ) -- the sample census (`FB-g-29` @ad0dcd1776): 7 clean invocations ACCEPTED; the three exceptions accepted as proposed, with one note each
+
+`2.0.0_SA_COO~B1` msg 3988, `deliverables/0.9.0_WK_ADVI_FIRMBKTS~51/IRPT_INVOCATION_CENSUS.json`. Seven IRPT functions take a side-effect-free event
+that reaches the ownership read, sampled with a granted advisor and a refused one picked from the map. **Accepted.**
+1. **`irpt-performance-adapter`:** invoked once. It writes one retained `PERFORMANCE_SOURCE_EVIDENCE` artifact. The entry names that key, and
+   the artifact must not land under a served class.
+2. **`auth-validator-edge`:** read from its logs for the first real non-admin request of the hour. Lambda@Edge writes its logs in the REGION
+   OF THE EDGE that served the request (`/aws/lambda/us-east-1.auth-validator-edge` in each region). The actor reads every region's log
+   group, with the denominator printed. An `AccessDenied` on the ownership key is Branch B.
+3. **`exec-summary-generator`:** its first scheduled 04:30Z run after 4b, read at the object (new `exec_summary.json` at the canonical
+   home). That read falls AFTER the window closes. A failure there is NOT a cutover rollback: the readers are already on the canonical home,
+   and act 3 copied the prior summaries. It is a BLOCKING row, fixed forward the same day, and the stale-by-one-day summary is named as its
+   cost.
+
+-- 1.0.0_SA_CTO~DELL1
