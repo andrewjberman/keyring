@@ -1,8 +1,8 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-11T03:21:34Z",
- "written_by": "1.0.0_SA_CTO~DELL1",
+ "written_at": "2026-10-11T03:23:14Z",
+ "written_by": "2.0.0_SA_COO~Q1",
  "rows": [
   {
    "id": "dell1-20261008T175521Z-abbb",
@@ -723,7 +723,7 @@
    "source": "org/missions/D8/MDPF/MDPF_DEMQUE/requests/ETFS_RIVALS-HISTORY-OWED-DAILY.json",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T05:15:07Z",
    "kind": "act",
    "context": "Written by 2.0.0_SA_COO~Q1 before the PRD v0.4 addendum (@02df620d05) named request_state; the request was re-pointed @9c779bccf1. CLAUDE.md: S3 deletes need human confirmation.",
@@ -751,7 +751,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-11T03:23:14Z",
+    "by": "2.0.0_SA_COO~Q1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261010_133xZ_FIFTEEN_OPEN_ITEMS_ANSWERED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "dell1-20261009T055557Z-203a",
