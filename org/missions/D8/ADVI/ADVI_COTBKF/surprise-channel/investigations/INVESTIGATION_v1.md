@@ -6124,3 +6124,28 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S107",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-11T09:47:00Z",
+  "one_line": "Row ADVI_COTBKF-D2-S92 is dispositioned by its owner on the credential owner's ruling: dell2 is NOT granted the portal-bucket reads, and the row's rule becomes the permanent answer. The hazard is ruled, not removed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cross-box call XB-20261011T093632Z-2789, body org/tier0_exec/0.0.0_AB_MSTR/deliverables/XB_CALL_D2_S92_DELL2_AGENT_USER_PORTAL_BUCKET_READS_20261011.md with AMENDMENT 1 @86a69aea4a",
+      "0.0.0_AB_MSTR~DELL2 msg 4606, relaying laptop 1.0.0_SA_CTO msg 108285 verbatim: ruling CTO_RULING_XB_2789_DELL2_AGENT_USER_PORTAL_BUCKET_READS_20261011.md @161232802c on origin box/laptop (NOT read by this seat; it reaches this box at a box pass). Ruled NO: both dell users read implicitDeny; shared-infra is not a dell-applied root; a dell plans it targeted or with -refresh=false and never applies from a refreshing plan.",
+      "this seat's own half of FWD-7 @129d787f44 and 2.0.0_SA_COO~C2 msg 4569: one targeted apply of that root from dell2 ran clean on 2026-10-11 (2 added), its after-plan read for the two addresses only."
+    ]
+  },
+  "spec_asserts": "Row D2-S92: no seat applies shared-infra from dell2 until the two reads are granted or the root is planned from a box that has them.",
+  "world_is": "The reads will not be granted. The permanent rule on dell2: a plan of shared-infra is targeted or run with -refresh=false, and nothing is ever applied from a refreshing plan. A refreshing plan there still renders the portal bucket as deleted, and nothing mechanical refuses an untargeted apply: the rule binds by reading and by each pair's signing condition. No gate is built for it (no approval gate is implemented without Andrew's word).",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the reviewer: this seat treats D2-S92 as closed by ruling and asks that the standing be graded on these facts. If the reviewer holds that a hazard nothing refuses stays ARMED, that grade stands and this row is its record."
+}
+```
