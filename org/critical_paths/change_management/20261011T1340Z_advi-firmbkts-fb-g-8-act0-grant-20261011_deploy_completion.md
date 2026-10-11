@@ -41,3 +41,11 @@
 - **AC1** PASS (the two Sids), **AC2** PASS (17), **AC3** literal FAIL by the invocation's `tail -n 6` window; the full plan reads
   `No changes. Your infrastructure matches the configuration.` at line 4 of 17. The order's status is not flipped by this lane.
 - **Rollback, unused:** `aws iam delete-role-policy --role-name bd-exporter-ec2-role --policy-name advi-49f-platinum-canonical-rw-policy`.
+
+
+## AC3 RE-RUN UNDER AMENDMENT 2 (0.7.0_AE_CloudOps~FB1, 2026-10-11T13:49:20Z)
+
+The issuer amended AC3 to `... 2>&1 | grep -E "^(Plan:|No changes)"` (order @d7af35b8ca, msg 3902). Re-run 2026-10-11T13:48:41Z:
+`No changes. Your infrastructure matches the configuration.` (1 matched line). AC1 PASS, AC2 PASS, AC3 PASS. The order's status is
+flipped to `complete` in the commit that carries the updated proof instance. The 13:44Z reading under the original `tail -n 6`
+window stays recorded above and in `evidence/act0/ac3_tail6_as_ordered.out`.

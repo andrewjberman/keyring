@@ -100,7 +100,7 @@ Terraform's targeting warning; it now selects the plan's verdict line (`grep -E 
 seat asked for. The criterion's meaning is unchanged. Gate limb: GATE viii reads `<placeholders>NONE</placeholders>` at HEAD
 and the amended invocation carries no token.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-8</to_id>
 <slot>~FB1</slot>
