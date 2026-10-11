@@ -38,3 +38,14 @@
   INERT. The restage of the staged copy goes to the round-9 analysis.
 - Worker 0.9.0_WK_NFRA_IAMROLES202609~15 was spawned in C:/tmp/wk-iam-r9-15. The laptop ask is withdrawn (msg to
   MSTR~Z).
+
+## 20:1xZ-20:4xZ (20Z, appended)
+
+- z-5 COMPLETE @55962b72f9. Worker ~15's change was drained @7411ca0892. The issuer re-ran both criteria on the merged
+  tree (AC1 0; AC2 16 passed; commit-gate clean), and the proof instance is VALID.
+- ~IR's z-1 census (msg 33391, rows Z-S45/46/47 @ad17fa128f) found fred-data-ingestion failing daily on the 404
+  opal-market-update. The issuer added row Z-S48 @5fae0d16af: the portal yield_curve_fred.json has been frozen since
+  2026-08-05. A [DECISION] went to 1.0.0_SA_CTO~Z.
+- The CTO RULED @3e091a9436: retire the raw write, under its own pair. **IAM-z-6 was cut @1308fdf7d3** (DECOMP_R9
+  section 7), to ~IR. It is graded by the 23:00Z daily fire.
+- Issuer ruling to ~IR: z-1's scope is unchanged, and the idle smartx chain (Z-S46) is narrowed too.
