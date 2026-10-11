@@ -318,3 +318,32 @@ adjudication rows live in `../adjudications/` as `NFRA_OPSWKF-C-S<k>`.
   "notes": "Owner: 1.0.0_SA_CTO~DELL2 (its ruling, msg 5817). Filed by the issuer at the owner's direction; not a defect of the FWD-9 release and it holds nothing."
 }
 ```
+
+## NFRA_OPSWKF-D2-S9 -- Row D2-S6 DISARMED: the wider rule was ruled, built before the merge, and read live
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S9",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~O2",
+  "surfaced_at": "2026-10-11T21:54:53Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Nothing remains to investigate: row D2-S6's hazard (a tier-only release locking out 7 of the 9 trade users) was disarmed before any release, by its disarm owner.",
+  "one_line": "Resolves row NFRA_OPSWKF-D2-S6: PRD v0.6 @ca5f93a729 ruled OPAL-INTERNAL as tier internal OR firmId opal-capital; OW-s-2 was rebuilt on it before its merge (@abf78fcb7f); the release read an advisor-tier opal-capital caller SERVED on the deployed service (R3, 19:35:56Z, 200 count 12).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 5574: ruled as the issuer recommended; PRD v0.6 @ca5f93a729, ratified-text half SIGNED @d4d5a850cf",
+      "order amendment @7baffab6a0; merged build @abf78fcb7f: OW-S2-PROBE-OK refused=80 of 80, served=30 of 30 (three insider shapes) on the merged tree",
+      "org/critical_paths/change_management/20261011T1909Z_opswkf-fwd8-trade-dashboard-api-20261011_deploy_completion.md leg L6: R3 IN-F (tier advisor, firmId opal-capital) 200 count 12 after the apply; ledger CLOSED 20:01:09Z",
+      "the tier-only build c02c0aa8e7 was never merged and never released"
+    ]
+  },
+  "spec_asserts": "FWD-8 serves Opal staff as before and refuses everyone else.",
+  "world_is": "It does, for the firmId branch, read live. The tier branch is proven at the pin and UNEXERCISED on the deployed service (the CTO half refused the tier-internal synthetic caller); that gap is stated in the issuer's grade and is not this row's hazard.",
+  "notes": "Resolving row written by the issuer, the disarm owner; append-only, S6 left as written."
+}
+```
