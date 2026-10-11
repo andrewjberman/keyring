@@ -26816,3 +26816,26 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The disagreement is a stated value against 'Not Available', not two stated kinds; no security was found with two different stated kinds. The alternative rule (stated value over 'Not Available') was not applied."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S94",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T17:32:52Z",
+  "one_line": "L8 round 138 (~P), no judgment criterion, two read-only orders. The record PRD v0.39 was signed against is now on the trunk and is byte-identical to the copy this seat reviewed, so that addendum's own guard is met. The sleeve read answers DSGN_IRPTV1 row D2-S18: a served holdings answer does carry sleeves with no security beneath (1,229 of 7,620 on one firm's one day, 333 with a nonzero amount), and the CTO ruled it the page's defect.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_138_P_DRAIN_END_20261011.md @3c88a755a0 (msg 5462)",
+      "this seat's read 2026-10-11T17:32:52Z: the record PRD v0.39 rests on (deliverables/0.9.0_WK_IRPT_BCKEND~299/IB138-2_TYPE_OVERLAP_AND_FUND_CHECK_READ.md) is the same blob on the trunk, dbe37d6091, as at the branch commit bfc0645151 this seat reviewed it at"
+    ]
+  },
+  "spec_asserts": "PRD ADDENDUM v0.39: nothing is cut before the record is on the trunk and its numbers are read there unchanged. Spine L8 (CLAUDE.md rule 27).",
+  "world_is": "Two orders terminal; nothing built or served; no class admitted by either. Not run by this seat: either read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

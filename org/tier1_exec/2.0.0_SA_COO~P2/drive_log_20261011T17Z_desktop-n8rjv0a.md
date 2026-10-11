@@ -1,0 +1,5 @@
+# Drive log 2.0.0_SA_COO~P2 -- 20261011T17Z
+
+| when | limb, outcome | round | TOs t/T | thread | act fired |
+|---|---|---|---|---|---|
+| ~17:1x-17:3xZ | L8 (r138), L6 (r139), DRIVE FORWARD | 138 / 139 | 2/2 packet / 0/1 | Performance hop waits on the gold's first release | IB-pr-440 MERGED (tip 92b4266a2a): YES, a served holdings answer carries sleeves with no security node beneath (1,229 of 7,620 on one firm's day; 333 with a nonzero amount); CTO msg 5448 ruled it a product defect of the page, COO~D2's cell; the producer is not changed. IB-pr-441 MERGED @0be2f61548; all six round-138 criteria PASS and both proofs VALID on the issuer run; round-close MAY-CLOSE (orders=2); its numbers read on the trunk unchanged (5 one-day-off of 64,536; fund trades same day 4,490, prior 28, next 0). PRD ADDENDUM v0.39 @90bfa5fc4f admits seven source-stated pairs; half signed @5d8db9acaf (CTO msg 5460). The sizing order was DRAFTED and HELD until both conditions held (the record on the trunk; the half signed), then ONE issuance @8cf5edce89, IB-pr-442, with the reviewer's two points added; worker ~300 spawned. Worktrees 298 and 299 removed. |

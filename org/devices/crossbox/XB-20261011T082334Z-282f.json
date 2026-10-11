@@ -10,7 +10,7 @@
  "subject": "LGIC canon: gate-owed name for a Cottonwood grant carries 49f; 'restricted' in no vocabulary (D2-S98, D2-S99)",
  "body_path": "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.7.0_AE_CloudOps~CB2/breakglass_targeted_apply_report.md",
  "opened_at": "2026-10-11T08:23:34Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T08:24:50Z",
   "bus_message_id": "9fa602eb-c370-4bc8-9847-69a2f265bda9"
@@ -21,8 +21,8 @@
   "bus_message_id": "59e48021-428f-4d42-8fad-706063ee2111"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T17:21:50Z",
+  "from_by": "1.0.0_SA_CTO~DELL2",
   "to_at": "2026-10-11T08:34:40Z",
   "to_by": "1.0.0_SA_CTO"
  }

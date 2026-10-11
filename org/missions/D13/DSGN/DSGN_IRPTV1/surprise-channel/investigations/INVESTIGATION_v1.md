@@ -5691,3 +5691,110 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-W59-S1 -- IV-e-106: the order names the response schema at infra/aws/lambda/investor-reporting/_contracts/responses/, which is not in this worktree; the same schema is at docs/contracts/investor-reporting/v1/responses/ and was read there
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W59-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~59",
+  "surfaced_at": "2026-10-11T17:19:00Z",
+  "one_line": "IV-e-106: the order names the response schema at infra/aws/lambda/investor-reporting/_contracts/responses/, which is not in this worktree; the same schema is at docs/contracts/investor-reporting/v1/responses/ and was read there",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of C:/dev/wk-dsgn-irptv1-49/infra/aws/lambda/investor-reporting/_contracts/responses/: No such file or directory",
+      "docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json lines 70-71, 100-101, 164-165 list retained_ref ($ref AnalysisReport.schema.json#/properties/retained_ref); the generated portal wire type (contracts/wire/responses.ts:170,177,183) names the same member"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face, cell IV-e-106 part 1: the response schema is at infra/aws/lambda/investor-reporting/_contracts/responses/analysis-report.response.schema.json in the workspace.",
+  "world_is": "The path does not exist in this worktree. The schema the generated wire type cites (responses.ts:157 'docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json') does, and lists retained_ref on all three answer shapes. The carry was built against that file and the generated type; no other source was used.",
+  "notes": "Not measured: whether the infra path exists on another checkout or is a name from an older tree."
+}
+```
+
+## DSGN_IRPTV1-D2-W59-S2 -- IV-e-106: the order says Investor Reporting is client-facing by the project's standing statement; the router says the page is staff-only (admin, Opal Capital firm, Dev user type), and only its print view is admitted by a browser-read render token
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W59-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~59",
+  "surfaced_at": "2026-10-11T17:19:30Z",
+  "one_line": "IV-e-106: the order says Investor Reporting is client-facing by the project's standing statement; the router says the page is staff-only (admin, Opal Capital firm, Dev user type), and only its print view is admitted by a browser-read render token",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/App.tsx:462 @9d3f43eff2: /investor-reporting is <ProtectedRoute requireAdmin requireInternal requireDev>",
+      "portal/src/App.tsx:614 @9d3f43eff2: /investor-reporting/print is <ProtectedRoute requireAdmin requireInternal requireDev allowRenderClaim>",
+      "portal/src/components/ProtectedRoute.tsx:86-88 (allowRenderClaim admits a ?renderToken= whose unverified, browser-decoded payload says aud irpt-render and role renderer, before any login check) and :118-122 (admin role, firmId opal-capital, userType Dev)",
+      "portal/src/lib/firmAccess.ts:44-126: no partner firm's allowlist holds /investor-reporting or /ticket-center or /security-analysis; /portfolios and /advisor-intelligence are in all four",
+      "DSGN_IRPTV1-D2-W57-S3 (this file) reached the same reading of App.tsx 462 and 614"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: 'Investor Reporting is client-facing by this project's standing statement: confirm it from the code rather than assume'.",
+  "world_is": "The code does not confirm it for the page. A login must be an admin of the Opal Capital firm with user type Dev to open /investor-reporting, and no partner firm lists it. The candidate record therefore classes the page's own files OPAL_INTERNAL. It classes the code the print view shares CLIENT_FACING, because the print view is mounted on a claim the browser reads without checking, which the code itself calls 'NOT A SECURITY CONTROL' (ProtectedRoute.tsx:20), so this seat cannot show that a client login cannot mount it. The candidate range changes ModelPortfolios and Advisor Intelligence, which ARE client-facing, so Andrew's word is needed for this push whichever way the Investor Reporting question is settled.",
+  "notes": "The standing statement may mean the OUTPUT (the report a client receives) rather than the page; this seat did not find where it was written. The CTO may wish to restate it."
+}
+```
+
+## DSGN_IRPTV1-D2-W60-S1 -- IV-e-108: the Total Assets figure and its heading are drawn by portal/src/components/CategoryViewTree.tsx, outside the grant, so its base is a caption above the card, not a label inside it
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W60-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~60",
+  "surfaced_at": "2026-10-11T17:17:00Z",
+  "one_line": "IV-e-108: the Total Assets figure and its heading are drawn by portal/src/components/CategoryViewTree.tsx, outside the grant, so its base is a caption above the card, not a label inside it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ portal/src/components/CategoryViewTree.tsx:1317 (<p ...>Total Assets</p>); the grant is portal/src/pages/InvestorReporting/ only",
+      "RENDERED holdings-face.client.png and holdings-face.picker.png in deliverables/0.9.0_WK_DSGN_IRPTV1~60/: the caption 'Total Assets below: all 2 accounts' / 'this account' sits above the dark card"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order, part 2: each total carries a short label of its base; the Holdings total is the one under the Total Assets heading.",
+  "world_is": "The heading is in a shared component outside the grant, so the Holdings total's base is a navy caption line in HoldingsTab.tsx directly above the card (data-slot holdings-total-base), beside the line naming the account (holdings-scope-line). The Identity band's figure carries its base inside IdentityCard.tsx (identity-how-much-base). If the CTO wants the base inside the card, that is an edit to the shared component, a later order's grant.",
+  "notes": "No act taken beyond the caption."
+}
+```
+
+## DSGN_IRPTV1-D2-W60-S2 -- IV-e-108: my pre-edit base run of bun test src/pages/InvestorReporting read 1 fail (F45-AC9, fe-s-45/residuals.test.ts, node_modules is a link in this slot), where the order's base reads 0 fail; the same suite after my edits read 0 fail
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W60-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~60",
+  "surfaced_at": "2026-10-11T17:17:00Z",
+  "one_line": "IV-e-108: my pre-edit base run of bun test src/pages/InvestorReporting read 1 fail (F45-AC9, fe-s-45/residuals.test.ts, node_modules is a link in this slot), where the order's base reads 0 fail; the same suite after my edits read 0 fail",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~60/base_suite.txt: 1160 pass, 27 skip, 1 fail of 1188; the failing test is F45-AC9 'every config loader in the reach writes nothing through the junction' (EVERY CONFIG LOADER ... : no -- 4 clean among 5 kept; control fired)",
+      "after_suite.txt in the same folder: 1166 pass, 27 skip, 0 fail of 1193"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The spawn facts: base reads 1161 pass, 27 skip, 0 fail in the other slot.",
+  "world_is": "One run before any edit failed F45-AC9; one run after the edits (which touch no config loader) passed it. Not re-run to separate a flake from a slot effect (node_modules is a link to the ~49 slot's install). new_failing_ids is computed against the base's own failing set, which holds that one id, and is empty.",
+  "notes": "Not investigated."
+}
+```
