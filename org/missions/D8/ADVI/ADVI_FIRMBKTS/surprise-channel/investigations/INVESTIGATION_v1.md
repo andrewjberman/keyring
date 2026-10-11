@@ -4846,3 +4846,28 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not a worker decision to widen: the import is the minimum that makes the ordered sys.exit(2) run. The issuer may rule whether the import is an accepted part of the bound or should become raise SystemExit(2) instead; the AC1 check accepts either."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S20",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~FBL",
+  "surfaced_at": "2026-10-11T15:55:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-15: r4_sim.py as issued does not run on the laptop (three defects); with those three corrected in a scratch copy the live policy reads 9 of 9 admitted allowed, 2 of 2 negatives explicitDeny, OAI statement ok=True.",
+  "spec_asserts": "TO-FB-f-15 AC1: `python .../r4_sim.py --out .../ACT3B_SIM.txt` prints 'ROUND 4 ACT 3B SIM: 9 of 9 admitted allowed, 2 of 2 negatives not allowed, oai statement ok=True'.",
+  "world_is": "Run 1 (as issued): FileNotFoundError WinError 2 at r4_sim.py:34, bare 'aws' is not resolvable by subprocess on Windows (only aws.cmd exists in PATH). Run 2 (aws resolved via shutil.which): AttributeError at :78, a bucket-policy statement carries Principal as the string '*' and .get fails, after all 11 simulations had run and before any line printed. Run 3 (both fixed): 11 of 11 simulations ERROR 'The command line is too long', the live policy passed inline to --resource-policy exceeds the Windows cmd limit through aws.cmd. Run 4 (policy passed as file:// from a repo-relative file, deleted after): 9 of 9 admitted allowed (performance adapter also allowed on the gold sample), inf-gold-qa-runner-ec2-role explicitDeny, exec-summary-generator-role explicitDeny, OAI one Allow Get-only on 9 resources ok=True, exit=0. The simulator does not evaluate SCPs (issuer's own blindness note).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~FBL/ACT3B_SIM.txt (run 4 output)",
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f15/r4_sim_laptop.diff (the scratch copy three changes against r4_sim.py) and run_sim_aws_shim.py.txt (the aws resolver)",
+      "r4_sim.py itself was not edited; nothing was written to AWS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The measured result is the answer the order asks for, but AC1's literal invocation exits 1 on this box, so TO-FB-f-15 <status> is left pending for the issuer to grade: either fix r4_sim.py (Principal type check, file:// policy, resolved aws path) and re-run AC1, or accept run 4 as the instrument."
+}
+```
