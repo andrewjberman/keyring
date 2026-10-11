@@ -281,7 +281,9 @@ def last_status(text: str, words: set) -> str:
     """The LAST <status> tag whose LEADING word is a status word (CTO ruling msg 107528; R3: read the order, not a spelling)."""
     got = ""
     known = set(words) | COMPLETE_WORDS | OTHER_TERMINAL_WORDS
-    for m in re.finditer(r"^<status>(.*?)</status>", text, re.M):
+    # leading whitespace admitted: an applier's flat-folder order indents its <status> line (TCKT_VNEXT TV2 orders), and
+    # a line-anchored read returned '' for a `complete` order, so it was never counted as done (D2-S23, second limb)
+    for m in re.finditer(r"^[ \t]*<status>(.*?)</status>", text, re.M):
         w = lead_word(m.group(1))
         if w in known:
             got = w
@@ -289,22 +291,46 @@ def last_status(text: str, words: set) -> str:
 
 
 def read_orders(src, proj_dir: str, rnd, ws) -> list:
+    """The project's orders: the tree's task-orders/ PLUS every seat flat folder's <CODE>.TO-*.md (an applier's or a
+    Tier-2 seat's own task_orders/, where a round's APPLY/RUN orders live -- TCKT_VNEXT-D2-S23: round 1 printed
+    judgment=1 graded=1 MAY-CLOSE while SA-r-1b AC2 NOT MET sat in 0.7.0_AE_CloudOps~TV2/task_orders/, unread). One order
+    per to_id: the tree copy wins over a flat copy of the same id. A flat order remembers its seat dir for proof_state."""
     out = []
+    seen = set()
     words = status_words()
-    for path in src.glob(pj(proj_dir, "task-orders", "*.md")):
+    code = os.path.basename(proj_dir.rstrip("/"))
+    tree = [(p, None) for p in src.glob(pj(proj_dir, "task-orders", "*.md"))]
+    # the local source globs from its root (an absolute pattern, like proj_dir's); the git source takes a repo pathspec
+    flat_pat = pj("org", "tier*", "*", "task_orders", code + ".TO-*.md")
+    if not hasattr(src, "_entries"):
+        flat_pat = pj(src.root, flat_pat)
+    flat = [(p, p.replace("\\", "/").rsplit("/task_orders/", 1)[0]) for p in src.glob(flat_pat)]
+    for path, seat_dir in tree + flat:
         text = src.read(path)
-        o = {"path": path, "stem": os.path.basename(path)[:-3], "id": tag(text, "to_id") or os.path.basename(path)[:-3],
-             "status": last_status(text, words), "round": tag(text, "round"),
+        stem = os.path.basename(path)[:-3]
+        # no <to_id>: the id is the stem's first two dot-segments, <CODE>.TO-<id>, the form every proof instance and
+        # grading row names (a whole-stem fallback matched neither, so a flat order's AC2 read UNGRADED and PROOF-BAD)
+        fallback = ".".join(stem.split(".", 2)[:2]) if stem.count(".") >= 2 and ".TO-" in stem else stem
+        o = {"path": path, "stem": stem, "id": tag(text, "to_id") or fallback,
+             "status": last_status(text, words), "round": tag(text, "round") or "",
              "workstream": tag(text, "workstream"), "issued_by": tag(text, "issued_by") or "",
-             "issued_to": tag(text, "issued_to") or "", "criteria": []}
+             "issued_to": tag(text, "issued_to") or "", "criteria": [], "seat_dir": seat_dir}
         for m in CRIT_TAG.finditer(text):
             attrs = dict(ATTR.findall(m.group(1)))
             if "id" in attrs:
                 o["criteria"].append({"id": attrs["id"], "judgment": attrs.get("judgment", "").lower() == "true"})
         if rnd is not None and str(o["round"]) != str(rnd):
-            continue
+            # A flat-folder order with NO <round> tag cannot be scoped to any round (the TV2 APPLY/RUN orders carry
+            # none). Dropping it silently is the D2-S23 hole; it is counted in every round's check and NAMED as
+            # untagged, so its judgment criteria still gate the close and the issuer sees the missing tag.
+            if not (seat_dir and not str(o["round"]).strip()):
+                continue
+            o["untagged"] = True
         if ws is not None and str(o["workstream"]) != str(ws):
             continue
+        if o["id"] in seen:
+            continue
+        seen.add(o["id"])
         out.append(o)
     return out
 
@@ -312,8 +338,13 @@ def read_orders(src, proj_dir: str, rnd, ws) -> list:
 def proof_state(src, order: dict, proj_dir: str, root: str, deep: bool) -> tuple:
     """(ok, reason). Structural by default; --deep adds proof-of-spec-check.py (rc 0 = VALID)."""
     paths = src.glob(pj(proj_dir, "deliverables", "*", order["stem"] + ".proof_of_spec.json"))
+    if order.get("seat_dir"):
+        # a flat-folder order's proof lives in its seat's own deliverables/ (directly, or one folder down)
+        paths += src.glob(pj(order["seat_dir"], "deliverables", order["stem"] + ".proof_of_spec.json"))
+        paths += src.glob(pj(order["seat_dir"], "deliverables", "*", order["stem"] + ".proof_of_spec.json"))
     if not paths:
-        return False, "no proof instance named %s.proof_of_spec.json under deliverables/" % order["stem"]
+        return False, "no proof instance named %s.proof_of_spec.json under deliverables/%s" % (
+            order["stem"], " (project tree or the seat's own)" if order.get("seat_dir") else "")
     reasons = []
     want = [c["id"] for c in order["criteria"]]
     for path in paths:
@@ -324,7 +355,10 @@ def proof_state(src, order: dict, proj_dir: str, root: str, deep: bool) -> tuple
         except (OSError, ValueError, KeyError, TypeError, AttributeError) as exc:
             reasons.append("%s unreadable (%s)" % (os.path.basename(os.path.dirname(path)), exc))
             continue
-        if str(inst.get("to_id", "")).strip() != order["id"]:
+        inst_id = str(inst.get("to_id", "")).strip()
+        # a proof instance names the order by its <CODE>.TO-<id> form OR by its whole file stem (both are in use across
+        # the appliers' folders); either names THIS order, a different id does not
+        if inst_id not in (order["id"], order["stem"]) and not inst_id.startswith(order["id"] + "."):
             reasons.append("%s names to_id %r, not %r" % (os.path.basename(os.path.dirname(path)), inst.get("to_id"), order["id"]))
             continue
         miss = [c for c in want if c not in have]
@@ -448,6 +482,13 @@ def _check(src, root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, de
     lines.append("ORDERS scope round=%s workstream=%s: %d order(s), %d complete, %d not complete and outside the verdict%s" % (
         rnd if rnd is not None else "all", ws if ws is not None else "all", n_orders, len(done), len(open_),
         (" (" + ", ".join(o["id"].split(".")[-1] for o in open_) + ")") if open_ else ""))
+    flat = [o for o in orders if o.get("seat_dir")]
+    untagged = [o for o in flat if o.get("untagged")]
+    if flat:
+        lines.append("  SEAT-FOLDER orders counted: %d (%s)%s" % (
+            len(flat), ", ".join(o["id"].split(".")[-1] for o in flat),
+            ("; %d carry NO <round> tag and are counted in EVERY round's check until the issuer tags them: %s" % (
+                len(untagged), ", ".join(o["id"].split(".")[-1] for o in untagged))) if untagged else ""))
     bad_proofs = 0
     for o in done:
         ok, why = proof_state(src, o, proj_dir, root, deep)
