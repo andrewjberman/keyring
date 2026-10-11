@@ -4045,3 +4045,27 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "The row names no firms at all. allowedFirmIds is ABSENT on andrew@opalinvest.com's PROFILE item (shape=ABSENT, count=0, ids=-), while the item itself is present and active (userType=Dev, firmId=opal-capital). So FIRM-NAMED cottonwood NO is reached from the ABSENT state, and the same NO would be printed for a present-but-empty value and for a present list not containing cottonwood. The question the order asked -- does that row name cottonwood -- is answered NO; the question the rule needs answered -- what does the rule see when the attribute is missing -- is not, and is not this seat's to answer."
 }
 ```
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S54",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T12:58:22Z",
+  "one_line": "L8 round 11, no judgment criterion, and a correction of this seat's own rows. Row D2-S52 is right: a request HAD run through the st30 root (TCKT_VNEXT's run 4, received 11:19:02Z) when this seat's row D2-S50 said at 11:36Z that none had. D2-S48 was true when written at 10:53Z; D2-S50 repeated it without re-reading. The conclusion stands for another reason: that run took the YCharts path and stopped at the vendor session, so the Opal changes are still unexercised and FWD-1 is NOT MET. No run of FWD-1 was made in round 11 and nothing was deployed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r11/ROUND11_DRAIN_END_READ_20261011.md @fb75139c9c (msg 4950)",
+      "this seat's reads 2026-10-11T12:58:22Z: iam get-role returns all three research roles (cot created 2026-10-04, 49f and inf 2026-10-09T10:29:26Z); at HEAD resident_worker.py:789 reads READ_BACK_RELEASE_VISIBILITY_S = 390; commits 177f315007, 09295933a2 and d7ae7d0f2b are ancestors of HEAD. Not run by this seat: any test; the host journal; the profile read",
+      "investigation rows IRPT_YCDGEN-D2-S52, D2-S48, D2-S50"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27). CLAUDE.md: read the number, then write the sentence; an inherited sentence is re-read before it is repeated.",
+  "world_is": "Round 11 reads MAY-CLOSE and no IRPT_YCDGEN order is open. st30's ticket admission is exercised; its READY receipt and its Opal changes are not. The dead-letter record is in the tree and not on the host.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

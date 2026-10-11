@@ -79,3 +79,6 @@ NOT in this cell: the deploy (its own packet and pair), and the portal form's ca
 the CTO as the hookup this cell needs; the form is another project's write surface).
 
 Dry-run at the base: rf-filer FAIL (absent test file) and rf-regress FAIL (161 passed, below 167), as expected.
+
+**Issuer cell `R3-rf-2` (2026-10-11 ~13:0xZ):** the apply of `R3-rf-1`'s build, under its own never-widen pair
+(`deliverables/2.0.0_SA_COO~V2/R3_RUN/R3_RF2_DEPLOY_PACKET_20261011.md`); ordered after the fourth run's ledger entry closes. Edge: `R3-rf-1` -> `R3-rf-2`.
