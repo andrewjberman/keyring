@@ -8526,6 +8526,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-Z-S112",
+     "project": "AMGT_HARVST",
+     "fabric": "site-z",
+     "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+     "surfaced_at": "2026-10-11T03:15:00Z",
+     "one_line": "HVST-bs-3 is still <status>issued</status> with no proof instance, and two of its three mechanical criteria cannot pass at HEAD: AC2 because HVST-bw-1 deliberately re-pinned the scheduled task's WorkingDirectory away from the directory AC2 names, and AC4 because the round-75 GC dry run it cites recorded 0 candidates EXEMPT and so carries no EXEMPT PID line.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "HVST-bs-3's AC2 expects (Get-ScheduledTask -TaskName 'Opal Data Harvest - Continuous Cycle').Actions.WorkingDirectory to match the regex wk-harvest-runner-pin-c1be67f53c, and its AC4 expects the regex 'EXEMPT PID' in round75/bs3_gc_dryrun.out. org/ref/TASK_ORDER_PROTOCOL.md: a terminal status (superseded, cancelled) is set by the COO or the ISSUER, never the assignee alone, and a terminal status without its pointer is rot.",
+     "world_is": "Measured on the site Z box at 2026-10-11T03:1xZ, the three invocations run literally. AC1 PASSES: Actions.Arguments carries '--publishers bbg wsj barrons' (1 match). AC2 FAILS: Actions.WorkingDirectory reads 'C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-b5a7a3a4b6' (0 matches for wk-harvest-runner-pin-c1be67f53c). That is not drift: HVST-bw-1 re-pinned the task's code tree to b5a7a3a4b6 on purpose and kept only the STATE dir at c1be67f53c, which is what the bw-2 cell text describes, so AC2 as written is now unsatisfiable unless bw-1 is undone. AC4 FAILS: round75/bs3_gc_dryrun.out (74 lines) has no 'EXEMPT PID' line; its line 50 reads '--- deliberate detached jobs: 1 marker(s), 30 worker worktree(s); 0 candidate(s) EXEMPT ---', so the round-75 dry run found no exempt candidate. The token is well formed, not a typo: the round-79 record round79/bw1_gc_dryrun.out carries 2 'EXEMPT PID' lines (PIDs 29192 and 37816) at lines 287 and 289. No proof instance exists at the named path round75/AMGT_HARVST.TO-HVST-bs-3.the-runner-activated-on-bbg-wsj-barrons.proof_of_spec.json. NOT DONE by this seat, because it is the issuer's call and not the assignee's: no status flip, no edit to bs-3, no re-run of the GC, no change to the scheduled task. The sibling order HVST-bs-4 is a separate matter and is fully delivered: its instance reads VALID (rc=0) in round77, so it is only awaiting the issuer's flip.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "Get-ScheduledTask 'Opal Data Harvest - Continuous Cycle': Arguments and WorkingDirectory, read 2026-10-11T03:1xZ",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-bs-3.the-runner-activated-on-bbg-wsj-barrons.md (AC2, AC4, <status> line 115)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round75/bs3_gc_dryrun.out line 50",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round79/bw1_gc_dryrun.out lines 287 and 289",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round77/AMGT_HARVST.TO-HVST-bs-4.the-r47-seeking-alpha-backfill-resumed.check.out (VALID rc=0)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
