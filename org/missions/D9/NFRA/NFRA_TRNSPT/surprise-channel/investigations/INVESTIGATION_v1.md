@@ -1838,3 +1838,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "notes": "Filed on the CTO's ruling (msg 4182). DISARMS on two measured reads, both printed in the disarming row: (1) the commentary function's live CodeSha256 equals the pull's after 2.0.0_SA_COO~Y2's re-apply; (2) git merge-base --is-ancestor of each of the three commits against origin CLOUD reads yes. Until then the CTO's signing condition on this root: the apply is targeted and the tree's dist zip hashes to the pull's live digest before the plan. No new gate. Hashes, times and sizes only."
 }
 ```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S23",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-11T05:40:00Z",
+  "hazard_standing": "INERT",
+  "one_line": "RESTATEMENT of row NFRA_TRNSPT-D2-S22's disarm read (1), on the CTO's word (msg 4193): ALL THREE functions of the transcripts root must read one live CodeSha256, not two.",
+  "class": "OBSERVATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 4193, 2026-10-11T05:35Z (citing 2.0.0_SA_COO~Y2's packet @abbb4ac3ac)",
+      "issuer live read 2026-10-11T05:29Z: teams pull AI4UQD0M..., mail pull VGIq85Xx... (LastModified 2026-10-07T23:59:05Z), commentary plVgBIIX... -- three digests",
+      "the row gate refuses an edit of an existing row (0 new rows of 81), so the restatement is this new row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row D2-S22 notes, disarm read (1): the commentary function's live CodeSha256 equals the pull's.",
+  "world_is": "The root has THREE functions on local.pull_zip. The mail pull (outlook-global-transcripts-pull-lambda) has run a third digest since 2026-10-07. Disarm read (1) of D2-S22 is therefore: teams pull, mail pull and commentary all read the same live CodeSha256. Read (2) (the three commits are ancestors of origin CLOUD) is unchanged.",
+  "notes": "The mail pull's re-apply onto the pull's bytes is this issuer's cell at its next issuance (code-only, targeted, its own pair, packet shape as 2.0.0_SA_COO~Y2's: member diff, the mail handler's import closure against the changed set, key producers equal). Not before the Monday 2026-10-12 13:00Z fire: the issuer reads no risk to the mail pull from waiting, since nothing has moved its bytes since 2026-10-07. Hashes and dates only."
+}
+```
