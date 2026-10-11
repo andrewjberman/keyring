@@ -66,6 +66,30 @@ You are `0.9.0_WK_IRPT_ANLREQ~52`.
    upload; every existing test whose expectation changed and why; whether any caller other than the form reads the POST's first
    answer (search `infra/aws/lambda/investor-reporting/` for callers of the create path and say what you found -- the release census reads this).
 
+---
+
+**SPAWN AMENDMENT (AMENDMENT 1, issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~21:5xZ): `TO-AR-y-142` is terminal and merged (@87202fbaed);
+what it built, which this cell builds on.** Gate limb that graded this amendment: read from this commit's own output.
+
+- **Four new finding codes** in `infra/aws/lambda/investor-reporting/intake/template_reader.py`, each carrying its words in a NEW
+  optional `description` member on the finding itself: `ACCOUNT_COLUMN_SEVERAL_VALUES` (ERROR), `HEADER_ROW_REPEATED` (ERROR),
+  `TOTAL_ROW_PRESENT` (ERROR), `SHEETS_NOT_READ` (NOTICE, on an ACCEPTED sheet: it never turns a sheet back).
+- **Their words live in `template_reader.WORDS`** (row `IRPT_ANLREQ-D2-W52-S13`), because `CORRECTION_WORDS` was outside that cell's
+  grant. **There must be ONE source of words per code.** For these four, `uploads.py` takes the words from the finding's own
+  `description` (or from `template_reader.WORDS`) -- do NOT write a second copy of the sentences in `CORRECTION_WORDS`. Say in your
+  report which way you wired it, and make `test_every_finding_code_the_reader_can_emit_has_words` pass a code whose words come
+  from EITHER source, and FAIL a code with words in neither.
+- **Item 2's "any ERROR finding" means severity ERROR.** A NOTICE (`SHEETS_NOT_READ`, the existing `DUPLICATE_SYMBOL_MERGED`) never
+  makes the first answer NEEDS_CORRECTION; a sheet with only NOTICE findings goes on to RESOLVING as today.
+- A repeated header row ALSO still emits its older `AMOUNT_NOT_A_NUMBER` finding for that row, and a totals row stays in the
+  reader's rows: nothing is dropped. Both findings reach the person; do not suppress either.
+- One existing test changed in that cell (`test_template_reader.py::test_prefer_named_sheet_other_sheets_and_columns_ignored` now
+  expects one `SHEETS_NOT_READ` NOTICE). The intake folder passes 299 at this base (the keep check's floor of 292 still holds).
+- **For your report, because the release census reads it:** the reader runs in TWO places -- the `irpt-ycharts-generate` Lambda (the
+  POST half) and the resident process on the runner host (cell `AR-y-141`'s record,
+  `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r14/TOTAL_LABEL_PROVIDER_ASK.json`). Say which of the two
+  your first-answer change runs in, and whether the resident's later answer for the same upload can now differ from the POST's.
+
 ### ACCEPTANCE
 
 <criterion id="AR143-y-AC1" cell_refs="AR-y-143"><invocation>python C:/dev/wk-irpt-anlreq-52/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r14/ar14_checks.py y143-words --root C:/dev/wk-irpt-anlreq-52</invocation><expect>Y143-WORDS-OK</expect></criterion>
