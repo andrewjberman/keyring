@@ -25,6 +25,9 @@ from the previous cycle are re-asked (`requeued`); the runner logs to `<state-di
 
 **Start condition:** bw-1 is done (its `bw1_register.out` is committed), and bbg's FIRST cycle whose `started_at` is after bw-1's
 `Start-ScheduledTask` has ENDED: its `cycles\bbg\<cycle_id>.cycle.json` exists. A cycle still running is not this read.
+(AMENDMENT 2, row AMGT_HARVST-Z-S111) A cycle the runner did not end by its own accounting is not this read either: cycle
+`20261010T204810Z` was killed at 22:01:29Z by a worktree removal (`No module named lib.opal_data_harvest`, completed false). Read
+the first cycle after it that ends with `completed true`, or with `stopped` on the consecutive-error cap.
 
 ## 1. THE READ (site Z box, read-only)
 
@@ -86,6 +89,9 @@ This order touches none of them.
   once this cell's completed record exists.
 - **AMENDMENT 1 (2026-10-09 ~20:2xZ, issuer):** step 7 (process tree), on row D1-S5. No criterion changes. A second
   `cycle_runner` (RUNNERS: 2) is a finding for the issuer the same tick, not something to stop.
+- **AMENDMENT 2 (2026-10-11 ~02:4xZ, issuer; no gate limb graded it, no criterion changes):** the start condition excludes
+  cycle 20261010T204810Z, killed by the /govern worktree GC (row AMGT_HARVST-Z-S111, remedy 22:15:26Z, runner PID 21512, state
+  dir intact). Otherwise a seat reading "first ended cycle" would write a completed=false record that AC3 cannot grade.
 - Checks at the base: AC1 and AC2 FAIL as expected (no such file).
 
 <risk>LOCAL</risk>
