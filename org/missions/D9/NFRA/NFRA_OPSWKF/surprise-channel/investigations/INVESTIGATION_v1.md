@@ -347,3 +347,27 @@ adjudication rows live in `../adjudications/` as `NFRA_OPSWKF-C-S<k>`.
   "notes": "Resolving row written by the issuer, the disarm owner; append-only, S6 left as written."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S10",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T21:59:53Z",
+  "one_line": "L9 workstream S: OW-sd1-AC2 MET, OW-sr1-AC1 MET, OW-sd2-AC2 MET, OW-sr2-AC1 MET for the refusal. FWD-8 is REALIZED. FWD-9 is realized for the refusal, and one read of its DONE WHEN is owed: after the release, an Opal-internal caller answered 400. It was never made, so a staff member being admitted to submit rests on tests and bytes, not on a read of the route. This seat repeated the member-by-member diff from both live functions: 3 of 3 byte-equal to the tree at each release pin.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/2.0.0_SA_COO~O2/S_DEPLOY/WORKSTREAM_S_L8_PACKET_AND_FWD9_GRADE_20261011.md @4daa06ebad (msg 5930)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPSWKF_WORKSTREAM_S_L9_GRADE_20261011.md",
+      "this seat's live read 2026-10-11T21:59:53Z: both function packages downloaded and read in memory. trade-dashboard-api: last modified 2026-10-11T19:30:58, active, the downloaded zip's sha256 equals the function's code hash, 3 members, each byte-equal to its file in the tree at pin abf78fcb7f, 1 environment key. trade-submission-handler: last modified 2026-10-11T21:27:29, active, zip hash equal, 3 members, each byte-equal to its file at pin 234c3b4b10, 4 environment keys; the deployed handler holds the new refusal's message once. No call was made to either service by this seat"
+    ]
+  },
+  "spec_asserts": "PRD v0.8 FWD-9 DONE WHEN: on the deployed service the outside caller reads 400 before and 403 after with the new check's own message; and after, an Opal-internal caller with an email is answered 400; no submission row and no mail from any of the three reads. PRD v0.6 FWD-8 DONE WHEN: both arms on the deployed service.",
+  "world_is": "Two of FWD-9's three reads were made. The mail side was not read. The CTO's rule stands in place of the third read: a staff 403 is an immediate rollback to a named version. No call was made to either service by this seat.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
