@@ -3031,3 +3031,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r138/p138_cells.py`: six criteria, al
 | `IB-pr-441` | both witnesses per instrument type, the type joined by CUSIP from the transactions table; each priced fund trade beside the reader's bar for its date and the days either side | FWD-3 (a basis somebody measured) | LOCAL | IB-pr-439 (its instrument, read from its branch if not merged) | P138-b |
 
 fanout: 2 of 2 chains, cap 8, reason: two independent read-only cells. Assignees: 0.9.0_WK_IRPT_BCKEND~298, ~299. DIRECT-ACT each.
+
+## 131. ROUND 139, WORKSTREAM ~P (2026-10-11 ~17:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 5453 and 5460)
+
+IB-pr-441 MERGED @0be2f61548 and read on the trunk unchanged by the issuer: 894 securities, 12 types, 5 one-day-off security-days of
+64,536; 6,149 priced fund trades: same day only 4,490, prior day only 28, next day only 0. PRD ADDENDUM v0.39 @90bfa5fc4f, its
+ratified-text half signed @5d8db9acaf, admits seven source-stated pairs to the second witness and leaves out RIC/BDC Inst, RIC/BDC
+Not Available, the untyped and the mixed. Its cost is not known. One read-only cell sizes it; no producer is cut on the sizing.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r139/p139_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-442` | the account-days freed when only securities of the seven admitted types are graded by the second witness; the blank share and never-served accounts; what the rest waits on, counted both ways; the reviewer's two points (the to-the-cent next-day trades named; the fund trades split by pair) | FWD-3 (Cottonwood's figure on a basis somebody measured) | LOCAL | IB-pr-441 drained and read on the trunk | P139-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~300. DIRECT-ACT (one read-only cell, LOCAL).
