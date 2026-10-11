@@ -4216,3 +4216,30 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "An endpoint question for 1.0.0_SA_CTO~DELL1 and, for the key shape, IRPT_BCKEND. Placements read from the evidence: (a) act 3 copies the 31 investor-reporting objects to the new bucket AT THE SAME KEYS (a pure copy; the RI1 re-shaping stays IRPT_BCKEND's), so writers and readers keep working after the flip; (b) the IRPT readers and writers read a transitional per-tier live bucket row (as the bronze pin does) until IRPT_BCKEND moves them. Act 4's un-park names this row."
 }
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~36 (FB-g-2, producers' role grant draft)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W36-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~36",
+  "surfaced_at": "2026-10-11T13:09:12Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-g-2 bound 4 asks for ASCII-only LF content in infra/aws/terraform/bd-pipeline/iam.tf, but the file already carries 8 non-ASCII lines at its base commit (em-dash characters in comments). The appended block is ASCII-only and the existing lines are untouched (0 deleted), so the bound is met for the added text only.",
+  "spec_asserts": "TO-FB-g-2 section 2 bound 4: 'ASCII only; LF endings' for the file that the order changes (iam.tf), read as a property of the file.",
+  "world_is": "iam.tf at base be150697b7 has 8 lines with non-ASCII bytes (lines 2, 16, 631, 774, 775, 833, 893, 953, all comment text). At the worker tree after the draft the count is still 8; the 44 added lines contain 0 non-ASCII bytes. Terraform fmt check is clean (rc=0) and the numstat is 44 added, 0 deleted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LC_ALL=C grep -n -P '[^\\x00-\\x7F]' infra/aws/terraform/bd-pipeline/iam.tf at base be150697b7: 8 lines (2,16,631,774,775,833,893,953)",
+      "git diff -U0 -- infra/aws/terraform/bd-pipeline/iam.tf, added lines filtered for non-ASCII: 0 matches",
+      "git diff --numstat -- infra/aws/terraform/bd-pipeline/iam.tf: 44 added, 0 deleted"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed by the worker: the existing comment lines are outside this order's write grant to rewrite and deleting them would break the additive bound (G3). Issuer decision needed: whether bound 4 is read for the added text only (as this worker read it) or whether the non-ASCII comment lines are to be migrated under a separate order."
+}
+```
