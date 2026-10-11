@@ -3728,3 +3728,30 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not this order set's to rule: the destination of a producer after the window is an endpoint question for 1.0.0_SA_CTO~DELL1. Two placements read from the evidence: (a) the pin follows the table's HOME (renderer reads the tier home, opal-data-assets), so writer, table and data agree after act 3's copy; (b) the pin is carved out of the flip and keeps opal-data-bd until its own move. Act 4's un-park condition names this row. No cell is cut on it until ruled."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FBL (FB-g-9, delivery read)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S19",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~FBL",
+  "surfaced_at": "2026-10-11T12:30:01Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-g-9: the one SEV1 test text was sent through the SMS send API (MessageId 88c89911-0012-4041-ae78-0be9b87d1bc9) but the account has NO delivery log for that API, so neither delivery nor failure of the text is readable from AWS.",
+  "spec_asserts": "TO-FB-g-9 step 4: 'read the delivery outcome for that MessageId: the account's SMS delivery log (the CloudWatch Logs group your send's event destination or configuration set writes)'.",
+  "world_is": "At 12:26:57Z one send-text-message returned a MessageId. The account has 0 SMS configuration sets (describe-configuration-sets), so the send has no event destination; no sms-voice or pinpoint log group exists; the two SNS delivery log groups (sns/us-east-1/313476888478/DirectPublishToPhoneNumber and /Failure, enabled this morning by TO-FB-f-12) log SNS direct publishes and held 0 events for the id and 0 events in the 15 minutes after. The record therefore reads delivery_status NO_DELIVERY_LOG_CONFIGURED, as the order directs. Arrival is read only on the phone. Separately, the order's proof command names /c/dev/ajb_workspace, which does not exist on the laptop; the grader ran from the worktree root with the same arguments.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence/sev1_test_sms_20261011.json",
+      "describe-configuration-sets length 0 at 12:28Z",
+      "filter-log-events on both SNS groups, by id and over 15 minutes, 0 events"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A later send for this diagnosis would need a configuration set with a CloudWatch Logs event destination created first (a write to the account's SMS configuration, outside this order's bounds and not started). Owner of that choice: the issuer and CTO."
+}
+```
