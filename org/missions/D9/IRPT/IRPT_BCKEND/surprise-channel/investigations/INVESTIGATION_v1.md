@@ -26513,3 +26513,26 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S90",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T15:36:53Z",
+  "one_line": "L8 rounds 133 and 134 (~P), no judgment criterion, both read-only; nothing is built, re-graded or served. Read against the outcome: the question these rounds open is whether an unofficial public reader may be the anchor for a served Cottonwood figure, and the packet rightly leaves it to the PRD. The NAV claim is stated as inferred, with one source and one control. One fact for row D2-W294-S2: this box's default python imports yfinance 1.2.0, the issuer's figure.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUNDS_133_134_P_DRAIN_END_20261011.md @b23f6ec18f (msg 5234)",
+      "this seat's read 2026-10-11T15:36:53Z: the box's default python (3.14.7, the one `python` resolves to) imports yfinance 1.2.0, which agrees with the issuer's read and not the worker's 1.7.0; a second interpreter on the box was not searched for"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27). ENDPOINT FWD-3: a figure computed from that account's own end-of-day holdings; PRD v0.36: a day is served only on a basis that was measured.",
+  "world_is": "Two orders terminal. Not run by this seat: either read. If an anchor built on that reader is ever proposed, it is a contract change and comes to this seat as an addendum.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
