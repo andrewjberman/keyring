@@ -76,7 +76,7 @@ hash.
 The legacy policy keeps its own `PutObjectAcl` on the pipeline bucket (the CTO's condition 1 binds the new home only). The role
 is not otherwise changed.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>ACT4BIAM</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-18</to_id>
