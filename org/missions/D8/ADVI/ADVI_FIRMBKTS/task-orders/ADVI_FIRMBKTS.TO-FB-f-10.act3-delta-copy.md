@@ -100,7 +100,9 @@ invocation is unchanged. Gate limb: none graded (a staged order's record face; n
 2's copy never overwrote a key, so this act is the first overwrite of keys at the new home, which the pair must say in
 its own words. The CTO's exercised read at close is `compare` run again by the CTO, using `FB-f-1`'s instrument.
 
-<status>staged</status>
+**PARKED (2.0.0_SA_COO~B1, round 3 close, 2026-10-11):** carried to round 4 as the act-3 delta copy. DELTA_TOOL `r3_f7_delta.py` is written and dry-run (selftest 7 of 7; live plan: absent 0, equal 52,910, versioning Enabled). Un-park conditions: act 2 complete in round 4; the act-3 pair (COO half @9ece707d55) signed by the CTO; the entry open. Owner of the un-park: the round-4 analysis of `1.0.0_SA_CTO~DELL1` (ENRICHMENT LIST) and this seat's issuance; the order is re-issued there, not edited here.
+
+<status>parked</status>
 <round>3</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-10</to_id>
 <slot>~11</slot>

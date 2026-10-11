@@ -75,6 +75,26 @@ Then one whole-scope run after; `suite_after` {failed, fixed_ids, new_failing_id
 
 <expected_criteria>IV95-AC1,IV95-AC2,IV95-AC3</expected_criteria>
 
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~10:4xZ): part 2's premise was wrong -- the excused set is MEASURED, not the two routes this order named (row DSGN_IRPTV1-D2-W53-S1)
+
+The order said `custody-report-read` and `custody-report-persist` have no producer fixture. They do: IRPT_BCKEND IB-pr-412 published response
+schemas and valid/invalid fixtures for both (@5020b450a7, 2026-10-09; the stat read by the issuer). The worker measured ONE declared route with
+no producer fixture, `analysis-request-original`, and correctly built nothing on a false reason. The defect is the issuer's: it carried an
+earlier worker's statement and the analysis's count without reading the fixtures.
+
+**Part 2 now reads:** the smoke map holds one entry per scoped (DECLARED) route THAT HAS A PRODUCER FIXTURE, each body sourced from that
+fixture (`sourced`: [{route, source}], one per key). A route is excused only when you MEASURED that no producer fixture exists for it
+(`excused`: [{route, reason, searched}], where `searched` states where you looked); the fe-s-1 test names the excused routes, fails if any
+other route is missing, and fails if an excused route gains a fixture entry while still excused. By your measurement that is 21 entries and
+one excuse; build what you measure. If more than two routes turn out to have no producer fixture, STOP with a row. `routes_declared` is the
+contract's count (22). `fe-s-14/published-map.test.ts` follows to the same statement, as strict as before. The producer's pin stays PLACED.
+
+Parts 1, 3 and 4 stand as committed (IV95-AC1 and IV95-AC3 PASS on the worker's run). Criterion IV95-AC2's check is amended to this statement;
+its id and invocation are unchanged. The CTO's ruling (one entry per scoped route, excuses by name) is unchanged in kind; the count it named
+is corrected by measurement and is reported to it with the candidate.
+
+**Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited.

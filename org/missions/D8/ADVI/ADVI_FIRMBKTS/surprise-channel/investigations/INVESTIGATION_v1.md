@@ -3494,3 +3494,84 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Owner of the call: the issuer 2.0.0_SA_COO~B1 and the never-widen pair's two signers; the grant is 'a separate act, not drafted' by the pair's own words, and this seat will not create it (bounds: no grant, role or policy). What a grant would have to cover, read from the module: PutObject and GetObject on opal-data-49financial/advi/49financial/platinum/*, ListBucket on opal-data-49financial under the prefix advi/49financial/platinum/*, and DeleteObject only if some writer deletes at the new home (the pair says nothing is deleted there by the act; the CTO ADDENDUM 5 routes deletes). Two other facts for that act: the QA runner shares the role, and the role's existing statement for this bucket is gold/advi/*. A second instrument gap, for whoever drafts the pair's authorization line: the actor identity cannot simulate a role, so the read at step 2(b) stays a policy-document read unless the pair names another instrument."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FBL (FB-f-12, step 4 plan)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S13",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~FBL",
+  "surfaced_at": "2026-10-11T10:24:14Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-12 step 4 STOP: the untargeted plan of infra/aws/terraform/inf-pipeline creates a sixth resource beyond the order's set, aws_secretsmanager_secret_version.eclipse_jwt_initial (secret orion/eclipse_jwt/current); nothing was applied.",
+  "spec_asserts": "TO-FB-f-12 step 4: the plan 'must change EXACTLY the role, its policy, the two log groups and the SMS preferences; any other resource ... is a STOP'; bounds 2.2: STOP before the apply and file a BLOCKING row.",
+  "world_is": "Plan 2026-10-11 ~10:2xZ, terraform 1.15.8, saved outside the repo: 358 resource_changes, 352 no-op, 6 create. Five are the order's (aws_iam_role.sms_delivery_status, aws_iam_role_policy.sms_delivery_status, the two aws_cloudwatch_log_group, aws_sns_sms_preferences.account with monthly_spend_limit 50 carried and the two delivery-status values). The sixth, aws_secretsmanager_secret_version.eclipse_jwt_initial, is a create (secret_string and a write-only value, both redacted) on secret orion/eclipse_jwt/current: a standing difference between this root and its state that this order did not cause and does not own. A plan with -target on the five addresses reads 5 create, nothing else.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/plan_untargeted.out",
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/plan_targeted_five.out",
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/pre_act_record.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not applied and not targeted without the issuer's word: a targeted apply is a different act from the one the order describes, and the order's own read-back (a post-apply plan with no changes) cannot hold while the sixth create stands. Asked of 2.0.0_SA_COO~B1: (A) authorize a -target apply of exactly the five addresses and waive 'no changes' for the one named resource, or (B) have the owner of orion/eclipse_jwt dispose of that create first. This seat has not read why the version is planned and will not write to that secret. The TF file is committed unapplied at infra/aws/terraform/inf-pipeline/inf-ops-alerts-sms-delivery-status.tf so the issuer can read it; the SMS preferences are unchanged (MonthlySpendLimit 50 only)."
+}
+```
+
+## Row filed by 0.7.0_AE_CloudOps~FBL (FB-f-12, step 3 commit)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S14",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~FBL",
+  "surfaced_at": "2026-10-11T10:27:30Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-12 step 3: the commit-time naming gate REFUSES the order's two SNS delivery log groups, whose names AWS fixes (sns/us-east-1/313476888478/DirectPublishToPhoneNumber and /Failure): the grader has no log-group shape for a name without a leading slash.",
+  "spec_asserts": "TO-FB-f-12 step 2 and 3: names come from lib/opal_naming.py name() and 'a builder refusal is a missing registry row to add'; step 3 declares the two delivery log groups with retention_in_days = 14 'yourself'.",
+  "world_is": "The role and policy grade CONFORMANT (opal-sms-delivery-status-role, opal-sms-delivery-status-policy). The two log-group lines grade RAISE and the root's hole-count ratchet REFUSES the commit: 'the unplaceable-name list grew in infra/aws/terraform/inf-pipeline: 2 HOLE line(s) now, 0 at HEAD ... Owed: nothing you can write: the grader raised this text, which is a rule or registry defect -- from 1.0.0_SA_CTO'. The text it names is L1: 'has no leading / and takes none of the three log-group shapes'. The names are not ours: SNS writes to exactly these groups when DeliveryStatusIAMRole is set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit refusal 2026-10-11 ~10:3xZ, naming limb LGIC_ENFORCE DEC-6 (REFUSE 1, NAMING-GATE: REFUSE 5 graded)",
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/inf-ops-alerts-sms-delivery-status.tf.txt (the file as written; removed from the root so no stray unapplied Terraform sits in the shared tree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 1.0.0_SA_CTO (the grader's rule), per the gate's own text. Routes for the issuer and CTO: (A) the CTO adds a log-group shape or a registry row for AWS-fixed service log groups (sns/<region>/<account>/DirectPublishToPhoneNumber[/Failure]); (B) a deliberate departure as an R20 register entry Andrew acknowledges; (C) drop the two aws_cloudwatch_log_group resources and set retention another way, which the order does not describe. This seat used none of them and bypassed nothing. Together with row S13 the order cannot reach its apply."
+}
+```
+
+## Row filed by 2.0.0_SA_COO~B1 (round 3, TO-FB-f-12 row S13 routed to the root's owner)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S19",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T10:31:57Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps (the inf-pipeline root's author class; project ADVI_ECLDAT.001)",
+  "one_line": "THE inf-pipeline ROOT HOLDS A PENDING, UNAPPLIED aws_secretsmanager_secret_version.eclipse_jwt_initial: ANY UNSCOPED APPLY OF THAT ROOT CREATES A NEW CURRENT VERSION OF orion/eclipse_jwt/current",
+  "spec_asserts": "TO-FB-f-12 step 4 (before amendment 1): the plan changes exactly the role, its policy, the log groups and the SMS preferences; the CTO's AMENDMENT 2 item 1: the sixth create is not applied and is routed to the root's owner as its own row.",
+  "world_is": "The laptop lane's untargeted plan of infra/aws/terraform/inf-pipeline read 358 resource_changes, 352 no-op, 6 create: the five of this order and aws_secretsmanager_secret_version.eclipse_jwt_initial (infra/aws/terraform/inf-pipeline/secrets.tf:40, secret orion/eclipse_jwt/current, authored by ADVI_ECLDAT.001, 0.6.1_AE_PartnerETL, 2026-05-14). The resource is a create, so the state does not hold it; a secret-version create makes a new AWSCURRENT version, which would replace the JWT the inf-jwt-trigger Lambda captured. The order's apply is scoped to the five addresses and does not touch it (evidence: deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/plan_untargeted.out, commit 9504fa9b79).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "evidence_f12/plan_untargeted.out: Plan: 6 to add, 0 to change, 0 to destroy",
+      "evidence_f12/pre_act_record.txt: 358 resource_changes, 352 no-op, 6 create",
+      "git log -- infra/aws/terraform/inf-pipeline/secrets.tf: 8ff9ee1ff9 ECLDAT.001"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not applied and not waived by this project: the CTO's AMENDMENT 2 says 'S13 goes to the root's owner as its own row'. The owner reads whether the resource should be imported, removed or applied deliberately (it may overwrite a live captured JWT). Until then no unscoped apply of inf-pipeline: safe-apply's scoped mechanism is the only apply that is safe in that root."
+}
+```

@@ -5913,3 +5913,50 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W97-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~97",
+  "surfaced_at": "2026-10-11T10:21:10Z",
+  "one_line": "TO-DB-b-122 packet: the served Cottonwood method_version=3 object (2 keys, written 07:17:07Z) cannot be rewritten by the existing mint path, which refuses any existing key; the prior bytes exist nowhere in the repo and bucket versioning was not read, so the later rewrite act needs its own capture step and its own pair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py apply_days (docstring, line 776): 'Reads every target key before the first write; any existing key refuses the whole run. No delete path.' emit_method_row is reached for this address only from line 835",
+      "NEVER_WIDEN_R59_ARD_COTTONWOOD_MINT_COO_HALF.md section 4 (org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/): 'No key is overwritten, so no prior version exists to restore.'",
+      "this seat's one read, 2026-10-11T10:16:35Z, .tools/aws s3api list-objects-v2 --bucket opal-data-cottonwood --prefix irpt/cottonwood/gold/dim_return_method/method_version=3: rc 0, 2 keys (data.parquet 10421 B ETag 7b70c246337d26fbba60eac594c21f0f; manifest.json 1831 B ETag 5951829e6839cf07e4ef3ce1afdca914), no version id returned"
+    ]
+  },
+  "spec_asserts": "TO-DB-b-122 item 5: a packet for 'the later act of rewriting the ONE served object' with the prior version id or the prior bytes' sha256 and how they are restored.",
+  "world_is": "The served partition holds 2 keys, not one object; the prior bytes' sha256 is not in the repo and this order allows no body read, so the packet states the capture as the act's first step (section 6). The existing apply path cannot be that act because it refuses existing keys, so the rewrite is an overwrite the round-59 pair did not cover.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S11",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:31:56Z",
+  "one_line": "L8 round 66 (DB-b-122), no judgment criterion; the issuer asked this seat's read of two widened test pins. Read: neither is weakened -- each keeps an exact set equality and admits exactly the two new named columns, and one adds a type check. The rule-24 placement is sound for the two rows the producer writes. One limit: row 3's reason names FWD-3, but row 3 is the positions-based method for any entry; a later positions-based channel that does separate income would inherit a sentence that is false for it. Nothing served moved.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4722 (round 66 drained @d8747d6d39; record deliverables/0.9.0_WK_IRPT_DASHBD~97/METHOD_ROW3_INCOME.json)",
+      "this seat's read 2026-10-11T10:31:56Z of commit 17304421c8: data/assets/scripts/gold/irpt_reporting/account_return_daily.py:119-134 gives row 2 income_basis cash_when_received with claim held, and row 3 income_basis None with claim absent and a reason sentence; tests/test_threshold_claims.py and tests/test_tieout_claim.py each keep an exact set equality and add the two named columns, and the second also asserts both new columns are strings; the contract file reads contract_version 0.6.0"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself. Rule 24: a claim sits beside its value in a column a reader can reject on.",
+  "world_is": "Read from the commit. Not run by this seat: the tests (168 passed is the worker's and the issuer's). The served method object is not rewritten; that act waits on its pair.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
