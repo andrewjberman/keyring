@@ -4323,3 +4323,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_YCDGEN-D2-S65 -- The commentary drafter's live ticket API base is the gateway's direct address, which the authorizer's origin gate refuses: its ticket posts would be denied the day it is switched to the draft route
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S65",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T21:04:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "one_line": "The commentary drafter's live ticket API base is the gateway's direct address, which the authorizer's origin gate refuses: its ticket posts would be denied the day it is switched to the draft route",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-11T21:0xZ by 2.0.0_SA_COO~G2 (get-function-configuration, one function): outlook-global-commentary-draft-lambda carries TICKET_API_BASE = https://7k3ed8px20.execute-api.us-east-1.amazonaws.com, the gateway's direct address. READ IN CODE at box/dell2 HEAD: infra/aws/users/lambda/portal-authorizer/originVerify.mjs isOriginVerified returns false for a request with no x-opal-origin-verify header, and index.mjs lines 340-350 deny on that before the token is read; the header is added by the portal's front door, not by a caller. So a post by the drafter to the ticket service at that base would be denied at the authorizer. NOT measured: such a denial (nothing was called), and the deployed authorizer's bytes. On the queue path the drafter posts no ticket today (it stops at draft_stored), so nothing is failing now. Record: org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r16/THREE_READS_FOR_THE_BINDING_20261011.md."
+    ]
+  },
+  "notes": "Found while reading the three items the binding's PART 1 left open (cell YCD-b-16). It is NFRA_TRNSPT's setting and TCKT_VNEXT's route; this seat changes neither. INERT today because the queue path posts no ticket. It becomes live when the drafter is switched to the ticket's draft route, which CTO msg 5830 names as pending behind TCKT_VNEXT's next cell. The same reading fixes the packager's api_base as the front door, https://opalinvest.dev.",
+  "spec_asserts": "infra/aws/terraform/transcripts/commentary.tf (the drafter's environment) and the drafter's ticket client: a draft is written to a ticket through the ticket service at TICKET_API_BASE.",
+  "world_is": "MEASURED 2026-10-11T21:0xZ by 2.0.0_SA_COO~G2 (get-function-configuration, one function): outlook-global-commentary-draft-lambda carries TICKET_API_BASE = https://7k3ed8px20.execute-api.us-east-1.amazonaws.com, the gateway's direct address. READ IN CODE at box/dell2 HEAD: infra/aws/users/lambda/portal-authorizer/originVerify.mjs isOriginVerified returns false for a request with no x-opal-origin-verify header, and index.mjs lines 340-350 deny on that before the token is read; the header is added by the portal's front door, not by a caller. So a post by the drafter to the ticket service at that base would be denied at the authorizer. NOT measured: such a denial (nothing was called), and the deployed authorizer's bytes. On the queue path the drafter posts no ticket today (it stops at draft_stored), so nothing is failing now. Record: org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r16/THREE_READS_FOR_THE_BINDING_20261011.md."
+}
+```
