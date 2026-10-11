@@ -22,8 +22,8 @@ THE READER, re-read by the issuer at the cut (the analysis cited :154-156; that 
   dates_to_build() was already re-pointed to monolith bronze @3b01132271; latest_rps_date() was not.
 
 ORDER: (a) BEFORE (b). Narrowing first would turn a silent dead read into a loud AccessDenied the builder may not handle.
-  (a) is NOT yours. The builder's owner (0.4.0_DS_ClientPlatform) removes the read; the issuer routed it through
-      0.0.0_AB_MSTR~Z at this issuance. Its landing is MEASURED, never reported:
+  (a) is NOT yours. AMENDED 19:2xZ: no box seats the owner (0.0.0_AB_MSTR~Z msg 33383), so the issuer's worker removes the
+      read under TO-IAM-z-5 (workstream SCHWAB_READER). Its landing is MEASURED, never reported:
         grep -c 'Bucket=SRC_BUCKET' data/canonical/schwab/build_canonical_daily.py   reads 0 at HEAD
   (b) is yours: narrow the Allow on bd-exporter-ec2-role (declared in infra/aws/terraform/bd-pipeline/iam.tf; role at :341).
 

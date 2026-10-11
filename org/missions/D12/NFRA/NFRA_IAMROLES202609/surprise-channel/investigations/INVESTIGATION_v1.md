@@ -2060,6 +2060,30 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
     },
     "disarm_owner": "2.0.0_SA_COO~ZI",
     "notes": "THE GENERAL LESSON IS NOT ABOUT THIS BUCKET. 'Deleted out of band' was an INFERENCE from a plan's shape -- four resources to add, therefore something vanished unexpectedly -- and it was never checked against the estate's own records, which held the answer in a file named tombstones.json that the very gate I ran on three applies reads. A plan tells you what Terraform intends; it cannot tell you whether the world's state was INTENDED. The cheap check is to grep the tombstone list for any name a plan wants to create, and it costs one read. SECOND FINDING IN THE SAME SHAPE, from the sweep this row came out of: of 7 absent names in live grants, only this one is tombstoned -- 6 have NO record that anyone decided they should be gone, and 5 of those carry write. The reverse check is what makes that meaningful: 5 of the 6 tombstoned S3 buckets have had their grants cleaned up, so the pattern exists and was followed, and the six untombstoned absences are not 'how it is always done'. Cites Z-S39 and Z-S40. Dispositions stay the CVO's at L9."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-S44",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-11T19:25:00Z",
+    "one_line": "The canonical Schwab PRODUCTION runner calls build_canonical_daily.py --upload WITHOUT --date (infra/aws/ec2/canonical-schwab-runner/run-canonical.sh:61), so its date is chosen by latest_rps_date() listing the deleted, claimable opal-data-schwab; the runner executes the S3-STAGED copy (s3://opal-data-bd/code/canonical/schwab, run-canonical.sh:45), which a repo fix alone does not move; and the code's owner 0.4.0_DS_ClientPlatform is seated on no box.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ROUND_ANALYSIS.round8.md @d14162158d E2: 'its owner removes the read, and this project routes it through 0.0.0_AB_MSTR~Z if the owner is off site Z'; it cites build_canonical_daily.py:154-156.",
+    "world_is": "(1) The cited lines aged: dates_to_build() was re-pointed @3b01132271; the remaining dead read is latest_rps_date() :141-145 (SRC_BUCKET :48, called :228 when --date is absent). (2) The production runner path is exactly that no---date call. (3) The runner has written 0 run logs: list-objects-v2 s3://opal-data-bd/canonical/schwab/_runlogs/ -> None at 19:2xZ, beside a positive control (gold/ and silver/ listed under canonical/schwab/). So the hazard needs both a claim of the name and a runner fire; neither is observed, hence INERT. (4) 0.0.0_AB_MSTR~Z msg 33383: process census of laptop, dell1, dell2 and site Z -- no box seats 0.4.0_DS_ClientPlatform.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/canonical/schwab/build_canonical_daily.py:48, :141-145, :228 (bytes printed at the cut)",
+        "infra/aws/ec2/canonical-schwab-runner/run-canonical.sh:45, :61",
+        "s3api list-objects-v2 opal-data-bd canonical/schwab/_runlogs/ -> None; same bucket canonical/schwab/ delimiter -> gold/, silver/",
+        "0.0.0_AB_MSTR~Z msg 33383"
+      ]
+    },
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "notes": "Issuer ruling, same tick: act (a) is re-pointed to the issuer's L7 worker as TO-IAM-z-5 (workstream SCHWAB_READER, LOCAL, repo + test). The S3-staged copy keeps the dead read until it is restaged from the repo; that restage is a deploy of DS-owned pipeline code and goes to round 9's analysis (owner question for 1.0.0_SA_CTO~Z), not to this round. Cites Z-S39 and Z-S43."
   }
 ]
 ```
