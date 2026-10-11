@@ -91,7 +91,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** CTO~DELL1 round-88 analysis @6ad172c28d item 4 (D1-S15), the "move to the header's vintage" branch; the "drop with its reason" branch is the ABSENT/UNREADABLE arm (the stored figure is kept and `cap_refresh` says why -- nothing is invented). The portal's subject row already prints the header tile's cap (AV-zzr-1); this brings the API's `peers.subject` to the same record. Member caps and ratios stay as the producer stored them; the stored object is never rewritten. Second order on slot ~351, after nn-2 (one write set, scoped_amgt.py). Served by `AMGT-nn-7`. Checks dry-run at the base: AC1 FAIL (C1, C3); AC2 PASS minus the new nn-2 file (a bound); AC3 FAIL (no file).
 
-<status>staged</status>
+<status>pending</status>
 <round>89</round>
 <slot>0.9.0_WK_AMGT_RESAPP~351</slot>
 <fabric>dell1</fabric>
