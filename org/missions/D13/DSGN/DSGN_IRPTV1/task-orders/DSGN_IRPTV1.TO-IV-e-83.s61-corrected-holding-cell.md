@@ -54,6 +54,19 @@ In `C:/dev/wk-dsgn-irptv1-46/portal`:
 `IV83-AC2` -- graded at L9 by `3.0.0_SA_CVO` from your render: the corrected row reads unambiguously and follows `portal/DESIGN.md` (navy ink on white, no
 new colour, tabular numerals in the dollars column).
 
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~06:0xZ): the portal base moved, and the suite baseline is a named set
+
+- **Base.** Your portal worktree is cut from DEV tip `6f70e36bace0014384a494f1509dc3ca65f33095`, not `7bb81fa8`: IV-e-84's press test
+  (`__tests__/dsgn-irptv1/upload-press-did-you-mean.test.tsx`) landed on DEV after the cut. It exercises `ProspectComposer`'s suggestion handler;
+  it passes at your base and must pass at your commit.
+- **Baseline.** IV-e-82 drained @fb60e94fd8: at `7bb81fa8` the Investor Reporting scope fails the SAME 43 test ids in three runs
+  (`org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~43/SUITE_SAMPLE.json`). "Keep every pin passing" means: after your change,
+  one full run of `bun test src/pages/InvestorReporting` fails a set of ids that is a SUBSET of those 43 (plus nothing new). Record the run's failing
+  ids and the set difference in your record under `suite_after` {failed, new_failing_ids, fixed_ids}. A new failing id is yours to fix or to report.
+- Six of the 43 fail only because a test spawns bun at another user's path (row DSGN_IRPTV1-D2-W43-S1); they are not yours to fix here.
+
+Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
+
 <criterion id="IV83-AC1" cell_refs="IV-e-83"><invocation>python "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D2/checks/r11/p11_round11.py" . IV83-AC1</invocation><expect>IV83-AC1 PASS</expect></criterion>
 `IV83-AC1` -- the fix is recorded with its component, a test that failed before and passes after, the product files changed and the candidate commit. Base: FAIL.
 
