@@ -699,3 +699,17 @@ Still open on row D2-S21 and not cut: the missing validation line and source lin
 producer's next release (IRPT_BCKEND's). 2.0.0_SA_COO~P2 is asked for one owner read confirming both on a served answer.
 
 fanout: 1 of 1 chains, cap 8.
+
+## v28 -- round 28 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~21:0xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2 msg 5782
+
+IV-e-115 is on portal DEV (1bf9e1f3). Its screenshot showed several cards of one section reading the same title and the same Label
+(row D2-W63-S2); the CTO named the next cell.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-116 | a vendor card whose Label equals its title prints the title once; a differing Label and an Opal card unchanged; and a READ (no product change) of whether the wire's section id carries a field slug the pinned census can name exactly | D2-W63-S2 | SERVED | B ~64 | portal/src/pages/InvestorReporting/contracts/adapt.ts, tabs/analysis/NativeSections.tsx |
+
+The proof of IV-e-115 on a served vendor report is asked of the laptop's walker
+(`deliverables/2.0.0_SA_COO~D2/LAPTOP_WALK_ASK_2_VENDOR_REPORT_20261011.md`, carried by 0.0.0_AB_MSTR~DELL2).
+
+fanout: 1 of 1 chains, cap 8.
