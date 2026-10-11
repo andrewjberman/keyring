@@ -163,7 +163,7 @@ Report once per phase to `2.0.0_SA_COO~O`.
 - Carried from the record: row NFRA_MCPINDEX-Z-S94 (host superset); row Z-W39-S5 (the opal-gateway root's
   grant-writer drift against C3's whole-root plan); row Z-W51-S1 (old `rel-nfra-oplgtw-r16` branch name, hence `-r16c`).
 
-<status>pending</status>
+<status>complete</status>
 <round>33</round>
 <workstream>APPLY-E2</workstream>
 <slot>~AE</slot>
