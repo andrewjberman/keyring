@@ -12465,3 +12465,34 @@ name the one known failure instead of silently inheriting it.
   "notes": "The pass wrote the missing snapshots write-once to the real access-state table, as the order says; nothing else was written."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S93",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-11T21:22:21Z",
+  "one_line": "ap9.AC2.sh queries Lambda function name 'mcportal-grant-writer', which does not exist -- the function is 'mcportal-grant-writer-lambda' -- so its `live` variable is the CLI's ResourceNotFoundException text rather than a hash, and its first limb can NEVER report equal no matter how correct the deploy is. OG-ap-9's deploy is complete and its ledger CLOSED; only this criterion is unsatisfiable as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ap9.AC2.sh line 10: `live=$(bash .tools/aws lambda get-function-configuration --function-name mcportal-grant-writer --query CodeSha256 --output text 2>&1 ...)` -- note 2>&1, so a failure is CAPTURED INTO the variable rather than surfacing as an error.",
+      "That name does not resolve: get-function-configuration --function-name mcportal-grant-writer returns 'ResourceNotFoundException' / 'Function not found: arn:aws:lambda:us-east-1:313476888478:function:mcportal-grant-writer'.",
+      "The real function does resolve: get-function-configuration --function-name mcportal-grant-writer-lambda returns CodeSha256 894RI63/G4h019yxAGP7E+wQzrpZIfJoMaLhzpTTyck=.",
+      "Terraform declares the name: infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf:128 reads function_name = \"mcportal-grant-writer-lambda\".",
+      "CLIENT-SIDE COUNT over the auto-paginated listing, denominator printed (rule 22a: a paginated list-* with --query length() returns the PAGE count): 237 functions listed; exact matches for 'mcportal-grant-writer' = 0, for 'mcportal-grant-writer-lambda' = 1.",
+      "A FIRST ATTEMPT AT THAT COUNT WAS ITSELF WRONG AND IS RECORDED: `list-functions --query \"length(Functions[?FunctionName=='...'])\"` returned 0 for BOTH names, including the one that demonstrably exists. The control -- querying a name already read successfully -- is what caught it, and the count was redone client-side.",
+      "AC2's OTHER limbs PASS on the same run: 'deployed package accepts calendar_months 13: True; prior package accepts it: False (want False)'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-9 step 6 and its proof_of_spec: AC2 reads the live CodeSha256, finds it equal to the build recorded in W/ap9_build.json and different from the prior, alongside the session-free parse result.",
+  "world_is": "The deploy is DONE and CORRECT and nothing is half-landed: the ledger nfra-oplgtw-grant-writer-rebuild has all 5 legs proven and is CLOSED with its sentinel removed; ap9.AC1 PASSES; the plan was 0/1/0 at rc=0 and the re-plan 0/0/0 at rc=0; and three independent reads agree the live CodeSha256 is 894RI63/G4h019yxAGP7E+wQzrpZIfJoMaLhzpTTyck= -- the plan's intended source_code_hash, get-function-configuration on the real name, and the sha256 of the package downloaded back from get-function. The ONLY thing unsatisfiable is AC2's first limb, because the script reads a nonexistent resource. `<status>` is therefore LEFT AT pending: this seat does not flip an order whose criterion did not PASS, and does not edit its own acceptance check to make it pass.",
+  "notes": "THE FIX IS THE ISSUER'S, one character class: ap9.AC2.sh line 10's --function-name becomes mcportal-grant-writer-lambda, matching tf:128. This seat deliberately did NOT make that edit -- the check lives under deliverables/2.0.0_SA_COO~O/, outside this order's <paths>, and a seat editing the script that grades it is self-grading however small the change. On the GO it re-runs AC2 and flips the status. NOTE THE SHAPE, which is the same class as OG-ap-7 step 5b's false-clean plan: the `2>&1` on line 10 folds the CLI's failure INTO the value being compared, so a resource-name defect presents as a normal 'no' rather than as an error. A check that captures stderr into a compared variable cannot distinguish 'the value differs' from 'the read failed'. The same line's second limb, 'differs from the prior', then reports yes for the wrong reason, because an error string does differ from the prior hash."
+}
+```
