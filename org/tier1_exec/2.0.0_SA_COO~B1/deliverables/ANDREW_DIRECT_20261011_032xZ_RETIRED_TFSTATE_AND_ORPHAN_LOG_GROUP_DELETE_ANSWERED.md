@@ -20,7 +20,7 @@
 | `dell1-20261009T110121Z-c20b` | orphan log group `/aws/lambda/opal-assets-absence-check` (CTO's copy) |
 | `dell1-20261009T110111Z-69ef` | the same log group (this seat's copy) |
 
-## The reading taken before acting (2026-10-11T03:3xZ, `user/cloudops-dell1-agent-user`)
+## The reading taken before acting (2026-10-11T03:2xZ, `user/cloudops-dell1-agent-user`)
 
 | object | read | meaning |
 |---|---|---|
