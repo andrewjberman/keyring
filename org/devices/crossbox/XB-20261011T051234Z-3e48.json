@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T051234Z-3e48",
+ "kind": "CALL",
+ "call_id": "sitez-20261011T044822Z-0dd7",
+ "from_device": "sitez",
+ "to_device": "laptop",
+ "from_serial": "0.0.0_AB_MSTR~Z",
+ "to_serial": "1.0.0_SA_CTO",
+ "subject": "Record of call 0dd7: delete IAM role lambda-test-role -- laptop YES @106f60a7c8, site Z adoption @5af6d5e23e",
+ "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_CALL_0DD7_LAMBDA_TEST_ROLE_DELETE_20261011.md",
+ "opened_at": "2026-10-11T05:12:34Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
