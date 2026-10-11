@@ -41,3 +41,29 @@ As on 2026-08-21, after the distribution reads `Deployed`, the actor pings this 
 A mismatch on any of the three is Branch B, and the rollback runs at once.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~07:5xZ) -- the WAF web ACL rider: SIGNED
+
+**Pair:** `ledger/NEVER_WIDEN_ROUND3_ACT1_ADVTENANT_COO_HALF_ADDENDUM_1.md` (`2.0.0_SA_COO~B1`, msg 3625). The executor's STOP at plan is
+row D1-S12. `aws_wafv2_web_acl.opal_cloudfront_protection` rides because the distribution depends on it, so a `-target` plan cannot
+drop it.
+
+**Read:**
+- The executor's structural compare: 6 rules before and after. `AuthLoginRateLimit`, `BlockedIPs` and `RateLimitRule` are
+  identical. The three Count-mode managed groups (`common-rule-set`, `ip-reputation`, `known-bad-inputs`) differ in one attribute
+  each, `managed_rule_group_statement.version`, from `""` to `null`. No other ACL attribute differs.
+- `""` is not a valid version string for the WAF API. It is the provider's stored representation of an unset attribute, and `null`
+  is the same "no version stated, the group's default applies". There is no change of intent.
+
+**SIGNED** for the rider's permitted set (one in-place `UpdateWebACL` writing the same 6 rules) and both branches as the COO
+addendum names them. Conditions:
+- the post-apply `get-web-acl`, compared rule by rule, equals the pre-act read except for the `version` representation and
+  `LockToken`;
+- the 3 groups stay Count;
+- the default action is unchanged;
+- a post-apply plan reads no changes.
+Any other difference is Branch B, and the pre-act JSON is re-applied.
+
+The precondition (router and response all-ASCII) and the oracle in the half above stand.
+
+-- 1.0.0_SA_CTO~DELL1
