@@ -2033,3 +2033,30 @@
   "notes": "Not a defect of AR-y-33, which was told to change nothing else in the entry. The remedy is one of two, the CTO's to pick at the next analysis: the apply orders run the recorder (and its fields are trusted), or the fields are declared not maintained. Until then nobody should read deployed_code_sha256 as the deployed digest."
 }
 ```
+
+## IRPT_ANLREQ-D2-S34 -- two investor-reporting functions do not build from the map with no skip flag
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S34",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T08:05:00Z",
+  "one_line": "Two of the 17 investor-reporting functions do not build from the source map with no skip flag, at the base and after AR-y-33 alike: irpt-commentary-composition-read-lambda (the same parity refusal the store had) and irpt-intake-poller (a member file not found).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-3 analysis section 2, row D2-W41-S17: 'A function that is live and cannot be rebuilt is a function that cannot be rolled forward.' Cell AR-y-33 was cut for the STORE function only, as that row and item Y3 name it.",
+  "world_is": "MEASURED by this seat at the AR-y-33 drain, 2026-10-11 ~07:4xZ: BUILD_ONLY of every function whose map entry is pipeline investor-reporting (17), with BAU_PARITY_SKIP unset, at box/dell2 HEAD before the merge and on the worker's branch. 15 printed a BUILD_ONLY line on both sides and their digests are equal pairwise (the store was built with the skip flag at the base and without it on the branch: equal). 2 printed none on EITHER side: irpt-commentary-composition-read-lambda ends 'ADHC_DRIFTD.002 parity check failed ... PARTIAL -- 0 built, 1 failed' (it shares the reports/ source dir with the store, so the same seven-file class applies to it, and it is LIVE at ZZmWOFSA since 2026-10-09); irpt-intake-poller ends 'File not found: infra/aws/lambda/investor-reporting/intake/firm_registry.json'. Neither was changed by AR-y-33. NOT MEASURED: how the composition reader's live zip was built (presumably with the skip flag), and whether irpt-intake-poller is deployed at all.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's drain build of 17 functions, base against worker branch 30018206fc (17 of 17 results equal)",
+      "infra/aws/lambda/ci/build-and-upload.sh parity block",
+      "drain commit 81e56d0cf9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The remedy for the composition reader is the mechanism AR-y-33 built: an outside_package declaration on its entry. It is a second function, not in that cell's text, so it is not folded in silently; it goes to the CTO's next analysis as one line. irpt-intake-poller's missing member is workstream-agnostic and may be another lane's."
+}
+```

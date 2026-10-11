@@ -1,0 +1,6 @@
+# Drive log -- 2.0.0_SA_COO~P2, IRPT_BCKEND (workstream ~P), 2026-10-11 07Z (dell2)
+
+| tick | limb | round | TOs t/T | thread | act fired |
+|---|---|---|---|---|---|
+| ~04:4xZ-06:4xZ | L10 wait (r117, r118), no unblocked act | 118 | 1/1 | y | Three ticks with nothing owed: both L8 packets READ by 3.0.0_SA_CVO, round 118 compiled @51fce2340c; irpt-status read live at 6idtFvAm (04:44:47Z, ~Y2's apply). empty_tick=off. CTO msg 4323: client-data-check is WARN-only on dell2, containment sweep stopped (Andrew-direct 2026-10-09). |
+| ~07:4xZ | L7 read on CTO msg 4408 (DSGN_IRPTV1 FWD-1 walk breaks at Performance) | 118 | 1/1 | y (breaks at the Performance hop) | Read-only: /aws/lambda/irpt-performance-adapter 03:59:40Z to 07:4xZ, 20 events, 0 TypeError. The walk's 4 performance-report requests at 07:30Z were ADMITTED (authorize_calls 2, retained path reached) and ended VendorEgressRefused -> OBJECT_NOT_COVERED at performance/authorization.py:90 (no server-approved per-use plan). This is the FIRST admitted exercise of IB-pr-420's adapter bytes: the Enforcer builds and authorizes with no TypeError. The refusal is not the walk account's firm binding. Sent to the CTO and ~D2 (msgs 4413, 4414) with the point that the gate demands a per-use word CLAUDE.md no longer requires for non-Bloomberg vendors. No fix cut (CTO: none before ~D2's read). |
