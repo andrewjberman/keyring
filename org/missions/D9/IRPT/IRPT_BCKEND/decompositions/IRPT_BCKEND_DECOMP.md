@@ -3196,3 +3196,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r149/p149_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-453` | which member of a submission, or of its ticket, says commentary is asked for today; where acceptance could read it; every reader of the accepted record and what each does with an absent or unknown member | FWD-4 (the vendor-path job and what it signals) | LOCAL | none | P149-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~309. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 142. ROUND 150, WORKSTREAM ~P (2026-10-11 ~20:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 5788 and 5800; PRD v0.43 @44828c43b8, signed @4c07d90a47)
+
+IB-pr-452 drained @6a7b589f9e (nine pairs blank 43.9218 percent; the five cost 10 account-days; seven securities mostly repeat).
+v0.43 adopts the repeated-share rule; the reviewer's note is that a rule over 'the grading run' is not reproducible. One build
+cell: the instrument's product form with a FIXED trailing window, built and tested, nothing served, returning the window proposal,
+the distribution in tenths and the rule's cost. The served change is a later pair.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r150/p150_cells.py`: AC1-AC3 FAIL at base (no module).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-454` | `date_basis_grading.py`: the ordered claim rule, the two witnesses, the nine pairs, the guard (imported) and the repeated-share rule over a fixed trailing window, as pure functions with tests; one read-only run returning the proposed window, the securities by share of repeated days in tenths, and the cost of the securities the rule takes | FWD-13 (a date label is measured, never assumed) | LOCAL | IB-pr-450, IB-pr-452 drained | P150-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~310. Not direct-act (above the size floor).
