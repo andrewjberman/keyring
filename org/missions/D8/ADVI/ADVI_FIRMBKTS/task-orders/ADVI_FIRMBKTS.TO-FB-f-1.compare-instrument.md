@@ -89,7 +89,7 @@ is the CVO's remedy for row D1-C-S7 and a prerequisite of act 3 (`FB-f-10`). The
 the checks is not committed; the worker's build is the instrument of record. The cell closes D1-C-S7 when its compare is
 the one the delta copy reports with (`FB-f-10`).
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-1</to_id>
 <slot>~11</slot>

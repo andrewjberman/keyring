@@ -64,6 +64,14 @@ for _stream in (sys.stdout, sys.stderr):
         _stream.reconfigure(line_buffering=True)
 
 
+def _gao_name() -> str:
+    """The git-author-override audit log name for THIS box: one file per box (shape (a), MSTR consensus 2026-10-11),
+    the legacy shared name when AGENTBUS_DEVICE is unset or malformed."""
+    dev = os.environ.get("AGENTBUS_DEVICE", "").strip()
+    ok = bool(dev) and all(c in "abcdefghijklmnopqrstuvwxyz0123456789-" for c in dev)
+    return "git-author-override-audit.%s.log" % dev if ok else "git-author-override-audit.log"
+
+
 def _echo(msg: str, stream) -> None:
     """Write msg + bare LF, bypassing the stream's platform newline translation --
     matches bash's `echo ... [>&2]` exactly (never CRLF, unlike a python subprocess's
@@ -645,7 +653,7 @@ def _ignore_suggestion(f: str) -> str:
 
 def _audit_path() -> str:
     return os.environ.get("COMMIT_GATE_AUDIT") or str(
-        Path(__file__).resolve().parents[1] / "org" / "git-author-override-audit.log")
+        Path(__file__).resolve().parents[1] / "org" / _gao_name())
 
 
 def _audit_oversize(f: str, size: int, reason: str) -> bool:

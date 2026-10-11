@@ -155,6 +155,47 @@ lane: CloudOps~Z, the site-Z executor for this dell1 project (msg 1440).
 </proof_of_spec>
 
   <report>
+    2026-10-11 06:0xZ, executor 0.7.0_AE_CloudOps~ZV: AMENDMENT 7 date 20261010 DONE; 20261011 NOT YET DUE.
+
+    20261010 (Saturday). The weekend fire DID run, which AMENDMENT 7 predicted on the -Daily trigger and the
+    :prune path. Transcriber run as ordered, not by hand:
+    `python -I org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.0.3_BG_BBGTerminal/transcribe_vehicle_log.py 20261010`.
+    It writes into its own seat's folder; the UNEDITED copy was placed at AMENDMENT 5/7's path under this seat's
+    own folder and committed alone: 4b8e5e530a,
+    org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261010_1100Z.txt.
+    Copy verified byte-identical rather than taken on report: transcript and copy both 1927 bytes, both
+    sha256 fc7221aee8df0547a15c9e9c7ff26114ad70a019797146f6bcf331bd9ce3b421; copied 2026-10-11T05:26:32Z.
+    Source C:/Users/Opal Bloomberg/opal_bbg_logs/bbg_tplus1_20261010_070002.log, 13451 bytes, last-write
+    2026-10-10T11:07:26.057054Z, sha256 e7bc12180128a46fd7d8d4b11eec337005f274c136043e59ecdd7b4163894cef.
+    EXACTLY ONE log matches bbg_tplus1_20261010_*.log -- the transcriber prints a NOTE on more than one and
+    printed none, and the directory was listed beside it -- so there is no second or re-pull run to disambiguate.
+    AC1's expectation is met on the bytes, read at origin with a positive and a negative control (an absent
+    path fatals rc=128 rather than reading clean-empty): the file holds
+    "-- DID THIS FIRE REACH THE ENRICHMENT LEG? --".
+
+    20261011 (Sunday) IS NOT A NON-FIRE AND NO did-not-fire LISTING WAS COMMITTED FOR IT. Measured, not assumed:
+    Get-ScheduledTaskInfo OPAL_BBGTML_daily_pull reads NextRunTime 2026-10-11T11:00:00Z, LastRunTime
+    2026-10-10T11:00:01Z, LastTaskResult 0, NumberOfMissedRuns 0, State Ready. At the time of this report the
+    trigger has not arrived, so AMENDMENT 7's no-match branch would record "the run did not fire" as a measured
+    fact when the true cause is "not yet due" -- the one reading that branch must not be used to produce. A
+    settle-wait is armed on the log path; the date is transcribed and committed when the log appears and its
+    size stops changing. The order itself carries the owed date, so this is parked on a carrier and not on a
+    live session: OWNER 0.7.0_AE_CloudOps~ZV per AMENDMENT 7.
+
+    The issuer's own reader, run read-only on what is now at origin, for the issuer's convenience and NOT as a
+    grade: 20261010 "J1-READ: NOT-REACHED -- J1 reads UNVERIFIABLE for this run, never PASS" (enrichment exit
+    97); 20261009 control "J1-READ: REACHED" (exit 94); 20261011 "J1-READ: NO-FILE". Since 20261010 reads
+    NOT-REACHED, the standing per-date obligation continues. The enrichment leg's own reason for the 97 is
+    copied verbatim under TO-CLOSE-XB-AND-AMENDMENT8 act B @55d280983b, and the instrument disagreement it
+    exposed is surprise row ETFS_RIVALS-Z-S81 @982563d244 (ARMED, disarm_owner 2.0.0_SA_COO~V1).
+
+    PUSH STATE, measured by ls-remote at 06:0xZ (origin/box/sitez 84da5399cf) with a discriminating control:
+    4b8e5e530a ON ORIGIN, 982563d244 ON ORIGIN, 55d280983b LOCAL. This seat cannot push box/sitez --
+    never-rules-gate refused it and named the integrator as the branch's only pusher -- so step 4's publication
+    path is the hash relayed to 0.0.0_AB_MSTR~Z, sent 05:45Z and again 06:08Z.
+
+    Read only. No ad-hoc run, no Bloomberg call, no grading, no edit to the transcription's text. The J1 grade
+    is the CVO's; the status flip is the issuer's.
     2026-10-09 07:10 Eastern: 0.7.0_AE_CloudOps~ZV executed the canonical transcriber and copied the full source bytes.
     Source: C:/Users/Opal Bloomberg/opal_bbg_logs/bbg_tplus1_20261009_070014.log; 14020 bytes;
     last-write 2026-10-09T11:08:47.312871Z; copied 2026-10-09T11:10:26.655412Z.

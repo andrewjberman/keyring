@@ -112,7 +112,8 @@ case "$_GCD" in
     *) MAIN_ROOT="$(cd "$REPO_ROOT/$_GCD/.." 2>/dev/null && pwd || echo "$REPO_ROOT")" ;;
 esac
 # Test seam: OWNED_PATHS_AUDIT_LOG lets unit tests redirect the audit log.
-AUDIT_LOG="${OWNED_PATHS_AUDIT_LOG:-$MAIN_ROOT/org/git-author-override-audit.log}"
+case "${AGENTBUS_DEVICE:-}" in ""|*[!a-z0-9-]*) GAO_REL="org/git-author-override-audit.log" ;; *) GAO_REL="org/git-author-override-audit.${AGENTBUS_DEVICE}.log" ;; esac  # one file per box (shape (a), MSTR consensus 2026-10-11); unset device -> legacy shared file
+AUDIT_LOG="${OWNED_PATHS_AUDIT_LOG:-$MAIN_ROOT/$GAO_REL}"
 MODE="${OWNED_PATHS_MODE:-block}"  # ADHC_OWNPTH.005 phase-2 flip 2026-04-30: was warn, flipped to block per Andrew directive
 OVERRIDE="${GIT_COMMIT_AUTHOR_OVERRIDE:-}"
 

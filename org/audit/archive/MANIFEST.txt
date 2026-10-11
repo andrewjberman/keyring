@@ -31,6 +31,10 @@ org/to-pos-override-audit.log
 org/to-pipeline-override-audit.log
 org/pipescript-suite-gate-audit.log
 org/git-author-override-audit.log
+org/git-author-override-audit.laptop.log
+org/git-author-override-audit.sitez.log
+org/git-author-override-audit.dell1.log
+org/git-author-override-audit.dell2.log
 org/halt-gate-override-audit.log
 org/mass-deletion-audit.log
 org/safe-deploy-bypass-audit.log

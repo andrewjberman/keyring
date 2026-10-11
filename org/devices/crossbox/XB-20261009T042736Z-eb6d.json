@@ -10,16 +10,20 @@
  "subject": "Run at ~10:30Z: one Terminal sign-in pre-flight for RIVALS, SECHIST, CORPUS",
  "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CROSSBOX_ORDER_PREFLIGHT_ZV_20261009.md",
  "opened_at": "2026-10-09T04:27:36Z",
- "state": "OPEN",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T04:32:20Z",
   "bus_message_id": "5ace48d5-b4ac-41d0-8b12-8092307ca21b"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:03:48Z",
+  "by": "0.7.0_AE_CloudOps~ZV",
+  "bus_message_id": "7c4af7fa-2f95-4df9-a68a-3e693009f327"
+ },
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-11T06:33:13Z",
+  "from_by": "1.0.0_SA_CTO~DELL1",
+  "to_at": "2026-10-11T06:03:48Z",
+  "to_by": "0.7.0_AE_CloudOps~ZV"
  }
 }

@@ -28,6 +28,7 @@
 set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+case "${AGENTBUS_DEVICE:-}" in ""|*[!a-z0-9-]*) GAO_REL="org/git-author-override-audit.log" ;; *) GAO_REL="org/git-author-override-audit.${AGENTBUS_DEVICE}.log" ;; esac  # one file per box (shape (a), MSTR consensus 2026-10-11); unset device -> legacy shared file
 # Terraform resolution is DEVICE-AGNOSTIC (CLAUDE.md: derive, do not hardcode).
 # The sibling terraform.exe exists on some devices and NOT on others -- site Z has no
 # .tools/terraform.exe and resolves terraform v1.15.8 on PATH -- and Rule 26 routes every
@@ -137,7 +138,7 @@ SG_RC=0
   if [ -n "$sg_blk" ]; then
     if [ -n "${SEAT_GATES_OVERRIDE:-}" ]; then
       printf '%s SEAT_GATES_OVERRIDE actor=%s safe-apply root=%s blocked=%s reason=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-        "$sg_serial" "$sg_root" "$sg_blk" "$SEAT_GATES_OVERRIDE" >> "$SCRIPT_DIR/../org/git-author-override-audit.log"
+        "$sg_serial" "$sg_root" "$sg_blk" "$SEAT_GATES_OVERRIDE" >> "$SCRIPT_DIR/../$GAO_REL"
       echo "safe-apply: [seat-gates] OVERRIDDEN (audited): $SEAT_GATES_OVERRIDE" >&2
     else
       echo "safe-apply: BLOCKED by the seat gates (ENFORCE, a switch file in $sg_dir):$sg_blk. Nothing was applied. Override: SEAT_GATES_OVERRIDE=\"reason\"." >&2
@@ -151,7 +152,7 @@ if [ "$SG_RC" -ne 0 ] && [ "$SG_RC" -ne 9 ]; then
   if [ -e "$sg_pd/seat-gates.apply-who.safe-apply.enforce" ] || [ -e "$sg_pd/seat-gates.crossbox.safe-apply.enforce" ]; then
     if [ -n "${SEAT_GATES_OVERRIDE:-}" ]; then
       printf '%s SEAT_GATES_OVERRIDE actor=%s safe-apply block-error rc=%s reason=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-        "${OPAL_AGENT_SERIAL:-UNKNOWN}" "$SG_RC" "$SEAT_GATES_OVERRIDE" >> "$SCRIPT_DIR/../org/git-author-override-audit.log"
+        "${OPAL_AGENT_SERIAL:-UNKNOWN}" "$SG_RC" "$SEAT_GATES_OVERRIDE" >> "$SCRIPT_DIR/../$GAO_REL"
       echo "safe-apply: [seat-gates] the block errored (rc=$SG_RC) under ENFORCE; OVERRIDDEN (audited): $SEAT_GATES_OVERRIDE" >&2
       SG_RC=0
     else
@@ -410,7 +411,7 @@ if [ "$DT_FOUND" -eq 1 ]; then
     # so "a second TAGAUTHZ bypass would be exactly as unattributable as the first" (MSTR).
     # -----------------------------------------------------------------------------------
     . "$SCRIPT_DIR/lib/resolve-actor.sh"
-    AUDIT="$SCRIPT_DIR/../org/git-author-override-audit.log"
+    AUDIT="$SCRIPT_DIR/../$GAO_REL"
     TA_ACTOR="$(resolve_actor)"
     TA_ID="$(date -u +%Y%m%dT%H%M%SZ 2>/dev/null || echo UNKNOWN-TIME)-$$"
     printf '%s TAGAUTHZ_BYPASS-INTENT id=%s actor=%s safe-apply tree=%s reason=%s\n' \
