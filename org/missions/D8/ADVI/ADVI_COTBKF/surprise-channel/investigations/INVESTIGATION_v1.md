@@ -5624,3 +5624,26 @@ round.** Never edit an existing row.
  "world_is": "deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R59_ARD_COTTONWOOD_MINT_COO_HALF.md states them and lists in its section 6 what it does not establish: the bucket policy, a real put on the two new keys, build() since round 58, and the deployed Lambda's packaged sources file. The sidecar's table name and partition were the round-59 worker's choice (row D2-W86-S1) and are put to the CTO half."
 }
 ```
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W87-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~87",
+ "surfaced_at": "2026-10-11T06:00:00Z",
+ "one_line": "CB-bh-1: the wider read-back changes the last line of --verify-served; two older exact-line tests outside the grant (test_commonwealth_ard_apply happy path, test_commonwealth_ard_mint_claims verify test) now fail, so CB60bh1-AC3 cannot be met inside the grant.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "silver suite with the variable unset after the change: 2 failed, 800 passed, 12 skipped; both failures are assertions on the exact ARD-COTTONWOOD-VERIFY line, which now ends with manifests=k/n (face step 2 requires that part)",
+   "test_commonwealth_ard_day_manifest.py: 10 passed"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Face CB-bh-1: AC3 the silver suite passes, 0 failed, and the read-back line gains manifests=<k>/<n>; the grant names no existing test file.",
+ "world_is": "test_commonwealth_ard_mint_claims.py:303,310,314 and test_commonwealth_ard_apply.py:158 assert the last verify line with ==. The apply test's stub serves day manifests that do not state row 3, so its line reads manifests=0/3. Updating those four assertions (outside the grant) resolves it."
+}
+```
