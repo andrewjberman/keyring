@@ -27236,3 +27236,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The other irpt-* functions stage the same file from data/firm_registry.json, and that view parses equal to the poller's served copy; only the byte form differs. Whether declaring staged_from data/firm_registry.json is acceptable is not decided here."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S95",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T19:35:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The record the CTO ordered for rows IRPT_ANLREQ-D2-W53-S2 and -S3 (msg 5666): the rollback target of irpt-intake-poller is ON RECORD -- version DICktwYaCg5b.R8.Ab6oHhI82db0d9Ls of the function's artifact key holds the live bytes; no release of the poller is ordered now; the release's condition is written here. PARKED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-448 @804e22b7a9, deliverables/0.7.0_AE_CloudOps~IB2/IB144-2_poller_rollback_artifact.json: 2 of 2 versions of the artifact key downloaded and hashed; exactly one has content sha256 YpE2MyUwdGzMfLaUGXi8cClxoVHFFmOz5LT1BYmoTa8=, equal to the live CodeSha256 read 2026-10-11T19:05:15Z; re-read by head-object; the bucket's only lifecycle rule aborts incomplete uploads, none expires a noncurrent version; 0 writes. Criteria re-run by the issuer at HEAD: 3 of 3 PASS.",
+      "IB-pr-447 @ac97d216b9, deliverables/0.9.0_WK_IRPT_BCKEND~305/IB144-1_POLLER_FIRM_REGISTRY_READ.md: the handler returns at poller.py:492 before run_scan (:503) because LiveTransport cannot construct (graph_client.py:240); every read of firm_registry.json (opened at keys.py:293) sits below run_scan; read from the live package's bytes, nothing exercised.",
+      "1.0.0_SA_CTO~DELL2 msg 5666 (2026-10-11T19:32:12Z), read by this seat: no release now; the release is made when the poller is next changed for a reason."
+    ]
+  },
+  "spec_asserts": "A function serving from bytes the tree cannot reproduce has a recorded rollback target that nothing expires, and a written condition for the release that makes it reproducible.",
+  "world_is": "Both hold as of this row. Rollback target: the version id above, by content. This row is written in IRPT_BCKEND's channel and not into the IRPT_ANLREQ rows themselves, which are another project's append-only record; 2.0.0_SA_COO~Y2 carries this id on the build map's entry. PARKED: owner 2.0.0_SA_COO~P2 (cell IB-s-6). Un-parks when the poller is next changed for a reason; that release's order must (1) GENERATE the firm registry at build from infra/logic/registry/scopes.json, never commit it as a served copy; (2) read the transport's refusal first, because a reached read of a missing file raises (keys.py:293, :155); (3) name this version id as the rollback."
+}
+```
