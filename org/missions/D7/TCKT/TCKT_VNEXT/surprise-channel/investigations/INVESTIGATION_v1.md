@@ -1601,3 +1601,30 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S36",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-11T10:22:41Z",
+  "one_line": "TO-RECORD-R3-sm1's objective and bounds both say 'no AWS write', but the recorder it orders me to run carries an `aws sns publish` to opal-infrastructure-alerts on its half-landed branch -- so a RECORD order's no-AWS-write bound is not a property of the recorder, only of the branch it happens to take.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/record-terraform-deploy.sh:871 `aws sns publish --region \"${REGION:-us-east-1}\" --topic-arn arn:aws:sns:us-east-1:313476888478:opal-infrastructure-alerts ...` -- one hit across one file scanned, inside the else branch of the comp-lambdamap reconcile-deployed call at :862-866",
+      "the branch is the C1 persistent-half-landed path: it fires when a just-deployed function's live CodeSha256 does not match its S3 artifact after a 45 s settle retry, and it is best-effort (`>/dev/null 2>&1 || echo` keeps the recorder going if the publish fails)",
+      "TCKT_VNEXT.TO-RECORD-R3-sm1 @11c612ede3 objective: 'A git record only: no AWS write, no apply, no build, no upload'; its bounds repeat 'No AWS write'",
+      "IT DID NOT FIRE on this run, and that is measured rather than assumed: the reconcile printed 'reconcile-deployed: 1 reconciled, 0 first-recorded, 0 HELD, 0 left unrecorded, 0 already-in-parity' then '[RECONCILED] opal-ticket-api: ywAvsfx/j3RTZOoO.. -> t1EoiJRZWXBsSc0H..' and 'reconcile: OK (deployed set in parity)' -- the OK branch, not the ALERT branch",
+      "why it could not have fired here: the R2-pk-2 apply fully landed and I verified it three ways before this order -- live CodeSha256 t1EoiJRZ... equals the uploaded object's content-sha256, and the deployed package re-downloaded from Code.Location hashes its single member to the pinned cf10e19e..."
+    ]
+  },
+  "spec_asserts": "The order states a flat bound, 'no AWS write', for an act whose whole mechanism is a third-party script the order itself names and tells the executor to run unmodified ('If it refuses, quote the refusal and STOP: do not hand-edit the map').",
+  "world_is": "The bound holds for the path this run took and does not hold for the script. A RECORD order that runs this recorder can publish to SNS whenever the reconcile finds a persistently half-landed function -- which is exactly the state a record act is most likely to meet, since it runs right after an apply. So the bound is satisfied here by the deploy having fully landed, not by anything the order or the executor controls. Two things follow, both narrow. First, an executor who reads 'no AWS write' as a guarantee would be surprised by a publish; I read the code before running it because step 1 told me to, which is the only reason this was visible in advance rather than after the fact. Second, the publish is a notification, and the estate carries a standing moratorium on building alert/SNS/notification paths without Andrew's explicit word -- this is a PRE-EXISTING path in shared CI tooling and nothing here builds or extends one, so the moratorium is not breached; it is named because a future reader comparing the two sentences would otherwise have to work out which applies.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Reported in the order's own designated place as well: step 1 asks the executor to state what the recorder writes and commits from the CODE and to say where the code disagrees with the order, with the code winning. This row is the durable carrier, because the divergence outlives this order and the next RECORD order will inherit it. No act proposed and nothing hand-edited: the recorder ran unmodified and its commit 6a5bee406c touched exactly the three paths its own pathspec permits (the map, the CHANGELOG, the reconcile audit log). The remedy, if any, is the issuer's and the CTO's: either the bound is restated as 'no AWS write on the success path, one best-effort SNS publish if the reconcile finds a half-landed function', or the recorder's alert limb is made conditional on a flag. Separately noted, not mine to file: the recorder's own [one-writer] WARN says infra/aws/lambda/ci/source-map-reconcile-audit.jsonl is the laptop's unsuffixed file being written from dell2, and labels itself 'WARN until C-QUEUE' -- an owned, known condition."
+}
+```
