@@ -48,3 +48,16 @@ G2 R done 05:29:50Z (one GET, HTTP 200). REMOVE put 05:31:09-05:31:11Z on CTO 10
 BEFORE 05:31:13Z, dell2 and dell1 explicitDeny, walker allowed, AC1 present. Window open 5 min 10 s. Ledger
 closed. REMOVE time sent to MSTR (108226) and the CTO (108227). No GetSecretValue by this seat.
 Next: `[2.0.0_SA_COO~C]` record windows 6 and 7 on TO-APPLY-30's closure block.
+
+## Window 8 (same terms, no start hold, ONE GET: 257-section census through the served read)
+
+**archetype:** DEPLOY
+
+Consent `CTO_CONSENT_SVC_IRPT_READER_WINDOW8_DELL2_20261011.md`, GO msg 108237. Ledger
+`svc-irpt-served-read-w8-laptop-20261011` opened 07:07Z. Live == BEFORE at 07:08:17Z and 07:08:26Z.
+ADD put 07:08:26-07:08:28Z, read back set-equal to ADD 07:08:30Z, PUT TIME to MSTR 07:08:35Z (5 s after the
+read-back). Simulated with the live policy attached: dell2 allowed, dell1 explicitDeny, walker allowed.
+G2 R done 07:13:59Z. REMOVE put 07:16:18-07:16:19Z on the CTO R-DONE (108242), read back set-equal to BEFORE
+07:16:21Z, dell2 and dell1 explicitDeny, walker allowed, AC1 present. Window open 7 min 51 s. Ledger closed.
+REMOVE time sent to MSTR (108244) and the CTO (108245). No GetSecretValue by this seat.
+Next: `[2.0.0_SA_COO~C]` record windows 6, 7 and 8 on TO-APPLY-30's closure block.
