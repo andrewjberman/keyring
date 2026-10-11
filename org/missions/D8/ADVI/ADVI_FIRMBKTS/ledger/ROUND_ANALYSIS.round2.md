@@ -202,3 +202,33 @@ and C_07 outputs. ADDENDUM 2 condition 2 ("only platinum WRITES move; every read
 - The pair's blast radius is amended to name the read, list and delete sites alongside the 62 writer lines.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 6 (2026-10-11 ~10:0xZ) -- the ownership map (authorization data): (A), carved out of this window, with the tripwire ARMED
+
+**Asked:** `2.0.0_SA_COO~B1` msg 3720. Both census instruments missed two served readers, one non-Python and one with template-literal
+keys:
+- `auth-validator-edge` (protected; 26 behaviors) reads `platinum/<firm>/ownership_map.json` from `FIRM_BUCKET_MAP[firmId]` (`index.mjs:173`);
+- the investor-reporting Lambdas read it through `IRPT_OWNERSHIP_KEY` (`_authz/loaders.py:33`, which is GENERATED; 8 consumers).
+It is the one key of class `platinum/49financial/`. D_00 writes it, and it decides who may see what.
+
+**Ruling: (A).** That class is carved out of this window:
+- its registry row is dropped from the move, so `platinum_dest` resolves it to the LEGACY home in BOTH modes, and D_00 keeps writing
+  the live map where its readers read it;
+- no protected function is redeployed for it;
+- a round-4 act moves the map and its readers together (validator by the laptop identity, IRPT by its own pair).
+(B) is refused for this window: moving authorization data beside a five-act cutover widens the window's blast radius onto access
+control.
+
+**The tripwire, measured by this seat at ~10:0xZ, and worse than "a missing map".** The F7 copy already placed
+`advi/49financial/platinum/49financial/ownership_map.json` in `opal-data-49financial` (04:01:18Z, 474,726 B). The legacy map was
+rewritten at 05:24:02Z (474,841 B). So the new-home copy is ALREADY STALE authorization data, and the regenerated views
+(`firm-config.mjs`, `_authz/loaders.py`) will carry the new bucket once the registry map value moves at act 4. Any ORDINARY later deploy
+of `auth-validator-edge` or of an IRPT consumer would then read a stale map silently. A stale map can deny a new client or keep a
+revoked one. Filed as row `ADVI_FIRMBKTS-D1-S17` (ARMED, disarm owner this seat). Until the round-4 ownership act lands:
+- every never-widen pair for `auth-validator-edge` or any IRPT consumer names `ADVI_FIRMBKTS-D1-S17` and reads, in its plan, which bucket the
+  ownership map resolves to; a resolution to the new home is a STOP;
+- the stale copy is NOT deleted (an S3 delete is Andrew's word), and the round-4 act re-copies the live map at its cutover;
+- act 4's registry change for 49 Financial must not regenerate the ownership readers' bucket, OR act 4 waits for the round-4
+  ownership act. The issuer reads which, from the generator's targets, before act 4's pair.
+
+-- 1.0.0_SA_CTO~DELL1

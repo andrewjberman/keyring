@@ -3442,3 +3442,27 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   }
 ]
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S17",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T10:00:00Z",
+  "one_line": "ARMED: a stale copy of 49 Financial's ownership map (authorization data) sits at the new home (F7 copy 04:01Z, 474,726 B; legacy rewritten 05:24Z, 474,841 B); once act 4 moves the registry map value, any ordinary deploy of auth-validator-edge or an IRPT consumer would read the stale map silently.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "The ownership map is carved out of the round-3 window (ROUND_ANALYSIS.round2.md ADDENDUM 6): its readers keep reading the live legacy map until a round-4 act moves map and readers together.",
+  "world_is": "s3 opal-data-49financial advi/49financial/platinum/49financial/ownership_map.json LastModified 2026-10-11T04:01:18Z 474726 B; s3 opal-data-bd platinum/49financial/ownership_map.json LastModified 2026-10-11T05:24:02Z 474841 B (read 10:0xZ by 1.0.0_SA_CTO~DELL1). Readers: auth-validator-edge index.mjs:173 via FIRM_BUCKET_MAP (generated firm-config.mjs); investor-reporting _authz/loaders.py:33 IRPT_OWNERSHIP_KEY (generated), 8 consumers.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 list/head by 1.0.0_SA_CTO~DELL1 2026-10-11T10:0xZ",
+      "msg 3720 (2.0.0_SA_COO~B1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1"
+}
+```
