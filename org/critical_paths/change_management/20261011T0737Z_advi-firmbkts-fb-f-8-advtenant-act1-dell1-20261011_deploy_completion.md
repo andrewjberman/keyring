@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | verify | pre-act reads saved in the entry: live get-distribution-config ETag + 10 associations, router v26 and guard v5 on 5 behaviors each, built artifact SHA-256 and bytes-above-127 count for both | ETag, the 10 ARNs, and 2 SHA/non-ASCII lines printed in the entry |  | OPEN |
+| L1 | verify | pre-act reads saved in the entry: live get-distribution-config ETag + 10 associations, router v26 and guard v5 on 5 behaviors each, built artifact SHA-256 and bytes-above-127 count for both | ETag, the 10 ARNs, and 2 SHA/non-ASCII lines printed in the entry | ETag E1OAC26XEP0FDI, status Deployed; router v26 x5 and guard v5 x5 (evidence/pre_get_distribution_config.json); artifacts from build-nodejs-lambda.sh portal-auth: shared-advisor-router.zip CodeSha256 DENFVwwc6PnJGsQpXB0ZgKMwJiGxJBTpbDWM3JXdk/E= bytes_above_127=0 (S3 VersionId NWJciPjHZ9WAwJzH2jNtipmj06usuqFg, gate 51 pass); shared-advisor-router-response.zip vLZcOM0N0p8TMEZzTQcuSzguEV/cTpFu/iDNmFbdhBw= bytes_above_127=0 (VersionId T39sO4P3JJT0ZMfr6MeZLYWNBHQ55Mk5, gate 46 pass) | CLOSED 20261011T074318Z |
 | L2 | activation | terraform plan of infra/aws/terraform/portal-auth read as JSON (exactly 2 functions + the distribution's 10 associations, distribution NOT no-op), then safe-apply, distribution Deployed | plan resource summary line + apply result + status Deployed |  | OPEN |
 | L3 | verify | post-apply read: 10 associations name the new versions, CodeSha256 of each new version equals its artifact SHA, post-apply plan reads No changes | AC1 AC2 AC3 outputs + the plan line |  | OPEN |
 | L4 | verify | CTO oracle read by 1.0.0_SA_CTO~DELL1: both new versions invoked on the 5 event classes against base, one live no-session request 401, associations diffed | the CTO's read, quoted with its message id |  | OPEN |
@@ -23,3 +23,4 @@
 ## Log
 
 - 20261011T073750Z OPENED by 0.7.0_AE_CloudOps~FB1 with 7 leg(s)
+- 20261011T074318Z LEG L1 closed: ETag E1OAC26XEP0FDI, status Deployed; router v26 x5 and guard v5 x5 (evidence/pre_get_distribution_config.json); artifac

@@ -1879,3 +1879,32 @@ write: **1 row** (`S1`).
   "notes": "Owner of the call: the issuer 2.0.0_SA_COO~B1 (it owns the order's criteria and its gate text); the CTO half's precondition is the CTO's to restate if the issuer reads it as covering comment-only characters. Two clean exits: (a) the issuer amends step 0 to read the BUNDLED artifact (0 non-ASCII bytes, measured above) and states that tier_policy.mjs and firm-config.mjs ship as comment-only exceptions; or (b) a cell makes tier_policy.mjs all-ASCII in one commit (comment edits, no decision moves; the file is outside this order's <paths>). This seat took no AWS write, opened no ledger entry and built no artifact; the order stays pending. Local scratch only: the two minified bundles in the session scratchpad."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-f-8, phase B, step 3 plan)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S12",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-11T07:44:08Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-8 step 3 STOPS before the apply: the portal-auth plan changes 4 resources, not the signed 3 -- it also updates aws_wafv2_web_acl.opal_cloudfront_protection (standing churn, managed_rule_group_statement.version empty-string to null on 3 count-mode rules), and a -target plan cannot exclude it because the distribution depends on the ACL.",
+  "spec_asserts": "TO-FB-f-8 step 3: the plan must change EXACTLY the two functions (each a new published version) and the distribution's 10 associations, nothing else; a plan naming any other resource, or drift outside the act, is a STOP. The COO half's Branch B: the plan names any resource beyond the two functions and the 10 associations -- the act stops, the order stays open, a BLOCKING row says why.",
+  "world_is": "terraform 1.15.8, aws provider 5.100.0 (lock file tracked), infra/aws/terraform/portal-auth, plan -out saved, 74 resource_changes: 70 no-op, 4 update, 0 add, 0 destroy. The 4: aws_lambda_function.shared_advisor_router[0] (s3_object_version, version 26 to known-after-apply), aws_lambda_function.shared_advisor_router_response[0] (same, version 5), aws_cloudfront_distribution.portal (5 of 29 ordered_cache_behaviors, only the router/guard lambda_arn values differ; a masked compare of before and after is equal), and aws_wafv2_web_acl.opal_cloudfront_protection. The ACL's 6 rules: 3 identical, 3 managed groups (common-rule-set p4, ip-reputation p3, known-bad-inputs p5, all override_action count) differ ONLY in managed_rule_group_statement.version, '' before and null after; no non-rule attribute differs. A plan with -target on the two functions and the distribution still lists the ACL (Plan: 0 to add, 4 to change) because the distribution references it. The churn is standing: logged 2026-09-03 (OPSEC S6 session, 'the module was never at 0-diff'), row ADVI_FIRMBKTS-S1 2026-09-13, and the 2026-09-23 session whose plan listed the ACL among 2 changes and ended 'Apply complete! 0 added, 2 changed'. State of this act: NO apply run, no AWS write other than the two build artifacts the order permits: s3://opal-313476888478-lambda-artifacts/portal-auth/shared-advisor-router.zip (VersionId NWJciPjHZ9WAwJzH2jNtipmj06usuqFg, CodeSha256 DENFVwwc6PnJGsQpXB0ZgKMwJiGxJBTpbDWM3JXdk/E=) and .../shared-advisor-router-response.zip (VersionId T39sO4P3JJT0ZMfr6MeZLYWNBHQ55Mk5, vLZcOM0N0p8TMEZzTQcuSzguEV/cTpFu/iDNmFbdhBw=), both 0 bytes above 127. Those two objects are the live inputs of the next portal-auth plan by anyone, so another seat's portal-auth apply would now carry both functions.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/evidence/plan_json_summary.txt (computed per-rule from the plan JSON: 3 rules IDENTICAL, 3 rules differ only at version)",
+      "evidence/plan_portal-auth_untargeted.out: 'Plan: 0 to add, 4 to change, 0 to destroy.'; evidence/plan_portal-auth_targeted_fns_and_distribution.out: the same 4 with 'Resource targeting is in effect'",
+      "org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-09-03/session_0.7.0_AE_CloudOps~T_2237-0020Z_OPSEC_S6_LOGIN_ABUSE_ALARM.md:80-86 (standing churn, targeted apply around it)",
+      "org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-09-23/session_close_1951-0655Z.md:84-104 (plan with the ACL among 2 changes, apply 2 changed)",
+      "surprise-channel/investigations/INVESTIGATION_v1.md row ADVI_FIRMBKTS-S1 and remediations/REMEDIATION_v1.md ADVI_FIRMBKTS-S1 (P1, never-widen packet or config brought to live)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the call: the issuer 2.0.0_SA_COO~B1 and, for the never-widen pair, 1.0.0_SA_CTO~DELL1 (a production front-door resource is outside the signed blast radius). Recommendation (a): a pair addendum, both halves, adding the ACL to the permitted set as a named rider whose measured effect is a re-PUT of 6 rules with 3 fields '' to null, all 3 managed groups count-mode, rollback = the same rule set (nothing to roll back); the act then runs from step 3 on the saved plan. Alternative (b): bring portal-auth config to the live ACL so the plan is clean, which is a Terraform edit outside this order's paths and needs its own pair. This seat will not apply a plan that names the ACL. Standing side effects: ledger entry advi-firmbkts-fb-f-8-advtenant-act1-dell1-20261011 is OPEN with L1 closed (deploy_ledger hold --pre-apply refuses once a leg carries proof) and its 4-hour window ends about 11:37Z; infra/aws/lambda/ci/lambda-source-map.json carries the two new artifact SHAs in the working tree, uncommitted, outside this order's paths."
+}
+```
