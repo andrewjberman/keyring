@@ -1273,3 +1273,23 @@ Cottonwood keys and nothing else. A denied put is the stop branch: no role is wi
 2.0.0_SA_COO~C2 reads the object back after the act.
 
 **fanout:** 1 of 1 chains, cap 8. Seat `0.7.0_AE_CloudOps~CB2`, on box/dell2 at or after 780ba55bde.
+
+## 72. ROUND 70, WORKSTREAM B (2026-10-11 ~16:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-69 ANALYSIS @90cb3e774b)
+
+The analysis is titled ROUND 69; this issuance is numbered 70 because round 69 is the one apply order cut on the CTO's msg 5263 minutes
+before the analysis arrived. Its ENRICHMENT LIST (section 4) is the rectangle, one cell per item.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-131` | FWD-11: item 1 -- the thresholds file inside the LIVE function's package read by content, and ONE recent 49 Financial daily returns manifest: top-level key names and the count of long digit runs, no value kept; the five values compared with the tracked file (rows W100-S3, W100-S2) | LOCAL | none | B70-1 |
+| `DB-b-132` | FWD-11: item 2 -- both manifest writers serve the five thresholds and their claims only, through one function (row W100-S3) | LOCAL | none to start; DRAIN after DB-b-130 | B70-2 |
+| `DB-b-134` | FWD-11: item 4 -- `method_version_of` refuses an entry naming a positions-based row with no declared valuation source (row W103-S1) | LOCAL | DB-b-132 (same file, same worktree) | B70-2 |
+| `DB-b-133` | FWD-11: item 3 -- the contract's two prose lines worded for the method; the tracked Cottonwood build manifest's stale text corrected or its lane refusal recorded (rows W103-S2, W102-S1) | LOCAL | none to start; DRAIN after DB-b-130 | B70-3 |
+| `DB-b-135` | FWD-12: item 5 -- the custodian's two-sided dollar read for the 90 unclassed tie-out segments, classed by cause, counts only (row W104-S1) | LOCAL | DB-b-129 (drained) | B70-4 |
+
+No served object is rewritten in this round (analysis section 2 item 3): removing a prior version is a delete and Andrew's act, asked only
+with DB-b-131's count in hand. No producer upload of method row 2 before DB-b-132 lands. FWD-11's Cottonwood half and FWD-12 stay parked
+(`deliverables/2.0.0_SA_COO~D2/FWD11_REPORTING_READ_PARKED_20261011.md`).
+
+**fanout:** 4 of 4 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~105` (DB-b-131), `~106` (DB-b-132 then DB-b-134, one worktree), `~107`
+(DB-b-133), `~108` (DB-b-135), each cut from box/dell2.

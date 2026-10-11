@@ -1,5 +1,5 @@
 """MDPF_DEMQUE round 9, DQ-t-36 criterion AC2: the guard on the REAL served store (S3 read only, nothing written). `extend_frontier.py --plan
---today 2026-06-30` (a frontier before every file's end, 2026-06-22/23) must exit non-zero, write no JSON plan, and name the store's latest
+--today 2026-06-15` (a frontier before every file's end, 2026-06-22/23) must exit non-zero, write no JSON plan, and name the store's latest
 valid_to in its message; `--plan --today 2026-10-12` must still print a plan ending 2026-10-12. GUARD-REAL-OK; else GUARD-REAL-BAD <why>.
 """
 from __future__ import annotations
@@ -20,7 +20,7 @@ def main() -> int:
     if not os.path.isfile(TOOL):
         print("GUARD-REAL-BAD no file " + TOOL)
         return 1
-    early = _run("2026-06-30")
+    early = _run("2026-06-15")
     out = (early.stdout + early.stderr)
     print("early: rc=%d %s" % (early.returncode, out.strip().splitlines()[-1][:200] if out.strip() else ""))
     late = _run("2026-10-12")
