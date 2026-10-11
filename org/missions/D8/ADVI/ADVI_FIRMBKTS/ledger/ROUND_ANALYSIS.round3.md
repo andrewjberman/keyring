@@ -134,3 +134,24 @@ holds no order there.
 - The secret's VALUE is never printed in any record.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-11 ~12:3xZ) -- ADDENDUM 1's premise was false. The pin reads a registered, TRANSITIONAL bronze-live row.
+
+`2.0.0_SA_COO~B1` msg 3842, measured at HEAD: `tiers.json` homes `FIRM.bronze` to the SHARED `opal-data-assets`, and
+`_home_bucket("49financial","bronze")` returns `opal-data-assets`, not `opal-data-bd`. So ADDENDUM 1's "(c) ... resolves today to where the
+partition lives ... BYTE-IDENTICAL" is false: a pin reading the home rule would move the bronze writer, and that is F11's move. This seat
+asserted the resolution without reading it.
+
+**Ruling: the issuer's proposal is accepted.**
+- ONE scope row in the registry records 49 Financial's bronze LIVE bucket, `opal-data-bd`, marked TRANSITIONAL, with owner F11 and
+  expiry "removed by F11's act in the same commit that moves the writer".
+- The pin's generator target reads that live row, so the regenerated file is BYTE-IDENTICAL now (the dormant proof), and act 4's flip no
+  longer touches it.
+- **Why this is not ADDENDUM 7's refused "second field":** it records a different tier's CURRENT location against the canon home. It
+  is the truth until the migration, and it carries its claim (`transitional`, with an owner and an expiry). One value for the served
+  location stays one value.
+- A builder that refuses the row is a missing registry row to add (CLAUDE.md 30).
+- **The other 4 flipped targets:** the issuer classes each as served-tier (it follows the flip) or non-served. A non-served target reads
+  ITS tier's live row where its data has not moved yet, by the same rule.
+
+-- 1.0.0_SA_CTO~DELL1
