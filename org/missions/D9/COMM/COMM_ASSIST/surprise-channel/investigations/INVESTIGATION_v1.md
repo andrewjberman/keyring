@@ -317,3 +317,62 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "The order named id COMM_ASSIST-W7-S1; the row gate requires the site-z coordinate, so it is filed as Z-W7-S1. Z-S6 is cited, not edited. Ruling file in the worker deliverables folder."
 }
 ```
+
+## COMM_ASSIST-Z-S9 -- the COO half's import test run from the pinned worktree root resolves tenant from the REPO, not the package
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S9",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~CA",
+  "surfaced_at": "2026-10-11T02:21:26Z",
+  "one_line": "The COO half's import test, run from the pinned worktree root as TO-CA-f-1 step 1 directs, imports the REPO's data.transcripts.scripts.teams_chat.tenant rather than the built package's: the worktree root's data/ shadows the pkg namespace portion through the cwd entry on sys.path. It passed either way at this pin, so nothing is blocked, but from that cwd the test is not an oracle for the package.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cwd C:/tmp/ca-f1-pin (the pinned worktree root), command exactly as the COO half writes it: handlers.__file__ = <pkg>/handlers.py but tenant.__file__ = C:/tmp/ca-f1-pin/data/transcripts/scripts/teams_chat/tenant.py -- the repo tree, not the package. rc=0.",
+      "cwd a neutral empty directory outside the repo, same command, same absolute pkg path: handlers.__file__ AND tenant.__file__ both under <pkg>/. rc=0. This is the reading the half's Branch B is graded on, and it PASSES.",
+      "python -I against the same pkg is NOT a valid control: -I implies -s, which drops user site-packages, so it fails in assist.py at zoneinfo.ZoneInfo('America/New_York') with ZoneInfoNotFoundError for a missing tzdata wheel. On the Lambda (python3.12, Linux) the system tz database is present, so that failure is an artifact of the control, not of the package.",
+      "d1_live.py's own probe carries the same hazard in a comment and defends against it with cwd=tmp; the half's one-line import test has no such defence."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "COO never-widen half @3d80c80db2, Branch B: 'the import test failing against the built dist/pkg' -- python -c \"import sys; sys.path[:0]=['<pkg>']; import handlers, data.transcripts.scripts.teams_chat.tenant\". TO-CA-f-1 step 1: every build and test runs FROM the pinned worktree.",
+  "world_is": "From the pinned worktree root those two instructions compose into a test that resolves tenant out of the repo working tree. A regular package (repo data/ with __init__.py) beats a namespace portion (pkg/data without one) regardless of sys.path order, so prepending the pkg path does not win. CA-f-1 satisfied Branch B on the neutral-cwd reading, which is sound; the row is filed so a later half does not inherit the unsound form. Fix, if the issuer wants one: run the import test from a directory holding no data/, or pass the cwd explicitly as d1_live.py does.",
+  "notes": "Found off-task during CA-f-1 step 4. Nothing was widened and nothing waits on this row. Not a defect in the deployed package: the live package was proved by CAf1-AC1 (served zip == CodeSha256, both round-13 files byte-equal the pin, served code refuses a sixth firm)."
+}
+```
+
+## COMM_ASSIST-Z-S10 -- cites Z-W7-S1 / Z-S6: the now-readable error names the failing call as route=teams status=404
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S10",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~CA",
+  "surfaced_at": "2026-10-11T02:23:56Z",
+  "one_line": "Cites COMM_ASSIST-Z-W7-S1 and COMM_ASSIST-Z-S6: the error field the CA-f-1 deploy made readable now NAMES the failing call -- route=teams status=404 error=None, on every post-deploy invocation. The question Z-W7-S1 left open (COMM's code or the gateway) is answered on the evidence: a 404 on the gateway's /teams route, which is not COMM's write surface.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "logs filter-log-events, /aws/lambda/teams-global-chat-assist-ingress-lambda, us-east-1, from the ingress LastModified 2026-10-11T02:17:01Z: 39 events, 19 carrying an event field -- ingress_poll 6, channel_poll 6, ingress_step_failed 6, mail_poll 1 (max-items 500, not cut short).",
+      "channel_poll payload, verbatim log fields only: {\"calls\": 1, \"channels\": 0, \"error\": \"route=teams status=404 error=None\", \"event\": \"channel_poll\", \"failed\": 1, \"mentions\": 0, \"read\": 0}.",
+      "ingress_step_failed by step: {'channels': 6} -- channels only; never mail, chats or eod.",
+      "ingress_poll continues: {\"chats_read\": 2, \"event\": \"ingress_poll\", \"events\": 0, \"first_run\": false, \"messages\": 0, \"pages\": 1}. mail_poll logged once in the window.",
+      "Base reading for contrast (COO half, Z-W7-S1): 59-60 channel_poll per hour, all failed, 0 with an error, 0 ingress_step_failed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-3: channel @mentions of Andrew reach his phone. Round-14 D2 cures the call the new error field names.",
+  "world_is": "The call is GET /teams against GATEWAY_BASE https://mcp.opalinvest.dev and it returns HTTP 404. status=404 with error=None means the response carried no parsable error code, which is the shape of a route that is not served rather than a request the route rejected. What this row does NOT establish: whether the gateway's teams route is undeployed, unrouted at the ALB, or served under a different path -- that plane is NFRA_OPLGTW's and this seat did not read it. The CVO half named exactly this as BLIND to CA-f-1.",
+  "notes": "Filed by the applier because CA-f-1's whole purpose was to make this datum readable, and it is now read. Z-W7-S1 and Z-S6 are cited, not edited. D2's owner can start from the 404 rather than re-deriving it. Non-application: this row proposes no fix and no gate."
+}
+```
