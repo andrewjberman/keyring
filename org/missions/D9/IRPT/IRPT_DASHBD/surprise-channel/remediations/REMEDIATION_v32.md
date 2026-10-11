@@ -31,11 +31,11 @@ Graduated, round label v76: 1 row, OPEN, INERT.
   "owner": "2.0.0_SA_COO~D2",
   "round": "v76",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~D2",
    "round": "v76"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
