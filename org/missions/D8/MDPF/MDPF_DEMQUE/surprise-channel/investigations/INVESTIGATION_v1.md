@@ -1196,6 +1196,32 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/ROUND9_LOCK_CAUSE_14.md"
       ]
     }
+  },
+{
+    "id": "MDPF_DEMQUE-Z-S5",
+    "one_line": "TO-DQ-t34's build item 3 (the completing fire records COMPLETE) and its build item 4 (the three existing test_demque_standing_drawer.py tests keep passing UNEDITED) cannot both hold: that t27 test's own fixture completes BOTH its requests on day 2, and it asserts at line 111 that the run outcome is DRAWN and at line 135 that every actuals line is DRAWN. The file is NOT in t34's <paths>.",
+    "spec_asserts": "TO-DQ-t34 build 3: 'that run records its ONE line for the request with outcome COMPLETE ... not DRAWN'. TO-DQ-t34 build 4: 'The three existing test_demque_standing_drawer.py tests keep passing unedited.'",
+    "world_is": "Built and measured, not predicted. With items 1-3 implemented: AC1 dq_t34_tests.py reads CL-OK (3 of 3 named tests pass) and AC2 dq_t34_close.py reads the expected date-gated 'CLOSE-BAD no COMPLETE row yet (2 rows for the job, 11716 cells drawn)'. But test_demque_standing_drawer.py::test_drawer_draws_min_of_allowance_and_remaining_in_rank_order then FAILS at line 111, 'assert COMPLETE == DRAWN'. The collision is structural and two assertions deep, so no design choice inside the drawer avoids it: line 111 reads the RUN outcome and could in principle be dodged by leaving the run-level field DRAWN, but line 135 asserts {r['outcome'] for r in rows} == {'DRAWN'} over the ACTUALS LINES, which is exactly what item 3 changes. The cause is the fixture's calendar, measured: that test's AAA request ends 2026-01-31 (a Saturday) and its ZZZ request ends 2026-01-04 (a Sunday), so after day 2's draws NO trading day remains in either security's (latest stored, end] window and both requests are COMPLETE under item 1's predicate. The two other t27 tests pass. test_demque_standing_drawer.py is NOT in t34's <paths> (the block grants standing_drawer.py, the NEW test_demque_standing_drawer_close.py, the actuals ledger, the STANDING output folder, change_management, .open_deploys and this channel), so the assignee cannot edit it, and item 4 forbids it anyway. NOTHING WAS WEAKENED AND NOTHING WAS LANDED: the candidate is preserved as org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_T34_CANDIDATE.patch (7440 B) plus MDPF_DEMQUE_ZQ_T34_test_close.py.candidate (7004 B), and standing_drawer.py was reverted to its HEAD blob d3be03d854a72d7b639a4ef677acb189dbdd9461 with the new test file removed from the collection path, so the shared tree is green (11 passed). THAT REVERT WAS NOT HYGIENE, IT WAS A HAZARD: the registered task mdpf-demque-drawer-daily runs data/mdpf/scripts/demque/standing_drawer.py from the repository root every day at 10:00 ET, so an uncommitted edit sitting on disk would have been executed by the next fire as UNSIGNED code, outside the t34 pair whose site-Z half has not even been requested yet. WHAT IS ASKED: an issuer amendment that either grants test_demque_standing_drawer.py so its two DRAWN assertions can be updated to the new semantics, or re-scopes item 3 (for instance to the per-request line only, which still leaves line 135), or states that the t27 test is superseded. Two incidental findings fixed inside the candidate and not landed: run() wrote its receipt BEFORE computing per-request outcomes, so a COMPLETE line could have disagreed with a DRAWN receipt, and _stored_latest unioned the REAL t24 output folder even for a tmp-dir test, reading production securities into a fixture.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZQ",
+    "surfaced_at": "2026-10-11T17:25:00Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "dq_t34_tests.py -> CL-OK, 3 passed, with items 1-3 implemented",
+        "dq_t34_close.py -> CLOSE-BAD no COMPLETE row yet (2 rows, 11716 cells) -- the expected date-gated read",
+        "pytest test_demque_standing_drawer.py -> 1 failed, 2 passed; 'assert COMPLETE == DRAWN' at line 111",
+        "test_demque_standing_drawer.py:111 run-outcome assertion and :135 {r['outcome'] for r in rows} == {'DRAWN'}",
+        "2026-01-31 is a Saturday and 2026-01-04 a Sunday, so both fixture requests reach their end on day 2",
+        "t34 <paths> does not list test_demque_standing_drawer.py",
+        "candidate preserved: MDPF_DEMQUE_ZQ_T34_CANDIDATE.patch and MDPF_DEMQUE_ZQ_T34_test_close.py.candidate; standing_drawer.py reverted to HEAD blob d3be03d854a72d7b639a4ef677acb189dbdd9461; 11 passed on the reverted tree"
+      ]
+    }
   }
 ]
 ```

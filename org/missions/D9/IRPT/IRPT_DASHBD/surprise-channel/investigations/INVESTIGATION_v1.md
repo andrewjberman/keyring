@@ -6528,3 +6528,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W110-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~110",
+  "surfaced_at": "2026-10-11T17:23:19Z",
+  "one_line": "DB-b-137: the order's BOUNDS limit AWS reads to get-function / get-function-configuration, yet item 2 of the cell orders the kit run 'exactly as REFRESH_3 ran it', which reads served inputs with S3 GETs; both can be true only if the kit's GETs are read as inside the cell. The worker read them so.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-137 BOUNDS: 'AWS reads are limited to get-function / get-function-configuration of the ONE reporting-gold function'; cell item 2: run the candidate producer dry on the kit day REFRESH_3 used, no upload, exactly as REFRESH_3 ran it.",
+  "world_is": "REFRESH_3's kit run and manifest capture read the served inputs for the kit day with the handler's own S3 GET and LIST calls (its packet, 'Reads made'); its order carried the same BOUNDS sentence plus a head-object. This cell ran refresh_delta0_run.py and manifest_capture.py unchanged for the same day: GETs and LISTs only through the harness (the capture guard raises on any write verb and captures put_object; the data write and the status write are stubs), 0 S3 writes. The one AWS CLI call made was a get-function-configuration of the one function. No head-object was made (not in this order). If the BOUNDS sentence was meant to exclude the kit's GETs, kit.ran would have been false for want of them; it ran, so the packet states the reads and the issuer can read this row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-137.r45-refresh-4-with-served-thresholds.md BOUNDS and cell item 2",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~101/NEVER_WIDEN_PACKET_R45_RELEASE_REFRESH_3.md (section Kit comparison, 'Reads made')",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~92/manifest_capture.py (the guard)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
