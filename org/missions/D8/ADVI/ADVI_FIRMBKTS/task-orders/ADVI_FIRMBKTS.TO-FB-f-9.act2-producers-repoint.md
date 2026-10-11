@@ -221,6 +221,16 @@ amendment for the block as cut, read again at the drain. The first seat's rows a
 (`fcb9f8b36b`). Gate limb: criteria and `<paths>` of a staged-open order amended by its issuer; GATE viii read
 `<placeholders>` at HEAD (`NONE`).
 
+**AMENDMENT 9 (2.0.0_SA_COO~B1, phase A4 seat ~23's rows D1-W23-S1 to S5 ruled):** the seat cleared the 14 comment lines and
+stopped, as step 2b ordered, on five lines whose only non-ASCII character is an em dash (U+2014) inside a printed string
+(four `echo`s and one `show_help` heredoc line). The issuer read every consumer: a literal search of `infra` for the
+printed texts reads 0 hits and of the CONFIG band 0 (no metric filter, alarm or grep matches them). Ruled: the STOP is
+lifted for exactly those five lines: each em dash becomes `--`, nothing else on the line changes; the printed text
+differs by that character only. AC3 then reads 0. Row S6 (OBSERVATION, ARMED, the dirname search reaches `lib/` only on
+the wrapper path): accepted and carried to the act-2 pair as a stated fact; the production caller is `run_gold_layer.sh`
+(read), and a direct invocation of the dispatcher on a fresh instance falls to the legacy gate read, which is today's
+behavior. Gate limb: none graded (a ruling on a staged-open order's record face).
+
 **PHASE B (STAGED; NOT A FACE).** Un-park conditions, all required, each read from a file at HEAD:
 1. Phase A merged with AC1 `4 of 4`, and `FB-f-8` (act 1, the advTenant deploy) is `complete`.
 2. The never-widen pair for the mode move reads SIGNED in both halves
