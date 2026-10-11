@@ -370,9 +370,9 @@ This slug lands under the gate's audited override, citing that clause.
     },
     "closed": false,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~D",
-      "at": null
+      "at": "2026-10-11T10:22:40Z"
     }
   },
   {

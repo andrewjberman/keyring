@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-11T05:38:26Z",
+ "written_at": "2026-10-11T10:20:20Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -1561,6 +1561,70 @@
     "at": "2026-10-11T05:38:26Z",
     "by": "1.0.0_SA_CTO~DELL1",
     "reason": "X2 is Andrew's own grant (06_CONFORMANCE_LEDGER X2, decider Andrew 2026-09-15); its written basis is now false, so only he re-grants or withdraws it"
+   }
+  },
+  {
+   "id": "dell1-20261011T101811Z-73d1",
+   "project": "AMGT_RESAPP",
+   "subject": "No box holds the client account-id hash list, so the check that stops client ids entering git only warns everywhere. Build it once, from the 3 firms' silver tables, under your identity on the laptop, hashes only, kept outside git on each box? REC yes",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round92.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-11T10:18:11Z",
+   "kind": "fork",
+   "context": "Row W381-S1 (ARMED). Measured: dell1 and laptop both lack OPAL_ACCOUNT_ID_HASHES and ~/.opal; dell2 is being asked. The only builder (2.0.0_SA_COO~P2/account_id_hash_builder.py) reads raw client account tables across 3 firms, which no agent identity should do alone.",
+   "rec": "Yes. One build by Andrew's identity on the laptop; only hashes leave the run; each box gets the file outside git and its check moves from WARN to REFUSE; then one back-check of recent commits per box. Without it, a client account id in a commit is never caught.",
+   "scope": {
+    "measured_at": "2026-10-11T10:18:11Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest",
+     "infra/aws/terraform/yang-pipeline",
+     "infra/aws/terraform/nfra-agentbus-alyssa01",
+     "infra/aws/terraform/seeking-alpha"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_IAMROLES202609 placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/research/api/scoped_amgt.py is on the shared branch (lib)",
+      "lib/research/filings/drafting_build.py is on the shared branch (lib)",
+      "lib/research/filings/tests is on the shared branch (lib)",
+      "lib/research/drafting is on the shared branch (lib)",
+      "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_monthly_chatter.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-11T10:20:20Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_192xZ_CLIENT_DATA_IN_PRIVATE_GIT_NOT_WORTH_TIME.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-11T10:18:12Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "reads three firms' raw client account tables under one identity; a cross-firm data act only Andrew authorizes"
    }
   }
  ]
