@@ -85,7 +85,7 @@ the entry id, AC1 to AC3 outputs and the commit hash. State that no text was sen
 that cannot set a per-publish attribute. The close (one real SEV1 publish delivered) is Andrew's word, asked by the CTO.
 Workstream `SMSAPPLY`.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>SMSAPPLY</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-20</to_id>
