@@ -1446,3 +1446,13 @@ half as this project's. Round 80 (DB-b-154, DB-b-155) is running; this ruling ar
 | `DB-b-156` | msg 5937: does any reader the tie-out or the served dashboard uses key on the file's day and not the transaction's own date; for the two sampled days, the ids' own dates against the files they now sit in. Read-only, counts only. The row closes on it | LOCAL | DB-b-151 | B81-1 |
 
 **fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~126`, in a fresh worktree cut from box/dell2.
+
+## 84. ROUND 82, WORKSTREAM B (2026-10-11 ~22:2xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 5955)
+
+The CTO accepted the renamed first axis and its two tokens and, on row D2-W121-S4, removed TIMING_END (a value that cannot occur).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-157` | msg 5955: the proposal record carries the class set as ruled -- TIMING holds three values, the three retired tokens are listed together, the ruling is recorded; by the serial that owns the record | LOCAL | DB-b-155 | B82-1 |
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~121` (worker-light), in a fresh worktree cut from box/dell2.
