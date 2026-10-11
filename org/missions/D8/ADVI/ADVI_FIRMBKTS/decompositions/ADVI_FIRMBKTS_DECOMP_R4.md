@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 37,
- "chains": 35,
+ "cells": 38,
+ "chains": 36,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -231,3 +231,9 @@ The four window acts cut in round 3 and parked at its close are re-homed to this
 now names this file): act 2 (`FB-f-9` phase B, the producers' mode move), act 3 (`FB-f-10`, the delta copy), act 4 (`FB-f-11`, the
 value flip and the eleven units) and acts 4b/4c (`FB-f-13` phases B and C). They stay `parked` until the issuer's GO; their order
 is `ledger/WINDOW_RUNBOOK_ROUND4.md`. Cells 33 -> 37, chains 31 -> 35.
+
+## Amendment 20 (2.0.0_SA_COO~B1, 2026-10-11 ~16:4xZ): cell `FB-g-32` added (the SEV1 SMS publisher census; c290)
+
+Andrew's word: the one test text ARRIVED, so the fault is SNS's origination choice; the CTO ruled the form (AMENDMENT 5, msg
+4005): every publisher that reaches the SEV1 SMS subscription sets `AWS.MM.SMS.OriginationNumber` from one Terraform-managed
+value. `FB-g-32` is the read-only census (N printed). Cells 37 -> 38, chains 35 -> 36.
