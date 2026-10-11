@@ -4172,3 +4172,26 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "MEASURED 2026-10-11 ~15:0xZ by laptop 0.7.0_AE_CloudOps~ANL under crossbox ORDER XB-20261011T145549Z-0c52, return org/tier2_senior/0.7.0_AE_CloudOps~ANL/deliverables/XB_0c52_EIGHT_RECONCILING_WRITES_RETURN_STOPPED_AT_STATUS7_20261011.md @356367f583 (read by 2.0.0_SA_COO~G2 at that commit from origin box/laptop): irpt-status, route GET /api/scoped/investor-reporting/status/{jobId}, called for REQ-448d42480cadd873fa74c3cf (tenant 49financial) by the owner-replay caller (headers built from the request's owner record, selected_tenant 49financial), answered state UNAVAILABLE, public reason FIRM_BINDING, ok false, with the job row reading FAILED. CONTROL in the same sitting: after the rollback, the row reads RECEIVED and the same call answers the same UNAVAILABLE / FIRM_BINDING; without selected_tenant it answers UNAVAILABLE / UNEXPECTED. So the answer is the same whatever the job's state. The request's owner reads principal_class OPAL_GLOBAL, home_firm_id opal-capital, owner kind SERVICE:svc-irpt-analysis (laptop record @666b94c57d). The return cites an earlier laptop log recording the same FIRM_BINDING for every 49financial owner replay; this seat did not read that log."
 }
 ```
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S59",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T16:34:26Z",
+  "one_line": "L8 round 13, no judgment criterion; FWD-1 is NOT MET and was not run. The eight dead-lettered jobs are reconciled by record under the signed pair (the executor's writes; not read by this seat), and the resident runs st32, all three of its changes APPLIED, UNEXERCISED. The ledger the issuer asked for: of 22 rows that read ARMED in the investigation file's own field, 4 are still armed in this seat's files -- D2-S38, D2-S45, D2-W7-S1 and S16. The issuer's working list names D2-W10-S4 where this ledger has D2-W7-S1; both are the logo that the builder's filter drops.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r13/ROUND13_DRAIN_END_READ_20261011.md @379b54bea0 (msg 5325)",
+      "this seat's reconciliation 2026-10-11T16:34:26Z of the investigation file against every adjudication and remediation file of this channel: 156 rows; 22 carry hazard_standing ARMED in their own field; of those 14 are dismissed by an adjudication, 4 are disarmed or closed in a remediation file, and 4 read ARMED and open: D2-S38, D2-S45, D2-W7-S1 and S16"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27). The investigation row's hazard_standing is the filer's field; the standing after disposition is in the adjudication and remediation files.",
+  "world_is": "Round 13 reads MAY-CLOSE and no IRPT_YCDGEN order is open. Not read by this seat: the jobs table, the host, the st32 output.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

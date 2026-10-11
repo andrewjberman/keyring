@@ -86,6 +86,20 @@ Laptop (cloud-local) in the same wave: B and D only (the rule's scope and the ke
 ```
 (The second rule keeps today's box-to-box traffic -- agentbus, git, the broker -- exactly as it is; tighten later by measurement.)
 
+## 7. Wave 1 result (16:0x-16:2xZ, all four managers, nothing enabled; msgs 108349/108350/108351/108361)
+
+| box | elevated | sshd | :22 rule | :3389 rule | sshd_config | admin keys |
+|---|---|---|---|---|---|---|
+| laptop | False | Running/Automatic | "OpenSSH Server (Tailscale only)", remote ANY | RDP TCP+UDP, tailnet /10 | yes | no |
+| sitez | False | none | none | "RDP - Tailscale tailnet only (TCP-In)", tailnet /10 | no | no |
+| dell1 | False | none | none | RDP TCP+UDP, tailnet /10 | no | no |
+| dell2 | False | none | none | RDP TCP+UDP, tailnet /10 | no | no |
+
+Reading: every manager session is unelevated, so **wave 2 is Andrew's act on all four boxes** (plan section 4 item 3): one
+elevated PowerShell per box (RDP in, "Run as administrator") running section 3 A-C, then B+D on the laptop. RDP is already
+tailnet-scoped everywhere, so phase 2 (RDP scoping) is DONE by measurement and needs no act. Nothing is owed by a manager
+until he says a box is done; this seat then probes `:22` and records the receipt per box.
+
 ## 6. Routing
 
 `0.0.0_AB_MSTR` (laptop) relays wave 1 to `~Z`, `~DELL1`, `~DELL2` now and runs it on the laptop; the four results come back
