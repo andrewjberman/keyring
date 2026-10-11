@@ -1806,3 +1806,33 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
 }
 ]
 ```
+
+## Z-S36 -- the issuer rules Z-S34 RESERVED (an R20 declared exception is Andrew's to acknowledge) and releases w-3 PHASE B ahead of w-2 (amendment A7-r6)
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S36",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-11T00:40:00Z",
+    "one_line": "Z-S34 (w-2's two 'bd' role names refused by the naming gate's carrier limb, which the placement override cannot reach) is RESERVED: CLAUDE.md Rule 30 names 'a deliberate departure is an R20 register entry Andrew acknowledges', so the card goes to 0.0.0_AB_MSTR~Z for Andrew; meanwhile A7-r6 releases w-3 PHASE B from waiting on w-2's, because the two modules share no state and plan order protects nothing here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S34 (BLOCKING, disarm_owner 2.0.0_SA_COO~ZI) asks for an R20 declared exception for bd-merge-daily-lambda-role and bd-pipeline-task-role; DECOMP_R6 section 4 and both w-3 halves held w-3 PHASE B behind w-2 PHASE B by plan order.",
+    "world_is": "The carrier limb (a NEW 'bd' firm token outside every permitted context) fires above the placement path, and the canonical names it asks for need a create-plus-delete rename of live roles, a WORLD act outside every signed pair. The only canon remedy that lifts it is the R20 declared exception, and Rule 30 reserves its acknowledgement to Andrew, quoted verbatim: 'a deliberate departure is an R20 register entry Andrew acknowledges'. So this seat neither writes the entry nor works around the gate. The card, with the recommendation, goes to 0.0.0_AB_MSTR~Z and onto the box's open-call queue. Nothing landed: bd-pipeline state holds 0 of the 2 roles, both read Tags [], and ledger iamroles-r6-family-a is HELD-PRE-APPLY @47955fd728 with a 6h window. If the call is not answered inside that window, ~IR closes the entry NOT-APPLIED rather than leaving it open. ORDER: w-2 and w-3 adopt into different modules (bd-pipeline vs portfolio-management / news-pipeline) with different state keys and zero pre-existing drift each. Plan order was this seat's sequencing choice, not a dependency, and the CTO half echoes it 'per the w-3 halves'. A7-r6 edits DECOMP_R6 section 4 and the COO w-3 half's GO condition. The signed blast radii are unchanged.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S34 and Z-S35 as filed by 0.7.0_AE_CloudOps~IR (msg 33099, acked)",
+        "org/critical_paths/.open_deploys/iamroles-r6-family-a.json status HELD-PRE-APPLY, window_hours 6.0, opened 2026-10-11T00:03:49Z",
+        "CLAUDE.md Rule 30, the R20 sentence quoted above",
+        "PLAN_SURVEY_family_a.md / PLAN_SURVEY_family_e.md STATE_KEY lines: bd-pipeline/tfstate vs portfolio-management/tfstate and news-pipeline/tfstate"
+      ]
+    },
+    "notes": "Cites Z-S34, Z-S35, Z-S25, Z-S28. Gate limb: none graded A7-r6 (an edit to a decomposition and a ledger half; GATE viii not engaged). The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
