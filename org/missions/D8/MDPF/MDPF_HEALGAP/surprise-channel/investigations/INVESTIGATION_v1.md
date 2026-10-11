@@ -918,6 +918,28 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "HG-t9 TO line 78: 'All three FAIL at the base (T9-BAD ..., T9IAM-BAD ..., GATE-BAD ...)'; HG3-t9-AC1 expects T9-OK on the rule's presence and schedule.",
     "world_is": "At the start tree the T9 rule check already passes without the v2 patch (the rule was merged at v1). AC1 therefore gives no signal on the v2 change; AC2 and AC3 do fail on the start tree as the order states.",
     "notes": "Recorded only: the order's sentence is quoted, not corrected. The AC1 PASS on the patched tree is correct for the rule but is not evidence that this cell's v2 patch changed the rule. For the CVO's L9 read."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W11-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~11",
+    "surfaced_at": "2026-10-11T13:25:59Z",
+    "one_line": "The top-of-file WHY block of satellites-characteristics-producer.tf (lines 34-35) names the registry producer's cron(0 7 * * ? *) rule as this trigger's anchor. The file's finality input, holdings.json, is final only at the stamp-gated cron(15 13 * * ? *) fire, which that block does not mention. Outside the three edits HG-t-14 names; not edited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf lines 34-35 at 60ee1f8f3d: the anchor is 'cot-satellites-registry-producer-daily   cron(0 7 * * ? *)   UTC'",
+        "infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf lines 304-307 (cot_satellites_registry_producer_daily, cron(0 7 * * ? *)) and lines 334-337 (cot_satellites_registry_producer_stamp_gated, cron(15 13 * * ? *)) at 60ee1f8f3d; hg_t14_schedule.py printed stamp_gated=cron(15 13 * * ? *)",
+        "Worktree edit for HG-t-14: schedule_expression changed to cron(25 13 * * ? *); the top-of-file block was left as found"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The file's top-of-file WHY block: this trigger's anchor is the registry producer's daily UTC cron at 07:00Z, so a constant UTC margin holds to a UTC-cron upstream.",
+    "world_is": "The registry producer still carries the 07:00Z daily rule, and holdings.json is final only at the stamp-gated 13:15Z fire. The block names only the 07:00Z rule, so it does not describe the input this trigger now clears. The UTC-cron reasoning itself still holds.",
+    "notes": "Recorded only; no edit made. The CVO or the issuer decides whether the top-of-file block is re-worded in a later cell."
   }
 ]
 ```
