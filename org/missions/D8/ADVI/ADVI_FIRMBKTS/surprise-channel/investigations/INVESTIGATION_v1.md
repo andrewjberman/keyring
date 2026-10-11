@@ -5151,3 +5151,76 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "The line check is not performed by this worker's census; the worker verified its 16 code lines by reading each one (each carries its publish call). For the issuer: a line test in S2 would close the gap. The checker is the COO's file and is not edited here."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W57-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~57",
+  "surfaced_at": "2026-10-11T17:09:47Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "FB-g-34 AC1 reads 3 of 4 arms: the E3 dormancy arm of r4_modeenv.py cannot pass on the merge form that FB-g-34 1a.2 mandates, because its in-order matcher stalls at the environment_variables header line.",
+  "spec_asserts": "FB-g-34 1a.2: environment_variables becomes merge(<the base map>, var.platinum_mode == '' ? {} : { BD_PLATINUM_MODE = var.platinum_mode }) with every base key and value kept character for character. FB-g-34 AC1 expects 'ROUND 4 MODE ENV: 4 of 4 arms'; E3 requires every base line kept in order and no other file of the root changed.",
+  "world_is": "On ee3e4f6b45 the AC1 run prints E1 PASS, E2 PASS, E3 FAIL ('base lines kept 11 of 15 (env block lines aside)'), E4 PASS, 'ROUND 4 MODE ENV: 3 of 4 arms', exit=1. The E3 greedy in-order matcher stops at the first base line it cannot find in order. That line is 'environment_variables = {' (the header), which the mandated merge form necessarily changes, so keep_o[11..14] (header, '  }', 'system_tag = PartnersAPI', '}') are unmatched. The check's env-line exclusion drops lines containing USERS_TABLE only, not the header or its close, so the spec-mandated form cannot reach 13 of 15 under this arm. By inspection (not executed), excluding the two header lines would leave 13 lines, all matched in order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-firmbkts-57/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_modeenv.py@1d4c0cbfd6 lines 60-69 and 73-89: keep_o drops only lines matching the base key USERS_TABLE; E3 pass threshold is i >= len(keep_o) - 2",
+      "r4_modeenv.py --arms var --cell partners --root C:/dev/wk-firmbkts-57 --base 9c6d5ea3ba at ee3e4f6b45: E1 PASS, E2 PASS, E3 FAIL (11 of 15 kept), E4 PASS, 3 of 4 arms, exit=1",
+      "E3 diagnostic at ee3e4f6b45 (.scratch/e3_diag.py, not committed): base non-env lines 15, greedy matched 11, UNMATCHED: 'environment_variables = {', '  }', 'system_tag = \"PartnersAPI\"', '}'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocks FB-g-34 AC1 (criterion FAIL, order left open). Not worked around: a for-expression wrapper that keeps the header line would pass E3 but is not the spec's merge(<base map>, cond) form and would game the arm. The check file is the COO's and is read-only to this worker. For the issuer: the arm's env-line exclusion should cover the environment_variables header and its close as it covers USERS_TABLE, or the arm's threshold should be stated for the merge form."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W57-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~57",
+  "surfaced_at": "2026-10-11T17:09:47Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The safe-commit risk-reflex advisory on FB-g-34 cited a device memory note that is absent from this device's memory directory, so the cited note could not be read before the commit.",
+  "spec_asserts": "CLAUDE.md section 2 and the pre-commit advisory: a HOLD advisory asks the committer to read the cited memory note before the commit proceeds. FB-g-34 section 5: commit the two files and the rows.",
+  "world_is": "safe-commit ee3e4f6b45 printed six HOLD advisories for infra/aws/terraform/partners-api/lambdas.tf citing memory/project_inf_hold_door2_staleness_ceiling_is_env_overridable.md:51 under the advisory's own memory root (C--Users-AndrewBerman-Desktop-ajb-workspace). The same name under this device's memory directory returned 'File does not exist', and the note is not indexed in this device's MEMORY.md. The commit proceeded (gate rc=0). The cited note was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at ee3e4f6b45: [risk-reflex] [HOLD] infra/aws/terraform/partners-api/lambdas.tf -> file:infra/aws/terraform/bd-pipeline/lambdas.tf (14 recorded claim(s)), memory/project_inf_hold_door2_staleness_ceiling_is_env_overridable.md:51",
+      "Read of C:/Users/Test/.claude/projects/C--dev-ajb-workspace/memory/project_inf_hold_door2_staleness_ceiling_is_env_overridable.md: 'File does not exist' (this device's memory dir)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not remediated: the worker has no write surface on the memory directory. The HOLD advisory's relevance to a variable with default empty (no apply, no plan) is for the CTO and the COO to read, not for this worker to decide."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W57-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~57",
+  "surfaced_at": "2026-10-11T17:09:47Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The client-data-check on the FB-g-34 commit ran WARN, not PASS: the hashed account-id list is absent on this device, so the commit was not checked for client account ids.",
+  "spec_asserts": "FB-g-34 section 2.3: if the commit is refused by a gate, do not override or force. The commit gates are expected to grade the commit.",
+  "world_is": "safe-commit ee3e4f6b45 printed 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty)'. The commit was not refused and nothing was overridden. The added lines are the variable block and the merge expression; none carries an account number.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at ee3e4f6b45: 'WARN: client-data-check: hashed account-id list ABSENT ... this commit was NOT checked for client account ids'",
+      "git show --stat ee3e4f6b45: 2 files changed, 18 insertions(+), 3 deletions(-); create mode 100644 infra/aws/terraform/partners-api/variables.tf"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not remediated: the list is an environment file outside this worker's write surface. The CTO or the integrator should decide whether the list must be present on this device for the check to grade commits from here."
+}
+```
