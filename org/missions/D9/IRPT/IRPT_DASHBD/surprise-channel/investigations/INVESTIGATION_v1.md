@@ -7044,3 +7044,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W129-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~129",
+  "surfaced_at": "2026-10-11T23:09:00Z",
+  "one_line": "DB-b-160: a flagged day does not fall back to the price return in the code; FLOW_UNRECONCILED serves a null return, LARGE_FLOW keeps the TWR return; the PRD C-GUARD clause and the order wording still say fallback.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-160 worker face and the CTO round-83 analysis: C-GUARD marks a day FLOW_UNRECONCILED or LARGE_FLOW and such a day falls back to the price return; the producer is under infra/aws/lambda/investor-reporting/.",
+  "world_is": "The producer is data/assets/scripts/gold/irpt_reporting/account_return_daily.py. Its selection chain (lines 1498-1528) serves a FLOW_UNRECONCILED day with total_return_daily null and return_basis NOT_MEASURABLE, and a LARGE_FLOW day with its TWR return kept (a reader warning). HOLDINGS_INCOME_FALLBACK is never emitted (lines 164-170); PRD addendum v0.4 ruling 17 withdraws the substitution, so no day falls back to the price return and fallback_days_moved to the price return is 0 under START and MID. What a moved flag changes is whether the served return is a value or null: under START 71 flagged-or-null days gain a value and 2590 lose theirs; under MID 48 and 1260. Separately, the two guard thresholds are not in the copy; they were inferred from the served flags by bracketing (record GUARD_INTERPLAY.json, thresholds). Counts only; no S3 read or write.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 164-170, 1498-1528",
+      "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md lines 454-461 (ruling 17)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~129/GUARD_INTERPLAY.json (what_a_flagged_day_becomes, fallback_days_moved)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
