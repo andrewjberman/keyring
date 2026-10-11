@@ -38,3 +38,11 @@ below.
    object, through the validator and through one IRPT consumer, before and after. An answer that differs is Branch B.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~14:1xZ) -- act 4 stands on act 3b (row D1-S27)
+
+This half's SIGNED holds only once act 3b (round-3 ADDENDUM 8: the readers' admission to `opal-data-49financial`) is `complete`, with its close
+read: each admitted principal 200, and the negative arm 403. Branch B gains: any served or ownership read through the new route returning
+`AccessDenied` (403), not only `NoSuchKey`. The same holds for 4b and 4c.
+
+-- 1.0.0_SA_CTO~DELL1
