@@ -5,7 +5,7 @@
  "project": "IRPT_YCDGEN",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.12",
+ "prd_version": "v0.13",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ycharts-inhouse-generation-feasibility-20261005.md@69141b561e",
  "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23"],
@@ -449,5 +449,45 @@ MECE check: every one of the 22 live outcomes has a row (FWD-3 and FWD-5 ride S2
   later read of the same job is a new `inferred` record that names its evidence. Rule 24 postulate (iv), restated: no remedy moves
   `measured`; no remedy moves `inferred` to `measured`.
 - Everything else of v0.11 stands as written.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.13 -- a request says whether commentary was asked for, and only then is a draft started (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `2.0.0_SA_COO~G2`'s binding packet PART 1 @4fdc20b233 (bound as built, every READY analysis starts a draft at an outside
+  model); this seat's rulings msgs 5727 and 5747; and `2.0.0_SA_COO~P2`'s read IB-pr-453,
+  `IRPT_BCKEND deliverables/0.9.0_WK_IRPT_BCKEND~309/IB149-1_COMMENTARY_ASKED_MEMBER_READ.md`, merged @f1744dd205, **read whole by this
+  seat before this addendum was written.** This seat also printed `ycharts/generate/submission.py` lines 14 to 16 and 46 to 54, and
+  `ticket_center/lambda_function.py` line 112. The ENDPOINT is unchanged.
+- **One correction to that read, on timing and not on substance:** it was made at a commit that does not contain
+  `2.0.0_SA_COO~G2`'s ticket gate (@8d6fef62e8 is not an ancestor of its base, by this seat's `merge-base`). Its sentence "the worker
+  signals on every READY job" was true of its base and is not true of the trunk, where the send needs a ticket id.
+- **What the read establishes.** A submission does not say whether commentary was asked for: its body is a closed set
+  (`PUBLIC_FIELDS`, the eight custody fields plus `input_id` and `ticket_id`) and an unknown member is refused. The TICKET says it:
+  `answers.add_commentary`, a boolean. Acceptance holds no ticket and no ticket port. The accepted record is written once; a replayed
+  submission returns the prior record unchanged; no file declares the record; every production reader reads named members and ignores
+  an unknown top-level one (50 readers placed by the worker, not re-read by this seat).
+- **THE CONTRACT. The submission's closed set gains ONE optional member, `commentary_requested`, a JSON boolean.** Any other type is
+  refused as the set's other members are. Acceptance copies it into the accepted record as a top-level member of the same name when
+  the submission carried it, and writes nothing for it otherwise. **The worker sends `analysis_ready` only when the accepted record
+  carries a ticket id AND `commentary_requested` is exactly `true`.** Absent, `false` or any other value sends nothing. So every record
+  accepted before this change, and every replay of one, starts no draft.
+- **Who sets it:** the form that files the request under a ticket sends the same answer it wrote to the ticket's `add_commentary`.
+  **It is the caller's own statement and the contract says so (`cause_claim` is not involved; this member is a request input, like
+  `report_title`).** What a caller gains by stating `true` falsely is a draft on their own ticketed request in their own firm, which
+  ticking the box on the ticket also gets; by stating `false`, no draft. Neither reaches another firm or a request with no ticket.
+- **Why not a ticket read:** it would give acceptance, the worker or the drafter a read of the ticket store, a new grant on a path
+  that has none, to learn one boolean the filer already holds. Ruled out in msg 5747.
+- **A second check, not in this addendum:** the ticket service may refuse a draft for a ticket whose `add_commentary` is not true.
+  That is TCKT_VNEXT's route and comes after a model call has already been made, so it cannot be the control; it is noted to that
+  project as a consistency check.
+- **Consumers named for the eventual served changes' pairs, each with one read:** the generate function (the closed set and
+  acceptance); the resident worker (the send); the portal form and its vendored schema copy
+  (`AnalysisSubmissionRequest.schema.json`, `additionalProperties` false, so the page and the service move in an order that never has
+  the page sending a member the live service refuses: SERVICE FIRST); the 50 readers of the accepted record.
+- **Rule 24:** one member, two values, one intent (was commentary asked for by the filer); domain, every submission; absence is not a
+  third value of the member, it is the member's absence and is read as not asked. Token census, word boundary, over py, json, ts,
+  tsx, md and yaml files of the workspace: `commentary_requested` 0 hits in 0 files before this addendum. Not searched: portal,
+  opal_ai, mcportal.
 
 -- 1.0.0_SA_CTO~DELL2
