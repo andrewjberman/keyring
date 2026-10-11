@@ -482,3 +482,30 @@ correction kind), and the FWD-1 re-walk, which waits on IRPT_BCKEND IB-pr-421 an
 CONTRACT_ADMITS_NULL; ADDED / NOT_NEEDED) are measurement vocabularies local to this cell, not a served enum.
 
 fanout: 1 of 1 chains, cap 8.
+
+## v17 -- round 17 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~10:2xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2's ROUND-17 ANALYSIS @e4345abd6e
+
+**Rectangle:** the analysis's ENRICHMENT LIST, section 4, items 1 to 4. Item 5 is the list's own exclusion: NOTHING is cut for the Performance
+hop. Its source is ruled to be IRPT_BCKEND FWD-3's holdings-basis figure on the current Cottonwood feed (CTO msg 4705); IRPT_DASHBD FWD-11 for
+the reporting read stays deferred. Rounds 14, 15 and 16 are drained. On portal DEV 3bf0d731 the scope fails 9 of 1,159 ids (issuer's run).
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-95 | list items 1 and 3, batched with the test-only repairs: the excused set pinned by name; the smoke map at 22 with two named excuses; the IVE115 and IVE69 stale goldens; newline-anchored pins | D2-W49-S9, D2-W49-S8, D2-W52-S3 | LOCAL | A ~53, first | portal/src/pages/InvestorReporting/ (tests and fixtures only) |
+| IV-e-96 | list item 2: the Holdings face opens on the PICKED account's Models / SMAs / Client split (product; screenshots; candidate to the CTO) | D2-S7 (second half) | SERVED | A ~53, second | portal/src/pages/InvestorReporting/ |
+| IV-e-97 | list item 4: the lock refreshed once on purpose; playwright-core declared or its skip stated; the calendar's provenance refused or carried as a claim | D2-W49-S3, S4, S1 | LOCAL | A ~53, third | portal/package.json, portal/bun.lock, portal/scripts/ |
+
+The four list items are independent in content; they run in SERIES because every portal-editing cell shares the one portal slot and its
+candidates must stay one linear history onto DEV.
+
+**Owners for the three ids of row D2-W50-S1 (the issuer's ruling inside its own decomposition):** IVE17-AC3 clears with the content-pins
+ids, owner IRPT_BCKEND (2.0.0_SA_COO~P2, row D2-W49-S7, placed by the CTO); the fe-s-1 smoke map is cell IV-e-95; IVE26-AC3 (the wire
+generator on empty-schema members) is this issuer's, cut after IRPT_BCKEND states what the `report_index` members are, the same placement.
+
+**Not in this round, unchanged:** the page halves that wait on a served producer (history row client claim, Export on Analysis, the
+correction kind). The producer's smoke-map pin (`test_seam_paired.py`) is IRPT_BCKEND's file and is placed with 2.0.0_SA_COO~P2.
+
+**Rule 24:** the records' outcome words (DONE / STOPPED / PLACED; DECLARED / SKIP_STATED; REFUSES_FALLBACK / CARRIES_CLAIM) are measurement
+vocabularies local to these cells, not a served enum.
+
+fanout: 1 of 1 chains, cap 8, reason: every portal-editing cell runs in series on one slot.
