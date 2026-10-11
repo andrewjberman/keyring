@@ -4273,3 +4273,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_YCDGEN-D2-S63 -- The source map entry for irpt-ycharts-generate is stale: its recorded commit lacks a fix the live bytes carry, and its recorded hash is not the live one
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S63",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T19:47:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "The source map entry for irpt-ycharts-generate is stale: its recorded commit lacks a fix the live bytes carry, and its recorded hash is not the live one",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-11T16:41Z by 2.0.0_SA_COO~G2: the live function irpt-ycharts-generate reads CodeSha256 tdpterTMfJlWXjnoAQCwil+wN/Jf8Q/yLjGxTk7yUkk=, LastModified 2026-10-09T09:32:22Z (get-function-configuration), and its downloaded package hashes to that same value (104 members). infra/aws/lambda/ci/lambda-source-map.json records for the same function artifact_sha256 ZA0QJ5Wt/7JcwmuzVfHOeNAdFk6th4H5IEeqQStDYm8=, last_deployed_commit 5d3eed890439d8db172902b90571fe04854ad14d, last_deployed_at 2026-10-08T21:35:15Z. The recorded commit does NOT contain fix db8161f46e by ancestry (positive control: HEAD does), while the live package's served.py DOES carry that fix's lines. So the map's entry describes an earlier deploy than the one running: at least one deploy on 2026-10-09 did not update it. Record: org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r14/TWO_ARMED_ROWS_AND_THE_SITTING_20261011.md @cbbff7ab80."
+    ]
+  },
+  "notes": "Filed on the CTO round-15 analysis @c3cf777f3b section 3 item 3. A reader who asks the map what is deployed is told the wrong commit; this seat nearly concluded from it that the fix for row S16 was NOT deployed. Not read: which commit the live package was built from, which other entries of the map are stale (this is one entry, found by accident, not a census), and which deploy on 2026-10-09 skipped the update. The correction is cell YCD-b-15: the entry is corrected from the live digest and the build input, by content.",
+  "spec_asserts": "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-ycharts-generate: artifact_sha256, last_deployed_commit and last_deployed_at describe what is deployed.",
+  "world_is": "MEASURED 2026-10-11T16:41Z by 2.0.0_SA_COO~G2: the live function irpt-ycharts-generate reads CodeSha256 tdpterTMfJlWXjnoAQCwil+wN/Jf8Q/yLjGxTk7yUkk=, LastModified 2026-10-09T09:32:22Z (get-function-configuration), and its downloaded package hashes to that same value (104 members). infra/aws/lambda/ci/lambda-source-map.json records for the same function artifact_sha256 ZA0QJ5Wt/7JcwmuzVfHOeNAdFk6th4H5IEeqQStDYm8=, last_deployed_commit 5d3eed890439d8db172902b90571fe04854ad14d, last_deployed_at 2026-10-08T21:35:15Z. The recorded commit does NOT contain fix db8161f46e by ancestry (positive control: HEAD does), while the live package's served.py DOES carry that fix's lines. So the map's entry describes an earlier deploy than the one running: at least one deploy on 2026-10-09 did not update it. Record: org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r14/TWO_ARMED_ROWS_AND_THE_SITTING_20261011.md @cbbff7ab80."
+}
+```
