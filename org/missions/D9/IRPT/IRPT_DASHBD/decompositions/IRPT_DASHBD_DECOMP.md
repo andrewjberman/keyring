@@ -1128,3 +1128,14 @@ The R45 pair signed on the DB-b-105 packet is void for the apply. The apply itse
 A producer or contract edit, if the record calls for one, is a later cell cut after DB-b-113 drains: it would move an R45 member.
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~89` (worker-light), cut from box/dell2.
+
+
+## 61. ROUND 59, WORKSTREAM B (2026-10-11 ~04:2xZ, issuer 2.0.0_SA_COO~D2, on row IRPT_DASHBD-D2-W88-S3 under 1.0.0_SA_CTO~DELL2's msg 3999)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-115` | FWD-11: the reporting-gold handler passes the declared source entry to every emit_day call, so the returns manifest states method row 2 and its three method fields, never absent; tested; no deploy | WORLD (producer floor) | DB-b-96, DB-b-102, DB-b-113 | B59-1 |
+
+The refreshed R45 packet (DB-b-113) stays UNSIGNED: it is refreshed once more at the handler's new bytes after this cell drains.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~90` (worker-light), cut from box/dell2.
