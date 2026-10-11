@@ -1524,3 +1524,160 @@ write: **1 row** (`S1`).
   "notes": "Owner: the CTO, to name the forwardfill completion family and rule split or merge for the ten groups, or to rule them data. Not decided here; the first session's declared exclusion is carried."
 }
 ```
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~17 (FB-f-7, round 3)
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W17-S1",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~17",
+    "surfaced_at": "2026-10-11T06:34:50Z",
+    "one_line": "FB-f-7 dormancy claim does not hold for the declared alias's own directory: 3 router decisions and 3 guard decisions change, all on platinum/advi/mockadv/ (49financial, mockadv, and opal-capital with ?firm=bd).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B1",
+    "spec_asserts": "1a.4: for the registry as it stands, every (firmId, path, query) decision of both functions equals the decision at base. Corollaries in 1a.1 (an alias lists the scope's own tenant, so mockadv lists the 49financial directory) and 1a.5 ALIAS (the alias is refused on any other tenant directory).",
+    "world_is": "Measured (deliverables evidence/dormancy_grid.out.txt): router identical 85 of 88; differing 3, all on platinum/advi/mockadv/. Guard differing 9 served-bucket cases, the same three firmId/path pairs. Bucket equality admitted that directory because mockadv and 49financial share opal-data-bd. The declared sets cannot both refuse mockadv on its own directory (the spec's ALIAS control) and keep the base decision for it, so the narrowing is intrinsic to the spec's sets, not to the code.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda-edge/shared-advisor-router/index.mjs@576e574de4 lines 427-451: base tenant assertion is pathFirmBucket !== bucket, which admits the mockadv directory for any caller on the shared bucket",
+        "infra/aws/lambda-edge/_shared/firm-config.mjs (worktree wk-ADVI_FIRMBKTS-17, generated): advTenant of mockadv = [49financial]; buckets of mockadv and 49financial both opal-data-bd",
+        "deliverables/0.9.0_WK_ADVI_FIRMBKTS~17/evidence/dormancy_grid.out.txt: ROUTER GRID identical 85 of 88; GUARD GRID identical 387 of 396"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Form only: the remedy is built to the spec's literal sets and is not changed here. Ruling needed before any cutover: keep the mockadv directory readable for the staff proxy and the alias (an explicit extra declaration), or accept the narrowing and restate the dormancy claim in 1a.4. Until ruled the remedy is dormant (nothing deployed)."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W17-S2",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~17",
+    "surfaced_at": "2026-10-11T06:34:50Z",
+    "one_line": "FB-f-7 1a.2 says the origin bucket comes from the path tenant's own configured bucket; the router sets the origin to the canonical tier constant for every platinum/advi/ request, as it did at base.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "1a.2: 'The origin bucket still comes from the path tenant's own configured bucket.'",
+    "world_is": "At base (index.mjs line 453, bucket = CANONICAL_PLATINUM_BUCKET after the tenant assertion) the origin of a platinum/advi/ request is the canonical tier constant, not the tenant's configured bucket. The new router keeps line 453 unchanged, so the built behaviour equals base; the phrase is not implemented as written and no decision moved because of it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda-edge/shared-advisor-router/index.mjs@576e574de4 line 453: bucket = CANONICAL_PLATINUM_BUCKET, set after the platinum/advi tenant assertion",
+        "infra/aws/lambda-edge/shared-advisor-router/test/firm-routing.spec.mjs@576e574de4: 49financial reading platinum/advi/49financial/ routes to the canonical tier, not to the configured bucket"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Form only. Built as base behaviour (the dormancy claim needs it). Owner of the wording: the issuer."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W17-S3",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~17",
+    "surfaced_at": "2026-10-11T06:34:50Z",
+    "one_line": "FB-f-7 ALIAS control is premised on a bucket difference between the alias and its declared directory that the registry does not carry today; the control's ALIAS arms therefore run on a cutover test double.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "1a.5 ALIAS: 'the declared alias is admitted on the tenant directory its declaration names although its bucket differs from that directory's bucket, and is refused on any other tenant directory.'",
+    "world_is": "In the generated FIRM_CONFIG at HEAD the alias and its declared directory share one bucket (opal-data-bd), so no bucket difference exists to test. The difference exists only in the cutover state described in the header of _shared/firm-config.mjs (declared tenant moved to its own bucket). The ALIAS arms build that state as a double; the registry arm asserts admission only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda-edge/_shared/firm-config.mjs@576e574de4 header lines 24-56: the cutover premise, 49financial moving to its own bucket while the alias stays on opal-data-bd",
+        "infra/aws/lambda-edge/_shared/firm-config.mjs (worktree wk-ADVI_FIRMBKTS-17, generated): mockadv and 49financial both carry bucket opal-data-bd"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Form only. The control still discriminates: mutation runs in the record show the ALIAS arms fail when the alias is inferred from the shared bucket."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W17-S4",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~17",
+    "surfaced_at": "2026-10-11T06:38:28Z",
+    "one_line": "FB-f-7 section 5 asks for the order's <status> to be flipped to complete in the commit, but the order file is not in the cell's <paths> write grant, so the flip is not written by this worker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Section 5: 'Flip this order's <status> to complete in the SAME commit as your proof instance and the deliverables.' Section 3 <paths> is the write grant and lists no task-orders file.",
+    "world_is": "The <status> element is <status>pending</status> at line 145 of the order file (read as a line number only; the record face is not read). The order file is outside <paths>, so the flip cannot be committed inside the grant. The proof instance and the deliverables are committed; the flip is left to the issuer or the complete-flip gate.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-7.advtenant-build.md@576e574de4 line 145: <status>pending</status> (grep -n -o, line number only)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-7.advtenant-build.md@576e574de4 lines 98-107: the <paths> block, which names no task-orders file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Form only. Owner of the flip: the issuer 2.0.0_SA_COO~B1 or the complete-flip path of .tools/to-pipeline-gate.py. The proof instance passes proof-of-spec-check with every criterion PASS."
+  }
+]
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~17 (FB-f-7, re-seated session, amended order 1419e9fa5a)
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W17-S5",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~17",
+    "surfaced_at": "2026-10-11T06:55:35Z",
+    "one_line": "AC5 cannot read zero under the amended sets: 49financial's read of platinum/advi/mockadv/ (admitted at base only because the two firms share opal-data-bd) is refused by the declared sets; measured router differing 1, guard differing 3.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B1",
+    "spec_asserts": "1a.1: an alias tenant lists ITSELF and the scope's own tenant (mockadv lists mockadv and 49financial). 1a.4: for the registry as it stands, every (firmId, tenant directory, path, query) decision of both functions equals the decision at base. AC5: 'DORMANCY: router differing 0, guard differing 0'.",
+    "world_is": "The amended sets are built as written and are verified: the alias's own directory is admitted, and the opal-capital ?firm=bd staff proxy now reads [49financial, mockadv] as at base. The one decision that still differs is firmId 49financial reading platinum/advi/mockadv/mix_summary.json: base admits it because 49financial and mockadv share opal-data-bd; under 1a.1 the set of 49financial is [49financial], so it is refused with 401 (router), and the guard serves 502/200 differently in three served-bucket cases. Measured by evidence/dormancy_grid.mjs over the base copies built from git show 576e574de4: ROUTER GRID identical 87 of 88, GUARD GRID identical 393 of 396; DORMANCY: router differing 1, guard differing 3. No sentence of 1a.1 declares 49financial's read of the mockadv directory, and declaring it would widen an entitlement, so the zero in 1a.4 and AC5 cannot be met with the amended sets. The build is not widened; AC5 reads FAIL.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda-edge/_shared/firm-config.mjs (worktree wk-ADVI_FIRMBKTS-17, regenerated by lib/opal_naming.py generate): mockadv advTenant = [mockadv, 49financial]; 49financial advTenant = [49financial]; both buckets opal-data-bd",
+        "infra/aws/lambda-edge/shared-advisor-router/index.mjs@576e574de4: the base tenant assertion is pathFirmBucket !== bucket, which admits the mockadv directory for any caller on opal-data-bd",
+        "deliverables/0.9.0_WK_ADVI_FIRMBKTS~17/evidence/dormancy_grid.mjs run at the worktree (AC5 invocation): ROUTER GRID identical 87 of 88, differing 1 (49financial, platinum/advi/mockadv/mix_summary.json); GUARD GRID identical 393 of 396, differing 3; last line DORMANCY: router differing 1, guard differing 3",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-7.advtenant-build.md (worker face lines 1-141, read by line range): 1a.1, 1a.4, AC5"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Form only; the remedy is not widened here. Ruling owed before any cutover, one of two: (a) declare 49financial's read of the mockadv directory in its advTenant (a widening of an entitlement, CTO ruling), which restores the base decision and the zero; or (b) restate 1a.4 and AC5 to name this one narrowing, with its cutover effect. This row refines the open part of ADVI_FIRMBKTS-D1-W17-S1 (the alias's own directory and the staff proxy are now at base). Until ruled the remedy is dormant: nothing is deployed."
+  }
+]
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~17 (FB-f-7, equivalence-class build, commit 4e68fb82b0)
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W17-S6",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~17",
+    "surfaced_at": "2026-10-11T07:08:15Z",
+    "one_line": "The hand-written header of _shared/firm-config.mjs (outside the generated block) still states the alias pair as mockadv -> {49financial}; the generated block now lists one equivalence class per scope.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The header comment of _shared/firm-config.mjs (line 59), which quotes the CTO ruling: 'mockadv -> {49financial}', describing the advTenant remedy's alias pair.",
+    "world_is": "The generated FIRM_CONFIG block, regenerated at 4e68fb82b0 under the issuer's equivalence-class ruling (6aab08c6f5), lists 49financial and mockadv each as [49financial, mockadv]. The header line therefore describes the superseded single-entry alias pair. No decision moves because of the header: it is a comment, and the generated block is what the router and the guard read.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda-edge/_shared/firm-config.mjs@4e68fb82b0 line 59: the header comment 'mockadv -> {49financial}' (hand-written, outside the GENERATED markers)",
+        "infra/aws/lambda-edge/_shared/firm-config.mjs@4e68fb82b0 lines 70 and 85: the generated advTenant lines for 49financial and mockadv, both [49financial, mockadv]"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Form only. Not edited by this cell: the header is design history quoted from the CTO ruling, and its wording is the owner's to restate. Owner of the wording: the issuer 2.0.0_SA_COO~B1 or the CTO who ruled the header text."
+  }
+]
+```
