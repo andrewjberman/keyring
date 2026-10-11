@@ -2885,3 +2885,30 @@ Opened as the worker's step-4 finding list. One row per read site, form OBSERVAT
   "notes": "E_01: retire from the census as a non-served-key writer (reason above, denominator 3 of 3 objects). E_24 reads dead under ADDENDUM 4's own test (no schedule, no caller, no SendCommand naming it in 45 days: 0 of 4,010) with one residual: 1 StartSession in the window. The act-2 pair proposes it retired from the census on that denominator and records the residual; the CTO rules. Owner: 2.0.0_SA_COO~B1."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FBL (FB-f-8, phase B, step 5 read-back)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S12",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~FBL",
+  "surfaced_at": "2026-10-11T08:27:45Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-8 act 1 APPLIED on the laptop (Branch A holds on every live read) but the pair's condition 'a post-apply plan reads no changes' is NOT met: the plan still lists aws_wafv2_web_acl.opal_cloudfront_protection (1 to change) because UpdateWebACL cannot clear the provider's stored empty Version; also AC4 as written reads 0, not 3, because OverrideAction.Count is an empty object.",
+  "spec_asserts": "COO half ADDENDUM 1 Branch A: after the apply 'the post-apply plan reads no changes (the ACL's standing churn is gone, which is the only observable effect)'; CTO ADDENDUM 1 condition 4: 'a post-apply plan reads no changes'; order AC4: wafv2 get-web-acl --query \"length(WebACL.Rules[?OverrideAction.Count])\" expects ^3$.",
+  "world_is": "Apply 08:21:33Z-08:23:57Z through safe-apply of the saved plan: 'Apply complete! Resources: 0 added, 4 changed, 0 destroyed.' Distribution Deployed, ETag E1OAC26XEP0FDI to ELAAK8OWYOWV1; router v27 (CodeSha256 cOG/BuFhy9xcL7EF+4u5VexRZGjDdJq3h364PAPkYsw= equals the built artifact) x5 and guard v6 (YIgGtFjZwFltdXbviIx5dOQbb6FsOAUtIB96caAI0xs= equals the artifact) x5; exactly 10 of 40 associations changed and the distribution config is otherwise identical. The ACL reads 6 rules identical to the pre-act read (names, priorities, actions, statements), the three groups Count, default Allow, LockToken 848a6d0b-d69f-40e0-876a-cfc0ce40b6b2 before and after: the write changed nothing in AWS, as dell1 row ADVI_FIRMBKTS-D1-S13 measured on 2026-10-11. The post-apply plan reads 'Plan: 0 to add, 1 to change, 0 to destroy', the ACL only (the three managed-group rules replaced). AC4's invocation returns 0 because JMESPath treats the empty object {} as false; the same query with '!=null' returns 3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence/plan_after_apply.out",
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence/pre_get_web_acl.json against post_get_web_acl.json: equal modulo Version representation, LockToken unchanged",
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence/pre_get_distribution_config.json against post_get_distribution_config.json: 10 associations differ, nothing else"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This seat did NOT roll back: the rollback of the associations would not clear the plan line, the ACL is byte-equal to the pre-act read, and a second apply is outside the order's bounds (2.0.0_SA_COO~B1 / 1.0.0_SA_CTO~DELL1 own the call). The ACL's standing churn is a provider representation that the API round-trip drops, so it will persist while the ACL stays in this root; the fix is outside this act (ignore_changes on the three version attributes, or moving the ACL to its own root). The order stays open until the two signers either waive condition 4 for this ACL or rule otherwise; the CTO oracle read is requested meanwhile."
+}
+```
