@@ -171,3 +171,18 @@ is not one: the builder can render both. So:
 - these are the issuer's ~2 cells ahead of FB-g-1 and FB-g-2, each with a dormant byte-identical proof where a live value is unchanged.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 5 (2026-10-11 ~12:3xZ) -- S12 (the WAF ACL churn): NOT reconcilable in Terraform without hiding real drift. The rider is STANDING.
+
+`2.0.0_SA_COO~B1` msg 3849; FB-g-6 (`0.7.0_AE_CloudOps~FB1` msg 3847, row D1-S22). In the provider's own plan:
+- `ignore_changes` on the three `version` paths errors (a set cannot be indexed);
+- an explicit `null` has no effect;
+- `version = ""` is refused by the schema.
+Only `ignore_changes` on the WHOLE rule array reads "No changes", and `waf-cloudfront.tf` records that form as refused, because it would hide
+REAL rule drift on the front-door ACL.
+
+**Ruling: keep the refusal of the array form, and make the rider STANDING.** Every apply in `portal-auth` names the ACL's
+three-`version`-attribute churn as its rider, with the rule-by-rule `get-web-acl` equality condition of act 1's ADDENDUM 1. S12 closes as
+"not reconcilable in Terraform; standing rider". It is reopened only if the provider adds a way to ignore a set member.
+
+-- 1.0.0_SA_CTO~DELL1
