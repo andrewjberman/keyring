@@ -26025,3 +26025,99 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S81",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T13:11:57Z",
+  "one_line": "L8 rounds 123 to 128 (~P), no judgment criterion, nothing applied. Five rounds are reads or contract files; this seat read the contract result (21 of 21 response schemas declare unprojected_grant). The irpt-ycharts-generate rebuild has a pair with an ENDPOINT read of each served member and no apply order, held by the CTO's half until the vendor-session read is in. PRD ADDENDUM v0.34 is reviewed separately and its ratified-text half is REFUSED (row D2-S82).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUNDS_123_128_P_DRAIN_END_20261011.md @f8b92be3b4 (msg 4965)",
+      "this seat's reads 2026-10-11T13:11:57Z: all 21 files under docs/contracts/investor-reporting/v1/responses/ name unprojected_grant; prd-signoff status IRPT_BCKEND read 'ratified-text SIGNED 3.0.0_SA_CVO current' at v0.34 before this seat's review, on a signature file whose prd_version is v0.33 @13ee60595d; after the stamp it reads REFUSED, PRD WITHHELD (stamp @f2fa66e7aa)"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself.",
+  "world_is": "Six orders terminal. Not run by this seat: any criterion, the replay, the counts of rounds 123, 125 and 127. The COO half of IB-pr-426 was not read line by line here; it is read when an apply order is cut.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S82",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T13:11:57Z",
+  "one_line": "PRD ADDENDUM v0.34's ratified-text half is REFUSED by this seat on two defects of its text. (1) OWN_DATE is defined over the GRADEABLE moved securities, so an account-day that also holds a priced security the instrument cannot grade is OWN_DATE and served; the read it rests on lists exactly that as not measured. (2) The four UNGRADEABLE kinds do not hold the day graded before its anchor lands, which the same addendum makes UNGRADEABLE. The rule's direction is sound and the ENDPOINT is unchanged; both are repairs of wording.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_PRD_v0.34_RATIFIED_TEXT_REVIEW_20261011.md @3f67123932",
+      "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md @e7c6ab606f, ADDENDUM v0.34",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~288/IB127-1_ACCOUNT_DAY_CLAIMS_READ.md lines 9 and 82, printed by this seat"
+    ]
+  },
+  "spec_asserts": "ENDPOINT FWD-3: a performance figure computed by Opal from that account's own end-of-day holdings. ADDENDUM v0.34: that 'is not met by a basis nobody measured'. Rule 24 postulate (i): a closed set covers its declared domain.",
+  "world_is": "Nothing is built on the addendum. The PRD reads WITHHELD until the text is repaired and the half signed; the gate refuses a newly added IRPT_BCKEND task order meanwhile.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S83",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T13:11:57Z",
+  "one_line": "INSTRUMENT: the PRD sign-off gate read the ratified-text half SIGNED and current on text its signer had not seen. The half's hash is taken over the ENDPOINT and CONTRACTS sections; ADDENDUM v0.34 changes the contract in an addendum appended below them, whose own heading says the half re-opens, and the hash did not move. This seat's signature was on v0.33. The review happened because an issuer's packet said so, not because the gate or the notifier asked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's reads 2026-10-11T13:11:57Z: all 21 files under docs/contracts/investor-reporting/v1/responses/ name unprojected_grant; prd-signoff status IRPT_BCKEND read 'ratified-text SIGNED 3.0.0_SA_CVO current' at v0.34 before this seat's review, on a signature file whose prd_version is v0.33 @13ee60595d; after the stamp it reads REFUSED, PRD WITHHELD (stamp @f2fa66e7aa)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_PRD_v0.34_RATIFIED_TEXT_REVIEW_20261011.md @3f67123932",
+      "org/missions/D9/IRPT/IRPT_BCKEND/prd/signoff/3.0.0_SA_CVO.json as it stood before the stamp: prd_version v0.33, half_hash 74a6900e..."
+    ]
+  },
+  "spec_asserts": "CLAUDE.md rule 27 L4-R: each half is bound to the HASH of its sections; an L10 addendum re-opens only the half it changed. Gate: .tools/prd_signoff_lib.py.",
+  "world_is": "A contract change made by addendum does not re-open the half mechanically, on any PRD that carries its addenda below the hashed sections. How many PRDs and addenda this reaches was not counted.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-S84 -- IRPT_BCKEND holds the expiry of a transitional directory row named by dell1's ADVI_FIRMBKTS (information only, parked)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S84",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T13:12:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IRPT_BCKEND is named EXPIRY OWNER of a TRANSITIONAL live row in the routed 49 Financial bucket alias: dell1's ADVI_FIRMBKTS lets the IRPT readers and the two gold writers keep reading investor-reporting/directory/ there instead of copying it into the firm's canonical bucket; the row expires at IRPT_BCKEND's RI1 move. Information only; no act was asked of dell2.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL2 msg 4977 (2026-10-11T13:11:11Z), a verbatim relay of 0.0.0_AB_MSTR~DELL1 bus 3d88160b on 1.0.0_SA_CTO~DELL1 msg 3872",
+      "named source, NOT read by this seat: ADVI_FIRMBKTS ROUND_ANALYSIS.round3.md ADDENDUM 6, row D1-S24 (on dell1's fabric)"
+    ]
+  },
+  "spec_asserts": "A transitional row has an owner who knows it holds the expiry and a condition that ends it.",
+  "world_is": "The expiry is assigned to IRPT_BCKEND by another fabric's analysis and reached this seat as an information-only relay. PARKED here: owner 2.0.0_SA_COO~P2 (workstream ~P) until a lane is named for the RI1 move; un-parks when the RI1 move of the IRPT directory is cut as a cell, whose face must name this row and retire the transitional read. Whether RI1 is in any current decomposition of IRPT_BCKEND was not read."
+}
+```

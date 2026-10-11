@@ -5084,3 +5084,110 @@
   "notes": "No act taken."
 }
 ```
+
+## DSGN_IRPTV1-D2-W54-S1 -- IV-e-98: IVE26-AC3 still fails after the regeneration, on its ARM 3 alone, for two causes that are not in the wire folder
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W54-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~54",
+  "surfaced_at": "2026-10-11T13:01:30Z",
+  "one_line": "IV-e-98: with the wire folder regenerated, iv-e-26.wire-regen.test.ts ARM 1 (0 of 27 files drift) and ARM 2 (data optional) pass, but ARM 3 fails on the fe-s-13 content-pins subprocess: its 3 tests fail on unprojected_grant and the test hard-codes 17 operations where the client consumes 24 (18 at base)",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~54/targeted_c.txt: REGENERATION DRIFT: 0 of 27 file(s) changed by a fresh run -- (none); CONSUMED OPERATIONS OFFERED: 24 of 24; VERDICT: WIRE-REGEN-FAILED -- content-pins.test.ts rc=1, expected 0; consumed operations offered 24 of 24, expected 17 of 17.",
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~54/step0_base_clean.txt (base 73806e29): the same arm failed with 'consumed operations offered 18 of 18, expected 17 of 17' and the same content-pins rc=1.",
+      "content-pins.test.ts findings (at base and after): 'comparison-catalogue: response envelope no longer declares unprojected_grant' and 'analysis-request-pdf: ...' -- the same two findings as row IRPT_ANLREQ-D2-W51-S6. consumed.ts's WIRE_CONSUMED_ENVELOPE_FIELDS holds unprojected_grant because contracts/envelope.ts parseIrEnvelope reads it; gen-consumed.ts derives the list from that read.",
+      "iv-e-17.bridge-dropped.test.ts (IVE17-AC3) fails at base and after on the same hard-coded 17."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order item 6: IVE26-AC3 fails at base because the generator could not render three members; it should now pass.",
+  "world_is": "The three members are rendered and the generator is idempotent (ARM 1, ARM 2). ARM 3 is a different claim: it runs the content-pins battery and asserts rc 0 and '17 of 17'. The battery is red on the envelope field unprojected_grant for two operations whose response schemas do not declare it, and the expected count 17 is a stale literal (the client's route table carries 24 operations; 18 in the committed consumed.ts at base). Neither is produced by gen-wire or gen-consumed; clearing them means changing contracts/envelope.ts's read, or content-pins.test.ts, or this test's literal -- each an assertion or a neighbouring cell's code this order did not name, and the order forbids weakening an assertion it did not name. ive26.outcome is recorded NOT_FIXED with this reason. The 6 base failing ids are the same 6 after (new_failing_ids []).",
+  "notes": "No act taken beyond measuring. Row IRPT_ANLREQ-D2-W51-S6 (moved to this issuer) names the same two findings."
+}
+```
+
+## DSGN_IRPTV1-D2-W54-S2 -- IV-e-98: the order's '13 type errors in 8 files' premise measured 18 errors in 11 files on this base
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W54-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~54",
+  "surfaced_at": "2026-10-11T13:01:30Z",
+  "one_line": "IV-e-98: regenerating the folder at portal 73806e29 surfaced 18 type errors in 11 files, not the 13 in 8 files the order and row IRPT_ANLREQ-D2-W51-S7 name",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~54/typecheck_regen.txt: 18 error TS lines: investor-reporting.ts 2, owned-requests.ts 1, responses.ts 3, iv-e-106 1, iv-e-116 2, iv-e-62 2, iv-e-66 1, iv-e-74 2, iv-e-80 1, mvp-selection/owned-history.test.ts 1, tabs/analysis/tests/owned-reopen.test.tsx 2.",
+      "Base before any change: typecheck_base.txt, bun run typecheck 0 errors."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order item 5: fix the 13 type errors the regeneration surfaces.",
+  "world_is": "The sibling counted on its own base, which lacked the iv-e-99 reader and the tests that build history pages; this base carries them, so the history page types fail in more places. All 18 are fixed at their causes (the generator's union lookup, and the reader's page type being declared as the wire page); none by cast or ts-ignore; typecheck reads 0 after.",
+  "notes": "Per-error cause and fix are in WIRE_REGEN.json type_errors."
+}
+```
+
+## DSGN_IRPTV1-D2-W54-S3 -- IV-e-98: no hand-added export in the wire folder has a consumer; the 'consumers lean on the hand edits' premise does not hold for the exports
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W54-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~54",
+  "surfaced_at": "2026-10-11T13:01:30Z",
+  "one_line": "IV-e-98: the three hand-added exports (AnalysisReportResponseDataWire, AnalysisReportOpalResponseDataWire, WIRE_CONSUMED_OPAL_FIELDS) are imported by 0 of 1112 portal source files outside the folder, so all three are deleted rather than emitted or moved",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Native Grep over portal/src *.ts and *.tsx for the five names (the three exports and the two private Extract aliases): hits only in contracts/wire/{responses,index,consumed}.ts, adapt.ts's own local re-declaration of the aliases (a type of its own, not an import), coverage.test.ts's own local alias, and one comment in fe-s-47/no-status-reason.test.ts. Denominator: 1140 tracked ts/tsx files under portal/src, 1112 outside contracts/wire/.",
+      "adapt.ts declares its own AnalysisReportYchartsWire, AnalysisReportOpalWire and AnalysisReportSliceWire union; AnalysisReportResponseWire (the envelope) is imported by nothing but the folder's index.ts."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order steps 1 and 2: each hand-added export has consumers that import it, and is placed GENERATOR_EMITS or MOVED_OUTSIDE.",
+  "world_is": "Zero consumers for each, so the order's own rule applies: deleted, consumers 0, MOVED_OUTSIDE with now_in '(deleted, no consumer)'. The breakage the sibling saw came from the regenerated owned-history page and from the generator's union lookup, not from consumers of these exports.",
+  "notes": "WIRE_CONSUMED_OPAL_FIELDS documented what the adapter reads from the Opal branch; that documentation is lost with the constant. Nothing reads it."
+}
+```
+
+## DSGN_IRPTV1-D2-W54-S4 -- IV-e-98: row IRPT_YCDGEN-W3-S21 does not reproduce at this base; a whole-scope run leaves the tree clean before and after
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W54-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~54",
+  "surfaced_at": "2026-10-11T13:01:30Z",
+  "one_line": "IV-e-98: bun test src/pages/InvestorReporting left git status empty at 73806e29 (before any edit) and at the final commit; the one command run in place on an unchanged tree lists 2 modified files with an empty git diff (core.autocrlf)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~54/step0_base.txt: git status --short empty after the run (1173 tests, 374 files). Final: the run at 66c788f4 left git status --short empty (step7_after.txt).",
+      "The in-place writers were gen-wire and gen-consumed run as commands; the tests generate into a temp directory (iv-e-26 per row W165-S2, and iv-e-98 from the start); the consumed generator no longer writes on import.",
+      "After bun run gen-all.ts on the committed tree: git status --short listed ComparisonCatalogue.ts and consumed.ts as modified while git diff --stat was empty -- the generators write LF over a CRLF working copy under core.autocrlf=true; git checkout -- contracts/wire cleared it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order item 7 / row W3-S21: a whole-scope run leaves four tracked contracts/wire files modified.",
+  "world_is": "suite_leaves_tree_clean is true at the base and the end. The writer W3-S21 suspected is gone at this base; I did not bisect when it left. Running the one command by hand can show stat-only modified entries under autocrlf; the content is identical.",
+  "notes": "Not fixed here: the CRLF working-copy artifact belongs to the checkout's line-ending config."
+}
+```
