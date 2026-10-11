@@ -6357,3 +6357,51 @@
   "notes": "A timing limit, not a product fact. suite_after in the record uses the run with 0 fail (after_suite.txt)."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W65-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~65",
+  "surfaced_at": "2026-10-11T22:33:00Z",
+  "one_line": "IV-e-117: two whole-scope tests (iv-e-26 wire-regen, iv-e-98 generators-drift) FAIL at the base ad774c6f9e: the workspace contract AnalysisSubmissionRequest has commentary_requested that the portal wire file lacks; IV117-AC1 asks suite_after fail 0",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~65/base_suite.txt (before any edit): 1188 pass, 27 skip, 2 fail; after_suite.txt (after my commit): 1189 pass, 27 skip, 2 fail; the same two tests both times (IVE26-AC3 gen-wire regeneration idempotent; IVE98 wire folder is generator output)",
+      "iv-e-98 prints: WIRE FOLDER DRIFT: 1 of 28 file(s) differ -- AnalysisSubmissionRequest.ts. A temporary generator run (no file written to the tree) differs from portal/src/pages/InvestorReporting/contracts/wire/AnalysisSubmissionRequest.ts at line 5 (Source sha256 1052343f... generated vs a6f224cd... committed) and lines 23-25 (generated adds 'readonly commentary_requested?: boolean')",
+      "Neither failing test touches a Holdings file; my change adds one passing test and no new failing id"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A whole-scope run of src/pages/InvestorReporting has 0 failing tests at the order's base (IV117-AC1 requires suite_after.fail 0).",
+  "world_is": "The base already has 2 failing tests: the workspace contract the generator reads carries commentary_requested on AnalysisSubmissionRequest and the committed wire file does not. The one command that clears them (bun run src/pages/InvestorReporting/__tests__/fe-s-13/gen-all.ts) rewrites contracts/wire/AnalysisSubmissionRequest.ts, a file outside the Holdings folder, which IV117-AC1 forbids in product_files_changed; the order's refusal clause says report, never repair by a route the order did not name. The record carries suite_after fail 2 as measured, so IV117-AC1 reads FAIL.",
+  "notes": "A regeneration is a one-file wire change the CTO or the issuer may order; no other cell of this order depends on it."
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W65-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~65",
+  "surfaced_at": "2026-10-11T22:34:00Z",
+  "one_line": "IV-e-117: AllocationBars.tsx calls PanelFooter but HoldingsTab never renders it (no import outside tests); its footer was left on the band",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep for '<AllocationBars|import .*AllocationBars' over portal/src excluding __tests__: no match; HoldingsTab.tsx imports only HoldingsTreemap and SecurityList (lines 109-110) and renders them at 487-488"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 1: three files call PanelFooter on the Holdings tab (SecurityList, HoldingsTreemap, AllocationBars); change every one the tab can render.",
+  "world_is": "Two of the three render (Treemap line 620, SecurityList line 623, both at rest in one view); AllocationBars (line 305) is dead code on the tab, so it was not changed. If it is ever mounted its footer is on the band inside a nested (white) panel.",
+  "notes": "Changing it would be a one-word edit in the same folder if the issuer wants it."
+}
+```
