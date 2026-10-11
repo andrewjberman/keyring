@@ -4374,3 +4374,80 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Form only; no hazard is armed. Two things for the gate owner, neither this lane's: (1) the overlap is matched on the root path token, so a one-resource IAM policy and an unrelated deploy in the same root read as a STOP; the gate cannot tell a disjoint scope from an overlapping one. (2) Under ENFORCE this apply would have stopped, and the act's order says nothing about reading the gate first. This lane's own correction: read --dry-seat-gates before any apply on a root another seat names."
 }
 ```
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~39 (FB-g-16, amendment 1: CANONICAL_PLATINUM_BUCKETS)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W39-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~39",
+  "surfaced_at": "2026-10-11T13:57:56Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The amendment renders CANONICAL_PLATINUM_BUCKETS into infra/aws/lambda-edge/_shared/firm-config.mjs, which is outside this order's <paths>; the worker's regeneration of that carrier is not in the grant. AC1 W5 reads FAIL (out of sync = firm-config.mjs) and the order stays open.",
+  "spec_asserts": "TO-FB-g-16 amendment (2.0.0_SA_COO~B1, CLAUDE.md rule 27): the same builder renders the identical list as export const CANONICAL_PLATINUM_BUCKETS into _shared/firm-config.mjs. Bounds 2.1: files that change are lib/opal_naming.py, loaders.py and the new test; no other Lambda file. AC3 allow-list excludes firm-config.mjs.",
+  "world_is": "The builder side is committed on wk-ADVI_FIRMBKTS-39 (lib/opal_naming.py: _blk_canonical_platinum_buckets registered for loaders.py and firm-config.mjs; AFTER_BLOCK takes a candidate list). loaders.py is regenerated and carries CANONICAL_PLATINUM_BUCKETS = [opal-data-49financial]. A scratch render of firm-config.mjs (.scratch/fc, not tracked) is a pure addition of one block after OWNERSHIP_KEYS, 5 lines. The tracked firm-config.mjs is unchanged in this worktree, so AC1 W5 reads FAIL: 'out of sync=[infra/aws/lambda-edge/_shared/firm-config.mjs]; other targets value-changed=[]; validate rc=0'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r4_irptown.py --arms read at the worker tree, 2026-10-11 ~13:57Z: 4 of 5 arms; W5 FAIL, out of sync=[infra/aws/lambda-edge/_shared/firm-config.mjs]",
+      "python lib/opal_naming.py generate --out .scratch/fc --target infra/aws/lambda-edge/_shared/firm-config.mjs; diff against the tracked file: 5 added lines after line 101",
+      "order Bounds 2.1 and AC3 --allow list (no firm-config.mjs)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed by the worker: regenerating firm-config.mjs in this worktree would put it in the change set, which AC3 refuses. Issuer decision needed: grant firm-config.mjs as a path for the regeneration (one generate --target line), or accept the carrier as a later cell's regeneration and read W5 accordingly. The worker's result is recorded as AC1 FAIL, not re-measured against a different grant."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W39-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~39",
+  "surfaced_at": "2026-10-11T13:57:56Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "AC3 (r4_scope.py) reads FAIL, 6 changed, 1 outside: the diff runs against the primary merge-base, so the issuer amendment commit 144e36d9f7 on this branch (the corrected r4_irptown.py) reads as outside the grant. The worker's own writes are all inside it.",
+  "spec_asserts": "TO-FB-g-16 AC3 (r4_scope.py, expect 'ROUND 4 SCOPE: OK'): the changed files are inside the order's paths and the required files are changed.",
+  "world_is": "At the worker tree: 'ROUND 4 SCOPE: FAIL 6 changed, 1 outside, 0 required missing', exit=1. The one outside path is deliverables/2.0.0_SA_COO~B1/round4/checks/r4_irptown.py, last changed by 144e36d9f7 (the issuer's amendment, not a worker write). The three code files, the instance and the session log are inside the grant. This is the same class as FB-g-12 S4 (the check takes no base argument).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r4_scope.py --root /c/dev/wk-firmbkts-39 output at 2026-10-11 ~13:57Z: 'ROUND 4 SCOPE: FAIL 6 changed, 1 outside, 0 required missing'",
+      "git log -1 -- round4/checks/r4_irptown.py: 144e36d9f7 amend(ADVI_FIRMBKTS FB-g-16, 2.0.0_SA_COO~B1)",
+      "ADVI_FIRMBKTS-D1-W33-S4 (the same class, FB-g-12)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed by the worker: the check reads the primary merge-base and the amendment commit is on this branch. Issuer decision needed: the check should exclude issuer commits, or the amendment should land on the primary checkout. The worker's AC3 is recorded as FAIL, not re-measured against another base."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W39-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~39",
+  "surfaced_at": "2026-10-11T14:01:28Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "After amendment 2 regenerated firm-config.mjs (5 added lines: CANONICAL_PLATINUM_BUCKETS), AC1 W5 reads FAIL with 'out of sync=[]; other targets value-changed=[infra/aws/lambda-edge/_shared/firm-config.mjs]'. The stale check is clean; the value-change clause counts the amendment's own added block as drift. AC1 reads 4 of 5, not the 5 of 5 the amendment expects.",
+  "spec_asserts": "AC1 W5 (r4_irptown.py): 'no other generated target covering scopes.json changes a non-mark line against the base'; amendment 2 expects 'W5 should read 5 of 5' after the firm-config regeneration.",
+  "world_is": "git diff of firm-config.mjs against base is exactly the generated block: 5 added lines after OWNERSHIP_KEYS, no line removed or changed. The check's drift test compares every non-mark line of the file against base (_nm removes only the GENERATED header lines), so any added generated block trips it. out of sync=[] shows the carrier equals the builder's output.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r4_irptown.py --arms read at the worker tree after regeneration, 2026-10-11 ~14:01Z: 'out of sync=[]; other targets value-changed=['infra/aws/lambda-edge/_shared/firm-config.mjs']; validate rc=0', 4 of 5 arms",
+      "git diff -- infra/aws/lambda-edge/_shared/firm-config.mjs: 5 added lines, 0 removed",
+      "r4_irptown.py read(): drift = [t for t ... if _nm(git show base:t) != _nm(cur)]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed by the worker: the amendment asked for this block in the carrier, and the carrier now carries exactly it. Issuer decision needed: the W5 drift clause should exempt blocks the builder adds (or compare against a base regenerated without them). Like S2, a check artifact the issuer grades at the drain. AC1 is recorded as 4 of 5, not re-measured."
+}
+```
