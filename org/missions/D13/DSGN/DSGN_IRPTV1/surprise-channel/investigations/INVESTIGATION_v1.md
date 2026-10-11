@@ -3892,3 +3892,58 @@
   "notes": "A later EXPORT_WIRED cut should grant index.tsx, tabs/TabShell.tsx and export/ by name."
 }
 ```
+
+## DSGN_IRPTV1-D2-W46-S4 -- The order's script steps (route, Analysis tab, upload input, upload fixture) do not reach the review table for
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W46-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~46",
+  "surfaced_at": "2026-10-11T06:25:10Z",
+  "one_line": "The order's script steps (route, Analysis tab, upload input, upload fixture) do not reach the review table for the stubbed Dev admin: the Prospect card is in internal firm-choice mode, its 'Review portfolio' button stays disabled with no firm, and the firm list comes only from a GLOBAL directory/resolve body. The run therefore also stubs directory/resolve with the repo's Global wire, chooses a firm in the card, and renames the two tenants to synthetic names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first run (stub resolve = fixtures/smoke/fe-s-14-global.json): FIRM-SELECT options [[\"\",\"Choose a firm\"]] only; the 'Review portfolio' click timed out at 10000 ms (button disabled by prospectFirmDecision, stagedProspect.ts)",
+      "second run (stub resolve = tests/opal-scope/server-wire.json context, tenants renamed firm-alpha/firm-beta): options firm-alpha, firm-beta; firm-alpha picked; upload POST ...analysis/inputs?selected_tenant=firm-alpha answered from the fixture; review table reached",
+      "portal/src/pages/InvestorReporting/contracts/directory-context.ts:61-100 (a GLOBAL context needs context_kind GLOBAL with per-firm scopes; a single-scope resolve body yields no catalogue); index.tsx:105 (firm starts at 'global'); AnalysisTab.tsx:122 (card firm null on Global)",
+      "run log org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~46/review_table_shot.run.txt; script review_table_shot.mjs in the same folder"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 3 step 2: the script opens the route, reaches the prospect composer, sets the CSV on the upload input and answers the upload request; load-time bodies come from existing fixtures.",
+  "world_is": "A firm choice and a Global resolve body are also needed; both were sourced from the repo (server-wire.json context, tenant strings replaced by firm-alpha/firm-beta so no real firm name reaches a PNG), no product file edited. Ten same-origin API reads had no fixture and answered 404 (listed in the run log); the page showed a red 'client list is unavailable' line for the two firms' browse reads, unrelated to the review table.",
+  "notes": "A later live-render cut can reuse review_table_shot.mjs as written."
+}
+```
+
+## DSGN_IRPTV1-D2-W46-S5 -- In the live render of the upload review table the 'Original amount' and 'Analysis dollars' columns are left-al
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W46-S5",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~46",
+  "surfaced_at": "2026-10-11T06:25:40Z",
+  "one_line": "In the live render of the upload review table the 'Original amount' and 'Analysis dollars' columns are left-aligned (plain <td>, no text-right), against DESIGN.md C2 'Figures right-align in a column'; tabular-nums is on (computed font-variant-numeric tabular-nums). The Holding-cell change does not touch these cells; the left alignment predates it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "review_table_crop_1cd1cf25.png in deliverables/0.9.0_WK_DSGN_IRPTV1~46/: $5,700.00 / $900.00 / $250.00 and 5700 USD / 900 USD / 250 USD start at the same left edge of their columns",
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx:576-577 (<td>{amount.trim()}</td><td>{formatMoney(...)}</td>, no alignment class)",
+      "portal/DESIGN.md C2 (line 220-223)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IV83-AC2 judgment: 'tabular numerals in the dollars column' and DESIGN.md C2 (figures right-align in a column).",
+  "world_is": "Tabular numerals present; right-alignment absent in both figure columns of the review table. Not changed by this order; reported for the L9 grader.",
+  "notes": "Outside this cell's scope (the order changes one Holding cell)."
+}
+```
