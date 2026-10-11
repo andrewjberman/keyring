@@ -6764,3 +6764,26 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W124-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~124",
+  "surfaced_at": "2026-10-11T21:44:28Z",
+  "one_line": "DB-b-151: the original silver transactions day objects of 2026-08-22 and 2026-08-23 now hold 0 rows where the silver_legacy copy holds rows (4545 and 1035 distinct ids, none in common), and 2026-08-24 is the reverse; the original was rewritten after the copy (bucket versions), and the copy is the only store that still holds the first two days' rows as of the copy.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Row W116-S2 and the ADVI_STITCH decomposition: the copy is byte-identical to the original; W116-S2 inferred a later rewrite of the originals (NOT_ESTABLISHED) and the tie-out figures taken from the copy were assumed to describe the original.",
+  "world_is": "get-bucket-versioning reads Enabled on opal-data-bd and opal-data-assets. list-object-versions on the three exact original keys: 4 versions each, 3 written after the copy (copy written 2026-08-25T23:05:52Z; later versions 2026-08-26 to 2026-09-02 UTC); the version current at copy time equals the copy in size and ETag on all 3 days. Current originals: 2026-08-22 and 2026-08-23 read 0 rows (copy 23229 rows over 4545 distinct ids and 4990 rows over 1035 distinct ids; 0 ids in common); 2026-08-24 reads 4864 rows over 1075 distinct ids (copy 0 rows; 0 ids in common). The writer (merge-daily-incremental.py lines 183-190, 513-519) replaces a day object wholesale on a re-landed bronze file and filters ids seen in the prior 30 days (lines 474-507). NOT_ESTABLISHED: which run wrote each later version, why the first two days now hold no rows, and the row content of the non-current versions (not read). Counts only; no money or account column read. Record: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~124/COPY_VS_ORIGINAL.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~124/COPY_VS_ORIGINAL.json (days, rewritten_reason)",
+      "data/black_diamond/scripts/silver/merge-daily-incremental.py lines 183-190, 474-507, 513-519"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "hazard_standing not assessed by this worker: whether downstream readers that load every original day object (gold A_03, B_01, B_03, nna_flows) now miss the first two days' rows was not measured."
+}
+```
