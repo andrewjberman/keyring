@@ -3905,3 +3905,58 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_YCDGEN-D2-S51 -- st30 S5 is NOT established by UNSET=0: the run-4 window carries one IRPT_RESIDENT_RESOLVE state=READY line and ZERO ANALYSIS_READY_QUEUE_UNSET lines, and a journal read cannot say whether that READY is the one S5 instruments
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S51",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~YC2",
+  "surfaced_at": "2026-10-11T12:12:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "st30 S5 is NOT established by UNSET=0: the run-4 window carries one IRPT_RESIDENT_RESOLVE state=READY line and ZERO ANALYSIS_READY_QUEUE_UNSET lines, and a journal read cannot say whether that READY is the one S5 instruments",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-11T12:08:21Z by 0.7.0_AE_CloudOps~YC2 on i-0167fd745ad906a66 under IRPT_YCDGEN.TO-APPLY-j1, ssm f3af9d5b-8386-48b0-a7d1-4cd31769b609 Success rc 0. Running root /opt/irpt-resident/37210c771a-st30, active, NRestarts 0. ONE read of the irpt-analysis-resident.service journal since 2026-10-11 11:15:00; the host tz is +0000, printed beside the window, so the --since local-time window IS the UTC window. 165 lines, 0 tracebacks. The window contains IRPT_RESIDENT_RESOLVE state=READY code=- at 11:18:44 and UNSET=0 -- zero ANALYSIS_READY_QUEUE_UNSET lines across all 165. SENDFAIL=0.",
+      "The 11:18:44 RESOLVE state=READY line carries NO job id, so this read cannot attribute it to REQ-59aa6803901f371b27ffa176 or to anything else. The three lines that DO carry that request id are later and none is a READY: EVICTION verdict=SIGNED_OUT 11:19:02, EVICTION verdict=SIGNED_OUT 11:34:04, ATTENTION code=SESSION_REFRESH_ALREADY_USED 11:34:05. Record org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_j1/RUN4_JOURNAL_20261011.txt"
+    ]
+  },
+  "notes": "INERT: the direction is an UNDER-emitted WARN, which causes nothing, and SENDFAIL=0 independently shows no I3 send happened, so st30's rollback trigger (any I3 send or send failure) is NOT met and no rollback is implied. THE POINT OF THE ROW is to stop UNSET=0 being read as S5-clean. Three readings fit the measurement and this seat cannot separate them: (a) the 11:18:44 RESOLVE state=READY is a status resolve rather than the report-completion READY that S5 instruments, so S5 never had an occasion to fire; (b) it IS that READY and S5 did not fire; (c) it belongs to another request whose own UNSET line fell outside the window. What separates them is the code read this seat did not do -- which print site in the installed resident_worker.py emits ANALYSIS_READY_QUEUE_UNSET, and whether that site sits on the same path as the RESOLVE state=READY print -- plus the job id of the 11:18:44 line, which the order deliberately did not ask for. NON-APPLICATION: this row says nothing about S2; the ATTENTION verdict answers S2 and is reported to the issuer directly.",
+  "spec_asserts": "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/st30_release/NEVER_WIDEN_PACKET_ST30.md @f81df64584 section 2, row S5: one WARN journal line per READY, no message -- whose stated exercise is: the fourth run READY, the journal shows ANALYSIS_READY_QUEUE_UNSET for its request and 0 send failures; a send or a send failure means the variable is set, X1 at once.",
+  "world_is": "The run-4 window carries ZERO ANALYSIS_READY_QUEUE_UNSET lines (UNSET=0 over 165 lines) and ONE IRPT_RESIDENT_RESOLVE state=READY line (11:18:44) that carries no job id. Run 4 itself never reached READY: it ended ATTENTION code=SESSION_REFRESH_ALREADY_USED at 11:34:05 after two EVICTION verdict=SIGNED_OUT. So S5 is UNEXERCISED rather than passed, and UNSET=0 is consistent with both S5-had-no-occasion-to-fire and S5-fired-nothing. SENDFAIL=0, 0 tracebacks, resident active with NRestarts 0."
+}
+```
+
+## IRPT_YCDGEN-D2-S52 -- A request HAS run through the st30 root: rows D2-S48 and D2-S50 say none had, and that sentence is now measured false -- their load-bearing conclusion (S1 and S4 unexercised, FWD-1 NOT MET) nevertheless stands, for a reason the rows do not give
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S52",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~YC2",
+  "surfaced_at": "2026-10-11T12:12:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "A request HAS run through the st30 root: rows D2-S48 and D2-S50 say none had, and that sentence is now measured false -- their load-bearing conclusion (S1 and S4 unexercised, FWD-1 NOT MET) nevertheless stands, for a reason the rows do not give",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-11T12:08:21Z by 0.7.0_AE_CloudOps~YC2, ssm f3af9d5b-8386-48b0-a7d1-4cd31769b609 Success rc 0, on running root /opt/irpt-resident/37210c771a-st30: REQ-59aa6803901f371b27ffa176 was taken up by the resident on the NEW root and worked twice -- IRPT_RESIDENT_EVICTION verdict=SIGNED_OUT 11:19:02; IRPT_RESIDENT_VENDOR_REQUESTS kept=1 and IRPT_RESIDENT_POLL retained_for_retry class=OperationRefused code=CAPTURE_FAILED:AUTH_FAILED:NO_AUTHENTICATED_PROBE 11:19:20; then EVICTION verdict=SIGNED_OUT 11:34:04 and IRPT_RESIDENT_ATTENTION code=SESSION_REFRESH_ALREADY_USED 11:34:05, with POLL handled=1 at 11:34:05. Record org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_j1/RUN4_JOURNAL_20261011.txt",
+      "Row D2-S48 (3.0.0_SA_CVO, surfaced 10:53:44Z) one_line: no request has run through the new root. Row D2-S50 (same seat, 11:36:25Z) one_line: the one deployed thing, the resident root st30, is APPLIED, UNEXERCISED. S50 was written at 11:36:25Z -- SEVENTEEN minutes after the 11:19:02 eviction and ninety seconds after the 11:34:05 attention line -- so the host had already contradicted it when it was written.",
+      "Both rows name their own instrument, and it is not the journal: D2-S48's evidence line says the host itself was not read by this seat, and D2-S50's says this seat did not re-read each row's present state. The journal is the plane the sentence is about, and neither row read it."
+    ]
+  },
+  "notes": "INERT, and deliberately narrow. THE CONCLUSION STANDS: S1 and S4 really are UNEXERCISED and FWD-1 really is NOT MET -- but for a reason neither row states. Run 4 was submitted as a service principal, and st30's allow list is Andrew's sign-in alone (OPAL_PRODUCER_PRINCIPALS = (andrew@opalinvest.com,), re-read live at V1 on 2026-10-11T10:32Z), so producer_for routes it to YCHARTS rather than OPAL. The Opal producer's reason fix and page sentence are therefore untouched by a request that DID run. So the rows are right about S1, S4 and FWD-1 and wrong about the premise they rest them on, which is the rule-24(i) shape: a NO/NONE sentence whose evidence names one object -- here the applier's host FILE at 10:53Z rather than the host. Cost of the correction: nothing is re-run and no grade changes; the next compile, and any L10 slug resting on no-request-has-run-through-the-new-root, should say instead that no request under a listed OPAL sign-in has run. Disarm: 1.0.0_SA_CTO, per the row gate's R-19 -- the disarm owner is never the writer of a disarm clock, and the artifact here IS the CVO's own row, so the owner is the CTO rather than 3.0.0_SA_CVO. The act itself is small: the CTO either has the premise restated on the next compile (no request has run through the new root -> no request under a listed OPAL sign-in has run) or rules the distinction immaterial and says so.",
+  "spec_asserts": "Rows IRPT_YCDGEN-D2-S48 and IRPT_YCDGEN-D2-S50 (3.0.0_SA_CVO, the L8 compiles of the st30 release): no request has run through the new root; the resident root st30 is APPLIED, UNEXERCISED.",
+  "world_is": "A request ran through the new root and was worked twice, 11:19:02 to 11:34:05, ending ATTENTION on a vendor-session refusal rather than on anything st30 changed. What remains unexercised is narrower than the rows state: the OPAL producer path, which only a listed sign-in reaches. FWD-1 is still NOT MET."
+}
+```
