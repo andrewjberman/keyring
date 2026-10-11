@@ -4271,3 +4271,54 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not changed by the worker: the gate and the device list are outside this order's paths. This row records that the gate did not run; it makes no finding about the committed content. disarm_owner 0.0.0_AB_MSTR is named by reading rule 32 (MSTR runs infrastructure); this order does not establish the owner of the list's placement on dell1, so the issuer should confirm or re-route it."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W37-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~37",
+  "surfaced_at": "2026-10-11T13:20:02Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The consumer census of data/firm_registry.json could not class one reader: the ETF positioning producer bundles the registry file as a packaged member, and no file in its own folder reads the bucket field.",
+  "spec_asserts": "TO-FB-g-14 section 1a item 4: every reader of data/firm_registry.json's bucket field outside the IRPT path is named and classed served-tier or IRPT; a consumer that cannot be classed goes in a surprise row and is not changed.",
+  "world_is": "infra/aws/lambda/etfs-pipeline/etf-positioning-producer/build_package.py:144-145 copies data/firm_registry.json into the producer package as a member. A folder-scoped comp-find over infra/aws/lambda/etfs-pipeline/etf-positioning-producer for 'import keys|from keys|from _keys|registry|firm_bucket|bucket' returned 17 hits across 2 files, all in build_package.py (the registry member list and comments); the producer's own runtime code names neither the registry file nor a bucket reader. Whether the packaged bytes are read at runtime, and which code reads the bucket field there, is not traced.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/etfs-pipeline/etf-positioning-producer/build_package.py:144-145@ba53f8a883 (data/firm_registry.json listed as a package member)",
+      "comp-find -i over infra/aws/lambda/etfs-pipeline/etf-positioning-producer @ba53f8a883 worktree: DENOMINATOR 17 hit(s) across 2 file(s), all in build_package.py",
+      "census of firm_registry across data/ infra/aws/lambda infra/aws/lambda-edge infra/aws/terraform lib .tools portal/src: DENOMINATOR 140 hit(s) across 11004 file(s), 59 file(s) listed; this producer is the one non-IRPT reader the census could not class"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed by the worker: the producer is outside this order's paths and the cell makes no value change to the bundled bytes (the generated marks change only). The row is a classing gap, not a finding about the producer's behaviour. The issuer should confirm whether the bundled registry is read for its bucket field and by which code; the answer decides whether the ETF producer is served-tier (follows the act-4 flip) or needs a row of its own."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W37-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~37",
+  "surfaced_at": "2026-10-11T13:22:15Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "FB-g-14 cannot commit: the naming gate (LGIC_ENFORCE DEC-6, ENFORCE mode) refused lib/opal_naming.py:384, the literal 'irpt' in the new _irpt_bucket() helper, as a NEW hand-kept carrier. The work stays uncommitted in the worktree; the order stays open.",
+  "spec_asserts": "TO-FB-g-14 section 2 bound 4 and section 5: if the commit is refused on a lane or by the naming gate, STOP, leave the edit uncommitted, file a BLOCKING row with the gate's lines, and do not override or force.",
+  "world_is": "safe-commit.sh for the 19-path FB-g-14 commit (HEAD ba53f8a883) ended: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' followed by '[naming-gate] NAMING REFUSE lib/opal_naming.py:384 irpt -> lookup('irpt')', '[naming-gate]   why: NEW hand-kept carrier (context rule); hand-kept carrier of 'irpt' outside every permitted context: read it through lookup('irpt')' and '[naming-gate] NAMING-GATE: REFUSE 1 graded'. The gate's own text (.tools/naming-gate.py:2008) names lookup('irpt') as the permitted read. The line at 384 is the helper body: live = ((scope_row.get(\"product_live\") or {}).get(\"irpt\") or {}).get(\"bucket\"). The gate's DENOMINATOR was 16 paths, 0 excluded; COVERAGE 16 seen. The helper takes scope_row only (order section 1a item 2a), so lookup() needs a registry argument the order does not give it. Not overridden, not forced; index cleared of the failed commit's staged paths (no worktree change).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for FB-g-14 on wk-ADVI_FIRMBKTS-37 at HEAD ba53f8a883, 2026-10-11T13:19Z: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode)'",
+      "lib/opal_naming.py:384 @ worktree (uncommitted): live = ((scope_row.get(\"product_live\") or {}).get(\"irpt\") or {}).get(\"bucket\")",
+      ".tools/naming-gate.py:2008 @ ba53f8a883: carr_txt = '; hand-kept carrier of %r outside every permitted context: read it through lookup(%r)'",
+      "AC1 r4_irptlive.py --arms live: 5 of 5 arms PASS in the worktree; AC2 r4_scope.py: OK 17 changed, 0 outside, 0 required missing (both uncommitted)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocks the order's commit, not its content. Disarm is not needed: the file is not live, and the INERT surprise S1 is unaffected. The issuer decides the route: a permitted read of 'irpt' (for example through a registry argument to the helper, which the order's signature does not give) or a naming-gate ruling. The worker did not edit the gate, the helper, or the lane."
+}
+```
