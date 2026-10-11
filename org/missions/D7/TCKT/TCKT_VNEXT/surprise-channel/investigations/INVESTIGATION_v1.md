@@ -2059,3 +2059,30 @@ denominator.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+### TCKT_VNEXT-D2-S48 -- the investor-reporting internal firm reader leaves a caller with no users row unrestricted, as the ticket service did
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S48",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T23:39:35Z",
+  "one_line": "The investor-reporting service's INTERNAL firm reader has the same no-row case the ticket service is about to close: an internal caller with no users row is left unrestricted, by the code's own stated rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1138-1166 (_internal_allowed_firms), printed by this seat 2026-10-11 ~23:5xZ: 'Returns None = UNCHANGED (no row, no attribute, or an empty list)'; `if row is None or \"allowedFirmIds\" not in row: return None`",
+      "the same file, lines 1100-1136 (_service_allowed_firms), read by worker 0.9.0_WK_TCKT_VNEXT~26 and NOT printed by this seat: no row, no attribute and an empty list each return an empty list (no firm)",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~26/EMPTY_FIRM_LIST_READ.json @1a47d695fb (claim: inferred; the portal authorizer was not found in the checkout and three of its cells are NOT_READ)",
+      "scope: code read at HEAD on box/dell2; nothing invoked; the deployed bytes of the investor-reporting functions were not compared with this file"
+    ]
+  },
+  "spec_asserts": "TCKT_VNEXT PRD v0.4 ADDENDUM 3 (C-FENCE): an internal caller the users table does not know is refused; 'the service does not grant its widest reading to a caller it cannot find'. The addendum rules on the ticket service only.",
+  "world_is": "The ticket service is being changed to refuse that caller (TO-R7-nr1). The investor-reporting internal reader, which applies when a firm other than the caller's own is selected, returns unchanged for no row, and its docstring states that as the rule (IB-pr-387, CTO msgs 2367 and 2569). After the ticket release the two services answer the same caller differently. Whether the investor-reporting reader should follow is not this project's to rule: it is IRPT's contract and the CTO's. Nothing is changed here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
