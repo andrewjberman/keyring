@@ -24888,3 +24888,77 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not acted on beyond the recorded denominators. The issuer may restate the order's cd path to the live worktree, or accept the substitution. No criterion's output is affected."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W392-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~392",
+  "surfaced_at": "2026-10-11T18:57:55Z",
+  "one_line": "The order names crosswalk.py resolve_identity as the identity-crosswalk read; no such function exists, the read is resolve().",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bc-1 section 1, surface (b): the identity crosswalk record of each key is read through lib/research/identity/crosswalk.py resolve_identity.",
+  "world_is": "At 54fd0c8c7d, lib/research/identity/crosswalk.py defines resolve(any_form, path=None) at line 1357 and no resolve_identity. resolve loads the newest pool object through _read_pool_latest. The reading read the newest crosswalk/v1 object directly (2026-10-09.json) and swept it. The reading was not blocked by this.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep 'def resolve' lib/research/identity/crosswalk.py at 54fd0c8c7d returns line 1357 'def resolve(any_form, path=None):' and no resolve_identity",
+      "aws s3 ls s3://opal-data-harvest/crosswalk/v1/ at 2026-10-11T18:5xZ lists 2026-09-29.json, 2026-10-07.json and 2026-10-09.json; the newest was read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not acted on. The reading names the function it read (crosswalk.py resolve path, newest object). No criterion output is affected."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W392-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~392",
+  "surfaced_at": "2026-10-11T18:57:55Z",
+  "one_line": "A key-name field sweep is blind to the stored model block and the classifications table; the first sweep read the sector control BA_US as matched 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bc-1 AC1 S4/S5 and order section 1: a field-name sweep over the stored objects sees a sector field when one is present, proven by the control listing BA_US_Equity.",
+  "world_is": "The model block stores each Bloomberg field as a record {mnemonic, value}: BA_US figures[3] has mnemonic GICS_SECTOR_NAME, value Industrials. A sweep of dict keys only reads that control as matched 0 over 11212 fields. The sweep matches the mnemonic value plane and then sees it. The classifications table holds no sector-named attribute: scoped_amgt.py _with_served_sector (line 647) derives the served sector from sub_asset_class, which no name sweep matches. A future key-only sweep would give a false absence on both surfaces.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "reading sweep run 1 (keys only) over BA_US model block: matched n=0 over 11212 fields; run 2 (keys plus mnemonic values) matched n=2 (the record and its basis copy)",
+      "BA_US model block figures[3]: mnemonic GICS_SECTOR_NAME, value Industrials, vintage 2026-10-11T13:02:40Z, source bloomberg-dapi",
+      "lib/research/api/scoped_amgt.py line 647 _with_served_sector: sector = sub_asset_class when in GICS_SECTORS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The reading discards run 1 and reports run 2 only, with the control shown. Not acted on beyond that. Disarm not required (INERT)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W392-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~392",
+  "surfaced_at": "2026-10-11T18:57:55Z",
+  "one_line": "The stored Bloomberg objects for CSL AU are much older than those for SAN FP and BA US: the newest model block is 2026-09-30 and the newest refdata is 2026-09-19.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bc-1 section 1: the stored Bloomberg-fed data for the listing CSL AU is read as the listing's current stored state.",
+  "world_is": "derived/model_block/CSL_AU_Equity holds 6 objects, the newest 20260930T093804Z (2026-09-30). bloomberg/harvest/bronze/refdata/security_key=CSL_AU_Equity holds 3 objects, all dated 2026-09-19. SAN_FP_Equity holds 17 model blocks through 2026-10-11 and BA_US_Equity 31 through 2026-10-11. The CSL AU sector value (Health Care) is read as stored and its freshness is not verified.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 ls --recursive on derived/model_block/CSL_AU_Equity/ at 2026-10-11T18:5xZ: 6 model_block.json objects, last 2026-09-30",
+      "aws s3 ls on bloomberg/harvest/bronze/refdata/security_key=CSL_AU_Equity/: 3 objects, all 2026-09-19",
+      "aws s3 ls --recursive on derived/model_block/SAN_FP_Equity/ and BA_US_Equity/: 17 and 31 objects, last 2026-10-11"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not acted on. Recorded so that any serve from CSL AU's stored objects carries their vintage. Cause not investigated."
+}
+```
