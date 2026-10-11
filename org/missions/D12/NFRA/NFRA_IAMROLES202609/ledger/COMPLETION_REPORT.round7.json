@@ -1,0 +1,126 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "NFRA_IAMROLES202609",
+ "round": 7,
+ "written_by": "2.0.0_SA_COO~ZI",
+ "written_utc": "2026-10-11T14:0xZ",
+ "decomposition_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/decompositions/NFRA_IAMROLES202609_DECOMP_R7.md@935b63a027",
+ "denominators": {
+  "fwd_in_prd_header": 8,
+  "cells_in_decomposition": 6,
+  "task_orders": 6,
+  "task_orders_terminal_with_valid_proof": 6
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a reviewer has actually answered the question with that evidence attached, rather than an opinion",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 7 per ROUND_ANALYSIS.round6.md: REALIZED at round 4."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "real roles have been read and their unused permissions named, over a stated lookback",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 7 per ROUND_ANALYSIS.round6.md: REALIZED at round 3."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "at least one real policy has been surfaced as perfectly scoped and yet requiring nothing of whoever calls it",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 7 per ROUND_ANALYSIS.round6.md: REALIZED at round 4."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "APPLIED",
+   "done_when_text": "each one is either in code or carries a named owner and a reason",
+   "cells": [
+    {
+     "cell_id": "IAM-x-1",
+     "task_orders": [
+      "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-x-1.adopt-family-c.md"
+     ]
+    },
+    {
+     "cell_id": "IAM-x-2",
+     "task_orders": [
+      "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-x-2.narrow-the-dead-grants.md"
+     ]
+    },
+    {
+     "cell_id": "IAM-x-3",
+     "task_orders": [
+      "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-x-3.smartx-drift-table.md"
+     ]
+    },
+    {
+     "cell_id": "IAM-x-4",
+     "task_orders": [
+      "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-x-4.retire-lambda-test-role.md"
+     ]
+    },
+    {
+     "cell_id": "IAM-x-5",
+     "task_orders": [
+      "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-x-5.narrow-portal-s3-read.md"
+     ]
+    },
+    {
+     "cell_id": "IAM-x-6",
+     "task_orders": [
+      "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-x-6.smartx-drift-deploy.md"
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "ENRICHMENT of an already-REALIZED outcome (round 6); MECHANICAL BARS MET on all six, AC4 x6 UNGRADED (L9 at 3.0.0_SA_CVO~Z). x-1 adopted rows 6 (shared-infra) and 14 (market-overview), no override on either (the CRO's 'sentiment' row made 14 EXISTING); x-2 deleted opal-smartx-lambda-role's two dead inline policies via the IAM API and removed one dead global-bucket ARN from the in-use CodeBuild role's S3Access (target 4 HELD to the slug); x-3 the read-only smartx drift table (corrected by Z-S41); x-4 retired lambda-test-role (site-Z record first, NoSuchEntity with control); x-5 (E5, most urgent) removed 12 ARNs of six non-existent buckets from opal-portal-s3-read (Get/Put/Delete on a 12-function production role), census 12 of 12 with all refs 0, portal invocation 37131e0c clean after; x-6 deployed smartx-pipeline's three drifted versions (one running-code change, rest_pull) + the ratified output nulls, under an equality check, smartx-rest-pull SUCCEEDED after. ISSUER REAL RUN at close, live 2026-10-11 14:03Z: rows 6 and 14 tags=4 inline=1 attached=1 lambda trust; opal-smartx-lambda-role inline = opal-smartx-logs only; CodeBuild S3Access = opal-data-news-v2/* only; lambda-test-role NoSuchEntity; portal dead=0 live=4; smartx CodeSha256 assets 4Iw0..., jwt MCsL..., rest_pull lM6cn... (the signed after-values). In code at HEAD (Grep name= over infra/aws/terraform/*.tf): 8 of the disposition table's roles (row 7 no longer exists). 7 of 7 round-7 ledgers CLOSED at HEAD."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a real narrowing has been checked in advance and the check was believed",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 7 per ROUND_ANALYSIS.round6.md: REALIZED at round 5."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "each of the known past plans has been established as done or not done, on evidence",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 7 per ROUND_ANALYSIS.round6.md: REALIZED at round 3."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "done_when_state": "APPLIED",
+   "done_when_text": "the assessment reports the two differently, at permission grain",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 7 per ROUND_ANALYSIS.round6.md: REALIZED at round 3."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "it has actually been re-run and produced a comparable answer",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 7 per ROUND_ANALYSIS.round6.md: REALIZED at round 4."
+  }
+ ],
+ "surprise_rows_for_l10": [
+  "x-2 target 4 HELD: sentiment_query_api-role DynamoDBAccess names a us-east-2 table; delete vs repoint is a product call (a repoint widens)",
+  "Z-S39 / E5 class: a squatting sweep beyond the named roles was never run; other roles may carry Allows on non-existent global bucket names",
+  "Z-S41: smartx-pipeline reads s3_object_version from the live latest object (no owning project)",
+  "Z-S25 / Z-S34 / R20 entries NFRA-IAMROLES-R20-01/02 (cutoff 2026-12-31): retire once dell1 FWD-8 is in box/sitez",
+  "Z-S40: ADVI_COTBKF applied restricted_breakglass before x-1 row 6's pair was signed; Z-S42: the assignee's pre-apply inbox guard fails toward CLEAN from a worktree",
+  "GOVERNANCE_DISPOSITION.md tokens for rows 6 and 14 (ADOPT -> DECLARED) and row 7 (RETIRE -> retired) await the drain batch repair"
+ ]
+}

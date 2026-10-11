@@ -64,6 +64,21 @@ Then one whole-scope run after; `suite_after`; `portal_commit`.
 
 <expected_criteria>IV97-AC1,IV97-AC2</expected_criteria>
 
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~14:0xZ): the lock needs no refresh -- a measured no-op satisfies part 1 (row DSGN_IRPTV1-D2-W53-S10)
+
+Part 1 rested on row D2-W49-S3: "the next non-frozen `bun install` in this portal will produce the same 5-version move and the 57-entry
+prune". The worker ran exactly that, once, with `package.json` unchanged, on bun 1.4.2: `bun.lock` came out BYTE-EQUAL, 0 packages moved,
+0 pruned, the installed set unchanged (251 top-level entries, the same names), the build hash equal. The premise does not hold today: the
+lock already states what `package.json` asks for. The routes that WOULD move it (`bun update`, deleting the lock and resolving fresh) change
+what is installed and are not what "refresh the lock once" meant; the worker correctly took none.
+
+**Ruled by the issuer inside its own decomposition:** part 1 is met by that measured no-op. Nothing is committed for it. Criterion IV97-AC1's
+check admits `refreshed: false` only with one install run, the lock equal before and after, and 0 packages moved; every other clause stands
+(dependencies unchanged, the build byte-equal, happy-dom 20.14.5, no new failing id). Row D2-W49-S3 is answered by the measurement, and the
+CTO is told with the candidate. Parts 2 and 3 stand as built.
+
+**Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited.
