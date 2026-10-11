@@ -4,10 +4,10 @@
  "directive": "D9",
  "macro_code": "IRPT",
  "fabric": "dell2",
- "dep_stage": "EXECUTING",
+ "dep_stage": "ROUND_CLOSE",
  "status": "active",
  "name": "YCharts direct-API generation, Opal-branded: persist and categorize every YCharts API response per call, map each report element to its source, and generate the three report types in Opal's branding with Opal's own script from the same data endpoints",
  "generated_from": "org/missions/D9/IRPT/IRPT_YCDGEN/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-09T19:39:08Z"
+ "generated_at": "2026-10-11T05:14:59Z"
 }
