@@ -5520,3 +5520,26 @@
   "world_is": "APPLIED as a portal candidate (commit 732b41c8, not pushed), EXERCISED only on synthetic data: bun static-markup test and the print route of a bun run build served from disk (print-document-driver.mjs, Edge headless). The export the backend renders (the render host opening the same print URL) was not run; no vendor call, no live request, no AWS call was made. The same holds as row DSGN_IRPTV1-D2-S16 states for IV-e-101."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S17",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T15:58:01Z",
+  "one_line": "L8 round 21 (four cells), no judgment criterion: all four are on portal DEV and none is exercised on a served Opal report. Read by this seat on DEV: the three places that print vendor wording now branch on the report's provider. The branch falls to the vendor words when a report carries NO provider, so the Opal wording depends on the provider reaching the view; no served Opal report has been opened to show that it does. This is the page half of IRPT_YCDGEN rows D2-W14-S1 and D2-W14-S2, built and unexercised.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 5262 (IV-e-97, IV-e-101, IV-e-102, IV-e-105 drained; portal DEV 00cbfdb3)",
+      "this seat's reads 2026-10-11T15:58:01Z of portal origin/DEV 00cbfdb3: tabs/analysis/OwnedRequestHistory.tsx:150-163, tabs/analysis/NativeSections.tsx:184-191 and render/analysis/AnalysisDocument.tsx:78-87 each branch on the report's provider: an OPAL_ENGINE report prints Opal's own source words and 'Computation validation'; a report with no provider, or a vendor one, prints 'Vendor attribution' and 'Extraction validation' as before"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27). Evidence law: APPLIED is not EXERCISED; a fixture render is not the served page.",
+  "world_is": "Read from source on DEV. Not run by this seat: the suite, the driver screenshots, the three-page print. FWD-1 has no rendered walk on these changes.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
