@@ -6296,3 +6296,49 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W103-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~103",
+  "surfaced_at": "2026-10-11T15:37:30Z",
+  "one_line": "DB-b-128: method_version_of refuses a custodian_reported entry naming row 3, but an entry that declares NO valuation_source is not refused for naming it; 0 of 2 sources.json entries do, so the reworded row-3 reason holds today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-128 rule-24 step: the reason is a property of the method row, so one sentence has to hold for every entry that can name row 3; a channel that separates income must not be able to name it.",
+  "world_is": "account_return_daily.py:1824-1830 compares the entry's valuation_source with the row's class only when the entry declares a non-blank one. RUN: the one declared custodian-equity source with method_version set to 3 raised 'REFUSED: ... does not belong to method row 3'; the underscore entry _commonwealth_delivery names 3 and is the only entry that can (1 of 2). An entry with no valuation_source would pass the check for any row in METHOD_ROWS, so a future channel that separates income and omits that field could name row 3 and be served the sentence 'income is inside the value'. None exists; build_manifest writes the literal absent for such a field. Not edited (outside the order): the producer's guard.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1810-1831 (method_version_of)",
+      "data/assets/scripts/gold/irpt_reporting/sources.json:6,123",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~103/INCOME_REASON.json (entries_that_can_name_row_3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W103-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~103",
+  "surfaced_at": "2026-10-11T15:37:30Z",
+  "one_line": "DB-b-128: two prose lines of the dim_return_method contract (line 6, the authored_under history; line 35, the income_basis column meaning) still give 'FWD-3 does not separate income' as the cause of row 3's absent income; only the example row was ordered reworded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-128 step 3: the test that pins row 3's reason and the contract's example row follow the new wording.",
+  "world_is": "After the edit the example row (income_basis_reason) and the producer carry the method-worded sentence. The contract still names the outcome id as the reason in 2 places: line 6 records the CTO ruling msg 4634 as it was worded (a history, true as a quotation) and line 35 is the column's meaning ('method row 3 states no income basis because FWD-3 does not separate income (it sits inside the value through the cash leg)'). Neither is served or read by code; schema_hash, version 0.6.0 and every column are unchanged. Left as is: not in the order's stated edit. Disposition proposed: ROW_FOR_ISSUER (reword line 35 to the method's reason at the next contract touch).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json:6,35"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
