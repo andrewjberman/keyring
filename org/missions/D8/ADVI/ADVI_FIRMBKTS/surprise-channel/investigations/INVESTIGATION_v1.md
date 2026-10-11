@@ -2937,3 +2937,28 @@ Opened as the worker's step-4 finding list. One row per read site, form OBSERVAT
   "disarm_owner": "0.0.0_AB_MSTR~DELL1"
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S16",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T08:55:00Z",
+  "one_line": "D1-S15 narrowed: the SEV1 SMS page path has delivered NOTHING in 14 days (0 delivered, 28 failed, 09-27..10-10); not sandbox (IsInSandbox false), not the USD 50 spend limit (SMSMonthToDateSpentUSD has no datapoints, i.e. no spend); origination number and opt-out unread (denied to the dell identity).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row D1-S15: the guard's SEV1 publish pages a human via the topic's SMS subscription.",
+  "world_is": "CloudWatch AWS/SNS opal-infrastructure-alerts, daily sums 2026-09-27..10-11: NumberOfNotificationsFailed 09-27 2, 09-28 2, 09-29 2, 09-30 4, 10-09 8, 10-10 10; NumberOfNotificationsDelivered none. SMSMonthToDateSpentUSD: 0 datapoints over 2 days. Laptop MSTR read (relay msg 3663, user/Andrew_Berman): MonthlySpendLimit 50, IsInSandbox false, no DeliveryStatusIAMRole, no DefaultSenderID. sns list-origination-numbers and list-phone-numbers-opted-out: AuthorizationError for cloudops-dell1-agent-user. Leading candidate, INFERRED not read: no registered US origination number (toll-free or 10DLC), which US carriers require for A2P SMS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws cloudwatch get-metric-statistics AWS/SNS (14 days, daily)",
+      "relay msg 3663 (laptop get-sms-attributes, get-sms-sandbox-account-status)",
+      "sns list-origination-numbers / list-phone-numbers-opted-out: AuthorizationError on dell1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL1"
+}
+```
