@@ -12179,3 +12179,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "The fix is one character class, e.g. [][a-z_.0-9\"-]+ or [a-z_.]+ (the address here has no index). Other r34 check scripts may carry the same pattern; not swept."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W56-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~56",
+  "surfaced_at": "2026-10-11T17:15:55Z",
+  "one_line": "Resolution of NFRA_OPLGTW-Z-W56-S2: the issuer fixed gw1.AC2.sh at b237fbf925; re-run against the saved plan it prints 'changed addresses 1: aws_lambda_function.mcportal_grant_writer', RESULT: PASS, exit=0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash gw1.AC2.sh at b237fbf925 -> 'plan rc=0; summary: Plan: 0 to add, 1 to change, 0 to destroy.; changed addresses 1: aws_lambda_function.mcportal_grant_writer ' RESULT: PASS exit=0",
+      "COMMIT b237fbf925 (issuer ruling relayed in the coordinator message: the regex defect was the issuer's)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row Z-W56-S2: gw1.AC2.sh cannot print PASS for any plan.",
+  "world_is": "After the fix the script counts the one address and passes. The plan file was not changed between the FAIL and the PASS (same gw1_plan.txt as committed at 3f8d4d7a6e).",
+  "notes": "Citing row; Z-W56-S2's text is untouched."
+}
+```
