@@ -3756,3 +3756,28 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Owner of the call: 1.0.0_SA_CTO~DELL1 (the S12 ruling named two forms; both fail here) and the issuer for the order. Options, none applied: (A) lift the recorded refusal for the whole rule array, with its lost evidence replaced by a separate assertion (for example a check block over a data read of the live ACL's six rule names and priorities), which is a change beyond one resource and beyond this order's one file; (B) keep the ACL as the named rider of every portal-auth apply, which the act-1 ADDENDUM 1 already covers (the apply writes the same six rules and the churn returns, as measured at 07:54Z: AWS read byte-identical before and after); (C) a provider version that stores no empty string (a lock file and version constraint change, outside this order's file, and a provider upgrade for the whole root). This lane recommends B until the CTO rules on A, because A removes the one control that shows a moved rule. The order stays pending and no file changed in the worktree: git diff of waf-cloudfront.tf is empty."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S23",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-11T12:36:00Z",
+  "one_line": "TO-FB-g-10 AC1 and AC2 cannot be graded as written on dell1: the full plan dies on two AccessDenied reads for cloudops-dell1-agent-user, and AC1's grep counts the state-refresh line that names the resource whether or not the block is in config.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-FB-g-10 step 3 and AC1/AC2: the root's full unscoped terraform plan, run by this seat, lists no eclipse_jwt_initial and ends Plan: 0 to add or No changes; grep -c eclipse_jwt_initial reads 0.",
+  "world_is": "Measured 2026-10-11T12:34Z in /c/dev/wk-firmbkts-31 after the one-block edit (secrets.tf, fmt clean): terraform plan -refresh=true rc=1 in 11 s with two errors and no Plan line. (1) aws_sns_sms_preferences.account: sms-voice:DescribeSpendLimits denied to user/cloudops-dell1-agent-user. (2) aws_ssm_parameter.inf_gold_last_trigger_mode: ssm:GetParameter on /inf/gold/last-trigger-mode denied. Separately, the first output line is 'aws_secretsmanager_secret_version.eclipse_jwt_initial: Refreshing state...' with the config block removed, so grep -c reads 1; the laptop evidence plan_untargeted.out prints the same line at :232 beside 'will be created' at :508, so the line is printed for the state entry before refresh drops it and AC1 as written cannot read 0 until a state write. AC3 (SECRET VERSION: UNCHANGED, AWSCURRENT f57eb0dc-439b-4f46-859e-17fb00d968cb of 2 versions) and AC4 (ROUND 4 SCOPE: OK, 3 changed, 0 outside) pass. The id shape the order names, ADVI_FIRMBKTS-D1-DELL1-S<k>, does not match the gate's id grammar (fabric coordinate = one capital plus digits), so this row is D1-S23.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "/c/dev/wk-firmbkts-31/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~DELL1/evidence/plan_full_after.out lines 1, 413-423 (uncommitted)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/plan_untargeted.out lines 232 and 508",
+      "r4_secretver.py and r4_scope.py runs, 2026-10-11T12:35Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The edit is NOT committed: the verifying plan could not run, so 'adds nothing new' is unproven. Two ways forward, both the issuer's: run steps 3 and AC1/AC2 from an identity that can read those two objects (the laptop did), or grant dell1 the two reads under its own order; and read AC1 as a count of the '# ... will be' plan line rather than the refresh line."
+}
+```
