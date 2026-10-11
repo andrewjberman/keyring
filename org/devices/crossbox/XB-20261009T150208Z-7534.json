@@ -10,16 +10,20 @@
  "subject": "AMGT_HARVST HVST-bu-2 round 77 B: read why bbg cycle stopped on error at site Z (read-only)",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round77/XB_ORDER_BU2_TO_ZW.md",
  "opened_at": "2026-10-09T15:02:08Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T15:07:28Z",
   "bus_message_id": "c809cf02-8721-4a76-9515-4e848c56fee7"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:02:57Z",
+  "by": "0.7.0_AE_CloudOps~ZW",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T06:02:57Z",
+  "to_by": "0.7.0_AE_CloudOps~ZW"
  }
 }
