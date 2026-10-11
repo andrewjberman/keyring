@@ -588,3 +588,28 @@ write: **1 row** (`S1`).
   "notes": "Resolves D1-S4 and D1-S7 as hazards (the D1-S8 shape used elsewhere for a disarm); GRADUATED stays the CVO's L9 field. The round-3 enrichment list carries the cutover family as one item."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S9",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T04:23:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "THE ISSUER CUT FB-e-6 WITHOUT RUNNING THE NAMING GATE ON ITS PATCH: THE GATE REFUSED THE FIRM-NAME TABLE AND THE SPEC'S KEY-SHAPED LITERALS AT THE WORKER'S COMMIT, AND THE ROUTER WAS RE-CUT WITH AN EMPTY CANONICAL-BUCKET LIST",
+  "spec_asserts": "The issuer's cut dry-ran every mechanical check at the base (DISPATCH Step 2) and, for FB-e-7, the naming gate on the diff. FB-e-6's patch @76bff7e7d4 was proved by its own harness and the router's gate, and its infra/ paths are graded by the commit-time naming gate (CLAUDE.md rule 30).",
+  "world_is": "Worker ~9's commit of the v1 patch was refused by naming-gate.py --enforce (35 graded): index.mjs:126 typed the three long-form firm names as a hand-kept scope table, and the new spec typed firm names and platinum-prefixed key strings. The issuer did not run naming-gate.py --diff on the patch before the cut; running it afterwards reproduced the refusal. The re-cut (patch @ F6_ROUTER_EDIT.patch, v3): the router carries an EMPTY CANONICAL_PLATINUM_BUCKETS list and derives a bucket's scope from its own name after the prefix; the spec types no firm name (it reads FIRM_CONFIG) and builds its keys from the router's exported class table; naming-gate.py --diff --enforce on the v3 diff reads PASS 0 graded; the router's gate reads 39 pass; r2_f6.mjs diff 193 of 193, seam 20 of 20 and 10 of 10 controls; a mutant with a non-empty list fails diff 183 of 193 and seam controls 9 of 10.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker ~9 report 2026-10-11 and its row ADVI_FIRMBKTS-D1-W9-S4 (the refusal text)",
+      "python .tools/naming-gate.py --diff <v1 patch> --enforce -> NAMING REFUSE index.mjs:126 and spec lines 40, 52, 55, 81, 83 (issuer's run)",
+      "python .tools/naming-gate.py --diff <v3 patch> --enforce -> NAMING-GATE: PASS 0 graded (issuer's run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The activation changed from the registry's map (rows D1-S4/S7's design) to an explicit list: a cutover now needs the map edit AND one list entry, and the list entry is a hand-kept firm carrier the naming gate will grade, so the cutover cell either registers it (infra/logic/registry/) or generates it from the registry. That is the CTO's round-3 cutover window. The dormant build is stronger than before: it cannot change a request until a list entry exists."
+}
+```
