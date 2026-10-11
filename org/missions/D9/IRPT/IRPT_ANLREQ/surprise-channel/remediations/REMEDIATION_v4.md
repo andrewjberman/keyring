@@ -29,11 +29,11 @@ Graduated, round label v6: 4 rows, OPEN, INERT. No judgment criterion this round
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v6",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v6"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_ANLREQ-D2-W51-S6",
