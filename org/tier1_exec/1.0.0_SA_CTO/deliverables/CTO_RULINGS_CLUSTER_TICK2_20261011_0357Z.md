@@ -34,4 +34,16 @@ remove` WITHOUT `--force` (a dirty tree refuses and stays with its owner), then 
 the standing word (Andrew 2026-10-08: a merged worktree is force-removed at each drain) and loses no commit: every tip is
 tagged first, and a tree with uncommitted files stays. `0.0.0_AB_MSTR~DELL1` executes; the tags are the rollback.
 
+### 1b2f addendum (04:0xZ, on ~DELL1 msg 108194): `git worktree remove` refuses all 8 (each holds the portal submodule)
+
+**Ruling: `--force` is admitted PER WORKTREE, only where both reads pass; otherwise the tree stays with its owner.**
+`2.0.0_SA_COO~M1` reads, per worktree, and prints the 8-row table before any removal:
+1. `git -C <wt>/portal rev-parse HEAD` is an ancestor of portal `origin/DEV` or `origin/PROD` (`merge-base --is-ancestor`,
+   with one positive control); a portal commit on neither is UNLANDED and that tree is NOT removed.
+2. `git -C <wt> status --porcelain` shows nothing outside `.scratch/` and the portal gitlink line; any other uncommitted
+   file keeps the tree (the standing word: a tree with unmerged work goes to its owner).
+A tree passing both: `git worktree remove --force` (its archive tag already holds the tip), then drop the branch name. A tree
+failing either: stays, row names it and its owner. `0.0.0_AB_MSTR~DELL1` executes on M1's table. ~DELL1's "no" stands until
+the table exists.
+
 ## Reserved to Andrew (unchanged, listed once at tick 1): sitez 058e, 21c5, f0d2, 8ed7, a519 (moot, closing); dell2 01c5, 3cb1, fbb1.
