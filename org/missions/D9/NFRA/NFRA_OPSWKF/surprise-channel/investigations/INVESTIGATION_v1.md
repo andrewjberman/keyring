@@ -452,3 +452,30 @@ adjudication rows live in `../adjudications/` as `NFRA_OPSWKF-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## NFRA_OPSWKF-D2-S14 -- the FWD-10 probes omitted the stage: both answered 404 for 'no such stage' and proved nothing; stopped before the write
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S14",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~O2",
+  "surfaced_at": "2026-10-11T23:39:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The FWD-10 pair's two probes omitted the API's stage. trade-submission-api has one stage, prod, and no $default stage, so both requests matched no stage, answered 404 for that reason, and could not have told an open endpoint from a closed one. The executor stopped at the pair's own guard; nothing was written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~DELL2 msg 6142: U BEFORE (GET /users, no Authorization, 23:30:08Z) 404 {\"message\":\"Not Found\"}, identical to N; get-stages 23:31:22Z: one stage, prod, no $default; DisableExecuteApiEndpoint re-read false; ledger CLOSED NOT EXECUTED @f57b83a3f0",
+      "this seat's own get-stages at ~22:1xZ printed the single row 'prod True' and the pair written an hour later did not use it",
+      "org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/2.0.0_SA_COO~O2/S_DEPLOY/OW_SD3_FWD10_SECOND_DOOR_CLOSE_PAIR_20261011.md section 4: both probe paths written bare"
+    ]
+  },
+  "spec_asserts": "The pair: probe N answers 404 from the API and probe U answers 401 from the API before the act, and U discriminates if N does not.",
+  "world_is": "Neither probe reached the API's routing. The expected outcome was predicted from the portal API's shape (a $default stage, bare paths) and not read from this API's own stage list, which this seat had in hand. It is the same error class as row D2-S7, by the same seat, on the same day. The guard written for a different doubt (U not 401 is a STOP) caught it before the write.",
+  "notes": "Repair: the pair's AMENDMENT 1 (the probes carry /prod; every answer tabled, including the ones that would mean the issuer is wrong again). Two of the pair's requests are spent. The door is still open as of this row; the closing write waits on the CTO half on the amendment."
+}
+```
