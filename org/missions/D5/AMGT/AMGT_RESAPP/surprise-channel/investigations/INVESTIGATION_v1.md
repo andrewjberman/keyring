@@ -22508,6 +22508,50 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-nn-4 section 1: AUDIT_ROOT resolved from `git rev-parse --path-format=absolute --git-common-dir` (the common dir's parent) is the shared tree that holds the audit log; change nothing else.",
     "world_is": "In a submodule the common dir is <superproject>/.git/modules/<name>, so the resolved AUDIT_ROOT is <superproject>/.git/modules and the row lands there, not in the superproject root (the spec's shared tree) nor the submodule root. Measured in the throwaway probe only; whether the hook fires inside a submodule commit was not measured.",
     "notes": "Not fixed here: the order bounds the edit to the adoption of the common-dir parent and says change nothing else. safe-commit.sh:160-190 resolves the superproject separately for this case; whether the hook needs the same handling is the disarm owner's call."
+  },
+  {
+    "id": "AMGT_RESAPP-D1-W371-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~371",
+    "surfaced_at": "2026-10-11T06:51:52Z",
+    "one_line": "The exact-name rule serves the held key of a different listing of the same company when a peer row names another listing or share class: China A-share row served 939_HK_Equity; a Hong Kong row served JD_US_Equity.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~R1",
+    "spec_asserts": "AMGT-pp-1 section 1: a non-numeric non-US peer member whose name names exactly one held company serves that company's key, MEASURED, matched_as company_name. The cell is silent on whether the key must be the listing the row itself is.",
+    "world_is": "Measured 2026-10-11 by .scratch/r91_matched_rows.py (read-only, same reads as r90_measure_nonus3.py) with the new rule: B24G12 'China Construction Bank Corporation Class A' country China served 939_HK_Equity; B0LMTQ 'China Construction Bank Corporation Class H' country Hong Kong served 939_HK_Equity; BKPQZT 'JD.com, Inc. Class A' country Hong Kong served JD_US_Equity. The served key names the company's held listing, which is not the row's own listing for the A-share and HK-JD rows.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/peers/numeric_tickers.py name_match_fields, rule 1 of the cell (exact name, one held key)",
+        ".scratch/r91_matched_rows.py run 2026-10-11T06:51Z: MATCH lines for B24G12, B0LMTQ, BKPQZT; denominator 23 of 1047 other non-US rows",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round90_prep/reads/r90_measure_nonus3.py (the read the counts come from)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not traced: which downstream figures read the served key for these members (the model block of 939_HK_Equity is what an A-share member would show). The cell's rule is the company-name rule of AMGT-av-5, which already serves 22 numeric rows by name; this row asks the issuer to rule whether a listing variant is served the company's key or left plain. ARMED: a served peer set that carries such a row shows another listing's identity until the issuer disarms or rules."
+  },
+  {
+    "id": "AMGT_RESAPP-D1-W371-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~371",
+    "surfaced_at": "2026-10-11T06:51:52Z",
+    "one_line": "The 1,047 'other non-US' rows include six United States rows with a dotted ticker, so the partition is not-US-alphabetic, not not-United-States.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AMGT-pp-1 section 4 and the preflight: 23 of the other 1,047 non-US rows name exactly one held company; the other partition is the non-US rows that are neither all-digit nor alphabetic United States.",
+    "world_is": "Measured 2026-10-11 by .scratch/r91_matched_rows.py: the partition 'not (ascii alphabetic and country United States)' holds 1,816 rows, 769 all-digit and 1,047 other. Of the 1,047, six are United States dotted tickers (BF.B, BRK.B, BF.A, HEI.A, LEN.B, UHAL.B) and seven are Canadian dotted tickers (*TECK.B, *BBD.B, *GIB.A, *RCI.B, *CCL.B, *CTC.A, *EMP.A). HEI.A is served by name (HEI_US_Equity); the other twelve dotted rows are not served.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch/r91_matched_rows.py run 2026-10-11T06:51Z: 'dotted class-share tickers among the other non-US rows: 13'",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round90_prep/reads/r90_measure_nonus3.py: non = rows not (ascii alphabetic and country United States)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The count of 23 stands; only the label is off. Recorded so the L9 read of the counts names the partition correctly. No row is served wrongly by this; the rule is unchanged."
   }
 ]
 ```
