@@ -4550,3 +4550,27 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not edited, because 1a.1 says every other line stays. A header-only update needs an issuer grant."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W42-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~42",
+  "surfaced_at": "2026-10-11T14:29:37Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The pre-commit risk reflex printed HOLD on infra/aws/terraform/modules/opal_name/main.tf, citing deploy-completion notes about other roots' main.tf files (a basename match); the commit landed rc=0 on 273de502f0.",
+  "spec_asserts": "The pre-commit risk reflex (comp-pulse diff) names a HOLD only for a touched node that a recorded claim is written about.",
+  "world_is": "The HOLD cites org/critical_paths/change_management/20260616T2001Z_nfra-infrpt-dr-snapshot-backup_deploy_completion.md:35, which is about main.tf of the portal_lambda_ec2_snapshot permissions, a different Terraform root. The reflex matched the bare name main.tf across six roots (9 claims each), not the touched opal_name/main.tf.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 273de502f0: '[HOLD] infra/aws/terraform/modules/opal_name/main.tf -> file:infra/aws/terraform/aaii-v2-bucket-lifecycle/main.tf (9 recorded claim(s))' and five further roots",
+      "org/critical_paths/change_management/20260616T2001Z_nfra-infrpt-dr-snapshot-backup_deploy_completion.md:35 read at the worktree: '- **main.tf:** fix portal_lambda_ec2_snapshot (EC2SnapshotPermissions)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken; the commit was not blocked and the cited claim is not this cell's. Filed for the reflex's owner to judge whether the bare-basename match is intended."
+}
+```

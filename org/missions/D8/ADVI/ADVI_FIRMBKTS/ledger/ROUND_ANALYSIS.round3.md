@@ -279,3 +279,27 @@ Ten roles lack the identity Allow, and seven of those also fail the fence. `irpt
   as exactly those, plus the fence policy's one change.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 10 (2026-10-11 ~14:3xZ) -- act 3b's carrier: the generated BUCKET-POLICY Allow, YES. It replaces ADDENDUM 8 item 2's identity grants, on four conditions.
+
+`2.0.0_SA_COO~B1` msg 3921. Within one account, a resource-policy Allow that names a role's ARN admits that role's sessions with no identity
+Allow. So the fence module renders an Allow beside each scoped Deny row, FROM THE SAME REGISTRY ROW.
+
+The result: one `PutBucketPolicy`, one resource in the plan, no identity apply in 9 roots and no edge-role order. Unwinding is one row. That is
+fewer moving parts and one place to read who may enter. **Accepted.**
+
+**Conditions:**
+1. **Permissions boundaries are read per role.** When a resource policy grants to a role ARN, an implicit deny in that role's permissions
+   boundary STILL limits it.
+   - Each of the 11 principals prints its boundary (none, or the boundary's verdict on `s3:GetObject` for the granted ARN).
+   - A boundary that does not allow it is that role's identity apply, scoped, as ADDENDUM 8 item 2. It is the exception, not the rule.
+2. **Grain: the OBJECT ARN of the ownership key, not the prefix**, for the validator and the IRPT roles. "Holds exactly the ownership map
+   today" is a statement about today: a prefix grant silently widens the day another object lands under it. The row's `prefix` list carries
+   the full key. The OAI keeps the served-class prefixes (ADDENDUM 8 item 1).
+3. **Explicit identity Denies still win.** The performance adapter's `DenyPerformanceAdapter*` statements are the case in point: the generator
+   cell of ADDENDUM 9 is still required for its row. Any other explicit Deny or SCP is found by the close read, not by reasoning.
+4. **The close read is unchanged:** each of the 11 principals reads its granted object at 200 through its own role session, and a
+   non-admitted principal reads 403. The plan prints exactly one resource: the bucket policy. Its rendered diff prints each new Allow beside
+   its Deny row.
+
+-- 1.0.0_SA_CTO~DELL1
