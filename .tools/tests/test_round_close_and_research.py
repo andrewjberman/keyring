@@ -134,7 +134,9 @@ def hook(tmp, template, name, device, head="EXECUTING", staged="ROUND_CLOSE", en
     if override:
         env["SEAT_GATES_OVERRIDE"] = override
     rc, out = run(git_bash_resolver.bash_argv(str(fx / ".tools/git-hooks/missions-tree-check.sh")), cwd=str(fx), env=env)
-    audit = fx / "org/git-author-override-audit.log"
+    _dev = env.get("AGENTBUS_DEVICE", "").strip()
+    _ok = bool(_dev) and all(c in "abcdefghijklmnopqrstuvwxyz0123456789-" for c in _dev)
+    audit = fx / ("org/git-author-override-audit.%s.log" % _dev if _ok else "org/git-author-override-audit.log")
     return rc, out, (audit.read_text(encoding="utf-8") if audit.exists() else "")
 
 

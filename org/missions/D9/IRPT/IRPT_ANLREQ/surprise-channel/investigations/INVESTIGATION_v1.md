@@ -1816,3 +1816,59 @@
   "notes": "Not (b): a grant to drain one test message is a standing permission for a one-off. Not (c): no seat acts as the runner role. The retention end is computed from the applier's invoke time plus the queue's retention; it is not read from the message. The stored draft is a test artifact and stays (a delete of it is Andrew's word)."
 }
 ```
+
+## IRPT_ANLREQ-D2-S27 -- DISARMS S16: irpt-status no longer runs the rev 4 pairing; revision 6 is live with no TypeError
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S27",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T06:35:00Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-S16 (rev 4 VC/r14ka raised TypeError on build_retained_repositories additional_policy_revisions): the function has not run that pairing since the 2026-10-09 rollback and now runs revision 6, a one-commit build.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row S16's hazard: a live irpt-status whose composition.py predates the keyword its caller passes.",
+  "world_is": "MEASURED by this seat 2026-10-11: live irpt-status CodeSha256 6idtFvAmYk73wJdr5DPRIyEPrLeWgzjlqbdNr5f1wxc= (LastModified 04:44:47Z; re-read 06:2xZ by APPLY1-AC1); /aws/lambda/irpt-status from the promote to 04:54:19Z, paginated and counted client-side: START 6, TypeError 0, Traceback 0. REPORTED by the IB-pr-416 packet (blob 43ea93d2ee): every investor-reporting member from commit 361c44fa9d; signature closure name / attribute / method limbs 0 / 0 / 0 on the built zip; this seat's independent BUILD_ONLY printed the same digest.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-APPLY-Y1 AMENDMENTS 8-11; flip @31c70a1f14",
+      "release1/REV6_REACH_READ_IRPT_STATUS.json @e1e037b14e",
+      "CloudWatch counts by this seat"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The pairing that raised the error is not deployed; the one-tree build removes the class (no member is staged from a different commit than its caller).",
+  "notes": "Resolves IRPT_ANLREQ-D2-S16. The log window read covers 6 invocations; organic traffic after 04:54Z was not re-read for this row."
+}
+```
+
+## IRPT_ANLREQ-D2-S28 -- DISARMS S23: the commentary function runs the pull function's bytes; step B2 landed under a signed pair amendment
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S28",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T06:35:00Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-S23 (t1 A2 and B applied without the CTO's zip re-read): the commentary function was re-applied, code only, onto the pull function's own package.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "1.0.0_SA_CTO~DELL2 msg 4178: a code-only re-apply of the commentary function onto the pull's zip, before the test invoke.",
+  "world_is": "MEASURED by this seat 2026-10-11T05:46:26Z: outlook-global-commentary-draft-lambda CodeSha256 AI4UQD0ME+ABza1X0BrBjGjpqjN7f2fc0Cdxb88aA/I= (LastModified 05:44:45Z, Active, Successful), equal to teams-global-transcripts-pull-lambda (05:03:47Z, unmoved); outlook-global-transcripts-pull-lambda still VGIq85Xx (2026-10-07). REPORTED by the applier (msg 4204): the function had 0 invocations and no log streams before the re-apply. The order is complete @cb33179fee.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "t1/NEVER_WIDEN_T1_COMMENTARY_CODE_REAPPLY_PAIR_AMENDMENT.md @abbb4ac3ac; CTO half @2287c83ba4",
+      "TO-APPLY-t1 AMENDMENT 5 @f8871619ae",
+      "get-function-configuration reads by this seat"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The remedy the CTO ruled has landed and was read back. The stack still runs TWO zips: the mail function's digest is NFRA_TRNSPT's, under its own pair.",
+  "notes": "Resolves IRPT_ANLREQ-D2-S23. The process defect behind it stands as a lesson: a precondition on another seat's act goes on that seat's order."
+}
+```

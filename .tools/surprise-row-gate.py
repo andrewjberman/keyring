@@ -66,6 +66,14 @@ TREE_CHANNEL_RE = re.compile(
 CHANNEL_RE = re.compile(FLAT_CHANNEL_RE.pattern + "|" + TREE_CHANNEL_RE.pattern)
 
 
+def _gao_name() -> str:
+    """The git-author-override audit log name for THIS box: one file per box (shape (a), MSTR consensus 2026-10-11),
+    the legacy shared name when AGENTBUS_DEVICE is unset or malformed."""
+    dev = os.environ.get("AGENTBUS_DEVICE", "").strip()
+    ok = bool(dev) and all(c in "abcdefghijklmnopqrstuvwxyz0123456789-" for c in dev)
+    return "git-author-override-audit.%s.log" % dev if ok else "git-author-override-audit.log"
+
+
 def _folder_identity(rel):
     """(project, kind) the PATH declares, or (None, None). Tree: the project folder two levels above
     surprise-channel/, and the kind from the sub-folder -- a REMEDIATION file filed under
@@ -1947,7 +1955,7 @@ def _honour_audit_line(root, reason, log_path=None, agent=None, now=None):
     import datetime as _dt
     agent = agent or os.environ.get("GIT_AUTHOR_NAME") or os.environ.get("OPAL_AGENT_SERIAL") or "UNKNOWN"
     ts = now or _dt.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
-    p = log_path or os.environ.get("SAFE_COMMIT_AUDIT_LOG") or os.path.join(root, "org", "git-author-override-audit.log")
+    p = log_path or os.environ.get("SAFE_COMMIT_AUDIT_LOG") or os.path.join(root, "org", _gao_name())
     try:
         os.makedirs(os.path.dirname(p), exist_ok=True)
         with open(p, "a", encoding="utf-8", newline="\n") as fh:
@@ -4041,7 +4049,7 @@ def main(argv):
             print("[surprise-row-gate] OVERRIDDEN (reason given): %s -- %d violation(s) on NEW rows follow as WARN."
                   % (_ovr, len(all_v)), file=sys.stderr)
             print("    PROVENANCE NOT VERIFIED BY THIS GATE: safe-commit writes an audit line to "
-                  "org/git-author-override-audit.log before exporting. If this override did not come "
+                  "org/git-author-override-audit.<device>.log before exporting. If this override did not come "
                   "from safe-commit, NO audit line exists and this is an UNAUDITED override.",
                   file=sys.stderr)
             for x in all_v:

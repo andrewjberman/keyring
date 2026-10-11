@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~46</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -49,6 +49,19 @@ In `C:/dev/wk-dsgn-irptv1-46/portal`:
 <criterion id="IV85-AC2" cell_refs="IV-e-85" judgment="true"/>
 `IV85-AC2` -- graded at L9 by `3.0.0_SA_CVO`: the decision between the two findings follows from the code you cite, and an EXPORT_WIRED export contains
 what the tab shows and nothing derived on the page.
+
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~06:0xZ): the portal base moved, and the suite baseline is a named set
+
+- **Base.** Your portal worktree is cut from DEV tip `6f70e36bace0014384a494f1509dc3ca65f33095`, not `7bb81fa8`: IV-e-84's press test
+  (`__tests__/dsgn-irptv1/upload-press-did-you-mean.test.tsx`) landed on DEV after the cut. It exercises `ProspectComposer`'s suggestion handler;
+  it passes at your base and must pass at your commit.
+- **Baseline.** IV-e-82 drained @fb60e94fd8: at `7bb81fa8` the Investor Reporting scope fails the SAME 43 test ids in three runs
+  (`org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~43/SUITE_SAMPLE.json`). "Keep every pin passing" means: after your change,
+  one full run of `bun test src/pages/InvestorReporting` fails a set of ids that is a SUBSET of those 43 (plus nothing new). Record the run's failing
+  ids and the set difference in your record under `suite_after` {failed, new_failing_ids, fixed_ids}. A new failing id is yours to fix or to report.
+- Six of the 43 fail only because a test spawns bun at another user's path (row DSGN_IRPTV1-D2-W43-S1); they are not yours to fix here.
+
+Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
 
 <criterion id="IV85-AC1" cell_refs="IV-e-85"><invocation>python "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D2/checks/r11/p11_round11.py" . IV85-AC1</invocation><expect>IV85-AC1 PASS</expect></criterion>
 `IV85-AC1` -- the reason for the missing export signal is cited by file and line, and the cell either wires the export with a test or stops with a row and no product change. Base: FAIL.

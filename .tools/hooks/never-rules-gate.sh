@@ -84,7 +84,8 @@ WS="${CLAUDE_PROJECT_DIR:-$(cd "$SCRIPT_DIR/../.." 2>/dev/null && pwd)}"
 # suite appends to the governance log on every run -- and OVERRIDE_REVIEW (the instrument MSTR is
 # required to walk every review) then reads its own test fixtures as real overrides. An instrument
 # whose test suite poisons its evidence base, append-only, cannot be audited. (RV-0048 F-020.)
-AUDIT="${NEVER_GATE_AUDIT:-$WS/org/git-author-override-audit.log}"
+case "${AGENTBUS_DEVICE:-}" in ""|*[!a-z0-9-]*) GAO_REL="org/git-author-override-audit.log" ;; *) GAO_REL="org/git-author-override-audit.${AGENTBUS_DEVICE}.log" ;; esac  # one file per box (shape (a), MSTR consensus 2026-10-11); unset device -> legacy shared file
+AUDIT="${NEVER_GATE_AUDIT:-$WS/$GAO_REL}"
 # SITEZ ADDED 2026-09-02, Andrew-direct at the 1.0.0_SA_CTO~Z terminal ("all recs approved" on the
 # /open-calls card). Without it, on the site-Z device GATE 1 (NEVER#7 rebase) and GATE 5 (integrator-
 # only push/pull) both read the working branch as NOT shared and never fired -- exhibited by exercise:

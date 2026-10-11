@@ -250,7 +250,8 @@ cw_process() {
     return
   fi
 
-  local audit_log="${SAFE_COMMIT_AUDIT_LOG:-$(git rev-parse --show-toplevel 2>/dev/null)/org/git-author-override-audit.log}"
+  case "${AGENTBUS_DEVICE:-}" in ""|*[!a-z0-9-]*) GAO_REL="org/git-author-override-audit.log" ;; *) GAO_REL="org/git-author-override-audit.${AGENTBUS_DEVICE}.log" ;; esac  # one file per box (shape (a), MSTR consensus 2026-10-11); unset device -> legacy shared file
+  local audit_log="${SAFE_COMMIT_AUDIT_LOG:-$(git rev-parse --show-toplevel 2>/dev/null)/$GAO_REL}"
   local ts; ts="$(cq_now_iso)"
 
   # (A) resolve the requester CWD (pathspecs are cwd-relative).

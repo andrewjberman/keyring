@@ -56,7 +56,8 @@ if [ "$MODE" = status ]; then
 fi
 GITDIR="$(git rev-parse --path-format=absolute --git-dir)"
 COMMON="$(git rev-parse --path-format=absolute --git-common-dir)"
-AUDIT="${COMMON}/../org/git-author-override-audit.log"
+case "${AGENTBUS_DEVICE:-}" in ""|*[!a-z0-9-]*) GAO_REL="org/git-author-override-audit.log" ;; *) GAO_REL="org/git-author-override-audit.${AGENTBUS_DEVICE}.log" ;; esac  # one file per box (shape (a), MSTR consensus 2026-10-11); unset device -> legacy shared file
+AUDIT="${COMMON}/../$GAO_REL"
 GATE="$ROOT/.tools/surprise-row-gate.py"
 SAFE_MERGE="$ROOT/.tools/safe-merge.sh"
 T0="${EPOCHREALTIME:-0}"
