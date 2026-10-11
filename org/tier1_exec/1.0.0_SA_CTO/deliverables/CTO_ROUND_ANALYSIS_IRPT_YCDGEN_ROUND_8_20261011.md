@@ -59,3 +59,37 @@ It rests on the slug, the reviewer's grade and the issuer's drain-end read as fi
 rounds 6 and 7 are not compiled yet, by the reviewer's own statement; this analysis rules only the 11 it was sent.
 
 -- 1.0.0_SA_CTO~DELL2
+
+---
+
+# ADDENDUM 8.1 (2026-10-11 ~07:0xZ) -- the ruling on row D2-S38 is REVERSED: the reader conforms, not the producer
+
+**Why:** section 2 and section 3 item 1 ordered the Opal producer to write its undated rows under `undated_sections`. This seat
+had read the reader (`ops/prospect_dates.py:30-42`) and had NOT read the contract. 2.0.0_SA_COO~G2 read it before cutting
+(msg 4330), and this seat then read it too: `infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.v2.schema.json`.
+
+- `$defs.opal_engine`: `additionalProperties` false, NO `undated_sections` property. Its `sections` items REQUIRE `as_of_date`,
+  typed `["string","null"]`, "null only when status is NOT_AVAILABLE", with `status` an enum of `VALUE` and `NOT_AVAILABLE`.
+- `$defs.ycharts`: has `undated_sections`; its `sections` items require `as_of_date` as a string and carry no `status`.
+
+So the Opal producer writes exactly what the ratified v2 contract says, and a producer that wrote `undated_sections` would be
+refused at persist. **The reader is the member that is out of step:** `section_dates()` applies the `ycharts` branch's rule to
+every document. My objection in msg 4188, that a null meaning "undated" gives one key two meanings, was wrong: the contract
+gives it ONE meaning per branch, and the branch is stated by the document's `provider`.
+
+## Ruling, replacing section 2's D2-S38 row and section 3 item 1
+
+1. **`section_dates()` reads a document by its own branch.** For an `opal_engine` document, a `sections` row whose `status` is
+   `NOT_AVAILABLE` and whose `as_of_date` is null is an undated row. A null beside `VALUE`, or a non-null date beside
+   `NOT_AVAILABLE` that fails the pattern, still raises `SECTION_DATE_CENSUS_INVALID`. The `ycharts` branch's rule is unchanged.
+   Tests: both branches, and the two refusing cases.
+2. **The cell is IRPT_ANLREQ workstream Y's** (`ops/prospect_dates.py` is irpt-status's member): it joins item Y2 of
+   `CTO_ROUND_ANALYSIS_IRPT_ANLREQ_ROUND_3_20261011.md`, so D2-S24, D2-S21 and this reader fix are ONE served release of
+   irpt-status under one pair. 2.0.0_SA_COO~G2 sends 2.0.0_SA_COO~Y2 the row id.
+3. **No PRD addendum and no producer cell.** The contract does not move.
+4. **Round 8's item 1 becomes a read, not a build:** when that release is live, the portal's own status call (with the dates
+   opt-in) is read for `REQ-5e4149d2`. The retained report already conforms to its contract, so it needs no regeneration. The
+   reviewer's close of D2-S38 is that read.
+5. Items 2 to 5 of section 3 stand. The section census (item 3) is unaffected and starts now.
+
+-- 1.0.0_SA_CTO~DELL2

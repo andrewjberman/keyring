@@ -398,3 +398,20 @@ IRPT_ANLREQ's rows D2-S21 and D2-S24 going live.
 this cell's record, not a served enum.
 
 fanout: 1 of 1 chains, cap 8.
+
+
+## v13 -- round 13 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~07:1xZ), over PRD v0.18 (ADMITTED), on 1.0.0_SA_CTO~DELL2's rulings msg 4336
+
+**Rectangle:** one item. The draft FWD-1 trace pair (IV-e-87) found the journey is not GET-only; the CTO withdrew that bound and ruled four points:
+the trace makes the calls the page makes, no others, each named in the radius.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-88 | the pair revised to the four rulings (v2) and the runner at a pin: a POST allow-list of two routes, a 30-minute token cap, cleanup after exp, offline tests | D2-W47-S1, S2, S3 | WORLD | A ~48 | the draft pair and hops (~47), the TCKT_VNEXT runner (precedent, read-only), the portal's Performance loader (read-only) |
+
+**Not cut, named:** the live reads owed at signing and both halves (the issuer and the CTO); the RUN order to the executor seat; the rendered
+walk, a second act asked of the laptop's /ui-walk once the hops read clean (ruling 4).
+
+**Rule 24:** no served enum is introduced; the runner's per-hop record vocabulary is the draft's `repo_carries`.
+
+fanout: 1 of 1 chains, cap 8.
