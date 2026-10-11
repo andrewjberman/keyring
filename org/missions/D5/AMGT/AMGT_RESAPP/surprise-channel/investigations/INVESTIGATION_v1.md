@@ -24787,3 +24787,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not in ff-1's cell (a name rule). The repair belongs to the CTO's round-94 analysis: a classification served for a security whose registered name disagrees with the table row's name must not be served as that security's (the same names_disagree test over the same two names), with its reason; the table's row itself is a data owner's repair (MDPF_SECCLASS), not this project's."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W391-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~391",
+  "surfaced_at": "2026-10-11T16:24:21Z",
+  "one_line": "The round-94 display-name check's D10 arm asserts a disagreeing rank series keeps its table classification; the round-95 withholding (AMGT_RESAPP-aa-2) moves it, so R94 DISPLAY NAME reads 11 of 12 and AC2's 12-of-12 expectation cannot hold.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AMGT_RESAPP-aa-2 AC2: r94_display_name.py gives R94 DISPLAY NAME: YES (12 of 12) at the changed tree, because the names are unmoved; the cell withholds the classification of a disagreeing series in scoped_amgt._rank_series_names.",
+  "world_is": "At 16:2xZ, in worktree C:/dev/wk-resapp-391 at 19a226fd54 plus this order's edits, r94_display_name.py FAILs D10: served 'Sanofi' name_state ABSENT classification None. D10 asserts the table's classification is unchanged on a disagreeing series (check lines 119-121); the R95 rule withholds it by design. The name and name_state D10 asserts are met. The literal AC2 chain (display-name && name census) stops at the display-name rc=1, so the census did not run in that chain; run standalone it reads R94 NAME CENSUS: YES (C1, C3, C4 at 0 different).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round94_prep/checks/r94_display_name.py@19a226fd54 D10 arm asserts classification unchanged (lines 119-121)",
+      "worker run python r94_display_name.py at C:/dev/wk-resapp-391: FAIL D10 served 'Sanofi' name_state ABSENT classification None; arms passed 11 of 12; exit 1",
+      "worker run python r94_name_census.py --where local at C:/dev/wk-resapp-391: C1, C3, C4 PASS; R94 NAME CENSUS: YES"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not edited: round94_prep/checks/r94_display_name.py is outside this order's <paths>. Disarm owner 2.0.0_SA_COO~R1 restates D10's classification clause to the R95 rule (withheld, reason classification not available for this listing) in the check, before the drain reads it. The name, name_state and D11-D12 arms are unaffected."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W391-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~391",
+  "surfaced_at": "2026-10-11T16:24:21Z",
+  "one_line": "test_names_read_agreement.py test_d10 asserts a disagreeing rank series keeps its table classification; with the round-95 withholding the test suite reads 949 passed and 1 failed, so AC3's no-failed expectation cannot hold.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AMGT_RESAPP-aa-2 AC3: every test of lib/research/api/tests (print_format_rich ignored) passes with no failed, about 950 passed; the existing ff-1 tests keep passing at the changed tree.",
+  "world_is": "pytest over lib/research/api/tests at C:/dev/wk-resapp-391: 1 failed, 949 passed, exit 1. The failure is test_d10_a_rank_series_whose_table_name_disagrees_serves_the_registered_name, AssertionError: assert None == {'sector': 'Financials'}, at test_names_read_agreement.py line 136, which asserts the table's classification for a disagreeing series. Its name and name_state assertions pass. The new file test_classification_withheld.py (4 tests) passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/tests/test_names_read_agreement.py@19a226fd54 line 136: assert got[SAN FP][classification] == table[SAN FP][classification]",
+      "worker run python -m pytest lib/research/api/tests --ignore=test_print_format_rich.py at C:/dev/wk-resapp-391: 949 passed, 1 failed, exit 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not edited: test_names_read_agreement.py is outside this order's <paths>, and names_read.py is untouched per the cell. The line-136 assertion is the pre-round-95 expectation that the cell supersedes. Disarm owner 2.0.0_SA_COO~R1 restates that assertion under the withholding before the drain."
+}
+```

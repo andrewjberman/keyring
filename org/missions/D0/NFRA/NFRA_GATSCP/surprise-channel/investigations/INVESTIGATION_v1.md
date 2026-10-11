@@ -790,3 +790,30 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "They disagree: a proof named by the order's id passes the flip and fails the close. Remedy (CTO~DELL1 ruling, ADVI_FIRMBKTS ledger/ROUND_ANALYSIS.round2.md section 2 item 5): round-close-check.py adopts to-pipeline-gate.py's resolver (stem, or the proof-block path), build ladder rung 2. Close when both tools accept the same set of instance paths on one fixture."
 }
 ```
+
+```json
+[
+  {
+    "id": "NFRA_GATSCP-D1-S17",
+    "project": "NFRA_GATSCP",
+    "fabric": "dell1",
+    "surfaced_by": "1.0.0_SA_CTO~DELL1",
+    "surfaced_at": "2026-10-11T16:45:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "test_safe_merge_continue.py builds its fixtures as worktrees and sm-cont-* branches of the WORKSPACE repo; an interrupted run leaves them (7 worktrees, 14 branches on dell1, idle 48 h), and only its finally block removes them.",
+    "spec_asserts": "A test's fixtures do not outlive the test or land in the workspace repo's refs.",
+    "world_is": "Measured 2026-10-11 ~16:4xZ: 7 worktrees under %TEMP%/smcont_ezapql3c and smcont_z5ceg_ie, 14 refs/heads/sm-cont-* with 2-4 commits each reachable from no other ref, all synthetic (author x; base/feat/ours, and drain merges by 0.9.0_WK_SMCONT~1). worktree_gc escalated them (MSTR msg 4012). The test calls tempfile.mkdtemp and git worktree add against ROOT (.tools/tests/test_safe_merge_continue.py:112).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git rev-list --count <sm-cont-*> --not <all other refs>: 2-4 each",
+        "git worktree list --porcelain: 7 smcont trees",
+        ".tools/tests/test_safe_merge_continue.py:112"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Owner 1.0.0_SA_CTO~DELL1. Remedy for the issuer: the test sweeps its OWN stale fixtures (branches sm-cont-* whose worktree path is under a smcont_ temp dir and whose unique commits are all author x) at start, or builds them in a throwaway clone. The removal of the 7 present trees waits on Andrew's word (recursive delete)."
+  }
+]
+```

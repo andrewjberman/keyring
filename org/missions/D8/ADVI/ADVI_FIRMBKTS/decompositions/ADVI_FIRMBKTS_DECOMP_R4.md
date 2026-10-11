@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 38,
- "chains": 36,
+ "cells": 41,
+ "chains": 39,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -237,3 +237,16 @@ is `ledger/WINDOW_RUNBOOK_ROUND4.md`. Cells 33 -> 37, chains 31 -> 35.
 Andrew's word: the one test text ARRIVED, so the fault is SNS's origination choice; the CTO ruled the form (AMENDMENT 5, msg
 4005): every publisher that reaches the SEV1 SMS subscription sets `AWS.MM.SMS.OriginationNumber` from one Terraform-managed
 value. `FB-g-32` is the read-only census (N printed). Cells 37 -> 38, chains 35 -> 36.
+
+## Amendment 21 (2.0.0_SA_COO~B1, 2026-10-11 ~17:0xZ): cells `FB-g-30` and `FB-g-31` added (act 4's flip commit and the eight re-pins)
+
+The act-4 pair's permitted set (COO half + ADDENDA 1 and 2, CTO half + ADDENDA 1 to 5) names two repository commits that no
+earlier cell produced: the flip commit (one registry value and the regenerated targets) and the eight re-pins of the IRPT
+consumers' staged `loaders.py`. Both are worker cells so the order's `<paths>` grants the generated targets' lanes. They are
+STAGED (`parked`) for the window. Cells 38 -> 40, chains 36 -> 38.
+
+## Amendment 22 (2.0.0_SA_COO~B1, 2026-10-11 ~17:2xZ): cell `FB-f-19` added (act 4's laptop leg) and `FB-f-11` re-faced
+
+Act 4 is two executors under one pair: `FB-f-11` is now the dell1 leg (the eight IRPT consumers, the before and after
+authorization sample, the first hour) and `FB-f-19` the laptop leg (router, guard, validator). Both are STAGED (`parked`) for the
+window. Cells 40 -> 41, chains 38 -> 39.
