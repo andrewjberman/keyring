@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_TCKT_VNEXT~12</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -72,7 +72,38 @@ In `package_ticket` ONLY:
 <criterion id="R2-pk1-AC2" cell_refs="R2-pk-1"><invocation>python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py tc-regress</invocation><expect>TC-REGRESS-OK</expect></criterion>
 `R2-pk1-AC2`: the whole `ticket_center/tests` directory passes (at least 147 passed, 0 failed, 0 errors; it reads 154 at the base).
 
-<expected_criteria>R2-pk1-AC1 R2-pk1-AC2</expected_criteria>
+### AMENDMENT 1 (2026-10-11, issuer `2.0.0_SA_COO~V2`; CTO ruling msg 4363) -- REOPENED: the 200 narrows too
+
+**Inherited state:** AC1 and AC2 are met and merged (@04f1f0cf93). Keep all of it. Item 4 of the cell said to leave the 200 alone
+because it was not ruled on. It is ruled now: "a success that hands the service principal the whole ticket is the same
+over-disclosure as the :1457 409 ... the rule is the principal, not the line."
+
+H1. **Count the callers first.** Find every caller of `POST /api/scoped/tickets/{ticketId}/package`, with file and line: search
+    the portal source (read it READ-ONLY at `C:/dev/ajb_workspace/portal/src`; the `portal` folder in your worktree is empty) and
+    the workspace (`lib/`, `infra/aws/lambda/`, `workflows/`). Print the denominator (which trees you searched and with what
+    pattern) and the list. Put both in your report.
+H2. **If the only caller is the packager service** (no page calls the route as an internal person): the 200 returns
+    `{"package": <the stored package identity>}` and nothing else, where the identity object is the SAME one the
+    `PACKAGE_ALREADY_ATTACHED` 409 returns (the `PACKAGE_REF_FIELDS` values plus `attached_at` and `attached_by`). No `ticket` key.
+H3. **If a page calls it as an internal person and reads `ticket` from the answer:** narrow BY PRINCIPAL. The route today admits
+    only the service principal (`package_principal`), so an internal caller is refused before the 200; if your count finds a page
+    that depends on the 200's `ticket`, do NOT guess: say so, file a BLOCKING row `TCKT_VNEXT-D2-W12-S<k>`, and stop at H1.
+H4. After this, NO answer of `package_ticket` to the service principal carries a `ticket` key or any of the ticket's `status`,
+    `assignee`, `requester`, `events`, `answers`.
+
+Add to `tests/test_package_409_codes.py`, named EXACTLY: `test_service_principal_200_returns_the_package_identity_only` and
+`test_no_package_answer_returns_a_ticket_to_the_service_principal` (every 200, 4xx and 409 the tests can reach, checked at any
+depth). Existing package tests that read `["ticket"]` from the 200 change ONLY that read (to the `package` object); list each.
+Update `test_the_200_and_the_400s_are_unchanged` to the new 200 and rename nothing.
+
+<criterion id="R2-pk1-AC3" cell_refs="R2-pk-1"><invocation>python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py pk-200</invocation><expect>PK-200-OK</expect></criterion>
+`R2-pk1-AC3`: the two tests exist and pass. AC1 and AC2 must still pass.
+
+Dry-run at base: AC3 FAIL (missing tests) as expected; AC1 and AC2 PASS.
+
+Proof: add AC3 and re-validate with `R2-pk1-AC1,R2-pk1-AC2,R2-pk1-AC3`. Flip to `complete` only when all three pass.
+
+<expected_criteria>R2-pk1-AC1 R2-pk1-AC2 R2-pk1-AC3</expected_criteria>
 
 Dry-run at base: AC1 FAIL (absent) as expected; AC2 OK as expected.
 
@@ -91,6 +122,9 @@ infra/aws/lambda/ticket_center/tests/test_package_409_codes.py
 infra/aws/lambda/ticket_center/tests/test_package_route.py
 infra/aws/lambda/ticket_center/tests/test_package_principal.py
 infra/aws/lambda/ticket_center/tests/test_package_i5p_i7.py
+infra/aws/lambda/ticket_center/tests/
+lib/
+workflows/
 org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py
 org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -101,7 +135,7 @@ org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: R2-pk1-AC1 R2-pk1-AC2. The instance is at
+Criterion ids: R2-pk1-AC1 R2-pk1-AC2 R2-pk1-AC3. The instance is at
 `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~12/TCKT_VNEXT.TO-R2-pk1.package-route-409s-carry-codes-and-no-ticket.proof_of_spec.json`.
 Validate it with `python .tools/proof-of-spec-check.py <instance> R2-pk1-AC1,R2-pk1-AC2` before the flip.
 </proof_of_spec>
