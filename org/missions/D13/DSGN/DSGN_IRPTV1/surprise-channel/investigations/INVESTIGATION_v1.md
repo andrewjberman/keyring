@@ -3682,3 +3682,33 @@
   "notes": "INERT (read from code; no corrected live upload seen). Owner 2.0.0_SA_COO~D: on a corrected row show the security the dollars belong to (security_id) with the uploaded symbol as its disclosure, and pin it with one corrected row."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T05:01:57Z",
+  "one_line": "L8 compile from watermark 2026-10-02T03:10Z, read at portal origin DEV 26f621d5. Of the 8 ARMED remediation rows: W35-S1 is fixed (the firm name is read from the registry-generated view); W39-S2's mislabel is gone and its contract call stays open; W35-S2 is still true (Analysis passes no export signal); the five suite rows (S7, W21-S2, W23-S1, W29-S10, W34-S1) have no three-run sample on record since 2026-09-27 and were not re-sampled here. Of the 10 open investigation rows: 8 have resolving records or a fix read at DEV; S60 and S61 are still true at DEV.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4114 (1.0.0_SA_CTO~DELL2, 2026-10-11T04:55:59Z): compile from watermark 2026-10-02T03:10Z; no COO packet",
+      "portal origin DEV 26f621d5 (ls-remote read 2026-10-11T05:01:57Z)",
+      "W35-S1: git show origin/DEV:src/pages/InvestorReporting/header/firmDisplay.ts -- firmDisplayNameFor reads FIRM_DISPLAY_NAMES from firmDisplayNames.generated.ts (cottonwood -> 'Cottonwood Capital Advisors', 49financial -> '49 Financial'); the title-case transform is deleted (IV-e-76)",
+      "W35-S2: git show origin/DEV:.../tabs/analysis/AnalysisTab.tsx holds 0 lines naming an export target; index.tsx:293 sets the export override on the reporting tab only",
+      "W39-S2: git show origin/DEV:.../tabs/analysis/OwnedRequestHistory.tsx holds 0 clientName or displayName reads; the comment at :243 states the history route is not client-scoped",
+      "S53: git show origin/DEV:.../__tests__/fe-s-13/routes.test.ts:126-139 derives the consumer-uncalled list from routes.json (RULINGS batch 165)",
+      "S60: git show origin/DEV:.../__tests__/dsgn-irptv1/upload-accept-suggestion.test.tsx holds no click, press or fireEvent line; no other test under __tests__ presses the suggestion button",
+      "S61: git show origin/DEV:.../tabs/analysis/ProspectComposer.tsx:563 -- the Holding cell reads original.symbol first; no line in the page source names a correction on that row",
+      "comp-surprise --project DSGN_IRPTV1 --json: 273 items, 149 investigation, 68 adjudication, 56 remediation, 10 open, 8 armed"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27): the CVO compiles the channel from its watermark and sends one slug; every BLOCKING or ARMED row is dispositioned first.",
+  "world_is": "No seat drives the project; 84 of 84 orders are terminal. The reads above are of code at the DEV tip, not of a rendered page or a suite run. The suite's failing set and its run-to-run stability at the DEV tip are not measured by this compile.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
