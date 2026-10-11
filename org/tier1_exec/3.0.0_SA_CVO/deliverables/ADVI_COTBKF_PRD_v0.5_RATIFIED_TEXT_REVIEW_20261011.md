@@ -17,7 +17,7 @@ source carries a withdrawal row beside it."
 `method_r29`, the code the addendum makes the default, is narrower in two ways (`data/assets/scripts/silver/commonwealth_flows.py`,
 printed by this seat):
 
-- **Which taxes.** Lines 160 and the set at 172-176: federal and state withholding (`ftax`, `stax`). Foreign tax (`frntax`) is a tax
+- **Which taxes.** Line 160 and the set at 178-182 (corrected after the stamp: this file first cited 172-176, a range typed from an earlier read of the file and not printed): federal and state withholding (`ftax`, `stax`). Foreign tax (`frntax`) is a tax
   withheld from the account too, and lines 109 and 193-194 keep it INSIDE the return on purpose: it is taken at source out of the
   holding's own income.
 - **Which rows.** Lines 234 and 250: only a withholding row on the cash line.
