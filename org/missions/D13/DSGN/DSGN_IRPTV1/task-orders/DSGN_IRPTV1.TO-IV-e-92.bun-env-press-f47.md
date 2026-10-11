@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~49</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -52,6 +52,59 @@ In `C:/dev/wk-dsgn-irptv1-49/portal`:
    FIXED or RULING_ASKED, reason, evidence}. F47-AC7 in the same file: say whether the same cause explains it.
 4. The suite run of the baseline note; `TEST_HYGIENE.json` {bun, press, f47, product_files_changed, portal_commit, suite_after}.
 
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~07:2xZ): the portal base moved before the cut
+
+Your portal worktree is at DEV tip `ab697ba120a6452bdcb634038d8114b88f18e4a9`, not `1cd1cf25`: one Model Portfolios commit landed on DEV after the
+issuance (two files outside Investor Reporting). `1cd1cf25` is its ancestor. The suite baseline is unchanged in meaning; if your first full run at
+this base fails an id outside the 43 BEFORE any edit of yours, record it under `base_new_failing_ids` and do not count it against your change.
+
+Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
+
+## AMENDMENT 2 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~07:2xZ): ONE dev dependency is ruled for the press test (CTO msg 4358)
+
+If your step-2 check finds no DOM from a transitive install (`NEITHER`), the CTO has ruled the remedy; `NEITHER` is then NOT your final answer:
+**add ONE dev dependency, a DOM implementation for bun's test runner (the registrator bun's own documentation names), pinned to an EXACT version
+that is not brand new. No testing library on top:** with a DOM, a native click inside `act` is enough. Then rewrite the press test to that
+(`supports: NATIVE_ACT`, `rewritten: true`, `uses_private_internals: false`) and show it still catches the two mutants.
+
+Conditions, each recorded under `dev_dependency` in `TEST_HYGIENE.json`:
+- `devDependencies` only; `name`, exact `version`, and its publish date (not brand new: say how old);
+- the lockfile diff shows that package and its own dependencies and NOTHING else moved: `lockfile_other_packages_moved: 0`, with the list of
+  packages added;
+- the production build's output is byte-equal before and after: build to two directories OUTSIDE both repos (before the dependency, at your base
+  plus IV-e-89's commit; after), hash every output file, and record `build_hash_before`, `build_hash_after` (one sha256 over the sorted
+  `path:sha256` lines of each) and `build_equal: true`. If they differ, record it as it is, do not land the dependency, file a row and stop this part.
+- how the DOM is registered for tests only (a preload in the test config), with file and line; no production import reaches it.
+
+**This amendment lifts two bounds for this one act:** a package download (this one package and its dependencies) and `bun install`.
+**Your `node_modules` is a JUNCTION into the shared main checkout: installing through it would change every other seat's portal. Before any
+install, REMOVE THE JUNCTION ONLY** with `cmd //c rmdir "C:\dev\wk-dsgn-irptv1-49\portal\node_modules"` (that removes the link, never its target;
+never `rm -rf` it), confirm `C:/dev/ajb_workspace/portal/node_modules` still lists its entries, then run `bun install --frozen-lockfile` in your
+portal worktree for a real local install, and only then add the dependency. Record that you did, in this order.
+
+The grant gains `portal/package.json`, `portal/bun.lock` and the bun test config file (`portal/bunfig.toml`, or the file the repository uses).
+`package.json` is a product-repo file: the commit is a CANDIDATE for the CTO.
+
+Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
+
+## AMENDMENT 3 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~08:3xZ): hold happy-dom at 20.14.5 with an override (CTO msg 4486)
+
+The CTO read the four commits and ruled: the age rule applies to what actually RUNS. The registrator asks for `^20.14.5` and the lock resolved
+`happy-dom@20.14.6`, which is 3 days old. So:
+1. Add an `"overrides"` entry in `portal/package.json` holding `happy-dom` at exactly `20.14.5`. One more line; no new dependency.
+2. Re-lock. The lock must read `happy-dom@20.14.5`, and NOTHING else may move: compare `bun.lock` at `1c615568` with the result and list every
+   line that differs; packages whose resolved version changed other than happy-dom: 0. If bun rewrites the lock beyond that, merge by hand as
+   before and confirm `bun install --frozen-lockfile` passes on the result.
+3. Re-install locally so 20.14.5 is what the tests execute (print the installed version from `node_modules/happy-dom/package.json`), then run
+   the press test and its two mutants again (each reverted, never committed), and the whole scope once.
+4. Rebuild the production bundle outside both repos and hash it as before: it must equal `08ee00df221e245a5c4e64848310346c85561551768f0e978396ffcdf047dad1`.
+5. One new portal commit on top of `1c615568`. Update `TEST_HYGIENE.json`: `dev_dependency` gains `override: {name, version}`,
+   `happy_dom_resolved`, `lock_line` (the lock's happy-dom line, verbatim), the build hashes again, `portal_commit` the new commit, `suite_after`.
+With that and the build hash equal, the CTO has approved the five commits for DEV without a further review; the issuer asks the push.
+Registering the DOM per test file stands ("right, and better"). Status back to `issued` until IV92-AC1 passes on the new commit.
+
+Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
+
 <criterion id="IV92-AC1" cell_refs="IV-e-92"><invocation>python "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D2/checks/r14/p14_round14.py" . IV92-AC1</invocation><expect>IV92-AC1 PASS</expect></criterion>
 `IV92-AC1` -- no hardcoded bun path is left, the press test is rewritten or its missing support is rowed, F47-AC6 is fixed or its ruling asked, with no new failing id. Base: FAIL.
 
@@ -72,6 +125,9 @@ org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~49/
 org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~49/
 portal/src/pages/InvestorReporting/
 portal/scripts/
+portal/package.json
+portal/bun.lock
+portal/bunfig.toml
 org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D13/DSGN/DSGN_IRPTV1/task-orders/DSGN_IRPTV1.TO-IV-e-92.bun-env-press-f47.md
 </paths>
