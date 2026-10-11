@@ -1980,3 +1980,29 @@ the denominator. Until then the criterion's expectation is the issuer's to amend
 **not established:** whether any OTHER scoped route created since the 27 was fixed is outside the clamp. I measured the two
 routes this apply added and did not sweep the rest of the API's 121 routes; that sweep is a different read with a different
 denominator.
+
+### TCKT_VNEXT-D2-W24-S1 -- the precheck's table is a list, so the handler rows go to a sibling file
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W24-S1",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~24",
+  "surfaced_at": "2026-10-11T22:10:03Z",
+  "one_line": "TO-R5-pc2 asks for a NEW top-level key ticket_handlers in the precheck's JSON table, but that table is a JSON list with no top-level key, and existing tests read it as a list; the handler rows are written to a sibling file instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~13/clamp_precheck/clamp_precheck.py main(): Path(a.out).write_text(json.dumps(table, indent=1)) where table is the list build_table returns",
+      "test_clamp_precheck.py test_irpt_host_on_a_release_build_is_clamped and test_unreadable_host_is_named_and_the_total_is_not_full iterate json.loads(out) as a list of rows (t['function']); the order says no existing test changes and the existing rows stay byte-identical",
+      "also: the shared test helper ticket_source() gained a lambda_handler router (additive, no existing test body changed) because a deployed member with no lambda_handler now exits non-zero (TICKET_HANDLERS UNREADABLE) rather than passing as 0 handlers"
+    ]
+  },
+  "spec_asserts": "The precheck's JSON table has top-level keys, and a new key ticket_handlers can be added beside the existing ones without changing the existing rows.",
+  "world_is": "The --out table is a bare list of host rows. Wrapping it in an object would change every existing row's container and break the tests that read it as a list. The handler rows are written to <out stem>_ticket_handlers.json as {ticket_handlers, dispatched, classed}; the --out file is byte-identical to before for the same inputs (asserted by test_the_read27_line_and_its_table_rows_are_unchanged).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
