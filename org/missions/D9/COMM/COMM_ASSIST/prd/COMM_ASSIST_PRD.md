@@ -5,7 +5,7 @@
  "project": "COMM_ASSIST",
  "directive": "D9",
  "fabric": "site-z",
- "prd_version": "v0.3",
+ "prd_version": "v0.4",
  "step": 4,
  "brief_ref": "docs/briefs/nfra-ctlpln-seat-roles-and-inbound-work-pipeline-brief-20261007.md@779f5428bc",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4"],
@@ -65,6 +65,11 @@ move is recorded in NFRA_CTLPLN's addendum v0.21. FWD-3 and FWD-4 are new, on An
                     not name him, or comes from anyone else, does not text him and is not passed to any model
          SOURCE     Andrew point 1, "the same exact process accessible via email"; ~22:5xZ, "it always has to say andrew in
                     the body text somewhere"; NFRA_CTLPLN C-SEATS clause 9
+         QUALIFIED  the CLIENT branch is a qualified essential wait: no seat can send as a client firm, so a client-firm
+                    mail can only be organic and is read the day the first one lands; the INTERNAL branch is driven
+                    by a sent mail. Andrew, 2026-10-11 ~03:2xZ, "Yes." to call sitez-20261011T012754Z-c719 (record
+                    org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261011_032xZ_OPEN_CALLS_ANSWERED_ITEMS_1_TO_9.md
+                    @5e10dd2dc5, item 1)
 ```
 
 ## CONTRACTS
@@ -105,3 +110,10 @@ Opal as internal; C-MAIL and C-VOICE carry clauses 9 and 10's limits verbatim; N
 | S03 | FWD-3 | `opal-data-transcripts`: `teams/transcripts/bronze/chat_messages/`, `silver/chat_threads/`, `state/chat_assist/` | held (writer declaration f3170c6f94) | the received-vs-texted count | wire | S02 | one writer per prefix |
 | S04 | FWD-3, FWD-4 | `infra/aws/ec2/opal-gateway/app/teams_route.py` and the mail route (NFRA_OPLGTW, site Z) | held | channel reads, mail admission | read | -- | read, not owned; ships with OPLGTW's release |
 | S05 | FWD-2 | `andrew_voice.md` and the draft path | held | the voice file | build | S01 | -- |
+
+## v0.4 (1.0.0_SA_CTO~Z, 2026-10-11 ~03:3xZ) -- FWD-4's client branch qualified
+
+One ENDPOINT line is added: FWD-4's QUALIFIED line, on Andrew's "Yes." to call sitez-20261011T012754Z-c719 (round-14
+analysis, un-park condition 3). The client branch is read when an organic client-firm mail arrives, and no cell is cut for
+it. The internal branch is unchanged. Nothing else moves. Because this changes ENDPOINT, the ratified-text half re-signs at
+`3.0.0_SA_CVO~Z`.
