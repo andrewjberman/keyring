@@ -708,3 +708,26 @@ write: **1 row** (`S1`).
   "notes": "Census figures are kept as the census denominator (444 classes, 238,861 objects). The live difference is recorded here, not re-censused."
 }
 ```
+```json
+{
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~4",
+  "surfaced_at": "2026-10-11T04:33:32Z",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_FIRMBKTS-D1-W4-S7",
+  "class": "OBSERVATION",
+  "one_line": "SHELL CWD DOES NOT PERSIST: THE ORDER'S CD-ONLY CALL DID NOT CARRY TO THE NEXT CALL, SO THE CHECKER RAN IN THE BASE CHECKOUT AND READ 0 OF 5 (ABSENT)",
+  "spec_asserts": "Step 4 runs each checker invocation in its own Bash call AFTER a first call that only does cd to the worktree, so the check reads the worktree's files.",
+  "world_is": "The Bash tool resets its working directory between calls: the cd-only call did not persist, so the invocation's cd \"$(git rev-parse --show-toplevel)\" ran git in the base checkout C:/dev/ajb_workspace. The checker printed ABSENT or unreadable (mapping_v2.json not found there) and ROUND 2 MAPPING STRUCTURE: 0 of 5 arms, exit=1. Recovered by prefixing the same call with cd /c/dev/wk-firmbkts-4; the recorded invocation text and the checker output lines are unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_mapping.py@2ca0be7c81 (_root() reads git rev-parse --show-toplevel from the process cwd)",
+      "worker run 2026-10-11: first structure run from the base cwd printed ABSENT and 0 of 5; the same command prefixed with cd to the worktree printed 5 of 5, exit=0"
+    ]
+  },
+  "notes": "Fail-soft: the checker catches the read error and exits 1 with a message, so a bare run from the wrong tree reads as a FAIL on a correct table. Not an order defect in the check text; the cd prefix is the only change, and the worker's proof instance records the order's invocation verbatim."
+}
+```
