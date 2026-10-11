@@ -5544,3 +5544,54 @@ round.** Never edit an existing row.
  "world_is": "Both are in the tree at 154e0e5a3a. NOT exercised: build() itself was not run (only its guard function is tested, on synthetic frames), and whether the SERVED account_day_value table carries the cusip column the build now reads was not checked (no S3 read was made); the local copy has it. --apply was not run."
 }
 ```
+
+## ADVI_COTBKF-D2-W86-S1 -- CB-bg-1 S1
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W86-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~86",
+ "surfaced_at": "2026-10-11T05:40:10Z",
+ "one_line": "CB-bg-1: the order names the sidecar's tenancy (Cottonwood's own, built by address()) but not its source, tier, table or partition; the worker chose them.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/silver/commonwealth_account_return_daily.py constants SIDECAR_SOURCE=irpt, SIDECAR_TIER=gold, SIDECAR_TABLE=account_return_daily_blank_reasons, SIDECAR_PARTITION=source_date=2026-06-23, address = lib/opal_naming.address(...) with object ard_cottonwood_blank_reasons.parquet, printed by the stamp into the tracked manifest's reasons_sidecar.address (bucket opal-data-cottonwood, the day files' bucket)",
+   "address() accepted the address (no refusal); the choice puts the sidecar beside the day table under the same source and tier, in a table name that cannot be read as a prefix of account_return_daily/ (distinct path segment)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bg-1 item 1: reasons_sidecar.address is the output of lib/opal_naming.address() under Cottonwood's own tenancy, built in code, never typed.",
+ "world_is": "address() takes five segments plus the object; the order fixes only the tenancy. Source irpt, tier gold, table and partition are this worker's choice. The CTO or the issuer may re-point them before the mint; the stamp and the mint both read the one function sidecar_address()."
+}
+```
+
+## ADVI_COTBKF-D2-W86-S2 -- CB-bg-1 S2
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W86-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~86",
+ "surfaced_at": "2026-10-11T05:40:10Z",
+ "one_line": "CB-bg-1: --apply now refuses a manifest that is not stamped; the older apply tests (bare manifests) pass only because conftest.py turns that refusal off for their module.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/silver/commonwealth_account_return_daily.py: REQUIRE_STAMPED = True; minted_objects() refuses a manifest lacking reasons_sidecar.address, method_row or vocabulary_notes",
+   "data/assets/scripts/silver/tests/conftest.py: the autouse fixture for the module test_commonwealth_ard_apply sets cw.REQUIRE_STAMPED False, beside the existing load_bond_inputs patch; test_commonwealth_ard_mint_claims runs with it True (11 tests, incl. the unstamped refusal)",
+   "silver suite, variable unset: 792 passed, 12 skipped"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bg-1 item 2 says what the mint writes; it does not say what the mint does on a manifest that states no sidecar or method row, and test_commonwealth_ard_apply (not in the grant) asserts the old days-only lines.",
+ "world_is": "Production keeps the strict refusal; the legacy module is exempted in conftest only. If REQUIRE_STAMPED were set False in production an unstamped manifest would mint days only; nothing in production sets it."
+}
+```
