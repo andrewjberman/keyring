@@ -549,6 +549,26 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         ".scratch/edge_arms.py run: t1_reserve_inferred finish_date 2026-10-12, allowance_today 125, finish_date_claim inferred"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W21-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~21",
+    "surfaced_at": "2026-10-11T05:26:28Z",
+    "one_line": "TO-DQ-t26 does not place two details of refreeze.py: the re-frozen quote also carries allowance_gap, and the collision counter follows the date (<id>.quote.superseded-<date>-2.json).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-DQ-t26 build item 3: <id>.quote.json carries request_id, channel, cells, finish_date, finish_date_claim, claim, basis, quoted_as_of, refrozen_at, frozen_by, supersedes; the superseded copy is <id>.quote.superseded-<YYYY-MM-DD>.json, and when that name exists it uses -2, -3.",
+    "world_is": "refreeze.py writes those keys plus allowance_gap (None on the real TR request; a named gap when the finish is absent, so a null finish is never unexplained). On a name collision the counter sits after the date: <id>.quote.superseded-<YYYY-MM-DD>-2.json. Both are the builder's reading. The three named tests and dq_t26_real.py exercise neither a collision nor a null finish through refreeze.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/refreeze.py refreeze() new dict and _superseded_name() at this worktree (uncommitted diff over 16b6e889a8)",
+        "dq_t26_real.py output at this worktree: new finish=2026-10-17, superseded 2026-10-13 kept with its reason, qva OPEN with cells_drawn 5858"
+      ]
+    }
   }
 ]
 ```
