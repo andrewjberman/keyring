@@ -2037,3 +2037,29 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "notes": "NOT MEASURED: which gateway build answered. The probe has no read of the gateway's deployed commit, so 'released' is site Z's word, not this row's. The CTO asked for it as an amendment of an open order; this issuer has none open (round 23's three orders are terminal), so it is filed as an issuer read. Statuses, counts and dates only."
 }
 ```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S31",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-11T20:35:00Z",
+  "hazard_standing": "INERT",
+  "one_line": "The shared transcripts dist zip on dell2 was rebuilt at 2026-10-11T14:54Z and no longer equals the digest all three functions run: on disk 8jmhmuWw... (91 members), live AI4UQD0M... (89). No function runs the on-disk bytes.",
+  "class": "OBSERVATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "file infra/aws/lambda/transcripts-pull/dist/transcripts-pull.zip: mtime 2026-10-11 10:54:09 -0400, 897,022 bytes, base64 sha256 8jmhmuWwaHC+RtMBIDLZCrVuENoCMV8kNAq/x0Fcqao=",
+      "get-function-configuration 2026-10-11T20:28Z: teams pull, mail pull and commentary all AI4UQD0ME+ABza1X0BrBjGjpqjN7f2fc0Cdxb88aA/I=",
+      "member diff, on-disk zip against the fetched deployed zip: 6 changed (data/firm_registry.json, teams/pull.py, registry name_rulings, scopes, systems, lib/opal_naming.py), 2 added (registry feeds, platinum_destinations), 0 removed",
+      "shared-tree org/critical_paths/.open_deploys/ at 20:28Z: no entry names the transcripts root but the held a18 one"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO condition on this root (row D2-S28 and every half signed on it): the tree's dist zip hashes to the pull's live digest before a plan.",
+  "world_is": "It does not, for every seat on this box, since 14:54Z. Who ran build.sh and for which act is not established (dist/ is not committed, so git names no author). The condition therefore STOPS any apply of this root until a deliberate rebuild is signed, which is the condition working; TR-ca-23's packet rebuilds under its own pair.",
+  "notes": "Not a hazard while the condition is honoured: an applier that skipped the hash read would deploy 8 unreviewed member changes to whichever function it targets. Hashes, sizes and times only."
+}
+```
