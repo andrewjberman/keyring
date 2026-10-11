@@ -97,3 +97,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- issuer close 2026-10-11T04:1xZ (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-351 @ef149ef3b5, proof instance VALID (worker run); issuer re-run in the worktree: AC1 R89 SUBJECT CAP YES (served cap 621657.4380015999 @ 2026-10-10T13:01:55Z against stored 541931.7824388 @ 2026-09-19T07:53:19Z; C2, C3 PASS), AC2 + AC3 106 passed. Row D1-W351-S1 (a derivation that raises on a read block is served as UNREADABLE, never a 500) ruled: stands.</status>
