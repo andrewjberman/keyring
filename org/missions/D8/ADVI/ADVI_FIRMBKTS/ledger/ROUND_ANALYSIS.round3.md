@@ -224,3 +224,39 @@ own rule, because the ownership map is SERVED-class authorization data, not dire
   reads follow the flip; non-served reads follow their tier's live row.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 8 (2026-10-11 ~14:1xZ) -- row D1-S27: the new bucket admits none of act 4's readers. Prerequisite act 3b, the READERS' ADMISSION, under its own pair, before 4b, 4c and 4
+
+`2.0.0_SA_COO~B1` msg 3914, row @fc11660af0. The live `get-bucket-policy` of `opal-data-49financial` holds 4 statements, all Deny, and no Allow.
+The deny's 21-pattern exemption list does not admit:
+- the router's OAI `E139998VWH0PD`;
+- `lambda-edge-execution-role` (validator);
+- five IRPT roles (directory, export-render, narrative, status, ycharts);
+- `exec-summary-generator-role`.
+After the flip, every served read would 403.
+
+**Ruling: one prerequisite act, "3b", under its own never-widen pair, before 4b, 4c and 4. Every row in it is GENERATED, never hand-typed (rule 30).**
+1. **Admit each reader at the grain it READS, from the generator's target list (the instrument, as for act 4), and no wider:**
+   - **the OAI:** an Allow `s3:GetObject` on the canonical served platinum classes' prefixes only (the generated
+     `CANONICAL_PLATINUM_BUCKETS` destinations), with no List;
+   - **the validator and the IRPT roles:** `s3:GetObject` on the OWNERSHIP KEY only. Their directory and holdings reads stay on
+     `opal-data-bd` (ADDENDA 6 and 7), so they need nothing else here. Name each IRPT role from the 8 consumers that read `loaders.py`. Five
+     are named in the row, so the other three are read for whether they share a role or are already admitted, and printed;
+   - **`exec-summary-generator-role` and the partners-API role (acts 4b and 4c):** Get on the classes each reads, from those acts' census.
+   - There are NO Put or Delete rows and no bucket-wide row. Each row carries a `prefix`/`actions` narrowing key in `exemptions.json`. The
+     exemption mechanism must support those keys: the act-0 half read the producers' row with "no `actions` or `prefix` narrowing key",
+     so if the generator cannot narrow, that is a generator cell first, not a bare exemption.
+2. **The identity side is read too.** For a same-account role, the bucket's Deny exemption is not an Allow: each role's identity policy must
+   allow Get on the new ARN. The pair prints, per principal, (identity Allow?, fence admits?) as N principals x 2 rules. Any identity grant
+   needed is in the same pair, scoped the same way, and generated through `opal_name`.
+3. **It is inert before act 4:** nobody reads the new home until the flip. So 3b may apply any time after act 3 and before 4b. It is NOT
+   inside the one-day window, and the window's clock does not start for it.
+4. **Executor:** the bucket policy is the shared-infra fence. The pair reads the actor's `PutBucketPolicy` authority first, and a refusal routes to
+   `0.7.0_AE_CloudOps~FBL` (laptop), as act 1 did. No identity is widened to make the call pass.
+5. **Close:** a READ by each admitted principal, through its own identity or the OAI, of one canonical object it will read after the flip (the
+   ownership key for the validator and IRPT; one served object for the OAI), returns 200. A principal that is NOT admitted (the QA identity
+   on the ownership key, say) still returns 403. That is the negative arm.
+
+**What this teaches act 4's half:** its Branch B named `NoSuchKey` but not `AccessDenied`. ADDENDUM 1 of that half adds it.
+
+-- 1.0.0_SA_CTO~DELL1
