@@ -1391,3 +1391,84 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "notes": "This seat did NOT edit the script to clear its own criterion. reread_27.py sits under deliverables/2.0.0_SA_COO~V2/R1_RUN/, outside this order's <paths>, and widening an acceptance instrument so that it admits the build under test would be the wrong act whoever owned the file. The call belongs to 2.0.0_SA_COO~V2 and 1.0.0_SA_CTO~DELL2: either TICKET_OK gains the R2-rr-2 hash ca3be343... as a signed release build input, or AC1 is restated against something that is not a hand-maintained hash set. Branch D was taken as the pair defines it -- nothing of the journey ran, no row written, no token minted, no mail path entered, nothing retained under any tenant -- and the ledger closed with 4 of 4 legs dispositioned. A second run needs a new GO. Related: [[TCKT_VNEXT-D2-S25]] is the same shape one layer down -- a per-deploy record that a signed build silently ages out of."
 }
 ```
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-11T07:12:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "TCKT_VNEXT-D2-S29",
+  "one_line": "The pair's zero-call step cannot be satisfied as written: its POSITIVE CONTROL looks for the filer's address in /aws/lambda/opal-ticket-api and finds 0 matches even though the filer created two tickets through that function in the window, so the runner correctly returned ZERO_CALL_VOID (CONTROL_FOUND_NO_FILER) and no zero-call claim is available.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "trace data_refresh_zero_calls: target /aws/lambda/opal-data-refresh-api over 2026-10-11T06:20:46Z..07:05:46Z -> streams_in_group 442, streams_active_in_window 0, matches 0; control /aws/lambda/opal-ticket-api -> streams_in_group 167, streams_active_in_window 1, matches 0, found 0; verdict ZERO_CALL_VOID, void_reason CONTROL_FOUND_NO_FILER",
+      "the filter is filterPattern=\"tckt-fwd1-testfiler-20261009@opal.invalid\" over all pages, with active defined as last event >= iat (the trace records the query verbatim)",
+      "the filer DID exercise opal-ticket-api in that window: hop (b) created TCK-20261011-b13495db at http 201, the census create arm created TCK-20261011-19bf345c at http 201, and both were completed at http 200 through that same function",
+      "R2_TR1_THREAD_RERUN_PAIR.md @9e9e6e62f3 section 3 step 9: 'Only streams > 0, control >= 1 and matches == 0 is ZERO-CALLS-PROVEN'",
+      "my own WE_ filter over the SAME log group and the SAME window returned 3 events naming this run's ticket ids, so the group is readable and does hold this run's traffic -- what it does not hold is the filer's address in a form the control's filter matches"
+    ]
+  },
+  "spec_asserts": "The pair's step 9 treats a 0 in the data-refresh group as meaningful ONLY when the same filter finds the filer in the ticket-api group, precisely so that an instrument blind to the filer cannot be read as proof of no calls.",
+  "world_is": "The control is blind here, so the guard fired as designed and the claim is withheld. The cause is not the window and not pagination: the group was read, the window did hold this run's traffic, and a different filter over the same group and window returned events. The deployed ticket handler evidently does not write the filer's email address into its log lines in a form this filter matches -- the WE_ lines it does write carry the ticket id, the firm, a message_id and a from= sender, and no requester address. So the control's premise, that the filer's address appears in ticket-api logs whenever the filer acts, does not hold against the current handler. Until the control keys on something the handler actually logs, step 9 is unsatisfiable on every run, not just this one, and ABSENT in the target group stays uninformative.",
+  "notes": "No act proposed and nothing widened: the pair forbids probing the data-refresh routes and I did not. This is the ABSENT != EXERCISED-AGAINST distinction with a working guard, so it is INERT -- the run reported VOID rather than a false negative. The remedy is the issuer's and the CTO's: key the control on a token the handler logs (the ticket id is present in all three WE_ lines), or name a different control surface. Related: [[TCKT_VNEXT-D2-S30]] is the same handler's logging gap seen from the mail side."
+}
+```
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-11T07:12:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "TCKT_VNEXT-D2-S30",
+  "one_line": "CTO condition 3 is written against a log line that carries no recipient: WE_CLIENT_SENT logs kind, ticket, firm, message_id and the SENDER's from= address only, so a send to the filer and a send to anyone else are indistinguishable from it -- and the CREATE ack leg logged no WE_CLIENT_* line at all, where AMENDMENT 2 anticipated two.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the one line, local-part masked by me: 'WE_CLIENT_SENT kind=pickup ticket=TCK-20261011-b13495db firm=49financial message_id=010001a129a094e8-... from=<local>@opalinvest.dev' -- the only address present is from=, the sender, on Opal's own domain; there is no to= or recipient= field",
+      "filter WE_ over /aws/lambda/opal-ticket-api across iat..exp returned exactly 3 events: WE_DL_UNCONFIGURED x2 (one per created ticket) and WE_CLIENT_SENT x1 (kind=pickup). WE_DL_SENT count is 0",
+      "NEVER_WIDEN_R2_TR1_THREAD_RERUN_CTO_HALF.md condition 3: 'A WE_CLIENT_* line naming the filer's .invalid address, sent or failed, is expected. A WE_CLIENT_SENT to any other address is a STOP before hop (d)'; AMENDMENT 2 moves the read after the run and makes a wrong one a BLOCKING row",
+      "AMENDMENT 2 also states 'Two such bounces per run are accepted here', i.e. the CREATE ack leg and the CLAIM pickup leg; only the pickup leg logged a line",
+      "the intended recipient, established from the data the code path uses rather than from the log: the journey ticket's requester.email domain is opal.invalid (the filer's own), requester.firm is 49financial, created_by is the filer; the CTO half's own code read places notify_client_isolated's single recipient at the requester (lines 1004-1035)"
+    ]
+  },
+  "spec_asserts": "CTO condition 3 makes a WE_CLIENT_SENT to an address other than the filer's .invalid address a STOP, and AMENDMENT 2 makes it a BLOCKING row read after the run -- a test that presumes the line names the recipient.",
+  "world_is": "The line does not name the recipient, so condition 3 is UNVERIFIABLE FROM ITS OWN INSTRUMENT. I reported it neither violated nor confirmed: no BLOCKING row was filed, because nothing evidences a foreign recipient, and no clean bill was given, because nothing evidences the filer either. The domain that IS on the line, opalinvest.dev, is Opal's own and is the sender -- read carelessly as a recipient it would look exactly like the violation the condition is hunting, which is the sharp edge here. The recipient was instead inferred from the ticket's requester.email domain plus the CTO's own code read, which is code-plus-data and not a measured delivery; by the fabric's own delivery rule, SENT is not READ and an agent-side ack is the only sound oracle, and there is none for mail. Separately, the ack leg firing no line at all means a silent no-op and a successful send are also indistinguishable on this surface.",
+  "notes": "Vacuous-versus-measured matters here and is stated per limb: AMENDMENT 1's empty-map limb is satisfied BY MEASUREMENT (map read empty before the write, then WE_DL_UNCONFIGURED x2 and WE_DL_SENT 0 live, exactly as predicted from the tree), while condition 3's recipient limb is not measurable from this line at all. Remedy is the owner's: log the recipient (or its domain) on the WE_CLIENT_* lines, or restate condition 3 against the ticket's requester field, which IS readable. Related: [[TCKT_VNEXT-D2-S29]]."
+}
+```
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-11T07:12:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "TCKT_VNEXT-D2-S31",
+  "one_line": "The pair's four signed branches are not MECE over what the run can do: this run's outcome -- hop (d) refused, so hops (e), (f), (g) UNREACHABLE and both report-route arms unrun -- is named by none of A, B, C or D, because C is written as hop (e) ending NOT-READY or on a terminal refusal and hop (e) never started.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "trace named_failures: [{hop d_analysis, status 200, reason INVALID_INPUT, note 'submission refused (any HTTP status); (e)-(g) depend on it'}, then e_ready, f_report and g_open each status null, reason UNREACHABLE, note 'depends on (d), which produced no service request id'}]",
+      "trace report_route_arms is the empty object: neither the malformed-id arm nor the issued-id arm ran",
+      "R2_TR1_THREAD_RERUN_PAIR.md @9e9e6e62f3 section 5: A is every hop met with hop (g) returning the report; B is a 400 from the report route on the ISSUED id; C is 'hop (e) ends NOT-READY or on a terminal refusal'; D is 'any STOP in steps 0-3: nothing of the journey runs'",
+      "none of the four fits: A is false; B cannot arise because the report route was never called with an issued id; C's subject is hop (e), which never started; D is false because the prechecks passed (STOP=None), the census passed with 82 armed and 0 off-list admits, and hops (a) through (d) all ran",
+      "the first attempt of this same order WAS a clean D (the AC1 precheck stop, row TCKT_VNEXT-D2-S28), so D's own boundary is exercised and distinct"
+    ]
+  },
+  "spec_asserts": "The pair presents A, B, C and D as the signed branch set for the run's outcome, and the GO's step 6 requires the executor to report 'the branch (A, B, C or D)' -- a closed four-way choice over the run's possible endings.",
+  "world_is": "A fifth ending exists and occurred: the journey ran past the census and stopped at hop (d), the submission, with a 200 carrying INVALID_INPUT and no issued request id. I reported it as C, because C is the branch whose CONSEQUENCES fit exactly -- it is a RESULT, the code is recorded, there is no re-run and no widening of the read, FWD-1 stays not realized and the code names the next cell -- and I said in the report that the branch set does not name this case rather than quietly widening C's text or inventing an E. Worth separating clearly: this is NOT branch B, so the R2-rr-2 rollback is NOT triggered and the report-id shape check is not implicated; it was never reached in either direction. The practical risk of the gap is that a hop-(d) refusal and a hop-(e) not-ready both land on C and would be told apart only by whoever reads the trace.",
+  "notes": "Taxonomy law (CLAUDE.md rule 24(i), MECE over a declared domain) read against the declared domain of branch outcomes, with the uncovered member found by subtraction from the printed hop list rather than by a forward guess. No act proposed; the branch set is the pair's, and re-cutting it belongs to 2.0.0_SA_COO~V2 with 1.0.0_SA_CTO~DELL2. The substantive question for the next cell is upstream of the taxonomy: why POST /api/scoped/investor-reporting/analysis answers 200 INVALID_INPUT for this submission."
+}
+```
