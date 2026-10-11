@@ -1930,9 +1930,11 @@ def _live_reset(reader):
     _LIVE.update(read=reader, done=False, nodes={}, vintage="", error="")
 
 
-def _live_holder(nm, value):
-    """(node type, vintage) when the live plane holds the exact name `value`, None when it runs nowhere. Raises _LiveFailed
-    when the read fails or cannot print its vintage. The read runs once per run; a failure is cached and raised every time."""
+def _live_holder(nm, value, typ):
+    """(node type, vintage) when the live plane holds the exact name `value` as a node of the declared type `typ` (any type
+    when the literal has none: a hand-kept carrier), None when it runs nowhere as that type. A node of another type that
+    shares the name does not make a declaration of `typ` EXISTING. Raises _LiveFailed when the read fails or cannot print
+    its vintage. The read runs once per run; a failure is cached and raised every time."""
     if not _LIVE["done"]:
         _LIVE["done"] = True
         try:
@@ -1941,20 +1943,21 @@ def _live_holder(nm, value):
                 raise ValueError("the live read printed no vintage")
             _LIVE["vintage"] = str(vintage).strip()
             for nd in nodes:
-                _LIVE["nodes"].setdefault(nd["name"], nd["type"])
+                _LIVE["nodes"].setdefault(nd["name"], []).append(nd["type"])
         except Exception as exc:  # any failure of the read: fail closed, never a zero
             _LIVE["error"] = " ".join(("%s: %s" % (type(exc).__name__, exc)).split())
     if _LIVE["error"]:
         raise _LiveFailed(_LIVE["error"])
-    typ = _LIVE["nodes"].get(value)
-    return None if typ is None else (typ, _LIVE["vintage"])
+    same = [t for t in _LIVE["nodes"].get(value, []) if typ is None or t == typ]
+    return None if not same else (same[0], _LIVE["vintage"])
 
 
-def _live_limb(nm, lit, note):
-    """Limb (b) for one NEW literal: the value of `new` after the live read (False = the plane holds the name). The
-    one-line why text goes into `note` ('held' on a hit, 'failed' on a failed read; judge() prints 'failed' on REFUSE rows)."""
+def _live_limb(nm, lit, typ, note):
+    """Limb (b) for one NEW literal: the value of `new` after the live read (False = the plane holds the name as the declared
+    type). The one-line why text goes into `note` ('held' on a hit, 'failed' on a failed read; judge() prints 'failed' on
+    REFUSE rows only)."""
     try:
-        hit = _live_holder(nm, lit.value)
+        hit = _live_holder(nm, lit.value, typ)
     except _LiveFailed as exc:
         note["failed"] = "LIVE-READ-FAILED: %s" % str(exc)[:120]
         return True
@@ -1999,7 +2002,7 @@ def _judge(nm, path, lit, pre_text, waivers, note):
     # Limb (b), LAZY: read the live plane only for a NEW literal that the branches below would REFUSE (a hand-kept carrier, or
     # an OUT-OF-PATTERN / ALIAS name). A CONFORMANT or NOT-GRADED name is never refused, so it never pays for the read.
     if new and _LIVE["read"] is not None and (carr or (typ is not None and nm.grade(typ, graded_as)[0] in ("OUT-OF-PATTERN", "ALIAS"))):
-        new = _live_limb(nm, lit, note)
+        new = _live_limb(nm, lit, typ, note)
     carr_txt = ""
     if carr:
         carr_txt = "; hand-kept carrier of %r outside every permitted context: read it through lookup(%r)" % (carr[0], carr[1])
@@ -2828,6 +2831,7 @@ def adopt_self_test(nm):
     held_plane = plane([{"type": "IAM_POLICY", "name": name, "arn": ""}])
     other_plane = plane([{"type": "IAM_ROLE", "name": "self-test-other", "arn": ""}])
     unread_plane = plane([{"type": "IAM_POLICY", "name": name, "arn": ""}], "UNREAD")
+    wrong_plane = plane([{"type": "EC2_INSTANCE", "name": name, "arn": ""}])
     saved = dict(_LIVE)
     try:
         _live_reset(held_plane)
@@ -2838,6 +2842,8 @@ def adopt_self_test(nm):
         failed = _grade_added(nm, path, text, name)
         _live_reset(unread_plane)
         undated = _grade_added(nm, path, text, name)
+        _live_reset(wrong_plane)
+        wrong = _grade_added(nm, path, text, name)
     finally:
         _LIVE.clear()
         _LIVE.update(saved)
@@ -2862,7 +2868,11 @@ def adopt_self_test(nm):
                   and not has(undated, "RUNNING-LIVE"))
     print("SELF-TEST arm adopt vintage-unreadable control: the read prints UNREAD -> %s: %s"
           % (", ".join("%s %s" % (r[0], r[6]) for r in undated) or "no row", "ok" if ok_undated else "FAIL"))
-    return ok_held and ok_absent and ok_failed and ok_undated
+    ok_wrong = (len(wrong) >= 1 and all(r[6] == "REFUSE" for r in wrong) and has(wrong, "NEW and")
+                and not has(wrong, "RUNNING-LIVE") and not has(wrong, "LIVE-READ-FAILED"))
+    print("SELF-TEST arm adopt wrong-type control: the plane holds the name only as EC2_INSTANCE -> %s: %s"
+          % (", ".join("%s %s" % (r[0], r[6]) for r in wrong) or "no row", "ok" if ok_wrong else "FAIL"))
+    return ok_held and ok_absent and ok_failed and ok_undated and ok_wrong
 
 
 def self_test():
