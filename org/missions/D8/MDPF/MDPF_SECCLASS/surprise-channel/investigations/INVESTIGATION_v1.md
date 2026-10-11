@@ -6180,3 +6180,56 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED: found while explaining the $128.07 split the CTO ruling (msg 3318, item 3) asked e60 to account for. It is the answer to that item: the split is C_06's total-vs-class gap, not an e60 move. The gap's owner is C_06's lane; whether a $128-magnitude position is counted in `total` on one day and in a class the next is for that lane to trace. RELATED: [[MDPF_SECCLASS-D1-S26]]."
 }
 ```
+
+## MDPF_SECCLASS-D1-W78-S1 -- The served firm totals for 2026-10-06 and 2026-10-07 cannot be reproduced from the current
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W78-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~78",
+  "surfaced_at": "2026-10-11T03:40:26Z",
+  "one_line": "The served firm totals for 2026-10-06 and 2026-10-07 cannot be reproduced from the current canonical holdings partitions: recomputed totals exceed the served totals by 584,886.01 and 442,485.38; 2026-10-08 reproduces to the cent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object, read 2026-10-11 ~03:3xZ: s3://opal-data-bd/gold/views/mix_daily_summary.json LastModified 2026-10-10T05:26:14Z; s3://opal-data-bd/gold/canonical/holdings/2026-10-06.parquet, 2026-10-07.parquet and 2026-10-08.parquet each LastModified 2026-10-10T23:15:02Z (sizes 2445127, 2440877, 2458671).",
+      "Read-only recompute at worktree HEAD bca7da6fff: data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py process_date over the three partitions. Recomputed total / served total: 2020133453.61 / 2019548567.60 (2026-10-06, 3252 relationships); 2013712890.73 / 2013270405.35 (2026-10-07, 3256 relationships); 2014814865.45 / 2014814865.45 (2026-10-08, 3262 relationships).",
+      "Record org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/C06_TOTAL_GAP_TRACE_20261011.json; c06_gap_record_check.py gap at bca7da6fff prints C06-GAP ok=False dates=1 (the criterion fails on this honest result)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The served firm snapshot for 2026-10-06 through 2026-10-08 is the output of C_06 process_date over the current canonical holdings partitions, so a read-only recompute reproduces its totals and gaps.",
+  "world_is": "Only the 2026-10-08 entry reproduces. The 2026-10-06 and 2026-10-07 entries were written from a different partition or static-table set: all three partitions were last written 2026-10-10T23:15Z, after the snapshot at 2026-10-10T05:26Z. The recomputed gaps for those two dates (167.10 and -120.97) therefore differ from the served gaps (-4.71 and +128.06). The cause of the partition change is not traced by this read.",
+  "notes": "SURFACED, NOT CHASED. Relates to MDPF_SECCLASS-D1-S27: the served gap mechanism is rounding of per-relationship shares (C_06 line 595, lines 737-743), confirmed on the recomputed run, but the served totals for two of three dates are not reproducible from the current partitions."
+}
+```
+
+## MDPF_SECCLASS-D1-W78-S2 -- The rounding basis test in c06_gap_record_check.py gap is an algebraic identity for any ho
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W78-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~78",
+  "surfaced_at": "2026-10-11T03:40:26Z",
+  "one_line": "The rounding basis test in c06_gap_record_check.py gap is an algebraic identity for any honest recompute, so it cannot separate share rounding from out-of-class mass; only a separate out-of-class probe does, and the checker does not run one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R20_CHECKS/c06_gap_record_check.py at bca7da6fff, gap mode: e_res = |share_rounding_residual_sum - recomputed_gap| with the residual defined as sum(total_mv * (1 - sum(mix.values()))).",
+      "Probe on the three partitions at bca7da6fff: classify_series rows whose asset_class falls outside the eight MIX_ASSET_CLASSES = 0 rows (0.00 dollars); rows with no class = 0. Derived from C_06.client_mix_timeseries.py classify_series (line 201) and process_date (lines 572-595)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The rounding basis test (residual sum within 0.05 of the recomputed gap) shows that the gap is the per-relationship share rounding and not another cause.",
+  "world_is": "The residual and the recomputed gap are the same expression over the same mix dictionary, so the basis test passes for any mix, including mass outside the eight classes. The discriminator between rounding and out-of-class mass is the out-of-class probe, which the checker does not run. On this recompute the probe is zero, so the rounding attribution holds, but the checker would not show it.",
+  "notes": "SURFACED, NOT CHASED. The instrument shape is for the L9 adjudicator to weigh; this row only records the identity."
+}
+```
