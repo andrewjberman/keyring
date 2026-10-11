@@ -143,6 +143,14 @@ Scratch (cached partitions) goes OUTSIDE the worktree, in `C:/dev/_scratch288/`,
   sensitivity; what was not measured. Counts only. No account id, no balance, no holding of any one account.
 
 
+**AMENDMENT 3 (issuer, 2026-10-11 ~13:3xZ, on `1.0.0_SA_CTO~DELL2` msg 5023 and PRD ADDENDUM v0.36 @dd8ba1ff0b).** The two
+account-day claim values are RENAMED, and nothing else changes: `OWN_DATE` becomes `ACCT_OWN_DATE` and `PRIOR_DATE` becomes
+`ACCT_PRIOR_DATE` (the bare name already exists at source grain, `partition_close[].holds`). In the output's `account_days`
+the four keys are `UNGRADEABLE`, `ACCT_PRIOR_DATE`, `ACCT_OWN_DATE`, `NOTHING_TO_GRADE`; a blank reason that names a claim uses
+the new names. The `moves_against_IB_pr_429` keys keep their names (`OWN_DATE_to_UNGRADEABLE`, `PRIOR_to_UNGRADEABLE`): they
+name IB-pr-429's old claims. The check file is updated to the new names in the same commit. Gate limb that graded this
+modification: GATE (viii) (placeholders).
+
 <criterion id="IB127-2-AC1" cell_refs="IB-pr-429"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r127/p127_v035_cells.py" . IB127-2-AC1</invocation><expect>IB127-2-AC1 PASS</expect></criterion>
 <criterion id="IB127-2-AC2" cell_refs="IB-pr-429"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r127/p127_v035_cells.py" . IB127-2-AC2</invocation><expect>IB127-2-AC2 PASS</expect></criterion>
 <criterion id="IB127-2-AC3" cell_refs="IB-pr-429"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r127/p127_v035_cells.py" . IB127-2-AC3</invocation><expect>IB127-2-AC3 PASS</expect></criterion>

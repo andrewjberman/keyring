@@ -107,7 +107,7 @@ false statement). `r4_okeys.py` O1 to O3 read this rule (entries are exactly the
 placement after FIRM_CONFIG in a hand-kept mjs: an `AFTER_BLOCK` anchor in `_render_view`) is accepted as built. Gate limb:
 GATE viii read `<placeholders>NONE</placeholders>` at HEAD and no token in the invocations (unchanged).
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>OWNKEYS</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-12</to_id>

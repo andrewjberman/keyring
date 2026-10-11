@@ -12,7 +12,7 @@
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- one IAM role policy is created; no cron, rule, schedule or cadence is added or changed.
 comp-iam: RUN by the actor at the act -- `simulate-principal-policy` is denied to this identity for the role (row D1-S18's second gap), so the read is the live policy document and the scoped plan, printed into the change-management entry; the act's own PutRolePolicy is read against the actor's identity before the first write. The grant is least-privilege to one prefix (Put, Get, scoped List; no Delete).
-comp-adversary: RUN by the issuer -- before the act the live role holds 16 inline policies and none names `advi-49f-platinum-canonical-rw` (AC1 and AC2 FAIL, AC3 reads a pending create); after, 17 and the two Sids. Blindness: nothing proves the producers can PUT through the role until the first canonical-mode run; the grant's effect is read from the document, not from a request.
+comp-adversary: RUN by the issuer -- before the act the live role holds 16 inline policies and none names `advi-49f-platinum-canonical-rw-policy` (AC1 and AC2 FAIL, AC3 reads a pending create); after, 17 and the two Sids. Blindness: nothing proves the producers can PUT through the role until the first canonical-mode run; the grant's effect is read from the document, not from a request.
 EGRESS CLASS, declared: NONE.
 </preflight>
 
@@ -29,13 +29,13 @@ the pair first.
 The gold producers' role `bd-exporter-ec2-role` (Terraform `aws_iam_role.bd_exporter`, root
 `infra/aws/terraform/bd-pipeline`) must be allowed to put, get and list the canonical home of the served platinum before
 act 2 (FB-f-9 phase B) moves the producers' mode. `FB-g-2` drafted the grant as one additive policy,
-`aws_iam_role_policy.bd_exporter_advi_49f_platinum_canonical` (name `advi-49f-platinum-canonical-rw`, in `infra/aws/terraform/bd-pipeline/iam.tf`).
+`aws_iam_role_policy.bd_exporter_advi_49f_platinum_canonical` (name `advi-49f-platinum-canonical-rw-policy`, in `infra/aws/terraform/bd-pipeline/iam.tf`).
 
 1. **Open the change-management entry** (`python .tools/deploy_ledger.py open ...`, slug `advi-firmbkts-fb-g-8-act0-grant-<UTCdate>`)
    BEFORE the first write: scope `bd-pipeline` root, one resource, rollback = `aws iam delete-role-policy` of that one
    policy name (nothing else changes; the QA runner shares the role, so the entry names it as a recipient of the Allow).
 2. **Plan, scoped.** In the root, with the saved-plan discipline the earlier acts used: `.tools/safe-apply.sh`'s plan limb
-   with `-target=aws_iam_role_policy.bd_exporter_advi_49f_platinum_canonical`. The plan must show exactly ONE resource
+   with `-target=module.opal_name_platinum_grant -target=aws_iam_role_policy.bd_exporter_advi_49f_platinum_canonical`. The plan must show exactly ONE resource
    to add and nothing else. A plan naming any other resource is a STOP: file a BLOCKING row and leave this order open.
 3. **Apply** through `.tools/safe-apply.sh` (never a bare `terraform apply`) on that saved plan. Close the entry with the
    three outputs below.
@@ -61,9 +61,9 @@ org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ADVI_FIRMBKTS.TO-FB-g-8.act0-grant.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-g-8"><invocation>timeout 100 aws iam get-role-policy --role-name bd-exporter-ec2-role --policy-name advi-49f-platinum-canonical-rw --query "PolicyDocument.Statement[].Sid" --output text</invocation><expect>AdviPlatinumCanonicalObjects\s+AdviPlatinumCanonicalList</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-g-8"><invocation>timeout 100 aws iam get-role-policy --role-name bd-exporter-ec2-role --policy-name advi-49f-platinum-canonical-rw-policy --query "PolicyDocument.Statement[].Sid" --output text</invocation><expect>AdviPlatinumCanonicalObjects\s+AdviPlatinumCanonicalList</expect></criterion>
   <criterion id="AC2" cell_refs="FB-g-8"><invocation>timeout 100 aws iam list-role-policies --role-name bd-exporter-ec2-role --query PolicyNames --output text | tr '\t' '\n' | wc -l</invocation><expect>^\s*17\s*$</expect></criterion>
-  <criterion id="AC3" cell_refs="FB-g-8"><invocation>cd /c/dev/ajb_workspace/infra/aws/terraform/bd-pipeline &amp;&amp; timeout 118 terraform plan -input=false -lock=false -refresh=true -no-color -target=aws_iam_role_policy.bd_exporter_advi_49f_platinum_canonical 2&gt;&amp;1 | tail -n 6</invocation><expect>No changes</expect></criterion>
+  <criterion id="AC3" cell_refs="FB-g-8"><invocation>cd /c/dev/ajb_workspace/infra/aws/terraform/bd-pipeline &amp;&amp; timeout 118 terraform plan -input=false -lock=false -refresh=true -no-color -target=module.opal_name_platinum_grant -target=aws_iam_role_policy.bd_exporter_advi_49f_platinum_canonical 2&gt;&amp;1 | tail -n 6</invocation><expect>No changes</expect></criterion>
 </proof_of_spec>
 
 AC1 reads the live policy's two statements, AC2 reads that the role now holds 17 inline policies (16 before: the
@@ -83,7 +83,18 @@ pair"). The window's order is act 0 (this), act 2 (FB-f-9 phase B), act 3 (FB-f-
 (FB-f-13): those four orders stay parked as cut in round 3 and are re-homed to round 4 by amendment at their un-park. Act
 4's un-park also waits on row D1-S21 (the asset-dim pin) and on the dormant readers of this round being merged.
 
-<status>parked</status>
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-11 ~14:1xZ, UN-PARKED):** the conditions of section 0 are met, each read at HEAD: (a)
+`FB-g-2` is merged (`291e9855e0`, complete at `e4207358a3`); (b) the never-widen pair
+`ledger/NEVER_WIDEN_ROUND4_ACT0_GRANT_COO_HALF.md` (@0911fa9901) and `..._CTO_HALF.md` (@37ef51525c, msg 3895) both read
+SIGNED; (c) is the actor's first step (the change-management entry). Changed from the staged text: the policy's live name is
+the module's `name` output, `advi-49f-platinum-canonical-rw-policy` (AC1 and every name above), and the scoped plan and
+apply name BOTH `module.opal_name_platinum_grant` and the policy resource (the policy reads the module's bucket and
+platinum_prefix outputs; the module call adds no resource, so the plan still reads `Plan: 1 to add`). `<issued_to>` is
+unchanged (`0.7.0_AE_CloudOps~FB1`); a refusal of `iam:PutRolePolicy` is a BLOCKING row routed to the laptop lane
+`0.7.0_AE_CloudOps~FBL`, never a widening. Gate limb: GATE viii reads `<placeholders>NONE</placeholders>` at HEAD and the
+amended invocations carry no token.
+
+<status>pending</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-8</to_id>
 <slot>~FB1</slot>

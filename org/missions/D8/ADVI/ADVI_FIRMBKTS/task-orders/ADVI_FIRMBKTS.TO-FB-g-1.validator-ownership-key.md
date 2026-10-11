@@ -110,7 +110,7 @@ identity (protected function), in the same act that names the bucket in this lis
 half of row D1-S17 once deployed. An unknown firm used to read a missing key (a 404, then the 503 fail-closed path); it now
 throws before the read and reaches the same handler.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-1</to_id>
 <slot>~35</slot>
