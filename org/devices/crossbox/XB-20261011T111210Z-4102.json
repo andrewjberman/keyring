@@ -10,12 +10,16 @@
  "subject": "ADVI_FIRMBKTS TO-FB-f-12 amendment 5: D1-S6 landed, re-run the saved plan unchanged",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-12.sms-delivery-status-logging.md",
  "opened_at": "2026-10-11T11:12:10Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-11T11:13:21Z",
   "bus_message_id": "54defd7e-47f4-4eed-8a6d-b01efabdfcb4"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T11:16:28Z",
+  "by": "0.7.0_AE_CloudOps~FBL",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
