@@ -2744,3 +2744,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T12:22:30Z",
+  "one_line": "FWD-1 hop trace: for a ticket filed by the form's one-step sequence (I1) nothing records the ticket's report_ref, and the ticket page's Open buttons for the report, the PDF and the original file all need it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py (equal to the live opal-ticket-api member, sha256 prefix cf10e19e423b): report_ref is written at line 632 (svc-commentary create via report_request_id) and line 1377 (report_ticket: status in_progress, assignee only); package_ticket (lines 1392-1468) writes only the package",
+      "portal origin/DEV src/pages/TicketCenter/analysisRequest.ts: the only caller of recordTicketReport is requestReport (line 314); reportRequestRefusal (lines 288-291) returns 'The backend requests this report itself.' for an I1 ticket; AnalysisRequestParts.tsx lines 236-243 packageFileHasReader returns false when ticket.report_ref?.request_id is absent",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:269 posts only to the package route; data/transcripts/scripts/commentary/lambda_handler.py:23-26 posts no ticket for an analysis_ready run",
+      "scope searched: those four files at tree head e41eab5325 and portal origin/DEV 8ed372cb; the resident and the status service were not searched for a ticket write"
+    ]
+  },
+  "spec_asserts": "IRPT_ANLREQ PRD FWD-1 (line 33): an Opal person opens the still-open ticket and finds the report, the PDF and the original file. TO-AR-v13 and TO-AR-y-31: the page opens each file by the ticket's request id (ticket.report_ref).",
+  "world_is": "Read from code only, not exercised: no code path found that sets report_ref on an I1 ticket, so the Open report button and the package block's Open buttons would not render for such a ticket. Not run on a real ticket; the fourth run (TCKT_VNEXT.TO-RUN-R3-tr1) files by API with a claim and a recorded report, which is the manual path.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
