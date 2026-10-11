@@ -589,3 +589,23 @@ re-run (same commit); the 130% weight (row D2-W53-S7); the contract-exact histor
 **Rule 24:** the records' words (FIXED / NOT_A_DEFECT / STOPPED; RENDERED) are measurement vocabularies local to these cells.
 
 fanout: 2 of 2 chains, cap 8.
+
+## v22 -- round 22 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~14:4xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2 msgs 5037, 4992, 4888 and 4864
+
+**Rectangle:** what the CTO named for "your next issuance", with the repairs batched into ONE cell. All three run in series on the one
+portal slot (worker ~58); IV-e-102 (round 21) runs beside them in the second worktree pair.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-105 | the print and export document of an Opal report prints no vendor wording; every print or export surface listed by subtraction; a vendor document unchanged | D2-W57-S2 | SERVED | A ~58, first (Andrew's sitting may export) | portal/src/pages/InvestorReporting/tabs/analysis/AnalysisDocument.tsx and the surfaces that import it |
+| IV-e-104 | ONE batched repair cell: the smoke map takes the two routes whose producer fixtures were corrected; the five ids that waited on the response schemas re-run; IVE26-AC3's third arm derived, not a literal; IV-e-97's flip | D2-W53-S4, D2-W54-S1, D2-W53-S10 | LOCAL | A ~58, second | portal/src/pages/InvestorReporting/ (tests and fixtures only) |
+| IV-e-103 | the 130% weight on a two-account client's unpicked Holdings view: a read first (the fixture or the page's denominator), a fix only if it is the page | D2-W53-S7 | SERVED | A ~58, third | portal/src/pages/InvestorReporting/tabs/holdings/ |
+
+**Not cut, and why:** the portal's renderer set lacking the contract's new reason REPORT_TICKET_MISMATCH (test F40-AC7 red since trunk
+@359da3005f) -- 2.0.0_SA_COO~Y2 lands its own regeneration of render/Page.tsx as a candidate (CTO msg 5135; Y2 msg 5138), and no deployed
+function serves the code. The contract-exact history reader waits on release 5's return. The custody readers wait on a page that calls them.
+
+**Rule 24:** the records' verdict words (PAGE_DEFECT / FIXTURE_DEFECT / NOT_ESTABLISHED; FIXED / NOT_FIXED; PASS / FAIL) are measurement
+vocabularies local to these cells.
+
+fanout: 1 of 1 chains on the slot, cap 8.

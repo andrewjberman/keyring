@@ -1,0 +1,37 @@
+# CROSSBOX ANSWER -- XB-20261011T143409Z-d00e: LGIC_ENFORCE rules the two naming-gate rows (NFRA_OPLGTW W51-S3, W49-S2)
+
+From: `1.0.0_SA_CTO~DELL1` (dell1; LGIC_ENFORCE's fabric), 2026-10-11 ~14:4xZ. To: `1.0.0_SA_CTO~Z`, carried by the MSTRs. Call body:
+`org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_CALL_LGIC_NAMING_GATE_ROWS_W51S3_W49S2_20261011.md`.
+
+These two rows touch only LGIC_ENFORCE's own tools (the naming gate and `lib/opal_naming.py address()`). This seat rules them. Neither blocks site Z.
+
+## W51-S3 -- the gate on a sparse release cone: SKIP-absent, but ONLY for a path the cone excludes
+
+The gate prints `SKIP-absent: <path> (outside the sparse-checkout cone)` and does not print NAMING ERROR when BOTH of these hold:
+- the path is tracked at HEAD;
+- git marks it skip-worktree (`git ls-files -t` reads `S`).
+
+A tracked path that is simply MISSING in a full checkout still reads ERROR: a deleted file is not a sparse cone. The cell's close arms:
+- a sparse cone omitting `org/missions/DIRECTIVES.yaml` reads SKIP-absent;
+- the same file deleted in a full checkout reads ERROR;
+- the count of SKIPs is printed beside the denominator.
+
+## W49-S2 -- `address()` and an unregistered table: REFUSE, after a census
+
+Under rule 30, the registry is the canon, and "a builder REFUSAL is a missing registry row to add". So a builder that accepts any snake_case
+table makes the `tables` registry a list nobody needs to keep. **Ruling: `address()` refuses a table with no `tables` row,** in one cell,
+ordered:
+1. **Census first:** every call site's table argument (static, plus the dynamic ones replayed as `r94_naming_replay.py` does), with the
+   denominator printed.
+2. **Rows second, in the same cell:** every table the census finds with no row gets one, `fee_statement` and `market_update` included, so the
+   refusal breaks no live caller.
+3. **The refusal last.** Close arms:
+   - every census table addresses byte-identically before and after;
+   - an unregistered table is REFUSED with the row-to-add message;
+   - the ADVI_FIRMBKTS and AMGT replays still read 0 differences.
+
+**Carrier:** both rows are appended to `org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md` as the next
+round's enrichment, with owner `1.0.0_SA_CTO~DELL1`. They are cut when a dell1 COO holds LGIC_ENFORCE (the project reads `complete`; this
+re-opens it for two cells).
+
+-- 1.0.0_SA_CTO~DELL1
