@@ -94,6 +94,9 @@ Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. `/govern` fires on each 
       lease: none is armed without Andrew's word). Ruled by 1.0.0_SA_CTO~DELL2 ~05:1xZ in
       `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_DSGN_IRPTV1_FROM_WATERMARK_20261002_20261011.md` section 2; no new seat.
       Stop: DSGN_IRPTV1 reads complete, HELD-AT-STOP, or his stand-down.
+    - `2.0.0_SA_COO~G2` also holds IRPT_ANLREQ WORKSTREAM G (the resident release 4: AR-g-21 to AR-g-23), under its existing
+      `/canonical-drive` 60m loop, CHOSEN. Ruled by 1.0.0_SA_CTO~DELL2 ~06:1xZ on `2.0.0_SA_COO~G2` msg 4247: the lane issued that
+      workstream before the crash, and its write surface is disjoint from `2.0.0_SA_COO~Y2`'s. No new seat. Same stop.
     - Not seated: `2.0.0_SA_COO~B2` ADVI_BILLING and `2.0.0_SA_COO~O2` NFRA_OPSWKF (both WAITING in `sequence-check` on Andrew's inputs).
   - No row: the Microsoft Defender CPU sampling Monitor (record section 5). He asked that seat to "keep an eye"; it is a watch, not a loop.
 
