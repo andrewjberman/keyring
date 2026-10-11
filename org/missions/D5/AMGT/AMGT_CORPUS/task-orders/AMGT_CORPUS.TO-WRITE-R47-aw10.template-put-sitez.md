@@ -20,7 +20,7 @@ halves are signed (STOP 0 below). WORKSTREAM `TEMPLATE`: a disjoint write surfac
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- no task is registered, run or edited; the one write is an ad-hoc `--put --write`, not a scheduled job.
 comp-iam: DECLARED-NOT-APPLICABLE -- this order changes no policy, role or credential. The put runs under the site-Z user's existing credentials, the same that ran round 45's ingest (put_performed 12); an AccessDenied is STOP 5 and nothing else changes.
-comp-adversary: RUN by the issuer at the cut on dell1 HEAD (the COO half names it): counter-reads written into the steps -- acting before both halves (STOP 0); a tree whose three closure files differ from the pair's blobs (STOP 1); a second put running (STOP 2); zero or several files carrying the master's name, or a file of another size (STOP 3, STOP 4); an access denial or a read-back mismatch (STOP 5). BLIND: whether the synced file equals the SharePoint item byte for byte (the size is compared, the hash of the item is not); the evidence prints the stored sha256.
+comp-adversary: RUN by the issuer at the cut on dell1 HEAD (the COO half names it): counter-reads written into the steps -- acting before both halves (STOP 0); a tree whose three closure files differ from the pair's blobs (STOP 1); a second put running (STOP 2); zero or several files carrying the master's name, or a file of another size (STOP 3, STOP 4); an access denial or a read-back mismatch (STOP 5); a scheduled task that writes a dossier or a research_template object (STOP 6, the CTO half's condition). BLIND: whether the synced file equals the SharePoint item byte for byte (the size is compared, the hash of the item is not); the evidence prints the stored sha256.
 lane: 0.7.0_AE_CloudOps~ZC applies under the signed pair (COO half deliverables/2.0.0_SA_COO~C1/NEVER_WIDEN_ROUND47_AW10_TEMPLATE_PUT.md; CTO half ledger/NEVER_WIDEN_ROUND47_AW10_CTO_HALF.md).
 </preflight>
 <decomp_ref>
@@ -58,6 +58,12 @@ lane: 0.7.0_AE_CloudOps~ZC applies under the signed pair (COO half deliverables/
     3. Open the evidence file (path below) with a header line (date UTC, HEAD). Under `## locate` copy whole:
        `python org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round47/aw10_locate.py`.
        STOP 3 unless it printed `matches 1`. STOP 4 unless its last line reads `size_equal True`. Either: write nothing further, commit the evidence, report.
+    3a. CONDITION OF THE CTO HALF (signed, msg 4031): site Z's own Windows scheduled tasks are not in the repo, so before any put list them under
+       `## scheduled tasks` with `schtasks /query /fo LIST /v`, print the denominator (the number of tasks listed), copy whole the blocks of every task
+       whose action (Task To Run) names `dossier`, `continuation`, `substrate`, `corpus` or `template`, and print one line,
+       `schtasks_named <n> dossier_writing <m>`: <n> the count of tasks whose action names any of the five, <m> the count among them that WRITES a
+       dossier or a `research_template` object (runs `dossier`, `continuation` or `substrate` in write mode, or `template --put ... --write`).
+       <m> above 0 is STOP 6: put nothing, commit the evidence file, report to the issuer.
     4. Under `## labels` copy whole, with `<path>` the single `template_locate match` path:
        `python -m lib.research.corpus.template --labels "<path>"`.
     5. Under `## dry-run` copy whole: `python -m lib.research.corpus.template --put "<path>" --item-id 01L6LHKFRTYYYRWCI37VGLHJQPCL3KMJXN --source-mtime 2026-07-24T13:04:50Z`.
@@ -82,6 +88,7 @@ Instance at `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/AMGT_
   <criterion id="AC1" cell_refs="CRPS-aw-10"><invocation>grep -cE "^template_put key amgt/harvest/bronze/research_template/template=01L6LHKFRTYYYRWCI37VGLHJQPCL3KMJXN/[0-9a-f]{16}/FactSet Based ONE PAGER TEMPLATE 2026 03 09_v2.xlsx sha256 [0-9a-f]{64} put_performed (True|False) existed (True|False)$" org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.7.0_AE_CloudOps~ZC/evidence/r47_aw10_template_put_sitez.txt</invocation><expect>2</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-aw-10"><invocation>grep -cE " put_performed False existed True$" org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.7.0_AE_CloudOps~ZC/evidence/r47_aw10_template_put_sitez.txt</invocation><expect>1</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-aw-10"><invocation>grep -cE "^template_labels measured [0-9]+ metric_name [0-9]+ pass_through [0-9]+ two_label_left [0-9]+ fallback [0-9]+ bloomberg_held [0-9]+ codes [0-9]+$" org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.7.0_AE_CloudOps~ZC/evidence/r47_aw10_template_put_sitez.txt</invocation><expect>1</expect></criterion>
+  <criterion id="AC4" cell_refs="CRPS-aw-10"><invocation>grep -cE "^schtasks_named [0-9]+ dossier_writing 0$" org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.7.0_AE_CloudOps~ZC/evidence/r47_aw10_template_put_sitez.txt</invocation><expect>1</expect></criterion>
 </proof_of_spec>
 
   <report>
