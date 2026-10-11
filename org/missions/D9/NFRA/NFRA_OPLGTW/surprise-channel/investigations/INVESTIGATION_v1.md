@@ -11830,3 +11830,61 @@ name the one known failure instead of silently inheriting it.
   "notes": "Citing row; Z-S78's own text is untouched. Z-S79 (source-map memory_size) is corrected in the assignee's step-5 source-map commit, as that row states."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S81",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-11T00:55:14Z",
+  "one_line": "OG-ap-6 B1 step 4: the whole-root opal-gateway plan at the release base reads 'Plan: 1 to add, 5 to change, 3 to destroy' where CTO C3 expects exactly 1/0/0, and ALL THREE destroys are resources that are LIVE RIGHT NOW and absent only from the release base's configuration -- a B2 apply from this worktree would delete two live gateway IAM policies and the live ALB listener rule serving /ms/taxsma-workbook.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PLAN (rc=0, complete) at release_sha 6aadf7db37a8605389110e08bb64f6e15e1d3026 on base 2a5966dfbd, saved verbatim to deliverables/0.7.0_AE_CloudOps~Z/ap6_plan.txt. Verdict: 'Plan: 1 to add, 5 to change, 3 to destroy'.",
+      "THE ONE EXPECTED ADD: aws_iam_role_policy.advi_billing_gateway_put will be created.",
+      "FIVE CHANGES, none expected: aws_iam_role_policy.gw_gateway_read_secrets; aws_iam_role_policy.schwab_catalog_read_policy; aws_iam_role_policy.schwab_data_read_policy; aws_lambda_function.mcportal_grant_writer; aws_lb_listener_rule.hx_capability -- all 'will be updated in-place'.",
+      "THREE DESTROYS, each 'because <addr> is not in configuration': aws_iam_role_policy.gw_mcportal_close_request_write; aws_iam_role_policy.gw_mcportal_fabric_read; aws_lb_listener_rule.taxsma_capability.",
+      "THE DESTROYS ARE CONFIG ABSENCES AT THE BASE, NOT STATE JUNK -- measured with a positive control: git grep over infra/aws/terraform/opal-gateway/ finds each of the three resource names in 0 files at 2a5966dfbd and in 1 file each at box/sitez HEAD.",
+      "AND THE TARGETS ARE LIVE: aws iam list-role-policies --role-name opal-gateway-role returns gateway-mcportal-close-request-write-policy and gateway-mcportal-fabric-read-policy; aws elbv2 describe-rules on the opal-gateway 443 listener returns 10 rules, one carrying the path condition \"/ms/taxsma-workbook\".",
+      "ROOT CAUSE, measured: the release branch is cut at MP-r-2's deployed commit 2a5966dfbd, which sits on rel-nfra-mcportal-cp2-v2 and does NOT contain box/sitez's later opal-gateway Terraform. The gateway TF root on the release branch is therefore stale against both box/sitez and the live estate."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO half @5e258448d2 C3: the .tf lands under its own ledger with a whole-root terraform plan reading exactly '1 to add, 0 to change, 0 to destroy' for aws_iam_role_policy.advi_billing_gateway_put, and 'Any other line in the plan is a stop.' OG-ap-6 step 4 repeats it and classes extra rows a STOP for B2, not for B1.",
+  "world_is": "Eight rows beyond the one add, three of them destructive against live resources. B1 is complete and reports this verbatim, as step 4 directs; B2's policy act CANNOT run on this plan. Options, none acted on and none recommended as a ruling: (a) the issuer re-cuts the release onto a base that carries box/sitez's gateway TF, which changes release_sha and re-opens all three halves anyway under CTO C1; (b) B2's policy act runs -target'd to aws_iam_role_policy.advi_billing_gateway_put alone, which lands the grant but leaves C3's whole-root drift read unsatisfied and the 3 destroys latent for the next whole-root applier; (c) the drift is adjudicated row by row first. This seat does not choose among them.",
+  "notes": "ARMED rather than INERT because the hazard is live and standing: any whole-root apply of this root from this branch destroys the three named resources, and the next applier inherits that without this row. It is NOT armed against B1, which wrote nothing. SEPARATELY, the base also cannot be planned at all without help, because 2a5966dfbd predates df3e0e2c06 ('the opal-gateway root plans clean with no variable and no pre-built output'): the root still declares two required no-default variables (mcportal_owner_key_claim, mcportal_owner_key), supplied here from the secret gateway/principals/rosters through TF_VAR_ env vars -- never argv, never a tfvars file -- and both values redacted from the saved plan because the design is explicit that no literal for them goes in the repo; and three archive_file/filebase64sha256 inputs are build artifacts. Two of those (m365-ms-ingest-liveness, m365-otp-liveness lambda_function.py) are TRACKED sources and only needed a wider sparse cone. The layer zip was copied from the main tree and is PROVABLY the live-published artifact: its filebase64sha256 oO8BxcnG9EOvVz/pMpHlQCUGzkayANH3ryCKpNAaKfk= and 5016850 bytes equal live layer mcportal-grant-writer-deps-layer v1 Content.CodeSha256 and CodeSize exactly, so the layer row it authors is a true 0-diff. The mcportal-grant-writer .build/staged dir was also copied from the main tree and was NOT independently verified against the live function, so the single row aws_lambda_function.mcportal_grant_writer MAY be instrument-derived; it is also the already-recorded Z-W39-S5 drift class. The three destroys and the four IAM/ALB changes depend on NO archive input and are unaffected by any of this."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S82",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-11T00:55:14Z",
+  "one_line": "OG-ap-6 B1 step 1: the opal-gateway host carries FOUR orphaned mcportal dashboard assets, not the two row NFRA_MCPINDEX-Z-S94 names; the two extra are dashboard/assets/index-CrZMj-00.js and dashboard/assets/index-a6wjv_wv.css.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SHIPPED-FILE COMPARISON (the step-1 check proper) is CLEAN: the host's md5s against the shipped files of 2a5966dfbd read 'MD5 listed 104 identical 104 mismatch 0 []', with 0 extras under app/ and deploy/. Evidence deliverables/0.7.0_AE_CloudOps~Z/ap6_md5_host.out, ssm a6b89beb-9525-4bc5-9d40-71afd96ca617.",
+      "The expected list was REGENERATED at the moved base rather than reused: the Phase-A script embeds the 1e32562729 list (100 entries). Control: md5-of-blob reproduced that embedded list 100 of 100 at 1e32562729, so the method is sound; at 2a5966dfbd the shipped set is 104 entries (4 added, 0 removed, 4 content-changed by MX-r-9/MP-r-2), which is the shipped-list movement COO half condition 3 anticipated.",
+      "DASHBOARD CENSUS (deliverables/0.7.0_AE_CloudOps~Z/ap6_dash_census.out): 7 files under dashboard/ = index.html 1 + referenced-by-index.html 2 (index-BTe-mgyF.css, index-CKTlb93s.js) + orphans 4 (index-BP6X9XJd.js, index-BqfQgt7G.css, index-CrZMj-00.js, index-a6wjv_wv.css). Denominator printed by the instrument.",
+      "Row NFRA_MCPINDEX-Z-S94 names 2 of those 4 (index-BP6X9XJd.js, index-BqfQgt7G.css). The other 2 are unnamed anywhere this seat could find."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-6 step 1: the host is a superset of the artifact, row NFRA_MCPINDEX-Z-S94 names 2 orphaned mcportal dashboard assets, list every extra by name, and any extra not named in this step is a STOP.",
+  "world_is": "Four orphans, two of them unnamed. This is NOT read as a step-1 STOP, and the reason is named rather than assumed: dashboard/ is shipped from mcportal's dist by deploy-to-ec2.sh (tar -C $TMP/bundle $DASHBOARD_BUNDLE_DIR), not from the gateway's git tree, and the instrument the order names (rl16_md5_host.py) walks ONLY app/ and deploy/ -- so it reports 0 extras and has never been able to see a dashboard file at all. The 4 orphans surfaced only because this seat WIDENED the walk to dashboard/. The step-1 set the order actually measures is clean at 104 of 104. The surface is mcportal's, and Z-S94 is NFRA_MCPINDEX's row.",
+  "notes": "Useful to B2 rather than blocking it: B2's read-back condition is that the host's extras named in step 1 are UNCHANGED, so naming 4 instead of 2 makes that comparison strictly sharper. Surfaced, not adjudicated: whether the 2 unnamed orphans want a cleanup cell is the issuer's call with NFRA_MCPINDEX, and nothing here deletes a file on the host."
+}
+```
