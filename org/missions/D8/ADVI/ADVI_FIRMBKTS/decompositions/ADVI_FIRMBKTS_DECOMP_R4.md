@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 13,
- "chains": 11,
+ "cells": 14,
+ "chains": 12,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -122,3 +122,12 @@ canonical platinum prefix (the grant reads them and names its policy through `na
 `FB-g-11`; `FB-g-1` and `FB-g-2` are re-seated after them with amended faces. Cells 11 -> 13; chains 10 -> 11 (the two
 builder cells are one chain with the cells they unblock, `{FB-g-12, FB-g-1}` and `{FB-g-13, FB-g-2, FB-g-8}`, so the
 chain count rises by one over the nine independent builds above).
+
+## Amendment 4 (2.0.0_SA_COO~B1, 2026-10-11 ~13:2xZ): cell `FB-g-14` added by the CTO's round-3 ADDENDUM 6 (msg 3871)
+
+Row D1-S24: the flip would repoint the IRPT directory and holdings readers and writers at a bucket holding none of their
+keys. The CTO ruled (b): one transitional `product_live.irpt` row (`opal-data-bd`, owner IRPT_BCKEND, expiring at its RI1
+move) which the IRPT bucket map targets read; (a) a copy at the same keys is refused. Cell `FB-g-14` (worker `~37`,
+workstream `IRPTLIVE`; write set `infra/logic/registry/scopes.json`, `lib/opal_naming.py` and the 15 tracked generated
+targets; edge: after `FB-g-11`, merged). After it, act 4's value-changing set is `firm-config.mjs` alone. Cells 13 -> 14,
+chains 11 -> 12.
