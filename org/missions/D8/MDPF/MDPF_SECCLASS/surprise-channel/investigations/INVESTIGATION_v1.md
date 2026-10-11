@@ -6153,3 +6153,30 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED: found at the e60b arm-2 read (SC1 msg 3300), traced by the issuer. The issuer's own AC1 is the instrument that missed it (the seam it exercised was the function, not the caller), so the fix cell's acceptance must exercise D_04's served classify path with a ticker-no-row position. Round 19 holds no build cell; the L10 slug carries this row to the CTO for the round-N analysis. RELATED: [[MDPF_SECCLASS-D1-S11]] (the trace that named the 23), [[MDPF_SECCLASS-D1-W66-S3]]."
 }
 ```
+
+## MDPF_SECCLASS-D1-S27 -- C_06's firm-daily total differs from the sum of its class values by about $128 with a sign that flips day to day; D_04's Unclassified line carries that gap
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S27",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-11T02:41Z",
+  "one_line": "C_06's firm-daily snapshot `total` does not equal the sum of its published class values: gap total-minus-classes is -4.71 (2026-10-06), +128.06 (2026-10-07), -128.57 (2026-10-08). D_04's e60 `Unclassified` line is total minus the six canonical classes, so it differs from C_06's own `unclassified` class by exactly that gap: top-level Unclassified 998,762.85 vs composition.mix.unclassified 998,634.78 at 10-07, and 972,621.40 vs 972,749.97 at 10-08.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read 2026-10-11T02:4xZ, s3://opal-data-bd/gold/views/mix_daily_summary.json VersionId 6o1FOSbTRgA9hRzl7I5WyHcN3EyFH.RJ, `firm` snapshots for the three newest dates: total=2019548567.60 / sum_classes=2019548572.31; total=2013270405.35 / sum_classes=2013270277.29; total=2014814865.45 / sum_classes=2014814994.02 (sum over every non-null class key except `total`; `other` reads 0.00 on all three).",
+      "`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R19_CHECKS/e60_ab_attribution.py` (compute-only, old D_04 816a77e9 vs new 23d2f2ae on the same three served inputs): 903 leaf fields, 6 differ, all under top-level `mix`; new top-level Unclassified 972,621.40 vs the C_06 `unclassified` class 972,749.97 on 2026-10-08.",
+      "D_04.client_portal_summary.py `_firm_top_level_mix` (:418-434): `uncovered = total - covered_mv`, shown as `Unclassified` when abs(uncovered) > 1e-12 * total, so any C_06 total/class-sum gap lands in the line by design (its docstring names 'dollars in the firm total that no class carries')."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C_06's firm-daily `total` is the sum of the class values it publishes, so D_04's Unclassified line equals C_06's `unclassified` class when `other` is zero.",
+  "world_is": "The snapshot total and the class sum disagree by about $128 of $2.0B (6e-8) on two of three dates, with opposite signs, so the served top-level Unclassified line and the donut's `unclassified` class differ by that amount and the sign moves day to day. e60 serves C_06's own numbers; the source of the gap is upstream of D_04 and not found by this read.",
+  "notes": "SURFACED, NOT CHASED: found while explaining the $128.07 split the CTO ruling (msg 3318, item 3) asked e60 to account for. It is the answer to that item: the split is C_06's total-vs-class gap, not an e60 move. The gap's owner is C_06's lane; whether a $128-magnitude position is counted in `total` on one day and in a class the next is for that lane to trace. RELATED: [[MDPF_SECCLASS-D1-S26]]."
+}
+```
