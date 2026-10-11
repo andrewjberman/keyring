@@ -1968,3 +1968,32 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-S41 -- smartx-pipeline reads s3_object_version from the LIVE latest object, so any re-upload re-opens drift with no commit behind it; and two claims of the x-3 table corrected
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S41",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-11T11:35:00Z",
+    "one_line": "Design gap, recorded INERT with NO owning project (as 1.0.0_SA_CTO~Z's E4 ruling @20c0a85d55 directs): infra/aws/terraform/smartx-pipeline reads each Lambda's s3_object_version from the live latest S3 object, so any re-upload re-opens plan drift that no commit produced; pinning the version or deriving it from the build is the module owner's choice, and no project owns smartx-pipeline.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "SMARTX_DRIFT_TABLE.md @c951e42cae (IAM-x-3) claims rest_pull's new bytes were produced by NO COMMIT, and that the content was first uploaded 2026-08-19T01:34Z.",
+    "world_is": "Both claims are corrected by the CTO's own artifact read (CTO_RULING_IAMROLES_E4_SMARTX_DRIFT_DEPLOY_ALL_20261011_Z.md). (1) The commit exists: the only difference between the running and latest rest_pull is smartx_jwt_reader.py docstring line 3 (data/orion -> data/inf), which is repo source last changed by 46d0b98aef (2026-06-11, the NFRA_DTAFLP path sweep), the source map's own last_deployed_commit. Only the deploy never ran. (2) The 6,608-byte content first appeared 2026-07-23, not 2026-08-19, and was re-uploaded 5 times up to the current version. The gap that let this happen stays: the module tracks the live latest object, so a re-upload of identical or near-identical bytes reads as drift and a hand upload would be adopted silently on the next apply. Not cut in this project. IAM-x-6 deploys the three current versions under the ruling.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IAMROLES_E4_SMARTX_DRIFT_DEPLOY_ALL_20261011_Z.md @20c0a85d55 (msg 33261)",
+        "deliverables/0.7.0_AE_CloudOps~IR/round7/smartx_drift/SMARTX_DRIFT_TABLE.md @c951e42cae",
+        "infra/aws/lambda/smartx_rest_pull/smartx_jwt_reader.py:3 at HEAD, last changed by 46d0b98aef"
+      ]
+    },
+    "notes": "Cites Z-S21, Z-S20. No owner by the CTO's ruling; a future project that takes smartx-pipeline inherits it. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
