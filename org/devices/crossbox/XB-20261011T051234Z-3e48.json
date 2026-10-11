@@ -10,16 +10,20 @@
  "subject": "Record of call 0dd7: delete IAM role lambda-test-role -- laptop YES @106f60a7c8, site Z adoption @5af6d5e23e",
  "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_CALL_0DD7_LAMBDA_TEST_ROLE_DELETE_20261011.md",
  "opened_at": "2026-10-11T05:12:34Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T05:17:05Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T05:17:05Z",
+  "to_by": "1.0.0_SA_CTO"
  }
 }
