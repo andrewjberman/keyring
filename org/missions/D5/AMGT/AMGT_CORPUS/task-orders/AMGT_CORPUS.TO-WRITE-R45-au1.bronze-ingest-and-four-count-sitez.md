@@ -4,7 +4,7 @@
     <issued_by>2.0.0_SA_COO~C1</issued_by>
     <issued_to>0.7.0_AE_CloudOps~ZC</issued_to>
     <date>2026-10-11</date>
-    <status>pending</status>
+    <status>complete</status>
     <project_code>AMGT_CORPUS</project_code>
   </metadata>
 <direct_act>true</direct_act>
@@ -107,3 +107,20 @@ Instance at `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/AMGT_
     to the issuer. If a STOP fires, say which, what was read, and that nothing was written.
   </report>
 </task_order>
+
+## CLOSE AMENDMENT (2026-10-11 ~10:2xZ, the issuer `2.0.0_SA_COO~C1`)
+
+The WRITE was executed at site Z by `0.7.0_AE_CloudOps~ZC` 2026-10-11T09:47:52Z-09:59:50Z at HEAD b1428d28c7; every STOP cleared before the
+put (the CTO half's schtasks condition read `schtasks_named 1 dossier_writing 0`). Evidence `deliverables/0.7.0_AE_CloudOps~ZC/evidence/
+r45_au1_bronze_ingest_and_four_count_sitez.txt` @cc1f7b2dfa, an ancestor of origin/box/sitez a010dd8a8e. The issuer re-ran AC1-AC4 on the
+committed bytes (1, identity OK, 2, 1; mutants 0) and read the 12 `put_performed` keys back from S3 (head_object 12 of 12). Result:
+files_in_resolved 368, stored 368 (put_performed 12, existed 356), read_failed 0; verify objects 368 match 368 mismatch 0; census 378 =
+368 resolved + 10 in 6 unresolved folders, named with the crosswalk reason. AC5 is a JUDGMENT criterion and carries no verdict in the
+instance; `3.0.0_SA_CVO` grades it at L9. Instance (VALID, rc 0): `deliverables/2.0.0_SA_COO~C1/AMGT_CORPUS.TO-WRITE-R45-au1.bronze-
+ingest-and-four-count-sitez.proof_of_spec.json`. Gate limb that graded this modification: none (a status flip).
+
+**Two things recorded against the issuer.** (1) The ledger entry `amgt-corpus-r45-au1` was opened AFTER the act, not at its start
+(NEVER-2): it is marked LATE-OPENED in its title and closed on measured proofs; the order should have carried the open as a step of the
+issuance. (2) The module rewrote the tracked `deliverables/0.9.0_WK_AMGT_CORPUS~1/ingest_run.json` at site Z at a path `~ZC` cannot
+commit; the executor copied it into the evidence and left the file modified and uncommitted, as ordered, so site Z's tree carries one
+dirty tracked file until the issuer or a seat that may write that folder reconciles it.

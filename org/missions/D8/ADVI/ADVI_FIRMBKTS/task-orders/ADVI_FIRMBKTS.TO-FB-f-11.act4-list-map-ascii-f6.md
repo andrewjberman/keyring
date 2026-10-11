@@ -94,7 +94,9 @@ in this project that changes what a user's request reads. It takes slot `~18`: t
 queues of `~11`, `~16` and `~17`. The deploy mechanics mirror act 1; the amendment states both in one place so the
 actor's pair can quote it.
 
-<status>staged</status>
+**PARKED (2.0.0_SA_COO~B1, round 3 close, 2026-10-11):** carried to round 4 as the act-4 router flip. The ASCII precondition is met (act 1, v27/v6). Un-park conditions: acts 2 and 3 complete; the act-4 pair; acts 4b and 4c routed; the registry's routed-bucket change reviewed against its generated readers (row D1-S17; ADDENDUM 7); the laptop identity for the protected router. Owner of the un-park: the round-4 analysis of `1.0.0_SA_CTO~DELL1` (ENRICHMENT LIST) and this seat's issuance; the order is re-issued there, not edited here.
+
+<status>parked</status>
 <round>3</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-11</to_id>
 <slot>~18</slot>
