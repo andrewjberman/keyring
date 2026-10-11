@@ -428,3 +428,76 @@
   "notes": "Filed at step 4 (commit). Stopped on the naming limb, per the order's rule for a refused JSON literal. Code files remain UNCOMMITTED in the worktree: .tools/gen_mdpf_bronze_homes.py, data/mdpf/config/bronze_homes.json, data/mdpf/scripts/gold/tests/test_mdpf_bronze_homes.py, and the modified data/mdpf/scripts/bronze/pull_orion_model_composition.py. Their checks pass in the worktree (homes 3 of 3; writer 2 of 3, GRANT open per S2)."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W9-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~9",
+  "surfaced_at": "2026-10-11T03:46:00Z",
+  "one_line": "The commit-time naming limb REFUSES the code commit on lib/opal_naming.py:73, the new BRONZE_HOME_FEEDS literal naming the scopes 'mdpf' and 'inflection' outside lookup(). The cell's code is not committed; the order stops at step 1.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-c-2 section 1.1 step 1 (the generated target is a lib VIEWS row whose feed map names the scope and tier) and section 2 bound 3 (every new address comes from the builders); a naming-gate refusal is filed as a BLOCKING row with the gate's text and the cell stops, never a workaround.",
+  "world_is": "safe-commit naming limb (LGIC_ENFORCE DEC-6, ENFORCE) on the 8-path code commit: 'NAMING REFUSE lib/opal_naming.py:73 inflection -> lookup(inflection): NEW hand-kept carrier (context rule); hand-kept carrier of inflection outside every permitted context: read it through lookup(inflection)'; 'NAMING OUT-OF-PATTERN lib/opal_naming.py:73 mdpf -> lookup(mdpf): EXISTING hand-kept carrier (context rule): WARN'; 'NAMING-GATE: REFUSE 2 graded'. 'ERROR: BLOCKED -- the naming limb refused. Commit aborted; files unstaged.' Nothing landed. The generated JSON and generated_locals.tf were not named in the refusal. Pre-commit commit-gate printed clean for 7 of 8 files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output, 2026-10-11T03:45Z, worktree C:/Dev/wk-canon-9 branch wk-MDPF_CANON-9 at 9f933161c4 plus uncommitted files: NAMING-GATE: REFUSE 2 graded",
+      "lib/opal_naming.py:73 (uncommitted) BRONZE_HOME_FEEDS = {\"orion_model_composition\": (\"mdpf\", \"inflection\")}"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stopped on the naming limb, per the order's rule for a refused literal. The literal is the cell's own feed declaration: the scope name is typed in lib, not read through lookup(). Resolution is a CTO decision: a permitted context for the declaration, or a registry row for the feed (infra/logic/registry/scopes.json is in this order's paths). No rename, no move, no workaround was made. Code files remain UNCOMMITTED in C:/Dev/wk-canon-9: lib/opal_naming.py, data/mdpf/config/bronze_homes.json, infra/aws/terraform/modules/opal_name/generated_locals.tf, infra/aws/terraform/modules/opal_name/main.tf, infra/aws/terraform/mdpf-pipeline/iam.tf, data/mdpf/scripts/bronze/pull_orion_model_composition.py, lib/tests/test_opal_naming_bronze_homes.py, data/mdpf/scripts/gold/tests/test_mdpf_bronze_homes.py."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W9-S5",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~9",
+  "surfaced_at": "2026-10-11T03:46:00Z",
+  "one_line": "No plane claims data/mdpf/config/bronze_homes.json: as a VIEWS target it is UNCLASSIFIED in 'lib/opal_naming.py targets' (rc=1), and two lib tests that require every target classified FAIL, so libs TESTS is 2 of 3 arms, not 3 of 3.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-c-2 section 1.1 step 1: add the target as a VIEWS row and run 'targets', reading its SHIP / REPO-ONLY placement; the JSON reaches the runner by the existing data/mdpf/config -> code/config path. Section 4 NOTE: 'libs' is 3 of 3 at base, a guard the edit must keep green.",
+  "world_is": "'lib/opal_naming.py targets' with the new VIEWS row: 'UNCLASSIFIED - data/mdpf/config/bronze_homes.json measured: no plane claims it'; rc=1. The S3 probe _sdc().file_to_s3_target and bundle_for_member are both None for the new file; the tracked sibling data/mdpf/config/route_bindings.yaml is also None/None. The runner's config path is the dispatch sync s3://${MDPF_BUCKET}/${CODE_PREFIX}/config/ -> /opt/mdpf/config/ (infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:130), which no classified plane writes. lib/tests/test_opal_naming.py: 94 passed, 2 failed: test_targets_report_covers_every_known_target_exactly_once (asserts nothing UNCLASSIFIED at the cut) and test_cmd_targets_exit_code_tracks_unclassified (asserts exit 0). r3_checks.py libs: TESTS FAIL (pytest rc=1), DECLARED PASS, DELTA0 PASS: 2 of 3 arms. Measured on uncommitted worktree bytes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming.py targets, worktree C:/Dev/wk-canon-9 at 9f933161c4 plus uncommitted, 2026-10-11T03:44Z: UNCLASSIFIED row, TARGETS 14, rc=1",
+      "python -m pytest lib/tests/test_opal_naming.py: 2 failed, 94 passed (both failures name the targets tests)",
+      "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:130 (config sync, read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A SHIP claim is each plane's own record (EN-g-9, R-26); a classification written into targets_report for this file would be a rule no plane wrote, so the cell did not add one, and it did not edit lib/tests (read-only grant). The plane record for data/mdpf/config/*.json would live in .tools/safe_deploy_core.py, outside this order's paths. Resolution is a CTO ruling: a plane claim for the file, or a declared exemption in the classifier. The order stays open; AC3 is FAIL."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W9-S6",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~9",
+  "surfaced_at": "2026-10-11T03:46:00Z",
+  "one_line": "The committed generated_locals.tf predates the registry: regenerating it also adds four '4698' lines (the inflection scope's masters) that HEAD does not carry. Kept what the generator wrote; not hand-reverted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-c-2 section 1.1 step 1: if generating generated_locals.tf moves anything beyond the new local and its mark (drift that predates the cell), keep what the generator wrote and say so in a row; do not hand-revert.",
+  "world_is": "generate --target generated_locals.tf (mark over exemptions.json,scopes.json,tiers.json) against HEAD: the new bronze_homes local and its mark move, and in addition scope_short, scope_long, scope_class and scope_bucket each gain a '4698' key (the masters of the inflection row in scopes.json). The HEAD mark reads over exemptions.json,scopes.json. scopes.json is unmodified in this worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff of infra/aws/terraform/modules/opal_name/generated_locals.tf after generate (scratch diff), worktree at 9f933161c4 plus uncommitted",
+      "infra/logic/registry/scopes.json inflection row masters [\"4698\"] (unmodified, read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The generator output is committed-candidate bytes, not hand-edited. A CTO or CloudOps ruling decides whether the committed locals are regenerated in a separate commit. No apply or plan was run."
+}
+```
