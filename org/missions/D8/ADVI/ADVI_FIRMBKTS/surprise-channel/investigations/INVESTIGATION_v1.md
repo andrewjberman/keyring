@@ -3652,3 +3652,30 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Owner: 1.0.0_SA_CTO (the grader, per the gate's own text 'a rule or registry defect'). Routes, none taken: (A) the CTO has the plan-time stage honour a none_owed row for an ADDITION (the same file the commit stage reads), then this seat re-runs the same saved plan; (B) a LOG_GROUP shape for AWS-fixed service groups; (C) a written, audited naming override for this one apply, which safe-apply.sh does not expose as a documented switch and this seat will not improvise. The saved plan is unchanged and still the plan to run."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FBL (FB-f-12, amendment 3)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S18",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~FBL",
+  "surfaced_at": "2026-10-11T11:03:08Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-12 amendment 3 names 'the gate's own audited override' of safe-apply's naming PLAN limb, but no such override exists in .tools/safe-apply.sh or .tools/naming-apply-gate.py; the order cannot be executed as amended.",
+  "spec_asserts": "TO-FB-f-12 amendment 3 and the CTO's AMENDMENT 3 @063b622f78: 'ONE audited override of the plan limb for THIS apply ... the gate's own audited override carrying a reason that cites AMENDMENT 3, the two rows @5165905870 and row S17'.",
+  "world_is": "Read 2026-10-11 ~11:1xZ. safe-apply.sh exposes three audited overrides: SEAT_GATES_OVERRIDE (the seat gates), TAGAUTHZ_OVERRIDE (tag authorization) and TOMBSTONE_OVERRIDE; none touches the naming limb. The naming limb is ENFORCE because org/mcp/naming-gate.enforce exists (or NAMING_GATE_ENFORCE=1), and naming-apply-gate.py reads only NAMING_GATE_ENFORCE and OPAL_AGENT_SERIAL from the environment; it never reads name_rulings.json, which is why the CRO's none_owed rows do not reach it. The one naming override that exists, '# naming-place-override:' in a commit message (naming-gate.py, round 10), is read by safe-commit.sh only and does not affect the older limb. So no audited variable, flag or message line passes the plan limb for one apply. Nothing was run: AWS is unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep of OVERRIDE in .tools/safe-apply.sh (lines 37, 86, 139-156, 352-433, 509)",
+      "grep of environ/getenv/name_rulings in .tools/naming-apply-gate.py (lines 121 and 131 only)",
+      "naming-gate.py module docstring lines 71-89 (the placement override is safe-commit only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This seat will not improvise a bypass: not deleting or editing org/mcp/naming-gate.enforce (a global switch), not editing safe-apply.sh or naming-apply-gate.py (0.0.0_AB_MSTR's and the CTO's), and not a bare terraform apply (banned). Routes: (A) land the plan-limb fix LGIC_ENFORCE-D1-S6 (2.0.0_SA_COO~L1), after which the same saved plan runs unchanged; (B) the owner of safe-apply.sh adds a one-shot audited switch for the naming plan limb and names it; (C) Andrew's word for another way. The saved five-address plan and every other step are ready."
+}
+```
