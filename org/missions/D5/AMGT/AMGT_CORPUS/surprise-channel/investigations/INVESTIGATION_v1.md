@@ -4313,6 +4313,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "The rule was followed: FIGURE rows with period values show the team's value, Bloomberg first, unmapped 0. But 40% of FIGURE rows are the sheet's own data-feed block, labelled by field code, and the team values print at full float precision (the page formats a Bloomberg figure by its row type; a team cell has none). DEV only: PROD is untouched and av-2 has not been promoted.",
   "notes": "Not a defect of the ruling's text but of what it leaves open: a display label for a field-code row, and a number format for a team value (the workbook's own number_format is readable at read time). Both are outcome-level calls for 1.0.0_SA_CTO~DELL1; the issuer cuts nothing. Recommendation: hold av-2's PROD promote until they are ruled.",
   "disarm_owner": "1.0.0_SA_CTO~DELL1"
+},
+{
+  "id": "AMGT_CORPUS-D1-S6",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-11T15:55:58Z",
+  "one_line": "Round-46 analysis section 3 item 1 assumes the estate holds a vendor field dictionary for the 106 field-code labels; it holds Bloomberg descriptions for 56 of them, and the other 50 (702 of 1348 FIGURE rows, 52%) are FactSet data-item codes no estate source describes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "integrations/bloomberg/research/field_map.json: 122 mnemonics, equal to model_block_pull.FIELD_BASIS; intersected with the 106 distinct code labels of the 32 own workbooks (live /12 team_sheet): 56 covered, 50 not",
+      "the 50: 38 FF_*, 2 FFI_*, 2 FG_*, FE_ESTIMATE, 2 P_PRICE_*, plus Bloomberg BS_TIER1_COM_EQUITY_RATIO, BS_TOT_LOAN, CF_DECR_CAP_STOCK, CF_INCR_CAP_STOCK, BEST_FPERIOD_OVERRIDE; FIGURE rows 702 of 1348 (646 describable), on 32 of 32 names",
+      "comp-find 'FF_EBITDA_OPER': 0 first-party source hits; only evidence JSON, the CRO's research_xlsx_mnemonics.json (counts per code, no description) and walk output; the sheet carries no human label beside a feed row (8306 JP, 8766 JP read)",
+      "CTO ruling msg 3846 (round 45): no label-to-field map; model_block_pull bound (f): Bloomberg's own definitions, no other vendor's name"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round-46 analysis section 3 item 1: the label of every field-code FIGURE row comes from the existing vendor field metadata; close: 0 raw codes as labels, denominator printed. And (b): the same dictionary marks override and request-parameter rows CONTROL (C-S45).",
+  "world_is": "Close (a) is reachable for 646 FIGURE rows (56 Bloomberg mnemonics, descriptions as stored). It is not reachable for 702 FIGURE rows from anything the estate holds: FactSet data-item codes have no dictionary here, and the PM-facing page may not name another vendor. And (b): BEST_FPERIOD_OVERRIDE is a Bloomberg override name, not a field, so field_map.json does not carry it and cannot mark it.",
+  "notes": "Options for 1.0.0_SA_CTO~DELL1, one decision: (1) the feed block (rows below the model, labelled by code only) is plumbing duplicating the team's own labelled rows: class it CONTROL by block, counted and never rendered; (2) a CTO-ratified hand map of the 50 codes to plain words, each carrying its claim as team-workbook code, inferred; (3) 0 raw codes as the fallback label 'Team model line' with the code in the title. The issuer cuts the 56-code lookup and the CONTROL rule for the override names as a literal list, and holds the rest.",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1"
 }
 ]
 ```

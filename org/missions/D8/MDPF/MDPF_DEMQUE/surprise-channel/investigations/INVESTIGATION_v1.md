@@ -864,6 +864,48 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/mdpf/scripts/demque/test_demque_quote_remaining.py test_complete_row_closes_the_request_and_sets_the_drawn_date (r-done ON_TIME on the finish day, r-late LATE)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S12",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-11T16:00:23Z",
+    "one_line": "Three of the 14 rejected names (FTHSX 40.7 pct, PFORX 42.9, RPIFX 39.2) are classed wrong-symbol by the cause rule, and FTHSX and PFORX are held by 4 and 11 accounts in the positions snapshot -- a client page may value those holdings with a possibly wrong security's prices.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "ROUND_ANALYSIS.round8.md R2: the near-40 pct names are read for whether any client page values a holding with them; if one does, that is a BLOCKING row to the CTO BEFORE any page change (a PROD change to a client-facing page waits on Andrew's word).",
+    "world_is": "2026-10-11 ~16:0xZ: lock_cause.py over the 14 (ROUND9_LOCK_CAUSE_14.md): agreement old == new for every name; RPIFX 39.2, FTHSX 40.7, PFORX 42.9 (all Mutual Fund, 513 to 651 trade dates) class wrong-symbol (both below 60). silver/positions/date=2026-06-23 (the only partition, AsOfDate 2026-06-23): FTHSX 4 accounts, PFORX 11 accounts, RPIFX 0, Account_Status 0 on every row. Whether a client page values those positions through these price files was NOT traced; the three names serve unchanged with claim held and this reason. No page was changed.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/ROUND9_LOCK_CAUSE_14.md",
+        "boto3 + pyarrow read of silver/positions/date=2026-06-23/part-00000.parquet, Cusip in (14064D865, 693390882, 77958B402) (this seat, 2026-10-11)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W24-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~24",
+    "surfaced_at": "2026-10-11T15:51:39Z",
+    "one_line": "demand_queue.draw skips every request whose job id already has a DRAWN row in the ledger; the standing request id STANDING-T1-EXTEND is fixed, so after its first DRAWN day no later daily draw fetches or writes it. The standing extension would run once and then go silent.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "spec_asserts": "TO-DQ-t31 and ROUND-8 R1 (a)/(c): a STANDING tier-1 request, rebuilt each trading day, carries every locked symbol to the T-1 frontier through the shared pacer; apply resets those symbols so the day's draw re-pulls each once. The request id is pinned as STANDING-T1-EXTEND.",
+    "world_is": "data/mdpf/scripts/demque/demand_queue.py@477921e3dc draw(): already = {job of each ledger row with outcome DRAWN} and a request whose request_id is in already is skipped (lines 169-173). run_daily_draw.sh appends every day to one ledger.jsonl with no per-day key, so the DRAWN row of day 1 stays in the ledger. Worker scratch probe (uncommitted, .scratch/t31_ledger/probe_ledger_skip.py at e3739bada7 plus this commit): one standing request, one DRAWN row for STANDING-T1-EXTEND, day-2 draw: fetch calls on day 2: 0, ledger rows written: 0. The apply is HELD for the CTO's word and has not run; no served, pacer or queue state was touched.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/demand_queue.py@477921e3dc lines 169-173: already set from DRAWN ledger jobs; continue when request_id in already",
+        "scratch probe run in the worktree: fetch calls on day 2: 0 | ledger rows written: 0 | rows: []",
+        "data/mdpf/scripts/demque/run_daily_draw.sh@e3739bada7 appends to $STATE/ledger.jsonl on every run (no per-day ledger key)"
+      ]
+    }
   }
 ]
 ```
