@@ -4821,3 +4821,28 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "No action taken beyond the derivation the face names. The path is the issuer's wording; the check reads the module from the gold folder. AC1 passes on this path. Recorded as a path premise only."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W47-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~47",
+  "surfaced_at": "2026-10-11T15:31:20Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The FB-g-26 fail-loud helper calls sys.exit(2), but D_02.advisor_client_detail.py had no import sys, so one import line was added to D_02 outside the stated bound.",
+  "spec_asserts": "Face sections 1a.1 and 1a.3: move the single delete_objects call of each script into _delete_batch_fail_loud, change nothing else about either script; the helper exits with sys.exit(2).",
+  "world_is": "D_02 at HEAD carries no 'import sys' (git show HEAD count 0), so sys.exit(2) on the refused path would raise NameError. One line 'import sys' was added (worktree D_02.advisor_client_detail.py:41), between 'import re' and 'import threading'. Nothing else in D_02 changed outside the helper (lines 99-111) and its one call site (line 3293). D_04 already imports sys.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:data/black_diamond/scripts/gold/D_02.advisor_client_detail.py | grep -c '^import sys' printed 0",
+      "worktree data/black_diamond/scripts/gold/D_02.advisor_client_detail.py:41 holds 'import sys'; :99-111 hold _delete_batch_fail_loud with sys.exit(2) at :111",
+      "r4_failloud.py --arms static at the worktree: 'ROUND 4 FAIL-LOUD: 4 of 4 arms', exit=0 (the check accepts raise SystemExit(2) as well as sys.exit(2))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a worker decision to widen: the import is the minimum that makes the ordered sys.exit(2) run. The issuer may rule whether the import is an accepted part of the bound or should become raise SystemExit(2) instead; the AC1 check accepts either."
+}
+```
