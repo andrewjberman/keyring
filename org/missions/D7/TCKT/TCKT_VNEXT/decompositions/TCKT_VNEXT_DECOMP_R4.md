@@ -50,3 +50,13 @@ tests), la-regress FAIL (56 below 61), all as expected.
 Run 4: request `REQ-59aa6803901f371b27ffa176`, accepted 2026-10-11T11:19:00Z under `49financial`, job ATTENTION
 `SESSION_REFRESH_ALREADY_USED` at 11:34:05Z (the host journal read by `2.0.0_SA_COO~G2`, msg 4898; not re-read by this seat).
 Run 3's id: not held by this project.
+
+## AMENDMENT 1 (2026-10-11 ~14:5xZ) -- by CTO msg 5176 (halves @0135c6f2c8)
+
+- `R4-pk-2`: the CTO half is SIGNED for Branch E. The applier adds `PACKAGE_ALLOWED_FIRMS = ""` and nothing else; the list's value
+  is named in the pair that mints the packager (IRPT_YCDGEN's). Cut as TO-APPLY-R4-pk2.
+- `R4-la-2`: **NOT CUT, CLOSED BY RULING.** The CTO did not sign the run and withdrew it: with the five package codes out of
+  reach it buys a 400 and a 403 that tests already cover, for an identity, a token and more leftovers under `49financial`. Both
+  arms ride the fifth run (`R4-tr-1`). `R4-la-1`'s build stays merged (@bd97cf87e7) and unused by any live run; the fifth run's
+  order decides whether it calls the two arms through that code or as part of the full journey.
+- The analysis's item 3 reads CLOSED BY RULING. Chains now: {`R4-pk-1` -> `R4-pk-2`}; {`R4-tr-1`}; {`R4-id-1`}.
