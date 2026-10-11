@@ -6333,3 +6333,31 @@ round.** Never edit an existing row.
  "world_is": "Read back as ruled for version 3. NOT read by this issuer: the method rows of versions 1 and 2 (other firms' or other channels' objects; the test that shows them unchanged is IRPT_DASHBD's), the ledger entry, and whether any consumer cached the old row (0 readers of the Cottonwood mint are known). The mint's verify compares the method row's version and its five threshold claims, so its 'match' does not by itself prove the income members; the direct read above does."
 }
 ```
+
+## ADVI_COTBKF-D2-S113 -- The silver suite is red at the base: the account-id scan counts 76 CUSIPs in the price-request lists as id shapes
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S113",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T11:07:36Z",
+ "one_line": "The silver suite is RED at the base after round 65's drains: 1 failed, 839 passed, 12 skipped. The failing test is the account-id scan of this project's tracked files; it counts 76 CUSIPs in the two price-request security lists as account-id SHAPES. None is an account id (0 account-set hits against the pinned set of 4,710). An issuer defect: CB-bm-2 was drained without running the suite.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer run at base 5c27b0b1a5: env -u COTBKF_SWEEPS_CONFIG python -m pytest data/assets/scripts/silver/tests -q -> '1 failed, 839 passed, 12 skipped'",
+   "the failure: data/assets/scripts/silver/tests/test_cotbkf_no_account_ids.py::test_no_account_ids_in_cotbkf_tracked_files, 'AssertionError: 76 shape hits and 0 account-set hits in 2 files'",
+   "the test's own lines: 'DENOMINATOR: 538 tracked files scanned under org/missions/D8/ADVI/ADVI_COTBKF/ (excluding surprise-channel/); 7 shapes; account set 4710 ids (sha256 pinned); 2 files with hits; 76 shape hits; 0 account-set hits; 1 named exceptions'; 'HIT shape=8 set=0 .../0.9.0_WK_ADVI_COTBKF~95/PRICE_REQUEST_BLOOMBERG.csv'; 'HIT shape=68 set=0 .../0.9.0_WK_ADVI_COTBKF~95/PRICE_REQUEST_YAHOO.csv'",
+   "the two files are the security lists of CB-bm-2 (columns identifier, kind, first_date, last_date, security_days, identifier_type, cusip; no account column, issuer read), drained @9bb6681873",
+   "worker ~96's branch read 840 passed because its base predated that drain; the issuer ran CB-bm-2's two criteria at its drain and not the suite"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The scan's intent: no client account id in a tracked file of this project. Its shape limb is a proxy for ids the pinned set might not hold.",
+ "world_is": "76 nine-character CUSIPs have the same shape as an account id. The set limb, which compares against the real ids, reads 0. The remedy is a repair cell in round 66: the scan learns to tell a declared security identifier from an account id without widening into a blanket exemption, and the suite returns to green. Until then the suite at the base is red on this one test and every other test passes."
+}
+```
