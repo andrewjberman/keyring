@@ -10,7 +10,7 @@
  "subject": "IRPT_YCDGEN r13 RE-ISSUE 1: eight conditional writes to irpt-jobs, four row checks; CTO half 715dcd3b69 (XB-0c52)",
  "body_path": "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r13/CROSSBOX_ORDER_ANL_EIGHT_RECONCILING_WRITES_REISSUE_1_20261011.md",
  "opened_at": "2026-10-11T15:22:14Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T15:24:12Z",
   "bus_message_id": "2f2f66bd-cae6-48b5-88bf-c091baa9bd6f"
@@ -18,11 +18,11 @@
  "ack": {
   "at": "2026-10-11T15:31:07Z",
   "by": "0.7.0_AE_CloudOps~ANL",
-  "bus_message_id": null
+  "bus_message_id": "2d97096f-69cc-4c56-8c8e-15098c1c922c"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T15:40:23Z",
+  "from_by": "2.0.0_SA_COO~G2",
   "to_at": "2026-10-11T15:31:07Z",
   "to_by": "0.7.0_AE_CloudOps~ANL"
  }
