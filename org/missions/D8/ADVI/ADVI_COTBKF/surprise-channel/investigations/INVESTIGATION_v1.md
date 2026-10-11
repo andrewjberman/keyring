@@ -6639,3 +6639,26 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W108-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~108",
+ "surfaced_at": "2026-10-11T15:43:15Z",
+ "one_line": "CB-bq-3: CHPT, the 20.2-times case, has one comparable date so the face's classes put it in TOO_FEW, not CONSTANT_SCALE or STEP; 50 of the 346 TOO_FEW securities carry a pair beyond 10 percent that the six classes do not show.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~108/CLOSE_VS_TRADE_SCAN.json known_cases: CTVA found CONSTANT_SCALE 0.1513 on 4 dates; CHPT found, class TOO_FEW, 1 comparable date (2025-05-23, close 14.48, sale at 0.717, ratio 20.2); the CUSIP has one by/sl row in the 1,416,497-row transactions cache",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~108/CLOSE_VS_TRADE_SCAN_TOO_FEW_BEYOND_10PCT.csv: 50 securities of 346 TOO_FEW, each with at least one pair beyond 10 percent (e.g. ORLY 0.067, SEAH 21.4, MJ 12.0, CHPT 20.2)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bq-3: 'A scan that does not surface both is wrong' (the issuer's note); the six classes cover every security, CONSTANT_SCALE and STEP list the mis-scaled ones.",
+ "world_is": "CTVA surfaces as CONSTANT_SCALE; CHPT surfaces only as a TOO_FEW security with one pair at 20.2, because the cache holds one trade of it. I added a supplement list of TOO_FEW securities with a pair beyond 10 percent, which the order did not ask for. Not established: whether CHPT's or any of the 50 securities' wider series is mis-scaled."
+}
+```
