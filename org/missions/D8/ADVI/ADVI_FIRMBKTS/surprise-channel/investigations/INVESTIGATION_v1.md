@@ -3266,6 +3266,27 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
     "spec_asserts": "TO-FB-f-9 step 2: the gate location comes from lib/platinum_dest.py source(); the dispatcher's own directory is searched first because on the downstream path the gate runs before any sync, so the directory holds lib/ there.",
     "world_is": "The wrapper path holds: the boot-synced directory is the dispatcher's own directory and holds lib/. The wrapper never passes --chain downstream, so the repo carries no downstream caller; a direct caller's $0 is not established, and _partial_chain_b01.sh runs /tmp/gold_dispatch.sh, whose directory holds no lib/.",
     "notes": "ARMED: once the mode export and the gate land deployed, a directly invoked chain on a fresh instance reads the legacy header_metrics.json under canonical (frozen data_as_of). This row narrows ADVI_FIRMBKTS-D1-W21-S2 to the direct-invocation path; it does not close it and W21-S2 is not edited. Disarm: the issuer names every downstream caller and its $0, or re-cuts the gate search to a directory every caller holds."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W23-S7",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~23",
+    "surfaced_at": "2026-10-11T09:39:00Z",
+    "one_line": "Amendment 9 (issuer ruling, relayed by the coordinator, a new commit): the step 2b STOP is lifted for rows S1 to S5; each of their five em dashes is replaced with two hyphens and nothing else on the line. S1 to S5 are not edited in place.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "coordinator relay of the issuer ruling: amendment 9 in the ADVI_FIRMBKTS.TO-FB-f-9 order file on the issuer branch; the five base lines were 517, 921, 1132, 1482 and 1484",
+        "data/black_diamond/scripts/gold/gold_dispatch.sh edited in the commit that carries this row: five lines changed, five insertions and five deletions; AC3 reads non-ascii-bytes=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Append-only channel: a row is never edited in place. The ruling asks one line added to each of rows S1 to S5 noting amendment 9.",
+    "world_is": "The annotation is carried here as one new row naming S1 to S5, not as a line inside each of S1 to S5, because an existing row is not edited.",
+    "notes": "If the issuer wants the line inside each of S1 to S5 itself, that is an issuer edit; this row is the record until then. The disposition of S1 to S5 is the issuer's."
   }
 ]
 ```
