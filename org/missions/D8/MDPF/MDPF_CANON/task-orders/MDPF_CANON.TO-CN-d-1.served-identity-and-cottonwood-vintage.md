@@ -46,6 +46,21 @@ Nothing asserts that on the final object, and the base docstring reads as if the
      to the first five as `(date, difference to the cent)`. Never print a level or a total. The function never mutates `arts`.
 2. In `build_all` (same file, about :2640) call it on the line directly after `arts = apply_sma_sleeve_overlay(arts)`, with one comment line
    naming it.
+2b. **AMENDMENT 2 (the guard is isolated; CTO half of the pair, msg 3573).** The call in step 2 runs bare, outside the scope isolation, so a
+   global-only fault stops every firm scope. The producer's own rule is that a fail-closed gate refuses its own scope only. In
+   `mdpf_gold_consolidator.py` add, directly after `assert_global_served_identity`, a module-level function
+   `guard_global_served_identity(arts: dict, isolated) -> dict`:
+   - return `arts` unchanged when `arts.get("global")` is None;
+   - otherwise call `isolated("global", lambda: (assert_global_served_identity(arts), True)[1])`; when that returns None (the isolation
+     recorded and swallowed the refusal), return a shallow copy of `arts` with `"global"` set to None; otherwise return `arts`.
+   - It mutates nothing, and it never catches an exception itself: the swallowing is `isolated`'s.
+   Then replace the bare call line in `build_all` by `arts = guard_global_served_identity(arts, _isolated)` (keep the comment line, reworded:
+   "global refused alone; siblings unchanged"). `_isolated` is the existing nested function in `build_all`; do not change it. Every consumer after
+   that line already tolerates `arts["global"]` being None (`arts.get("global") is not None`); read lines 2718-2745 to confirm before you edit
+   and file a BLOCKING row if one does not.
+   Add one test to `data/mdpf/tests/canon/test_global_served_identity.py`: with a fake `isolated` that records and swallows SystemExit, a
+   planted violation returns `global` None with the three firm scopes the same objects, and the control returns `arts` unchanged.
+
 3. In `dim_mdpf_aggregate_aua_timeseries.py`, change two docstrings and nothing else in that file:
    - `build_global_artifact`: keep the HEADLINE IDENTITY paragraph and say it is the BASE identity (before the additive folds); add the
      served identity above, naming `base_excluding_tax_aua`, `tax_additive_aua` and `sma_additive_aua`, and say it is asserted by
@@ -101,7 +116,7 @@ Read-only: the whole repository, in particular `data/mdpf/tests/stratid/test_str
 ## 4. PROOF OF SPEC (literal; timeout 300)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="CN-d-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round4/checks/r4_cn_d_1.py"; echo "exit=$?"</invocation><expect>ROUND 4 IDENTITY: 5 of 5 arms -- and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="CN-d-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round4/checks/r4_cn_d_1.py"; echo "exit=$?"</invocation><expect>ROUND 4 IDENTITY: 6 of 6 arms -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="CN-d-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round4/checks/r4_cn_d_1_vintage.py"; echo "exit=$?"</invocation><expect>ROUND 4 VINTAGE: 3 of 3 arms -- and exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -126,7 +141,9 @@ rollback. Base box/dell1. LF only.
 
 **AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-11 ~06:2xZ, row MDPF_CANON-D1-W13-S1):** the proof instance is named beside the order's own file stem, `MDPF_CANON.TO-CN-d-1.served-identity-and-cottonwood-vintage.proof_of_spec.json`, because the pipeline gate searches for `<order file stem>.proof_of_spec.json`; section 5's path is corrected, no criterion or path of the grant changes. Gate limb: only GATE (viii) grades a modification, and `<placeholders>` is NONE.
 
-<status>complete</status>
+**AMENDMENT 2 (2.0.0_SA_COO~D1, 2026-10-11 ~07:0xZ; CTO half of the pair REFUSED with one fix, msg 3573 @421b233635):** step 2b and the sixth arm A6 of `r4_cn_d_1.py` added; AC1 now reads 6 of 6. The order is REOPENED (status complete -> pending) and the same worker continues on a fresh worktree. Gate limb: only GATE (viii) grades a modification, and `<placeholders>` is NONE.
+
+<status>pending</status>
 <round>4</round>
 <to_id>MDPF_CANON.TO-CN-d-1</to_id>
 <slot>~10</slot>

@@ -507,6 +507,7 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 - detail: listed in manifest but no live file
 
 ## 2026-10-11T064313Z -- COVERAGE -- MANIFEST-ENTRY-MISSING-LIVE
+## 2026-10-11T064450Z -- COVERAGE -- MANIFEST-ENTRY-MISSING-LIVE
 <!-- sig: COVERAGE|MANIFEST-ENTRY-MISSING-LIVE|org/git-author-override-audit.dell#.log|listed in manifest but no live file -->
 - log: org/git-author-override-audit.dell1.log
 - detail: listed in manifest but no live file
@@ -525,3 +526,17 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 <!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/git-author-override-audit.dell#.log|baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\#-#-#T#Z\org_git-author-override-audit.dell#.log -->
 - log: org/git-author-override-audit.dell1.log
 - detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\2026-10-10T205353Z\org_git-author-override-audit.dell1.log
+## 2026-10-11T064450Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/git-author-override-audit.laptop.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\#-#-#T#Z\org_git-author-override-audit.laptop.log -->
+- log: org/git-author-override-audit.laptop.log
+- detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\2026-10-10T201745Z\org_git-author-override-audit.laptop.log
+
+## 2026-10-11T064450Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/git-author-override-audit.sitez.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\#-#-#T#Z\org_git-author-override-audit.sitez.log -->
+- log: org/git-author-override-audit.sitez.log
+- detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\2026-10-10T201745Z\org_git-author-override-audit.sitez.log
+
+## 2026-10-11T064450Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/git-author-override-audit.dell#.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\#-#-#T#Z\org_git-author-override-audit.dell#.log -->
+- log: org/git-author-override-audit.dell1.log
+- detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\2026-10-10T201745Z\org_git-author-override-audit.dell1.log

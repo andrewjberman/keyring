@@ -180,6 +180,10 @@ under an amendment, and a delete is Andrew's.
 
 **Surprise rows** mint `ADVI_COTBKF-D2-WCB2-S<k>`, `"fabric": "dell2"`, `surfaced_at` read from the clock, carrying no account id.
 
+**AMENDMENT 6 (issuer, 2026-10-11T06:51Z) -- the surprise-row id form, corrected.** The form `ADVI_COTBKF-D2-WCB2-S<k>` that AMENDMENT 5 and the
+BOUNDS name is refused by the row gate (measured by `0.7.0_AE_CloudOps~CB2`, msg 4307). A row of this order mints the next free
+`ADVI_COTBKF-D2-S<k>` id, read from the channel at write time, as rows D2-S91 and D2-S92 did. Nothing else changes.
+
 ### ACCEPTANCE
 
 <criterion id="CB38al2-AC1" cell_refs="CB-al-2"><invocation>python data/assets/scripts/silver/commonwealth_account_return_daily.py --verify-served --out .scratch/advi_cotbkf/ard_cottonwood_verify</invocation><expect>ARD-COTTONWOOD-VERIFY days=</expect></criterion>

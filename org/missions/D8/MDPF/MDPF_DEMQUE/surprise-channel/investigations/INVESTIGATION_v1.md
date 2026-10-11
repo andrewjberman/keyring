@@ -654,6 +654,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R8_CHECKS/dq_t28_stale.py: STALE-OK n=14 of 141"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S10",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~R1",
+    "surfaced_at": "2026-10-11T06:31:57Z",
+    "one_line": "138 of the 1,038 rows in request AMGT_RESAPP-S14-CRNCY-SCANNER-US are names the identity pool already holds, whose trading currency the served function already states from their own model block.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The request's reason (filed 2026-10-11 on CTO~DELL1 msg 3434): a peer member's price currency has no source in any store (the scanner carries no currency field; the model-block pool holds CRNCY only for held names), so CRNCY is requested for the 1,038 United States scanner rows.",
+    "world_is": "crosswalk.resolve of each row's bloomberg form ('<T> US Equity') reads MEASURED for 138 of the 1,038, so each is a held name with its own model block; the live peers route already serves price_currency for such members (AMD and NFLX on ASML's peers, read 2026-10-11 ~05:3xZ). The request has no quote and no answer yet. The list is in AMGT_RESAPP deliverables 2.0.0_SA_COO~R1/round91_prep/DEMQUE_REQUEST_ROWS_ALREADY_HELD.txt (tab-separated, row and held security_key).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python crosswalk.resolve over org/missions/D8/MDPF/MDPF_DEMQUE/requests/AMGT_RESAPP-S14-CRNCY-SCANNER-US.json securities[].bloomberg, 2026-10-11 ~06:4xZ: 138 MEASURED of 1038",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round90_prep/OO1_WHOLE_PAGE_READ_20261011.md: live ASML peers, members with a stored price_currency"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "A question for the queue's owner, not an instruction: keeping the 138 as a second source for currency is a reasonable use of the draw; dropping them narrows the quote. This seat takes no action on the request. The ask rides CTO~DELL1's round-90 analysis item 4."
   }
 ]
 ```

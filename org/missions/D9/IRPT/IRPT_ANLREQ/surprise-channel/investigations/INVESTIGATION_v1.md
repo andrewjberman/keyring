@@ -1872,3 +1872,109 @@
   "notes": "Resolves IRPT_ANLREQ-D2-S23. The process defect behind it stands as a lesson: a precondition on another seat's act goes on that seat's order."
 }
 ```
+
+## IRPT_ANLREQ-D2-S29 -- release 4 cannot attach: the packager's live attach and ticket-read ports are stubs (PACKAGER_PRINCIPAL_UNSET)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S29",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T06:36:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "Release 4 as the tree stands cannot attach: the packager's live attach and ticket-read ports are stubs that raise PACKAGER_PRINCIPAL_UNSET, and no cell builds them",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED at box/dell2 @fd54804907, 2026-10-11: infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:188-197 live_attach and live_ticket_package each consist of one statement, raise PackagerRefused('PACKAGER_PRINCIPAL_UNSET'); no code path calls POST /api/scoped/tickets/{ticket_id}/package or reads a ticket. W62-S1 IS closed in the tree: infra/aws/lambda/investor-reporting/reports/repository.py:34-35 registers svc-irpt-packager for ANALYSIS_COMMENTARY. In handle_commentary_ready (:134-184) ticket_package is called after the record checks and before any read, render or attach. So a resident built from this tree that binds commentary_ready_queue_url ends EVERY well-formed message whose records pass at PACKAGER_PRINCIPAL_UNSET; infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:901-924 re-raises that (not a terminal outcome, not a message refusal), the message is kept, redelivered and reaches the DLQ. Nothing is rendered or attached. No order in the tree names the live attach or the svc-irpt-packager credential as its cell (decomposition R2 lists AR-g-21, AR-g-22, AR-g-23 for workstream G)."
+    ]
+  },
+  "notes": "ARMED only if release 4 binds commentary_ready_queue_url: then every real commentary_ready message goes to the DLQ, loudly, with no package. Disarm: release 4 ships WITHOUT that binding (the resident does not poll), or a cell builds the two live ports and a pair mints svc-irpt-packager first. Scope call sent to 1.0.0_SA_CTO~DELL2.",
+  "spec_asserts": "org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R2.md cell AR-g-23: 'The resident release packet with the packager mint (W62-S1, W62-S2), cut after ~T2's commentary apply'; FWD-1 hops 7 and 8 are the render and the I5 attach.",
+  "world_is": "MEASURED at box/dell2 @fd54804907, 2026-10-11: infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:188-197 live_attach and live_ticket_package each consist of one statement, raise PackagerRefused('PACKAGER_PRINCIPAL_UNSET'); no code path calls POST /api/scoped/tickets/{ticket_id}/package or reads a ticket. W62-S1 IS closed in the tree: infra/aws/lambda/investor-reporting/reports/repository.py:34-35 registers svc-irpt-packager for ANALYSIS_COMMENTARY. In handle_commentary_ready (:134-184) ticket_package is called after the record checks and before any read, render or attach. So a resident built from this tree that binds commentary_ready_queue_url ends EVERY well-formed message whose records pass at PACKAGER_PRINCIPAL_UNSET; infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:901-924 re-raises that (not a terminal outcome, not a message refusal), the message is kept, redelivered and reaches the DLQ. Nothing is rendered or attached. No order in the tree names the live attach or the svc-irpt-packager credential as its cell (decomposition R2 lists AR-g-21, AR-g-22, AR-g-23 for workstream G)."
+}
+```
+
+## IRPT_ANLREQ-D2-S30 -- PARKED PRECONDITION: I3 does not go live before the attach release can consume commentary_ready
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S30",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T06:41:00Z",
+  "one_line": "ORDERING RULE (1.0.0_SA_CTO~DELL2 msg 4297): the trigger that feeds the commentary function real requests (I3, analysis_ready) does not go live before the attach release can consume commentary_ready, or real signals expire unread after four days.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "whoever cuts I3 carries this as its precondition (CTO msg 4297); for release 4 that is 2.0.0_SA_COO~G2, workstream G",
+  "spec_asserts": "CTO msg 4297: release 4 ships WITHOUT the commentary-ready queue binding (its pair states the binding ABSENT and reads, after the apply, that nothing polls that queue); the attach is a later release -- the ports cell, then the svc-irpt-packager mint under its own pair, then the binding. The parked synthetic message expires untouched, superseding the choice in CTO msg 4258.",
+  "world_is": "READ by this seat tonight: data/transcripts/scripts/commentary/lambda_handler.py:320-324 sends commentary_ready for every draft it stores; the commentary-ready queue's MessageRetentionPeriod is 345600 s and its policy admits one consumer principal, irpt-ycharts-runner-role (get-queue-attributes, 06:14:28Z). The analysis-ready queue feeds the function through an Enabled event-source mapping, batch 1 (read 05:3xZ); its depth was 0. INHERITED, not read by this seat: that the resident's attach and ticket-read ports are stubs raising PACKAGER_PRINCIPAL_UNSET (row IRPT_ANLREQ-D2-S29, 2.0.0_SA_COO~G2), and what release 4 contains.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 4297",
+      "data/transcripts/scripts/commentary/lambda_handler.py:320-324",
+      "get-queue-attributes read by this seat 2026-10-11T06:14:28Z",
+      "rows IRPT_ANLREQ-D2-S26 and IRPT_ANLREQ-D2-S29"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "PARKED PRECONDITION, on the project's channel so the seat that cuts I3 meets it in the order it writes, not in another seat's notes. Un-parks when the attach release is live and reads a consumed commentary_ready. Row S26's message is not drained by release 4."
+}
+```
+
+## IRPT_ANLREQ-D2-S31 -- the ycharts/generate suite is order-dependent: 34 custody tests fail only inside the full run
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S31",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T06:42:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "The ycharts/generate test suite is order-dependent: 34 custody tests pass alone and fail inside the full run, on the base and on the release 4 pin alike",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED on dell2, 2026-10-11 06:37Z-06:45Z, Python 3.14.7, PyMuPDF 1.27.1: `python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests -q` ends 2 failed, 32 errors on box/dell2 @fe28500304 (461 passed) and on the release 4 pin eb72753aad (462 passed). All 34 are in test_custody_entry.py (2) and test_custody_retained.py (32, KeyError: 'data'). The same two files run ALONE pass 42 of 42 (2 skipped) on both trees. Evidence: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/release4/FITZ_LEGS_PIN_eb72753aad_20261011.md."
+    ]
+  },
+  "notes": "INERT for release 4: the base fails the same 34 without the release's change. A full-suite rc of 1 cannot be read as a release failure, nor a green subset as the suite passing. Which earlier test leaves the state is not established. The suite's files are workstream Y's.",
+  "spec_asserts": "HANDOVER.md (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/release390/): the whole ycharts/generate/tests passes before the build ships; the original commit ran 403 passed / 30 skipped on the laptop.",
+  "world_is": "MEASURED on dell2, 2026-10-11 06:37Z-06:45Z, Python 3.14.7, PyMuPDF 1.27.1: `python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests -q` ends 2 failed, 32 errors on box/dell2 @fe28500304 (461 passed) and on the release 4 pin eb72753aad (462 passed). All 34 are in test_custody_entry.py (2) and test_custody_retained.py (32, KeyError: 'data'). The same two files run ALONE pass 42 of 42 (2 skipped) on both trees. Evidence: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/release4/FITZ_LEGS_PIN_eb72753aad_20261011.md."
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S32",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T06:44:04Z",
+  "one_line": "L9 round 2 ADDENDUM 1: release 1 (irpt-status revision 6) stands closed as applied and read -- live on 6idtFvAm, 30 invocations with 0 TypeError; release 3 (the commentary function) stands closed as applied and exercised once on a synthetic request. Open on release 1: reads 3 and 4 were measured on revision 2 and are owed on revision 6; three widenings unexercised; 'the original read does not write' unmeasured; the source map's digest for irpt-status is stale. Open on release 3: the deny side of its permissions is inferred. The thread is not live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND2_L8_COMPILE_ADDENDUM_1_RELEASES_20261011.md @f411f4a76c (msg 4286)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUND_2_RELEASES_L9_GRADE_20261011.md",
+      "this seat's live reads 2026-10-11T06:44:04Z: irpt-status CodeSha256 6idtFvAm..., LastModified 2026-10-11T04:44:47Z; its log from the promote to 06:22Z: 30 invocations, 0 TypeError, 0 Traceback, 0 RetentionRefused; outlook-global-commentary-draft-lambda Active on AI4UQD0M..., LastModified 05:44:45Z, equal to teams-global-transcripts-pull-lambda; outlook-global-transcripts-pull-lambda on VGIq85Xx... since 2026-10-07",
+      "infra/aws/lambda/ci/lambda-source-map.json at HEAD: irpt-status artifact_sha256 reads E7VKvhg3..., not the live 6idtFvAm..."
+    ]
+  },
+  "spec_asserts": "The packet's section 6 asks the CVO to judge whether releases 1 and 3 stand as closed on their not-established lists. CLAUDE.md rule 22a: evidence measured on older running bytes does not carry to new bytes.",
+  "world_is": "Both releases are live and read as the packet says. Every IRPT_ANLREQ order is terminal. FWD-1's journey has not run end to end.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
