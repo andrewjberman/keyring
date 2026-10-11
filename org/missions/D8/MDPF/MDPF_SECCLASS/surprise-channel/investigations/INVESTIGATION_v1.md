@@ -6204,3 +6204,83 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED. Scope of SC-e-87 is the three sites' non-blank branch; the lib is out of this cell's write grant (<paths> names no lib file). The hop label differs, and the CUSIP-chain resolution differs when a CUSIP is passed. For the lane that owns the lib to disposition; no change made in this cell."
 }
 ```
+
+## MDPF_SECCLASS-D1-W78-S1 -- The served firm totals for 2026-10-06 and 2026-10-07 cannot be reproduced from the current
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W78-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~78",
+  "surfaced_at": "2026-10-11T03:40:26Z",
+  "one_line": "The served firm totals for 2026-10-06 and 2026-10-07 cannot be reproduced from the current canonical holdings partitions: recomputed totals exceed the served totals by 584,886.01 and 442,485.38; 2026-10-08 reproduces to the cent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object, read 2026-10-11 ~03:3xZ: s3://opal-data-bd/gold/views/mix_daily_summary.json LastModified 2026-10-10T05:26:14Z; s3://opal-data-bd/gold/canonical/holdings/2026-10-06.parquet, 2026-10-07.parquet and 2026-10-08.parquet each LastModified 2026-10-10T23:15:02Z (sizes 2445127, 2440877, 2458671).",
+      "Read-only recompute at worktree HEAD bca7da6fff: data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py process_date over the three partitions. Recomputed total / served total: 2020133453.61 / 2019548567.60 (2026-10-06, 3252 relationships); 2013712890.73 / 2013270405.35 (2026-10-07, 3256 relationships); 2014814865.45 / 2014814865.45 (2026-10-08, 3262 relationships).",
+      "Record org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/C06_TOTAL_GAP_TRACE_20261011.json; c06_gap_record_check.py gap at bca7da6fff prints C06-GAP ok=False dates=1 (the criterion fails on this honest result)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The served firm snapshot for 2026-10-06 through 2026-10-08 is the output of C_06 process_date over the current canonical holdings partitions, so a read-only recompute reproduces its totals and gaps.",
+  "world_is": "Only the 2026-10-08 entry reproduces. The 2026-10-06 and 2026-10-07 entries were written from a different partition or static-table set: all three partitions were last written 2026-10-10T23:15Z, after the snapshot at 2026-10-10T05:26Z. The recomputed gaps for those two dates (167.10 and -120.97) therefore differ from the served gaps (-4.71 and +128.06). The cause of the partition change is not traced by this read.",
+  "notes": "SURFACED, NOT CHASED. Relates to MDPF_SECCLASS-D1-S27: the served gap mechanism is rounding of per-relationship shares (C_06 line 595, lines 737-743), confirmed on the recomputed run, but the served totals for two of three dates are not reproducible from the current partitions."
+}
+```
+
+## MDPF_SECCLASS-D1-W78-S2 -- The rounding basis test in c06_gap_record_check.py gap is an algebraic identity for any ho
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W78-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~78",
+  "surfaced_at": "2026-10-11T03:40:26Z",
+  "one_line": "The rounding basis test in c06_gap_record_check.py gap is an algebraic identity for any honest recompute, so it cannot separate share rounding from out-of-class mass; only a separate out-of-class probe does, and the checker does not run one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R20_CHECKS/c06_gap_record_check.py at bca7da6fff, gap mode: e_res = |share_rounding_residual_sum - recomputed_gap| with the residual defined as sum(total_mv * (1 - sum(mix.values()))).",
+      "Probe on the three partitions at bca7da6fff: classify_series rows whose asset_class falls outside the eight MIX_ASSET_CLASSES = 0 rows (0.00 dollars); rows with no class = 0. Derived from C_06.client_mix_timeseries.py classify_series (line 201) and process_date (lines 572-595)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The rounding basis test (residual sum within 0.05 of the recomputed gap) shows that the gap is the per-relationship share rounding and not another cause.",
+  "world_is": "The residual and the recomputed gap are the same expression over the same mix dictionary, so the basis test passes for any mix, including mass outside the eight classes. The discriminator between rounding and out-of-class mass is the out-of-class probe, which the checker does not run. On this recompute the probe is zero, so the rounding attribution holds, but the checker would not show it.",
+  "notes": "SURFACED, NOT CHASED. The instrument shape is for the L9 adjudicator to weigh; this row only records the identity."
+}
+```
+
+## MDPF_SECCLASS-D1-S28 -- the real run of the amended cross-box check STOPs on closed-at-trunk sentinels in lagging worktrees and on a prunable registration
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S28",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-11T04:02Z",
+  "one_line": "The ONE REAL RUN of SC-e-89's amended cross-box check on the three-file BD ship reads STOP (4 OPEN-DEPLOY hits) although none contends: two limbs the cell's criteria did not reach. (d) a ledger entry CLOSED at trunk (sentinel deleted) is still read as HELD in a lagging worktree's HEAD and counts as a live deploy; (e) a registered worktree whose directory is gone (prunable) reads 'ls-tree rc=128 (not readable, not clear)', the vanished-worktree classification only covering a worktree absent from the list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Real run 2026-10-11T04:01Z on box/dell1 after SC-e-89 drained (cc3c69590e): `python .tools/crossbox-deploy-check.py --root data/black_diamond --files D_04 C_06 D_03` -> OPEN-CALL clear, OVERLAP clear, UPSET clear, OPEN-DEPLOY hit (4); denominator 38 worktrees, 665 sentinel reads, 68 distinct (path, blob), 53 distinct slugs, vanished=0. Saved at org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R20_CHECKS/E89_REAL_RUN_20261011.txt.",
+      "Three hits are slugs closed at trunk: secclass-e60-d04-unclassified-sc1-20261009 (ledger CLOSED by SC1 this session, status HELD-SOVEREIGN-GATED at an older worktree HEAD), secclass-e84-cot-name-port-sc1-20261009 (CLOSED @a95bddaefd on box/dell1, sentinel deleted there) and cot-cash-admission-m-20260925 (author 2.0.0_SA_COO~M, 16 days old, status HELD-SOVEREIGN-GATED in a stale worktree). Each names a carried file only inside its own proof text.",
+      "The fourth hit is `worktree C:/dev/wt-q1-r7: ls-tree rc=128 (not readable, not clear)`: the directory does not exist (`ls /c/dev/wt-q1-r7` fails) and `git worktree list` no longer shows it a minute later, so the registration was prunable at the read; measure_open_deploy's vanished branch requires the tree to be absent from the re-read list."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A one-file-family ship with no real contention reads CLEAR from the cross-box check once the actor's own entry and slug duplicates are handled (SC-e-89's three limbs).",
+  "world_is": "It reads STOP on stale or unreadable worktree state: a closed entry survives as HELD in any worktree HEAD that has not taken the closing commit, and a prunable registration is a hit. Under WARN mode (the current switch) the ship prints these and proceeds, so SC-e-87b is not blocked; under ENFORCE every ship from a box with lagging worktrees STOPs.",
+  "notes": "SURFACED, NOT CHASED: found by the round's one real run, which is what the drain's real-run step is for; the cell's three fixture criteria passed and could not see it. Candidate fix for a round-21 cell: read each sentinel's status from the trunk (box branch HEAD) first and count a slug present only in a lagging worktree as stale when trunk deleted it; classify a registered-but-missing directory as vanished. RELATED: [[MDPF_SECCLASS-D1-S23]], [[MDPF_SECCLASS-D1-S25]], [[MDPF_SECCLASS-D1-S22]]."
+}
+```
