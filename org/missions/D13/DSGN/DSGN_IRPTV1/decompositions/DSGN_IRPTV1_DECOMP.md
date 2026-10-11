@@ -356,3 +356,27 @@ names the served revision. AD-12 (a client the search offers must open) is owned
 **Edges:** one chain, one slot (~42), IV-e-80 then IV-e-81: both re-touch the header test pins (iv-e-38 and neighbours), so they run in
 series on one worktree. Both are DIRECT-ACT (one cell each, well under 300 product lines, LOCAL); the close is the issuer's real run
 on 5174. fanout: 1 of 1 chains, cap 8.
+
+
+## v11 -- round 11 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~05:2xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2's round analysis @10d7d46e49
+
+**Rectangle:** the analysis's section 4 ENRICHMENT LIST, five items, one cell each. The lane is 2.0.0_SA_COO~D2 (analysis section 2), lease FULL.
+Portal base for every portal cell: DEV tip `7bb81fa89792067bf90531371bcf0031a05f878c` (ls-remote after a fetch, 2026-10-11 ~05:1xZ).
+
+| cell | item | rows | risk | chain / slot | key files (IR = portal/src/pages/InvestorReporting) |
+|---|---|---|---|---|---|
+| IV-e-82 | 1: the pinned three-run suite sample | S7, W21-S2, W23-S1, W29-S10, W34-S1 | LOCAL | A ~43 | the IR test scope, read-only |
+| IV-e-83 | 2: S61 the Holding cell names the corrected security | S61 | SERVED | B ~46, 1 of 2 | IR/tabs/analysis/ProspectComposer.tsx (+ pins) |
+| IV-e-84 | 3: S60 a test that presses "Did you mean" | S60 | LOCAL | C ~44 | IR/__tests__/dsgn-irptv1/ (test only) |
+| IV-e-85 | 4: W35-S2 Export on the Analysis tab | W35-S2 | SERVED | B ~46, 2 of 2 | IR/tabs/analysis/AnalysisTab.tsx, the page header's Export |
+| IV-e-86 | 5: the per-outcome state table | (none; the next analysis's input) | LOCAL | D ~45 | the PRD, the reviewer's files, the old lane's records |
+
+**Edges:** IV-e-82, IV-e-84 and IV-e-86 are independent and start at once (analysis section 4). IV-e-83 waits on IV-e-82's baseline, then IV-e-85
+follows it on the same slot and worktree pair: both touch the analysis tab and its pins. The two SERVED cells produce CANDIDATE portal commits; the
+CTO reviews each product-file candidate before DEV (analysis section 2). W39-S2's served half is IRPT_ANLREQ's (row IRPT_ANLREQ-D2-S21); its page
+half is a later round's and is NOT cut here.
+
+**Rule 24:** no new enum is introduced by this round. The three closed sets in the checks (the ruling of a failing test id, the Export finding, the
+outcome state) are the CTO's own, quoted from the analysis sections 3 and 4.
+
+fanout: 3 of 4 chains at the cut (A, C, D), chain B after A; cap 8.

@@ -5438,3 +5438,56 @@ round.** Never edit an existing row.
  "world_is": "No measured row holds a bond (they are all blank for want of a bond close), so the clean or dirty answer changes no measured row today; it matters only when bonds are priced. The only stored bond closes (gold canonical holdings, 184 of 778 Fixed Income CUSIPs, 2026-06-08 to 2026-10-06) fall by one half-coupon on the coupon date in 81 of 86 testable bonds."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S86",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T05:08:20Z",
+  "one_line": "L9 round 57: CB57be1-AC2 MET. The bond-close record's 10 code citations resolve at their lines, its counts carry denominators (this seat recounted the 107,316 measured account-days), and DIRTY follows from 81 of 86 testable bonds stepping down about one half-coupon at the coupon date against 5 of 42 controls. The accrual climb is not resolved and the record says so. Consequence for the mint: method row 3's income basis is not contradicted by any measured row (none holds a bond) and would be false for a bond day priced from this store.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_57_DRAIN_END_20261011.md @6edfe081c7 (msg 4128)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~84/BOND_ACCRUAL_MEASURE.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_57_L9_GRADE_20261011.md",
+      "this seat's read of the record's 14 evidence entries: 10 name a code file and line, and each resolves at that line (commonwealth_daily_valuation.py:444, :440, :296; commonwealth_price_census.py:59, :61; commonwealth_transactions.py:53; commonwealth_fwd3_serve.py:254; commonwealth_cot_price_rewrite.py:67; commonwealth_sweeps.py:1028; account_return_daily.py:1900); 4 name a data file (line 0), both files present on this box",
+      "this seat's recount from .scratch/advi_cotbkf/fwd3_serve_r34/daily_returns.parquet: 1,691,729 rows, 107,316 with a return (the record's measured denominator)"
+    ]
+  },
+  "spec_asserts": "CB57be1-AC2 (JUDGMENT, graded by 3.0.0_SA_CVO at L9): the verdict follows from the cited lines and counts and each citation resolves; the counts carry denominators and the bond rule is stated; income_basis_for_bonds follows from the verdict.",
+  "world_is": "All three limbs hold. Not recomputed by this seat: the coupon-date test and the 0 of 107,316 count. The record's settling_read field is empty; the read is named in its .md.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W85-S1 -- the holdings source of the bond count is local copies; absent copies refuse the build and the mint
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W85-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~85",
+ "surfaced_at": "2026-10-11T05:30:00Z",
+ "one_line": "The order gave no source for the holdings of an account-day; the count reads local copies (account_day_value and the transactions cache under the day directory's parent), so the build and the mint now REFUSE when those copies are absent.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "commonwealth_account_return_daily.py load_bond_inputs/load_fixed_income_cusips: base = parent of the day directory; files fwd3_serve_r34/account_day_value.parquet (columns account, date, cusip) and tx_cache/trade_year=*/*.parquet (Cusip, Asset_Type)",
+   "real read: 778 Fixed Income CUSIPs and 141,555 bond-holding account-days, equal to the round-57 counts; the 3,325-file count ran in 10 s",
+   "the build reads the S3 silver account_day_value with a new cusip column (not read from S3 here: no S3 call was allowed), so that the column exists in the served table is UNVERIFIED by this worker",
+   "conftest.py: an autouse fixture answers 'no bond holdings' for test_commonwealth_ard_apply only, because those older tests fake S3 and carry no holdings files"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The order names where round 57 read the holdings but not where --bond-check, the mint and the build read them in a fresh checkout; it says a normal build or apply is unchanged when the count is 0.",
+ "world_is": "A fresh checkout without .scratch/advi_cotbkf/tx_cache or fwd3_serve_r34 gets REFUSED from the mint and the build, where before it did not; the S3 silver account_day_value is assumed to carry the cusip column the local copy carries."
+}
+```
