@@ -1787,3 +1787,32 @@
   "notes": "PARKED ITEM. Owner: 2.0.0_SA_COO~G2. Un-parks when release 4's apply order is cut with the criterion `apply1_cells.py . REL4-READ5` expecting PASS. The read is not weakened: it must still pass, and it fails today. Reads 3 and 4 of release 1 were measured on revision 2 on 2026-10-09 and were not re-run on revision 6."
 }
 ```
+
+## IRPT_ANLREQ-D2-S26 -- ARMED: one commentary_ready test message left on the queue until ~2026-10-15T06:10Z; binds release 4
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S26",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T06:17:00Z",
+  "one_line": "ONE commentary_ready message for the synthetic request REQ-4b5155ac2ea9467ab771b414 (tenant 49financial) sits on outlook-global-commentary-draft-commentary-ready-queue until about 2026-10-15T06:10Z; its only admitted consumer is the resident's role, and no seat on this box may receive or delete it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 reads the depth; it disarms on a MEASURED depth of 0 (1.0.0_SA_CTO~DELL2 msg 4257). 2.0.0_SA_COO~G2 is bound by it for AR-g-23.",
+  "spec_asserts": "1.0.0_SA_CTO~DELL2 msg 4226 item 2: after the one invoke, receive that one message, record its id and body sha256, and delete it; depth 0 before and after. Msg 4257 replaces it: item 2 is NOT DONE; the message is left to expire; release 4 (AR-g-23), the one thing that would poll the queue, either NAMES that message in its pair's radius and states, read from the consumer's code, what the resident does with a commentary_ready for a synthetic request -- making it the release's first driven exercise -- or its promote waits for depth 0.",
+  "world_is": "MEASURED by this seat 2026-10-11T06:14:28Z (get-queue-attributes): ApproximateNumberOfMessages 1, NotVisible 0, MessageRetentionPeriod 345600 s; the queue policy has ONE statement, Sid TheResidentConsumesCommentaryReady, Allow, principal arn:aws:iam::313476888478:role/irpt-ycharts-runner-role, actions sqs:ReceiveMessage, sqs:DeleteMessage, sqs:GetQueueAttributes; redrive maxReceiveCount 3 to outlook-global-commentary-draft-commentary-ready-dlq. REPORTED by 0.7.0_AE_CloudOps~DELL2 msg 4249 (not re-run by this seat): the message was sent by the ONE step-6b invoke at 06:09:56Z (stage draft_stored; test artifact ART-a46c4ab7a07d4cc785391666b1d430c066ca3fe2bd0bfe6c31d9dbb46e128f53, version_id YYbJqn7Ej7D1.WSepb.IADadwnyeqJOv, sha256 f3ef3b7400ceb89601a0e238bab3f339a0069faaf8acd81d4f62353e9916583a); before the invoke 0 event-source mappings, 0 of 11 subscriptions naming the queue, and 24h CloudWatch sums 0 for EmptyReceives, MessagesReceived and MessagesSent, over a queue created 05:25:59Z; its own receive was refused: 'not authorized to perform: sqs:receivemessage'. The message id and body sha256 are NOT RECORDED: nobody has received it. NOT MEASURED: whether the resident's running code polls this queue today (permitted, never observed), and what it does with such a message.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msgs 4226 and 4257",
+      "0.7.0_AE_CloudOps~DELL2 msg 4249",
+      "get-queue-attributes read by this seat, 2026-10-11T06:14:28Z",
+      "TO-APPLY-t1 AMENDMENT 6 @e8a0aaaa25"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not (b): a grant to drain one test message is a standing permission for a one-off. Not (c): no seat acts as the runner role. The retention end is computed from the applier's invoke time plus the queue's retention; it is not read from the message. The stored draft is a test artifact and stays (a delete of it is Andrew's word)."
+}
+```
