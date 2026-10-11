@@ -26230,3 +26230,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Two consequences, one small and one worth a decision. The small one: no grant was sought or added, and no bound was bent -- the read was taken through the instance's own role, which the order names as the read path for that host, and it wrote nothing. The one worth a decision: an operator diagnosing this host cannot see the operational rows that decide its behaviour -- capture_not_before, which gates whether another sign-in can be attempted, and intent_session_refresh, which is the per-job one-shot that bounds lock-out -- without going through the instance. That is a real diagnostic handicap for any cell asked to read this subsystem, and it is the reason this read reports the cooldown's EFFECT, measured five times from journal spacing, rather than the attribute's value. It is not obviously wrong that an operator user lacks the data key; it is a choice, and it should be a deliberate one rather than a surprise met mid-incident. OWNER: 1.0.0_SA_CTO~DELL2 to say whether the operator role should hold kms:Decrypt on that key for read, or whether host-mediated reads are the intended and only path. Nothing here holds the order."
 }
 ```
+
+## IRPT_BCKEND-D2-W293-S1 -- The own-tree gold holdings price store reads to 2026-10-09 in this run, not to 2026-10-06 as the order's note says
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W293-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~293",
+  "surfaced_at": "2026-10-11T14:26:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The store the order calls last read to 2026-10-06 holds rows to 2026-10-09 when read through the census module's own reader, so a coverage figure taken from the 2026-10-06 note would understate it by the last three trading days.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB133-1_outside_anchor_coverage.json stores[own-firm-gold-canonical-holdings]: first_date 2026-06-09, last_date 2026-10-09, last_date_any 2026-10-09, objects_read 134, source bd_snapshot (the module's read_store and load_store_cached, run on this box)",
+      "found 44,837 of 45,216 needed security-days; 502 of 734 ranked securities have every needed day; the 2 securities the store does not match by CUSIP are in coverage_by_security.no_needed_day",
+      "the order's worker face: 'last read to 2026-10-06' (from 2.0.0_SA_COO~C2, msg 5084) -- a figure read at an earlier time"
+    ]
+  },
+  "spec_asserts": "The worker face says the gold holdings store was last read to 2026-10-06 (2.0.0_SA_COO~C2 msg 5084).",
+  "world_is": "The store holds a row dated 2026-10-09 (the last graded day) when read in this run, 134 objects. The note is a read taken earlier; the store has grown since. No cell acted on the older date. The figure matters because the store is a custodian mark on the same holding, so its near-complete coverage tracks the source partitions it is derived from."
+}
+```
+
+## IRPT_BCKEND-D2-W293-S2 -- The own-tree silver price store is grouped as a custodian mark by the order, but its own source column is a mix of market and derived sources
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W293-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~293",
+  "surfaced_at": "2026-10-11T14:26:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order and 2.0.0_SA_COO~C2 group the own-firm silver prices store with the custodian marks; the store's source column names yahoo_finance, linear_interpolation and transaction_observed, so its price_kind could as well be read as market_close, mixed or derived.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB133-1_outside_anchor_coverage.json stores[own-firm-silver-canonical-prices].sources: ['linear_interpolation', 'transaction_observed', 'yahoo_finance'] (read through read_store, 211,145 rows kept for the wanted keys)",
+      "the same store ends 2026-06-09: 75 of 45,216 needed security-days found and 0 of 734 securities have every needed day from it, so neither reading of its price_kind changes either upper bound",
+      "the record writes price_kind custodian_mark for it, the order's grouping, with the source mix stated in its note"
+    ]
+  },
+  "spec_asserts": "The worker face: two stores are the firm's own and the other four are market stores; price_kind is custodian_mark (the same custodian's value of the same holding) or market_close.",
+  "world_is": "For the gold holdings store the face's grouping is borne out (source bd_snapshot). For the silver store the source column says otherwise or at least differently. Left as the order grouped it; it moves no number in this record because the store cannot cover any security's every needed day. A later cell that uses the silver store for dates before 2026-06-09 should decide its price_kind first."
+}
+```
+
+## IRPT_BCKEND-D2-W293-S3 -- The copied v0.35 claims script's measure mode reads a file of the previous cell's folder that is not in this tree
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W293-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~293",
+  "surfaced_at": "2026-10-11T14:26:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "ib429_claims_v035.py, copied unchanged into this folder, reads IB127-1_account_day_claims.json from the previous cell's folder in its measure mode (for the anchor landing-order timing block), which does not exist in this worktree, so only its functions and its --control mode are usable here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ib429_claims_v035.py in org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~293/ line ~338: open(root / 'org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~288/IB127-1_account_day_claims.json')",
+      "the previous cell's folder is not in this worktree by the order's design (the order says not to create it); python -I ib429_claims_v035.py --control prints EQUAL: True here",
+      "this cell's ib435_measure.py imports the typing, the ordered claim rule and the serving counter from the copy and runs its own pass; the totals it prints equal the re-count's file (present 76,796; UNGRADEABLE 42,967; ACCT_OWN_DATE 20,138; NOTHING_TO_GRADE 13,636; ACCT_PRIOR_DATE 55)"
+    ]
+  },
+  "spec_asserts": "The order says to copy the scripts into this folder and extend the copies.",
+  "world_is": "A copy of a script whose measure mode depends on a sibling folder is not a self-contained instrument once the sibling is absent. Nothing in the result depends on that block (timing only, not turned into claims). The copy was not edited, to keep it byte for byte the previous cell's. Anyone re-running the previous cell's whole measure from this folder needs the other folder present."
+}
+```
