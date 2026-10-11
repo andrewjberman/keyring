@@ -1,13 +1,12 @@
 {
   "prd": "LGIC_ENFORCE_PRD.md",
   "prd_version": "v1.4",
-  "prd_pin": "eed4828f9d97fae60e3db0ff8c939c46e8506004",
+  "prd_pin": "5cef7ba9ceb739d151f608425dd682c8837b3dc3",
   "half": "ratified-text",
-  "half_hash": "60acd6d2f6e59cb08ca7acc7050fcf94fdfe2b480ecbf2a27eeb39a74268d6f6",
-  "endpoint_hash": "1210b410ed3c94804c65f4ccc5b991ad947dab26768e4bb7d484325a6218f426",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_ENFORCE_PRD_V14_RATIFIED_TEXT_REVIEW_20261011.md@5230744abb",
+  "half_hash": "19e012d728ee6eb58c18b4e781fafe79617954518bbbaf67dd554509e6608046",
+  "endpoint_hash": "daf47ec03394209dcb63c89e3e941797059c0231d8b31caa91d8f97cfda14d75",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_ENFORCE_PRD_V14_RATIFIED_TEXT_REVIEW_20261011.md@a1e7e1cc38",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-11T02:47:00Z",
-  "reason": "FWD-8 ACCEPT lacks an arm for the fail-closed live census read the v1.4 ruling names (PRD line 106); add arm 4"
+  "signed_at": "2026-10-11T02:50:22Z"
 }
