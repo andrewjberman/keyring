@@ -690,9 +690,13 @@ def validate(reg_dir=None, systems_file=None):
             acts, pre = r["actions"], r["prefix"]
             if not (isinstance(acts, list) and acts and all(isinstance(a, str) and a in scoped_actions for a in acts)):
                 refuse(rwhere, "actions", "a non-empty list drawn from the closed read set %s" % ", ".join(scoped_actions))
-            if not (isinstance(pre, str) and pre.endswith("/") and not pre.startswith("/") and not re.search(r"[*?]", pre)):
-                refuse(rwhere, "prefix", "a literal key prefix ending in /, no leading / and no * or ?")
-            elif len(pre.split("/")) < 3 or pre.split("/")[1] != bucket_firm.get(bucket):
+            # FB-g-19 (CTO round-3 ADDENDUM 9): prefix is one string or a non-empty list of strings; every member is held to
+            # the rules of the string form, and the firm token is checked on every member
+            pres = pre if isinstance(pre, list) else [pre]
+            if not (isinstance(pre, (str, list)) and pres and all(
+                    isinstance(p, str) and p.endswith("/") and not p.startswith("/") and not re.search(r"[*?]", p) for p in pres)):
+                refuse(rwhere, "prefix", "a literal key prefix ending in /, no leading / and no * or ?, or a non-empty list of them")
+            elif any(len(p.split("/")) < 3 or p.split("/")[1] != bucket_firm.get(bucket) for p in pres):
                 refuse(rwhere, "prefix", "its second path segment must be the firm token of this bucket (%r)" % bucket_firm.get(bucket))
             if not (isinstance(raw_who, str) and raw_who.startswith("arn:") and not re.search(r"[*?]", raw_who)):
                 refuse(rwhere, "arn", "a scoped row names exactly one principal by its exact ARN (no * or ?)")
