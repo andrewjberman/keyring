@@ -5421,3 +5421,102 @@
   "notes": "dom-env.ts is outside this order's cell and was not changed. Any later cell that wants a typed-input or dialog test should use the same child-process form."
 }
 ```
+
+## DSGN_IRPTV1-D2-W58-S1 -- The whole-scope base run before any edit read 5 failing ids, not the 2 the spawn expected: IVE98, F14-AC13 and F57-AC2 fail beside IVE26-AC3 and the p
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W58-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~58",
+  "surfaced_at": "2026-10-11T15:04:19Z",
+  "one_line": "The whole-scope base run before any edit read 5 failing ids, not the 2 the spawn expected: IVE98, F14-AC13 and F57-AC2 fail beside IVE26-AC3 and the producer-fixtures envelope id; the same 5 fail after the change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~58/step0_base.txt (rc=1, summary line and the five failing ids)",
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~58/after_suite.txt (rc=1, the same five ids)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Spawn and order: expect 2 failing (IVE26-AC3 and the producer-fixtures RESPONSE ENVELOPE id); that set is the base for new_failing_ids.",
+  "world_is": "bun test src/pages/InvestorReporting at portal b92696c1 read 1152 pass, 27 skip, 5 fail, 1184 tests across 378 files; the failing ids are IVE26-AC3 (gen-wire regeneration), IVE98 (the wire folder is generator output and nothing else), producer fixtures (RESPONSE ENVELOPE), F14-AC13 (every declared route parses), F57-AC2 (unprojected_grant PRESENT-AT-ZERO on 17 of 17). After the change: 1155 pass, 27 skip, the same 5 fail, 1187 tests across 379 files. The set is the base; new_failing_ids is empty. Not investigated here (the contract and fixtures are read, never edited)."
+}
+```
+
+## DSGN_IRPTV1-D2-W58-S2 -- The order and row D2-W57-S2 name tabs/analysis/AnalysisDocument.tsx; the print and export document is portal/src/pages/InvestorReporting/render/analys
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W58-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~58",
+  "surfaced_at": "2026-10-11T15:04:19Z",
+  "one_line": "The order and row D2-W57-S2 name tabs/analysis/AnalysisDocument.tsx; the print and export document is portal/src/pages/InvestorReporting/render/analysis/AnalysisDocument.tsx (no such file under tabs/analysis).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal b92696c1: render/analysis/AnalysisDocument.tsx lines 78, 134, 136-140; importers Preview.tsx:51 and PrintEntry.tsx:86 import ../render/analysis/AnalysisDocument"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IV-e-105 (What is wrong): the print/export document is tabs/analysis/AnalysisDocument.tsx near lines 77-80.",
+  "world_is": "The file at that name does not exist at portal b92696c1; the vendor-worded lines (Vendor attribution at 78, Extraction validated at 136-140, the coverage block at 134) are in render/analysis/AnalysisDocument.tsx, inside the order grant (portal/src/pages/InvestorReporting/). Edited there; no path outside the grant was touched."
+}
+```
+
+## DSGN_IRPTV1-D2-W58-S3 -- Two things on the Opal document are not vendor WORDS and are left as they are: the Source column prints the wire page number of each value (2, 3, or n
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W58-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~58",
+  "surfaced_at": "2026-10-11T15:04:19Z",
+  "one_line": "Two things on the Opal document are not vendor WORDS and are left as they are: the Source column prints the wire page number of each value (2, 3, or not stated), and report-level disclosure text prints as the producer supplied it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~58/print-document.opal.png (read: Source column cells 2 and not stated)",
+      "portal b92696c1 contracts/adapt.ts:998 and render/analysis/AnalysisDocument.tsx (disclosures as supplied)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IV-e-105 item 2: no word vendor and no word extraction on a surface that can show an Opal report.",
+  "world_is": "The Opal document (print-document.opal.png) has a Source column whose cell is the section value sourceCoordinate, which adaptOpalSections sets to the wire page (adapt.ts:998); the page of what an Opal computation has no document for is a coordinate, not a word, so it is not changed here. The sections slice carries no disclosures, so the document reads The report carries no disclosure text; a full report that carried disclosure text naming a vendor would print it as supplied. Neither is a word this cell writes."
+}
+```
+
+## DSGN_IRPTV1-D2-W58-S4 -- IV-e-105 is UNEXERCISED on a served Opal report and on a real export: the document was rendered from synthetic fixtures through the print route of a b
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W58-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~58",
+  "surfaced_at": "2026-10-11T15:04:19Z",
+  "one_line": "IV-e-105 is UNEXERCISED on a served Opal report and on a real export: the document was rendered from synthetic fixtures through the print route of a build, not from a backend-produced export.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~58/print-document.opal.run.txt (PRINT-STATE ready, 3 pages, no vendor or extraction word)",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~58/print-document.vendor.run.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_YCDGEN FWD-1: the firm principal may export an Opal report and every word on it is true.",
+  "world_is": "APPLIED as a portal candidate (commit 732b41c8, not pushed), EXERCISED only on synthetic data: bun static-markup test and the print route of a bun run build served from disk (print-document-driver.mjs, Edge headless). The export the backend renders (the render host opening the same print URL) was not run; no vendor call, no live request, no AWS call was made. The same holds as row DSGN_IRPTV1-D2-S16 states for IV-e-101."
+}
+```
