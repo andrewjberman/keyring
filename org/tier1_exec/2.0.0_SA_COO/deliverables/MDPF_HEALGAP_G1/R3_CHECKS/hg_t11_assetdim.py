@@ -97,8 +97,13 @@ def ssm() -> int:
         print("SSMGUARD-BAD " + "; ".join(bad))
         return 1
 
+    def _pull_started(calls: str) -> bool:
+        # the PULL is a `runuser ... pull_bd_asset_dim_rest.py pull` call; the staging `aws s3 cp` lines name the same
+        # file and are present in every arm, so a bare substring test cannot tell skip from run (worker ~8, row W8-S1).
+        return any(ln.startswith("RUNUSER") and "pull_bd_asset_dim_rest.py pull" in ln for ln in calls.splitlines())
+
     skip = _arm(lines, 0)
-    if "RUNUSER" in skip["calls"] and "pull_bd_asset_dim_rest.py" in skip["calls"]:
+    if _pull_started(skip["calls"]):
         bad.append("guard read OK but the pull still ran")
     if "SHUTDOWN" not in skip["calls"]:
         bad.append("guard read OK but the shutdown was not armed (the instance would be stranded)")
@@ -106,7 +111,7 @@ def ssm() -> int:
         bad.append(f"guard read OK, script rc={skip['rc']}, want 0")
     for rc in (1, 2):
         run = _arm(lines, rc)
-        if "pull_bd_asset_dim_rest.py" not in run["calls"]:
+        if not _pull_started(run["calls"]):
             bad.append(f"guard read FAILED (rc {rc}) but the pull did not run (a failed read was taken as 'exists')")
     if bad:
         print("SSMGUARD-BAD " + "; ".join(bad))
