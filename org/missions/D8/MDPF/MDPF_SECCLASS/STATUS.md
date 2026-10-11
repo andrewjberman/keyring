@@ -17,11 +17,11 @@ Claim words: `measured` = read this session against the served artifact; `held` 
 
 ## Deploy ledgers
 
-All MDPF_SECCLASS ledgers are CLOSED except two (one held, one not yet opened):
+All MDPF_SECCLASS ledgers are CLOSED except two (both HELD):
 
 | Ledger | State |
 |---|---|
-| e87b BD three-file ship (SC1) | NOT OPENED: order `TO-SC-e87b` is at `0.7.0_AE_CloudOps~SC1`, GO sent 04:00Z; it ships in the window after the BD 04:00Z chain ends (~06:20Z). Leg G should read about $6,335.94 left Unclassified, not zero |
+| e87b BD three-file ship (SC1) | SHIPPED 06:20Z (legs V, P, D CLOSED, `E87-SHIPPED ok=True`); HELD on MY leg G after the next scheduled BD fire (23:00Z fallback Mon-Sat, else 04:00Z). Served ETags re-read by me 06:3xZ: D_04 304573cf, C_06 1aa6e3b5, D_03 6238716b = the signed digests, lib eb9bb852 unmoved. Leg G should read about $6,335.94 left Unclassified, not zero |
 | e57e61 FWD-10 apply (~S) | HELD on the first scheduled new-security run that plans US stocks |
 | e60 D_04 Unclassified line | CLOSED (SC1): AC1 ok, arm 2 closed as non-e60 drift by the CTO (ADDENDUM 1 @4cac828d3c) |
 | e79 BD lib ship | CLOSED, leg G NOT MET: the lib is inert on the served path (row D1-S26) |
@@ -32,7 +32,8 @@ All MDPF_SECCLASS ledgers are CLOSED except two (one held, one not yet opened):
 
 - **D1-S26:** the three BD classify sites (D_04, C_06, D_03) called `classify_with_identity` with an empty ticker only, so e79's
   ticker-no-row branch never ran. FIXED IN CODE by round 20's SC-e-87 (23 of 23 placed, $966,285.46 on the live table, CVO's own
-  run, ADJUDICATION_v16 D1-C-S2); NOT yet served: the ship is `TO-SC-e87b`, leg G is the proof.
+  run, ADJUDICATION_v16 D1-C-S2); SHIPPED 06:20Z by `TO-SC-e87b` (served ETags measured 06:3xZ); NOT yet proven on the served table: leg G is the proof,
+  after the next scheduled BD fire.
 - **D1-S27:** C_06's firm-daily `total` differs from its class sum by about $128 with a flipping sign; e60's `Unclassified` carries
   it. EXPLAINED by SC-e-88 as 6-decimal share rounding (2026-10-08 reproduces to the cent). Only the owner's acceptability ruling
   is open (remediation owner `1.0.0_SA_CTO~DELL1`).
@@ -42,8 +43,8 @@ All MDPF_SECCLASS ledgers are CLOSED except two (one held, one not yet opened):
 ## Next, in order
 
 1. Round 20 is closed at my seat (3 of 3 orders complete, `round-close-check` MAY-CLOSE, `dep_stage` ROUND_CLOSE) and graded by the
-   CVO (L8 packet READ 04:12Z; L9 @eb33d5d466, MAY-CLOSE). The L10 slug is HELD at the CVO until `TO-SC-e87b` ships and its leg G
-   reads (`3.0.0_SA_CVO/deliverables/MDPF_SECCLASS_R20_SLUG_HELD_REMEDIATION_v11.md`). Then the CTO's round-20 analysis; cut round 21 in
+   CVO (L8 packet READ 04:12Z; L9 @eb33d5d466, MAY-CLOSE). The L10 slug is HELD at the CVO until `TO-SC-e87b`'s leg G reads, which
+   is mine after the next scheduled BD fire (`3.0.0_SA_CVO/deliverables/MDPF_SECCLASS_R20_SLUG_HELD_REMEDIATION_v11.md`). Then the CTO's round-20 analysis; cut round 21 in
    ONE issuance the tick it lands.
 2. **e57e61:** release when a scheduled new-security run plans US stocks.
 3. **p1 residue** (11 keys outside FWD-15's plan): waits on a ruling.
