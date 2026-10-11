@@ -762,6 +762,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "pyarrow max(Trade_Date) over date=2026-06-23/*.parquet -> 2026-06-22, 1,416,497 rows"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W25-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~25",
+    "surfaced_at": "2026-10-11T15:46:45Z",
+    "one_line": "For FTHSX, IWS and VWO the served file and the fresh draw agree with the trades to the same percentage (40.7, 83.3 and 87.2 on both sides), so the draw-column class does not hold for these three: the causes measure as wrong-symbol (FTHSX) and never-met-floor (IWS, VWO).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-DQ-t32 (round 9, DQ-t-32): the cause of each lock rejection is measured first; the classed causes are wrong-symbol, draw-column (old agreement >= 90 and new < 90), never-met-floor and unclassified.",
+    "world_is": "2026-10-11 ~15:4xZ, lock_cause.py --names FTHSX,IWS,VWO --json at worktree wk-MDPF_DEMQUE-25 (branch HEAD descends from 477921e3dc): FTHSX old 40.7 new 40.7 n_checked 627 cause wrong-symbol disagreeing 372; IWS old 83.3 new 83.3 n_checked 240 cause never-met-floor disagreeing 40; VWO old 87.2 new 87.2 n_checked 313 cause never-met-floor disagreeing 40. first_lock_predates_floor is true for all three.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t32_real.py -> LCAUSE-OK 3 of 3 names read (S3 read plus three paced Yahoo pulls under a scratch pacer; nothing written)",
+        "data/mdpf/scripts/demque/lock_cause.py measure(): old side is the served prices.parquet as_traded_close, new side is yahoo_pull.pull as_traded_close, both against the same daily trade medians with lock.check's tolerance",
+        "python data/mdpf/scripts/demque/hold_lock_records.py --dry-run -> 14 planned, 14 three-column names, the three names among them (no write)"
+      ]
+    }
   }
 ]
 ```
