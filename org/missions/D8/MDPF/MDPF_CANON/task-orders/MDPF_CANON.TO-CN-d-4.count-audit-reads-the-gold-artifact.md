@@ -117,7 +117,7 @@ vintage).
 
 ## 5. WHEN YOU ARE DONE
 
-Write the instance at `org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~13/MDPF_CANON.TO-CN-d-4.proof_of_spec.json`, with AC3
+Write the instance at `org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~13/MDPF_CANON.TO-CN-d-4.count-audit-reads-the-gold-artifact.proof_of_spec.json`, with AC3
 UNVERIFIABLE-BY-INSTRUMENT and status_reason "graded at the round-4 close". **Flip this order's `<status>` to `complete` in the SAME
 commit as your proof instance**, and only when every mechanical criterion passes.
 
@@ -146,6 +146,8 @@ filing. Report once: the diff (one line per file), the output line of every crit
 - **Fanout:** independent of every other round-4 cell (disjoint write set); slot ~13, a chain of one.
 - **Not a never-widen pair:** no served output moves; the CTO's L10 read is the exercised read, the CVO grades AC3 on `/seams`.
 - Base box/dell1. LF only.
+
+**AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-11 ~06:2xZ, row MDPF_CANON-D1-W13-S1):** the proof instance is named beside the order's own file stem, `MDPF_CANON.TO-CN-d-4.count-audit-reads-the-gold-artifact.proof_of_spec.json`, because the pipeline gate searches for `<order file stem>.proof_of_spec.json`; section 5's path is corrected, no criterion or path of the grant changes. Gate limb: only GATE (viii) grades a modification, and `<placeholders>` is NONE.
 
 <status>pending</status>
 <round>4</round>

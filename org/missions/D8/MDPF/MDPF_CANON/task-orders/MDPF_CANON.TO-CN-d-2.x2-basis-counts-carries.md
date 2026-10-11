@@ -83,7 +83,7 @@ as-of and reads back every `min firms` integer, every carry row (entry, `count_a
 
 ## 5. WHEN YOU ARE DONE
 
-Write the instance at `org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~11/MDPF_CANON.TO-CN-d-2.proof_of_spec.json`, with AC2
+Write the instance at `org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~11/MDPF_CANON.TO-CN-d-2.x2-basis-counts-carries.proof_of_spec.json`, with AC2
 UNVERIFIABLE-BY-INSTRUMENT and status_reason "graded at the round-4 close". **Flip this order's `<status>` to `complete` in the SAME commit as
 your proof instance**, and only when every mechanical criterion passes.
 
@@ -95,6 +95,8 @@ Report once: the diff (one line per file), the output line of every criterion, t
 **ISSUER NOTES:** round 4 = `org/missions/D8/MDPF/MDPF_CANON/ledger/ROUND_ANALYSIS.round3.md` @ae094ea51d section 3 item 2 AC1 as re-cut by
 ADDENDUM 1 @187b53dbe6. Slot ~11, its own chain (a document and one ledger cell; it shares no file with `CN-d-1`). It moves no served output.
 FWD-3 stays NOT REALIZED until Andrew's X2 call fe9b whatever this cell reads. Base box/dell1. LF only.
+
+**AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-11 ~06:2xZ, row MDPF_CANON-D1-W13-S1):** the proof instance is named beside the order's own file stem, `MDPF_CANON.TO-CN-d-2.x2-basis-counts-carries.proof_of_spec.json`, because the pipeline gate searches for `<order file stem>.proof_of_spec.json`; section 5's path is corrected, no criterion or path of the grant changes. Gate limb: only GATE (viii) grades a modification, and `<placeholders>` is NONE.
 
 <status>pending</status>
 <round>4</round>
