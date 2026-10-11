@@ -4720,3 +4720,52 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "No action taken by this worker; the list is a per-device input, not this cell's. Repeat of ADVI_FIRMBKTS-D1-W43-S2, filed for the owner of the client-data check."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W44-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~44",
+  "surfaced_at": "2026-10-11T15:07:30Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Arm P3 of the round-4 policy check expects seven new fence exemption ARNs for opal-data-49financial; the real render yields eight, because the performance adapter is now a registry row. AC1 reads 5 of 6 arms.",
+  "spec_asserts": "Arm P3 (r4_policy.py:154, and its docstring at r4_policy.py:16-19) says fence_exemption_arns for the bucket equals the base list plus seven new principals (six readers and the OAI), with the performance adapter as a registry row now. Face section 1b.4 says the adapter is carried by module.opal_name.fence_exemption_arns.",
+  "world_is": "With the registry rows and wiring written as section 1a and 1b give them, the render's fence_exemption_arns for opal-data-49financial adds eight ARNs: the six readers, irpt-performance-adapter-role and the OAI. The module builds fence_exemption_arns from every row of the bucket (infra/aws/terraform/modules/opal_name/main.tf:111-115), so the adapter row enters it. The adapter's ARN has to stay in the blanket Deny exemption list, because its role name carries no firm token and fence_patterns does not match it. P3 printed 'new exemption arns=8' and FAILed; P1, P2, P4, P5 and P6 pass. The check was not edited (read-only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r4_policy.py --arms policy at the worktree under timeout 118: 'P3 allow principals=10, new exemption arns=8, other buckets same=True', 'FAIL P3 the render holds exactly the ten Allow principals at their granted resources and the new exemptions', 'ROUND 4 POLICY: 5 of 6 arms', exit=1",
+      "infra/aws/terraform/modules/opal_name/main.tf:111-115 read at the worktree: fence_exemption_arns maps every row of each exemptions bucket to its arn",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_policy.py:154 read at the worktree: want_new = READERS plus the OAI, with no ADAPTER"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a worker decision. The registry and the wiring follow section 1a and 1b literally; the mismatch sits between the check's expectation and the order's own 1b.4 and the module's semantics. AC1 stays FAIL and the order stays open until the issuer rules whether the check's expectation or the render is corrected."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W44-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~44",
+  "surfaced_at": "2026-10-11T15:07:30Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Removing the adapter's hand statements left its explanatory comments in s3-49financial.tf above code that no longer exists, so they now describe Denies and locals the file does not hold.",
+  "spec_asserts": "Face section 1b.4 removes the adapter's data block, its locals and the three hand statements, and keeps every other line.",
+  "world_is": "The comment blocks at s3-49financial.tf:103-112 (IRPT_BCKEND-S140 and TO-IB-pr-201) were kept as the bound says. They still say the adapter is served by three Denies scoped to that role and by the f49 locals, and the file now holds neither. The adapter's access comes from its registry row, so the comments are stale, not wrong about history.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/s3-49financial.tf:103-112 read at the worktree after the edit: the comment lines are present and no data, locals or DenyPerformanceAdapter statement follows them",
+      "grep at the worktree: no 'DenyPerformanceAdapter', 'irpt_performance_adapter' or 'f49_scope' remains in the file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken by this worker: the order's keep-every-other-line bound was followed literally. The wording of these comments belongs to the issuer."
+}
+```
