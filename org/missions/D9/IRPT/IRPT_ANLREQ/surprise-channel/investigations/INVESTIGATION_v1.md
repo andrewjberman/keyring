@@ -3463,3 +3463,55 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W52-S14 -- (worker row, filed in the worker's own commit)
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T21:58:16Z",
+  "id": "IRPT_ANLREQ-D2-W52-S14",
+  "one_line": "TO-AR-y-143 AR143-y-AC2 cannot pass as ordered: the first-answer change (item 2) makes intake/tests/test_deferred_resolution.py::test_refusal_is_written_by_name_and_answered_with_findings fail, and that file is outside this order's <paths>. The test posts a sheet with a reader ERROR (AAPL,bad = AMOUNT_NOT_A_NUMBER) beside an unknown ticker and expects the POST to answer RESOLVING, then the resident to write both findings. Under the ruling the POST now answers NEEDS_CORRECTION with the reader's finding alone and sends nothing, so the test's first resolve() has no message (IndexError). The intake folder is 302 passed, 1 failed, 1 skipped; the one failure is this test.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/tests/test_deferred_resolution.py:146-155",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py _defer (the reader's ERROR findings are the first answer)",
+      "python -m pytest tests -q in intake/: 1 failed, 302 passed, 1 skipped"
+    ]
+  },
+  "spec_asserts": "Face of IRPT_ANLREQ.TO-AR-y-143: AR143-y-AC2 'the whole intake test folder passes'; item 2 'every finding read_template itself raises today' is decided at the POST; <paths> names test_correction_words.py and test_template_uploads.py as the only test files.",
+  "world_is": "Item 2 and AC2 cannot both hold with the grant: the one failing test needs its sheet changed so that its reader-clean provider case (MISSING,10) stays RESOLVING and the reader-ERROR case (AAPL,bad) is asserted on the first answer instead (a test that already exists in spirit as test_post_decidable_findings_arrive_on_the_first_answer). Not edited: outside the grant.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S15 -- (worker row, filed in the worker's own commit)
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T21:58:16Z",
+  "id": "IRPT_ANLREQ-D2-W52-S15",
+  "one_line": "TO-AR-y-143: ops/status.py CORRECTION_WORDS gained the same 24 entries as uploads.py CORRECTION_WORDS (words only, no logic, no existing key) because two tests lock the pair equal (intake/tests/test_correction_words.py::test_correction_words_are_the_envelopes_words and ycharts/generate/tests/test_y5_proxy_corrections.py::test_the_words_copy_still_equals_the_envelope_source, the second outside this order's paths). The envelope's build_envelope therefore now adds a CORRECT action with words for a NEEDS_CORRECTION state whose public_reason_code is one of the 24 (for example FILE_UNREADABLE), which it did not before.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/status.py:155-158 (words = CORRECTION_WORDS.get(public_reason_code))",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_y5_proxy_corrections.py:122-132",
+      "ycharts/generate: test_y5_proxy_corrections.py + test_resolve_upload.py 35 passed after the edit"
+    ]
+  },
+  "spec_asserts": "Face of IRPT_ANLREQ.TO-AR-y-143 item 1: status.py is a WORDS-ONLY edit 'only if the words actually live there'; ONE source of words per code.",
+  "world_is": "The words live in two literal copies by design (status.py is not staged into the Lambda that ships uploads.py). The 24 codes are in both copies, locked equal; the four reader codes are in neither (their words are template_reader.WORDS, carried as the finding's own description). Not run: any caller of build_envelope with one of the 24 as a NEEDS_CORRECTION reason.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
