@@ -4,8 +4,10 @@
 **Ruling this applies:** CTO ADDENDUM 3 `c3cc34f2d0` (msg 3655): (B), the characteristics rule re-timed past the 13:15Z fire FIRST, as its own
 pair, before HG-t-5; "counts every reader of `characteristics.json` and every writer of the key (N printed)"; "a wall-clock schedule, never a
 trigger on the upstream's success".
-**Status:** order `MDPF_HEALGAP.TO-HG-t14` issued (`60ee1f8f3d`, worker `0.9.0_WK_MDPF_HEALGAP~11` running). Nothing applied. The apply waits on the
-worker's VALID proof, the merge, and your half.
+**Status (2026-10-11 ~13:4xZ):** order `MDPF_HEALGAP.TO-HG-t14` issued (`60ee1f8f3d`); worker `0.9.0_WK_MDPF_HEALGAP~11` finished, proof VALID rc=0,
+criteria re-run by the issuer in the worker's tree (T14-OK, margin 600 s; the diff against the base changes only `schedule_expression`,
+`description` and comments; fmt hunks 2 before and 2 after, both pre-existing). **Bytes read:** fix `fd95aeb659`, merged as `00cbe27985` (LOCAL on
+`box/dell1`). Nothing applied; the apply waits on your half.
 
 ## 1. The act
 
