@@ -63,7 +63,7 @@ org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ADVI_FIRMBKTS.TO-FB-g-8.act0-grant.proof_of_spec.json`.
   <criterion id="AC1" cell_refs="FB-g-8"><invocation>timeout 100 aws iam get-role-policy --role-name bd-exporter-ec2-role --policy-name advi-49f-platinum-canonical-rw-policy --query "PolicyDocument.Statement[].Sid" --output text</invocation><expect>AdviPlatinumCanonicalObjects\s+AdviPlatinumCanonicalList</expect></criterion>
   <criterion id="AC2" cell_refs="FB-g-8"><invocation>timeout 100 aws iam list-role-policies --role-name bd-exporter-ec2-role --query PolicyNames --output text | tr '\t' '\n' | wc -l</invocation><expect>^\s*17\s*$</expect></criterion>
-  <criterion id="AC3" cell_refs="FB-g-8"><invocation>cd /c/dev/ajb_workspace/infra/aws/terraform/bd-pipeline &amp;&amp; timeout 118 terraform plan -input=false -lock=false -refresh=true -no-color -target=module.opal_name_platinum_grant -target=aws_iam_role_policy.bd_exporter_advi_49f_platinum_canonical 2&gt;&amp;1 | tail -n 6</invocation><expect>No changes</expect></criterion>
+  <criterion id="AC3" cell_refs="FB-g-8"><invocation>cd /c/dev/ajb_workspace/infra/aws/terraform/bd-pipeline &amp;&amp; timeout 118 terraform plan -input=false -lock=false -refresh=true -no-color -target=module.opal_name_platinum_grant -target=aws_iam_role_policy.bd_exporter_advi_49f_platinum_canonical 2&gt;&amp;1 | grep -E "^(Plan:|No changes)"</invocation><expect>No changes</expect></criterion>
 </proof_of_spec>
 
 AC1 reads the live policy's two statements, AC2 reads that the role now holds 17 inline policies (16 before: the
@@ -94,7 +94,13 @@ unchanged (`0.7.0_AE_CloudOps~FB1`); a refusal of `iam:PutRolePolicy` is a BLOCK
 `0.7.0_AE_CloudOps~FBL`, never a widening. Gate limb: GATE viii reads `<placeholders>NONE</placeholders>` at HEAD and the
 amended invocations carry no token.
 
-<status>pending</status>
+**AMENDMENT 2 (2.0.0_SA_COO~B1, after the seat's report msg 3901):** act 0 APPLIED at `f942dcb9a8` (Plan: 1 to add, apply
+13:43:23-13:44:07Z, entry CLOSED; AC1 and AC2 PASS). AC3's invocation took the last six lines of the plan, which land inside
+Terraform's targeting warning; it now selects the plan's verdict line (`grep -E "^(Plan:|No changes)"`), the amendment the
+seat asked for. The criterion's meaning is unchanged. Gate limb: GATE viii reads `<placeholders>NONE</placeholders>` at HEAD
+and the amended invocation carries no token.
+
+<status>complete</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-8</to_id>
 <slot>~FB1</slot>
