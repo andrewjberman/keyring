@@ -8,7 +8,11 @@ seat; last 2026-10-11 ~03:1xZ.
 un-park conditions fires, each with one cell:
 1. NFRA_CTLPLN CT-i-11 is live on the gateway (`2.0.0_SA_COO~O`, after MX-r-10, on the laptop CTO's consent): cut D2 as a read.
 2. Andrew's test mail arrives, or he names a sender (call `sitez-20261011T030519Z-058e`): run `r13/checks/check_e1_mail_day.py`.
-3. Andrew rules the FWD-4 client branch (call `sitez-20261011T012754Z-c719`).
+3. ~~Andrew rules the FWD-4 client branch (call `sitez-20261011T012754Z-c719`).~~ FIRED 2026-10-11 ~03:2xZ, Andrew: "Yes." (record
+   `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261011_032xZ_OPEN_CALLS_ANSWERED_ITEMS_1_TO_9.md` @5e10dd2dc5). The
+   client branch stands as a qualified essential wait; the CTO records it in the PRD, and no COMM cell follows.
+
+Condition 1's path: the laptop CTO said YES to `2.0.0_SA_COO~O` releasing CT-i-11 after OG-ap-6 (ruling @de13ed0e00, msg 33148).
 
 Z-S9 (the import-test shadowing) rides the first cell cut.
 
