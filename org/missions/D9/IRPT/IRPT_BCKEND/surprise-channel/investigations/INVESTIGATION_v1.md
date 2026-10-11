@@ -25763,3 +25763,83 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-W287-S1 -- BLOCKING (IB126-1-AC3): the control route comparison-catalogue does NOT read SAME_AS_FIXTURE; its handler answer fails its own response schema on the member unprojected_grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W287-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~287",
+  "surfaced_at": "2026-10-11T11:39:31Z",
+  "one_line": "TO-IB-pr-428 control comparison-catalogue: the whole envelope the handler returns in process (existing test test_the_read_rides_the_entrys_guard_and_tenant_check, run unaltered) FAILS responses/comparison-catalogue.response.schema.json with 'Additional properties are not allowed (unprojected_grant was unexpected)'; its data member has the fixture's member names and types. By the face's definition (shape AND the answer validates) the control reads DIFFERS, so IB126-1-AC3 cannot PASS as written and the order is left open; the issuer rules whether the method or the handler is off before the five verdicts are used.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:419-423 @329be12f74: response_envelope ALWAYS sets envelope['unprojected_grant'] (its docstring: a top-level, non-optional field of every served response, CTO ruling @61627f39f9)",
+      "docs/contracts/investor-reporting/v1/responses/comparison-catalogue.response.schema.json @329be12f74: additionalProperties false; properties are contract_version, operation, firm_id, data, status; unprojected_grant is neither declared nor required",
+      "run 2026-10-11: cd infra/aws/lambda/investor-reporting/ycharts/generate/tests; IB126_WRAP=sys:served.Entry.handle IB126_OP=comparison-catalogue python -m pytest -q -p no:cacheprovider -p ib126_capture_plugin test_comparison_catalogue.py::test_the_read_rides_the_entrys_guard_and_tenant_check -> 1 passed, 1 envelope captured; validated with _contracts/tests/test_seam_paired.py _response_validator (imported): INVALID, one error, path envelope root; data member: names and types equal to ComparisonCatalogue.valid.json (one nullable member, entries[].ticker, seen as null only in the handler sample; the same file test_comparison_catalogue.py::test_the_catalogue_lists_the_models_then_the_named_tickers_only_and_validates builds string tickers, 12 passed)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~287/IB126-1_handler_shape_vs_fixture.json (control block)"
+    ]
+  },
+  "spec_asserts": "The order expects the control comparison-catalogue to read SAME_AS_FIXTURE ('the issuer expects it and has not measured it'); a verdict of SAME_AS_FIXTURE needs the same member names and types AND an answer that validates against its v1 response schema.",
+  "world_is": "The control reads DIFFERS on exactly one member, at the envelope: unprojected_grant (handler: object; response schema: not declared, additionalProperties false). Its data member matches the fixture. The same cause fails custody-report-read and custody-report-persist (row W287-S2), so the method is consistent across the three; of the 21 response schemas under v1/responses, 17 declare unprojected_grant as required and 4 do not (analysis-request-pdf, comparison-catalogue, custody-report-persist, custody-report-read). test_seam_paired.py's own _envelope helper adds unprojected_grant only where a schema requires it, so no existing test validates a real handler envelope against these 3 schemas. This seat fixed nothing and did not rule which side moves.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W287-S2 -- OBSERVATION: the handler answers of custody-report-read and custody-report-persist fail their own v1 response schemas on the same envelope member
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W287-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~287",
+  "surfaced_at": "2026-10-11T11:39:32Z",
+  "one_line": "TO-IB-pr-428: the in-process answers of custody-report-read and custody-report-persist (real export entry.lambda_handler over the in-memory retention world of test_custody_writer_composed.py) both carry the envelope member unprojected_grant, which their response schemas (additionalProperties false) do not declare, so each answer is INVALID against its own v1 response schema although the data member matches its fixture; in the read answer data.report carries as_of_date, title and sections beside composition_sha256 and NO accounts member.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/responses/custody-report-read.response.schema.json and custody-report-persist.response.schema.json @329be12f74: additionalProperties false, unprojected_grant not declared; $defs CustodyReportRead.report is {type: object} (free-form)",
+      "infra/aws/lambda/investor-reporting/export/custody_read.py:78 and export/custody_persist.py:177 build the data; _authz/served.py:1321 wraps it via response_envelope (:403) which always adds unprojected_grant",
+      "run 2026-10-11: test_custody_writer_composed.py::test_guarded_or_scheduled_a_verified_opal_caller_persists_through_the_entry (unaltered, 1 passed) for persist; deliverables ib126_custody_read_probe.py (reuses that file's fixtures, then asks the same entry.lambda_handler for the persisted report) for read; both INVALID with one error each",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~287/IB126-1_handler_shape_vs_fixture.json"
+    ]
+  },
+  "spec_asserts": "A handler answer validates against the v1 response schema of its route (the contract the producer publishes); FIVE_FIXTURES_VS_CONTRACT_20261011.md shows the five fixtures valid against that contract.",
+  "world_is": "Two of the five target routes (custody-report-read, custody-report-persist) have a handler answer that fails its own response schema on envelope.unprojected_grant; the other three (directory-browse, analysis-request-history, analysis-input-upload) validate. The handler's report is the persisted document passed through (custody_read.py:78 returns resolved['report']); it builds and checks no accounts member. This seat fixed nothing and did not rule which side moves.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W288-S1 -- DATA: the holdings source carries valued rows the instrument cannot price (no CUSIP, or negative Units); they decide the NOT_GRADED split
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W288-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~288",
+  "surfaced_at": "2026-10-11T11:54:00Z",
+  "one_line": "Across the 91 blackdiamond_z09 silver partitions read, 11,837 non-cash rows carry Units and Market Value above zero but no CUSIP, and 4,084 carry Units and Market Value below zero; the instrument's price filter (CUSIP present, Units and Market Value above zero) leaves both out, so under AMENDMENT 1 they are 'priced securities the instrument cannot grade' that the face did not list, and counting them moves the alternative rule's blank share from 14.3 to 25.0 percent (7,930 account-days ungradeable for no_cusip, 255 for negative_position).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB127-1_account_day_claims.json not_graded_split.ungradeable.by_holdings_class: outside_anchor 8,380; no_cusip 7,930; neither_row 923; negative_position 255 (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~288/, this cell's commit)",
+      "IB127-1_account_day_claims.json not_graded_split_two_kinds_only and serving_rule_alternative_two_kinds_only: the same split and rule counting only outside_anchor and neither_row (9,303 ungradeable account-days; 10,825 blank of 75,796 eligible, 14.3 percent) against 17,488 and 18,931 (25.0 percent) with the two added kinds",
+      "row-kind census over the 91 cached partitions (counts only, run in memory): CUSIP absent with Units and Market Value above zero and Cash Equivalent false 11,837; Units and Market Value below zero and Cash Equivalent false 4,084 (3,811 with a CUSIP, 273 without)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1 lists the ungradeable holdings classes as outside_anchor (a priced security the anchor does not carry), neither_row, 'or any other reason you meet', and the nothing_to_grade classes as cash_only, did_not_move, no_priced_row ('no row with a price at all').",
+  "world_is": "Rows exist that have a price (Market Value over Units) but that the instrument does not price: no CUSIP, or negative Units. Read as 'no row with a price', they would be nothing_to_grade; read as 'a priced security the instrument cannot grade', they are ungradeable. This cell counted them ungradeable (the order's own definition: nothing in the account could be on the wrong date) under two new named classes, and gives the two-kinds-only count beside it. No judgment was made about which reading the CTO intends. The claim itself (OWN_DATE, PRIOR_CLOSE, NOT_GRADED) and the first rule's counts do not depend on it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
