@@ -1192,3 +1192,15 @@ The R45 apply is a later cell: both halves are signed; it waits on this census a
 | `DB-b-120` | FWD-11: the dim_return_method contract lists method row 3; tieout_tolerance_proposed takes the same per-value claim as the five thresholds and lands typed; contract 0.5.0; rule-24 record first (one cell before ADVI_COTBKF's Cottonwood mint) | LOCAL | DB-b-118 | B64-1 |
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~95`, cut from box/dell2.
+
+
+## 67. ROUND 65, WORKSTREAM B (2026-10-11 ~08:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ruling msg 4459)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-121` | FWD-11: one read-only cell before any build -- what the reporting read needs per firm and whether Cottonwood has it; whether the page's year-to-date needs the reporting summary once performance answers; what DB-b-86's hop3 reads of the Cottonwood returns gold | LOCAL | none | B65-1 |
+
+The build's shape (one reporting-read function per firm, or one map) is the CTO's ruling on this cell's two lines. DB-b-86 stays BLOCKED on its
+hop3 file; the Cottonwood returns gold it waited on was minted by ADVI_COTBKF on 2026-10-11.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~96`, cut from box/dell2.
