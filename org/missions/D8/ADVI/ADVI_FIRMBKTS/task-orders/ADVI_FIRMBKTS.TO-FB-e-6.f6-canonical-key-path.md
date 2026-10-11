@@ -110,7 +110,7 @@ FB-e-1's repair does not move it; if the repair places more served classes, they
 cell. The CTO's exercised read at close is AC2 and AC3 run again.
 
 # pipeline-override: the one refusal is LIMB PRD_HEADER.fabric='laptop' vs the register's 'dell1'. The register row is the authority since 1.0.0_SA_CTO's L3 re-placement @8afcb0f851; the PRD header repair is the CTO's. Every other limb passed in the issuer's dry run.
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-e-6</to_id>
 <slot>~9</slot>

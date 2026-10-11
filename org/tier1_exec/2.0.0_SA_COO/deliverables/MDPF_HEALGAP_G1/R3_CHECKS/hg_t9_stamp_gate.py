@@ -3,16 +3,19 @@ completion stamp, and leaves the 07:00Z fire unchanged. Pure stub test: no AWS c
 
 Handler under test: infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py
 
-Contract the handler must meet (the order's worker face states the same):
+Contract the handler must meet (the order's worker face states the same; v2 after the CTO half refusal, msg 3485):
   - event {} (the 07:00Z fire): NO S3 call; producer.main runs once.
-  - event {"require_stamp": true} (the 13:15Z fire): head_object(Bucket=producer.ASSETS_BUCKET,
-    Key="<ROSTER_KEY prefix before /bronze/>/meta/<today UTC>-complete.json") is called at CALL time. The handler DERIVES
-    the bucket and the prefix from the producer module's own constants and types no firm or bucket literal (naming gate).
-      present            -> producer.main runs once.
-      404 / NoSuchKey    -> producer.main is NOT called; exactly one log line starting STAMP-ABSENT; the handler returns.
-      any other error    -> the error propagates (a grant fault is loud, never read as an absent stamp); main NOT called.
+  - event {"require_stamp": true} (the 13:15Z fire): list_objects_v2(Bucket=producer.ASSETS_BUCKET,
+    Prefix="<ROSTER_KEY prefix before /bronze/>/meta/<today UTC>-complete.json") is called at CALL time. The handler reads
+    presence from the LISTING (an object whose Key equals the stamp key exactly). It DERIVES the bucket and the prefix from the
+    producer module's own constants and types no firm or bucket literal (naming gate). It makes NO head_object / get_object call.
+      listed             -> producer.main runs once.
+      not listed         -> producer.main is NOT called; exactly one log line starting STAMP-ABSENT; the handler returns.
+                            A listed SIBLING key (stamp key + a suffix) is "not listed".
+      AccessDenied (403) -> the error propagates (a grant fault is loud, never read as an absent stamp); main NOT called.
 
-Last line: GATE-OK or GATE-BAD <reasons>. At the base (no stamp logic) this prints GATE-BAD.
+Why a listing: an absent key under a HEAD or GET answers 403 unless the request itself satisfies a ListBucket grant, and an
+s3:prefix condition is only populated on a list request. Last line: GATE-OK or GATE-BAD <reasons>. At the base this is GATE-BAD.
 """
 from __future__ import annotations
 
@@ -48,16 +51,27 @@ def main() -> int:
     import boto3
     from botocore.exceptions import ClientError
 
-    state = {"head": [], "main": 0, "mode": "present"}
+    state = {"list": [], "other": [], "main": 0, "mode": "listed"}
 
     class FakeS3:
+        def list_objects_v2(self, **kw):
+            state["list"].append(kw)
+            mode, key = state["mode"], kw.get("Prefix", "")
+            if mode == "listed":
+                return {"KeyCount": 1, "Contents": [{"Key": key}]}
+            if mode == "absent":
+                return {"KeyCount": 0}
+            if mode == "sibling":
+                return {"KeyCount": 1, "Contents": [{"Key": key + ".tmp"}]}
+            raise ClientError({"Error": {"Code": "AccessDenied", "Message": "denied"}}, "ListObjectsV2")
+
         def head_object(self, **kw):
-            state["head"].append(kw)
-            mode = state["mode"]
-            if mode == "present":
-                return {"ContentLength": 1}
-            code = {"absent": "404", "denied": "403"}[mode]
-            raise ClientError({"Error": {"Code": code, "Message": mode}}, "HeadObject")
+            state["other"].append(("head_object", kw))
+            raise ClientError({"Error": {"Code": "403", "Message": "forbidden"}}, "HeadObject")
+
+        def get_object(self, **kw):
+            state["other"].append(("get_object", kw))
+            raise ClientError({"Error": {"Code": "AccessDenied", "Message": "denied"}}, "GetObject")
 
     real_client = boto3.client
     boto3.client = lambda *a, **k: FakeS3()  # import-time AND call-time client creation both land on the fake
@@ -84,48 +98,55 @@ def main() -> int:
         boto3.client = real_client
         print(f"GATE-BAD handler does not import: {type(exc).__name__}: {exc}")
         return 1
-    finally:
-        pass
 
     cap = _Capture()
     logging.getLogger().addHandler(cap)
     bad: list[str] = []
+
+    def reset(mode: str) -> None:
+        state.update({"list": [], "other": [], "main": 0, "mode": mode})
+        cap.lines.clear()
+
     try:
-        # A: the 07:00Z fire -- no stamp read at all
-        state.update(head=[], main=0, mode="present")
+        # A: the 07:00Z fire -- no S3 call at all
+        reset("listed")
         mod.lambda_handler({}, None)
-        if state["head"]:
+        if state["list"] or state["other"]:
             bad.append("A: the 07:00Z event made an S3 call")
         if state["main"] != 1:
             bad.append(f"A: producer.main ran {state['main']} times, want 1")
 
-        # B: the 13:15Z fire, stamp present
-        state.update(head=[], main=0, mode="present")
-        mod.lambda_handler({"require_stamp": True}, None)
-        want = {f"blackdiamond/cottonwood/meta/{_today()}-complete.json"}
-        got = {h.get("Key") for h in state["head"]}
-        if not got or not got <= want | {f"blackdiamond/cottonwood/meta/{_today()}-complete.json"}:
-            bad.append(f"B: head_object keys {sorted(got)} != {sorted(want)}")
-        if any(h.get("Bucket") != BUCKET for h in state["head"]):
-            bad.append("B: head_object bucket is not opal-data-assets")
+        # B: the 13:15Z fire, stamp listed
+        reset("listed")
+        try:
+            mod.lambda_handler({"require_stamp": True}, None)
+        except Exception as exc:  # noqa: BLE001 - a HEAD-based handler dies here on the fake's 403; report it as a defect
+            bad.append(f"B: the 13:15Z event raised {type(exc).__name__} on a present stamp")
+        want = f"blackdiamond/cottonwood/meta/{_today()}-complete.json"
+        got = [h.get("Prefix") for h in state["list"]]
+        if got != [want]:
+            bad.append(f"B: list_objects_v2 Prefix {got} != [{want!r}]")
+        if any(h.get("Bucket") != BUCKET for h in state["list"]):
+            bad.append("B: the list bucket is not opal-data-assets")
+        if state["other"]:
+            bad.append("B: a head_object/get_object call was made (the grant allows a listing only)")
         if state["main"] != 1:
-            bad.append(f"B: stamp present, producer.main ran {state['main']} times, want 1")
+            bad.append(f"B: stamp listed, producer.main ran {state['main']} times, want 1")
 
-        # C: stamp absent (404) -- one log line, nothing rebuilt
-        state.update(head=[], main=0, mode="absent")
-        cap.lines.clear()
+        # C: stamp not listed -- one log line, nothing rebuilt, no raise
+        reset("absent")
         try:
             mod.lambda_handler({"require_stamp": True}, None)
         except Exception as exc:  # noqa: BLE001
             bad.append(f"C: an absent stamp raised {type(exc).__name__}")
-        absent_lines = [ln for ln in cap.lines if ln.startswith("STAMP-ABSENT")]
+        lines = [ln for ln in cap.lines if ln.startswith("STAMP-ABSENT")]
         if state["main"] != 0:
             bad.append(f"C: stamp absent, producer.main ran {state['main']} times, want 0")
-        if len(absent_lines) != 1:
-            bad.append(f"C: {len(absent_lines)} log lines start STAMP-ABSENT, want exactly 1")
+        if len(lines) != 1:
+            bad.append(f"C: {len(lines)} log lines start STAMP-ABSENT, want exactly 1")
 
-        # D: any other error (403) -- loud, nothing rebuilt
-        state.update(head=[], main=0, mode="denied")
+        # D: AccessDenied on the listing -- loud, nothing rebuilt
+        reset("denied")
         raised = None
         try:
             mod.lambda_handler({"require_stamp": True}, None)
@@ -134,9 +155,18 @@ def main() -> int:
         except Exception as exc:  # noqa: BLE001
             bad.append(f"D: raised {type(exc).__name__}, want the ClientError itself")
         if raised is None and not any(b.startswith("D: raised") for b in bad):
-            bad.append("D: a 403 on the stamp read did not raise (a grant fault read as an absent stamp)")
+            bad.append("D: AccessDenied on the listing did not raise (a grant fault read as an absent stamp)")
         if state["main"] != 0:
-            bad.append(f"D: 403, producer.main ran {state['main']} times, want 0")
+            bad.append(f"D: denied, producer.main ran {state['main']} times, want 0")
+
+        # E: a SIBLING key is listed (stamp key + suffix) -- it is not the stamp
+        reset("sibling")
+        try:
+            mod.lambda_handler({"require_stamp": True}, None)
+        except Exception as exc:  # noqa: BLE001
+            bad.append(f"E: a sibling listing raised {type(exc).__name__}")
+        if state["main"] != 0:
+            bad.append(f"E: only a sibling key listed, producer.main ran {state['main']} times, want 0 (exact key match)")
     finally:
         boto3.client = real_client
         logging.getLogger().removeHandler(cap)
@@ -144,7 +174,7 @@ def main() -> int:
     if bad:
         print("GATE-BAD " + "; ".join(bad))
         return 1
-    print("GATE-OK arms A(no stamp read) B(present) C(404 absent) D(403 loud)")
+    print("GATE-OK arms A(no S3 call) B(listed) C(absent) D(403 loud) E(sibling not the stamp)")
     return 0
 
 

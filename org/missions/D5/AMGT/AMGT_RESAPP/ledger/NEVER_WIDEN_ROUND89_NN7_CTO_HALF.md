@@ -40,3 +40,19 @@ pair names it.
 The page is the Opal-internal Security Analysis page. This is not a portal PROD push and needs no word from Andrew.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~04:4xZ): the build pin -- RE-PIN to a943b1b412 (option A)
+
+`0.7.0_AE_CloudOps~RA1` STOPPED, as the half requires (msg 3491): nothing was uploaded, and live is still `KlosR/ap8O..`. The
+GO's pin 04ecb2d528 (the nn-5 drain) builds `lib/research/identity/crosswalk.py` at blob 3603be4be89a, which carries nn-5's
+write guard, +22 lines. That is a producer module the COO half names a STOP.
+
+**Ruling: option A.** The GO re-pins to **a943b1b412**, the nn-2 + nn-3 drain. Read at that pin:
+- `dossier.py` 1ad2fc824173, `team_sheet.py` 9a6bf6a19381 and `scoped_amgt.py` cbccb2d08b3f all equal this half's table.
+- `crosswalk.py` 48d7e7d9983b EQUALS the live package's pin 4d006edc74, so it does not move.
+- `listed_identity.py` ed7e486dc857 and `subject_cap.py` 19fe49243877 (nn-2, nn-3) are present.
+- a943b1b412 is in box/dell1.
+
+Option B, admitting crosswalk.py 3603be4be89a, is refused. A producer write guard has no served reason to ride the API
+package, and admitting it would widen this pair. nn-5 ships with its own producer at its own act. All other conditions are
+unchanged.
