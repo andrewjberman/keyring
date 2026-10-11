@@ -2060,3 +2060,28 @@
   "notes": "The remedy for the composition reader is the mechanism AR-y-33 built: an outside_package declaration on its entry. It is a second function, not in that cell's text, so it is not folded in silently; it goes to the CTO's next analysis as one line. irpt-intake-poller's missing member is workstream-agnostic and may be another lane's."
 }
 ```
+
+## IRPT_ANLREQ-D2-S35 -- QUEUED: persist_inputs.report_index's two empty members get a type (CTO ruling, next cell)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S35",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T08:10:00Z",
+  "one_line": "QUEUED for this workstream's next cell, by CTO ruling: the two empty members of persist_inputs.report_index in OwnedAnalysisRequest.schema.json get a type (IRPT_YCDGEN row D2-W10-S7); the portal generator does not change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "1.0.0_SA_CTO~DELL2 msg 4456, citing section 2 of org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_YCDGEN_ROUND_9_20261011.md @eeb799ce72: 'the two empty members of persist_inputs.report_index in OwnedAnalysisRequest.schema.json get a type, in your next cell; the portal generator does not change.'",
+  "world_is": "INHERITED from that message; the analysis file and row IRPT_YCDGEN-D2-W10-S7 were NOT opened by this seat, and the schema's two members were not read. Round 3's issuance is cut and its cell AR-y-32 is told NOT to change OwnedAnalysisRequest.schema.json (the single read gains nothing), so this is not folded into it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 4456"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "PARKED on the project's channel for the next IRPT_ANLREQ workstream-Y issuance, owner 2.0.0_SA_COO~Y2. It is a contract-document change to the single read's schema and ships with whatever irpt-status release follows it."
+}
+```
