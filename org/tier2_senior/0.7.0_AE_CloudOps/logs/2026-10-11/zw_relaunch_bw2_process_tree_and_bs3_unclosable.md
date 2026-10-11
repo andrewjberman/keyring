@@ -217,3 +217,29 @@ Two consequences, both mine:
 - **Step 5 is a live obligation, not a formality.** 15.6 hours of headroom is real but not large, and any
   pair hitting the ~15-minute error cooldown pushes the ETA toward the marker. An expired marker exempts
   nothing, so the reaper would kill a leg that is still working.
+
+---
+
+## Addendum 4, 12:4xZ: narrowing an explanation I gave too broadly at startup
+
+Addendum 1 said the A.2 audit-archive findings were "already owned and documented" because
+`.tools/audit-archive-invoker.py:186` names a CRLF-versus-LF baseline false fire. That is true of the
+CLASS, and the operative conclusion stands -- not mine, MSTR owns the append-only walk, nothing re-filed.
+But it does not fit one of the three NON-APPEND-EDIT rows I folded into it, and a committed record should
+not carry an explanation wider than its evidence.
+
+`org/git-author-override-audit.log` diverged at **line 1, column 1** with the live head 35 KB SMALLER
+than its baseline (2705416B to 2670305B). A CRLF mismatch diverges where the first line ending differs,
+not at column 1 with a shrink. Two better-fitting causes are now visible, neither of which I had at
+03:00Z:
+- **A per-device migration is in flight.** CLAUDE.md rule 14a was edited this session to name
+  `org/git-author-override-audit.<device>.log`, one file per box, as the instrument. Four now exist
+  (dell1 40 KB, dell2 430 KB, laptop 172 KB, sitez 153 KB) beside the shared file, which is still being
+  appended to -- it reads 5.5 MB at 12:17Z, two orders of magnitude above the 03:00Z baseline.
+- **Cross-device merge churn.** Four boxes appending to one file and merging produces interleavings that
+  diverge from any single device's baseline at line 1.
+
+So the honest statement is: the row's cause is NOT established by me, the CRLF mechanism does not cover
+it, and a plausible cause is an in-flight law migration whose owner is the seat that landed rule 14a.
+Still not re-filed, for the same reason as before. Recorded because "the class is owned" was doing work
+that only "this class is owned, and I did not check whether this row belongs to it" can honestly do.
