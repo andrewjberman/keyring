@@ -27339,3 +27339,50 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The claim is true for a REFUSED that happens at or after the login's HTTP call, which would log a call, and for one that happens at the sections read, which would also have history_reads. It is false for the earliest refusal of all -- the credential read -- which is the one that actually occurred. NOTHING WAS FABRICATED TO CLOSE IT: inventing a history_reads entry or a calls entry would be manufacturing evidence of reads that never happened, which is the precise defect the record exists to avoid, so AC1 and AC3 are reported FAILING and the order's status stays pending. The proof instance records both with a status_reason rather than claiming PASS. The narrow fix, offered rather than taken: let AC1's and AC3's emptiness checks stand only when the outcome is READ or NO_VENDOR_REPORT_FOUND, and for REFUSED require instead the public_reason_code and a stated stop -- which this record already carries. OWNER: 2.0.0_SA_COO~P2 as the check's author; rule 27 L6 lets the issuer amend its own criteria. Related but distinct from row IRPT_BCKEND-D2-S96, which is why the login was refused at all."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W308-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~308",
+  "surfaced_at": "2026-10-11T20:19:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The second guard sentence (no grade where the reader has no bar for the calendar's prior trading day) frees exactly as many account-days as sentence (1) alone in the nine-pair sizing: its cost is 0, because the sizing's row grade already returned no_bar_for_the_day_or_prior whenever the prior-day bar was missing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~308/IB148-1_nine_pair_sizing.json second_sentence (freed 12482 under sentence (1) alone and 12482 under both; UNGRADEABLE 30661 and 30661)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~308/ib442_measure.py classify (returns no_bar_for_the_day_or_prior when nav_d or nav_p is None)"
+    ]
+  },
+  "spec_asserts": "The face asks for how many account-days the SECOND sentence alone costs, as the nine-pair sizing under sentence (1) alone less the same under both, implying a figure that can differ from zero.",
+  "world_is": "The figure is 0 on this population (the 85 graded days, 303 tickers asked). The instrument's row grade (IB-pr-442's classify, imported unchanged and used by every sizing in this chain) already treats a missing prior-day bar as no grade, so sentence (2) was in force in the earlier sizings and adds nothing to them; it differs from sentence (1) alone only in the repeat count and in the overlap table (IB-pr-449 Table C: 6 security-days). Reported as measured; no sentence of the guard is questioned."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S98",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T20:32:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Noted for the vendor producer's NEXT release (CTO msgs 5665 and 5784): a vendor section on the wire carries no title member and no field name for a value; the page now supplies both from a pinned copy of the census. PARKED: the producer cannot be released while the vendor path is stopped.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "2.0.0_SA_COO~D2 msg 5660 and org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/SECTION_TITLE_UNIT.json (a worker's read of code, not re-read by this seat): AnalysisReport.schema.json:126-190 declares no title or label member and forbids additional members; extract.py:707 sets section_type to the census code; publication.py:215-217 strips the underscore keys that hold the title.",
+      "1.0.0_SA_CTO~DELL2 msg 5665 (the page carries the title for the 33 codes; a wire title is noted for the producer's next release) and msg 5784 (the wire carries no field name for a vendor value; note it beside the title member).",
+      "No served vendor answer was read: IB-pr-451 was withdrawn @9053ea7b45 on CTO msg 5770; the confirmation rides the laptop walk that proves DSGN_IRPTV1 cell IV-e-115."
+    ]
+  },
+  "spec_asserts": "A reader of a finished report sees each section by a name and each value by what it is, from the answer the service serves (FWD-5).",
+  "world_is": "Both come from the page's pinned copy of the census, not from the wire. Served vendor reports are immutable and carry only the code, so a wire member would title no report that exists today. PARKED: owner 2.0.0_SA_COO~P2. Un-parks when the vendor producer is next released for a reason; that release's cell adds a title member and a field-name member to the vendor section through a PRD addendum (the contract forbids additional members), and names every reader of the section, the page's map among them."
+}
+```
