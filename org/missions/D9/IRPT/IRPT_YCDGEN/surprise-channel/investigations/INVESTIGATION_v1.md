@@ -4092,3 +4092,31 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_YCDGEN-D2-S56 -- The resident journal does NOT hold the cause of the eight dead letters, and journal retention is not why: coverage is FULL back to 2026-09-24 and NONE of the eight request ids appears in 8535 lines across the 47-hour window -- so for these eight the reason is, so far, nowhere
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S56",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~YC2",
+  "surfaced_at": "2026-10-11T14:15:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "The resident journal does NOT hold the cause of the eight dead letters, and journal retention is not why: coverage is FULL back to 2026-09-24 and NONE of the eight request ids appears in 8535 lines across the 47-hour window -- so for these eight the reason is, so far, nowhere",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-11T14:12:21Z by 0.7.0_AE_CloudOps~YC2 under IRPT_YCDGEN.TO-APPLY-j3, ssm 9354a5d3-f754-46da-b1a6-da81e0073eb5 Success rc 0, ONE read-only journalctl of irpt-analysis-resident.service over 2026-10-07 18:00:00 to 2026-10-09 17:00:00 UTC (host tz +0000, printed, so the --since/--until window IS the UTC window). OLDEST line the journal holds for the unit: 2026-09-24T09:35:20+0000, which is 13 days BEFORE the window opens, so the script printed COVERAGE FULL. WINDOW lines=8535 tracebacks=0. All eight ids read lines=0: REQ-ef7b39c548d08cbb4822f7cc, REQ-8966d24ffefa1c28269ef26c, REQ-1f8b4cc4682f2d929cc70215, REQ-3d76e5b49dae4f91db1694b0, REQ-9d59d4d2334f841152914569, REQ-f7ddede91f98562412314b6e, REQ-448d42480cadd873fa74c3cf, REQ-4b5155ac2ea9467ab771b414. COUNTS ids_declared=8 ids_with_any_line=0 retained_lines=40 trace_lines=0 unterminated_traceback=0. Record org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_j3/DEAD_LETTER_JOURNAL_20261011.txt",
+      "THE ZEROS ARE NOT A BROKEN MATCH, and that was established BEFORE the host read rather than argued afterwards. The same awk program was run against a seeded journal carrying two of the eight ids: it returned lines=2 and lines=1 for those two and 0 for the other six, printed their lines under them, and emitted exactly 8 ID lines. IN-RUN control on host data: the same program, on the same single pass, matched 40 retained_for_retry lines, so it was demonstrably matching content in that window rather than reading an empty stream.",
+      "THE RESIDENT WAS NOT IDLE in that window, which is what makes the absence interesting rather than trivial: 40 IRPT_RESIDENT_POLL retained_for_retry lines across FIVE distinct refusal classes -- ClientError 10, LayoutRefused 10, RetentionExpired 10, RetentionRefused 5, SubmissionRefused 5 (the last with code CLOSED_COMPOSITION_REQUIRED, the only non-empty code; the other 35 read code=-). Those lines carry a class and no request id, which the order itself notes, so they cannot be attributed to any of the eight from this read."
+    ]
+  },
+  "notes": "INERT: a read that moved nothing, and it disturbs none of the eight dead letters (no receive, no delete, no redrive; D2-S45 stays ARMED). THE POINT: the decomp context said the cause of each failure, if it is anywhere, is in the host journal of 2026-10-07 to 2026-10-09. It is not there, and the obvious benign explanation is ruled out -- the order anticipated a short journal as a finding, and coverage is FULL with 13 days of margin. Read together with row D2-S49 (a job can be dead-lettered while its record still reads RECEIVED and holds no reason), that leaves the reason for these eight in no place anyone has yet looked. This is exactly the hole st31's D1 was built to close going forward, which is why it matters that D1 is APPLIED but UNEXERCISED: it does nothing for these eight. ONE READ WOULD SHARPEN THIS AND THIS SEAT DID NOT RUN IT, because the order asks for one command over eight named ids and widening a read on my own judgment is not mine to do: whether the window contains ANY other REQ- token. That separates two very different worlds -- the eight were never worked by this resident, versus this worker logs no request id at all in that window, in which case the zeros say nothing about the eight. Recommended as the next read and handed to the issuer. NOT ADJUDICATED: where else a reason could live (the job rows, the Lambda side, the queue's own attributes) is the issuer's and the CTO's call; this seat read the journal only, because the bounds forbid a queue or table read.",
+  "spec_asserts": "org/tier2_senior/0.7.0_AE_CloudOps~YC2/task_orders/IRPT_YCDGEN.TO-APPLY-j3.resident-journal-read-eight-dead-letters-dell2.md @3825f1fbd4 decomp_context, citing the CTO round-13 analysis @7fa981f907 section 3 item 1: a job record holds no reason, so the cause of each failure, if it is anywhere, is in the host journal of 2026-10-07 to 2026-10-09; this read looks for it. The order also provides for the benign case by name: the read prints how far back the journal reaches first, and a short journal is a finding, not a failure.",
+  "world_is": "The journal reaches back to 2026-09-24T09:35:20Z, 13 days before the window opens, so COVERAGE is FULL and retention explains nothing. Across 8535 journal lines in the 47-hour window, ZERO lines contain any of the eight request ids, and there are ZERO tracebacks. The resident was working and refusing in that window -- 40 retained_for_retry lines over five classes -- but it logged none of the eight ids. So the cause of the eight dead letters is not in the resident journal, and the benign explanation for its absence is measured false rather than assumed away."
+}
+```
