@@ -10,16 +10,20 @@
  "subject": "AMGT_CORPUS r47 aw-10 WRITE v2: template put at site Z (locate amended, PYTHONPATH=.)",
  "body_path": "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-WRITE-R47-aw10.template-put-sitez.md",
  "opened_at": "2026-10-11T18:17:55Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-11T18:19:43Z",
   "bus_message_id": "59189e0e-fb6d-4bc4-9450-4f0986fffc91"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T19:01:28Z",
+  "by": "0.7.0_AE_CloudOps~ZC",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T19:01:28Z",
+  "to_by": "0.7.0_AE_CloudOps~ZC"
  }
 }
