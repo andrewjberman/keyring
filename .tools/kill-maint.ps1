@@ -325,6 +325,12 @@ try {
 } catch {
   [Console]::Error.WriteLine(("WARN: liveness unreadable ({0}) -- ORPHANED class disabled this run" -f $LivenessPath))
 }
+# A file that PARSES but yields ZERO live owners while sessions are up is not a verdict either (dell2 08:31Z: a read
+# during a rewrite left an empty map, every owner-keyed poller was classed ORPHANED, 16 were killed). Fail closed.
+if ($null -ne $liveSerials -and $liveSerials.Count -eq 0 -and @($sessions).Count -gt 0) {
+  [Console]::Error.WriteLine(("WARN: liveness parsed but 0 owner serial(s) live with {0} session(s) up -- ORPHANED class disabled this run" -f @($sessions).Count))
+  $liveSerials = $null
+}
 
 function Write-Audit([string]$line) {
   # one ASCII line to the audit log; an append failure never fails the run

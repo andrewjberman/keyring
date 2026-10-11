@@ -2732,3 +2732,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r119/p119_cells.py`: every criterion 
 | `IB-pr-421` | vendor performance path without the one-use plan; kept behaviours tested; adapter rebuilt; packet | FWD-2 (DSGN_IRPTV1 FWD-1's Performance hop) | WORLD | IB-pr-420 applied | P119-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~282.
+
+## 113. ROUND 120, WORKSTREAM ~P (2026-10-11 ~08:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 4488)
+
+Round 119's one order (IB-pr-421) is complete and built, not applied. Row D2-W282-S1: the adapter role holds no secretsmanager
+GetSecretValue, because `retained.tf` count-gates both vendor session-read policies on the retired plan variable. The CTO ruled ONE
+release: IB-pr-421's zip plus the two policies, under one pair. One cell ungates the two policies and produces the Terraform plan and
+its packet; nothing is applied in it.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r120/p120_cells.py`: every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-422` | two session-read policies ungated from the plan variable; plan adds exactly those two; naming limb; packet | FWD-2 (DSGN_IRPTV1 FWD-1's Performance hop) | WORLD | IB-pr-421 complete | P120-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~283.
