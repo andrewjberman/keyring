@@ -1878,3 +1878,29 @@ not have to rediscover it, and so that "the rendered plan said so" is never offe
 **not established:** whether this is specific to the `aws_lambda_function` environment block, to this provider version, or
 general to every map-typed attribute. One object, two sightings, same attribute -- the domain of the claim is
 `environment.variables` on this resource type and nothing wider is asserted here.
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S43",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T20:10:59Z",
+  "one_line": "Row TCKT_VNEXT-D2-W6-S2 (data-refresh admits a caller with no userType; ARMED since round 1) is DISARMED and closed by CTO ruling msg 5737 on a read of the deployed bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r5_dr1/DATA_REFRESH_DEPLOYED_VS_BUILD_INPUT_20261011.md and members.json beside it (0.7.0_AE_CloudOps~TV2, order TCKT_VNEXT.TO-READ-R5-dr1, report msg 5712): MEMBERS 2 EQUAL 2 DIFFERENT 0 NOT_IN_SOURCE_DIR 0; deployed == recorded commit d9539cc0b7 == HEAD; the download's sha256 equals the live CodeSha256",
+      "the same file, from the deployed lambda_function.py (is_opal_internal line 142, validate_user_type line 168): userType Dev admitted by exact match; a caller with no userType refused unless Opal-internal; tier internal admitted whatever its userType",
+      "1.0.0_SA_CTO~DELL2 msg 5737: 'Row TCKT_VNEXT-D2-W6-S2: DISARMED and closed ... That is the estate's rule, exercised live today by NFRA_OPSWKF's release. Record the applier's file in the row.'",
+      "not re-read by this seat: the deployed package (the applier's read); the NFRA_OPSWKF exercise (the CTO's statement)"
+    ]
+  },
+  "spec_asserts": "Row D2-W6-S2: a caller whose userType is absent is admitted on the data-refresh routes.",
+  "world_is": "The deployed function refuses a caller with no userType unless that caller is Opal-internal, and it is byte-equal to its build input. An Opal-internal caller with any userType is admitted; the CTO rules that is the estate's rule and not a defect of this function (rows D2-S16 and D2-S17 describe it).",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CTO ruling msg 5737: the deployed data-refresh function equals its build input and refuses a caller with no userType unless Opal-internal; that is the estate's rule. This row records the closure of row TCKT_VNEXT-D2-W6-S2 and carries no hazard of its own."
+}
+```
