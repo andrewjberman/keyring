@@ -46,6 +46,10 @@ All MDPF_SECCLASS ledgers are CLOSED except two (both HELD):
    CVO (L8 packet READ 04:12Z; L9 @eb33d5d466, MAY-CLOSE). The L10 slug is HELD at the CVO until `TO-SC-e87b`'s leg G reads, which
    is mine after the next scheduled BD fire (`3.0.0_SA_CVO/deliverables/MDPF_SECCLASS_R20_SLUG_HELD_REMEDIATION_v11.md`). Then the CTO's round-20 analysis; cut round 21 in
    ONE issuance the tick it lands.
+   - **Carried into that issuance, `SC-e-90` (CTO msg 4167):** the portal test `iv-e-46.class-readers.test.ts` reads 1 pass 1 fail at origin/DEV
+     (its `NAMED` entries cite file:line; two lines moved). Repair: locate by content, plus a negative arm; the test file only. Draft:
+     `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R21_DRAFTS/TO-SC-e90_DRAFT_class-readers-test-locate-by-content.md`. Not cut in
+     round 20: `to-pipeline-gate` refuses a new order there (one issuance per round; `dep_stage` ROUND_CLOSE).
 2. **e57e61:** release when a scheduled new-security run plans US stocks.
 3. **p1 residue** (11 keys outside FWD-15's plan): waits on a ruling.
 4. **IB-pr-417:** the COO half on the e56 member is SIGNED (@ced2704270, due Mon 2026-10-12 13:00Z at dell2); push of that commit
