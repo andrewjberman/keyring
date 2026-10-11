@@ -10,7 +10,7 @@
  "subject": "ADVI_FIRMBKTS FB-f-20 c290: SNS default SMS type, 1 to change; pre-read can STOP",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-20.sms-default-type-apply.md",
  "opened_at": "2026-10-11T17:08:48Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T17:12:19Z",
   "bus_message_id": "23916939-7950-4a3d-b4cb-75a423049a49"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-11T17:30:30Z",
   "from_by": "2.0.0_SA_COO~B1",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T17:28:42Z",
+  "to_by": "0.7.0_AE_CloudOps~FBL"
  }
 }
