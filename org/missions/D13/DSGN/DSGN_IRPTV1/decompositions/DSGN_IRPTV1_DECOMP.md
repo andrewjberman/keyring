@@ -380,3 +380,21 @@ half is a later round's and is NOT cut here.
 outcome state) are the CTO's own, quoted from the analysis sections 3 and 4.
 
 fanout: 3 of 4 chains at the cut (A, C, D), chain B after A; cap 8.
+
+
+## v12 -- round 12 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~06:4xZ), over PRD v0.18 (ADMITTED), on 1.0.0_SA_CTO~DELL2's ruling msg 4198
+
+**Rectangle:** one item. FWD-1 reads APPLIED in the round-11 state table: no whole signed-in trace exists. The CTO ruled no closer and one
+trace cell under a never-widen pair for a READ-ONLY synthetic identity.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-87 | the DRAFT pair for one signed-in FWD-1 trace: hops and requests from the portal at the DEV tip, the ruled identity bounds, radius, branches, halves UNSIGNED | (none) | WORLD | A ~47 | the PRD's FWD-1, the TCKT_VNEXT R2-tr-1 pair (precedent), the portal's Investor Reporting client (read-only) |
+
+**Not cut, named:** the trace RUN (after both halves sign; its executor is named in the pair); the page halves of W39-S2 and W35-S2, which wait on
+IRPT_ANLREQ's rows D2-S21 and D2-S24 going live.
+
+**Rule 24:** the check's closed sets (`writes_server_side`: true / false / NOT_ESTABLISHED; `repo_carries`) are measurement vocabularies local to
+this cell's record, not a served enum.
+
+fanout: 1 of 1 chains, cap 8.
