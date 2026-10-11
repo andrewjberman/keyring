@@ -3168,3 +3168,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r147/p147_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-451` | one owner read of a served vendor report's sections through the service principal: is there a title or label member, the section_type and units tokens with counts; key names only, GET only | FWD-5 (what a reader of a finished report is served) | WORLD (declared; reads only, by an applier) | none | P147-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.7.0_AE_CloudOps~IB2.
+
+## 140. ROUND 148, WORKSTREAM ~P (2026-10-11 ~20:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5724 and PRD v0.42 @73d4348a31, signed @b05e8baee2)
+
+IB-pr-449 drained @eb0c2d4890: 416 of 416 comparable first moved bars equal the anchor that day. v0.42 admits nine pairs under the
+guard. The reviewer's note: five institutional securities have no anchor, so nothing shows their moved days are dated right. The
+CTO rules a per-security exclusion on three numbers. One read-only cell, counts only.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r148/p148_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-452` | nine pairs sized under both guard sentences (blank share, never served, freed); the same with ADLYX, BISOX, EIBLX, GPPIX, OLCYX not graded by the second witness; how many securities of the nine pairs outside the first witness repeat on more than half their days | FWD-13 (a date label is measured, never assumed) | LOCAL | IB-pr-449, IB-pr-450 drained | P148-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~308. DIRECT-ACT (one read-only cell, LOCAL).
