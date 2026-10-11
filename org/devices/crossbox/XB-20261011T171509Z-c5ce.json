@@ -10,12 +10,16 @@
  "subject": "DSGN_IRPTV1: read-only rendered walk of Investor Reporting on portal DEV (CTO~DELL2 round-23 analysis item 2)",
  "body_path": "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D2/LAPTOP_WALK_ASK_20261011.md",
  "opened_at": "2026-10-11T17:15:09Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T17:19:22Z",
+  "by": "0.0.0_AB_MSTR",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
