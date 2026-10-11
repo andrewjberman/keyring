@@ -101,7 +101,7 @@ census before its GO. The issuer's L5 reading is only that D_04 writes 22 key fa
 moves every read and write of the gold scripts (L5_FACTS section 4). A census that finds the seam inseparable makes
 step 2 a producer migration, which is a CTO call (a round of its own), and the amendment says so.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-6</to_id>
 <slot>~16</slot>
