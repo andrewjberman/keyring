@@ -18,6 +18,7 @@ ADDENDUM 1: act 4 does not run before 4b and 4c are routed).
 |---|---|---|---|
 | Lambda `exec-summary-generator` (Terraform root `infra/aws/terraform/exec-summary`) | a new published code version carrying the seam, and ONE environment value added: `BD_PLATINUM_MODE=canonical`. Nothing else in its configuration (role, timeout, memory, layers, schedule) | the scoped plan changes only this function's code hash and its `environment`; `CodeSha256` of the new version equals the built artifact's; `get-function-configuration` reads the one value | the previous version re-published and the value removed (Terraform), the same hour |
 | Lambda `opal-partners-data` (root `infra/aws/terraform/partners-api`) | the same two changes. Its DynamoDB `s3Bucket` item is NOT touched (the mode keeps the layout rule in code; the item still names the pipeline bucket the seam recognises) | the same three reads | the same |
+| IAM policy of `exec-summary-generator-role` (root `infra/aws/terraform/exec-summary`; ADDENDUM 11) | ONE new inline policy: `s3:PutObject` on `advi/49financial/platinum/advisors/*/exec_summary.json` of `opal-data-49financial`. No other action, resource or role | the scoped plan names exactly one `aws_iam_role_policy` to add; `get-role-policy` after equals the plan; the registry row and the bucket-policy Allow are act 3b's | `delete-role-policy` of that one name |
 | the Lambdas' served behavior, as an effect | on `canonical`: every served-class read, head and list of both Lambdas on the pipeline bucket resolves to the canonical home through the generated view; `exec-summary-generator`'s one put (`platinum/advisors/<id>/exec_summary.json`) lands at the canonical key | the object-level read below; census UNROUTED 0 (`r3_reads.py --files`, both Lambdas) and the parity class `TestLambdaSeamParity` at the merged tree; the recording-client arm (e): 0 calls on the pipeline bucket under a served prefix | as above; the exec-summary objects already written at the new home are inert |
 
 **The mode is the one value per Lambda.** Neither act edits a bucket, key or registry value. The seam applies only to the
@@ -40,8 +41,8 @@ Branch B.
 ## What the acts may NOT touch
 
 `opal-data-bd` (no write by these Lambdas except the exec-summary's put, which moves to the canonical key), the DynamoDB
-`s3Bucket` item, the Lambdas' roles and policies (their reads and the put on the canonical prefix must be allowed already: see
-Authorization), the router, guard, validator and IRPT consumers (act 4), any schedule or alarm, any other function.
+`s3Bucket` item, the partners API's role and policy (allowed already: see Authorization), every other role and policy of the exec-summary
+root (its one new put policy is in the permitted set above), the router, guard, validator and IRPT consumers (act 4), any schedule or alarm, any other function.
 
 ## Both branches of every outcome named
 
@@ -55,17 +56,30 @@ Authorization), the router, guard, validator and IRPT consumers (act 4), any sch
   legacy key after the value is set. Rollback: the previous version and the removed value, the same hour; the order stays open
   with a BLOCKING row; the legacy home is untouched so serving resumes from it.
 
-## Authorization
+## Authorization (amended 2026-10-11 ~15:1xZ for the CTO's round-3 ADDENDA 10 and 11)
 
-Each Lambda's role must allow `s3:GetObject`, `s3:ListBucket` and, for the exec-summary, `s3:PutObject` on the canonical
-prefix of `opal-data-49financial`; the actor reads each role's policy before the first write (`simulate-principal-policy` at the
-prefix ARN grain, never `*`). **This half does not know that they do** (act 0 granted the producers' role only): a role
-that does not is a BLOCKING row naming the grant as a separate act under its own pair, and the act does not proceed. The
-actor's identity must be permitted `lambda:UpdateFunctionConfiguration` through Terraform on each root (read, not assumed).
+- **`opal-partners-data`:** its role's identity policy already allows the canonical prefix; the fence admits it (full row). Read,
+  not assumed, by the same `simulate` read as below.
+- **`exec-summary-generator`: reads** ride the act 3b bucket-policy carrier (ADDENDUM 10): ONE scoped row for
+  `exec-summary-generator-role`, `actions` `s3:GetObject` and `s3:ListBucket`, prefix `advi/49financial/platinum/advisors/`,
+  with the module's Allow beside it. Its read of `platinum/leaderboards/` is a class the registry does not place, so the seam
+  keeps it on the pipeline bucket (read from `served_seam.py`, not assumed). **Put** is ADDENDUM 11: the scoped row ALSO names
+  `s3:PutObject` (fence side, `FB-g-23`; no PutObjectAcl, no Delete), and the narrow identity Allow lives in the exec-summary
+  root, `s3:PutObject` on `advi/49financial/platinum/advisors/*/exec_summary.json` only; the bucket-policy Allow is read-only.
+  The identity apply is one scoped plan of one policy.
+- **Writer census of `advisors/` at the canonical home, N=2, printed (ADDENDUM 11 condition 3):** `D_04.client_portal_summary.py`
+  (Put `summary.json`, `timeseries.json`, `mix.json`, `nna_clients.json`, `positions.json` per current advisor; Delete of every
+  key under a DEPARTED advisor's directory, `exec_summary.json` included, at `D_04:789-812`) and the exec-summary generator
+  (Put `exec_summary.json` per advisor). No Put key is shared. The one shared key is `exec_summary.json` of a departed advisor,
+  which D_04 may delete: that needs `s3:DeleteObject` for D_04's role (row `ADVI_FIRMBKTS-D1-S29`), not for the exec-summary.
+- **Timing (ADDENDUM 11 condition 2):** the exec-summary runs at `cron(30 4 * * ? *)`. Act 4b lands after act 2 and before the next
+  04:30Z run, or act 2 waits a day; act 2's legacy-quiet read names `exec_summary.json` among its keys.
+- The actor reads each role's authorization before the first write (an IAM evaluation at the object-ARN grain, never `*`),
+  through the act 3b close instrument.
 
 ## What this half does not know (stated)
 
-- Whether either Lambda's role already holds the canonical-prefix Allow (above).
+- Whether the exec-summary identity apply (the put) lands inside its window (above).
 - The state of each root's plan (standing drift): a root that cannot plan scoped is a BLOCKING row for that Lambda.
 - Whether the exec-summary's schedule fires inside the window: the put's destination is then read from the object's
   listing; if it does not fire, the put is not exercised by these acts and the first scheduled run is the read.
