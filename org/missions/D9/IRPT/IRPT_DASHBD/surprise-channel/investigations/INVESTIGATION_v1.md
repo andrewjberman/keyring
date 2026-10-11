@@ -6481,3 +6481,26 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W111-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~111",
+  "surfaced_at": "2026-10-11T17:20:00Z",
+  "one_line": "DB-b-138: in 18 of the 51 flow-class segments the custodian's external-flow transaction rows (by return date) do not reproduce the served flow dollars day by day, though the same flow days appear and the segment dollars tie to Black Diamond net additions; the daily value series shows the entry DAY of a flow but no row or series read separates START, MID and END.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order DB-b-138 item 2: for each flow the custodian's rows say the posting date and the daily value series (day beginning and ending value against the flow amount) show whether the flow sits at the START, END or between; a segment whose rows cannot tell is ROWS_DO_NOT_TELL.",
+  "world_is": "Read from worker 108's private download (3 prefixes of 49 Financial's own tree, 2488 objects, no new read): flow days in the custodian transaction rows equal the served flow days in 51 of 51 segments; the day totals equal the served flow dollars in 33 of 51 and differ in 18 (50 flow days; no neighbouring day, trade date or settle date reproduces the served amount; excluding fee rows does not reconcile them). In the value series 83 of 86 readable flow days enter the closing value of the posting day only, 3 are ambiguous; a daily end-of-day series with a flow amount cannot place a flow within its day. 25 segments are placed 'entry day shown, intraday not shown', 14 'ledger dollars do not reproduce served flow', 12 'no determinable flow'. Claim: measured for the dates and the entry day; NOT_ESTABLISHED for intraday timing and for why the 18 differ (cause of the ledger gap not read).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~111/CONTESTED_51.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~108/UNCLASSED_90.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
