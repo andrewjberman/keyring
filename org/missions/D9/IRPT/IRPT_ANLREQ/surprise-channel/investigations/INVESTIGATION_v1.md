@@ -2006,3 +2006,30 @@
   "notes": "Issuer's ruling needed: either the ticket service admits svc-irpt-packager to GET a ticket (a ticket_center change: a matrix or principal_class entry, firm-scoped like package_ticket), or the idempotence read moves to another reader. The packager side (live_ticket_ports) is delivered either way."
 }
 ```
+
+## IRPT_ANLREQ-D2-S33 -- the source map's irpt-status entry still records a 2026-10-05 deploy in five fields
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S33",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T07:40:00Z",
+  "one_line": "The source map's irpt-status entry carries FIVE applied-artifact fields that still describe a deploy of 2026-10-05 (deployed_code_sha256 jhGc2J4Q..., last_deployed_commit 44cc631396, last_deployed_at 2026-10-05T04:23:09Z, deploy_ledger d407e320da, recorded_by record-terraform-deploy.sh), and a note saying artifact_sha256 is deliberately not moved; the function has been applied five times since.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-3 analysis section 4 Y4: the source map records irpt-status's live digest (cell AR-y-33 Part B sets artifact_sha256). The entry's own fields claim to record what was last deployed.",
+  "world_is": "REPORTED by 0.9.0_WK_IRPT_ANLREQ~53 (its final report on TO-AR-y-33) and READ by this seat in its worktree at branch commit 30018206fc: artifact_sha256 now reads 6idtFvAm... (the live digest, set by the cell); deployed_code_sha256 reads jhGc2J4Q5EesJgnLq8EzdE5ErrZLbyqnJ8m00R7CgdE=, a digest that matches none of revisions 2-6 named in TO-APPLY-Y1; last_deployed_at reads 2026-10-05T04:23:09Z; the `note` member says 'artifact_sha256 is DELIBERATELY NOT MOVED: it equals the S3 object and the live CodeSha256' (true when written, under IB-rt-9). So the tool that writes those fields (record-terraform-deploy.sh) did not run for the applies of 2026-10-09 and 2026-10-11, or its write was not committed. NOT MEASURED: whether other functions' entries carry the same staleness, and what reads these five fields.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-status, read at worker branch 30018206fc",
+      "TO-AR-y-33 final report (0.9.0_WK_IRPT_ANLREQ~53)",
+      "TO-APPLY-Y1 AMENDMENTS 1-8 (the applies since 2026-10-05)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a defect of AR-y-33, which was told to change nothing else in the entry. The remedy is one of two, the CTO's to pick at the next analysis: the apply orders run the recorder (and its fields are trusted), or the fields are declared not maintained. Until then nobody should read deployed_code_sha256 as the deployed digest."
+}
+```

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_TCKT_VNEXT~8</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -252,7 +252,41 @@ Dry-run at base: AC8 FAIL (missing tests) as expected; AC7 FAIL at base too, by 
 Proof: add AC8 and re-validate with ids `R2-rn1-AC1,...,R2-rn1-AC8` comma-separated. Flip to `complete` only when all eight pass.
 Rows, if needed: `TCKT_VNEXT-D2-W8-S<k>` with k from 10 upward.
 
-<expected_criteria>R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7 R2-rn1-AC8</expected_criteria>
+### AMENDMENT 5 (2026-10-11, issuer `2.0.0_SA_COO~V2`) -- REOPENED: the live run was refused at hop (d) because of the token this runner sends
+
+**Inherited state:** AC1-AC8 are met and merged (@2d2b309be9). Keep all of it. The runner ran live once (2026-10-11 06:20Z): hops
+(a), (b), (c) answered, and the analysis submission at hop (d) came back HTTP 200 carrying `INVALID_INPUT`. The issuer read the
+service's log: the refusal is `CHANGED_INPUTS_SAME_REQUEST_ID`. The service refuses a client request id it has seen before with
+different inputs (`infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py:74-80`, `recipe.py:286-298`), and this runner
+sends `"sar1b-" + file_sha[:24]` (`fwd1_run.py:707`): a value fixed by the synthetic input file, so every run sends the SAME id
+with a different body (a new ticket id).
+
+G1. **The submission's idempotency token is unique per run.** Build it from the run label, the token's `iat` and the file hash:
+    a short lower-case prefix made from `--run-label` (letters and digits only), a dash, then the first 24 hex characters of
+    `sha256(run_label + "|" + str(iat) + "|" + file_sha)`. It must match the submission contract's pattern
+    `^[A-Za-z0-9][A-Za-z0-9_.:-]*$` (`docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json`). Two runs with
+    the same file and a different `iat` send different tokens. The token is still traced as `idempotency_token` and never polled,
+    recorded on a ticket or written as a request id.
+G2. Remove every `"sar1b-"` literal that names a token the SERVICE receives: the submission token (`:707`) and the upload token
+    (`:565`, `"sar1b-" + file_sha[:16]`), which gets the same per-run form with its own short suffix (`-up`) so an upload of the
+    same file in a later run is also a new request. `MALFORMED_REPORT_ID` (`:185`) is NOT a service token of this kind: it is the
+    deliberately malformed id of the report-route arm; keep its value.
+G3. **A refusal at hop (d) is its own named result (row TCKT_VNEXT-D2-S31).** When the submission is refused, the run's top-level
+    result is `BRANCH_E_SUBMISSION_REFUSED`, with the served reason code recorded; hops (e), (f), (g) and both arms are
+    UNREACHABLE; cleanup runs in the signed order. It is a RESULT: no retry, no second submission with another token.
+    The other named results keep their names.
+
+<criterion id="R2-rn1-AC9" cell_refs="R2-rn-1"><invocation>python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py rn-token</invocation><expect>RN-TOKEN-OK</expect></criterion>
+`R2-rn1-AC9`: tests `test_idempotency_token_differs_between_two_runs`, `test_idempotency_token_fits_the_contract_pattern`,
+`test_no_token_is_derived_from_the_file_hash_alone` (two runs, same file, different `iat`: neither the submission token nor the
+upload token repeats), `test_hop_d_refusal_is_its_own_named_branch` exist and pass. AC1-AC8 must still pass.
+
+Dry-run at base: AC9 FAIL (missing tests) as expected; AC1-AC8 PASS.
+
+Proof: add AC9 and re-validate with ids `R2-rn1-AC1,...,R2-rn1-AC9` comma-separated. Flip to `complete` only when all nine pass.
+Rows, if needed: `TCKT_VNEXT-D2-W8-S<k>` with k from 10 upward.
+
+<expected_criteria>R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7 R2-rn1-AC8 R2-rn1-AC9</expected_criteria>
 
 Dry-run at base: all three FAIL (absent), as expected.
 
@@ -271,6 +305,7 @@ org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/sa_r1/sa_r1b_run.py
 docs/contracts/investor-reporting/v1/
 infra/aws/lambda/investor-reporting/ops/owned_requests.py
 infra/aws/lambda/investor-reporting/ops/
+infra/aws/lambda/investor-reporting/ycharts/generate/
 portal/src/api/endpoints/investor-reporting.ts
 org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -281,7 +316,7 @@ org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7 R2-rn1-AC8. The instance is at
+Criterion ids: R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7 R2-rn1-AC8 R2-rn1-AC9. The instance is at
 `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~8/TCKT_VNEXT.TO-R2-rn1.fwd1-runner-reads-the-served-request-id.proof_of_spec.json`.
 Validate it with `python .tools/proof-of-spec-check.py <instance> R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3` before the flip.
 </proof_of_spec>

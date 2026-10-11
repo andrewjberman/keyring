@@ -54,6 +54,32 @@ the defect is that a person can type something the system must then refuse.
 
 Use the existing field classes (`FIELD`); add no colours.
 
+---
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~07:5xZ): the ruling on row `IRPT_ANLREQ-D2-W51-S1`. Step 4 is REPLACED; the grant gains
+ONE file.** Your stop was right: the form's only mount is `src/pages/TicketCenter/TicketCenter.tsx:406`, outside the grant, and the page
+holds no served list. Gate limb that graded this amendment: read from this commit's own output.
+
+- **Where the list comes from (ruled):** the served directory context. The ticket page already builds an Investor Reporting client
+  (`TicketCenter.tsx:148`, `const ir = useMemo(() => createInvestorReportingApi() ...)`). That client's EXISTING method
+  `resolveDirectoryContext` (`src/api/endpoints/investor-reporting.ts:1238`) returns a `ResolvedScope` whose `permittedFirms`
+  (`src/pages/InvestorReporting/contracts/adapt.ts:713-718`) is the list of firms the caller's own profile allows, as the server gives
+  them. This is one existing call on an existing served route: no new endpoint, no constant list, no new client.
+- **Build, in `TicketCenter.tsx`:** when the Analysis Request form is shown (`newType === 'analysis_request'`), call
+  `resolveDirectoryContext` ONCE (not per render, not per keystroke; a retry only on the user's own action). Map
+  `permittedFirms` to `firms = [{ id: <the firm's tenant>, label: <its displayName> }]`, keeping only firms whose `selectable` is true,
+  and pass `firms` to `AnalysisRequestFields`. While the call is in flight, pass `null`.
+- **If the call fails:** `firms` stays `null`, the form states "The firms you can file for could not be loaded." in its existing alert
+  line, and the request cannot be submitted. Never fall back to free text or to the caller's single claim firm.
+- `catalogueFirm` (`TicketCenter.tsx:198`) keeps reading `analysisForm.firm`; it now only ever holds a chosen firm.
+- If `IrpAnalysisClient` (the type the page casts its client to) does not declare `resolveDirectoryContext`, widen that type where the
+  page declares it. If it is declared in a file outside the grant, file a row naming the file and stop on that point only.
+- **Tests:** the three named tests of step 5 stand. Add a FOURTH to the same file, named exactly
+  `the ticket page loads the allowed firms once through the directory context`: mount the page's form path with a stubbed client and
+  assert ONE call and the options rendered. Add its name to your report; criterion `AR35-y-AC1` checks the three names it lists and
+  that the file passes, so the fourth is graded by passing.
+- Steps 1, 2, 3, 5 and 6 stand as written.
+
 ### ACCEPTANCE
 
 <criterion id="AR35-y-AC1" cell_refs="AR-y-35"><invocation>python C:/dev/wk-irpt-anlreq-51/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py y35-page --portal C:/dev/wk-irpt-anlreq-51/portal</invocation><expect>Y35-PAGE-OK</expect></criterion>
@@ -75,6 +101,7 @@ The issuer runs the portal typecheck, lint and the whole TicketCenter test folde
 
 <paths>
 portal/src/pages/TicketCenter/AnalysisRequestParts.tsx
+portal/src/pages/TicketCenter/TicketCenter.tsx
 portal/src/pages/TicketCenter/__tests__/analysis-firm-choice.test.tsx
 portal/src/pages/TicketCenter/__tests__/analysis-request.test.tsx
 portal/src/pages/TicketCenter/__tests__/analysis-form-i1.test.tsx
