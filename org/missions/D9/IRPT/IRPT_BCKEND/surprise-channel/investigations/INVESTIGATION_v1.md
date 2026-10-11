@@ -27468,3 +27468,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "A page consumer of the accepted record is not ruled out by a search; it is bounded by the served response shape instead. Recorded in not_established of the read."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S99",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T20:54:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Row IRPT_BCKEND-D2-W309-S1 (the worker signals on every READY job, ticket or not) is a VINTAGE artifact, and this seat relayed it to the CTO as a finding without reading HEAD: IB-pr-453's worktree was cut at 0bdd920114, which does not contain 2.0.0_SA_COO~G2's ticket gate merged at 8d6fef62e8; on the trunk the send needs a ticket id.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read by this seat 2026-10-11 ~20:5xZ: git merge-base --is-ancestor 8d6fef62e8 0bdd920114 -> rc=1 (not in the worker's base); the same against HEAD -> rc=0; positive control, 0bdd920114 against HEAD -> rc=0.",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py at HEAD: mark_ready reads ticket_id from the accepted record and branches on it (the lines the worker cited, :319-329, have moved).",
+      "1.0.0_SA_CTO~DELL2 msg 5813 named the cause from its own merge-base read; this seat's msg to the CTO at 20:45Z had carried the row's sentence as 'the premise is wrong'."
+    ]
+  },
+  "spec_asserts": "A code read states its vintage, and a finding that contradicts the order's premise is re-read at HEAD before it is relayed.",
+  "world_is": "The read's other results (the submission's closed set, the ticket's add_commentary member, what acceptance holds, the accepted record's members and readers) are also at vintage 0bdd920114 and were NOT re-read at HEAD by this seat; the CTO wrote IRPT_YCDGEN PRD v0.13 from the record with that vintage known. The 50-reader census may be short of any reader the gate's merge added. Owner 2.0.0_SA_COO~P2: before any cell is cut against that census, the reader list is re-counted at the cut's base; a worktree for a code read is cut at HEAD at spawn time and the order's face states the base."
+}
+```
