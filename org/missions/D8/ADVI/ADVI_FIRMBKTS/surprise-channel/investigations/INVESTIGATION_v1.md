@@ -563,3 +563,148 @@ write: **1 row** (`S1`).
   "notes": "FB-e-6 builds the path gated on the registry's own map (FIRM_BUCKET_MAP[scope] === resolved bucket), so no request changes until the map does. The cutover is the CTO's, with F10 and the advTenant remedy."
 }
 ```
+
+```json
+{
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~4",
+  "surfaced_at": "2026-10-11T04:20:38Z",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_FIRMBKTS-D1-W4-S1",
+  "class": "BLOCKING",
+  "one_line": "ROUND-1 COLLISION: cot gold/positions_cube/ AND gold/timeseries/positions_cube/ WRITE THE SAME 171 DATED KEYS, SO 1b (COPY UNCHANGED) AND 1e (A COLLIDING GROUP IS FAULT) CANNOT BOTH HOLD; P2 FAILS ON THIS GROUP",
+  "spec_asserts": "FB-e-1 1b: every round-1 MOVE/HOME row is copied UNCHANGED (check V5). 1e: a destination table shared with overlap above 0 makes EVERY class of the group FAULT. P2: every shared table needs a merge ruling with overlap_keys 0.",
+  "world_is": "mapping.json cot rows gold/positions_cube/ and gold/timeseries/positions_cube/ both map to advi/cottonwood/gold/positions_cube/date=<D>/data.parquet. Live listing (read-only, 2026-10-11): 171 keys per class with the same dates, overlap 342 of 342. Left unchanged and UNRULED in mapping_v2.json; r2_mapping.py --arms repair: P2 FAIL, AC2 3 of 4.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping.json (cot gold/positions_cube/, gold/timeseries/positions_cube/)",
+      "boto3 list_objects_v2 on opal-data-cot, read-only, prefixes gold/positions_cube/ and gold/timeseries/positions_cube/",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v2.json"
+    ]
+  },
+  "notes": "The CTO rules whether one of the two round-1 rows becomes FAULT (a round-1 change) or the table is re-keyed. Neither is taken here."
+}
+```
+
+```json
+{
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~4",
+  "surfaced_at": "2026-10-11T04:20:38Z",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_FIRMBKTS-D1-W4-S2",
+  "class": "OBSERVATION",
+  "one_line": "RS4 COMPLETION MARKERS HAVE NO CLASS IDENTITY IN THEIR DESTINATION: 13 CLASSES IN TWO bd/cot STATE-COMPLETE GROUPS COLLIDE (217 AND 401 SHARED KEYS) AND 1e FAULTS THEM",
+  "spec_asserts": "1c RS4 writes {V}/{F}/state/complete/<seg1>/<rest> with no class segment, so markers from different classes collide whenever the same name recurs.",
+  "world_is": "forwardfill_v2/allocations/_complete/2026-07-20.json and forwardfill_v2/transactions/_complete/2026-07-20.json (cot) both map to blackdiamond/cottonwood/state/complete/_complete/2026-07-20.json under the class-prefix convention. Groups: bd state/complete 5 classes overlap 217; cot state/complete 8 classes overlap 401.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v2.json (state/complete rows)",
+      ".scratch overlap pass, live listing 2026-10-11 (uncommitted, worktree scratch)"
+    ]
+  },
+  "notes": "The convention (matched prefix = class or child prefix) keeps keys unique within a class. Cross-class collisions remain; a rule that carries the kind in the table would clear them."
+}
+```
+
+```json
+{
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~4",
+  "surfaced_at": "2026-10-11T04:20:38Z",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_FIRMBKTS-D1-W4-S3",
+  "class": "OBSERVATION",
+  "one_line": "A ZERO-BYTE MARKER EQUAL TO ITS CLASS PREFIX CANNOT BE A RE-GRID CHILD: bd gold/cohorts/, filters/, nna/, snapshots/, summary/, timeseries/ KEEP THE MARKER IN A FAULT REMAINDER",
+  "spec_asserts": "1c RC: a key ending in / is a zero-byte directory marker, RETIRE. 1d: a re-grid child is a prefix that starts with its parent; the checker forbids two rows with one prefix.",
+  "world_is": "The marker key equals the class prefix (gold/cohorts/ and the like). A child keeping that prefix would duplicate the parent prefix, so the marker sits in the FAULT rest child with the non-MOVE objects. gold/clients/ (bd, 2949 live objects) stays FAULT whole for the same reason plus S5.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v2.json (regrids: bd gold/cohorts/, gold/filters/, gold/nna/, gold/snapshots/, gold/summary/, gold/timeseries/)",
+      "r2_mapping.py repair: duplicates=0 at structure V2"
+    ]
+  },
+  "notes": "The spec does not say how a marker equal to its prefix is split. A FAULT remainder is the conservative reading (1c: a rule that cannot apply as written is FAULT)."
+}
+```
+
+```json
+{
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~4",
+  "surfaced_at": "2026-10-11T04:20:38Z",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_FIRMBKTS-D1-W4-S4",
+  "class": "OBSERVATION",
+  "one_line": "1e TAKEN LITERALLY FAULTS ROUND-1 PLACED CLASSES THAT COLLIDE WITH NEW CLASSES; ONLY THE NEW CLASSES ARE FAULTED HERE, TO KEEP 1b",
+  "spec_asserts": "1e: every class of a colliding group becomes FAULT. 1b: round-1 placed rows are copied unchanged (V5).",
+  "world_is": "Round-1 classes in a new-vs-old overlap: bd gold/artifacts/ (44 keys in the group), bd platinum/advisors/ (980 keys; 77 shared with new gold/advisors/ keys), bd canonical/schwab/gold/account_performance/ and client_performance/, cot gold/artifacts/. The new classes of those groups are FAULT (reason destination-key overlap n of m); the round-1 rows stay.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v2.json (collisions, FAULT rows with reason destination-key overlap)",
+      "r2_mapping.py repair P2 and structure V5"
+    ]
+  },
+  "notes": "A CTO ruling could instead FAULT the round-1 rows (a change the difference control forbids) or key the new rows apart."
+}
+```
+
+```json
+{
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~4",
+  "surfaced_at": "2026-10-11T04:20:38Z",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_FIRMBKTS-D1-W4-S5",
+  "class": "OBSERVATION",
+  "one_line": "INTERLEAVED MARKERS AND DATA: A PREFIX RE-GRID WOULD NEED ONE CHILD PER FILE; 6 CLASSES (23,977 LIVE OBJECTS) STAY FAULT WHOLE ABOVE A 25-CHILD LIMIT THE SPEC DOES NOT SET",
+  "spec_asserts": "1d names children as sub-directories, root files or exclude groups; it sets no limit on the number of children.",
+  "world_is": "bronze/orion-api/ (17170 live objects, 3488 children), bronze/eclipse/ (1798, 270), bronze/eclipse_qa/ (871, 134), gold/eclipse/ (529, 265), silver/eclipse/ (660, 264); gold/clients/ (2949 root JSON beside a marker). Each stays one FAULT row with the reason naming the child count.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v2.json (FAULT rows, reason interleaved completion markers)",
+      "boto3 list_objects_v2 read-only on opal-data-inf and opal-data-bd, 2026-10-11"
+    ]
+  },
+  "notes": "The limit (25) is the worker's, not the spec's. The CTO may rule per-file children or a per-date re-grid."
+}
+```
+
+```json
+{
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~4",
+  "surfaced_at": "2026-10-11T04:20:38Z",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_FIRMBKTS-D1-W4-S6",
+  "class": "OBSERVATION",
+  "one_line": "CENSUS DRIFT: the 226 round-1 FAULT classes hold 114,349 live objects at 2026-10-11T04:01:07Z against 114,045 in census.json (2026-10-09T20:36:32Z); 42 classes differ",
+  "spec_asserts": "Re-grid parent_objects are live counts under the parent (1d).",
+  "world_is": "Per-class live counts exceed census counts by up to 16 objects (bd forwardfill_v2/transactions/ 310 against 306 census). Re-grid denominators use the live listing; census_listed_at stays the census value.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/census.json (listed_at 2026-10-09T20:36:32Z)",
+      ".scratch fault_listing.json, live list 2026-10-11T04:01:07Z (uncommitted)"
+    ]
+  },
+  "notes": "Census figures are kept as the census denominator (444 classes, 238,861 objects). The live difference is recorded here, not re-censused."
+}
+```
