@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~51</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>in_progress</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -104,6 +104,11 @@ issuer's AMENDMENT 2 on CTO ruling msg 4797; cell AR-y-42 closed as a RESULT, br
 DSGN_IRPTV1." Re-run the two remaining checks and record what they print NOW. Commit, validate with the two ids, then flip to `complete`.
 The criterion line for `AR42-y-AC1` below is struck: it is no longer an acceptance criterion of this order.
 
+**AMENDMENT 3 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~11:2xZ):** `<owned_cells>` now names `AR-y-41` only. Cell `AR-y-42` left this
+order with its criterion (AMENDMENT 2; CTO ruling msg 4797 gives it to DSGN_IRPTV1); the proof checker refused an owned cell with no
+criterion. The decomposition still lists the cell, with its disposition in this order's AMENDMENT 1. Gate limb that graded this
+amendment: read from this commit's own output.
+
 ### ACCEPTANCE
 
 <criterion id="AR41-y-AC1" cell_refs="AR-y-41"><invocation>python C:/dev/wk-irpt-anlreq-51/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r4/ar4_checks.py y41-types --root C:/dev/wk-irpt-anlreq-51</invocation><expect>Y41-TYPES-OK</expect></criterion>
@@ -136,7 +141,7 @@ org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v
 
 <decomp_ref>
 <decomp_doc>org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R4_Y.md</decomp_doc>
-<owned_cells>AR-y-41 AR-y-42</owned_cells>
+<owned_cells>AR-y-41</owned_cells>
 </decomp_ref>
 
 <proof_of_spec>
