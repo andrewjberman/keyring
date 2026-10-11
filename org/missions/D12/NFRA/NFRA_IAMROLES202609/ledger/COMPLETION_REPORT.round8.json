@@ -1,0 +1,100 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "NFRA_IAMROLES202609",
+ "round": 8,
+ "written_by": "2.0.0_SA_COO~ZI",
+ "written_utc": "2026-10-11T17:5xZ",
+ "decomposition_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/decompositions/NFRA_IAMROLES202609_DECOMP_R8.md@e27d52cb19",
+ "denominators": {
+  "fwd_in_prd_header": 8,
+  "cells_in_decomposition": 2,
+  "task_orders": 2,
+  "task_orders_terminal_with_valid_proof": 2
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a reviewer has actually answered the question with that evidence attached, rather than an opinion",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 8 per ROUND_ANALYSIS.round7.md: REALIZED at round 4."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "real roles have been read and their unused permissions named, over a stated lookback",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 8 per ROUND_ANALYSIS.round7.md: REALIZED at round 3."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "at least one real policy has been surfaced as perfectly scoped and yet requiring nothing of whoever calls it",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 8 per ROUND_ANALYSIS.round7.md: REALIZED at round 4."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "APPLIED",
+   "done_when_text": "each one is either in code or carries a named owner and a reason",
+   "cells": [
+    {
+     "cell_id": "IAM-y-1",
+     "task_orders": [
+      "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-y-1.disarm-the-inbox-check.md"
+     ]
+    },
+    {
+     "cell_id": "IAM-y-2",
+     "task_orders": [
+      "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-y-2.dead-bucket-sweep.md"
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "ENRICHMENT; MECHANICAL BARS MET on both, AC4 x2 UNGRADED (L9 at 3.0.0_SA_CVO~Z). y-1 (@1ce115f687): Z-S42 DISARMED. /cloud-ops 18a records get_delivery_state as the primary limb; the negative is a true mutant (old form 0, new form ERROR, same path, same shell), and the positive control went from 1 to 0 across the ack. ISSUER SPECIFICATION ERROR, recorded: the fallback this issuer specified (ls -A minus read/) returns 3 on an empty inbox (ls is aliased to ls -F here), an always-tripped wire. The assignee's find -maxdepth 1 -type f form with state markers counted alongside is ACCEPTED. y-2 (@4aaba2fa6a): 41 distinct bucket names / 393 principals / 651 documents, 3 wildcard names skipped. 0 FOREIGN (no URGENT), 34 OURS, 7 ABSENT (6 with write), and only 1 absence tombstoned. market_data_v2: Andrew-ruled tombstone, safe-apply already refuses the recreate (Z-S43; the cell's premise was backwards). ISSUER REAL RUN at close, live 2026-10-11 17:48Z: cloud-ops get_delivery_state count 1; sweep rows 41 == names 41; head-bucket opal-market-update 404, opal-data-schwab 404, control opal-data-portal-v2 200."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a real narrowing has been checked in advance and the check was believed",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 8 per ROUND_ANALYSIS.round7.md: REALIZED at round 5."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "each of the known past plans has been established as done or not done, on evidence",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 8 per ROUND_ANALYSIS.round7.md: REALIZED at round 3."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "done_when_state": "APPLIED",
+   "done_when_text": "the assessment reports the two differently, at permission grain",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 8 per ROUND_ANALYSIS.round7.md: REALIZED at round 3."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "it has actually been re-run and produced a comparable answer",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 8 per ROUND_ANALYSIS.round7.md: REALIZED at round 4."
+  }
+ ],
+ "surprise_rows_for_l10": [
+  "y-2: six ABSENT names carry live grants (five with write) and are nobody's decision -- round 9 narrowing candidates (ajb-workflow, opal-data-portal-s3, opal-data-schwab, opal-data-smartx-v2, opal-market-data-v2, opal-market-update; opal-data-smartx read-only)",
+  "opal-data-schwab reads 404 while the 49F Schwab ingest skill names s3://opal-data-schwab -- a broken or renamed pipeline target to confirm before narrowing",
+  "Z-S43: market_data_v2 is an Andrew-ruled tombstone; the market-overview declaration's removal is the remaining question",
+  "R20 bridge carried (retire when dell1 FWD-8 is in box/sitez)"
+ ]
+}

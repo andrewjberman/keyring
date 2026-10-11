@@ -276,6 +276,15 @@ function ajb {
     # session's tool calls to the right serial even with concurrent agents.
     $env:OPAL_AGENT_SERIAL = $Serial
 
+    # Box identity for every writer that keys a per-box file on $AGENTBUS_DEVICE (the override audit log among them,
+    # CTO~Z ruling msg 33351). A session started before the persisted user value existed never inherited it and wrote the
+    # legacy shared log. Derived from the persisted value, never typed; an env value already set wins.
+    if (-not $env:AGENTBUS_DEVICE) {
+        $persistedDevice = [Environment]::GetEnvironmentVariable('AGENTBUS_DEVICE', 'User')
+        if ($persistedDevice) { $env:AGENTBUS_DEVICE = $persistedDevice.Trim() }
+        else { Write-Host "[ajb] WARN: AGENTBUS_DEVICE is unset in the env and the user setting; per-box logs fall back to the shared file." -ForegroundColor Yellow }
+    }
+
     Push-Location $ws
     try {
         # --dangerously-skip-permissions: fully hands-free -- no folder-trust
