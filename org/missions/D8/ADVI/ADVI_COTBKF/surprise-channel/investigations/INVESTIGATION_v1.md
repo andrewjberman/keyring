@@ -7191,3 +7191,26 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W140-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~140",
+  "surfaced_at": "2026-10-11T23:13:37Z",
+  "one_line": "The order asks that VBTLX be flagged excluded in the csv and that the csv have exactly nine named columns; both cannot hold. The csv keeps the nine columns and VBTLX carries its rule class like every fund; the exclusion flag is in the record (against_earlier.excluded_tickers) and the md. VBTLX is too_few under the rule (1 decisive unit, 0 failing), so it is not in named and the five counts still sum to 270.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~140/FUNDS_BY_TRADES.csv header (nine columns) and FUNDS_BY_TRADES.json against_earlier.excluded_tickers",
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-bx-3.funds-by-trades.md item 5 (columns listed) and the issuing message (flag VBTLX excluded in the csv)"
+    ]
+  },
+  "spec_asserts": "The csv has exactly the columns cusip, ticker, class_by_trades, trade_rows, failing_rows, median_ratio, class_by_reinvestment, substituted, moved_in_round_74, and VBTLX is flagged excluded in it.",
+  "world_is": "Nine columns, none of which can carry an exclusion flag without changing the schema or the class values; the flag was placed in the JSON and md instead. Not established: whether the issuer wants a tenth column.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
