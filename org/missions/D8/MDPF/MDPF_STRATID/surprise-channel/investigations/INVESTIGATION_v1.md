@@ -531,6 +531,30 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Row D1-S7: the deployed slice imports a module absent from both homes, and its new key breaks the L-1 key-set identity.",
     "world_is": "Both are fixed in both homes and proven on the shipped bytes. The scheduled 2026-10-10 12:52Z dispatch and 13:30Z fire are the real runs (ledger L4)."
+  },
+  {
+    "id": "MDPF_STRATID-D1-S9",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-11T02:30:00Z",
+    "one_line": "The 2026-10-10 13:30Z scheduled-floor fire (the first scheduled run of the round-2 code) did NOT emit Global: the global scope refused at the cross-axis coherence gate (5 Opal fixed-income models carry account_count and model_value=None on 2026-10-09). Round-2 L4 (FWD-2, FWD-6) is therefore UNREAD, not failed; the 12:52Z backstop also read NOT-YET, so the runner step 6d (ledger W2 L3 runner-log half) did not run.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "mdpf-gold-lambda log stream 2026/10/10/[$LATEST]aee71e75 (13:30:37Z-13:31:37Z): 'SCOPE FAILED (isolated): global -- AssertionError: CROSS-AXIS COHERENCE GATE FAILED (global) -- REFUSING TO EMIT'; (v) presence disagreement 5 across 1 date: 2026-10-09 opal_ultra_short_term/short_term/intermediate/long_term_conservative/long_term_aggressive model_value=None, account_count 192/841/2034/3476/1431; 'cycle complete: 12/16 A4 objects built ... errors=[global]'",
+        "served: portal/gold/mdpf/global/aggregate-aua-timeseries newest key 2026-10-08.json LastModified 2026-10-09T13:31:40Z (comp-freshness --raw, age 36.8h at 02:2xZ); r2_run_read.py prints R2-RUN-READ FAIL on exactly those pre-round-2 bytes (no inside_model_figure/held_out), so that FAIL is not a grade of round 2",
+        "git diff --stat 23c47d3837 88e974ca10 -- data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py (the gate's file): empty, unchanged by round 2; the same assertion fired 2026-10-01T11:58:59Z on this log group",
+        "aum_daily line in the same stream: 'day 2021-09-02..2026-10-08' (the 49F value axis ends 2026-10-08) while Cottonwood measured 2026-10-09 (slice LastModified 2026-10-10T13:31:08Z, dates end 2026-10-09)",
+        "mdpf-feeder-trigger log stream 2026/10/10/[$LATEST]42e1390d: backstop and accelerator both 'NOT-YET dispatched false' (looked_for s3://opal-data-inf/gold/eclipse/2026-10-10/_meta/gold_complete.json and s3://opal-data-bd/schwab/silver/rps/date=20261010/data.parquet absent)",
+        "served Cottonwood slice, version IlnFtQxJ vs the prior run's ti203WCy: by_model keys 16 of 16 equal, sma members {divz, pfde} equal, 0 model_value cells differ on the 493 common dates; new key unidentified_strategies as_of 2026-10-09, names_scanned 18, config_source s3://opal-data-etfs/config/etf_universe.json, rows [Opal_Muni_Sleeve 553337.61 RULE_NOT_COUNTED]"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-APPLY-R2 leg L4 and ledger mdpf-stratid-w2-wiring-silver L3: the 2026-10-10 12:52Z dispatch and 13:30Z fire are the real runs; r2_run_read.py reads Global's run-date object.",
+    "world_is": "INFERRED, not exercised against pre-round-2 bytes: the Saturday fire's run date is Friday 2026-10-09, Cottonwood measured it and the 49F value axis did not, so Global's frontier date carries counts with no values and the unchanged gate refuses. Global's prior emit stays authoritative; nothing broken was served. L4 re-points to the first fire that emits a Global object for a date on which all three scopes carry values (expected the 2026-10-12 13:30Z fire); L3 waits for the first dispatch that is not NOT-YET."
   }
 ]
 ```
