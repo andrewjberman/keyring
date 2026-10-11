@@ -3290,3 +3290,75 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T20:47:23Z",
+  "one_line": "TO-AR-y-132: the order and the earlier read (TCKT_VNEXT~20) name parse.py as the normalizer, but the door the form reaches does not use it: the deployed upload service refuses the parse.py lane by name (CSV_LANE_NOT_COMPOSED) and the form only sends the template lane, whose reader is template_reader.py reading columns A and B. A check built in parse.py would never run for a person filing in the Ticket Center.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face of IRPT_ANLREQ.TO-AR-y-132 and ONE_ACCOUNT_CHECK_READ.json (~20): 'parse.py recognises identifier, name, unit and currency headers only' is the place a several-accounts check would read.",
+  "world_is": "MEASURED: infra/aws/lambda/investor-reporting/intake/upload_resolution.py:110-111 and :130-132 build both deployed services with parse_mapping and resolve_security = _not_composed('CSV_LANE_NOT_COMPOSED'); portal origin/DEV c2c6a8aedd prospect.ts:118-121 always sends file_base64 + file_type. The live path is infra/aws/lambda/investor-reporting/intake/template_reader.py (xlsx cells outside A/B skipped at :95; csv cut to two values at :129) and portfolio.freeze_template_portfolio. parse.py DOES already carry a subtotal control (SUBTOTAL_ROW_PRESENT, :900), a multi-sheet control (MULTI_SHEET_WORKBOOK, :857) and a stated-total check (TOTAL_MISMATCH, :1201), all measured in process, none reachable from the form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r13/ONE_ACCOUNT_CHECK_READ.json (door_today, door)",
+      "infra/aws/lambda/investor-reporting/intake/upload_resolution.py:105-134",
+      "portal origin/DEV c2c6a8aedd src/pages/InvestorReporting/tabs/analysis/prospect.ts:97-126"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not read: the Terraform / source map that stages the two deployed functions; this row rests on the composition functions in upload_resolution.py, which the order's tests construct."
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T20:47:23Z",
+  "one_line": "TO-AR-y-132: run through the door in process (offline provider stub), a two-account sheet with an Account column and a sheet ending in a 'Total' row are both ACCEPTED (NORMALIZED); the first merged two accounts' AAA rows into one holding (150), the second counted the total as a holding (600 on a 300 sheet). The live provider's answer for the symbol TOTAL was not run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TCKT_VNEXT FWD-3 as quoted in the order: a known-bad sheet (several accounts in one file, a totals row, a holding that cannot be priced) is turned back with what to fix.",
+  "world_is": "MEASURED in process with synthetic sheets (script .scratch/run_door.py of this worktree, not committed): SEVERAL_ACCOUNTS NORMALIZED total 420; TOTALS_ROW 'Total' NORMALIZED total 600; 'Grand Total' turned back only as TICKER_CHECK_UNAVAILABLE (a space keeps it from the provider); shares sheet turned back as SHARES_PRICE_SOURCE_NOT_COMPOSED, no words; unknown ticker turned back with words. Bounded by the stub, which finds any symbol matching security_resolution.py:17.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r13/ONE_ACCOUNT_CHECK_READ.json (door_today)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_deferred_resolution.py (the harness)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This is the state the outcome exists to change, so it is recorded as the base, not as a new defect. The exposure that matters: an accepted merged or double-counted sheet is analysed as given. Not looked at: any report already produced from such a sheet."
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T20:47:23Z",
+  "one_line": "TO-AR-y-132: the door's first answer to every template upload (10 of 10 sheets run) is RESOLVING; the form then says 'submit again in a moment', so a person learns what to fix only after a second press even for a file that is plainly bad.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FWD-3: 'a file that today would come back by email comes back from the form instead' (the order does not say after how many presses).",
+  "world_is": "MEASURED: infra/aws/lambda/investor-reporting/intake/uploads.py:370-382 (_defer publishes RESOLVING; the pure read_template result is discarded) and 10 of 10 in-process runs first=RESOLVING; portal origin/DEV analysisRequest.ts:113-118 shows the 'still being checked' text. The resident step ran in process at once; how long it takes live was not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r13/ONE_ACCOUNT_CHECK_READ.json (form.how_a_refusal_is_shown)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded in the proposed cells as the optional fifth cell and the _defer placement; the ruling is the CTO's."
+}
+```
