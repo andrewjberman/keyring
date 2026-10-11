@@ -6311,3 +6311,27 @@ that exception is precisely what hid this, so it is stated rather than relied on
  "world_is": "The token test cannot tell the RUNNING-LIVE node type from the verdict's declared type, so the criterion could pass on a wrong-type match. The gate was fixed at 75bd033fa7 and a self-test control pins it. The check was not edited (its expectation is the issuer's); the self-test wrong-type arm is the discriminating control."
 }
 ```
+
+```json
+{
+  "id": "LGIC_ENFORCE-D1-S3",
+  "project": "LGIC_ENFORCE",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T05:50:00Z",
+  "one_line": "Generated registry views lag the registry at box/dell1 HEAD: regeneration writes 14 files and 12 differ (9 in the GENERATED mark only; vectors.json, opal_name.tftest.hcl and portal vendorDisplayNames.generated.ts in content); event_rules.json moves data/firm_registry.json without being named in its mark.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Every generated view equals `python lib/opal_naming.py generate` at HEAD, and each view's mark names every registry file that moves it.",
+  "world_is": "1.0.0_SA_CTO~DELL1 at 05:4xZ: validate OK (54 system rows, 14 scope rows, registry@557f0c882e296291); generate --out <scratch> wrote 14 files; 12 differ from HEAD. Non-mark changed lines: vectors.json 36, opal_name.tftest.hcl 72 (the 4698 rows), vendorDisplayNames.generated.ts 3 (commonwealth, yahoo, yahoo-finance); the other 9 differ only in the mark line. MDPF_CANON-D1-S11 (check_en_r2.py r6) reports event_rules.json moving data/firm_registry.json, a file its mark does not list. Ruling (MDPF_CANON ledger/ROUND_ANALYSIS.round3.md section 2): regenerate at HEAD and declare event_rules.json in that target's mark scope; the portal file lands on portal DEV by its normal path; check_en_r2.py retires as a round-2 fixed input.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I lib/opal_naming.py validate (rc 0) and generate --out <scratch> (14 written), diffed with --strip-trailing-cr against box/dell1 HEAD 2026-10-11T05:4xZ",
+      "row MDPF_CANON-D1-S11"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~L1"
+}
+```
