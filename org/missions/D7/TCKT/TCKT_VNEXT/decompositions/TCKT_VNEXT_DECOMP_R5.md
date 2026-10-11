@@ -113,3 +113,19 @@ The CTO signed the deploy ON AMENDMENT 1 of the packet, which needs two lines in
 
 Edge: `R5-cm-2` -> `R5-ml-2`. The packet's AMENDMENT 1 then names the new pin, hash, numstat and test count; the CTO confirms in
 one line; then the apply order is cut. Dry-run at the base: cm2-lines FAIL (missing tests), cm2-regress FAIL (190 below 192).
+
+## AMENDMENT 5 (2026-10-11 ~21:0xZ) -- `R5-cm-2` drained, `R5-ml-2` issued, and one more cell by CTO ruling msg 5831
+
+- `R5-cm-2`: merged @33d165b4ef (192 ticket tests; handler blob `7113a749`). `R5-ml-2`: the CTO confirmed the packet's
+  AMENDMENT 1 @e1506c3a04; TO-APPLY-R5-ml2 issued @579de1cd17.
+- CTO ruling msg 5831 (row IRPT_YCDGEN-D2-S64, the CVO's catch: a submission checks only a ticket id's format, so any well-formed
+  id would start a draft on that ticket): the draft lands only on the ticket whose OWN record names that request.
+
+| cell | builds | list item | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|---|
+| `R5-cm-3` | the draft route's body carries the request id; the one deny also covers a ticket with no recorded request and a ticket whose recorded request id differs; the conditional write carries the match | 2 (FWD-6's fence) | FWD-6 | cut | dell2 worker, slot 23, workstream CR | WORLD by path floor; nothing is applied | worker | `R5-cm-2` (drained) |
+| `R5-cm-4` | the apply of `R5-cm-3`, under its own pair | 2 | FWD-6 | NOT-EVALUATED | ISSUER + applier seat | WORLD | -- | `R5-cm-3`; and `R5-ml-2` applied first (the CTO: "Apply the build I signed as signed") |
+
+**Ordering held by the issuer:** `R5-cm-3` is built in its own worktree now and MERGED only after TO-APPLY-R5-ml2 reports, because
+that apply's pin check reads the handler at HEAD. The drafter (`2.0.0_SA_COO~T2`) is not switched to the route before `R5-cm-4`
+lands (the CTO's word to that seat). Dry-run at the base: cm3-match FAIL (missing tests), cm3-regress FAIL (192 below 196).
