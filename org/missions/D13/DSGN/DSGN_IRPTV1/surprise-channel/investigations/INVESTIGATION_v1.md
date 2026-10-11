@@ -6116,3 +6116,32 @@
   "notes": "Not investigated."
 }
 ```
+
+## DSGN_IRPTV1-D2-W62-S1 -- IV-e-113: the vendor sections wire has no title member and the producer sends lower-case unit tokens; the page prints the section code as title and 'unknown' as unit on every vendor card
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W62-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~62",
+  "surfaced_at": "2026-10-11T19:25:00Z",
+  "one_line": "IV-e-113: the vendor sections wire has no title member and the producer sends lower-case unit tokens; the page prints the section code as title and 'unknown' as unit on every vendor card",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.schema.json:126-190: the vendor section item has section_id, section_type, value, units, as_of_date, date_claim, page, bbox and additionalProperties false; no title or label member",
+      "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py:704-709 section_type = row[\"section_id\"] (the census code S00..S32) and units = row[\"unit\"]; :714 the title is held as `_label`, :781 `_title`; ycharts/extract/publication.py:215-217 public() drops every key starting with an underscore",
+      "docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json: 33 sections S00..S32 each with a title (the producer's table of names, pinned by build_resident_package.py:39); 72 typed field rows with unit tokens count, date, enum, number, pct, price, ratio, score, text, usd_billions, years (all lower case)",
+      "portal 940c17a7 contracts/adapt.ts:530-537 SECTION_UNIT_FOR_WIRE keys DECIMAL_FRACTION, PERCENT, USD, CURRENCY, COUNT, TEXT; :937 title: section.section_type; :941 label: section.section_type; :944 unit: SECTION_UNIT_FOR_WIRE[section.units] ?? 'unknown'",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/SECTION_TITLE_UNIT.json (the whole trace, verdict BOTH, served answer NOT read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A reader who opens a finished analysis report sees each section by a name and each figure with its unit (row DSGN_IRPTV1-D2-S21's spec_asserts; the contract's own description calls units 'the units half; required on every section').",
+  "world_is": "By code at this tree, not by a served vendor answer: the vendor section carries a code in section_type and no name anywhere on the wire, so a name cannot be printed without a contract change (a title member, or a code-to-name table the page reads) on the producer's side; and the wire's units tokens are the census's lower-case set while the page maps only upper-case Opal-era tokens, so all 12 (11 scalar plus 'chart') fall to 'unknown'. The contract fixtures send DECIMAL_FRACTION, which the page maps, so every fixture-driven test passed. The two repairs are on different sides: the title is a contract-plus-producer matter (IRPT_BCKEND / IRPT_YCDGEN), the unit map is a page matter (this project).",
+  "notes": "Not repaired (a read cell). The served-answer read that would close the deployed-vs-tree gap is in SECTION_TITLE_UNIT.json served_answer_how for 2.0.0_SA_COO~P2."
+}
+```
