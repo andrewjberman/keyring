@@ -1,13 +1,16 @@
 {
-  "request_id": "DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS",
-  "channel": "history",
+  "allowance_gap": null,
+  "basis": "history backfill quoted over NON-trading days (weekends and NYSE holidays, lib/trading_calendar.py is_trading_day) at the measured ceiling per day; a trading day's backfill allowance is 0 (production draws history on trading days); counted only on days a scheduled drawer fires (drawer_schedule.py); re-frozen under the rule in force: rule changed, round 6 R1",
   "cells": {
     "bloomberg_history": 15720
   },
-  "quoted_at": "2026-10-09T09:3xZ",
-  "finish_date": "2026-10-13",
-  "finish_date_claim": "held",
-  "claim": "held",
-  "basis": "frozen from the round-5 real run: dq_t15_quotes.py ran bbg_quote.py --quote at the dell1 base ~2026-10-09T09:3xZ, recorded verbatim in deliverables/2.0.0_SA_COO~Q1/ROUND5_REAL_RUN.md @05d2eb6bc5 (committed before any of these requests drew)",
-  "frozen_by": "2.0.0_SA_COO~Q1"
+  "channel": "history",
+  "claim": "measured",
+  "finish_date": "2026-10-17",
+  "finish_date_claim": "measured",
+  "frozen_by": "2.0.0_SA_COO~Q1",
+  "quoted_as_of": "2026-10-09",
+  "refrozen_at": "2026-10-11T05:30:22Z",
+  "request_id": "DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS",
+  "supersedes": "DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.quote.superseded-2026-10-11.json"
 }

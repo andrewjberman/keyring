@@ -3349,3 +3349,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "MEASURED: Packaged by cell YCD-n-6 (merge cb5d6be8a4; packet org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/NEVER_WIDEN_PACKET_BRANCH_B2.md section 1 and its host proof, section 2). LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: produce completed for a listed principal with no LayoutRefused."
 }
 ```
+
+## IRPT_YCDGEN-D2-S38 -- status-job with the portal date opt-in is refused INVALID_INPUT for a READY Opal report (SECTION_DATE_CENSUS_INVALID)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S38",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T05:32:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "The portal's own status-job call (date opt-in header) is REFUSED INVALID_INPUT for a READY Opal report: 251 of 257 sections sit undated under `sections`",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED, window 7, 2026-10-11T05:29:50Z, irpt-status rev 6 (CodeSha256 6idtFvAm...): GET /api/scoped/investor-reporting/status/REQ-5e4149d2863aea31cc87d660?selected_tenant=49financial WITH header X-IRPT-Status-Dates: prospect-v1 returns HTTP 200, ok false, state UNAVAILABLE, public_reason_code INVALID_INPUT (record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R6_STATUS_JOB_OPT_IN_REV6_20261011.json). CloudWatch /aws/lambda/irpt-status, correlation corr-62e36c245412: exception_type RequestReadRefused, exception_text SECTION_DATE_CENSUS_INVALID, operation status-job; TypeError 0. Source: infra/aws/lambda/investor-reporting/ops/prospect_dates.py:30-42 section_dates() refuses a report whose `sections` member holds a row without an ISO as_of_date; an undated row is legal only under `undated_sections` with date_claim NONE. The served OPAL_ENGINE report of this request (window-6 record R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf) holds 257 rows under `sections`: 6 with an ISO as_of_date, 251 with as_of_date null; no row carries date_claim and the document has no undated_sections member. The same read WITHOUT the header (04:52:49Z) answers ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE."
+    ]
+  },
+  "notes": "ARMED: every portal status read of a READY OPAL_ENGINE report that sends X-IRPT-Status-Dates: prospect-v1 gets INVALID_INPUT, a third answer neither ruling predicted. Loud (ok false), no data written. Two remedies, a contract call for 1.0.0_SA_CTO~DELL2: the Opal producer writes its undated rows under undated_sections with date_claim NONE (IRPT_YCDGEN, this seat), or section_dates() treats an OPAL_ENGINE document's null as_of_date as undated (ops/prospect_dates.py, the status module's owner). Disarm: one of the two lands and this read answers one of the two predicted branches.",
+  "spec_asserts": "1.0.0_SA_CTO~DELL2 msg 4152: a status-job read of a READY request that sends the portal's date opt-in answers READY / ANALYSIS_READY when the request has retained source provenance, else ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE; 2.0.0_SA_COO~Y2 msg 4155 names the same two branches. The portal client sends the header on its status call (portal/src/pages/InvestorReporting/contracts/prospect-dates.ts:3).",
+  "world_is": "MEASURED, window 7, 2026-10-11T05:29:50Z, irpt-status rev 6 (CodeSha256 6idtFvAm...): GET /api/scoped/investor-reporting/status/REQ-5e4149d2863aea31cc87d660?selected_tenant=49financial WITH header X-IRPT-Status-Dates: prospect-v1 returns HTTP 200, ok false, state UNAVAILABLE, public_reason_code INVALID_INPUT (record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R6_STATUS_JOB_OPT_IN_REV6_20261011.json). CloudWatch /aws/lambda/irpt-status, correlation corr-62e36c245412: exception_type RequestReadRefused, exception_text SECTION_DATE_CENSUS_INVALID, operation status-job; TypeError 0. Source: infra/aws/lambda/investor-reporting/ops/prospect_dates.py:30-42 section_dates() refuses a report whose `sections` member holds a row without an ISO as_of_date; an undated row is legal only under `undated_sections` with date_claim NONE. The served OPAL_ENGINE report of this request (window-6 record R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf) holds 257 rows under `sections`: 6 with an ISO as_of_date, 251 with as_of_date null; no row carries date_claim and the document has no undated_sections member. The same read WITHOUT the header (04:52:49Z) answers ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE."
+}
+```

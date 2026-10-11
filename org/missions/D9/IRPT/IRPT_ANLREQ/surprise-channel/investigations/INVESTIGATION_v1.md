@@ -1704,3 +1704,32 @@
   "notes": "Resolves IRPT_ANLREQ-D2-S19."
 }
 ```
+
+## IRPT_ANLREQ-D2-S23 -- t1 A2 and B applied without the CTO's transcripts-zip re-read; the applier's pin predates fd74f984ac
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S23",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T05:29:00Z",
+  "one_line": "TO-APPLY-t1 steps A2 and B were applied tonight without the CTO's precondition (msg 3939: re-read the shared transcripts zip, moved by NFRA_TRNSPT TR-ra-22 to the fd74f984ac build); the precondition sat in this seat's runtime tick file and never reached the applier, whose pin predates fd74f984ac.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (asked 05:28Z: accept as landed, or a code-only re-apply at a pin carrying fd74f984ac before the test invoke)",
+  "spec_asserts": "1.0.0_SA_CTO~DELL2 msg 3939: after TR-ra-22 the shared transcripts dist zip is the fd74f984ac build; re-read it before steps A2 and B of ledger irpt-anlreq-t1-commentary-store-and-lambda-20261009. CTO msg 3904: that ledger is 2.0.0_SA_COO~Y2's to close or decide.",
+  "world_is": "MEASURED by this seat 05:26Z-05:28Z. get-function-configuration: irpt-commentary-draft-store-lambda CodeSha256 AsKY+KWL..., LastModified 2026-10-11T04:12:31Z (step A2); outlook-global-commentary-draft-lambda State Active, CodeSha256 plVgBIIX..., LastModified 2026-10-11T05:26:35Z (step B; the function did not exist at 02:4xZ). Ledger at HEAD: A, A2, KEYS closed; B, SIM, INVOKE open. The applier's pin is 4901eece20 (its t1_stepA2_preapply.md and plan commit 7dd84ba3f6): git merge-base --is-ancestor fd74f984ac 4901eece20 rc 1, 36b0bc0423 rc 0, control (pin in origin/CLOUD) rc 0. infra/aws/terraform/transcripts/commentary.tf:281-282 gives the function filename = local.pull_zip, so its bytes are the transcripts zip built at that pin. The applier's four t1 files carry 0 mentions of fd74f984ac or msg 3939. Its inbox since 03:40Z holds 10 messages, none about t1. It resumed a pending order whose GO dated from 2026-10-09 (T2 msg 3594). NOT MEASURED: whether any commentary code path differs between the two zips; TR-ra-22's change is described as the Teams pull.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live get-function-configuration reads, two named functions",
+      "git merge-base reads against pin 4901eece20",
+      "org/mcp/inbox/0.7.0_AE_CloudOps/~DELL2/read/ listing 20261011T03-05",
+      "org/mcp/drive_ticks/2.0.0_SA_COO~Y2.md row 03:0xZ (where the precondition was parked)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This seat's defect: a precondition on another seat's act was recorded on a carrier that seat does not read. The applier was told at 05:28Z to finish step B (never half-landed), run the read-only simulate, and HOLD before the test invoke. Nothing is rolled back by this row."
+}
+```

@@ -49,7 +49,7 @@ D1-S1, D1-W1-S2, D1-W1-S3 and D1-S3 as enrichment items; D1-S2 and S11 are not p
     "owner": "2.0.0_SA_COO~F1",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F1",
       "round": "v2"
     },
@@ -58,7 +58,7 @@ D1-S1, D1-W1-S2, D1-W1-S3 and D1-S3 as enrichment items; D1-S2 and S11 are not p
       "owner": "2.0.0_SA_COO~F1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-W1-S3",
@@ -75,7 +75,7 @@ D1-S1, D1-W1-S2, D1-W1-S3 and D1-S3 as enrichment items; D1-S2 and S11 are not p
     "owner": "2.0.0_SA_COO~F1",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F1",
       "round": "v2"
     },
@@ -84,7 +84,7 @@ D1-S1, D1-W1-S2, D1-W1-S3 and D1-S3 as enrichment items; D1-S2 and S11 are not p
       "owner": "2.0.0_SA_COO~F1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-S1",
@@ -153,7 +153,7 @@ D1-S1, D1-W1-S2, D1-W1-S3 and D1-S3 as enrichment items; D1-S2 and S11 are not p
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v2"
     },
@@ -162,7 +162,7 @@ D1-S1, D1-W1-S2, D1-W1-S3 and D1-S3 as enrichment items; D1-S2 and S11 are not p
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
