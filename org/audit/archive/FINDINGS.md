@@ -500,3 +500,28 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 - log: org/pipescript-suite-gate-audit.log
 - detail: non-append edit: first divergence at line 1, col 6 (baseline 4760B / live-head 151B)
 - action: THIS log PINNED at its prior baseline (evidence preserved, still FIRING); other covered logs continue to archive. Needs human authority ruling (clause 3).
+
+## 2026-10-11T064313Z -- COVERAGE -- MANIFEST-ENTRY-MISSING-LIVE
+<!-- sig: COVERAGE|MANIFEST-ENTRY-MISSING-LIVE|org/git-author-override-audit.laptop.log|listed in manifest but no live file -->
+- log: org/git-author-override-audit.laptop.log
+- detail: listed in manifest but no live file
+
+## 2026-10-11T064313Z -- COVERAGE -- MANIFEST-ENTRY-MISSING-LIVE
+<!-- sig: COVERAGE|MANIFEST-ENTRY-MISSING-LIVE|org/git-author-override-audit.dell#.log|listed in manifest but no live file -->
+- log: org/git-author-override-audit.dell1.log
+- detail: listed in manifest but no live file
+
+## 2026-10-11T064313Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/git-author-override-audit.laptop.log|baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\#-#-#T#Z\org_git-author-override-audit.laptop.log -->
+- log: org/git-author-override-audit.laptop.log
+- detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\2026-10-10T205353Z\org_git-author-override-audit.laptop.log
+
+## 2026-10-11T064313Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/git-author-override-audit.sitez.log|baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\#-#-#T#Z\org_git-author-override-audit.sitez.log -->
+- log: org/git-author-override-audit.sitez.log
+- detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\2026-10-10T205353Z\org_git-author-override-audit.sitez.log
+
+## 2026-10-11T064313Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/git-author-override-audit.dell#.log|baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\#-#-#T#Z\org_git-author-override-audit.dell#.log -->
+- log: org/git-author-override-audit.dell1.log
+- detail: baseline missing: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\audit\archive\sitez\2026-10-10T205353Z\org_git-author-override-audit.dell1.log
