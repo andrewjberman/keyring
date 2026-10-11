@@ -415,3 +415,32 @@ walk, a second act asked of the laptop's /ui-walk once the hops read clean (ruli
 **Rule 24:** no served enum is introduced; the runner's per-hop record vocabulary is the draft's `repo_carries`.
 
 fanout: 1 of 1 chains, cap 8.
+
+
+## v14 -- round 14 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~07:3xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2's ROUND-13 ANALYSIS @72e8e2bb59
+
+**Round 13 is void:** its one order, IV-e-88 (the trace runner and pair v2), was SUPERSEDED before any work landed. The CTO's analysis dropped the
+API-runner trace (an API trace does not grade FWD-1; the reviewer's answer, accepted) and withdrew msgs 4198 and 4338. The analysis calls its list
+"round 13"; it is cut here as round 14 so no round number carries two issuances.
+
+**Rectangle:** the analysis's section 4, five items. Item 1 (the FWD-1 rendered walk) is an ASK the managers carry to the laptop's /ui-walk, not a
+cell. Items 2 to 5 are one cell each. Portal base: DEV tip `1cd1cf252eae0eee0d67cba4bde31630a71f975c`.
+
+| cell | item | rows | risk | chain / slot | key files (IR = portal/src/pages/InvestorReporting) |
+|---|---|---|---|---|---|
+| IV-e-89 | 2: F40-AC5, the calendar derived from the one frontier | D2-W43-S3 | SERVED | A ~49, 1 of 3 | the portal's calendar data and its generator; fe-s-40 |
+| IV-e-90 | 3: the 43-id table, two dispositions only | S7, W21-S2 (stay ARMED until dispositioned), the 14 refused labels | LOCAL | B ~50 | the suite sample and its logs, read-only |
+| IV-e-91 | 4: the portal half catches up to the contract (18 ids) | D2-W43-S2 | SERVED | A ~49, 3 of 3 | IR routes table, envelopes, content pins |
+| IV-e-92 | 5: bun from the environment; the press test off the private dispatcher; F47-AC6 | D2-W43-S1, D2-W44 (press), D2-W43-S3 | LOCAL | A ~49, 2 of 3 | IR tests and helpers |
+
+**Edges:** every portal-editing cell runs in series on ONE slot and worktree pair (chain A), in the order calendar, test hygiene, contract
+catch-up, so the candidates form one linear history on the DEV tip and each later cell's suite run stands on the earlier fixes. The table
+(chain B) is independent and starts at once. The analysis lists items 2, 3 and 5 as independent; they are, but two portal branches cut from one tip
+cannot both fast-forward, so 5 follows 2 on the slot.
+
+**Not cut, named:** the page halves waiting on served fields (W39-S2 on IRPT_ANLREQ D2-S21; Export on IRPT_ANLREQ D2-S24; the correction kind on
+IRPT_YCDGEN FWD-20); right-aligning the two dollar columns (D2-W46-S5: "in the next cell that touches the table").
+
+**Rule 24:** the two dispositions of the 43-id table are the CTO's, quoted from the analysis section 2 item 2; the check refuses any third word.
+
+fanout: 2 of 2 chains, cap 8.

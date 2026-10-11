@@ -167,7 +167,7 @@ this remedy was an open sovereign call at Andrew ("mockadv has ZERO users, measu
 round-2 analysis orders it built and names it step 1 of the window. The shared file `lib/opal_naming.py` is
 LGIC_ENFORCE's; the edit is one emitter. A worker that finds the generator needs more than `_blk_firm_config` files a row.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-7</to_id>
 <slot>~17</slot>

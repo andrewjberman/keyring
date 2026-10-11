@@ -1978,3 +1978,31 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W66-S1 -- the ticket service refuses GET to svc-irpt-packager: the packager's idempotence read cannot succeed live
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W66-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~66",
+  "surfaced_at": "2026-10-11T07:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The ticket service refuses GET /api/scoped/tickets/{id} to svc-irpt-packager (403), so the packager's idempotence read (ticket_package) cannot succeed live even with the new live_ticket_ports; handle_commentary_ready calls it before any render or attach, so no package attaches until the ticket service lets the packager read a ticket",
+  "spec_asserts": "TO-AR-g-31 cell item 6 and opal_packager.py module docstring step 3: the ticket is the one idempotence reader, read as the package principal svc-irpt-packager (row IRPT_ANLREQ-D2-W62-S2).",
+  "world_is": "MEASURED by reading, no call made: infra/aws/lambda/ticket_center/lambda_function.py get_ticket (:1196-1207) calls authorize('GET', actor); MATRIX['GET'] = frozenset({INTERNAL}) (:160); principal_class (:300-318) returns UNRESOLVABLE for any userType 'service' email other than svc-ticket-form, svc-analyst-intake and svc-commentary (:305-312), and svc-irpt-packager is not among them, so authorize is False and get_ticket answers 403 via _deny. package_ticket (:1392-1400) does NOT use that path: it admits the package_principal by name, so attach can succeed while the read cannot. The ticket's package sits at answer['ticket']['package'] (get_ticket returns {'ticket': Item}; package_ticket writes it as attribute 'package' at :1447). live_ticket_ports maps the 403 to TICKET_READ_REFUSED:403. ticket_center is outside this order's paths and was not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:156-168 MATRIX (GET admits INTERNAL only; PACKAGE empty)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:300-324 principal_class and authorize",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1196-1207 get_ticket; :1392-1459 package_ticket",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:160 ticket_package is called before the render and the attach"
+    ]
+  },
+  "notes": "Issuer's ruling needed: either the ticket service admits svc-irpt-packager to GET a ticket (a ticket_center change: a matrix or principal_class entry, firm-scoped like package_ticket), or the idempotence read moves to another reader. The packager side (live_ticket_ports) is delivered either way."
+}
+```

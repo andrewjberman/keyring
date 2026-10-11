@@ -60,3 +60,27 @@ Push state: LOCAL @576d421c27 on box/dell1; origin read e3f052f94a (ls-remote 06
 
 Push state: LOCAL @4b21258057 on box/dell1; origin read 4516969e5d (ls-remote 06:5xZ).
 
+## 07Z: the CVO's grades and the CTO's refusal, both fixed at the issuer's end
+
+- CVO compile @f334fa1334 (06:58Z local 02:58): CN-d-2 AC2 MET, CN-d-3 AC3 MET (tooltip read, one date), **CN-d-4 AC3 NOT MET** -- the census row still named
+  the staging tree and the census file was in AC3's text but not in the worker's grant (my defect). Rows S13-S15, W10-S1..S3, W12-S1, W13-S1, W14-S1 dismissed;
+  S16 graduated to REMEDIATION_v4, held. Slug HELD on CN-d-1.
+- CTO half of the pair **REFUSED** (msg 3573, @421b233635): the identity guard ran bare in build_all, so a global-only fault would have stopped every firm
+  scope; the producer's own rule is the opposite. CN-d-1 reopened by amendment 2 @742bed9e98 (guard through `_isolated`, arm A6), same worker on a fresh
+  worktree, merged @0d39789fdf, pair sections 1, 4, 5 amended @de83c794b6; CTO RE-SIGNED @8a01e43ab0 (msg 3588). CN-d-3 cleared for DEV (his condition, the
+  CVO's AC3 MET).
+- CN-d-4 reopened by amendment 2 @8a6efab30a (census granted, step 8, AC4 `r4_cn_d_4_census.py`); worker merged @70666803, order closed @002de41d83;
+  CVO asked to re-grade AC3.
+- `ADHOC.canon-r4-code-deploy` @359072576e issued to CloudOps~DELL1, WAITING on `MDPF_STRATID.TO-APPLY-R2`. Pin 0d39789fdf is on origin.
+- Worktrees: ~10, ~11, ~13, ~14 removed; ~12 stays until the portal DEV fast-forward (nested branch wk-MDPF_CANON-12-portal @133fb8af).
+
+| item | owner | un-parks when |
+|---|---|---|
+| CVO re-grade of CN-d-4 AC3, then his slug and the CTO's round-4 analysis | 3.0.0_SA_CVO, then 1.0.0_SA_CTO~DELL1 | his compile |
+| the CloudOps deploy (D1, D2, one run, classification) | 0.7.0_AE_CloudOps~DELL1 | `TO-APPLY-R2` ledger CLOSED; his report, then I read C1-C5 against the artifacts |
+| portal DEV fast-forward of @133fb8af | 0.0.0_AB_MSTR~DELL1 under /govern | his push; then worktree ~12 and the nested branch are mine to retire |
+| Sunday 13:30Z fire read (`round4/checks/r4_daily.py read --fire 2026-10-11T13:30:00Z`), then `r4_daily_bronze.py --run-date 2026-10-11 --since 2026-10-11T06:00:00Z` after the dispatch | 2.0.0_SA_COO~D1 | time: no cron is armed on this lane (zero crons by the launch table), so a message or the operator wakes the read |
+| Monday 13:30Z fire read | 2.0.0_SA_COO~D1 | same |
+
+Push state: LOCAL on box/dell1; origin read d3e2ba57bc (ls-remote 07:0xZ) carries through the CN-d-1 amendment merge.
+
