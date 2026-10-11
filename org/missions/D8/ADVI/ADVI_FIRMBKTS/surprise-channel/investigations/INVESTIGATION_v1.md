@@ -3729,6 +3729,30 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
 }
 ```
 
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W29-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~29",
+  "surfaced_at": "2026-10-11T12:23:31Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The worktree /c/dev/wk-firmbkts-29 carries a dirty submodule gitlink at portal, so the AC3 write-surface bound (r4_scope.py) reads FAIL on a path the worker never wrote.",
+  "spec_asserts": "TO-FB-g-7 section 4 AC3: r4_scope.py --allow the script, the test, the deliverables folder and the investigation file exits 0 with 'ROUND 4 SCOPE: OK', the worktree's changed set being the write surface.",
+  "world_is": "After commit 0e4e8e8b0c (script and test only) git status --short in the worktree reads ' M portal' beside the two committed files and the new instance. git diff --submodule=short -- portal reads index c96efe1714784162c4134450da33ce6fd6226b60 against worktree Subproject commit 8ed372cb72659b96a5cfb4000a20b8ae315b9be7; git ls-tree HEAD portal reads 160000 commit c96efe1714 (the branch's recorded gitlink); git -C portal rev-parse HEAD reads 8ed372cb72. The worker issued no act on portal. The gitlink state was present in the worktree when the scope check first ran. Output: 'CHANGED portal <-- OUTSIDE', 'ROUND 4 SCOPE: FAIL 3 changed, 1 outside, 0 required missing', exit=1. The cause (checkout-time submodule advance or a drift of the worktree's portal checkout) was not investigated and no state was reset.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round4/checks/r4_scope.py run in /c/dev/wk-firmbkts-29 at 2026-10-11T12:2xZ, exit=1, the CHANGED/OUTSIDE lines quoted above",
+      "git diff --submodule=short -- portal and git ls-tree HEAD portal at 0e4e8e8b0c (dell1 branch base, worktree of 0.9.0_WK_ADVI_FIRMBKTS~29)",
+      "the ajb_workspace repo's own git status at session start also lists ' M portal' (the parent tree, not this worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-g-6, WAF ACL reconcile)
 
 ```json
