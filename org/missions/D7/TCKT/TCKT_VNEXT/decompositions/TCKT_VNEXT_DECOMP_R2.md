@@ -57,3 +57,21 @@ carries no `stage`, so `R2-rn-1`'s stage poll does not grade the journey and the
 this cell. Write set: `portal/src/pages/TicketCenter/` (four files), disjoint from every other cell.
 
 Dry-run at the base (portal DEV dbeb6764ea): pg-open FAIL absent as expected; pg-existing PASS as expected (pass=4).
+
+## ADDENDUM 2 (2026-10-11 ~07:2xZ) -- round 2 gains the packager-seam cell, by CTO ruling msg 4349
+
+`2.0.0_SA_COO~G2` read `package_ticket` (msg 4347): five 409s share a status and differ only in their sentence; the
+already-carries-a-package 409 names no package; the 409 after a lost write returns the whole ticket to the service principal. The CTO
+ruled these ONE TCKT_VNEXT cell "in your next issuance, with its own never-widen pair (it narrows)", the last item first.
+
+| cell | builds | list item | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|---|
+| `R2-pk-1` | ticket_center `package_ticket`: each of its five 409s carries a distinct `code`; the already-attached 409 returns the stored package's identity; the changed-under-write 409 no longer returns the ticket. Code and tests only | ruling 4349 | C-PACKAGE | NOT-EVALUATED | dell2 worker, slot ~12 | WORLD by path floor (a Lambda handler); nothing applied | worker-light | -- |
+| `R2-pk-2` | the apply of `R2-pk-1` to opal-ticket-api under its own never-widen pair | ruling 4349 | C-PACKAGE | NOT-EVALUATED | applier seat | SERVED | -- | R2-pk-1 drained; the pair signed; the R2-tr-1 run finished (its precheck pins the live ticket build) |
+
+**Edges:** `R2-pk-1` -> `R2-pk-2`; `R2-tr-1` -> `R2-pk-2` (an ordering on one shared deployed function, stated because a deploy
+mid-run would fail the run's precheck). Chains M = 3 unchanged in count; this pair joins the thread chain through that ordering.
+Write set of `R2-pk-1`: `package_ticket` in `lambda_function.py`, the new `tests/test_package_409_codes.py`, and forced asserts in
+the three existing package test files. No other open order writes those.
+
+Dry-run at the base: pk-codes FAIL absent as expected; tc-regress PASS as expected (154).

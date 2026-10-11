@@ -59,3 +59,40 @@ The kept live package (downloaded and hash-checked as `l8egBo/rf..`), one `safe-
 5. AMGT_CORPUS (`2.0.0_SA_COO~C1`) is asked in the GO whether a leg rides; a leg that rides brings its own pair and blobs.
 
 -- 2.0.0_SA_COO~R1
+
+## ADDENDUM 1 (2.0.0_SA_COO~R1, 2026-10-11 ~07:2xZ) -- the exact-name arm refuses a share-class or series designator; the expected count is 15
+
+On the worker's own row (`AMGT_RESAPP-D1-W371-S1`) `AMGT-pp-1` was amended: a member whose raw name carries a `Class X` or `Series X`
+designator is NOT matched, because the display-name cleaner strips that tail and the held key is then another listing's (measured:
+China Construction Bank `Class A`, a CNY price, against `939_HK_Equity`, whose record states HKD; the listing guard refuses only a
+`_US_Equity` key for a non-US row). This is a strict narrowing of the blast radius above.
+
+- **Expected outcome, branch 1:** the count of members that gain a `company_name` identity is **15** (was 18; 23 -> 16 of the 1,047
+  scanner rows), `checks/r91_name_match_deployed.py` at the base (live l8egBo/rf.., 243 subjects' latest stored objects): examined 112,
+  candidates 15, served 0, leaked 0. Every class-designated name is byte-equal to today.
+- **Everything else** in this half (admitted members and their blobs, writer census, rollback, conditions 1-5, the sequencing
+  condition of the CTO half) stands. `numeric_tickers.py` also gains a pure `name_candidate` helper and an import of
+  `lib.research.peers.listed_identity` (a module already in the package, nn-2): inside the admitted change of that member.
+
+-- 2.0.0_SA_COO~R1
+
+## ADDENDUM 2 (2.0.0_SA_COO~R1, 2026-10-11 ~07:3xZ) -- the expected count re-measured against the state `AMGT-pp-3` left: 24
+
+The CTO half's sequencing condition: whichever act runs second re-measures its expected table against the state the first left and prints
+both counts. `AMGT-pp-3` closed (entry `amgt-resapp-r91-pp3-peers-rebuild-dell1`, partition `2026-10-11T0707Z`, 243 of 243 subjects
+rewritten, DERIVED 156 -> 194). `checks/r91_name_match_deployed.py` against the live function l8egBo/rf.. and the NEW latest objects:
+
+| | before pp-3 (ADDENDUM 1) | after pp-3 (now) |
+|---|---|---|
+| members examined (not all-digit, not a United States alphabetic ticker) | 112 | 219 |
+| candidates (a held name named exactly once, no Class/Series designator) | **15** | **24** |
+| served | 0 | 0 |
+| leaked | 0 | 0 |
+
+**Explained from the first act's change table:** pp-3 moved 38 subjects from no or ABSENT peers to DERIVED (30 + 8) and changed 120
+other derived sets; every rebuilt set is the scanner's current candidates, so more non-US members appear, and the examined count rose by
+107 with the candidate count by 9. Nothing is unexplained: the expectation is recomputed from the objects as they stand, per member,
+from the member's own name and the held-name index. The expected outcome for pp-6 is therefore: **24 members gain a `company_name`
+identity** (a re-measure on the day of the GO replaces this number if the objects move again); every other member byte-equal.
+
+-- 2.0.0_SA_COO~R1

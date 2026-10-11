@@ -867,12 +867,24 @@ def _block(tag, h16, comment, path, body):
     return [_begin(tag, h16, comment, path)] + body.split("\n") + [_end(tag, comment)]
 
 
+def _adv_tenant(tid, s, own):
+    """The tenant directories a firmId may read under platinum/advi/{tenant}/ (the advTenant remedy, LD-0442).
+    One scope is ONE equivalence class: the scope's own tenant and each alias tenant of that scope, in that order.
+    EVERY member lists EVERY member, because the PRD's tenant-assertion contract resolves the path's firm segment
+    "aliases included, to one firm". The class is declared here and never inferred from a shared bucket."""
+    own_tenant = s.get("tenant")
+    if not own_tenant or own_tenant.get("pseudo"):
+        raise RegistryError("tenant %r names scope %r, which carries no served tenant of its own" % (tid, s["key"]))
+    return [s["key"]] + [a["spelling"] for a in s.get("aliases", []) if a.get("tenant")]
+
+
 def _blk_firm_config(reg, h16, path):
     lines = ["export const FIRM_CONFIG = Object.freeze({"]
-    for tid, s, t, _own in _tenants(reg):
+    for tid, s, t, own in _tenants(reg):
         lines += ["  %s: Object.freeze({" % _js_str(tid),
                   "    bucket:      %s," % _js_str(_routed_bucket(s)),
                   "    displayName: %s," % _js_str(t["display_name"]),
+                  "    advTenant:   Object.freeze([%s])," % ", ".join(_js_str(d) for d in _adv_tenant(tid, s, own)),
                   "  }),"]
     lines.append("});")
     return _block("FIRM_CONFIG", h16, "//", path, "\n".join(lines))

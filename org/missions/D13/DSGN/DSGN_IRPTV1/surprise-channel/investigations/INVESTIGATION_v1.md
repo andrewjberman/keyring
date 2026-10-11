@@ -4161,3 +4161,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-S7 -- the FWD-1 rendered walk breaks at Performance: the year-to-date return is refused for the named firm (OBJECT_NOT_COVERED, FIRM_BINDING)
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S7",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T07:38:02Z",
+  "one_line": "The FWD-1 rendered walk on portal DEV @ab697ba1 (laptop /ui-walk, 2026-10-11 ~07:30Z) BREAKS at the Performance hop: the year-to-date return and its spread are refused. Sign-in, search, the brokerage-account pick, the identity card and the security list PASS; the Models / SMAs / Client split is PARTIAL (the default view splits by account; the category split sits one layer in). The thread is not live.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "relay 0.0.0_AB_MSTR~DELL2 msg 4401 of laptop 4.0.0_SA_CRO msg 108255 (bus 98d7c3cc), verbatim there",
+      "the walk record org/tier1_exec/4.0.0_SA_CRO/deliverables/UI_WALK_DSGN_IRPTV1_FWD1_20261011T0730Z.md @b39ea1d4eb on origin CLOUD; NOT yet on this box and NOT read by this seat",
+      "as relayed: performance/sel_* UNAVAILABLE OBJECT_NOT_COVERED; reporting summary and manifest UNAVAILABLE FIRM_BINDING; guard.tsv empty, 0 aborts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD FWD-1: the user reads the client's year-to-date return with its spread to the benchmark and the Models / SMAs / Client split, on the live product, end to end.",
+  "world_is": "The Performance tab serves a refusal for the named firm on both paths it tries. Measured by the walk: the two refusal codes. INFERRED by this seat, not measured: FIRM_BINDING on the reporting routes is the reporting gold not being bound or served for the firm, which is IRPT_DASHBD's open order DB-b-86 (BLOCKED on the Cottonwood returns gold, row IRPT_DASHBD S43) behind ADVI_COTBKF's mint; and OBJECT_NOT_COVERED on the performance route is the branch row DSGN_IRPTV1-D2-W47-S2 read from the code. Neither inference has been checked against the handlers' refusal sites.",
+  "notes": "BLOCKING for FWD-1's grade, not armed: nothing served is wrong, a page refuses. The split being one layer in is a separate page question for the reviewer against FWD-1's words. Owner of the next act: 1.0.0_SA_CTO~DELL2 at the next analysis (which project's cell serves the firm's returns to the Performance tab)."
+}
+```

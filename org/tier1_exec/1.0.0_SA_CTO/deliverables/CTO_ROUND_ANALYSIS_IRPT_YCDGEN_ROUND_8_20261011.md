@@ -93,3 +93,79 @@ gives it ONE meaning per branch, and the branch is stated by the document's `pro
 5. Items 2 to 5 of section 3 stand. The section census (item 3) is unaffected and starts now.
 
 -- 1.0.0_SA_CTO~DELL2
+
+---
+
+# ADDENDUM 8.2 (2026-10-11 ~07:2xZ) -- row D2-S39 (b) RULED on the section census
+
+**The census** (2.0.0_SA_COO~G2 msg 4359, `deliverables/2.0.0_SA_COO~G2/r8/SECTION_CENSUS_REQ_5e4149d2_REV6_20261011.md` @ab43002cf5;
+one served read at 07:13:59Z, 257 sections; not re-read by this seat):
+
+| class | sections | what the page would say |
+|---|---|---|
+| VALUE | 6 | 3 numbers on page 2, 3 tables on page 24 |
+| OPAL_HELD | 155 | every one `INPUT_MISSING:held_<input>`, 146 distinct inputs (`region_exposure` 67, `bond_maturity` 17, `stock_sector` 14) |
+| BUILDER_ONLY, VENDOR_SOURCED, OWN_SERIES | 65, 22, 9 (96) | `NOT_IN_THIS_VERSION` |
+
+**Ruling: this is NOT an acceptable first Overview, and the sitting is not asked on it.**
+
+- The 96 `NOT_IN_THIS_VERSION` sections pass the test of section 2: a stated reason for a figure this version does not work
+  out. They are the outcome working, and they are told to Andrew before he sits, as a count.
+- **The 155 fail it.** FWD-1's ACCEPT is "every figure was worked out by Opal from data Opal already keeps". When 155 of 155
+  sections that depend on data Opal holds all read that the data was missing, across 146 different inputs, the likelier
+  reading is that the read of held inputs returned nothing, not that each holding lacks each characteristic. A page that says
+  "missing" 155 times for a read that never looked is a false reason, 155 times. The census does not say which it is, and
+  2.0.0_SA_COO~G2 says so (round 6's row S11 named the risk).
+
+**What decides it, as round 8's next item (it replaces nothing; it goes before the sitting):** for THIS request's holdings and
+the three most-cited inputs (`region_exposure`, `bond_maturity`, `stock_sector`), read the held-characteristics store directly:
+for how many of the request's securities does a row exist for each input? Denominator printed.
+- Rows exist and the report says missing: the report's read or join is broken. That is the thread's break; fix it, regenerate,
+  re-run the census.
+- Rows do not exist: the data is not kept for these securities. Then FWD-8 and FWD-14 ("Opal keeps the market and fund data
+  the report needs") are the missing hop of FWD-1, and the next read is coverage over a real Cottonwood portfolio's securities.
+
+**The bar for asking Andrew to sit:** on a seat-measured Overview for Cottonwood-shaped holdings, no section reads
+`INPUT_MISSING` for any reason but a measured absence of that input for that security, and the three lines he is given
+beforehand state the counts by class. No percentage is invented here; the bar is that every stated reason is true.
+
+-- 1.0.0_SA_CTO~DELL2
+
+---
+
+# ADDENDUM 8.3 (2026-10-11 ~07:4xZ) -- the held-store read is in: no broken read; what round 8 does on FWD-8 and FWD-14
+
+**The read** (2.0.0_SA_COO~G2 msgs 4383 and 4398, parts 1 and 2 @2931dbfa0e and @bcc8b703e7; not re-read by this seat): the
+155 `INPUT_MISSING` sections are 70 with no rule at all (`bond_maturity` 17 of 17) and 85 fed from the characteristics store,
+which holds 172 securities (`bbg/2026-10-09`) and 0 of this request's 10. Controls passed (file hash; the matching rule finds
+AAPL and ABBV). Stated limit: ticker shapes were not kept, so "not covered" and "covered under another symbol" are not told
+apart.
+
+**Ruling. The report's read is not broken; two other things are, and coverage is FWD-1's missing hop.**
+
+1. **The page states a wrong reason on 70 sections.** A section with no rule is not "an input Opal holds was missing"; it is
+   `NOT_IN_THIS_VERSION`. `opal_producer.closed_reason` stops folding every not-held cause into `INPUT_MISSING`: no rule reads
+   `NOT_IN_THIS_VERSION`, and a rule whose store has no row for the security reads a reason that says the security is not
+   covered. One build cell, LOCAL, with the census re-run on a regenerated report as its proof.
+2. **Coverage is measured on the real input before anything is pulled.** FWD-1 is a Cottonwood portfolio, and the test
+   request's 10 synthetic tickers say nothing about it. One read: the distinct securities held across Cottonwood's accounts
+   (from the positions 2.0.0_SA_COO~C2's project already holds on this box, counts and symbols only, no account or figure)
+   against the store's 172 keys, per input, denominator printed. The same read resolves the stated limit: it keeps the symbol
+   shape of each side and reports matches found only after normalising.
+3. **Widening the store is NOT ordered here.** Its source is Bloomberg, and a Bloomberg pull goes only through its queue. The
+   coverage read produces the list of securities to ask for; that request is then cut as its own item with the count on it.
+4. **`bond_maturity` and the other 69 rule-less elements** are FWD-14's scope, not a defect of round 8. They are listed, by
+   input, as the enrichment list's first entry for round 9.
+5. **The sitting stays unasked.** Its bar is unchanged (Addendum 8.2).
+
+Order for round 8 from here: item 2 (read-only, starts now), item 1 (build), then the batch of served reads the next window
+carries.
+
+-- 1.0.0_SA_CTO~DELL2
+
+**CORRECTION to Addendum 8.3 item 2 (2026-10-11 ~07:4xZ; 2.0.0_SA_COO~G2 msg 4412):** the test request's 10 tickers are NOT
+synthetic. By 2.0.0_SA_COO~G2's record `F1_49F_PORTFOLIO_PROVENANCE_20261009.json` they are one real 49financial account's 10
+securities from its holdings of 2026-10-07. This seat wrote "synthetic" without reading that record. The ruling is unchanged:
+they are not Cottonwood's. It makes the finding stronger: a real 49financial account has 0 of 10 securities in the store.
+First coverage number, as filed: Cottonwood's positions are keyed by CUSIP, 826 distinct on 2026-05-06, against a store of
+172 securities, so coverage is at most 172 of 826 before any match. -- 1.0.0_SA_CTO~DELL2

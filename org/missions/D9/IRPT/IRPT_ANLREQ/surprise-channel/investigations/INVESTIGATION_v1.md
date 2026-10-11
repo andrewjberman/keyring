@@ -1979,6 +1979,90 @@
 }
 ```
 
+## IRPT_ANLREQ-D2-W66-S1 -- the ticket service refuses GET to svc-irpt-packager: the packager's idempotence read cannot succeed live
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W66-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~66",
+  "surfaced_at": "2026-10-11T07:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The ticket service refuses GET /api/scoped/tickets/{id} to svc-irpt-packager (403), so the packager's idempotence read (ticket_package) cannot succeed live even with the new live_ticket_ports; handle_commentary_ready calls it before any render or attach, so no package attaches until the ticket service lets the packager read a ticket",
+  "spec_asserts": "TO-AR-g-31 cell item 6 and opal_packager.py module docstring step 3: the ticket is the one idempotence reader, read as the package principal svc-irpt-packager (row IRPT_ANLREQ-D2-W62-S2).",
+  "world_is": "MEASURED by reading, no call made: infra/aws/lambda/ticket_center/lambda_function.py get_ticket (:1196-1207) calls authorize('GET', actor); MATRIX['GET'] = frozenset({INTERNAL}) (:160); principal_class (:300-318) returns UNRESOLVABLE for any userType 'service' email other than svc-ticket-form, svc-analyst-intake and svc-commentary (:305-312), and svc-irpt-packager is not among them, so authorize is False and get_ticket answers 403 via _deny. package_ticket (:1392-1400) does NOT use that path: it admits the package_principal by name, so attach can succeed while the read cannot. The ticket's package sits at answer['ticket']['package'] (get_ticket returns {'ticket': Item}; package_ticket writes it as attribute 'package' at :1447). live_ticket_ports maps the 403 to TICKET_READ_REFUSED:403. ticket_center is outside this order's paths and was not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:156-168 MATRIX (GET admits INTERNAL only; PACKAGE empty)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:300-324 principal_class and authorize",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1196-1207 get_ticket; :1392-1459 package_ticket",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:160 ticket_package is called before the render and the attach"
+    ]
+  },
+  "notes": "Issuer's ruling needed: either the ticket service admits svc-irpt-packager to GET a ticket (a ticket_center change: a matrix or principal_class entry, firm-scoped like package_ticket), or the idempotence read moves to another reader. The packager side (live_ticket_ports) is delivered either way."
+}
+```
+
+## IRPT_ANLREQ-D2-S33 -- the source map's irpt-status entry still records a 2026-10-05 deploy in five fields
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S33",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T07:40:00Z",
+  "one_line": "The source map's irpt-status entry carries FIVE applied-artifact fields that still describe a deploy of 2026-10-05 (deployed_code_sha256 jhGc2J4Q..., last_deployed_commit 44cc631396, last_deployed_at 2026-10-05T04:23:09Z, deploy_ledger d407e320da, recorded_by record-terraform-deploy.sh), and a note saying artifact_sha256 is deliberately not moved; the function has been applied five times since.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-3 analysis section 4 Y4: the source map records irpt-status's live digest (cell AR-y-33 Part B sets artifact_sha256). The entry's own fields claim to record what was last deployed.",
+  "world_is": "REPORTED by 0.9.0_WK_IRPT_ANLREQ~53 (its final report on TO-AR-y-33) and READ by this seat in its worktree at branch commit 30018206fc: artifact_sha256 now reads 6idtFvAm... (the live digest, set by the cell); deployed_code_sha256 reads jhGc2J4Q5EesJgnLq8EzdE5ErrZLbyqnJ8m00R7CgdE=, a digest that matches none of revisions 2-6 named in TO-APPLY-Y1; last_deployed_at reads 2026-10-05T04:23:09Z; the `note` member says 'artifact_sha256 is DELIBERATELY NOT MOVED: it equals the S3 object and the live CodeSha256' (true when written, under IB-rt-9). So the tool that writes those fields (record-terraform-deploy.sh) did not run for the applies of 2026-10-09 and 2026-10-11, or its write was not committed. NOT MEASURED: whether other functions' entries carry the same staleness, and what reads these five fields.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-status, read at worker branch 30018206fc",
+      "TO-AR-y-33 final report (0.9.0_WK_IRPT_ANLREQ~53)",
+      "TO-APPLY-Y1 AMENDMENTS 1-8 (the applies since 2026-10-05)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a defect of AR-y-33, which was told to change nothing else in the entry. The remedy is one of two, the CTO's to pick at the next analysis: the apply orders run the recorder (and its fields are trusted), or the fields are declared not maintained. Until then nobody should read deployed_code_sha256 as the deployed digest."
+}
+```
+
+## IRPT_ANLREQ-D2-S34 -- two investor-reporting functions do not build from the map with no skip flag
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S34",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T08:05:00Z",
+  "one_line": "Two of the 17 investor-reporting functions do not build from the source map with no skip flag, at the base and after AR-y-33 alike: irpt-commentary-composition-read-lambda (the same parity refusal the store had) and irpt-intake-poller (a member file not found).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-3 analysis section 2, row D2-W41-S17: 'A function that is live and cannot be rebuilt is a function that cannot be rolled forward.' Cell AR-y-33 was cut for the STORE function only, as that row and item Y3 name it.",
+  "world_is": "MEASURED by this seat at the AR-y-33 drain, 2026-10-11 ~07:4xZ: BUILD_ONLY of every function whose map entry is pipeline investor-reporting (17), with BAU_PARITY_SKIP unset, at box/dell2 HEAD before the merge and on the worker's branch. 15 printed a BUILD_ONLY line on both sides and their digests are equal pairwise (the store was built with the skip flag at the base and without it on the branch: equal). 2 printed none on EITHER side: irpt-commentary-composition-read-lambda ends 'ADHC_DRIFTD.002 parity check failed ... PARTIAL -- 0 built, 1 failed' (it shares the reports/ source dir with the store, so the same seven-file class applies to it, and it is LIVE at ZZmWOFSA since 2026-10-09); irpt-intake-poller ends 'File not found: infra/aws/lambda/investor-reporting/intake/firm_registry.json'. Neither was changed by AR-y-33. NOT MEASURED: how the composition reader's live zip was built (presumably with the skip flag), and whether irpt-intake-poller is deployed at all.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's drain build of 17 functions, base against worker branch 30018206fc (17 of 17 results equal)",
+      "infra/aws/lambda/ci/build-and-upload.sh parity block",
+      "drain commit 81e56d0cf9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The remedy for the composition reader is the mechanism AR-y-33 built: an outside_package declaration on its entry. It is a second function, not in that cell's text, so it is not folded in silently; it goes to the CTO's next analysis as one line. irpt-intake-poller's missing member is workstream-agnostic and may be another lane's."
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S1 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
 ```json
 {
   "id": "IRPT_ANLREQ-D2-W52-S1",
@@ -2002,6 +2086,8 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W52-S2 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
 
 ```json
 {
@@ -2027,6 +2113,8 @@
 }
 ```
 
+## IRPT_ANLREQ-D2-W52-S3 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
 ```json
 {
   "id": "IRPT_ANLREQ-D2-W52-S3",
@@ -2050,6 +2138,8 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W52-S4 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
 
 ```json
 {

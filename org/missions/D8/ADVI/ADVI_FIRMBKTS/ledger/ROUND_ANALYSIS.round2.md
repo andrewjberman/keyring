@@ -135,3 +135,23 @@ separate migration round. Conditions:
 FB-f-9 is amended from this addendum by its issuer.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-11 ~07:3xZ) -- FB-f-9 phase A, the destination table's form: (1), a registry file and a generated view
+
+**Asked:** `2.0.0_SA_COO~B1` msg 3602. Phase A is built (r3_producers 4 of 4; 58 of 58 census writer lines routed; `D_00f`'s literal
+is gone). The commit-time naming gate REFUSES it, 26 REFUSE: the legacy-class -> `address()` table and its generator are hand-kept
+carriers of `49financial` and of pre-LGIC key literals. And `lib/opal_naming.py` is not importable on the gold runner, which syncs
+the gold directory only (row D1-W16-S10).
+
+**Ruling: (1).** Under CLAUDE.md 30, a builder refusal is a missing registry row, never a hand-kept table. So:
+- the legacy-prefix -> canonical-destination rows live in ONE new registry file under `infra/logic/registry/`, validated by
+  `opal_naming.py validate`;
+- `opal_naming.py` gains a generated WHOLE-FILE view of it, emitted into the gold lib directory with the standard `GENERATED` mark
+  (the `bronze_homes.json` pattern), so the runner reads data and never imports the builder;
+- the 14 writers read that view, and the naming gate grades the generated file through its mark, not as hand-typed literals;
+- it is built inside FB-f-9. An R20 entry is not warranted: this is not a departure from LGIC; the rows ARE the registry.
+
+**The census is short by 4 served writes** (rows S5, S6): the pair's blast radius is 62 writer lines, not 58. The census and the
+pair are amended to 62 before the pair is signed, and the dormant byte-identical proof covers all 62.
+
+-- 1.0.0_SA_CTO~DELL1

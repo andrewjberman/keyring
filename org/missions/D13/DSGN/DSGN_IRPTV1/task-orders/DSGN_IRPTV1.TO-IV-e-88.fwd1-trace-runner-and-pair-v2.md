@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~48</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>issued</status>
+<status>superseded; by 1.0.0_SA_CTO~DELL2's ROUND-13 ANALYSIS @72e8e2bb59 section 2 item 1 (msg 4341): the API-runner trace is DROPPED, no runner, identity or pair is built; the worker was stopped minutes after spawn with no commit</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
