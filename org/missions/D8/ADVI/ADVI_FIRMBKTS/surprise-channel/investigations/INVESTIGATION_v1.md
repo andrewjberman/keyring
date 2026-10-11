@@ -3728,3 +3728,31 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not this order set's to rule: the destination of a producer after the window is an endpoint question for 1.0.0_SA_CTO~DELL1. Two placements read from the evidence: (a) the pin follows the table's HOME (renderer reads the tier home, opal-data-assets), so writer, table and data agree after act 3's copy; (b) the pin is carved out of the flip and keeps opal-data-bd until its own move. Act 4's un-park condition names this row. No cell is cut on it until ruled."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-g-6, WAF ACL reconcile)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S22",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-11T12:26:35Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-g-6: neither of the CTO's two forms clears the portal-auth ACL plan on this provider (ignore_changes on the groups' version cannot index a set; an explicit null is a no-op); the only form that reads No changes is ignore_changes on the whole rule array, which the file's own comments record as refused, so no edit was made.",
+  "spec_asserts": "TO-FB-g-6 step 2: try (i) ignore_changes naming the groups' version, (ii) an explicit version = null on the three managed_rule_group_statement blocks, (iii) the smallest third form that clears the plan while changing no rule name, priority, action, override or statement; bound 2: if the only clearing form changes behavior, stop and file a BLOCKING row. AC1: the targeted plan reads No changes.",
+  "world_is": "Targeted plan of aws_wafv2_web_acl.opal_cloudfront_protection (terraform 1.15.8, aws provider 5.100.0, lock file tracked): base = 1 to change (three managed groups, version '' in state to null in config). Form (i) with paths rule[3..5].statement[0].managed_rule_group_statement[0].version: 'Error: Cannot index a set value' x3. Form (ii) explicit version = null x3: the same 1 to change, no effect. Form (iii-a) version = '': 'expected length of ...version to be in the range (1 - 128), got ' x3. Form (iii-b) ignore_changes = [tags, tags_all, rule]: 'No changes', measured with the file restored afterwards and never committed. A version pin is not available for ip-reputation (list-available-managed-rule-group-versions returns CurrentDefaultVersion None and 0 versions) and for the other two (Version_1.23, Version_1.26) it stops following AWS's default and plans as an update. Root cause as observed: the provider's flatten stores the empty string where AWS stores no Version, and the config can neither name nor omit it in a way the set-element comparison accepts. The file (waf-cloudfront.tf lines 371-377 and 415-421) records that ignore_changes on a WAF rule array was refused because the array is the security control and ignoring it blinds Terraform to a moved rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/g6/forms_tried.txt",
+      "g6/baseline_targeted.out, g6/form_i_ignore_changes_paths.out, g6/form_ii_explicit_null.out, g6/form_iii_a_empty_string.out, g6/form_iii_b_ignore_rule_array_MEASURE_ONLY.out (the provider's own plan text per form)",
+      "r4_waf.py --arms waf --root /c/dev/wk-firmbkts-30 at the unchanged base: A1 FAIL, A2 PASS, A3 PASS, 2 of 3, exit 1",
+      "infra/aws/terraform/portal-auth/waf-cloudfront.tf lines 371-377 and 415-421 (the recorded refusal)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the call: 1.0.0_SA_CTO~DELL1 (the S12 ruling named two forms; both fail here) and the issuer for the order. Options, none applied: (A) lift the recorded refusal for the whole rule array, with its lost evidence replaced by a separate assertion (for example a check block over a data read of the live ACL's six rule names and priorities), which is a change beyond one resource and beyond this order's one file; (B) keep the ACL as the named rider of every portal-auth apply, which the act-1 ADDENDUM 1 already covers (the apply writes the same six rules and the churn returns, as measured at 07:54Z: AWS read byte-identical before and after); (C) a provider version that stores no empty string (a lock file and version constraint change, outside this order's file, and a provider upgrade for the whole root). This lane recommends B until the CTO rules on A, because A removes the one control that shows a moved rule. The order stays pending and no file changed in the worktree: git diff of waf-cloudfront.tf is empty."
+}
+```
