@@ -6837,3 +6837,29 @@ round.** Never edit an existing row.
  "world_is": "The 3-trading-day rule adds 54 pairs and moves 1 of 346 (the table holds a security only from its first held day); reinvestment prints (admitted: dvr, leu, TRCISU on a median-within-2-percent test over AGREES securities) move 19 more, 8 of them into NOISY as ramp-shaped fund series, which the six classes do not name as a shape. Fixed income has 0 pairs within 3 trading days (unit read from distributions only); no CUSIP lists two symbols. I added a rounding guard (summed Quantity at least 0.05) on non-trade prints that the order did not name. Not established: how many of the AGREES securities carry the same ramp on dates the scan cannot see."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S121",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T17:14:12Z",
+  "one_line": "L9 round 70: all four MET. The 2022 factor reads APPLY on a pairs table this seat recounted (before the event 0 of 16 without the factor and 15 with it; after it 26 of 26 without). The widened scan's count of 8 is a floor, and nine fund series show the shape of a dividend-adjusted close, untested. The late-receipt rule does not hold its constants out of sample. The re-mint mode refuses before any write and deletes nothing, read in the code; on a failed read-back it rolls nothing back. The flow counts reconcile: 47 rows differ in bytes, 44 carry a real change, 3 are floating-point residue on zero.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_70_DRAIN_END_20261011.md @28d71b3241 (msg 5417)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_70_L9_GRADE_20261011.md",
+      "this seat's recount 2026-10-11T17:14:12Z of deliverables/0.9.0_WK_ADVI_COTBKF~112/SPINOFF_2022_PAIRS.csv, 42 rows: before the event 16 dates (2020-07-16 to 2022-01-10), the served close within 2 percent of the traded price on 0 (median ratio 0.7573), with the factor 1.324 on 15 (median 1.0027); on or after it 26 dates (2022-06-02 to 2026-06-08), without the factor 26 (median 0.9993), with it 0 (median 1.3231); both ratio columns recompute exactly from the table's own price columns",
+      "this seat's read of data/assets/scripts/silver/commonwealth_account_return_daily.py, remint_days at line 1209: every REFUSED raise sits before the write loop (the last refusal 69 lines into the function, the first write 77 lines in); an unlisted differing day and a moved capture each raise; the file holds 0 delete or copy calls; on a failed read-back it returns through _remint_failure with the keys written and rolls nothing back",
+      "this seat's exact comparison of the flow column on the two at-pin tables: 47 account-days over 46 dates differ exactly; 44 differ by more than 1e-9; the other 3 differ by less than 1e-12 on a value of 0.0, floating-point residue"
+    ]
+  },
+  "spec_asserts": "CB70br2-AC2, CB70br3-AC2, CB70br4-AC2 and CB70br5-AC3 (JUDGMENT, graded by 3.0.0_SA_CVO at L9), as each order states them.",
+  "world_is": "Every limb holds. Not re-derived by this seat: the scan's counts, the hold-out counts, the 37 tests, the reach of the 2022 event. Nothing was applied and the re-mint mode was not run against the bucket (the worker's and issuer's statements).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
