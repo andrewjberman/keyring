@@ -11,7 +11,7 @@
 <placeholders>ROUTER_VERSION, GUARD_VERSION, ROUTER_SHA256, GUARD_SHA256, WAF_ACL_NAME, WAF_ACL_ID</placeholders>
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- no cron, rule, schedule or cadence is added or changed.
-comp-iam: RUN by the issuer -- iam:SimulatePrincipalPolicy on user/cloudops-dell1-agent-user reads allowed for lambda:PublishVersion, lambda:UpdateFunctionCode, lambda:GetFunctionConfiguration, cloudfront:GetDistributionConfig and cloudfront:UpdateDistribution (5 of 5, resource *). The role the Terraform apply runs under is read by the actor at step 2 (this order's `safe-apply` is the path; a refusal there is a STOP).
+comp-iam: RUN by the issuer AT THE WRONG GRAIN and corrected: iam:SimulatePrincipalPolicy on user/cloudops-dell1-agent-user read allowed for lambda:PublishVersion, lambda:UpdateFunctionCode, lambda:GetFunctionConfiguration, cloudfront:GetDistributionConfig and cloudfront:UpdateDistribution at resource `*`. The deploy policy's `DenyProtectedFunctions` (CT-a-1; `infra/aws/terraform/nfra-ctlpln-identity/protected_functions.json`, rule b, lambda-at-edge) NAMES both functions and denies this identity `lambda:UpdateFunctionCode` and `lambda:PublishVersion` on them: the apply was refused 403 at 07:53Z (row D1-S13). The identity that may apply act 1 is the CTO's and Andrew's to name (amendment 5).
 comp-adversary: RUN by the issuer -- the build is `TO-FB-f-7` (merged @e6ec8ce6e4) with `TO-FB-f-8` phase A (merged @acf8a16706): router gate 51 pass, guard suite 46 pass, dormancy grid router 88 of 88 and guard 396 of 396 identical to base, both files 0 non-ASCII bytes. The three criteria below read FAIL at base by construction (no new version exists).
 EGRESS CLASS, declared: NONE.
 </preflight>
@@ -46,6 +46,11 @@ and `cloudfront_rollback_plan.md`; load `/cloud-ops` before any AWS or Terraform
    artifacts with the repository's `build-nodejs-lambda.sh` from the merged tree; record each artifact's SHA-256
    (`ROUTER_SHA256`, `GUARD_SHA256`: the `CodeSha256` the published version must read) and its count of bytes above 127
    (expected 0, printed beside the SHA in the entry).
+2a. **State reconciliation (amendment 5; after the refused apply of 07:53Z, row D1-S13).** Terraform's state holds the new
+   artifact versions while the live functions run the old code, so a plain plan reads the two functions CLEAN. Before ANY
+   retry, reconcile the state to live with a refresh-only apply through the repository's wrapper (it writes the state
+   file only, no AWS object), then confirm the plan again lists the two functions and the 10 associations. Keep the
+   state file's pre-reconcile version id in the entry.
 3. **Plan.** Run the Terraform plan of `infra/aws/terraform/portal-auth/` through the repository's wrapper and read the
    plan JSON. It must change EXACTLY the two functions (each a new published version), the distribution's 10
    associations, and the ADDENDUM 1 rider `aws_wafv2_web_acl.opal_cloudfront_protection` (three `version` attributes,
@@ -137,6 +142,14 @@ half reads SIGNED, so step 3's permitted set, step 2's rollback record and step 
 that the three Count groups stay Count (3 rules with an override action of Count). Two placeholders join
 (`WAF_ACL_NAME`, `WAF_ACL_ID`, read by the seat at step 2). The CTO's conditions are step 5's. Gate limb: GATE viii read
 `<placeholders>` at HEAD (four tokens) and the two new tokens are each carried by AC4's invocation.
+
+**AMENDMENT 5 (2.0.0_SA_COO~B1, on the executor's report, row D1-S13, msg 3635):** the signed apply ran at 07:53Z and
+both `lambda:UpdateFunctionCode` calls returned 403: `DenyProtectedFunctions` on the Dell group names the two functions
+(rule b of `protected_functions.json`, lambda-at-edge). Live is unchanged (ETag, 10 associations, versions 26 and 5, ACL
+byte-identical) but the Terraform state holds the new artifact versions, so a plan reads the functions clean over old
+live code. The order's comp-iam line is corrected (the wrong grain was the issuer's). Step 2a is added: reconcile the
+state first. Which identity applies is NOT decided here: the deny is CT-a-1's and Andrew's, and the question is with
+`1.0.0_SA_CTO~DELL1`; the order stays open and no retry is authorized by this amendment.
 
 **ISSUER NOTES:** class WORLD. Un-park conditions, all satisfied at this amendment: `FB-f-7` complete (@e6ec8ce6e4); phase A
 merged (@acf8a16706); the pair SIGNED in both halves (@d30c5fe203); the actor's entry is opened by the actor before any
