@@ -10,16 +10,20 @@
  "subject": "May 2.0.0_SA_COO~O release NFRA_CTLPLN CT-i-11 (/hx/teams/* routes) to the gateway?",
  "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_CALL_CTLPLN_CT_I_11_GATEWAY_RELEASE_20261011.md",
  "opened_at": "2026-10-11T03:00:21Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T03:05:41Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T03:05:41Z",
+  "to_by": "1.0.0_SA_CTO"
  }
 }
