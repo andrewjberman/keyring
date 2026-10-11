@@ -1487,6 +1487,22 @@ def _platinum_prefixes(reg):
     return out
 
 
+def _class_prefixes(reg):
+    """scope long form -> {legacy class prefix: canonical class directory} for every REGISTERED destination class
+    (ADVI_FIRMBKTS FB-g-24; CTO act-0 ADDENDUM 1). The directory is the root of _platinum_build()'s template, the part
+    before its {tail}, so it is the directory the seam's canonical destination of a key under the legacy prefix sits in;
+    it ends in /. Built from the same derivation as platinum_prefix and ownership_key, never typed."""
+    out = {}
+    for row in sorted(_platinum_rows(reg), key=lambda r: r["legacy_prefix"]):
+        _bucket, tmpl = _platinum_build(reg, row)
+        if not tmpl.endswith(PLATINUM_TAIL) or not tmpl[:-len(PLATINUM_TAIL)].endswith("/"):
+            raise RegistryError("the destination of class %r is %r, which does not end in a directory and %s"
+                                % (row["legacy_prefix"], tmpl, PLATINUM_TAIL))
+        scope = lookup(row["scope"], reg)["long"]
+        out.setdefault(scope, {})[row["legacy_prefix"]] = tmpl[:-len(PLATINUM_TAIL)]
+    return {scope: out[scope] for scope in sorted(out)}
+
+
 def _gen_locals(reg, h16):
     scopes = _scopes(reg)
     scope_long = {}
@@ -1517,6 +1533,8 @@ def _gen_locals(reg, h16):
         "  platinum_prefix = " + _hcl(_platinum_prefixes(reg), 2),
         "  # every scope with a registered ownership-map address: long form -> the canonical key of that address (_ownership_canonical(), the _blk_ownership_keys derivation)",
         "  ownership_key = " + _hcl({o: _ownership_canonical(reg, t) for o, t in sorted(_ownership_owners(reg).items())}, 2),
+        "  # every scope's registered destination classes: long form -> {legacy class prefix: its canonical directory prefix} (_class_prefixes(), the _platinum_build template's root)",
+        "  class_prefix = " + _hcl(_class_prefixes(reg), 2),
         "}",
     ]
     return "\n".join(parts) + "\n"
