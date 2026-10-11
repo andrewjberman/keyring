@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_TCKT_VNEXT~11</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -117,7 +117,45 @@ Run `bun x tsc -b` again and report its tail. The issuer looks at the running pa
 look is not yours. Proof: add AC3 to your existing instance and re-validate with
 `python .tools/proof-of-spec-check.py <instance> R2-pg1-AC1,R2-pg1-AC2,R2-pg1-AC3`. Flip to `complete` only when all three pass.
 
-<expected_criteria>R2-pg1-AC1 R2-pg1-AC2 R2-pg1-AC3</expected_criteria>
+### AMENDMENT 2 (2026-10-11, issuer `2.0.0_SA_COO~V2`) -- REOPENED: bring the candidate onto TODAY's portal DEV
+
+**What went wrong, and it was the issuer's error:** the candidate was cut from the LOCAL ref `DEV` at `dbeb6764ea`. The real
+`origin/DEV` is `26f621d51c`, many commits ahead, and three of your files moved there under another project (IRPT_ANLREQ and
+NFRA_OPSWKF): `src/pages/TicketCenter/AnalysisRequestParts.tsx`, `TicketCenter.tsx` and `analysisRequest.ts`. That work added, among
+other things, a report PACKAGE reader on the ticket (commits `c34ff9c0`, `d06ae384`, `bd3b6559`, `9988b426`) and a Trade Request
+form. Your candidate `6ee667df6d` cannot land as it is.
+
+**Inherited state:** your portal worktree is on branch `wk-TCKT_VNEXT-11-portal` at `6ee667df6d`. `origin/DEV` is already fetched.
+
+C1. **Merge, never rebase.** In the portal worktree run `git merge origin/DEV` (if git asks for an identity, pass
+    `-c user.name=0.9.0_WK_TCKT_VNEXT~11 -c user.email=0.9.0_WK_TCKT_VNEXT~11@opal.agent`). Resolve every conflict. The result must
+    keep ALL of DEV's work in those files byte-for-byte except where your cell's change has to sit: the package reader, the Trade
+    Request form, the I1 catalogue form and every other DEV feature stay exactly as DEV has them.
+C2. **Your cell, restated on the new base** (rules B1 and B2 of AMENDMENT 1 and rules 1-4 as amended still hold): the ticket's "Open
+    report" reads the finished report through `getOwnedAnalysisReport` and shows it with `RetainedSections`, imported; a report not
+    yet generated shows the stated waiting state; the request record is never presented as the report; the request id is on
+    `data-request-id` only.
+C3. **Do not duplicate what DEV now has.** Read DEV's package reader first (`AnalysisRequestParts.tsx` and `analysisRequest.ts` at
+    `origin/DEV`). If DEV already changed `openReport` or the opened panel, reconcile: ONE "Open report" behaviour, yours, and DEV's
+    package file openers untouched beside it. If DEV's new code calls `getOwnedAnalysisRequest` for something that is NOT presenting
+    a report (for example reading a package's handles), leave that call alone and say so in your report. If you find DEV's work and
+    this cell genuinely contradict each other (two different things both called the report), do NOT pick: file a BLOCKING row
+    `TCKT_VNEXT-D2-W11-S<k>` naming both, leave the merge uncommitted, and stop.
+C4. `OpenedReport` in `AnalysisRequestParts.tsx`: you removed it as unused. If DEV now uses it, keep DEV's use and do not remove it.
+C5. After the merge commit, `git diff origin/DEV HEAD --stat` should list only the TicketCenter files your cell needs. Put that
+    stat, verbatim, in your report, and for each NON-test file a one-line description of every hunk.
+
+<criterion id="R2-pg1-AC4" cell_refs="R2-pg-1"><invocation>python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py pg-suite --portal C:/tmp/tckt-r2-11/portal</invocation><expect>PG-SUITE-OK</expect></criterion>
+`R2-pg1-AC4`: every test file under `src/pages/TicketCenter` passes on the merged tree (DEV's tests and yours; 0 fail). A fourth
+criterion because the base moved: DEV's own tests are now the seam with the other project's work. AC1, AC2 and AC3 must still pass.
+
+Dry-run at base (`6ee667df6d`, before the merge): AC4 FAIL as expected (DEV's test files are absent there); AC1-AC3 PASS.
+
+Run `bun x tsc -b` on the merged tree and report its tail. Proof: add AC4 to your instance and re-validate with
+`python .tools/proof-of-spec-check.py <instance> R2-pg1-AC1,R2-pg1-AC2,R2-pg1-AC3,R2-pg1-AC4`. Flip to `complete` only when all four
+pass.
+
+<expected_criteria>R2-pg1-AC1 R2-pg1-AC2 R2-pg1-AC3 R2-pg1-AC4</expected_criteria>
 
 Dry-run at base: AC1 FAIL (absent) as expected; AC2 OK (pass=4) as expected.
 
@@ -140,6 +178,7 @@ portal/src/pages/TicketCenter/TicketCenter.tsx
 portal/src/pages/TicketCenter/__tests__/open-report.test.tsx
 portal/src/pages/TicketCenter/__tests__/analysis-request.test.tsx
 portal/src/pages/TicketCenter/AnalysisRequestParts.tsx
+portal/src/pages/TicketCenter/
 infra/aws/lambda/investor-reporting/ops/owned_report.py
 org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py
 org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -151,7 +190,7 @@ org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: R2-pg1-AC1 R2-pg1-AC2 R2-pg1-AC3. The instance is at
+Criterion ids: R2-pg1-AC1 R2-pg1-AC2 R2-pg1-AC3 R2-pg1-AC4. The instance is at
 `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~11/TCKT_VNEXT.TO-R2-pg1.ticket-open-report-opens-the-finished-report.proof_of_spec.json`.
 Validate it with `python .tools/proof-of-spec-check.py <instance> R2-pg1-AC1,R2-pg1-AC2` (ids comma-separated) before the flip.
 </proof_of_spec>
