@@ -24686,3 +24686,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "The header's rule and the file's shape disagree; the header's FIRST-block instruction would mis-append here. The disarm is the channel owner's: reconcile the header with the one-row-per-block shape."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S24",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-11T13:18:15Z",
+  "one_line": "reverify_stored_thesis_driver is not idempotent over a rescaled object: it re-derives from each point's `value`, which AMGT-ff-3 now stores rescaled (13.745) while the excerpt prints 13,745, so a second re-verification of SAP keeps 1 of 3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "reverify_stored_thesis_driver's own docstring: it re-derives from the RAW claim every time (`value` of `points` and `held_uncited`) so it is idempotent regardless of the object's current state; AMGT-ff-3 (merged @ae14fab6f5) keeps `stated_value` beside the shown `value` on a rescaled point.",
+  "world_is": "Measured 2026-10-11 ~13:25Z by RA1 (msg of 13:16Z, evidence file AMGT_RESAPP.TO-AMGT-ff-5.RESCALED_OBJECT_DEGRADES_ON_REVERIFY.md) and re-read by the issuer (dry run, nothing written): after AMGT-ff-5 wrote SAP's analysis object with 3 points (2024 = 18.078 stated 18078 million, 2023 = 13.745 stated 13745 million, 2025 = 21.05 stated 21.05 billion, held_uncited 0), `analyze.reverify_stored_thesis_driver('SAP_GY_Equity', '000110465926020058', dry_run=True)` expects 1 point: the raw points handed to `_apply_point_verification` are `{period, value}` taken from the stored `value` (13.745), a figure the excerpt does not print as such, so 2023 and 2024 are held 'value not found as a whole number'. The SERVED state is correct (r94_sap_served.py V1-V3 YES: SAP 3 points on the billion scale, ASML none, BABA 2); the hazard is a SECOND run of the re-verification over the object, by an operator or a pair that re-reads it, which would write 1 point and splice it. No scheduled path re-verifies stored objects (the analyze CLI's fresh run re-derives from the model's raw claim, not from stored values). r94_rescale_table.py T1 and r94_locator.py L5 read NO against the post-write object for the same reason.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~RA1/AMGT_RESAPP.TO-AMGT-ff-5.RESCALED_OBJECT_DEGRADES_ON_REVERIFY.md",
+      "the issuer's dry-run table of r94_rescale_table.py on 2026-10-11 after the write: SAP stored 3, expected 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed (the round is frozen mid-round; a row is the only off-spec act). The repair is a cell for the CTO's round-94 analysis: in `reverify_stored_thesis_driver` take `stated_value` when a stored point carries it (and `held_uncited` the same), with a control arm that a re-verification of an already-rescaled object keeps its 3 points byte-equal. Until then NO operator re-verifies SAP's object; AMGT-ff-5's AC1 is amended to read the served route against the pair's table (r94_sap_served.py). The idempotence arm was the issuer's omission from ff-3's checks."
+}
+```
