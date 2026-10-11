@@ -3572,3 +3572,31 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Owner unknown to this seat; the issuer routes it. Not blocking this order after amendment 1."
 }
 ```
+
+## Row filed by 2.0.0_SA_COO~B1 (round 3, TO-FB-f-12 row S13 routed to the root's owner)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S19",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T10:31:57Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps (the inf-pipeline root's author class; project ADVI_ECLDAT.001)",
+  "one_line": "THE inf-pipeline ROOT HOLDS A PENDING, UNAPPLIED aws_secretsmanager_secret_version.eclipse_jwt_initial: ANY UNSCOPED APPLY OF THAT ROOT CREATES A NEW CURRENT VERSION OF orion/eclipse_jwt/current",
+  "spec_asserts": "TO-FB-f-12 step 4 (before amendment 1): the plan changes exactly the role, its policy, the log groups and the SMS preferences; the CTO's AMENDMENT 2 item 1: the sixth create is not applied and is routed to the root's owner as its own row.",
+  "world_is": "The laptop lane's untargeted plan of infra/aws/terraform/inf-pipeline read 358 resource_changes, 352 no-op, 6 create: the five of this order and aws_secretsmanager_secret_version.eclipse_jwt_initial (infra/aws/terraform/inf-pipeline/secrets.tf:40, secret orion/eclipse_jwt/current, authored by ADVI_ECLDAT.001, 0.6.1_AE_PartnerETL, 2026-05-14). The resource is a create, so the state does not hold it; a secret-version create makes a new AWSCURRENT version, which would replace the JWT the inf-jwt-trigger Lambda captured. The order's apply is scoped to the five addresses and does not touch it (evidence: deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/plan_untargeted.out, commit 9504fa9b79).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "evidence_f12/plan_untargeted.out: Plan: 6 to add, 0 to change, 0 to destroy",
+      "evidence_f12/pre_act_record.txt: 358 resource_changes, 352 no-op, 6 create",
+      "git log -- infra/aws/terraform/inf-pipeline/secrets.tf: 8ff9ee1ff9 ECLDAT.001"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not applied and not waived by this project: the CTO's AMENDMENT 2 says 'S13 goes to the root's owner as its own row'. The owner reads whether the resource should be imported, removed or applied deliberately (it may overwrite a live captured JWT). Until then no unscoped apply of inf-pipeline: safe-apply's scoped mechanism is the only apply that is safe in that root."
+}
+```
