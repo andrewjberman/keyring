@@ -563,3 +563,53 @@ write: **1 row** (`S1`).
   "notes": "FB-e-6 builds the path gated on the registry's own map (FIRM_BUCKET_MAP[scope] === resolved bucket), so no request changes until the map does. The cutover is the CTO's, with F10 and the advTenant remedy."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W7-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~7",
+  "surfaced_at": "2026-10-11T03:57:49Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "F4 negative arm N4 passes on the absence of the deny text alone: the cot role's cottonwood read is refused by an identity-side implicit deny, so the fence's admit leg for its own firm is not exercised by this run",
+  "spec_asserts": "Round-2 cell FB-e-4 / PRD F4 (r2_f4.py N4): the cot role's read of opal-data-cottonwood is NOT refused by the resource-based deny, so the difference control shows the fence refuses the other firm's role and admits its own.",
+  "world_is": "Evidence F4_NEGARM_EVIDENCE.json (command f95a10b3-ab60-40b0-a673-3fce3a6258d9, runner i-0167fd745ad906a66, caller assumed-role/irpt-cot-ycharts-research-role/fb-r2-4-negarm): the INF read is refused with 'explicit deny in a resource-based policy'; the COT read is ALSO refused, with 'because no identity-based policy allows the s3:ListBucket action'. The cottonwood refusal is an identity-side implicit deny, not a fence admit. N4 (r2_f4.py:98-100) tests only that the deny phrase is absent from the COT text, so it passes; the fence's admit of its own firm is shown only by policy text (P3), not by an exercised read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~7/F4_NEGARM_EVIDENCE.json @8a41501ebc (COT line: because no identity-based policy allows the s3:ListBucket action)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f4.py:98-100 @8a41501ebc (N4 tests DENY_PHRASE not in COT text only)",
+      "r2_f4.py --arms negative on the evidence file: 4 of 4 arms, rc 0, reproduced on two runs; mutant with the INF deny text removed gives N3 FAIL, 3 of 4, rc 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded, not graded. The cell's acceptance reads as written (AC2 4 of 4). Whether the difference control must exercise the cottonwood admit leg is for the issuer and the L9 adjudicator; the cot role's missing identity permission on opal-data-cottonwood is not ruled on here."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W7-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~7",
+  "surfaced_at": "2026-10-11T04:10:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AC1 and AC2 expect lines read 'ROUND 2 F4 ... ARMS -- and exit=0' on one line, but the invocation prints the arms line and 'exit=0' on two lines, so the expect string never occurs in the verbatim output",
+  "spec_asserts": "Round-2 TO-FB-e-4 AC1 expect: 'ROUND 2 F4 POSITIVE: 3 of 3 arms -- and exit=0'; AC2 expect: 'ROUND 2 F4 NEGATIVE: 4 of 4 arms -- and exit=0'. The invocation's output is the stated line followed by an echo of the exit code.",
+  "world_is": "Verbatim output of both invocations (run at 8a41501ebc in the worktree): 'ROUND 2 F4 POSITIVE: 3 of 3 arms' and 'exit=0' on separate lines; 'ROUND 2 F4 NEGATIVE: 4 of 4 arms' and 'exit=0' on separate lines. Substance matches (3 of 3 and 4 of 4, exit 0). proof-of-spec-check matches expect as a regex on output_evidence and reports both rows VIOLATION (status PASS not matched). Worker recorded the verbatim output and status FAIL; the expect text was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-e-4.f4-arms.md @8a41501ebc (section 4 AC1 and AC2 expect text)",
+      "proof-of-spec-check.py conditional_checks expect match (re.search over output_evidence) @732412e179 -> VIOLATION acceptance[AC1] and acceptance[AC2] on the first run",
+      "AC1 and AC2 invocations run in the worktree @8a41501ebc: 'ROUND 2 F4 POSITIVE: 3 of 3 arms' / 'exit=0'; 'ROUND 2 F4 NEGATIVE: 4 of 4 arms' / 'exit=0'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded, not graded. The format difference is for the issuer and the L9 adjudicator to rule on; the order stays open with AC1 and AC2 recorded FAIL on the mechanical expect match, and no flip is made."
+}
+```
