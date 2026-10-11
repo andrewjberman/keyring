@@ -100,7 +100,7 @@ line (the laptop's `plan_untargeted.out` lists the name in a refresh line), so i
 or `must be` change header. Gate limb: GATE viii reads `<placeholders>` at HEAD (`NONE`) and the amended invocation
 carries no token.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>INFJWT</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-10</to_id>

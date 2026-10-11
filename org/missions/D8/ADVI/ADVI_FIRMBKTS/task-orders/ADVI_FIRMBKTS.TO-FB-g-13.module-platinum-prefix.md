@@ -90,7 +90,7 @@ cell's merge: the grant's policy name comes from the module's `name` output (sys
 `platinum-canonical-rw`, kind `policy`), its bucket from `bucket`, its prefix from `platinum_prefix`. The module is
 consumed by other roots; adding outputs and a local changes no plan.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>OWNKEYS</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-13</to_id>

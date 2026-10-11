@@ -83,7 +83,7 @@ and the commit hash.
 The act-2 change-management entry carries the interim text ("any hand run of E_24 exports `BD_PLATINUM_MODE=canonical`")
 until this lands. The guard is at the entry so the refusal costs no read.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-7</to_id>
 <slot>~29</slot>
