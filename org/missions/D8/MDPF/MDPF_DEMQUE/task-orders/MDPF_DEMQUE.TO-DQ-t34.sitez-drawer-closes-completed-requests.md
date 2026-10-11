@@ -10,6 +10,7 @@
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>9</round>
+**AMENDED by the issuer 2.0.0_SA_COO~Q1, 2026-10-11 ~18:0xZ (rows MDPF_DEMQUE-Z-S4 and MDPF_DEMQUE-Z-S5, BLOCKING; issuer defects; no criterion change):** (1) `dq_t33_real.py`, the start oracle, was once-only: it read the real folder after the issuer had already made its chained re-freeze, so its `supersedes_new` arm demanded a transition that had happened. It now restores its input from the superseded copy and prints QR-REAL-OK on the real tree (committed with this amendment); `bbg_quote.record_actual` accepting `COMPLETE` is exercised, as you measured. (2) Build items 3 and 4 could not both hold: `test_demque_standing_drawer.py`'s own fixture completes BOTH its requests on day 2 and asserts every actuals line is DRAWN (:111 and :135). GRANTED: `data/mdpf/scripts/demque/test_demque_standing_drawer.py` for exactly those two assertions: the day-2 run outcome and every actuals line of that test accept `DRAWN` or `COMPLETE`, and the lines of the day on which a request completes must read `COMPLETE` while every earlier line reads `DRAWN`. No other assertion in that file changes; its three tests keep passing. Land the candidate you preserved at `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_T34` once that file is amended. This supersedes build item 4's word "unedited" for those two lines only.
 **Directive:** D8 | **Fabric:** dell1 (placement site Z) | **Decomp cell:** `DQ-t-34` (`decompositions/MDPF_DEMQUE_DECOMP.md`, ROUND 9 -- CUT) |
 **outcome_ref:** FWD-3 | **depends_on:** DQ-t-33 (`COMPLETE` in `bbg_quote.record_actual`)
 
@@ -71,6 +72,7 @@ Run each invocation from the repository root at site Z. At the base: `CL-BAD no 
 <paths>
 data/mdpf/scripts/demque/standing_drawer.py
 data/mdpf/scripts/demque/test_demque_standing_drawer_close.py
+data/mdpf/scripts/demque/test_demque_standing_drawer.py
 org/missions/D8/MDPF/MDPF_DEMQUE/ledger/BBG_ACTUALS.jsonl
 org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_STANDING/
 org/critical_paths/change_management/
