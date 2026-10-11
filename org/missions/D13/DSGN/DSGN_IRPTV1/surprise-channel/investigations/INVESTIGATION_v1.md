@@ -3712,3 +3712,78 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W43-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~43",
+  "surfaced_at": "2026-10-11T05:42:00Z",
+  "one_line": "Six tests in the Investor Reporting suite spawn bun by a hardcoded path under another user's profile directory, which does not exist on this device, so they fail here whatever the product does: iv-e-18.fields-rescope (IVE18-AC3), iv-e-25.states-rescope (IVE25-AC1) and fe-s-90/suite-complete-check (four CONTROL tests).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 7bb81fa8 src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-18.fields-rescope.test.ts:39, dsgn-irptv1/iv-e-25.states-rescope.test.ts:49 and fe-s-90/suite-complete-check.test.ts:43 each name the path C:/Users/AndrewBerman/.bun/bin/bun",
+      "the run output (3 of 3 runs): 'ENOENT: no such file or directory, uv_spawn' on that path for all four FE-s-90 controls; IVE18-AC3 and IVE25-AC1 report 'exited 1' and -1 sub-tests",
+      "ls of that path on this device: No such file or directory"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md section 5: never write device-specific logic into the portal; derive it. TO-IV-e-82 asks for the failing SET at the DEV tip, ruled once per id.",
+  "world_is": "On a device that lacks that profile path these six fail in every run (3 of 3). The sample proposes REGRESSION for them (they should pass at this commit), with the cause named as a device-bound path, not a product defect. No existing row records them.",
+  "notes": "Not fixed here (read-only sample). A fix is a test-only change deriving bun from process.execPath or PATH."
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W43-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~43",
+  "surfaced_at": "2026-10-11T05:42:30Z",
+  "one_line": "Eighteen failing ids (fe-s-13 x12, fe-s-14 x4, fe-s-57 F57-AC2, mvp-selection x1) fail because the suite reads the workspace contract files (docs/contracts/investor-reporting/v1, from the workspace worktree at box/dell2 9c9f20e08a) while the portal is at DEV 7bb81fa8: the contract is ahead of the portal half, so the sample's identity is a PAIR of commits, not the portal tip alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fe-s-13/routes.test.ts:48 resolves docs/contracts/investor-reporting/v1/routes.json six directories above the test file, i.e. in the workspace worktree, not the portal repo",
+      "run output (3 of 3): 'POST /api/scoped/investor-reporting/custody-report: no table entry'; operation count Expected 22 Received 21; 'comparison-catalogue' and 'analysis-request-pdf' envelopes 'no longer declare unprojected_grant'; F14-AC13 and F57-AC2 'slice property download_route does not $ref the document'; F14-AC16 'export download data is missing sha256, byte_length'",
+      "rows S40 and S49 record these same tests (content pin x3, operation table x4, F14-AC13, F57-AC2, producer fixtures, retained selection) red for an earlier routes.json drift and fixed at DEV ebceef5b; they are red again for new causes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IV-e-82: the bar is the failing SET at the portal DEV tip. S49: the fe-s-13/14/57 battery derives its route count from routes.json.",
+  "world_is": "The same portal DEV tip run against a workspace without the newer contract could grade differently; this sample cannot say which half moved. The sample proposes REGRESSION for the 18 (they went green after S49 and are red again).",
+  "notes": "A reviewer who needs the portal-only bar re-runs against the workspace commit the DEV tip was cut with."
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W43-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~43",
+  "surfaced_at": "2026-10-11T05:43:00Z",
+  "one_line": "Five failing ids at the DEV tip are named in no existing row as failing: IVE115 (CLASS_RANK arm), IVE137 (f) wiring, F40-AC5 (calendar), and F47-AC6 and F47-AC7 (a fixture file the test reads from git HEAD is not in the tree).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run output (3 of 3): IVE115 'ARM1: CLASS_RANK is not Cash 0 .. Unclassified 8'; IVE137 (f) wiring: a source-text pin on GenerateComposer.tsx returned false",
+      "F40-AC5: 'Expected: 2024 Received: 2010' (the workspace lib/trading_calendar.py fallback years span 2010-2027, the portal module covers 2024-2027)",
+      "F47-AC6/AC7: 'git cat-file blob HEAD:src/pages/InvestorReporting/fixtures/wire/AnalysisReportResponseData.valid.json failed (status 128)'; that file is on neither disk nor HEAD at 7bb81fa8; rows S56 and S57 record F47-AC6 red and then fixed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IV-e-82 step 4: rule each failing id once; KNOWN-LEGACY needs an existing row.",
+  "world_is": "None of the five is in any row as a current failure, so none can be KNOWN-LEGACY; the sample proposes REGRESSION for each. Root causes beyond the quoted lines were not diagnosed (read-only sample).",
+  "notes": "F40-AC5 also depends on the workspace half (see D2-W43-S2)."
+}
+```
