@@ -3832,3 +3832,31 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "A later send for this diagnosis would need a configuration set with a CloudWatch Logs event destination created first (a write to the account's SMS configuration, outside this order's bounds and not started). Owner of that choice: the issuer and CTO."
 }
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~32 (FB-g-11, transitional bronze-live row)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W32-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~32",
+  "surfaced_at": "2026-10-11T12:37:31Z",
+  "one_line": "The FB-g-11 dormant arm D4 reads infra/aws/lambda-edge/_shared/firm-config.mjs and .tools/ds-precommit-check.py as value-changed on this dell1 worktree, though their non-mark bytes equal the base; the check decodes the git show base with the Windows locale codec (cp1252) and the worktree file as UTF-8, and both files carry non-ASCII bytes, so identical bytes compare unequal. AC1 reads 4 of 5 arms, exit 1.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_dormant.py@cd50c0374e lines 43-86: _git(root, 'show', base:t).stdout is text=True (locale codec) while cur is open(..., encoding='utf-8')",
+      "python -c locale.getpreferredencoding(False) on this device returns cp1252; git show cd50c0374e:infra/aws/lambda-edge/_shared/firm-config.mjs is 5791 bytes with 14 bytes above 127; the worktree copy is 5791 bytes (wc -c), and its UTF-8 text has 5782 characters",
+      "bytewise (rb) non-mark lines of both files equal the base bytes; utf-8 decoded non-mark lines equal; cp1252 decoded non-mark lines unequal (the codec, not the value, produces D4 FAIL)",
+      "git diff -U0 HEAD over the 15 regenerated targets: one changed line per file (the GENERATED mark), two mark lines in .tools/ds-precommit-check.py; no non-mark hunk"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-g-11 AC1 (r4_dormant.py --arms live, expect 'ROUND 4 BRONZE LIVE: 5 of 5 arms'): D4 DORMANT passes on a conforming build; its preflight names one base artifact (the primary checkout's uncommitted edits) and states that a clean worktree does not have it.",
+  "world_is": "On this dell1 Windows worktree (HEAD cd50c0374e, FB-g-11 edits uncommitted) D4 reports drift on two targets whose non-mark bytes equal the base. The check's git show decode uses the locale codec (cp1252), its file read uses UTF-8, and both targets carry non-ASCII bytes (14 and 9 above 127 in the base). The result is 4 of 5 arms and exit 1. No value moved in any target.",
+  "notes": "Not fixed by this worker: the check is outside this order's paths and no edit to it is granted. Issuer decision needed: the check reads the base as bytes or decodes both sides as UTF-8 (positive control: with both sides decoded as UTF-8 the drift vanishes). The builder change, the tier_live row and the 15 regenerated targets are on the worker branch; the nested-portal target firmDisplayNames.generated.ts was not regenerated and is named in the report."
+}
+```
