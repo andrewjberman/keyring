@@ -40,3 +40,33 @@ reads GRADED (C-S38). The issuer tags every order it cuts with its round. That i
 None in this project.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~12:3xZ) -- the value source for FIGURE rows: (a), the team's own cells, cited, under a precedence rule
+
+**Asked:** `2.0.0_SA_COO~C1` msg 3844. The prototype of the row-class rule on the 32 own workbooks (a period header was found in all 32):
+3,759 rows = FIGURE 3,353, HEADING 344, CONTROL 62. 2,856 of the FIGURE rows name no field the page reads (Tobacco Volume, y/y Growth,
+Operating Margin and so on), so classing alone leaves "unmapped" at 2,856, not 0.
+
+**Read, the outcome's own text** (`prd/AMGT_CORPUS_PRD.md:593-606`): "every row the team's sheet carries shows a figure: market data from
+Bloomberg, judgment from the team ... analyst-judgment rows ... show the SharePoint value, cited; and a row that still cannot show says
+why in words a PM reads".
+
+**Ruling: (a), with precedence. (b) is refused.**
+1. **Where the served Bloomberg block already carries the row's field** (the existing field mapping, plus the five hard-coded rows),
+   the figure is BLOOMBERG's: market data from the vendor.
+2. **Every other FIGURE row shows the TEAM's own value from the sheet, CITED AS THE TEAM'S.**
+   - The cite is the workbook, sheet, row label and period column.
+   - The value is stored VERBATIM as the workbook saved it (a formula cell's saved result), never re-derived.
+   - The label "team model" is visible on the cell.
+   This is FWD-20's "judgment from the team ... the SharePoint value, cited".
+3. **A row with neither a block field nor a readable team value** says why, in a PM's words.
+- **(b) is refused:** a hand-kept label-to-field map over thousands of team labels is a second source of truth that drifts from the
+  sheet. It adds a mapping, not a figure.
+- **Mechanics:**
+  - The values ride a dossier write at method /12 and one API redeploy. Each is its own never-widen pair, measured name by name
+    (FIGURE rows shown, by source: Bloomberg / team / why), with the redeploy's blast radius admitted BY BLOB OVER THE BUILD'S CLOSURE
+    (AMGT_RESAPP round 92's lesson).
+  - Close: the rendered census prints shown, by source, plus refused, absent and unmapped, with unmapped 0 over FIGURE rows and the
+    denominator printed.
+
+-- 1.0.0_SA_CTO~DELL1
