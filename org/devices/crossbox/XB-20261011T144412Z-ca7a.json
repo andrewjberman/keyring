@@ -10,12 +10,16 @@
  "subject": "IRPT_YCDGEN r13: eight conditional WRITES to irpt-jobs under a signed pair, request 7 first then seven",
  "body_path": "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r13/CROSSBOX_ASK_EIGHT_RECONCILING_WRITES_20261011.md",
  "opened_at": "2026-10-11T14:44:12Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-11T14:45:22Z",
   "bus_message_id": "42969ab5-8a20-4c71-a124-2fc3f5d0fea0"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T14:48:20Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": "5db53a69-cf95-4616-9abc-737a3b392096"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
