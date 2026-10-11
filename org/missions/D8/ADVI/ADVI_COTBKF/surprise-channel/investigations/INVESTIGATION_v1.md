@@ -5222,3 +5222,31 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D2-S82 -- Disarms D2-S80: the mint manifest is restored and the boundary test is in the tree
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S82",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T03:40:00Z",
+ "one_line": "DISARMS ADVI_COTBKF-D2-S80 (its disarm_owner, on the CTO's condition in the round-54 analysis @0ac41554df section 3): the mint manifest is restored to its round-52 bytes and the boundary test is in the tree. CB-bb-1 drained @05b0f0b2f2.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer run at box/dell2 HEAD 05b0f0b2f2: manifest sha256 924987f6369300d530ddc9fa5793befa4c4edc291c5e83a99c5288a36811c1cb, 0 acct# tokens in the file",
+   "issuer re-hash of the round-47 local day files against the manifest: sha256 match 3325 of 3325, differ 0, local file missing 0; sha256-named fields not 64 hex: 0",
+   "comp-find for the damage signature '[0-9a-f]acct#[0-9a-f]{8}|acct#[0-9a-f]{9,}', corpus all: 0 hits across 87054 files scanned; NOT covered: 25607 binary, 2 unreadable, 1649 ephemeral-floor files",
+   "pytest test_cotbkf_acct_check_hex.py + both id tests at the same HEAD: 7 passed; docs test 461 files 0 hits, code test 72 files 0 hits; silver suite 765 passed, 11 skipped",
+   "issuer read of the fix @2eb7ed857e: 6 added lines in scan_text, an exact 64-character lower-case hex run bounded on both sides; SHAPES, the guards and set_spans untouched"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO round-54 analysis section 3: D2-S80 disarms when the restored file reads 0 tokens inside a hash and the test is in the tree.",
+ "world_is": "Both conditions read true at 05b0f0b2f2. The ruling's further test (every sha256 field asserts 64 hex) is cut as CB-bc-1 and is not in the tree yet; the issuer's one-off read of those fields is 0 not 64 hex."
+}
+```
