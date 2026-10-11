@@ -5385,3 +5385,29 @@ round.** Never edit an existing row.
  "world_is": "The persisted inputs the regrade reads by default live only in the private evidence mirror, so any AC3 re-run needs the flags that point at them. The comparison is still like for like: both runs used the same flags."
 }
 ```
+
+## ADVI_COTBKF-D2-W84-S1 -- the measured rows hold no bond; the held set holds 16 bonds, not 3
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W84-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~84",
+ "surfaced_at": "2026-10-11T05:00:35Z",
+ "one_line": "The order's premise 'Cottonwood's bond holdings inside the measured rows' is empty: 0 of 107,316 measured account-days hold a Fixed Income CUSIP, and the 'bonds' of the held set are 16 CUSIPs by Asset_Type, not the 3 on the hold list.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "fwd3_serve_r34 daily_returns (return not null) 107,316 account-days; account_day_value joined to Asset_Type from the silver transactions: 0 Fixed Income CUSIPs among 252 distinct CUSIPs in 229,743 holding rows of those days",
+   "141,555 account-days hold a Fixed Income CUSIP (772 CUSIPs); all are blank (UNPRICED 141,379, FIRST_DAY 125, DVR_CLOSE_STEP 51); 988 of them are the HELD_SOURCE_UNDER_REVIEW set, which holds 16 Fixed Income CUSIPs, one of them on the hold list",
+   "the record ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~84/BOND_ACCRUAL_MEASURE.json carries the counts and the rule"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Item 2 and 3 of the cell: bond holdings exist inside the measured rows, and the held set is the 3-bond list's 988 account-days.",
+ "world_is": "No measured row holds a bond (they are all blank for want of a bond close), so the clean or dirty answer changes no measured row today; it matters only when bonds are priced. The only stored bond closes (gold canonical holdings, 184 of 778 Fixed Income CUSIPs, 2026-06-08 to 2026-10-06) fall by one half-coupon on the coupon date in 81 of 86 testable bonds."
+}
+```
