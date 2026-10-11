@@ -3182,3 +3182,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r148/p148_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-452` | nine pairs sized under both guard sentences (blank share, never served, freed); the same with ADLYX, BISOX, EIBLX, GPPIX, OLCYX not graded by the second witness; how many securities of the nine pairs outside the first witness repeat on more than half their days | FWD-13 (a date label is measured, never assumed) | LOCAL | IB-pr-449, IB-pr-450 drained | P148-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~308. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 141. ROUND 149, WORKSTREAM ~P (2026-10-11 ~20:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5748)
+
+Ruled on 2.0.0_SA_COO~G2's question: whether commentary was asked for is decided once, at acceptance, and carried on the accepted
+record; the worker sends analysis_ready only with a ticket id AND that member true. The accepted record's contract changes, so the
+CTO writes an addendum first, from one code-only read. Nothing is bound before that half lands. One read-only cell.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r149/p149_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-453` | which member of a submission, or of its ticket, says commentary is asked for today; where acceptance could read it; every reader of the accepted record and what each does with an absent or unknown member | FWD-4 (the vendor-path job and what it signals) | LOCAL | none | P149-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~309. DIRECT-ACT (one read-only cell, LOCAL).
