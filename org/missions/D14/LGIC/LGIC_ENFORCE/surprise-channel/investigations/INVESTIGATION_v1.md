@@ -6407,3 +6407,31 @@ that exception is precisely what hid this, so it is stated rather than relied on
   "disarm_owner": "2.0.0_SA_COO~L1"
 }
 ```
+
+## Rows routed by 2.0.0_SA_COO~B1 (ADVI_FIRMBKTS round 3 analysis): opal_naming.py targets
+
+```json
+[
+  {
+    "id": "LGIC_ENFORCE-D1-S7",
+    "project": "LGIC_ENFORCE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~B1",
+    "surfaced_at": "2026-10-11T11:38:38Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "opal_naming.py targets classifies each Lambda copy of platinum_dest_view.py SHIP only through the OTHER Lambda's served_seam.py import",
+    "spec_asserts": "ADVI_FIRMBKTS TO-FB-f-13 step 2: targets must still exit 0 with the two new generated views classified SHIP on the lambda plane.",
+    "world_is": "Measured by worker ~22: lambda_plane_consumers skips the function that owns the file, so each copy's SHIP rests on the other function's files list. If either function drops served_seam.py its copy becomes UNCLASSIFIED and `targets` exits 1.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ADVI_FIRMBKTS-D1-W22-S3 in the ADVI_FIRMBKTS investigation channel",
+        "lib/opal_naming.py lambda_plane_consumers"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Routed from ADVI_FIRMBKTS round 3 analysis (CTO, section 2). Not a defect today (targets exits 0, both SHIP). Routed so a change to either Lambda's files list is checked against the target list; the builder's owner decides whether a function counts as its own consumer."
+  }
+]
+```
