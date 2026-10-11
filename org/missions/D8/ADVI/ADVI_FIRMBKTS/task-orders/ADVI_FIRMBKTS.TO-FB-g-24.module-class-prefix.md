@@ -87,7 +87,7 @@ cleanups delete under, printed from the code. The grant cell (`FB-g-25`, `infra/
 merge; the fail-loud cell (`FB-g-26`) runs beside it. Row `ADVI_FIRMBKTS-D1-S29`. Workstream `FENCECLS`. Class WORLD by the
 path floor, dormant.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>FENCECLS</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-24</to_id>

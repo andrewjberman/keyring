@@ -104,7 +104,8 @@ def hook(tmp, template, name, device, head="EXECUTING", staged="ROUND_CLOSE", en
         seats["3.0.0_SA_CVO"] = {"last_seen_epoch": now, "summary": "x"}
     put(fx, "org/mcp/liveness.json", json.dumps(seats))
     if not graded:
-        (fx / PROJ / "surprise-channel/adjudications/ADJUDICATION_v1.md").unlink()
+        # the hook runs round-close-check.py --staged, which reads the INDEX: the removal must be staged
+        git(fx, "rm", "-q", PROJ + "/surprise-channel/adjudications/ADJUDICATION_v1.md")
     sgdir = fx / "scratch_seat_gates"
     sgdir.mkdir()
     if enforce:
@@ -278,9 +279,10 @@ def main():
                 if inst_to_id is not None:
                     put(d, "deliverables/w/%s.proof_of_spec.json" % name,
                         json.dumps({"to_id": inst_to_id, "acceptance": [{"criterion_id": cid, "status": "PASS"}]}))
-                o = rcc.read_orders(d, None, None)[0]
+                src = rcc.WorkTree(d)
+                o = rcc.read_orders(src, d, None, None)[0]
                 if want == "match":
-                    ok, why = rcc.proof_state(o, d, str(REPO), False)
+                    ok, why = rcc.proof_state(src, o, d, str(REPO), False)
                     return ok, "id=%s %s" % (o["id"], why)
                 return o["status"] == want, "status=%s" % o["status"]
             return fn
