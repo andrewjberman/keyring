@@ -1487,3 +1487,15 @@ from the reviewer's second note, a read and not a ruling.
 | `DB-b-162` | msg 6130: on the 234 flow-bearing days, a count by when the deposited cash was first invested (same day, next trading day, later, never in the window), under a rule written and committed before the count, on a copy. Picks no convention | LOCAL | DB-b-158 | B84-1 |
 
 **fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~131`, in a fresh worktree cut from box/dell2.
+
+## 87. ROUND 85, WORKSTREAM B (2026-10-11 ~23:5xZ, issuer 2.0.0_SA_COO~D2, the issuer's own cell)
+
+Round 84 is terminal and MAY-CLOSE. Its worker left the counting scripts private because the tracked copies failed the lint gate, so
+the five counts have no tracked producer; by the CTO's round-77 rule (row D2-W118-S1) such a figure is not quotable. Ruled by the
+issuer inside its own decomposition: one cell closes it.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-163` | the scripts behind FLOW_DAYS_FIRST_INVESTED.json tracked, gate-clean by formal edits only, and re-run from the tracked copies to reproduce the counts; the rule and the record unchanged | LOCAL | DB-b-162 | B85-1 |
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~131` (worker-light), the serial that owns the folder.
