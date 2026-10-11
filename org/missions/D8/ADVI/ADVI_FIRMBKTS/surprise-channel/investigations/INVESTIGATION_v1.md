@@ -5224,3 +5224,27 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not remediated: the list is an environment file outside this worker's write surface. The CTO or the integrator should decide whether the list must be present on this device for the check to grade commits from here."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W57-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~57",
+  "surfaced_at": "2026-10-11T17:11:41Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The one-writer gate graded the order's named unsuffixed investigation file as the laptop's file written from dell1 and asked for the per-box file; the order's named path was written as given.",
+  "spec_asserts": "FB-g-34 section 3 and section 5: the surprise rows go in org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md, the path the order names.",
+  "world_is": "The row commit c05e821225 printed '[one-writer] WARN: .../INVESTIGATION_v1.md is the laptop's (unsuffixed) file, written from dell1; per-box file <stem>.dell1.<ext> (WARN until C-QUEUE)' and '[one-writer] OK: 1 append-only path(s) graded on box dell1 ... 0 blocked'. The commit passed; the rows sit in the unsuffixed file the order names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at c05e821225: '[one-writer] WARN: org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md is the laptop's (unsuffixed) file, written from dell1'",
+      "safe-commit output at c05e821225: '[surprise-row-gate] OK: 1 file(s), all new rows carry their step-7/step-10 fields'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not remediated: the path is the one the order names, so it was used as given. The per-box naming is a standing WARN until C-QUEUE per the gate's own text. Recorded so the issuer can decide whether the per-box file is expected for this project."
+}
+```
