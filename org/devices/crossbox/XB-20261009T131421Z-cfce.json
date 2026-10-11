@@ -10,12 +10,16 @@
  "subject": "WAKE NOW (read window OPEN 13:20-14:30Z): run the AMGT_CORPUS R40 leg v READ per XB-c4e7",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/AMGT_CORPUS.TO-READ-R40-ap10b-lv.fire-log-and-budget-line-sitez.md",
  "opened_at": "2026-10-09T13:14:21Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T13:19:00Z",
   "bus_message_id": "77a8bc9b-159e-4fe5-be9f-2f674755fcb3"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:10:10Z",
+  "by": "0.7.0_AE_CloudOps~ZC",
+  "bus_message_id": "75057f9a-84a2-4026-9478-366d46f7a4bb"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
