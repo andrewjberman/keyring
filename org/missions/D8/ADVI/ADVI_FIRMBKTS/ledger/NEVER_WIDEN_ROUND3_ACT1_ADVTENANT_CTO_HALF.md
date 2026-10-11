@@ -27,7 +27,7 @@ This act deploys the router's code, including F6, so it is the deploy at which t
 - The two hand-written files are made all-ASCII (comment characters only, so every decision is unchanged) in one commit on
   `box/dell1`. The build is cut from that commit. The dormancy grid is re-run on it and reads 88 of 88 and 396 of 396 again.
 - `_shared/firm-config.mjs` is GENERATED (`lib/opal_naming.py`) and is not hand-edited. It ships as is, and the fix belongs to the
-  generator's template. That rides `LGIC_ENFORCE-D1-S3` (regenerate at HEAD), with a line added to that row naming the non-ASCII.
+  generator's template. That is filed as `LGIC_ENFORCE-D1-S4` (header comment lines 7, 10, 11, 14, 15) and rides `LGIC_ENFORCE-D1-S3`'s regeneration.
 
 ## The oracle when no firm session can be had: YES, this seat's exercised read
 
