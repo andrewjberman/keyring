@@ -10,16 +10,20 @@
  "subject": "RIVALS seat-home pointer @2a0a4ee702: run TO-PREFLIGHT-bbg-signin-20261009 at 10:20-10:45Z",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ETFS_RIVALS.TO-PREFLIGHT-bbg-signin-20261009.md",
  "opened_at": "2026-10-09T07:50:01Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T07:52:25Z",
   "bus_message_id": "b7e51f6f-fec7-4caa-9ad5-0552fbb5ecb1"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:03:50Z",
+  "by": "0.7.0_AE_CloudOps~ZV",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T06:03:50Z",
+  "to_by": "0.7.0_AE_CloudOps~ZV"
  }
 }

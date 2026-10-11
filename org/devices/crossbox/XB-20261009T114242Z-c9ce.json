@@ -10,16 +10,20 @@
  "subject": "ETFS_RIVALS TO-MERGE-tc1: merge b0b65368fb into box/sitez before 2026-10-10 10:45Z",
  "body_path": "org/missions/D5/ETFS/ETFS_RIVALS/task-orders/ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009.md",
  "opened_at": "2026-10-09T11:42:42Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T11:43:49Z",
   "bus_message_id": "8fa0c2e7-15af-4ed1-a6d3-f62d1c0f2d2f"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:03:52Z",
+  "by": "0.7.0_AE_CloudOps~ZV",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T06:03:53Z",
+  "to_by": "0.7.0_AE_CloudOps~ZV"
  }
 }
