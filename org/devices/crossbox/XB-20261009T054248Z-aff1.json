@@ -10,7 +10,7 @@
  "subject": "AMGT_CORPUS R40 leg v READ: copy the 2026-10-09 13:00Z amgt-induction-daily fire log and budget ledger, 13:20Z-14:30Z",
  "body_path": "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-READ-R40-ap10b-lv.fire-log-and-budget-line-sitez.md",
  "opened_at": "2026-10-09T05:42:48Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T05:53:12Z",
   "bus_message_id": "f8c8da9c-a68a-4dba-8f35-da17848b5e06"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-11T06:33:18Z",
   "from_by": "2.0.0_SA_COO~C1",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T06:10:06Z",
+  "to_by": "0.7.0_AE_CloudOps~ZC"
  }
 }

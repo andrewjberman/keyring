@@ -10,7 +10,7 @@
  "subject": "AMGT_CORPUS R40 (u) leg r: re-pin to 7580fe909c, 11:15Z-12:45Z, only with BOTH CTO re-signs (STOP 0)",
  "body_path": "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-REPIN-R40-ap10u-lr.repin-induction-to-p-sitez.md",
  "opened_at": "2026-10-09T05:43:15Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T05:53:16Z",
   "bus_message_id": "90925e6b-6dda-4712-b054-b3187275cca8"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-11T06:33:18Z",
   "from_by": "2.0.0_SA_COO~C1",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T06:10:07Z",
+  "to_by": "0.7.0_AE_CloudOps~ZC"
  }
 }

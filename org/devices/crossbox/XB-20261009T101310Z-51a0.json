@@ -10,7 +10,7 @@
  "subject": "WAKE NOW: run XB-20261009T075001Z-fc8b (TO-PREFLIGHT-bbg-signin-20261009), 10:20-10:45Z",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ETFS_RIVALS.TO-PREFLIGHT-bbg-signin-20261009.md",
  "opened_at": "2026-10-09T10:13:10Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T10:14:11Z",
   "bus_message_id": "64db8474-cf97-4916-aa1c-39bdd5b7b673"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-11T06:33:19Z",
   "from_by": "2.0.0_SA_COO~V1",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T06:03:51Z",
+  "to_by": "0.7.0_AE_CloudOps~ZV"
  }
 }

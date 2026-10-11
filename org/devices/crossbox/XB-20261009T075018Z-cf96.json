@@ -10,7 +10,7 @@
  "subject": "SEAT-HOME @3101937431: AMGT_CORPUS R40 leg v READ, 13:20Z-14:30Z (fire log + budget ledger)",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/AMGT_CORPUS.TO-READ-R40-ap10b-lv.fire-log-and-budget-line-sitez.md",
  "opened_at": "2026-10-09T07:50:18Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T07:52:36Z",
   "bus_message_id": "797afc00-0e74-4eb1-a190-5e10226daff9"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-11T06:33:19Z",
   "from_by": "2.0.0_SA_COO~C1",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T06:10:08Z",
+  "to_by": "0.7.0_AE_CloudOps~ZC"
  }
 }

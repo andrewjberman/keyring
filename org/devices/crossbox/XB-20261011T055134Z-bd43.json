@@ -10,7 +10,7 @@
  "subject": "ETFS_RIVALS TO-CLOSE-XB-AND-AMENDMENT8: ack+close nine done ORDERs; copy 20261010 log lines 170-178",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ETFS_RIVALS.TO-CLOSE-XB-AND-AMENDMENT8-20261011.md",
  "opened_at": "2026-10-11T05:51:34Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T05:53:01Z",
   "bus_message_id": "9a6bdcde-9a2d-4ab6-ac3a-c6be8ae9697f"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-11T06:33:20Z",
   "from_by": "2.0.0_SA_COO~V1",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T06:14:54Z",
+  "to_by": "0.7.0_AE_CloudOps~ZV"
  }
 }
