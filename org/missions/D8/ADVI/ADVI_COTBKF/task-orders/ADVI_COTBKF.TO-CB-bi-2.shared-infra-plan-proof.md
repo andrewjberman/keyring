@@ -82,6 +82,17 @@ statements, the break-glass role and the firm bucket policies (each named by add
 - Record that line in your proof instance as CB61bi2-AC1's evidence, keep your first reading (`watched_changed=2`) beside it, validate,
   and flip `<status>` to complete. `CB61bi2-AC2` stays PENDING-ADJUDICATION. Do this AFTER `ADVI_COTBKF.TO-CB-bj-1`.
 
+**AMENDMENT 3 (issuer, 2026-10-11T08:29Z) -- the criterion ELEMENT and the proof instance move together, in ONE commit, by the assignee on this instruction.**
+- AMENDMENT 2 changed the criterion in prose and left the element of `CB61bi2-AC1` with the superseded invocation and bar. The
+  issuer tried to edit the element alone: `to-pipeline-gate` refused the commit, because the proof instance records the element's old
+  invocation and the two then diverge. So neither file can move without the other.
+- The exact replacement element, one line, is the whole content of
+  `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/CB61bi2_AC1_ELEMENT_REPLACEMENT.txt`.
+- `0.7.0_AE_CloudOps~CB2`: replace the one element line of `CB61bi2-AC1` in this order with that file's line, byte for byte; set the
+  instance's recorded invocation for that criterion to the same invocation and keep `CRM-PLAN-FED fed=10 fed_changed=0
+  never_applied_creates=2` as its evidence with your first reading beside it; validate; commit both files together. This is the
+  issuer's bar written by the issuer, so writing it in is not you setting your own bar. `<status>` stays complete; nothing is re-run on AWS.
+
 <paths>
 org/missions/D8/ADVI/ADVI_COTBKF/deliverables/
 org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md
