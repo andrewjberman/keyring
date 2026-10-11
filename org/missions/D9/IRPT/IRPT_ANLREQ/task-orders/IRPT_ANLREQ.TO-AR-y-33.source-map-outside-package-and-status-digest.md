@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~53</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -58,6 +58,58 @@ store function builds clean with no skip flag; the map records irpt-status's liv
 
 **Not yours:** any other function's entry; `BAU_PARITY_SKIP` itself (it stays, as the rare override); any upload or apply.
 
+---
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~09:4xZ): REOPENED by CTO ruling (`1.0.0_SA_CTO~DELL2` msg 4572, on row
+`IRPT_ANLREQ-D2-S36`): the irpt-status entry is re-pinned to ONE merged commit, built fresh, and the 12 members that leave an older pin
+are censused.** Gate limb that graded this amendment: read from this commit's own output. This SUPERSEDES Part B's "change nothing else
+in that entry" and REPLACES criterion AC3's check.
+
+Why: the entry's 42 `staged_from` rows carry three pins (32 at `361c44fa9d`, 9 at `80a79a7462`, 1 at `eab13e88d3`). A build today mixes
+members at HEAD with 12 members older than HEAD, and so does not carry `retained_ref` (`owned_report.py` is one of the 12). The ruling:
+one tree; "a build mixing 30 members at HEAD with 12 at older pins is a tree nobody tested".
+
+**The one pin: `ee3fd7c5e520243e1a3f58a6b86d22bfc2b1e4d3`** (on origin; `infra/`, `lib/` and `org/standards/` at it equal this branch's HEAD).
+
+**Do:**
+1. In `infra/aws/lambda/ci/lambda-source-map.json`, entry `functions["irpt-status"]` ONLY: set every `staged_from` row's `pin` to that
+   commit and its `sha256` to the hex sha256 of `git show <pin>:<repo_path>` (bytes, as the 42 rows record it today: verify your method
+   reproduces an UNCHANGED row's value before you rewrite any). Do NOT move `artifact_sha256` (it records the LIVE digest until an apply
+   moves it), do not add or remove a member, do not touch `files`, and do not touch any other function's entry. Append one dated
+   sentence to `_staged_from_note` saying what this amendment did and by whose ruling.
+2. Build twice, `BUILD_ONLY=1`, `TMPDIR` outside the worktree, keeping the zip of the first build:
+   `bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-status`. The two digests must be equal. If the build
+   refuses, that is a finding: file a row with the refusal text and stop this step.
+3. Compare the built zip member by member (sha256 of each member's bytes) with the LIVE revision's zip, a copy of which the issuer
+   holds at `C:/Users/Test/AppData/Local/Temp/claude/C--dev-ajb-workspace/12ff9ef9-d82c-49bd-9a05-f0bc6bbe592e/scratchpad/build416/lambda-artifact-irpt-status.zip`
+   (its sha256, base64, must begin `6idtFvAm`; check that before you use it). Record which members changed, were added or removed.
+4. Write `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/release5/REPIN_CENSUS_IRPT_STATUS.json`:
+   `{"pin": "<the commit>", "build": {"sha256_first": "<base64 digest>", "sha256_second": "<same>", "bytes": <n>, "members": <n>,
+   "changed_members_vs_live": ["<name>", ...], "added": [...], "removed": [...]}, "members": [ ... 12 objects ... ]}`.
+   The 12 are the rows whose blob at the OLD pin differs from the blob at the new pin: `loaders.py`, `firm_registry.json`,
+   `resident_installed.py`, `acceptance.py`, `lib/opal_naming.py`, `org/standards/NAMING_SCHEMA.json`, the five
+   `infra/logic/registry/` files (`exemptions`, `reporting_policies`, `resources`, `scopes`, `systems`), and `owned_report.py`
+   (re-derive the list yourself and say so if yours differs). Each object:
+   - `packaged_as`, `repo_path`, `old_pin`;
+   - `owning_commits`: every commit between the old pin and the new one that touched the file (`git log <old>..<new> -- <path>`), as
+     `"<short hash> <author serial>"`; `project`: the project code(s) those commits name;
+   - `served_effect`: `CHANGES_SERVED_ANSWER` or `INERT` -- does any answer irpt-status serves on its 7 declared routes change when
+     this member lands? Decide it by READING: what the diff changes, and whether a route's handler can reach the changed lines (which
+     module imports the member, which function calls the changed function, with which arguments). For a registry or schema JSON file,
+     find who in the package reads it and whether the changed rows are ones that reader selects for this function.
+   - `why`: two or three plain sentences giving that reading, with file and line; `claim`: `measured` if you exercised it (a test you
+     ran, a function you called on both versions), `inferred` if you read it only. Never write `measured` for a reading.
+   - for a `CHANGES_SERVED_ANSWER` member, `after_read`: the one read an applier can make on the live function after the apply that
+     shows the change landed (route, the field or status to look at, and what it reads before and after).
+   An honest `inferred` with a clear reason is worth more than a confident guess; if you cannot decide a member, say `CHANGES_SERVED_ANSWER`
+   and say why you could not rule it out.
+5. Commit the map and the census (two commits or one). Do not run any other function's build.
+
+**AC3 is now:** the check `y33-repin` (the criterion line below is changed to it). It prints `Y33-REPIN-OK` when the entry has one pin, every
+row's sha256 is the blob at it, `artifact_sha256` still reads the live digest, the census names exactly the 12 with every member filled,
+and a BUILD_ONLY prints the census's digest. The old AC3 (`y33-digest`: a build still prints the live digest) is RETIRED: after a re-pin
+it must not. AC1 and AC2 must still print their tokens. Update the proof instance (three rows) and flip back to `complete` only then.
+
 ### ACCEPTANCE
 
 <criterion id="AR33-y-AC1" cell_refs="AR-y-33"><invocation>python C:/dev/wk-irpt-anlreq-53/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py y33-store --root C:/dev/wk-irpt-anlreq-53</invocation><expect>Y33-STORE-OK</expect></criterion>
@@ -67,8 +119,8 @@ store function builds clean with no skip flag; the map records irpt-status's liv
 `AR33-y-AC2`: the difference control of AC1 -- a file in the source dir that is neither packaged nor declared outside STILL refuses the
 build by name. (The check writes one probe file into `reports/` and removes it; it passes at the base and must still pass.)
 
-<criterion id="AR33-y-AC3" cell_refs="AR-y-33"><invocation>python C:/dev/wk-irpt-anlreq-53/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py y33-digest --root C:/dev/wk-irpt-anlreq-53</invocation><expect>Y33-DIGEST-OK</expect></criterion>
-`AR33-y-AC3`: the map records `6idtFvAm...` for irpt-status and a BUILD_ONLY of irpt-status still prints that digest.
+<criterion id="AR33-y-AC3" cell_refs="AR-y-33"><invocation>python C:/dev/wk-irpt-anlreq-53/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py y33-repin --root C:/dev/wk-irpt-anlreq-53</invocation><expect>Y33-REPIN-OK</expect></criterion>
+`AR33-y-AC3` (AMENDMENT 1): the irpt-status entry is pinned to one commit, the census is complete, and a BUILD_ONLY prints the census digest.
 
 <expected_criteria>AR33-y-AC1 AR33-y-AC2 AR33-y-AC3</expected_criteria>
 

@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T093421Z-e8e0",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~C1",
+ "to_serial": "0.7.0_AE_CloudOps~ZC",
+ "subject": "AMGT_CORPUS r45 au-1/au-2 WRITE: bronze ingest + four-count at site Z (pair signed, STOP 0-4)",
+ "body_path": "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-WRITE-R45-au1.bronze-ingest-and-four-count-sitez.md",
+ "opened_at": "2026-10-11T09:34:21Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-11T09:35:56Z",
+  "bus_message_id": "ebbd3bb5-bb8a-4089-a909-4151f6b393be"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

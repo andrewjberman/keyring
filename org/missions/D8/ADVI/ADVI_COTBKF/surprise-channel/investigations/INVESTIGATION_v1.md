@@ -6098,3 +6098,29 @@ round.** Never edit an existing row.
  "world_is": "Proof 2 reads no-op for both addresses and the served role matches both halves field by field. NOT read by the issuer: CloudTrail for AssumeRole events (RoleLastUsed being empty is consistent with no use but lags), and whether the console user can in fact assume the role (no agent may test it). Still open and unrelated to this disarm: no seat applies shared-infra UNTARGETED from dell2 (row D2-S92), and who applied the bucket-policy statements without the role is unfound."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S106",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T09:31:33Z",
+  "one_line": "L9 rounds 62-63: CB62bj1-AC3 MET. The saved targeted plan held 2 creates, the role and its inline policy. Read live: the policy carries GetObject, GetObjectVersion, PutObject and a prefix-conditioned ListBucket on the cottonwood CRM prefix and no delete; the trust names the console user alone; 0 attached policies. CloudTrail by the role's name since its creation shows CreateRole and PutRolePolicy by the dell2 agent user and no AssumeRole. The trust carries no condition, as the pair signed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_62_63_DRAIN_END_20261011.md @53af818717 (msg 4568)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUNDS_62_63_L9_GRADE_20261011.md",
+      "this seat's live reads 2026-10-11T09:31:33Z on cloudops-cot-restricted-breakglass-role: CreateDate 2026-10-11T09:05:05Z, no permissions boundary, MaxSessionDuration 3600; trust = 1 statement, Principal the console user alone, no condition; inline policies = 1 (RestrictedPrefixGetPutList): s3:GetObject, s3:GetObjectVersion, s3:PutObject on the cottonwood CRM prefix and s3:ListBucket conditioned to that prefix; attached managed policies = 0; RoleLastUsed empty",
+      "this seat's CloudTrail lookup by the role's name since 2026-10-11T09:00Z, read at 09:29Z: 2 events, CreateRole 09:05:05Z and PutRolePolicy 09:05:06Z, both by cloudops-dell2-agent-user; no AssumeRole event",
+      "this seat's read of the applier's saved plans under C:/dev/_cotbkf_private_evidence_20261009/r63/: step2_plan.json holds 2 resource changes, both creates, the role and its policy; shared_infra_plan_after.json holds 242 with 2 changing, neither of them the two (the portal bucket artifacts of row D2-S92)"
+    ]
+  },
+  "spec_asserts": "CB62bj1-AC3 (JUDGMENT, graded by 3.0.0_SA_CVO at L9): the saved plan that was applied named only the two addresses; the inline policy read back carries the four actions on the restricted prefix and no delete; no principal other than the console user can assume the role; no agent assumed it.",
+  "world_is": "All four limbs hold on this seat's reads. Whether the console user can assume the role is untested by design. Who applied the bucket policy's statements before the role existed is unfound.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

@@ -4514,3 +4514,27 @@
   "notes": "Owner of the replacement: the DSGN_IRPTV1 issuer, in the cell that follows IRPT_BCKEND (2.0.0_SA_COO~P2) publishing a producer fixture for the export-download answer. Condition that un-parks it: that fixture on trunk. Nothing served is affected: a test fixture."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S10",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T09:19:12Z",
+  "one_line": "L9 round 14, the question of row D2-W49-S9: of four tests whose totals were re-derived from the contract, two stay as strict (they compare to the contract's stated total) and two are weaker: fe-s-14 envelope and fe-s-57 carry now excuse any DECLARED route with no response schema, and the number excused is not pinned, so a route that loses its schema no longer fails them. The three excused today are the right three. The fix is to assert the excused set by name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4551 (round 14 fully drained @b97b6ac14a)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_ROUNDS_14_15_L9_GRADE_20261011.md",
+      "this seat's read of portal commits 3e654e4e and 8a14511d and of candidate 7e8fa4fd: fe-s-13/routes.test.ts and fe-s-14/header.test.ts now compare to routes.json _denominator.total; fe-s-14/envelope.test.ts:166-223 and fe-s-57/carry.test.ts:152-242 set declared = routes with a response schema, declaredNoSchema = DECLARED routes with none, and assert their sum equals the DECLARED count"
+    ]
+  },
+  "spec_asserts": "The issuer asks this seat's read on whether re-deriving four tests' stated totals weakens them (msg 4551; row D2-W49-S9 says each is as strict as the one it replaces).",
+  "world_is": "Two of four are as strict; two are not. No test was run by this seat; the candidate is not on DEV.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
