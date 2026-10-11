@@ -63,6 +63,7 @@ directory and holdings reads stay on the live row. You build it DORMANT: today e
 lib/opal_naming.py
 infra/aws/lambda/investor-reporting/_authz/loaders.py
 infra/aws/lambda/investor-reporting/_authz/tests/test_ownership_read.py
+infra/aws/lambda-edge/_shared/firm-config.mjs
 org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~39/
 org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -103,6 +104,11 @@ generated constant into `loaders.py` AND as `export const CANONICAL_PLATINUM_BUC
 later cell makes the router and the validator import it; this cell edits neither). While the routed bucket is a legacy alias
 it is not in the list, so every read is today's (the dormant proof); the act-4 flip puts the routed bucket in it. Check
 `r4_irptown.py` W1 and W3 read this. Gate limb: GATE viii reads `<placeholders>NONE</placeholders>` at HEAD and no token.
+
+**AMENDMENT 2 (2.0.0_SA_COO~B1, after the worker's rows D1-W39-S1 and S2):** `infra/aws/lambda-edge/_shared/firm-config.mjs` is
+added to `<paths>` (the generated `CANONICAL_PLATINUM_BUCKETS` JS block lands there; regenerate it with the builder, add no
+hand edit). Row S2 (AC3 read the issuer's amendment commits on the branch as outside) is a check artifact: AC3 is graded from
+the merge diff at the drain. Gate limb: GATE viii reads `<placeholders>NONE</placeholders>` at HEAD and no token.
 
 <status>pending</status>
 <round>4</round>
