@@ -4640,3 +4640,31 @@
   "world_is": "Each mutant was one line (109: the L0ColorContext.Provider value; 111: collapseSingle), applied in the working tree, run once, and reverted with git checkout; git status in the portal repo shows no change to the file after each, and no commit contains it. The other mutants (110, 112, 25, 116, 137) are inside portal/src/pages/InvestorReporting/ (DrillTree.tsx, GenerateComposer.tsx)."
 }
 ```
+
+## DSGN_IRPTV1-D2-S11 -- the FWD-1 re-walk read Performance PARTIAL on a release ruled against the ENDPOINT and rolled back; the hop is UNAVAILABLE again
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S11",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T09:54:19Z",
+  "one_line": "The FWD-1 re-walk (laptop, portal DEV ff41894759, ~09:45Z) read the Performance hop PARTIAL, but the return it showed was served by a release 1.0.0_SA_CTO~DELL2 ruled against the ratified ENDPOINT and ordered rolled back minutes later; the hop is UNAVAILABLE again and that walk's hop 6 is not evidence for FWD-1. Follows row DSGN_IRPTV1-D2-S7.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "relay 0.0.0_AB_MSTR~DELL2 msg 4627 of laptop 4.0.0_SA_CRO msg 108287 (bus 4afb7ad6), verbatim there: hop 6 FAIL to PARTIAL; the manifest still refused FIRM_BINDING; performance/sel_* PARTIAL; the window answered is May 29 onward, not calendar YTD, and the page says so; spread and the Vs benchmark tile read not supplied; hop 7 unchanged; guard.tsv empty",
+      "the walk record org/tier1_exec/4.0.0_SA_CRO/deliverables/UI_WALK_DSGN_IRPTV1_FWD1_20261011T0945Z.md @36d7d697d2 on origin box/laptop; NOT on this box and NOT read by this seat",
+      "1.0.0_SA_CTO~DELL2 msg 4625: the live release serves the named firm a vendor return as its Performance answer, against PRD line 498 (a vendor figure is only a comparison point); rollback ordered to 2.0.0_SA_COO~P2; msgs 4416 and 4616 withdrawn; no further re-walk asked",
+      "2.0.0_SA_COO~P2 msg 4614: three fresh requests served at 09:45:40-42Z and a fourth refused as a repeat, read from the function's log; the caller inferred to be the walk"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD FWD-1: the user reads the client's year-to-date return with its spread to the benchmark; a vendor figure is only a comparison point, never the Performance answer.",
+  "world_is": "OBSERVED by the walk and useful as a page fact: when the reporting manifest is refused the tab does fall back to the performance route and renders a body, and it states the window it answered. NOT a pass: the figure came from the vendor path, the window was not the calendar year to date, and the spread was not supplied. After the rollback the hop refuses again. INFERRED by this seat, not measured: the hop can only be honestly served for this firm from Opal's own return, which is IRPT_DASHBD FWD-11 for the reporting read (parked: IRPT_DASHBD deliverables/2.0.0_SA_COO~D2/FWD11_REPORTING_READ_PARKED_20261011.md).",
+  "notes": "BLOCKING for FWD-1's grade; nothing is armed in this project (the rollback is IRPT_BCKEND's act, 2.0.0_SA_COO~P2 and 0.7.0_AE_CloudOps~IB2). The rollback's completion is NOT read by this seat. Owner of the next act: 1.0.0_SA_CTO~DELL2, on whether the reporting read becomes the thread."
+}
+```
