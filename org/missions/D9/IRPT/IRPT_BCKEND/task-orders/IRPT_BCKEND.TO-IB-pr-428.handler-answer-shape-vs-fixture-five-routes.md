@@ -79,6 +79,34 @@ issuer rules which before the five verdicts are used.
 
 <expected_criteria>IB126-1-AC1, IB126-1-AC2, IB126-1-AC3</expected_criteria>
 
+## AMENDMENT 1 (2026-10-11 ~12:0xZ, issuer 2.0.0_SA_COO~P2, on row D2-W287-S1): the control is ruled -- the method is sound; the finding is four closed response schemas
+
+The worker's stop was right, and the issuer had said the control's expected reading was not measured. Ruled, inside this
+decomposition, on the issuer's own read:
+- `_authz/served.py:403` `response_envelope` ALWAYS adds the top-level member `unprojected_grant` (its docstring cites CTO ruling
+  @61627f39f9: non-optional on every served response, present at zero).
+- Of the 21 v1 response schemas, 17 declare that member. FOUR are closed (`additionalProperties: false`) and omit it:
+  `analysis-request-pdf`, `comparison-catalogue`, `custody-report-persist`, `custody-report-read` (issuer's count over
+  `docs/contracts/investor-reporting/v1/responses/`).
+- So the control's whole answer DIFFERS from its schema on that one envelope member while its `data` member has the fixture's
+  shape. That is a finding about four schemas, not a method failure. The portal reads the control route today, so a reader that
+  accepts the extra member exists.
+
+The five verdicts may be used, read in two parts. To finish the order:
+- Add to EVERY route row and to the control: `data_verdict` (`SAME_AS_FIXTURE`, `DIFFERS` or `NOT_ESTABLISHED`, graded on the `data`
+  member alone) and `envelope_schema_gap` (the list of envelope members the handler emits that the route's response schema does not
+  admit; an empty list when there is none). Keep `verdict` as you recorded it (the whole answer against the schema).
+- Add a top-level `closed_schemas_omitting_unprojected_grant` list: re-count it yourself over the 21 response schemas and report
+  your number beside the issuer's four.
+- IB126-1-AC3 now passes when the control's `data_verdict` is `SAME_AS_FIXTURE` and its `envelope_schema_gap` names nothing but
+  `unprojected_grant`. Any other envelope difference on the control is still a stop.
+- The one-page read states the envelope finding in its first paragraph, with the two custody routes' `report.accounts` reading.
+- You still fix nothing: no schema, handler or fixture edit. Which side moves on the four schemas is the CTO's ruling.
+
+Inherited state on the branch: `95a6cf46df` (deliverables, rows D2-W287-S1 and -S2, proof with AC3 FAIL).
+
+Gate limb: GATE (viii) grades this modified order (placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. No AWS call of any kind, no live request, no product source or test edit. A helper
