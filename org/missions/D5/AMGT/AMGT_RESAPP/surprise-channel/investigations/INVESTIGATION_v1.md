@@ -24166,3 +24166,78 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recorded, not acted on: the order does not name the account-id list and this commit carries no client data. Until the list is placed or OPAL_ACCOUNT_ID_HASHES is set on this device, every commit here that touches client data goes unchecked by that gate."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W383-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~383",
+  "surfaced_at": "2026-10-11T08:41:00Z",
+  "one_line": "A located period whose locate key is not a four-digit year (for example a 'Q4 2025' label) keeps its block unbounded by the year rule, because the order's bound names only a DIFFERENT four-digit year.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-qq-3 section 1: bound every block at the first token of a DIFFERENT four-digit year that follows its own label. The order does not say what bounds a located period whose key is not a four-digit year.",
+  "world_is": "At 918d472d4d lib/research/filings/analyze.py _block_end_at_other_year returns the block end unchanged when _locate_key(period) does not fullmatch a four-digit year, so such a block still runs to the next located label or the excerpt end, as before the change. The round-92 check and the 8 new tests cover four-digit periods only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/analyze.py@918d472d4d _block_end_at_other_year (a non-year locate key returns the block end)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-qq-3.a-located-periods-block-stops-at-another-years-label.md@cbd398d50e section 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed so the issuer can rule whether a non-year period is bounded by any four-digit year token. No hazard is armed, so no disarm_owner is set. The worker kept the four-digit rule as written and did not widen the cell."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W382-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~382",
+  "surfaced_at": "2026-10-11T08:37:03Z",
+  "one_line": "The built candidate-universe document carries a wall-clock read_at and an absolute source.model_block_dir, so an identical rebuild is not byte-identical; the pooled payload drops both plus the machine-local cache fields, and a document loaded from the pool carries no read_at.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AMGT-qq-2 section 1 rule 2: the payload must be deterministic for an identical rebuild so the idempotence arm can hold across machines; machine-local fields are kept out of the pooled payload.",
+  "world_is": "lib/research/peers/universe.py@cbd398d50e build_candidate_universe stamps read_at with the wall clock (_now_iso) and records source.model_block_dir as the building checkout's absolute path, so two identical rebuilds differ in bytes. Worktree edit: _pooled_bytes excludes read_at, cache_path, cache_sha256, pool_receipt and source.model_block_dir; the local mirror keeps read_at. A pool-loaded document carries no read_at, so summary_lines prints read_at None for it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/peers/universe.py@cbd398d50e build_candidate_universe: read_at=_now_iso() and source.model_block_dir",
+      "lib/research/peers/universe.py@worktree _pooled_bytes and _MACHINE_LOCAL_KEYS",
+      "lib/research/peers/tests/test_universe_home.py@worktree test_rebuild_at_another_time_or_checkout_is_still_idempotent and test_pooled_payload_drops_machine_local_and_wall_clock_fields"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded because the cell's determinism premise and the document's wall-clock field conflict. The round-92 check's H3a holds read_at fixed, so the check does not exercise this; the new test does. Whether read_at belongs in the pooled document is the issuer's call. No hazard is armed by this row."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W382-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~382",
+  "surfaced_at": "2026-10-11T08:37:03Z",
+  "one_line": "The AC1 and AC2 invocations anchor to git rev-parse --show-toplevel from the shell cwd; the agent shell cwd resets to the base checkout between calls, so an invocation without a prior cd answers for the base tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AMGT-qq-2 section 4 AC1 and AC2: cd \"$(git rev-parse --show-toplevel)\" && ...; the task order preamble: start every shell call with cd into the worktree path.",
+  "world_is": "Measured 2026-10-11 by this worker: a call whose cwd was the base checkout resolved git rev-parse --show-toplevel to C:/dev/ajb_workspace. The round-92 check there printed 2 of 6 (H1, H2, H3b, H4 FAIL, exit 1); pytest on lib/research/peers/tests/test_universe_home.py returned no tests ran (exit 4). Re-run after an explicit cd into C:/dev/wk-resapp-382: 6 of 6, exit 0; and 146 passed, exit 0. Same trap as AMGT_RESAPP-D1-W371-S3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-qq-2.the-candidate-universe-home-follows-the-scanner-vintage.md section 4 (the invocation as written)",
+      "the two runs above (base, then worktree) printed in this worker's session on 2026-10-11, before the surfaced_at stamp of 08:37:03Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed: the invocation is literal and was not edited. The recorded AC1 and AC2 outputs in the instance are the worktree-anchored runs. Whether the proof invocation should anchor to the worktree path is the issuer's call. No hazard is armed by this row."
+}
+```
