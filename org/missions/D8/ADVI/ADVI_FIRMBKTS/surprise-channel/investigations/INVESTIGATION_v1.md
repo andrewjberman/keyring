@@ -5001,3 +5001,128 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Recorded as a premise note only. The act-4 actor needs a live token to run this one event; the census does not carry one."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W52-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~52",
+  "surfaced_at": "2026-10-11T16:50:32Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-g-32 census: the Budgets reads are denied to the worker identity, so the find-insure-budget-alerts Budgets actions are unread and that topic lists its code publisher only.",
+  "spec_asserts": "FB-g-32 1a and 1b.3: the census reads the account's publishers; an unreadable call is recorded as a surprise row naming the denied call, and the rest is filled.",
+  "world_is": "The Budgets describe calls for the account return AccessDeniedException (rc=254) for the worker identity cloudops-dell1-agent-user: budgets:ViewBudget and budgets:DescribeBudgetActionsForAccount are not granted. No aws_budgets resource or budget action exists under infra/aws/terraform (native Grep, no match).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "budgets describe-budgets run 2026-10-11 with the account id as an argument: rc=254, AccessDeniedException on budgets:ViewBudget",
+      "budgets describe-budget-actions-for-account run 2026-10-11: rc=254, AccessDeniedException on budgets:DescribeBudgetActionsForAccount",
+      "native Grep of C:/dev/wk-firmbkts-52/infra/aws/terraform for aws_budgets or budget_action at cd726fdc6c: No matches found"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A denied read per the comp-iam preflight: a finding, not a failure. The issuer or CVO may grant the read or name another reader for the Budgets publishers. No budget was changed."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W52-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~52",
+  "surfaced_at": "2026-10-11T16:50:32Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "FB-g-32 AC1: the S4 phone-number check refuses every topic ARN, because each ARN carries the 12-digit AWS account id; AC1 reads 3 of 4 arms on a census that is otherwise complete.",
+  "spec_asserts": "FB-g-32 1b.2 and AC1: a count and a topic ARN are the most the census prints, and the check refuses a run of ten or more digits; AC1 passes at 4 of 4.",
+  "world_is": "Each of the six topic_arn values is arn:aws:sns:us-east-1:<12-digit account id>:<topic>. The r4_smscensus.py S4 regex matches exactly 6 times in the written file, each the account id inside a topic ARN (run length 12); the +1 prefix matches 0. The file carries the true ARNs, unmasked, so AC1 S4 FAILS (3 of 4). A masked ARN would pass S4 but would not be the ARN the spec names; that choice is the issuer's or the CTO's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r4_smscensus.py --arms census run on the written census at the worktree: FAIL S4 no phone number appears in the file; ROUND 4 SMS CENSUS: 3 of 4 arms; exit=1",
+      "python regex count over the written census: 6 matches, all 12-digit runs inside arn:aws:sns:us-east-1: prefixes (values not recorded)",
+      "sns list-subscriptions in us-east-1 (client-side count 11): 6 subscriptions of protocol sms, one per topic ARN"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not masked by this worker. For a ruling: exempt the account-id run in S4 for ARN fields, or accept a masked ARN form. AC1 stays FAIL and the order stays open until ruled."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W52-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~52",
+  "surfaced_at": "2026-10-11T16:50:32Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-g-32 census: a live Lambda (ec2-runtime-monitor) publishes to ec2-long-running-alerts, which has an SMS subscription, but its source is not in this tree, so the census lists no code publisher for that topic.",
+  "spec_asserts": "FB-g-32 1a: each publisher is a repository line (kind code) or an AWS service resource, and a publisher is found by reading the topic's wiring.",
+  "world_is": "The Lambda list (237 functions, client-side count) shows ec2-runtime-monitor with Environment SNS_TOPIC_ARN set to the ec2-long-running-alerts ARN. infra/aws/lambda/ci/lambda-source-map.json entry ec2-runtime-monitor has source_dir EXTERNAL and files []. No infra/aws/lambda/ec2-runtime-monitor directory exists (native Glob). The topic's census entry has publishers=[] and sms_subscriptions=1, so N is under-counted by one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda list-functions in us-east-1 with a client-side scan of Environment: ec2-runtime-monitor SNS_TOPIC_ARN names ec2-long-running-alerts, at worktree HEAD cd726fdc6c",
+      "C:/dev/wk-firmbkts-52/infra/aws/lambda/ci/lambda-source-map.json ec2-runtime-monitor: source_dir EXTERNAL, files []",
+      "Glob C:/dev/wk-firmbkts-52/infra/aws/lambda/ec2-runtime-monitor/lambda_function.py: no file (only ec2-auto-shutdown-enforcer matched)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not counted as aws_service: it is code, and its can_set_message_attributes is unknown without its source. The source must be located outside this tree before the attribute fix covers it. The live enforcer ec2-auto-shutdown-enforcer publishes to ec2-auto-shutdown-alerts, not to this topic."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W52-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~52",
+  "surfaced_at": "2026-10-11T16:50:32Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-g-32 census: data/inf/scripts/gold/lib/aor_attribution_audit.py:204 publishes to the topic named by INF_AOR_DRIFT_SNS_ARN, which no tree wiring sets; its docstring names opal-partner-etl-ops-alerts, so the census does not count it.",
+  "spec_asserts": "FB-g-32 1a: a code publisher counts when its topic resolves by an environment variable or a Terraform value the worker reads.",
+  "world_is": "INF_AOR_DRIFT_SNS_ARN is read at aor_attribution_audit.py:191 and is set in no file under infra/ (native Grep, no match) and in no data/ file outside its test module. No live Lambda environment carries an SNS ARN under that key. The docstring at line 185 names opal-partner-etl-ops-alerts, which is a claim, not a resolution, so the topic is unresolved.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-firmbkts-52/data/inf/scripts/gold/lib/aor_attribution_audit.py:191 at cd726fdc6c: arn = os.environ.get('INF_AOR_DRIFT_SNS_ARN', '').strip()",
+      "native Grep of C:/dev/wk-firmbkts-52/infra for INF_AOR_DRIFT_SNS_ARN at cd726fdc6c: No matches found",
+      "Lambda Environment scan (client-side): no SNS ARN under the key INF_AOR_DRIFT_SNS_ARN"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Excluded from N. If the variable's live setting is read and points at opal-partner-etl-ops-alerts, that topic gains one code publisher and N rises by one."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W52-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~52",
+  "surfaced_at": "2026-10-11T16:50:32Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Repository Terraform carries E.164 phone-number literals in a comment and in a variable default, outside this order's paths; the census cites them by path only and writes none.",
+  "spec_asserts": "FB-g-32 1b.2: no phone number, endpoint or email is written into any file or row; the candidate list names where the toll-free identifier lives and never the number.",
+  "world_is": "infra/aws/terraform/portal-auth/sms-iam.tf:7 (comment) carries a toll-free E.164 literal; infra/aws/terraform/inf-pipeline/inf-ops-alerts-sms.tf:11 (comment) carries an on-call E.164 literal; infra/aws/terraform/partner-etl-ops-alerts/ops-alerts.tf:6 (variable default) carries an on-call E.164 literal. The literals appeared in this worker's search output and were not recorded in any file or row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "native Grep of C:/dev/wk-firmbkts-52/infra/aws/terraform for origination or toll-free at cd726fdc6c: portal-auth/sms-iam.tf:7 comment carries an E.164 literal",
+      "native Grep of C:/dev/wk-firmbkts-52/infra/aws/terraform for on-call E.164 literals at cd726fdc6c: inf-pipeline/inf-ops-alerts-sms.tf:11 and partner-etl-ops-alerts/ops-alerts.tf:6",
+      "Read of partner-etl-ops-alerts/ops-alerts.tf lines 4-6 at cd726fdc6c: description reads E.164 on-call pager; default carries a literal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the CTO's call on whether committed on-call numbers belong in Terraform source. Not remediated: the paths are outside this order's write grant."
+}
+```
