@@ -38,7 +38,9 @@ carries `_research_folders_disclosure()` (about line 347), a twin of the swallow
    rule at two depths and must not disagree: where `main`'s guard fires, `write_pool` is never reached.
 4. In `add_security.py` retire the twin `_research_folders_disclosure()`: its callers use the crosswalk's one guarded helper
    (`crosswalk._research_folders_for_disclosure()`, the function `main` uses, same `(folders, root)` pair). If a test in
-   `lib/research/identity/tests` patches the retired name, repoint that patch to the helper; do not delete the test.
+   `lib/research/identity/tests` patches the retired name, repoint that patch to the helper; do not delete the test. The three
+   patches in `lib/research/identity/tests/test_writers_carry_issuer.py` (lines 34, 47, 53) are such patches: repoint each to
+   `crosswalk._research_folders_for_disclosure` with the same `(None, None)` return.
 5. Tests in the new file `lib/research/identity/tests/test_write_pool_guard.py` in the style of `test_write_pool_union.py` (its
    `_FakeS3`, `_document`): door B refused with no put and the served object's bytes unchanged; the control arm (document carrying
    folders) lands; no `document` lands byte-identical; a first publish with no served `research_universe` still lands; the error
@@ -63,6 +65,7 @@ lib/research/identity/add_security.py
 lib/research/identity/tests/test_write_pool_guard.py
 lib/research/identity/tests/test_crosswalk_refuses_absent_library.py
 lib/research/identity/tests/test_write_pool_union.py
+lib/research/identity/tests/test_writers_carry_issuer.py
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~353/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -99,3 +102,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>pending -- AMENDMENT 1 (issuer, 2026-10-11T03:5xZ) on row AMGT_RESAPP-D1-W353-S1 (BLOCKING, the worker's): retiring _research_folders_disclosure breaks three patches in lib/research/identity/tests/test_writers_carry_issuer.py (lines 34, 47, 53), a file the order did not name; AC2's 3 failures are those three. The file joins <paths> and its three patches are repointed to crosswalk._research_folders_for_disclosure. Rows S2 (the check reads the real bucket by GET only) and S3 (write_pool refuses ANY absent document over a served count, main's early guard only a LibraryAbsentError) are ruled: both stand as built -- S3 is the CTO's device-independent rule. Criteria unchanged. Graded by to-pipeline-gate on a modification.</status>
