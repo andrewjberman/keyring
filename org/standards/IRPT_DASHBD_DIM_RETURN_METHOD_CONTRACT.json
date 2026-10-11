@@ -318,7 +318,7 @@
       "price_basis": "LEFT TO THE SOURCE ENTRY: METHOD_ROWS[3] names no price basis; the entry's price_basis field states it (read by method_fields, not written to the dim row)",
       "income_basis": null,
       "income_basis_claim": "absent",
-      "income_basis_reason": "FWD-3 does not separate income: it sits inside the value through the cash leg, so this method states no income basis (its income columns are null on every row)",
+      "income_basis_reason": "A positions-based method values the account from its positions and cash, so income is inside that value and is not separated from it: the method states no income basis.",
       "income_basis_note": "ABSENT BY DESIGN (1.0.0_SA_CTO~DELL2 ruling msg 4634). Before 0.6.0 this row stated cash_when_received, which the Cottonwood table does not do; the producer now states no value and says why.",
       "fee_basis": "PER_ENTRY_FEE_TREATMENT",
       "fee_basis_note": "LEFT TO THE SOURCE ENTRY: METHOD_ROWS[3] states that fee treatment is per entry and does not say gross or net; the entry's fee_treatment field states it. This contract asserts no gross or net for row 3.",
