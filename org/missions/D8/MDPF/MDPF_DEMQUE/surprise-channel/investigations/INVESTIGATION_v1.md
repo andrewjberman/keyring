@@ -762,6 +762,28 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "pyarrow max(Trade_Date) over date=2026-06-23/*.parquet -> 2026-06-22, 1,416,497 rows"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W24-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~24",
+    "surfaced_at": "2026-10-11T15:51:39Z",
+    "one_line": "demand_queue.draw skips every request whose job id already has a DRAWN row in the ledger; the standing request id STANDING-T1-EXTEND is fixed, so after its first DRAWN day no later daily draw fetches or writes it. The standing extension would run once and then go silent.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Q1",
+    "spec_asserts": "TO-DQ-t31 and ROUND-8 R1 (a)/(c): a STANDING tier-1 request, rebuilt each trading day, carries every locked symbol to the T-1 frontier through the shared pacer; apply resets those symbols so the day's draw re-pulls each once. The request id is pinned as STANDING-T1-EXTEND.",
+    "world_is": "data/mdpf/scripts/demque/demand_queue.py@477921e3dc draw(): already = {job of each ledger row with outcome DRAWN} and a request whose request_id is in already is skipped (lines 169-173). run_daily_draw.sh appends every day to one ledger.jsonl with no per-day key, so the DRAWN row of day 1 stays in the ledger. Worker scratch probe (uncommitted, .scratch/t31_ledger/probe_ledger_skip.py at e3739bada7 plus this commit): one standing request, one DRAWN row for STANDING-T1-EXTEND, day-2 draw: fetch calls on day 2: 0, ledger rows written: 0. The apply is HELD for the CTO's word and has not run; no served, pacer or queue state was touched.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/demand_queue.py@477921e3dc lines 169-173: already set from DRAWN ledger jobs; continue when request_id in already",
+        "scratch probe run in the worktree: fetch calls on day 2: 0 | ledger rows written: 0 | rows: []",
+        "data/mdpf/scripts/demque/run_daily_draw.sh@e3739bada7 appends to $STATE/ledger.jsonl on every run (no per-day ledger key)"
+      ]
+    }
   }
 ]
 ```
