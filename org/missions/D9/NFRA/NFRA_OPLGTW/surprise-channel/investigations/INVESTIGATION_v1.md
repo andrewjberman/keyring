@@ -12338,3 +12338,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Owed: Andrew's admission call (C8, per the CTO ruling step 3) naming principal A (4 calls) and caller B (1 call, unresolved principal); this worker grants and profiles nothing. No deny built; tests/test_og_bd1.py not written; order left pending. A separate fix (not this order's): pass principal into audit.log_call in integrations/base.py, so the next census needs no digest join."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S92",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T18:05:01Z",
+  "one_line": "The Teams bearer secret gateway/teams/bearer is readable by the gateway, COMM_ASSIST's Lambda, group cloudops-dell-agents-group and admin. OG-ap-7's three /hx/teams/* channel-read routes therefore extend what every holder of that bearer can read; they do not change who holds it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MSG 1.0.0_SA_CTO~Z msg 33350, read at signing OG-ap-7's CTO half @4f49f40bd0: the readers of gateway/teams/bearer are the gateway, COMM_ASSIST's Lambda, cloudops-dell-agents-group and admin"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-7's blast radius is the three /hx/teams/* GET routes only.",
+  "world_is": "The routes are the only code change, but a group grant (cloudops-dell-agents-group) holds the same bearer, so any member of it gains channel read with this release.",
+  "notes": "CTO ruling: name the dell consumer of the teams bearer, then either narrow the group's grant or give that consumer its own bearer. A cell for a later round. Not a rollback trigger for OG-ap-7 (the CTO signed with this known)."
+}
+```
