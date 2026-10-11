@@ -61,7 +61,10 @@ Reuse the ~43 r29 tooling in `deliverables/0.9.0_WK_NFRA_OPLGTW~43/` (`r29_ssm_p
    the host printing `E2_DIGEST <sha256 of json.dumps(body, sort_keys=True)>`. Body exactly: `served_release`,
    `installed_code: true`, `tool_listed`, `tool_safe`, `tool_write_class`, `bad_quarter_refused` (one call with
    quarter `2026Q9`, through the installed code's own entry, writes nothing), `objects_written: 0`,
-   `fee_root_equals_address`, `market_update_root_present`. Then AC2.
+   `fee_root_equals_address`, `market_update_root_present`, and (A1) `put_object_accepts_if_none_match`, which is
+   whether `IfNoneMatch` is a member of the installed botocore's S3 `PutObject` input shape, read on the host through
+   the gateway's own Python. Add `write_files_holders` (int), the count of installed tools whose write class is
+   `write_files`. Then AC2.
 
 `W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~51/`.
 
@@ -113,6 +116,14 @@ AC1 and AC2 PASS (after Phase C). Report once per phase.
 - Host queue: r29 -> allowlist -> MP-x-4 (all LIVE by 16:27Z) -> MX-r-9 (in flight) -> THIS -> the metadata route.
 - Pre-cut: rl16.AC1 and rl16.AC2 base FAIL as expected (records absent); rl15_attest.py gains the E2_DIGEST rule
   (additive; tl1.AC2 re-run PASS after the edit).
+- A1 (issuer, 2026-10-11 ~12:2xZ): Phase B was applied by NFRA_OPLGTW.TO-OG-ap-6. Both of its ledgers are CLOSED
+  (@a54fa42da7), and the issuer re-ran ap6.AC1 and ap6.AC2 PASS. The live release is `6aadf7db37` (a re-cut of
+  a88661b145 on 2a5966dfbd, all three halves re-pinned). Phase C's body gains two fields, carrying CTO Half 1 C4 (the
+  host's botocore accepts `IfNoneMatch`) and the CVO half's ask to count `write_files` holders. `rl15_attest.py`'s
+  E2_DIGEST rule now requires both: `put_object_accepts_if_none_match` is True and `write_files_holders` is an int >= 1.
+  Controls: a full body passes; a False, 0, bool or None value fails; the old body shape fails. The other three rules are
+  untouched. rl16.AC2 reads FAIL at base because RL16_READ.json is absent. Phase C runs as a continuation of slot ~51.
+  Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>33</round>
