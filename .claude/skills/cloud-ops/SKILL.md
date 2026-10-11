@@ -108,6 +108,58 @@ The checkpoint sees only unread files directly under `inbox/<serial>/`, so a liv
 moves the message first) guarantees a silent empty-inbox `exit 0`, and a `~lane` agent is unhaltable
 regardless. **NOBODY CITES A HALTGT PASS.** `docs/architecture/ADHC_HALTGT.md`, `org/tier0/ledger/LD-0267.md`.
 
+### 18a. THE PRE-APPLY INBOX CHECK -- it must not be able to read CLEAN (row NFRA_IAMROLES202609-Z-S42)
+
+Rule 18's caveat says a `~lane` agent is **unhaltable**, so HALTGT cannot be cited and such a seat must read its
+own inbox before an irreversible apply. **That direct read is the only pre-apply mail guard a `~lane` seat has,
+and the obvious form of it fails toward CLEAN.** Measured 2026-10-11 (`0.7.0_AE_CloudOps~IR`, round 7): the
+expression below was cited in THREE apply records and could not have detected mail in any of them.
+
+```bash
+# DO NOT USE -- all three defects measured:
+ls -1 org/mcp/inbox/<base>/~<lane>/ 2>/dev/null | grep -vc '^read$'
+```
+1. **From a LINKED WORKTREE it prints `0` because the inbox path is not checked out there** -- identical to an
+   empty inbox. Rule 14b is what sends a seat to a worktree to commit, so this is the normal case, not the edge.
+2. **From the main tree it over-counts by one:** `ls -1` renders the subdirectory as `read/`, which `^read$`
+   never matches, so the directory itself is counted. Against an empty inbox it prints `1`.
+3. **`ls -1` hides dotfiles**, and the only regular files directly in that directory are `.unread-deliveries`
+   and `.watcher.owner`. The denominator is not what it appears to be.
+
+**THE FORM TO USE, two limbs:**
+
+- **(a) PRIMARY -- the broker read.** `get_delivery_state(<your FULL lane serial>)` and count **every row not
+  `READ`**. This is sound from any tree because it does not depend on a checkout, and it is the only limb that
+  survives a **live Monitor**: the watcher `mv`s an arriving message into `read/` before any agent sees it, so a
+  file-based check goes quiet exactly when mail has arrived. `READ` is also the only state that claims an AGENT
+  saw a message -- `SENT` and `EMITTED` are transport, not readership.
+- **(b) FALLBACK, only if the broker is unreachable.** `test -d` the **REAL** inbox path
+  (`org/mcp/inbox/<base>/~<lane>/` under the **MAIN workspace root**, never a linked worktree's copy), then
+  `ls -A` and count entries other than `read/`. **A MISSING PATH IS AN ERROR** -- print it and exit non-zero.
+  **It is NEVER a `0`.** That rule is the whole disarm: defect 1 above was a missing path silently becoming a
+  clean reading.
+
+```bash
+# (b) fallback -- ROOT is the main workspace, resolved, never the cwd
+ROOT=$(git -C "$(git rev-parse --show-toplevel)" rev-parse --path-format=absolute --git-common-dir)/..
+INBOX="$ROOT/org/mcp/inbox/<base>/~<lane>"
+test -d "$INBOX" || { echo "ERROR: inbox path absent: $INBOX -- this is NOT an empty inbox"; exit 2; }
+# -type f excludes read/ regardless of how ls renders it; the name pattern excludes state dotfiles
+echo "unread=$(find "$INBOX" -maxdepth 1 -type f -name '2026*.md' | wc -l)       state_markers=$(find "$INBOX" -maxdepth 1 -type f ! -name '2026*.md' | wc -l)"
+```
+
+> **DO NOT FILTER `read/` BY NAME WITH `ls`, IN ANY FORM. `ls` IS ALIASED TO `ls -F` HERE**
+> (`ls -F --color=auto --show-control-chars`), and `-F` appends `/` to a directory, so `ls -A` emits
+> **`read/`** and `grep -v '^read$'` never matches it. Measured 2026-10-11: that alias is the actual mechanism
+> behind Z-S42's over-count, and it defeats `ls -1` and `ls -A` alike. `find -maxdepth 1 -type f` cannot be
+> fooled by the rendering. **Both counts are printed** because the two state dotfiles
+> (`.unread-deliveries`, `.watcher.owner`) are always present: a bare entry count reads 3 against an empty
+> inbox, which is a tripwire that is always tripped and therefore gets ignored -- as useless as one that reads
+> clean.
+
+**COST:** one broker call. **NON-APPLICATION:** a seat that is not `~lane`-scoped can be halted and has HALTGT;
+this is for the seats that cannot.
+
 ### IAM INSTRUMENT TRAPS -- moved from CLAUDE.md Rule 22a, 2026-08-25
 
 ⛔ **`comp-iam` IS NOT SUFFICIENT FOR A NEW RESOURCE, AND IT FAILS *GREEN*.** It models `(action)`,

@@ -98,3 +98,49 @@ with max `Trade_Date` 2026-06-22. So R1 (b) has no later trades to check. That p
   store meant to refresh, who owns it, and when. It is not a condition of round 9.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-11 ~15:5xZ) -- the owner answered: that transactions store is a ONE-TIME backfill. The `held` tail stands by design.
+
+`1.0.0_SA_CTO~DELL2`, dell2 msg 5256, relayed by `0.0.0_AB_MSTR~DELL2` (bus 053013ba), verbatim in part: "that partition is NOT meant to
+refresh ... ADVI_COTBKF is a ONE-TIME backfill by its PRD (contract C-ONE-TIME): Commonwealth's delivery of Cottonwood's history, ending
+2026-06-22 ... If MDPF_DEMQUE needs Cottonwood transactions after 2026-06-22, that is a different source, Cottonwood's ongoing custodian feed,
+and not this prefix." The owner's stated limits: the prefix was not listed today, and "no schedule" is read from the PRD's contract, not from a
+Terraform sweep.
+
+**Consequences:**
+- **t-30's dynamic resolve is harmless but will not, by itself, ever upgrade the tail.** No later partition is planned in that prefix.
+- **The `held` tail after 2026-06-22 is the steady state** until a second trades source is wired. It is not a gap to chase in round 9.
+- **For round 10's list:** locate Cottonwood's ONGOING custodian transaction feed on this estate (`comp-which` first, then the served graph,
+  with the denominator printed).
+  - If it exists, the lock reads it as a second trades source, and the tail moves to `measured` wherever trades agree.
+  - If it does not, the tail stays `held` by design, and that is stated on the lock records.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-11 ~16:0xZ) -- row D1-S12 (BLOCKING): TRACE the valuation path now, read-only; re-resolve the three by CUSIP; no page change without Andrew
+
+`2.0.0_SA_COO~Q1` msg 3975, table `deliverables/2.0.0_SA_COO~Q1/ROUND9_LOCK_CAUSE_14.md`.
+- Old and new agreement are EQUAL on all 14, so there is no draw defect.
+- 11 never met the floor, and their `held` claim stands.
+- THREE are classed wrong-symbol: RPIFX 39.2 pct, FTHSX 40.7 pct and PFORX 42.9 pct.
+- `silver/positions` `date=2026-06-23`: FTHSX is held by 4 accounts, PFORX by 11, RPIFX by 0.
+- The 14 lock records now read `held`.
+
+**Ruling:**
+1. **Trace the valuation path NOW, read-only, as a round-9 cell.** For FTHSX and PFORX, which served artifact values those 15 accounts'
+   positions, from which price file, and onto which client page (route and firm), the denominator printed. A trace changes no byte, so it
+   needs no word. Not tracing would leave a possibly wrong client figure unmeasured.
+2. **Re-resolve the three by CUSIP through the EXISTING resolvers** (C-IDENTITY: no second resolver). A mutual fund whose prices agree about 40
+   pct of the time within the 0.5 pct band is typical of a WRONG SHARE CLASS of the right fund, not a different company. The read prints:
+   - per CUSIP, the share class and ticker the resolver returns;
+   - the agreement of that candidate's as-traded close against the client's trades.
+   A candidate at or above the 90 pct floor is the proposed correction.
+3. **No page or served price changes yet.** If the trace shows a client page values a position from a wrong-symbol file, the exposure is
+   EXISTING (served before this round). The correction (new lock, re-drawn file, re-valued page) is a client-facing change, so it is written
+   up with the before and after values per account and waits on Andrew's word (CLAUDE.md Agent Autonomy: a client-facing PROD change). If
+   the trace shows no page reads them, the correction proceeds under its own never-widen pair.
+4. **RPIFX** (held by 0 accounts) is re-resolved and corrected under its pair, with no wait.
+
+D1-S12 stays BLOCKING until the trace prints. It then disarms to either "waiting on Andrew, cited" or "no client page reads it".
+
+-- 1.0.0_SA_CTO~DELL1

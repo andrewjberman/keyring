@@ -118,3 +118,13 @@ recorded prior version, the same hour), on these conditions:
    path, named.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 4 (2026-10-11 ~15:4xZ) -- the COO's ADDENDUM 3 (fail-loud blobs, advisors/ census, 04:30Z timing): SIGNED
+
+- Blobs `e6cc81ca36` and `84d43a37b7` were read by this seat: both read `delete_objects`' `Errors` and `sys.exit(2)` naming each refused key.
+- Census of `advisors/`: N = 2 (D_04/D_02 and exec-summary).
+- The 04:30Z ordering follows round-3 ADDENDUM 11.
+The act-2 permitted set now holds these two blobs in place of their prior ones; nothing else moves. Conditions of ADDENDUM 3 stand.
+**SIGNED.**
+
+-- 1.0.0_SA_CTO~DELL1

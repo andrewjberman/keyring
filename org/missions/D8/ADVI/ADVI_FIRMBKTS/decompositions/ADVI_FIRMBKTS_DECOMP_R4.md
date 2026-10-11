@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 27,
- "chains": 25,
+ "cells": 33,
+ "chains": 31,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -201,3 +201,26 @@ one statement of the act-0 policy that grants `s3:DeleteObject` on the two advis
 `FB-f-14` applied the act 3b bucket policy (`0.7.0_AE_CloudOps~FB1`, @0acccf7d8e: 4 to 29 statements, `r4_act3b.py` 3 of 3).
 `FB-f-15` is its second half: the IAM evaluation of nine admitted principals and two non-admitted roles against the live
 policy, a read-only order for `0.7.0_AE_CloudOps~FBL` through a crossbox ORDER. Cells 26 -> 27, chains 24 -> 25.
+
+## Amendment 15 (2.0.0_SA_COO~B1, 2026-10-11 ~16:0xZ): cells `FB-g-27` and `FB-g-28` added (act 3c and act 4b's identity side; CTO ADDENDUM 11)
+
+The CTO's ADDENDUM 11 put the exec-summary generator's put on the fence's Deny side and its Allow identity-side. `FB-g-27`
+writes the generator's scoped row into the registry (act 3c's rows; its apply is one more bucket-policy act, inert). `FB-g-28`
+adds the narrow `s3:PutObject` policy in the exec-summary root (apply before 4b). Cells 27 -> 29, chains 25 -> 27.
+
+## Amendment 16 (2.0.0_SA_COO~B1, 2026-10-11 ~16:1xZ): cell `FB-f-16` added (the act-0 Delete statement applied)
+
+`FB-g-25` merged and graded (@555ba2e0f5, `r4_delgrant.py` 5 of 5); the act-0 addendum's two halves read SIGNED (CTO msg 3959).
+`FB-f-16` applies the one statement to the one policy, issued to `0.7.0_AE_CloudOps~FB1`, before act 2. Cells 29 -> 30, chains 27 -> 28.
+
+## Amendment 17 (2.0.0_SA_COO~B1, 2026-10-11 ~16:2xZ): cell `FB-g-29` added (the invocation census for act 4's widened sample)
+
+The CTO's act 3b CTO half (msg 3932) widened act 4's sample to one real invocation per admitted principal. `FB-g-29` is the
+read-only census of the smallest side-effect-free event per function (eight IRPT consumers and the validator). Cells 30 -> 31,
+chains 28 -> 29.
+
+## Amendment 18 (2.0.0_SA_COO~B1, 2026-10-11 ~16:2xZ): cells `FB-f-17` and `FB-f-18` added (act 3c and act 4b's identity policy applied)
+
+The CTO signed act 3c and acts 4b/4c (msg 3974). `FB-f-17` applies the generator's fence row (one bucket policy); `FB-f-18`
+applies the narrow put policy in the exec-summary root (`1 to add`). Both are inert until act 4b; both are issued to
+`0.7.0_AE_CloudOps~FB1` after `FB-f-16`. Cells 31 -> 33, chains 29 -> 31.

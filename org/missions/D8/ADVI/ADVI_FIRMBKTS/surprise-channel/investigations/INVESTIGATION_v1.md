@@ -4846,3 +4846,106 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not a worker decision to widen: the import is the minimum that makes the ordered sys.exit(2) run. The issuer may rule whether the import is an accepted part of the bound or should become raise SystemExit(2) instead; the AC1 check accepts either."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W49-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~49",
+  "surfaced_at": "2026-10-11T15:53:44Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "safe-commit's commit-gate checked 0 of 1 file (the registry JSON is outside its graded suffixes) and the client-data check printed WARN with the hashed account-id list absent; commit 3a6d8aa89d was not checked for client account ids (a repeat of ADVI_FIRMBKTS-D1-W43-S2 and W45-S2).",
+  "spec_asserts": "The commit gate checks each staged file it admits, and the client-data check runs on every commit it admits.",
+  "world_is": "The commit-gate printed 'checked 0 of 1 file(s) -- NOTHING WAS CHECKED' for infra/logic/registry/exemptions.json, a suffix it does not grade. The client-data check printed WARN: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt. The one added row carries account id 313476888478, the id the file's own account_id field names and every existing row already carries; whether that number is on the hashed list is unknown, because the list is absent. The registry row's validation is AC1 (r4_exec.py, 4 of 4 arms) and AC2 (r4_scope.py), not the commit gate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 3a6d8aa89d: 'commit-gate checked 0 of 1 file(s) -- NOTHING WAS CHECKED' and 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids'",
+      "infra/logic/registry/exemptions.json _about.account_id and account_id field read at the worktree: 313476888478"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken by this worker; the commit was not refused and the list is a per-device input. Filed for the owner of the commit gate and the client-data check to judge the un-graded JSON suffix and the device's missing list."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W50-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~50",
+  "surfaced_at": "2026-10-11T15:53:58Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The face's module source ../../modules/opal_name does not resolve from the exec-summary root; the call uses ../modules/opal_name, the path that resolves and the one the check requires.",
+  "spec_asserts": "Face section 1a.1: a NEW module call with source ../../modules/opal_name, following infra/aws/terraform/bd-pipeline/iam.tf's module opal_name_platinum_grant.",
+  "world_is": "infra/aws/terraform/exec-summary/ sits one level below infra/aws/terraform/, so ../../modules/opal_name resolves to infra/aws/modules/opal_name, which does not exist (ls -d printed no such file, rc=2). The module is at infra/aws/terraform/modules/opal_name/. bd-pipeline's call (infra/aws/terraform/bd-pipeline/iam.tf:1285) uses ../modules/opal_name, and r4_execiam.py I1 requires that string. The new call at iam.tf uses ../modules/opal_name; AC1 reads 5 of 5 arms, I3 resolves the ARN through the module.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -d infra/aws/modules/opal_name at /c/dev/wk-firmbkts-50 printed 'No such file or directory' rc=2",
+      "ls -d infra/aws/terraform/modules/opal_name at /c/dev/wk-firmbkts-50 printed the directory (contains main.tf, variables.tf, generated_locals.tf, tests/)",
+      "infra/aws/terraform/bd-pipeline/iam.tf:1285 reads source = \"../modules/opal_name\" at the worktree",
+      "r4_execiam.py:I1 at the worktree requires the string \"../modules/opal_name\" in the module block; r4_execiam.py --arms iam returned 5 of 5 arms, exit=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as a path premise only. The face's ../../ would fail terraform init for this root. The issuer may confirm ../modules/opal_name as the intended source or correct the face's text."
+}
+```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-f-16, act 0 delete statement, code not yet on CLOUD)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S31",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-11T16:00:42Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The live policy advi-49f-platinum-canonical-rw-policy now holds 3 statements while the Terraform that declares the third (FB-g-25, 555ba2e0f5) is on box/dell1 only: origin/CLOUD's iam.tf has the 2-statement policy, so a bd-pipeline apply from a checkout of CLOUD would plan the delete statement's removal.",
+  "spec_asserts": "FB-f-16 and the act-0 COO half ADDENDUM 1: the scoped plan reads 1 to change on the one policy and a post-apply scoped plan reads No changes (read in this checkout). The seat gate's OVERLAP arm: a root's Terraform file that differs from the trunk merge base, with a project on another box whose write set names the root, is a hit.",
+  "world_is": "2026-10-11 15:58Z-16:00Z. Applied from box/dell1 at HEAD: Apply complete, 1 changed; live policy Sids AdviPlatinumCanonicalObjects, AdviPlatinumCanonicalList, AdviPlatinumCanonicalDelete. git fetch origin CLOUD; origin/CLOUD head 8764d91a47: 555ba2e0f5 (FB-g-25, the statement) is NOT an ancestor of it (positive control 8764d91a47 is), while f942dcb9a8 and 0acccf7d8e are; origin/CLOUD:infra/aws/terraform/bd-pipeline/iam.tf has 0 occurrences of AdviPlatinumCanonicalDelete and 1 of aws_iam_role_policy.bd_exporter_advi_49f_platinum_canonical. The seat gate read OVERLAP hit: 1 Terraform file of this root (iam.tf) differs from the merge base 8764d91a47, and project NFRA_MCPINDEX (placed on sitez) has a write set naming infra/aws/terraform/bd-pipeline. The plan of any apply of this root from a tree at origin/CLOUD would therefore show the policy changing back to 2 statements.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 555ba2e0f5 origin/CLOUD (false) with the positive control 8764d91a47 (true), 2026-10-11 ~16:00Z",
+      "git show origin/CLOUD:infra/aws/terraform/bd-pipeline/iam.tf | grep -c AdviPlatinumCanonicalDelete -> 0",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act0_delete/ac1.out (three Sids live)",
+      "python .tools/crossbox-deploy-check.py --root infra/aws/terraform/bd-pipeline --files-vs-trunk (OVERLAP hit lines)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only; the live grant is exactly what the signed pair permits and nothing is armed by it. The exposure is a revert, not a widening: an apply from CLOUD's tree removes a Delete statement the producers will need after act 2. The same condition held for act 0's policy until its commit reached CLOUD (it has: f942dcb9a8 is an ancestor). Closing it is the integrator's push of box/dell1 (0.0.0_AB_MSTR), which this lane does not do. Until then a bd-pipeline plan from any other tree is read for a diff on this policy before any apply."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S20",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~FBL",
+  "surfaced_at": "2026-10-11T15:55:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-15: r4_sim.py as issued does not run on the laptop (three defects); with those three corrected in a scratch copy the live policy reads 9 of 9 admitted allowed, 2 of 2 negatives explicitDeny, OAI statement ok=True.",
+  "spec_asserts": "TO-FB-f-15 AC1: `python .../r4_sim.py --out .../ACT3B_SIM.txt` prints 'ROUND 4 ACT 3B SIM: 9 of 9 admitted allowed, 2 of 2 negatives not allowed, oai statement ok=True'.",
+  "world_is": "Run 1 (as issued): FileNotFoundError WinError 2 at r4_sim.py:34, bare 'aws' is not resolvable by subprocess on Windows (only aws.cmd exists in PATH). Run 2 (aws resolved via shutil.which): AttributeError at :78, a bucket-policy statement carries Principal as the string '*' and .get fails, after all 11 simulations had run and before any line printed. Run 3 (both fixed): 11 of 11 simulations ERROR 'The command line is too long', the live policy passed inline to --resource-policy exceeds the Windows cmd limit through aws.cmd. Run 4 (policy passed as file:// from a repo-relative file, deleted after): 9 of 9 admitted allowed (performance adapter also allowed on the gold sample), inf-gold-qa-runner-ec2-role explicitDeny, exec-summary-generator-role explicitDeny, OAI one Allow Get-only on 9 resources ok=True, exit=0. The simulator does not evaluate SCPs (issuer's own blindness note).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~FBL/ACT3B_SIM.txt (run 4 output)",
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f15/r4_sim_laptop.diff (the scratch copy three changes against r4_sim.py) and run_sim_aws_shim.py.txt (the aws resolver)",
+      "r4_sim.py itself was not edited; nothing was written to AWS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The measured result is the answer the order asks for, but AC1's literal invocation exits 1 on this box, so TO-FB-f-15 <status> is left pending for the issuer to grade: either fix r4_sim.py (Principal type check, file:// policy, resolved aws path) and re-run AC1, or accept run 4 as the instrument."
+}
+```
