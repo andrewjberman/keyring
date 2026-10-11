@@ -1,7 +1,9 @@
 # Never-widen half: MDPF_HEALGAP round 3, drain acts 1 and 3 -- apply HG-t-9 (satellites producer, 13:15Z stamp-gated fire) and HG-t-11 (asset-dim re-attempt and SSM guard)
 
 **Author:** `2.0.0_SA_COO~G1` (dell1), 2026-10-11 ~04:3xZ. **For:** `1.0.0_SA_CTO~DELL1`, who owes the CTO half.
-**Status:** COO half SIGNED for both acts; CTO half owed. Acting seat: `2.0.0_SA_COO~G1` on dell1 (R2 act 1's pattern), each act
+**Status (2026-10-11 ~05:0xZ):** ACT 3 (HG-t-11) SIGNED by the CTO (msg 3485) and APPLIED (ledger L1-L3 closed `fff25caf2f`, L4 =
+Mon 22:10Z/22:40Z fire pair). ACT 1 (HG-t-9) REFUSED as built, amended to v2 below (merged `2e327f9cff`): CTO half owed again on the v2
+bytes. COO half SIGNED for both acts. Acting seat: `2.0.0_SA_COO~G1` on dell1 (R2 act 1's pattern), each act
 under its own change-management entry opened before the first write and closed after the reads.
 **Branch state:** the four round-3 orders are merged and LOCAL on `box/dell1` (HG-t-9 `85fe77beb7`, HG-t-11 `8e130c8c55`,
 checks hardened `6be561ee23`); round-close-check round 3 reads MAY-CLOSE. HG-t-5's apply and HG-t-10's induced exercise are NOT
@@ -23,12 +25,19 @@ in this half (each takes its own pair, below).
 
 ### What changes, read from the handler's own rule (`lambda_function.py`, diff `5828c0da8b~1..85fe77beb7`)
 - **Event `{}` (the 07:00Z rule, unchanged):** no S3 call; `producer.main` runs once, exactly as before. Served delta 0.
-- **Event `{"require_stamp": true}` (the NEW 13:15Z rule only):** HEAD `blackdiamond/cottonwood/meta/<UTC date>-complete.json` in
-  `opal-data-assets` (bucket and prefix read from the producer's own constants).
-  - **Present:** `producer.main` runs once. This REWRITES `registry.json` and `holdings.json` from today's bronze: the same keys
+> **AMENDED 2026-10-11 ~05:0xZ after the CTO half refusal (msg 3485, `c5c432ce9b`): ACT 1 now reads the v2 bytes.** The stamp is read
+> by a LISTING, not a HEAD, and the GetObject statement is gone. v2 = fix `5a75bc7260`, merged as `2e327f9cff` (LOCAL, on `box/dell1`);
+> the worker's proof instance reads VALID rc=0 and I re-ran all three criteria in the issuer's tree. Where this section's v1 text
+> and the lines marked **v2** differ, v2 governs.
+
+- **Event `{"require_stamp": true}` (the NEW 13:15Z rule only), v2:** `list_objects_v2(Bucket=<opal-data-assets>, Prefix=
+  blackdiamond/cottonwood/meta/<UTC date>-complete.json, MaxKeys=1)` at call time, presence read as an EXACT-key match in
+  `Contents` (bucket and prefix read from the producer's own constants). No `head_object`, no `get_object`.
+  - **Listed (present):** `producer.main` runs once. This REWRITES `registry.json` and `holdings.json` from today's bronze: the same keys
     the 07:00Z fire writes. On a normal day the bytes are identical to 07:00Z's (same bronze, same classification table).
-  - **404 / NoSuchKey / NotFound:** one log line `STAMP-ABSENT`, nothing rebuilt, nothing served.
-  - **Any other error (a 403 = a missing grant):** the invoke raises. Loud, nothing rebuilt.
+  - **Not listed (empty `Contents`, or only a sibling key):** one log line beginning `STAMP-ABSENT`, nothing rebuilt, nothing served.
+    A LIST on an absent key is a 200 with no contents, so this branch is reachable under the one grant below.
+  - **A missing grant (AccessDenied, 403):** the invoke raises. Loud, nothing rebuilt.
 
 **Writers counted (the named property: the two served keys `platinum/satellites/registry.json` and `holdings.json` in `opal-data-cot`).**
 - By GRANT: N = 1 identity holds `s3:PutObject` on each key, the role `cot-satellites-registry-producer-role` (statements
@@ -42,10 +51,12 @@ in this half (each takes its own pair, below).
 **Triggers on the keys:** none added. The new rule is a wall-clock schedule; nothing is chained to the runner's success.
 
 ### Blast radius
-- **Code:** one function's code. **IAM:** one inline policy, two statements ADDED: `s3:GetObject` on
-  `arn:aws:s3:::opal-data-assets/blackdiamond/cottonwood/meta/*-complete.json` and `s3:ListBucket` on
-  `arn:aws:s3:::opal-data-assets` with `s3:prefix` = `blackdiamond/cottonwood/meta/` only. This is a WIDENING; it cannot list or read
-  bronze or any other meta key (the check `hg_r3_rules.py --t9-iam` reads the Resource and the prefix exactly, mutants fire).
+- **Code:** one function's code. **IAM, v2:** one inline policy, ONE statement ADDED (`ListStampPrefix`): `s3:ListBucket` on
+  `arn:aws:s3:::opal-data-assets` with `s3:prefix` = `blackdiamond/cottonwood/meta/*` (StringLike). The v1 `GetObject` statement
+  (`ReadRunnerCompleteStamp`) is REMOVED: the stamp's content is never read. This is a WIDENING, narrower than v1; it can list
+  names under `meta/` only, it reads no object anywhere, and it cannot list bronze (the check `hg_r3_rules.py --t9-iam` reads the
+  Resource and the prefix exactly: one ListBucket on the bucket ARN, no GetObject on `meta`, nothing wider; mutants M1-M3 fire,
+  and a ListBucket Resource widened to `opal-data-assets/*` reads `T9IAM-BAD`).
 - **Keys:** the same two served keys, one extra rewrite per day. **Schedules:** one added rule.
 - **Untouched:** the 07:00Z rule and its input, the runner, silver, every other role and bucket policy.
 
@@ -64,7 +75,8 @@ statements) after restoring the artifact object version above; read back CodeSha
 ### Acceptance
 1. Live `CodeSha256` equals the build's sha256, read from the build input. `LastUpdateStatus` `Successful`.
 2. `list-rules` shows two rules on the function; the new one `cron(15 13 * * ? *)` ENABLED with input `{"require_stamp":true}`.
-3. The policy reads the two new statements and no others changed (statement `Sid` list, Resource and prefix read back).
+3. v2: the policy reads the ONE new statement `ListStampPrefix` (Resource the bucket ARN, `s3:prefix` = `meta/*`), no `GetObject`
+   statement for `meta`, and no others changed (statement `Sid` list, Resource and prefix read back).
 4. **The first 13:15Z fire after the apply:** one invocation, `registry.json` as_of today, LastModified at or after 13:15Z OR the
    log line `STAMP-ABSENT` on a day with no stamp. The negative arm (a day the runner lands after 07:00Z) is read on the first
    such day, or on an induced late landing under HG-t-5's pair.
