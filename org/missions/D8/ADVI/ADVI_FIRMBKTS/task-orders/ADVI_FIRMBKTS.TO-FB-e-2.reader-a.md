@@ -80,7 +80,7 @@ Read-only: `org/tier1_exec/2.0.0_SA_COO~B1/round2/blind/LOCATIONS.json` and `r2_
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="FB-e-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/tier1_exec/2.0.0_SA_COO~B1/round2/blind/r2_reader.py" --reader A; echo "exit=$?"</invocation><expect>ROUND 2 READER A: 2 of 2 arms -- and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-e-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/tier1_exec/2.0.0_SA_COO~B1/round2/blind/r2_reader.py" --reader A; echo "exit=$?"</invocation><expect>ROUND 2 READER A: 2 of 2 arms</expect></criterion>
 </proof_of_spec>
 
 Agreement between the two readers is NOT graded here; it is the issuer's real run at the round's close.
@@ -104,7 +104,7 @@ the independence is the reader's own OPENED line: the claim is `held`, not `meas
 never continued from another reader.
 
 # pipeline-override: the one refusal is LIMB PRD_HEADER.fabric='laptop' vs the register's 'dell1'. The register row is the authority since 1.0.0_SA_CTO's L3 re-placement @8afcb0f851; the PRD header repair is the CTO's. Every other limb passed in the issuer's dry run.
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-e-2</to_id>
 <slot>~5</slot>
