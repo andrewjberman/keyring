@@ -24291,3 +24291,77 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Disarmed in the same turn by AMENDMENT 1 of AMGT-qq-4: SAP_GY_Equity is HELD out of the write set (ASML and BABA only) and the order's check takes --hold. SAP's driver serves exactly what it serves today. The repair is a verifier rule (a point set whose unit renderings differ by a thousand, million or billion token in the sentence the figure sits in is held as a set), a cell for the round-92 analysis; this row does not cut it."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W384-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~384",
+  "surfaced_at": "2026-10-11T10:41:48Z",
+  "one_line": "The product files live in the nested portal repository, so the order commit-in-the-worktree instruction lands the product commit in a second repository.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The order section 5 says commit in the worktree via safe-commit.sh with paths that include the portal product files, and the face says do not stage portal.",
+  "world_is": "PeersTab.tsx and types.ts are tracked by the nested repo at C:/dev/wk-resapp-384/portal (branch wk-AMGT_RESAPP-384-portal); the outer repo records only the portal gitlink. The product commit was made from inside the portal worktree with the same safe-commit.sh as f4e09f2d; the outer repo took no product file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-ss-1.the-peers-table-says-why-the-dates-differ.md@cab1577aba (section 5 and the face Bounds)",
+      "git -C C:/dev/wk-resapp-384/portal log -1 --format=%H reads f4e09f2d47c548abcff44cdda2d80d91cc78f5c9 on wk-AMGT_RESAPP-384-portal",
+      "outer git status at 2026-10-11 reads \" m portal\" (gitlink only)"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W384-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~384",
+  "surfaced_at": "2026-10-11T10:41:48Z",
+  "one_line": "The nested portal repository has no committer identity, so safe-commit refused rc=128 until the committer was named for that one call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "safe-commit.sh with --author 0.9.0_WK_AMGT_RESAPP~384 commits the worker work in its worktree without further identity set-up.",
+  "world_is": "git config user.name and user.email are unset in the portal worktree (the outer checkout reads dell1). The first attempt refused with Committer identity unknown, rc=128, and committed nothing. The retry set GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL to the worker serial for that one call and wrote no config; f4e09f2d carries author and committer 0.9.0_WK_AMGT_RESAPP~384.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-resapp-384/portal config user.name reads empty and user.email reads empty (read 2026-10-11)",
+      "the refused safe-commit attempt printed fatal: unable to auto-detect email address, rc=128, and 0 commits were made",
+      "git log -1 --format=%an~%cn on f4e09f2d reads 0.9.0_WK_AMGT_RESAPP~384 for both"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W384-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~384",
+  "surfaced_at": "2026-10-11T10:41:48Z",
+  "one_line": "The pre-commit gate and risk reflex read zero of the two .ts/.tsx files, so their clean lines carry no evidence for this frontend commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "A clean safe-commit pre-commit result is evidence that the staged frontend commit is clean.",
+  "world_is": "On the staged pair of f4e09f2d, comp-pulse reported ANSWER STATE PARTIAL_OR_BLIND (danger map 132.2h STALE; scanned 0 of 2) and commit-gate reported checked 0 of 2 file(s), NOTHING WAS CHECKED, because it reads only .py .sh .tf and org/projects JSON. The frontend evidence is the order own criteria: bun run typecheck (AC3), the stock peers harness (AC2) and the rendered checker (AC1).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for the portal commit (2026-10-11): risk-reflex ANSWER STATE PARTIAL_OR_BLIND, commit-gate checked 0 of 2 file(s)",
+      "commit-gate header line: This gate reads only .py / .sh / .tf / org/projects/*.json"
+    ]
+  }
+}
+```
