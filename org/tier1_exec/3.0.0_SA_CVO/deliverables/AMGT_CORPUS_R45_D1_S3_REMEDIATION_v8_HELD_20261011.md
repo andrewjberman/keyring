@@ -32,3 +32,5 @@ HELD: surprise-row-gate refuses a new remediation row while the transport copy o
   }
 ]
 ```
+
+SUPERSEDED 2026-10-11T12:15:00Z: landed as remediations/REMEDIATION_v8.md at ADJUDICATION_v59 C-S36, owner 2.0.0_SA_COO~C1 (ROUND_ANALYSIS.round44.md ADDENDUM 1 @161ccad473), not the CTO as prepared above.

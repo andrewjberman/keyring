@@ -3703,3 +3703,28 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "disarm_owner": "0.0.0_AB_MSTR~DELL1"
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S21",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T12:20:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The value flip of act 4 repoints the BD asset-dim bronze pull's write bucket from opal-data-bd to opal-data-49financial, while the mapping table HOMEs that class to opal-data-assets: the generated pin is a reader of the routed bucket that the round-3 analysis list does not name.",
+  "spec_asserts": "Round-3 analysis section 3 item 1 (ADDENDUM 7): the window's readers of 49 Financial's routed bucket are the router and guard, auth-validator-edge, the IRPT consumers, the three gold scripts and the two Lambdas; act 4 is the value flip with every regenerated target deployed in the same act.",
+  "world_is": "A scratch-registry rehearsal of the flip (round4/checks/r4_flip.py: the 49financial alias opal-data-bd loses routed=true, all 17 generated targets regenerated and diffed against HEAD) changes a bucket VALUE in exactly five targets: data/firm_registry.json (2), infra/aws/lambda-edge/_shared/firm-config.mjs (2), data/assets/scripts/gold/investor_reporting/directory_runner.py (2), holdings_snapshot.py (2) and data/black_diamond/scripts/bronze/_asset_dim_rest_pin.py (1: bucket 'opal-data-bd' -> 'opal-data-49financial'). The other twelve targets change only their registry-hash mark; perfrp_firm_pin.py is among those twelve, so the CTO's 'three gold scripts' read as directory_runner, holdings_snapshot and a script whose bytes do not move. The pin is imported by pull_bd_asset_dim_rest.py (lines 81-87) and deployed to s3://opal-data-bd/code/bronze/_asset_dim_rest_pin.py (infra/aws/ssm/opal-bd-asset-dim-download.json:44). mapping_v3.json row opal-data-bd / blackdiamond/49financial/bronze/assets_dim_rest/ is HOME to s3://opal-data-assets/blackdiamond/49financial/bronze/assets_dim_rest/2026-10-08/assets_dim_rest.parquet. After the flip and a redeploy of the pin, the pull would write the class to a bucket that is neither where it sits today nor where the table homes it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_flip.py --arms flip, 2026-10-11 ~11:50Z (value-changing lines printed per target)",
+      "data/black_diamond/scripts/bronze/_asset_dim_rest_pin.py lines 29-41 and its docstring (the pin sits in the routed bucket alias, not the tier home)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v3.json, the assets_dim_rest row (disposition HOME)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not this order set's to rule: the destination of a producer after the window is an endpoint question for 1.0.0_SA_CTO~DELL1. Two placements read from the evidence: (a) the pin follows the table's HOME (renderer reads the tier home, opal-data-assets), so writer, table and data agree after act 3's copy; (b) the pin is carved out of the flip and keeps opal-data-bd until its own move. Act 4's un-park condition names this row. No cell is cut on it until ruled."
+}
+```
