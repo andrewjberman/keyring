@@ -508,6 +508,28 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/mdpf/scripts/demque/price_store.py write path"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W23-S1",
+    "one_line": "DQ-t-29 D1-S7 (land_cot.py) cannot be committed as the face specifies: the naming gate refuses the two registry row keys passed to legacy_address(), because legacy_address is not a permitted call context.",
+    "spec_asserts": "Worker face DQ-t-29 section 2: HIST_KEY and TX_PREFIX are read through lib/opal_naming legacy_address(key) on the rows cottonwood-silver-historical-prices and cottonwood-silver-transactions-prefix, and the repaired land_cot.py is committed.",
+    "world_is": ".tools/naming-gate.py@698312232c (lines 22-24) permits a firm token only inside the arguments of key(), address(), name() or lookup(); legacy_address() is not listed. Committing the repaired land_cot.py (safe-commit, before 2026-10-11T05:19:28Z) printed 'NAMING-GATE: REFUSE 3 graded' for data/mdpf/scripts/demque/land_cot.py:71 and :72 (cottonwood-silver-historical-prices, cottonwood-silver-transactions-prefix, NEW hand-kept carrier) and a WARN at :46. Nothing was committed for the lander half; the D1-S6 half committed alone at 27e8ae878a. lib/opal_naming.lookup('cottonwood') returns no legacy key rows, so no permitted builder route reads a legacy row by key. The alternative of composing the key from the firm token was not taken: it routes around the gate.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~23",
+    "surfaced_at": "2026-10-11T05:19:28Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/naming-gate.py@698312232c lines 22-24 (CONTEXT RULE) and 1994-2026 (hand-kept carrier REFUSE)",
+        "lib/opal_naming.py@698312232c line 1941 (legacy_address, not a key/address/name/lookup builder)",
+        "infra/logic/registry/legacy_addresses.json@698312232c rows cottonwood-silver-historical-prices and cottonwood-silver-transactions-prefix",
+        "data/mdpf/scripts/demque/land_cot.py lines 71-72 in the worktree (uncommitted): the two literal row keys"
+      ]
+    }
   }
 ]
 ```
