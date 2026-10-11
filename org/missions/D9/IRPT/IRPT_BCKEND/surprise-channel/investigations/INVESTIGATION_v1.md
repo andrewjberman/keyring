@@ -25738,3 +25738,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-W286-S1 -- SCHEMA: Account Supervised and Holding Supervised are absent from 49 of 85 graded partitions of the holdings source
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W286-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~286",
+  "surfaced_at": "2026-10-11T11:21:50Z",
+  "one_line": "The blackdiamond_z09 silver partitions do not carry one column layout: Account Supervised and Holding Supervised are absent from 49 of the 85 graded partitions (2026-06-10 to 2026-08-19) and present on 36 (2026-08-20 on); the fetch step reads the columns each partition has and records the rest as absent, so the field split for those two columns has a third value, column absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB125-1_lag_by_account.json columns_absent_from_some_partitions: both columns days_absent 49, first 2026-06-10, last 2026-08-19 (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~286/, this cell's commit)",
+      "ib427_fetch.py first run failed with ArrowInvalid 'No match for FieldRef.Name(Account Supervised)' on the first June partition read; the schema of the 2026-09-24 partition (read once, no values printed for account columns) lists both columns"
+    ]
+  },
+  "spec_asserts": "The order (step 2) lists 'the columns the partition rows carry' as one list for the 85 days, and IB-pr-425's fetch step reads a fixed column set from every partition.",
+  "world_is": "The column set changes inside the window. A fixed-column read raises on the earlier partitions; this cell reads the intersection and counts the absent days. The two columns that most plausibly name an account type therefore cover only 36 days, and the split by them says nothing about the other 49. No product source or vendor was touched.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
