@@ -38,7 +38,7 @@ unchanged, and prove it three ways.
 
 1. `git apply --check <the patch>` then `git apply <the patch>` from the repository root. If it does not apply, that is a
    BLOCKING row with the error text; never hand-edit to make it apply.
-2. Run the three invocations of section 4, in order. Each must read as its `<expect>` says. A different reading is your
+2. Run the three invocations of section 4, in order. Each must read as its `<expect>` says (the pattern is matched against the output; also read the `exit=` line: it must be 0). A different reading is your
    final report; you do not change the patch or the checks to move a number.
 3. Commit `index.mjs` and the new spec together with the proof instance and the status flip.
 
@@ -70,9 +70,10 @@ Read-only: the patch, the issuer's checks under `org/missions/D8/ADVI/ADVI_FIRMB
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="FB-e-6"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 bash infra/aws/lambda-edge/shared-advisor-router/run-gate.sh; echo "exit=$?"</invocation><expect>N pass with N at least 36 (31 at base plus the eight new arms: 39 expected), 0 fail, across 3 files -- and exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="FB-e-6"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 bun "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f6.mjs" diff; echo "exit=$?"</invocation><expect>F6 DIFF: identical 193 of 193 events through handleWithMap; 193 of 193 through handler -- and exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="FB-e-6"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 bun "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f6.mjs" seam; echo "exit=$?"</invocation><expect>F6 SEAM CONTROLS: 9 of 9 -- and exit=0</expect></criterion>
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~9/ADVI_FIRMBKTS.TO-FB-e-6.proof_of_spec.json`.
+  <criterion id="AC1" cell_refs="FB-e-6"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 bash infra/aws/lambda-edge/shared-advisor-router/run-gate.sh; echo "exit=$?"</invocation><expect>\b39 pass</expect></criterion>
+  <criterion id="AC2" cell_refs="FB-e-6"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 bun "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f6.mjs" diff; echo "exit=$?"</invocation><expect>F6 DIFF: identical 193 of 193 events through handleWithMap; 193 of 193 through handler</expect></criterion>
+  <criterion id="AC3" cell_refs="FB-e-6"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 bun "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f6.mjs" seam; echo "exit=$?"</invocation><expect>F6 SEAM CONTROLS: 9 of 9</expect></criterion>
 </proof_of_spec>
 
 AC1 is the built behavior (the router's own deploy-chain gate, `31 pass` at base, with the eight new arms counted). AC2 is

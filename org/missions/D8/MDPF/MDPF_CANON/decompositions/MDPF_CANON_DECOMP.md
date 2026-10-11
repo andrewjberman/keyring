@@ -153,3 +153,12 @@ same feed map as a `bronze_homes` Terraform local and module output that the run
 `.tools/naming-gate.py` is not touched. Cells and chains unchanged. Checks: `r3_checks.py homes` re-cut (the mark, builder equality,
 regeneration reproduces the bytes) and `libs` added (opal_naming's tests, r6-declared-moves, r6-delta0-ordered). At base: homes 0/3, libs
 3/3 (a control that must stay green), basis 0/3, writer 0/3, reader 0/3. Row D1-S11 records that three other r6 arms read FAIL at HEAD.
+
+### v3 AMENDMENT 3 (issuer 2.0.0_SA_COO~D1, 2026-10-11 ~04:0xZ; rows MDPF_CANON-D1-W9-S4, W9-S5, CTO ruling msg 3457)
+
+`CN-c-2`'s generate target met two more refusals. S4: the feed is declared as a registry row the renderer reads (a new registry file,
+read by this target only, so no other generated view re-marks), with no firm or scope literal in `lib/opal_naming.py`; the edit carries
+its own `validate` run. S5: `data/mdpf/config/` and `data/mdpf/scripts/` are classified as a `runner-code` plane measured from the
+runner's real sync list (`mdpf-daily-dispatch.sh` :125, :130); where the hand sync differs from the plane the cell files a row and does
+not widen the plane. Cells and chains unchanged. `r3_checks.py libs` is now 5 arms (opal_naming's tests, `validate` rc 0, `targets` rc
+0, r6-declared-moves, r6-delta0-ordered); 5 of 5 at base, a guard that must stay green.

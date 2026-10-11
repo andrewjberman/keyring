@@ -656,6 +656,48 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "The act 3 half and ledger assume that at least one of two dell1 actors (2.0.0_SA_COO~G1 at 06:05Z, 0.0.0_AB_MSTR~DELL1 by 12:00Z) is live to restore the daily target input, so an induce on a production target is bounded to hours.",
     "world_is": "Both actors depend on one box and one usage budget; when the box stopped, nothing on dell1 could restore, and the bound became whenever a seat on ANOTHER device read the ledger (14h23m past the first owner moment). The loss was nil here only because the daily rule has one fire per day and the next fire (06:00Z 2026-10-11) came after the laptop restore; a rule with a shorter period, or a restore that landed after the next fire, would have run a second induced day. REMEDY (one, owner 1.0.0_SA_CTO~DELL1 at the next induce): the half of any later induced act names a restore actor on a DIFFERENT device than the seat that sets the induce, with the ledger path it reads, and says so in the ledger's rollback line. Distinct from MDPF_HEALGAP-S12, which is a fail-safe that outlived its kill; this is a fail-safe chain with no member off the failing box.",
     "notes": "No build asked for: this is a wording rule for the half, not a monitor or alert (standing moratorium). UNDER_INVESTIGATION is deliberate, as in D1-S10/D1-S11: GRADUATED is the CVO's L9 field. Act 3's own outcome (PARTIAL read, heal, C5b) is in the R2 drain-end read."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W10-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~10",
+    "surfaced_at": "2026-10-11T04:03:48Z",
+    "one_line": "On the EC2 path the 6d block rewrites one cottonwood gold partition before the slice: dispatch line 554 runs build_dim_model_portfolio.py --upload for the newest silver assignment date. The slice itself writes no gold partition, but the EC2 path is a second writer of the day partition, which the MDPF_HEALGAP-S1 world_is does not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:549-556 at HEAD d08867926c: cot_date is the newest blackdiamond/cottonwood/silver/fact_model_assignment partition; line 554 runs build_dim_model_portfolio.py --date cot_date --upload before the slice at line 556",
+        "data/assets/scripts/gold/build_dim_model_portfolio.py:538-542: key = GOLD_PREFIX + dim_model_portfolio/date=<date>/data.parquet, GOLD_PREFIX = blackdiamond/cottonwood/gold/ (line 72), then put_object and head_object",
+        "list read 2026-10-11T04:0xZ on opal-data-assets prefix blackdiamond/cottonwood/gold/dim_model_portfolio/: date=2026-10-10 LastModified 2026-10-10T13:30:39Z; the only EC2 launch read is 2026-09-30T13:30:35Z (MDPF_HEALGAP-S1), so the 10-10 launch is UNREAD"
+      ]
+    },
+    "spec_asserts": "MDPF_HEALGAP-S1: which one writes the day's partition is read here. Its world_is says the EC2 slice would re-publish on the newest assignment date only and cannot rewrite a caught-up partition.",
+    "world_is": "When the 6d condition holds, the EC2 path re-uploads gold/dim_model_portfolio/date=<newest silver assignment date> before the slice step, so the EC2 path can rewrite a gold partition on the day. Whether that rewrite is byte-identical to the served partition is UNREAD (the builder re-derives from silver on each run). The slice step (line 556) writes only the revamp object and no gold partition.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W10-S2",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~10",
+    "surfaced_at": "2026-10-11T04:03:48Z",
+    "one_line": "NOOP for the EC2 slice re-publish is UNKNOWN: the slice writes one fixed key unconditionally, and its body carries a date-derived trading-days field, so a same-day re-run is a no-op only if that field and the staged axis match what is served. No served-bytes comparison was read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/assets/scripts/gold/build_cottonwood_mdpf_slice.py:1501: put_object to SLICE_KEY with no skip-if-exists; :1353-1366: trading_days_behind_settled_frontier computed from dt.date.today()",
+        "head-object 2026-10-11T04:0xZ on opal-data-assets gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries.json: LastModified 2026-10-10T13:31:08Z, ETag 50425224d45dc36f6588544bb0525d4d, 162895 bytes; no later write recorded",
+        "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:504-516 and :556: the slice runs after the 6a axis stage of the same run, so its axis input is the EC2 run's own staged copy"
+      ]
+    },
+    "spec_asserts": "TO HG-t-13 NOOP field: YES, NO, or UNKNOWN because a reason, read for whether the EC2 re-publish has the same bytes or keys as what is served.",
+    "world_is": "The key is the same on every run, so the key level is a no-op. The bytes are unread: a same-day re-run matches the served object only if the dim partition, the staged axis and the trading-days value all match, and a later run can change the trading-days field. The read that answers it is a GET of the served key diffed against a rebuild with dt.date.today() held fixed, or the ETag of the served key across two consecutive days.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
