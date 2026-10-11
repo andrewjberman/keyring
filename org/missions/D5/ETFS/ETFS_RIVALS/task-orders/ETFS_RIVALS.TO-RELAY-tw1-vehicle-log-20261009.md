@@ -35,8 +35,9 @@
     OWNER/UN-PARK CONDITION: `0.7.0_AE_CloudOps~ZV`, or any live site-Z CloudOps lane the site-Z manager names; un-parks
     when a site-Z seat registers. At 2026-10-11 05:0xZ no site-Z seat is live (`get_live_agents`: 0 of 19 at site Z;
     `~ZV` NOT REGISTERED).
-    Gate limb: none graded this modification as a NEWLY-ADDED order; GATE (viii) reads `<placeholders>NONE</placeholders>`
-    here, which this amendment does not change.
+    Gate limb: GATE (viii) graded this modification (the order already declares `<placeholders>NONE</placeholders>` at HEAD)
+    and passed (to-pipeline-gate, commit 9e6b96a315 receipt: "1 of 1 staged-MODIFIED tree order(s) ... were graded").
+    LIMB 6 did not fire (no newly-added order).
   </amendment>
 
   <amendment id="6" date="2026-10-09" by="2.0.0_SA_COO~V1">
