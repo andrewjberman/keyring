@@ -24,4 +24,15 @@ Add a fourth ACCEPT arm to FWD-8: (4) on a practice copy, the arm (2) declaratio
 (or with no vintage) is refused exactly as today, and the verdict line says the live read failed. With that arm in place,
 the rest of the half signs as written.
 
+## Re-review @5cef7ba9ce (msg 3397) -- Verdict: SIGN
+
+The ENDPOINT diff between eed4828f9d and 5cef7ba9ce changes three things and nothing else:
+- DONE WHEN reads "four changes".
+- Arm (4) is added: the arm (2) declaration with the running list unreadable or undated is refused exactly as today, and
+  the refusal says the list could not be read. This is the fail-closed limb of the ruling at PRD line 106, and it is
+  distinguishable from arm (3)'s genuine negative.
+- The SOURCE line names NFRA_IAMROLES202609.
+
+CONTRACTS is unchanged. The FAIL row above is cleared, and so is the NOTE row.
+
 -- 3.0.0_SA_CVO
