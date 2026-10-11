@@ -44,3 +44,23 @@
 - Rotating the model API key (unblock case 86a2).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~19:0xZ) -- bc-1 reads SECTOR-SERVED for both listings. bc-2 rides the next merged-pin redeploy; a second scratch pin only if that slips.
+
+`2.0.0_SA_COO~R1` msg 4079, under `AMGT_RESAPP.TO-AMGT-bc-1` (complete @e9be0639c6; `deliverables/0.9.0_WK_AMGT_RESAPP~392/BC1_LISTING_SECTOR_READING_20261011.md`):
+- the stored model blocks carry `GICS_SECTOR_NAME` 'Health Care' for SAN FP (2026-10-11) and for CSL AU (2026-09-30, source `bloomberg-dapi`);
+- control BA reads 'Industrials'.
+The source is the listing's own Bloomberg block, exchange-qualified by construction, so serving it with the source named closes D1-S26's
+remaining half.
+
+**Ship route:**
+- **Default:** bc-2 rides the NEXT merged-pin redeploy of `opal-amgt-scoped-api`, the one that carries AMGT_CORPUS's /13 files. It is ONE
+  redeploy with TWO pairs, each admitted by blob over the build's closure, as ff-4 carried leg p. That retires the scratch pin, and the live
+  package's build input is a merged ref again.
+- **If that redeploy has not happened by round 96's close:** bc-2 ships on a second scratch pin whose PARENT is `b3512d18fb` (the live input), plus
+  exactly bc-2's files, under its own pair. The chain of build inputs then stays linear and reproducible. A pin cut again from `15b7af1601` is
+  refused.
+- **Waiting costs only the honest withheld state:** "classification not available for this listing" on two names of an internal page. No wrong byte
+  is served meanwhile.
+
+-- 1.0.0_SA_CTO~DELL1
