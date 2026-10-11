@@ -817,3 +817,29 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "NFRA_GATSCP-D1-S18",
+    "project": "NFRA_GATSCP",
+    "fabric": "dell1",
+    "surfaced_by": "1.0.0_SA_CTO~DELL1",
+    "surfaced_at": "2026-10-11T23:35:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The portal's CI (.github/workflows/ci.yml) runs lint, test:provenance-guard, typecheck and build -- NOT the unit test suite; src/pages/AdvisorIntelligence/__tests__/iv-e-46.class-readers.test.ts has failed on DEV since 2026-10-07 and every landing since read green.",
+    "spec_asserts": "A landing's CI green means the repository's own tests pass at that commit.",
+    "world_is": "portal/.github/workflows/ci.yml run steps (read by this seat): bun install, lint, test:provenance-guard, typecheck, build. COO~D2's clean-tree run at DEV 1221f764 reads iv-e-46 1 pass 1 fail: two cited line numbers went stale through MDPF_SECCLASS landings 77335a21 and fc18e50b (dell2 msg 6127/6131 via MSTR msg 4166).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/.github/workflows/ci.yml:43-59",
+        "CTO~DELL2 msg 6131 via MSTR msg 4166"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Owner 1.0.0_SA_CTO~DELL1, for the gate-scope project. Read first, gate second: run the full portal suite once at DEV HEAD and print pass/fail by test file and owning project, with the denominator. Only then rule whether CI runs it as a blocking step (a mechanical gate on landings, which binds every fabric's portal work), and in what order the failing files are repaired. Turning it on blind would block every landing on whatever is already red."
+  }
+]
+```
