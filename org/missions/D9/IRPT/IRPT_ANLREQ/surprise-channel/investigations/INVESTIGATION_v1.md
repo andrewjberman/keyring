@@ -3192,3 +3192,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W53-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-11T18:52:00Z",
+  "one_line": "AMENDMENT 1 of TO-AR-y-113 is blocked twice: the commit gate's naming limb REFUSES the served firm_registry.json (23 graded literals, ENFORCE mode), and 20 of the other 27 members of the live package differ from the tree only in line endings (live CRLF, tree LF) with no commit holding the live bytes.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live read 2026-10-11 via get-function: the package zip (52312 bytes) has base64 sha256 YpE2MyUwdGzMfLaUGXi8cClxoVHFFmOz5LT1BYmoTa8= (equals the entry's deployed_code_sha256); 28 members, all 28 named by files[]; the download link was used once and never printed; zip deleted.",
+      "member firm_registry.json: 5229 bytes, sha256 cc3f2c63bb2d8c14a3d65b2bb2215b4089e5e776718a307660a253eebfbd25e3 (equals the IRPT_BCKEND-W4-S34 figure); read before committing: KIND of content = firm identifiers, storage-bucket names, email domains, scope flags, free-text governance notes; no person's name, no account or money figure, no credential, no token; ASCII only; 135 CRLF line endings.",
+      "bash .tools/safe-commit.sh ... -- infra/aws/lambda/investor-reporting/intake/firm_registry.json -> 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted' / 'NAMING-GATE: REFUSE 23 graded' (each hand-kept firm token, bucket name and email-domain literal graded NEW hand-kept carrier -> lookup(...)). The commit was not made; HEAD unchanged at 10288cf87c. The file was removed from the worktree again so no unpinned file remains in the source folder. safe-commit.sh lines 1053-1170: the audited override is for the PLACEMENT limb only (naming-place-override), and it writes org/audit/..., outside this order's grant; the enforce switch is org/mcp/naming-gate.enforce / NAMING_GATE_ENFORCE. None was used.",
+      "members vs live (comparing the live zip's bytes with the pin blob for the 3 staged members and with the working file at HEAD for the rest): 7 of 28 equal live before any pin (poller.py, graph_client.py, checkpoint.py, outbox.py, gate.py, keys.py, firm_destination_policy.json); firm_registry.json absent from the tree; 20 differ: every fixtures/graph/* member (FIXTURE_MANIFEST.json, 5 delta_*.json, 4 att-*.bin, 5 list_*.json, 5 *.eml). For three sampled members (delta_page1.json, att-0001.bin, AAMk-49f-0001.eml) the difference is line endings only (equal after CRLF-to-LF); the other 17 were not individually checked: the live bytes use CRLF, the tree blobs LF (git ls-files --eol shows i/lf w/lf; delta_page1.json has 1 commit, 1e1aeb1de4, LF). No commit holds the CRLF bytes of any of the 20, so step 4's pin-by-commit cannot be done for them."
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1 steps 3-4: the served firm_registry.json is committed alone in its own commit; every other member with no row that differs from live is pinned to a commit whose blob equals the live bytes; members_equal_live is recorded before and after.",
+  "world_is": "The commit of the served member is refused by the naming gate and is not made, so there is no commit to pin; separately, 20 fixture members have no commit holding their live (CRLF) bytes. Not done: no commit of firm_registry.json, no map edit, no build to the target; no override used and nothing adjusted by trial. Not measured: whether the build script, given pins for the CRLF members, would reproduce the digest (the build stages the pinned bytes, so it should; no pin could be named to test it). The order stays pending. Decisions that are not this worker's: how the served firm_registry.json lands past the naming gate (a registry row, an exemption, or the gate's enforce switch), and where CRLF fixture bytes come from (an issuer-authorised commit of the live bytes of each of the 20, which needs the same gate-passing and a binary-safe path, or a map mechanism that stages the member from outside git).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
