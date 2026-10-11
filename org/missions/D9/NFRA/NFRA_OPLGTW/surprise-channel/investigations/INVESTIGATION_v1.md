@@ -12179,3 +12179,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Residual from the order stands: one deck placed on two different dates lands under two keys."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W55-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~55",
+  "surfaced_at": "2026-10-11T17:08:54Z",
+  "one_line": "Resolves NFRA_OPLGTW-Z-W55-S1: under TO-OG-mu-1 Amendment 1 (@1ceb994ad3) test_ogab2_ac02 is re-pinned to the content-addressed .pptx key, and mu1.AC1 now reads PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r34/checks/mu1.AC1.sh: 'pytest rc=0; named tests passed 3 of 3; failed/error lines 0' / 'tests/test_advi_site_to_s3.py: pytest rc=0; 27 passed' / 'tests/test_og_ab2_pairs.py: pytest rc=0; 3 passed' / RESULT: PASS / exit=0",
+      "FILE infra/aws/ec2/opal-gateway/tests/test_og_ab2_pairs.py: the only changes are inside test_ogab2_ac02 (expected key date=<UTC put date>/deck_<sha16>.pptx via an injected now, Metadata original-name asserted, the existing-key probe given the same now); 9 insertions, 3 deletions; ac01 and ac03 untouched, 2 of 2 pass"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-W55-S1: test_ogab2_ac02 pins the superseded name-in-key form, so AC1 cannot pass inside the order's paths.",
+  "world_is": "After Amendment 1 added the file to <paths>, the assertion is re-pinned and AC1 passes (3 of 3 named, 27 of 27, 3 of 3).",
+  "notes": "Citing row; Z-W55-S1's text is untouched. The disposition of Z-W55-S1 is the issuer's. One edit beyond the literal assertion line, inside the same test: the existing-key refusal probe passes now=<same put date>, else it hits a different day's key and does not raise."
+}
+```
