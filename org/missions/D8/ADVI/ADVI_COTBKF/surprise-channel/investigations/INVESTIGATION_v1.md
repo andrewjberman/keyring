@@ -7098,3 +7098,25 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S126",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-11T20:46:45Z",
+  "one_line": "One fetched fund, VBTLX, sits far off the build's close on part of its history: lowest ratio 0.1823 (build close over fetched unadjusted close) and 7.83 percent of 1,482 shared dates below 0.98, while it reads 'looks unadjusted' with the other 24. A ratio of 0.18 is not a dividend adjustment. Not investigated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~130/FETCH_HELD_27.json (not_established) and FETCH_HELD_27.csv, the VBTLX row; merged @08bbd1d8c2. The worker's figures; the issuer did not re-derive them."
+    ]
+  },
+  "spec_asserts": "Round 74 cell CB-bv-4 reads all 25 fetched fund series 'looks unadjusted' against the build's close, by a rule that calls a series adjusted only when at least half its shared dates sit below 0.98.",
+  "world_is": "VBTLX passes that rule and still has a stretch where the build's close is about a fifth of the fetched close: the shape of a mis-scaled or mis-keyed price stretch, not of an adjustment. Not established: which dates, which store the build's close came from on them, whether any measured account-day rests on them, and whether the round-70 scan already classed this series.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
