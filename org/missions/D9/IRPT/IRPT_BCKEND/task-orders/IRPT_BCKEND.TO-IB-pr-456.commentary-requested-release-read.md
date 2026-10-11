@@ -92,6 +92,26 @@ then build, then the module's Terraform path) and Branch B (redeploy the rollbac
 proposed through each reader, the entanglements, what is NOT exercised. Do NOT write which ratified outcome each change
 serves, and do NOT recommend an order of release among the functions: the issuer reads the ENDPOINT against your census.
 
+**AMENDMENT 1 (2026-10-11 ~22:0xZ, issuer, on CTO msg 5904), before any spawn.** Two things go in the packet and in the json.
+(a) **`after_read_with_no_vendor_call`** for `irpt-ycharts-generate`. The CTO's half on IB-pr-426
+(`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/NEVER_WIDEN_IB_pr_426_YCHARTS_GENERATE_ONE_TREE_ENDPOINT_READ_AND_COO_HALF.md`
+names it; find the CTO's half beside the commit 87d92b7c3b with `git show --stat 87d92b7c3b`) forbids an apply while the resident's
+vendor session is signed out, because its first after-read was ONE VENDOR GENERATION. The vendor path is stopped, so that
+condition blocks the function indefinitely. PROPOSE, from the code, the after-read that replaces it with NO vendor call: a
+submission accepted and read back, WITH and WITHOUT the member (name the exact routes, what is read back and through which
+reader), and an Opal-producer job if one is needed to exercise the function past acceptance (say whether one is needed and
+what it reaches). Then list, by route and code path, WHAT OF THAT FUNCTION STAYS UNEXERCISED under that after-read
+(`stays_unexercised`: every route or branch that only a vendor generation reaches, each with its file:line). Write it as text
+the CTO rules on; do not say the old condition is lifted. Shape: `after_read_with_no_vendor_call:{steps:[{step, route_or_call,
+what_is_read_back, through_which_reader}], opal_producer_job_needed (true/false/null), why, stays_unexercised:[{what,
+code_line, why_only_a_vendor_generation_reaches_it}]}`.
+(b) **The replay fact as a branch:** a replay of the same request id with a DIFFERENT `commentary_requested` (or with the member
+added or dropped) is REFUSED `CHANGED_INPUTS_SAME_REQUEST_ID`, because `browser_sha256` is the digest of the validated
+submission. Add a replay arm that shows it on the built package (`name` containing `same_request_id_different_member`,
+verdict `expected-diff` against live where live refuses the member outright; say exactly what each side answers), and state
+it in the packet as a branch of the release with what a caller sees.
+IB152-1-AC3 does not grade (a) or (b) mechanically; the issuer reads them at the drain.
+
 **Output:** `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/IB152-1_release_read.json` with
 `{base_commit, source_map_census:{entries_scanned, entries_packaging_a_changed_member, how_found}, functions:[{function,
 live_code_sha256, live_read_at_utc, rollback_version_id, rollback_version_absent_reason, build:{...}, moved_members:[...],
