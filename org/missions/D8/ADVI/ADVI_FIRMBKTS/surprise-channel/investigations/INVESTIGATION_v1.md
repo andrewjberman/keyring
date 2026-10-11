@@ -4243,3 +4243,31 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not changed by the worker: the existing comment lines are outside this order's write grant to rewrite and deleting them would break the additive bound (G3). Issuer decision needed: whether bound 4 is read for the added text only (as this worker read it) or whether the non-ASCII comment lines are to be migrated under a separate order."
 }
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~35 (FB-g-1, commit 711d72b756)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W35-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~35",
+  "surfaced_at": "2026-10-11T13:10:37Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "one_line": "The client-data check of the commit gate did not run on this device: the hashed account-id list is absent at its default path, so safe-commit printed WARN and commit 711d72b756 landed unchecked for client account ids.",
+  "spec_asserts": "TO-FB-g-1 sections 2.3 and 5: commit the three files with .tools/safe-commit.sh under the worker serial; a refusal is reported and never overridden. The order names no client-account-id check and no step that supplies the list.",
+  "world_is": "safe-commit printed 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there)'. The commit then landed as 711d72b756 with the gate's naming line 'NAMING-GATE: PASS 0 graded' (the .mjs suffix is not graded by it). test -f on the default path reads ABSENT (rc=1) at 2026-10-11T13:10Z.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for commit 711d72b756 on branch wk-ADVI_FIRMBKTS-35, 2026-10-11T13:10Z: 'WARN: client-data-check: hashed account-id list ABSENT ... this commit was NOT checked'",
+      "test -f on the default path (C:/Users/Test/.opal/account_id_hashes.txt): ABSENT, rc=1, 2026-10-11T13:10Z",
+      "safe-commit.sh output for the same commit: '[commit-gate] WARN: commit-gate checked 0 of 3 file(s) -- NOTHING WAS CHECKED' (the commit gate reads .py, .sh, .tf and org/projects/*.json only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed by the worker: the gate and the device list are outside this order's paths. This row records that the gate did not run; it makes no finding about the committed content. disarm_owner 0.0.0_AB_MSTR is named by reading rule 32 (MSTR runs infrastructure); this order does not establish the owner of the list's placement on dell1, so the issuer should confirm or re-route it."
+}
+```
