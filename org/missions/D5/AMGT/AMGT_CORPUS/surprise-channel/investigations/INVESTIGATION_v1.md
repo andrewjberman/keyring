@@ -4567,5 +4567,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "notes": "For the issuer to choose per code or per row for the template line; the census line is per row by construction (its sum equals the rows).",
   "disarm_owner": "2.0.0_SA_COO~C1"
 }
+,
+{
+  "id": "AMGT_CORPUS-Z-S92",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~ZC",
+  "surfaced_at": "2026-10-11T17:43:43Z",
+  "one_line": "Step 3 of TO-WRITE-R47-aw10 cannot run as written -- `python <path>/aw10_locate.py` puts the SCRIPT's directory on sys.path, never the cwd, so its `from lib.research.corpus import ...` raises ModuleNotFoundError rc=1, and rc=1 is NEITHER of the script's two documented exits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`python org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round47/aw10_locate.py` run with cwd = the repository root (printed beside it): ModuleNotFoundError: No module named 'lib.research', rc=1. Whole output copied into deliverables/0.7.0_AE_CloudOps~ZC/evidence/r47_aw10_template_put_sitez.txt @ec5c71c561.",
+      "The same script, byte-unmodified, under `PYTHONPATH=.`: rc=3 with `template_locate matches 0 of files_walked 378` -- so only sys.path differed.",
+      "Control on the mechanism: `python -c 'import sys;print(sys.path[0])'` prints empty (the cwd), which is why every `python -m lib.research...` step of round 45's TO-WRITE-R45-au1 ran, and why round 45's au1_accounting.py ran (it imports only `re` and `sys`).",
+      "The script's own docstring directs `python aw10_locate.py (from the repository root of the site-Z checkout)`, so the repository root is exactly what the ordered invocation form fails to put on sys.path."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 3's invocation, run at the site-Z repository root, prints the locate lines and exits 0 (one match) or 3 (none or several), so that STOP 3 and STOP 4 are decidable from its output.",
+  "world_is": "The ordered form raises before it walks anything and exits 1, a code the script does not define. The STOP is still reached in this instance -- under PYTHONPATH=. the script reports `matches 0`, so STOP 3 fires for a REAL reason -- but it is reached by an invocation the order does not contain.",
+  "notes": "THE HAZARD IS THE INDISTINGUISHABILITY, not the broken import. An executor who reads rc!=0 as the STOP condition reports STOP 3 from an INSTRUMENT FAILURE that never opened the library, and a genuine absence and a failed import then look identical in the record -- on a WORLD-risk order whose whole purpose is to decide whether one object gets written. The discriminator is cheap and is the script's own docstring: rc 0 and rc 3 are the only defined exits, so rc=1 is the instrument, never the world. Disarm is one line in the order: `PYTHONPATH=. python ...`, or ship the check as `python -m` with a package path. Generalises to every future checks/<round>/*.py that imports `lib.*` and is ordered as a bare path; round 45's checks script escaped it only by importing nothing but stdlib. No gate built and no script edited by this lane.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+}
 ]
 ```

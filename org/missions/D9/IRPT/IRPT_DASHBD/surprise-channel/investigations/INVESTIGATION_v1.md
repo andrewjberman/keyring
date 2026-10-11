@@ -6552,3 +6552,26 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S17",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T17:57:20Z",
+  "one_line": "L8 rounds 71 and 72, no judgment criterion, no served write. The count of served manifests that may carry the 24-key thresholds object is a ceiling of 569 keys by listing, with no body read; it is not a count of those that do. The tie-out is not closed: 185 classed, 51 contested, 8 unclassed, and on 18 of the 51 the custodian's flow rows do not reproduce the served flow day by day. The R45 packet is refreshed a fourth time and waits on the CTO's half.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 5485 (IRPT_DASHBD rounds 71 and 72 drained; DSGN_IRPTV1 round 23, two of three cells drained, portal DEV ca23f110)",
+      "this seat made no read of its own for this compile; the row rests on the issuer's message and the three worker rows"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27). A census cut before its denominator is a page, not an answer.",
+  "world_is": "Three orders terminal and none open. Nothing was run or read by this seat.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
