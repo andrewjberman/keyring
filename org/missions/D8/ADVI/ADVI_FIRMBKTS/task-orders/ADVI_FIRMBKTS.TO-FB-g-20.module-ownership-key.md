@@ -83,7 +83,7 @@ outputs and the commit hash.
 The ten identity-grant cells that consume this output follow (edge role, eight IRPT roots, exec-summary root); the
 partners role already holds its Allow.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>FENCE3B</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-20</to_id>

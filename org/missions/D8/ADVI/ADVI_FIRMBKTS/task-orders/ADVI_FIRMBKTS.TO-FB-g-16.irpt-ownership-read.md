@@ -110,7 +110,7 @@ added to `<paths>` (the generated `CANONICAL_PLATINUM_BUCKETS` JS block lands th
 hand edit). Row S2 (AC3 read the issuer's amendment commits on the branch as outside) is a check artifact: AC3 is graded from
 the merge diff at the drain. Gate limb: GATE viii reads `<placeholders>NONE</placeholders>` at HEAD and no token.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>IRPTOWN</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-16</to_id>

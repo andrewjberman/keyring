@@ -88,7 +88,7 @@ commit hash.
 Workstream `FENCE3B`; act 3b's registry rows (the performance adapter's two-prefix row among them) are the next cell.
 Class WORLD by the path floor, dormant.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>FENCE3B</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-19</to_id>
