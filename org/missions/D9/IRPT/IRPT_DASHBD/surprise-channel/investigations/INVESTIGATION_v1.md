@@ -6903,3 +6903,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "hazard_standing not assessed by this worker: whether downstream readers that load every original day object (gold A_03, B_01, B_03, nna_flows) now miss the first two days' rows was not measured."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W126-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~126",
+  "surfaced_at": "2026-10-11T22:22:00Z",
+  "one_line": "DB-b-156: served readers of the original silver transactions store key on the FILE's day (B_03.account_gains.py line 327; bd_price_update.py line 265 and its lambda twin line 143), and all 5580 ids of 2026-08-22 and 2026-08-23 now sit in the files two days earlier, so those three readers place the same ids on a different day than before; owner of the readers is the Black Diamond gold and silver pipeline.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Row W124-S1 and the owner's record (1.0.0_SA_CTO~DELL1, box/dell1, BD49F_SILVER_TRANSACTIONS_LOSS_CHECK): no id is lost; whether a reader keyed by FILE day rather than by the transaction's own date reads a different day's figures after the move was left open as this project's question. DB-b-143 (ORIGINAL_STORE_SHAPE.json) listed the readers and did not class what they key on.",
+  "world_is": "Read in this worktree at the lines named: of 17 served readers, 3 are FILE_DAY (B_03.account_gains.py line 327: loads silver/transactions/D.parquet for day D and sums every income-type row as day D; bd_price_update.py line 265 and infra/aws/lambda/bd-pipeline/bd-price-update/lambda_function.py line 143: load the object of the target date and take the median price of every row as that date's), 5 are BOTH, 8 key on the row's own date, 1 uses no day. For the two days the oldest version of each day object (4545 and 1035 distinct ids) was compared with 84 current objects dated 2026-07-20 to 2026-10-11: all 5580 ids are found, each in exactly one current file, the file two days before the old one (2026-08-20 and 2026-08-21), none in the old day's file. No id's own trade_date or return_date equals the old file's day (0 of 5580); return_date equals the new file's day for 5580 of 5580 and trade_date for 4505 and 1030. The ids' own date values are unchanged between versions. Counts only; transaction id and date columns read, no money or account column; no S3 write. NOT_ESTABLISHED: whether those three readers have run since the rewrites (2026-08-26 to 2026-09-02), and whether any served figure for the four days 2026-08-20 to 2026-08-23 changed (no served figure was recomputed; no gold partition read). Owner as DB-b-143 recorded it: Black Diamond gold pipeline (path data/black_diamond/scripts/gold) for B_03; Black Diamond silver pipeline (data/black_diamond/scripts/silver) and the bd-pipeline lambda (infra/aws/lambda/bd-pipeline) for the price update. Record: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~126/FILE_DAY_READERS.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~126/FILE_DAY_READERS.json (readers, days, answer)",
+      "data/black_diamond/scripts/gold/B_03.account_gains.py lines 327-329, 888-893",
+      "data/black_diamond/scripts/silver/bd_price_update.py lines 263-271, 327-344, 821"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "hazard_standing not assessed by this worker: it depends on whether the three file-day readers re-ran after the rewrites and what their fingerprint or incremental logic rebuilt, which was not read."
+}
+```
