@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 25,
- "chains": 23,
+ "cells": 27,
+ "chains": 25,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -190,3 +190,14 @@ The act-0 grant lacks `s3:DeleteObject`, and the two stale-advisor cleanups neve
 fail-loud on `Errors` at both sites (item 2). `FB-g-24`: the module exposes the per-class canonical directories, so the grant
 is generated. `FB-g-26`: both scripts fail loud, with a unit test. The grant cell `FB-g-25` (bd-pipeline `iam.tf`) follows
 `FB-g-24`'s merge. Cells 23 -> 25, chains 21 -> 23.
+
+## Amendment 13 (2.0.0_SA_COO~B1, 2026-10-11 ~15:5xZ): cell `FB-g-25` added (the narrow Delete statement; row D1-S29)
+
+`FB-g-24` (the module's per-class directories) and `FB-g-26` (fail loud on `Errors`) are merged and graded. `FB-g-25` writes the
+one statement of the act-0 policy that grants `s3:DeleteObject` on the two advisor directories. Cells 25 -> 26, chains 23 -> 24.
+
+## Amendment 14 (2.0.0_SA_COO~B1, 2026-10-11 ~15:5xZ): cell `FB-f-15` added (act 3b's close simulation, laptop lane)
+
+`FB-f-14` applied the act 3b bucket policy (`0.7.0_AE_CloudOps~FB1`, @0acccf7d8e: 4 to 29 statements, `r4_act3b.py` 3 of 3).
+`FB-f-15` is its second half: the IAM evaluation of nine admitted principals and two non-admitted roles against the live
+policy, a read-only order for `0.7.0_AE_CloudOps~FBL` through a crossbox ORDER. Cells 26 -> 27, chains 24 -> 25.
