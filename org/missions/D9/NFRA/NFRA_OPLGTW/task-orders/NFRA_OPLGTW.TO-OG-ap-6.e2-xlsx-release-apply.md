@@ -45,12 +45,20 @@ condition. Two phases. B1 runs now. B2 runs only on the issuer's GO.
    unrelated `mcportal_grant_writer` `source_code_hash` drift in this root. List every planned row by address. Any
    row beyond the one add goes in your report verbatim. It is a STOP for B2, not for B1.
 5. Run AC1, commit, REPORT, STOP.
+5b. **(A1) The policy plan at box/sitez HEAD, read only.** Step 4's plan read a TF root that is stale against the live
+   estate (row Z-S81). Create a DETACHED worktree `C:/tmp/og-tf-e2` at box/sitez HEAD; make no commits there. Check
+   that `git rev-parse HEAD:infra/aws/terraform/opal-gateway/advi_billing_gateway_iam.tf` = `49c420acbce7cfb99c8726f5439b3f2cc6ea9f5a`,
+   the signed release's blob. Run the same whole-root plan from that worktree, with step 4's secret and artifact handling
+   (TF_VAR_ env only, values redacted), and save it to `W/ap6_plan_head.txt`. List every row by address, and report it
+   verbatim.
 
 ### PHASE B2 (only on the issuer's GO, which names the three halves re-pinned at `release_sha` and MP-r-2's drain into box/sitez)
 
 6. **Policy act** (CTO C3). Ledger `nfra-oplgtw-e2-put-policy`, entry AND sentinel committed before the act. Run
-   `bash .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-gateway apply` on the plan step 4 read, only if that plan
-   was exactly 1/0/0 or the GO names the CTO's ruling on the extra row. Read back `iam get-role-policy` for the new
+   `bash .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-gateway apply` FROM `C:/tmp/og-tf-e2` (A1), on the plan
+   step 5b read. Run it only if that plan was exactly 1/0/0, or if the GO names the CTO's ruling on each extra row and the
+   form (`-target` or whole-root) it admits. NEVER run a Terraform apply from `C:/tmp/og-rel16c`: its root would destroy
+   three live resources (Z-S81). Read back `iam get-role-policy` for the new
    policy: one statement, `s3:PutObject` only, on the fee_statement prefix only. Close the ledger and commit it.
 7. **Deploy.** Ledger `nfra-oplgtw-gateway-release-e2` (NOT `-r16`: that slug is an old release's, 2026-10-04), entry
    AND sentinel committed first. From `C:/tmp/og-rel16c`, run `infra/aws/ec2/safe-ec2-deploy.sh` with
@@ -120,6 +128,17 @@ Report once per phase to `2.0.0_SA_COO~O`.
   control: a synthetic re-cut from the dry-applied tree on 2a5966dfbd read AC1 PASS (patch-id 041ec0e02b87 equals the
   signed release's). Negative control: a88661b145 on that base read FAIL (15 paths outside, patch-id differs). The
   control record was removed.
+- A1 (issuer, 2026-10-11 ~01:1xZ, on rows Z-S81 and Z-S82, after B1 @178b8ecb96, release_sha 6aadf7db37, AC1 PASS):
+  - The policy is planned and applied from a box/sitez-HEAD worktree (new step 5b; step 6 amended). It is never
+    applied from the release worktree, whose gateway TF root is cut at MP-r-2's deployed commit and lacks box/sitez's
+    later Terraform (three live resources would be destroyed).
+  - The policy's blob at HEAD equals the signed release's (`49c420ac`), so the act is the same policy.
+  - The deploy still ships the release worktree's app code (step 7 unchanged).
+  - Option (a) of Z-S81, re-cutting onto HEAD, is refused: it would carry box/sitez's unreleased gateway app changes
+    into the deploy.
+  - Z-S82: step 1's extras are FOUR dashboard orphans: `index-BP6X9XJd.js`, `index-BqfQgt7G.css`, `index-CrZMj-00.js`,
+    `index-a6wjv_wv.css`. Step 8 compares all four as unchanged, and the dashboard/ walk is part of the read-back.
+  - Gate limb: to-pipeline-gate grades this modification (placeholders NONE).
 - Slug change: the halves' `nfra-oplgtw-gateway-release-r16` is already taken by a 2026-10-04 release, whose CLOSED
   entry would satisfy a count check. The deploy ledger is `-e2`, and this change is named in the re-pin ask.
 - Carried from the record: row NFRA_MCPINDEX-Z-S94 (host superset); row Z-W39-S5 (the opal-gateway root's
