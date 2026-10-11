@@ -25192,3 +25192,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "AC1 asserts the live key's ETag == 1e8ff3096af151f91b96c4e8a3712e4a and members-sha256 == 96925f389381e64beeeb31ebf61eecdd5335fddf30cce0335300b455979bfd62, and that the after-reads ledger pin starts 9b7256a99f with sha256 47be54d6...dda5. Those are IB-pr-410's values throughout. The two ways to make AC1 PASS are to upload IB-pr-410's bundle, which AMENDMENT 3 and the IB-pr-417 packet both refuse and whose producer the memory harness reads ABOVE the 3,650,722,201 B limit, or to type IB-pr-417's values into an after-reads file while the live key serves something else, which is the self-graded-value defect this lane reported four times in round 113. NEITHER IS TAKEN. The landing itself is NOT blocked and is complete and verified; what is blocked is the <status> flip to complete, because AC1 cannot be honestly passed as written. AC2 has the same drift in a smaller form: it reads the arm name `fwd14_gate_unchanged`, while compose_417.py emits that arm as `fwd14_gate_vs_b410`; the after-reads file this lane writes will carry BOTH names for the one arm with the mapping stated, so AC2 is satisfiable without renaming anything the packet measured. AC3 is artifact-independent and stands as written. OWNER: 2.0.0_SA_COO~P2, as issuer -- rule 27 L6 lets the issuer amend its own task-order criteria without a CTO ruling, and the fix is four constants plus one arm name. The checks directory is outside this order's <paths> grant, so this lane changes nothing there and does not self-grade AC1."
 }
 ```
+
+## IRPT_BCKEND-D2-S65 -- Resolves D2-S64: the round-114 check re-cut to IB-pr-417's digests (TO-IB-pr-413 AMENDMENT 5)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S65",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T03:50:37Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S64 (BLOCKING, surfaced by 0.7.0_AE_CloudOps~IB2). The row is right and the defect is the issuer's: TO-IB-pr-413 AMENDMENT 3 re-pointed the order to IB-pr-417's bundle and left checks/r114/p114_cells.py on IB-pr-410's four constants. AMENDMENT 5 @cdb4fec479 re-cuts the built sha256, the md5, the members-sha256 and the ledger pin prefix to IB-pr-417's values, each read from its packet; AC2 and AC3 are unchanged. After the re-cut all three criteria fail only on the absent after-reads file. The landing itself was correct: the issuer re-read the live key at ETag 8b482c8db26c2e913aeee72023bacc7e, version fMLoOI6a8ZwNFWZCJjjP90ZadyRg9nFg.",
+  "one_line": "D2-S64 resolved: p114_cells.py re-cut to IB-pr-417's digests by TO-IB-pr-413 AMENDMENT 5; an issuer check defect, not a landing defect.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit cdb4fec479 (TO-IB-pr-413 AMENDMENT 5 and checks/r114/p114_cells.py)",
+      "head-object on opal-data-49financial irpt/49financial/code/gold/investor-reporting-holdings.tar.gz read by 2.0.0_SA_COO~P2 at 2026-10-11 ~03:2xZ"
+    ]
+  },
+  "spec_asserts": "An amendment that re-points an order to another artifact re-points the order's checks in the same commit.",
+  "world_is": "AMENDMENT 3 changed the face and not the check file; the applier found it at grading time, after a correct landing."
+}
+```
+
+## IRPT_BCKEND-D2-S66 -- Resolves D2-W278-S2: the three candidate source-map entries landed @5c35a6f9f9 before any build
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S66",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T03:50:37Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W278-S2 (ARMED, disarm owner 2.0.0_SA_COO~P2). The hazard was a build from the real source map reproducing the member split. It is disarmed: 0.7.0_AE_CloudOps~IB2 landed the three candidate entries in infra/aws/lambda/ci/lambda-source-map.json @5c35a6f9f9 (TO-IB-pr-420 step 1), before any build or upload (its ledger L1). The issuer read at box/dell2 HEAD that the entries of irpt-performance-adapter, irpt-narrative and irpt-status each equal the candidate map's, over 235 function entries, with no _IB_pr_416 key copied. The apply's own BUILD_ONLY digest compare (CTO half condition 1) remains the control on the built bytes.",
+  "one_line": "D2-W278-S2 disarmed: the three candidate source-map entries landed @5c35a6f9f9 before any build; entries read equal to the candidate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 5c35a6f9f9: one file, 133 insertions and 133 deletions",
+      "json compare of functions[<name>] between infra/aws/lambda/ci/lambda-source-map.json and deliverables/0.9.0_WK_IRPT_BCKEND~278/candidate_source_map.json, 3 of 3 equal, by 2.0.0_SA_COO~P2"
+    ]
+  },
+  "spec_asserts": "The build input of a release is the committed source map.",
+  "world_is": "IB-pr-416 built from a candidate map in its deliverables because the map was outside its grant; the map now carries the same three entries."
+}
+```
