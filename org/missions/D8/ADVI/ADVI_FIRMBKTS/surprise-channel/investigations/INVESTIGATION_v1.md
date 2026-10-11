@@ -5352,3 +5352,29 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-S33",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "1.0.0_SA_CTO~DELL1",
+    "surfaced_at": "2026-10-11T22:30:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "B_01.holdings_lots.py picks each asset's served price by sort_values('date', ascending=False).drop_duplicates('asset_name', keep='first') over the concat of silver/prices/<date>.parquet and canonical_prices.parquet; the default sort is not stable, so on a same-date tie which object's price wins is undefined by the code -- the 'not established' of dell2 D2-W125-S1/-S2 is not establishable by reading.",
+    "spec_asserts": "A served price is chosen by a stated precedence, not by an unstable sort's tie order.",
+    "world_is": "data/black_diamond/scripts/gold/B_01.holdings_lots.py:331-361 (read by this seat): files concatenated in sorted(key) order (daily files before canonical_prices.parquet), then sort_values('date') with pandas' default kind (quicksort, not stable) and keep='first'. Dell2's severity read (origin/box/dell2 IRPT_DASHBD deliverables/0.9.0_WK_IRPT_DASHBD~125/MOVED_MEDIANS_SEVERITY.json @7f80ca32da): on 2026-10-09, 34 of 160 assets carry the un-deduplicated median in the daily file and a Yahoo/other price in canonical_prices; canonical_prices is rewritten four times a day by a writer not identified.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/B_01.holdings_lots.py:331-361",
+        "COO~D2 dell2 msg 5961 via MSTR msg 4145"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Owner 1.0.0_SA_CTO~DELL1. Joins D1-S32's parked cell (un-park: act 4 read-back): (1) dedupe by transaction_id before the median; (2) an EXPLICIT price precedence in B_01 (stable sort with a stated source rank), replacing the tie order; (3) identify canonical_prices.parquet's four-a-day writer (writer census; DEC-12 read/write logging where it exists). Before any change: a read-only run of B_01's price load on 2026-10-09 prints which object wins for each of the 34, so the before state is MEASURED, then the change under a never-widen pair with before/after per asset."
+  }
+]
+```
