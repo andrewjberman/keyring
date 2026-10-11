@@ -290,3 +290,31 @@ adjudication rows live in `../adjudications/` as `NFRA_OPSWKF-C-S<k>`.
   "notes": "Ruled by the issuer for its own decomposition (msg to 0.7.0_AE_CloudOps~DELL2 answering 5693): K1 stays in place, the applier records the deploy and runs the cleanup as written, no further call with either token. Routed in the round's slug to 1.0.0_SA_CTO~DELL2, whose half carried the expectation and who holds TCKT_VNEXT's halves; nothing is asked of TCKT_VNEXT's seats by this row."
 }
 ```
+
+## NFRA_OPSWKF-D2-S8 -- FWD-9 refuses the non-Opal filer FWD-1's ACCEPT admits; ruled by the owner, to be met by an addendum when advisor reach is built
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S8",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~O2",
+  "surfaced_at": "2026-10-11T20:52:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "FWD-9 (the submit route answers Opal staff only) refuses a filer that FWD-1's ACCEPT says may file: an advisor of a partner firm filing a trade request in the Ticket Center, whose submission the bridge carries to that route. Nothing live breaks today; the two outcomes disagree when advisor reach is built.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPSWKF/prd/NFRA_OPSWKF_PRD.md @cfc5091071: FWD-1 ACCEPT 'an advisor files a trade request in the Ticket Center'; FWD-9 DONE WHEN 'refuses a verified caller who is not OPAL-INTERNAL'",
+      "infra/aws/lambda/trade-pipeline/trade-submission-handler/src/submission_handler.py @234c3b4b10: _require_internal is called before the body is parsed, so a ticket-bound submission by a non-Opal filer is refused before the ticket check runs",
+      "org/missions/D9/NFRA/NFRA_OPSWKF/decompositions/NFRA_OPSWKF_DECOMP.md round 1 Rule 24 remainder: the Ticket Center is internal-only today, so no non-Opal filer reaches the route",
+      "org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/1.0.0_SA_CTO~DELL2/CTO_HALF_OW_SD2_FWD9_RELEASE_20261011.md @1ca1f1ea52, last section: RULED -- FWD-9 stands; when advisor reach is built, a ticket-bound submission by a firm's own advisor gets its own admission rule by addendum, and this check is not loosened"
+    ]
+  },
+  "spec_asserts": "FWD-1 ACCEPT and FWD-9 DONE WHEN both hold.",
+  "world_is": "They hold together only while every filer is Opal staff. The owner has ruled which gives way and how; the row exists so the enrichment item that builds advisor reach finds the ruling.",
+  "notes": "Owner: 1.0.0_SA_CTO~DELL2 (its ruling, msg 5817). Filed by the issuer at the owner's direction; not a defect of the FWD-9 release and it holds nothing."
+}
+```

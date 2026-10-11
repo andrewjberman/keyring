@@ -27339,3 +27339,132 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The claim is true for a REFUSED that happens at or after the login's HTTP call, which would log a call, and for one that happens at the sections read, which would also have history_reads. It is false for the earliest refusal of all -- the credential read -- which is the one that actually occurred. NOTHING WAS FABRICATED TO CLOSE IT: inventing a history_reads entry or a calls entry would be manufacturing evidence of reads that never happened, which is the precise defect the record exists to avoid, so AC1 and AC3 are reported FAILING and the order's status stays pending. The proof instance records both with a status_reason rather than claiming PASS. The narrow fix, offered rather than taken: let AC1's and AC3's emptiness checks stand only when the outcome is READ or NO_VENDOR_REPORT_FOUND, and for REFUSED require instead the public_reason_code and a stated stop -- which this record already carries. OWNER: 2.0.0_SA_COO~P2 as the check's author; rule 27 L6 lets the issuer amend its own criteria. Related but distinct from row IRPT_BCKEND-D2-S96, which is why the login was refused at all."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W308-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~308",
+  "surfaced_at": "2026-10-11T20:19:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The second guard sentence (no grade where the reader has no bar for the calendar's prior trading day) frees exactly as many account-days as sentence (1) alone in the nine-pair sizing: its cost is 0, because the sizing's row grade already returned no_bar_for_the_day_or_prior whenever the prior-day bar was missing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~308/IB148-1_nine_pair_sizing.json second_sentence (freed 12482 under sentence (1) alone and 12482 under both; UNGRADEABLE 30661 and 30661)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~308/ib442_measure.py classify (returns no_bar_for_the_day_or_prior when nav_d or nav_p is None)"
+    ]
+  },
+  "spec_asserts": "The face asks for how many account-days the SECOND sentence alone costs, as the nine-pair sizing under sentence (1) alone less the same under both, implying a figure that can differ from zero.",
+  "world_is": "The figure is 0 on this population (the 85 graded days, 303 tickers asked). The instrument's row grade (IB-pr-442's classify, imported unchanged and used by every sizing in this chain) already treats a missing prior-day bar as no grade, so sentence (2) was in force in the earlier sizings and adds nothing to them; it differs from sentence (1) alone only in the repeat count and in the overlap table (IB-pr-449 Table C: 6 security-days). Reported as measured; no sentence of the guard is questioned."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S98",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T20:32:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Noted for the vendor producer's NEXT release (CTO msgs 5665 and 5784): a vendor section on the wire carries no title member and no field name for a value; the page now supplies both from a pinned copy of the census. PARKED: the producer cannot be released while the vendor path is stopped.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "2.0.0_SA_COO~D2 msg 5660 and org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/SECTION_TITLE_UNIT.json (a worker's read of code, not re-read by this seat): AnalysisReport.schema.json:126-190 declares no title or label member and forbids additional members; extract.py:707 sets section_type to the census code; publication.py:215-217 strips the underscore keys that hold the title.",
+      "1.0.0_SA_CTO~DELL2 msg 5665 (the page carries the title for the 33 codes; a wire title is noted for the producer's next release) and msg 5784 (the wire carries no field name for a vendor value; note it beside the title member).",
+      "No served vendor answer was read: IB-pr-451 was withdrawn @9053ea7b45 on CTO msg 5770; the confirmation rides the laptop walk that proves DSGN_IRPTV1 cell IV-e-115."
+    ]
+  },
+  "spec_asserts": "A reader of a finished report sees each section by a name and each value by what it is, from the answer the service serves (FWD-5).",
+  "world_is": "Both come from the page's pinned copy of the census, not from the wire. Served vendor reports are immutable and carry only the code, so a wire member would title no report that exists today. PARKED: owner 2.0.0_SA_COO~P2. Un-parks when the vendor producer is next released for a reason; that release's cell adds a title member and a field-name member to the vendor section through a PRD addendum (the contract forbids additional members), and names every reader of the section, the page's map among them."
+}
+```
+
+## IRPT_BCKEND-D2-W309-S1 -- The worker sends analysis_ready on EVERY READY job; it is not gated on a ticket id
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W309-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~309",
+  "surfaced_at": "2026-10-11T20:30:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's why-paragraph says the resident worker sends analysis_ready 'when the job is bound to a ticket id', but the code sends it on every READY job whatever the record carries, and the commentary receiver reads no ticket id either.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:319-329: mark_ready copies ticket_id into the receipt only when present, then calls signal_ready unconditionally",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:163-186: send_ready's only guard is a non-empty IRPT_ANALYSIS_READY_QUEUE_URL",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_ready_signal.py:91-97 test_b_no_ticket_receipt_is_byte_identical_and_still_signals_once; run offline in this worktree: 2 passed",
+      "data/transcripts/scripts/commentary/lambda_handler.py:285-327 and entry.py:264-268: the receiver builds its item from tenant and request_id only and never reads ticket_id"
+    ]
+  },
+  "spec_asserts": "The face (WORKER FACE, Why): 'Today the worker sends it when the job is bound to a ticket id.'",
+  "world_is": "Today a READY job with no ticket id signals analysis_ready exactly as one with a ticket id does, and the receiver drafts if a model is configured. The first place a missing ticket id has any effect on this chain is later and different: the packager refuses TICKET_ID_ABSENT (ycharts/research/opal_packager.py:150-152). Whether the live queue is bound and the model configured is unread. The read file states the code as it is; no judgment on significance is made here."
+}
+```
+
+## IRPT_BCKEND-D2-W309-S2 -- The packager reads commentary_ref from a record that the code says cannot carry it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W309-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~309",
+  "surfaced_at": "2026-10-11T20:30:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "commentary_ref is set as a sibling attribute of the request item, not inside the immutable record, yet the packager reads record.get('commentary_ref') from DynamoAcceptance.get, which returns only the record attribute.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/commentary_draft_store.py:21-24 and :213-219: commentary_ref is set once by conditional update on the item; 'the immutable record attribute is never rewritten'",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py:68-71: get returns json.loads(item['record']['S']) and nothing else",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:334 passes that same acceptance as the packager's acceptance port; ycharts/research/opal_packager.py:153 reads record.get('commentary_ref')",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_packager.py:58-64: the fake acceptance port returns commentary_ref INSIDE the record, so no test crosses the draft store's write and the packager's read",
+      "no live read was made (the order forbids it); INFERRED from code only"
+    ]
+  },
+  "spec_asserts": "The packager's docstring (opal_packager.py:7-8): 'the acceptance record of (tenant, request_id) carries ticket_id (AR-y-11) and commentary_ref (AR-t-12, set once)'.",
+  "world_is": "By the code, a live packager would raise COMMENTARY_REF_ABSENT on a record whose commentary_ref sits beside it. It matters to the addendum only in that a member written into the immutable record at acceptance is read by the same get, while a sibling attribute is not. Unmeasured live."
+}
+```
+
+## IRPT_BCKEND-D2-W309-S3 -- portal/ is an empty submodule directory in this worktree, so the page-consumer search could not be run
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W309-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~309",
+  "surfaced_at": "2026-10-11T20:30:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order asks for a search of portal/ for readers of the accepted record; the worktree's portal directory is empty (gitlink c96efe1714 not checked out), so no page could be searched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la portal in the worktree: an empty directory (0 entries)",
+      "git ls-files -s portal: mode 160000 gitlink c96efe1714784162c4134450da33ce6fd6226b60",
+      "native Grep of portal/ for browser_sha256|acting_principal_id|accepted_at|analysis#: 0 hits (an empty tree, so a zero that cannot say what it saw)",
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:243: the served read returns {identity, accepted_at} only, which bounds what a page can see of the record through that route"
+    ]
+  },
+  "spec_asserts": "The face (item 6): 'search portal/ too if the record reaches a response'.",
+  "world_is": "A page consumer of the accepted record is not ruled out by a search; it is bounded by the served response shape instead. Recorded in not_established of the read."
+}
+```

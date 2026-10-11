@@ -92,3 +92,24 @@ fn-fence FAIL absent, fn-regress FAIL (175 below 179), ac-read FAIL absent, all 
   absent, c6-regress FAIL (183 below 190), as expected.
 - The cell first written `R5-c6-1` is renamed `R5-cm-1` throughout this file: the gate's cell-id grammar refuses a digit in
   the middle token (to-pipeline-gate, 3 violations on the first commit attempt of TO-R5-c61). Same cell, same order.
+
+## AMENDMENT 3 (2026-10-11 ~20:3xZ) -- two cells are another project's orders now (2.0.0_SA_COO~Y2, msgs 5701, 5778)
+
+- `R5-ac-2` (FWD-3, the one-account check) is IRPT_ANLREQ's: `IRPT_ANLREQ.TO-AR-y-132`, issued @56d7070068, a READ first (how
+  several accounts in one file can be recognised; what the upload door does today with each bad kind); the build is cut from
+  its record at that seat's next issuance. Lane `IRPT_COMPLETION_Y` by the owned-paths file at HEAD.
+- FWD-5's page half (the elapsed age) is IRPT_ANLREQ's: `TO-AR-y-121` (approved by the CTO for portal DEV by that seat's word)
+  and `TO-AR-y-131` (hours up to 72; a closed list of waiting statuses).
+- `R5-cm-1`: merged @88ca11bc33 (190 ticket tests). `R5-ml-2`: its packet is signed by this seat and with the CTO.
+FWD-3 and FWD-5 read OPEN on those orders; this project cites them and cuts nothing for either.
+
+## AMENDMENT 4 (2026-10-11 ~20:3xZ) -- by the CTO half of the R5-ml-2 pair @c1c7a3b194 (msg 5780)
+
+The CTO signed the deploy ON AMENDMENT 1 of the packet, which needs two lines in the handler first:
+
+| cell | builds | list item | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|---|
+| `R5-cm-2` | the draft route answers the same deny for a missing ticket and for an off-list firm (a service subject is not told which ticket ids exist); `CLIENT_NOTICE_PROHIBITED` names `draft_commentary`, `commentary_sent` and `package`. Two tests | 2 (its deploy's condition) | FWD-6 | cut | dell2 worker, slot 22, workstream CM (C6 already holds its one issuance; the gate refuses a second) | WORLD by path floor; nothing is applied | worker-light | `R5-cm-1` (drained) |
+
+Edge: `R5-cm-2` -> `R5-ml-2`. The packet's AMENDMENT 1 then names the new pin, hash, numstat and test count; the CTO confirms in
+one line; then the apply order is cut. Dry-run at the base: cm2-lines FAIL (missing tests), cm2-regress FAIL (190 below 192).

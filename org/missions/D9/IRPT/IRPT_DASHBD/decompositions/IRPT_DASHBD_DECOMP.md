@@ -1377,3 +1377,18 @@ Round 75 is drained @fc42bbcab0 (round-close MAY-CLOSE). The CTO ruled one read-
 A reader that sums without the id and SERVES something goes to the CTO as one row naming its owner; correcting it is its owner's.
 
 **fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~116` (DB-b-143) and `~117` (DB-b-144), each cut from box/dell2.
+
+## 79. ROUND 77, WORKSTREAM B (2026-10-11 ~20:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-76 ANALYSIS @d70feb6d15)
+
+The analysis answers REMEDIATION_v32 @305103f259 with four items. Its item 2 and the first half of item 1 were already issued as round
+76 on the CTO's msg 5721 (DB-b-143 running; DB-b-144 drained: 59 of 90 becomes 89 of 90 with each id counted once). The rest:
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-145` | item 1, second half: the scripts behind the figures the tie-out records quote are tracked in the project's folder with their hashes, or the figure is listed as withdrawn; no client data enters the tree (row W114-S1) | LOCAL | DB-b-144 | B77-1 |
+| `DB-b-146` | item 3: the shared code table's class for the one "Other Fee" row beside the method's rule; agreement closes row W113-S3, disagreement is a row against the table (rows W113-S3, W115-S1) | LOCAL | DB-b-142 | B77-2 |
+| `DB-b-147` | item 4: what CONTESTED still means for the 51 now that their flows reproduce, grouped, with what would close each; a proposal, not a ruling; the tie-out not closed | LOCAL | DB-b-142, DB-b-144 | B77-3 |
+
+The issuer tracks its own re-run script itself (`deliverables/2.0.0_SA_COO~D2/rerun_five_days.py`, in this issuance's commit).
+
+**fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~118`, `~119`, `~120`, each cut from box/dell2.
