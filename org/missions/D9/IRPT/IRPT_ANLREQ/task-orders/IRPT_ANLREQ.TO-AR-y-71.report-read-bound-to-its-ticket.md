@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~52</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>pending</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -72,10 +72,53 @@ ticket's id on its acceptance record (`infra/aws/lambda/investor-reporting/ychar
 7. Do not change who may read a request, any other route, the acceptance writer, or the source map (the irpt-status entry pins
    `owned_report.py` on purpose: do not touch `infra/aws/lambda/ci/`). Do not build, upload or apply.
 
+---
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~13:2xZ): REOPENED by CTO ruling (`1.0.0_SA_CTO~DELL2` msg 4984): the mismatch is
+served under a DISTINCT public reason, and only AFTER the caller is admitted to the request.** Gate limb that graded this amendment:
+read from this commit's own output.
+
+What you built (commit `420fc49e0e`, merged) serves the mismatch as public reason `NOT_FOUND`. The page cannot tell that from a report
+that does not exist yet, and its Open path shows a waiting state for a missing report: a mis-recorded ticket would read "not ready"
+forever, which is the failure this binding exists to make visible. The ruling, in its words: "Authorization first, the ticket
+comparison second. A caller who may not open the request gets what it gets today and learns nothing about any ticket. Only a caller
+already admitted to the request is told the ticket does not match."
+
+**Do:**
+1. Give the mismatch its own PUBLIC reason code (the value a caller reads in `status.public_reason_code`), named by the rules the
+   existing public reasons follow. Find where the public-reason set is declared and how a refusal class or code maps to it (the entry
+   boundary and its reason table; the status envelope's contract; any enum in `docs/contracts/investor-reporting/v1/` or
+   `infra/aws/lambda/investor-reporting/_contracts/`). Add the value everywhere the set is declared, in each place's own style.
+2. Keep the order you already have and PROVE it with one arm: a viewer NOT admitted to the request, sending a wrong `ticket_id`,
+   reads exactly the same answer as when it sends the right one (and the same as with none). Only an admitted caller reads the new
+   reason. The refusal still carries neither ticket id.
+3. Two more tests in `test_report_ticket_binding.py`, named exactly:
+   - `test_a_viewer_not_admitted_reads_the_same_answer_with_a_wrong_ticket_as_with_a_right_one`
+   - `test_an_admitted_caller_is_told_the_ticket_does_not_match_by_its_own_public_reason`
+   Update `test_report_read_with_another_ticket_id_is_refused` for the new public reason; the other four stay as they are.
+4. **A public reason is a value in a closed set: census every reader of that set.** Write
+   `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r7/PUBLIC_REASON_READERS.json`:
+   `{"new_public_reason": "<the value>", "declared_in": ["<file:line>", ...], "searched": "<what you searched, over what, with the
+   count of files>", "readers": [{"side": "SERVICE"|"PORTAL", "file_line": "<file:line>", "what_it_does": "<one sentence>",
+   "key_policy": "EXACT"|"TOLERANT", "meets_new_value": "PASS"|"REFUSES"|"NOT_REACHED", "why": "<one sentence>"}, ...]}`.
+   SERVICE readers: every place in `infra/aws/lambda/investor-reporting` (non-test) and the contract tests that enumerates or
+   validates public reason codes. PORTAL readers: read-only, by `git -C C:/dev/wk-irpt-anlreq-51/portal show origin/PROD:<path>` and
+   `origin/DEV:<path>` (never touch that worktree's files): every place under `src` that reads `public_reason_code` or holds the set
+   of reason codes (a union type, a validator, a switch, a message table). For each: EXACT means an unknown value is refused or
+   throws; TOLERANT means it passes through or falls to a default. `meets_new_value` is what THAT reader does when it receives the
+   new value (PROD and DEV as separate rows where they differ). A portal reader that REFUSES the new value is a FINDING to state
+   plainly at the top of your report: it must be on PROD before this service change is released, exactly as happened with the
+   history reader this morning.
+5. Update the contract line you added to `routes.json` if it names the old reason. Do not build, upload or apply. Do not touch
+   `infra/aws/lambda/ci/`.
+
+AC1 now requires the seven named tests and the census file (the check `y71-bind` is amended). AC2 is unchanged. Update the proof
+instance, validate it after its commit, and flip back to `complete` only then.
+
 ### ACCEPTANCE
 
 <criterion id="AR71-y-AC1" cell_refs="AR-y-71"><invocation>python C:/dev/wk-irpt-anlreq-52/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r7/ar7_checks.py y71-bind --root C:/dev/wk-irpt-anlreq-52</invocation><expect>Y71-BIND-OK</expect></criterion>
-`AR71-y-AC1`: the binding test file holds the five named tests and passes.
+`AR71-y-AC1` (AMENDMENT 1): the binding test file holds the seven named tests and passes, and the public-reason reader census exists with every row filled.
 
 <criterion id="AR71-y-AC2" cell_refs="AR-y-71"><invocation>python C:/dev/wk-irpt-anlreq-52/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r7/ar7_checks.py y71-keep --root C:/dev/wk-irpt-anlreq-52</invocation><expect>Y71-KEEP-OK</expect></criterion>
 `AR71-y-AC2`: the difference control -- the whole `ops/tests` folder passes (it passes at the base and must still pass).
