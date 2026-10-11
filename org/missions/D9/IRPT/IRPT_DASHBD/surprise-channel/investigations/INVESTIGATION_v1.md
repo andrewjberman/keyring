@@ -6222,3 +6222,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W104-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~104",
+  "surfaced_at": "2026-10-11T15:30:00Z",
+  "one_line": "DB-b-129: of the 244 UNEXPLAINED segments, 154 class from the records already on this box and 90 cannot: no repo or private record holds a per-segment field that names their cause, and the next read is an S3 read this round forbids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row W86-S2 / CTO round-68 analysis section 4 item 6: the 244 are classed by cause from what the records already hold per segment, the remainder printed.",
+  "world_is": "The per-segment record exists on this box (private RESTATED_TIEOUT.json, sha256 equal to the repo record's) and reproduces UNEXPLAINED = 244 of 990. Classed by rule over DB-b-106's codes, the day counts and the ~73 reason: 9 + 1 + 88 + 23 + 10 + 23 = 154. The remaining 90 have DB-b-106 verdict confirmed (event dates agree), Black Diamond day count equal to Opal's, a gap above 0.35 pp, and no measured convention shift (0 of the 244 are among the 74 restated segments). Of the 90, 49 carry nonzero Black Diamond fees reported and 41 zero; 57 sit within 0.70 pp and 33 above. Also: for all 235 FLOW_TIMING/INCOME_DATE members the Opal-side re-link figure is within 0.35 pp by construction of the label, so it does not separate the classes. A next cell needs the two-sided custodian dollar read (the W73_S1_EVIDENCE shape) for these 90 from the firm's 49 Financial Black Diamond tree: an S3 read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~104/UNEXPLAINED_244.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~86/RESTATED_TIEOUT.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~86/restated_tieout.py:55"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
