@@ -4870,3 +4870,29 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "No action taken by this worker; the commit was not refused and the list is a per-device input. Filed for the owner of the commit gate and the client-data check to judge the un-graded JSON suffix and the device's missing list."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W50-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~50",
+  "surfaced_at": "2026-10-11T15:53:58Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The face's module source ../../modules/opal_name does not resolve from the exec-summary root; the call uses ../modules/opal_name, the path that resolves and the one the check requires.",
+  "spec_asserts": "Face section 1a.1: a NEW module call with source ../../modules/opal_name, following infra/aws/terraform/bd-pipeline/iam.tf's module opal_name_platinum_grant.",
+  "world_is": "infra/aws/terraform/exec-summary/ sits one level below infra/aws/terraform/, so ../../modules/opal_name resolves to infra/aws/modules/opal_name, which does not exist (ls -d printed no such file, rc=2). The module is at infra/aws/terraform/modules/opal_name/. bd-pipeline's call (infra/aws/terraform/bd-pipeline/iam.tf:1285) uses ../modules/opal_name, and r4_execiam.py I1 requires that string. The new call at iam.tf uses ../modules/opal_name; AC1 reads 5 of 5 arms, I3 resolves the ARN through the module.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -d infra/aws/modules/opal_name at /c/dev/wk-firmbkts-50 printed 'No such file or directory' rc=2",
+      "ls -d infra/aws/terraform/modules/opal_name at /c/dev/wk-firmbkts-50 printed the directory (contains main.tf, variables.tf, generated_locals.tf, tests/)",
+      "infra/aws/terraform/bd-pipeline/iam.tf:1285 reads source = \"../modules/opal_name\" at the worktree",
+      "r4_execiam.py:I1 at the worktree requires the string \"../modules/opal_name\" in the module block; r4_execiam.py --arms iam returned 5 of 5 arms, exit=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as a path premise only. The face's ../../ would fail terraform init for this root. The issuer may confirm ../modules/opal_name as the intended source or correct the face's text."
+}
+```
