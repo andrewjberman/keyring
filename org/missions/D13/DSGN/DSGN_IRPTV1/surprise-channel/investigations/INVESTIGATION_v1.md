@@ -5267,3 +5267,74 @@
   "notes": "The print/export document is the one a principal could be handed; whether it needs the same treatment is the issuer's and the CTO's call."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S10",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T14:00:11Z",
+  "one_line": "IV-e-97 part 1: the order's premise fails. With package.json unchanged, `bun install` (bun 1.4.2) rewrites nothing: bun.lock is byte-equal afterwards, so the lock cannot be refreshed by the route the order names. lock.refreshed is false and IV97-AC1 fails as written; no lock commit was made.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun install at portal 1f0b1d68 (package.json dependencies, devDependencies and overrides untouched): rc 0, output 'bun install v1.4.2 ... 1 package installed' (xlsx only), `git status --short` empty, cmp of bun.lock against the copy taken before: identical; installed top-level count 251 before and after, same names, happy-dom 20.14.5, typescript 5.9.3, vite 7.3.5, react 19.2.4, playwright-core 1.60.0 (junction intact) before and after (evidence folder: bun_install.txt, installed_before.txt, installed_after.txt, versions_before.txt, versions_after.txt)",
+      "probes on COPIES of package.json and bun.lock in a scratch folder outside both repos, nothing installed, no repo file touched: `bun install --lockfile-only` rewrites nothing (differs only in line endings: the working-tree lock is CRLF, the index blob LF; 0 differing lines after stripping CR); `bun add --dev typescript-eslint@^8.60.1 --lockfile-only` (same range) 0 differing lines; `bun update typescript-eslint --lockfile-only` moves typescript-eslint itself 8.60.1 -> 8.71.1 and rewrites package.json, 140 differing lines; deleting the lock and resolving fresh gives 418 entries against 495, 210 entries at a different version, 97 removed, 20 added, and the stale pins move to @typescript-eslint/* 8.71.1 and ts-api-utils 2.5.0 (lockprobe1..4 folders and *_install.txt in the evidence folder)",
+      "the stale entries named by row D2-W49-S3 are still in the committed lock: @typescript-eslint/eslint-plugin, scope-manager, type-utils, visitor-keys at 8.46.4 and ts-api-utils at 2.1.0 beside typescript-eslint 8.60.1; the earlier worker saw the re-resolve only after changing package.json (a dependency add), which this order forbids",
+      "build at portal 1f0b1d68 before and after the install: 88 files, 8,320,201 bytes, digest bd6819c692f03f530af402c3f3b03456eabda9179a595a43cc4f25d2f0293b00 both times (hash_before.txt, hash_after.txt)"
+    ]
+  },
+  "spec_asserts": "Order IV-e-97 item 1: `bun install` with package.json unchanged re-resolves five packages and prunes 57 entries, once, on its own commit; lock.refreshed true.",
+  "world_is": "On bun 1.4.2 a plain install of an unchanged package.json is a no-op, so the lock stays as it is, with the stale pins in it. Routes that would change it are all ones the order did not name: touch package.json (add then remove a dev dependency), `bun update <pkg>` (moves typescript-eslint to 8.71.1 and rewrites package.json), or delete the lock and resolve fresh (210 entries move; the build hash would then need re-proving). This worker took none of them. Which route, or whether the lock clause of IV97-AC1 is re-worded, is not decided here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S11",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T14:00:12Z",
+  "one_line": "IV-e-97: the build hash method as the spawn prompt words it ('sorted relative-path order') gives 6702334..., not the issuer's bd6819c6...; the issuer's number is reproduced only when the relative paths are sorted case-insensitively. Same 88 files and 8,320,201 bytes either way.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 1f0b1d68, bun run build rc 0, dist hashed with sha256 over, for each file in order, the relative path (posix, utf-8) then the file bytes: plain sorted order 67023341f296bed009ab2fa6cb25a35e898aa92aaaa3c4181d1b5a42554af914; order sorted with key=str.lower bd6819c692f03f530af402c3f3b03456eabda9179a595a43cc4f25d2f0293b00 (equal to the issuer's measurement); the other orders tried (walk order, directory-then-name, separators) matched neither (hashdist.py, hash_before.txt in the evidence folder)"
+    ]
+  },
+  "spec_asserts": "The issuer's build hash at portal 1f0b1d68 is bd6819c692f03f530af402c3f3b03456eabda9179a595a43cc4f25d2f0293b00 by sorted relative path.",
+  "world_is": "build_hash_before equals the issuer's number under the case-insensitive sort; both sorts are recorded in TOOLING.json and every comparison in this order is made under the same one. The record states the sort.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S12",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T14:00:13Z",
+  "one_line": "IV-e-97 part 3: this box has no pandas_market_calendars (python 3.14.7), so the package branch of the frontier was exercised by a stub in the new test, not by the real package. The generator's refusal runs against the real package on any box that has one; this worker did not run it there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fe-s-40/calendar-source.test.ts ARM B prints 'calendar_source() = NYSE/pandas_market_calendars' from a stub module written to a scratch folder and put first on PYTHONPATH; the stub answers valid_days from lib/trading_calendar.py's NYSE_HOLIDAYS_FALLBACK, so ARM B equalling ARM A shows the generator writes the same bytes from either branch, not that the real package agrees with the set",
+      "lib/trading_calendar.py lines 48-52 name lib/tests/test_nyse_fallback_equals_package.py as the proof that the fallback set equals the package for every covered year; it needs the package and was not run here",
+      "the generated module differs from the committed one in the header and one new field (calendarSourceClaim); MARKET_CLOSED_WEEKDAYS (170 weekdays, 2010-2027) and the calendarSource value are unchanged, and the production build is byte-equal after the change (88 files, bd6819c6...)"
+    ]
+  },
+  "spec_asserts": "Order IV-e-97 item 3: the output carries the source as a claim a reader can reject on, with the day data proven identical.",
+  "world_is": "Day data is proven identical between the active branch and the fallback set by the generator on every run, and between the two simulated branches by the test; identity with the real package is held by the frontier's own test on a box with the package.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

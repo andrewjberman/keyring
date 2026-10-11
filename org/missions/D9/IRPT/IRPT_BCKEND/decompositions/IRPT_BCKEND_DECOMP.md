@@ -2934,3 +2934,19 @@ suite exits 0 under the netguard preload; the session tests read 118 passed, 1 s
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~292. Class WORLD by the L6 floor; build only,
 no request sent, nothing deployed.
+
+## 125. ROUND 133, WORKSTREAM ~P (2026-10-11 ~14:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5082)
+
+The re-count under PRD ADDENDUM v0.35/v0.36 (IB-pr-429 AMENDMENT 2, branch wk-IRPT_BCKEND-288b @4f263f004c): UNGRADEABLE 42,967,
+ACCT_OWN_DATE 20,138, NOTHING_TO_GRADE 13,636, ACCT_PRIOR_DATE 55; 57.3 percent of 75,796 eligible account-days blank; 382 of 999
+accounts never served; OUTSIDE_ANCHOR on 34,437 account-days. The CTO ruled: the serving rule stands; a cash-flagged priced row
+outside the anchor is cash only where the source's own price is equal on the day and the prior trading day; the sixth reason is
+a refusal of the stamp; the next cell reads the anchor's coverage from what the estate already holds. No gold producer before it.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r133/p133_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-435` | the securities behind OUTSIDE_ANCHOR ranked by account-days with the half and ninety-percent counts; the cash rule counted; whether a held price store carries each security's close | FWD-3 (Cottonwood's figure on a basis somebody measured) | LOCAL | IB-pr-429 AMENDMENT 2 (its instrument, read from its branch) | P133-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~293. DIRECT-ACT (one read-only cell, LOCAL).
