@@ -5595,3 +5595,32 @@ round.** Never edit an existing row.
  "world_is": "Production keeps the strict refusal; the legacy module is exempted in conftest only. If REQUIRE_STAMPED were set False in production an unstamped manifest would mint days only; nothing in production sets it."
 }
 ```
+
+## ADVI_COTBKF-D2-S89 -- Round 59 closed; the CB-al-2 COO half is re-cut and names its widenings
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S89",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T05:49:26Z",
+ "one_line": "Round 59 (CB-bg-1) drained @6e4419bcd7 and closed by the issuer's run; the CB-al-2 COO half is re-cut on it. The mint now writes 3 objects the refused half did not cover (a sidecar holding account ids, and the two objects of method row 3), one of them by a direct put_object outside the producer; the half names both as widenings. Also on record: rows D2-S87 and D2-S88 carry a surfaced_at typed about ten minutes ahead of the clock by this seat (CTO msg 4171); they are append-only and stand as written.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer run at 6e4419bcd7: ARD-COTTONWOOD-MANIFEST-STAMP days=3325 day_hashes_equal=3325/3325 note=present sidecar_rows=1584413 method_version=3; manifest sha256 d2d99d5c4a127635170f77516b52fdfc0c163e151e39649e35569a601ce47b36 before and after the run (0 bytes changed)",
+   "same HEAD: ARD-COTTONWOOD-BOND-CHECK days=3325 rows=1691729 measured_rows=107316 measured_rows_on_bond_days=0 fixed_income_cusips=778",
+   "tests, variable unset: test_commonwealth_ard_mint_claims.py 11 passed; silver suite 792 passed, 12 skipped; IRPT_DASHBD producer tests 160 passed (run, not edited)",
+   "local sidecar sha256 589f72cca730a4fff9fd2852d58ac197aec520e888912ba76cae05542afcfcd1 equals the manifest's reasons_sidecar.sha256; rows 1584413",
+   "live read ~05:45Z of opal-data-cottonwood, first page of up to 1000: account_return_daily/ 0 keys, account_return_daily_blank_reasons/ 0 keys, dim_return_method/ 0 keys; positive control irpt/cottonwood/gold/ 245 keys",
+   "issuer read of apply_days at 384a9a4397: every target key is read before the first write; write order days, sidecar (re-hashed), method row; one LANDED line per object; no delete path"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO round-58 analysis @1c27ce4263 section 4 item 5 and msg 4170: the pair states the manifest by sha256, the method row, the bond count, the sidecar by key and sha256, the blast radius by key list and the rollback per key.",
+ "world_is": "deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R59_ARD_COTTONWOOD_MINT_COO_HALF.md states them and lists in its section 6 what it does not establish: the bucket policy, a real put on the two new keys, build() since round 58, and the deployed Lambda's packaged sources file. The sidecar's table name and partition were the round-59 worker's choice (row D2-W86-S1) and are put to the CTO half."
+}
+```
