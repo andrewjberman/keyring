@@ -70,6 +70,7 @@ Read-only: the patch, the issuer's checks under `org/missions/D8/ADVI/ADVI_FIRMB
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~9/ADVI_FIRMBKTS.TO-FB-e-6.proof_of_spec.json`.
   <criterion id="AC1" cell_refs="FB-e-6"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 bash infra/aws/lambda-edge/shared-advisor-router/run-gate.sh; echo "exit=$?"</invocation><expect>\b39 pass</expect></criterion>
   <criterion id="AC2" cell_refs="FB-e-6"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 bun "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f6.mjs" diff; echo "exit=$?"</invocation><expect>F6 DIFF: identical 193 of 193 events through handleWithMap; 193 of 193 through handler</expect></criterion>
   <criterion id="AC3" cell_refs="FB-e-6"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 bun "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f6.mjs" seam; echo "exit=$?"</invocation><expect>F6 SEAM CONTROLS: 9 of 9</expect></criterion>

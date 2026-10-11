@@ -71,6 +71,7 @@ Read-only: the pair under `org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/`, the issu
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~8/ADVI_FIRMBKTS.TO-FB-e-5.proof_of_spec.json`.
   <criterion id="AC1" cell_refs="FB-e-5"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f7.py" manifest --verify "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~8/F7_MANIFEST.tsv.gz"; echo "exit=$?"</invocation><expect>MANIFEST VERIFIED: every key placed once by address()</expect></criterion>
   <criterion id="AC2" cell_refs="FB-e-5"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 115 python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f7.py" compare --manifest "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~8/F7_MANIFEST.tsv.gz"; echo "exit=$?"</invocation><expect>COPY-COMPLETE: every manifest key present and equal</expect></criterion>
   <criterion id="AC3" cell_refs="FB-e-5"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f7.py" residue --check --dir "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~8"; echo "exit=$?"</invocation><expect>RESIDUE UNCHANGED: gold/advi/ and _campaign/ key counts equal before, after and now</expect></criterion>

@@ -80,6 +80,7 @@ Read-only: `org/tier1_exec/2.0.0_SA_COO~B1/round2/blind/LOCATIONS.json` and `r2_
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~5/ADVI_FIRMBKTS.TO-FB-e-2.proof_of_spec.json`.
   <criterion id="AC1" cell_refs="FB-e-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/tier1_exec/2.0.0_SA_COO~B1/round2/blind/r2_reader.py" --reader A; echo "exit=$?"</invocation><expect>ROUND 2 READER A: 2 of 2 arms</expect></criterion>
 </proof_of_spec>
 
