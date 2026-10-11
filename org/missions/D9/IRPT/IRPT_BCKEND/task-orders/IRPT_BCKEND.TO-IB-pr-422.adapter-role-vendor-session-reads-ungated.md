@@ -63,6 +63,27 @@ use record and then fail the credential read. The CTO ruled one release: the zip
 
 <expected_criteria>IB120-1-AC1, IB120-1-AC2, IB120-1-AC3</expected_criteria>
 
+## AMENDMENT 1 (2026-10-11 ~08:4xZ, issuer 2.0.0_SA_COO~P2, on row D2-W283-S1 and CTO msg 4509): the plan is TARGETED at the two policy addresses
+
+The worker's stop was right. The untargeted plan reads 2 adds and 1 change: `lambda.tf:62-65` makes the module depend on
+`aws_iam_role_policy.performance_approved_session`, so a pending add defers the artifact read and the function prints as an update.
+The CTO ruled (msg 4509): NO `lambda.tf` edit; the policies land first by a plan and apply TARGETED at the two addresses, then the zip
+on the full root. For this order, still PLAN ONLY:
+- Step 3's plan is `terraform plan -target=aws_iam_role_policy.performance_approved_session
+  -target=aws_iam_role_policy.performance_approved_inf_session`. It must read exactly 2 adds, 0 changes, 0 destroys, or STOP.
+- The census is of THAT plan; its `plan_command` shows both `-target` flags. It also carries `untargeted_plan:{adds, changes,
+  destroys, cause}` recording the 2 add / 1 change read and the `depends_on` cause, from the evidence already committed @d435105a39.
+- The naming limb already run on the untargeted plan (rc 0, both new names CONFORMANT) stands; record its invocation.
+- The packet's Branch A is two steps in one sitting under one ledger entry: (1) targeted plan and apply at the two addresses, exactly
+  2 adds and 0 changes, after-read each policy's one secret ARN; (2) full-root plan with a KNOWN hash, exactly 1 change, the function,
+  apply, after-read the digest equals IB-pr-421's built zip. Branch B: step 2 rolls back to digest
+  `9kYLdR64P0p2TEbDXcQu1hrpQ9KtqjPNnFDpoE/W31A=`; if step 1 landed and step 2 cannot, the two policies are removed by a targeted
+  destroy, pre-authorised by the CTO for that case only. With the policies landed and the old zip live, the old code refuses at its
+  plan check before any secret read, so the grant is unused: say so.
+The criteria are unchanged.
+
+Gate limb: GATE (viii) grades this modified order (placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. **NO `terraform apply`, no `safe-apply` in apply mode, no AWS write of any kind.**

@@ -5785,3 +5785,105 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W96-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~96",
+  "surfaced_at": "2026-10-11T08:41:08Z",
+  "one_line": "DB-b-121 Q3: hop3_real_run.py cannot read the Cottonwood returns gold. Its masters resolve to 49 Financial, and the builder refuses the Cottonwood ownership map. The DB-b-86 unblock condition 'the hop3 file present with its sha256' would be met by a 49 Financial file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (amends the DB-b-86 AMENDMENT 3 unblock condition, or cuts the Cottonwood leg of hop3 as its own order with its own never-widen pair)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_custody/advisor_client_list.py:50 MASTERS = ('08242234', '08335338'); client_report_figures.py:115 DEFAULT_MASTERS the same two; lookup() prints firm 49financial for both (this seat's run, 2026-10-11)",
+      "data/assets/scripts/gold/irpt_custody/client_report_figures.py:865 the firm of a report run is lookup(holder[account])['firm']; :667 the returns address is built from it",
+      "this seat's run: opal_naming.legacy_address('blackdiamond-platinum-cottonwood-ownership-map') -> KeyError no legacy_addresses.json row carries that key; the 49financial key -> s3://opal-data-bd/platinum/49financial/ownership_map.json",
+      "grep for cottonwood and z09 over hop3_real_run.py, advisor_client_list.py, client_report_figures.py, unkeyed_lookup.py and the two hop3 tests: 0 hits",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~96/REPORTING_READ_PER_FIRM.json"
+    ]
+  },
+  "spec_asserts": "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-86.e2a-real-statement-apply.md AMENDMENT 3 item 3 (line 95) and the mint record line 54: the laptop runs hop3_real_run.py after the Cottonwood returns gold has rows, and the first reader of that table is IRPT_DASHBD's hop3 leg under its own pair.",
+  "world_is": "hop3_real_run.py as written reads only 49 Financial (two Schwab masters, the 49financial returns gold, the 49financial ownership map). It has no Cottonwood master, and the naming builder refuses the Cottonwood ownership-map key. The count of readers of the Cottonwood returns gold is 0 today (record, section Q3).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W96-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~96",
+  "surfaced_at": "2026-10-11T08:41:08Z",
+  "one_line": "DB-b-121 Q1: the reporting publisher would refuse every Cottonwood account. publisher.build_series demands non-null income, external_flow and value, and the Cottonwood returns table writes income_received null on all 1,691,729 rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/publisher.py:165, :169, :170 call _req_num on market_value_eod, external_flow and income_received; :78-82 _req_num raises PublishRefused on a null",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py:499-501 value and flow null on exception rows, income_received None on every row",
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json: value, external_flow and income are 'never null'",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~79/ard_cottonwood_manifest.json columns_null.income_received, rows 1691729, return_basis_twr_rows 107316",
+      "INFERRED: the outcome. The publisher has not been run on this table; no object body was read"
+    ]
+  },
+  "spec_asserts": "The reporting publisher turns the firm's gold account_return_daily into the platinum series and manifest (reporting-publish/handler.py docstring; DB-b-2), and FWD-11 gives a Cottonwood account the same reporting as a 49 Financial account (IRPT_DASHBD_PRD.md:118-122).",
+  "world_is": "The Cottonwood table, as minted, carries no income and has null value and flow on blank days, so the publisher's never-null rules refuse each account; no schedule publishes for Cottonwood either (sources.json declares one custody source). The series contract and the Cottonwood table disagree on three columns.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W96-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~96",
+  "surfaced_at": "2026-10-11T08:41:08Z",
+  "one_line": "DB-b-121 Q1: the Cottonwood gold account_id is a Commonwealth custodian number, the directory mints its opaque ids from the z09 vendor key; the reporting read matches the two by minting, so a published file could still read NOT_READY. Not measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting/entry.py:241 opaque_account(firm, raw) for each account=<raw> prefix, matched to the issued opaque id",
+      "infra/aws/lambda/investor-reporting/_ids/raw_keys.json:53 the Cottonwood account raw key is fact_model_assignment.external_id (the z09 key)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-az-1.code-account-ids.md lists the Commonwealth custodian account number shapes the gold carries (none starts z09)",
+      "ard_cottonwood_manifest.json vocabulary_notes.NO_HOLDINGS_ROW: the two id forms joined on 0 of 75 neighbour days",
+      "INFERRED: no gold object body was read, so no id was compared"
+    ]
+  },
+  "spec_asserts": "The reporting read matches an issued opaque account id to a platinum account=<raw> prefix by minting each raw key with the one normalizer (entry.py module docstring).",
+  "world_is": "For Cottonwood the gold's raw key and the directory's raw key look to be two different id spaces, by the record's own join measure. Nothing in the tree maps one to the other for the reporting read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W96-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~96",
+  "surfaced_at": "2026-10-11T08:41:08Z",
+  "one_line": "DB-b-121 Q2: the order names src/pages/InvestorReporting/tabs/ReportingTab.tsx; at the portal DEV tip the file is src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/ajb_workspace/portal ls-tree -r --name-only 733986d7c6989c8be26a964344e663e7f372a213 -- src/pages/InvestorReporting/tabs lists tabs/reporting/ReportingTab.tsx and no tabs/ReportingTab.tsx",
+      "git show 733986d7c6989c8be26a964344e663e7f372a213:src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx read in full (927 lines)"
+    ]
+  },
+  "spec_asserts": "TO-DB-b-121 question 2: read the Performance tab's loader at src/pages/InvestorReporting/tabs/ReportingTab.tsx and reportingRead.ts at the DEV tip.",
+  "world_is": "The tab file is one folder deeper (tabs/reporting/). reportingRead.ts is at dashboard/reportingRead.ts. The cited basis lines use the real paths.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
