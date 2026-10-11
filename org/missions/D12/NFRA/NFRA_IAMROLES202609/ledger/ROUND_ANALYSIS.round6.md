@@ -48,5 +48,14 @@ project already applies `-target` in that module, so it carries the diagnosis:
 |---|---|---|---|
 | E4 | **READ-ONLY**: for each of the three drifts (`assets_daily_pull`, `jwt_refresher`, `rest_pull`), name the source commit that moved the package or object version, whether that code ever ran live (CodeSha256 and LastModified vs the commit date), and a deploy-or-revert recommendation with its reason; plus the three null outputs' cause | Z-S21 | a per-Lambda table, with each row's evidence read live; nothing applied |
 
+## Addendum 2 (2026-10-11 ~05:1xZ) -- E3 is no longer conditional
+
+Row 7's "Andrew's word first" is lifted by
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IAMROLES_ROW7_LAMBDA_TEST_ROLE_DELETE_20261011_Z.md`, which adopts the
+laptop CTO's YES. Nothing pins the role (never assumed, 0 functions, 0 references account-wide), and its definition is saved
+for re-creation. E3 runs under that ruling's terms.
+
+## Addendum 1 note
+
 The deploy-or-revert act that follows is NOT this round's. This seat rules it on E4's table, and it runs under its own
 never-widen pair.
