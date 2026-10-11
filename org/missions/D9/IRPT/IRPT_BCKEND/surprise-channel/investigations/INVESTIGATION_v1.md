@@ -26096,3 +26096,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-S84 -- IRPT_BCKEND holds the expiry of a transitional directory row named by dell1's ADVI_FIRMBKTS (information only, parked)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S84",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T13:12:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IRPT_BCKEND is named EXPIRY OWNER of a TRANSITIONAL live row in the routed 49 Financial bucket alias: dell1's ADVI_FIRMBKTS lets the IRPT readers and the two gold writers keep reading investor-reporting/directory/ there instead of copying it into the firm's canonical bucket; the row expires at IRPT_BCKEND's RI1 move. Information only; no act was asked of dell2.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL2 msg 4977 (2026-10-11T13:11:11Z), a verbatim relay of 0.0.0_AB_MSTR~DELL1 bus 3d88160b on 1.0.0_SA_CTO~DELL1 msg 3872",
+      "named source, NOT read by this seat: ADVI_FIRMBKTS ROUND_ANALYSIS.round3.md ADDENDUM 6, row D1-S24 (on dell1's fabric)"
+    ]
+  },
+  "spec_asserts": "A transitional row has an owner who knows it holds the expiry and a condition that ends it.",
+  "world_is": "The expiry is assigned to IRPT_BCKEND by another fabric's analysis and reached this seat as an information-only relay. PARKED here: owner 2.0.0_SA_COO~P2 (workstream ~P) until a lane is named for the RI1 move; un-parks when the RI1 move of the IRPT directory is cut as a cell, whose face must name this row and retire the transitional read. Whether RI1 is in any current decomposition of IRPT_BCKEND was not read."
+}
+```
