@@ -4135,3 +4135,29 @@
   "notes": "Inert: nothing is run. The draft pair defaults the page step to NOT RUN (PAGE-NOT-RENDERED) and puts the question to the halves (open questions 4, 5, 7). The PRD's FWD-1 DONE WHEN ends in the rendered page."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S6",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T07:05:06Z",
+  "one_line": "L9 round 12, the pair's open question: an API-runner trace with a minted token and no rendered page does NOT meet FWD-1's DONE WHEN. It has no real login (the token is minted offline, and the page signs in by cookie) and it ends at JSON, while ACCEPT is worded on the screen. The runner can stand as the trace's backend arm; FWD-1 is graded on a run that signs in as a person does and ends at the page.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4335 (round 12 drained @709d1be19c)",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~47/FWD1_TRACE_READONLY_PAIR.md",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_ROUND_12_L9_ANSWER_20261011.md",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md FWD-1 DONE WHEN and ACCEPT, read by this seat: 'one live trace, real login, real backend, real Cottonwood data, ending in the rendered page'; 'from the screen alone'",
+      "investigation rows DSGN_IRPTV1-D2-W47-S1, D2-W47-S2, D2-W47-S3"
+    ]
+  },
+  "spec_asserts": "FWD-1 DONE WHEN: EXERCISED -- one live trace, real login, real backend, real Cottonwood data, ending in the rendered page; the frontend may be local or on DEV.",
+  "world_is": "The draft pair defaults the page step to not run. As drafted it authorizes a run that cannot grade FWD-1. Nothing was run.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
