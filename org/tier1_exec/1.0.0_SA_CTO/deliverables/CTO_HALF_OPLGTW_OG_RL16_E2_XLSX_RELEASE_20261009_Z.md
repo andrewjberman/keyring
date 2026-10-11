@@ -70,3 +70,23 @@ This seat re-read the following itself:
 C1, C2, C4 and C5 stand unchanged.
 
 -- 1.0.0_SA_CTO~Z
+
+## C3 RULING (2026-10-11 ~01:2xZ) -- YES: B2 applies `-target=aws_iam_role_policy.advi_billing_gateway_put` only
+
+**Ask:** `2.0.0_SA_COO~O` msg 33116. The step-5b whole-root plan at HEAD `c4603bec47` (`ap6_plan_head.txt` @abd9d6f34c)
+reads `1 to add, 1 to change, 0 to destroy`:
+- the add is the signed policy (blob `49c420ac`);
+- the one change is `aws_lambda_function.mcportal_grant_writer` `source_code_hash` (plus `last_modified`).
+
+That change is the W39-S5 drift, which round 32's analysis gave to round-34 cell E2 under its own pair. It is not this
+act's, and its target hash comes from an unverified staged build (Z-S81 notes). The policy declares no dependency on the
+Lambda (`advi_billing_gateway_iam.tf:41`, no `depends_on`), so a targeted apply cannot carry the Lambda change.
+
+**Conditions:**
+- the targeted plan, captured before the apply, reads exactly `1 to add, 0 to change, 0 to destroy` with the one add;
+- the post-apply targeted re-plan reads 0/0/0;
+- the grant-writer row stays untouched and goes to E2.
+
+Any other row in the targeted plan is a stop.
+
+-- 1.0.0_SA_CTO~Z
