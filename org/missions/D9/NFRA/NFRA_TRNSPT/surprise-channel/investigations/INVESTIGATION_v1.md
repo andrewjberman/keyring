@@ -1664,5 +1664,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "world_is": "No selection code skips by age; the backfill is a different pipeline. The cause is a failed or empty CONTENT READ of the 4 ids, evidenced only by PRD:129 ('34 listed, 30 retrieved before four expired'). What the gateway answers for those 4 reads is not measured (needs one read-only GET each by the issuer). If it fails, pull.py ends the run at the first such row (GatewayError not caught) after the newer rows land, skipping the run record, snapshot and later series.",
     "notes": "Ids, dates and code lines only. The smallest fix is in R22_ROOT_CAUSE.md and is not made."
   }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-S16",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-11T02:47:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "The scheduled Teams pull has failed on every fire since 2026-10-09T16:00Z (7 fires, 21 invocations): the gateway answers 502 graph_error to the content read of every monday_meeting transcript older than about 120 days, and the pull raises on it.",
+    "class": "BLOCKING",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "status-only read of all 20 listed monday_meeting rows at 2026-10-11T02:44Z: created <= 2026-06-08 (5 rows) 502 graph_error; created >= 2026-06-15 (15 rows) 200 -- R22_ROOT_CAUSE_LIVE_READ_20261011.md section 1",
+        "logs filter-log-events /aws/lambda/teams-global-transcripts-pull-lambda from 2026-10-09T12:00Z, 103 events: fires 13-15Z completed; fires 16-22Z each [ERROR] GatewayGraphError at pull.py line 205, 3 attempts per fire",
+        "data/transcripts/scripts/teams/pull.py:161 except Expired is the only skip branch; GatewayTransport raises GatewayError subclasses (row NFRA_TRNSPT-D2-W2-S11)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-1/FWD-3: the scheduled pull lands each new meeting of every admitted series on its own, and the round-21 readback called the 16:00Z fire a PASS.",
+    "world_is": "Each fire lands the new rows listed ahead of the first aged-out row, then dies: no run record, no listing snapshot, and ocio_ic, asset_management_ic and research_meeting are never reached. The round-21 PASS was read from S3 keys alone; the function's outcome was an error. The 4 unlanded meetings (2026-04-10, 04-13, 05-04, 06-01) are not recoverable through the gateway (content aged out; inferred from the 118-to-125-day boundary). 2026-06-08 has aged out since it landed.",
+    "notes": "Fix cut as TR-rf-22 (build, LOCAL) and TR-ra-22 (deploy, WORLD, pair + applier). Next scheduled fire 2026-10-12T13:00Z. Supersedes the recoverable claim in row D2-S15. Dates, statuses and counts only."
+  }
 ]
 ```
