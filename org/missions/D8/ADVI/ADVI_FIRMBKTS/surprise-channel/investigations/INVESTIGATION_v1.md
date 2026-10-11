@@ -3938,3 +3938,31 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Issuer decision needed, one of: (a) a registered legacy row per tenant in legacy_addresses.json (the registry's owner is 4.0.0_SA_CRO; a READ address) that the block reads through legacy_address(); or (b) a CTO ruling on whether the gate admits the legacy platinum/<tenant>/ownership_map.json shape as an out-of-registry literal. Also observed: the safe-commit refusal printed 'files unstaged', but the channel file stayed staged in the worker index; the worker left that as it was."
 }
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~33 (FB-g-12, amendment 1 re-run)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W33-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~33",
+  "surfaced_at": "2026-10-11T13:03:15Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "AC3 (r4_scope.py) reads FAIL, 9 changed, 5 outside, because the scope check diffs the branch against the merge-base with the primary checkout (0b9b0b1c4e). The five OUTSIDE paths are the issuer's amendment commits caed07e6f0 and d5b9d4a803 on this branch (r4_grant.py, r4_modgrant.py, r4_okeys.py, r4_validator.py, the TO file). The worker's own writes since the amendment are the two code files.",
+  "spec_asserts": "TO-FB-g-12 AC3 (r4_scope.py, expect 'ROUND 4 SCOPE: OK'): the changed files are inside the order's paths, the required files are changed.",
+  "world_is": "At the worker tree: 'ROUND 4 SCOPE: FAIL 9 changed, 5 outside, 0 required missing', exit=1. The five outside paths equal the file list of git show --name-only caed07e6f0 d5b9d4a803. git diff --name-only d5b9d4a803 (the worker's writes since the amendment) lists lib/opal_naming.py and infra/aws/lambda-edge/_shared/firm-config.mjs only. The check takes no base argument, so it cannot exclude issuer commits on the branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r4_scope.py --root /c/dev/wk-firmbkts-33 output, 2026-10-11 ~13:02Z: 'ROUND 4 SCOPE: FAIL 9 changed, 5 outside, 0 required missing'",
+      "git show --name-only --format= caed07e6f0 d5b9d4a803: the five amended paths",
+      "git diff --name-only d5b9d4a803: lib/opal_naming.py, infra/aws/lambda-edge/_shared/firm-config.mjs (the worker's writes)",
+      "git merge-base HEAD <primary HEAD> = 0b9b0b1c4e, the base the check diffs against"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed by the worker: the check and the amendment commits are outside this order's paths. Issuer decision needed: the check should diff from the amendment (or exclude issuer commits), or the amendment should land on the primary checkout. The worker's AC3 result is recorded as FAIL, not re-measured against a different base."
+}
+```
