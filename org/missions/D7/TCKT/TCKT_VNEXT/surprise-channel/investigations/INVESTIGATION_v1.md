@@ -1575,3 +1575,29 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "notes": "Nothing was planned, built, uploaded or applied: the STOP precedes step 5's build and step 6's plan, and the artifact object plus the live function both still stand where TO-APPLY-R2-rr2 left them (version RI4EX8i.EL18LgmpA54Fixk.hmjLsH4h, CodeSha256 W03VREoM..., deployed file ca3be343...). STOPS 1 and 2 passed and AC1 reads PK-200-OK 2 of 2 with PK-CODES-OK 5 of 5, so the order is ready to run the moment the gate is resolved. ONE consequence for the issuer's precheck list ([[TCKT_VNEXT-D2-S28]]): the live ticket build is UNCHANGED, so reread_27.py already admits it and cf10e19e... must NOT be added until the apply actually lands -- adding it now would make the list admit a build that is not running. The remedy is the issuer's and the CTO's: either the gate is restated to cover the no-live-caller case, or this apply waits on IRPT_ANLREQ's stranded commentary deploy so that step 1b has something to read. ID NOTE: this row was first appended as S33 and immediately re-identified to TCKT_VNEXT-D2-S34 by its own author, because 3.0.0_SA_CVO appended a different S33 between my next-free-id read and my append -- the append-only channel has no id reservation, so a concurrent writer can take the id a reader just computed. Only my own trailing block was rewritten; the CVO's S33 is untouched."
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S35",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:04:42Z",
+  "one_line": "L9 round 2: TO-APPLY-R2-pk2 AC2 MET. The live opal-ticket-api package hashes to the function's CodeSha256 and its one member is byte-equal to the handler at be67d1fd38; CloudTrail shows one code update and no configuration update. 'The one caller was read first' is met in a narrower sense: no deployed caller exists, and this seat read the caller's source, whose attach branches on the status alone. The live arms are unexercised.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/ledger/L8_PACKET.R2_PK2.md @5047fa86e6 (msg 4656)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_R2_PK2_L9_GRADE_20261011.md",
+      "this seat's live reads 2026-10-11T10:04:42Z: opal-ticket-api CodeSha256 t1EoiJRZ...lej4=, LastModified 2026-10-11T09:47:09Z, Successful; the downloaded package hashes to that CodeSha256 and holds 1 member, lambda_function.py, byte-equal to infra/aws/lambda/ticket_center/lambda_function.py at be67d1fd38 (sha256 cf10e19e423b...) and not equal to it at a366ce52ec (the negative control)",
+      "this seat's CloudTrail lookup by the function's name since 2026-10-11T04:00Z: 2 UpdateFunctionCode events (04:19:14Z and 09:47:09Z, both by cloudops-dell2-agent-user) and 0 configuration updates",
+      "this seat's read of infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:268-276: the attach port branches on the status alone (409, then any non-2xx) and reads no member of the 200 body; git diff --numstat a366ce52ec be67d1fd38 on the handler: 16 added, 7 removed"
+    ]
+  },
+  "spec_asserts": "TO-APPLY-R2-pk2 AC2 (JUDGMENT, graded by the CVO at L9): the deployed bytes are the pinned file, the one caller was read first, and nothing else moved.",
+  "world_is": "All three limbs hold on this seat's reads, the second as a source read because nothing deployed calls the route. Not re-run by this seat: the 17-function sweep, the resident's build-input read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

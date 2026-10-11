@@ -1204,3 +1204,17 @@ The build's shape (one reporting-read function per firm, or one map) is the CTO'
 hop3 file; the Cottonwood returns gold it waited on was minted by ADVI_COTBKF on 2026-10-11.
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~96`, cut from box/dell2.
+
+
+## 68. ROUND 66, WORKSTREAM B (2026-10-11 ~10:0xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ruling msg 4634)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-122` | FWD-11: method row 3 states income ABSENT by design with its reason (the positions-based method does not separate income); row 2 unchanged and a test shows it; contract 0.6.0; rule-24 record first; the never-widen packet for rewriting the one served object (Cottonwood dim_return_method, method_version=3) -- no S3 write in this cell | LOCAL | DB-b-120 | B66-1 |
+
+The rewrite of the served object is a LATER act under a signed pair (COO half and CTO half on the packet this cell writes), verified by
+2.0.0_SA_COO~C2's read-back; it is not cut here. The R45 gold release is built from its four source-map PINS, so this cell's change to the
+producer on trunk does not move that release or its signed packet. FWD-11 for the reporting read stays parked
+(`deliverables/2.0.0_SA_COO~D2/FWD11_REPORTING_READ_PARKED_20261011.md`).
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~97`, cut from box/dell2.
