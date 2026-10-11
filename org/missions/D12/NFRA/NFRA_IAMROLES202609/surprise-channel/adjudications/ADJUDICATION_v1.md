@@ -1330,3 +1330,81 @@ undispositioned round-7 rows (Z-S38 to Z-S42) are dispositioned at C-S40 and C-S
 ```
 
 -- 3.0.0_SA_CVO~Z
+
+---
+
+## ROUND 8 -- L8 + L9 (C-S42 to C-S44)
+
+**By:** `3.0.0_SA_CVO~Z`, 2026-10-11 ~18:3xZ, on `2.0.0_SA_COO~ZI` msg 33354 (`ledger/COMPLETION_REPORT.round8.json @be0536cad9`; 2 of 2
+terminal, proofs VALID). The slug is `remediations/REMEDIATION_v8.Z.md`.
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S42",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T18:30Z",
+    "one_line": "L9 grade, TO-IAM-y-1 AC4 (judgment): FAIL, narrow -- the recorded check reads sound from any tree today, but its fallback limb counts only files named '2026*.md', so from 2027-01-01 a waiting message reads unread=0 and the check reads CLEAN.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-y-1 AC4: can the recorded check still read CLEAN when mail is waiting, from any tree?",
+    "world_is": "/cloud-ops 18a, read whole at HEAD. LIMB (a), get_delivery_state(<lane serial>) with no since, returns the NEWEST 50 rows first (this seat's call at ~18:2xZ listed 33354 at the top), so a waiting message surfaces, and it does not depend on a checkout. Sound from any tree; the residual is more than 50 newer messages arriving after an unread one. LIMB (b) resolves ROOT through --git-common-dir, which is correct from a linked worktree, and treats a missing path as an ERROR, so Z-S42's defect 1 is closed. But its unread count is find -name '2026*.md'. This seat planted one '20270104T090000Z_...md' beside the two state dotfiles in a temp inbox: 'unread=0 state_markers=3'. That is the SAME line this seat's real, empty inbox prints right now (unread=0 state_markers=3), so the two cannot be told apart, and from 2027-01-01 the fallback reads CLEAN with mail waiting. The grammar form find -name '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]T*.md' counts the planted message (unread=1). One token fixes it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".claude/skills/cloud-ops/SKILL.md section 18a (lines 111-160) at HEAD",
+        "get_delivery_state(3.0.0_SA_CVO~Z) with no since: newest first (33354 top), 50 rows",
+        "temp-dir plant: .unread-deliveries, .watcher.owner and 20270104T090000Z_2.0.0_SA_COO_X_test.md -> as written unread=0 state_markers=3; grammar form unread=1",
+        "the live inbox org/mcp/inbox/3.0.0_SA_CVO/~Z as written: unread=0 state_markers=3"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S43",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T18:30Z",
+    "one_line": "L9 grade, TO-IAM-y-2 AC4 (judgment): PASS -- each non-empty class carries a control, the empty FOREIGN class is stated as uncontrolled, and nothing can hide behind UNRESOLVED (0 rows). This seat exercised the missing 403 arm: two foreign names read 403, and all 7 ABSENT names read 404 live.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-y-2 AC4: does each class carry a control, and could an ABSENT or FOREIGN name be hiding behind an UNRESOLVED row?",
+    "world_is": "DEAD_BUCKET_SWEEP.md: 41 concrete Allow names over 393 principals and 651 documents (3 wildcard names counted, not classified; 2 Deny-only names excluded and stated). The classes are 7 ABSENT, 34 OURS, 0 FOREIGN, 0 UNRESOLVED. Controls: ABSENT is opal-data-smartx, independently absent in round 7. OURS is cross-checked against list-buckets (0 OURS outside our list, 0 ABSENT inside it). FOREIGN is EMPTY, which the sweep says plainly is the one verdict it could not corroborate. This seat closed that arm: s3api head-bucket on 'test' and 'examplebucket' reads 403, so the instrument separates a foreign name from an absent one. All 7 ABSENT names re-read 404 now (ajb-workflow, opal-data-portal-s3, opal-data-schwab, opal-data-smartx, opal-data-smartx-v2, opal-market-data-v2, opal-market-update). With UNRESOLVED at 0 and OURS bounded by our own list, a FOREIGN name could only hide as a misread ABSENT, and the 403 control shows it would not be.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.7.0_AE_CloudOps~IR/round8/DEAD_BUCKET_SWEEP.md sections 2-5 @4aaba2fa6a",
+        "aws s3api head-bucket at ~18:2xZ: the 7 ABSENT names 404; 'test' 403, 'examplebucket' 403; opal-data-portal-v2 200 (own control)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-y-2 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S44",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T18:30Z",
+    "one_line": "Round 8 L8: Z-S43 GRADUATES -- opal-market-data-v2 is an Andrew-ruled tombstone (deleted 2026-07-30), but its Terraform declaration and one live Allow (write) still stand; the declaration's removal is open TF-debt A7.",
+    "class": "OBSERVATION",
+    "spec_asserts": "A standing defect leaves the round as an owned remediation row.",
+    "world_is": "Z-S43 (0.7.0_AE_CloudOps~IR): tombstones.json carries opal-market-data-v2, deleted 2026-07-30, verified_absent, declaration_removed 'NOT YET'. The sweep shows it still named in one live Allow with write; this seat's head-bucket reads 404. The other five tombstoned buckets had their grants cleaned up, so this one is the outlier.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S43"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "investigation row Z-S43",
+        "DEAD_BUCKET_SWEEP.md section 4",
+        "head-bucket opal-market-data-v2: 404 at ~18:2xZ"
+      ]
+    },
+    "disposition": "GRADUATED"
+  }
+]
+```
+
+-- 3.0.0_SA_CVO~Z
