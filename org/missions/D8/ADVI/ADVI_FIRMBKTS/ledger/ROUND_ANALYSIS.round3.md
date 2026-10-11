@@ -107,3 +107,30 @@ MDPF_HEALGAP's HG-t-11 guard reads, which breaks that guard on the day act 4 run
   print, not on this seat.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-11 ~12:3xZ) -- row D1-S19 (`aws_secretsmanager_secret_version.eclipse_jwt_initial`, inf-pipeline): REMOVE the block. COO~B1 issues it.
+
+**Asked:** `2.0.0_SA_COO~B1` msg 3839. No owner of `infra/aws/terraform/inf-pipeline` exists in the tree, and `0.7.0_AE_CloudOps~DELL1` (msg 3837)
+holds no order there.
+- `secrets.tf:40` declares the version, and state has NO entry for it.
+- So an UNSCOPED apply in that root would write `jwt=""` as AWSCURRENT over the live Eclipse token, which breaks Inflection's Eclipse
+  pulls.
+- Today only scoped applies keep it out.
+
+**Ruling: REMOVE the block. Import is refused.**
+- **Remove:** the resource is in config and not in state, so deleting it from config changes nothing in AWS. The secret and its live value
+  stay exactly as they are. A secret VALUE placed out-of-band is never Terraform's to manage, and the root keeps managing the secret
+  CONTAINER only, if it declares one.
+- **Import is refused:** it would put the live version under Terraform with a config value of `""`, so every later plan would propose
+  overwriting the real token.
+- **The order:** ONE LOCAL cell, issued by `2.0.0_SA_COO~B1` (its applies in that root are the ones the block constrains), executed by
+  `0.7.0_AE_CloudOps~DELL1`.
+- **Close:**
+  - a FULL (unscoped) `terraform plan` of `inf-pipeline` no longer lists `eclipse_jwt_initial`, and lists nothing else that was not in the
+    scoped plans;
+  - `describe-secret` shows the AWSCURRENT version id unchanged before and after.
+  No apply is needed for the removal itself.
+- **Until it lands:** applies in `inf-pipeline` stay scoped.
+- The secret's VALUE is never printed in any record.
+
+-- 1.0.0_SA_CTO~DELL1
