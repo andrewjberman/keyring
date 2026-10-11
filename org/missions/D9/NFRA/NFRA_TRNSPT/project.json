@@ -5,7 +5,7 @@
   "fabric": "dell2",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "ROUND_CLOSE",
   "created": "2026-09-30",
   "registered_under_tree": "2026-09-30",
   "placement": "DELL2",
@@ -41,7 +41,7 @@
   },
   "blocking": "2026-10-01T11:15Z (1.0.0_SA_CTO, rulings batch 82): UN-PARKED. Site Z reports the gateway mail route live since 10:43:56Z (relay 0.0.0_AB_MSTR 103704; not exercised on the laptop). The ONE round of the round-2 analysis is owed, taken by 2.0.0_SA_COO~D in FAST mode while its Investor Reporting items wait on other lanes; 2.0.0_SA_COO~T is dark. First read of the round: whether site Z's 582,728-byte PDF is the admitted message this row names at 585,757 bytes. || EARLIER: Round 2 EXECUTING. FWD-7's real row needs a byte-exact recording of one admitted message (identified: Manav 2026-08-11, PDF 585,757 bytes); FWD-1 hops 1-2 wait on site Z (transcript tools + headless route, accepted 103276); the slicer's real replay waits on IRPT_BCKEND's READY hook (S18).",
   "fabric_ruling": "laptop: Andrew-direct 2026-09-30 (\"This fabric will own TRNSPT\"); D9 is LAPTOP as a whole since 2026-09-10 (DIRECTIVES.yaml), so no per-project exception exists or is needed. The gateway project NFRA_OPLGTW stays on site Z as a dependency.",
-  "phase": "Round 22 ISSUED 2026-10-09 by 2.0.0_SA_COO~T2 (dell2) on CTO ADDENDUM 13: TR-c22 FWD-3 fetchable-vs-landed census (worker, LOCAL) + its live run (issuer); TR-n22 new meeting types' first landings (event reads); TR-f22 FWD-9 on t1. Carried: FWD-6 parked (site Z OG-ab-2), FWD-8 admitted read (site Z), Andrew's Monday read (FWD-1+5), research grant, named past meeting.",
-  "last_updated": "2026-10-08",
+  "phase": "Round 22 CLOSED-AT-DRAIN 2026-10-11 by 2.0.0_SA_COO~T2 (dell2): the scheduled Teams pull had failed every fire since 2026-10-09T16:00Z (the gateway refuses content older than about 120 days; the pull raised on it). Fixed (TR-rf22, TR-rl22), deployed to the Teams pull function only (TO-APPLY-ra22, pair complete) and driven clean: 4 series, run record written, 1 ocio_ic transcript landed. 4 Monday meetings (2026-04-10, 04-13, 05-04, 06-01) ABSENT. The round-21 scheduled-landing PASS is withdrawn. Open: the Monday 2026-10-12 13:00Z scheduled fire (read from run.json); research_meeting listing refused, SharePoint folder link owed by Andrew; FWD-1/2/3 graded at the analysis.",
+  "last_updated": "2026-10-11",
   "placement_ruling": "DELL2 on Andrew-direct 2026-10-07 ~13:4xZ at the 4.0.0_SA_CRO terminal: 'I would like for whatever device is handling the YCDGEN workstreams to also take on NFRA_TRNSPT' (record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261007_134xZ_NFRA_TRNSPT_TO_THE_BOX_HOLDING_IRPT_YCDGEN_DELL2.md); IRPT_YCDGEN's placement reads DELL2. Was SITEZ under the four-box layout of ~01:0xZ, and LAPTOP before. The project is between rounds (17 of 17 orders complete), so the move is at a round boundary. Placed by 1.0.0_SA_CTO on 4.0.0_SA_CRO's analysis @9887bfc595."
 }

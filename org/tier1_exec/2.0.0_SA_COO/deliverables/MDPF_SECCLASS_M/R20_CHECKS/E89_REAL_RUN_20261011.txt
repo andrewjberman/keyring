@@ -1,0 +1,128 @@
+CROSSBOX-DEPLOY-CHECK device=dell1 (AGENTBUS_DEVICE=dell1 (process environment)) root=data/black_diamond targets=0 files=3 now=2026-10-11T04:01:13Z serial=2.0.0_SA_COO~M1
+OPEN-CALL: clear
+  files mode: a call or row hits only if it names one of the 3 carried file(s) or a project covering one, not the shared root
+  org/devices/crossbox/XB-20261008T203134Z-a3f0.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T042421Z-897f.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T042736Z-eb6d.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T052023Z-bf16.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T054219Z-fbb0.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T054248Z-aff1.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T054315Z-f12c.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T054600Z-3bf7.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T054601Z-99e4.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T060524Z-7b40.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T063322Z-fda4.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T073627Z-d88b.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T075001Z-6a34.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T075001Z-fc8b.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T075017Z-68ae.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T075018Z-cf96.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T075056Z-abf4.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T075133Z-9bec.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T084334Z-101d.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T090208Z-c071.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T090208Z-c4e7.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T090909Z-a28e.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T092601Z-cb23.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T093642Z-9ec5.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T094814Z-3eb7.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T094932Z-e176.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T100730Z-a3db.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T101310Z-51a0.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T105147Z-ac80.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T105156Z-1c53.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T110410Z-adcf.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T113054Z-9452.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T114242Z-c9ce.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T125323Z-c442.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T131421Z-cfce.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T132014Z-ebb9.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T133033Z-7a23.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T140758Z-6151.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T141705Z-b0d1.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T143530Z-4849.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T145753Z-977e.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T150208Z-7534.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T150208Z-dcce.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T150554Z-2fd7.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T152001Z-00c3.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T152001Z-db6a.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T152158Z-cae7.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T163036Z-d84f.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T165641Z-1f87.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T165905Z-c46b.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T172645Z-2ed2.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T173811Z-4315.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T175102Z-f170.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T180040Z-a009.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T180350Z-0655.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T181651Z-b4e2.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T183312Z-e563.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T183422Z-7f48.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T184023Z-ffaf.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T184024Z-13a1.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T192607Z-5772.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T192626Z-2921.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T202047Z-8c6d.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T205724Z-7dd9.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261010T222733Z-73c5.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261010T225240Z-dcb5.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T022524Z-5e9a.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T030021Z-b98e.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T032959Z-ea7f.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T033014Z-ae79.json: live (state OPEN) but does not name the root or its projects
+  org/devices/state/dell1/open_calls.json: device=dell1 written_by=1.0.0_SA_CTO~DELL1 age 0h24m rows=32
+  org/devices/state/dell2/open_calls.json: device=dell2 written_by=1.0.0_SA_CTO~DELL2 age 54h13m rows=6
+  org/devices/state/sitez/open_calls.json: device=sitez written_by=1.0.0_SA_CTO~Z age 0h55m rows=31
+OVERLAP: clear
+  files mode: 3 file(s) carried (the list the caller passed)
+  no live project's write set shares a path with the 3 carried file(s) (placement-check read_projects/overlaps)
+UPSET: clear
+  notice opal-assets-cot-rebalancer-until-20261008T0620Z EXPIRED at 2026-10-08T06:20:00Z (now 2026-10-11T04:01:13Z) -- ignored
+OPEN-DEPLOY: hit (4)
+  files mode: a sentinel hits only if it names one of the 3 carried file(s), not the shared root
+  worktree C:/dev/ajb_workspace: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/b1-fb-r2: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/coo_m1_r20: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/cvo_probe_lgic_r23: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/cvo_secclass_r9: 17 file(s) at HEAD, 16 sentinel(s) read
+  worktree C:/dev/wk-canon-9: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-10: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-4: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-5: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-6: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-7: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-8: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-9: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-resapp-351: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-resapp-352: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-resapp-353: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-secclass-42: 17 file(s) at HEAD, 16 sentinel(s) read
+  worktree C:/dev/wk-secclass-44: 17 file(s) at HEAD, 16 sentinel(s) read
+  worktree C:/dev/wk-secclass-47: 17 file(s) at HEAD, 16 sentinel(s) read
+  worktree C:/dev/wk-secclass-48: 17 file(s) at HEAD, 16 sentinel(s) read
+  worktree C:/dev/wk-secclass-54: 17 file(s) at HEAD, 16 sentinel(s) read
+  worktree C:/dev/wk-secclass-r20-78: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-secclass-r8-27: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-secclass-r9-34: 17 file(s) at HEAD, 16 sentinel(s) read
+  worktree C:/dev/wk-secclass-r9-38: 17 file(s) at HEAD, 16 sentinel(s) read
+  worktree C:/dev/wk_healgap_r3_10: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk_healgap_r3_7: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk_healgap_r3_8: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk_healgap_r3_9: 19 file(s) at HEAD, 18 sentinel(s) read
+  HIT worktree C:/dev/wt-q1-r7: ls-tree rc=128 (not readable, not clear)
+  worktree C:/tmp/mm4-ac1: 29 file(s) at HEAD, 28 sentinel(s) read
+  worktree C:/Users/Test/AppData/Local/Temp/smcont_ezapql3c/a: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/Users/Test/AppData/Local/Temp/smcont_ezapql3c/b: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/Users/Test/AppData/Local/Temp/smcont_ezapql3c/c: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/a: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/b: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/c: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/d: 19 file(s) at HEAD, 18 sentinel(s) read
+  HIT open deploy cot-cash-admission-m-20260925 (author 2.0.0_SA_COO~M, status HELD-SOVEREIGN-GATED, opened 2026-09-25T23:43:45.260517+00:00) names a carried file (token C_06.client_mix_timeseries.py)
+  HIT open deploy secclass-e60-d04-unclassified-sc1-20261009 (author 0.7.0_AE_CloudOps~SC1, status HELD-SOVEREIGN-GATED, opened 2026-10-09T07:05:39.340131+00:00) names a carried file (token data/black_diamond/scripts/gold/D_04.client_portal_summary.py)
+  HIT open deploy secclass-e84-cot-name-port-sc1-20261009 (author 0.7.0_AE_CloudOps~SC1, status HELD-SOVEREIGN-GATED, opened 2026-10-09T11:56:48.165579+00:00) names a carried file (token C_06.client_mix_timeseries.py)
+  denominator: 38 worktree(s), 665 sentinel read(s), 68 distinct (path, blob), 53 distinct slug(s), vanished=0
+STOP: 4 hit(s) in OPEN-DEPLOY -- first: OPEN-DEPLOY: worktree C:/dev/wt-q1-r7: ls-tree rc=128 (not readable, not clear)
+ROUTE: do not deploy this on the strength of this box alone; raise a cross-box call to the box that owns the work (cell CT-s-6's tool), or wait for the notice to expire.
+CROSSBOX-DEPLOY device=dell1 root=black_diamond open_call=clear overlap=clear upset=clear open_deploy=hit verdict=STOP

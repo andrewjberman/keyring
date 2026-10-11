@@ -98,3 +98,4 @@ The `<status>` flip is the issuer's. Your next order on this slot is `AMGT-nn-3`
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- issuer close 2026-10-11T04:1xZ (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-351 @237699a1be, proof instance VALID (worker run); issuer re-run in the worktree: AC1 R89 PEER IDENTITY YES (7 of 7 resolvable members served MEASURED, 12 members, I2 and I3 PASS), AC2 + AC3 106 passed. Merged with AMGT-nn-3 at the chain end.</status>

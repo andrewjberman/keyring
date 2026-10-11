@@ -1139,3 +1139,14 @@ A producer or contract edit, if the record calls for one, is a later cell cut af
 The refreshed R45 packet (DB-b-113) stays UNSIGNED: it is refreshed once more at the handler's new bytes after this cell drains.
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~90` (worker-light), cut from box/dell2.
+
+
+## 62. ROUND 60, WORKSTREAM B (2026-10-11 ~04:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ruling msg 4036, row IRPT_DASHBD-D2-W89-S1)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-116` | FWD-11: one measurement -- every field of the written dim row 3 (income basis included) read against the Cottonwood adapter, verdict ROW3_TRUE or ROW3_FALSE; the dim row 3 partition read at the builder address with a positive control (ADVI_COTBKF's mint waits on it) | LOCAL | DB-b-114 | B60-1 |
+
+True: the stamp is method_version 3. False: a new method row is proposed under rule 24 in a later cell.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~91` (worker-light), cut from box/dell2.

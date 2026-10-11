@@ -1040,3 +1040,29 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "notes": "Read from the tree, not exercised. Bears on cell R2-tr-1's oracle and on whether round 2 needs a page cell; with the CTO."
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W11-S1",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~11",
+  "surfaced_at": "2026-10-11T04:06:53Z",
+  "one_line": "The analysis-report read has no typed 'not generated yet' result; the ticket's waiting state is mapped from IrRequestError (reason code NOT_READY or NOT_FOUND, or transport 404), which the tree does not prove the deployed sections route emits for an ungenerated report.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/OwnedRequestHistory.tsx:59-64 readOwnedSections -> api.getOwnedAnalysisReport (called at :334); on ANY throw the page sets reportError and says 'Report sections are not available' -- it does not distinguish not-ready",
+      "portal/src/api/endpoints/investor-reporting.ts:1091-1098 getOwnedAnalysisReport; :970-1041 send() raises IrRequestError(publicReasonCode) for a refused envelope or IrRequestError(httpStatus) for a transport failure; no dedicated not-ready class",
+      "portal/src/pages/InvestorReporting/render/Page.tsx:108 CONTRACT_NAMED_REASON_CODES names NOT_READY and NOT_FOUND",
+      "portal/src/pages/TicketCenter/analysisRequest.ts isReportNotReady (this worker's commit e4b9f8966c on wk-TCKT_VNEXT-11-portal); tests use IrRequestError built with those codes; tree read and unit-tested, not exercised against the deployed route (LOCAL: no AWS or live API call)"
+    ]
+  },
+  "spec_asserts": "Cell R2-pg-1 item 2: a report not yet generated is a stated waiting state, read from how the chosen read reports 'no report yet'.",
+  "world_is": "The chosen read reports it only as a generic IrRequestError. The worker treated public reason code NOT_READY / NOT_FOUND or http 404 as the waiting state and every other failure as an error. If the deployed analysis/{jobId}/sections route answers an ungenerated report with another code or status (for example 409), the ticket shows an error banner instead of the waiting message. Also: OpenedReport in AnalysisRequestParts.tsx (outside this order's paths) is now unused; the panel is OpenedReportPanel in TicketCenter.tsx.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Also: bunx is absent on this box; tsc was run as 'bun x tsc -b'."
+}
+```
