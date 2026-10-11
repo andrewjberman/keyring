@@ -7,9 +7,10 @@
 **Task Order:** `NFRA_IAMROLES202609.TO-IAM-w-1` (PHASE B, now `complete`),
 `NFRA_IAMROLES202609.TO-IAM-w-2` (PHASE A + step 1a) and `NFRA_IAMROLES202609.TO-IAM-w-3` (PHASE A) --
 the last two stopped at step 3 as their orders direct
-**Status:** w-1 PHASE B COMPLETE, applied and verified live. w-2 and w-3 PHASE A delivered in full.
-**w-2 PHASE B STOPPED AT STEP 5 WITH NOTHING APPLIED** -- a different naming limb refuses it and the
-audited override cannot reach it (`Z-S34`); its ledger entry is HELD-PRE-APPLY on that named gate.
+**Status:** **w-1 and w-3 PHASE B COMPLETE** -- three roles adopted across three modules, all applied and
+verified live. w-2 PHASE A delivered in full; **w-2 PHASE B STOPPED AT STEP 5 WITH NOTHING APPLIED**, a
+different naming limb refuses it and the audited override cannot reach it (`Z-S34`), ledger HELD-PRE-APPLY
+on that named gate pending a sovereign R20 call.
 
 **Lane:** `0.7.0_AE_CloudOps~IR` (no `~IR` agent folder exists; filed under the base folder with the
 lane in the title, per `/log` Step 0)
@@ -137,6 +138,32 @@ no live `zz_adopt_family_a.tf`. The module plans `No changes`.
 AFTER the apply and left a live IAM role planned for destruction. A4-r6 put the commit before the import,
 so this time the identical gate behaviour cost nothing at all.
 
+### w-3 PHASE B -- two modules, two applies, the round's cleanest cell
+
+A7-r6 @`7c213215bd` released the "w-2 lands first" condition IN PLACE in the COO half and `1.0.0_SA_CTO~Z`
+struck it in the CTO half, on the ground that the two acts write different modules with separate state keys
+and zero pre-existing drift. So w-3 landed while w-2 stayed held.
+
+| Step | Act | Result |
+|---|---|---|
+| 0 | Both halves read at HEAD; both sequencing releases verified in place, not taken on the GO's word | COO @`9586e0106b`, CTO @`8453026444` |
+| 0 | Preconditions measured | 0 open entries matching `portfolio\|news\|family-e` over 34 listed; both roles `Tags []`; row 11 **1 attached managed**, row 3 codebuild trust |
+| 4 | **TWO** ledger entries opened, one per module, 3 legs each | each module's own stop condition is its middle leg: MANAGED / TRUST |
+| 5 | Both renames committed FIRST, pure R100, placement override, **no author override** | `1df69456eb`; 4 rows OVERRIDDEN, WARN 4 graded |
+| 5 | Two targeted plans saved, then graded per attribute | 1 `resource_change` / 1 non-no-op / 1 attribute each; **0 other addresses** |
+| 5 | **The sharp check: each module's tags against its OWN provider block** | **3 keys** for portfolio-management with `System` confirmed ABSENT; **4** for news-pipeline |
+| 5 | Two applies of the saved plans | `1 imported, 0 added, 1 changed, 0 destroyed` each |
+| 5 | **Stop conditions, read LIVE** | row 11: `AWSLambdaBasicExecutionRole` **still attached**; row 3: trust still `codebuild.amazonaws.com`, description still absent |
+| 5 | Drain in the SAME session (A4-r6) | `763f3934c9` |
+| 5 | **Required post-drain untargeted plans in the SHARED tree** | **"No changes" in BOTH modules** -- the Z-S27 window never opened |
+| 6 | `POST_APPLY_family_e.md`, both ledgers closed, proof VALID rc=0 first pass | `8cf6951908`, `fc8da02312` |
+
+**Why this was the round's easy cell, which is the instructive part:** all three mechanisms that cost w-1
+and w-2 real trouble had been fixed by the time it ran -- the ordering (A4-r6, after w-1 left a live role
+planned for destruction), the override's own lane (`b7c27ef5b0`, after it refused the commit it had just
+authorised), and the override's scope (A5-r6 dropping the stacked author override). The work left was
+grading two modules without letting either one's numbers contaminate the other.
+
 ---
 
 ## Postmortem -- I proved the apply was safe and did not prove the commit was possible
@@ -188,6 +215,11 @@ before touching AWS; it costs one command and it is the whole of the fix.
 | Keep section 4 of the Family A survey -- the full record of why the module could not plan -- after the fix landed | A survey showing only the working plan would hide that `bd-pipeline` was unplannable for nine days, which is the evidence behind `Z-S29` and the reason step 1a exists. |
 | Do NOT fix the five pre-existing `terraform fmt` failures I found in three modules | Outside the orders' `<paths>`, and formatting unrelated files is a rider on a WORLD cell. Surfaced in both surveys instead, with the note that a later module-wide `fmt -check` will fail on them and the adoption will not be the cause. |
 | Chase comp-tagauthz's ADVISORY instance rather than dismissing it as another empty-denominator pass | Family B's collision was answerable by scope alone; this one named a LIVE instance whose tag authorizes `ec2:StartInstances` and said this tree's `default_tags` would overwrite it. The tool states its own limit, so the question had to be measured: 0 of bd-pipeline's 7 managed instances, with a positive control reading 1, later corroborated by the tool's own GATE-mode denominator. |
+| Build the w-3 tag check as an EQUALITY TEST against a per-module expected dict, not an eyeball of the printed keys | The two modules write 3 and 4 keys. Families A and B both wrote four, so four is the number I arrived with, and a glance at module 1's output would have read "looks right" against the wrong target. The script compared each module's `tags_all` to a dict written from THAT module's provider block and separately asserted `System` absent from module 1. |
+| Open TWO ledger entries for w-3 rather than one covering both modules | The cell says "one per module" and AC3 expects `closed=` 2 or more. One entry would have made a single close cover two independent applies, so a half-landed second module would have read as fully closed. |
+| Record that AC3's `closed=` limb cannot prove closure, rather than quoting `closed=2` as if it did | `deploy_ledger.py open` writes the completion file at OPEN time, so the limb read 2 before either apply. Noticing that cost one read of the count at the wrong moment; not noticing it would have put a false corroboration in the proof instance. w-1's AC3 had the mirror-image defect and the same treatment. |
+| File `Z-S35` against myself in the channel, rather than leaving the probe error in a commit message | The ambiguity that caused it is in MY OWN row `Z-S27`'s prescription, which w-3 PHASE B then had to follow. A lesson that lives only in a revert message is not available to the next cell that reads the row. |
+| Release the hold on w-2 rather than close-and-reopen, when `Z-S34` clears | The entry was opened before the act, as NEVER-2 requires, and nothing was applied. Closing it NOT-APPLIED and opening a fresh one would lose the fact that the act was authorised, prepared and stopped at a named gate. |
 
 ---
 
@@ -299,21 +331,28 @@ Written for a reader with zero prior context.
   daily platinum keys). Both FAILed before the edit, so they discriminate rather than always passing.
   The guard's own plan delta is ZERO, which is what confirms ~MI's premise that nothing consumes those
   locals. **The YAML was NOT touched** -- the remedy was ruled to be the guard, not the data.
-- **Four inert declarations now sit in four modules**, none of them live: `zz_adopt_family_b.tf` is the
-  only one renamed (w-1, applied), while `bd-pipeline/zz_adopt_family_a.tf.proposed`,
-  `portfolio-management/zz_adopt_family_e.tf.proposed` and `news-pipeline/zz_adopt_row3.tf.proposed`
-  wait for their pairs. Every `.tf` copy used for a plan run was removed and none was committed.
+- **THREE declarations are live and ONE is still inert:** `smartx-pipeline/zz_adopt_family_b.tf`,
+  `portfolio-management/zz_adopt_family_e.tf` and `news-pipeline/zz_adopt_row3.tf` are applied;
+  `bd-pipeline/zz_adopt_family_a.tf.proposed` stays inert, waiting on `Z-S34`. Every `.tf` copy used for a
+  PHASE A plan run was removed and none was committed.
 - **Worktree `C:/tmp/iam-w1b`** holds branch `wk-iamroles-r6-w2-1a` and a completed `terraform init` for
   ALL FOUR modules (`smartx-pipeline`, `bd-pipeline`, `portfolio-management`, `news-pipeline`). Its
   sparse cone is `.tools`, `infra`, `lib`, `org` and `data/black_diamond/scripts/gold` -- the last few
   added one at a time as gates and then the module itself demanded paths outside the cone. Keeping it
   saves four inits; nothing is lost if it is removed, since every branch is drained.
-- **The only live change this session made anywhere is w-1's:** one role imported, four tags added. The
-  three PHASE A cells applied nothing by construction, and **w-2 PHASE B applied nothing because it was
-  refused at the commit, before AWS** -- `bd-pipeline` state holds 0 of its 2 roles against a positive
-  control of 17 `aws_iam_role` entries, and both roles still read `Tags []`. No other tag, policy, trust
-  relationship, instance or Lambda moved in any module.
-- **One ledger entry is deliberately HELD, not open and not closed:** `iamroles-r6-family-a`,
+- **THREE roles are now in code, across three modules, and that is the whole of what this session changed
+  in the world:** `opal-smartx-lambda-role` (4 tags), `portfolio-management-lambda-role` (**3** tags, no
+  `System` key) and `codebuild-semantic-clustering-role` (4 tags incl. `System=NewsPipeline`). Each was
+  imported into its module's state and each carries exactly its module's `default_tags` set, where all
+  three carried zero before. **No permission moved anywhere:** every role's policies, trust, path,
+  description, max session and boundary are identical to the pre-act reads, and row 11's attached
+  `AWSLambdaBasicExecutionRole` -- the one managed attachment in the program -- survived its import.
+- **w-2's two roles are UNTOUCHED.** PHASE B applied nothing because it was refused at the commit, before
+  AWS: `bd-pipeline` state holds 0 of its 2 roles against a positive control of 17 `aws_iam_role` entries,
+  and both roles still read `Tags []`. No instance or Lambda moved in any module.
+- **Four ledger entries, three CLOSED and one deliberately HELD** -- `iamroles-r6-family-b` (w-1) and
+  `iamroles-r6-family-e-portfolio-management` / `-news-pipeline` (w-3) are closed with all legs proven;
+  `iamroles-r6-family-a` is HELD, not open and not closed:
   HELD-PRE-APPLY on the `Z-S34` gate (`47955fd728`, verified at HEAD rather than on the working tree,
   because my first hold wrote the file and was then discarded by a revert before it was ever committed --
   the tool's OK line described a change that no longer existed). `iamroles-r6-family-b` is CLOSED. Nothing
@@ -321,8 +360,9 @@ Written for a reader with zero prior context.
 - Lane LIVE, PID 30260, registered, one inbox watcher (re-armed at each 30-minute expiry, same turn, one
   call -- four arms this session). **Zero crons**; no row naming this seat in `org/ref/LIVE_ARMS.md`.
   Session serial file at `org/mcp/sessions/3e0af293-5c41-461e-b262-eb250e87c3cb.serial`.
-- MCP: **5 messages in, all READ-acked** -- 33017 the re-seat, 33038 the A4-r6 ruling, 33054 the w-3 GO,
-  33067 the A6-r6 step-1a amendment, 33097 the w-2 PHASE B GO; **6 reports out**. Message 33067 is worth noting for a successor: its
+- MCP: **6 messages in, all READ-acked** -- 33017 the re-seat, 33038 the A4-r6 ruling, 33054 the w-3 PHASE A
+  GO, 33067 the A6-r6 step-1a amendment, 33097 the w-2 PHASE B GO, 33102 the w-3 PHASE B GO; **8 reports
+  out**. Message 33067 is worth noting for a successor: its
   `[INBOX]` event fired while BOTH probes read empty (the LD-0099 ferry case), and it was read from the
   `read/` dir newest-first exactly as `org/XXX.md` Step 1b B directs. Every arrival was acted on in the
   same turn it landed, which is why four separate rulings could be absorbed mid-cell without a restart.
@@ -335,31 +375,27 @@ Written for a reader with zero prior context.
    thing standing between w-2 PHASE B and its apply, and the only sovereign item in this log. Rule 30 makes
    an R20 entry a departure Andrew acknowledges; the pair is already signed and the plan already measured,
    so nothing else is owed once it lands.
-2. **[`2.0.0_SA_COO~ZI`] Decide the ORDER, now that w-2 is held and w-3 is not** -- w-3 PHASE B's names take
-   the placement path and the existing override lifts them (measured this session), so w-3 can land first.
-   That inverts the w-2-before-w-3 order the w-2 halves assert, which is why it is the issuer's call and not
-   mine. **When w-3 PHASE B is cut, the one thing to get right is that `portfolio-management` writes THREE
-   tags and no `System` key**, where every other module in this round writes four; a fourth tag in its
-   targeted plan is a STOP, not a rounding difference.
+2. **[`0.7.0_AE_CloudOps~IR`] Close `iamroles-r6-family-a` NOT-APPLIED at ~06:03Z** if the R20 call is still
+   unanswered when its 6-hour window ends -- the issuer's instruction in msg 33102. Nothing is applied, so
+   the close is a record of a held act and not a rollback. If the call lands first, the hold releases and
+   PHASE B proceeds unchanged against the already-signed pair.
 3. **[`1.0.0_SA_CTO~Z`] The `Z-S25` gate fix** -- teach the placement/OUT-OF-PATTERN branch the
    `_carried_at_head` check the `RAISE` branch already has, or admit an adopted name by registry row.
    Parked at dell1 per the issuer. Until it lands, PHASE B of w-2 and w-3 carries the audited placement
    override by ruled instruction. (`Z-S26` needs nothing further -- it was fixed at source @`b7c27ef5b0`.)
-4. **[`2.0.0_SA_COO~ZI`] Disarm `Z-S25`, `Z-S27`, `Z-S29` and `Z-S34`** as their `disarm_owner`. All three have
-   had their substance answered -- `Z-S27` by A4-r6's rewritten step 5, `Z-S29` by step 1a's landed
-   guard, `Z-S25` by the standing ruling plus the parked fix -- but the disarm is the issuer's act and
-   this seat did not touch any row's disposition.
-5. **[`3.0.0_SA_CVO~Z`] Grade w-1's AC4** -- did the apply move custody without moving a permission, and
+4. **[`2.0.0_SA_COO~ZI`] Disarm `Z-S25`, `Z-S27`, `Z-S29`** and dispose `Z-S34` / `Z-S35` as their
+   `disarm_owner`. Their substance is answered -- `Z-S27` by A4-r6's rewritten step 5 and now **twice
+   exercised** (it cost w-2 nothing and w-3 nothing), `Z-S29` by step 1a's landed guard, `Z-S25` by the
+   standing ruling plus the parked fix, `Z-S34` by the sovereign call it is waiting on -- but the disarm is
+   the issuer's act and this seat did not touch any row's disposition. `Z-S35` additionally carries a
+   suggested re-wording of `Z-S27`'s prescription, which the issuer owns.
+5. **[`3.0.0_SA_CVO~Z`] Grade w-1's AND w-3's AC4** -- did the apply move custody without moving a permission, and
    did the survey name every tag before the pair was signed? Both planes of evidence and both counts
    against this seat are in the proof instance's `status_reason`.
-7. **[`0.7.0_AE_CloudOps~IR`] On each pair + GO:** follow A4-r6/A5-r6 exactly -- commit the renamed
-   `.tf` FIRST, with a `# naming-place-override:` naming the role(s), their live `CreateDate`s and
-   `Z-S25`, and **NO author override** (A5-r6); then the `-target` apply; then the drain in the same
-   session; then the untargeted shared-tree plan recorded at `0 to destroy`. Per-cell stop conditions,
-   all measured at plan time and to be re-verified live: w-2 row 2's `assume_role_policy` (the
-   `ecs-tasks` principal), w-3 row 3's (the `codebuild` principal), and w-3 row 11's
-   `managed_policy_arns` (the `AWSLambdaBasicExecutionRole` attachment must survive). w-2's `-target`
-   list is two addresses; w-3 is two modules, so two ledger entries, two applies, and AC2 expects TWO
-   `POST-APPLY-PLAN` lines.
+7. **[`0.7.0_AE_CloudOps~IR`] When `Z-S34` clears, w-2 PHASE B resumes from step 5 unchanged:** the pair is
+   already signed and the plan already measured at `2 to import, 0 to add, 2 to change, 0 to destroy` with
+   four keys per role. The ledger entry exists and is held, so releasing the hold rather than opening a new
+   entry is the correct move. The stop condition to re-verify live is row 2's `assume_role_policy` -- the
+   `ecs-tasks.amazonaws.com` principal -- plus one inline policy each and no detachments.
 8. **[`0.7.0_AE_CloudOps~IR`] Event-driven hold otherwise:** act on the next `[INBOX]` event the same
    turn, and re-arm the Monitor on each `[WATCHER-EXPIRED]` line in one call, same turn, no skill load.

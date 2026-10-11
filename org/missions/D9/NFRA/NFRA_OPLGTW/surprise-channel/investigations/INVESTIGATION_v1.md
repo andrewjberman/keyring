@@ -11888,3 +11888,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "Useful to B2 rather than blocking it: B2's read-back condition is that the host's extras named in step 1 are UNCHANGED, so naming 4 instead of 2 makes that comparison strictly sharper. Surfaced, not adjudicated: whether the 2 unnamed orphans want a cleanup cell is the issuer's call with NFRA_MCPINDEX, and nothing here deletes a file on the host."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S83",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T01:03:29Z",
+  "one_line": "Disarms NFRA_OPLGTW-Z-S81 for OG-ap-6 and folds Z-S82 in: OG-ap-6 AMENDMENT 1 plans and applies the E2 policy ONLY from a detached box/sitez-HEAD worktree (C:/tmp/og-tf-e2, policy blob 49c420ac equal to the signed release's), never from the release worktree; the four dashboard orphans join step 8's unchanged-extras read-back.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: git rev-parse <ref>:infra/aws/terraform/opal-gateway/advi_billing_gateway_iam.tf = 49c420acbce7cfb99c8726f5439b3f2cc6ea9f5a at box/sitez HEAD, at release 6aadf7db37 and at the signed a88661b145",
+      "MEASURED: gw_mcportal_close_request_write, gw_mcportal_fabric_read and taxsma_capability each appear in 1 file of the opal-gateway root at box/sitez HEAD (0 at 2a5966dfbd, per Z-S81's own control)",
+      "ORDER org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-6.e2-xlsx-release-apply.md AMENDMENT 1 (this commit): new step 5b, step 6 FROM C:/tmp/og-tf-e2 and NEVER from C:/tmp/og-rel16c"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The destroy hazard came from applying a stale TF root. A1 takes the root from box/sitez HEAD, which carries all three live resources and the identical policy blob, so the apply this order makes cannot destroy them. Any remaining extra row in the HEAD plan (expected: the Z-W39-S5 grant-writer row) is the CTO's to rule under C3 before B2. The latent hazard stays true of the release branch as a TF source, which is why step 6 forbids it.",
+  "spec_asserts": "Z-S81: B2's policy act cannot run on a plan of 1 add, 5 change and 3 destroy (C3 expects 1/0/0). Z-S82: step 1 names 2 dashboard orphans; there are 4.",
+  "world_is": "The policy plan is re-read at box/sitez HEAD (step 5b), and B2 applies from there or not at all. The deploy still ships the release worktree's app code at 6aadf7db37. Four orphans are named in A1 and compared unchanged in step 8.",
+  "notes": "Citing row; Z-S81 and Z-S82 texts are untouched. Option (a) of Z-S81 (re-cut onto HEAD) is refused: it would carry box/sitez's unreleased gateway app changes into the deploy."
+}
+```
