@@ -5960,3 +5960,26 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S12",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:48:29Z",
+  "one_line": "L8 round 67 (DB-b-123, a SERVED write), no judgment criterion. Read on the served objects by this seat: Cottonwood's method row 3 now states income absent with its reason, in a string-typed column; against the prior version only the three income members and the timestamp moved; both prior versions are retained and nothing is deleted. The manifest's body, which nobody had read back, agrees. The change fits the PRD's C-VALUE: income is inside the value through cash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4748 (round 67 drained @f13ac5f7f1; record deliverables/0.9.0_WK_IRPT_DASHBD~98/METHOD_ROW3_APPLY.json)",
+      "this seat's served reads 2026-10-11T10:48:29Z under s3://opal-data-cottonwood/irpt/cottonwood/gold/dim_return_method/method_version=3/: data.parquet (LastModified 2026-10-11T10:38:24Z, 11,641 bytes, sha256 ff9afa007927...) holds 1 row and 31 columns, method_version 3, income_basis null in a string-typed column, income_basis_claim absent, the reason present; against the prior version (.MnBt..., 29 columns, income_basis cash_when_received) 2 columns are added, 0 removed, and 2 moved: income_basis and measured_at; manifest.json's BODY (2,037 bytes) states the same three income members; list-object-versions under the prefix reads 4 versions and 0 delete markers. PRD line 227 (C-VALUE): the value includes the cash that income produces"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the served state itself. A value must carry its claim in a field a consumer can reject on.",
+  "world_is": "The served row is as the order states. Not done by this seat: the mint's whole verify (it reads every day key). The limit of row D2-S11 stands: the reason is worded for one channel.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
