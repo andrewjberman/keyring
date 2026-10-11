@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-11T09:55:46.979659+00:00
-**Status:** HELD-PRE-APPLY -- gate: external / TO-FB-f-9 amendment commit by 2.0.0_SA_COO~B1 declaring the build final (step 3), then the GO amendment with its window (step 4); and the row D1-S14x ruling on the producers' role grant at the new home (held since 2026-10-11T09:56:03.263270+00:00)
+**Status:** HELD-PRE-APPLY -- gate: external / TO-FB-f-9 build-final amendment commit by 2.0.0_SA_COO~B1 (step 3), the GO amendment with its window (step 4), and the ruling on row ADVI_FIRMBKTS-D1-S18 (the producers' role grant at the new home) (held since 2026-10-11T09:56:03.263270+00:00)
 **Deploy:** ADVI_FIRMBKTS TO-FB-f-9 phase B (window act 2): ship the 19 dormant gold .py objects and the dispatcher switch to s3://opal-data-bd/code/gold/, moving BD_PLATINUM_MODE to canonical for the scheduled production chain; pair COO half @12b22ef020 + ADDENDUM 1 @1d7f94ebb1, CTO half @03c1c6f001 + ADDENDA 1 @6ac66a8950 and 2 @3d24ccdbd2
 **Authored by:** 0.7.0_AE_CloudOps~FB1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -23,7 +23,7 @@
 
 - 20261011T095546Z OPENED by 0.7.0_AE_CloudOps~FB1 with 6 leg(s)
 - 20261011T095603Z HELD-PRE-APPLY gate=external/TO-FB-f-9 amendment commit by 2.0.0_SA_COO~B1 declaring the build final (step 3)
-
+- 20261011T095840Z HELD-PRE-APPLY gate=external/TO-FB-f-9 build-final amendment commit by 2.0.0_SA_COO~B1 (step 3), the GO amend
 
 ## STEP 2 READS (0.7.0_AE_CloudOps~FB1, 2026-10-11T09:58:07Z)
 
