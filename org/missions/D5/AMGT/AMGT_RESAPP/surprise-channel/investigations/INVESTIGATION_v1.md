@@ -24738,3 +24738,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "The worker has not edited the test: the file is outside the order's <paths>, and a path the order lacks is a BLOCKING row, not an override. AC3 is recorded FAIL on the proof instance; the code is committed LOCAL on wk-AMGT_RESAPP-387 so the issuer can read it. The disarm is the issuer's: widen the grant to the test file with the fixture and assertion named, or amend the criterion's expected control list. Nothing was pushed or merged."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S25",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-11T13:56:25Z",
+  "one_line": "The rank timeseries route serves each series' name straight from the classifications table by bare ticker: SAN FP reads 'Banco Santander S.A. ADR' and CSL AU 'Carlisle Cos Inc'; a fourth path the ff-1 rule did not reach.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "CTO round-93 analysis item 1 (row D1-S23): a name served for another company on every route that serves a name; AMGT_RESAPP.TO-AMGT-ff-1's cell text named the chain, the overlay and the peers subject.",
+  "world_is": "Read 2026-10-11 ~13:55Z on the live function (SOzAz9/gfKE..): /lead-panel/timeseries/TRENDING/PRICE?tickers=SAN FP,CSL AU,BA US returns series names 'Banco Santander S.A. ADR' (SAN FP, 8 points), 'Carlisle Cos Inc' (CSL AU, 0 points), 'The Boeing Co' (BA US). `scoped_amgt.read_rank_series` assigns `name`, `classification` and `name_state` from `_classification_for_ticker(ticker)` (the table's answer for the bare ticker `SAN`), with no security key and no registered-name check; the ranked list's row 67 of TRENDING/PRICE and BREAKOUT/PRICE (the same SAN FP) was fixed by ff-1 amendment 1, the chart's series was not. The sector in the same table row ('Financials' for Sanofi) is the same bare-ticker collision and is NOT moved by this cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the issuer's live Lambda invoke of the timeseries route, 2026-10-11 ~13:5xZ, three tickers, series names as above",
+      "lib/research/api/scoped_amgt.py read_rank_series: served_names[ticker] = _classification_for_ticker(ticker)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Ruled by the issuer inside its own decomposition: ff-1 AMENDMENT 3 (the helper _rank_series_names, check arms D10-D12, census arm C4) rides the one redeploy under ff-4's pair. The sector of the two names (the table row's other fields) stays unmoved and is stated in the pair."
+}
+```
