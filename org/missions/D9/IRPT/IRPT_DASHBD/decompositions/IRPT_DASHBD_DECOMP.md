@@ -1117,3 +1117,14 @@ It lands before R45 (R45 CTO half, condition 2) and before Monday 07:41 ET.
 The R45 pair signed on the DB-b-105 packet is void for the apply. The apply itself is a later cell, after both halves re-sign and Monday's R44 acceptance (W78-S1).
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~88`, cut from box/dell2.
+
+
+## 60. ROUND 58, WORKSTREAM B (2026-10-11 ~03:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADVI_COTBKF round-54 analysis @0ac41554df, row ADVI_COTBKF-D2-W66-S1)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-114` | FWD-11: the rule-24 record (four postulates, word-boundary token census) deciding the return_basis and method_version values Cottonwood's positions-based returns state; lands no value (ADVI_COTBKF's re-stamp and CB-al-2 wait on it) | LOCAL | DB-b-102 | B58-1 |
+
+A producer or contract edit, if the record calls for one, is a later cell cut after DB-b-113 drains: it would move an R45 member.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~89` (worker-light), cut from box/dell2.
