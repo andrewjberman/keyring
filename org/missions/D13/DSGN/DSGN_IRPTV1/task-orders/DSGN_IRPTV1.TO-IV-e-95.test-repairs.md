@@ -95,6 +95,36 @@ is corrected by measurement and is reported to it with the candidate.
 
 **Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
 
+## AMENDMENT 2 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~11:0xZ): the map holds every route whose producer fixture the consumer can READ; the rest are excused by name with a measured reason (row DSGN_IRPTV1-D2-W53-S3)
+
+The worker built the 21-key map and withdrew it: two other tests (fe-s-75, fe-s-81) require every entry to parse through `parseIrEnvelope`,
+and the consumer's reader REFUSES the producer's own fixture for three routes (`directory-browse`, `analysis-request-history`,
+`analysis-input-upload`) and has no envelope adapter for the two custody routes, which the page reads through `validateCustodyReport`.
+That is a finding, not a test to bend: a consumer that cannot read the producer's published instance is out of step with it on one side or
+the other, and which side is the CTO's ruling at the candidate. Ruled here, inside the decomposition, none of your three options as stated:
+
+1. **Never the consumer's edited copies** (your option a): the map's bodies are the producer's bytes or the route has no entry.
+2. **The two custody routes get entries**, bodies from the producer's fixtures. fe-s-75 and fe-s-81 parse EVERY entry through the reader the
+   consumer actually uses for that route: the envelope reader for envelope routes, `validateCustodyReport` for the two custody routes, named
+   explicitly, and each must pass. That is as strict as before (every entry is read by a real reader), not an exemption. If
+   `validateCustodyReport` REFUSES the producer's custody fixture, that route joins the excused set below instead.
+3. **The three routes whose producer fixture the reader refuses get NO entry** and are excused BY NAME with `reason_class`
+   `READER_REFUSES_PRODUCER_FIXTURE` and, as `evidence`, the parser's own refusal text for that fixture (print it; one line each). No product
+   file and no producer file is edited (your option c is not yours).
+4. `analysis-request-original` is excused with `reason_class` `NO_PRODUCER_FIXTURE`, evidence = where you searched.
+5. The CONTROL arms of fe-s-75 and fe-s-81 take `Object.keys(map)[0]`; pin each to the NAMED key it meant (the first key of the map as it
+   stood at base), so adding entries cannot change what the control exercises.
+6. fe-s-1 names the excused routes with their reason class; it fails if any other declared route has no entry, and fails if an excused route
+   has an entry. fe-s-14 `published-map.test.ts` follows to the same statement and must not crash on a custody entry. One temporary mutant for
+   each of fe-s-1's two failure modes.
+
+By your measurement that is 18 entries and 4 excuses; build what you measure. More than four excuses is a STOP with a row.
+`smoke_map`: {routes_declared, keys, excused: [{route, reason_class, reason, evidence}], sourced: [{route, source, reader}], pins_followed,
+producer_pin}. Start from your kept patch (`SMOKE_MAP_CANDIDATE_NOT_COMMITTED.patch`); delete that patch file from the folder once its
+content is committed in the portal. Criterion IV95-AC2's check is amended to this statement; its id and invocation are unchanged.
+
+**Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited.
