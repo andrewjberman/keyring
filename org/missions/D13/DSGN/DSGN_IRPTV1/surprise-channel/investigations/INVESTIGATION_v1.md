@@ -5691,3 +5691,58 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-W59-S1 -- IV-e-106: the order names the response schema at infra/aws/lambda/investor-reporting/_contracts/responses/, which is not in this worktree; the same schema is at docs/contracts/investor-reporting/v1/responses/ and was read there
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W59-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~59",
+  "surfaced_at": "2026-10-11T17:19:00Z",
+  "one_line": "IV-e-106: the order names the response schema at infra/aws/lambda/investor-reporting/_contracts/responses/, which is not in this worktree; the same schema is at docs/contracts/investor-reporting/v1/responses/ and was read there",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of C:/dev/wk-dsgn-irptv1-49/infra/aws/lambda/investor-reporting/_contracts/responses/: No such file or directory",
+      "docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json lines 70-71, 100-101, 164-165 list retained_ref ($ref AnalysisReport.schema.json#/properties/retained_ref); the generated portal wire type (contracts/wire/responses.ts:170,177,183) names the same member"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face, cell IV-e-106 part 1: the response schema is at infra/aws/lambda/investor-reporting/_contracts/responses/analysis-report.response.schema.json in the workspace.",
+  "world_is": "The path does not exist in this worktree. The schema the generated wire type cites (responses.ts:157 'docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json') does, and lists retained_ref on all three answer shapes. The carry was built against that file and the generated type; no other source was used.",
+  "notes": "Not measured: whether the infra path exists on another checkout or is a name from an older tree."
+}
+```
+
+## DSGN_IRPTV1-D2-W59-S2 -- IV-e-106: the order says Investor Reporting is client-facing by the project's standing statement; the router says the page is staff-only (admin, Opal Capital firm, Dev user type), and only its print view is admitted by a browser-read render token
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W59-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~59",
+  "surfaced_at": "2026-10-11T17:19:30Z",
+  "one_line": "IV-e-106: the order says Investor Reporting is client-facing by the project's standing statement; the router says the page is staff-only (admin, Opal Capital firm, Dev user type), and only its print view is admitted by a browser-read render token",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/App.tsx:462 @9d3f43eff2: /investor-reporting is <ProtectedRoute requireAdmin requireInternal requireDev>",
+      "portal/src/App.tsx:614 @9d3f43eff2: /investor-reporting/print is <ProtectedRoute requireAdmin requireInternal requireDev allowRenderClaim>",
+      "portal/src/components/ProtectedRoute.tsx:86-88 (allowRenderClaim admits a ?renderToken= whose unverified, browser-decoded payload says aud irpt-render and role renderer, before any login check) and :118-122 (admin role, firmId opal-capital, userType Dev)",
+      "portal/src/lib/firmAccess.ts:44-126: no partner firm's allowlist holds /investor-reporting or /ticket-center or /security-analysis; /portfolios and /advisor-intelligence are in all four",
+      "DSGN_IRPTV1-D2-W57-S3 (this file) reached the same reading of App.tsx 462 and 614"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: 'Investor Reporting is client-facing by this project's standing statement: confirm it from the code rather than assume'.",
+  "world_is": "The code does not confirm it for the page. A login must be an admin of the Opal Capital firm with user type Dev to open /investor-reporting, and no partner firm lists it. The candidate record therefore classes the page's own files OPAL_INTERNAL. It classes the code the print view shares CLIENT_FACING, because the print view is mounted on a claim the browser reads without checking, which the code itself calls 'NOT A SECURITY CONTROL' (ProtectedRoute.tsx:20), so this seat cannot show that a client login cannot mount it. The candidate range changes ModelPortfolios and Advisor Intelligence, which ARE client-facing, so Andrew's word is needed for this push whichever way the Investor Reporting question is settled.",
+  "notes": "The standing statement may mean the OUTPUT (the report a client receives) rather than the page; this seat did not find where it was written. The CTO may wish to restate it."
+}
+```
