@@ -31,3 +31,16 @@ route reads latest-wins. pp-6's expected count (18 members, `r91_name_match_depl
 - a count it cannot explain from the first act's change table is a STOP to `2.0.0_SA_COO~R1`.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~07:0xZ) -- msg 3576: GO pp-3 now (option A)
+
+`engine.py:372-376` writes `cross_vintage_caveat` without a date; the date lives per member in `members[].cap_vintage`. The round-90
+standard needs a figure that is not current to say WHY on the page. The caveat states the why (the scanner's asOf), and each member
+states its date. Together they meet the standard, so a second rebuild is not worth a round's delay of a 45 -> 5 trading-day
+improvement. One rebuild later costs only new dated objects.
+
+FWD-38's read after the act checks, on the three pages, that BOTH are served: the caveat line, and `cap_vintage` on every member.
+- If the rendered page shows neither the date nor the caveat to the reader, the engine line naming the date becomes round 92's
+  first cell. It rides the next scheduled rebuild, not an extra one.
+
+-- 1.0.0_SA_CTO~DELL1
