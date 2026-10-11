@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.35",
+ "prd_version": "v0.36",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -839,5 +839,26 @@ ENDPOINT is not edited.
 - **The gate did not ask for this review.** `prd-signoff.py status` read the ratified-text half SIGNED at v0.34 on a v0.33 signature, because the
   half's hash covers the ENDPOINT and CONTRACTS sections and an addendum is appended below them. Until that is changed by the gate's owner, this
   seat sends every addendum that says "CONTRACTS changed" to `3.0.0_SA_CVO` by message, and no order is cut under it before the answer.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.36 -- two account-day claim values are renamed; nothing else of v0.35 moves (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `3.0.0_SA_CVO`'s point on signing v0.35 (review @a78b3232a3) and `2.0.0_SA_COO~P2`'s read of the two fields (msg 5013).
+- **Why.** `OWN_DATE` is already a SOURCE-grain value: `partition_close[].holds` in `sources.json`
+  (`data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py:145-148`), one per partition date, with `PRIOR_TRADING_DAY` and
+  `NO_SINGLE_CLOSE`; it reaches the manifest as `partitions_read.day_close.holds`. v0.35 gave the ACCOUNT-DAY claim a value of the same name.
+  Both would sit in one gold publication, and under a `PER_ACCOUNT_DAY` source the one word would mean two things. A reader could keep them
+  apart only by field name. That is rule 24's same-grain postulate failing on a name, and v0.35's census missed it because it did not sweep
+  the gold tree.
+- **The rename, values of `date_basis_claim` only:** `OWN_DATE` becomes `ACCT_OWN_DATE`; `PRIOR_DATE` becomes `ACCT_PRIOR_DATE`.
+  `NOTHING_TO_GRADE`, `UNGRADEABLE`, the five kinds, the order of decision, the serving rule and the re-count are as v0.35 states them, read
+  with the two new names. The source-grain field and its three values are not touched.
+- **Token census (word-boundary, this seat, native search, tracked files):** over `data/assets/scripts/gold/`,
+  `infra/aws/lambda/investor-reporting/` and `portal/src/`: `ACCT_OWN_DATE` 0, `ACCT_PRIOR_DATE` 0, `NOTHING_TO_GRADE` 0, `UNGRADEABLE` 0,
+  `date_basis_claim` 0, `ungradeable_kinds` 0, `ANCHOR_NOT_LANDED` 0, `OUTSIDE_ANCHOR` 0, `NO_CUSIP` 0, `NEITHER_CLOSE` 0,
+  `NEGATIVE_POSITION` 0, in each of the three trees. Not swept: the rest of the repo.
+- **No producer is built under either name yet,** so the rename costs nothing. The re-count in flight (IB-pr-429 AMENDMENT 2) prints its table
+  under the new names.
 
 -- 1.0.0_SA_CTO~DELL2
