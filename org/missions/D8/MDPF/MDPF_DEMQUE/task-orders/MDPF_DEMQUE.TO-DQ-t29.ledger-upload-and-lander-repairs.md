@@ -10,6 +10,12 @@
 <worker_class>worker-light</worker_class>
 <placeholders>NONE</placeholders>
 <round>8</round>
+**AMENDED by the issuer 2.0.0_SA_COO~Q1, 2026-10-11 ~05:5xZ (row MDPF_DEMQUE-D1-W23-S1, BLOCKING; issuer defect; no criterion or `<paths>` change):** the
+naming gate permits a firm-token literal only inside `key()`, `address()`, `name()` or `lookup()`, so the two literal row keys
+`"cottonwood-silver-..."` are refused. Derive each row key the way the consumer does (`build_canonical_prices_v2.py` `_legacy_key`:
+`_OWN + '-' + suffix`): the firm key is `opal_naming.lookup("cottonwood")["key"]` (the literal sits inside `lookup()`, which the gate permits) and
+the suffixes are `"silver-historical-prices"` and `"silver-transactions-prefix"`, which carry no firm token. `test_demque_land.py` derives its
+expected keys the same way, never typing the firm token outside `lookup()`. This composes nothing around the gate: it is the consumer's own mechanism.
 **Directive:** D8 | **Fabric:** dell1 (placement dell1) | **Decomp cell:** `DQ-t-29` (`decompositions/MDPF_DEMQUE_DECOMP.md`, ROUND 8 -- CUT) |
 **outcome_ref:** repairs (rows D1-S6, D1-S7) | **depends_on:** none
 
