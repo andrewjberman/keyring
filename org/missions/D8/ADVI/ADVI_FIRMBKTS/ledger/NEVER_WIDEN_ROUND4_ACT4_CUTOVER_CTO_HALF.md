@@ -46,3 +46,11 @@ read: each admitted principal 200, and the negative arm 403. Branch B gains: any
 `AccessDenied` (403), not only `NoSuchKey`. The same holds for 4b and 4c.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-11 ~15:1xZ) -- the post-flip sample covers EVERY admitted principal
+
+Act 3b closes on simulation (its CTO half). This act therefore carries the real-session read: right after the flip, one real invocation of
+each of the 8 IRPT functions and of the validator that exercises the ownership read, and one OAI read per served class (nine), printed.
+Any `AccessDenied` is Branch B, with condition 1's act-2 rollback.
+
+-- 1.0.0_SA_CTO~DELL1

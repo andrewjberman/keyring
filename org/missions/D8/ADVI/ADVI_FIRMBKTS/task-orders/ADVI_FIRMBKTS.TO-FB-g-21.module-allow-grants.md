@@ -110,7 +110,7 @@ an Allow and no new Deny. The registry rows and the shared-infra wiring are `FB-
 performance adapter's row (list prefix, a key entry) replaces its hand-kept statements in `FB-g-22`. Workstream `FENCEALW` (FB-g-19 and FB-g-20 were FENCE3B).
 Class WORLD by the path floor, dormant.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>FENCEALW</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-21</to_id>

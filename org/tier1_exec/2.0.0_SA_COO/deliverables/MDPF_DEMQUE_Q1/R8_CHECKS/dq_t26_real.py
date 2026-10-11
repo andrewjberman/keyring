@@ -36,8 +36,17 @@ def main() -> int:
         return _bad("no file " + tool)
     tmp = tempfile.mkdtemp(prefix="refreeze_")
     try:
-        for suffix in (".json", ".quote.json"):
-            shutil.copy(os.path.join(MISSION, "requests", RID + suffix), os.path.join(tmp, RID + suffix))
+        req_dir = os.path.join(MISSION, "requests")
+        shutil.copy(os.path.join(req_dir, RID + ".json"), os.path.join(tmp, RID + ".json"))
+        quote = json.load(open(os.path.join(req_dir, RID + ".quote.json"), encoding="utf-8"))
+        if quote.get("supersedes"):
+            # The real folder is already re-frozen (the issuer's act after the merge). The input of this check is the quote as it
+            # was BEFORE the re-freeze: the superseded copy kept beside it, without the keys the re-freeze added.
+            quote = json.load(open(os.path.join(req_dir, quote["supersedes"]), encoding="utf-8"))
+            for k in ("superseded_reason", "superseded_on", "superseded_by"):
+                quote.pop(k, None)
+        with open(os.path.join(tmp, RID + ".quote.json"), "w", encoding="utf-8") as fh:
+            json.dump(quote, fh, indent=2, sort_keys=True)
         rc, out, err = _run([tool, "--request-id", RID, "--requests-dir", tmp, "--as-of", "2026-10-09", "--reason", REASON])
         if rc != 0:
             return _bad("refreeze rc=%d %s" % (rc, (err or out)[-300:].strip()))
@@ -48,8 +57,14 @@ def main() -> int:
         old = json.load(open(kept[0], encoding="utf-8"))
         print("new: finish=%s supersedes=%s" % (new.get("finish_date"), new.get("supersedes")))
         print("old: finish=%s reason=%s" % (old.get("finish_date"), old.get("superseded_reason")))
+        # The ledger as it stood on 2026-10-10 (the day this order was graded): later fires add rows, and this arm names 5,858 drawn.
+        actuals = os.path.join(tmp, "BBG_ACTUALS.upto-2026-10-10.jsonl")
+        with open(os.path.join(MISSION, "ledger", "BBG_ACTUALS.jsonl"), encoding="utf-8", errors="replace") as src,                 open(actuals, "w", encoding="utf-8") as dst:
+            for ln in src:
+                if ln.strip() and json.loads(ln).get("date", "9") <= "2026-10-10":
+                    dst.write(ln)
         rc2, out2, err2 = _run([os.path.join(DEMQUE, "quote_vs_actual.py"), "--request", RID, "--requests-dir", tmp,
-                                "--actuals", os.path.join(MISSION, "ledger", "BBG_ACTUALS.jsonl"), "--today", "2026-10-11"])
+                                "--actuals", actuals, "--today", "2026-10-11"])
         if rc2 != 0:
             return _bad("quote_vs_actual rc=%d %s" % (rc2, (err2 or out2)[-300:].strip()))
         lines = [ln for ln in out2.splitlines() if ln.strip().startswith("{")]
