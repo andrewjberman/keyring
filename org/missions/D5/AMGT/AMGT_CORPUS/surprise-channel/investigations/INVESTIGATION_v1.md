@@ -4664,5 +4664,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "notes": "Per-sheet is the round-47 behaviour and the order said to keep it; a per-workbook bound would need one load shared by both sheets, which is a change to sheet_reading outside this order. Declared, not fixed. No gate built.",
   "disarm_owner": "2.0.0_SA_COO~C1"
 }
+,
+{
+  "id": "AMGT_CORPUS-D1-S8",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-11T23:21:11Z",
+  "one_line": "The Security Analysis tabs harness fails three checks at portal origin/DEV ad774c6f (short_read_refused, short_read_control_served, generation_captions_present) that pass at the local DEV cb76f857 (21 of 21); the failures are not AMGT_CORPUS's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer's run, 2026-10-11 ~23:1xZ, in a detached portal tree at ad774c6f: node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs printed 'CHECKS-WRONG-WAY short_read_refused,short_read_control_served,generation_captions_present' and exited 1; the same tree with the CRPS-ay-2 reference patch applied printed the same line.",
+      "The harness at portal cb76f857 (the local DEV) passes 21 of 21 (a fork's run on the same machine, same day). origin/DEV ad774c6f merges other teams' work (git log: wk-dsgn-irptv1-r21-57, IRPT_ANLREQ AR-y-144, TicketCenter)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-ay-2 AC2: the page's tabs harness is the Model tab's regression control and exits 0.",
+  "world_is": "At origin/DEV ad774c6f the harness exits 1 on three checks that no AMGT_CORPUS file touches, so AC2 of CRPS-ay-2 pins the failing SET to those three (the change adds none and masks none) instead of an exit code.",
+  "notes": "Not an AMGT_CORPUS surface; surfaced for the seats that own those checks. No gate built; no fix attempted here.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+}
 ]
 ```
