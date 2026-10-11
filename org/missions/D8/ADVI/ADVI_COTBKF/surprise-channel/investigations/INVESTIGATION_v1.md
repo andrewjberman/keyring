@@ -7051,3 +7051,50 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S124",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T20:12:07Z",
+  "one_line": "L9 round 73: CB73bu1-AC2 MET and CB73bu2-AC3 MET. The three-date read reproduces on this seat's own script figure for figure (101 funds, 944 cells, 794 / 744 / 579, winners 17 / 15 / 0 / 69, 42 validated); the convention reads undetermined and the worker did not bend the rule to the nine. The re-mint mode refuses a second writer by a conditional write and never prints another writer's change as its own, on the faked bucket; the hard kill is now counted as not described everywhere.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_73_DRAIN_END_20261011.md @f3bffdeb6f (msg 5731)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_73_L9_GRADE_20261011.md",
+      "this seat's re-derivations 2026-10-11T20:12:07Z. (1) The three-date rule as written, applied by this seat's own script to the custodian's reinvestment rows and the cache on disk: 270 fund series, 149 with a cache, 198 with a row, 101 with both; 944 compared cells; equal same day 794, the day before 744, the day after 579, all three 458; funds by winner 17 same, 15 before, 0 after, 69 undecided; the nine 6 before and 3 undecided; 42 funds validated. Each equals the worker's figure. (2) The decided funds by the first two words of the custodian's security description: of the 15 that follow the day before, 12 are American Funds; of the 17 that follow the same day, 1 is. (3) The re-mint code read at the merged tree; 0 delete calls; its test file run by this seat, 120 passed"
+    ]
+  },
+  "spec_asserts": "CB73bu1-AC2 and CB73bu2-AC3 (JUDGMENT, graded by the CVO at L9, never self-graded), as written in the two orders.",
+  "world_is": "Not re-derived: the split of the 42 into adjusted and not; the reach of 1,874. Untested by anyone: whether the real bucket honours the write condition. Nothing was applied, served, re-minted or fetched.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S125",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T20:12:07Z",
+  "one_line": "The date convention the round read as undetermined splits by fund family. Of the 15 decided funds whose reinvestment row matches the cached close of the trading day BEFORE, 12 are American Funds; of the 17 that match the same day, 1 is. The family is read from the first two words of the custodian's own security description. Eight of the nine funds of rounds 71 and 72 are American Funds; the ninth is the one that matched on the same day. A count on 32 funds, with exceptions each way: a lead, not a result.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_73_L9_GRADE_20261011.md",
+      "this seat's re-derivations 2026-10-11T20:12:07Z. (1) The three-date rule as written, applied by this seat's own script to the custodian's reinvestment rows and the cache on disk: 270 fund series, 149 with a cache, 198 with a row, 101 with both; 944 compared cells; equal same day 794, the day before 744, the day after 579, all three 458; funds by winner 17 same, 15 before, 0 after, 69 undecided; the nine 6 before and 3 undecided; 42 funds validated. Each equals the worker's figure. (2) The decided funds by the first two words of the custodian's security description: of the 15 that follow the day before, 12 are American Funds; of the 17 that follow the same day, 1 is. (3) The re-mint code read at the merged tree; 0 delete calls; its test file run by this seat, 120 passed"
+    ]
+  },
+  "spec_asserts": "The round 73 record: no split by kind, build group or period separates the two groups, and no sponsor field is on disk.",
+  "world_is": "The custodian's security description is on disk in the transaction cache and names the family. Not established: why the row is dated a day later for that family; whether it holds on the 69 undecided funds; the 3 other families on the before side.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
