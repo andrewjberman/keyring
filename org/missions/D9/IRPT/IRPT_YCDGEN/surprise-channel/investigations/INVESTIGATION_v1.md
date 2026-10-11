@@ -3778,3 +3778,30 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "MEASURED 2026-10-11 by 2.0.0_SA_COO~G2 on the package built at pin 37210c771a with --research and --opal-map and NO --base-pin: resident_package_gate.py in whole-tree mode printed G2 291 of 292, DIFFERS ycharts/research/overview_map.json, GATE FAIL (rc 1). The member is correct: its sha256 21a8f6d690bbd28c equals `git show 37210c771a:org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json`, the source the bindings record under provenance.opal_map_source, and equals the running st27 member. The gate compared it to infra/aws/lambda/investor-reporting/ycharts/research/overview_map.json, a path that does not exist at the pin, because line 110 reads `opal_source = provenance.get(\"opal_map_source\") if base_pin else None`. The same package passed (G2 292 of 292, rc 0) in named-list mode with --base-pin 37210c771a and an EMPTY --files-from list. Second observation, same two runs: the tar's sha256 differed between them (22d40e9678428a6a, then e5a6b6251b0e5e97) at the same byte length 999816, so the tar is not reproducible run to run and the install script, which embeds the tar's sha256, differs too."
 }
 ```
+
+## IRPT_YCDGEN-D2-S47 -- install_st30.sh carries an UNSUBSTITUTED placeholder VER=__ST30_SCRIPT_VERSION__: dead today because the fetch is by key, a hard failure the moment anyone restores the by-version fetch it is a leftover of
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S47",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~YC2",
+  "surfaced_at": "2026-10-11T10:36:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "install_st30.sh carries an UNSUBSTITUTED placeholder VER=__ST30_SCRIPT_VERSION__: dead today because the fetch is by key, a hard failure the moment anyone restores the by-version fetch it is a leftover of",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-11T10:36Z by 0.7.0_AE_CloudOps~YC2 while reading the order's scripts before leg D2. org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/st30_release/install_st30.sh line 6 reads `VER=__ST30_SCRIPT_VERSION__  # the staged version (fetched by key; the sha256 binds the bytes)`. The name $VER is referenced NOWHERE else in that file (1 assignment, 0 reads), so the literal placeholder never reaches an AWS argument and the leg ran clean: the fetch on line 16 is `aws s3 cp s3://.../$KEY` and the binding control is the sha256 compare against WANT on line 17, which this seat saw pass on the host ('D2 install script sha256 verified on the host at 2026-10-11T10:32:00Z', ssm 39cacd01-6a93-4a7e-86be-8080f1c84b80 Success rc 0).",
+      "The st29 predecessor this script was derived from fetched BY VERSION -- the st29 ledger's U2 leg records a read-back by version id for both objects -- which is where the placeholder comes from. The host-side installer resident_host_install_37210c771a-st30.sh carries no such placeholder; its KEY= line (:12) is complete, and this seat keyed the uploaded tar from that line rather than from its local basename."
+    ]
+  },
+  "notes": "INERT, and it did not touch this install: a dead variable in a bash script with `set -u` is harmless because nothing expands it. The hazard is at the NEXT derivation. The in-script comment explains why by-key is sufficient, so a future editor restoring `--version-id \"$VER\"` would be reverting a deliberate simplification -- and would get `An error occurred (400) ... Invalid version id` rather than a silent wrong fetch, so it fails loud. Named here only so the next release's script is cut from a file with no placeholder in it. Not fixed by this seat: the file is the issuer's, inside the issuer's own deliverables folder, and leg D2 is closed. Disarm: the issuer deletes the line, or substitutes it, when it next derives a release script.",
+  "spec_asserts": "org/tier2_senior/0.7.0_AE_CloudOps~YC2/task_orders/IRPT_YCDGEN.TO-APPLY-st30.the-one-resident-release-dell2.md the_act step 4 and the script's own header: install_st30.sh fetches the signed host install script BY KEY (the host role holds GetObject, not GetObjectVersion) and verifies its sha256, which binds the bytes -- i.e. no version id is needed or used.",
+  "world_is": "The file nevertheless carries a by-version leftover: line 6 assigns the literal string __ST30_SCRIPT_VERSION__ to VER and nothing reads it. 1 assignment, 0 reads, measured over the whole file. Effect on leg D2: NONE -- the install ran rc=0 and the host verified both sha256 values. Effect on the next derivation: a restored `--version-id \"$VER\"` would pass the literal placeholder to S3."
+}
+```

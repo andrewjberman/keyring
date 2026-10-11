@@ -2778,3 +2778,22 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r122/p122_cells.py`: every criterion 
 | `IB-pr-424` | adapter zip back to 9kYLdR64; source-map entry back; performance/ and retained.tf back to fb3bae3b99; two session policies removed (targeted); ledger | FWD-3 (the ENDPOINT's state restored) | WORLD | none | P122-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.7.0_AE_CloudOps~IB2.
+
+## 116. ROUND 123, WORKSTREAM ~P (2026-10-11 ~10:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 4729)
+
+Round 122 rolled the vendor release back. The Performance hop for Cottonwood is FWD-3's own outcome: a figure computed by Opal from
+holdings. The CTO ruled the source stays the declared silver fact_holdings (read current by the issuer: 91 partitions, 2026-06-09 to
+2026-10-09, 86 of 86 trading days) and that the thread is row S252: a minority of securities carry the prior day's close, measured so
+far on 10 of 81 partitions. One read-only cell measures it on every trading-day partition and names the securities. The basis
+declaration that follows is the CTO's ruling on that read, and is not this cell.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r123/p123_cells.py`: every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-425` | S252 on every trading-day partition: per-day counts, the lagged securities and their classes, a planted control | FWD-3 (Cottonwood) | LOCAL | none | P123-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~284. DIRECT-ACT (one cell, read only, LOCAL).
+
+Parked for the next issuance, each ruled and unblocked: the one-tree re-pin of irpt-ycharts-generate (CTO msg 4657; owner this seat);
+the `_contracts` smoke-map pin with the two custody-route fixtures (2.0.0_SA_COO~D2 msg 4714; owner this seat).

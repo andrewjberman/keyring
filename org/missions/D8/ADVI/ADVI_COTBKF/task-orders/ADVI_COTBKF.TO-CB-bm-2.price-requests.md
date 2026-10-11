@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ADVI_COTBKF~95</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -71,8 +71,9 @@ already held prices them. Andrew's word names two sources. The CTO wants the two
 <criterion id="CB65bm2-AC1" cell_refs="CB-bm-2"><invocation>python -c "import json;d=json.load(open('org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~95/PRICE_REQUESTS.json',encoding='utf-8'));L=d['legs'];print('PRICE-REQUESTS-RECORD position_rows=%d unpriced_position_rows=%d legs=%d leg_rows_sum=%d unpriced_securities=%d leg_securities_sum=%d bloomberg_rules=%d'%(d['position_rows'],d['unpriced_position_rows'],len(L),sum(x['unpriced_position_rows'] for x in L),d['unpriced_securities'],sum(x['securities'] for x in L),len(d['bloomberg_rules_relied_on'])))"</invocation><expect>PRICE-REQUESTS-RECORD position_rows=21102041 unpriced_position_rows=15993996 legs=2 leg_rows_sum=15993996</expect></criterion>
 `CB65bm2-AC1` -- the totals are the measured ones and the two legs cover every unpriced row exactly once.
 
-<criterion id="CB65bm2-AC2" cell_refs="CB-bm-2"><invocation>python -c "import io;D='DIorg/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~95/PRICE_REQUESTS.json';y=io.open(D+'PRICE_REQUEST_YAHOO.md',encoding='utf-8').read();b=io.open(D+'PRICE_REQUEST_BLOOMBERG.md',encoding='utf-8').read();print('PRICE-REQUESTS-STATUS yahoo_not_sent=%s bloomberg_not_sent=%s yahoo_csv_rows=%d bloomberg_csv_rows=%d'%('STATUS: WRITTEN, NOT SENT' in y,'STATUS: WRITTEN, NOT SENT' in b,len(io.open(D+'PRICE_REQUEST_YAHOO.csv',encoding='utf-8').read().splitlines())-1,len(io.open(D+'PRICE_REQUEST_BLOOMBERG.csv',encoding='utf-8').read().splitlines())-1))"</invocation><expect>PRICE-REQUESTS-STATUS yahoo_not_sent=True bloomberg_not_sent=True</expect></criterion>
+<criterion id="CB65bm2-AC2" cell_refs="CB-bm-2"><invocation>python -c "import io;D='org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~95/';y=io.open(D+'PRICE_REQUEST_YAHOO.md',encoding='utf-8').read();b=io.open(D+'PRICE_REQUEST_BLOOMBERG.md',encoding='utf-8').read();print('PRICE-REQUESTS-STATUS yahoo_not_sent=%s bloomberg_not_sent=%s yahoo_csv_rows=%d bloomberg_csv_rows=%d'%('STATUS: WRITTEN, NOT SENT' in y,'STATUS: WRITTEN, NOT SENT' in b,len(io.open(D+'PRICE_REQUEST_YAHOO.csv',encoding='utf-8').read().splitlines())-1,len(io.open(D+'PRICE_REQUEST_BLOOMBERG.csv',encoding='utf-8').read().splitlines())-1))"</invocation><expect>PRICE-REQUESTS-STATUS yahoo_not_sent=True bloomberg_not_sent=True</expect></criterion>
 `CB65bm2-AC2` -- both request documents exist, each marked written and not sent, each with its security list.
+(AMENDMENT 1, issuer ruling 2026-10-11: the invocation's folder value was corrected; a template substitution had corrupted it. Row ADVI_COTBKF-D2-W95-S1.)
 
 <criterion id="CB65bm2-AC3" cell_refs="CB-bm-2" judgment="true"/>
 `CB65bm2-AC3` -- JUDGMENT, graded by 3.0.0_SA_CVO at L9 and never self-graded: the Bloomberg request is one a seat that read

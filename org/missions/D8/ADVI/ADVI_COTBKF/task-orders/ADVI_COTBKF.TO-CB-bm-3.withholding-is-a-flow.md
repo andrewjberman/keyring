@@ -83,6 +83,34 @@ case that is the refusal clause.
 at the end of the file and rewrites nothing else: the earlier row commit changed trailing whitespace on 206 existing lines and was not
 merged for that reason.
 
+### AMENDMENT 2 (2026-10-11T10:42Z, issuer `2.0.0_SA_COO~C2`) -- the grant covers EVERY script that names the r28 rule; `method_r29` is the default (CTO msg 4734)
+
+Worker ~96 stopped a second time, correctly (row ADVI_COTBKF-D2-W96-S2): `commonwealth_daily_valuation.py` selects the round-28
+valuation repairs by comparing the cash leg against r28 (lines 875 to 898 and 939), so an r29 leg would lose the split repair and the
+distribution close-step blanking. AMENDMENT 1 did not grant that file. The issuer has now taken the census it should have taken first
+(`comp-find -i 'METHOD_R28|method_r28' data/assets/scripts`: 51 hits, 14 files of 407 scanned; 8 scripts and 6 tests). **This amendment
+adds to AMENDMENT 1; where they differ, this one wins.**
+
+1. **The rule, unchanged:** `method_r29` is `method_r28` plus ONE change (a cash withholding is an outflow with or without a same-day
+   `lo`). It loses nothing r28 does, anywhere.
+2. **How.** Wherever one of the eight granted scripts SELECTS a behaviour by comparing a leg or a flow rule against r28 (an `==`, an
+   `in (...)`, a `choices=`, a default), r29 gets r28's behaviour. Prefer ONE named set defined beside the constants (the legs that
+   carry the round-28 repairs: r28 and r29) and membership tests against it, over repeating `or == r29` at each site, so the next
+   version is one edit. `method_r25` to `method_r28` stay byte-for-byte in behaviour.
+3. **The default (this REVERSES AMENDMENT 1's "the default stays r28").** `1.0.0_SA_CTO~DELL2` ruled (msg 4734): `method_r29` becomes
+   the default. Set `CASH_LEG_DEFAULT` (and any flow-rule default that follows it) to r29, and update the comment beside it to cite
+   "CTO msg 4734, 2026-10-11". A test asserts the default is r29. An existing test that asserts the default is r28 changes its
+   expectation; name each one in your report.
+4. **The three trace and regrade scripts** (`commonwealth_div_dating_trace.py`, `commonwealth_scale_trace.py`,
+   `commonwealth_sweep_regrade.py`) and `commonwealth_fwd3_serve.py`: read each r28 mention. Where it selects behaviour or refuses a
+   leg that is not r28, r29 is admitted exactly as r28 is. Where it only NAMES r28 in prose about a past round, leave it. List every
+   site and what you did.
+5. **Nothing is run for real**: no build, no serve, no trace. The r28-versus-r29 comparison over all days is a LATER order.
+6. **Tests added by this amendment:** under r29 the split repair and the close-step blanking still apply (assert on the valuation's
+   selection, the way the existing split-repair test does for r28); the default leg is r29; r28 selected explicitly still gives the
+   old withholding answer.
+7. **Your rows are `ADVI_COTBKF-D2-W96-S<k>`** (the gate requires the worker form; the earlier text of this order named the wrong form).
+
 ### ACCEPTANCE
 
 <criterion id="CB65bm3-AC1" cell_refs="CB-bm-3"><invocation>env -u COTBKF_SWEEPS_CONFIG python -m pytest data/assets/scripts/silver/tests -q</invocation><expect>passed</expect></criterion>
@@ -96,8 +124,9 @@ merged for that reason.
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below, your deliverables folder and the file of this order.
-- **Do NOT touch:** `commonwealth_daily_valuation.py`, the mint adapter, any manifest, anything under `data/assets/scripts/gold/`.
-  (AMENDMENT 1 widened the grant to `commonwealth_daily_returns.py` and `commonwealth_sweeps.py`, for the three edits it names only.)
+- **Do NOT touch:** the mint adapter (`commonwealth_account_return_daily.py`), any manifest, anything under
+  `data/assets/scripts/gold/`. (AMENDMENTS 1 and 2 widened the grant to the eight scripts in the `<paths>` block, for the edits they
+  name only.)
 - **Do NOT run the build, `--apply` or `--verify-served`.** No AWS or S3 call. No push.
 - **No gate override** of any kind and no `--force`. If a gate refuses and the fix is not an ordinary correction inside your grant,
   stop and report its exact refusal line.
@@ -110,6 +139,11 @@ merged for that reason.
 data/assets/scripts/silver/commonwealth_flows.py
 data/assets/scripts/silver/commonwealth_daily_returns.py
 data/assets/scripts/silver/commonwealth_sweeps.py
+data/assets/scripts/silver/commonwealth_daily_valuation.py
+data/assets/scripts/silver/commonwealth_fwd3_serve.py
+data/assets/scripts/silver/commonwealth_div_dating_trace.py
+data/assets/scripts/silver/commonwealth_scale_trace.py
+data/assets/scripts/silver/commonwealth_sweep_regrade.py
 data/assets/scripts/silver/tests/
 org/missions/D8/ADVI/ADVI_COTBKF/deliverables/
 org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md
