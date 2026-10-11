@@ -4615,5 +4615,54 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "notes": "THE HAZARD IS THE INDISTINGUISHABILITY, not the broken import. An executor who reads rc!=0 as the STOP condition reports STOP 3 from an INSTRUMENT FAILURE that never opened the library, and a genuine absence and a failed import then look identical in the record -- on a WORLD-risk order whose whole purpose is to decide whether one object gets written. The discriminator is cheap and is the script's own docstring: rc 0 and rc 3 are the only defined exits, so rc=1 is the instrument, never the world. Disarm is one line in the order: `PYTHONPATH=. python ...`, or ship the check as `python -m` with a package path. Generalises to every future checks/<round>/*.py that imports `lib.*` and is ordered as a bare path; round 45's checks script escaped it only by importing nothing but stdlib. No gate built and no script edited by this lane.",
   "disarm_owner": "2.0.0_SA_COO~C1"
 }
+,
+{
+  "id": "AMGT_CORPUS-D1-W1-S16",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T21:06:31Z",
+  "one_line": "The order's premise that round 47's tests pass unchanged, bar the one reversed entries test, does not hold: the nine shipped entries change two round-47 fixture results, so those two tests are isolated from the shipped file by an empty entries cache.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/factset_descriptions.json@e54dbf921e holds nine entries (AC4 grep count 9), FF_COM_SHS_OUT_EPS_DIL among them, text 'Avg Diluted Shares'.",
+      "Scratch read, not committed, of the round-47 fixture book against the SHIPPED entries file: per-code measure kinds {'FF_SALES': 'pass_through', 'FE_ESTIMATE': 'metric_name', 'FF_COM_SHS_OUT_EPS_DIL': 'held', 'FF_GROSS_INC': 'none', 'BEST_EBIT': 'held'}; the two-label code reads text 'Avg Diluted Shares' claim held, where test_a_code_two_labels_reference_is_left_as_a_factset_line expects 'FactSet line'.",
+      "The labels CLI line of the same book moves from two_label_left 1 bloomberg_held 1 to two_label_left 0 bloomberg_held 2, where test_the_labels_cli_prints_the_count_line pins the first.",
+      "lib/research/corpus/tests/test_template_round47.py@e54dbf921e: both tests now monkeypatch the factset cache to {} and say so in a comment; no expected value was changed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2: the round-47, round-46 and round-44 tests pass, and the only round-47 assertion the order changes is the entries-file-wins test, which becomes its reverse; the order names no other test as changed.",
+  "world_is": "With the shipped entries file, two round-47 fixture assertions that pin the measured-and-fallback rule for codes the file now describes fail unless isolated; the isolation keeps each test on the rule its name states and does not alter the shipped data.",
+  "notes": "For the issuer to decide whether these two fixtures should keep the empty cache (as built) or assert the shipped file. The live census moves on the shipped file as the order intends (factset_held 0 becomes 252, measured unchanged at 1345); the census test already isolates its fixture. No gate built and no expectation edited.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+}
+,
+{
+  "id": "AMGT_CORPUS-D1-W1-S17",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T21:06:31Z",
+  "one_line": "The order's bound 'the formula grid read at most once per workbook' holds per SHEET, not per workbook: a workbook whose two team sheets both carry figures has its bytes loaded once for each sheet that needs a measured label.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/team_sheet.py@e54dbf921e sheet_reading: _reading(rows, s, lambda s=s: _formula_grid(body, s)) is called once per figure-carrying sheet, and each _reading holds its own grid list.",
+      "lib/research/corpus/team_sheet.py@e54dbf921e _formula_grid: openpyxl.load_workbook(io.BytesIO(body), read_only=True, data_only=False) on every call, so one workbook's bytes load once per sheet that calls it.",
+      "The change adds the measured run for an entries-file code, so a sheet that holds only entries-file codes now also calls its grid; the count of loads per workbook can rise on the shipped entries. Not counted by this worker: the number of two-sheet workbooks that need a grid."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build item 2: the measured rule runs for a FactSet code that has an entry, and the workbook's formula grid is read at most once per workbook.",
+  "world_is": "The grid is read at most once per figure-carrying sheet, so a workbook with both Model NEW VERSION and Model carrying figures can be loaded twice; the 'once per workbook' bound is not what the code enforces, and the change does not enforce it either.",
+  "notes": "Per-sheet is the round-47 behaviour and the order said to keep it; a per-workbook bound would need one load shared by both sheets, which is a change to sheet_reading outside this order. Declared, not fixed. No gate built.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+}
 ]
 ```
