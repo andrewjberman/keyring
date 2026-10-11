@@ -10243,3 +10243,53 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order
 ```
+
+## 105. ROUND 97 -- A WITHHELD LISTING SERVES ITS SECTOR BY LISTING KEY FROM ITS OWN MODEL BLOCK, WITH SOURCE AND AS-OF DATE (THE CLASSIFICATION STAYS WITHHELD); ITS REDEPLOY ON A SCRATCH PIN. One worker order, one staged seat order, one staged cell
+
+**Input:** the CTO~DELL1 round-96 analysis `ledger/ROUND_ANALYSIS.round96.md` (msg 4084; CVO ADJUDICATION_v117, MAY-CLOSE, bc-1 AC2 MET C-S90; the CVO's point adopted: the listing key
+discriminates, not the value). Prep in `deliverables/2.0.0_SA_COO~R1/round97_prep/` (check `r97_sector_serve_census.py`, dry-run at the base K1-K4 FAIL and K5, K6 PASS; against a
+throwaway candidate 6 of 6) and `round96_prep/BC2_ORDER_DRAFT_FOR_ROUND97.md` (SUPERSEDED: it put the sector inside `classification`). The cells are prefixed `bd`.
+
+### 105a. MEASURED AT THE CUT
+
+- **Item 1:** the stored model blocks carry `GICS_SECTOR_NAME` 'Health Care' for `SAN_FP_Equity` (`derived/model_block/SAN_FP_Equity/20261011T130935Z`) and `CSL_AU_Equity`
+  (`.../20260930T093804Z`, so its as-of date is 2026-09-30), source bloomberg-dapi; the control `BA_US_Equity` 'Industrials' (the issuer's and the CVO's own S3 reads). Today the
+  live function serves no sector for either listing on any list route (the round-95 withhold). The route families that serve the withheld classification are three: the ranked
+  rows, the rank timeseries (listed or asked by ticker) and the collected-chatter rows.
+- **Round-95 ADDENDUM 1's fallback has fired:** no merged-pin redeploy happened by round 96's close (AMGT_CORPUS's /13 waits on its template put), so the redeploy ships on a scratch pin
+  parented on `b3512d18fb` plus exactly this round's two api files.
+- **Item 2 (pp-4):** staged on the DEMQUE answer; no quote, no answer.
+
+### 105b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bd-1` | a withheld listing serves its sector by listing key with source 'Bloomberg, listing' and as-of date; the classification stays withheld | `~393` | worker | LOCAL until bd-2 | `lib/research/api/scoped_amgt.py`, `monthly_chatter.py`, one new test | D1-S26's close beyond the withheld state |
+| `AMGT-bd-2` | the ONE redeploy carrying bd-1, on a scratch pin parented on `b3512d18fb` -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger | the same |
+| `AMGT-bd-3` | the DEMQUE answer's reader and wiring (pp-4) -- STAGED, no order | -- | worker | LOCAL until a redeploy | `lib/research/api/scoped_amgt.py` | D1-S14 |
+
+**Uncovered, with its owner:** the portal PROD promote (call `dell1-20261011T033643Z-e7f2`; the breakdown is delivered, the visual smoke and the answer are Andrew's), FWD-16, the model API
+key -- Andrew (analysis section 3); AMGT_CORPUS's /13 redeploy -- `2.0.0_SA_COO~C1`.
+
+### 105c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: analysis items 1-2. 1 -> bd-1 then bd-2; 2 -> bd-3. Printed denominator 2 of 2 items placed (1 worker order, 1 staged seat order, 1 staged cell).
+- **(ii) Same grain.** bd-1 one rule in three places that each serve the withheld classification; bd-2 one code leg.
+- **(iii) Intent coherence.** bd-1 is code; bd-2 the one served act; bd-3 waits on an answer.
+- **(iv) What a cell does NOT move.** bd-1 adds three keys to an entry that is already withheld and moves no classification, name, score, rank or member of any subject; a subject whose
+  table row agrees, or whose block holds no sector or fails to read, is byte-equal; bd-2 moves only the function's code, each member admitted by blob and its table measured route by
+  route first.
+
+### 105d. EDGES AND FAN-OUT
+```
+bd-1 --> bd-2              (the redeploy carries what is merged; the pair from the route-by-route measurement; the scratch pin created at the GO)
+bd-3 on the DEMQUE answer
+fanout:
+  cap: 8
+  orders_total: 2          (bd-1 a worker order; bd-2 a staged seat order)
+  chains_total: 2          (bd-1 -> bd-2 ; bd-3)
+  wave_0: [bd-1 ~393]
+  wave_1 staged: [bd-2 RA1 (bd-1 merged, the pair), bd-3 (on the DEMQUE answer)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```
