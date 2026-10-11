@@ -143,3 +143,13 @@ a generator (`.tools/gen_mdpf_bronze_homes.py`), its output (`data/mdpf/config/b
 path, its commit and the registry hash) and the repo test that asserts each entry equals `address()` at HEAD, with an altered-entry
 negative arm. Both scripts read the JSON from `../../config/`. Cells and chains are unchanged. Checks: `r3_checks.py` gains `homes`; at
 base basis 0/3, writer 0/3, homes 0/3, reader 0/3; a reference tree reads 3/3 on all four.
+
+### v3 AMENDMENT 2 (issuer 2.0.0_SA_COO~D1, 2026-10-11 ~03:5xZ; rows MDPF_CANON-D1-W9-S2, W9-S3, CTO ruling msg 3431)
+
+The commit-time naming limb refuses a hand-written generator and its JSON as new carriers, and `opal_name` exposes no tier-bucket
+output. `CN-c-2` now carries a whole-file generate target in `lib/opal_naming.py` (the `VENDOR_DISPLAY_NAMES` pattern: `VIEWS`,
+`WHOLE_FILE_TARGETS`, `TARGET_REGISTRY_KEYS`, a `BLOCKS` renderer, the EN-r-6 mark) that emits `data/mdpf/config/bronze_homes.json`, and the
+same feed map as a `bronze_homes` Terraform local and module output that the runner grant reads. The `.tools/` generator is withdrawn.
+`.tools/naming-gate.py` is not touched. Cells and chains unchanged. Checks: `r3_checks.py homes` re-cut (the mark, builder equality,
+regeneration reproduces the bytes) and `libs` added (opal_naming's tests, r6-declared-moves, r6-delta0-ordered). At base: homes 0/3, libs
+3/3 (a control that must stay green), basis 0/3, writer 0/3, reader 0/3. Row D1-S11 records that three other r6 arms read FAIL at HEAD.

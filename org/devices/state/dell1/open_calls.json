@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-11T03:21:34Z",
+ "written_at": "2026-10-11T03:36:43Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -723,7 +723,7 @@
    "source": "org/missions/D8/MDPF/MDPF_DEMQUE/requests/ETFS_RIVALS-HISTORY-OWED-DAILY.json",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T05:15:07Z",
    "kind": "act",
    "context": "Written by 2.0.0_SA_COO~Q1 before the PRD v0.4 addendum (@02df620d05) named request_state; the request was re-pointed @9c779bccf1. CLAUDE.md: S3 deletes need human confirmation.",
@@ -751,7 +751,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-11T03:23:14Z",
+    "by": "2.0.0_SA_COO~Q1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261010_133xZ_FIFTEEN_OPEN_ITEMS_ANSWERED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "dell1-20261009T055557Z-203a",
@@ -1401,6 +1408,101 @@
     "by": "1.0.0_SA_CTO~DELL1",
     "reason": "ACT ONLY ANDREW CAN DO: an S3 delete is human-confirm class (CLAUDE.md Agent Autonomy; MDPF_CANON PRD DEC-14). CTO REC yes: delete the 4 synthetic keys, then one backfill run fills 2026-10-08. Nothing else waits on it."
    }
+  },
+  {
+   "id": "dell1-20261011T033641Z-1b2f",
+   "project": "MDPF_SECCLASS",
+   "subject": "Remove 8 MDPF_SECCLASS worktrees: tag each tip archive/MDPF_SECCLASS/<branch>, git worktree remove WITHOUT --force (dirty trees refuse and stay), drop branch names",
+   "asked_by": "2.0.0_SA_COO~M1",
+   "source": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/WORKTREE_GC_ASSESSMENT_20261011.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-11T03:36:41Z",
+   "kind": "act",
+   "context": "COO~M1 assessed 8 worktrees: unlanded r9 E_18 callers and r8 classification scripts, the rest records, 3-22 uncommitted files each. MSTR~DELL1 holds it as destructive git (msg 3437). Nothing waits on it; disk only.",
+   "rec": "YES. Every tip is kept as an archive tag, so no commit is lost. Without --force a dirty tree refuses to go, so no uncommitted file is lost either. The worst case is a tree that stays.",
+   "scope": {
+    "measured_at": "2026-10-11T03:36:41Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/shared-infra"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/terraform/shared-infra/main.tf overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/terraform/shared-infra)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_cusip_fallback.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      ".tools/safe_deploy_core.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/safe_deploy_core.py)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_IAMROLES202609 on sitez",
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+109), also declared by root infra/aws/terraform/shared-infra named by IRPT_BCKEND on dell2"
+     ],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "dell1-20261011T033643Z-e7f2",
+   "project": "AMGT_RESAPP",
+   "subject": "Portal PROD promote: origin/DEV is 46 commits / 62 files ahead of PROD (SecurityAnalysis 43, TicketCenter 8, AdvisorIntelligence 4, InvestorReporting 3, api 3); /prod-deploy merges all of it. Promote now, and by which DT seat?",
+   "asked_by": "2.0.0_SA_COO~R1",
+   "source": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round88.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-11T03:36:43Z",
+   "kind": "act",
+   "context": "AMGT_RESAPP r89 item 7 wants the Security Analysis empty-state card (Opal-internal) on PROD, but /prod-deploy ships live DEV whole. TicketCenter, AdvisorIntelligence and InvestorReporting may open to partner logins; unsure = client-facing, so Andrew's word. Item 7 parks; nothing else waits.",
+   "rec": "Yes, through /prod-deploy by its DT seat after a page-class read of the 62 files names each client-facing page. Splitting the card off DEV would be a second promote path.",
+   "scope": {
+    "measured_at": "2026-10-11T03:36:43Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest",
+     "infra/aws/terraform/yang-pipeline",
+     "infra/aws/terraform/nfra-agentbus-alyssa01",
+     "infra/aws/terraform/seeking-alpha"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_IAMROLES202609 placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/research/api/scoped_amgt.py is on the shared branch (lib)",
+      "lib/research/filings/drafting_build.py is on the shared branch (lib)",
+      "lib/research/filings/tests is on the shared branch (lib)",
+      "lib/research/drafting is on the shared branch (lib)",
+      "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_monthly_chatter.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": null
   }
  ]
 }

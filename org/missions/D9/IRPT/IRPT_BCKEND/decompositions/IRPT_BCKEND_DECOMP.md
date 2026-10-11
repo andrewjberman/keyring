@@ -2699,3 +2699,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r117/p117_cells.py`: every criterion 
 
 fanout: 4 of 4 chains, cap 8, reason: four independent cells. Assignees: 0.9.0_WK_IRPT_BCKEND~279 (417), ~281 (419), ~278 (416),
 ~280 (418).
+
+## 111. ROUND 118, WORKSTREAM ~P (2026-10-11 ~03:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the IB-pr-416 pair; CTO msgs 3959, 3961, 3980)
+
+Round 117 is terminal 4 of 4. IB-pr-416 built irpt-performance-adapter, irpt-narrative and irpt-status from one commit (361c44fa9d); the
+pair is signed (COO @c362f7e0fb; CTO @d29ccddb17, conditions 1-9). One cell applies the adapter (failing closed on performance-report
+since 2026-10-09T15:41Z) and then the narrative, with the three candidate source-map entries landed first (row D2-W278-S2). irpt-status's
+apply is 2.0.0_SA_COO~Y2's (IRPT_ANLREQ TO-APPLY-Y1 AMENDMENT 8, CTO msg 3928) and is not a cell here.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r118/p118_cells.py`: every criterion FAILs at base. Condition 8's reach read:
+`checks/r118/REACH_READ_IB416_BUILT_ZIPS_20261011.txt` (adapter count 0 under CTO half A4).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-420` | source-map entries landed; adapter then narrative applied under the pair; live-call arm each; ledger | FWD-2 | WORLD | IB-pr-416 complete, pair signed | P118-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.7.0_AE_CloudOps~IB2.

@@ -1542,3 +1542,57 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S17 -- CANDIDATE carried from TCKT_VNEXT-D2-S3: the Analysis Request form's firm answer is free text; a firm pick-list
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S17",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T03:35:00Z",
+  "one_line": "The Analysis Request form's firm answer is free text sent to the upload door as selectedTenant; it should be a choice from the caller's allowed firms.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The person filing picks a firm they may file for.",
+  "world_is": "INHERITED from TCKT_VNEXT-D2-S3 (read by this seat at org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md:177-189, not re-measured): they type a firm id; a wrong one is refused only at the door. Grounded there on portal f7fa7fb1 src/pages/TicketCenter/analysisRequest.ts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md row TCKT_VNEXT-D2-S3",
+      "2.0.0_SA_COO~V2 msg 3988",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_TCKT_VNEXT_ROUND_2_20261011.md @bbba700c22 section 2 (as cited by 2.0.0_SA_COO~V2 msg 3988; the ruling file was not opened by this seat)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Enrichment CANDIDATE for a later IRPT_ANLREQ round, not a defect of the current release. No cell is cut for it; the CTO's next round analysis decides whether it enters the enrichment list."
+}
+```
+
+## IRPT_ANLREQ-D2-S18 -- CANDIDATE carried from TCKT_VNEXT-D2-S4: a filed report opens only for its requester; a second reader of a filed report
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S18",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T03:35:00Z",
+  "one_line": "A filed report opens through IRPT's owned read (getOwnedAnalysisRequest), so the ticket's assignee, when not the uploader, cannot open it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Anyone opening the ticket later can open its report.",
+  "world_is": "INHERITED from TCKT_VNEXT-D2-S4 (read by this seat at org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md:199-211, not re-measured): only the requester of the report can open it. Grounded there on prospect.py:51-59 (a firm advisor or ops user is admitted only for inputs they uploaded; OPAL_GLOBAL for any creator's input). That row names a second-reader path as IRPT_YCDGEN's; the CTO ruling places the candidate here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md row TCKT_VNEXT-D2-S4",
+      "2.0.0_SA_COO~V2 msg 3988",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_TCKT_VNEXT_ROUND_2_20261011.md @bbba700c22 section 2 (as cited by 2.0.0_SA_COO~V2 msg 3988; the ruling file was not opened by this seat)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Enrichment CANDIDATE for a later IRPT_ANLREQ round, not a defect of the current release. No cell is cut for it; the CTO's next round analysis decides whether it enters the enrichment list."
+}
+```
