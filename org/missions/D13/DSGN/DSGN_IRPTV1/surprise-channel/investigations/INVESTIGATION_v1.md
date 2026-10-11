@@ -6145,3 +6145,28 @@
   "notes": "Not repaired (a read cell). The served-answer read that would close the deployed-vs-tree gap is in SECTION_TITLE_UNIT.json served_answer_how for 2.0.0_SA_COO~P2."
 }
 ```
+
+## DSGN_IRPTV1-D2-S24 -- Laptop walk XB-c5ce face 11: with an ACCOUNT row picked in the header's search, Performance's Account select d
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S24",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T19:40:29Z",
+  "one_line": "Laptop walk XB-c5ce face 11: with an ACCOUNT row picked in the header's search, Performance's Account select does NOT start on the picked account on a served answer; IV-e-108 recorded hands_tabs true on a test alone",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IV-e-108 (portal cd744428, on DEV since ca23f110): when the header selection is an ACCOUNT row, Performance's Account select starts from that account and Holdings opens on it; its record states header_picker.hands_tabs true, held by a rendered test and a pure-rule arm, with no rendered walk of the account-row case.",
+  "world_is": "The walk's result file, face 11 (walk 5, a fresh session, DEV at or after ca23f110): typing an account's last four digits offered ONE option, the client's name with that account's masked label; after the pick the search box reads the client's name and the Identity band shows the whole client. Performance's Account select then starts on the client's OTHER, larger account: NO. Holdings did open on the picked account, but the walker's Performance select loop had just left that account selected, so the two causes cannot be told apart: NOT SEEN as a clean read. Face 10b: Holdings opened on ONE account in every walk on these heads, the one Performance's select last held, so the all-accounts line was NOT SEEN. NOT established: whether the option the header offers IS an account row or a client row labelled with an account (the walker inferred the former); what selection the header hands on for it. If the header yields a client selection for that option, the page's rule is right and the header never produces an account row for this search; if it yields an account row, the hand-off fails on a served answer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/XB_C5CE_IRPT_DEV_WALK_RESULT_20261011.md lines 53-56 (faces 10a, 10b, 10c, 11), read by this seat",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~60/HOLDINGS_FACE.json (header_picker)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
