@@ -3,7 +3,7 @@
 <!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
 
 <decomp_ref>
-<decomp_doc>org/missions/D8/ADVI/ADVI_FIRMBKTS/decompositions/ADVI_FIRMBKTS_DECOMP_R3.md</decomp_doc>
+<decomp_doc>org/missions/D8/ADVI/ADVI_FIRMBKTS/decompositions/ADVI_FIRMBKTS_DECOMP_R4.md</decomp_doc>
 <owned_cells>FB-f-13</owned_cells>
 </decomp_ref>
 <issued_to>0.9.0_WK_ADVI_FIRMBKTS~22</issued_to>
@@ -174,8 +174,19 @@ ruling on a pending order's record face; paths unchanged).
 
 **PARKED (2.0.0_SA_COO~B1, round 3 close, 2026-10-11):** carried to round 4 as acts 4b and 4c (the cutover of exec-summary-generator and opal-partners-data by `BD_PLATINUM_MODE` in Terraform environment, CTO ADDENDUM 2 @3d24ccdbd2). Phase A (the dormant seams) is merged (@23133da0fb). Un-park conditions: act 3 reads COPY-COMPLETE and act 4 is ready; each Lambda's own pair with DELTA = 0 on its served responses; its change-management entry. Owner of the un-park: the round-4 analysis of `1.0.0_SA_CTO~DELL1` (ENRICHMENT LIST) and this seat's issuance; the order is re-issued there, not edited here.
 
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-11 ~16:4xZ; RE-HOMED TO ROUND 4, STILL PARKED UNTIL ITS PAIR'S ORDER):** the decomposition
+reference is the round-4 decomposition (cell `FB-f-13`, its amendment 19); `<round>` reads 4. Phase A (the dormant seams) is
+merged. PHASES B AND C are acts 4b and 4c, SIGNED in both halves (`NEVER_WIDEN_ROUND4_ACT4BC_LAMBDAS_COO_HALF.md`, amended
+for ADDENDA 10 and 11, and `..._CTO_HALF.md`, msg 3974). The CTO's order: act 3c complete before 4b, act 3b before 4c, 4b after
+act 2 and before the next 04:30Z run (or act 2 waits a day), and the exec-summary generator's real read joins act 4's widened
+sample. The identity policy 4b needs is `FB-f-18` (separate order, one scoped apply); the exec-summary's fence row is `FB-f-17`.
+Each phase's act is: the Lambda's new code version (the seam, dormant until the value) and ONE environment value
+`BD_PLATINUM_MODE=canonical`, nothing else of its configuration. The partners API's cache TTL is read and named in 4c's entry
+(CTO msg 3974). Executor: `0.7.0_AE_CloudOps~FB1`. The order stays `parked` until `FB-f-17` and `FB-f-18` are applied and the GO.
+Gate limb: the `<decomp_doc>` and `<round>` of a parked order amended by its issuer; no criterion changed.
+
 <status>parked</status>
-<round>3</round>
+<round>4</round>
 <workstream>ACT4BC</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-13</to_id>
 <slot>~22</slot>

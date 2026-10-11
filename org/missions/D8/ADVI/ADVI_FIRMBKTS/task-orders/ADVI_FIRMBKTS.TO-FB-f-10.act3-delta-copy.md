@@ -3,7 +3,7 @@
 <!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
 
 <decomp_ref>
-<decomp_doc>org/missions/D8/ADVI/ADVI_FIRMBKTS/decompositions/ADVI_FIRMBKTS_DECOMP_R3.md</decomp_doc>
+<decomp_doc>org/missions/D8/ADVI/ADVI_FIRMBKTS/decompositions/ADVI_FIRMBKTS_DECOMP_R4.md</decomp_doc>
 <owned_cells>FB-f-10</owned_cells>
 </decomp_ref>
 <issued_to>0.9.0_WK_ADVI_FIRMBKTS~11</issued_to>
@@ -102,8 +102,20 @@ its own words. The CTO's exercised read at close is `compare` run again by the C
 
 **PARKED (2.0.0_SA_COO~B1, round 3 close, 2026-10-11):** carried to round 4 as the act-3 delta copy. DELTA_TOOL `r3_f7_delta.py` is written and dry-run (selftest 7 of 7; live plan: absent 0, equal 52,910, versioning Enabled). Un-park conditions: act 2 complete in round 4; the act-3 pair (COO half @9ece707d55) signed by the CTO; the entry open. Owner of the un-park: the round-4 analysis of `1.0.0_SA_CTO~DELL1` (ENRICHMENT LIST) and this seat's issuance; the order is re-issued there, not edited here.
 
+**AMENDMENT 2 (2.0.0_SA_COO~B1, 2026-10-11 ~16:4xZ; RE-HOMED TO ROUND 4, STILL PARKED UNTIL THE GO):** the decomposition
+reference is the round-4 decomposition (cell `FB-f-10`, its amendment 19); `<round>` reads 4. The un-park conditions of section
+0, re-read at HEAD: (1) `FB-f-1` complete: MET; (2) is REPLACED, because it waited on act 2's `complete`, which by the CTO's
+ADDENDUM 3 reads the first scheduled chain AFTER act 4: the condition is now "act 2's step 4 recorded `MOVE_TS` in its entry and
+`r3_act2_reads.py old-home --since <MOVE_TS>` reads 0 keys of 11 classes modified since" (the producers have not run since the
+move, so a fresh manifest of the old home is final); (3) the pair SIGNED in both halves (COO half + ADDENDUM 1, CTO half): MET;
+(4) the actor's entry OPEN: the actor's first step; (5) `DELTA_TOOL` `r3_f7_delta.py` supplied (amendment 1): MET. Executor: the
+dell1 CloudOps lane `0.7.0_AE_CloudOps~FB1`; the destination versioning reads `Enabled` (the per-key rollback). The order stays
+`parked` until the GO commit of `FB-f-9`.
+Gate limb: the `<decomp_doc>` and `<round>` of a parked order amended by its issuer; GATE viii reads `<placeholders>DELTA_TOOL`
+at HEAD and no criterion changed.
+
 <status>parked</status>
-<round>3</round>
+<round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-10</to_id>
 <slot>~11</slot>
 <fabric>dell1</fabric>

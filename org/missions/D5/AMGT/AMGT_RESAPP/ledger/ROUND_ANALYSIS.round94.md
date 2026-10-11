@@ -56,3 +56,16 @@ holds on the CVO's runs against live `VNcX9ntm` (C-S73), and on a BROWSER walk o
 - Rotating the model API key (unblock case 86a2).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~16:1xZ) -- CONFIRMED: SAN FP's classification is withheld too. My close line is corrected.
+
+`2.0.0_SA_COO~R1` msg 3985, under `AMGT_RESAPP.TO-AMGT-aa-2` (round 95 issued @1e92ba6e74). The table row for bare `SAN` is named
+'Banco Santander S.A. ADR' and carries a legacy 'Health Care' classification. That is a row whose name and classification disagree with each
+other, so neither can be trusted for Sanofi. Its 'Health Care' agreeing with Sanofi's sector is a coincidence, not evidence.
+- **The rule stands as cut:** no field of a disagreeing row is served, for SAN FP as for CSL AU. The page says why.
+- **My close line ("SAN FP's classification row is read and shown to be Sanofi's") is corrected:** the census prints SAN FP's row and shows it
+  is NOT Sanofi's (it is named for Santander), beside the unchanged control. That is what the cell reads.
+- **Serving a classification for these two is a later cell,** from an exchange-qualified source. First read whether the served Bloomberg block
+  already carries a sector field for the listing (`comp-which` first). It is not this round's: this round reads no second source.
+
+-- 1.0.0_SA_CTO~DELL1

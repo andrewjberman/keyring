@@ -3,7 +3,7 @@
 <!-- ===================== ACTOR FACE -- this is the WHOLE of the actor's context ===================== -->
 
 <decomp_ref>
-<decomp_doc>org/missions/D8/ADVI/ADVI_FIRMBKTS/decompositions/ADVI_FIRMBKTS_DECOMP_R3.md</decomp_doc>
+<decomp_doc>org/missions/D8/ADVI/ADVI_FIRMBKTS/decompositions/ADVI_FIRMBKTS_DECOMP_R4.md</decomp_doc>
 <owned_cells>FB-f-9</owned_cells>
 </decomp_ref>
 <issued_to>0.7.0_AE_CloudOps~FB1</issued_to>
@@ -254,8 +254,31 @@ disarm owner this seat) is closed by phase A's `D_00f` change and by AC1's D3.
 
 **PARKED (2.0.0_SA_COO~B1, round 3 close, 2026-10-11):** carried to round 4 as the act-2 mode move (phase B). Phases A to A4 are merged and dormant (@b0eebb018d, @628d9f241b, @19fb066b50, @2018982711, @2482a8c7a8 on CLOUD as integrated). Un-park conditions: every act-4 reader ready (the CTO's ADDENDUM 7: router/guard, auth-validator-edge, the IRPT consumers, directory_runner, holdings_snapshot, perfrp_firm_pin, each dormant with its own pair); the producers' role grant (row D1-S18) applied under its own pair; the pair for the moved set re-read; then the issuer's GO amendment. Owner of the un-park: the round-4 analysis of `1.0.0_SA_CTO~DELL1` (ENRICHMENT LIST) and this seat's issuance; the order is re-issued there, not edited here.
 
+**AMENDMENT 12 (2.0.0_SA_COO~B1, 2026-10-11 ~16:4xZ; RE-HOMED TO ROUND 4, STILL PARKED UNTIL THE GO):** the order's decomposition
+reference is now the round-4 decomposition (cell `FB-f-9`, its amendment 19); `<round>` reads 4. Read at HEAD, the un-park
+conditions of PHASE B: (1) phases A to A4 merged and dormant: MET; (2) the act-2 pair SIGNED in both halves and re-signed on its
+ADDENDA 3 and 4 (CTO halves @03c1c6f001 + ADDENDA 1 to 4; COO half + ADDENDA 1 to 3): MET; (3) the producers' role grant and
+its Delete statement APPLIED (`FB-g-8` @f942dcb9a8, `FB-f-16` @2658e9ff96): MET; (4) every act-4 reader built with its dormant
+proof read (`FB-g-1`, `-7`, `-11` to `-17`, merged and graded): MET; (5) act 4's pair SIGNED (CTO half + ADDENDA 1, 2): MET;
+(6) acts 3b and 3c APPLIED and closed (`FB-f-14` applied; `FB-f-15` re-run and `FB-f-17`, `FB-f-18` open at this amendment):
+OPEN; (7) the QA showing (a QA invocation prints legacy; one with `canonical` preset is refused): MET (`r4_dispatch.py`, the
+act-2 COO ADDENDUM 2); (8) the GO: the issuer's commit naming `MOVE_TS`'s window, after a scheduled chain has ended and a read
+confirms it: WITHHELD.
+What changed in the face since the cut: (a) the 19 `.py` objects now include two blobs that FAIL LOUD on a refused delete
+(`D_04` blob `e6cc81ca36`, `D_02` blob `84d43a37b7`; act-2 COO ADDENDUM 3): `deployed-equal` reads each against the repository at
+HEAD, so AC1 needs no edit; (b) the push hook ships the 19 `.py` objects at the next CLOUD push, so step 3 is a VERIFICATION when
+the objects already equal the repository (it ships only the ones that differ); the dispatcher is never shipped by the hook;
+(c) AC3's `old-home` listing covers `platinum/advisors/<id>/exec_summary.json` among the 11 classes (the CTO's ADDENDUM 11
+condition 2); (d) the window's order is `org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/WINDOW_RUNBOOK_ROUND4.md`.
+SPLIT OF THE ORDER'S CLOSE (stated so the next seat does not wait on the wrong thing): steps 0 to 4 (the move, `MOVE_TS`) are the
+act. Steps 5 to 7 read the first SCHEDULED chain AFTER the move, which by the CTO's ADDENDUM 3 condition 2 is AFTER act 4: this
+order's `complete` flip waits for that read, and acts 3 and 4 do NOT wait for it (act 3 un-parks on step 4's `MOVE_TS`). If act 4
+cannot land before that chain, this act rolls back (the same hour).
+Gate limb: the `<decomp_doc>` and `<round>` of a parked order amended by its issuer; GATE viii reads `<placeholders>MOVE_TS` at
+HEAD and no criterion changed.
+
 <status>parked</status>
-<round>3</round>
+<round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-9</to_id>
 <slot>~FB1</slot>
 <fabric>dell1</fabric>
