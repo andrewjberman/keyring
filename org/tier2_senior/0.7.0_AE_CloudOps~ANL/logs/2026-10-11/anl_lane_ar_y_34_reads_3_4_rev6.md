@@ -46,6 +46,15 @@ runs printed the same outcomes (versions 3 -> 3, all reads true); only the secon
 | 4_route | 5 APIs, 133 routes scanned (denominator), `/original` declared 1 time |
 | write-nothing | 3 versions before, 3 after, on three artifact directories (1 key each, 1 page each) |
 
+**AMENDMENT 1, Step 4 (unreadable-composition census).** 1869 irpt-requests items scanned over every page (consistent read, all
+tenants); 49 carry a sort key `analysis#REQ-<24 hex>#1` (49financial 9, cottonwood 39, inflection 1). Each composition was read by a
+direct object read of the version its artifact index row names, hash-checked against the record's ref, then the rule of
+`owned_requests.py:198-214` applied (schema_version equals `irpt-analysis-composition.v1`, `browser` present, `client_id` null or
+a string). Result: 0 unreadable of 49, 0 unfetchable, 0 in every tenant. The marker is still right and the number is 0. A direct
+read does not exercise the retention-liveness check the reader's `artifacts.get` also makes, so a composition whose retention row is
+absent would count readable here; that is outside the rule the order names. Measured anyway: the composition retention row of
+49 of 49 requests is present and unexpired (49 LIVE, 0 ABSENT, 0 EXPIRED), so the caveat moves nothing.
+
 Scope of the version count: the three artifact directories the `original()` code reads for this request in `opal-data-irpt`
 (request_compositions, normalized_portfolios, original_holdings, each under `irpt/49financial/state/`). The retained original
 is one of the three keys; the other two are what the route reads on the way. A tenant-wide prefix was not counted because other

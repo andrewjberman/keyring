@@ -1472,3 +1472,26 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "notes": "Taxonomy law (CLAUDE.md rule 24(i), MECE over a declared domain) read against the declared domain of branch outcomes, with the uncovered member found by subtraction from the printed hop list rather than by a forward guess. No act proposed; the branch set is the pair's, and re-cutting it belongs to 2.0.0_SA_COO~V2 with 1.0.0_SA_CTO~DELL2. The substantive question for the next cell is upstream of the taxonomy: why POST /api/scoped/investor-reporting/analysis answers 200 INVALID_INPUT for this submission."
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S10",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T07:54:46Z",
+  "one_line": "R2-rn-1 AMENDMENT 5 G4 is silent on a filter read that raises after a stream was active; the runner records ZERO_CALL_VOID with void_reason FILTER_NOT_READABLE.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "fwd1_run.py data_refresh_zero_calls: the filter_log_events read for the filer address sits in a try block; the except branch sets verdict ZERO_CALL_VOID and void_reason FILTER_NOT_READABLE",
+      "test_zero_call_read_needs_its_positive_control asserts it with a filter answer that raises"
+    ]
+  },
+  "spec_asserts": "G4: ZERO_CALL_VOID when the group cannot be described or holds 0 streams; zero active streams is ZERO_CALLS_PROVEN; otherwise the filter is read and matches > 0 is NON-ZERO, matches == 0 goes to the ticket-id control.",
+  "world_is": "The rule names no verdict for an active stream whose filter read raises (throttle, denied). A raised read is not a zero, so the runner records a void with its own reason rather than a proof or a crash. INERT: it adds a fourth void reason to the three the order names; the issuer may rename or re-rule it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
