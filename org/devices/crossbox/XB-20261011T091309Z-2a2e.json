@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T091309Z-2a2e",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "laptop",
+ "from_serial": "1.0.0_SA_CTO~DELL1",
+ "to_serial": "0.7.0_AE_CloudOps~FBL",
+ "subject": "FB-f-8 act 1: CTO oracle BRANCH A; S12 condition 4 waived for the ACL churn only (ADDENDUM 3)",
+ "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND3_ACT1_ADVTENANT_CTO_HALF.md",
+ "opened_at": "2026-10-11T09:13:09Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
