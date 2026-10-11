@@ -25712,3 +25712,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-W284-S1 -- INSTRUMENT: the one-price-per-CUSIP rule of the existing close-anchor sweep does not hold; IB-pr-425 grades every row
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W284-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~284",
+  "surfaced_at": "2026-10-11T10:56:27Z",
+  "one_line": "The existing close-anchor instrument keeps ONE price per CUSIP (last row wins), but a CUSIP in the blackdiamond_z09 silver carries different row prices on 50 of 85 graded days; the S252 minority is mostly rows inside securities, not whole securities, so IB-pr-425 grades every row and decides a security-day by a stated precedence. S3 reads went through boto3 (as the existing instrument does), not the .tools/aws CLI shim.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "partition_close_anchor_sweep.py @953d34c9bb: px[c.strip()] = mv / u overwrites per CUSIP; 9 of 1,151 CUSIPs carry more than one distinct row price at date=2026-09-24 (read from the cached partition)",
+      "IB123-1_s252_all_partitions.json days[]: mixed_own_and_prior is non-zero on 50 of 85 graded days, up to 285 securities (2026-10-01); prior_close_every_row is 1.8 percent at the median against 5.9 percent for any-row",
+      "s252_all_partitions.py docstring states the precedence (any row at the prior close, else any at the own close, else neither) and reports both bounds on every day"
+    ]
+  },
+  "spec_asserts": "The order and the declaration treat a partition as holding one close per security, and the existing sweep is the instrument to extend ('Use the tolerance the existing instrument uses').",
+  "world_is": "Tolerance is unchanged (1e-4 relative). The per-security price rule could not be kept: it makes the count depend on row order. The old S252 counts (0 to 22 per day) are therefore not comparable to this cell's and were not re-run. The AWS shim is a CLI wrapper; parquet reads need an object body, so boto3 with the same ambient credentials was used, read-only (list and get).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
