@@ -4,7 +4,7 @@
 {
  "project": "ADVI_FIRMBKTS",
  "directive": "D8",
- "fabric": "laptop",
+ "fabric": "dell1",
  "prd_version": "v1.3",
  "step": 4,
  "brief_ref": "docs/briefs/d8-legacy-firm-buckets-migration-brief-20260913.md@2b64208047",
