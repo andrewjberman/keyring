@@ -4,7 +4,7 @@
 <issued_to>0.9.0_WK_MDPF_HEALGAP~7</issued_to>
 <issued_by>2.0.0_SA_COO~G1</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -30,25 +30,33 @@ event are NOT changed. Nothing is chained off the runner's success: both fires a
   `bronze/rebalancer_models/*` and `bronze/rebalancer_model_detail/*` and has NO `s3:ListBucket`.
 - `infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py`: `lambda_handler` passes no event field to
   `producer.main`.
-- **Why a ListBucket is needed:** without `s3:ListBucket`, a HEAD on an ABSENT key answers 403, indistinguishable from a missing grant.
-  The grant added here is ONE prefix-conditioned `ListBucket` on the runner's `meta/` prefix, so an absent stamp reads 404 and a grant
-  fault stays loud.
+- **AMENDMENT A2 (issuer, 2026-10-11 ~04:5xZ, after the CTO half refusal msg 3485): the stamp is read by a LISTING, not a HEAD.**
+  Round-3 commit `85fe77beb7` merged a HEAD-based handler and a `GetObject` + prefix-conditioned `ListBucket` pair. A `s3:prefix`
+  condition is populated only on a LIST request: a HEAD on an absent key therefore reads 403 and `STAMP-ABSENT` would never log.
+  The fix, in this order and not a new cell: the handler calls `list_objects_v2(Prefix=<exact stamp key>, MaxKeys=1)` and reads
+  presence from `Contents`; the role gets ONE statement, `s3:ListBucket` on the bucket with `s3:prefix` = `<meta prefix>*`; the
+  `GetObject` statement is REMOVED (the stamp's content is never read, so no object grant is needed). A listing on an absent key
+  returns an empty result, so an absent stamp is logged and a missing grant raises 403 and stays loud.
 - **Why the key is not typed in the handler:** the naming gate refuses a new hand-kept `cottonwood` literal. The handler DERIVES the
   bucket and the prefix from the producer module's own constants (`producer.ASSETS_BUCKET`, `producer.ROSTER_KEY`). The new rule's name
   is built by the `opal_name` module, never typed.
 
-**Build -- the issuer prepared and pre-validated two reference patches against HEAD (they apply cleanly to a pristine checkout and
-every criterion below reads OK on them). Apply them, run the criteria, and fix minimally only if something differs in your tree:**
-1. `git apply org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_PATCHES/t9_producer_tf.patch` -- the Terraform: a `locals`
-   `cot_meta_prefix`, two IAM statements (`ReadRunnerCompleteStamp` GetObject on `meta/*-complete.json`; `ListStampPrefix` ListBucket on
-   the bucket with `StringLike s3:prefix = [local.cot_meta_prefix]`), the `module "stamp_gated_rule_name"` (system `etfs`, scope
-   `cottonwood`, function `satellites-registry-producer`, qualifier `stamp-gated`, kind `daily`, built name
-   `etfs-cot-satellites-registry-producer-stamp-gated-daily`), the second rule `cron(15 13 * * ? *)` whose target carries
-   `input = jsonencode({ require_stamp = true })`, its permission, and the amended "NO ListBucket" comment.
-2. `git apply org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_PATCHES/t9_handler.patch` -- the handler: on
-   `event.get("require_stamp")` only, HEAD `<prefix>/meta/<today UTC>-complete.json` at CALL time; 404 / NoSuchKey / NotFound -> ONE
-   log line beginning `STAMP-ABSENT`, return without calling `producer.main`; any other error re-raises. With no `require_stamp` the
-   handler makes NO S3 call and behaves exactly as at the base.
+**Build -- the tree you start from already carries the round-3 v1 change (merged at `85fe77beb7`). The issuer prepared and
+pre-validated two v2 reference patches against that HEAD (they apply cleanly to a pristine checkout and every criterion below reads
+OK on them). Apply them, run the criteria, and fix minimally only if something differs in your tree:**
+1. `git apply org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_PATCHES/t9_v2_producer_tf.patch` -- the Terraform: removes
+   the `ReadRunnerCompleteStamp` GetObject statement, makes the `ListStampPrefix` condition `s3:prefix = ["${local.cot_meta_prefix}*"]`
+   (the listing's Prefix is the exact stamp key, under `meta/`), and rewrites the "ONE EXCEPTION" comment. The rule, target,
+   permission and the `opal_name` module call stay as merged.
+2. `git apply org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_PATCHES/t9_v2_handler.patch` -- the handler: on
+   `event.get("require_stamp")` only, `list_objects_v2(Bucket=producer.ASSETS_BUCKET, Prefix=<prefix>/meta/<today UTC>-complete.json,
+   MaxKeys=1)` at CALL time and an exact-key match on `Contents`; not listed -> ONE log line beginning `STAMP-ABSENT`, return
+   without calling `producer.main`; an AccessDenied raises. No `head_object`/`get_object`, and the now-unused `ClientError` import is
+   removed. With no `require_stamp` the handler makes NO S3 call and behaves exactly as at the base.
+3. Your earlier proof instance for this order was VALID against the v1 criteria: rebuild it for the same three criterion ids against the
+   current checks (the checks changed: `hg_t9_stamp_gate.py` has five arms; `--t9-iam` reads the ListBucket statement exactly),
+   re-validate, and flip the order `complete` in the same commit as the instance. Your prior commits `d90794efd4` and `334c1287ac` are
+   the inherited state; the surprise rows `MDPF_HEALGAP-D1-W7-S1..S4` are filed and stay; add a new row only for a new finding.
 
 Printed names (builder output, rule 30): `etfs-cot-satellites-registry-producer-stamp-gated-daily` (`python lib/opal_naming.py` `name()`
 over system `etfs`, scope `cottonwood`, function `satellites-registry-producer`, qualifier `stamp-gated`, kind `daily`). Confirm the
@@ -60,7 +68,7 @@ module's output equals it: `terraform init` and `plan` are NOT yours, so confirm
 `HG3-t9-AC1` -- the existing rule stays at `cron(0 7 * * ? *)`; exactly one other rule at `cron(15 13 * * ? *)` targets the producer, is named by the `opal_name` module and carries a permission.
 
 <criterion id="HG3-t9-AC2" cell_refs="HG-t-9"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_CHECKS/hg_r3_rules.py --t9-iam</invocation><expect>T9IAM-OK</expect></criterion>
-`HG3-t9-AC2` -- the role gains GetObject on the stamp pattern and one prefix-conditioned ListBucket and nothing wider (no bare `meta/*`, no Put or Delete on the assets bucket).
+`HG3-t9-AC2` -- the role gains exactly one ListBucket statement (Resource the bucket ARN, `s3:prefix` = `blackdiamond/cottonwood/meta/*`), NO GetObject or any resource under `meta/`, and no Put or Delete on the assets bucket.
 
 <criterion id="HG3-t9-AC3" cell_refs="HG-t-9"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_CHECKS/hg_t9_stamp_gate.py</invocation><expect>GATE-OK</expect></criterion>
 `HG3-t9-AC3` -- four stub arms on the handler: no event field -> no S3 call and the producer runs; stamp present -> the producer runs; 404 -> one `STAMP-ABSENT` line and no rebuild; 403 -> raises.

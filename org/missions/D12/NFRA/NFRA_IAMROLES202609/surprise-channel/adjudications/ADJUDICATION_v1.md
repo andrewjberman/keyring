@@ -977,3 +977,164 @@ is written beside it on purpose.
   }
 ]
 ```
+
+---
+
+## ROUND 6 -- L8 + L9 (C-S28 to C-S33)
+
+**By:** `3.0.0_SA_CVO~Z`, 2026-10-11 ~04:4xZ, on `2.0.0_SA_COO~ZI` msg 33174 (`ledger/COMPLETION_REPORT.round6.json` @dfe1a35d13; 4 of 4 terminal, proofs VALID). AC4 x4 graded at C-S28 to C-S31; all
+17 round-6 rows (Z-S21 to Z-S37) dispositioned at C-S32 and C-S33. The slug is `remediations/REMEDIATION_v6.Z.md`.
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S28",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T04:40Z",
+    "one_line": "L9 grade, TO-IAM-w-1 AC4 (judgment): PASS -- the apply moved custody without moving a permission (CloudTrail: TagRole only), and the survey named every tag the apply wrote before the pair was signed.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-w-1 AC4: did the apply move custody without moving a permission, and did the survey name every tag the apply wrote before the pair was signed?",
+    "world_is": "PERMISSIONS: in CloudTrail since 2026-10-09, opal-smartx-lambda-role show exactly one IAM write each, a TagRole, and no policy, trust or attachment write; the account-wide TagRole count is 5, the five adopted roles. tag authorization on two planes: the survey's get-account-authorization-details sweep (identity and trust policies) finds 0 aws:PrincipalTag conditions; this seat's comp-find --corpus aws 'PrincipalTag' over the served graph (2894 nodes, vintage 2026-10-11 04:06:44Z) finds 0, with the control 'SecureTransport' hitting bucket policies, so the graph models S3 resource policies. Not covered by either: KMS key and Secrets Manager resource policies, unless the graph models them. TAGS: live list-role-tags for opal-smartx-lambda-role reads {Environment=Production, ManagedBy=Terraform, Project=OpalPortal, System=SmartXPipeline}, which equals the tag delta PLAN_SURVEY_family_b.md names. ORDER: the survey landed @4dff2b348a (2026-10-09 18:46Z), before the pair (COO @f2c325cac8 19:10Z, CTO @f5444083a8 19:30Z). The scoped -target apply (A2-r6) kept the module's three pre-existing Lambda drifts out of the act; Z-S21 carries them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudTrail lookup-events by ResourceName since 2026-10-09T00:00Z, auto-paginated: each of the five adopted roles shows exactly ONE event, TagRole (opal-smartx-lambda-role, bd-merge-daily-lambda-role, bd-pipeline-task-role, portfolio-management-lambda-role, codebuild-semantic-clustering-role); account-wide TagRole since 10-09 = 5, the same five. No PutRolePolicy, DeleteRolePolicy, AttachRolePolicy, DetachRolePolicy or UpdateAssumeRolePolicy on any of them",
+        "tag authorization on two planes: the survey's get-account-authorization-details sweep (identity and trust policies) finds 0 aws:PrincipalTag conditions; this seat's comp-find --corpus aws 'PrincipalTag' over the served graph (2894 nodes, vintage 2026-10-11 04:06:44Z) finds 0, with the control 'SecureTransport' hitting bucket policies, so the graph models S3 resource policies. Not covered by either: KMS key and Secrets Manager resource policies, unless the graph models them",
+        "aws iam list-role-tags per role, read 2026-10-11 ~04:3xZ",
+        "deliverables/0.7.0_AE_CloudOps~IR/round6/PLAN_SURVEY_family_b.md"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-w-1 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S29",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T04:40Z",
+    "one_line": "L9 grade, TO-IAM-w-2 AC4 (judgment): PASS -- the apply moved custody without moving a permission (CloudTrail: TagRole only), and the survey named every tag the apply wrote before the pair was signed.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-w-2 AC4: did the apply move custody without moving a permission, and did the survey name every tag the apply wrote before the pair was signed?",
+    "world_is": "PERMISSIONS: in CloudTrail since 2026-10-09, bd-merge-daily-lambda-role and bd-pipeline-task-role show exactly one IAM write each, a TagRole, and no policy, trust or attachment write; the account-wide TagRole count is 5, the five adopted roles. tag authorization on two planes: the survey's get-account-authorization-details sweep (identity and trust policies) finds 0 aws:PrincipalTag conditions; this seat's comp-find --corpus aws 'PrincipalTag' over the served graph (2894 nodes, vintage 2026-10-11 04:06:44Z) finds 0, with the control 'SecureTransport' hitting bucket policies, so the graph models S3 resource policies. Not covered by either: KMS key and Secrets Manager resource policies, unless the graph models them. TAGS: live list-role-tags for bd-merge-daily-lambda-role and bd-pipeline-task-role reads {Environment=Production, ManagedBy=Terraform, Project=OpalPortal, System=BDPipeline} on both, which equals the tag delta PLAN_SURVEY_family_a.md names. ORDER: the survey landed @d27dec64c2 (2026-10-10 22:56Z), before the pair (COO @1ad6f36ca2 23:52Z, CTO @dadc1ec69a 23:57Z). The survey's own warning (bd-pipeline's default_tags would overwrite System=CottonwoodPipeline on the cot-exporter instance, which a tag-conditioned grant uses) did not materialise: i-0643a5bee8a8feabf still reads System=CottonwoodPipeline, and the only two EC2 CreateTags events since 10-09 are DataLifecycleManager snapshot tags.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudTrail lookup-events by ResourceName since 2026-10-09T00:00Z, auto-paginated: each of the five adopted roles shows exactly ONE event, TagRole (opal-smartx-lambda-role, bd-merge-daily-lambda-role, bd-pipeline-task-role, portfolio-management-lambda-role, codebuild-semantic-clustering-role); account-wide TagRole since 10-09 = 5, the same five. No PutRolePolicy, DeleteRolePolicy, AttachRolePolicy, DetachRolePolicy or UpdateAssumeRolePolicy on any of them",
+        "tag authorization on two planes: the survey's get-account-authorization-details sweep (identity and trust policies) finds 0 aws:PrincipalTag conditions; this seat's comp-find --corpus aws 'PrincipalTag' over the served graph (2894 nodes, vintage 2026-10-11 04:06:44Z) finds 0, with the control 'SecureTransport' hitting bucket policies, so the graph models S3 resource policies. Not covered by either: KMS key and Secrets Manager resource policies, unless the graph models them",
+        "aws iam list-role-tags per role, read 2026-10-11 ~04:3xZ",
+        "deliverables/0.7.0_AE_CloudOps~IR/round6/PLAN_SURVEY_family_a.md"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-w-2 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S30",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T04:40Z",
+    "one_line": "L9 grade, TO-IAM-w-3 AC4 (judgment): PASS -- the apply moved custody without moving a permission (CloudTrail: TagRole only), and the survey named every tag the apply wrote before the pair was signed.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-w-3 AC4: did the apply move custody without moving a permission, and did the survey name every tag the apply wrote before the pair was signed?",
+    "world_is": "PERMISSIONS: in CloudTrail since 2026-10-09, portfolio-management-lambda-role and codebuild-semantic-clustering-role show exactly one IAM write each, a TagRole, and no policy, trust or attachment write; the account-wide TagRole count is 5, the five adopted roles. tag authorization on two planes: the survey's get-account-authorization-details sweep (identity and trust policies) finds 0 aws:PrincipalTag conditions; this seat's comp-find --corpus aws 'PrincipalTag' over the served graph (2894 nodes, vintage 2026-10-11 04:06:44Z) finds 0, with the control 'SecureTransport' hitting bucket policies, so the graph models S3 resource policies. Not covered by either: KMS key and Secrets Manager resource policies, unless the graph models them. TAGS: live list-role-tags for portfolio-management-lambda-role and codebuild-semantic-clustering-role reads {Environment, ManagedBy, Project=OpalPortal} (no System) and {..., System=NewsPipeline} respectively, which equals the tag delta PLAN_SURVEY_family_e.md names. ORDER: the survey landed @8361e51c56 (2026-10-10 23:24Z), before the pair (COO @9586e0106b 23:30Z, CTO @8453026444 23:43Z). The survey caught that portfolio-management declares no System key, and the live tags agree.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudTrail lookup-events by ResourceName since 2026-10-09T00:00Z, auto-paginated: each of the five adopted roles shows exactly ONE event, TagRole (opal-smartx-lambda-role, bd-merge-daily-lambda-role, bd-pipeline-task-role, portfolio-management-lambda-role, codebuild-semantic-clustering-role); account-wide TagRole since 10-09 = 5, the same five. No PutRolePolicy, DeleteRolePolicy, AttachRolePolicy, DetachRolePolicy or UpdateAssumeRolePolicy on any of them",
+        "tag authorization on two planes: the survey's get-account-authorization-details sweep (identity and trust policies) finds 0 aws:PrincipalTag conditions; this seat's comp-find --corpus aws 'PrincipalTag' over the served graph (2894 nodes, vintage 2026-10-11 04:06:44Z) finds 0, with the control 'SecureTransport' hitting bucket policies, so the graph models S3 resource policies. Not covered by either: KMS key and Secrets Manager resource policies, unless the graph models them",
+        "aws iam list-role-tags per role, read 2026-10-11 ~04:3xZ",
+        "deliverables/0.7.0_AE_CloudOps~IR/round6/PLAN_SURVEY_family_e.md"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-w-3 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S31",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T04:40Z",
+    "one_line": "L9 grade, TO-IAM-w-4 AC4 (judgment): PASS -- both DEFERs (rows 5 and 16) say what would reopen them and, usefully, what would NOT.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-w-4 AC4: does each DEFER say what would reopen it, so it is a decision on the record and not a parking lot?",
+    "world_is": "DEFER_ROWS_5_16.md: row 5 (finbert-ec2-backfill-role) reopens when 'a finbert backfill recurs', and not on the passage of time or a tidy-up sweep. Row 16 (workspace-sync-lambda-role) reopens when 'a module comes to own the function', and not on a bare name reference. Each quotes the CTO's ruling, names its owner (0.7.0_AE_CloudOps~Z) and a one-line reason. Carried: the reopen conditions are events no mechanism watches, so they reopen only when someone notices. That is the nature of a DEFER, and acceptable under the criterion as written.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.7.0_AE_CloudOps~IR/round6/DEFER_ROWS_5_16.md:30-84 read whole"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-w-4 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S32",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T04:40Z",
+    "one_line": "Round 6 L8: twelve rows DISMISSED -- the BLOCKING/ARMED hazards each disarmed by a committed amendment or fix (Z-S22, Z-S26, Z-S27, Z-S29), the worker's reverted commit (Z-S35), and the issuer's seven ruling rows; Z-S37 is OVERTAKEN.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The L8 compile dispositions every undispositioned BLOCKING or ARMED row of the round.",
+    "world_is": "Z-S22 (wrong deliverables path) is disarmed by A2-r6 (Z-S24). Z-S26 (override audit file outside the lane) is fixed at source @b7c27ef5b0 (Z-S30). Z-S27 (remote state held the role before its declaration drained) is ruled by Z-S28: commit the .tf before any import, then apply and drain in the same session; w-2 and w-3 followed it. Z-S29 (bd-pipeline could not plan) is disarmed by the can() guard @a18b96fd5d, re-run PASS by the issuer (Z-S33). Z-S35: a premature worker commit, reverted before any drain. Rulings Z-S24, Z-S28, Z-S30, Z-S31, Z-S33 and Z-S36 carry no defect of their own. Z-S37 is OVERTAKEN, not followed. At 02:55Z it recorded the R20 ask WITHDRAWN and w-2 waiting on LGIC_ENFORCE FWD-8. At ~03:2xZ Andrew answered call 5bdf '4.) Yes we can make the exception for now' (ANDREW_DIRECT_20261011_032xZ_OPEN_CALLS_ANSWERED_ITEMS_1_TO_9.md @5e10dd2dc5, item 4, read at its pin by this seat). The CTO landed R20 entries NFRA-IAMROLES-R20-01/02 @bd2cacee69 at 03:29Z, and w-2 applied under them. The channel never recorded that reversal; this row does.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S22",
+      "NFRA_IAMROLES202609-Z-S26",
+      "NFRA_IAMROLES202609-Z-S27",
+      "NFRA_IAMROLES202609-Z-S29",
+      "NFRA_IAMROLES202609-Z-S35",
+      "NFRA_IAMROLES202609-Z-S24",
+      "NFRA_IAMROLES202609-Z-S28",
+      "NFRA_IAMROLES202609-Z-S30",
+      "NFRA_IAMROLES202609-Z-S31",
+      "NFRA_IAMROLES202609-Z-S33",
+      "NFRA_IAMROLES202609-Z-S36",
+      "NFRA_IAMROLES202609-Z-S37"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "investigation rows Z-S22 to Z-S37 (read 2026-10-11 ~04:3xZ)",
+        "git log bd2cacee69: 2026-10-10T23:29:41-04:00 1.0.0_SA_CTO~Z waiver(naming-gate): R20 entries NFRA-IAMROLES-R20-01/02",
+        "org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261011_032xZ_OPEN_CALLS_ANSWERED_ITEMS_1_TO_9.md @5e10dd2dc5 item 4",
+        "ledger/COMPLETION_REPORT.round6.json @dfe1a35d13 FWD-4 note"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each hazard is disarmed by a committed amendment or fix; the rulings carry no defect; Z-S37 is overtaken by Andrew's word and the R20 entries."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S33",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T04:40Z",
+    "one_line": "Round 6 L8: Z-S21, Z-S23, Z-S25, Z-S32 and Z-S34 GRADUATE to REMEDIATION_v6.Z -- the smartx Lambda drift, two dead grants, the naming gate's pre-image defect, and the 'for now' R20 bridge that expires 2026-12-31.",
+    "class": "OBSERVATION",
+    "spec_asserts": "A standing defect leaves the round as an owned remediation row.",
+    "world_is": "Z-S21: the hazard (code deploys riding an IAM act) was disarmed by scoping, but the three smartx Lambda drifts it exposed stand. Z-S23 and Z-S32: grants pointing at nothing live (an orphan role's S3/secret grants; a live role's NoSuchBucket grant). Z-S25: naming-gate.py decides NEW from the file's pre-image, so an adopted live name reads NEW; the class fix is LGIC_ENFORCE FWD-8 at dell1 (XB-20261010T225240Z-dcb5). Z-S34: w-2's two 'bd' names stand on R20 entries Andrew granted 'for now', with a 2026-12-31 cutoff, so they need either FWD-8 served or a re-decision before then.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S21",
+      "NFRA_IAMROLES202609-Z-S23",
+      "NFRA_IAMROLES202609-Z-S25",
+      "NFRA_IAMROLES202609-Z-S32",
+      "NFRA_IAMROLES202609-Z-S34"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "investigation rows Z-S21, Z-S23, Z-S25, Z-S32, Z-S34",
+        "COMPLETION_REPORT.round6.json surprise_rows_for_l10"
+      ]
+    },
+    "disposition": "GRADUATED"
+  }
+]
+```
+
+-- 3.0.0_SA_CVO~Z

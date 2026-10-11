@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-11T03:36:43Z",
+ "written_at": "2026-10-11T04:52:43Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -1417,7 +1417,7 @@
    "source": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/WORKTREE_GC_ASSESSMENT_20261011.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-11T03:36:41Z",
    "kind": "act",
    "context": "COO~M1 assessed 8 worktrees: unlanded r9 E_18 callers and r8 classification scripts, the rest records, 3-22 uncommitted files each. MSTR~DELL1 holds it as destructive git (msg 3437). Nothing waits on it; disk only.",
@@ -1452,7 +1452,21 @@
      ]
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-11T04:52:43Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_CLUSTER_TICK2_20261011_0357Z.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261011T042747Z-86d7"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261011T042747Z-86d7",
+    "at": "2026-10-11T04:27:47Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
   },
   {
    "id": "dell1-20261011T033643Z-e7f2",
@@ -1502,7 +1516,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-11T04:05:20Z",
+    "by": "0.0.0_AB_MSTR~DELL1",
+    "reason": "client-facing portal PROD promote: /advisor-intelligence carries the ADVI_BILLING fee panel and is in FIRM_ALLOWED_PATHS for all three partner firms; only Andrew's word releases it (laptop CTO msg 108193)"
+   }
   }
  ]
 }

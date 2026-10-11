@@ -202,7 +202,7 @@ one with a named owner"). RETIRE is a classification, not a removal. The 2 DECIS
 two round-1 DECISION rows (FWD-7, FWD-8); no worker adds a third.
 
 # pipeline-override: the one refusal is LIMB PRD_HEADER.fabric='laptop' vs the register's 'dell1'. The register row is the authority since 1.0.0_SA_CTO's L3 re-placement @8afcb0f851; the PRD header repair is the CTO's. Every other limb passed in the issuer's dry run.
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-e-1</to_id>
 <slot>~4</slot>
