@@ -25612,3 +25612,50 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "An untagged complete order of another workstream with a missing or differently named proof instance refuses every round's unscoped close check for the project. Owner of the order: 2.0.0_SA_COO~Y2; owner of the checker: 1.0.0_SA_CTO."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S77",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:35:01Z",
+  "one_line": "L8 round 122 (~P), no judgment criterion: the rollback of the vendor performance release is read live as complete (the adapter no longer runs the release's bytes; the role is back to 7 policies with neither session policy). A correction of this seat's own row D2-S75: that compile read the applied bytes and grants and did not read the release against the ratified ENDPOINT either. Its measured facts stand; it should have asked which outcome the served change serves.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_122_P_DRAIN_END_AND_CORRECTION_20261011.md (msg 4726)",
+      "this seat's live reads 2026-10-11T10:35:01Z: irpt-performance-adapter CodeSha256 9kYLdR64...W31A=, LastModified 2026-10-11T10:03:25Z (it read OF+8j4uc... at 09:41Z); irpt-performance-adapter-role holds 7 inline policies and neither session policy (it held 9 at 09:41Z)",
+      "investigation row IRPT_BCKEND-D2-S75"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself. ENDPOINT FWD-3 and PRD ADDENDUM v0.19, as the packet quotes them: a vendor figure is only a comparison point.",
+  "world_is": "Rolled back, read live. Not read by this seat: the adapter's logs, the full-root plan, the ENDPOINT text itself (quoted from the packet).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S78",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:35:01Z",
+  "one_line": "In the 44 minutes the vendor performance release was live (2026-10-11 09:19Z to 10:03Z), 3 requests were served a vendor-calculated return that the ratified ENDPOINT does not admit as FWD-3's figure (the issuer's log read). The use records and retained reports written in that window were not read by anyone and were deliberately kept. Who was shown the figures is inferred, not measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_122_P_DRAIN_END_AND_CORRECTION_20261011.md (msg 4726)",
+      "the packet's section 'What was served while the release was live': 31 log events, 3 served, 2 refused NOT_AUTHORIZED, 1 refused as a repeat; the use records NOT READ"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND ENDPOINT FWD-3: Inflection and Cottonwood are served a performance figure computed by Opal from the account's own end-of-day holdings; a vendor figure is only a comparison point (PRD ADDENDUM v0.19), as the packet quotes.",
+  "world_is": "Three figures were served against that. The retained reports remain in the store; whether any later read can serve them again is not established.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
