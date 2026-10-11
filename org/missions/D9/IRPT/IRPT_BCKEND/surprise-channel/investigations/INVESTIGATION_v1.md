@@ -26230,3 +26230,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Two consequences, one small and one worth a decision. The small one: no grant was sought or added, and no bound was bent -- the read was taken through the instance's own role, which the order names as the read path for that host, and it wrote nothing. The one worth a decision: an operator diagnosing this host cannot see the operational rows that decide its behaviour -- capture_not_before, which gates whether another sign-in can be attempted, and intent_session_refresh, which is the per-job one-shot that bounds lock-out -- without going through the instance. That is a real diagnostic handicap for any cell asked to read this subsystem, and it is the reason this read reports the cooldown's EFFECT, measured five times from journal spacing, rather than the attribute's value. It is not obviously wrong that an operator user lacks the data key; it is a choice, and it should be a deliberate one rather than a surprise met mid-incident. OWNER: 1.0.0_SA_CTO~DELL2 to say whether the operator role should hold kms:Decrypt on that key for read, or whether host-mediated reads are the intended and only path. Nothing here holds the order."
 }
 ```
+
+## IRPT_BCKEND-D2-W288-S2 -- DATA: one valued row with zero Units fits none of the five ungradeable kinds (sixth_reason_rows 1)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W288-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~288",
+  "surfaced_at": "2026-10-11T13:38:17Z",
+  "one_line": "Over the 85 graded days one non-cash row (Units zero, Market Value above zero) fits none of the five ungradeable kinds and has no price; it is counted as sixth_reason_rows 1 and not fitted to a kind.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB127-2_account_day_claims_v035.json sixth_reason_rows: rows 1, account_days 1, rows_by_sign_of_units_and_market_value units_zero_mv_pos 1; the one account-day reads UNGRADEABLE by its other rows (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~288/, this cell's commit)",
+      "probe in ib429_claims_v035.py: non-cash rows typed no_price by IB-pr-429's row_types whose Market Value is non-zero, over the 85 cached partitions, counts only"
+    ]
+  },
+  "spec_asserts": "PRD ADDENDUM v0.35: a row that fits none of the five kinds and still cannot be placed is a sixth reason, counted separately and filed, never fitted to one of the five.",
+  "world_is": "Exactly one row of the 85 partitions has Units 0 and a positive Market Value, is not cash-flagged, carries no usable price, and is neither NO_CUSIP (needs Units above zero) nor NEGATIVE_POSITION. The instrument cannot place it at a close. Rule 4 reads 'rows with no price' as nothing to grade, so it adds no kind. Its account-day reads UNGRADEABLE by other rows, so no claim and no serving count depends on it. Whether a sixth kind is wanted for such rows is not decided here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
