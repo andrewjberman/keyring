@@ -4,12 +4,18 @@
 <issued_to>0.9.0_WK_MDPF_DEMQUE~24</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>9</round>
+**AMENDED by the issuer 2.0.0_SA_COO~Q1, 2026-10-11 ~16:0xZ (row MDPF_DEMQUE-D1-W24-S1, BLOCKING/ARMED, disarm_owner this issuer; issuer defect; no
+criterion and no `<paths>` change):** `demand_queue.draw` skips any request whose id already has a DRAWN ledger row, so the fixed id
+`STANDING-T1-EXTEND` would draw once and then go silent. The request's `request_id` is `STANDING-T1-EXTEND-<frontier>` (the ISO frontier date, a
+new id each trading day); the FILE name stays `Z-STANDING-T1-EXTEND.json` (replaced daily, so the folder holds one). `plan()` returns that id,
+and `test_apply_resets_exactly_the_plan_symbols_and_replaces_the_standing_request_file` also asserts that two applies on different days write two
+different ids into the one file.
 **Directive:** D8 | **Fabric:** dell1 (placement dell1) | **Decomp cell:** `DQ-t-31` (`decompositions/MDPF_DEMQUE_DECOMP.md`, ROUND 9 -- CUT) |
 **outcome_ref:** C-PRICES | **depends_on:** DQ-t-30 (the same worker, second in its queue: `lock.py` carries `trades_through` and `latest_partition` when you start)
 

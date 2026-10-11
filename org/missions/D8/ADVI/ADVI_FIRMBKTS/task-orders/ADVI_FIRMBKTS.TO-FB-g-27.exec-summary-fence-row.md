@@ -76,7 +76,7 @@ commit hash.
 **ISSUER NOTES:** the exec-summary's rows, deferred from act 3b by the CTO's ADDENDUM 11. The apply is act 3c (`FB-f-17`, one
 bucket policy again), inert like 3b, before act 4b. Workstream `EXECROW`. Class WORLD by the path floor.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>EXECROW</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-27</to_id>

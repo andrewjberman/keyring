@@ -26607,3 +26607,50 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The base figure was measured with an unpopulated portal gitlink. A worktree carrying the nested portal checkout the order provisions reads a different consumer fixture, so AC3 as written fails there for a reason that is not this schema. Re-run AC3 where portal/ is empty (the drain's checkout) for the order's figure."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S91",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T16:04:13Z",
+  "one_line": "L8 rounds 135 and 136 (~P), no judgment criterion, nothing applied or served. Read as the ratified-text signer: the sections response schema still admits two closed forms no document fits at once; the Opal form's four members now carry their v2 reference inside an always-true conditional so that the portal's generator can render the file. A validator enforces the same shape as before. The contract now reads less plainly than it means, to suit one consumer's tool; that choice is unruled (row D2-W295-S2). No PRD section moves.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUNDS_135_136_P_DRAIN_END_20261011.md @dc47506c21 (msg 5271)",
+      "this seat's reads 2026-10-11T16:04:13Z of docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json at HEAD: data.anyOf holds 2 forms, each additionalProperties false; the vendor form's six members are v1 $refs; the Opal form requires provider, request_ref, sections and computation_validation, and each of those four carries a plain const or type plus allOf of one {if: {}, then: {$ref into the v2 report schema}}; an empty `if` is always true, so a Draft-07 validator enforces the v2 shape; retained_ref is a v1 $ref in both forms"
+    ]
+  },
+  "spec_asserts": "PRD ADDENDUM v0.28 item 29: the sections answer admits the Opal-made report form. Spine L8 (CLAUDE.md rule 27).",
+  "world_is": "Read from the file at HEAD. Not run by this seat: the generator, the portal tests, the round 136 sizing.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S92",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T16:04:13Z",
+  "one_line": "PRD ADDENDUM v0.37's ratified-text half is REFUSED by this seat on two points. (1) Its safety argument says a witness's error either blanks a day or passes it only by chance. That holds for a wrong price, not for a wrong date label: if the reader labels a fund's value one day off, a prior-close mark equals its day-t bar every time and the day is served on the wrong basis. The only control is an exchange-traded fund; no mutual fund's date label was measured, and mutual funds are what the second witness is for. (2) The text does not say which witness grades a security both carry.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_PRD_v0.37_RATIFIED_TEXT_REVIEW_20261011.md @5810d49063",
+      "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md @8c12f97cc4, ADDENDUM v0.37",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~296/IB136-1_ALL_SECURITIES_NAV_EFFECT_READ.md lines 26 and 40, printed by this seat"
+    ]
+  },
+  "spec_asserts": "ENDPOINT FWD-3 as ADDENDUM v0.34 put it: an account's own end-of-day holdings 'is not met by a basis nobody measured'.",
+  "world_is": "Nothing is stamped or built under the addendum. The PRD reads WITHHELD until the text is repaired and the half signed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

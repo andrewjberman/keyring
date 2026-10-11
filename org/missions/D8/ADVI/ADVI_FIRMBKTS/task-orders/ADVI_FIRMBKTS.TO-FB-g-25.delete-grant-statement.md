@@ -83,7 +83,7 @@ The directories, read from the code and printed: `D_04.client_portal_summary.py:
 `D_02.advisor_client_detail.py:3252-3265` lists `advisor_book_key('_').rsplit('/', 2)[0] + '/'` = `gold/entities/advisors/`.
 Workstream `DELGRANT`. Class WORLD by the path floor, inert until applied.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>DELGRANT</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-25</to_id>
