@@ -4692,3 +4692,32 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W55-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~55",
+  "surfaced_at": "2026-10-11T11:25:50Z",
+  "one_line": "TO-IV-e-99 STOP CLAUSE FIRED before any code: the ratified OwnedAnalysisRequestHistory contract makes unreadable_rows (top level) and client_id + client_claim (every item) REQUIRED, so the two-key answer the order asks the reader to keep admitting is a contract violation; which answer the reader takes is the CTO's ruling. No file edited, no test run.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequestHistory.schema.json:7-11 required [items, next_cursor, unreadable_rows]; :19-24 item required [identity, accepted_at, client_id, client_claim]; additionalProperties false at :6 and :18",
+      "same file :32-39 client_id type [string,null] pattern ^[A-Za-z0-9][A-Za-z0-9_.:-]*$ (null admitted); :40-48 client_claim string enum SELECTED|UPLOAD|UNREADABLE (no null); :60-64 unreadable_rows integer minimum 0 (no null)",
+      "same file :52-58 next_cursor [string,null] minLength 1 maxLength 2048 (required, as the reader already treats it); :13-16 items array maxItems 50",
+      "portal/src/pages/InvestorReporting/contracts/owned-requests.ts:80 (portal 11f25102) readOwnedHistory exact(value,[items,next_cursor]); :83 each item goes through readOwnedRequest whose :61 exact() admits only identity, accepted_at (+comparisons, +composition), so client_id/client_claim on a ROW are refused too (the other lane's fact is CONFIRMED by reading)",
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/OwnedAnalysisRequestHistory.valid.json: instance carries unreadable_rows and client_id/client_claim on both items; there is no two-key fixture in the producer's set, and the .invalid fixture also carries all three members",
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json:7-10 required [identity, accepted_at]; optional comparisons (:61), composition (:84), persist_inputs (:88); client_id and client_claim are NOT members (the history schema's own description at :38 says the single-request read does not carry them). readOwnedRequest has no persist_inputs member (0 occurrences of persist_inputs under portal/src/pages/InvestorReporting at 11f25102): the single-request read would refuse an include=persist_inputs answer; NOT widened here, a separate gap for another cell",
+      "task order TO-IV-e-99 item 2: 'If the contract makes a member REQUIRED, the two-key answer would be a contract violation: in that case STOP with a row before writing any code'"
+    ]
+  },
+  "spec_asserts": "TO-IV-e-99: the reader admits BOTH the two-key answer (live after the rollback) and the contract's answer, 'exactly as the contract types them'; and, if any new member is required, STOP.",
+  "world_is": "The two asks cannot both be met exactly. Contract-exact: all three members required, so the two-key answer is refused (it IS a contract violation: unreadable_rows absent, client_id/client_claim absent). Order-literal: the two-key answer admitted, so the new members are OPTIONAL in the reader, which is looser than the contract. Both are small and both unblock release 5; the choice is whether the portal reader may be more lenient than the ratified schema for the rollback window. This worker has written no code. The ARMED hazard of release 5 is row DSGN_IRPTV1-D2-W53-S43 / IRPT_ANLREQ-D2-S43, not this row.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the next act: 1.0.0_SA_CTO~DELL2 via 2.0.0_SA_COO~D2 -- rule (A) strict: required members, the two-key answer refused (then the rollback to two keys is still unreadable, so release 5's rollback state would stay unreadable until the service returns); or (B) the order's literal both-shapes: optional members in the reader only, each typed as the contract types it when present (client_id string|null with the pattern, client_claim enum, unreadable_rows integer >= 0), and absent stays absent in the carried type. On either rule the item level needs its own reader: readOwnedRequest is shared with the single-request read and must not gain client_id/client_claim there. Unmeasured: the live two-key answer's item shape; no live request made."
+}
+```

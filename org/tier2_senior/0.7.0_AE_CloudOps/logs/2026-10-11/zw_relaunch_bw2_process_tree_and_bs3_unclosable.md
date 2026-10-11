@@ -189,3 +189,31 @@ append the remaining fields verbatim, then regenerated.
 **Still open and owned here:** only HVST-bs-4 step 6, on the driver's own PAIRS completion line. That leg
 is clean at this read -- 11 JOB lines, 0 `rc=3221225794`, 0 `run_id=None` -- and step 5's re-declaration
 is owed if it runs past its 48-hour marker (declared 2026-10-11T04:01:38Z).
+
+---
+
+## Addendum 3, 11:1xZ: the sa leg's pace, measured, and what it does to step 5 and step 6
+
+The r47 sa leg is WORKING, not stalled, and the distinction needed a real instrument rather than a log
+mtime. At 11:09:42Z the log had been quiet 28 minutes, which looks like a hang. It is not: the driver
+(PID 13220) had a live collector child, PID 24132, started 10 seconds before the read. 21 of 107 pairs
+done, 0 `rc=3221225794`, 0 `run_id=None`, marker LIVE.
+
+**A zero of mine was an instrument artifact and is retracted here.** My first child-process check printed
+`children: 0`. Bash expanded `$d` inside the double-quoted PowerShell command before PowerShell saw it,
+so the query asked for the children of an EMPTY set and answered truthfully about nothing. Re-run through
+the PowerShell tool with no bash quoting layer, the answer is 1. A zero from a mangled variable reads
+exactly like a real zero, which is why it was re-measured instead of reported.
+
+**The pace, with its denominator.** Successive run ids 20261011T095255Z, T100909Z, T102810Z give
+inter-pair gaps of 16.2 and 19.0 minutes, mean 17.6 -- over 2 gaps from 3 run ids, which is a SMALL
+sample and is stated as one. At that mean the 86 remaining pairs finish about 2026-10-12T12:25Z, 25.3
+hours out. The declared job's 48-hour marker expires 2026-10-13T04:01Z, so headroom is about 15.6 hours.
+
+Two consequences, both mine:
+- **Step 6 is a DAY out, not hours.** That matters beyond this order: step 6's report to
+  `0.0.0_AB_MSTR~DELL1` is what lets the cycle runner add `sa`, so the issuer's round planning should not
+  expect it today.
+- **Step 5 is a live obligation, not a formality.** 15.6 hours of headroom is real but not large, and any
+  pair hitting the ~15-minute error cooldown pushes the ETA toward the marker. An expired marker exempts
+  nothing, so the reaper would kill a leg that is still working.
