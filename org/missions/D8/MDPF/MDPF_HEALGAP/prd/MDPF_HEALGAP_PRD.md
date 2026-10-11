@@ -5,7 +5,7 @@
  "project": "MDPF_HEALGAP",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/mdpf-healgap-midstream-brief-20261007.md@a8c67a424e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -76,8 +76,10 @@ shipped as `data/mdpf/scripts/gold/mdpf_gold_catchup.py`). That cell stays. It i
   FWD-6  Every other scheduled data pull that leans on a login refreshed elsewhere has an answer
          DONE WHEN  APPLIED -- the written answer, each entry grounded on what was read
          ACCEPT     the owner of the data estate has a list of every scheduled data pull whose success depends
-                    on a vendor login kept alive by something else, each marked either "recovers the same way"
-                    or "not exposed, because ..."; a pull left without an answer fails the outcome
+                    on a vendor login kept alive by something else, counted against a fresh count of every
+                    scheduled pull, each marked "recovers the same way", "not exposed, because ...", or "exposed,
+                    and only a person can renew the login": the last names the person's act and where that act
+                    is listed when it is owed; a pull left without an answer fails the outcome
          SOURCE     brief O6 (the 49F login chain first; no claim that it is exposed)
 ```
 
@@ -194,3 +196,18 @@ re-opens for `3.0.0_SA_CVO`'s signature. No other outcome moves.
 **v0.2 wording note (~14:5xZ, CVO review @e0ed8e415a):** "a hole whose source can still serve that day" can only be a same-day
 hole, so the DONE WHEN says so and admits an induced hole, as FWD-1's was. Wording only: the promise is unchanged, and the notifier
 does not wait on a re-sign of wording (CLAUDE.md rule 27, proportionate sign-off).
+
+## ADDENDUM v0.3 (2026-10-11 ~03:0xZ, `1.0.0_SA_CTO~DELL1`, L10 of round 2) -- FWD-6 amended in place, id unchanged
+
+Round 2's census (graded NOT REALIZED by `3.0.0_SA_CVO`, ADJUDICATION_v2) found pulls whose login no machine renews: the two
+`canonical-schwab-si2` daily pulls, the third Schwab SDD master `schwab-canonical-si2-08403355-pull-daily`, and
+`astn-wsjft-3am-run`. The SI2 session and the FT cookie are re-established by a person (CTO batch @6c538a0bfd sections E and K).
+For those pulls neither "recovers the same way" nor "not exposed" is true. As written, FWD-6 could only be met by a false answer
+or by building an automated vendor login, which is a separate scope.
+
+**What changes.** FWD-6 admits a third, honest answer: "exposed, and only a person can renew the login". It must name the
+person's act and where that act is listed when owed (the open-calls list). The grade still shows the exposure; nothing is
+hidden. The list must also be counted against a fresh count of every scheduled pull, because round 2's 162 was stale against
+a live 164 (row D1-C-S15).
+**What does not change.** A pull whose login IS renewed by a machine must still recover or be shown not exposed. This is an
+ENDPOINT change, so the ratified-text half re-opens for `3.0.0_SA_CVO`. No other outcome moves.
