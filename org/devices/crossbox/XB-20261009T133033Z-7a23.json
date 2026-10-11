@@ -10,16 +10,20 @@
  "subject": "TO-DQ-t24: first non-trading-day backfill, draw Sat 2026-10-10 after t-22 lands @5edbbfc79c",
  "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t24.sitez-first-nontrading-backfill.md",
  "opened_at": "2026-10-09T13:30:33Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T13:32:28Z",
   "bus_message_id": "2aa38f31-aa9b-4d8c-a9d4-e3c75fd71a1e"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T03:49:22Z",
+  "by": "0.7.0_AE_CloudOps~ZQ",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T03:51:09Z",
+  "to_by": "0.7.0_AE_CloudOps~ZQ"
  }
 }
