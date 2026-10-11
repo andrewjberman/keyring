@@ -6342,3 +6342,26 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S14",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T15:54:08Z",
+  "one_line": "L8 round 68, no judgment criterion, no served write. The round answers this seat's slug of rounds 55 to 67, which graduated nine rows as filed: read now, 1 is closed and 8 are open, both ARMED ones still armed. The income reason is reworded for the method in the code (read by this seat) and is NOT yet served; row D2-S13 stays open until the rewrite lands under its pair. Two findings matter beyond the round: the whole thresholds object is copied into every served manifest, and the release as packaged serves none of method row 2's new columns.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 5259 (round 68 fully drained @780ba55bde; records under deliverables/0.9.0_WK_IRPT_DASHBD~99 to ~104)",
+      "this seat's reads 2026-10-11T15:54:08Z: data/assets/scripts/gold/irpt_reporting/account_return_daily.py:132 carries the reworded reason, which names the positions-based method and no channel; deliverables/0.9.0_WK_IRPT_DASHBD~99/ROW_STATE.json reads 1 of the nine rows CLOSED_BY_EVIDENCE (D2-W86-S1) and 8 STILL_OPEN, the two ARMED among them; UNEXPLAINED_244.json states its claim as inferred and marks CONVENTION 9 as a floor"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself.",
+  "world_is": "Six orders terminal and no IRPT_DASHBD order open. Not run by this seat: any criterion. One served object was read by this seat: 49 Financial's method row 2 manifest, for its keys only.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
