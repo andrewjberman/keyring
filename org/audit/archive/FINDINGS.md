@@ -540,3 +540,18 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 <!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/git-author-override-audit.dell#.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\#-#-#T#Z\org_git-author-override-audit.dell#.log -->
 - log: org/git-author-override-audit.dell1.log
 - detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\2026-10-10T201745Z\org_git-author-override-audit.dell1.log
+
+## 2026-10-11T101654Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/git-author-override-audit.laptop.log|baseline missing: C:\dev\ajb_workspace\org\audit\archive\#-#-#T#Z\org_git-author-override-audit.laptop.log -->
+- log: org/git-author-override-audit.laptop.log
+- detail: baseline missing: C:\dev\ajb_workspace\org\audit\archive\2026-08-20T042433Z\org_git-author-override-audit.laptop.log
+
+## 2026-10-11T101654Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/git-author-override-audit.sitez.log|baseline missing: C:\dev\ajb_workspace\org\audit\archive\#-#-#T#Z\org_git-author-override-audit.sitez.log -->
+- log: org/git-author-override-audit.sitez.log
+- detail: baseline missing: C:\dev\ajb_workspace\org\audit\archive\2026-08-20T042433Z\org_git-author-override-audit.sitez.log
+
+## 2026-10-11T101654Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/git-author-override-audit.dell#.log|baseline missing: C:\dev\ajb_workspace\org\audit\archive\#-#-#T#Z\org_git-author-override-audit.dell#.log -->
+- log: org/git-author-override-audit.dell1.log
+- detail: baseline missing: C:\dev\ajb_workspace\org\audit\archive\2026-08-20T042433Z\org_git-author-override-audit.dell1.log
