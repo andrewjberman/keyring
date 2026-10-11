@@ -764,3 +764,29 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "Five of the six differ in lane (39959, 40602, 40786, 40874, 42229); 39887 shares its lane and differs in staged-path count. Separately, the replay measured 40786 as UNATTRIBUTED, not OTHER-ACT: its OVERRIDE (line 40888, n=1) matches no one-file commit by 0.0.0_AB_MSTR, and its two blocked paths were committed by 1.0.0_SA_CTO in 9f01c965cd (00:05:50Z). The tie counts are 19 / 5 / 2, not 19 / 6 / 1."
 }
 ```
+
+## NFRA_GATSCP-D1-S16 -- round-close-check and to-pipeline-gate resolve a proof instance by two different rules
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S16",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T05:45Z",
+  "one_line": "round-close-check.py finds a tree order's proof instance only as deliverables/*/<order stem>.proof_of_spec.json; to-pipeline-gate.py also accepts the path in the order's <proof_of_spec> block. ADVI_FIRMBKTS round 2 flipped 7 orders complete while the close check read PROOF-BAD x7.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/remediations/REMEDIATION_v3.md row ADVI_FIRMBKTS-D1-S10 (CVO, @ff86d9f579)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/R2_CLOSE.md 'What changed at the close' item 1 (seven git mv to the stem, e60140c2d2)",
+      "ADVI_FIRMBKTS rows D1-W7-S3, D1-W8-S1, D1-W10-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "One rule decides whether an order carries a valid proof instance; the complete-flip gate and the round-close check agree on it.",
+  "world_is": "They disagree: a proof named by the order's id passes the flip and fails the close. Remedy (CTO~DELL1 ruling, ADVI_FIRMBKTS ledger/ROUND_ANALYSIS.round2.md section 2 item 5): round-close-check.py adopts to-pipeline-gate.py's resolver (stem, or the proof-block path), build ladder rung 2. Close when both tools accept the same set of instance paths on one fixture."
+}
+```
