@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-11T05:10:32.398752+00:00
-**Status:** OPEN
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / EventBridge rule etfs-cot-satellites-registry-producer-stamp-gated-daily, the first scheduled 13:15Z fire after the 2026-10-11T05:19Z apply (L5 is a read of that fire, not an act this seat owes before it) (held since 2026-10-11T06:23:02.165167+00:00)
 **Deploy:** MDPF_HEALGAP R3 act 1 (HG-t-9 v2): cot-satellites-registry-producer code + inline policy in place, then the 13:15Z stamp-gated rule (3 resources) via safe-apply. CTO half SIGNED @698312232c (msg 3504). Rollback: restore artifact version mgzFeamx2_MIO_R.lBF6IYGUNM5aXcir (CodeSha256 eFToEJ0F..., 2026-09-14T19:50:02Z) and terraform apply of the same targets from 5828c0da8b~1 (removes rule, target, permission and the ListStampPrefix statement)
 **Authored by:** 2.0.0_SA_COO~G1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -25,3 +25,4 @@
 - 20261011T051825Z LEG L2 closed: Built with infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/build_package.py --pin 2e327f9cff (CTO half AD
 - 20261011T052030Z LEG L3 closed: safe-apply -chdir=infra/aws/terraform/cot-pipeline apply of a saved plan, six targets (module.cot_satellites_registry_pr
 - 20261011T052031Z LEG L4 closed: Read live 2026-10-11T05:2xZ. Acc1: Lambda CodeSha256 4DuxxeGxnC5tW/vZyjr8YEAe4zqFM/cieQ8rCvnz6So= == base64 of the build
+- 20261011T062302Z HELD-SOVEREIGN-GATED gate=external/EventBridge rule etfs-cot-satellites-registry-producer-stamp-gated-daily, the fi
