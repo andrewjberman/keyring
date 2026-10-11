@@ -166,7 +166,9 @@ TARGET_REGISTRY_KEYS = {
     # VENDOR_DISPLAY_NAMES (DSGN_IRPTV1 W2-19 / UIC-14, IV-e-117; CTO 102443 "never a hand-typed map"; landed by
     # 1.0.0_SA_CTO 2026-09-30 on 2.0.0_SA_COO~D 103272) -- _blk_vendor_display_names() reads systems.json VENDOR rows only.
     "portal/src/pages/InvestorReporting/header/vendorDisplayNames.generated.ts": ("systems",),
-    LOCALS_PATH: ("scopes", "exemptions", "tiers", "feeds"),
+    # platinum_prefix (ADVI_FIRMBKTS FB-g-13) -- _platinum_prefixes() reads the platinum rows and key() (the source's
+    # systems.json key, the scope's scopes.json long form), and _home_bucket() reads tiers.json (the bucket).
+    LOCALS_PATH: ("scopes", "exemptions", "tiers", "feeds", "platinum_destinations", "systems"),
     BRONZE_HOMES_PATH: ("scopes", "tiers", "feeds"),
     # PLATINUM_DESTINATIONS (ADVI_FIRMBKTS FB-f-9, CTO ADDENDUM 3) -- _platinum_build() reads the row, key() reads
     # systems.json (the source) and scopes.json (the long form), and _home_bucket() reads tiers.json (the bucket).
@@ -1270,6 +1272,31 @@ def _hcl(obj, indent=0):
     return json.dumps(obj)
 
 
+def _platinum_prefixes(reg):
+    """scope long form -> the canonical served-platinum prefix of that scope's bucket (ADVI_FIRMBKTS FB-g-13): the
+    common directory path of every class template _platinum_build() places in the bucket the scope's rows land in,
+    which must end in /platinum/ (RegistryError when it does not). A scope with no platinum row has no entry."""
+    by_bucket = {}
+    for row in _platinum_rows(reg):
+        bucket, tmpl = _platinum_build(reg, row)
+        by_bucket.setdefault(bucket, []).append((lookup(row["scope"], reg)["long"], tmpl))
+    out = {}
+    for bucket in sorted(by_bucket):
+        items = by_bucket[bucket]
+        common = []
+        for segs in zip(*[t.split("/")[:-1] for _s, t in items]):
+            if len(set(segs)) != 1:
+                break
+            common.append(segs[0])
+        prefix = "/".join(common) + "/"
+        if not prefix.endswith("/platinum/"):
+            raise RegistryError("the platinum templates of bucket %s share %r, which does not end in /platinum/"
+                                % (bucket, prefix))
+        for scope in {s for s, _t in items}:
+            out[scope] = prefix
+    return out
+
+
 def _gen_locals(reg, h16):
     scopes = _scopes(reg)
     scope_long = {}
@@ -1296,6 +1323,8 @@ def _gen_locals(reg, h16):
         "  account_id = " + json.dumps(reg["exemptions"]["account_id"]),
         "  # every bronze feed the MDPF pipeline writes by its builder address: feed -> {bucket, key_prefix} (_bronze_homes())",
         "  bronze_homes = " + _hcl(_bronze_homes(reg), 2),
+        "  # every scope the destination registry places: long form -> its bucket's canonical served-platinum prefix (_platinum_prefixes())",
+        "  platinum_prefix = " + _hcl(_platinum_prefixes(reg), 2),
         "}",
     ]
     return "\n".join(parts) + "\n"
