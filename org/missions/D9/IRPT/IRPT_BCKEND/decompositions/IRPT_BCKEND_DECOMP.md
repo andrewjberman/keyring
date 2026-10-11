@@ -2880,3 +2880,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r128/p128_cells.py`: AC1, AC3 and AC4
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~289. Class WORLD by the L6 floor (its paths name infra/); not a direct act. It deploys nothing. The ratified-text
 signer 3.0.0_SA_CVO is told at issuance: the four files are contract files.
+
+## 122. ROUND 129, WORKSTREAM ~P (2026-10-11 ~12:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 4916, URGENT)
+
+The resident on the YCharts host refused a request on 2026-10-11 with CAPTURE_FAILED:AUTH_FAILED:NO_AUTHENTICATED_PROBE, then
+SIGNED_OUT, then SESSION_REFRESH_ALREADY_USED (host journal read by 0.7.0_AE_CloudOps~YC2). The CTO ruled the session runner
+IRPT_BCKEND's and stopped every seat from sending another request down the YCharts path until the failure is read: every
+submission makes the host try to sign in, and repeated failed sign-ins can lock the one vendor account. One READ-ONLY cell.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r129/p129_cells.py`: AC1-AC3 FAIL at base (no record). The checks grade shape and
+bounds; the host's state is unmeasured by the issuer.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-431` | why the host's session capture failed to sign in, from the host's lines and the runner's stored state; when a YCharts-path job last reached READY there; no sign-in attempted | FWD-4 (a session is usable only when verified; never an endless login contest) | WORLD | none | P129-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: the applier seat 0.7.0_AE_CloudOps~IB2 (the read is by SSM on the host).
