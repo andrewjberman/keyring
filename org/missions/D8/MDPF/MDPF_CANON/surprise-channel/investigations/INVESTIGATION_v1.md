@@ -773,3 +773,69 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+```json
+{
+  "id": "MDPF_CANON-D1-W10-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~10",
+  "surfaced_at": "2026-10-11T06:16:51Z",
+  "one_line": "CN-d-1 asks for two docstrings in dim_mdpf_aggregate_aua_timeseries.py to be changed; the live pure-addition guard TXA1-AC4 forbids any removed line in that file vs HEAD. The first edit removed the HEADLINE header line and the guard failed; resolved by restoring every existing line and adding lines only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-d-1 step 3: change the build_global_artifact HEADLINE IDENTITY paragraph (say it is the BASE identity) and change nothing else in the file; the cell reads as an in-place edit of existing docstring text.",
+  "world_is": "data/mdpf/tests/taxsma/test_taxsma_aggregate.py::test_ac4_no_existing_line_in_the_production_module_was_changed runs git diff --unified=0 HEAD on that file and asserts zero removed lines. The in-place edit failed it with one removed line (the header). The served-identity wording was added as new lines only; the diff now has 0 removed lines and 272 of 272 stratid+taxsma+canon tests pass.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/tests/taxsma/test_taxsma_aggregate.py:104-131@fdc574c044",
+      "data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py (HEADLINE IDENTITY block, build_global_artifact docstring)@fdc574c044"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "MDPF_CANON-D1-W10-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~10",
+  "surfaced_at": "2026-10-11T06:16:51Z",
+  "one_line": "assert_global_served_identity has no difference to the cent for a date where opal_aggregate_aua is set and model_aua or non_model_aua is None; the refusal names that date with a reason text in the difference slot, because no difference exists to print.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-d-1 step 1: the refusal lists up to the first five violations as (date, difference to the cent); a date with opal set and model_aua None is refused (test 5 of the cell).",
+  "world_is": "A difference cannot be computed against a None term, so the function records (date, 'model_aua or non_model_aua absent') for that date. It prints no level. The served 2026-10-08 global object has no such date: check r4_cn_d_1.py A4 passes on 484 non-null opal dates.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py assert_global_served_identity (the model/non-model None branch)@fdc574c044",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round4/checks/r4_cn_d_1.py A4 PASS (484 non-null dates)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "MDPF_CANON-D1-W10-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~10",
+  "surfaced_at": "2026-10-11T06:19:46Z",
+  "one_line": "The order's closing step flips its own <status> to complete, but the task-order file is outside this worker's <paths>; the flip is NOT made by the worker and the order stays open on that step.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-d-1 section 5: flip this order's <status> to complete in the same commit as the proof instance, only when every mechanical criterion passes.",
+  "world_is": "The order file is task-orders/MDPF_CANON.TO-CN-d-1.served-identity-and-cottonwood-vintage.md, line 127 reads <status>pending</status>. Section 3 of the same order lists the write grant (<paths>) and that file is not in it, so the commit that touches it would sit outside the lane. Both mechanical criteria pass; the flip is left to the COO.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-d-1.served-identity-and-cottonwood-vintage.md:127@fdc574c044",
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-d-1.served-identity-and-cottonwood-vintage.md section 3 <paths>@fdc574c044"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
