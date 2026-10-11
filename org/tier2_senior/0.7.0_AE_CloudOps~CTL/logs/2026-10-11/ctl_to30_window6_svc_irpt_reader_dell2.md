@@ -35,3 +35,16 @@ None. Status flip on the TO is the issuer's (2.0.0_SA_COO~C); no amendment text 
 - `deploy_ledger.py open/close-leg/close`: worked.
 - Script trap: Python `subprocess` could not launch `.tools/aws` or `.tools/aws.cmd`, and bare `bash` resolved to WSL.
   Nothing was put on either failed run; the fix was bash doing the AWS calls and Python only comparing files.
+
+## Window 7 (same session, same terms, no start hold)
+
+**archetype:** DEPLOY
+
+Consent `CTO_CONSENT_SVC_IRPT_READER_WINDOW7_DELL2_20261011.md`, GO msg 108221. Ledger
+`svc-irpt-served-read-w7-laptop-20261011` opened 05:25Z. Live == BEFORE at 05:25:51Z and 05:26:00Z.
+ADD put 05:26:00-05:26:01Z, read back set-equal to ADD 05:26:03Z, PUT TIME to MSTR 05:26:09Z (6 s after the
+read-back). Simulated with the live policy attached: dell2 allowed, dell1 explicitDeny, walker allowed.
+G2 R done 05:29:50Z (one GET, HTTP 200). REMOVE put 05:31:09-05:31:11Z on CTO 108225, read back set-equal to
+BEFORE 05:31:13Z, dell2 and dell1 explicitDeny, walker allowed, AC1 present. Window open 5 min 10 s. Ledger
+closed. REMOVE time sent to MSTR (108226) and the CTO (108227). No GetSecretValue by this seat.
+Next: `[2.0.0_SA_COO~C]` record windows 6 and 7 on TO-APPLY-30's closure block.
