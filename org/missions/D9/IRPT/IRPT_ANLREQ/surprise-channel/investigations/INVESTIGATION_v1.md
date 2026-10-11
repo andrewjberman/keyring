@@ -3042,3 +3042,26 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W53-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-11T17:28:10Z",
+  "one_line": "AR-y-102 step 5 (negative control) cannot run as written: with a one-byte uncommitted edit to the tracked reports/repository.py the build REFUSES (staged_from destination is a tracked file with uncommitted edits) and prints no digest, so 'still DbvBUxTG...' cannot be read. The digest did not move; the pin binds is shown instead by the staging lines (member taken from git show <pin>, sha256 verified).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-102 step 5: change one byte of the working repository.py (uncommitted), build once, confirm the digest is STILL DbvBUxTG...",
+  "world_is": "infra/aws/lambda/ci/build-and-upload.sh refuse_dirty_tracked_destinations (about lines 306-325) exits the build with ERROR before staging when a staged_from destination is a tracked file with uncommitted edits; no BUILD_ONLY line is printed. Working file restored from git show HEAD bytes; git status --porcelain on it empty; sha256 d94dc2c7...ec88. The guard was not bypassed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "build output of the control run by this worker at 2026-10-11T17:2xZ in C:/dev/wk-irpt-anlreq-53 at HEAD 487f73663e",
+      "infra/aws/lambda/ci/build-and-upload.sh lines 306-325 and the staging script lines 196-245"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
