@@ -6796,3 +6796,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "An empty-but-parsed liveness read is treated as 'no serial is live' and every poller on the box is killed. Why the read came back empty at 08:31Z is NOT measured (a read during a rewrite of liveness.json, or no pid matching server.py at that instant). Whether the other three boxes hit it is unmeasured here; they were told on the bus."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T19:47:29Z",
+  "one_line": "POINTER (laptop CTO ruling XB-b98e @de13ed0e00 term 4): CT-i-11 (863e37d1f9 + AMENDMENT 1 4d722ff458) is RELEASED on the gateway by site Z's release issuer as NFRA_OPLGTW.TO-OG-ap-7, release 28ba9532b6 on live c3af8687e4. Ledger nfra-oplgtw-gateway-release-cti11 is CLOSED. GET /hx/teams/teams answers 200 where it answered 404.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LEDGER org/critical_paths/change_management/20261011T1831Z_nfra-oplgtw-gateway-release-cti11_deploy_completion.md: CLOSED, 6 legs, sentinel gone (ap7.AC2 read by the issuer at HEAD)",
+      "ORDER org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-7.cti11-teams-routes-release.md complete @114904f31a; ap7.AC1 PASS (patch-id 37fa4995232e equal to CT-i-11 as built; 3 files); ap7.AC2 PASS (manifest 28ba9532b6, rb.AC2 PASS, GET /hx/teams/teams after: 200)",
+      "HALVES COO @bd6be1a027, CTO 1.0.0_SA_CTO~Z @4f49f40bd0; consent laptop 1.0.0_SA_CTO @de13ed0e00 + Addendum 1 @4f285abe22"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Record row only, written by the releasing issuer as the ruling's term 4 asks. Nothing in NFRA_CTLPLN is changed by it. COMM_ASSIST row Z-S11 (the 404 that triggered the release) is answered by the served 200.",
+  "spec_asserts": "Ruling XB-b98e term 4: NFRA_CTLPLN's ledger gets one line pointing at the release's ledger entry when it closes.",
+  "world_is": "Done: this row points at the CLOSED entry above."
+}
+```
