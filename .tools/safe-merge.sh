@@ -96,6 +96,8 @@ if [ "${1:-}" = "--self-test" ]; then
       "grep -q 'THIS MERGE DID NOT STAGE' '$0'"
   chk "--continue refuses when this script did not open the merge (no state file)" \
       "grep -q 'THIS script did not open it' '$0'"
+  chk "--continue refuses when HEAD moved since the merge opened (D1-S16)" \
+      "grep -q 'HEAD MOVED SINCE THE MERGE OPENED' '$0' && grep -q 'safe-merge-conflict' '$0' && grep -q 'STATE.head' '$0'"
   chk "--abort exists and clears the conflict state" \
       "grep -q 'merge aborted; tree restored and conflict state cleared' '$0'"
   chk "the state file is resolved via --git-path (a linked worktree keeps its own)" \
@@ -391,7 +393,7 @@ if [ "${1:-}" = "--abort" ]; then
     # there was no way to disarm one: --abort exited 2 and left it armed. Clearing it IS the
     # abort in that case.
     if [ -f "$STATE" ]; then
-      rm -f "$STATE" "$STATE.branch" "$STATE.conflicted" 2>/dev/null || true
+      rm -f "$STATE" "$STATE.branch" "$STATE.head" "$STATE.conflicted" 2>/dev/null || true
       echo "safe-merge: no merge in progress, but a STALE conflict state file was present -- cleared."
       echo "            --continue is now disarmed in this worktree. Nothing else was touched."
       exit 0
@@ -405,7 +407,7 @@ if [ "${1:-}" = "--abort" ]; then
     exit 2
   fi
   git merge --abort || { echo "safe-merge: git merge --abort FAILED; the tree is NOT restored" >&2; exit 1; }
-  rm -f "$STATE" "$STATE.branch" "$STATE.conflicted" 2>/dev/null || true
+  rm -f "$STATE" "$STATE.branch" "$STATE.head" "$STATE.conflicted" 2>/dev/null || true
   rm -rf "$_LOCK" 2>/dev/null || true
   echo "safe-merge: merge aborted; tree restored and conflict state cleared"
   exit 0
@@ -441,6 +443,18 @@ if [ "${1:-}" = "--continue" ]; then
     _lock_write "$(cat "$STATE.branch" 2>/dev/null || echo '<unknown>')"
   else
     mkdir "$_LOCK" 2>/dev/null && _lock_write "$(cat "$STATE.branch" 2>/dev/null || echo '<unknown>')"
+  fi
+  # D1-S16 (MDPF_CANON): HEAD moved since the merge opened -> the staged snapshot is stale, and committing it would
+  # revert the peer's paths (merge 0468b6c8ba reverted 7). Refuse and keep the merge OPEN; no .head file = an
+  # older open merge, which keeps the old behaviour.
+  _OPENED_HEAD="$(cat "$STATE.head" 2>/dev/null || true)"
+  if [ -n "$_OPENED_HEAD" ] && [ "$_OPENED_HEAD" != "$(git rev-parse -q --verify HEAD 2>/dev/null || echo none)" ]; then
+    echo "safe-merge: *** REFUSED -- HEAD MOVED SINCE THE MERGE OPENED (was $(git rev-parse --short "$_OPENED_HEAD" 2>/dev/null || echo "$_OPENED_HEAD"), now $(git rev-parse --short HEAD 2>/dev/null || echo '?'))." >&2
+    echo "            A peer committed while this merge sat open, so the merge's staged snapshot no longer" >&2
+    echo "            matches the tree; committing it would revert the peer's paths. Nothing has landed." >&2
+    echo "            Run: bash .tools/safe-merge.sh --abort   then re-run safe-merge.sh from the top." >&2
+    _KEEP_LOCK=1
+    exit 4
   fi
   _UNRES="$(git diff --name-only --diff-filter=U | wc -l | tr -d ' ')"
   if [ "$_UNRES" != "0" ]; then
@@ -705,6 +719,8 @@ if ! git merge --no-commit --no-ff "$BRANCH"; then
   # GS-h-3: the CONFLICT set alone, so the keep-ours exemption in _verify_staged_carried reaches only these paths.
   git diff --name-only --diff-filter=U 2>/dev/null | LC_ALL=C sort -u > "$STATE.conflicted" || true
   echo "$BRANCH" > "$STATE.branch" 2>/dev/null || true
+  # D1-S16 (MDPF_CANON): the HEAD this merge opened on. --continue refuses when HEAD is no longer it.
+  git rev-parse -q --verify HEAD > "$STATE.head" 2>/dev/null || true
   echo "safe-merge: *** CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED. ***" >&2
   echo "            ${_CONF_N} conflicted path(s):" >&2
   git diff --name-only --diff-filter=U | sed 's/^/              /' >&2
@@ -881,7 +897,7 @@ while :; do
     echo "safe-merge: *** REFUSED -- MERGE_HEAD CHANGED UNDER THIS RUN (opened ${_MY_MH}, now ${_NOW_MH}). ***" >&2
     echo "            Another process aborted or replaced this merge. NOT committing and NOT aborting: whatever" >&2
     echo "            is open now is not this run's. Nothing landed. Re-run safe-merge from the top." >&2
-    rm -f "$_PRIV_IDX" "$STATE" "$STATE.branch" 2>/dev/null || true
+    rm -f "$_PRIV_IDX" "$STATE" "$STATE.branch" "$STATE.head" 2>/dev/null || true
     exit 1
   fi
   if GIT_INDEX_FILE="$_PRIV_IDX" git commit --no-edit --author "$_AUTH" -m "$SUBJECT"; then break; fi
@@ -898,7 +914,7 @@ while :; do
   git merge --abort 2>/dev/null || true
   exit 1
 done
-rm -f "$_PRIV_IDX" "$STATE" "$STATE.branch" "$STATE.conflicted" 2>/dev/null || true
+rm -f "$_PRIV_IDX" "$STATE" "$STATE.branch" "$STATE.head" "$STATE.conflicted" 2>/dev/null || true
 # The commit's hooks are the longest window a peer has to reset the shared index under this merge.
 # Read the TREE now, before reporting anything (see _verify_merge_tree).
 _vrc=0; _verify_merge_tree HEAD || _vrc=$?

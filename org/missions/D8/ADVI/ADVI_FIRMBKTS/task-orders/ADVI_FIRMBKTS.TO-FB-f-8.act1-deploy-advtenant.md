@@ -1,4 +1,4 @@
-# ADVI_FIRMBKTS task order -- `FB-f-8` -- WINDOW ACT 1: DEPLOY THE advTenant BUILD (shared-advisor-router and shared-advisor-router-response)
+# ADVI_FIRMBKTS task order -- `FB-f-8` -- WINDOW ACT 1: DEPLOY THE advTenant BUILD (PHASE A: THE ALL-ASCII ROUTER AND GUARD)
 
 <!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
 
@@ -8,91 +8,113 @@
 </decomp_ref>
 <issued_to>0.9.0_WK_ADVI_FIRMBKTS~17</issued_to>
 <issued_by>2.0.0_SA_COO~B1</issued_by>
-<placeholders>ROUTER_VERSION, GUARD_VERSION, ROUTER_SHA256, GUARD_SHA256, ROUTE_FETCH_CHECK</placeholders>
+<placeholders>NONE</placeholders>
 <preflight>
-comp-schedule: DECLARED-NOT-APPLICABLE -- no cron, rule, schedule or cadence is added or changed.
-comp-iam: RUN by the issuer -- iam:SimulatePrincipalPolicy on user/cloudops-dell1-agent-user reads allowed for lambda:PublishVersion, lambda:UpdateFunctionCode, lambda:GetFunctionConfiguration, cloudfront:GetDistributionConfig and cloudfront:UpdateDistribution (5 of 5, resource *); the role the Terraform apply runs under is read by the amendment. No grant is created.
-comp-adversary: DECLARED-NOT-APPLICABLE at the cut -- every criterion names a value that exists only after the act (a version, a hash, a second manifest) or a check the amendment writes; at the cut each reads FAIL by construction. The amendment writes each scripted check, dry-runs it at the base and tests it against a mutant BEFORE the GO.
-EGRESS CLASS, declared: NONE.
+comp-schedule: DECLARED-NOT-APPLICABLE -- phase A is two repository files; no cron, rule, schedule or cadence is added or changed.
+comp-iam: DECLARED-NOT-APPLICABLE -- phase A is repository files only: no AWS act and no grant. The deploy chain's actions read `allowed` for the caller (5 of 5) and are re-read for phase B by its amendment.
+comp-adversary: RUN by the issuer -- at base the non-ASCII count reads router 15 bytes on 5 lines and guard 12 bytes on 4 lines (AC1 FAILS as it should); the router's gate (51 pass), the guard's suite (46 pass) and the dormancy grid (88 of 88 and 396 of 396 identical) PASS at base as controls. Blindness: the lens cannot see a runtime parse error a comment edit introduces; the two suites and the grid exercise both modules.
+EGRESS CLASS, declared: NONE (the guard's `bun install --frozen-lockfile` fetches its pinned dependencies; no other request leaves the machine).
 </preflight>
 
-## 0. THIS ORDER IS STAGED. IT IS NOT A SPAWNABLE FACE UNTIL THE ISSUER'S AMENDMENT SAYS SO.
+## 1. THE CELL -- `FB-f-8` phase A (round 3, enrichment item 1, step 1; the CTO's precondition on act 1)
 
-Un-park conditions, all required, each read from a file at HEAD:
-1. `FB-f-7` is `complete`, its proof instance VALID, and its commit merged.
-2. The never-widen pair for this act exists and reads SIGNED in both halves:
-   `org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND3_ACT1_ADVTENANT_COO_HALF.md` and `..._CTO_HALF.md`. A half
-   names the act's BLAST RADIUS (what it may touch and the rollback per key), reads the new behavior's expected outcome
-   from the build's own rule, and covers BOTH branches.
-3. The actor's change-management entry for this act is OPEN (`python .tools/deploy_ledger.py open ...`), committed with its
-   `.open_deploys/` sentinel BEFORE the first act.
-4. The issuer's amendment commit fills the five placeholders' meaning (section 4), names the executor, and sets
-   `<status>pending</status>`.
+Act 1 deploys the router's code, so it is the deploy at which the router and its guard go all-ASCII (CLAUDE.md section 4:
+"all non-ASCII out", the first of the two safe moves; the CTO's ruling on row D1-W9-S1, restated as the precondition of
+the act-1 pair). You make the two files ASCII. The change is COMMENTS ONLY: no code, string, regex, key or logic changes.
 
-## 1. THE CELL -- `FB-f-8` (round 3, enrichment item 1, step 1)
+1. `infra/aws/lambda-edge/shared-advisor-router/index.mjs`: 15 bytes above 127 on 5 lines (at the cut: lines 49, 271, 278,
+   307, 488).
+2. `infra/aws/lambda-edge/shared-advisor-router-response/index.mjs`: 12 bytes above 127 on 4 lines (lines 2, 10, 17, 239).
+3. Replace each non-ASCII character by its plain ASCII spelling (an em dash or en dash by `--`, a typographic quote by the
+   straight quote, an arrow by `->`, a multiplication sign by `x`, an ellipsis by `...`). A character inside a string
+   literal or a regular expression is NOT a comment: STOP on it and file a BLOCKING row naming the line.
+4. `infra/aws/lambda-edge/_shared/firm-config.mjs` is generated and is NOT yours: it ships as it is (its header's five
+   non-ASCII characters are the generator template's, LGIC_ENFORCE's row D1-S4).
 
-Deploy the two edge functions `FB-f-7` built, as one act: `shared-advisor-router` and `shared-advisor-router-response`,
-through Terraform only (`infra/aws/terraform/portal-auth/lambda-edge.tf`, `safe-apply`, never `aws lambda
-update-function-code`). The deploy moves every CloudFront behavior that carries them, for every partner firm; the build is
-dormant by construction (`FB-f-7` AC3: every decision equals today's), so no request changes. Steps, and the traps the
-2026-08-21 act recorded (`org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-08-21/session_1531-1712Z_p4r3_route_act.md`):
-1. Open the change-management entry first (condition 3).
-2. Build both zips with the repository's `build-nodejs-lambda.sh`, upload the artifacts the `aws_s3_object` data sources
-   read, and read the plan's JSON: the function resource MUST change and `aws_cloudfront_distribution` MUST update the
-   association. A plan that publishes a version while the distribution reads NO-OP is the `qualified_arn` pin defect: STOP.
-3. Apply through `safe-apply`. Read back the live association's version per behavior and the function's `CodeSha256`.
-4. Make the exercised fetch through the page's own route (section 4, `ROUTE_FETCH_CHECK`): the firm's own tenant, the
-   declared alias and the staff proxy are served; a foreign tenant is refused 401; the guard does not 502.
-5. A post-apply plan reads no changes. Close the entry with the evidence.
+### 1a. The steps
+
+0. Work in `/c/dev/wk-firmbkts-17`. Begin every shell call with `cd /c/dev/wk-firmbkts-17 &&` and put
+   `export PATH="$PATH:$HOME/.bun/bin"` first in any call that runs `bun`.
+1. Print the non-ASCII lines of the two files first (line number and the line, no other output).
+2. Edit only those lines. Diff afterwards with `git diff --stat` and `git diff` and read every hunk: each must touch a
+   comment and change only characters above 127.
+3. Run AC1-AC4 (section 4). Read every line. Repair only what they name.
 
 ## 2. BOUNDS
 
-1. The only writes are the artifact objects the Terraform data sources name, the Terraform apply of the two functions and
-   their distribution association, and the ledger. No policy, bucket, schedule or other function changes; no second apply.
-2. If the plan or the live read differs from the pair's blast radius: STOP before the apply and file a BLOCKING row.
-3. Rollback is the previous published version of each function re-associated through Terraform, named in the pair.
+1. Repository files only: no deploy, no `terraform`, no `aws` call, no change to a Lambda, CloudFront or IAM object.
+2. Two source files change, one commit. No other file in the package changes (the tests stay as they are).
+3. A hunk that changes anything but a comment is a STOP (a BLOCKING row), never "fixed up".
+4. Only the files in section 3 change. LF line endings.
 
 ## 3. SURFACES
 
 <paths>
-org/critical_paths/change_management/
-org/critical_paths/.open_deploys/
+infra/aws/lambda-edge/shared-advisor-router/index.mjs
+infra/aws/lambda-edge/shared-advisor-router-response/index.mjs
 org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~17/
 org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
-(The amendment adds the Terraform paths and the executor's worktree. The `.tf` files are read by `safe-apply`; they do
-not change in this act unless the plan says the pin must drop, which is a STOP.)
+Read-only: the rest of both packages, `_shared/firm-config.mjs`, the checks under `deliverables/2.0.0_SA_COO~B1/`, the
+dormancy grid at `deliverables/0.9.0_WK_ADVI_FIRMBKTS~17/evidence/dormancy_grid.mjs`.
 
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~17/ADVI_FIRMBKTS.TO-FB-f-8.act1-deploy-advtenant.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-f-8"><invocation>.tools/aws lambda get-function-configuration --function-name shared-advisor-router --qualifier <ROUTER_VERSION> --region us-east-1 --query CodeSha256 --output text</invocation><expect><ROUTER_SHA256></expect></criterion>
-  <criterion id="AC2" cell_refs="FB-f-8"><invocation>.tools/aws lambda get-function-configuration --function-name shared-advisor-router-response --qualifier <GUARD_VERSION> --region us-east-1 --query CodeSha256 --output text</invocation><expect><GUARD_SHA256></expect></criterion>
-  <criterion id="AC3" cell_refs="FB-f-8"><invocation><ROUTE_FETCH_CHECK></invocation><expect>ROUTE CHECK: own tenant 200, alias 200, staff proxy 200, foreign tenant 401, guard 502 count 0</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-f-8"><invocation>cd /c/dev/wk-firmbkts-17 &amp;&amp; python -c "f=['infra/aws/lambda-edge/shared-advisor-router/index.mjs','infra/aws/lambda-edge/shared-advisor-router-response/index.mjs']; n=[sum(1 for b in open(p,'rb').read() if b&gt;127) for p in f]; print('NON-ASCII: router %d, guard %d' % (n[0],n[1]))"; echo "exit=$?"</invocation><expect>NON-ASCII: router 0, guard 0</expect></criterion>
+  <criterion id="AC2" cell_refs="FB-f-8"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd /c/dev/wk-firmbkts-17 &amp;&amp; timeout 110 bash infra/aws/lambda-edge/shared-advisor-router/run-gate.sh; echo "exit=$?"</invocation><expect>\b(5[1-9]|[6-9][0-9]) pass</expect></criterion>
+  <criterion id="AC3" cell_refs="FB-f-8"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd /c/dev/wk-firmbkts-17/infra/aws/lambda-edge/shared-advisor-router-response &amp;&amp; timeout 115 bash -c 'bun install --frozen-lockfile >/dev/null 2>&amp;1; bun test test/ 2>&amp;1 | tail -6'; echo "exit=$?"</invocation><expect>\b(4[6-9]|[5-9][0-9]) pass</expect></criterion>
+  <criterion id="AC4" cell_refs="FB-f-8"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd /c/dev/wk-firmbkts-17 &amp;&amp; timeout 110 bun org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~17/evidence/dormancy_grid.mjs /c/dev/wk-firmbkts-17 2>&amp;1 | tail -3; echo "exit=$?"</invocation><expect>DORMANCY: router differing 0, guard differing 0</expect></criterion>
 </proof_of_spec>
 
-Placeholders at the amendment: `ROUTER_VERSION` and `GUARD_VERSION` are the published Lambda versions the apply reads back;
-`ROUTER_SHA256` and `GUARD_SHA256` are the build artifacts' `CodeSha256`; `ROUTE_FETCH_CHECK` is one issuer-written
-script, dry-run at the base before the GO, that makes the five exercised requests through the page's route and prints the
-one result line.
+AC1 is the built behavior. AC2-AC4 are difference controls (the same suites and grid as `FB-f-7`, counts never below
+`FB-f-7`'s 51 and 46): a comment edit must move no decision. Four criteria are carried because the edit touches two
+packages and each package's own suite is its control. Each invocation terminates inside its bound.
 
 ## 5. WHEN YOU ARE DONE
 
-Close the change-management entry with the three outputs; flip `<status>` to `complete` in the SAME commit as the proof
-instance; report once: the pair's two blob ids, the plan's resource summary, the live associations per behavior, the three
-outputs, the post-apply plan line, the entry's path and the commit hash.
+Instance at `D/ADVI_FIRMBKTS.TO-FB-f-8.act1-deploy-advtenant.proof_of_spec.json`, `D` =
+`org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~17`. Commit the two source files, the instance and
+your rows together on your branch. **Do not flip this order's `<status>`:** phase B (the deploy) is staged below the record
+face and the order stays open until it is done. A row id on this project carries the dell1 infix and your slot:
+`ADVI_FIRMBKTS-D1-W17-S<k>` (your earlier sessions filed S1 to S6: the next unused is S7), with `surfaced_at` from
+`date -u +%FT%TZ`. Report once: the before and after non-ASCII counts, the lines changed (numbers only), the output lines of
+AC1-AC4, and the commit hash.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-**ISSUER NOTES:** staged. Class WORLD: a deploy of a shared function. The CTO's round-2 analysis item 1 names this step
-and orders it first ("the advTenant remedy lands first": `_shared/firm-config.mjs` header). The executor is the amendment's
-call: the same lane that did the 2026-08-21 act is `0.7.0_AE_CloudOps` (a lane on this project needs seating). The
-`ROUTE_FETCH_CHECK` needs sessions for a firm, its alias and the staff proxy; if none can be obtained, the amendment says
-so and the CTO's exercised read is the oracle (as in 2026-08-21's "exercised fetch").
+**AMENDMENT 1 (2.0.0_SA_COO~B1, after the CTO's act-1 half @d30c5fe203, msg 3601):** the pair was SIGNED on one
+precondition: both functions go all-ASCII in one commit, the build is cut from it, and the dormancy grid re-reads 88 of 88
+and 396 of 396. That moved decomposition step 4's ASCII item (cell `FB-f-11`) into this cell, as phase A, spawnable now.
+Phase B (the deploy) is the original order, staged below. Same cell, same slot: the decomposition is frozen mid-round.
+The face's placeholders read `NONE` because the face now carries no token; phase B's five tokens return with its
+criteria at the amendment. Gate limb: GATE viii read `<placeholders>` at HEAD (five tokens) and the new declaration is
+`NONE` over literal invocations.
 
-<status>staged</status>
+**PHASE B (STAGED; NOT A FACE).** Un-park conditions, all required, each read from a file at HEAD:
+1. `FB-f-7` is `complete` (merged @e6ec8ce6e4) and phase A is merged with AC1-AC4 PASS.
+2. The pair reads SIGNED in both halves: `ledger/NEVER_WIDEN_ROUND3_ACT1_ADVTENANT_COO_HALF.md` and `..._CTO_HALF.md`
+   @d30c5fe203. **Satisfied.** The oracle is the CTO's exercised read: the actor pings the CTO at `Deployed`; the CTO invokes
+   both new versions on the 5 event classes against base, makes one live no-session 401 request and diffs the associations.
+3. The actor's change-management entry is OPEN and committed first (`python .tools/deploy_ledger.py open ...`).
+4. The amendment commit names the executor, the build's artifact hashes (`ROUTER_SHA256`, `GUARD_SHA256`), and sets
+   `<status>pending</status>`.
+Steps, with the traps the 2026-08-21 act recorded: open the entry; build both zips with `build-nodejs-lambda.sh` from the
+phase-A tree; upload the artifacts the `aws_s3_object` data sources read; read the plan's JSON: the two functions and 10
+associations change, nothing else, and a distribution that reads NO-OP is the pin defect and a STOP; apply through
+`safe-apply` only; read back each behavior's version and `CodeSha256`; the post-apply plan reads no changes; ping the CTO
+at `Deployed`; close the entry with the evidence.
+Criteria then (placeholders `ROUTER_VERSION`, `GUARD_VERSION`, `ROUTER_SHA256`, `GUARD_SHA256`): AC5 router `CodeSha256`
+at the published version equals `<ROUTER_SHA256>`; AC6 the guard's likewise; AC7 the distribution's 5 + 5 associations read
+the two new versions (a bounded `get-distribution-config` read).
+
+**ISSUER NOTES:** class WORLD by the floor of phase B; phase A is repository files. The executor of phase B is the
+issuer's call and is open: the 2026-08-21 act was the CloudOps seat's (`0.7.0_AE_CloudOps`); a lane for this project is
+not seated. `auth-validator-edge` (v22 on 26 behaviors) bundles the same generated config and is not redeployed.
+
+<status>pending</status>
 <round>3</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-8</to_id>
 <slot>~17</slot>

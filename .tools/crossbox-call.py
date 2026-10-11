@@ -486,6 +486,7 @@ class Box:
         rc, _, _ = git(self.root, "cat-file", "-e", "%s:%s" % (commit, doc["body_path"]))
         if rc != 0:
             raise Refused("the body file %s is not in commit %s" % (doc["body_path"], commit))
+        self.need_in_tree(doc, rel, commit)
         inbox = self.resolve_seat(doc["to_serial"])
         marker = "_CROSSBOX_%s_" % doc["id"]
         for where in (inbox, inbox / "read"):
@@ -501,8 +502,44 @@ class Box:
                    "file: %s\nbody: %s\n" % (doc["from_serial"], doc["from_device"], doc["to_serial"], ts, doc["id"], doc["kind"],
                                              doc["from_device"], subj, rel, doc["body_path"]))
         write_text(inbox / name, content)
-        note = "" if self.path(doc["id"]).is_file() else " NOTE: the file is not in this working tree yet; merge commit %s before `ack`." % commit
-        return ["DELIVERED %s to %s: %s%s" % (doc["id"], doc["to_serial"], inbox / name, note)]
+        return ["DELIVERED %s to %s: %s" % (doc["id"], doc["to_serial"], inbox / name)]
+
+    # The identity of a call: the fields a later `sent`/`ack`/`close` never rewrites.
+    IDENTITY_FIELDS = ("id", "kind", "from_device", "to_device", "from_serial", "to_serial", "subject", "body_path")
+
+    def need_in_tree(self, doc: dict, rel: str, commit: str) -> None:
+        """CVO ruling @bf5cc9cb1e: the recipient reads the call and its body from the WORKING TREE, so a line is delivered
+        only when both are here -- tested by CONTENT, never `merge-base --is-ancestor` (a cherry-pick or squash brings the
+        bytes with no ancestry). Raises PullFirst (nothing written) otherwise.
+        The call file is compared on its IDENTITY fields: its sent/ack/closed record advances by design in later commits, so
+        a byte test would refuse every line once the sender's `sent` commit lands. The body passes when its working-tree
+        bytes equal the commit's, or when the commit's blob is an earlier version of the same path in this tree's history
+        (an amended order); a body whose committed bytes this tree never held refuses."""
+        run_next = " RUN NEXT: the box pass (`bash .tools/box-sync.sh box`) or a merge of the sender's branch, then `receive` again. Nothing was written."
+        here = self.root / rel
+        if not here.is_file():
+            raise PullFirst("PULL-FIRST: call file %s is not in this working tree (commit %s is known here but not merged)." % (rel, commit) + run_next)
+        try:
+            mine = json.loads(here.read_text(encoding="utf-8"))
+        except ValueError as exc:
+            raise Refused("the working-tree copy of %s is not JSON (%s)" % (rel, exc))
+        for f in self.IDENTITY_FIELDS:
+            if mine.get(f) != doc.get(f):
+                raise Refused("the working-tree copy of %s has %s %r, the line's commit %s has %r" % (rel, f, mine.get(f), commit, doc.get(f)))
+        body = doc["body_path"]
+        bpath = self.root / body
+        if not bpath.is_file():
+            raise PullFirst("PULL-FIRST: body %s is not in this working tree (commit %s is known here but not merged)." % (body, commit) + run_next)
+        rc, want, _ = git(self.root, "rev-parse", "%s:%s" % (commit, body))
+        rc2, have, _ = git(self.root, "hash-object", "--", body)
+        if rc != 0 or rc2 != 0:
+            raise Refused("could not hash body %s (commit side rc=%s, working-tree side rc=%s)" % (body, rc, rc2))
+        if want.strip() == have.strip():
+            return
+        rc, hit, _ = git(self.root, "log", "-1", "--format=%H", "--find-object=%s" % want.strip(), "HEAD", "--", body)
+        if rc == 0 and hit.strip():
+            return
+        raise PullFirst("PULL-FIRST: body %s here differs from commit %s and this tree's history never held the committed bytes." % (body, commit) + run_next)
 
     def ack(self, call_id: str, by: str, at: str | None = None) -> list:
         doc = self.read(call_id)
@@ -795,6 +832,14 @@ def run_cases(tmp) -> list:
     except PullFirst as exc:
         inbox_dir = b.root / "org" / "mcp" / "inbox" / SEAT / SEAT_LANE
         rec("receive-before-the-pull-reads-PULL-FIRST", "PULL-FIRST" in str(exc) and not list(inbox_dir.glob("*.md")), str(exc)[:80])
+    h.pull(b, a, ff=False)   # the commit object is here, the working tree is not merged: the CVO @bf5cc9cb1e case
+    try:
+        b.receive(consumer_line)
+        rec("receive-with-the-commit-fetched-but-not-merged-reads-PULL-FIRST", False, "delivered onto a path not in the working tree")
+    except PullFirst as exc:
+        inbox_dir = b.root / "org" / "mcp" / "inbox" / SEAT / SEAT_LANE
+        rec("receive-with-the-commit-fetched-but-not-merged-reads-PULL-FIRST",
+            "not in this working tree" in str(exc) and "box-sync" in str(exc) and not list(inbox_dir.glob("*.md")), str(exc)[:100])
     h.pull(b, a, ff=True)
     forged = consumer_line.replace(cid, "XB-20200101T000000Z-dead")
     ok, why = raises(Refused, lambda: b.receive(forged), "")
@@ -809,6 +854,22 @@ def run_cases(tmp) -> list:
     rec("receive-lands-one-file-in-the-seats-watched-inbox", len(landed) == 1 and res[0].startswith("DELIVERED") and body.startswith("# Message from 1.0.0_SA_CTO")
         and ("body: " + BODY) in body, res[0])
     rec("receive-twice-delivers-once", b.receive(consumer_line)[0].startswith("ALREADY DELIVERED") and len(list(inbox_dir.glob("*.md"))) == 1, "")
+
+    # Present by CHERRY-PICK: B holds the same bytes in a commit of its own, with no ancestry link to A's commit.
+    body2 = "docs/body2.md"
+    (a.root / body2).write_text("second body\n", encoding="utf-8")
+    h.commit(a, body2)
+    cid2 = a.open("CALL", b.device, seat, "1.0.0_SA_CTO", "Second call", body2)[0].split()[1]
+    h.commit(a, a.rel(cid2))
+    h.push(a.root)
+    line2 = a.line(cid2)[0]
+    sgit(b.root, "fetch", "-q", str(a.root), "HEAD")   # the object is here; nothing merged
+    (b.root / body2).write_text("second body\n", encoding="utf-8")
+    shutil.copyfile(a.path(cid2), b.path(cid2))
+    h.commit(b, body2, b.rel(cid2))
+    rc_anc, _, _ = sgit(b.root, "merge-base", "--is-ancestor", line2.rsplit("@", 1)[1], "HEAD")
+    res2 = b.receive(line2)
+    rec("receive-accepts-a-body-present-by-cherry-pick-with-no-ancestry", rc_anc != 0 and res2[0].startswith("DELIVERED"), "is-ancestor rc=%s; %s" % (rc_anc, res2[0][:80]))
 
     ok, why = raises(Refused, lambda: a.ack(cid, seat), "receiving box")
     rec("the-sending-box-cannot-ack", ok, why)
