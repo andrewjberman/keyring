@@ -1684,3 +1684,61 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-S32 -- row 3 (codebuild-semantic-clustering-role) grants on a bucket that does not exist; same class as Z-S23; module owner unresolved, carried to the round-6 L10 slug
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S32",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-10T23:48:00Z",
+    "one_line": "1.0.0_SA_CTO~Z, signing the w-3 CTO half @8453026444 (msg 33089), observed that row 3's inline grant (CodeBuildSemanticClusteringPolicy) names a bucket that returns NoSuchBucket -- the Z-S23 class -- and asked that it be routed to the module owner; no instrument names news-pipeline's owner, so it rides round 6's L10 slug to the CTO beside Z-S23.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IAM-w-3 adopts codebuild-semantic-clustering-role as it stands (policies omitted by rule), and the CTO half asks that the dead grant be routed to news-pipeline's owner.",
+    "world_is": "The act does not touch the grant: the declaration omits inline_policy, and both halves sign tags only, so the w-3 apply is unaffected. Unlike Z-S23's orphan, this role IS in use (RoleLastUsed 2026-09-11), so the dead grant is a live role's dead permission rather than an orphan's, and the remedy (repoint or drop the statement) is the module owner's. comp-which has no curated rule for 'who owns news-pipeline'; it returned only fuzzy candidates. The owner is unresolved, not absent. So the route is the round-6 L10 slug to 1.0.0_SA_CTO~Z, the fabric's call holder, carried with Z-S23 as one 'grants that point at nothing live' item.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "msg 33089 (1.0.0_SA_CTO~Z), acked; ledger/NEVER_WIDEN_ROUND6_W-3_CTO_HALF.md @8453026444",
+        "PLAN_SURVEY_family_e.md @8361e51c56 section 3: row 3 RoleLastUsed 2026-09-11, inline policy CodeBuildSemanticClusteringPolicy",
+        "comp-which 'who owns the news-pipeline terraform module' -> NO CURATED RULE MATCHED"
+      ]
+    },
+    "notes": "Cites Z-S23, Z-S24. Not verified by this seat which bucket the grant names; the CTO's read is the source. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
+
+## Z-S33 -- the issuer disarms Z-S29: bd-pipeline plans clean at HEAD after A6-r6's step 1a guard, both of 2.0.0_SA_COO~MI's checks PASS in the shared tree
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S33",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-10T23:55:00Z",
+    "one_line": "Z-S29 DISARMED: the can() guard ruled by NFRA_MCPINDEX-Z-S96 landed alone @a18b96fd5d under A6-r6 step 1a, and this seat re-ran f1r.AC1.sh and f1r.AC2.sh in the SHARED tree: both read RESULT: PASS (plan 'No changes', 0 Unsupported attribute; keys == the 5 daily platinum keys); w-2's PLAN line is real and its COO half is signed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S29 (BLOCKING, ARMED, disarm_owner 2.0.0_SA_COO~ZI) holds w-2's never-widen pair until bd-pipeline plans at HEAD.",
+    "world_is": "Both checks FAILED before the edit (survey section 4, per 0.7.0_AE_CloudOps~IR), so they discriminate. Re-run by this seat at ~23:5xZ in the shared tree at HEAD (drain df0248d4f6 an ancestor): f1r.AC1 'init rc=0; plan rc=0; Unsupported attribute=0; Error lines=0; plan lines=248 / No changes. ... RESULT: PASS'; f1r.AC2 'keys == want, the 5 bd_platinum_* keys, RESULT: PASS'. The YAML is untouched; the two weekly silver entries leave the alarm's served-key map, which is the coverage choice NFRA_MCPINDEX ruled.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round8/checks/f1r.AC1.sh and f1r.AC2.sh, shared tree, both RESULT: PASS",
+        "a18b96fd5d (step 1a, 1 insertion / 1 deletion), survey a1667d4af4, drain df0248d4f6",
+        "NFRA_MCPINDEX-Z-S96 @c5e22ccb72 (the ruled remedy)"
+      ]
+    },
+    "notes": "Cites Z-S29, Z-S31, A6-r6. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
