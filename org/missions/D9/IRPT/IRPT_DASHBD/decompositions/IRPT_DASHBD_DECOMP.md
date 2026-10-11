@@ -1232,3 +1232,32 @@ columns and their readers; that is NOT the R45 release already signed (built fro
 2.0.0_SA_COO~C2 reads the object back after the drain.
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~98`, cut from box/dell2.
+
+
+## 70. ROUND 68, WORKSTREAM B (2026-10-11 ~13:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-68 ANALYSIS @0005d9fd9a)
+
+The analysis answers the L10 slug for rounds 55 to 67 (REMEDIATION_v27 @806d057711), which had been held behind one blocked order
+(DB-b-86, superseded @34e0d00eff). Its ENRICHMENT LIST, section 4, one cell per item:
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-124` | list item 1: the present state of the nine rows compiled before today, each closed with its evidence or confirmed open; the two ARMED rows with their disarm (read-only) | LOCAL | none; FIRST and ALONE | A |
+| `DB-b-125` | list item 2: the thresholds file carries a claim per threshold, is tracked at the handler's path, and is hashed against the served copy (row W85-S1 and a new row) | WORLD (the gate's floor: the grant names a path under infra/aws/lambda; nothing is deployed) | DB-b-124 | B |
+| `DB-b-126` | list item 3: R45 presented again on current bytes with its sources.json named; DB-b-115's manifest fields read; what the release changes for 49 Financial's method row named for a new pair (rows W88-S1, W88-S3) | LOCAL | DB-b-124 | C |
+| `DB-b-127` | list item 4: the Cottonwood adapter's two stale statements; method row 3 read for a sentence false for Cottonwood; one counts-only read of the account-id join (rows W89-S1, W96-S3) | LOCAL | DB-b-124 | D, first |
+| `DB-b-128` | list item 5: the income reason reworded for the method, with its small packet (row D2-S13) | LOCAL | DB-b-127 (the same producer file) | D, second |
+| `DB-b-129` | list item 6: the 244 UNEXPLAINED tie-out segments classed by cause, the remainder printed (row W86-S2) | LOCAL | DB-b-124 | E |
+
+**No served write in the round** (DB-b-125 is classed WORLD by the gate's path floor and writes nothing served). DB-b-126 and DB-b-128 each end in a packet; each apply is a later act under a newly signed pair, and
+(row W87-S1, analysis section 3) names an applier the gates admit, not a worker. The R45 apply still waits on Monday 2026-10-12 07:41 ET's
+R44 acceptance fire as well as on the new pair.
+
+**Parked, by the analysis's section 2 item 1:** the Cottonwood half of FWD-11 un-parks when IRPT_BCKEND's holdings gold has minted one
+Cottonwood partition; the superseded cell DB-b-86 is re-cut then (carrier: `deliverables/2.0.0_SA_COO~D2/FWD11_REPORTING_READ_PARKED_20261011.md`).
+The Inflection half and FWD-12 (49 Financial) do not wait on it and are not in this round's list.
+
+**Rule 24:** the records' words (CLOSED_BY_EVIDENCE / STILL_OPEN / NOT_ESTABLISHED; READ / RUN) are measurement vocabularies local to these
+cells. DB-b-125's claims use the producer's existing THRESHOLD_CLAIMS vocabulary and mint no value. DB-b-128 carries its own four-postulate
+record before it changes a served word.
+
+**fanout:** 1 of 5 chains now (A), then up to 3 at a time, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~99` to `~104`, each cut from box/dell2.
