@@ -200,3 +200,4 @@ Read-only: the whole repository, in particular `integrations/bloomberg/research/
 <round>47</round>
 <slot>~1</slot>
 <fabric>dell1</fabric>
+<status>complete</status>
