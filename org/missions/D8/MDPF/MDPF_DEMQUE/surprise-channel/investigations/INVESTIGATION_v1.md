@@ -719,6 +719,29 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "org/missions/D8/MDPF/MDPF_DEMQUE/requests/DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.quote.json finish_date 2026-10-17 (frozen, the authority)"
       ]
     }
+  },
+{
+    "id": "MDPF_DEMQUE-Z-S3",
+    "one_line": "The TR request can NEVER reach its quoted 15,720 cells: the quote prices 1,310 WEEKDAYS per security but the vendor returns 1,260 TRADING days, so full coverage is 15,120 cells and `drawn < quoted` leaves the request OPEN forever -- from 2026-10-18 every non-trading day will fire the standing drawer, draw 0 rows and append a DRAWN actuals line reading cells_drawn 0.",
+    "spec_asserts": "TO-DQ-t27: an open request is one 'whose cells drawn so far ... are fewer than its quoted cells', and the drawer draws open backfill requests until they are no longer open. The frozen quote reads cells.bloomberg_history 15720 with claim measured.",
+    "world_is": "Measured with the denominator printed. The frozen quote's own basis is weekdays: 1,310 weekdays over 2021-10-01..2026-10-08 x 6 securities x 2 fields = 15,720, which reproduces the frozen figure exactly. But the vendor returns 1,260 rows per security: FOUR securities (KO, JNJ, T, VZ) are now complete to the request's end date 2026-10-08 and each holds exactly 1,260 rows, so the 50-row-per-security difference is NYSE holidays that fall on weekdays, not an incomplete draw. Real full coverage is therefore 1,260 x 6 x 2 = 15,120 cells, leaving an UNREACHABLE REMAINDER of 600 cells against the quote. Consequence, traced through the code: open_requests tests `already >= quoted` (standing_drawer.py), so at 15,120 the request still reads open; _draw_request advances each security's window to the day after its latest stored date, so once every security is complete `start > end` and all are skipped, the run draws 0 rows with reason None, and run() records outcome DRAWN with cells_drawn 0. PREDICTED DATES, checkable: MO needs 442 more rows and XOM 1,260, i.e. 3,404 cells, which is under the 5,858 ceiling, so the 2026-10-17 fire completes coverage at 15,120; the 2026-10-18 fire is the FIRST no-op, and every non-trading day after it appends another zero-cell DRAWN line. NO EFFECT ON t27's CRITERIA, all three of which passed today: AC1 DRW-OK, AC2 DRSCH-OK, AC3 FIRE-OK. The remedy is a round decision, not a mid-round edit, and it is not weakened here: either the open test becomes coverage-based (every security's window exhausted) rather than cell-count-based, or the quote is priced on trading days rather than weekdays. Found while verifying this fire's resume, not by looking for it.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZQ",
+    "surfaced_at": "2026-10-11T14:20:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "weekday count 2021-10-01..2026-10-08 = 1310; 1310 x 6 x 2 = 15720, reproducing the frozen quote exactly",
+        "KO, JNJ, T and VZ are each complete to the request end 2026-10-08 with exactly 1260 rows (t24 + t27 parquets)",
+        "1260 x 6 x 2 = 15120 real full coverage; 15720 - 15120 = 600 unreachable cells",
+        "standing_drawer.py open_requests `already >= quoted` test and _draw_request's per-security window advance",
+        "receipt.2026-10-11.json cells_drawn 5858, 11716 of 15720 drawn, 4004 remaining by quote arithmetic vs 3404 by vendor rows"
+      ]
+    }
   }
 ]
 ```
