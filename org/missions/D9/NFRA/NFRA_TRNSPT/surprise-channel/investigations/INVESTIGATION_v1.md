@@ -1640,5 +1640,29 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "world_is": "4 fetchable Monday meetings older than 2026-06-08 were never landed (the earlier 365-day backfill did not reach them; cause not yet measured). They remain fetchable today, so the gap is recoverable by landing them through the same pull path.",
     "notes": "Recovery is a served landing (bronze+silver writes) under a pair; routed to the CTO as a decision. Counts and dates only."
   }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S11",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-10T00:00:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "TR-rc-22: the Teams pull has no window or filter and the b17 backfill is the Outlook mail pull; the 4 unlanded monday_meeting reads are unmeasured, and on the live transport a failed read raises (pull.py catches only Expired, which GatewayTransport never raises).",
+    "class": "BLOCKING",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/pull.py:142-187 (_pull_series: no age test; skip branch only at 161-164 except Expired)",
+        "data/transcripts/scripts/teams/gateway_client.py:41,143 (Expired raised only by FixtureTransport), 170-195,228-229 (live non-200 -> GatewayError subclass)",
+        "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/NFRA_TRNSPT.TO-RUN-b17.analysis-commentary-365d-backfill-dell2.md step 4: outlook/pull.py --gateway --days 365 (mail, analysis_commentary)",
+        "data/transcripts/scripts/tests/test_monday_skip_replay.py: 3 passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row D2-S15 and TR-rc-22: the earlier 365-day backfill / the pull's selection skipped the 4 oldest monday_meeting meetings; a code line decides it.",
+    "world_is": "No selection code skips by age; the backfill is a different pipeline. The cause is a failed or empty CONTENT READ of the 4 ids, evidenced only by PRD:129 ('34 listed, 30 retrieved before four expired'). What the gateway answers for those 4 reads is not measured (needs one read-only GET each by the issuer). If it fails, pull.py ends the run at the first such row (GatewayError not caught) after the newer rows land, skipping the run record, snapshot and later series.",
+    "notes": "Ids, dates and code lines only. The smallest fix is in R22_ROOT_CAUSE.md and is not made."
+  }
 ]
 ```
