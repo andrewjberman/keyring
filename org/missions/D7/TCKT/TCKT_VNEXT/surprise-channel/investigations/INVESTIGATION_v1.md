@@ -1011,3 +1011,32 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S24",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T03:51:15Z",
+  "one_line": "The portal's ticket link does not open a report. openReport reads analysis-request-read for the ticket's report_ref.request_id, and that route answers {identity, accepted_at} as soon as the request is ACCEPTED with a retained composition. None of its refusal codes means not-yet-generated, so a 200 there does not show that a report was made.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/analysisRequest.ts:178-183 openReport -> deps.ir.getOwnedAnalysisRequest(requestId, ticket.answers?.firm)",
+      "portal/src/api/endpoints/investor-reporting.ts:214 analysis-request-read = GET {IR_ROUTE_BASE}/analysis/requests/{requestId}; :1068 getOwnedAnalysisRequest",
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:230-241 read() returns _public(record) = identity + accepted_at; :163-190 _validate, :192-196 _materialize, :215-227 _final",
+      "the same file's RequestReadRefused codes (26 raise sites read by this seat): identity, composition, authorization, retention and history bindings; no code names report generation",
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json: required identity, accepted_at; no stage",
+      "1.0.0_SA_CTO~DELL2 msg 4015 (hop (e) oracle = the route the ticket's own link opens)",
+      "tree read at box/dell2 HEAD; not the deployed bytes"
+    ]
+  },
+  "spec_asserts": "FWD-1 ACCEPT (PRD :30-31): the report is made from the filed file, and the finished report opens from the ticket.",
+  "world_is": "From the ticket the page opens the accepted request record. Whether a report was generated is answered by other routes (analysis-request-pdf, the analysis-report read) that the ticket link does not call. A journey run graded on the ticket link alone would pass with no report made.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Read from the tree, not exercised. Bears on cell R2-tr-1's oracle and on whether round 2 needs a page cell; with the CTO."
+}
+```
