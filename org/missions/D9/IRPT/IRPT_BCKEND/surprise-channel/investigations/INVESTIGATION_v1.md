@@ -25688,3 +25688,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The arm's failure set is reachable only by a defect that fires BEFORE or AT authorization. IB-pr-420's defect was of that kind -- an Enforcer kwarg mismatch raised while constructing the request -- so the identical arm reproduced it on the pre-apply control and genuinely discriminated. IB-pr-423's change was the opposite kind: it altered what an ADMITTED request does after authorization succeeds. A synthetic caller never gets there, so the arm returned the same typed NOT_AUTHORIZED before and after, read clean, and the release passed its own check while serving three real Cottonwood users a Black Diamond figure against ratified FWD-3. THIS IS NOT A COMPLAINT ABOUT THE ORDER OR THE PAIR, and not the reason the release was wrong -- the order was wrong on the ENDPOINT, which is 2.0.0_SA_COO~P2's escalation and the CTO's ruling. It is a claim about the INSTRUMENT, and it generalises past this release: any future never-widen pair whose change takes effect after authorization will get a clean reading from this arm shape, because the arm cannot see that far. The applier cannot close the gap from where it stands: no seat on this fabric can mint a verified internal subject, which is why both this seat and ~281 hit the same ceiling independently. WHAT WOULD ACTUALLY DISCRIMINATE, offered as options rather than a chosen design: an admitted-caller probe driven by whoever can mint a verified subject, which on this estate appears to be the laptop's product walk; or a post-promote read of the SERVED plane for the affected firms over a short window, counting served outcomes rather than log errors, which would have shown 3 within minutes instead of 44; or an explicit statement in the pair that the arm proves only that the function answers, with the real evidence named and scheduled. The third already exists in part: the COO half said the first real evidence is the laptop's re-walk and that until then the outcome is ABSENT -- the gap is that nothing made the release wait for it. OWNER: 1.0.0_SA_CTO~DELL2 and 2.0.0_SA_COO~P2, as the authors of the arm's specification. Nothing here holds any order: IB-pr-424 is complete and the path is back to its refusal."
 }
 ```
+
+
+## IRPT_BCKEND-D2-W285-S1 -- IB-pr-426: method-call closure limb reads 4 on the one-commit build (and the same 4 on the live package); order stopped on its refusal clause
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W285-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~285",
+  "surfaced_at": "2026-10-11T10:59:06Z",
+  "one_line": "IB-pr-426 STOPPED on its refusal clause: the method-call closure limb reads mismatched=4 on the one-commit build of irpt-ycharts-generate (and the identical 4 on the LIVE package), so IB124-1-AC1's required 0 cannot be met without altering the instrument or a member.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "build: candidate map org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~285/candidate_source_map.json @4191200027 (all 88 staged rows re-pinned to af64b4bca9); BUILD_ONLY twice, rc 0 both, byte-identical, sha256 hex 30642ee7ee7c5b1277a726e6671f1c15d27d9f2a443ef3c6a3ae9c0b2881d6db = base64 MGQu5+58WxJ3pybmZx8cFdJ9nypEPvPGo66cCyiB1ts=; git status --short after each build showed nothing tracked changed; live CodeSha256 re-read still tdpterTMfJlWXjnoAQCwil+wN/Jf8Q/yLjGxTk7yUkk=, fetched live zip sha256 matches it",
+      "built zip: signature_closure calls=299 checked=295 skipped_unpack=4 mismatched=0; signature_closure_attr attr_checked=119 attr_mismatched=0; method_call checked=574 skipped_unpack=25 not_packaged_method=4365 mismatched=4 (method_call_limb_426.py, copied unchanged from ~278's method_call_limb_416.py)",
+      "live zip, same three instruments: signature mismatched=0, attr_mismatched=0, method_call checked=550 mismatched=4 -- the same four call sites: publication:114 .lookup(1 arg) vs DynamoAcceptance.lookup(owner,browser); publisher:191 and publisher:258 .validate(2 args) vs CompositionAdmission.validate(document); resident_worker .renew(ttl=900) vs DynamoGenerationStore.renew() (line 137 live, 215 built)",
+      "the receivers read from the built bytes: publication:114 is _naming().lookup(firm), a module function in lib/opal_naming.py (lookup(scope, registry=None)); publisher.py self.reports is an injected constructor argument (reports) whose validate takes (kind, document); resident_worker self.transport is assigned a broker._RecoveryObserver, which has __getattr__ delegation to the injected session transport. No packaged class defines renew(ttl), so that call resolves only on an object the zip does not contain",
+      "release-census.py irpt-ycharts-generate --pin 4191200027 --map <candidate>: built_members=104 live_members=104 changed_members=26 (23 staged + acceptance.py, durable_job.py, submission_service.py), matching 2.0.0_SA_COO~P2's r122 read; scratch outputs in C:/dev/_scratch285 (outside the worktree)"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-426 step 3 and IB124-1-AC1: the name, attribute and method closure limbs each read 0 on the built zip; and the refusal clause says a limb above 0 stops the order, with no member pinned back.",
+  "world_is": "The name and attribute limbs read 0. The method limb reads 4 on the built zip and the same 4 on the live package: it matches a call's attribute name against every packaged class method of that name, so a call on an injected or module-level receiver that shares a name with a packaged method (lookup, validate, renew) is counted. By the read above all four receivers are objects other than the packaged class, so they look like name collisions of the instrument rather than a drift the rebuild introduces; that is a reading of source text, not an observation by a call, and a replay arm was not built because the order stops here. Not done: census, replay, packet, proof and the status flip. The order stays pending. Nothing was uploaded, no real map or product source was edited. For the issuer: either rule the four known collisions out of the instrument (an allow-list by file:line, which would be a change to the check, not to this worker's grant) or amend AC1 to the number the instrument reads on live; the rebuild itself is ready and byte-stable at the sha256 above, and the member list from release-census is the 26 above.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
