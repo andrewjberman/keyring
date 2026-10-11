@@ -125,3 +125,4 @@ AC3 FAIL (the new test file does not exist yet), AC4 FAIL (the literal reads /14
 <round>49</round>
 <slot>~1</slot>
 <fabric>dell1</fabric>
+<status>complete</status>
