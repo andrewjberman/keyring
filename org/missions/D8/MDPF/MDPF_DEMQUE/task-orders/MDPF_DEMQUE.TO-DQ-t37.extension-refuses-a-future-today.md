@@ -11,6 +11,7 @@
 <placeholders>NONE</placeholders>
 <round>9</round>
 <workstream>EXTGUARD2</workstream>
+**AMENDED by the issuer 2.0.0_SA_COO~Q1, 2026-10-11 ~17:3xZ (row MDPF_DEMQUE-D1-W29-S1, BLOCKING; issuer defect):** the face said `test_demque_extend_frontier.py` stays unedited and monkeypatches `date.today`; it does neither: two of its tests pass `today="2026-10-12"`, a date after the real local date, which the new refusal rejects, and they would pass only once the calendar passes 2026-10-12. GRANTED: `data/mdpf/scripts/demque/test_demque_extend_frontier.py` for ONE change: pin the local date inside `extend_frontier` for those tests with the same date-subclass monkeypatch your new file uses (a fixed local date on or after the latest date any of its tests passes), so they no longer depend on the real clock. No assertion about the plan, the file or the pacer changes. All three extension test files must then pass. No criterion change.
 **Directive:** D8 | **Fabric:** dell1 (placement dell1) | **Decomp cell:** `DQ-t-37` (`decompositions/MDPF_DEMQUE_DECOMP.md`, ROUND 9 -- CUT, amendment 2) |
 **outcome_ref:** C-PRICES | **depends_on:** DQ-t-36 (merged @df9aaa34cc)
 
@@ -63,6 +64,7 @@ only; do not edit that file.
 <paths>
 data/mdpf/scripts/demque/extend_frontier.py
 data/mdpf/scripts/demque/test_demque_extend_future.py
+data/mdpf/scripts/demque/test_demque_extend_frontier.py
 org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
