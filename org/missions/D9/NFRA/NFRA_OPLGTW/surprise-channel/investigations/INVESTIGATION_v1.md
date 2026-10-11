@@ -12127,3 +12127,55 @@ name the one known failure instead of silently inheriting it.
   "notes": "Citing row; W35-S1's text is untouched. With E3 not cut, C:/tmp/wk-oplgtw-r30-35's KEEP condition (E3 cut) is void: the tree can be dropped, the branch kept."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W56-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~56",
+  "surfaced_at": "2026-10-11T16:45:07Z",
+  "one_line": "OG-gw-1 step 2 names mcportal_owner_key_claim and mcportal_owner_key as two required Terraform variables to supply by TF_VAR_ env; at box/sitez HEAD neither is a declared variable, the opal-gateway root reads both from gateway/principals/rosters inside the configuration, so the plan ran with no TF_VAR_ set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/terraform/opal-gateway/main.tf:59-109 declares only region, name, vpc_id, ec2_subnet_id, alb_subnet_ids, certificate_arn, route53_zone_id, hostname, gateway_port (each with a default); no mcportal_owner_* variable",
+      "FILE infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf: data.aws_secretsmanager_secret_version.mcportal_owner_config + local.mcportal_owner_config feed the function environment",
+      "RUN terraform plan -target=aws_lambda_function.mcportal_grant_writer in C:/tmp/og-tf-gw1 (box/sitez 6f523f89c9): rc=0, 'Plan: 0 to add, 1 to change, 0 to destroy.', no variable prompt (-input=false)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-gw-1 step 2: the two required variables mcportal_owner_key_claim and mcportal_owner_key come from the secret by TF_VAR_ env only.",
+  "world_is": "The configuration reads the secret itself (round-14 CTO ruling R2 shape); the variables do not exist, so the order's TF_VAR_ instruction had nothing to bind to and was not performed. The plan shows no diff on the function's environment.",
+  "notes": "Cut-time text written against an older shape of the root; the plan result is unaffected."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W56-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~56",
+  "surfaced_at": "2026-10-11T16:50:17Z",
+  "one_line": "gw1.AC2.sh cannot print PASS for any plan: its changed-address grep -E '^\\s*# [a-z_.\\[\\]\"0-9-]+ will be' has a malformed bracket expression (the class ends at the first ']'), so it matches zero lines and reports 'changed addresses 0', while the saved plan at rc=0 reads exactly 'Plan: 0 to add, 1 to change, 0 to destroy.' with the one address aws_lambda_function.mcportal_grant_writer.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r34/checks/gw1.AC2.sh -> 'plan rc=0; summary: Plan: 0 to add, 1 to change, 0 to destroy.; changed addresses 0:  ' RESULT: FAIL exit=1",
+      "RUN positive control, GNU grep 3.0: printf '  # aws_x.y will be updated' | grep -cE '^\\s*# [a-z_.\\[\\]\"0-9-]+ will be' -> 0; the same plan text with grep -E '^\\s*# [a-z_.]+ will be' -> 1 line, 'aws_lambda_function.mcportal_grant_writer'",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~56/gw1_plan.txt and gw1_plan.rc (rc 0): 'Plan: 0 to add, 1 to change, 0 to destroy.'; one '# ... will be updated in-place' line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-gw-1 AC2: 'plan rc=0; summary: Plan: 0 to add, 1 to change, 0 to destroy.; changed addresses 1: aws_lambda_function.mcportal_grant_writer ... RESULT: PASS'.",
+  "world_is": "The criterion's script is written as the order says but its address regex counts 0 on any plan, so AC2 reads FAIL on a plan that satisfies its own stated test. The script is outside this worker's <paths>; it was not edited and the plan file was not altered to fit it. AC2 is recorded FAIL by output.",
+  "notes": "The fix is one character class, e.g. [][a-z_.0-9\"-]+ or [a-z_.]+ (the address here has no index). Other r34 check scripts may carry the same pattern; not swept."
+}
+```
