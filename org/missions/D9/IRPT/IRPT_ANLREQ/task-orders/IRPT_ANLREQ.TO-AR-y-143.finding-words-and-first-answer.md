@@ -90,6 +90,34 @@ what it built, which this cell builds on.** Gate limb that graded this amendment
   `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r14/TOTAL_LABEL_PROVIDER_ASK.json`). Say which of the two
   your first-answer change runs in, and whether the resident's later answer for the same upload can now differ from the POST's.
 
+---
+
+**AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~22:1xZ): the issuer rules on row `IRPT_ANLREQ-D2-W52-S14`. ONE more test file
+joins the grant; the stop was right.** The earlier seating's commits (`4215d98f26`, `ce85146d30`, `c2e0a95500`, `d92664d6fc`) are
+inherited state: `AR143-y-AC1` passes; `AR143-y-AC2` fails on exactly one test,
+`tests/test_deferred_resolution.py::test_refusal_is_written_by_name_and_answered_with_findings`, which posts a sheet the READER
+refuses (`AAPL,bad`) and expects the first answer RESOLVING and a resident run afterwards. That expectation is what this cell
+changes on purpose (CTO ruling 4): a reader ERROR is now the POST's own answer and nothing goes to the resident.
+
+- **`infra/aws/lambda/investor-reporting/intake/tests/test_deferred_resolution.py` is added to `<paths>`** for this ONE test only.
+- **Keep what the test proves, do not delete it.** Its subject is the RESIDENT's path: a refusal the resident makes is written by
+  name and answered with findings. So: change the test's sheet to one the reader ACCEPTS and the resident REFUSES (the earlier
+  seating named `MISSING,10` -- a symbol the provider stub does not find; confirm it), so the test still walks POST = RESOLVING,
+  then the resident, then the refusal written by name with findings. Keep its name and every assertion that still describes that
+  path; change only the sheet and what the sheet forces.
+- **Add ONE test beside it,** `test_a_reader_refusal_is_answered_at_the_post_and_never_reaches_the_resident`, with the OLD sheet
+  (`AAPL,bad`): the POST's first answer is NEEDS_CORRECTION with the reader's finding, and NOTHING is published or handed to the
+  resident (assert on the same fakes the file's other tests use for the queue or publisher).
+- Change no other test in that file. If another test there fails after your change, STOP and file a row.
+- Then both criteria again, verbatim; a fresh proof instance at the same path; flip `<status>` to `complete` on VALID.
+- **Read by the issuer, for the record:** `ops/tests/test_status.py` fails 14 of 23 at the BASE too (`ModuleNotFoundError: No module
+  named 'submission'`; the issuer's run on the shared tree before your change): not yours, not in this order.
+- **Noted for the release census, not for you to change:** your words table made `build_envelope` add a CORRECT action when a
+  NEEDS_CORRECTION reason is one of the 24 codes that gained words. That is a change to a SERVED answer that came from a
+  words-only edit; the census (cell `AR-y-145`) names every reader of it. Say in your report exactly which envelope member changes
+  and for which reasons.
+- Gate limb that graded this amendment: read from this commit's own output.
+
 ### ACCEPTANCE
 
 <criterion id="AR143-y-AC1" cell_refs="AR-y-143"><invocation>python C:/dev/wk-irpt-anlreq-52/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r14/ar14_checks.py y143-words --root C:/dev/wk-irpt-anlreq-52</invocation><expect>Y143-WORDS-OK</expect></criterion>
@@ -111,6 +139,7 @@ infra/aws/lambda/investor-reporting/intake/uploads.py
 infra/aws/lambda/investor-reporting/ops/status.py
 infra/aws/lambda/investor-reporting/intake/tests/test_correction_words.py
 infra/aws/lambda/investor-reporting/intake/tests/test_template_uploads.py
+infra/aws/lambda/investor-reporting/intake/tests/test_deferred_resolution.py
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 

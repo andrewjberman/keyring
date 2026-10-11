@@ -5,7 +5,7 @@
  "project": "NFRA_OPSWKF",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.8",
+ "prd_version": "v0.9",
  "step": 4,
  "brief_ref": "docs/briefs/q3-trade-submission-ops-workflow-brief-20261006.md@c41e705220",
  "endpoint_outcomes": [
@@ -107,9 +107,11 @@ wrote the brief. **COO:** UNSEATED at registration; seating is `0.0.0_AB_MSTR`'s
                     asserted untouched on each refusal; and ON THE DEPLOYED SERVICE, on ONE body that cannot be stored (a malformed
                     `ticket_id`, and NO `initiator_email`), posted by a caller who is not Opal-internal AND CARRIES A VERIFIED EMAIL:
                     BEFORE the release that caller is answered 400 `ticket_id is malformed`, AFTER it 403 carrying the new check's
-                    own message, which is not either of the handler's two existing refusals; and AFTER, an Opal-internal caller with
-                    an email is answered 400 `ticket_id is malformed`; no submission row and no mail from any of the three reads; the
-                    deployed bytes diffed against the build input, member by member
+                    own message, which is not either of the handler's two existing refusals; and AFTER, the ADMITTED arm on the
+                    deployed function: ONE DIRECT INVOKE of the deployed handler with a constructed event whose authorizer context
+                    carries firmId `opal-capital` and an email and whose body is that same unstorable body, answered 400
+                    `ticket_id is malformed`, and the same invoke with a context that fails both comparisons answered the new 403; no
+                    submission row and no mail from any read; the deployed bytes diffed against the build input, member by member
          ACCEPT     a person signed in as a client or as another firm's user cannot put a trade in front of Opal's approvers or
                     mail them; an Opal staff member submits as before
          SOURCE     NFRA_OPSWKF cell OW-s-1's record `deliverables/0.9.0_WK_NFRA_OPSWKF~7/FOUR_FUNCTIONS_WHAT_A_NON_INTERNAL_CALLER_CAN_DO.md`
@@ -277,5 +279,30 @@ backlog in their numbered order.
   nothing either time: the malformed-id return is at lines 200 to 202 (v0.7 cited 199 to 201), before any table is touched.
 - The release's pair states what that caller is for its token's life on every other surface, read from each surface's own rule, as
   FWD-8's pair did not for its Opal-firm caller.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM (2026-10-11 ~22:0xZ, `1.0.0_SA_CTO~DELL2`): FWD-9's admitted arm is read by a direct invoke, and no Opal-internal identity is minted for it (L10; ENDPOINT changed)
+
+- **Source:** `3.0.0_SA_CVO`'s grade of workstream S (msg 5940, @25857907be): FWD-9 is realized for the refusal; v0.8's third read,
+  an Opal-internal caller answered 400 after the release, was never made, so staff being admitted rests on tests and bytes.
+- **Why it was not made:** this seat's half on the release (@1ca1f1ea52) refused the synthetic Opal-firm caller. For its token's
+  minutes that caller is Opal-internal on every surface that reads the firm claim, data-refresh's write routes included, with three
+  surfaces not established (the release pair's section 5). v0.8 asked for a read this seat then declined to buy, and left the
+  outcome with a DONE WHEN nobody could meet. That is corrected here, not left as a note in a half.
+- **The read that replaces it, and it is an act a seat can take on demand:** one direct invoke of the DEPLOYED function with a
+  constructed event. The handler's check reads the authorizer context out of the event (read by this seat at the pin, line 164
+  onward), so a context carrying firmId `opal-capital` exercises the admitted branch of the deployed bytes, and the unstorable body is
+  answered 400 before any table or mail (lines 200 to 202 before the release; the same return after it). A second invoke with a
+  context that fails both comparisons must answer the new 403: without it the first proves only that the function answers 400.
+  **No token is minted and no identity exists anywhere for either invoke.**
+- **What that read does NOT show, said in the outcome's record:** that the authorizer hands this function the context a real staff
+  session carries. The shape of that context was shown live today on the same authorizer by FWD-8's read R3 (a firmId `opal-capital`
+  caller served through the front door). The first real submission by a staff member closes it by-session.
+- **The mail side:** no read has looked at the mail service. The outcome claims no mail on the ground that the handler returns before
+  the write and the mail on every read made (the by-initiator count for the outside caller read 0, control 18); it does not claim a
+  read of the mail service's own log.
+- The invoke is made under an amendment to the release's pair (who may invoke, the two events, both answers of each), by the applier
+  that made the release. CONTRACTS unchanged. The CVO re-signs the ratified-text half.
 
 -- 1.0.0_SA_CTO~DELL2

@@ -129,3 +129,18 @@ one line; then the apply order is cut. Dry-run at the base: cm2-lines FAIL (miss
 **Ordering held by the issuer:** `R5-cm-3` is built in its own worktree now and MERGED only after TO-APPLY-R5-ml2 reports, because
 that apply's pin check reads the handler at HEAD. The drafter (`2.0.0_SA_COO~T2`) is not switched to the route before `R5-cm-4`
 lands (the CTO's word to that seat). Dry-run at the base: cm3-match FAIL (missing tests), cm3-regress FAIL (192 below 196).
+
+## AMENDMENT 6 (2026-10-11 ~22:0xZ) -- `R5-ml-2` LIVE, `R5-cm-3` drained, `R5-cm-4` issued, and one cell by CTO msg 5932
+
+- `R5-ml-2`: LIVE since 21:27:13Z (applier msg 5910; this seat's reads: CodeSha256 `e1ZHjf21`, handler `7113a749`, `READ27 27/27`,
+  four unauthenticated POSTs 401). Its findings: a 401 does not prove a route exists; the precheck's 27 is a frozen set (row
+  D2-S45).
+- `R5-cm-3`: merged @b6fcebb514 (196 ticket tests; handler blob `b7764fbd`). `R5-cm-4`: both halves signed (packet @675c87aa34,
+  CTO half @15b0cd9a3f); TO-APPLY-R5-cm4 issued.
+
+| cell | builds | list item | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|---|
+| `R5-pc-2` | the clamp precheck lists every ticket handler the DEPLOYED code dispatches, each with a class (profile scope, env firm list, submit context, or unclassed), with its own totals line; an unclassed handler fails the precheck; the `READ27` line unchanged | CTO msg 5932 | (instrument) | cut | dell2 worker, slot 24, workstream PC | LOCAL | worker | none |
+
+Write set: the slot-13 `clamp_precheck/` folder, shared with no other open order. Dry-run at the base: pc2-classes FAIL (missing
+tests), pc2-regress FAIL (16 below 21), as expected.

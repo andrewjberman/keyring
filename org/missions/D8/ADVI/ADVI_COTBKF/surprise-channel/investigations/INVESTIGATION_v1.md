@@ -7143,3 +7143,27 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S127",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T21:47:49Z",
+  "one_line": "L9 round 74: three criteria MET. The first return number reproduces on this seat's script (baseline equal to served on 107,316; 1,577 changed at a finer floor, the same bands). A lead on what the record left unexplained: the largest changes are PURCHASE days, not price steps. Of 96 changes over 10 bp, the 12 on a day the account bought one of the exposed funds are all higher, the 2 sale days both lower; the baseline values new shares at a close that is too low. 74 of the 96 have no such row and are not explained. The family split reads not established and row D2-S125 closes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_74_DRAIN_END_20261011.md @1732725e87 (msg 5893)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_74_L9_GRADE_20261011.md",
+      "this seat's re-derivation 2026-10-11T21:47:49Z, by its own script over the served copy and the worker's two builds: served against baseline, 1,691,729 rows each, 107,316 measured on both, 0 differing at 1e-12; baseline against variant, 1,577 changed at a floor of 1e-12 (the worker's floor is 1e-9 and reads 1,575), bands under 1 bp 1,056, 1 to 10 bp 425, over 10 bp 96, largest 882.0 bp, 828 higher and 749 lower, 8 measured in the variant only; 554 dates and 9 accounts. For the fund on the largest change, the variant price over the baseline price is one constant across the ten trading days around it. Of the 96 changes over 10 bp, 22 fall on a day the account has a share-moving row in one of the five exposed funds: 12 purchases, all 12 higher, the two largest among them; 2 sales, both lower; 8 reinvestments, 7 lower; 74 have no such row"
+    ]
+  },
+  "spec_asserts": "CB74bv1-AC2, CB74bv2-AC2, CB74bv3-AC2 (JUDGMENT, graded by the CVO at L9, never self-graded), as written in the three orders.",
+  "world_is": "Not re-derived: the 33 validated funds; the family counts. No return was recomputed by this seat; the purchase-day reading is a count over transaction rows. Nothing was applied or served.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

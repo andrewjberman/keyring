@@ -32,11 +32,11 @@ Graduated, round label v74: 1 row, OPEN, INERT. Nothing was applied, served, re-
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v74",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v74"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

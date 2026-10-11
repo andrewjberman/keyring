@@ -2063,3 +2063,30 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "notes": "Not a hazard while the condition is honoured: an applier that skipped the hash read would deploy 8 unreviewed member changes to whichever function it targets. Hashes, sizes and times only."
 }
 ```
+
+```json
+{
+ "id": "NFRA_TRNSPT-D2-S32",
+ "project": "NFRA_TRNSPT",
+ "fabric": "dell2",
+ "surfaced_by": "0.7.0_AE_CloudOps~TR2",
+ "surfaced_at": "2026-10-11T21:40:00Z",
+ "hazard_standing": "INERT",
+ "one_line": "safe-apply's CROSSBOX-DEPLOY limb printed verdict=STOP on TR-ca-23's fully paired code-only apply (6 hits); mode=WARN let it proceed. All 6 are token matches on 'transcripts' and 2 of the 3 OPEN-DEPLOY hits are STALE worktree copies of sentinels that are CLOSED at shared HEAD.",
+ "class": "OBSERVATION",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-apply 2026-10-11T21:18:38Z, stderr verbatim: 'safe-apply: [seat-gates] mode=WARN CROSSBOX-DEPLOY device=dell2 root=transcripts open_call=hit overlap=clear upset=clear open_deploy=hit verdict=STOP' then 'safe-apply: WARN [seat-gates] would stop under ENFORCE ( crossbox-deploy ); WARN mode proceeds.'",
+   "read-only re-run enumerating every hit: python .tools/crossbox-deploy-check.py --root infra/aws/terraform/transcripts --target aws_lambda_function.pull --target aws_lambda_function.mail_pull --target aws_lambda_function.commentary (rc=1, 2026-10-11T21:37:20Z). OPEN-CALL hit (3): XB-20261011T055148Z-00a7 (ACKED, dell2 -> sitez, the a18 status-only ADMITTED read), open_calls rows dell2-20261011T023030Z-01c5 and dell2-20261011T063600Z-e260. OPEN-DEPLOY hit (3): nfra-trnspt-a18-second-reader-laptop-20261009, irpt-anlreq-t1-commentary-store-and-lambda-20261009, nfra-trnspt-c3-driven-positive-arm-20261007. Printed denominator: 69 worktrees, 1379 sentinel reads, 162 distinct (path, blob), 122 distinct slugs, vanished=0",
+   "the two open_calls rows each carry roots [] and scope {risk LOCAL, verdict OWN-BOX}; their subjects are a SharePoint folder link for research_meeting and the FWD-8 Opal_Terminal key read -- neither names a Lambda, a function or this root's code",
+   "org/critical_paths/.open_deploys/ in the SHARED working tree at 21:39Z: irpt-anlreq-t1-commentary-store-and-lambda-20261009.json and nfra-trnspt-c3-driven-positive-arm-20261007.json are both ABSENT (their closes removed the sentinels); the only entry naming this root at shared HEAD is nfra-trnspt-a18-second-reader-laptop-20261009 (status HELD-SOVEREIGN-GATED, device laptop, targets aws_iam_role/aws_iam_policy/aws_iam_role_policy_attachment.second_reader and aws_kms_key.transcripts -- not one of the three functions)",
+   "the act itself: plan 0 add / 3 change / 0 destroy, every changed attribute source_code_hash plus the last_modified that follows from it, all three resources of type aws_lambda_function (read from the saved plan's JSON)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "safe-apply's crossbox-deploy limb: STOP means 'do not deploy this on the strength of this box alone; raise a cross-box call to the box that owns the work, or wait for the notice to expire' -- i.e. a hit names work another box owns or a deploy still in flight on this root.",
+ "world_is": "On this root the limb cannot tell a live conflict from a token match or a stale checkout. Its OPEN-DEPLOY arm unions sentinels across 69 worktree HEADs, so a ledger CLOSED hours ago in the shared tree still reads OPEN from any worktree whose HEAD predates the close: 2 of the 3 OPEN-DEPLOY hits here are that, with the shared tree's own .open_deploys as the control. Its OPEN-CALL arm matches the bare token 'transcripts' in a subject or context, so two LOCAL / OWN-BOX asks with roots [] and the one read-only status probe to site Z all count as hits. The residue after both corrections is zero live conflict with a code-only apply of the three functions, and the act carried a GIVEN COO half and a SIGNED CTO half. Under ENFORCE this apply would have been refused and routed to a cross-box call it does not need.",
+ "notes": "For the limb's owner, not for this lane: the applier's own NEVER-2 read reached the same verdict independently and is what the act relied on. Not measured here: whether the same stale-copy effect is reachable on other roots, and whether any of the 69 worktrees is prunable (not this lane's write surface, and no worktree was touched). Same stale-copy class the mp23 instance recorded. Statuses, counts, hashes and times only; no transcript text, mail content or prompt text."
+}
+```
