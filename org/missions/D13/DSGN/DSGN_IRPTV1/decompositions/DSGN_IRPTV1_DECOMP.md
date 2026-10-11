@@ -548,3 +548,21 @@ D2-W53-S4) are not cut: the CTO rules that cell after 2.0.0_SA_COO~P2 reads the 
 **Rule 24:** the record's words are booleans and lists local to this cell; no enum is minted. `client_claim`'s enum is the contract's.
 
 fanout: 2 of 2 chains, cap 8.
+
+## v20 -- round 20 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~12:1xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2's ruling msg 4872
+
+**Rectangle:** one read-only cell. Round 19's history reader is on portal DEV (8ed372cb) and waits on Andrew's word for PROD. Before the
+service release returns, the CTO wants every portal reader of that service listed with how strictly it reads.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-100 | the census: every irpt-status route the portal reads -- reader (file:line), key policy per level (EXACT / TOLERANT), release 5's answer PASS or the refusing member, at portal PROD 37aa1247ee and at DEV's tip; the sections reader and the single-request reader included; the routes that join the PROD push | D2-W53-S4, D2-W55-S1; IRPT_YCDGEN-W2-S13, W6-S4 | LOCAL | B ~56, the second worktree pair, read-only | portal/src/pages/InvestorReporting/contracts/, infra/aws/lambda/investor-reporting/ |
+
+**What it feeds:** a build cell per reader that refuses at PROD (the CTO's order of return: every such reader on PROD first, then the
+service). The sections reader admitting the Opal form (IRPT_YCDGEN round-11 analysis, section 4 item 3) is expected to be one of them; it
+is cut from this cell's rows, not before. Row IRPT_YCDGEN-W3-S21 (the suite leaves four tracked wire files modified) is taken into IV-e-98.
+
+**Rule 24:** EXACT / TOLERANT is one axis (what an unknown key does at one level) with two values and no third; PASS / REFUSES /
+NOT_ESTABLISHED is one axis (what the reader does with one answer). Both are measurement vocabularies local to this cell.
+
+fanout: 2 of 2 chains, cap 8.

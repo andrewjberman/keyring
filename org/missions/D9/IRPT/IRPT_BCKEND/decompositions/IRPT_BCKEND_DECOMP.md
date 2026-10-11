@@ -2862,3 +2862,21 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r127/p127_cells.py`: every criterion 
 | `IB-pr-429` | one claim per account-day; NOT_GRADED by reason and what those accounts hold; served and blank under the rule; the instrument's daily needs; a constructed control | FWD-3 (Cottonwood) | LOCAL | IB-pr-427 drained | P127-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~288. DIRECT-ACT (one cell, read only, LOCAL).
+
+## 121. ROUND 128, WORKSTREAM ~P (2026-10-11 ~12:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 4858 and 4865)
+
+Round 126's read (IB-pr-428, drained @7b8605503e): the handlers' data member has its fixture's shape on 5 of 5 routes, and four closed
+v1 response schemas omit the envelope member `unprojected_grant` that `response_envelope` always adds. The CTO ruled the four schemas
+gain the member (the portal's envelope parser already requires it). The CTO also ruled, on 2.0.0_SA_COO~D2's read, that two producer
+fixtures are thin and are re-made by their handlers: DirectoryPage (an entry's revision must be the page's) and AnalysisUploadResult
+(the portfolio's source must name its upload). One cell does both. It changes no handler and no deployed byte.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r128/p128_cells.py`: AC1, AC3 and AC4 FAIL at base; AC2 is a bound and PASSes at base
+(2 failed, 203 passed, both failures analysis-request-original). A fourth criterion is stated with its reason on the face.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-430` | four response schemas declare unprojected_grant; their valid fixtures follow; two producer fixtures re-made by the handlers' own code path | FWD-2 (the v1 contract agrees with what the handlers send) | WORLD | IB-pr-428 drained | P128-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~289. Class WORLD by the L6 floor (its paths name infra/); not a direct act. It deploys nothing. The ratified-text
+signer 3.0.0_SA_CVO is told at issuance: the four files are contract files.
