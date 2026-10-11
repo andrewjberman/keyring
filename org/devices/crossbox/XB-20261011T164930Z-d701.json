@@ -10,12 +10,16 @@
  "subject": "ADVI_FIRMBKTS FB-f-19 act 4 laptop leg, STAGED for Mon 13:45Z+: read and ack with your time",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-19.act4-edge-leg.md",
  "opened_at": "2026-10-11T16:49:30Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T16:52:22Z",
+  "by": "0.7.0_AE_CloudOps~FBL",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
