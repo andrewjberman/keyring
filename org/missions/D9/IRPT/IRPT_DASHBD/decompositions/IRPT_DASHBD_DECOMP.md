@@ -1293,3 +1293,17 @@ with DB-b-131's count in hand. No producer upload of method row 2 before DB-b-13
 
 **fanout:** 4 of 4 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~105` (DB-b-131), `~106` (DB-b-132 then DB-b-134, one worktree), `~107`
 (DB-b-133), `~108` (DB-b-135), each cut from box/dell2.
+
+## 73. ROUND 71, WORKSTREAM B (2026-10-11 ~16:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ruling msg 5375)
+
+DB-b-131 found the 24-key thresholds object in the live package and in a daily returns manifest. The CTO ruled three things on it; each is
+a cell (its items 1 and 2 are one read).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-136` | FWD-11: items 1 and 2 -- the 49 Financial manifests the live package writes, counted per prefix by key listing (no bodies) with first and last dates; and each of the ten readers of a returns manifest read for whether it passes the thresholds object or the whole manifest onward | LOCAL | DB-b-131 | B71-1 |
+| `DB-b-137` | FWD-11: item 3 -- R45 presented once more as REFRESH 4 with today's producer (DB-b-128, DB-b-132, DB-b-134), so the first run after it stops writing the 24 keys; a packet, no apply; REFRESH 3's halves stand until REFRESH 4's are signed | LOCAL | DB-b-132, DB-b-134 | B71-2 |
+
+No served object is rewritten or deleted. With DB-b-136's two answers the CTO takes the question to Andrew.
+
+**fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~109` (DB-b-136) and `~110` (DB-b-137), each cut from box/dell2.

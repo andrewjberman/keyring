@@ -55,7 +55,9 @@ REGION = "us-east-1"
 PACKAGE_DIRS = ("_authz", "_contracts", "_gate", "_ids", "_keys", "_scope", "intake", "ops",
                 "reports", "ycharts/generate", "ycharts/session", "ycharts/extract")
 RESEARCH_DIR = "ycharts/research"
-RESEARCH_EXT = (".py", ".json", ".sh", ".md", ".cjs")
+# .svg: the Opal logo under ycharts/research/brand/ (rows IRPT_YCDGEN-D2-W7-S1, D2-W10-S4): without it a --research build
+# ships no logo and the resident refuses the Opal page. It is the one tracked non-test file the other five endings miss.
+RESEARCH_EXT = (".py", ".json", ".sh", ".md", ".cjs", ".svg")
 OPAL_MAP_MEMBER = RESEARCH_DIR + "/overview_map.json"
 EXTRA_FILES = ("lib/opal_naming.py", "data/firm_registry.json", "org/standards/NAMING_SCHEMA.json")
 EXTRA_DIRS = ("infra/logic/registry", "docs/contracts/investor-reporting/v1")
