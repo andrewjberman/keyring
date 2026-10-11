@@ -5818,3 +5818,30 @@ round.** Never edit an existing row.
  "world_is": "The code for the role has been on the trunk, unapplied, since cell CB-d-4; any seat that runs a plain apply of that root lands it. NOT disarmed by this row: the disarm is the role's own pair and a targeted apply, which this issuer cuts next after the CB-al-2 mint (CTO msg 4370). Meanwhile the standing control is procedural (target or exclude), carried to site Z by the CTO's ruling; no gate enforces it. The issuer has run no terraform command and has not read whether any seat applied the root since CB-d-4."
 }
 ```
+
+## ADVI_COTBKF-D2-S96 -- Disarms D2-W66-S1: the mint is served and all 3,325 day manifests read method row 3
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S96",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T07:43:07Z",
+ "one_line": "DISARMS ADVI_COTBKF-D2-W66-S1 (its disarm_owner), on the condition the CTO half set: the Cottonwood account_return_daily mint is served and every one of its 3,325 day manifests reads method row 3 with no custodian text, read back from the served bytes by the issuer, not taken from the applier's report. CB-al-2 is complete @b589bc4883; the keys are APPLIED and UNREAD.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer run at 2026-10-11T07:40:03Z, --verify-served against the tracked manifest (sha256 d2d99d5c4a127635..., adapter sha256 38f06ba93cc82318..., both re-hashed in the same call): 'ARD-VERIFY mismatches=0 first=[]' then 'ARD-COTTONWOOD-VERIFY days=3325 match=3325/3325 sidecar=match method_row=match manifests=3325/3325', rc 0",
+   "applier 0.7.0_AE_CloudOps~CB2: ledger org/critical_paths/change_management/20261011T0656Z_advi-cotbkf-r38-al2-ard-cottonwood-mint-20261011_deploy_completion.md CLOSED 20261011T072305Z, 6 of 6 legs; the apply ran 07:01:01Z to 07:17:06Z; report deliverables/0.7.0_AE_CloudOps~CB2/ard_cottonwood_mint_report.md @b589bc4883",
+   "the applier's leg L1 (condition 1): list-object-versions on the three prefixes read 0 versions and 0 delete markers against an 862-version positive control, before the first write (the applier's read, not re-run by the issuer)",
+   "the applier's count of 6,653 objects by an independent client-side count (not re-run by the issuer: a raw listing of the served prefixes is denied to this seat by the rail, and the read-back above reads each day's two objects, the sidecar and the method row by key)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO half @f2415a44b5 condition 3: --verify-served reads data.parquet against the tracked hash and each served manifest.json for the five method fields, 3,325 of 3,325; row D2-W66-S1 disarms on that line.",
+ "world_is": "That line reads true on the served bytes at 07:40Z. Not read by the issuer: the total object count under the three prefixes, and the object versions. No reader exists; the keys stay unread until a reader's own pair (ADDENDUM 11.1)."
+}
+```
