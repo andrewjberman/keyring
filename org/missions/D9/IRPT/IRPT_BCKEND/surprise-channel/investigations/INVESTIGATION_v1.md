@@ -25511,3 +25511,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both occurrences were benign for one reason only, and it is luck rather than design: the members being staged happened to be byte-identical to HEAD, so there was nothing for the failed restore to put back. The latent case is a member whose PIN differs from HEAD -- which is the normal case for a release that re-pins members, and precisely what this order's source map does. Then the failed restore leaves the pinned content sitting in a tracked file in the SHARED tree, rc=0, with only a WARN in a long build log, and any seat's next `safe-commit` over that path would land it. The detection that caught it here is cheap and should be the habit: git diff HEAD over the staged directories beside a positive control, after every build, rather than trusting the script's exit code. NOT FIXED HERE: the script is outside this order's grant and this is not a defect in the release. OWNER: whoever owns infra/aws/lambda/ci/build-and-upload.sh. Two candidate remedies, neither chosen here: make the restore failure non-zero so the build fails loudly instead of warning, or have the script stage into a temporary tree of its own rather than the shared worktree."
 }
 ```
+
+## IRPT_BCKEND-D2-S73 -- Resolves D2-W282-S1: both single-secret session-read grants are live on the adapter role
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S73",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T09:34:17Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W282-S1. The adapter role had no secretsmanager GetSecretValue because retained.tf count-gated both vendor session-read policies on the retired plan variable. The CTO ruled one release (msg 4488). IB-pr-422 ungated the two policies (targeted plan 2 add, 0 change, 0 destroy) and IB-pr-423 applied them before the zip. Read by the issuer on the live role after the close: 9 inline policies; irpt-performance-approved-session-policy and irpt-performance-approved-orion-session-policy are each one statement granting only secretsmanager:GetSecretValue on its one signed secret ARN (criterion IB121-1-AC2, PASS).",
+  "one_line": "D2-W282-S1 resolved: both single-secret session-read grants are live on the adapter role, landed before the zip (IB-pr-422, IB-pr-423).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checks/r121/p121_cells.py IB121-1-AC2 run by 2.0.0_SA_COO~P2 at 2026-10-11 ~09:4xZ: PASS (list-role-policies and get-role-policy on irpt-performance-adapter-role)",
+      "ledger closed @b424a3c4a1 by 0.7.0_AE_CloudOps~IB2"
+    ]
+  },
+  "spec_asserts": "A release that retires a code gate also carries the permissions the ungated path needs.",
+  "world_is": "The retired gate had a second half in Terraform; the build cell found it by reading the role, before any apply."
+}
+```
+
+## IRPT_BCKEND-D2-S74 -- Resolves D2-W283-S1: the deferred Lambda plan line, ruled a targeted apply of the two policies first
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S74",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T09:34:17Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W283-S1. The untargeted plan after the retained.tf edit read 2 add, 1 change: lambda.tf:62-65 makes the adapter module depend on aws_iam_role_policy.performance_approved_session, so a pending add defers the artifact data read and the function prints as an in-place update. The worker stopped on CTO condition 3, correctly. The CTO ruled no lambda.tf edit and a plan and apply TARGETED at the two policy addresses, policies before the zip (msg 4509); TO-IB-pr-422 AMENDMENT 1 @99d71afa7b carried it. Measured at the apply by 0.7.0_AE_CloudOps~IB2: targeted plan 2 add, 0 change, 0 destroy; then the full-root plan 0 add, 1 change, 0 destroy with a known hash.",
+  "one_line": "D2-W283-S1 resolved: the deferred Lambda plan line is a depends_on artifact; ruled a targeted apply of the two policies first, measured 2/0/0 then 0/1/0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/performance/lambda.tf:62-65 read by 2.0.0_SA_COO~P2",
+      "TO-IB-pr-422 AMENDMENT 1 @99d71afa7b; 0.7.0_AE_CloudOps~IB2 msgs 4547 and 4573 for the two plan counts at the apply (not re-run by the issuer)"
+    ]
+  },
+  "spec_asserts": "A plan whose adds are exactly two policies shows no other line.",
+  "world_is": "A module-level depends_on on one of the two policies makes the function's hash unknowable at plan time while that policy is a pending add."
+}
+```
