@@ -5647,3 +5647,31 @@ round.** Never edit an existing row.
  "world_is": "test_commonwealth_ard_mint_claims.py:303,310,314 and test_commonwealth_ard_apply.py:158 assert the last verify line with ==. The apply test's stub serves day manifests that do not state row 3, so its line reads manifests=0/3. Updating those four assertions (outside the grant) resolves it."
 }
 ```
+
+## ADVI_COTBKF-D2-S90 -- Round 60 closed; the day manifest reads row 3 on three real days before any write
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S90",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T06:12:06Z",
+ "one_line": "Round 60 (CB-bh-1) drained @f32b096b42 and closed by the issuer's run. The hazard of row D2-W66-S1 (a day manifest stating the custodian method for rows computed another way) is exercised on REAL rows for the first time, before any write: the manifest the producer builds for three real days states method row 3 and carries no custodian text. D2-W66-S1 does not disarm on this; it disarms on the read-back of the served manifests, 3,325 of 3,325.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer run at f32b096b42, no S3 client created, --show-day-manifest on 2013-04-03, 2020-03-16 and 2026-06-22: each last line reads method_version=3 valuation_source=positions_x_as_traded_close fee_treatment=net_of_fees price_basis=as_traded custodian_text=absent, rc 0",
+   "worker ~87's report of the real 2026-06-22 manifest: 18 top-level keys; method sentence 'r_t = (V_t - F_t) / V_(t-1) - 1; the valuation source, fee treatment and price basis are the declared fields ... and no further method is stated for this source; daily returns link geometrically. GIPS-ALIGNED, not GIPS-compliant.'",
+   "tests at the same HEAD, variable unset: test_commonwealth_ard_day_manifest.py 10 passed; silver suite 802 passed, 12 skipped",
+   "issuer read of the adapter diff cb39f6fce6..620da664d1: 4 hunks, all additions; 0 lines changed inside apply_days or build; check_day_manifest is the one function both the show mode and verify_served call",
+   "stamp at the same HEAD: days=3325 day_hashes_equal=3325/3325, manifest sha256 d2d99d5c4a127635170f77516b52fdfc0c163e151e39649e35569a601ce47b36 unchanged; bond count 0 of 107,316"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO half @1013274c3f condition 2: the applier shows the day manifest the producer will write before 3,325 of them are written; the custodian method's text anywhere in it is a STOP. Condition 3: --verify-served reads the same fields back on 3,325 of 3,325.",
+ "world_is": "Both reads exist in the tool at f32b096b42. Shown so far: 3 of 3,325 days, built locally. Not established: that the show mode's two helper functions stay equal to the lines of apply_days they mirror (they are equal today by the issuer's read; apply_days does not call them)."
+}
+```
