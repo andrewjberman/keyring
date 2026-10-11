@@ -444,3 +444,19 @@ IRPT_YCDGEN FWD-20); right-aligning the two dollar columns (D2-W46-S5: "in the n
 **Rule 24:** the two dispositions of the 43-id table are the CTO's, quoted from the analysis section 2 item 2; the check refuses any third word.
 
 fanout: 2 of 2 chains, cap 8.
+
+
+## v15 -- round 15 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~07:5xZ), over PRD v0.18 (ADMITTED), on 1.0.0_SA_CTO~DELL2 msgs 4407 and 4427
+
+**Rectangle:** one read-only item. The FWD-1 rendered walk ran on the laptop (portal DEV @ab697ba1) and broke at Performance on two refusals
+(row DSGN_IRPTV1-D2-S7). OBJECT_NOT_COVERED is placed and ruled elsewhere (IRPT_BCKEND, 2.0.0_SA_COO~P2). The CTO asked for this cell "first in
+round 14"; the issuance gate admits one issuance per round, so it is round 15. Round 14's four orders run unchanged.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-93 | the FIRM_BINDING refusal of the reporting summary and manifest placed at its emitting line; whether Global (All) is the cause; what an Opal user sees by default; whose defect; hop 7's two sentences side by side | D2-S7 | LOCAL | A ~51 | infra/aws/lambda (the reporting-read handler, _authz), the portal's Performance loader at ab697ba1, the walk record; read-only |
+
+**Rule 24:** the record's answer sets (YES / NO / NOT_ESTABLISHED; SERVICE / PAGE / BOTH / NOT_ESTABLISHED) are measurement vocabularies local to
+this cell, not a served enum.
+
+fanout: 1 of 1 chains, cap 8.

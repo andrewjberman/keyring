@@ -71,7 +71,31 @@ Use the existing panel classes; add no colours (light canvas, white hairline pan
 <criterion id="AR31-y-AC2" cell_refs="AR-y-31"><invocation>python C:/dev/wk-irpt-anlreq-51/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py y31-keep --portal C:/dev/wk-irpt-anlreq-51/portal</invocation><expect>Y31-KEEP-OK</expect></criterion>
 `AR31-y-AC2`: the two package test files that must not move still pass.
 
-<expected_criteria>AR31-y-AC1 AR31-y-AC2</expected_criteria>
+---
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~08:5xZ): REOPENED at the drain -- the portal typecheck is RED on this cell's two test
+files.** The order was flipped `complete` on the worker's branch with AC1 and AC2 passing; `bun test` does not typecheck, and the issuer's
+drain run of `bun x tsc -b --noEmit` on the portal branch (at portal commit `0e2d21b6`) exits 2 with SIX errors, all `TS2345`, all in
+this cell's tests. Lint is clean (0 errors) and the whole TicketCenter folder passes (39 tests). The product code is not in question.
+Gate limb that graded this amendment: read from this commit's own output.
+
+The six, as tsc printed them:
+- `src/pages/TicketCenter/__tests__/package-open.test.tsx(56,54)`, `(57,51)` and `(73,61)`: the fake `getOwnedAnalysisReport` returns
+  `Promise<{ requestId: string; sections: never[]; }>`, which is not an `AnalysisReportSliceView`.
+- `src/pages/TicketCenter/__tests__/package-report-reader.test.tsx(53,45)`, `(64,54)` and `(97,53)`: the fake returns
+  `Promise<unknown>`, not `Promise<AnalysisReportSliceView>`.
+
+**Repair, tests only:** make each fake reader's return type satisfy `PackageReaders` -- build a real `AnalysisReportSliceView` value in
+the test (the smallest valid one; read the type in `src/api/endpoints/investor-reporting.ts`) or type the fake as
+`PackageReaders['getOwnedAnalysisReport']`. Do NOT loosen `PackageReaders`, do NOT add `any`, `as any` or a `// @ts-` comment, and do
+not touch a product file. The four named tests keep their names and what they assert.
+
+<criterion id="AR31-y-AC3" cell_refs="AR-y-31"><invocation>python C:/dev/wk-irpt-anlreq-51/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py portal-tsc --portal C:/dev/wk-irpt-anlreq-51/portal</invocation><expect>PORTAL-TSC-OK</expect></criterion>
+`AR31-y-AC3`: the portal typecheck exits 0 (about 40 seconds). A third criterion, added because the drain's own check found a red that
+the first two could not see. AC1 and AC2 must still print their tokens. Update the proof instance to three rows and re-validate it
+AFTER its commit; flip back to `complete` only when all three print.
+
+<expected_criteria>AR31-y-AC1 AR31-y-AC2 AR31-y-AC3</expected_criteria>
 
 The issuer runs the portal typecheck, lint and the whole TicketCenter test folder at the drain, and looks at the rendered block.
 
@@ -95,9 +119,9 @@ org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: AR31-y-AC1 AR31-y-AC2. The instance is at
+Criterion ids: AR31-y-AC1 AR31-y-AC2 AR31-y-AC3. The instance is at
 `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~51/IRPT_ANLREQ.TO-AR-y-31.package-report-opens-finished-report.proof_of_spec.json`.
-Validate it AFTER its commit with `python .tools/proof-of-spec-check.py <instance> AR31-y-AC1,AR31-y-AC2`.
+Validate it AFTER its commit with `python .tools/proof-of-spec-check.py <instance> AR31-y-AC1,AR31-y-AC2,AR31-y-AC3`.
 </proof_of_spec>
 
 **REPORT (once):** each check line verbatim; the portal commit; whether `OpenedReport` was deleted or kept and why; the assertion you

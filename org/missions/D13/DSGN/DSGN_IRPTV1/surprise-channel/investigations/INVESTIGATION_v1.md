@@ -4161,3 +4161,55 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W50-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~50",
+  "surfaced_at": "2026-10-11T07:48:00Z",
+  "one_line": "Three more failing ids come from the same drift as row D2-W43-S2 (portal behind the contract) but are not among IV-e-91's 18, so IV91-AC1 will not see them: iv-e-17 IVE17-AC3 (spawns content-pins, rc=1), iv-e-26 IVE26-AC3 (gen-wire cannot render the new report_index {} members) and fe-s-1 'the smoke map covers every scoped route' (12 smoke keys vs 22 DECLARED routes).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~50/FAILING_ID_TABLE.json rows for the three ids (cause and evidence lines per row)",
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~43/c1.txt: 'content-pins.test.ts rc=1, expected 0' (IVE17-AC3), UnrenderableSchemaError at OwnedAnalysisRequest.schema.json report_index/alternatives/1/properties/report_id (IVE26-AC3), '10 routes with 0 key(s)' (fe-s-1 fixtures)",
+      "portal 7bb81fa8 fixtures/smoke/default.json holds 12 keys; docs/contracts/investor-reporting/v1/routes.json declares 22 (_denominator.declared 22)"
+    ]
+  },
+  "spec_asserts": "TO-IV-e-91 and CTO ROUND-13 ANALYSIS section 3: the 18 ids of row D2-W43-S2 are the contract-vs-portal family and the portal moves; IV91-AC1 grades those 18.",
+  "world_is": "The family is wider than the 18: IVE17-AC3 clears only when the content-pins ids do; IVE26-AC3 and the fe-s-1 fixtures id need portal generator or fixture work no listed cell owns. This table names IVE26-AC3 and fe-s-1 fixtures as UNCUT and IVE17-AC3 under IV-e-91 as consequential; IV-e-91's suite_after.fixed_ids will show IVE17-AC3 fixed or not.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Also found in passing: row W38-S1 (ARMED) says iv-e-42 and iv-e-44 fail; neither appears in the 43-id sample, so that part of W38-S1 no longer reproduces. Not re-measured beyond the sample."
+}
+```
+
+## DSGN_IRPTV1-D2-S7 -- the FWD-1 rendered walk breaks at Performance: the year-to-date return is refused for the named firm (OBJECT_NOT_COVERED, FIRM_BINDING)
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S7",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T07:38:02Z",
+  "one_line": "The FWD-1 rendered walk on portal DEV @ab697ba1 (laptop /ui-walk, 2026-10-11 ~07:30Z) BREAKS at the Performance hop: the year-to-date return and its spread are refused. Sign-in, search, the brokerage-account pick, the identity card and the security list PASS; the Models / SMAs / Client split is PARTIAL (the default view splits by account; the category split sits one layer in). The thread is not live.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "relay 0.0.0_AB_MSTR~DELL2 msg 4401 of laptop 4.0.0_SA_CRO msg 108255 (bus 98d7c3cc), verbatim there",
+      "the walk record org/tier1_exec/4.0.0_SA_CRO/deliverables/UI_WALK_DSGN_IRPTV1_FWD1_20261011T0730Z.md @b39ea1d4eb on origin CLOUD; NOT yet on this box and NOT read by this seat",
+      "as relayed: performance/sel_* UNAVAILABLE OBJECT_NOT_COVERED; reporting summary and manifest UNAVAILABLE FIRM_BINDING; guard.tsv empty, 0 aborts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD FWD-1: the user reads the client's year-to-date return with its spread to the benchmark and the Models / SMAs / Client split, on the live product, end to end.",
+  "world_is": "The Performance tab serves a refusal for the named firm on both paths it tries. Measured by the walk: the two refusal codes. INFERRED by this seat, not measured: FIRM_BINDING on the reporting routes is the reporting gold not being bound or served for the firm, which is IRPT_DASHBD's open order DB-b-86 (BLOCKED on the Cottonwood returns gold, row IRPT_DASHBD S43) behind ADVI_COTBKF's mint; and OBJECT_NOT_COVERED on the performance route is the branch row DSGN_IRPTV1-D2-W47-S2 read from the code. Neither inference has been checked against the handlers' refusal sites.",
+  "notes": "BLOCKING for FWD-1's grade, not armed: nothing served is wrong, a page refuses. The split being one layer in is a separate page question for the reviewer against FWD-1's words. Owner of the next act: 1.0.0_SA_CTO~DELL2 at the next analysis (which project's cell serves the firm's returns to the Performance tab)."
+}
+```

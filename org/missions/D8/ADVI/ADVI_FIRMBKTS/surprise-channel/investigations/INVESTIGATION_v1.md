@@ -1681,3 +1681,201 @@ write: **1 row** (`S1`).
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S5",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T07:12:14Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "PRODUCER_CENSUS.json OMITS THREE SERVED gold/views/ WRITES IN D_00 (lines 1106-1108), SO THE CENSUS UNDER-COUNTS THE PLATINUM WRITE LINES OF THE 14 WRITERS",
+    "spec_asserts": "FB-f-9 section 1 and step 5: the census names each platinum write line of the 14 writers, and the per-script routed count is read against the census writer-line count.",
+    "world_is": "D_00.portal_aggregates.py:1106-1108 @96f3212d22 call _write_view_parquet(geo | geo_city | adv, NNA_AUA_BY_GEOGRAPHY | NNA_AUA_BY_GEOGRAPHY_CITY | NNA_AUA_BY_ADVISOR, upload=True); the helper (base :206-213) puts to S3_BUCKET. Those keys are gold/views/*.parquet (lib/s3_layout.py:190-192 @96f3212d22), a served class. The census gold/views/ class lists C_05:401, C_06:417, C_07:477-479 and D_03:767, and no D_00 line. This worker routed the helper put, which the three calls share, so the D_00 routed count is 5 of 5 census lines (via gold_utils) plus 3 non-census view writes. The census was not edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 96f3212d22:data/black_diamond/scripts/gold/D_00.portal_aggregates.py | sed -n '1104,1109p': _write_view_parquet calls at 1106, 1107, 1108",
+        "git show 96f3212d22:data/black_diamond/scripts/gold/lib/s3_layout.py: NNA_AUA_BY_GEOGRAPHY, NNA_AUA_BY_GEOGRAPHY_CITY, NNA_AUA_BY_ADVISOR = 'gold/views/...' at lines 190-192",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json (read-only): class gold/views/ writers are C_05 401, C_06 417, C_07 477-479, D_03 767; none names D_00"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not a mode-dependent defect: the put is routed in this cell and is identity in legacy mode. The census is read-only to this worker; its owner re-cuts it."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S6",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T07:12:14Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "PRODUCER_CENSUS.json OMITS A SERVED gold/entities/clients/ WRITE IN C_06 (_write_relationship_views, LINE 381)",
+    "spec_asserts": "FB-f-9 section 1 and step 5: the census names each platinum write line of the 14 writers.",
+    "world_is": "C_06.client_mix_timeseries.py:88 @96f3212d22 sets OUTPUT_PREFIX = CLIENT_TIMESERIES_PREFIX.rstrip('/'); lib/s3_layout.py:276 gives CLIENT_TIMESERIES_PREFIX = 'gold/entities/clients/'. _write_relationship_views (base :376-383) puts key = f'{OUTPUT_PREFIX}/{rel_id}_views.json' at line 381, a served key. The census lists C_06 at 363 (client_timeseries_key) and 417 only. This worker routed the line-381 put; its legacy dual-write (line 386, gold/client_timeseries/) is non-served and left as it is.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 96f3212d22:data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py | sed -n '88p;376,386p': OUTPUT_PREFIX at 88; key at 378; put at 381; legacy lk at 384-386",
+        "git show 96f3212d22:data/black_diamond/scripts/gold/lib/s3_layout.py:276: CLIENT_TIMESERIES_PREFIX = 'gold/entities/clients/'",
+        "PRODUCER_CENSUS.json (read-only): class gold/entities/clients/ writers from C_06 are line 363 only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Routed in this cell; identity in legacy mode. The census is read-only to this worker."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S7",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T07:12:14Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "IN CANONICAL MODE THE LEADERBOARD PRIOR-WEEK ROTATION ARCHIVES A STALE LEGACY-BUCKET COPY, BECAUSE THE SOURCE IS READ FROM S3_BUCKET WHILE THE CURRENT WRITE GOES TO THE DESTINATION",
+    "spec_asserts": "FB-f-9 section 1b step 2: a copy whose source is a platinum key reads the source from S3_BUCKET (legacy key) and writes to the destination.",
+    "world_is": "D_04.client_portal_summary.py:2466-2470 @96f3212d22 copies platinum/firm/leaderboard.json (CopySource on BUCKET) to platinum/firm/leaderboard.prior_week.json before the new write. The new leaderboard is written by _write_batch (base :2478) through the helper (base :269-273), which in canonical mode puts to the destination bucket. The rotation source is therefore the legacy-bucket copy, which canonical mode no longer refreshes; the rotation archives that stale copy as prior_week at the destination. The mode is unset in this cell, so nothing reads the difference today.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 96f3212d22:data/black_diamond/scripts/gold/D_04.client_portal_summary.py | sed -n '2466,2470p': copy_object CopySource Bucket BUCKET, Key platinum/firm/leaderboard.json, target platinum/firm/leaderboard.prior_week.json",
+        "git show 96f3212d22:data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2478 _write_batch leaderboard write; :265-273 helper put to BUCKET",
+        "the order worker face section 1b step 2 (FB-f-9, lines 65-66) names the source as S3_BUCKET"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The spec wording was implemented as written. Phase B, which sets the mode, makes this live: its owner settles the rotation source (read the destination, or keep refreshing the legacy copy) before the mode is set."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S8",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T07:12:14Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "IN CANONICAL MODE D_00f'S WRITE-SUCCESS SENTINEL READS THE LEGACY BUCKET, SO A LANDED WRITE FAILS LOUD",
+    "spec_asserts": "FB-f-9 section 2 bound 1: reads stay on S3_BUCKET; the D_00f sentinel exists to assert that the object actually landed this run.",
+    "world_is": "D_00f.advisor_nna_canonical.py:928 @96f3212d22 writes OUTPUT_KEY through _write_json_s3, which in canonical mode puts to the destination bucket. The sentinel at base :937 is head_object(Bucket=S3_BUCKET, Key=OUTPUT_KEY). In canonical mode it reads the legacy bucket, where the object is old, and so fails loud on a write that landed. It cannot pass silently on a stale object because the LastModified window is 10 minutes. Phase B must read the destination for this sentinel.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 96f3212d22:data/black_diamond/scripts/gold/D_00f.advisor_nna_canonical.py | sed -n '935,938p': the sentinel comment and head_object(Bucket=S3_BUCKET, Key=OUTPUT_KEY) at 937",
+        "git show 96f3212d22:data/black_diamond/scripts/gold/D_00f.advisor_nna_canonical.py:928 _write_json_s3(artifact, OUTPUT_KEY)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Inert while the mode is unset. Phase B owns the sentinel's bucket."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S9",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T07:12:14Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "D_00f's LITERAL BUCKET WAS PINNED AGAINST BD_S3_BUCKET; THROUGH THE SEAM ITS READS AND WRITE NOW FOLLOW BD_S3_BUCKET",
+    "spec_asserts": "FB-f-9 step 3 (D_00f's hard-coded bucket goes through the same seam) and dormant proof 4 (mode unset: every writer names the identical destination key and bucket as today).",
+    "world_is": "Base D_00f.advisor_nna_canonical.py:87 set S3_BUCKET = 'opal-data-bd' as a literal, so its reads (base :152, :166, :216), its head (:937) and its write went to opal-data-bd whatever BD_S3_BUCKET held. Now S3_BUCKET is lib/config.py's value, os.environ BD_S3_BUCKET defaulting to opal-data-bd, and all of D_00f's reads and its write follow it. The runner sets BD_S3_BUCKET to opal-data-bd by default (gold_dispatch.sh:77) and no repository path overrides it, so the runner's behaviour is unchanged. An override would change D_00f's reads and write, which the literal prevented. This is an OBSERVATION and not BLOCKING because the condition is environment-only; a reading of FB-f-9 bound 3 could class it BLOCKING, and the issuer rules that.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 96f3212d22:data/black_diamond/scripts/gold/D_00f.advisor_nna_canonical.py: :87 S3_BUCKET = 'opal-data-bd' (literal); :37 docstring 'reads + writes opal-data-bd ONLY'",
+        "git show 96f3212d22:data/black_diamond/scripts/gold/gold_dispatch.sh:77 BD_S3_BUCKET=\"${BD_S3_BUCKET:-opal-data-bd}\"",
+        "git show 96f3212d22:data/black_diamond/scripts/gold/lib/config.py:14 S3_BUCKET = os.environ.get('BD_S3_BUCKET', 'opal-data-bd'); a grep of data/black_diamond for BD_S3_BUCKET finds no runner export of another value"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Routing and the seam are the cell's own ruling. Under the runner default the legacy identity holds. Named here so the issuer can decide whether the override case needs a guard or a note."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S10",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T07:18:20Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "THE COMMIT-TIME NAMING GATE (LGIC_ENFORCE, ENFORCE) REFUSES THE PHASE A BUILD, SO NONE OF THE BUILD IS ON THE BRANCH: THE CLASS TABLE CARRIES THE 49FINANCIAL SCOPE AND BUCKET AS HAND-KEPT CARRIERS, THE GENERATOR NAMES THE SCOPE AND ROOT, AND D_04 GAINS A NEW LINE WITH A PRE-LGIC KEY",
+    "spec_asserts": "FB-f-9 step 1: the class table comes from address() output, either by importing lib/opal_naming.py where the gold runner executes or by a committed data file a generator writes from address(); CLAUDE.md section 4: every S3 address is address() output, and a builder refusal is a missing registry row or an R20 register entry Andrew acknowledges, never a hand-typed workaround.",
+    "world_is": "The gold runner syncs only the gold directory (gold_dispatch.sh:665-666 @96f3212d22: aws s3 sync of s3://$BD_S3_BUCKET/code/gold/), so repository lib/opal_naming.py is not importable there. The data-file route is the only one the bounds allow, and the naming gate grades that file: 26 REFUSE lines (24 in platinum_dest_table.json: the 49financial scope and the advi/49financial/platinum/ keys outside lookup('49financial'); 2 in gen_platinum_dest_table.py: the scope and root literals), 1 OUT-OF-PATTERN (D_04.client_portal_summary.py:2468, the pre-LGIC key platinum/firm/leaderboard.prior_week.json on a new line), 1 RAISE-EXISTING (gen:72). safe-commit.sh refused with 'naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' In the worktree the build runs and AC1 reads 4 of 4 arms; nothing of the build is committed to the branch.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output of the phase A commit attempt (worktree .scratch/safe_commit_out.txt): 'NAMING-GATE: REFUSE 29 graded'; 26 REFUSE, 1 OUT-OF-PATTERN, 1 RAISE-EXISTING, 1 CONFORMANT",
+        "git show 96f3212d22:data/black_diamond/scripts/gold/gold_dispatch.sh | sed -n '665,666p': sync_scripts syncs s3://$BD_S3_BUCKET/code/gold/ only",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.proof_of_spec.json (uncommitted in the worktree): AC1 4 of 4 arms, VALID (rc 0)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not worked around: no guard bypass, no author override, no rewording of keys to slip past the gate. Routes for the CTO or Andrew, none adopted here: (a) an R20 register entry, acknowledged by Andrew, for a generated carrier of the served-class table and the scope bucket; (b) make the builder importable on the gold runner, a code-sync change outside this cell; (c) the issuer re-cuts the destination to read the builder at runtime. INERT: nothing is live and the mode is never set by this cell."
+  }
+]
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~17 (FB-f-8, phase A, the all-ASCII router and guard)
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W17-S7",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~17",
+    "surfaced_at": "2026-10-11T07:25:47Z",
+    "one_line": "The cell's spelling list for non-ASCII characters names no ASCII spelling for U+26D4 (NO ENTRY sign) on line 239 of the shared-advisor-router-response guard; the worker wrote [STOP] there, a comment-only edit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Section 1 step 3 of the FB-f-8 cell: replace each non-ASCII character by its plain ASCII spelling, with examples for an em dash or en dash, a typographic quote, an arrow, a multiplication sign and an ellipsis. No spelling is given for any other character.",
+    "world_is": "The guard at infra/aws/lambda-edge/shared-advisor-router-response/index.mjs carries U+26D4 inside a // comment at line 239; the 12 bytes above 127 in that file are three em dashes (3 bytes each) and this one sign (3 bytes). No listed spelling covers the sign. The worker wrote [STOP] (6 bytes), so the guard's byte count moves by +3 on that line and by -3 on the three dashes, a net delta of 0. AC1 reads 0 and 0 after the edit, AC2 51 pass, AC3 46 pass, AC4 DORMANCY 0 and 0. No decision moves: the change is comment text only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda-edge/shared-advisor-router-response/index.mjs@7718c70a30 line 239: a // comment beginning with U+26D4 (escaped in this JSON as \\u26d4) followed by THE SERVING LAYER CANNOT REPAIR THIS AND MUST NOT TRY",
+        "the same file in the FB-f-8 commit, line 239: a // comment beginning with [STOP] followed by the same words; no other character on that line changed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Form only. The spelling of a symbol outside the cell's listed examples is the issuer's to confirm; the commit uses [STOP] and the issuer may restate it. Owner of the spelling: the issuer 2.0.0_SA_COO~B1."
+  }
+]
+```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-f-8, phase B, step 0 gate)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S11",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-11T07:36:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-8 step 0 STOPS: shared-advisor-router/tier_policy.mjs, which the router bundles, reads 19 non-ASCII bytes (10 chars, all on comment lines); neither pair half names that file and the order's gate reads 'router and guard sources must read 0 non-ASCII bytes'.",
+  "spec_asserts": "TO-FB-f-8 section 1a step 0: the repository's router and guard sources must read 0 non-ASCII bytes (FB-f-8 phase A merged); if any is not so, STOP, a BLOCKING row, no write to AWS. The CTO half's precondition names two hand-written files (the router and guard index.mjs) and accepts the generated _shared/firm-config.mjs as is.",
+  "world_is": "At HEAD (59fa47b54b): infra/aws/lambda-edge/shared-advisor-router/index.mjs 0 bytes, shared-advisor-router-response/index.mjs 0 bytes (phase A holds). infra/aws/lambda-edge/shared-advisor-router/tier_policy.mjs, imported by the router at index.mjs line 83, reads 10 characters / 19 bytes above 127 on lines 2, 4, 6, 9, 10, 11, 12, 39, 42, 54, every one inside a comment (em dash, arrow, section sign). It was last touched by 1c76daba93 (ADVI_ROLGAT.DT1) and no phase-A commit reached it. A local bun build --minify of each entry (same flags as build-nodejs-lambda.sh, no upload) reads router 7509 bytes with 0 non-ASCII and guard 3538 bytes with 0 non-ASCII, so the DEPLOYED artifact is all-ASCII either way; only the SOURCE reading of the step 0 gate fails.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/lambda-edge/shared-advisor-router/tier_policy.mjs decoded as utf-8: bytes 2451, byte_delta 19, chars 10, lines [2,4,6,9,10,11,12,39,42,54]",
+      "git show HEAD:infra/aws/lambda-edge/shared-advisor-router/index.mjs and ...-response/index.mjs: byte_delta 0 each; _shared/firm-config.mjs byte_delta 9, chars 5, lines [7,10,11,14,15] (the CTO half's accepted generated file)",
+      "infra/aws/lambda-edge/shared-advisor-router/index.mjs:83 import { requiredTierForUri, canAccess } from ./tier_policy.mjs",
+      "bun build --target=node --format=esm --minify --external @aws-sdk/client-sns, outfile in the session scratchpad: router.mjs 7509 bytes non_ascii 0, guard.mjs 3538 bytes non_ascii 0",
+      "infra/aws/lambda/ci/build-nodejs-lambda.sh lines 276-281 bundle with --minify"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the call: the issuer 2.0.0_SA_COO~B1 (it owns the order's criteria and its gate text); the CTO half's precondition is the CTO's to restate if the issuer reads it as covering comment-only characters. Two clean exits: (a) the issuer amends step 0 to read the BUNDLED artifact (0 non-ASCII bytes, measured above) and states that tier_policy.mjs and firm-config.mjs ship as comment-only exceptions; or (b) a cell makes tier_policy.mjs all-ASCII in one commit (comment edits, no decision moves; the file is outside this order's <paths>). This seat took no AWS write, opened no ledger entry and built no artifact; the order stays pending. Local scratch only: the two minified bundles in the session scratchpad."
+}
+```
