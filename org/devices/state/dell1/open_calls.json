@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-11T10:18:12Z",
+ "written_at": "2026-10-11T10:20:20Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -1571,7 +1571,7 @@
    "source": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round92.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-11T10:18:11Z",
    "kind": "fork",
    "context": "Row W381-S1 (ARMED). Measured: dell1 and laptop both lack OPAL_ACCOUNT_ID_HASHES and ~/.opal; dell2 is being asked. The only builder (2.0.0_SA_COO~P2/account_id_hash_builder.py) reads raw client account tables across 3 firms, which no agent identity should do alone.",
@@ -1611,7 +1611,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-11T10:20:20Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_192xZ_CLIENT_DATA_IN_PRIVATE_GIT_NOT_WORTH_TIME.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,

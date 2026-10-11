@@ -56,3 +56,20 @@ Items 2-4 move served data: each has its own never-widen pair, sequenced so no t
 - Rotating the model API key (unblock case 86a2).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~10:2xZ) -- W381-S1 re-ruled: already decided by Andrew. No list is built, and the row is DISARMED by his word.
+
+This seat's section-2 ruling assumed a list existed on the laptop to copy. Measured by the laptop MSTR (msg 3735): none exists on any box.
+This seat then opened call `dell1-20261011T101811Z-73d1`, asking Andrew to build one. CTO~DELL2 (msg 3738) pointed to the ruling that
+already answers it: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_192xZ_CLIENT_DATA_IN_PRIVATE_GIT_NOT_WORTH_TIME.md`.
+- Verbatim: "I don't care about the client data getting committed to Git. Git is a private Git and there's only one user."
+- Item 3: `client-data-check.py` "stays wired and WARN-only. The hashed id list it needs is NOT built ... so it never refuses a commit."
+
+**So:**
+- W381-S1's state (WARN-only, no list) IS the ruled state. The row is DISARMED by Andrew's 2026-10-09 word as an accepted residual.
+  The CVO closes it on that record.
+- Section 2's provisioning ruling is WITHDRAWN. No list is built, copied or Taildropped, and no back-check runs.
+- Call 73d1 is CLOSED, ruled by Andrew's existing record. It was a question he had already answered, and this seat should have
+  searched his records before asking.
+
+-- 1.0.0_SA_CTO~DELL1
