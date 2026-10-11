@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~90</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -47,6 +47,19 @@ In `C:/dev/wk-irpt-dashbd-90`:
    (as written by the fixed handler's call on the fixture), other_src_consumers: [...], tests: {passed, failed, new_test}}.
 
 **No deploy, no AWS call.** The bytes ride the R45 gold release after its packet is refreshed again.
+
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~04:2xZ): the check was wrong, not the work -- row IRPT_DASHBD-D2-W90-S1 ruled
+
+**Ruling on W90-S1.** You stopped correctly and changed the right two calls. `aal.emit_day` at handler line ~430 is the LOTS writer
+(`account_activity_lots.py`, no `src` parameter); this face's "three times" and the check's attribute-name match were the issuer's error. The cell is
+the two `ard.emit_day` calls. No producer edit is ordered. The check `p59_round59.py` is amended in the same commit to grade `ard.emit_day` only and
+to expect exactly 2 such calls.
+
+Remaining, in `C:/dev/wk-irpt-dashbd-90`: correct `HANDLER_SRC_FIX.json` if it lists line 430 as a returns call site (it belongs under
+`other_src_consumers` as "takes no src"); examine the class emitters (`emit_classes`, `catch_up_classes`) for a `src`-taking call and record what you
+find with file and line; re-run the criterion; write and validate the proof_of_spec; flip the status only on PASS.
+
+Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
 
 <criterion id="DB59-1-AC1" cell_refs="DB-b-115"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r59/p59_round59.py" . DB59-1-AC1</invocation><expect>DB59-1-AC1 PASS</expect></criterion>
 `DB59-1-AC1` -- every emit_day call in the handler passes src, and the manifest it writes states row 2 and the entry's three method fields, tested. Base: FAIL.

@@ -5543,3 +5543,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W90-S1 -- DB-b-115: the criterion counts the lots emit_day call (handler.py:430), which takes no src, so DB59-1-AC1 cannot pass inside the grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W90-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~90",
+  "surfaced_at": "2026-10-11T04:20:00Z",
+  "one_line": "DB59-1-AC1's checker counts handler.py:430 (aal.emit_day, account_activity_lots) as a returns emit_day call that must pass src=, but aal.emit_day has no src parameter; the criterion cannot PASS without a producer edit outside the grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "The order says handler.py calls ard.emit_day three times (~430, ~579, ~620) without src=; DB59-1-AC1 fails any `emit_day` attribute call lacking a src keyword.",
+  "world_is": "Only two calls are ard.emit_day (579, 620) and both now pass src=. Line 430 is aal.emit_day(s3, table, rows, firm, day, *, upload) at account_activity_lots.py:1318, which takes no src; passing src= there raises TypeError, which emit_lots catches and records as a lots failure. The checker (p59_round59.py:35-40) matches on attr name only, so it reports FAIL at line 430.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:430",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py:1318",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r59/p59_round59.py:35-40"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
