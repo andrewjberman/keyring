@@ -148,3 +148,5 @@ the five pinning tests, update your instance, run the checker after your final c
 END of this file only if AC1-AC3 pass. Report once.
 
 <status>pending</status>
+
+<status>complete</status>

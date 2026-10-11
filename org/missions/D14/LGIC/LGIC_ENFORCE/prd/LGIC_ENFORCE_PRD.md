@@ -5,10 +5,10 @@
  "project": "LGIC_ENFORCE",
  "directive": "D14",
  "fabric": "dell1",
- "prd_version": "v1.3",
+ "prd_version": "v1.4",
  "step": 4,
  "brief_ref": "docs/briefs/d14-executable-layer-brief-20260913.md@fc2a1ba75f",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
  "status": "RATIFIED"
 }
 ```
@@ -81,6 +81,41 @@ The ENDPOINT section is unchanged. Both halves are owed again.
   script. 8 of the generator's 10 targets sit on surfaces that SHIP (row LGIC_ENFORCE-S50).
 - DEC-5 now states the consequence it was built with. Only the brief half changes: DEC-5, and the round-3 cell that
   prints it. The ENDPOINT and CONTRACTS are byte-unchanged; the ratified-text half stands.
+
+**v1.4 (2026-10-11, an L10 addendum by `1.0.0_SA_CTO~DELL1`) RE-OPENS the project with FWD-8, on cross-box call
+XB-20261010T225240Z-dcb5.** Call body:
+`org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_CALL_NAMING_GATE_ADOPTED_NAME_REFUSED_20261010.md`. Routing:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUTING_XB_DCB5_NAMING_GATE_ADOPTED_NAME_20261010.md` @1e0ae35de9. Rows:
+NFRA_IAMROLES202609 Z-S25 and Z-S34 (site Z).
+- **The defect, read at HEAD.** `judge()` sets `new` from the graded file's pre-image alone (`.tools/naming-gate.py`
+  `new = pre_text is None or not _in_pre(...)`). Two shapes that mint nothing are therefore graded NEW and refused:
+  - (a) A RENAME. safe-commit diffs the staged path alone, so the source's deletion is outside the pathspec and an R100
+    rename reads as an added file with no pre-image (Z-S25: `zz_adopt_family_b.tf.proposed` to `.tf`, bytes identical).
+  - (b) An ADOPTION. A Terraform import declares a resource that is already running. Its name is new text by
+    construction (Z-S25 `opal-smartx-lambda-role`, live since 2025-11-20).
+  - Both shapes are refused on two limbs: the placement row (`NEW and OUT-OF-PATTERN`, which the audited placement
+    override converts) and the firm-carrier clause (Z-S34, `bd`, which the override does not reach).
+  - `_carried_at_head()` is consulted only under RAISE, and it counts only `GRADED_EXT` files, so it covers neither shape.
+- **The ruling.** Rule 30's non-application already says an existing resource reaches conformance through its own R19
+  migration and never through the commit that declares it. The gate gains two limbs, and both feed `new` before every
+  branch that refuses, the carrier branch included:
+  - (a) A renamed file is graded against its SOURCE's HEAD bytes as the pre-image.
+  - (b) A literal whose exact name the census LIVE plane holds (`lib/opal_naming.py` `census_live`, or the graph DB it
+    reads) is EXISTING. The verdict line prints the plane's vintage and the node type it matched. That reading is a
+    `measured` claim with its vintage; a live read that fails, or that cannot print its vintage, leaves `new` as it is
+    today, so a failure stays distinguishable from a genuine negative (fail closed to the present behaviour).
+  - EXISTING here never means CONFORMANT. The name still reads OUT-OF-PATTERN or carrier WARN, and FWD-5's census still
+    lists it for its R19 project. No registry row, no R20 entry and no name is minted by this addendum.
+- **Not this class: MDPF_HEALGAP-D1-S9.** That refusal was a NEW firm-token literal inside an S3 ARN in an existing
+  pipeline's `.tf`. It is not a running resource's name and not a rename, so neither limb admits it, and CTO ruling H
+  @1af255b7da stands for it.
+- **Z-S34's R20 ask to Andrew.** Once FWD-8 is served, the w-2 adoption commits no longer need an R20 entry. Whether to
+  withdraw that ask is site Z's call; this addendum does not withdraw it.
+- **Cell candidate E14 (the round-23 issuer decomposes; at most three mechanical criteria):** limbs (a) and (b) in
+  `.tools/naming-gate.py`, plus the two `--self-test` arms and the negative arm FWD-8 names. Risk class LOCAL. The commit
+  limb only; the apply limb (`naming-apply-gate.py`) grades plan names and is not touched.
+- Both halves re-open, because the ENDPOINT changed (spine v3.19). `3.0.0_SA_CVO` signs the ratified-text half;
+  `4.0.0_SA_CRO` (or `4.0.0_SA_CRO~DELL1`) signs the brief half.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -162,6 +197,24 @@ The ENDPOINT section is unchanged. Both halves are owed again.
                     someone types that firm's name by hand instead, the change is refused --
                     where today every new firm means editing its name into many places by hand
          SOURCE     brief Part I O7; bar Part III O7
+
+  FWD-8  Bringing a resource that is already running into the code under its own name,
+         or renaming a file that already holds a name, is not refused as a new name; a
+         name that exists nowhere is still refused
+         DONE WHEN  EXERCISED -- three changes have been put deliberately through the real
+                    save check on a practice copy, each with the expected answer
+         ACCEPT     on a practice copy, through the real save check: (1) a file holding a
+                    name is renamed with its contents unchanged, and it goes through with
+                    nothing graded as new; (2) a declaration is added for a resource already
+                    running under a name that breaks the pattern, firm spelling included,
+                    and it goes through with a warning that says where the name was found
+                    running and when that list was read; (3) the same declaration with a
+                    name running nowhere and written nowhere in the stored code is refused
+                    exactly as today -- where today taking over a running resource is
+                    refused as if it were new, and passes only under an audited override
+                    that a firm-spelling refusal does not accept
+         SOURCE     L10 addendum v1.4 on XB-20261010T225240Z-dcb5 (rows Z-S25, Z-S34);
+                    CLAUDE.md rule 30 non-application
 ```
 
 ## CONTRACTS
