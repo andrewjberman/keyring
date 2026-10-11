@@ -677,3 +677,29 @@
   "notes": "The plane claim stays as the runner's own sync list says (the order forbids widening it). Whether the repo-to-code copy should be automated is a CTO or CloudOps ruling; this row does not propose the mechanism. The ARMED hazard is the missing config sync at deploy, not the classification."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S12",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-11T05:10:00Z",
+  "one_line": "Row MDPF_CANON-D1-W9-S7's hand step is DONE: bronze_homes.json, the Stage-0 writer and the feeder are on s3://opal-data-mdpf/code/ at the repo bytes, the runner pulled to the builder's address once, and the feeder read is DELTA=0. S7's disarm_owner may disposition it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ADHOC.canon-r3-bronze-intake: the three files are copied by hand to code/ before the first post-deploy daily run (row S7 disarm_owner clause); deploy exactly the three files, never a tree sync.",
+  "world_is": "Measured 2026-10-11T05:00-05:06Z on dell1 from box/dell1 (six source paths unchanged since pin d437b0648f): code/config/bronze_homes.json absent before, now ETag b2d27b65d2e766f9ce599503793bb985 464 B; code/scripts/bronze/pull_orion_model_composition.py ETag 0f2ba775.. -> e64b70fe47621d5df4f87c0fa93efa70; code/scripts/gold/build_mdpf_wsc_inflection_feeder.py ETag 2024adcc.. -> ee2412111e130d8c19574b4f07c051cd; each read back byte-equal to the repo file. One Stage-0 run on i-02448edb624a7a7cf (SSM f1b89351-3669-479a-868a-598939f07e92) exit 0, 9 model files + _meta/pull_complete.json under date=2026-10-11 at the builder's keys. History copied 1030 of 1030 objects, source untouched. Feeder local read with --eclipse-date 2026-10-09: 750 rows, DELTA=0 on every data-bearing column (only _ingested_at differs). TWO FACTS THE ORDER DID NOT EXPECT: (1) the runner-policy grant was already live at order start, applied 2026-10-11T04:41:01Z by cloudops-dell1-agent-user (CloudTrail) with no ledger proof left, so the 0/1/0 plan could not be reproduced; (2) the runner was started by this order and is left RUNNING (stopping EC2 is a confirm-class act); the next dispatch stops it at its own end. The rest of code/ is untouched and still behind HEAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20261011T0439Z_mdpf-canon-r3-bronze-intake-dell1-20261011_deploy_completion.md (ledger CLOSED, 7 legs with proof)",
+      "aws s3api head-object / get-object read-backs and cmp against data/mdpf/** at HEAD, 2026-10-11T05:00Z",
+      "aws cloudtrail lookup-events ResourceName=mdpf-daily-runner-ec2-role: PutRolePolicy 2026-10-11T04:41:01Z cloudops-dell1-agent-user",
+      "aws ssm get-command-invocation f1b89351-3669-479a-868a-598939f07e92 (PULL_EXIT=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Evidence row, no defect asserted: records that row MDPF_CANON-D1-W9-S7's hand step was performed and measured. Disposition of S7 and of this row is the COO's and CVO's; the old bronze prefix is not deleted (an S3 delete needs a human's confirmation)."
+}
+```
