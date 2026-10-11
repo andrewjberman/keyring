@@ -1349,3 +1349,178 @@ write: **1 row** (`S1`).
   }
 ]
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W12-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~12",
+  "surfaced_at": "2026-10-11T07:02:38Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "INFLECTION AND SILVER COMPLETION MARKERS NEED STATE FAMILY NAMES THE RULING DOES NOT NAME (gold_complete, silver_complete, bronze_complete FOR ORION-API)",
+  "spec_asserts": "Ruling (b) and addendum 1(2): completion markers map to the R21 state/ home under a family. The ruling names one family, bronze_complete, for the cot bronze/ markers (registered cot-bronze-complete).",
+  "world_is": "The rebuilt table places three further marker groups under state families the ruling does not name: opal-data-inf bronze/orion-api/ (2 tails, 1776 objects) under bronze_complete, gold/eclipse/ gold_complete.json (132) and silver/eclipse/ silver_complete.json (132). address() accepts each family, so no builder refusal arises. The worker chose the table names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v3.json rows with kind marker for opal-data-inf bronze/orion-api/, gold/eclipse/, silver/eclipse/ (dest.table bronze_complete, gold_complete, silver_complete), written by the repair on wk-ADVI_FIRMBKTS-12 over a46c669e20",
+      "infra/logic/registry/resources.json@a46c669e20 names cot-bronze-complete (line 2303) and inf-bronze-complete-emitter (line 317); no gold_complete or silver_complete family row (grep, 2026-10-11)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_mapping.py@a46c669e20 arm S4 PASS on the rebuilt table: each marker address equals address() output"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: the CTO, to name the state families for inflection and silver completion markers, or to rule them not state. Placed under the reading of (b) and addendum 1(2) as written."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W12-S6",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~12",
+  "surfaced_at": "2026-10-11T07:02:38Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A QA-NAMED BRONZE FEED MATCHES TWO ROUND-1 RULES: RB (QA OUTPUT, NO DESTINATION) AND BRONZE/** (HOME). PLACED UNDER BRONZE/**",
+  "spec_asserts": "Round-1 rule RB retires log, diagnostic, scratch, probe or QA output with no destination. The bronze/** rule homes bronze data in opal-data-assets. Ruling (c) re-grids an interleaved class per date partition.",
+  "world_is": "opal-data-inf bronze/eclipse_qa/ (871 live objects, 67 date partitions, 804 data objects beside 67 pull_complete.json markers) has the same shape as the production bronze/eclipse/ feed. Its name marks it as QA. The worker re-gridded it per date and homed the data under bronze/** (table eclipse_qa, HOME) rather than retiring it under RB's QA reading. The choice is one rule's application; the CTO decides which reading holds.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live listing opal-data-inf bronze/eclipse_qa/ 2026-10-11T06:56:05Z: 871 objects, 67 date partitions, one pull_complete.json per partition",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v3.json date children of opal-data-inf bronze/eclipse_qa/ (dest.table eclipse_qa, HOME) written by the repair",
+      "round-1 rule texts RB and the bronze/** rule as cited in the rule fields of mapping_v2.json @a46c669e20"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: the CTO. If RB governs, the 804 data objects become per-date RETIRE rows and the FAULT count is unchanged; if bronze/** governs, the rows stand as written."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W12-S7",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~12",
+  "surfaced_at": "2026-10-11T07:02:38Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "1,142 performance_dim_SKIP.json FILES SIT BESIDE DATA IN ORION-API DATE PARTITIONS. RULE (b) NAMES COMPLETION MARKERS ONLY, SO THEY STAY DATA",
+  "spec_asserts": "Ruling (b): completion markers are matched by literal key tail and excluded from the data children of their class. The ruling's examples of tails are _BRONZE_COMPLETE.json and _SUCCESS.",
+  "world_is": "opal-data-inf bronze/orion-api/ date partitions hold 1,142 objects named performance_dim_SKIP.json, each 110 bytes, beside the _BRONZE_COMPLETE.json markers. The name says skip, not complete. No marker tail matches them, so they stay in their date partition's data child (HOME, table orion-api). Whether a SKIP file is a completion marker is not stated.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live listing opal-data-inf bronze/orion-api/ 2026-10-11T06:56:06Z: 17170 objects; basename performance_dim_SKIP.json on 1142 objects, every size 110 bytes",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v3.json regrid bronze/orion-api/ (partition_rule per-date) and its date children",
+      "ruling text: ROUND_ANALYSIS.round2.md section 2 item 3, rules (b) and addendum 1(1), in the project ledger folder"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: the CTO, to say whether SKIP files are completion markers (then they take a marker_match row) or data. Left as data, which is the reading of (b) as written."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W12-S8",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~12",
+  "surfaced_at": "2026-10-11T07:02:38Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "THE TWO ECLIPSE BRONZE CLASSES WRITE THE SAME STATE KEYS FOR SHARED DATES (66 MARKER KEYS), SO THEIR MARKER ROWS ARE FAULT",
+  "spec_asserts": "Ruling (d) and round-2 rule 1e: a destination collision needs a measured key overlap and a merge or split ruling. A new class of a colliding group stays FAULT until the CTO rules.",
+  "world_is": "opal-data-inf bronze/eclipse/ pull_complete.json (134 objects) and bronze/eclipse_qa/ pull_complete.json (67 objects) both map to state/bronze_complete under source eclipse, scope inflection. 66 (date, tail) keys are shared. Both marker rows are FAULT with owner 1.0.0_SA_CTO~DELL1. The two data classes write different tables (eclipse, eclipse_qa) and do not collide.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v3.json two FAULT rows with marker_match pull_complete.json at opal-data-inf bronze/eclipse/ and bronze/eclipse_qa/ (reason cites 66 shared keys)",
+      "measured in the repair build: the set of (date, tail) pairs of each class's markers from the 2026-10-11T06:56:05Z listings; intersection 66",
+      "round-2 rule 1e text in the rule fields of mapping_v2.json @a46c669e20"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: the CTO, to rule split (a distinct state family per class) or merge (overlap must be 0, which is not the case here). Without a ruling the 201 marker objects stay FAULT."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W12-S9",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~12",
+  "surfaced_at": "2026-10-11T07:02:38Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "INHERITED RE-GRID ROWS DID NOT SUM TO THEIR LIVE LISTING (logs/ 30 OBJECTS, gold/timeseries/ 3), AND CHECK ARM S2 READS ONLY THE FIELD",
+  "spec_asserts": "Ruling (e) and check arm S2: a re-grid's child objects sum to its LIVE listing, and children_objects equals listed_objects.",
+  "world_is": "Session-1 mapping_v3.json: the bd logs/ children summed to 9,209 against 9,239 listed; the bd gold/timeseries/ children summed to 2,641 against 2,644 listed, the three directory children each one short. The regrid field children_objects said listed, so arm S2 passed. The repair re-derives each child count from the live listing (logs/ at 06:59:50Z, gold/timeseries/ at 06:56:10Z); the sums now equal the listing. Dispositions and addresses are unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".scratch/mapping_v3.session1.json (a copy of the session-1 mapping_v3.json merged at 08b039ef50): regrids for opal-data-bd logs/ and gold/timeseries/",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_mapping.py@a46c669e20 lines 73-79: the regrid loop compares g.children_objects with g.listed_objects and never sums the child rows",
+      "build log of the repair: RECOUNT and RECONCILED lines for opal-data-bd logs/ and gold/timeseries/ (2026-10-11)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: the issuer (2.0.0_SA_COO~B1), to decide whether arm S2 should sum the child rows as its title says. The repaired counts are in the table; no check was edited."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W12-S10",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~12",
+  "surfaced_at": "2026-10-11T07:02:38Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A CLASS-GRAIN ROW CARRIES THE TOKEN {partition} IN ITS ADDRESS: THE GOLD/CLIENTS CLASS PLACED AT ITS PREFIX HAS NO ONE PARTITION",
+  "spec_asserts": "Session-1 face correction 1: a class whose data is placed at its class prefix carries exclude_keys naming the placeholder. Every address comes from address() output.",
+  "world_is": "opal-data-bd gold/clients/ (2,948 data objects, one per client file, keys carry client ids) is one MOVE row at its class prefix with exclude_keys [gold/clients/]. Its partition is the token {partition}; address() accepts the token and returns s3://opal-data-49financial/advi/49financial/platinum/clients/{partition}. No object key is enumerated. A token in an address is a pattern, not a key, and a reader must not take it for a real object path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v3.json row opal-data-bd gold/clients/ (class grain, exclude_keys, dest.partition {partition})",
+      "live listing opal-data-bd gold/clients/ 2026-10-11T06:56:10Z: 2949 objects, one zero-byte key equal to the prefix, no nested key",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_mapping.py@a46c669e20 arm S4 PASS: the token address equals address() output"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: the CTO, to say whether a class-grain address carries a pattern token (as written) or whether a registered per-class pattern row is required."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W12-S11",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~12",
+  "surfaced_at": "2026-10-11T07:05:35Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TEN forwardfill _complete/ GROUPS ARE COMPLETION MARKERS BY NAME AND SIT BESIDE DATA IN THEIR RE-GRIDS, BUT STAY FAULT (1e): THEIR KEYS COLLIDE WITH EACH OTHER",
+  "spec_asserts": "Ruling (b): completion markers (state/complete groups) carry kind marker, map to the R21 state/ home of the class they mark, and are never re-gridded beside data. Addendum 1: a key matched by a marker_match is excluded from the data children.",
+  "world_is": "Ten round-2 FAULT rows are forwardfill _complete/ groups: bd allocations, realized, transactions, unrealized (4) and cot account_attributes, allocations, holdings, realized, transactions, unrealized (6). Each is a child of its forwardfill regrid, beside the data children. Their destination keys overlap each other (15 to 94 keys per row, reasons in the table). Left FAULT under rule 1e with owner 1.0.0_SA_CTO~DELL1, because no state family is named for them and a split or merge is the CTO's. Check arm T2 tests only rows of kind marker, so these rows cannot trip it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v3.json ten FAULT rows with prefix forwardfill_v2/*/_complete/ (objects 15, 93, 103, 15 in bd; 42, 59, 79, 88, 88, 59 in cot), reasons cite overlaps with each other",
+      "infra/logic/registry/resources.json names no forwardfill completion family (grep, 2026-10-11); lib/opal_naming.py address() accepted every candidate family name in this repair",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_mapping.py arm T2 reads only rows whose kind equals marker"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: the CTO, to name the forwardfill completion family and rule split or merge for the ten groups, or to rule them data. Not decided here; the first session's declared exclusion is carried."
+}
+```
