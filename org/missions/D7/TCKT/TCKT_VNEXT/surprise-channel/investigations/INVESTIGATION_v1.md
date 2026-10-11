@@ -1628,3 +1628,51 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "notes": "Reported in the order's own designated place as well: step 1 asks the executor to state what the recorder writes and commits from the CODE and to say where the code disagrees with the order, with the code winning. This row is the durable carrier, because the divergence outlives this order and the next RECORD order will inherit it. No act proposed and nothing hand-edited: the recorder ran unmodified and its commit 6a5bee406c touched exactly the three paths its own pathspec permits (the map, the CHANGELOG, the reconcile audit log). The remedy, if any, is the issuer's and the CTO's: either the bound is restated as 'no AWS write on the success path, one best-effort SNS publish if the reconcile finds a half-landed function', or the recorder's alert limb is made conditional on a flag. Separately noted, not mine to file: the recorder's own [one-writer] WARN says infra/aws/lambda/ci/source-map-reconcile-audit.jsonl is the laptop's unsuffixed file being written from dell2, and labels itself 'WARN until C-QUEUE' -- an owned, known condition."
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S37",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:28:33Z",
+  "one_line": "L9 round 1: TO-RUN-SA-r-1 AC2 NOT MET. The one-firm proof holds on what was exercised (21 of 21 arms with a cottonwood leg read FIRM_BINDING, 0 admits; 5 of 6 ticket routes not exercised), but 0 of 7 hops ran: the run stopped before the hops on a data-refresh route that admitted the token. The stop was the right act. Graded on the applier's trace of 2026-10-09, which cannot be re-read live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4720 (round-close-check --round 1 reads two judgment criteria UNGRADED by id)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_R1_SA_R1_L9_GRADE_20261011.md",
+      "this seat's count 2026-10-11T10:28:33Z over org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/sa_r1/sa_r1_trace.json (run SA-r-1-2026-10-09T15:40:57Z, the applier's file, claim measured): 27 arms, 22 exercised; 21 carry a cottonwood leg and 21 of 21 read FIRM_BINDING, 0 admitted; the 22nd is the ticket list, which carries no cottonwood leg and shows a filter (8 tickets, one requester firm); 5 ticket routes not exercised, each with its stated reason; the ticket-create arm refused 400 on a missing attachment before the firm check; 0 of 7 hops carry a status; named failure STOP_BEFORE_HOPS on a data-refresh admit (200)"
+    ]
+  },
+  "spec_asserts": "TO-RUN-SA-r-1 AC2 (JUDGMENT, graded by the CVO at L9): the trace -- the one-firm proof with zero cottonwood admits, and every hop recorded with its artifact.",
+  "world_is": "The first limb holds on the exercised arms; the second does not: no hop ran. The trace is the applier's own record.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S38",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:28:33Z",
+  "one_line": "L9 round 1: TO-RUN-SA-r-1b AC2 NOT MET. This row restates, under the order's id, the grade this seat gave on 2026-10-10 in row TCKT_VNEXT-D2-S21 (61 of 61 reads returned INVALID_REQUEST_ID; the runner polled its own idempotency token, so no run read a finished report). The grade does not change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4720 (round-close-check --round 1 reads two judgment criteria UNGRADED by id)",
+      "investigation row TCKT_VNEXT-D2-S21",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_SA_R1B_L9_GRADE_20261010.md"
+    ]
+  },
+  "spec_asserts": "TO-RUN-SA-r-1b AC2 (JUDGMENT, graded by the CVO at L9).",
+  "world_is": "Graded NOT MET on 2026-10-10. Row D2-S21 named the criterion as 'SA-r-1b AC2', without the order's id, and the round-close check could not match it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
