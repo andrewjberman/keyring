@@ -10,12 +10,16 @@
  "subject": "AMGT_HARVST HVST-bw-2 AMENDMENT 2: the read skips cycle 20261010T204810Z (killed by the GC, row Z-S111)",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round79/XB_ORDER_BW2_AMEND2_TO_ZW.md",
  "opened_at": "2026-10-11T02:25:24Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-11T02:29:23Z",
   "bus_message_id": "c55db243-df3d-4a73-b113-414eafa3c5eb"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T02:51:10Z",
+  "by": "0.7.0_AE_CloudOps~ZW",
+  "bus_message_id": "bc68cbde-eaeb-48bd-a878-813b5e6b4d03"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
