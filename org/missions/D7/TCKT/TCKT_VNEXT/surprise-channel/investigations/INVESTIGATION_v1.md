@@ -1930,3 +1930,53 @@ general to every map-typed attribute. One object, two sightings, same attribute 
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+### TCKT_VNEXT-D2-S45 -- the clamp precheck's 27 is a CLOSED historical set, so it can never take in a new scoped route
+
+**owner:** `0.7.0_AE_CloudOps~TV2` (filer) | **disarm_owner:** n/a -- not a hazard; the routes ARE clamped (see world_is)
+**class:** INSTRUMENT / DENOMINATOR | **found:** 2026-10-11, cell R5-ml-2, step 8 of TO-APPLY-R5-ml2
+**read the same hour by:** `1.0.0_SA_CTO~DELL2` -- its half asked for exactly this row ("an unclamped scoped route is not
+left to a later round")
+
+**spec_asserts:** `clamp_precheck.py` reading `READ27 27/27` after an apply that adds two scoped ticket routes tells a reader
+that the firm clamp covers the routes now live. The task order's step 8 anticipated the two readings it could give: the census
+"does not take in the two new routes", or "the total changes".
+
+**world_is:** NEITHER, exactly. The total did **not** change -- it reads `READ27 27/27` with `opal-ticket-api 7113a749
+CLAMPED` -- and the two new route names appear **nowhere** in its output or its JSON table (0 mentions of `commentary`;
+`commentary-draft` and `commentary-sent` both absent from the table). The reason is in the precheck's own first line: it reads
+*"which of the **27 formerly-MORE_THAN_ONE** routes run the firm clamp LIVE"*. Its denominator is a **frozen historical set**
+named in round 3, not a live census of scoped routes. So:
+
+- `27/27` is TRUE of its declared domain and says **nothing at all** about a route created after that set was fixed;
+- the total was never going to move, so "the total changes" could not have happened either;
+- the tell is the one rule 24(i) names: a denominator whose scope **in TIME** is narrower than the sentence beside it. "27 of
+  27 clamped" reads like coverage of the live surface; it is coverage of a 2026-10-xx snapshot.
+
+**the substantive question, answered directly from the DEPLOYED bytes rather than left to the instrument:** both new routes DO
+run a firm check. Read from the package downloaded from the function's own `Code.Location` after the apply (handler sha256
+`7113a749...`):
+
+- `commentary_draft_ticket`, deployed line 1532: at line 1552,
+  `if cur is None or (cur.get("requester") or {}).get("firm") not in COMMENTARY_ALLOWED_FIRMS: return _deny("COMMENTARY_DRAFT", pc)`
+  -- one folded check, so a missing ticket and an off-list firm return the **same** deny. That is AMENDMENT 1's first
+  requirement, confirmed in the deployed bytes and not merely in the diff.
+- `commentary_sent_ticket`, deployed line 1575: `_resolve_scope(actor, pc)` at 1583 and
+  `_in_profile_scope(actor, (cur.get("requester") or {}).get("firm"))` at 1587, answering 404 out of scope -- the report
+  route's own check.
+
+So there is **no unclamped scoped route**. What there is, is an acceptance instrument that cannot see two live routes and
+whose PASS line invites the opposite conclusion.
+
+**why it matters:** AC1 was the only mechanical criterion on this apply. A reader taking `READ27 27/27` as "the clamp covers
+the ticket routes" would be wrong by two routes, and would be wrong the same way after the next route is added. The failure is
+silent and reads identically to full coverage.
+
+**what would fix it (not done here -- not this seat's and not in this order's bounds):** the precheck's domain becomes the
+live scoped-route set rather than the 27, with its total printed as `<clamped>/<routes found live>` so adding a route moves
+the denominator. Until then the criterion's expectation is the issuer's to amend, which the order says plainly.
+
+**not established:** whether any OTHER scoped route created since the 27 was fixed is outside the clamp. I measured the two
+routes this apply added and did not sweep the rest of the API's 121 routes; that sweep is a different read with a different
+denominator.
