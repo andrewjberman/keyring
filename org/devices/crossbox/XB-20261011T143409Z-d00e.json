@@ -10,12 +10,16 @@
  "subject": "LGIC_ENFORCE: naming-gate rows W51-S3 and W49-S2 from NFRA_OPLGTW r33 (CTO~Z msg 33302)",
  "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_CALL_LGIC_NAMING_GATE_ROWS_W51S3_W49S2_20261011.md",
  "opened_at": "2026-10-11T14:34:09Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-11T14:35:56Z",
   "bus_message_id": "2f9477fd-87da-4ea4-8c1d-f453b0835f34"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T14:40:20Z",
+  "by": "1.0.0_SA_CTO~DELL1",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

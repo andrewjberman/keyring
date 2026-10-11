@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 19,
- "chains": 17,
+ "cells": 20,
+ "chains": 18,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -156,3 +156,11 @@ grammar's `prefix` takes a string or a list (the performance adapter reads two p
 scope's canonical ownership key, so the readers' identity grants are generated through `opal_name`. Workstream `FENCE3B`.
 The act's remaining cells (the registry rows, the OAI allow in the shared-infra bucket policy, ten identity grants, the
 executor's order and the pair) follow these two. Cells 17 -> 19, chains 15 -> 17.
+
+## Amendment 8 (2.0.0_SA_COO~B1, 2026-10-11 ~14:5xZ): cell `FB-g-21` added (act 3b's carrier is a generated bucket-policy Allow; CTO ADDENDUM 10)
+
+The CTO accepted a generated bucket-policy Allow beside each scoped Deny row, in place of nine identity-side applies
+(ADDENDUM 10, msg 3922). `FB-g-21`: the module renders that Allow from the same row, accepts an exact object key in a row's
+prefix list (the CTO's grain: the object ARN of the ownership key, never the prefix), and renders an Allow-only `grants` row for
+the two principals the fence already admits by other means. `FB-g-22` (registry rows and the shared-infra wiring) follows its
+merge. Cells 19 -> 20, chains 17 -> 18.
