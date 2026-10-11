@@ -1,9 +1,8 @@
 # MDPF_SECCLASS -- one canonical security classification -- status
 
 Seat `2.0.0_SA_COO~M1` (dell1), successor to `2.0.0_SA_COO~M`. Contract `org/standards/MDPF_SECCLASS_CONTRACT.json`. Lease **FULL**
-(`drive-mode.py read`); `/canonical-drive` armed at 10m on Andrew-direct ~03:1xZ (MSTR msg 1542). As of **2026-10-09 ~08:0xZ**.
-This file replaces the 2026-10-01 FAST-mode status. History is in git and the drive logs
-(`org/tier1_exec/2.0.0_SA_COO~M1/drive_log_20261009T0*Z_*.md`).
+(`drive-mode.py read`); `/canonical-drive` armed at 60m (Andrew-direct 2026-10-10 ~23:3xZ). As of **2026-10-11 ~02:5xZ**.
+History is in git and the drive logs (`org/tier1_exec/2.0.0_SA_COO~M1/drive_log_*Z_*.md`).
 
 Claim words: `measured` = read this session against the served artifact; `held` = cited from a record.
 
@@ -12,37 +11,34 @@ Claim words: `measured` = read this session against the served artifact; `held` 
 | Surface | State | Claim |
 |---|---|---|
 | Investor Reporting Holdings | live since 2026-09-30 | held |
-| Black Diamond firm Mix (Advisor Intelligence, PROD bf780f94 tree) | **LIVE.** The 49F firm Mix tiles equal the served `platinum/firm/mix_summary.json` (structured $88.2M, alternatives $5.21M); firm unclassified 6.94 -> **0.05 pct** on the 2026-10-09 04:00Z fire | measured 07:3xZ |
-| BD relationship z08327149 | served composition reads VXX structured/Hedge from `etf-classifications`; 0 `bd-securities` class sources in the run | measured |
+| Black Diamond firm Mix (Advisor Intelligence) | six classes + one `Unclassified` line; Unclassified 972,621.40 (0.048 pct) at data_as_of 2026-10-08; the 23 ticker-no-row securities ($966,285) still sit in it (row D1-S26) | measured 02:4xZ |
+| Cottonwood firm / clients | four clients' latest point sums to 1; no multi_asset class served; firm_composition gap $0.01 | measured 02:5xZ |
+| Cottonwood NAME:: placement (e84) | 1,061 positions ($17.32M) placed, none outside the six; firm unclassified 65.2M vs the 84.3M baseline | measured 02:4xZ |
 
 ## Deploy ledgers
 
+All MDPF_SECCLASS ledgers are CLOSED except one:
+
 | Ledger | State |
 |---|---|
-| e65b `_shared` cash-token (two keys 40ffa3fa) | CLOSED (0.7.0_AE_CloudOps~SC1) |
-| e71 seed names (one re-seed, 15 rows) | CLOSED (~SC1; issuer-verified `E71-RESEED ok=True`) |
-| e75 BD C_06 retained reclass | CLOSED. One-relationship widening (z08296368, PDBC) kept: CTO ADDENDUM 1 + XA-2797; row D1-S21 |
-| e76 BD NAME:: lookup | CLOSED (unclassified 0.05 pct vs 0.38 / 5.0) |
-| e77 S11 rows + liquid-alt remap | CLOSED (REMAP funds $209,064.46 now alternatives) |
-| thread-r3 (BD thread, 10-01) | CLOSED, B4 on ruling I + XA-96fb (served bytes + firm walk) |
-| e60 BD D_04 Unclassified line | SHIPPED 07:07:36Z (D_04 23d2f2ae); HELD on leg G = the next BD run (`R13_CHECKS/e60_mix_verify.py`) |
-| e67 COT C_06 retired class | SHIPPED 02:14:55Z; HELD on leg G = the 2026-10-09 10:30Z COT run |
-| remap-b (33 multi_asset rows) | HELD; its COT half reads with e67 G |
-| cot-repoint (10-02) | HELD; leg S closes after the 10:30Z COT run (ruling I, XA-96fb) |
-| cot-cusip-rows (10-02) | HELD; its leg R reads with cot-repoint S |
-| bd-securities-cot-new-p1 (09-26) | HELD; 925/941 placed, 16 absent (5 e49 FINAL, 11 outside FWD-15's plan); waits on a ruling for the 11 |
 | e57e61 FWD-10 apply (~S) | HELD on the first scheduled new-security run that plans US stocks |
+| e60 D_04 Unclassified line | CLOSED (SC1): AC1 ok, arm 2 closed as non-e60 drift by the CTO (ADDENDUM 1 @4cac828d3c) |
+| e79 BD lib ship | CLOSED, leg G NOT MET: the lib is inert on the served path (row D1-S26) |
+| e84 COT NAME:: port | CLOSED, leg G PASS |
+| remap-b (33 multi_asset rows) | CLOSED, leg G PASS |
 
-## Held build lines
+## Open findings
 
-e63 RETIRED SUPERSEDED (by e65b; branch kept, since deletion of unmerged commits waits on a human word). e60 released (above).
+- **D1-S26:** the three BD classify sites (D_04, C_06, D_03) call `classify_with_identity` with an empty ticker only, so e79's
+  ticker-no-row branch never runs. Needs a round-20 build cell whose acceptance exercises D_04's served classify path.
+- **D1-S27:** C_06's firm-daily `total` differs from its class sum by about $128 with a flipping sign; e60's `Unclassified` carries it.
+  Owner: C_06's lane.
 
 ## Next, in order
 
-1. **~11:3xZ COT log** (poll armed): e67 G, remap-b's COT half, cot-repoint S, then cot-cusip-rows R.
-2. **Next BD run:** e60 G (`E60-MIX ok=True`).
-3. **Round-15 analysis** (1.0.0_SA_CTO~DELL1): the p1 residue (11 keys); later pairs over C_06's retained reclass census every class
-   outside the six (CTO ADDENDUM 1).
-
-Rows filed this session: D1-S18 (seed `--dry-run` prints "Items written"), D1-S19 (a BD gold test pins the retired ship-everything
-rule), D1-S21 (e75 single-class census miss).
+1. Round 19 (reads only) is at the CVO as an L8 packet (`L8_DRAIN_END_PACKET_R19_20261011.md`); the L10 slug and the CTO's round-20
+   analysis follow. Cut round 20 in ONE issuance the tick the analysis lands.
+2. **e57e61:** release when a scheduled new-security run plans US stocks.
+3. **p1 residue** (11 keys outside FWD-15's plan): waits on a ruling.
+4. **IB-pr-417:** the COO half on the e56 member is SIGNED (@ced2704270, due Mon 2026-10-12 13:00Z at dell2); push of that commit
+   is the box-sync's.
