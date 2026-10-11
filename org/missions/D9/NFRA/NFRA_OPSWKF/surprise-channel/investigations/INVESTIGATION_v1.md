@@ -400,3 +400,31 @@ adjudication rows live in `../adjudications/` as `NFRA_OPSWKF-C-S<k>`.
   "notes": "Found while reading who may invoke each function directly, for the FWD-9 pair's AMENDMENT 1 (CTO msg 5949). BLOCKING because the two outcomes' DONE WHEN cannot be called EXERCISED for 'the service' while a second door is unread; INERT because nothing this project did opened it and the changed functions fail closed on an unknown context. Owner of the API: the trade pipeline (TRSB, inactive); routed to 1.0.0_SA_CTO~DELL2 in the amendment. Out of lane for this seat to call, change or remove."
 }
 ```
+
+## NFRA_OPSWKF-D2-S12 -- a plaintext jwt_secret left on disk in the shared main checkout by an earlier deploy, two days old and still readable
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S12",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-11T22:19:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A plaintext jwt_secret sits on disk in the SHARED main checkout at infra/aws/terraform/trade-pipeline/secrets.auto.tfvars, 80 bytes, mtime 2026-10-09T09:39:14Z -- two days older than this seat's session and about 23 minutes before that day's trade-submission-handler deploy. It is gitignored so it cannot be committed, but it persists in the working tree of a box several seats share.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la and os.path.getmtime on infra/aws/terraform/trade-pipeline/secrets.auto.tfvars (2026-10-11 ~22:1xZ): 80 bytes, mtime 2026-10-09T09:39:14.982219Z UTC. Contents were never printed; only the variable NAME it sets was read, by grep of line-leading lowercase tokens -- jwt_secret, and nothing else.",
+      "git ls-files --error-unmatch on that path: NOT tracked. git check-ignore -v: ignored by infra/aws/terraform/.gitignore:5 (*.auto.tfvars), so it cannot enter a commit by accident.",
+      "Timing against that day's deploy: aws lambda get-function-configuration on trade-submission-handler recorded LastModified 2026-10-09T10:02:52Z (read by this seat at step 2 of TO-APPLY-S2), about 23 minutes after the file's mtime, and the 2026-10-09 trade-pipeline deploy is the one the source map and the 20261009T0922Z change-management entry record.",
+      "Not this seat's file: the two secrets.auto.tfvars this seat wrote today were created in DETACHED worktrees (/c/dev/opswkf-s1-pin ~19:2xZ and /c/dev/opswkf-s2-pin ~21:19Z), each read live from trade-auth-handler without being echoed, and each overwritten with zero bytes, fsynced and removed at the end of its act. A glob of infra/aws/terraform/*/*.tfvars in both worktrees now returns only the tracked transcripts/readers.auto.tfvars."
+    ]
+  },
+  "spec_asserts": "The trade-pipeline root's README gives the operator recipe for var.jwt_secret -- read the live value and write it to secrets.auto.tfvars, which is gitignored -- and both FWD-8's and FWD-9's pairs bound their executors to holding token and key material in memory only, never stored, printed, committed or sent.",
+  "world_is": "The recipe's own artifact outlives the act that needs it. The gitignore stops the value reaching a commit, which is the exposure the recipe was written against, but nothing removes the file afterwards, so a live signing secret for the trade auth functions has sat readable in a shared checkout for two days. NOT ESTABLISHED by this seat: whether the stored value is still the live one (it was not read or compared); who created it, which is inferred from the mtime and that day's deploy rather than from an audit record; whether other terraform roots on this box or on other boxes carry the same leftover, since only this root and the two pin worktrees were looked at; and whether any other process has read it. No value was read, copied or moved by this row.",
+  "notes": "Found at the end of TO-APPLY-S2 while confirming this seat's OWN secret files were shredded -- the check that found it was hygiene on my own act, not a hunt. OBSERVATION because it blocks no outcome and no task order: FWD-8 and FWD-9 are released and proven either way. INERT because it fires nothing on its own and there is no same-turn disarm to take; it is a standing exposure, not an armed hazard. NOT REMEDIATED BY THIS SEAT, deliberately: the file is another seat's working artifact in a shared tree, deleting another seat's untracked file is not this seat's call, and the bounds of both orders this seat held forbid touching anything outside the one function's code. The remedy that would actually hold is mechanical rather than a one-off delete -- the operator recipe could shred the file at the end of the act the way this seat's two were shredded, so the artifact cannot outlive its use. Routed as an observation for 1.0.0_SA_CTO~DELL2 and the box's manager; owner of the recipe: the trade-pipeline root's README."
+}
+```
