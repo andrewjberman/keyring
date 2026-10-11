@@ -1192,3 +1192,30 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S26",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T04:50:50Z",
+  "one_line": "L9 round 2 R2-rr-2: TO-APPLY-R2-rr2 AC2 MET. The live opal-ticket-api package, downloaded by this seat, hashes to the live CodeSha256 and holds one member byte-equal to lambda_function.py at pin a366ce52ec (negative control: the pin's parent does not match). The code delta from the previously deployed file (eb80f55340, 67068626) is 4 added lines, the report request-id shape check. Runtime, handler, memory and timeout equal the Terraform file; 8 environment keys. The check's two live arms are not exercised (cell R2-tr-1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/ledger/L8_PACKET.R2_RR2.md @16fcc87ae6 (msg 4098)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_R2_RR2_L9_GRADE_20261011.md",
+      "this seat's download of the live package (get-function Code.Location): zip base64 sha256 W03VREoM..., 1 member, sha256 ca3be343..., equal to git show a366ce52ec:infra/aws/lambda/ticket_center/lambda_function.py",
+      "git diff eb80f55340 a366ce52ec on the handler: 4 insertions, 0 deletions; git show eb80f55340:<file> sha256 67068626...",
+      "get-function-configuration opal-ticket-api: python3.11, lambda_function.lambda_handler, 256 MB, 30 s, 8 env keys, LastModified 2026-10-11T04:19:14Z; infra/aws/terraform/ticket-center :243-246",
+      "org/critical_paths/change_management/20261011T0403Z_tckt-vnext-r2-rr2-report-id-shape-20261011_deploy_completion.md (CLOSED)"
+    ]
+  },
+  "spec_asserts": "TO-APPLY-R2-rr2 AC2 (judgment): the deployed bytes are the pinned file, and nothing else moved.",
+  "world_is": "Holds on this seat's content comparison. The shape check is APPLIED and not exercised live; FWD-1 still needs a run that reads a server-minted request id.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
