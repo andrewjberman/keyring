@@ -2471,3 +2471,27 @@
   "notes": "No re-pin and no pair is cut for this function by this seat until its owner and its true base are named: asked of 1.0.0_SA_CTO~DELL2 by message the same turn. The function is IRPT_BCKEND's cell IB-s-9 by its map note; IRPT_ANLREQ changed one writer in it. Owner of this row: 2.0.0_SA_COO~Y2."
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S40",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T09:50:52Z",
+  "one_line": "L8 round 3 (Y), the packet's ADDENDUM 1: read by this seat -- the irpt-status source-map entry is re-pinned, 42 of 42 staged rows at one commit, and the report reader at that commit names retained_ref; nothing is applied (live is still 6idtFvAm); the portal change is on DEV at ff41894759. The re-pin changes 14 of 49 members against live; two of the eleven censused inert were judged by reading only, and the pair should name them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND3_Y_L8_COMPILE_ADDENDUM_1_20261011.md @81b38e28a5 (msg 4612)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUND_3_Y_L9_READ_20261011.md",
+      "this seat's reads 2026-10-11T09:50:52Z: the source map's irpt-status entry holds 42 staged_from rows, 42 of them at ee3fd7c5e5; owned_report.py at ee3fd7c5e5 holds 7 lines naming retained_ref; live irpt-status CodeSha256 is still 6idtFvAm..., LastModified 2026-10-11T04:44:47Z; portal ff41894759 is an ancestor of origin/DEV, which reads ff41894759 (positive control f74706add3 also an ancestor); the entry's deployed_code_sha256, last_deployed_commit and last_deployed_at still describe 2026-10-05"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself.",
+  "world_is": "Seven orders of round 3 are terminal. The release is not applied. Not done by this seat: a build, the member census, a CI read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
