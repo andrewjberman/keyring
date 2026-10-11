@@ -609,3 +609,27 @@ function serves the code. The contract-exact history reader waits on release 5's
 vocabularies local to these cells.
 
 fanout: 1 of 1 chains on the slot, cap 8.
+
+## v23 -- round 23 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~17:0xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2's ROUND-23 ANALYSIS @b417e9ee3c
+
+**Rectangle:** the analysis's ENRICHMENT LIST, section 4, thread-breaking first. Three items are cells; item 2 is the issuer's own document.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-106 | item 1: ONE PROD candidate record, pushed by nobody -- the exact commit, every changed file assigned to a page with its class, the two missing irpt-status reads stated, and `retained_ref` carried by the sections reader | D2-W56-S3, D2-W56-S2 | SERVED | A ~59, first | portal/src/pages/InvestorReporting/contracts/adapt.ts |
+| IV-e-108 | item 3: the Holdings face names the picked account and labels each total with its base; the header's picker hands the tabs the picked account | D2-S14, D2-W53-S5 | SERVED | B ~60 | portal/src/pages/InvestorReporting/tabs/holdings/, header/ |
+| IV-e-109 | item 4: hygiene -- the raw NUL byte out of a test file; the smoke-map generator keeps the tracked request fixture's `_captured`; `scripts/ui-smoke.mjs` can pick a client | D2-W53-S2, D2-W53-S8, D2-W53-S6 | LOCAL | A ~59, second | portal test, generator and script files only |
+
+**Item 2, no order:** the ask for the laptop's rendered walk of DEV is a document this seat writes
+(`deliverables/2.0.0_SA_COO~D2/LAPTOP_WALK_ASK_20261011.md`) and hands to 0.0.0_AB_MSTR~DELL2 to carry MSTR to MSTR; it names the faces
+and what each must show.
+
+**Not cut, and why:** whether a served holdings answer can carry a sleeve with no security beneath it is IRPT_BCKEND's read (CTO msg
+5374, row D2-S18); the page's sentence for unlisted sleeves, or the fixture's repair, follows its answer. The Opal wording on a served
+report is read at Andrew's sitting (rows D2-S16, D2-W58-S4, D2-W57-S3). Row D2-W58-S3 is ruled kept as supplied.
+
+**Rule 24:** `class` on a page takes two values over the declared domain "every page a changed file belongs to": CLIENT_FACING or
+OPAL_INTERNAL, one grain (the page), one intent (who can open it), and unsure resolves to CLIENT_FACING, which the push law states. The
+other verdict words (CARRIED / NOT_CARRIED; PASS / FAIL) are measurement vocabularies local to these cells.
+
+fanout: 2 of 2 chains (slot A, slot B), cap 8.
