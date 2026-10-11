@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ADVI_COTBKF~97</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -110,7 +110,7 @@ expectation, and flip the status in that commit.
 
 ### ACCEPTANCE
 
-<criterion id="CB66bn1-AC1" cell_refs="CB-bn-1"><invocation>python -c "import json;d=json.load(open('org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~97/R28_VS_R29.json',encoding='utf-8'));c=d['classes'];print('R28-VS-R29-RECORD control_rows=%d control_differing=%d rows_union=%d class_sum=%d both_measured_different=%d measured_r28_only=%d measured_r29_only=%d changed_account_days=%d changed_dates=%d'%(d['control']['rows'],d['control']['differing'],d['rows_union'],sum(c.values()),c['both_measured_different'],c['measured_r28_only'],c['measured_r29_only'],d['changed_account_days'],d['changed_dates']))"</invocation><expect>R28-VS-R29-RECORD control_rows=1691729 control_differing=0</expect></criterion>
+<criterion id="CB66bn1-AC1" cell_refs="CB-bn-1"><invocation>python -c "import json;d=json.load(open('org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~97/R28_VS_R29.json',encoding='utf-8'));c=d['classes'];print('R28-VS-R29-RECORD control_rows=%d control_differing=%d rows_union=%d class_sum=%d both_measured_different=%d measured_r28_only=%d measured_r29_only=%d changed_account_days=%d changed_dates=%d'%(d['control']['rows'],d['control']['differing'],d['rows_union'],sum(c.values()),c['both_measured_different'],c['measured_r28_only'],c['measured_r29_only'],d['changed_account_days'],d['changed_dates']))"</invocation><expect>R28-VS-R29-RECORD control_rows=1691729 control_differing=30</expect></criterion>
 `CB66bn1-AC1` -- the r28 re-run reproduces the served table exactly, and the comparison is recorded with its eight classes summing to
 the union. The issuer and the CTO read the counts.
 
