@@ -3547,3 +3547,28 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Owner: 1.0.0_SA_CTO (the grader's rule), per the gate's own text. Routes for the issuer and CTO: (A) the CTO adds a log-group shape or a registry row for AWS-fixed service log groups (sns/<region>/<account>/DirectPublishToPhoneNumber[/Failure]); (B) a deliberate departure as an R20 register entry Andrew acknowledges; (C) drop the two aws_cloudwatch_log_group resources and set retention another way, which the order does not describe. This seat used none of them and bypassed nothing. Together with row S13 the order cannot reach its apply."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FBL (FB-f-12, amendment 1 observation)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S15",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~FBL",
+  "surfaced_at": "2026-10-11T10:34:12Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The inf-pipeline root carries a standing pending create, aws_secretsmanager_secret_version.eclipse_jwt_initial (secret orion/eclipse_jwt/current): an unscoped safe-apply of that root by anyone writes that secret version.",
+  "spec_asserts": "TO-FB-f-12 amendment 1: the sixth create 'was pending before' the order and the seat reports it as an OBSERVATION row.",
+  "world_is": "The untargeted plan of infra/aws/terraform/inf-pipeline read 358 resource_changes, 352 no-op, 6 create on 2026-10-11 ~10:2xZ; five were this order's, the sixth is this resource. This seat has not read why it is pending and has not touched it. Until its owner disposes of it, every unscoped apply of the root writes a secret version, and every full plan after TO-FB-f-12 will list it as exactly one create.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/plan_untargeted.out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner unknown to this seat; the issuer routes it. Not blocking this order after amendment 1."
+}
+```
