@@ -4909,3 +4909,81 @@
   "notes": "No act taken; a real-data read is needed before calling it a defect."
 }
 ```
+
+## DSGN_IRPTV1-D2-W56-S1 -- IV-e-100: the order expects the sections reader to meet computation_validation where it expects extraction_validation; the portal's reader (PROD and DEV) already branches on provider and reads computation_validation, so that premise fails -- rows IRPT_YCDGEN-W2-S13 and -W6-S4 concern the response SCHEMA, which no portal reader consumes
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W56-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~56",
+  "surfaced_at": "2026-10-11T12:30:52Z",
+  "one_line": "IV-e-100: the order expects the sections reader to meet computation_validation where it expects extraction_validation; the portal's reader (PROD and DEV) already branches on provider and reads computation_validation, so that premise fails -- rows IRPT_YCDGEN-W2-S13 and -W6-S4 concern the response SCHEMA, which no portal reader consumes",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~56/READER_CENSUS.json (row analysis-report / the denominator)",
+      "probe_prod.json and probe_dev.json in the same folder (bun probe over git-archive exports of 37aa1247ee and 00989b8b9d)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face, item 5: the report SECTIONS reader 'will meet retained_ref and, for an OPAL_ENGINE report, computation_validation where it expects extraction_validation' (rows IRPT_YCDGEN-W2-S13, -W6-S4).",
+  "world_is": "adaptAnalysisReportSlice (src/pages/InvestorReporting/contracts/adapt.ts:1427 at DEV 00989b8b9d, :1420 at PROD 37aa1247ee) tests isOpalAnalysisWire (provider === 'OPAL_ENGINE') first and reads computation_validation for that form, extraction_validation otherwise. Run in a bun probe at both commits: an OPAL_ENGINE sections body (provider, request_ref, sections, computation_validation) PASSES with and without retained_ref; a YCHARTS body PASSES; removing the form's own validation member refuses. The two cited rows are about docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json (data requires extraction_validation, additionalProperties false), which the portal reader does not validate against.",
+  "notes": "The schema/producer disagreement the two rows record stands (not this cell's); only the consumer half of the premise is measured here. See READER_CENSUS.json row analysis-report."
+}
+```
+
+## DSGN_IRPTV1-D2-W56-S2 -- IV-e-100: the portal reads 7 of the 7 irpt-status routes at DEV but only 5 at PROD -- the PROD client has no method and no route-table row for analysis-request-pdf or -original, and PROD's parser has no adapter for -original
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W56-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~56",
+  "surfaced_at": "2026-10-11T12:30:52Z",
+  "one_line": "IV-e-100: the portal reads 7 of the 7 irpt-status routes at DEV but only 5 at PROD -- the PROD client has no method and no route-table row for analysis-request-pdf or -original, and PROD's parser has no adapter for -original",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~56/READER_CENSUS.json (row analysis-report / the denominator)",
+      "probe_prod.json and probe_dev.json in the same folder (bun probe over git-archive exports of 37aa1247ee and 00989b8b9d)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face, item 1: routes_read_by_portal is one set, 'the ones a portal client method calls'; item 4 asks for a result at PROD and at DEV for each.",
+  "world_is": "src/api/endpoints/investor-reporting.ts at 37aa1247ee has no getAnalysisRequestPdf/getAnalysisRequestOriginal and no IR_ROUTE_TABLE row for either (the DEV diff adds both, plus envelope.ts:198 'analysis-request-original'); a search of the exported PROD src finds no caller. Probe at PROD: parseIrEnvelope('analysis-request-original', ...) refuses on 'operation' for any body (no adapter), 'analysis-request-pdf' parses. Release 5 does not change either route. Recorded as NOT_ESTABLISHED at PROD with this reason, and the denominator carries both counts.",
+  "notes": "If a later PROD push carries the DEV client methods without the parser line, or the reverse, the original route would refuse at PROD; today nothing at PROD sends the request."
+}
+```
+
+## DSGN_IRPTV1-D2-W56-S3 -- IV-e-100: on the v1 plane the sections reader drops retained_ref (no member on AnalysisReportSliceView), and getAnalysisReport is typed AnalysisReport while the parser returns the slice view -- its adapter argument is unread
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W56-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~56",
+  "surfaced_at": "2026-10-11T12:30:52Z",
+  "one_line": "IV-e-100: on the v1 plane the sections reader drops retained_ref (no member on AnalysisReportSliceView), and getAnalysisReport is typed AnalysisReport while the parser returns the slice view -- its adapter argument is unread",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~56/READER_CENSUS.json (row analysis-report / the denominator)",
+      "probe_prod.json and probe_dev.json in the same folder (bun probe over git-archive exports of 37aa1247ee and 00989b8b9d)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face, item 5: the sections reader 'will meet retained_ref'; the response contract lists retained_ref (analysis-report.response.schema.json:71).",
+  "world_is": "adaptAnalysisReportSlice (adapt.ts:1427-1447) reads named members and returns {requestId, attemptRef, sections, extractionValidation, extractionCoverage?}; retained_ref is neither refused nor carried (TOLERANT by absence, run at both commits). LiveClient.send returns parsed.data, adapted by IR_DATA_ADAPTER['analysis-report'] (envelope.ts:193); the per-call adapt argument (adaptAnalysisReport for getAnalysisReport, investor-reporting.ts:1295-1302) is documented unread on the envelope path (:1105-1114). Whether AnalysisTab.tsx:196 and export/resolveBundle.ts:391, which call getAnalysisReport, use members only the full AnalysisReport view has was NOT traced.",
+  "notes": "No act taken. A consumer that expects retained_ref on the sections view (for example to open the retained report) would find no member to read it from."
+}
+```
