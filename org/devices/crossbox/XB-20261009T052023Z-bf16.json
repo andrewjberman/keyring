@@ -10,7 +10,7 @@
  "subject": "PROD readiness: IRPT_BCKEND, IRPT_YCDGEN, TCKT_VNEXT commits in portal promote f73f9ab0..2d42e9b7",
  "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CROSSBOX_CALL_PORTAL_PROD_PROMOTE_READINESS_20261009.md",
  "opened_at": "2026-10-09T05:20:23Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T05:22:26Z",
   "bus_message_id": "5f0f9edc-775f-49ac-a4df-0a583d77a6df"
@@ -21,8 +21,8 @@
   "bus_message_id": "e33c1e4c-2c06-4fe6-be90-0437f17968b6"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-10T23:43:54Z",
+  "from_by": "1.0.0_SA_CTO~DELL1",
   "to_at": "2026-10-10T23:39:57Z",
   "to_by": "1.0.0_SA_CTO"
  }
