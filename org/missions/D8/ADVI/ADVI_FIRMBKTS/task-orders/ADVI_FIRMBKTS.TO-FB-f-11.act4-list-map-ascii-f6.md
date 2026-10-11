@@ -3,7 +3,7 @@
 <!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
 
 <decomp_ref>
-<decomp_doc>org/missions/D8/ADVI/ADVI_FIRMBKTS/decompositions/ADVI_FIRMBKTS_DECOMP_R3.md</decomp_doc>
+<decomp_doc>org/missions/D8/ADVI/ADVI_FIRMBKTS/decompositions/ADVI_FIRMBKTS_DECOMP_R4.md</decomp_doc>
 <owned_cells>FB-f-11</owned_cells>
 </decomp_ref>
 <issued_to>0.9.0_WK_ADVI_FIRMBKTS~18</issued_to>
@@ -96,8 +96,25 @@ actor's pair can quote it.
 
 **PARKED (2.0.0_SA_COO~B1, round 3 close, 2026-10-11):** carried to round 4 as the act-4 router flip. The ASCII precondition is met (act 1, v27/v6). Un-park conditions: acts 2 and 3 complete; the act-4 pair; acts 4b and 4c routed; the registry's routed-bucket change reviewed against its generated readers (row D1-S17; ADDENDUM 7); the laptop identity for the protected router. Owner of the un-park: the round-4 analysis of `1.0.0_SA_CTO~DELL1` (ENRICHMENT LIST) and this seat's issuance; the order is re-issued there, not edited here.
 
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-11 ~16:4xZ; RE-HOMED TO ROUND 4, STILL PARKED UNTIL THE GO):** the decomposition
+reference is the round-4 decomposition (cell `FB-f-11`, its amendment 19); `<round>` reads 4; the executor is the dell1 CloudOps
+lane `0.7.0_AE_CloudOps~FB1` for the eight IRPT roots and `0.7.0_AE_CloudOps~FBL` (laptop identity, crossbox ORDER) for the three
+protected edge functions. THE FACE ABOVE IS THE ROUND-3 TEXT. Its section 1 steps 1 to 3 are met or replaced: (1) all-ASCII:
+done in act 1 (v27/v6); (2) "add `opal-data-49financial` to `CANONICAL_PLATINUM_BUCKETS`" is NOT an edit any more: the list is
+GENERATED, and the engagement is the ONE registry value (the alias's `routed` marker, `true` to `false`), so step 3 is the
+value commit and the regeneration of exactly two targets (`firm-config.mjs`, `loaders.py`); (3) the deploy is eleven units, not
+one: the router, the guard and the validator (laptop) and the eight IRPT consumers (dell1). THE SIGNED PAIR IS THE FACE:
+`org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND4_ACT4_CUTOVER_COO_HALF.md` and `..._CTO_HALF.md` (ADDENDA 1
+and 2), `org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/WINDOW_RUNBOOK_ROUND4.md`. At the GO the issuer's amendment (1) replaces section 1 with the pair's permitted set, (2) replaces the three
+criteria with the instruments the pair names (`r4_flip.py`, `r4_dormant.py`, the act-3 `compare` at start and end, the
+per-unit `CodeSha256` and association reads, the widened sample), each dry-run at base, and (3) names the sample's census
+(`FB-g-29`). Instruments still owed at this amendment: the act-4 live reader `r4_act4.py` and the nine OAI reads' instrument
+(the CTO's ruling pending, msg after 3979). This order is NOT spawnable until that amendment.
+Gate limb: the `<decomp_doc>` and `<round>` of a parked order amended by its issuer; GATE viii reads the four placeholders at
+HEAD and no criterion changed.
+
 <status>parked</status>
-<round>3</round>
+<round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-11</to_id>
 <slot>~18</slot>
 <fabric>dell1</fabric>

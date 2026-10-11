@@ -409,3 +409,14 @@ branches or it is not signed".
    `prices.parquet`, `lock.json`, `splits.parquet`, `dividends.parquet`; rollback per key = the object's prior S3 version; the overlap rows'
    delta is measured against a pre-run snapshot and printed (`close_served` can legitimately restate on a split inside the new tail).
 4. The ONE real run of each outcome at close, `deliverables/2.0.0_SA_COO~Q1/ROUND9_REAL_RUN.md`.
+
+**Round 9 amendment 1 (issuer, 2026-10-11 ~16:2xZ; two cells added under the CTO's ADDENDUM 3 and the issuer's own defect; the spec is the CTO's
+ruling, so this is an amendment and not a surprise row):**
+
+| cell | serves | what | write set | assignee | risk | depends |
+|---|---|---|---|---|---|---|
+| DQ-t-35 | C-PRICES, C-IDENTITY (R2; row D1-S12, BLOCKING) | the read-only valuation trace for FTHSX (4 accounts) and PFORX (11): price file -> carrying artifact -> value artifact -> portal route and firm, denominator 15; the three wrong-symbol CUSIPs re-resolved through the EXISTING resolvers with each candidate's agreement printed (no page or served change) | `deliverables/0.9.0_WK_MDPF_DEMQUE~27/` only | `0.9.0_WK_MDPF_DEMQUE~27` | LOCAL (records) | none |
+| DQ-t-36 | C-PRICES (issuer defect in DQ-t-31) | `extend_frontier.py` refuses a frontier before the store's latest `valid_to`, so a manual `--today` can never shorten a served file; `apply` then writes and resets nothing | `extend_frontier.py`, NEW `test_demque_extend_guard.py` | `0.9.0_WK_MDPF_DEMQUE~28` (worker-light) | LOCAL | DQ-t-31 (merged @1961d4ee7a) |
+
+Chains now five: t-30 -> t-31 (merged), t-32 (merged), t-33 -> t-34, t-35, t-36. Fan-out for the amendment: 2 of 2 chains, cap 8. The
+COO half of the t-31 never-widen pair is written on the bytes AFTER t-36 merges (the override is then covered by the guard, not by a promise).
