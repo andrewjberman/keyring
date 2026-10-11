@@ -3046,3 +3046,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r139/p139_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-442` | the account-days freed when only securities of the seven admitted types are graded by the second witness; the blank share and never-served accounts; what the rest waits on, counted both ways; the reviewer's two points (the to-the-cent next-day trades named; the fund trades split by pair) | FWD-3 (Cottonwood's figure on a basis somebody measured) | LOCAL | IB-pr-441 drained and read on the trunk | P139-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~300. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 132. ROUND 140, WORKSTREAM ~P (2026-10-11 ~18:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5501)
+
+IB-pr-442's sizing (branch wk-IRPT_BCKEND-300 @721d34910e, drain in progress at this cut): admitting PRD v0.39's seven pairs sizes
+the blank share at 50.3 percent (58.2 in force) and never-served accounts at 357 (382); the institutional fund share class, left
+out on two one-day-off security-days of 1,474, is what most of the rest waits on (6,960 account-days by it alone, an upper bound).
+The CTO does not admit it on smallness and orders one read: a third dated value beside both witnesses on the five one-day-off
+security-days, and whether the first witness's partition for the window's last day is the prior day's.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r140/p140_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-443` | the five one-day-off security-days of IB-pr-441, each with both witnesses over three days and a third dated value; one verdict each (which witness is off, or cannot be told); the last-day question | FWD-3 (a basis somebody measured) | LOCAL | IB-pr-441 drained | P140-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~301. DIRECT-ACT (one read-only cell, LOCAL).

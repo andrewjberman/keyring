@@ -1,13 +1,12 @@
 {
   "prd": "NFRA_OPSWKF_PRD.md",
-  "prd_version": "v0.4",
-  "prd_pin": "13e6b2011b2e5afab0820aa630f5c0fb4204ab64",
+  "prd_version": "v0.5",
+  "prd_pin": "b7dfe287f14d56bd18d8ce50fa7f807728d721c4",
   "half": "ratified-text",
-  "half_hash": "d5c0e57e6abae11a6be24b2488763b041518ad4cb9d746d99d3895f52bf9d53f",
-  "endpoint_hash": "8f52a5d075550097d22b8f9fce9947dd80cd1aeb692c982e936b18d94699ea17",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPSWKF_PRD_v0.4_RATIFIED_TEXT_REVIEW_20261011.md@5c31605357249137d3f5bb66a56553dc0901779d",
+  "half_hash": "b073ac4cd06cfab76005ef4c48d0afb0a5c804191f6c9946b4fc97a2235b299a",
+  "endpoint_hash": "c9132182d6ad55f8379c2c3ba4a8ebf070fa8fe1bf72537706d2d0224d5f37f6",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPSWKF_PRD_v0.5_RATIFIED_TEXT_REVIEW_20261011.md@54616e920834ce34747463ca0d783f3c1e286b9d",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-11T17:44:15Z",
-  "reason": "FWD-8 DONE WHEN: the only read of the deployed service is the positive arm, which passes whether or not the fix landed; add the live refused read"
+  "signed_at": "2026-10-11T17:50:24Z"
 }

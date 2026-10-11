@@ -6933,3 +6933,26 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W116-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~116",
+ "surfaced_at": "2026-10-11T17:45:07Z",
+ "one_line": "CB-bs-1: 72 of 270 fund series (73 tested, 124 untested) carry a dividend-adjusted close left on the store by the as-traded basis; the adjustment is 1.0 to 2.3 times the single one their distributions imply, so the face's 80-percent-within-2-percent test fails for all nine though every step sits on a distribution.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~116/DIVIDEND_ADJUSTED_SERIES.json: nine (all DIVIDEND_ADJUSTED, 201 of 201 daily steps on a distribution, 0 down), table (270 / 73 substituted / 197 left / 73 tested / 72 adjusted / 1 not / 124 untested), other_kinds, reach",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~60/price_basis_census.csv: all nine and all 72 are class other (matches_neither), outside SUBSTITUTE_CLASSES in data/assets/scripts/silver/commonwealth_daily_valuation.py line 205, so as_traded_store never touches them (after equals before on every date)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bs-1 step 1: a fund reads DIVIDEND_ADJUSTED if the observed ratio tracks the implied factor (example threshold: 80 percent of pairs within 2 percent); step 2: the Yahoo cache may carry a dividend column; the nine were read by eye as a single dividend-adjusted close.",
+ "world_is": "The cache holds only date, Close and Adj Close (no dividend column; its dividend steps are read from Adj/Close). The custodian-implied factor matches Yahoo's own on 103 of 104 pairs, but the build's close departs from Close 1.0 to 2.3 times as far as that factor (CPXIX 1.0; the other eight 1.6 to 2.3), so 0 to 2 of 4 to 18 pairs per fund are within 2 percent; the readings rest on shape (steps on distributions, correlation 0.95 to 1.0), a rule I set after the first run and state in the md. Three round-70 CONSTANT_SCALE funds (AMBFX, BALCX, OIEJX) read adjusted. 120 of the 124 untested funds have no cache file (119 on the custodian-holdings store only). Why the store over-adjusts was not read."
+}
+```
