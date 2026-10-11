@@ -26436,3 +26436,80 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-W294-S1 -- IB-pr-436: the Yahoo reader returns no bars for FPNIX, one of the nine funds; its 85 fund-days are no_nav_found
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W294-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~294",
+  "surfaced_at": "2026-10-11T15:09:13Z",
+  "one_line": "IB-pr-436: the Yahoo reader returns no bars for FPNIX, one of the nine funds; its 85 fund-days are no_nav_found",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fetch_yahoo in data/assets/scripts/silver/commonwealth_price_basis_census.py, ONE call, ten tickers, window 2026-06-08 to 2026-10-10: nine returned 87 bars each; FPNIX answered 'possibly delisted; no price data found (1d 2026-06-08 -> 2026-10-10)' and the reader cached a none_reason marker",
+      "ADVI_COTBKF's cache (<main root>/.scratch/advi_cotbkf/yahoo_census/FPNIX.csv, 2026-10-09) already held the same none_reason marker for the 2020-06-27 to 2026-10-10 window, read only",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~294/IB134-1_fund_nav_basis.json: funds[FPNIX] nav_days_found 0 of 86, no_nav_found 85"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-436: if the reader cannot return a fund's NAV, record it as no_nav_found for that fund's days, say what the call returned, file a row; no retry, no other source.",
+  "world_is": "The reader has no NAV for FPNIX at all, in this fetch or in the older cache. FPNIX is the 9th ranked security (12,115 account-days in IB-pr-435); its fund-days cannot be graded from this source, and 3 of the 583 account-days whose only outside-anchor rows are these funds hold it. No other source was tried, by the bound.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W294-S2 -- IB-pr-436: yfinance on this box is 1.7.0, the order says 1.2.0; the reader ran unchanged and returned bars
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W294-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~294",
+  "surfaced_at": "2026-10-11T15:09:13Z",
+  "one_line": "IB-pr-436: yfinance on this box is 1.7.0, the order says 1.2.0; the reader ran unchanged and returned bars",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I -c 'import yfinance; print(yfinance.__version__)' in the worktree printed 1.7.0 before the single fetch call",
+      "fetch_yahoo (BATCH 50, auto_adjust=False, group_by ticker) ran without edit and returned 9 of 10 tickers with 87 daily bars each; FSMAX Close equals the ADVI_COTBKF cache on 86 of 86 common dates"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-436: yfinance 1.2.0 is importable on this box (measured by the issuer).",
+  "world_is": "The installed version is 1.7.0. Nothing failed, the reader and the cache layout worked as the order describes; recorded so a later reader of the order does not assume 1.2.0.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W294-S3 -- IB-pr-436: the majority-mark rule shows no prior-day fund-day, but 497 rows (33 days) equal only the prior day's NAV and 42 equal neither; the account-day effect is graded row by row
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W294-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~294",
+  "surfaced_at": "2026-10-11T15:09:13Z",
+  "one_line": "IB-pr-436: the majority-mark rule shows no prior-day fund-day, but 497 rows (33 days) equal only the prior day's NAV and 42 equal neither; the account-day effect is graded row by row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~294/IB134-1_fund_nav_basis.json: totals equals_prior_day_nav_only 0, equals_neither 0; row_level_outcomes equals_prior_day_nav_only 497, equals_neither 42, of 124,645 rows with a NAV (eight funds)",
+      "row_level_prior_rows_by_day: 33 of 85 days, 2 to 22 rows a day on 30 days from 2026-08-26, 17 on 2026-06-22, 41 on 2026-07-02, 3 on 2026-07-31; row_level_neither_rows_by_day: 14 rows on each of 2026-09-01, 2026-10-01, 2026-10-02",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~294/ib436_measure.py: effect() classifies each fund row of an account-day by its own mark against the day's and prior day's NAV"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-436: the fund-day's mark is chosen by the many-marks rule (the mark held by the most rows) and the five outcomes are per fund-day; the account-day effect is stated 'every such fund's mark'.",
+  "world_is": "Counting only the majority mark, every resolvable fund-day is the day's NAV; the minority rows (a few per fund on a third of the days) are visible only row by row. The worker added the row-level counts beside the five outcomes and graded the account-day effect per fund row (not per fund-day mark), which found 1 account-day with a prior-day row and 3 with no NAV. Done without an instruction; the fund-day outcomes the checks grade are unchanged by it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

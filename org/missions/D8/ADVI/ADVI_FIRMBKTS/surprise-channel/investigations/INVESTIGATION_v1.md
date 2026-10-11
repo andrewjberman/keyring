@@ -4769,3 +4769,80 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "No action taken by this worker: the order's keep-every-other-line bound was followed literally. The wording of these comments belongs to the issuer."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-f-14, act 3b apply, the seat gate)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S30",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-11T15:29:21Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cross-box seat gate reports an OPEN deploy (iamroles-r7-narrow-portal-s3, 0.7.0_AE_CloudOps~IR) that reads CLOSED in this tree's change-management entry and whose sentinel is in none of the 50 worktrees read, and it names the shared-infra root by path token alone; with a cross-box call naming the same root, the gate read STOP in WARN mode for a one-resource apply that touches neither.",
+  "spec_asserts": "safe-apply's seat gates: crossbox-deploy-check reports OPEN-CALL and OPEN-DEPLOY hits when a live cross-box call or an OPEN deploy names the root by token, and under ENFORCE a STOP blocks the apply; the check's own OVERLAP and --files-vs-trunk modes read file and resource overlap.",
+  "world_is": "2026-10-11 15:25Z, crossbox-deploy-check for root infra/aws/terraform/shared-infra with --files-vs-trunk and --target aws_s3_bucket_policy.opal_data_49financial: OVERLAP clear (0 files differ from the merge base d54eecad2b), UPSET clear, OPEN-CALL hit XB-20261011T082334Z-282f (state ACKED, dell2 to laptop; its report names s3-lgic-firm-buckets.tf, a different file and a different bucket-policy resource), OPEN-DEPLOY hit iamroles-r7-narrow-portal-s3 (author 0.7.0_AE_CloudOps~IR, opened 11:02Z). That entry's change-management file in this tree reads 'CLOSED -- nothing stranded -- closed 20261011T113448Z', mentions neither opal-data-49financial nor aws_s3_bucket_policy, and its sentinel is in none of the 50 worktrees that git worktree list returns (the gate reads a view this lane could not locate). Verdict STOP in WARN mode; the act proceeded after both hits were read and found disjoint from the one resource.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act3b/apply_safe-apply.out (the seat-gate lines)",
+      "python .tools/crossbox-deploy-check.py --root infra/aws/terraform/shared-infra --serial 0.7.0_AE_CloudOps~FB1 --files-vs-trunk --target aws_s3_bucket_policy.opal_data_49financial, 2026-10-11T15:25Z",
+      "org/critical_paths/change_management/20261011T1102Z_iamroles-r7-narrow-portal-s3_deploy_completion.md line 3 (Status: CLOSED)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only; nothing armed. For the gate owner: (1) a sentinel the gate counts as OPEN while the entry reads CLOSED is the DRIFT class the ledger's own check names; the sentinel's location is the open question. (2) The match is by root path token, so a disjoint one-resource apply and an unrelated cross-box call read as a STOP. This lane's practice at this act: --dry-seat-gates first, then read each hit's resource set before the apply."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W46-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~46",
+  "surfaced_at": "2026-10-11T15:30:31Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The FB-g-24 face names lib/platinum_dest.py as the seam, but no such file exists under lib/; the seam is data/black_diamond/scripts/gold/lib/platinum_dest.py.",
+  "spec_asserts": "Face section 1a.1 derives each class's canonical directory from the canonical destination of lib/platinum_dest.py for a key under the legacy prefix.",
+  "world_is": "Glob under the worktree lib/ for platinum_dest*.py returned no files at 92a9b27704. The module is data/black_diamond/scripts/gold/lib/platinum_dest.py (destination(legacy_key, mode) at line 59), importing lib.platinum_dest_view. r4_modclass.py imports it with data/black_diamond/scripts/gold on sys.path. The worker derived each directory from opal_naming._platinum_build(), the derivation platinum_prefix and ownership_key use; AC1 M2 reads the seam's destination and reports 11 of 11 classes equal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Glob lib/**/platinum_dest*.py at /c/dev/wk-firmbkts-46/lib returned No files found at 92a9b27704",
+      "data/black_diamond/scripts/gold/lib/platinum_dest.py:24-25 read at the worktree: imports S3_BUCKET from lib.config and PLATINUM_CLASSES from lib.platinum_dest_view; destination() at line 59",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_modclass.py:96 read at the worktree: from lib import platinum_dest as pd, with data/black_diamond/scripts/gold on sys.path"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken beyond the derivation the face names. The path is the issuer's wording; the check reads the module from the gold folder. AC1 passes on this path. Recorded as a path premise only."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W47-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~47",
+  "surfaced_at": "2026-10-11T15:31:20Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The FB-g-26 fail-loud helper calls sys.exit(2), but D_02.advisor_client_detail.py had no import sys, so one import line was added to D_02 outside the stated bound.",
+  "spec_asserts": "Face sections 1a.1 and 1a.3: move the single delete_objects call of each script into _delete_batch_fail_loud, change nothing else about either script; the helper exits with sys.exit(2).",
+  "world_is": "D_02 at HEAD carries no 'import sys' (git show HEAD count 0), so sys.exit(2) on the refused path would raise NameError. One line 'import sys' was added (worktree D_02.advisor_client_detail.py:41), between 'import re' and 'import threading'. Nothing else in D_02 changed outside the helper (lines 99-111) and its one call site (line 3293). D_04 already imports sys.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:data/black_diamond/scripts/gold/D_02.advisor_client_detail.py | grep -c '^import sys' printed 0",
+      "worktree data/black_diamond/scripts/gold/D_02.advisor_client_detail.py:41 holds 'import sys'; :99-111 hold _delete_batch_fail_loud with sys.exit(2) at :111",
+      "r4_failloud.py --arms static at the worktree: 'ROUND 4 FAIL-LOUD: 4 of 4 arms', exit=0 (the check accepts raise SystemExit(2) as well as sys.exit(2))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a worker decision to widen: the import is the minimum that makes the ordered sys.exit(2) run. The issuer may rule whether the import is an accepted part of the bound or should become raise SystemExit(2) instead; the AC1 check accepts either."
+}
+```

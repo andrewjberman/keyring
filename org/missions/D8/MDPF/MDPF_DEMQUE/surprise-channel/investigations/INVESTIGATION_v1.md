@@ -742,6 +742,26 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "receipt.2026-10-11.json cells_drawn 5858, 11716 of 15720 drawn, 4004 remaining by quote arithmetic vs 3404 by vendor rows"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S11",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-11T15:34:07Z",
+    "one_line": "The transactions store holds ONE partition, date=2026-06-23, with largest Trade_Date 2026-06-22: the round-8 ruling that the lock reads the latest partition and checks trades since June has no later trades to read, so a served window past 2026-06-22 cannot be proved by the client's trades.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "ROUND_ANALYSIS.round8.md R1 (b): the lock reads the LATEST transactions partition, resolved through opal_naming, not a pinned date; new trades since June are checked.",
+    "world_is": "2026-10-11 ~16:2xZ, S3 read (boto3, this seat): s3://opal-data-assets/commonwealth/cottonwood/silver/transactions/ lists one date= partition, date=2026-06-23, five parquet parts, 1,416,497 rows, max Trade_Date 2026-06-22. commonwealth/cottonwood/ holds only bronze/ and silver/; bronze/ lists imaging, manifest, portfolio_accounting (not read). Resolving the latest partition returns the same June snapshot today. TO-DQ-t30 resolves it dynamically and TO-DQ-t31's extension claims `held` for any window past trades_through; the served apply of the extension is HELD for the CTO's word.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "boto3 list_objects_v2 Delimiter=/ on commonwealth/cottonwood/silver/transactions/ -> 1 partition (2026-10-11, this seat)",
+        "pyarrow max(Trade_Date) over date=2026-06-23/*.parquet -> 2026-06-22, 1,416,497 rows"
+      ]
+    }
   }
 ]
 ```

@@ -368,3 +368,44 @@ at site Z, not a worker slot. Write sets are disjoint apart from `bbg_quote.py`,
 **Essential wait (qualified):** DQ-t-27 AC3, the first scheduled non-trading-day fire, cannot precede the next non-trading day the drawer
 exists on (2026-10-17 at the latest): a history draw is barred on trading days by round-6 R1 (production would be crowded), so the
 positive arm has no on-demand act; the negative arm (a trading day draws 0) is driven on demand in AC2. Reported to the CTO in the round's message.
+
+**Round 8 outcome (record):** t-25 .. t-29 terminal; t-27's first fire drew 5,858 of 5,858 on 2026-10-11 (earlier than the 10-17 bound above). D1-S8
+127 of 141 (D1-S9). `ROUND8_REAL_RUN.md`. Closed at the CVO's L10 slug (@50398613b5).
+
+
+---
+
+# ROUND 9 -- CUT (issuer 2.0.0_SA_COO~Q1, 2026-10-11 ~16:xxZ)
+
+**Rectangle:** the CTO's round-8 analysis `ledger/ROUND_ANALYSIS.round8.md` @92a9b27704 section 3 (msg 3951): R1 (the price store reaches the T-1 frontier
+daily: a standing tier-1 extension, the lock reading the latest transactions partition, the one-time gap through the queue), R2 (the 14 rejected
+names: no wider band; a per-name cause instrument; the existing files serve with claim `held`; the two near-40 pct names read for client-page use),
+Z-S2 and Z-S3 (this seat's cells). Carried, a read only: FWD-3's Monday 2026-10-12 morning production read.
+
+**A PREMISE THE ANALYSIS DID NOT HAVE (measured by the issuer 2026-10-11 ~16:2xZ, row D1-S11):** the transactions store
+`s3://opal-data-assets/commonwealth/cottonwood/silver/transactions/` holds ONE partition, `date=2026-06-23`, and its largest Trade_Date is
+2026-06-22. No later partition exists, so "the lock reads the LATEST partition" resolves to the same June snapshot today, and the client's
+trades since 2026-06-22 are not in this store to be checked. Cut as ruled: t-30 resolves the partition dynamically (it advances by itself when a
+later partition lands) and reports `trades_through`; where a served window runs past `trades_through` the lock's claim is `held`, never `measured`
+(the existing vocabulary, no new key). The extension's SERVED apply (t-31) is HELD for the CTO's word on this premise: its half "covers both
+branches or it is not signed".
+
+| cell | serves | what | write set | assignee | risk | depends |
+|---|---|---|---|---|---|---|
+| DQ-t-30 | C-PRICES, FWD-1 (R1 b) | `lock.py` resolves the latest `date=` partition holding parquet (no pinned date), exposes `trades_through`, `--partition`; `check()` claims `held` when the window runs past the trades | `lock.py`, NEW `test_demque_lock_partition.py` | `0.9.0_WK_MDPF_DEMQUE~24` | LOCAL | none |
+| DQ-t-31 | C-PRICES, FWD-1, FWD-8 (R1 a, c) | `extend_frontier.py`: the standing tier-1 request ending at the T-1 frontier (`expected_last_trading_day`) over every locked symbol, the pacer reset for exactly those symbols, hooked ahead of the draw in `run_daily_draw.sh`; its first run IS the one-time 76-trading-day gap, quoted by the draw's own ledger | NEW `extend_frontier.py`, NEW `test_demque_extend_frontier.py`, `run_daily_draw.sh`, `daily_draw.py` | `0.9.0_WK_MDPF_DEMQUE~24` (queue, second) | LOCAL (the apply and the draw after it are SERVED, under its own never-widen pair, HELD for the CTO) | DQ-t-30 (`trades_through`) |
+| DQ-t-32 | C-PRICES, FWD-5 (R2) | `lock_cause.py`: per rejected name the agreement against the old file and the new draw, the disagreeing dates with trade type and ex-dividend/split proximity, whether the first lock pre-dates the floor, a classed cause; `hold_lock_records.py`: the claim `held` with its reason on those lock records (dry-run here; the apply is the issuer's) | NEW `lock_cause.py`, NEW `hold_lock_records.py`, NEW `test_demque_lock_cause.py` | `0.9.0_WK_MDPF_DEMQUE~25` | LOCAL (the apply writes 14 served `lock.json`, SERVED, CTO half = R2) | none |
+| DQ-t-33 | FWD-4 (Z-S2, Z-S3; round 7 R2) | a re-quote of a partly drawn request prices the REMAINING cells and says so; a history request is priced on TRADING days; an outcome `COMPLETE` closes a request and sets its drawn date; a re-freeze chains a second superseded quote | `bbg_quote.py`, `quote_vs_actual.py`, `refreeze.py`, NEW `test_demque_quote_remaining.py`, `test_demque_bbg.py` | `0.9.0_WK_MDPF_DEMQUE~26` | LOCAL | none |
+| DQ-t-34 | FWD-3, FWD-4 (Z-S3) | the standing drawer closes a request whose every security reached its end date: the completing fire records `COMPLETE`, later fires skip it, no 0-cell `DRAWN` line | `standing_drawer.py`, NEW `test_demque_standing_drawer_close.py`, `ledger/BBG_ACTUALS.jsonl`, change-management | `0.7.0_AE_CloudOps~ZQ` (site Z) | WORLD (the standing drawer under CTO~Z's half; no new draw capacity) | DQ-t-33 (`COMPLETE`) |
+
+**Chains:** three (t-30 -> t-31; t-32; t-33 -> t-34). Fan-out 3 of 3 chains, cap 8: t-34 is a seat order at site Z, not a worker slot.
+
+**The issuer's acts at the drain (not cells):**
+1. After DQ-t-33 merges: re-freeze the real TR request again (`refreeze.py`, reason "cells priced on trading days, round 9 Z-S3"); the
+   superseded chain keeps all three quotes.
+2. After DQ-t-32 merges: `lock_cause.py` over the 14 (the real run, table recorded), then `hold_lock_records.py --apply` (14 served lock.json
+   writes; CTO half = round-8 R2; rollback per key = the object's prior S3 version). The two names near 40 pct are read for client-page use.
+3. DQ-t-31's `--apply` and the first extended draw: HELD (the premise above). The pair's blast radius when released: the 141 CUSIP prefixes'
+   `prices.parquet`, `lock.json`, `splits.parquet`, `dividends.parquet`; rollback per key = the object's prior S3 version; the overlap rows'
+   delta is measured against a pre-run snapshot and printed (`close_served` can legitimately restate on a split inside the new tail).
+4. The ONE real run of each outcome at close, `deliverables/2.0.0_SA_COO~Q1/ROUND9_REAL_RUN.md`.
