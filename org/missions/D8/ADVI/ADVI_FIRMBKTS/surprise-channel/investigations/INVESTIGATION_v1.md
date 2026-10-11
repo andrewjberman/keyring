@@ -4574,3 +4574,27 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "No action taken; the commit was not blocked and the cited claim is not this cell's. Filed for the reflex's owner to judge whether the bare-basename match is intended."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S28",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T14:51:34Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The standing scoped-exemption instrument infra/aws/terraform/shared-infra/tests/check_fence_scoped_rows.py reads ok=False at HEAD: its scratch root before_strip fails init on one(list), and it raises a cp1252 UnicodeEncodeError unless PYTHONIOENCODING=utf-8 is set.",
+  "spec_asserts": "The file's own docstring (NFRA_CTLPLN.TO-CT-d-2 AMENDMENT 4) says it proves the scoped-exemption renderer and the fail-closed readers on scratch copies and ends on a FENCE-SCOPED line; its last line is the instrument a renderer change is graded by.",
+  "world_is": "cd infra/aws/terraform/shared-infra/tests && PYTHONIOENCODING=utf-8 python check_fence_scoped_rows.py (2026-10-11 ~15:2xZ, dell1) printed: 'ERROR: root before_strip: init rc=1 ... while calling one(list) | local.lgic_managed_firm_buckets is object with 2 attributes Invalid value for \"list\" parameter: must be a list, set, or tuple value with either zero or one elements.' and 'FENCE-SCOPED rows_today=32 unchanged_today=False scoped_rendered=0/0 sim_ok=0/0 refusals_ok=0/7 unknown_key_refused_by=none ok=False'. Without PYTHONIOENCODING it stops on UnicodeEncodeError (charmap, positions 36-41). The renderer this round changed (FB-g-19, -20, -21) is graded by the issuer's r4_modfence.py, r4_modallow.py and r4_policy.py instead.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the command above, run read-only in the working tree at HEAD, last two output lines quoted",
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf (the local named in the error)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a prerequisite of act 3b: nothing in the act depends on this instrument reading ok=True. It stands as a broken regression instrument for the fence module; an owner (the NFRA_CTLPLN lane that built it) repairs or retires it. Surfaced, not chased."
+}
+```
