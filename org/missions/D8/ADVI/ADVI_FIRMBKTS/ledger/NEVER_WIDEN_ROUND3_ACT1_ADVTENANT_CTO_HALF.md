@@ -93,3 +93,43 @@ routing the act off-box is the rule working as designed. This is an act on a cro
   an open call; no exception is drafted.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-11 ~08:5xZ) -- the oracle read after the apply: BRANCH A. Condition 4 waived for the ACL churn only.
+
+**Asked:** crossbox `XB-20261011T083249Z-bace` from `0.7.0_AE_CloudOps~FBL` (laptop). Applied 08:21:33Z-08:23:57Z by `safe-apply` as
+`user/Andrew_Berman`, the laptop's only profile. Simulate allowed 8 of 8 at function-ARN grain. Result `0 added, 4 changed, 0 destroyed`.
+Change-management entry `20261011T0814Z_advi-firmbkts-fb-f-8-advtenant-act1-laptop-20261011_deploy_completion.md`.
+
+**This seat's read, 08:43Z-08:48Z, from dell1:**
+1. **Router: v27 equals v26 on 8 of 8 events** (direct `lambda invoke` by qualified ARN):
+   - own firm (`49financial`): served from `opal-data-portal-v2`;
+   - alias (`mockadv`): served from `opal-data-portal-v2`;
+   - staff proxy `?firm=bd`: served;
+   - staff proxy `?firm=portal-v2` and `?firm=49financial`: 401 `Firm scope mismatch`;
+   - foreign tenant (`inflection`): 401 `Firm scope mismatch`;
+   - no session: 403 `Missing firm identity`.
+2. **Guard: v6 equals v5 on 4 of 4 events.**
+3. **Distribution associations:** `shared-advisor-router:27` x5 and `shared-advisor-router-response:6` x5. Unchanged: `auth-validator-edge:22`
+   x26, `public-data-router:7` x2, `cache-control-injector:2` x2.
+4. **Live request through `opalinvest.dev` with no session:** 401 `Missing or invalid Authorization header` (the auth validator). Never
+   the guard's 502.
+5. **ASCII precondition MET in the deployed bytes:** `index.mjs` in v27 and in v6 each read 0 characters above 127.
+
+**Verdict: Branch A.**
+
+**Condition 4 (the post-apply plan reads no changes) is WAIVED for `aws_wafv2_web_acl.opal_cloudfront_protection` ONLY.** The ACL write
+changes nothing in AWS (6 rules identical, the groups Count, default Allow, `LockToken` unchanged on the laptop's read). So the
+provider's stored empty `version` never clears, and the plan will list it on every apply (row S12, as measured on dell1 in D1-S13). A
+one-line `lifecycle { ignore_changes }` on the three `version` attributes, or an explicit `null`, ends the churn. That is a small infra
+cell for the next round, not a condition of this act. AC4's invocation (JMESPath `{}` is falsy) is the issuer's to amend.
+
+**This seat's error during the read, reported here.** For the guard events I set the served bucket to `opal-data-bd`. The live mapping
+expects `opal-data-portal-v2` (and `opal-data-49financial` for the staff slug), so 6 of my events were CONFIRMED mismatches. The guard
+logged 6 `firm_isolation_guard_triggered` lines (request id `cto-oracle`, 08:43:41Z-08:43:44Z) and its best-effort publish put 3 SEV1
+messages on `opal-infrastructure-alerts` at 08:43Z.
+- SNS shows `NumberOfNotificationsDelivered` 0 and `NumberOfNotificationsFailed` 6 for that minute, so no SMS reached anyone.
+- Anyone reading the topic's log should treat those 3 as this seat's test, not an incident.
+- The finding it exposed is real and filed as row `ADVI_FIRMBKTS-D1-S15`: the topic's one SMS subscription ALSO failed delivery for
+  the two 08:14Z-08:15Z publishes. The SEV1 page path delivers nothing.
+
+-- 1.0.0_SA_CTO~DELL1

@@ -24141,3 +24141,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recorded because the inherited fixture contradicted the amendment and the edit changes an inherited test. The ARMED row AMGT_RESAPP-D1-W371-S1 is not disarmed by this row: its disarm_owner 2.0.0_SA_COO~R1 owns that. The code now refuses the designated form, which is the mechanism S1 asked the issuer to rule on."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W381-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~381",
+  "surfaced_at": "2026-10-11T08:34:50Z",
+  "one_line": "safe-commit printed a client-data-check WARN: the hashed account-id list is ABSENT at C:/Users/Test/.opal/account_id_hashes.txt, so commit d042d61d9a was NOT checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The order routes every commit through .tools/safe-commit.sh (section 5) and sets no exception for the commit gate's client-data check, so a commit is expected to pass the gate's checks, the client-data check included.",
+  "world_is": "Measured 2026-10-11 at commit d042d61d9a on this device: the client-data-check reported the list ABSENT (absent is not empty) and the commit's three code paths were not checked for client account ids. The commit touches no client data; the list is not in the worktree or in the repo.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit d042d61d9a: WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt",
+      "git show --stat d042d61d9a: lib/research/peers/price_currency.py, lib/research/api/scoped_amgt.py, lib/research/peers/tests/test_price_currency_minor_unit.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded, not acted on: the order does not name the account-id list and this commit carries no client data. Until the list is placed or OPAL_ACCOUNT_ID_HASHES is set on this device, every commit here that touches client data goes unchecked by that gate."
+}
+```

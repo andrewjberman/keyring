@@ -6359,3 +6359,27 @@ that exception is precisely what hid this, so it is stated rather than relied on
   "disarm_owner": "2.0.0_SA_COO~L1"
 }
 ```
+
+```json
+{
+  "id": "LGIC_ENFORCE-D1-S5",
+  "project": "LGIC_ENFORCE",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T08:50:00Z",
+  "one_line": "The LGIC placement step chose the firm token '49f' for a shared-infra literal that carries no firm; for a literal with no firm token it must print the <scope> placeholder and never pick a firm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Placement derives a name's scope from the literal and the registry; it never invents a firm for a shared (non-firm) resource.",
+  "world_is": "Laptop 1.0.0_SA_CTO's XB-282f ruling (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_XB_282F_INLINE_POLICY_NAME_AND_GATE_REFUSED_LEDGER_20261011.md @e1267f773c, relayed by 0.0.0_AB_MSTR~DELL1 msg 3656) records the placement step picking '49f' for a shared-infra inline policy name. Remedy for the next recut: a literal with no firm token places as <scope> (printed for a human to fill or rule), with a negative arm on that literal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "relay msg 3656 (laptop MSTR bus 01dd909f)",
+      "CTO_RULING_XB_282F_INLINE_POLICY_NAME_AND_GATE_REFUSED_LEDGER_20261011.md @e1267f773c (laptop)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~L1"
+}
+```

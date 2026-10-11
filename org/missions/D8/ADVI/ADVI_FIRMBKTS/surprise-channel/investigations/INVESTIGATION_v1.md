@@ -2912,3 +2912,28 @@ Opened as the worker's step-4 finding list. One row per read site, form OBSERVAT
   "notes": "This seat did NOT roll back: the rollback of the associations would not clear the plan line, the ACL is byte-equal to the pre-act read, and a second apply is outside the order's bounds (2.0.0_SA_COO~B1 / 1.0.0_SA_CTO~DELL1 own the call). The ACL's standing churn is a provider representation that the API round-trip drops, so it will persist while the ACL stays in this root; the fix is outside this act (ignore_changes on the three version attributes, or moving the ACL to its own root). The order stays open until the two signers either waive condition 4 for this ACL or rule otherwise; the CTO oracle read is requested meanwhile."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S15",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T08:50:00Z",
+  "one_line": "The firm-isolation guard's SEV1 page path delivers nothing: every publish to opal-infrastructure-alerts in the 40 minutes read (08:14Z, 08:15Z, and this seat's 3 test publishes at 08:43Z) failed delivery to the topic's one subscription (SMS); NumberOfNotificationsDelivered 0, NumberOfNotificationsFailed 8.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "shared-advisor-router-response publishGuardAlert: a confirmed cross-firm mis-route pages the central ops topic (best-effort; the 502 block does not depend on it).",
+  "world_is": "CloudWatch AWS/SNS for TopicName opal-infrastructure-alerts, 08:04Z-08:44Z: Published 08:14Z 1, 08:15Z 1, 08:43Z 3; Delivered none; Failed 08:14Z 1, 08:15Z 1, 08:43Z 6. list-subscriptions-by-topic: 1 subscription, protocol sms. The 08:43Z publishes were this seat's own oracle mistake (guard events with a mismatching served bucket, request id cto-oracle; ledger/NEVER_WIDEN_ROUND3_ACT1_ADVTENANT_CTO_HALF.md ADDENDUM 3). The block itself works (502 returned). Why SMS delivery fails (sandbox, spend limit, opt-out, origination number) is not read. No new alert is built (CLAUDE.md moratorium); this is a defect of an existing route.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws cloudwatch get-metric-statistics AWS/SNS NumberOfMessagesPublished / NumberOfNotificationsDelivered / NumberOfNotificationsFailed, TopicName=opal-infrastructure-alerts, 2026-10-11T08:04Z-08:44Z",
+      "aws sns list-subscriptions-by-topic opal-infrastructure-alerts: 1 sms",
+      "/aws/lambda/shared-advisor-router-response filter cto-oracle: 6 lines"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL1"
+}
+```
