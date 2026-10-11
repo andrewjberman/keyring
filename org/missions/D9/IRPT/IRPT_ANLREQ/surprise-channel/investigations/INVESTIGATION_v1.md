@@ -3042,3 +3042,26 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T17:47:10Z",
+  "one_line": "TO-AR-y-103: five of the 49 members of irpt-status files[] (manifests.py, owned_status.py, pdf_link.py, read_memo.py, status_loader.py) have no staged_from row in the map; they are built from source_dir. The order says every member gets a staged_from row, so I wrote those five rows with repo_path = source_dir + name (infra/aws/lambda/investor-reporting/ops/<name>), pin P, sha256 of git show P:<path>, which the order did not state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-status @487f73663e: files[] 49 names, staged_from 44 rows, set difference = the five names above",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r10/IRPT_STATUS_ENTRY_ONE_PIN.json: 49 rows at one pin; BUILD_ONLY with that entry written into the map (uncommitted, restored) printed the same digest twice with no parity skip"
+    ]
+  },
+  "spec_asserts": "TO-AR-y-103 step 2: every member of files[] has a staged_from row with pin P and the sha256 of git show P:<repo path>.",
+  "world_is": "Five members were never staged (they sit in source_dir, so the build takes the working file); for them the repo path is the source_dir path, and the two builds equalled each other on that reading. Whether the release wants those five staged or left to source_dir is the issuer's.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
