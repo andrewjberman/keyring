@@ -895,6 +895,29 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "HG3-t11-AC2 (order MDPF_HEALGAP.TO-HG-t11): the document's own shell, run with the instance's tools stubbed: 'guard read failed (rc 1 and 2) -> the pull runs'. Invocation 'hg_t11_assetdim.py --ssm', expect SSMGUARD-OK. The refusal clause: a criterion that cannot be met as written is a stop and a row, and no check is weakened.",
     "world_is": "The invocation's failed-read arm is satisfied by the staging line, so a regression that makes a failed guard read skip the download still prints SSMGUARD-OK and AC2 cannot gate it. The patched document itself runs the pull on rc 1 and 2 (measured by the same harness). The defect is in the check, not the guard. The checker is outside this order's <paths> grant and was not edited.",
     "notes": "Owner of the fix is the issuer, 2.0.0_SA_COO~G1: a failed-read arm that reads the RUNUSER pull line, as the skip arm reads its SHUTDOWN line. Nothing was sent; no AWS act; the two patches are committed LOCAL on branch wk-MDPF_HEALGAP-8 for the drain, with no apply."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W7-S5",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~7",
+    "surfaced_at": "2026-10-11T04:59:55Z",
+    "one_line": "HG3-t9-AC1 does not fail on the tree the order starts from: hg_r3_rules.py --t9 prints T9-OK rc=0 on the v1 satellites tf, so the order's sentence 'All three FAIL at the base' is not true of AC1 at the start tree; AC1 does not discriminate the v2 patch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Control run, this worktree: git show 85fe77beb7:infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf saved to .scratch/ctl/base.tf (uncommitted); 'python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_CHECKS/hg_r3_rules.py --t9 .scratch/ctl/base.tf' -> 'T9-OK new_rule=cot_satellites_registry_producer_stamp_gated schedule=cron(15 13 * * ? *) existing=cot_satellites_registry_producer_daily cron(0 7 * * ? *)' rc=0",
+        "git diff --stat 85fe77beb7 9ab36371f1 lists no satellites-registry-producer file, so the blob above is the start tree's pre-patch Terraform at commit 9ab36371f1",
+        "The same start-tree controls: --t9-iam on that blob -> T9IAM-BAD rc=1; hg_t9_stamp_gate.py with HG_T9_HANDLER on the 85fe77beb7 handler blob -> GATE-BAD rc=1. AC1 is the only one of the three criteria that passes on the start tree",
+        "org/missions/D8/MDPF/MDPF_HEALGAP/task-orders/MDPF_HEALGAP.TO-HG-t9.satellites-second-fire-stamp-gated.md@9ab36371f1 line 78: 'All three FAIL at the base'; lines 44-46 state the tree already carries the round-3 v1 change merged at 85fe77beb7"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG-t9 TO line 78: 'All three FAIL at the base (T9-BAD ..., T9IAM-BAD ..., GATE-BAD ...)'; HG3-t9-AC1 expects T9-OK on the rule's presence and schedule.",
+    "world_is": "At the start tree the T9 rule check already passes without the v2 patch (the rule was merged at v1). AC1 therefore gives no signal on the v2 change; AC2 and AC3 do fail on the start tree as the order states.",
+    "notes": "Recorded only: the order's sentence is quoted, not corrected. The AC1 PASS on the patched tree is correct for the rule but is not evidence that this cell's v2 patch changed the rule. For the CVO's L9 read."
   }
 ]
 ```

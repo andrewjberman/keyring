@@ -334,3 +334,37 @@ shape). Round 6 CLOSED @0c72210d2b. Carried, not cut: the total-return column's 
 | DQ-t-24 | FWD-3, FWD-4 (R1) | the first non-trading-day backfill at site Z: the 15,720-cell TR-comparison request drawn on Saturday 2026-10-10 up to that day's quoted allowance (5,858), stopping on any vendor limit warning or refusal; actuals recorded (`bbg_budget`, `ledger/BBG_ACTUALS.jsonl`) and read against the quote | NEW `bbg_backfill.py`, NEW `test_demque_bbg_backfill.py`, `bbg_ledger_upload.py`, `ledger/BBG_ACTUALS.jsonl`, its deliverables | `0.7.0_AE_CloudOps~ZQ` (site Z) | WORLD (a Bloomberg draw under `1.0.0_SA_CTO~Z`'s half) | DQ-t-22 |
 
 **Chains:** two independent (t-22 -> t-24; t-23). Fan-out 2 of 2 chains.
+
+
+---
+
+# ROUND 8 -- CUT (issuer 2.0.0_SA_COO~Q1, 2026-10-11 ~05:xxZ)
+
+**Rectangle:** the CTO's round-7 analysis `ledger/ROUND_ANALYSIS.round7.md` @f5553ca3d5 section 3 (msg 3487), items 1-5, with rulings R1
+(the non-trading walk keys on TIER, with D1-S5) and R2 (re-freeze under the rule in force, keep the old quote; a STANDING site-Z drawer on
+every non-trading day). Round 7 CLOSED at the CVO's slug (msg 3478, MAY-CLOSE 3 of 3, `round-close-check` MAY-CLOSE). Carried, a read only: FWD-3's
+Monday 2026-10-12 morning production read grades FWD-3; no cell serves it.
+
+| cell | serves | what | write set | assignee | risk | depends |
+|---|---|---|---|---|---|---|
+| DQ-t-25 | FWD-3, FWD-4 (R1; rows D1-W19-S1, D1-S5) | ONE change to `quote()`'s history branch by the request's tier: tier 1 draws against the reserve on any day (a Monday SHT8 quote reads a positive `allowance_today` and finishes that day); tier 2+ walks non-trading days at the measured ceiling whatever the reserve's claim; a ceiling not `measured` reads `finish_date null` with its reason, never the weekday rule | `bbg_quote.py`, `test_demque_bbg.py`, NEW `test_demque_tier_quote.py` | `0.9.0_WK_MDPF_DEMQUE~21` | LOCAL | none |
+| DQ-t-26 | FWD-4 (R2 quote half; row D1-C-S17) | the walk counts a non-trading day only when a drawer fires on it (`drawer_schedule.py`); `refreeze.py` writes a re-frozen quote beside the superseded one (kept, with its reason); `quote_vs_actual` grades the re-frozen quote and prints both | NEW `drawer_schedule.py`, NEW `refreeze.py`, `bbg_quote.py`, `quote_vs_actual.py`, NEW `test_demque_refreeze.py` | `0.9.0_WK_MDPF_DEMQUE~21` (queue, second) | LOCAL | DQ-t-25 (same file) |
+| DQ-t-27 | FWD-3 (R2 drawer half; row D1-C-S17) | the STANDING non-trading-day drawer at site Z: one scheduled fire per non-trading day, drawing open tier-2+ history backfills in rank order up to the measured ceiling, resuming where the last day stopped, stopping on a vendor warning or refusal; receipt and actuals line per run | NEW `standing_drawer.py`, NEW `test_demque_standing_drawer.py`, `bbg_backfill.py`, `test_demque_bbg_backfill.py`, `ledger/BBG_ACTUALS.jsonl`, change-management | `0.7.0_AE_CloudOps~ZQ` (site Z) | WORLD (a standing Bloomberg draw under `1.0.0_SA_CTO~Z`'s half) | DQ-t-26 |
+| DQ-t-28 | C-PRICES (row D1-S8) | `redraw_stale.py`: list the served price files still carrying the original 3 columns, reset exactly those symbols in the Yahoo pacer and enqueue ONE paced re-draw request; the second run with nothing stale enqueues nothing | NEW `redraw_stale.py`, NEW `test_demque_redraw_stale.py` | `0.9.0_WK_MDPF_DEMQUE~22` | LOCAL (the issuer's `--apply` and the next scheduled draw are SERVED, under a never-widen half) | none |
+| DQ-t-29 | repairs (rows D1-S6, D1-S7) | `bbg_ledger_upload.py` resolves a Name-to-literal assignment before `literal_eval`; `land_cot.py` reads its consumer's keys through `lib/opal_naming.legacy_address` so `pytest data/mdpf/scripts/demque` collects with no INTERNALERROR | `bbg_ledger_upload.py`, `test_demque_bbg_ledger_upload.py`, `land_cot.py`, `test_demque_land.py` | `0.9.0_WK_MDPF_DEMQUE~23` (worker-light, the batch repair cell) | LOCAL | none |
+
+**Chains:** three (t-25 -> t-26 -> t-27 share `bbg_quote.py` and then the schedule; t-28; t-29). Fan-out 3 of 3 chains, cap 8: t-27 is a seat order
+at site Z, not a worker slot. Write sets are disjoint apart from `bbg_quote.py`, which one worker's queue holds in order.
+
+**The issuer's acts at the drain (not cells):**
+1. After DQ-t-26 merges: `refreeze.py --request-id DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS --as-of 2026-10-09 --reason "rule changed, round 6 R1"` on the
+   real requests folder, committed (the superseded quote is kept beside the new one). `quote_vs_actual.py` then reads ONE ruled quote.
+2. After DQ-t-28 merges: `redraw_stale.py --apply` on this box's daily-draw home (resets 32 pacer entries, enqueues one request), then the
+   scheduled 22:30 local daily draw writes the seven columns; the served read of 141 of 141 files is this round's SERVED real run. NEVER-WIDEN pair:
+   CTO half = the round-7 analysis item 3 (@f5553ca3d5); COO half = this section. Blast radius: the 32 listed CUSIP prefixes' `prices.parquet`
+   (existing three columns byte-identical, t21's contract); rollback per key = the object's prior S3 version.
+3. The ONE real run of each outcome at close, under `deliverables/2.0.0_SA_COO~Q1/`.
+
+**Essential wait (qualified):** DQ-t-27 AC3, the first scheduled non-trading-day fire, cannot precede the next non-trading day the drawer
+exists on (2026-10-17 at the latest): a history draw is barred on trading days by round-6 R1 (production would be crowded), so the
+positive arm has no on-demand act; the negative arm (a trading day draws 0) is driven on demand in AC2. Reported to the CTO in the round's message.

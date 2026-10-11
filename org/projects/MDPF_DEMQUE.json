@@ -4,10 +4,10 @@
  "directive": "D8",
  "macro_code": "MDPF",
  "fabric": "dell1",
- "dep_stage": "ROUND_CLOSE",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "The backfill demand queue: every history backfill priced, ranked and drawn within the Bloomberg and Yahoo budgets, without ever crowding out a production pull",
  "generated_from": "org/missions/D8/MDPF/MDPF_DEMQUE/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-11T04:35:13Z"
+ "generated_at": "2026-10-11T05:06:08Z"
 }
