@@ -3109,3 +3109,20 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r143/p143_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-446` | what node-port is and why the probe uses it and not the page; whether the vendor calls a job makes after a capture go the same way; what changed on our side since the bundle of 2026-10-05, or that nothing did | FWD-4 (a session is usable only when verified from the transport that will use it) | LOCAL | IB-pr-444 drained | P143-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~304. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 136. ROUND 144, WORKSTREAM ~P (2026-10-11 ~19:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5611)
+
+Row IRPT_ANLREQ-D2-W53-S3 ruled a RESULT: 21 of 28 live members of irpt-intake-poller have no blob in git, so the function serves
+from bytes the tree cannot reproduce; its rollback target is the live package itself. The remedy is a release of the poller by
+IRPT_BCKEND (cell IB-s-6), after one read; until then the live package is held once as the rollback artifact. Two cells, disjoint
+write sets, no edge between them. The release itself is NOT cut here.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r144/p144_cells.py`: all six criteria FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-447` | does the running poller read firm_registry.json (read from the live package's bytes), which fields, and where each would come from under the naming canon's registry; what a release that drops the file would do | FWD-9 (intake) | LOCAL | none | P144-a |
+| `IB-pr-448` | the live package held as the rollback artifact: its version id found among the artifact key's versions by content, or the order stops; nothing is written | FWD-9 (intake) | WORLD (declared; reads only, by an applier) | none | P144-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two independent cells. Assignees: 0.9.0_WK_IRPT_BCKEND~305 (IB-pr-447, DIRECT-ACT) and
+0.7.0_AE_CloudOps~IB2 (IB-pr-448).
