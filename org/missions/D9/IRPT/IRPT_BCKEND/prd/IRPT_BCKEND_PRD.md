@@ -4,7 +4,7 @@
 {
  "project": "IRPT_BCKEND",
  "directive": "D9",
- "fabric": "laptop",
+ "fabric": "dell2",
  "prd_version": "v0.33",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",

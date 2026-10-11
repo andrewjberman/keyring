@@ -4,7 +4,7 @@
 {
  "project": "NFRA_OPSWKF",
  "directive": "D9",
- "fabric": "laptop",
+ "fabric": "dell2",
  "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/q3-trade-submission-ops-workflow-brief-20261006.md@c41e705220",

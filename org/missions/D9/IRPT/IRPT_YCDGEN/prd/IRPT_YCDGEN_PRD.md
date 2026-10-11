@@ -4,7 +4,7 @@
 {
  "project": "IRPT_YCDGEN",
  "directive": "D9",
- "fabric": "laptop",
+ "fabric": "dell2",
  "prd_version": "v0.10",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ycharts-inhouse-generation-feasibility-20261005.md@69141b561e",
