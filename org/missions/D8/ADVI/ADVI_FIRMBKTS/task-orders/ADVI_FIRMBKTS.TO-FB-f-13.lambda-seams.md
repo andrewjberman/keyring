@@ -157,6 +157,21 @@ new home. Two follow-ups outside this cell: the partners API's `/health` probe (
 seam too; and `data/black_diamond/scripts/exec_summary/` carries a second copy of `template_library.py` and `trigger_eval.py`
 that this cell does not touch.
 
+**AMENDMENT 1 (2.0.0_SA_COO~B1, seat ~22's row D1-W22-S4, BLOCKING, ruled):** the partners health probe
+(`s3_client.head_object(Bucket=bucket, Key='gold/artifacts/summary/header_metrics.json')`, about line 986) cannot be
+rewritten with its key literal on an added line: the commit-time naming gate refuses an out-of-pattern S3 key literal on
+any CHANGED line of the file, and the partners package cannot reach the builder. The seat correctly did not split or hide
+the literal. Ruled: the probe's line stays byte-for-byte as it is; the routing happens in the client it calls. Replace the
+module's `s3_client` with a thin wrapper class `_ServedS3` (defined once, no key literal) that holds the real boto3 client
+and exposes `head_object(self, Bucket, Key, **kw)` and `list_objects_v2(self, Bucket, **kw)` applying
+`platinum_source` and `platinum_list_target` and delegating every other attribute (`__getattr__`) unchanged. The census is
+syntactic, so put the marker `# seam: exempt routed by the _ServedS3 wrapper that s3_client is` on the line ABOVE the
+probe's `head_object` line (a new comment line with no literal). Parity test (e) drives the probe through the wrapper
+with the recording fake. The other routed sites stay as the seat built them. The seat's rows S1 to S3 and S5 are
+accepted (S1 builder header names the canonical target; S2 three awswrangler reads are outside served classes; S3 the
+views classify through the other Lambda's import; S5 the naming WARN on the guard constant). Gate limb: none graded (a
+ruling on a pending order's record face; paths unchanged).
+
 <status>pending</status>
 <round>3</round>
 <workstream>ACT4BC</workstream>
