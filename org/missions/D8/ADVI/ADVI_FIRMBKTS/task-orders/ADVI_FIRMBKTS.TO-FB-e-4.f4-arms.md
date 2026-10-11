@@ -93,7 +93,7 @@ issuance message. The claim the negative arm carries is `exercised` only if N1-N
 reported as `absent`, never as `inferred`. If the send is refused the cell is a BLOCKING row, not a recut.
 
 # pipeline-override: the one refusal is LIMB PRD_HEADER.fabric='laptop' vs the register's 'dell1'. The register row is the authority since 1.0.0_SA_CTO's L3 re-placement @8afcb0f851; the PRD header repair is the CTO's. Every other limb passed in the issuer's dry run.
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-e-4</to_id>
 <slot>~7</slot>

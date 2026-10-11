@@ -21,7 +21,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T13:15:00Z. Graduated at ADJUDICATION_v6
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v7"
     },
@@ -30,7 +30,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T13:15:00Z. Graduated at ADJUDICATION_v6
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "MDPF_DEMQUE-D1-S4",
@@ -46,7 +46,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T13:15:00Z. Graduated at ADJUDICATION_v6
     "owner": "2.0.0_SA_COO~Q1",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Q1",
       "round": "v7"
     },
@@ -55,7 +55,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T13:15:00Z. Graduated at ADJUDICATION_v6
       "owner": "2.0.0_SA_COO~Q1",
       "at": null
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

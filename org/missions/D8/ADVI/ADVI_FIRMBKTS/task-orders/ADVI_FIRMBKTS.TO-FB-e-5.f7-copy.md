@@ -99,7 +99,7 @@ an invocation): it is a new served write, and the class decides which limbs enga
 `compare` run again by the CTO. The snapshot caveat is row D1-S4: this copy does not authorize a router flip.
 
 # pipeline-override: the one refusal is LIMB PRD_HEADER.fabric='laptop' vs the register's 'dell1'. The register row is the authority since 1.0.0_SA_CTO's L3 re-placement @8afcb0f851; the PRD header repair is the CTO's. Every other limb passed in the issuer's dry run.
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-e-5</to_id>
 <slot>~8</slot>

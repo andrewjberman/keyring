@@ -185,7 +185,7 @@ step would add an unconsumed production step to the cot daily chain). "The liter
 ADVI_COTBKF (CB-ap-1, CB-at-1, CB-ax-1 @19b3550e8a). Direct act: one cell, about 130 product lines, LOCAL.
 
 # pipeline-override: the one refusal is LIMB PRD_HEADER.fabric='laptop' vs the register's 'dell1'. The register row is the authority since 1.0.0_SA_CTO's L3 re-placement @8afcb0f851; the PRD header repair is the CTO's. Every other limb passed in the issuer's dry run.
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-e-7</to_id>
 <slot>~10</slot>
