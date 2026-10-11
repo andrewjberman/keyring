@@ -6335,3 +6335,27 @@ that exception is precisely what hid this, so it is stated rather than relied on
   "disarm_owner": "2.0.0_SA_COO~L1"
 }
 ```
+
+```json
+{
+  "id": "LGIC_ENFORCE-D1-S4",
+  "project": "LGIC_ENFORCE",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T07:25:00Z",
+  "one_line": "The generated infra/aws/lambda-edge/_shared/firm-config.mjs carries 5 non-ASCII characters (a section sign and em dashes) in its fixed header comment, lines 7, 10, 11, 14, 15; it ships in Lambda@Edge bundles, and a hand edit is forbidden, so the generator's template is the fix.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md section 4: no non-ASCII in production code; ADVI_FIRMBKTS round-2 ruling D1-W9-S1: the edge code goes all-ASCII at its deploy.",
+  "world_is": "At box/dell1 HEAD, firm-config.mjs reads 5 non-ASCII characters on 5 lines, all in the header comment block, none in generated values. The ADVI_FIRMBKTS act-1 deploy (shared-advisor-router and -response, CTO half ledger/NEVER_WIDEN_ROUND3_ACT1_ADVTENANT_CTO_HALF.md) ships it as is. Remedy: the template that writes the header emits ASCII ('section 2', '--'), regenerated with LGIC_ENFORCE-D1-S3's regeneration; close when the generated file reads 0 bytes above 127.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python count over infra/aws/lambda-edge/_shared/firm-config.mjs at box/dell1 HEAD 2026-10-11T07:2xZ: 5 chars, lines 7,10,11,14,15",
+      "row LGIC_ENFORCE-D1-S3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~L1"
+}
+```
