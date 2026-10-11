@@ -2372,3 +2372,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S36",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T09:24:18Z",
+  "one_line": "A build of irpt-status at the merged round-3 HEAD does NOT carry retained_ref: owned_report.py is pinned in the source map at 361c44fa9d, so the build is a mixed tree (2 members from HEAD, 12 pinned members older than HEAD). Cell AR-y-32's check passed on source, never on the built zip.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Decomposition IRPT_ANLREQ_DECOMP_R3_Y.md interface I9 and order TO-AR-y-32: the served analysis-report read carries retained_ref; and this seat's L8 packet IRPT_ANLREQ_ROUND3_Y_L8_COMPILE_20261011.md section 5: the irpt-status build UNn2/KeP5DpS 'carries AR-y-32 and, because acceptance.py is in its file list, AR-y-37's bytes'.",
+  "world_is": "MEASURED by this seat on the zip built BUILD_ONLY at 755b2e074d (sha256 UNn2/KeP5DpSMPrgtsrvdI8a4jJmrE+sJONWbX3Vvvc=, 49 members, 362174 bytes): against the live revision 6 zip (6idtFvAm, 49 members) exactly 2 members differ, owned_requests.py and prospect_dates.py; owned_report.py in the new zip holds 0 occurrences of retained_ref (source at HEAD holds 7); acceptance.py is byte-equal to live. Cause, read in infra/aws/lambda/ci/lambda-source-map.json functions/irpt-status: 42 staged_from members are pinned (32 at 361c44fa9d, 9 at 80a79a7462, 1 at eab13e88d3); 12 of the 42 have a blob at their pin that differs from HEAD (loaders.py, firm_registry.json, resident_installed.py, acceptance.py, lib/opal_naming.py, NAMING_SCHEMA.json, five infra/logic/registry files, owned_report.py). The same read on irpt-ycharts-generate: 88 pinned members across 12 distinct pins, 23 differ from HEAD, and its map digest ZA0QJ5Wt equals neither the live digest tdpterTM nor either build. So the packet's section 5 sentence is WRONG for both retained_ref and AR-y-37's bytes: the history-row client and the section-date branch would ship in a HEAD build; retained_ref and the acting-principal writer would not. The reach read on UNn2 printed count=0 verdict=PROCEED, but UNn2 is not a release artifact.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "member-by-member sha256 diff of two zips in this seat's scratchpad (live 6idtFvAm against the HEAD build UNn2)",
+      "infra/aws/lambda/ci/lambda-source-map.json functions/irpt-status staged_from, 42 entries read",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release5/REACH_READ_IRPT_STATUS_UNn2.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No pair is cut on UNn2. The release needs a source-map re-pin of the irpt-status entry to ONE commit (CTO msg 3856: one tree, no member re-pins), which also releases every other pinned member's pending change (11 members beyond owned_report.py), then a fresh build, reach read and pair. That widens the blast radius beyond round 3's cells, so the shape is the CTO's call: asked by message the same turn. Owner of this row: 2.0.0_SA_COO~Y2."
+}
+```
