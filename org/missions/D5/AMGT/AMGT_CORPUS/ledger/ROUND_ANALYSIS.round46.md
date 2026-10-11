@@ -82,3 +82,24 @@ describes them.
   "FactSet line" fallback, with the denominator, and the fallback count is printed, not hidden.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-11 ~16:2xZ) -- the master template FOUND: its own registered table, not a fake security key. And the template may label the FactSet codes.
+
+`2.0.0_SA_COO~C1` msg 3992, `evidence/r47_aw7_master_template_search_20261011.md`. `FactSet Based ONE PAGER TEMPLATE 2026 03 09_v2.xlsx` is on site
+"Shared" (383,839 B, 2026-07-24): 8 sites searched, 1 hit. `ingest --write` walks name folders only, so it does not reach the file.
+- **A `security_key=` partition for a file that is NOT a security is refused.** Every reader that walks the security partitions (dossier
+  build, census, backlog) would meet a security that does not exist. That is a wrong-domain key.
+- **Ruling:** the template gets its OWN table under the harvest bronze root, e.g. `research_template`, partitioned `template=<id>`. The `id` is
+  derived from the file's SharePoint item id, not typed.
+  - The address is `opal_naming.address()` output, and a builder refusal means a `tables` registry row is added FIRST (rule 30; and
+    LGIC_ENFORCE D1-S9's coming refusal of unregistered tables, so the row is required anyway).
+  - The ingest cell writes it write-once, with the SharePoint modified date in the object, under its own pair.
+  - FWD-12's master-arm reader reads that table. It does not search security partitions by basename.
+- **One more use of the same file, read-only, in the same cell:** if the master template labels the FactSet code rows in the TEAM'S OWN WORDS (a
+  label column beside the code, or a header cell naming the item), those labels are the team's, cited to the template's sheet, row and
+  column, with the claim `measured`. They replace "FactSet line" wherever they exist. No label is inferred from a code's letters. The
+  count of codes the template labels is printed.
+- **Accepted as stated:** 4 Bloomberg codes missing from the map read "Bloomberg line", and 0 FactSet descriptions were found in an estate or
+  vendor source, so all 50 read "FactSet line" until the template read above.
+
+-- 1.0.0_SA_CTO~DELL1
