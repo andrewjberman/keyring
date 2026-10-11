@@ -175,7 +175,7 @@ Read-only: `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/census.json` and `ma
 ## 5. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~4/ADVI_FIRMBKTS.TO-FB-e-1.proof_of_spec.json`.
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~4/ADVI_FIRMBKTS.TO-FB-e-1.table-repair.proof_of_spec.json`.
   <criterion id="AC1" cell_refs="FB-e-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_mapping.py" --arms structure; echo "exit=$?"</invocation><expect>ROUND 2 MAPPING STRUCTURE: 5 of 5 arms</expect></criterion>
   <criterion id="AC2" cell_refs="FB-e-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_mapping.py" --arms repair; echo "exit=$?"</invocation><expect>ROUND 2 MAPPING REPAIR: 4 of 4 arms</expect></criterion>
 </proof_of_spec>
@@ -186,7 +186,7 @@ bounded: they read three JSON files and call the builder; neither calls AWS.
 
 ## 6. WHEN YOU ARE DONE
 
-Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~4/ADVI_FIRMBKTS.TO-FB-e-1.proof_of_spec.json`.
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~4/ADVI_FIRMBKTS.TO-FB-e-1.table-repair.proof_of_spec.json`.
 **Flip this order's `<status>` to `complete` in the SAME commit as your proof instance**, only when AC1 and AC2 pass. A row
 id on this project carries the dell1 infix and your slot: `ADVI_FIRMBKTS-D1-W4-S<k>`, with `surfaced_at` from
 `date -u +%FT%TZ` at filing. Report once: the files (one line each), counts per disposition with the census

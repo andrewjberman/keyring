@@ -160,7 +160,7 @@ Read-only: the patch under `org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~10/ADVI_FIRMBKTS.TO-FB-e-7.proof_of_spec.json`.
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~10/ADVI_FIRMBKTS.TO-FB-e-7.s11-tolerant-load.proof_of_spec.json`.
   <criterion id="AC1" cell_refs="FB-e-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 python -m pytest -q -p no:cacheprovider data/cot/scripts/gold/tests/test_s00_missing_tier2.py; echo "exit=$?"</invocation><expect>3 passed</expect></criterion>
   <criterion id="AC2" cell_refs="FB-e-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_s11.py"; echo "exit=$?"</invocation><expect>S11 NAMING GATE: PASS</expect></criterion>
   <criterion id="AC3" cell_refs="FB-e-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 115 python -m pytest -q -p no:cacheprovider data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py data/cot/scripts/gold/tests/test_canonical_prices_input_resolution.py; echo "exit=$?"</invocation><expect>12 passed</expect></criterion>
@@ -171,7 +171,7 @@ the tolerant load in place. AC2 is the seam to the naming gate that refused this
 
 ## 5. WHEN YOU ARE DONE
 
-Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~10/ADVI_FIRMBKTS.TO-FB-e-7.proof_of_spec.json`.
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~10/ADVI_FIRMBKTS.TO-FB-e-7.s11-tolerant-load.proof_of_spec.json`.
 **Flip this order's `<status>` to `complete` in the SAME commit as your proof instance**, only when AC1-AC3 pass. A row id on
 this project carries the dell1 infix and your slot: `ADVI_FIRMBKTS-D1-W10-S<k>`, with `surfaced_at` from
 `date -u +%FT%TZ`. Report once: the apply result, the output lines of AC1-AC3, the two commit hashes.
