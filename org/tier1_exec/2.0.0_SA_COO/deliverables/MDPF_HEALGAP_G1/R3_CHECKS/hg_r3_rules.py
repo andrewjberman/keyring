@@ -6,10 +6,10 @@
                    arn is module.cot_satellites_registry_producer.function_arn, and an aws_lambda_permission whose source_arn
                    names that new rule.
                Last line: T9-OK or T9-BAD <reason>.
-  --t9-iam [TF] HG-t-9 IAM (round 3 issuance): the producer role's S3 policy block gains (a) s3:GetObject on exactly
-               arn:aws:s3:::opal-data-assets/blackdiamond/cottonwood/meta/*-complete.json and (b) s3:ListBucket on
-               arn:aws:s3:::opal-data-assets whose Condition names the s3:prefix blackdiamond/cottonwood/meta/ (so a missing
-               stamp reads 404, never 403), and nothing wider: no bare meta/* resource, no Put or Delete on opal-data-assets.
+  --t9-iam [TF] HG-t-9 IAM (v2, CTO half refusal 3485): the producer role's S3 policy block gains exactly ONE statement for the
+               stamp: s3:ListBucket on arn:aws:s3:::opal-data-assets whose Condition names s3:prefix =
+               [blackdiamond/cottonwood/meta/*] (the handler LISTS the exact stamp key; a HEAD on an absent key reads 403), and
+               NO GetObject or any resource under meta/, no Put or Delete on opal-data-assets.
                Last line: T9IAM-OK or T9IAM-BAD <reason>.
   --t11 [TF]   HG-t-11 (ruling E): infra/aws/terraform/bd-pipeline/eventbridge.tf carries
                (a) bd_asset_dim_pipeline at cron(10 22 ? * MON-FRI *), unchanged, and
@@ -82,16 +82,13 @@ def t9_iam(path: str) -> int:
     if not blk:
         print("T9IAM-BAD no aws_iam_role_policy cot_satellites_registry_producer_s3 block")
         return 1
-    stamp = "arn:aws:s3:::opal-data-assets/blackdiamond/cottonwood/meta/*-complete.json"
     bad = []
-    if stamp not in blk or "s3:GetObject" not in blk:
-        bad.append("no s3:GetObject on " + stamp)
+    # v2 (CTO half refusal 3485): the stamp is read by a LISTING, so there is NO GetObject on meta/ at all and the one
+    # grant is a prefix-conditioned ListBucket. An s3:prefix condition applies to a list call only; a HEAD reads 403.
+    if re.search(r'opal-data-assets/[^"]*meta/', blk):
+        bad.append("a resource under meta/ is granted (the listing needs only the bucket ARN)")
     if "s3:ListBucket" not in blk:
         bad.append("no s3:ListBucket statement")
-    elif not re.search(r's3:prefix"?\s*=\s*\[?\s*"blackdiamond/cottonwood/meta/', blk):
-        bad.append("s3:ListBucket carries no s3:prefix condition on blackdiamond/cottonwood/meta/")
-    if re.search(r'opal-data-assets/blackdiamond/cottonwood/meta/\*"', blk):
-        bad.append("a bare meta/* resource")
     # the ListBucket statement, read exactly (worker ~7, row D1-W7-S3): Resource is the bucket ARN and nothing else,
     # and the s3:prefix condition names the one meta prefix with no wildcard.
     li = blk.find("s3:ListBucket")
@@ -111,8 +108,8 @@ def t9_iam(path: str) -> int:
             bad.append("the s3:ListBucket Resource is %r, want exactly [%r]" % (got, want))
         pre = re.search(r's3:prefix"?\s*=\s*(\[[^\]]*\]|"[^"]*")', stmt)
         pv = re.findall(r'"([^"]+)"', pre.group(1)) if pre else []
-        if pv != ["blackdiamond/cottonwood/meta/"]:
-            bad.append("the s3:ListBucket prefix condition is %r, want exactly ['blackdiamond/cottonwood/meta/']" % (pv,))
+        if pv != ["blackdiamond/cottonwood/meta/*"]:
+            bad.append("the s3:ListBucket prefix condition is %r, want exactly ['blackdiamond/cottonwood/meta/*']" % (pv,))
     for m in re.finditer(r'Action\s*=\s*\[([^\]]*)\]', blk):
         acts = m.group(1)
         seg = blk[m.end():m.end() + 400]
@@ -121,7 +118,7 @@ def t9_iam(path: str) -> int:
     if bad:
         print("T9IAM-BAD " + "; ".join(bad))
         return 1
-    print("T9IAM-OK stamp GetObject + prefix-conditioned ListBucket, nothing wider")
+    print("T9IAM-OK one meta/*-prefix-conditioned ListBucket on the bucket ARN, no GetObject on meta, nothing wider")
     return 0
 
 
