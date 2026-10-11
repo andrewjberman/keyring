@@ -14,8 +14,18 @@ in this half (each takes its own pair, below).
 ## ACT 1 -- apply HG-t-9
 
 ### The act
-1. `bash infra/aws/lambda/ci/build-and-upload.sh cot-pipeline cot-satellites-registry-producer` from the merged tree. A
-   `BUILD_ONLY=1` build reads the sha256 first; the live and the built hashes are both printed.
+1. **CORRECTED 2026-10-11 ~05:2xZ (COO, measured):** the build is NOT `build-and-upload.sh`. That script's `BUILD_ONLY=1` read built a 9292 B
+   zip of `lambda_function.py` + `build_package.py` only (live artifact: 105484 B, 7 members), which would import-fail. This function's own
+   builder is `python infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/build_package.py --pin 2e327f9cff --out <zip>`
+   (immutable pin required), then upload with `--metadata content-sha256=<base64 sha256>` and the script's own head-object verify
+   (size AND metadata equal). Built at pin `2e327f9cff`: 112882 B, 7 members, sha256 hex `e03bb1c5..`. **Shipped member set vs the live
+   pin `97fe1221bd`:** `lambda_function.py` (the v2 handler: intended); `build_satellites_registry.py`, `satellites_registry.py`,
+   `satellites_weights.py` byte-identical; **`lib/trading_calendar.py` and `etf_classifications_dynamodb.py` DIFFER** (four merged
+   commits since the live pin: `4b766e4e2d`, `3d7fb62105`, `a96e00c279`, `cf24f07493`). Measured effect on the served keys: the producer
+   path calls neither `calendar_source`, `expected_last_trading_day` nor `trading_days_behind` (consumer-side `vintage()`/`read()` only;
+   `payload()` carries no verdict), calls only `ETFClassifier.get_classification` (unchanged), and not `classify_holdings` or `find_by_*`
+   (the changed methods). Import of the built package from an extracted zip root resolves. The CTO half read the handler diff only; this
+   member drift was not in the bytes it read. The act does not start until the half covers it or says to pin otherwise.
 2. `.tools/safe-apply.sh -chdir=infra/aws/terraform/cot-pipeline apply` with `-target` on exactly: `module.cot_satellites_registry_producer`
    (code hash, in place), `aws_iam_role_policy.cot_satellites_registry_producer_s3` (in place), `module.stamp_gated_rule_name`,
    `aws_cloudwatch_event_rule.cot_satellites_registry_producer_stamp_gated`, `aws_cloudwatch_event_target.cot_satellites_registry_producer_stamp_gated`
