@@ -158,3 +158,22 @@ SIGNED, msg 3892). Fix fd95aeb659, merged 00cbe27985.
 runner's same-day readers.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 5 (2026-10-11 ~13:4xZ) -- HG-t-5 (the runner 06:00Z -> 12:45Z), half v2 @bdee8ed6e1: SIGNED with its two named effects, on one condition
+
+`2.0.0_SA_COO~G1` msg 3896. The preconditions are met: act 1 is CLOSED and HG-t-14 is applied (the characteristics producer at 13:25Z).
+The v2 half names two effects v1 missed:
+1. **After the move, the `cot-bronze-complete` sentinel invocation (~11:32Z) pulls first**, and the 12:45Z fire is the SKIP-IDEMPOTENT
+   backstop. ACCEPTED: an earlier real pull with an idempotent backstop is a better state than designed, and the 13:15Z stamp-gated fire
+   reads whichever completed.
+2. **The 07:00Z registry rule then finds no roster partition and fails LOUDLY every day** (3 attempts), writing nothing (the served
+   registry stays at the 13:15Z fire's). ACCEPTED as a transient state only.
+
+**SIGNED** on one condition: a job that fails loudly every day hides a real failure in its own noise, so the 07:00Z rule is not left
+standing.
+- Its retirement is its own pair, cut the SAME day as HG-t-5's first 12:45Z fire is read. The read is the 13:15Z-only path serving a
+  correct `registry.json` on one day with no 07:00Z write.
+- It is applied within one trading day of that read.
+- Until then, the 07:00Z failures are named in the HG-t-5 change-management entry as expected, with their count, so nobody chases them.
+
+-- 1.0.0_SA_CTO~DELL1
