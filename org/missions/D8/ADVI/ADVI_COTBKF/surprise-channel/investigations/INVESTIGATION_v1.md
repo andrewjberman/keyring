@@ -6361,3 +6361,31 @@ round.** Never edit an existing row.
  "world_is": "76 nine-character CUSIPs have the same shape as an account id. The set limb, which compares against the real ids, reads 0. The remedy is a repair cell in round 66: the scan learns to tell a declared security identifier from an account id without widening into a blanket exemption, and the suite returns to green. Until then the suite at the base is red on this one test and every other test passes."
 }
 ```
+
+## ADVI_COTBKF-D2-W97-S1 -- CB-bn-1 control fails: the live split store changed since the served build
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W97-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~97",
+ "surfaced_at": "2026-10-11T11:38:00Z",
+ "one_line": "CB-bn-1 positive control FAILS: the method_r28 re-run does not reproduce the served daily_returns table (1,691,729 rows, 30 differing). Cause measured: dell1's split-history store on S3, which the build reads at run time, lists 141 held CUSIPs now and listed 32 at the round-34 run. The r29 comparison was not made.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "control: served org-local copy .scratch/advi_cotbkf/fwd3_serve_r34/daily_returns.parquet vs my fwd3 --build --cash-leg method_r28 --price-basis as_traded on a regrade before=method_r28/store after=method_r28/as_traded (same legs, basis, hold list none, price cache copy of fwd3/price_cache, run commit 7dec032cc6): rows 1691729 vs 1691729, keys 1691729 both, 0 row-only; differing 30 = 28 return values (1 account, 2020-10-12..2020-11-18 trading days, max abs diff 0.0053) + 2 blank reasons UNPRICED -> INKIND_UNDERSTATED (dates 2020-10-13, 2024-09-24, both returns null); by served blank_reason: null 28, UNPRICED 2",
+   "inputs that moved: regrade log line 'SPLIT-STORE listed=141 held_by_the_accounts=141' (served run's log c2_r34_regrade.txt: 'listed=32 held_by_the_accounts=32'); R28-REPAIRS splits_applied 42 vs 38, splits_not_applied 37 vs 23, disagreements 4 vs 0; repair_days 1102 vs 1091 (SUSPECT_BEFORE 33 vs 22, DVR_CLOSE_STEP 1069 both); security_day_price 3034 of 2124908 points differ over 4 CUSIPs and 1947 dates; account_day_value 29 values differ, holdings and priced_holdings 0 differ; month grades 82593 of 82593 present, 0 grade changes, 0 computed changes",
+   "unchanged inputs: price-store row counts identical to the served run (2138920, 564563, 95, 132015, 0, 0), as-traded substitution counts identical (911 tickers, 1049193 points, 477980 days re-derived, 3962 dropped); SWEEP-REGRADE last line identical to the served run (months 3133/838/78622 before, 3678/293/78622 after, regressions=5)",
+   "code: git diff 728d223ddc..7dec032cc6 on the compute scripts changes the method_r28 path by no line (r29 additions only; rides_withdrawal unchanged under r28)",
+   "S3 stores read read-only: silver transactions (Amount columns and census), silver performance, the five price stores via the local cache copy, the split store yahoo/global/silver/price_history (list and per-CUSIP splits.parquet get). Nothing written to S3"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bn-1: a local method_r28 re-run with the served build's settings reproduces the served daily returns row for row, 1,691,729 rows, 0 differing; if it does not, STOP.",
+ "world_is": "It does not: 30 differ. The split store is a live S3 input with no flag to pin or point to a local copy (load_store_splits takes the S3 client), so no run now can reproduce the round-34 served table and no r28-versus-r29 comparison can be tied to it. The r29 regrade was started once by mistake before the control was compared and was stopped about 83 seconds in; it wrote no finished table. Not established: whether the served S3 tables (not the local copy) equal the local copy (round 34's verify read hash_same=True for all three), and what the 109 added split-store CUSIPs change in the daily returns beyond the 30 days seen. Ways forward for the issuer: re-baseline on a re-minted r28 under today's store, then run r29 against it, or pin the split store."
+}
+```
