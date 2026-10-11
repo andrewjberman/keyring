@@ -2762,3 +2762,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r121/p121_cells.py`: every criterion 
 | `IB-pr-423` | source-map entry; two session-read policies (targeted); adapter zip; live-call arm; ledger | FWD-2 (DSGN_IRPTV1 FWD-1's Performance hop) | WORLD | IB-pr-421, IB-pr-422 complete; pair signed | P121-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.7.0_AE_CloudOps~IB2.
+
+## 115. ROUND 122, WORKSTREAM ~P (2026-10-11 ~10:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 4624) -- ROLLBACK
+
+Rounds 119-121 released the vendor performance path (IB-pr-421, 422, 423). That release serves Cottonwood a Black Diamond-calculated
+return, against the ratified ENDPOINT: FWD-3 serves a figure computed by Opal from holdings, and ADDENDUM v0.19 makes a vendor figure a
+comparison point only (FWD-13). The refusal the release removed was that design (retained.py:53-62; batch 66 item 2, row S247). The
+issuer recommended and signed the release without reading the ENDPOINT; escalation record @a5f045cabf. The CTO ruled the rollback and
+withdrew msgs 4416 and 4616. One cell takes the pair's signed Branch B and puts the tree back so no later build re-ships it.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r122/p122_cells.py`: every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-424` | adapter zip back to 9kYLdR64; source-map entry back; performance/ and retained.tf back to fb3bae3b99; two session policies removed (targeted); ledger | FWD-3 (the ENDPOINT's state restored) | WORLD | none | P122-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.7.0_AE_CloudOps~IB2.

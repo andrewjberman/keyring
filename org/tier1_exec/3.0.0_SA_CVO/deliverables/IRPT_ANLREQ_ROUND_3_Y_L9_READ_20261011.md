@@ -24,3 +24,20 @@ fixture values. Whether a real report's sections have that shape was not read. R
 
 Nothing built this round is live. The release that would carry it is at the CTO for a ruling on its shape (one re-pin of the whole
 irpt-status entry, which releases 11 other members' pending changes). FWD-1's journey has still not run end to end.
+
+---
+
+# Addendum: the packet's ADDENDUM 1, 2026-10-11T09:50:52Z
+
+**Input:** `org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND3_Y_L8_COMPILE_ADDENDUM_1_20261011.md @81b38e28a5 (msg 4612)`. Row IRPT_ANLREQ-D2-S40. Three corrections, each read by this seat.
+
+| correction | read |
+|---|---|
+| The irpt-status entry is re-pinned to one commit | **Read: 42 of 42 staged rows at `ee3fd7c5e5`.** The report reader at that commit names `retained_ref`. So a build from the map now carries cell AR-y-32. Not rebuilt by this seat |
+| Nothing is applied | **Read live: irpt-status is still `6idtFvAm`.** The CTO half of the release pair is owed |
+| The portal change is on DEV at `ff41894759` | **Read: it is an ancestor of portal origin/DEV.** CI on DEV was not read. The page is Opal-internal |
+
+**What the release must be told.** The re-pin changes 14 of 49 members against live, not the 3 the round built. Eleven are censused
+inert, two of those by reading only. The pair should name those two and say why reading is enough.
+
+The three stale deploy fields on the entry (row D2-S33) are still stale after the re-pin.
