@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~51</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -88,7 +88,49 @@ holds no served list. Gate limb that graded this amendment: read from this commi
 <criterion id="AR35-y-AC2" cell_refs="AR-y-35"><invocation>python C:/dev/wk-irpt-anlreq-51/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py y31-keep --portal C:/dev/wk-irpt-anlreq-51/portal</invocation><expect>Y31-KEEP-OK</expect></criterion>
 `AR35-y-AC2`: the package tests that must not move still pass after the form change (the same file holds both).
 
-<expected_criteria>AR35-y-AC1 AR35-y-AC2</expected_criteria>
+---
+
+**AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~09:1xZ): REOPENED for the rendered look. The build is done and stays as it is
+(portal `21cac46b`); what remains is THREE screenshots the issuer reads before the candidate goes to the CTO.** Gate limb that graded
+this amendment: read from this commit's own output.
+
+Nobody has looked at either change rendered. The portal's instrument is `scripts/ui-smoke.mjs` (read its header: usage, `--dist`,
+`--fixtures`, `--click`, `--clicktext`, `--fill`, and its notes on the stubbed auth). There are no fixtures for the Ticket Center page
+yet; writing them is this step.
+
+1. **Build once** from the portal worktree at its HEAD: `bun run build` (it is `tsc -b && vite build`; if it runs past your command
+   limit, run `bun x vite build --configLoader runner` alone -- the typecheck already passes). Record `git rev-parse --short HEAD` as
+   `portal_commit`. The `dist/` folder is build output: never commit it.
+2. **Fixtures** (synthetic, in your deliverables folder under `shots/`): JSON files in the script's `--fixtures` shape,
+   `{ "<url-substring>": <response body> }`. Read the client code for each response's exact envelope before you write it; a body the
+   page's parser refuses renders the refusal, not the state you want. You need, at least: the tickets list
+   (`/api/scoped/tickets`), with ONE `analysis_request` ticket that carries a `report_ref` with a request id and a `package`; the
+   directory resolve (`POST /api/scoped/investor-reporting/directory/resolve`) with two permitted firms; the comparison catalogue the
+   form loads; and the owned analysis report for that request id, with two or three sections. Invented names only: no real firm,
+   person, account or figure. Use the firm ids the portal's own tests use.
+3. **Three screenshots**, each `node scripts/ui-smoke.mjs <route> <out.png> --dist dist --fixtures <file> ...` from the portal worktree,
+   written to `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~51/shots/` in the WORKSPACE worktree:
+   - `firm-choice-loaded.png`: the Analysis Request form open, the Firm control showing the two allowed firms as options.
+   - `firm-choice-load-failed.png`: the same form when the directory resolve fails (no fixture for it, or a refusing body): the
+     Firm control disabled and the line "The firms you can file for could not be loaded." visible.
+   - `package-report-opened.png`: the ticket's package block with the Report file opened, the retained sections rendered.
+   If the script's flags cannot drive a state (the ticket-type control is a `<select>`), copy the script's own launch-and-stub
+   pattern into a small script under `shots/` and drive the page there; do not edit `scripts/ui-smoke.mjs`.
+4. **Read each PNG yourself** (the Read tool shows images) and write `shots/MANIFEST.json`:
+   `{"portal_commit": "<hash>", "shots": {"firm-choice-loaded": {"file": "firm-choice-loaded.png", "loc": "<the LOC line the script
+   printed>", "canvas": "<the CANVAS line's rgb(...) value>", "command": "<the exact command>", "what_is_visible": "<two plain
+   sentences: what you see, including anything that looks wrong>"}, "firm-choice-load-failed": {...}, "package-report-opened":
+   {...}}}`. `what_is_visible` is a description, not a verdict: the issuer and the CTO judge. Say so plainly if a state could not be
+   reached, and do not substitute another state for it.
+5. Commit the PNGs, fixtures, any driver script and the manifest (workspace worktree, your deliverables folder).
+
+<criterion id="AR35-y-AC3" cell_refs="AR-y-35"><invocation>python C:/dev/wk-irpt-anlreq-51/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py y35-shots --root C:/dev/wk-irpt-anlreq-51</invocation><expect>Y35-SHOTS-OK</expect></criterion>
+`AR35-y-AC3`: the three PNGs exist, and the manifest records for each the Ticket Center route, the light canvas `rgb(244, 246, 250)`
+and the command. A third criterion, added because the round's one real look at these two changes had no instrument to run.
+AC1 and AC2 must still print their tokens. Update the proof instance to three rows, validate it AFTER its commit, and flip back to
+`complete` only when all three print.
+
+<expected_criteria>AR35-y-AC1 AR35-y-AC2 AR35-y-AC3</expected_criteria>
 
 The issuer runs the portal typecheck, lint and the whole TicketCenter test folder at the drain, and looks at the rendered form.
 
@@ -114,9 +156,9 @@ org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: AR35-y-AC1 AR35-y-AC2. The instance is at
+Criterion ids: AR35-y-AC1 AR35-y-AC2 AR35-y-AC3. The instance is at
 `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~51/IRPT_ANLREQ.TO-AR-y-35.analysis-form-firm-choice.proof_of_spec.json`.
-Validate it AFTER its commit with `python .tools/proof-of-spec-check.py <instance> AR35-y-AC1,AR35-y-AC2`.
+Validate it AFTER its commit with `python .tools/proof-of-spec-check.py <instance> AR35-y-AC1,AR35-y-AC2,AR35-y-AC3`.
 </proof_of_spec>
 
 **REPORT (once):** each check line verbatim; the portal commit; where the firm list comes from (file and line) and the hookup line the
