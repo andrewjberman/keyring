@@ -3874,3 +3874,27 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Owner: CTO to confirm the .json tail, or to name a finer rule for the forwardfill markers."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W26-S7",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~26",
+  "surfaced_at": "2026-10-11T12:53:38Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "THREE MORE 2026-10-11 DATE PARTITIONS APPEARED AT THE RE-LIST (bronze/eclipse/, gold/eclipse/, silver/eclipse/): ADDED UNDER RULE (c)",
+  "spec_asserts": "Ruling S9: each re-grid's child objects sum to its LIVE listing. Ruling (c): a re-grid is per date partition. Amendment 1 re-list instruction: re-list live where needed.",
+  "world_is": "A re-list of the 29 re-grid parents (LIST calls only) found a 2026-10-11 partition under bronze/eclipse/ (1,811 objects live at the re-list, 1,798 at the earlier listing), gold/eclipse/ (533) and silver/eclipse/ (665). None was in the census or the v3 children. mapping_v4 adds one HOME or MOVE child row for each, copied from the latest dated sibling under rule (c). Nine parents are flagged moving: true with both counts. This extends the row S5 finding, which named two partitions and one folder at an earlier listing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v4.json rows with prefixes bronze/eclipse/2026-10-11/, gold/eclipse/2026-10-11/, silver/eclipse/2026-10-11/ and regrids entries with moving true @03e93707a6",
+      "LIST of the 29 re-grid parents, .scratch/live_parents.json (re-listed at this round, keys not committed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: issuer 2.0.0_SA_COO~B1 to confirm the added child rows and the moving flags at the round-4 analysis."
+}
+```
