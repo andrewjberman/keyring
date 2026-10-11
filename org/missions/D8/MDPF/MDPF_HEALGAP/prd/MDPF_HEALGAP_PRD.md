@@ -4,7 +4,7 @@
 {
  "project": "MDPF_HEALGAP",
  "directive": "D8",
- "fabric": "laptop",
+ "fabric": "dell1",
  "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/mdpf-healgap-midstream-brief-20261007.md@a8c67a424e",

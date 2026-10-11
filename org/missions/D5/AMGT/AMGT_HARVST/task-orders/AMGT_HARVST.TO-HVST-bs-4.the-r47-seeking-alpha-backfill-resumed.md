@@ -42,6 +42,12 @@ not been relaunched. Andrew's order still stands. Resume the leg, do not restart
    report is what lets the cycle runner add sa.
 7. Write everything in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/r47/`. Anything odd: append
    one row to the surprise channel and keep working. Your next row id is `AMGT_HARVST-Z-S<next free Z number>`.
+8. (AMENDMENT 1, row AMGT_HARVST-Z-S109) The leg STOPPED on error at 134 of 242 (run summary finished 2026-10-09T09:59:40Z;
+   `retry 3, gave_up 1, never_started 104`). A stop is not a completion, so this order stays open. Write `bs4_stop_reason.out`:
+   the checkpoint's own `stopped` map and the run summary's stop and upload-failure fields, verbatim. If the reason is
+   transport-class, repeat steps 1 to 4 against that checkpoint with the same argv and `--clear-stop` (declared detached job,
+   `bs4_resumed_2.out`), then step 6 on completion. If it is not transport-class, relaunch nothing: file a row with the
+   verbatim reason and keep working.
 
 ## STANDING CONDITIONS (every order to a 0.7.0_AE_CloudOps lane; `1.0.0_SA_CTO~DELL1` @947dd446e5, ADDENDUM 3)
 
@@ -92,7 +98,11 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   conflict: the lane holds AMGT_HARVST only.
 
 <risk>` WORLD: the collector asks Seeking Alpha from the site Z box.
-
+- **AMENDMENT 1 (2026-10-11 ~03:4xZ, issuer; GATE (viii) graded the modification, no other limb):** `~ZW` reported bs-4
+  delivered (proof VALID rc=0) and awaiting a flip. Not flipped: AC3 reads "the completion is a completion, not a stop", and
+  `r47/bs4_completed.out` on origin is headed "STOPPED-INCOMPLETE; not a completion certificate" (134 / 242, stopped error,
+  4 uploads failed). AC2's regex `PAIRS` passes on any driver line, so a mechanical pass is not completion. The leg has had no
+  relaunch for about 17 h. Step 8 reads the stop reason first; Andrew's 2026-10-06 order stands.
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>

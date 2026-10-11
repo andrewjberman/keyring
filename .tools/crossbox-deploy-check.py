@@ -360,6 +360,7 @@ def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
         found.extend((e[2], e[3].strip(), tree) for e in sentinels)
     blobs = read_blobs(repo_root, sorted({f[0] for f in found}))
     seen = set()
+    readings = []  # one per distinct (path, blob) that parses: (slug, doc, why, path)
     for sha, path, tree in found:
         if (path, sha) in seen:
             continue
@@ -375,19 +376,32 @@ def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
             hits.append("%s is not JSON (%s): not clear" % (path, exc))
             lines.append("  HIT %s" % hits[-1])
             continue
-        if str(doc.get("status", "")).upper() in CLOSED_WORDS:
-            continue
-        if serial and doc.get("author") == serial:
-            continue
         why = mentions(text, pats, [])
         if why and narrow:
             why = why.replace("names the root (token", "names a carried file (token")
-        if why:
-            hits.append("open deploy %s (author %s, status %s, opened %s) %s" % (
-                doc.get("slug", path), doc.get("author"), doc.get("status"), doc.get("opened_at"), why))
-            lines.append("  HIT %s" % hits[-1])
-    lines.append("  denominator: %d worktree(s), %d sentinel read(s), %d distinct (path, blob), vanished=%d" % (
-        len(trees), len(found), len(seen), vanished))
+        readings.append((sentinel_slug(doc, path), doc, why, path))
+    # SC-e-89 limb c: one SLUG counts once however many statuses or worktrees it was read at. A slug is skipped when every
+    # reading is closed, and its readings authored by the actor are skipped; otherwise it draws one hit iff a live reading of
+    # another author names the carried file, built from the most recently opened such reading.
+    by_slug, order = {}, []
+    for slug, doc, why, path in readings:
+        if slug not in by_slug:
+            by_slug[slug] = []
+            order.append(slug)
+        by_slug[slug].append((doc, why, path))
+    for slug in order:
+        live = [r for r in by_slug[slug] if str(r[0].get("status", "")).upper() not in CLOSED_WORDS]
+        if not live:
+            continue
+        named = [r for r in live if r[1] and not (serial and r[0].get("author") == serial)]
+        if not named:
+            continue
+        doc, why, path = max(named, key=lambda r: str(r[0].get("opened_at") or ""))
+        hits.append("open deploy %s (author %s, status %s, opened %s) %s" % (
+            doc.get("slug", path), doc.get("author"), doc.get("status"), doc.get("opened_at"), why))
+        lines.append("  HIT %s" % hits[-1])
+    lines.append("  denominator: %d worktree(s), %d sentinel read(s), %d distinct (path, blob), %d distinct slug(s), vanished=%d" % (
+        len(trees), len(found), len(seen), len(order), vanished))
     return hits, lines
 
 
@@ -457,6 +471,32 @@ def read_list(path: str) -> list:
     return [norm_file(x) for x in text.splitlines() if x.strip()]
 
 
+def resolve_serial(arg: str, repo_root: str = REPO) -> str:
+    """The acting seat, in resolve-actor.sh's order (--serial, $OPAL_AGENT_SERIAL, the session serial file, $GIT_AUTHOR_NAME),
+    but "" -- never UNKNOWN -- when nothing resolves, so an unresolved actor is never treated as an author (SC-e-89, limb b)."""
+    if arg:
+        return arg
+    if os.environ.get("OPAL_AGENT_SERIAL"):
+        return os.environ["OPAL_AGENT_SERIAL"]
+    session = os.environ.get("CLAUDE_CODE_SESSION_ID", "")
+    if session:
+        path = os.path.join(repo_root, "org", "mcp", "sessions", session + ".serial")
+        if os.path.isfile(path):
+            with open(path, encoding="utf-8", errors="replace") as fh:
+                text = fh.read().strip()
+            if text:
+                return text
+    return os.environ.get("GIT_AUTHOR_NAME", "")
+
+
+def sentinel_slug(doc: dict, path: str) -> str:
+    """The sentinel's slug, else its file name without .json (SC-e-89, limb c)."""
+    if doc.get("slug"):
+        return str(doc["slug"])
+    base = os.path.basename(path)
+    return base[:-len(".json")] if base.endswith(".json") else base
+
+
 def run(argv: list) -> int:
     root, targets, notices, serial, now_arg, repo_root = "", [], "", "", "", REPO
     files, trunk, listing, commit_range = None, False, False, None
@@ -516,6 +556,7 @@ def run(argv: list) -> int:
     notices = notices or os.path.join(repo_root, "org", "devices", "deploy_notices")
     rel = rel_root(root, repo_root)
     name = rel.split("/")[-1]
+    serial = resolve_serial(serial, repo_root)
     files_note = "the list the caller passed"
     if trunk:
         files, files_note = trunk_files(repo_root, rel)
@@ -524,9 +565,9 @@ def run(argv: list) -> int:
     reg = dev.load()
     dev_name, basis = dev.this_device(reg)
     covering, findings = projects_covering(pc, dev, reg, rel, files)
-    print("CROSSBOX-DEPLOY-CHECK device=%s (%s) root=%s targets=%d files=%s now=%s" % (
+    print("CROSSBOX-DEPLOY-CHECK device=%s (%s) root=%s targets=%d files=%s now=%s serial=%s" % (
         dev_name or "UNRESOLVED", basis, rel, len(targets), "root-only" if files is None else str(len(files)),
-        now.strftime("%Y-%m-%dT%H:%M:%SZ")))
+        now.strftime("%Y-%m-%dT%H:%M:%SZ"), serial or "UNRESOLVED"))
     if trunk and files is None:
         print("FILES-NOTE: %s" % files_note)
     sections = (
