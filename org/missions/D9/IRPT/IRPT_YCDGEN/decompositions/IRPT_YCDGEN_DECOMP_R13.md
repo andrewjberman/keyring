@@ -47,3 +47,12 @@ it is. (iv) What this round does NOT move by its own act: any message, any queue
 it makes none.
 
 fanout: 0 tree orders; the reads are apply orders and a cross-box call.
+
+## AMENDMENT 1 (2026-10-11, the issuer, inside its own decomposition): `YCD-d-13` is un-parked and gains one build order
+
+IRPT_BCKEND's capture cell is built and drained @231219c1f4 (`2.0.0_SA_COO~P2` msg 5171), so `YCD-d-13` no longer waits.
+`1.0.0_SA_CTO~DELL2` msg 5179 names three things st32's packet carries beyond st31's; the second, the worker stamps
+`cause_claim` "measured" (PRD ADDENDUM v0.12), is one line that is not yet built. It is cut as ONE order under this cell,
+`IRPT_YCDGEN.TO-YCD-d-13.worker-stamps-cause-claim-measured`, issued to `0.9.0_WK_IRPT_YCDGEN~16`, `<risk>WORLD</risk>`; the same order repairs two stale tests (row IRPT_YCDGEN-D2-S57). The cell is otherwise as
+written: st32 in the st31 form from a trunk pin, cut AFTER that order is merged. fanout: 1 of 1 chains, cap 8. Gate limb:
+`to-pipeline-gate.py` graded the new order at this commit.

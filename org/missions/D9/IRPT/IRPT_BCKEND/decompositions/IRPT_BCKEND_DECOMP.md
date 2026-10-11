@@ -2966,3 +2966,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r134/p134_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-436` | nine funds by 85 days: per fund, the days the custodian's mark equals the NAV of the day, of the prior day, of both, of neither; a control on a security the anchor carries; the account-day effect as an upper bound | FWD-3 (Cottonwood's figure on a basis somebody measured) | LOCAL | IB-pr-435 (its ranking and instrument, read from its branch) | P134-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~294. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 127. ROUND 135, WORKSTREAM ~P (2026-10-11 ~15:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on 2.0.0_SA_COO~D2 msg 5188)
+
+A defect of this workstream's own IB-pr-432 (drained @8aa28be2a8): the sections response schema lists its members under
+data.properties as description-only schemas, and the portal's wire generator refuses an untyped member on purpose; three portal
+tests are red at portal DEV b92696c1 (2.0.0_SA_COO~D2's measure). Nothing served is affected. One repair cell, its seam probe
+run against the real neighbour: the portal's own generator in a provisioned portal worktree.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r135/p135_cells.py`: AC1 FAIL at base, AC2 FAIL at base, AC3 a bound, PASS at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-437` | every member of the sections response schema is typed so the portal's generator renders it; the two closed forms keep their meaning; the generator's rewritten wire files listed for the portal's lane, not committed | FWD-4 / PRD ADDENDUM v0.28 item 29 (a contract its consumer can read) | WORLD | IB-pr-432 drained | P135-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell; portal_ref: b92696c1ed61. Assignee: 0.9.0_WK_IRPT_BCKEND~295.

@@ -35,11 +35,11 @@ absent, read on the served objects by this seat).
   "owner": "2.0.0_SA_COO~C2",
   "round": "v68",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v68"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "ADVI_COTBKF-D2-W100-S1",

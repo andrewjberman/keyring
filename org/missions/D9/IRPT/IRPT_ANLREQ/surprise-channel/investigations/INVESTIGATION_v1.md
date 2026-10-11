@@ -2940,3 +2940,30 @@
   "notes": "This seat's miss: the fix for a test the worker's census had named sat inside a candidate held for another reason, while the contract row that turns the test red went to the trunk. The re-release packet's order of return must put the portal's reason set on PROD before the service: added to this seat's owed list for that packet."
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S53",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T15:12:51Z",
+  "one_line": "ARMED: with cell AR-y-81 merged, a build of irpt-commentary-composition-read-lambda from the source map ships the READY gate, and the function's role cannot read the jobs table: every composition read would be refused. The map records the live digest and no longer builds it.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "spec_asserts": "CTO ruling msg 4838 on row IRPT_ANLREQ-D2-S45: 'the map's job is to reproduce what is LIVE ... A map that builds something other than the running function is the hazard, whoever remembers not to press the button.' And order TO-AR-y-81: the gate is released under its own pair, with the role grant, before the analysis-ready binding.",
+  "world_is": "MEASURED by this seat at the shared HEAD 5117ad5c1d: live irpt-commentary-composition-read-lambda CodeSha256 ZZmWOFSA/GjO0d/cKHSm9G5+xDc5sNfEHOpbmfIabQ0=, LastModified 2026-10-09T13:18:10Z; the map entry's artifact_sha256 is the same digest; its files[] lists commentary_composition.py and the entry's 12 staged_from rows do NOT pin that file, so a build takes it from the tree, which since merge 5117ad5c1d (worker commit d6824da73a) carries the gate. READ in infra/aws/terraform/investor-reporting/export/commentary_composition.tf:62-71: the role's GetItem is on the requests table only and its kms:Decrypt context names the requests table only; the gate reads the jobs table. So a rebuilt function with today's role refuses every composition read with UNAVAILABLE (INFERRED from the code and the policy; fail-closed, and it would stop READY requests too). NOT built by this seat after the merge: the post-merge digest was not measured. This function builds only with the parity skip flag (row IRPT_ANLREQ-D2-S34). Map last_deployed_commit None, last_deployed_at None.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration irpt-commentary-composition-read-lambda, read by this seat",
+      "infra/aws/lambda/ci/lambda-source-map.json functions/irpt-commentary-composition-read-lambda: files[] and 12 staged_from rows",
+      "infra/aws/terraform/investor-reporting/export/commentary_composition.tf:62-71",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~52/r8/READY_GATE_DESIGN.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Same class as S45. Remedy by that ruling's own rule would be to pin commentary_composition.py in the entry at the commit whose bytes are live until the gate's release (which carries the two policy edits). Not done by this seat: it is a new member pin on another function; asked of 1.0.0_SA_CTO~DELL2 the same turn. Until ruled: no build-and-upload of irpt-commentary-composition-read-lambda by any seat."
+}
+```
