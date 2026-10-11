@@ -2622,3 +2622,53 @@
   "notes": "DISARM ACT, ordered same turn: roll irpt-status back to 6idtFvAm (S3 version hRe7.zty9CYey5GkmjHlETbeZkKsD.3O), TO-APPLY-Y5 AMENDMENTS 4 and 5 @3b08900647, sent to the live applier 11:20Z. Disarms on a measured live digest 6idtFvAm and one history read answering with exactly the two keys. The re-release waits on the portal reader admitting the new members on PROD first (CTO msg 4805)."
 }
 ```
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T11:36:00Z",
+  "id": "IRPT_ANLREQ-D2-S44",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-S43: irpt-status is back on revision 6 and the history read answers with exactly the two original keys.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_ANLREQ-D2-S43 disarms on a measured live digest 6idtFvAm and one history read answering with exactly the two keys.",
+  "world_is": "MEASURED: live CodeSha256 6idtFvAmYk73wJdr5DPRIyEPrLeWgzjlqbdNr5f1wxc= (this seat's reads 11:28:06Z and ~11:35Z; LastModified 2026-10-11T11:26:53Z by the applier and the CTO). Rollback record org/tier2_senior/0.7.0_AE_CloudOps~DELL2/deliverables/irpt_anlreq_r5/R5_rollback_record.json @0581ad2a46: the recorded version copied onto the key, no S3 delete, plan 1 change, re-plan 0, ledger closed (0 release-5 sentinels open, read by this seat). RELAYED, the laptop reader's read (msg 108323 via 0.0.0_AB_MSTR~DELL2 msg 4829; result @2bf6ba276b, not yet opened by this seat on this box): owner history, every page: page keys [items, next_cursor], row keys [accepted_at, identity], 40 rows (cottonwood 39, inflection 1); 49financial owners not readable by replay. NOT measured by anyone: the page itself in a browser. The three-member answer was live 61 minutes, 10:25:40Z to 11:26:53Z.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "R5_rollback_record.json @0581ad2a46",
+      "0.0.0_AB_MSTR~DELL2 msg 4829 relaying laptop msg 108323"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S43's hazard is disarmed. Its lesson stands for the re-release: the pair's after-reads include the consuming page, and the portal reader (DSGN_IRPTV1 IV-e-99) is on PROD before the service returns (CTO msgs 4805, 4819)."
+}
+```
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T11:36:00Z",
+  "id": "IRPT_ANLREQ-D2-S45",
+  "one_line": "ARMED: after the rollback the source map's irpt-status entry records the live digest 6idtFvAm but a build from it prints UNn2/KeP, which carries the history change that broke the portal page. Any ordinary build-and-apply of irpt-status by any seat re-breaks the page.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "spec_asserts": "CTO ruling msg 4805: the rollback restores the source map 're-pinned back', so the map and the live function agree; and the map entry's artifact_sha256 states what the entry builds.",
+  "world_is": "MEASURED by this seat ~11:35Z at the shared HEAD after the applier's restore (0581ad2a46): the entry has its three older pins again (32 at 361c44fa9d, 9 at 80a79a7462, 1 at eab13e88d3) and artifact_sha256 6idtFvAm; BUILD_ONLY of irpt-status prints UNn2/KeP5DpSMPrgtsrvdI8a4jJmrE+sJONWbX3Vvvc=. Cause, measured earlier (row IRPT_ANLREQ-D2-S36): owned_requests.py and prospect_dates.py are files[] members taken from the building tree, not pinned rows, and the tree holds cell AR-y-32's history change. UNn2 differs from live in exactly those two members; owned_requests.py is the one that adds unreadable_rows, client_id and client_claim. The targeted Terraform plan reads source_code_hash from the S3 object (applier msg 4820), so the plan itself is quiet today; the hazard arms the moment any seat uploads a fresh irpt-status build, which every release on the shared investor-reporting/ops root that rebuilds this function does.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BUILD_ONLY of irpt-status by this seat ~11:35Z: UNn2/KeP",
+      "infra/aws/lambda/ci/lambda-source-map.json functions/irpt-status at HEAD",
+      "row IRPT_ANLREQ-D2-S36"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not disarmed by this seat: the two remedies both need a ruling. (1) pin owned_requests.py and prospect_dates.py in the entry at 361c44fa9d until the reader is on PROD (a member pin, which CTO msg 3856 forbade as a class); (2) leave the map and forbid any irpt-status upload until then, on every seat that shares the ops root. Asked of 1.0.0_SA_CTO~DELL2 by message the same turn. Until ruled: no seat should run build-and-upload for irpt-status."
+}
+```

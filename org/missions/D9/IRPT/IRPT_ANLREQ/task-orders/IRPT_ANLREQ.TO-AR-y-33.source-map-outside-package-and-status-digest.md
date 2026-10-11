@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~53</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -110,6 +110,40 @@ row's sha256 is the blob at it, `artifact_sha256` still reads the live digest, t
 and a BUILD_ONLY prints the census's digest. The old AC3 (`y33-digest`: a build still prints the live digest) is RETIRED: after a re-pin
 it must not. AC1 and AC2 must still print their tokens. Update the proof instance (three rows) and flip back to `complete` only then.
 
+---
+
+**AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~11:4xZ): REOPENED by CTO ruling (`1.0.0_SA_CTO~DELL2` msg 4838, on row
+`IRPT_ANLREQ-D2-S45`, ARMED): the irpt-status entry must BUILD THE LIVE BYTES. Pin the two members that today come from the tree.**
+Gate limb that graded this amendment: read from this commit's own output. This SUPERSEDES AMENDMENT 1's one-tree state: release 5 was
+applied and ROLLED BACK (the portal's history reader refuses its answer), and the entry was restored to its three older pins.
+
+The state now: live irpt-status runs `6idtFvAmYk73wJdr5DPRIyEPrLeWgzjlqbdNr5f1wxc=`. The entry's `artifact_sha256` says so. But a
+`BUILD_ONLY` of irpt-status from this map prints `UNn2/KeP5DpSMPrgtsrvdI8a4jJmrE+sJONWbX3Vvvc=`: `owned_requests.py` and
+`prospect_dates.py` are `files[]` members, taken from the tree, and the tree holds a later change to both. Every other member already
+equals the live zip. A map that builds something other than the running function is the hazard: any rebuild-and-apply ships it.
+
+**Do:**
+1. In `infra/aws/lambda/ci/lambda-source-map.json`, entry `functions["irpt-status"]` ONLY: make `owned_requests.py` and
+   `prospect_dates.py` PINNED members at commit `361c44fa9d40992c8cacfd625cc789536f84b920` (the commit the live build took every
+   investor-reporting member from; their blobs there are the live zip's bytes). Read how the build script
+   (`infra/aws/lambda/ci/build-and-upload.sh`) stages a `staged_from` row and how it treats a name that is in both `files[]` and
+   `staged_from`, and use the form the script already supports for a pinned member of the function's own source dir (other rows of this
+   entry, such as `entry.py`, `owned_report.py`, `status.py`, are exactly that case: copy their shape). `sha256` of each row = hex sha256
+   of `git show 361c44fa9d:<repo_path>` bytes. Change nothing else in the entry, and no other entry.
+2. Append one dated sentence to the entry's `_staged_from_note`: that the two members are pinned at `361c44fa9d` so the map builds the
+   live bytes, by CTO ruling msg 4838 on row `IRPT_ANLREQ-D2-S45`, and that the UN-PIN CONDITION is the portal's history reader that
+   admits the new members being on PROD, at which point the entry is re-pinned to one tree for the re-release.
+3. `BUILD_ONLY=1` (TMPDIR outside the worktree), twice: both must print `6idtFvAmYk73wJdr5DPRIyEPrLeWgzjlqbdNr5f1wxc=`. If the digest is
+   anything else, compare the built zip member by member with the live zip at
+   `C:/Users/Test/AppData/Local/Temp/claude/C--dev-ajb-workspace/12ff9ef9-d82c-49bd-9a05-f0bc6bbe592e/scratchpad/build416/lambda-artifact-irpt-status.zip`
+   (base64 sha256 begins `6idtFvAm`), name the members that differ, fix the pin of those members the same way, and say so. If the parity
+   check refuses the build because of the pins, that is a finding: file a row with the refusal text; do not weaken the check.
+4. Commit the map. Do not run any other function's build.
+
+**AC3 is now:** the check `y33-digest` again (the criterion line below is changed back to it): the map records `6idtFvAm...` and a
+BUILD_ONLY of irpt-status prints that digest. `y33-repin` (one pin, the census) is RETIRED with the rollback; the census file stays as a
+record. AC1 and AC2 must still print their tokens. Update the proof instance (three rows) and flip back to `complete` only then.
+
 ### ACCEPTANCE
 
 <criterion id="AR33-y-AC1" cell_refs="AR-y-33"><invocation>python C:/dev/wk-irpt-anlreq-53/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py y33-store --root C:/dev/wk-irpt-anlreq-53</invocation><expect>Y33-STORE-OK</expect></criterion>
@@ -119,8 +153,8 @@ it must not. AC1 and AC2 must still print their tokens. Update the proof instanc
 `AR33-y-AC2`: the difference control of AC1 -- a file in the source dir that is neither packaged nor declared outside STILL refuses the
 build by name. (The check writes one probe file into `reports/` and removes it; it passes at the base and must still pass.)
 
-<criterion id="AR33-y-AC3" cell_refs="AR-y-33"><invocation>python C:/dev/wk-irpt-anlreq-53/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py y33-repin --root C:/dev/wk-irpt-anlreq-53</invocation><expect>Y33-REPIN-OK</expect></criterion>
-`AR33-y-AC3` (AMENDMENT 1): the irpt-status entry is pinned to one commit, the census is complete, and a BUILD_ONLY prints the census digest.
+<criterion id="AR33-y-AC3" cell_refs="AR-y-33"><invocation>python C:/dev/wk-irpt-anlreq-53/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py y33-digest --root C:/dev/wk-irpt-anlreq-53</invocation><expect>Y33-DIGEST-OK</expect></criterion>
+`AR33-y-AC3` (AMENDMENT 2): the map records the live digest `6idtFvAm...` and a BUILD_ONLY of irpt-status prints it.
 
 <expected_criteria>AR33-y-AC1 AR33-y-AC2 AR33-y-AC3</expected_criteria>
 

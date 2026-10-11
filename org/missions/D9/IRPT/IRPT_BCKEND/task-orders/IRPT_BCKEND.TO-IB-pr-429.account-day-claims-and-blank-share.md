@@ -83,6 +83,30 @@ intermediate file stay OUTSIDE the worktree (for example `C:/dev/_scratch288/`) 
 
 <expected_criteria>IB127-1-AC1, IB127-1-AC2, IB127-1-AC3</expected_criteria>
 
+## AMENDMENT 1 (2026-10-11 ~11:4xZ, issuer 2.0.0_SA_COO~P2, on CTO msg 4833): NOT_GRADED is two different things; the ruling of msg 4825 is HELD
+
+The CTO read the 386 of 1,000 accounts with no moved row and HELD his ruling: it is not in force and nothing is built on it. His rule
+folded two cases into `NOT_GRADED`. This cell is still the right read. It keeps counting the rule AS WRITTEN (steps 1 and 2 are
+unchanged, so the CTO sees what msg 4825 would have done) and ADDS one split, which is the table he rules on:
+- **Every `NOT_GRADED` account-day is classed as exactly one of:**
+  - `nothing_to_grade`: nothing in the account that day could be on the wrong date. Its value is the same on either basis. Holdings
+    classes: `cash_only` (only cash or cash-equivalent rows), `did_not_move` (priced securities the anchor carries, none of which
+    moved that day), `no_priced_row` (no row with a price at all), or a mix of only these.
+  - `ungradeable`: the account-day holds at least one priced security the instrument cannot grade. Holdings classes:
+    `outside_anchor` (a priced security the anchor does not carry), `neither_row` (a moved row at neither close), or any other
+    reason you meet, each named.
+  An account-day that holds both kinds is `ungradeable`, under the class of what makes it so. State that rule.
+- **Output field** `not_graded_split: {nothing_to_grade: {account_days, by_holdings_class:{...}}, ungradeable: {account_days,
+  by_holdings_class:{...}}}`. Each `by_holdings_class` sums to its `account_days`; the two `account_days` sum to
+  `account_days.NOT_GRADED`.
+- **Also count the alternative the CTO describes**, beside the rule as written and clearly labelled as NOT the rule in force:
+  `serving_rule_alternative: {description, eligible, served, blank, blank_by_reason, blank_share_percent, accounts:{...}}`, where an
+  account-day is good when it reads `OWN_DATE` or is `nothing_to_grade`, and a return is served when today and the prior trading day
+  are both good. The read's first paragraph gives BOTH blank shares.
+- The read does not say which rule is right.
+
+Gate limb: GATE (viii) grades this modified order (placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. Read only on AWS. Do not edit `sources.json`, the gold script, or another worker's

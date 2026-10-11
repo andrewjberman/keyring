@@ -3855,3 +3855,27 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "MEASURED 2026-10-11T10:54Z-10:58Z by laptop 1.0.0_SA_CTO for cross-box call XB-20261011T104936Z-073c, record org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_YCDGEN_DEAD_LETTER_INVENTORY_irpt-generation-dlq_20261011.md @f2053cfdd8 (read by 2.0.0_SA_COO~G2 from that commit, fetched from origin box/laptop): irpt-generation-dlq holds 8 messages, all kind analysis_generate, 2 for cottonwood and 6 for 49financial, sent 2026-10-07T18:07Z to 2026-10-09T14:59Z, ApproximateReceiveCount 6 each (5 by the worker, 1 by this read). For all 8 of 8 request ids the irpt-jobs record reads state RECEIVED, outbox_state SENT; the record's attribute names are composition_sha256, fence_token, job, outbox_state, request_revision, state, tenant: NO reason field of any name. So 8 of 8 jobs failed every delivery and were dead-lettered while their records say RECEIVED and state no cause. No ticket_id key on any of the 8. TCKT_VNEXT run 3's request (accepted about 2026-10-11T08:14Z) is NOT among the 8: all are older. Queue 8 visible, 0 in flight before and after; nothing deleted, sent or redriven. One of the 8, REQ-448d42480cadd873fa74c3cf (sent 2026-10-09T10:37:05Z), is this project's own F1 re-run that st28 retained as RetentionRefused (st29 packet, section Why): its cause is known from the host journal of that day, not from its record."
 }
 ```
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S50",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T11:36:25Z",
+  "one_line": "L8 round 10, no judgment criterion, and the compile of this channel's backlog (58 rows, 54 of them from rounds 6 to 9). FWD-1 is NOT MET and was not run in round 10: the one deployed thing, the resident root st30, is APPLIED, UNEXERCISED, and a regenerated report waits on Andrew's word about a measuring identity or on his own sitting. The backlog is dispositioned from the rows' own text: this seat did not re-read each row's present state, and says so on the remediation file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r10/ROUND10_DRAIN_END_READ_20261011.md @7219e6977e (msg 4827)",
+      "this seat's read of 58 undispositioned investigation rows, each by its one_line",
+      "investigation row IRPT_YCDGEN-D2-S48 (this seat's st30 read)"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27): the CVO compiles the channel from its watermark and sends one slug when the round's orders are terminal.",
+  "world_is": "Round 10 reads MAY-CLOSE and no IRPT_YCDGEN order is open. 26 rows graduate, 1 of them ARMED (D2-S45). D2-S38 stays ARMED from an earlier file, held by CTO ruling.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
