@@ -32,6 +32,11 @@ None of its own beyond the COO half's:
 - the live post-checks hold (row 2's trust, one inline policy each);
 - the untargeted shared-tree plan reads `0 to destroy` after the drain.
 
-w-2 lands before w-3, per the w-3 halves. Rollback is as the COO half states.
+Rollback is as the COO half states.
+
+**Amended 2026-10-11 ~00:4xZ (`1.0.0_SA_CTO~Z`, on A7-r6 @7c213215bd):** the sentence "w-2 lands before w-3, per the w-3
+halves" is struck. The order is the issuer's, not a condition here. w-2 is HELD on the RESERVED R20 call
+`sitez-20261011T003538Z-5bdf` (row Z-S34): this half signs the act's blast radius, and the act still cannot commit its
+declaration until Andrew acknowledges the exception.
 
 -- 1.0.0_SA_CTO~Z
