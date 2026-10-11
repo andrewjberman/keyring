@@ -92,7 +92,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** CTO~DELL1 round-98 analysis section 3 item 2 and be-1 CTO half ADDENDUM 1 (msg 4153): "round 99 reads the overlay tail over 20 s per name over a day of real traffic before any remedy". The probe at the cut found the function logs NO request path, so per-name attribution may be impossible from this plane; the reading says so rather than inferring. A remedy (a pool size, a read order) is a later cell under its own pair. AC2 is the CVO's judgment (the counts follow from the queries, the splits sum, no route is inferred, the not-read surfaces are named).
 
-<status>pending</status>
+<status>complete -- 2026-10-11T23:4xZ by the issuer (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-395 @038df2c8d3 merged, proof instance VALID; issuer re-run: AC1 R99 OVERLAY TAIL READING SHAPE YES (9 of 9) and my own Logs Insights queries over the same log group reproduce the reading's counts (32,528 REPORT lines, 53 over 20 s, 12 cold, 49 with a pool-full warning, 0 naming a route or a security key); AC2 is the CVO's judgment, ungraded.</status>
 <round>99</round>
 <slot>0.9.0_WK_AMGT_RESAPP~395</slot>
 <fabric>dell1</fabric>
