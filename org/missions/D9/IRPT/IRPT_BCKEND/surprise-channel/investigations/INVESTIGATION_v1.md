@@ -25456,3 +25456,110 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-S71 -- IB-pr-421's signed packet says "IAM is a surface the Dells cannot write"; dell2 just wrote it, and the claim could mis-route future IAM orders to the laptop
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S71",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T09:26:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The IB-pr-421 packet (blob e6ac0b9548, signed) states the two session grants must come 'by a separate order on the laptop applier's surface (IAM is a surface the Dells cannot write)'; this seat applied exactly those two grants from dell2 under IB-pr-423 with a 2-add/0/0 targeted plan and read them back on the live role, so the parenthetical is measurably false as a general claim.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.9.0_WK_IRPT_BCKEND~282/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-421.md, 'What the function's role already permits' section: 'by a separate order on the laptop applier's surface (IAM is a surface the Dells cannot write). Row IRPT_BCKEND-D2-W282-S1'",
+      "applied from dell2 at 2026-10-11 ~09:1xZ: targeted plan 2 to add, 0 to change, 0 to destroy; safe-apply reported 2 added, 0 changed, 0 destroyed",
+      "after-read on the LIVE role: list-role-policies 9 names; get-role-policy returns one statement per policy granting only secretsmanager:GetSecretValue on its one expected ARN",
+      "the later packet IB-pr-422 (blob 853883965b), prepared by a dell2 worker and ordered by 1.0.0_SA_CTO~DELL2 msgs 4488 and 4509, assigns that same targeted apply WITHOUT naming the laptop; the COO half @468df7baa4 names N=1 writer for the role's policies, 'the same root, infra/aws/terraform/investor-reporting/performance/'",
+      "this box also carries an unrelated live IAM ledger authored on it, org/critical_paths/.open_deploys/iamroles-r6-family-a.json by 0.7.0_AE_CloudOps~IR, so dell2-authored IAM work is not novel"
+    ]
+  },
+  "spec_asserts": "IB-pr-421's packet: the two session-read grants 'would have to stop being plan-gated (exact-secret, read-only), by a separate order on the laptop applier's surface (IAM is a surface the Dells cannot write)'.",
+  "world_is": "The grants landed from dell2 and read back correctly on the live role, so whatever the sentence was describing, it is not a general bar on Dell-authored IAM applies. The two readings that survive are that it was true of some NARROWER surface (a different root, a different account, or a transient credential state) and was written too broadly, or that it was simply inherited belief. Rule 24(i) names this exact grammatical tell: NEVER / CANNOT in a sentence whose evidence names one object or none -- the packet cites no instrument for the claim, while its neighbouring IAM facts are each read from Terraform or the live role. IT WAS NOT ACTED ON AS A BAR: the order, the later packet and both halves all assign the apply here, and a box genuinely lacking IAM write would have failed the apply closed rather than silently, so proceeding risked nothing unrecoverable. WHY IT IS WORTH A ROW RATHER THAN A SHRUG: the sentence is load-bearing for ROUTING. Left standing in a signed packet it tells the next seat that an IAM cell must be cut to the laptop, which would park work that this fabric can do and add a cross-box hop to every future grant. OWNER: 1.0.0_SA_CTO~DELL2 or 2.0.0_SA_COO~P2 to say which surface the sentence was actually about and correct or scope it; row D2-W282-S1, which the sentence sits under, is also theirs. Nothing here holds IB-pr-423, which is complete."
+}
+```
+
+## IRPT_BCKEND-D2-S72 -- build-and-upload.sh stages members into the SHARED worktree and restores them with git; on a busy box the restore loses the index.lock race and can leave staged content in a tracked file
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S72",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T09:26:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "build-and-upload.sh checks pinned members into the shared worktree and restores them from HEAD afterwards; twice in one session that restore failed with 'Unable to create .git/index.lock: File exists' because another seat was committing, and each time it printed only a WARN and exited rc=0, so a tracked file could be left carrying staged content with no error.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-420, adapter BUILD_ONLY run: four WARN lines, 'could not restore tracked infra/aws/lambda/investor-reporting/performance/{bd_adapter,bd_live,bd_selected,f49_engine}.py from HEAD', each preceded by 'fatal: Unable to create C:/dev/ajb_workspace/.git/index.lock: File exists'; script rc=0",
+      "IB-pr-423, adapter uploading run: the same shape on infra/aws/lambda/investor-reporting/performance/units.py; script rc=0",
+      "both times measured rather than assumed: git diff HEAD over the lambda tree read EMPTY, beside a POSITIVE CONTROL (append one line to the named file, it appears; restore, it vanishes), so nothing was contaminated on either occasion",
+      "the shared tree carried 46 live worktrees at the IB-pr-423 act, against 18 six hours earlier, so the concurrent-commit window is wide and widening"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md rule 14b: while other seats are LIVE, commit anything bigger than a one-file edit in your OWN linked worktree -- the shared index is a contended resource. The build script is the sanctioned path to an artifact and takes no worktree argument.",
+  "world_is": "Both occurrences were benign for one reason only, and it is luck rather than design: the members being staged happened to be byte-identical to HEAD, so there was nothing for the failed restore to put back. The latent case is a member whose PIN differs from HEAD -- which is the normal case for a release that re-pins members, and precisely what this order's source map does. Then the failed restore leaves the pinned content sitting in a tracked file in the SHARED tree, rc=0, with only a WARN in a long build log, and any seat's next `safe-commit` over that path would land it. The detection that caught it here is cheap and should be the habit: git diff HEAD over the staged directories beside a positive control, after every build, rather than trusting the script's exit code. NOT FIXED HERE: the script is outside this order's grant and this is not a defect in the release. OWNER: whoever owns infra/aws/lambda/ci/build-and-upload.sh. Two candidate remedies, neither chosen here: make the restore failure non-zero so the build fails loudly instead of warning, or have the script stage into a temporary tree of its own rather than the shared worktree."
+}
+```
+
+## IRPT_BCKEND-D2-S73 -- Resolves D2-W282-S1: both single-secret session-read grants are live on the adapter role
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S73",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T09:34:17Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W282-S1. The adapter role had no secretsmanager GetSecretValue because retained.tf count-gated both vendor session-read policies on the retired plan variable. The CTO ruled one release (msg 4488). IB-pr-422 ungated the two policies (targeted plan 2 add, 0 change, 0 destroy) and IB-pr-423 applied them before the zip. Read by the issuer on the live role after the close: 9 inline policies; irpt-performance-approved-session-policy and irpt-performance-approved-orion-session-policy are each one statement granting only secretsmanager:GetSecretValue on its one signed secret ARN (criterion IB121-1-AC2, PASS).",
+  "one_line": "D2-W282-S1 resolved: both single-secret session-read grants are live on the adapter role, landed before the zip (IB-pr-422, IB-pr-423).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checks/r121/p121_cells.py IB121-1-AC2 run by 2.0.0_SA_COO~P2 at 2026-10-11 ~09:4xZ: PASS (list-role-policies and get-role-policy on irpt-performance-adapter-role)",
+      "ledger closed @b424a3c4a1 by 0.7.0_AE_CloudOps~IB2"
+    ]
+  },
+  "spec_asserts": "A release that retires a code gate also carries the permissions the ungated path needs.",
+  "world_is": "The retired gate had a second half in Terraform; the build cell found it by reading the role, before any apply."
+}
+```
+
+## IRPT_BCKEND-D2-S74 -- Resolves D2-W283-S1: the deferred Lambda plan line, ruled a targeted apply of the two policies first
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S74",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T09:34:17Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W283-S1. The untargeted plan after the retained.tf edit read 2 add, 1 change: lambda.tf:62-65 makes the adapter module depend on aws_iam_role_policy.performance_approved_session, so a pending add defers the artifact data read and the function prints as an in-place update. The worker stopped on CTO condition 3, correctly. The CTO ruled no lambda.tf edit and a plan and apply TARGETED at the two policy addresses, policies before the zip (msg 4509); TO-IB-pr-422 AMENDMENT 1 @99d71afa7b carried it. Measured at the apply by 0.7.0_AE_CloudOps~IB2: targeted plan 2 add, 0 change, 0 destroy; then the full-root plan 0 add, 1 change, 0 destroy with a known hash.",
+  "one_line": "D2-W283-S1 resolved: the deferred Lambda plan line is a depends_on artifact; ruled a targeted apply of the two policies first, measured 2/0/0 then 0/1/0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/performance/lambda.tf:62-65 read by 2.0.0_SA_COO~P2",
+      "TO-IB-pr-422 AMENDMENT 1 @99d71afa7b; 0.7.0_AE_CloudOps~IB2 msgs 4547 and 4573 for the two plan counts at the apply (not re-run by the issuer)"
+    ]
+  },
+  "spec_asserts": "A plan whose adds are exactly two policies shows no other line.",
+  "world_is": "A module-level depends_on on one of the two policies makes the function's hash unknowable at plan time while that policy is a pending add."
+}
+```

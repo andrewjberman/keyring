@@ -2397,3 +2397,52 @@
   "notes": "No pair is cut on UNn2. The release needs a source-map re-pin of the irpt-status entry to ONE commit (CTO msg 3856: one tree, no member re-pins), which also releases every other pinned member's pending change (11 members beyond owned_report.py), then a fresh build, reach read and pair. That widens the blast radius beyond round 3's cells, so the shape is the CTO's call: asked by message the same turn. Owner of this row: 2.0.0_SA_COO~Y2."
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S37",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T09:35:56Z",
+  "one_line": "L8/L9 round 3 (Y): no judgment criterion. This seat's reads: the issuer's correction holds -- a build of irpt-status from the source map carries no retained_ref, because the report reader is staged from a commit that lacks it; reads 3 and 4 of release 1 now ran on revision 6 (the applier's file), closing this seat's ADDENDUM 1 gap; 'the original read does not write' is measured on S3 only; irpt-ycharts-generate's live bytes are neither build the packet names; the portal change is read from two fixture screenshots and is not on DEV. Nothing built this round is live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND3_Y_L8_COMPILE_20261011.md @b8ed5db8be (msg 4564), corrected by msg 4571 (row D2-S36 @12dc42e1c6)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUND_3_Y_L9_READ_20261011.md",
+      "this seat's read: infra/aws/lambda/investor-reporting/ops/owned_report.py holds 7 lines naming retained_ref at HEAD and 0 at 361c44fa9d, the commit the source map stages irpt-status from; so a build from the map carries no retained_ref (row D2-S36 holds)",
+      "this seat's live reads 2026-10-11T09:35:56Z: irpt-ycharts-generate CodeSha256 tdpterTM..., LastModified 2026-10-09T09:32:22Z; the source map's irpt-status artifact_sha256 now reads 6idtFvAm..., the live digest, while deployed_code_sha256, last_deployed_commit and last_deployed_at still describe 2026-10-05",
+      "this seat's read of two screenshots under deliverables/0.9.0_WK_IRPT_ANLREQ~51/shots/: firm-choice-internal-loaded.png (the Firm control lists 49 Financial and Inflection Wealth Management by display name) and package-report-opened.png (the report opens under the ticket; three section cards)"
+    ]
+  },
+  "spec_asserts": "Spine L8/L9 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself.",
+  "world_is": "Six orders are terminal and merged. The release that carries them is not cut; its shape is with the CTO (row D2-S36). The thread is not live.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S38",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T09:35:56Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The ticket's opened report prints a decimal fraction beside the unit 'percent' (annualized_return 0.0712 percent; expense_ratio 0.0042 percent) in the screenshot of cell AR-y-31. If a served section carries that shape, the page states 0.07 percent where it means 7.12 percent. The values are fixture values; a real report's section shape was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's read of two screenshots under deliverables/0.9.0_WK_IRPT_ANLREQ~51/shots/: firm-choice-internal-loaded.png (the Firm control lists 49 Financial and Inflection Wealth Management by display name) and package-report-opened.png (the report opens under the ticket; three section cards)",
+      "the screenshot package-report-opened.png: section 2 Value 0.0712 Unit percent; section 4 Value 0.0042 Unit percent"
+    ]
+  },
+  "spec_asserts": "IRPT_ANLREQ FWD-1: the finished report opens from the ticket and a reader can read its figures. portal/DESIGN.md C2 governs how a figure is shown.",
+  "world_is": "Seen on a fixture render only. Not established for a served report: the unit a real section carries, and whether the value is a fraction or a percentage.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
