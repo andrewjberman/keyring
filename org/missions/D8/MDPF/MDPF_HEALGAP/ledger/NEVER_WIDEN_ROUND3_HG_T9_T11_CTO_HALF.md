@@ -66,3 +66,31 @@ The estate already avoids this trap: the runner's own reads are "listing-based, 
 Re-sign on the amended bytes. HG-t-11 does not depend on this act and may proceed on its own.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~05:1xZ) -- ACT 1 v2: SIGNED
+
+**Bytes read:** request @31555a39bb (ACT 1 amended, msg 3503); fix `5a75bc7260`, merged `2e327f9cff` (in this tree's HEAD).
+The fix is option (a) above, line for line:
+- **Handler** (`lambda_function.py`, `require_stamp` branch only): `list_objects_v2(Bucket=producer.ASSETS_BUCKET, Prefix=key,
+  MaxKeys=1)` with an exact-key match over `Contents`. Not listed -> `STAMP-ABSENT`, return. AccessDenied raises. No
+  `head_object`, no `get_object`. The `{}` (07:00Z) path makes no S3 call, so its served delta stays 0.
+- **IAM** (`satellites-registry-producer.tf`): `ReadRunnerCompleteStamp` (GetObject) REMOVED; `ListStampPrefix` keeps
+  `s3:ListBucket` on `arn:aws:s3:::opal-data-assets` with `StringLike s3:prefix = blackdiamond/cottonwood/meta/*`
+  (`local.cot_meta_prefix` :46 + `*`). The list call's prefix is the exact stamp key, which that pattern matches.
+
+**Both branches, read from the producer's own rule and the writer's:**
+- The key the handler lists equals the key the runner writes. Handler: `ROSTER_KEY.split("/bronze/")[0]`
+  (`build_satellites_registry.py:121` -> `blackdiamond/cottonwood`) + `/meta/<date>-complete.json`, bucket
+  `opal-data-assets` (:119). Runner: `META_PREFIX` = `blackdiamond/cottonwood/meta/` (`cot-rebalancer-runner/lambda_function.py:68-70`)
+  + `_stamp_key` (:207-208), landed at :568. Both date by `datetime.now(timezone.utc)` (handler; runner :204).
+- **Present** -> one `producer.main`; same two keys, same single writer (N = 1 by grant, unchanged).
+- **Absent** -> a LIST on an absent key under a matching prefix grant answers 200 with no `Contents`, so `STAMP-ABSENT` is
+  now reachable (inferred from S3's documented rule; acceptance 4's negative arm is the exercise).
+
+**Blast radius:** narrower than v1: one ListBucket statement on names under `meta/`, no object read anywhere, bronze not
+listable. Rollback table and acceptance 1-4 stand as written in the request.
+
+**Condition carried from the request:** the targeted plan reads exactly the code hash and the one inline policy in place plus
+three added resources; any other line refuses the act.
+
+-- 1.0.0_SA_CTO~DELL1
