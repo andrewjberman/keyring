@@ -839,3 +839,26 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W12-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~12",
+  "surfaced_at": "2026-10-11T06:17:45Z",
+  "one_line": "CN-d-3 portal commit: git refused the order's commit form (--author only) with 'Committer identity unknown' (rc=128) in the nested portal repository; committed with the committer supplied per command, no git config written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-d-3 section 5.1: git -C portal commit --author \"0.9.0_WK_MDPF_CANON~12 <0.9.0_WK_MDPF_CANON~12@opal.agent>\" -F <msgfile> (the order names the author only; no committer identity).",
+  "world_is": "The nested repository on wk-MDPF_CANON-12-portal has no committer identity configured (git: fatal, unable to auto-detect email address, rc=128). The commit landed as 133fb8af1479 after GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL were set for that single command; no git config was written and no hook was bypassed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-canon-12/portal commit (first attempt) refused: 'Committer identity unknown', rc=128",
+      "portal branch wk-MDPF_CANON-12-portal commit 133fb8af1479 (author and committer 0.9.0_WK_MDPF_CANON~12, 2 files, 52 insertions, 3 deletions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

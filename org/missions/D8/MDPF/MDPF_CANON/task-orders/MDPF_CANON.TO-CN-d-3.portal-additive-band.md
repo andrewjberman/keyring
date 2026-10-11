@@ -152,7 +152,7 @@ arithmetic, so each additive series is its own key; a single summed band would n
 `modelPortfolioColors.ts` edit and is the CTO's, not this cell's. (3) The `ui-smoke` fixture for AC3 needs the served global timeseries as a body for the
 page's global fetch URL substring: build it from a read-only get of the served object and keep it out of the repo.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <to_id>MDPF_CANON.TO-CN-d-3</to_id>
 <slot>~12</slot>
