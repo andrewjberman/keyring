@@ -77,7 +77,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-wr-1.warm-13-month-read.proof_o
   PASSES.
 - Pre-cut: wr1.AC1 and wr1.AC2 base FAIL as expected (WR1_READ.json absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>34</round>
 <slot>~56</slot>
 <fabric>site-z</fabric>

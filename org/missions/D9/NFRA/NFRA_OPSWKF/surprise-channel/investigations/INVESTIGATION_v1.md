@@ -232,3 +232,33 @@ adjudication rows live in `../adjudications/` as `NFRA_OPSWKF-C-S<k>`.
   "notes": "Resolving row written by the issuer; append-only, S2 and S3 left as written."
 }
 ```
+
+## NFRA_OPSWKF-D2-S6 -- a tier-only check refuses 7 of the 9 trade users: Opal staff mostly carry tier advisor with firmId opal-capital
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S6",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~O2",
+  "surfaced_at": "2026-10-11T18:28:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "FWD-8 as written (refuse every caller whose tier is not internal) would refuse 7 of the 9 people in trade-users: their portal rows carry tier advisor with firmId opal-capital. Only 2 of 9 carry tier internal. The fix as ordered (OW-s-2, built on its branch, not merged, not released) locks most Opal staff out of the blotter.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws dynamodb scan trade-users (cloudops-dell2-agent-user, 2026-10-11 ~18:3xZ): Count 9, ScannedCount 9, no LastEvaluatedKey; all 9 emails at opalinvest.com",
+      "aws dynamodb scan opal-users-v2 (same time): 87 items, no LastEvaluatedKey; joined to the 9 on email: 5 = tier advisor, userType absent, firmId opal-capital; 2 = tier advisor, userType Dev, firmId opal-capital; 2 = tier internal, userType Dev, firmId opal-capital. All portal users by tier: advisor 52, internal 6, absent 29",
+      "infra/aws/users/lambda/portal-authorizer/index.mjs:388 and :400 @HEAD: the context's tier is the token's claim, unchanged; :201 firmId defaults to the string null",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_XB_74E2_TRADE_DASHBOARD_API_SERVES_ANY_PORTAL_LOGIN_20261011.md:27 @HEAD: the ruled helper is tier == 'internal' (or firmId == 'opal-capital'); the PRD v0.5 ENDPOINT and the relay carry only the tier clause",
+      "infra/aws/lambda/data_refresh/lambda_function.py:142-165 @HEAD: the estate's existing is_opal_internal admits tier internal OR the internal firm id by exact match"
+    ]
+  },
+  "spec_asserts": "PRD v0.5 FWD-8 DONE WHEN: each of the eight routes refuses a verified caller whose tier is not internal and still serves one whose tier is; ACCEPT: an Opal staff member sees the blotter as before.",
+  "world_is": "The two clauses disagree for 7 of 9 trade users. Opal staff are identified in the portal's user table by firmId opal-capital far more often than by tier internal (6 portal users in all carry that tier). A tier-only check meets DONE WHEN and breaks ACCEPT. The join is on the user table's stored tier; the tier a live token carries was not read (a token is minted at login from that row; a stale session could differ).",
+  "notes": "Disarm: the issuer does not cut the release pair (OW-s-d-1) and does not merge wk-NFRA_OPSWKF-8 until 1.0.0_SA_CTO~DELL2 rules what 'internal' is for FWD-8; the ENDPOINT's wording is the CTO's. The issuer's recommendation: tier internal OR firmId exactly opal-capital, as the owner's ruling line 27 and data_refresh already have it, with the probe gaining an arm for an advisor-tier opal-capital caller (served) and an advisor-tier caller of another firm (refused). Found while building the pair's caller census, not by the order's checks: both of the order's checks pass on the branch."
+}
+```

@@ -26907,3 +26907,143 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The face does not say whether a missing PRIOR bar alone is 'a date with no bar' (3 rows, no effect on any count named here beyond those rows) nor whether 'freed' for waiting-only requires no other ungradeable kind (both counts are in the json; the checked key holds the one without that condition)."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W301-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~301",
+  "surfaced_at": "2026-10-11T18:11:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Three of the five one-day-off security-days (SHM 2026-06-30, SHM 2026-07-20, PZA 2026-07-31) are not a date disagreement: the anchor holds a half-cent close and the reader's Close is that close rounded half-up to the cent, which happens to equal the prior day's close; the face's three verdict words have no word for 'neither witness is on the wrong day'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~301/IB140-1_five_days_third_value.json security_days[SHM 2026-06-30, SHM 2026-07-20, PZA 2026-07-31].series_either_side (sub_cent_first_witness_days_in_the_fetched_windows 6 / 6 and 2 / 2 follow the half-up rounding; sub_cent_days_listed)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~301/ib443_measure.py decide(), half_up()"
+    ]
+  },
+  "spec_asserts": "The face: each of the five security-days has a witness whose value for t 'belongs to another day' (FIRST_WITNESS_OFF or SECOND_WITNESS_OFF), or CANNOT_BE_TOLD.",
+  "world_is": "For the three exchange-traded days the evidence says neither witness is a day off: on every sub-cent first-witness day in the fetched windows of the two securities (SHM 6, PZA 2; 8 of 8) the reader's Close equals the first witness's close rounded half-up to the cent, so the 1e-4 relative tolerance reads a half-cent rounding as a disagreement, and where the rounded value equals the prior day's close the classifier reads one-day-off. The worker used CANNOT_BE_TOLD with claim inferred and said so in the reason; the sample is two securities in about 45 days each, not a population."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W301-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~301",
+  "surfaced_at": "2026-10-11T18:11:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The last-day question is answered null/absent: the per-security, per-day values of IB-pr-441 are not on the trunk (its output holds counts by type and five detail lines) and its scratch is gone, so the three counts could not be recomputed without a fetch of the 890 tickers the face forbids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~301/IB140-1_five_days_third_value.json last_day_first_witness_partition (is_the_prior_days null, claim absent, counts 0, last_modified_utc, how_read)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~299/IB138-2_type_overlap_and_fund_check.json keys: type_join, overlap_by_type, one_day_off_summary, one_day_off_detail (no per-security per-day table)"
+    ]
+  },
+  "spec_asserts": "The face: recompute the 2026-10-09 comparison from the first witness's partition and data needing no new reader call, for example a cached table in ~299's outputs; otherwise answer null/absent with the partition's LastModified.",
+  "world_is": "~299's outputs carry no per-day table and no reader cache is on the box, so the second branch of the face was taken: is_the_prior_days null, counts 0, the partition's LastModified, and IB-pr-441's single case held as its finding. Noted for the reader: a wholly stale partition would read 'neither' against a correct reader bar, not one-day-off, so that cell's count does not answer the question either way."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W301-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~301",
+  "surfaced_at": "2026-10-11T18:11:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The one Yahoo call for the four tickers used the reader script's inherited window 2026-06-05 to 2026-10-13, not the face's 2026-06-20 to 2026-10-13; it contains the face's window, the call count and the tickers asked are as bounded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~301/IB140-1_five_days_third_value.json fetch.window_asked, fetch.calls, fetch.tickers_asked",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~301/ib441_fetch_yahoo.py START, END (copied unchanged from ~299)"
+    ]
+  },
+  "spec_asserts": "The face: the reader window is 2026-06-20 to 2026-10-13; ONE call for four tickers, each asked once.",
+  "world_is": "The copied one-pass script carries START 2026-06-05; the worker ran it unchanged rather than edit an inherited instrument, so up to 11 extra weekdays of bars were read for the same four tickers in the same single call. Nothing in the five security-days uses them beyond the 2026-06-15 start of the axis."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W302-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~302",
+  "surfaced_at": "2026-10-11T18:17:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The capture's probe has no challenge classification: a reply the READ path would call WAF_CHALLENGE (a waf-action header of challenge/captcha/block, or a 202/403/405 with the awswaf marker) is only status-classified as NOT_LIVE, so an accepted sign-in whose probe is challenged ends as failure_class AUTH_FAILED / reason NO_AUTHENTICATED_PROBE, the label of a rejected credential.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js:584-595 classifyResponse (202 falls to NOT_LIVE at :594); :904,:907,:928 the waf-action header is copied to evidence only",
+      "infra/aws/lambda/investor-reporting/ycharts/session/controller.py:35-37 and infra/aws/lambda/investor-reporting/ycharts/generate/transport.py:188-191 the read path's test",
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js:1156-1162,:1188-1189 the two AUTH_FAILED endings"
+    ]
+  },
+  "spec_asserts": "The capture reads a failure as AUTH_FAILED when the sign-in did not yield an authenticated probe; the failure class is taken to name a credential or session problem.",
+  "world_is": "AUTH_FAILED is also what a probe challenged after an accepted sign-in (identity cookie and document identity passed, steps probe_reason NOT_LIVE) ends as; the code has no branch that tells the two apart. Whether the fifth run was a challenge is UNDECIDED (see IB141-1_receipt_diagnosis.json). Not remedied here."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W302-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~302",
+  "surfaced_at": "2026-10-11T18:17:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The discriminating probe pair is vacuous when the jar holds no aws-waf-token: both arms send the identical token-less request, so 'same status in both arms' (fifth run: 202/202, waf_token_cookie_in_jar false in both) separates nothing about the token.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js:310-319 residentClient: the token is added only when wafCookie exists (withToken && wafCookie); :893 the control client is built with withWafToken: true over the same cookies",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r14/FIFTH_RUN_HOST_SIDE_READ_20261011.md section 2: waf_header_sent, waf_token_cookie_in_jar, waf_token_cookie_sent false in both arms"
+    ]
+  },
+  "spec_asserts": "The sixth-amendment comment (:304-309, :890-892) says the pair names the WAF token as the one variable, so 200/405 names the token and 405/405 names the rule.",
+  "world_is": "With no aws-waf-token in the browser's jar (the fifth run), the control arm does not differ from the primary arm in anything it sends; the pair reads the same request twice. The pair is informative only when the jar holds a token."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W302-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~302",
+  "surfaced_at": "2026-10-11T18:17:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The persisted receipt keeps the probe's WAF action class and content-type class only for the FIRST probe after the submission (the pair, built once), not per step, and keeps no body marker, probe path or identity-leg record, so the leaf that would settle a header-less interstitial is not persisted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js:1034 pairControl: filled && !record.probe_pair; :1035-1039 the step keeps only probe_reason, probe_via, probe_http_status, probe_state",
+      "infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py:195-198 _STEPS whitelist; :183-194 _PROBE_PAIR; :225-245 _derive_pair reduces header and location to classes and a boolean and drops the rest",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~302/IB141-1_receipt_diagnosis.json deciding_leaves (persisted_by_the_whitelist false for the body marker)"
+    ]
+  },
+  "spec_asserts": "IB-pr-434 built the whitelist so that the sign-in's record is kept as a closed secret-free receipt, enough to tell what the sign-in did.",
+  "world_is": "Steps 2-7 of a seven-probe failure leave only status/state/reason/via; a body-only firewall interstitial, the probe URL path (YC_PROBE_PATH is honoured from the host env, :85) and the document-identity record leave no trace in the receipt."
+}
+```
