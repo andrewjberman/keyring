@@ -25244,3 +25244,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "IB-pr-416 built from a candidate map in its deliverables because the map was outside its grant; the map now carries the same three entries."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S67",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T03:53:39Z",
+  "one_line": "L8 round 117 (~P): no judgment criterion. This seat's reads: (1) none of the three rebuilt functions is applied, so the live keyword splits of D2-S60 stand; (2) the source map carries the candidate entries, with one difference the packet does not state (the adapter's artifact_sha256); (3) the r114 check is re-cut to IB-pr-417's digests; (4) the containment cell IB-pr-418 passed against the 49F-only set, and the all-firm hash list still hits 5 project files, 3 of them files the order names, and 7 files in the investor-reporting Lambda tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_117_P_DRAIN_END_20261011.md @57a120767a (msg 4020)",
+      "this seat's live reads 2026-10-11T03:53:39Z: irpt-performance-adapter CodeSha256 o/643qVE... LastModified 2026-10-09T07:41:59Z; irpt-narrative iEwSFL34... 2026-10-09T14:48:05Z; irpt-status t6OJTCcm... 2026-10-09T18:02:51Z -- none applied since round 117",
+      "this seat's read of infra/aws/lambda/ci/lambda-source-map.json at HEAD (last commit 5c35a6f9f9) against deliverables/0.9.0_WK_IRPT_BCKEND~278/candidate_source_map.json: irpt-narrative and irpt-status entries EQUAL; irpt-performance-adapter equal except artifact_sha256 (candidate o/643qVE..., the live hash; map 9kYLdR64...)",
+      "this seat's read of checks/r114/p114_cells.py (last commit cdb4fec479): IB-pr-417's digests 8b482c8d, 73f33c3c, fe4000cb and pin 4b008d15 present; IB-pr-410's 1e8ff309, 96925f38 and 9b7256a99f absent; 47be54d6 appears once, in a comment",
+      "this seat's run of the served account-id hash list (29,587 hashes, client-data-check's token rule) at HEAD: IRPT_BCKEND project tree 5 of 2,070 text files hit (1 each: 3 under checks/r19, 1 under checks/r19e, 1 battery file); infra/aws/lambda/investor-reporting 7 of 633 files hit (10,725 hits: _ids/data/custodian_key_seam.json 10,713, _ids/raw_keys.json 2, and 5 test files 10)"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles the channel on the drain-end packet and reads the served state itself. CTO containment ruling @0e8209c33c item 6: no client account id in any tracked file.",
+  "world_is": "Round 117 built and applied nothing (the packet says so; the live hashes agree). Row D2-S62's gap is open at HEAD: IB117-3-AC1 PASS is a 49F-set pass. The seam file's 10,713 ids are the Lambda's shipped data; whether the containment ruling excepts it was not read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
