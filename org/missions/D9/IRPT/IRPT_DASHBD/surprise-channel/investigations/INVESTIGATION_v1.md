@@ -6645,3 +6645,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W114-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~114",
+  "surfaced_at": "2026-10-11T19:44:34Z",
+  "one_line": "DB-b-141: the tracked tree holds one reader of the silver_legacy transactions copy (a project script, not keyed on the transaction id, nothing served); the readers whose figures the records quote live outside the tree, and one record figure rests on an unkeyed sum.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-141: list every reader of the copy in the repo, each read for whether it keys on the transaction id; the tracked code only.",
+  "world_is": "Over 71502 files scanned the only tracked reader of the copy is org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~81/bd_dates_two_sided.py (line 58 sums by return date, no id, nothing served); no production code reads it. The scripts that actually read the copy for ~108, ~111, ~113, ~115 and the issuer's re-run are in the private evidence folder, outside the tree, so they are not in the reader list. Of those, ~108 and ~111 sum without the id, and UNCLASSED_90.json line 66 (59 of 90 tie, 31 do not) quotes ~108's unkeyed sum: whether the 31 include repetition is NOT_ESTABLISHED. Also NOT_ESTABLISHED: whether the ORIGINAL silver transactions the copy was made from (opal-data-bd silver/transactions) repeats a transaction per portfolio group; no AWS call was made. portal, opal_ai and mcportal are empty gitlinks in this worktree and were not searched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~114/BD_TXN_READERS.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~81/bd_dates_two_sided.py lines 32, 58, 60",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~108/UNCLASSED_90.json line 66",
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/ (private, outside the repo): 0.9.0_WK_IRPT_DASHBD~108/read90.py line 26, table90.py line 45; 0.9.0_WK_IRPT_DASHBD~111/s2_read.py line 85, s5_mismatch.py lines 35 and 39"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
