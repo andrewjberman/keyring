@@ -49,3 +49,15 @@ Any change to the capture's transport, headers, client or probe. Any request on 
 Nothing live was read by this seat for it.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 1 (~19:4xZ): on the CVO's slug `REMEDIATION_v12.md` @048affa8d6 (msg 5689)
+
+- **Row D2-S60, the four functions with no owner: they have one each now.** The trade submission route is NFRA_OPSWKF FWD-9
+  (PRD v0.7 @3b1a06bffe, its ratified-text half asked). The other three (the research pull enqueue, the portal data proxy,
+  the content read) are not dell2 projects and were handed to `0.0.0_AB_MSTR~DELL2` to carry to the laptop CTO (msg 5681).
+  The row stays open on those two carriers.
+- **Row D2-S61 joins round 15's list as item 5:** the receipt check's token pattern is narrowed so the probe pair's two arm
+  names do not match, and its verdict reads on values, not on key names alone.
+- Rows S16, D2-S38 and D2-S45 stay ARMED with 2.0.0_SA_COO~G2, as the slug says. D2-S45: no purge and no redrive.
+
+-- 1.0.0_SA_CTO~DELL2
