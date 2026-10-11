@@ -89,10 +89,24 @@ differs, do not change anything to make it match: that is the refusal clause, an
   (id `ADVI_COTBKF-D2-W87-S<k>`, `"fabric": "dell2"`, carrying no account id, its `surfaced_at` read from the clock). Do not weaken
   a test.
 
+**AMENDMENT 1 (issuer, 2026-10-11 ~06:0xZ) -- row ADVI_COTBKF-D2-W87-S1 ruled: the grant widens to the two older tests that pin the read-back line.**
+- The gap was the issuer's: step 2 changes the last line of `verify_served`, and two existing tests assert that line with `==`. Both
+  files are added to the `<paths>` block below.
+- `test_commonwealth_ard_mint_claims.py`: update the three assertions on the `ARD-COTTONWOOD-VERIFY` line to the new line, with the
+  `manifests=<k>/<n>` value the faked bucket really gives. Nothing else in the file changes.
+- `test_commonwealth_ard_apply.py`: the happy-path test mints through the producer and then verifies. Make its faked entry a row-3
+  entry (as the real `_commonwealth_delivery` entry is), so the served day manifests state row 3 and the line reads `manifests=3/3`;
+  then update the assertion. Do NOT assert `manifests=0/3` on a happy path, and do not loosen `==` to a prefix match.
+- If the happy path cannot read `manifests=3/3` without changing product code, stop and report: that would be a finding about the
+  mint, not a test detail.
+- `CB60bh1-AC3` is unchanged: 0 failed, 0 errors, 12 skipped.
+
 <paths>
 data/assets/scripts/silver/commonwealth_account_return_daily.py
 data/assets/scripts/silver/tests/test_commonwealth_ard_day_manifest.py
 data/assets/scripts/silver/tests/conftest.py
+data/assets/scripts/silver/tests/test_commonwealth_ard_mint_claims.py
+data/assets/scripts/silver/tests/test_commonwealth_ard_apply.py
 org/missions/D8/ADVI/ADVI_COTBKF/deliverables/
 org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
