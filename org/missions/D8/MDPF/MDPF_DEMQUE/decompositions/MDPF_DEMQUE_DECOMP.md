@@ -431,3 +431,11 @@ value is B_00's BD market value / units; no re-resolve candidate reaches 90; D1-
 **Round 9 amendment 3 (issuer, 2026-10-11 ~17:1xZ):** reading the CTO's ADDENDUM 1 against the merged bytes for the half: "the lock record states
 `trades_through`". The row carries only the claim. One more cell, `DQ-t-38` (`ROW_KEYS` gains `trades_through`; `0.9.0_WK_MDPF_DEMQUE~30`,
 worker-light, LOCAL, workstream LOCKTHRU, depends on DQ-t-30). The COO half of the t-31 pair is written on the bytes after it merges.
+DQ-t-38 merged @1bb7035580; COO half @b3baaeb04c; CTO half SIGNED (msg 4028) with one condition.
+
+**Round 9 amendment 4 (issuer, 2026-10-11 ~17:2xZ):** the CTO half's condition: `commonwealth_daily_valuation.py:469` reads `splits.parquet` in
+production, so a name that gains a split row in the extension keeps its prior file and is listed. The issuer reads it as the WHOLE name (the
+prices are split-adjusted from the same pull; restated prices beside an old `splits.parquet` would be inconsistent). One more cell, `DQ-t-39`
+(`price_store.write` holds a name whose pull adds a split row; `0.9.0_WK_MDPF_DEMQUE~31`, worker-light, LOCAL, workstream SPLITHOLD). The
+apply runs after it merges. Names held are listed with split date, ratio and the account count of holders (a positions read); those rows get their
+own pair and wait on Andrew if the valuation reaches a client page.

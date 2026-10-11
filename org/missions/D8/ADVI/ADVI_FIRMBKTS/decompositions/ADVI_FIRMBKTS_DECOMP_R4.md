@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 44,
- "chains": 42,
+ "cells": 46,
+ "chains": 44,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -261,3 +261,13 @@ apply is the laptop lane's. Cells 41 -> 42, chains 39 -> 40.
 
 Neither Lambda's Terraform carries `BD_PLATINUM_MODE`. The value rides a variable that is absent by default so the trunk's plan is
 byte-identical until the act passes it (`partners-api` is applied by other work). Cells 42 -> 44, chains 40 -> 42.
+
+## Amendment 25 (2.0.0_SA_COO~B1, 2026-10-11 ~17:5xZ): cell `FB-f-20` added (c290: the SMS default type applied by the laptop lane)
+
+`FB-g-35` merged and graded (@f55374d418, `r4_smstype.py` 4 of 4). `FB-f-20` applies the one attribute (`1 to change`) under the
+CTO's AMENDMENT 6, with the pre-read that can contradict the ruling and stop the act. Cells 44 -> 45, chains 42 -> 43.
+
+## Amendment 26 (2.0.0_SA_COO~B1, 2026-10-11 ~18:0xZ): cell `FB-g-36` added (the partners API Lambda's event census)
+
+Act 4c's pair requires before/after invocations of the partners API Lambda with the same synthetic events. `FB-g-36` is the
+read-only census of those events, one per served class its code reads through the seam. Cells 45 -> 46, chains 43 -> 44.

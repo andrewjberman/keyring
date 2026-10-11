@@ -57,6 +57,24 @@ its table classification: this cell changes exactly that. The issuer has changed
 replace the classification assertion by `assert got["SAN FP"]["classification"] is None` and `assert "not available for this listing" in got["SAN FP"]["classification_reason"]`, and
 change nothing else in that file (`status` stays asserted equal). The file joins `<paths>`. Re-run AC1-AC3 and rewrite the instance; the two rows are ruled by this amendment.
 
+### 1c. AMENDMENT 2 -- the rank series resolves a ticker only through the COVERED universe, and `CSL_AU_Equity` is not in it (the issuer's measurement after your merge)
+
+The census read `CSL AU` asked for BY TICKER on the rank timeseries after your merge @b12a5c865b: it still serves 'Carlisle Cos Inc' (name) and 'US Large Cap'
+(classification), because `_rank_series_names` finds a ticker's security key with `_covered_bloomberg_index()` (the 95 covered names) and `CSL_AU_Equity` is a MEASURED crosswalk
+subject outside that universe. K2 judged only the series of tickers a ranked list holds (CSL AU is on none), so it passed without seeing it; the new arm K6 asks for every
+disagreeing ticker by ticker. The close the CTO set is that CSL AU serves no Carlisle field on the rank timeseries. Do exactly this in `scoped_amgt.py`:
+
+1. Add `_measured_ticker_index() -> Dict[str, str]`: ticker -> security_key over every crosswalk record whose `resolution` is `MEASURED` and that has a `security_key`, the ticker
+   taken from `resolve_identity(key)["bloomberg"]` (as `_covered_bloomberg_index` takes it); `setdefault` so the first record wins; `crosswalk.load_crosswalk()` is read once.
+2. In `_rank_series_names(tickers)` build the lookup as `{**_measured_ticker_index(), **_covered_bloomberg_index()}` (the covered entry wins where both name a ticker) and use it
+   instead of `_covered_bloomberg_index()` alone; a failed read of either leaves every answer as the table's (the existing `try`). Change nothing else: the ranked join and the
+   collected-chatter rows already carry the security key and are not touched.
+3. Add to `test_classification_withheld.py` one test: a ticker that is in the measured index and not in the covered index, whose table name disagrees, is withheld with the reason
+   and its name replaced (the arm D10's shape), and an agreeing measured ticker is returned byte-equal.
+
+AC1's census now has six arms (K1-K6). The issuer's measurement: the arm reads FAIL at the merged base (K6: CSL AU 'Carlisle Cos Inc' / 'US Large Cap') and 6 of 6 against a
+throwaway candidate that widens the lookup exactly so.
+
 Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: id form `AMGT_RESAPP-D1-W391-S<k>`, `disarm_owner` `2.0.0_SA_COO~R1`.
 
 ## 2. BOUNDS
@@ -81,7 +99,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; timeout 900)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-aa-2"><invocation>cd C:/dev/wk-resapp-391 &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round95_prep/checks/r95_classification_census.py" --where local; echo "exit=$?"</invocation><expect>two disagreeing table rows listed (CSL_AU_Equity, SAN_FP_Equity) with their rows whole; PASS K1 (ranked rows withheld, with the reason), PASS K2 (rank series), PASS K3 (collected chatter, three windows), PASS K4, PASS K5 (186 ranked rows and 186 series unchanged); arms passed 5 of 5; R95 CLASSIFICATION CENSUS: YES; and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-aa-2"><invocation>cd C:/dev/wk-resapp-391 &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round95_prep/checks/r95_classification_census.py" --where local; echo "exit=$?"</invocation><expect>two disagreeing table rows listed (CSL_AU_Equity, SAN_FP_Equity) with their rows whole; PASS K1 (ranked rows withheld, with the reason), PASS K2 (rank series), PASS K3 (collected chatter, three windows), PASS K4, PASS K5 (186 ranked rows and 186 series unchanged), PASS K6 (every disagreeing ticker asked for by ticker); arms passed 6 of 6; R95 CLASSIFICATION CENSUS: YES; and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-aa-2"><invocation>cd C:/dev/wk-resapp-391 &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round94_prep/checks/r94_display_name.py" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round94_prep/checks/r94_name_census.py" --where local; echo "exit=$?"</invocation><expect>the names are unmoved: R94 DISPLAY NAME: YES (12 of 12) and R94 NAME CENSUS: YES (C1, C3, C4 at 0 different); and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-aa-2"><invocation>cd C:/dev/wk-resapp-391 &amp;&amp; PYTHONPATH="$(pwd)" python -m pytest lib/research/api/tests --ignore=lib/research/api/tests/test_print_format_rich.py -q -p no:cacheprovider; echo "exit=$?"</invocation><expect>the control: the new test file and every other test of lib/research/api/tests pass (no failed, no error; about 950 passed); and exit=0</expect></criterion>
 </proof_of_spec>
@@ -91,7 +109,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 
 **ISSUER NOTES:** CTO~DELL1 round-94 analysis item 2: "D1-S26: no field of a disagreeing table row is served. When the registered name disagrees with the table row's name for the bare ticker, no field of that row is served for the security, and the page says why ('classification not available for this listing'). Close: CSL AU serves no Carlisle field on the overlay, the ranked join or the rank timeseries. SAN FP's classification row is read and shown to be Sanofi's, beside a control whose classification is unchanged. It is a served change: its redeploy is under its own pair, measured route by route as ff-4 was." READ: the rule withholds SAN FP's too (its row's name disagrees); the census prints SAN's row (a legacy 'Health Care' under a cleaned Santander name) and the control arm K5 is the 'unchanged' control. The CTO is asked to confirm that reading (message with the issuance); the pair's table lists SAN FP's change either way. The overlay arm K4 is a guard (the subject's own classification is not served there today). aa-4 follows on this slot's queue (same file).
 
-<status>complete -- 2026-10-11T16:40Z by the issuer (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-391 @093a874ac2 (code @1b5327c039, test amendment @43c01b4571) merged @b12a5c865b, proof instance VALID; issuer re-run on the merged tree: AC1 R95 CLASSIFICATION CENSUS YES (5 of 5: 2 ranked rows, 2 rank series and 3 chatter rows withheld with the reason; no per-security route carries a classification; 186 ranked rows and 186 series unchanged), AC2 R94 DISPLAY NAME YES (12 of 12) and R94 NAME CENSUS YES (C1, C3, C4 at 0), AC3 lib/research/api/tests 950 passed. scoped_amgt.py +12/-2 (the constant, `_drop_disagreeing_table_names`, `_rank_series_names`, the series copy), monthly_chatter.py +9/-2, one new test file of four, one assertion changed in test_names_read_agreement.py. Rows D1-W391-S1 and S2 ruled by AMENDMENT 1 (the issuer's D10 and its mirror asserted the round-94 reading). Served change: NONE until AMGT-aa-5; SAN FP's classification is withheld too, as the CTO confirmed (msg 3986).</status>
+<status>pending -- REOPENED AGAIN 2026-10-11T17:05Z by the issuer (2.0.0_SA_COO~R1): the cell was closed @2d061171dc on the merge @b12a5c865b; the issuer's own census read, on the merged tree, that CSL AU asked for by ticker on the rank timeseries still serves 'Carlisle Cos Inc' / 'US Large Cap' (the series lookup is the covered universe, CSL_AU_Equity is not in it); arm K2 judged listed tickers only. AMENDMENT 2 in section 1c; a worker re-seat on slot ~391 in a fresh worktree.</status>
 <round>95</round>
 <slot>0.9.0_WK_AMGT_RESAPP~391</slot>
 <fabric>dell1</fabric>
