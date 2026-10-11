@@ -5979,3 +5979,57 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-W60-S4 -- IV-e-110 AMENDMENT 1: when the listed rows plus the sleeves with no security exceed the card, the residual is negative; the page prints no line two and no negative, and the overrun is carried in the view only
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W60-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~60",
+  "surfaced_at": "2026-10-11T18:48:00Z",
+  "one_line": "IV-e-110 AMENDMENT 1: when the listed rows plus the sleeves with no security exceed the card, the residual is negative; the page prints no line two and no negative, and the overrun is carried in the view only",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 1ba3ae5b tabs/holdings/SecurityList.tsx unlistedViewFrom(): left < -0.01 sets `overrun` and leaves `residual` null; the printed lines are noSecuritySleevesWords and notItemisedWords only",
+      "rendered test arm (g) in __tests__/dsgn-irptv1/iv-e-110.holdings-table-states-unlisted-sleeves.test.tsx: TARGET rows 330,000 on a 300,000 Models sleeve, a 60,000 withheld sleeve, card 600,000: line one 60,000 prints, line two absent, no '-$30,000' in the markup; the overrun is -30,000",
+      "producer read org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~298/IB138-1_SLEEVE_LEAF_READ.md section 2: 5,957 sleeves hold only TARGET-basis securities, which the aggregates exclude, so rows above the card are reachable"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 item 2: if the residual is negative do not print a negative as 'held'; say in the record what was chosen and why, and file a row.",
+  "world_is": "Chosen: print NOTHING for a negative residual (line one still prints if it is above one cent). Why: any sentence that explains why the rows and sleeves exceed the card would state a cause the nodes do not show (TARGET-basis rows listed beside held rows is one reachable cause, not the only one), and a negative amount under 'not itemised' would be false. The consequence: a table whose rows exceed the card says nothing about it, as before this order. The overrun is exposed as UnlistedView.overrun for a later cell if the CTO wants a statement; this cut prints none.",
+  "notes": "The CTO may wish to rule whether an overrun deserves its own sentence (it is measurable: card less rows less line one, below minus one cent)."
+}
+```
+
+## DSGN_IRPTV1-D2-W60-S5 -- IV-e-110 AMENDMENT 1: the first whole-scope run after my commit read 1 fail (F45-AC2, fe-s-45/residuals.test.ts, a dev-server probe); that file passes alone and the whole scope passed on a second run
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W60-S5",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~60",
+  "surfaced_at": "2026-10-11T18:48:00Z",
+  "one_line": "IV-e-110 AMENDMENT 1: the first whole-scope run after my commit read 1 fail (F45-AC2, fe-s-45/residuals.test.ts, a dev-server probe); that file passes alone and the whole scope passed on a second run",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~60/after_suite_amend1.txt: 1177 pass, 27 skip, 1 fail of 1205; the failure is F45-AC2 'the new script answers, serves this worktree and writes nothing to node_modules/.vite-temp': 'NOT shown to serve this worktree'",
+      "fe45_rerun.txt (same folder): that file alone, 6 pass 0 fail; after_suite_amend1_run2.txt: whole scope 1178 pass, 27 skip, 0 fail of 1205",
+      "the failing test starts a dev server in its own process and does not read SecurityList.tsx; the same file read 1 fail (a different id, F45-AC9) once in this slot before, row DSGN_IRPTV1-D2-W60-S2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The spawn facts: the base reads 1174 pass, 27 skip, 0 fail; new_failing_ids is empty.",
+  "world_is": "One of two whole-scope runs after the commit failed an fe-s-45 dev-server probe; the other passed; the probe alone passed. Not separated further (a build had just run in this tree). The record's suite_after is the passing run, and this row names the failing one.",
+  "notes": "Not investigated."
+}
+```
