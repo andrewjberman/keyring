@@ -3266,3 +3266,27 @@
   "notes": "The pair for release 5's return (section 6) already names the removal as a step after the after-reads; that step is now a fresh cell, not the landing of this branch. This seat's defect: it cut a change that is safe only after an act BEFORE the act, and held it by text."
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S61",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T20:17:19Z",
+  "one_line": "L9 round 12: AR121-y-AC3 MET. The ticket queue's created cell now shows, beside the created time, how long the ticket has waited in words; one line of the list changes and no column is added. Three limits: the age is rounded down to one unit (47 hours reads 1 day), it does not tick while the page sits open, and the code shows it for every status except completed, wider than the packet's wording. The change is on portal DEV.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND12_Y_L8_COMPILE_20261011.md @3d9a1b2589 (msg 5732)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUND_12_Y_L9_GRADE_20261011.md",
+      "this seat's read 2026-10-11T20:17:19Z of portal commit d16b5510 on origin/DEV c2c6a8aedd: 3 files, 118 lines added and 1 removed; in TicketCenter.tsx one line of the list changes, the created cell; elapsedAge.ts read whole. Not looked at by this seat: a rendered page"
+    ]
+  },
+  "spec_asserts": "AR121-y-AC3 (JUDGMENT, graded by the CVO at L9): a person reading the queue list learns how long each open ticket has waited without subtracting, and nothing else about the list reads differently.",
+  "world_is": "Not looked at by this seat: a rendered page, the age text's contrast, a real ticket.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
