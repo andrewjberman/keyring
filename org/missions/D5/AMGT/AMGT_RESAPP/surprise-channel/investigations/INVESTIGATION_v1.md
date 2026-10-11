@@ -24241,3 +24241,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not fixed: the invocation is literal and was not edited. The recorded AC1 and AC2 outputs in the instance are the worktree-anchored runs. Whether the proof invocation should anchor to the worktree path is the issuer's call. No hazard is armed by this row."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S21",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-11T09:01:49Z",
+  "one_line": "A subject can list its own company among its peers: 7 of 243 subjects live, 10 after pp-1; membership is the scanner's, and the identity arms now say so.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The peers route serves a subject's PEERS: other companies (AMGT-nn-2/nn-7/pp-1 attach a held company's identity to a member so the page can link it; no cell states that a member may be the subject itself).",
+  "world_is": "Measured 2026-10-11 over all 243 MEASURED subjects (the live l8egBo/rf.. function and the merged tree's handler, same pool; instrument scratch r92_self_peer.py): members whose served security_key equals the subject's own key: live 7 subjects (NOVN_SW 710306 Novartis AG, ORA_FP 517617 Orange SA, PBR_US 268236 Petroleo Brasileiro, ROG_SW 710891 Roche Holding, SAN_FP 567173 Sanofi, TSM_US 688910 Taiwan Semiconductor, ZURN_SW 598381 Zurich Insurance); merged tree 10 subjects, the three new ones all pp-1's exact-name arm: BZLFY_US B0744B Bunzl plc, ST_SP B02PY1 Singapore Telecommunications, UBSG_SW BRJL17 UBS Group AG. The scanner lists the subject's company under its home-exchange numeric ticker; the member count is unchanged by every cell of round 91 and 92. The three are members of the 24 pp-1 gains whose pair the CTO signed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round92_prep/MEMBER_TABLE_BASELINE_vs_MERGED_20261011.json (the 24 identity gains with their keys, subject by subject)",
+      "the r92_self_peer.py output printed in this session on 2026-10-11 (243 subjects, live 7, merged 10)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed and not a STOP of AMGT-qq-5: no member is added or removed by the act and the pair's table names these three. Whether the peers engine should exclude a member that is the subject itself (by key or by held name) is a product call for the CTO; it is an engine rule, not a decorator. Recorded so the rendered-page read (AMGT-qq-6) looks at one such page."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S22",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-11T09:13:38Z",
+  "one_line": "The point verifier checks that a figure's digits are in its period's block, not that the figures of one series share a scale: SAP's re-verified driver would serve 2023 = 13,745 and 2024 = 18,078 (EUR millions) beside 2025 = 21.05 (EUR billions).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AMGT-qq-4 as cut (decomposition s.100, item 4 of the CTO round-91 analysis): re-verify the stored drivers and splice them; the dry run kept 3 points for SAP_GY_Equity, which the preflight read as a gain (1 -> 3 points). The verifier's contract (analyze._apply_point_verification, rk-91, pp-2, qq-3): a point is kept when its value is found in the block that carries its period label.",
+  "world_is": "Measured 2026-10-11 on the merged tree, dry run, nothing written (scratch r92_driver_detail.py, r92_span_context.py): SAP_GY_Equity filings/v1/SAP_GY_Equity/000110465926020058.analysis.json, claim 'Current cloud backlog (constant currency growth)', unit text 'EUR billions and % growth at constant currencies'. Expected points: 2024 = 18078 at span [129709,129715] ('...to EUR 18,078 million in 2024 (2023: EUR 13,745 million)'), 2023 = 13745 at [129740,129746] (the same sentence), 2025 = 21.05 at [111203,111208] ('...to EUR 21.05 billion in 2025 (2024: EUR 18.08 billion)'). All three digit strings ARE inside their period's block, which is all the verifier asks; the series would be 13,745 / 18,078 / 21.05 on one axis, its units a factor of 1,000 apart (the numbers 859 times). The stored object serves 1 point (2024 = 18078), already under a billions unit text. BABA's two points (RMB millions, one table row, 118,028 and 158,132) and ASML's removal (the digit 4 of '12.4') were read in context and are correct.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round92_prep/DRIVER_REVERIFY_DETAIL_20261011.json (stored and expected points with spans, every analysis object)",
+      "the span-context read printed in this session on 2026-10-11 (excerpt text around each span, SAP, BABA, ASML)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarmed in the same turn by AMENDMENT 1 of AMGT-qq-4: SAP_GY_Equity is HELD out of the write set (ASML and BABA only) and the order's check takes --hold. SAP's driver serves exactly what it serves today. The repair is a verifier rule (a point set whose unit renderings differ by a thousand, million or billion token in the sentence the figure sits in is held as a set), a cell for the round-92 analysis; this row does not cut it."
+}
+```
