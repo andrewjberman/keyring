@@ -7167,3 +7167,27 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S128",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T22:35:08Z",
+  "one_line": "L9 round 75: three criteria MET. The purchase-day reading is confirmed under a rule written first, and by this seat on the custodian's own figures: on the 12 purchases the validated unadjusted close equals the price paid (12 of 12 within 1 percent) and the close the served table uses is about three quarters of it (0 of 12, median 0.76). The 74 changes with no trade row all take a cause, but the list's order decides nine and its largest cause is a description, not a cause. Unexamined: 26 percent of all 936 purchase rows do not fit the unadjusted close.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_75_DRAIN_END_20261011.md @056535ed50 (msg 5976)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_75_L9_GRADE_20261011.md",
+      "this seat's check 2026-10-11T22:35:08Z, on a fact the worker's formula does not use: the cash paid over the shares bought on each purchase row, from the custodian's transactions, beside the close in each build's price input. 12 purchase account-day-funds on a changed day (10 in one fund, 2 in another), all 12 with a change over 10 bp. The variant's close over the price paid: within 1 percent on 12 of 12, median 1.0000. The baseline's close over the price paid: within 1 percent on 0 of 12, median 0.7586, range 0.747 to 0.910"
+    ]
+  },
+  "spec_asserts": "CB75bw1-AC2, CB75bw2-AC2, CB75bw4-AC2 (JUDGMENT, graded by the CVO at L9, never self-graded), as written in the three orders.",
+  "world_is": "Not re-derived: the worker's recomputation over 1,577 days; the 74 causes; the refuting control. Row D2-S127 stays OPEN: the return error on trade days is not sized beyond the measured accounts. Nothing was applied, served, built or fetched.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
