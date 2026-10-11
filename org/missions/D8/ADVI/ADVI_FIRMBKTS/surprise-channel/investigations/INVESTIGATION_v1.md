@@ -1056,3 +1056,53 @@ write: **1 row** (`S1`).
   "notes": "Owner of the disagreement: the gate owner (round-close-check.py and to-pipeline-gate.py are .tools, not this lane). Either the close check reads the proof-block path too, or the order template names the stem form. The issuer's repair is a rename, not a gate edit; it does not prevent the next round's orders from repeating it unless the template changes."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W15-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~15",
+  "surfaced_at": "2026-10-11T06:23:30Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-f-5 FACE DESCRIBES THE OUT READ BY CLASS ONLY (AN UNGRANTED OWN-FIRM KEY); THE SENDER NAMES A CONCRETE KEY THE FACE DOES NOT LIST, SO THE FACE'S STOP RULE (ANY KEY NOT ABOVE) READS INCONCLUSIVE",
+  "spec_asserts": "Task order FB-f-5 step 1 (task-orders/ADVI_FIRMBKTS.TO-FB-f-5.f4-ownfirm.md @576e574de4 lines 36-37): print the sender command; if it names anything other than the instance, role, buckets and keys above, STOP as a BLOCKING row. Line 30 describes OUT only as 'a key the role's identity policy does not grant, same bucket'.",
+  "world_is": "The printed command (r3_f4_send.py --print, run at 2026-10-11T06:21Z) names OUT as opal-data-cottonwood key irpt/cottonwood/code/gold/investor-reporting-holdings.tar.gz. That key is not in the face's key list (only the OWN key is named there). The live send (command d1841aa3-50a6-409c-876e-af595954f53f) returned OUT AccessDenied from the identity side ('no identity-based policy allows the s3:GetObject action'), which is the class the face describes. I judged the key within the described class and proceeded with the single send; I did not edit the sender or re-send.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python r3_f4_send.py --print (worktree wk-ADVI_FIRMBKTS-15, HEAD 576e574de4): OUT command GetObject key 'irpt/cottonwood/code/gold/investor-reporting-holdings.tar.gz'",
+      "python r3_f4_send.py --out .../0.9.0_WK_ADVI_FIRMBKTS~15/F4_OWNFIRM_EVIDENCE.json --wait 100: SENT command_id=d1841aa3-50a6-409c-876e-af595954f53f status=Success; OUT: AccessDenied ... no identity-based policy allows the s3:GetObject action",
+      "task-orders/ADVI_FIRMBKTS.TO-FB-f-5.f4-ownfirm.md @576e574de4 line 30 names the OUT key by class only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the disambiguation: the issuer (2.0.0_SA_COO~B1), by naming the OUT key in the order face or by confirming the sender's key is the intended ungranted key. No edit to the sender or grader was made. AC1 4 of 4 and AC2 3 of 3 were run on this evidence and pass; the finding does not block them."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W15-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~15",
+  "surfaced_at": "2026-10-11T06:26:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "FB-f-5 FLIP ACT NOT PERFORMED: THE FACE ORDERS THE <status> ELEMENT FLIPPED TO complete, BUT THE ELEMENT IS NOT IN THE FACE LINES 1-80 THIS WORKER WAS GIVEN, SO THE ORDER REMAINS OPEN AT THIS HEAD",
+  "spec_asserts": "Task order FB-f-5 section 5 (task-orders/ADVI_FIRMBKTS.TO-FB-f-5.f4-ownfirm.md @576e574de4 lines 75-77): flip this order's <status> to complete in the SAME commit as the proof instance and the evidence file, when AC1 and AC2 pass.",
+  "world_is": "AC1 (4 of 4 arms) and AC2 (3 of 3 arms) pass on this worker's evidence. Lines 1-80 of the order, the only lines this worker's face permits, carry no <status> element; the element sits beyond the record-face boundary (line 81 onward). The worker did not read past line 80 to locate it, so the flip is not made in the commit and the order stays open pending the issuer or a flip the COO can make.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read of task-orders/ADVI_FIRMBKTS.TO-FB-f-5.f4-ownfirm.md offset 1 limit 80 at worktree wk-firmbkts-15 (HEAD 576e574de4): no <status> element in lines 1-80",
+      "Worker face boundary: the RECORD FACE marker at line 81 is not this worker's context; the face says do not read past line 80",
+      "AC1 output: ROUND 3 F4 OWNFIRM: 4 of 4 arms, exit=0; AC2 output: ROUND 2 F4 POSITIVE: 3 of 3 arms, exit=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the disposition: the issuer (2.0.0_SA_COO~B1) or the COO's flip, which can read the record face. The proof instance and evidence are committed with the channel row; no status edit was made here. Remedy is a flip of the order's <status> to complete at the COO's commit, or a face that carries the element in lines 1-80."
+}
+```
