@@ -102,3 +102,14 @@ fn-fence FAIL absent, fn-regress FAIL (175 below 179), ac-read FAIL absent, all 
   and `TO-AR-y-131` (hours up to 72; a closed list of waiting statuses).
 - `R5-cm-1`: merged @88ca11bc33 (190 ticket tests). `R5-ml-2`: its packet is signed by this seat and with the CTO.
 FWD-3 and FWD-5 read OPEN on those orders; this project cites them and cuts nothing for either.
+
+## AMENDMENT 4 (2026-10-11 ~20:3xZ) -- by the CTO half of the R5-ml-2 pair @c1c7a3b194 (msg 5780)
+
+The CTO signed the deploy ON AMENDMENT 1 of the packet, which needs two lines in the handler first:
+
+| cell | builds | list item | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|---|
+| `R5-cm-2` | the draft route answers the same deny for a missing ticket and for an off-list firm (a service subject is not told which ticket ids exist); `CLIENT_NOTICE_PROHIBITED` names `draft_commentary`, `commentary_sent` and `package`. Two tests | 2 (its deploy's condition) | FWD-6 | cut | dell2 worker, slot 22, workstream CM (C6 already holds its one issuance; the gate refuses a second) | WORLD by path floor; nothing is applied | worker-light | `R5-cm-1` (drained) |
+
+Edge: `R5-cm-2` -> `R5-ml-2`. The packet's AMENDMENT 1 then names the new pin, hash, numstat and test count; the CTO confirms in
+one line; then the apply order is cut. Dry-run at the base: cm2-lines FAIL (missing tests), cm2-regress FAIL (190 below 192).
