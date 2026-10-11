@@ -6365,3 +6365,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W105-S1 -- DB-b-131: the newest trading day has no returns manifest yet; the read used the newest that exists, and the live package's threshold file is not byte-identical to the tracked one
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W105-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~105",
+  "surfaced_at": "2026-10-11T16:30:00Z",
+  "one_line": "DB-b-131: the order asks for the most recent trading day's manifest.json; the calendar's T-1 (2026-10-09) has none (GetObject NoSuchKey), so the cell read 2026-10-08, the newest that a head-object found. Separately, the thresholds file in the live package holds the same five threshold values as the tracked file but its sha256 differs from the tracked file's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-131 step 2: the most recent trading day's manifest.json for 49 Financial exists to be read; step 1: the package's thresholds file is compared on five values with the tracked file.",
+  "world_is": "trading_calendar.prev_trading_day(2026-10-11) = 2026-10-09; the builder address's manifest.json for that day answered NoSuchKey; 2026-10-08 (head-object, then one get-object) answered. The served 2026-10-08 thresholds object has 24 keys and 14 digit runs of 8 or more, the same key names as the package file (24 keys, 14 runs): the code copies the whole object, as the reviewer said. The five values are equal between package and tracked; the tracked file and the packaged file differ in bytes, not diffed further (no value printed).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~105/PACKAGE_AND_MANIFEST_READ.json (day_note, package.note)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
