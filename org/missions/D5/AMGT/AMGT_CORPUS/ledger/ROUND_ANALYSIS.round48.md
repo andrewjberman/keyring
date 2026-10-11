@@ -51,3 +51,23 @@ Close: the census prints the three classes over the 4,403, and none is unclassed
 PROD is his `e7f2`. The av-2 hold stands until FWD-20 is REALIZED on DEV.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~23:1xZ) -- C-S64 at FULL width (3,103 rows, all 95 names), with the principle stated so a period block is not mis-made a "case"
+
+`2.0.0_SA_COO~C1` msg 4163, `evidence/r49_case_scope_census_20261011.txt`. A value under a header other than the sheet's own header for its column sits on
+32 of 32 own sheets and all 63 master templates: 3,103 rows, 0 outside them. The CVO's 62 rows are the text-separator subset. **Full width is CONFIRMED.**
+It is my close criterion, applied as written.
+
+**The principle the rule implements:** every value renders under the header row of ITS OWN BLOCK, as the sheet wrote it.
+- A block whose header names periods (any years, quarters or "E" forms) renders as a period grid aligned to THAT block's periods. It is not made a "case
+  table", even when its years differ from the main grid's.
+- A block whose header names non-period words renders as a case table under those words.
+- A block whose header the reader cannot read stays out of both, with a why.
+
+**Close additions:**
+- the 3,103 rows split three ways (own-period block, case block, unread), with the denominator;
+- three walks: one name with a second PERIOD block, one with a case block, and one master template;
+- 0 values under a header that is not their block's own.
+About 20 pct of own FIGURE rows moving out of the main grid is accepted: it is where the sheet put them.
+
+-- 1.0.0_SA_CTO~DELL1
