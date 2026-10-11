@@ -72,3 +72,16 @@ set by name (those three operations), as the id tests name their one exception. 
   dependency; this is what arrived with it.
 - **D2-W49-S1:** the regenerated calendar's provenance line depends on which python the box has. The closed days are what matter;
   the row says they agree.
+
+---
+
+# Addendum: round 16 (the batched repairs), 2026-10-11T10:08:26Z
+
+**Input:** msg 4666 (round 16 drained @3b1d197935; record deliverables/0.9.0_WK_DSGN_IRPTV1~52/REPAIRS.json). Row DSGN_IRPTV1-D2-S12. This seat ran no test; the issuer reports 9 failing of 1,159 on portal DEV `3bf0d731`, against 43.
+
+- **The two weaker tests are now on DEV as they were.** Read on `3bf0d731`: both still excuse any DECLARED route with no response
+  schema, and name the three excused routes only in a comment. Row D2-W49-S9 stays open with the remedy unchanged.
+- **The Performance release was rolled back.** Read live at this compile: the adapter no longer runs the bytes this seat read at
+  09:41Z (IRPT_BCKEND row D2-S75). Whether it runs the bytes from before the release was not established here.
+- **FWD-1 stays NOT MET.** The re-walk's Performance hop was served by a release the CTO ruled against the ENDPOINT (row D2-S11).
+  It is not evidence. The hop is unavailable again.

@@ -1935,3 +1935,36 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+## Z-S40 -- a never-widen half's NEGATIVE-CONTROL BASELINE went stale between the survey and the signing: both row 6 halves were signed against a "2 to add" that the world had already resolved 10 minutes earlier
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S40",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-11T10:02:00Z",
+    "one_line": "Row 6's never-widen pair binds a NOT-SIGNED set by quoting my survey's negative control -- the pre-existing 'Plan: 2 to add' in shared-infra (aws_iam_role.restricted_breakglass + aws_iam_role_policy.restricted_breakglass). I measured that at ~08:4xZ; ADVI_COTBKF APPLIED the pair at 09:05:05Z; the COO half signed at ~09:1xZ and the CTO half at ~09:2xZ. So BOTH HALVES WERE SIGNED AGAINST A BASELINE THAT WAS ALREADY FALSE, and the REPLAN leg's condition -- 'the 2 to add UNCHANGED' -- was unsatisfiable before the act began. It resolved in the SAFE direction here (the drift disappeared because its owner applied it, and my apply added 0), but the mechanism is direction-agnostic: had the owner declared MORE instead, the halves would have authorised against a smaller world than the real one and the act would have been graded clean against a stale denominator.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ledger/NEVER_WIDEN_ROUND7_X-1_ROW6_COO_HALF.md @4309620d05: 'aws_iam_role.restricted_breakglass and aws_iam_role_policy.restricted_breakglass, the negative control's 2 to add, are ADVI_COTBKF's declared, never-applied pair (CTO msg 33237)', and in Branch B: 'After the drain, the untargeted shared-tree plan must read 0 to destroy, and its 2 to add (the breakglass pair) is recorded unchanged beside it.' The half is 'Read against' PLAN_SURVEY_family_c.md section 4a, whose negative control I ran at ~08:4xZ.",
+    "world_is": "The pair is NOT 'never-applied' any more and was not when either half was signed. Measured: the live role cloudops-cot-restricted-breakglass-role has CreateDate 2026-10-11T09:05:05Z and the backend state object shared-infra/tfstate was written at 09:05:07Z (size 415149). The COO half is dated ~09:1xZ and the CTO half ~09:2xZ -- both AFTER that. My ledger opened 09:28Z and my apply's own state write is 09:36:15Z (size 416517). So the post-drain untargeted plan reads 'No changes' instead of '2 to add', and the pair now appears only as two 'Refreshing state...' lines carrying real ids. THE HAZARD THE CLAUSE EXISTS TO CATCH DID NOT OCCUR, on three independent facts: the CreateDate precedes my ledger open by 23 minutes; my apply reported '0 added' verbatim; and my graded plan contained 0 restricted_breakglass addresses, measured by filtering every resource_change address rather than reading the summary. The state size delta corroborates it -- +1368 bytes between the 09:05 and 09:36 writes is consistent with one imported role plus a tag set, not with creating two IAM resources. THE GENERAL SHAPE, which is why this is filed rather than just noted in the leg: a never-widen half's NOT-SIGNED set is often expressed as a negative control's NUMBER, and that number is measured at SURVEY time while the half is signed later and the act runs later still. Nothing re-reads it in between. Here three clocks drifted apart by about 50 minutes on a module with another project actively applying to it -- and the GO itself anticipated the collision risk ('Row 6 and x-5 both touch shared-infra, so serialize on .open_deploys/'), which serialised the ACTS but not the BASELINE: .open_deploys/ held 0 matching entries when I checked at 09:2xZ, correctly, because ADVI_COTBKF's apply had already finished. Serialising on an open-deploy sentinel cannot catch a change that completed before you looked. A cheap fix exists and is the issuer's to rule, not mine to implement: re-run the negative control at the ACT, immediately before the apply, and compare it to the number the half quotes -- one plan, and it converts a stale baseline from invisible into a stop.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws iam get-role --role-name cloudops-cot-restricted-breakglass-role -> CreateDate 2026-10-11T09:05:05Z, 4 tags",
+        "aws s3api list-object-versions --bucket opal-313476888478-terraform-state --prefix shared-infra/tfstate -> writes at 09:05:07Z (415149 B) and 09:36:15Z (416517 B), UTC via s3api (s3 ls would render LOCAL time)",
+        "ledger/NEVER_WIDEN_ROUND7_X-1_ROW6_COO_HALF.md @4309620d05 (dated ~09:1xZ) and CTO_HALF @85cbea7549 (~09:2xZ)",
+        "PLAN_SURVEY_family_c.md section 4a: the negative control 'Plan: 2 to add, 0 to change, 0 to destroy', run ~08:4xZ",
+        "post-drain untargeted shared-tree plan: 'No changes. Your infrastructure matches the configuration.', destroy=0 replace=0, 2 restricted_breakglass occurrences both on 'Refreshing state...' lines",
+        "my apply: 'Apply complete! Resources: 1 imported, 0 added, 1 changed, 0 destroyed.'; graded plan JSON: 0 restricted_breakglass addresses",
+        "deploy ledger iamroles-r7-family-c-shared-infra: ledger opened 09:28Z, all 4 legs closed"
+      ]
+    },
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "notes": "ONE CORRECTION AGAINST MYSELF, recorded because it nearly became the headline. I briefly read shared-infra's state address count as jumping 58 -> 256 and took that as evidence of a large interim apply by another seat. It was my own conflation: the 58 was SMARTX-PIPELINE's count, measured minutes earlier for cell IAM-x-3, and shared-infra holds 256 and always did. What caught it was the state object's SIZE -- +1368 bytes cannot be 197 new addresses -- so the cheap check on a suspicious count is a second, independent measure of the same object. Had I reported the jump, the row would have alleged a far larger interim apply than happened. Cites Z-S27 (ordering), Z-S38 (the ADVI_COTBKF fix that unblocked this module). The REPLAN leg closes on this evidence with its letter-vs-substance deviation stated in the proof text. Dispositions stay the CVO's at L9."
+  }
+]
+```

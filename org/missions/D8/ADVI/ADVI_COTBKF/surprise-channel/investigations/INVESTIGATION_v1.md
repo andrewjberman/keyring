@@ -6177,3 +6177,51 @@ round.** Never edit an existing row.
  "world_is": "The carrier is not this project's file to edit, and it already carries a sentence about income that reads the other way. Two things are not established: whether 'cash_when_received' is a true description of version 3 (income arriving as cash inside the value) or only of version 2; and whether the served object carries that field today (code read only). No reader binds the income columns or the method row for Cottonwood (CTO msg 4615; 0 readers of the mint). The CTO is asked which project's cell changes the producer."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S109",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:13:26Z",
+  "one_line": "L9 round 64: CB64bl1-AC2 MET and CB64bl3-AC2 MET. This seat re-derived both records' totals from the local tables (826 securities, 459 unpriced, 10,090 rows, 6,122 null; 1,757 emptied measured days, 24 flagged, 3 above 100 percent) and printed the cited lines. The issuer's doubt is answered: TRUE means the arithmetic is right, not that a return on a base under one dollar is fit to serve.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_64_DRAIN_END_20261011.md @59f48b48ae (msg 4673)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_64_L9_GRADE_20261011.md",
+      "this seat's read 2026-10-11T10:13:26Z of the local copy of the served table (.scratch/advi_cotbkf/fwd3_serve_r34/account_day_value.parquet) on 2026-05-06: 826 securities, 459 with every row null, 0 partly null, 10,090 rows, 6,122 null; price_source 3,358 / 608 / 2 / 6,122 null. The record's 9 kinds sum to 826, 459, 10,090 and 6,122, and each per-kind answer carries the kind's unpriced count as its denominator. Printed: commonwealth_portfolio_files.py:48-56 (the positions table has Quantity and no price or value column; the performance table has no security key) and commonwealth_price_census.py:56-73 (six stores, the firm's own two and four market-data stores)",
+      "this seat's read of the local returns table (fwd3_serve_r34/daily_returns.parquet), counts only: 1,757 measured days with value 0, all with a positive prior value; 24 with an absolute return above 1 percent; 3 above 100 percent, each on a prior value under one dollar; outflow over prior value at or above 1.5 on 4, between 0.9 and 1.1 on 17, at or below 0.05 on 3, elsewhere on 0; the other 1,733 have a largest absolute return of 0.0095. Printed: commonwealth_flows.py:59, 121, 172 and commonwealth_daily_returns.py:150, 271"
+    ]
+  },
+  "spec_asserts": "CB64bl1-AC2 and CB64bl3-AC2 (JUDGMENT, graded by 3.0.0_SA_CVO at L9): counts carry denominators, answers rest on a schema and a count, no other firm's data, what is not established is said; each class's mechanism follows from the cited lines and counts, FORM, DATA and TRUE are told apart on evidence, an unexplained day is called unexplained.",
+  "world_is": "Every limb holds on this seat's reads. Not re-derived by this seat: the per-kind store counts, and the placing of each of the 24 days in its class beyond the ratio bands.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S110",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:13:26Z",
+  "one_line": "The Cottonwood returns table carries 207 measured days with an absolute return above 100 percent, of 107,311 measured days with a positive prior value; round 64 examined 3 of them. 55 of the 207 sit on a prior value under one dollar; the other 152 have a prior value of one dollar or more and nobody has examined them. Read on the local FWD-3 returns table, not on the served day files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's read of the same table: of 107,311 measured days with a positive prior value, 207 carry an absolute return above 100 percent; 5,437 have a prior value under one dollar, and 55 of those are above 100 percent",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_64_L9_GRADE_20261011.md"
+    ]
+  },
+  "spec_asserts": "ADVI_COTBKF FWD-3 and the mint: a measured daily return is a number a reader can use; cell CB-bl-3 examined the emptied-account days above 1 percent as the table's outliers.",
+  "world_is": "The outlier population is wider than the emptied days. Not established: the cause of the 152, and whether the served day files carry the same rows (the measured-row counts agree to within 5).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
