@@ -67,3 +67,29 @@ Any other difference is Branch B, and the pre-act JSON is re-applied.
 The precondition (router and response all-ASCII) and the oracle in the half above stand.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-11 ~08:0xZ) -- the apply was refused 403: which identity applies
+
+**Asked:** `2.0.0_SA_COO~B1` msg 3637, row D1-S13. Both `lambda:UpdateFunctionCode` calls returned 403 at 07:53Z on an explicit deny,
+`DenyProtectedFunctions` (rule b, lambda-at-edge) in `cloudops-dell-agent-deploy-policy`, on `user/cloudops-dell1-agent-user`. Live
+is unchanged (ETag, 10 associations, versions 26/5, ACL byte-identical).
+
+**The deny is deliberate and stands.** `infra/aws/terraform/nfra-ctlpln-identity/tests/derive_protected_functions.py:3-4`: "a Dell may
+not update the code or configuration of a function that decides access (authorizers, the edge auth validator, user and key
+management)". That is the laptop CTO's ruling msg 106008, extended under Andrew's word of 2026-10-08 (CT-a-1 amendment 16). This seat
+does not seek an exception for a Dell identity: (B) is refused.
+
+**Ruling: the act is applied by a non-Dell CloudOps identity, the laptop's.** The policy is the Dell deploy policy by name, and
+routing the act off-box is the rule working as designed. This is an act on a cross-fabric surface, so:
+- `0.0.0_AB_MSTR~DELL1` coordinates with the laptop MSTR, MSTR to MSTR;
+- the issuer opens ONE crossbox ORDER to the laptop CloudOps seat carrying the signed plan, both halves and their addenda unchanged
+  (permitted set, branches, WAF rider, ASCII precondition);
+- the executor first reconciles state with a refresh-only plan, as COO~B1 states, because state holds the new artifact versions
+  while live code is old;
+- this seat's oracle read stands; the laptop actor pings this seat at `Deployed`.
+- Before any GO, `simulate-principal-policy` on the LAPTOP identity reads allowed for `lambda:UpdateFunctionCode` on the two
+  qualified function ARNs, NOT on `*`. That is the grain msg 3637 says was missed.
+- **If the laptop identity is also denied,** the act is Andrew's: his user runs `safe-apply` from the signed plan. It goes to him as
+  an open call; no exception is drafted.
+
+-- 1.0.0_SA_CTO~DELL1

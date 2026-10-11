@@ -2048,3 +2048,32 @@ write: **1 row** (`S1`).
   }
 ]
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-f-8, phase B, step 4 apply)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S13",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-11T07:58:04Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-8 step 4 FAILED: safe-apply of the signed 4-resource plan was refused 403 on lambda:UpdateFunctionCode for both functions by an EXPLICIT DENY in cloudops-dell-agent-deploy-policy on user/cloudops-dell1-agent-user; live AWS is unchanged, but Terraform state now records the new artifact versions, so the functions plan clean while the live code is the old build.",
+  "spec_asserts": "TO-FB-f-8 step 4 and the pair's Branch A: the apply changes the two functions, the 10 associations and the ACL, and the distribution reads Deployed with each of the 10 associations on the new version. The issuer's preflight: iam:SimulatePrincipalPolicy on user/cloudops-dell1-agent-user reads allowed for lambda:UpdateFunctionCode, resource *, 5 of 5. Step 2: the role the Terraform apply runs under is read by the actor.",
+  "world_is": "The apply ran as user/cloudops-dell1-agent-user (the 403 names it). cloudops-dell-agent-deploy-policy v6 carries a Deny on lambda:UpdateFunctionCode, UpdateFunctionConfiguration, PublishVersion, CreateAlias, UpdateAlias, DeleteFunction, DeleteAlias, PutFunctionConcurrency and the function-URL actions for a list of function ARNs that includes shared-advisor-router, shared-advisor-router-response, auth-validator-edge, cache-control-injector, public-data-router, opal-portal-authorizer, opal-portal-rest-authorizer and opalinvest-auth-handler (statement not printed in full here; the file is in evidence). A simulation with resource * does not match those ARNs, which is how it read allowed. Results: the ACL UpdateWebACL ran and left AWS byte-identical (rules, default action, LockToken); both UpdateFunctionCode calls 403; the distribution update never ran. Live: ETag E1OAC26XEP0FDI Deployed, router 26 x5, guard 5 x5, no new Lambda version. State: s3_object_version of both functions holds the new S3 VersionIds (NWJciPjHZ9WAwJzH2jNtipmj06usuqFg, T39sO4P3JJT0ZMfr6MeZLYWNBHQ55Mk5) while live CodeSha256 is still ZnPN8IRd... (router) and 4iHfdSnY... (guard). The plan after the attempt reads 0 to add, 1 to change: only the ACL, whose churn returned right after its own write, so the pair's 'post-apply plan reads no changes' cannot be met while the ACL stays in the root.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "evidence/apply_attempt_safe-apply.out lines for the two 'Error: updating Lambda Function' blocks (RequestIDs 18bc7cdb-aa88-4d96-a132-efed2d2d8c9f and 7002f6bd-ec66-4f7e-a5c7-8e2f67c62bf5)",
+      "evidence/deny_policy_cloudops-dell-agent-deploy-policy.json (iam get-policy-version v6)",
+      "evidence/state_vs_live_after_attempt.txt (terraform state show against get-function-configuration, same minute)",
+      "evidence/post_apply_get_web_acl.json against evidence/pre_get_web_acl.json: 6 of 6 rules identical, LockToken 848a6d0b-d69f-40e0-876a-cfc0ce40b6b2 before and after",
+      "evidence/plan_after_attempt.out: Plan: 0 to add, 1 to change, 0 to destroy (the ACL only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This seat did not read the apply role at step 2 as the order asks; the read would have surfaced the deny before the plan, and the ACL write was a no-op in AWS, so no harm landed. Owner of the call: the owner of cloudops-dell-agent-deploy-policy and the never-widen pair's two signers; this seat will not change IAM, assume another identity or run update-function-code. Routes the issuer may weigh: (A) the apply runs from an identity outside the deny (these two functions were applied on 2026-08-21 and 2026-09-14, so one exists; which is not read here); (B) the policy owner narrows the deny for a bounded window. Either way a plan will not show the functions until the S3 objects carry a new VersionId (a re-run of build-nodejs-lambda.sh uploads identical bytes under a new one, inside the permitted set) or the owner corrects the state; this seat has done neither. Until then the Terraform state is the one place that says the deploy is done, and it is not. The two S3 objects remain the live inputs of any portal-auth plan."
+}
+```

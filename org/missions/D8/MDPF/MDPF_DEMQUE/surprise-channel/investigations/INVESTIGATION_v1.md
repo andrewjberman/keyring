@@ -675,6 +675,28 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "A question for the queue's owner, not an instruction: keeping the 138 as a second source for currency is a reasonable use of the draw; dropping them narrows the quote. This seat takes no action on the request. The ask rides CTO~DELL1's round-90 analysis item 4."
+  },
+{
+    "id": "MDPF_DEMQUE-Z-S1",
+    "one_line": "TO-DQ-t27's stated precondition oracle dq_t26_real.py can only ever pass ONCE: it re-runs refreeze on a COPY of the already-re-frozen real quote, refreeze correctly declines, and the check reads REFRZ-BAD -- so its BAD verdict is evidence DQ-t-26 SUCCEEDED, not that it is incomplete.",
+    "spec_asserts": "TO-DQ-t27 THE CELL: 'Start only after DQ-t-26's commit is in your tree (python .../R8_CHECKS/dq_t26_real.py prints REFRZ-OK there; drawer_schedule.py exists).'",
+    "world_is": "dq_t26_real.py prints 'REFRZ-BAD expected one superseded file, found 0'. Measured cause, not inferred: the check copies the REAL requests/DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS{.json,.quote.json} into a tempdir and runs refreeze.py there; refreeze.py:59-61 returns {\"status\": \"ALREADY_REFROZEN\"} and writes nothing when the frozen quote already carries `supersedes`. Run directly on a scratch copy it printed exactly that and wrote 0 new files (before/after listing identical). The real folder already holds the completed re-freeze that t26 performed at 01:42 local: quote.json finish_date 2026-10-17, finish_date_claim measured, supersedes -> DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.quote.superseded-2026-10-11.json, and that superseded file carries finish_date 2026-10-13 with superseded_reason 'rule changed, round 6 R1' and superseded_by the live quote -- which is precisely what the check's four arms (new_finish, old_kept, graded_on_new, prints_both) describe. DQ-t-26's commit IS in this tree (277294a59c, 0.9.0_WK_MDPF_DEMQUE~21) and drawer_schedule.py exists, so the precondition's SUBSTANCE is met and only its stated oracle is stale-by-construction. The check is non-idempotent: it grades a state transition whose input state the real act has already consumed, so it is unpassable from now on. t27 proceeded on the substance; the check was NOT weakened and is outside this order's <paths> (R8_CHECKS is the issuer's). SECOND, SMALLER DISAGREEMENT OF THE SAME CLASS, recorded here rather than as its own row: this order's refusal clause prescribes the id `MDPF_DEMQUE-Z-W2-S<k>`, but .tools/surprise-row-gate.py REFUSES a W coordinate from a seat -- 'a seat's row on the main index carries no W (the coordinate names the allocator, and a seat allocates on the main index)'. The row was renamed to the next free seat id MDPF_DEMQUE-Z-S1 rather than taking the audited override, because the gate is right and the order text is wrong. The four pre-existing MDPF_DEMQUE-Z-W1-S* rows are not re-graded by the gate and were left untouched.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZQ",
+    "surfaced_at": "2026-10-11T07:55:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R8_CHECKS/dq_t26_real.py -> 'REFRZ-BAD expected one superseded file, found 0'",
+        "data/mdpf/scripts/demque/refreeze.py:59-61 the `supersedes` guard returning ALREADY_REFROZEN; direct run on .scratch/rf printed {\"status\": \"ALREADY_REFROZEN\"} rc=0 and wrote no superseded file",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/requests/DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.quote.json (finish 2026-10-17, supersedes set) and .quote.superseded-2026-10-11.json (finish 2026-10-13, reason 'rule changed, round 6 R1')",
+        "git log -1 data/mdpf/scripts/demque/refreeze.py -> 277294a59c 0.9.0_WK_MDPF_DEMQUE~21 DQ-t-26"
+      ]
+    }
   }
 ]
 ```
