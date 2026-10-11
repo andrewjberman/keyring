@@ -3860,3 +3860,57 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not fixed by this worker: the check is outside this order's paths and no edit to it is granted. Issuer decision needed: the check reads the base as bytes or decodes both sides as UTF-8 (positive control: with both sides decoded as UTF-8 the drift vanishes). The builder change, the tier_live row and the 15 regenerated targets are on the worker branch; the nested-portal target firmDisplayNames.generated.ts was not regenerated and is named in the report."
 }
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~34 (FB-g-13, module platinum prefix)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W34-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~34",
+  "surfaced_at": "2026-10-11T12:54:43Z",
+  "one_line": "The FB-g-13 dormant arm M4 of r4_modgrant.py cannot pass on a conforming build: the spec requires the generated_locals.tf mark line (line 1, which names the registry list) to change, and the check's _kept() greedy matcher counts a base line as kept only when it appears verbatim, so a changed line 1 yields 0 of 100 kept.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r4_modgrant.py M4 at round4/checks: _kept(old, new) advances i only on verbatim equality with old_lines[i]",
+      "run at worktree HEAD 0b9b0b1c4e plus FB-g-13 edits: 'generated_locals.tf: base lines kept in order 0 of 100; added lines 104' and 'FAIL M4'",
+      "the same run, base lines of generated_locals.tf excluding line 1 kept in order 99 of 99 (added 4: the platinum_prefix comment, local and closing brace content); main.tf 216 of 216 kept, 10 added",
+      "the spec's own behavior 3 permits the mark line to change ('the generated file's mark line (the registry list it names)')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-g-13 AC1 (r4_modgrant.py --arms module, expect 'ROUND 4 MODULE GRANT: 5 of 5 arms'): M4 DORMANT passes when generated_locals.tf and main.tf keep every base line in order and only the new local, comment, outputs and mark line are added.",
+  "world_is": "M1, M2, M3 and M5 pass (M3 terraform test 48 passed; M5 generate in sync and validate rc 0). M4 fails on generated_locals.tf alone, 0 of 100 base lines kept, because TARGET_REGISTRY_KEYS for LOCALS_PATH had to gain platinum_destinations and systems, which changes the mark's over clause and therefore base line 1. Result 4 of 5 arms, exit 1. The check is outside this order's paths and was not edited.",
+  "notes": "Issuer decision needed: either the check's matcher skips the mark line (compare base lines 2 to N, as the spec's own allowance implies), or the mark line is exempted by rule. The build is otherwise complete and committed on the worker branch; AC1 is not met until this is ruled. No value of the module's outputs moved for any existing scope."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~34 (FB-g-13, module platinum prefix)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W34-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~34",
+  "surfaced_at": "2026-10-11T12:54:43Z",
+  "one_line": "The output expressions the spec gives, lookup(local.scope_bucket, var.scope, null) and lookup(local.platinum_prefix, var.scope, null), fail when var.scope is null, though the spec requires both outputs to be null in that case; terraform test fails 2 of 2 runs with 'Invalid value for key parameter: argument must not be null'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform test (module folder) with the literal spec expressions: 0 passed, 2 failed, 46 skipped; main.tf lines 92 and 97, 'var.scope is null'",
+      "after the fix var.scope == null ? null : lookup(...) on both outputs: terraform test 'Success! 48 passed, 0 failed.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-g-13 behavior 2: bucket and platinum_prefix are lookup(...) with a null default, each null when var.scope is null.",
+  "world_is": "Terraform's lookup() refuses a null key, so the literal expression cannot meet the null case the same spec states. The worker added a null guard in front of each lookup inside the two output blocks (main.tf only); the lookup form and the default are unchanged.",
+  "notes": "Recorded for the issuer's read of the spec's expression against its own null case. No other module file changed."
+}
+```
