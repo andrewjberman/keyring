@@ -3645,3 +3645,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S63",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T23:12:41Z",
+  "one_line": "DISARMS rows IRPT_ANLREQ-D2-W53-S5 and IRPT_ANLREQ-D2-W53-S6: the round-14 upload reader, its words and the POST's first answer are reverted off the trunk; the intake folder and ops/status.py equal the round's base again.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO ruling msg 6054: revert, now. A hazard armed on the trunk is disarmed where it is armed. Two ordinary revert commits, no history rewritten; disarm rows D2-W53-S5 and S6 by naming them. No resident package is built from a pin at or after 87202fbaed and before the revert.",
+  "world_is": "MEASURED by this seat ~23:2xZ: commit 114c77fb01 restores seven files to their bytes at the round's base 35c3c4bd45 (template_reader.py, uploads.py, ops/status.py, three test files restored; the new test file test_template_account_totals.py removed). git diff 35c3c4bd45 HEAD over infra/aws/lambda/investor-reporting/intake and ops/status.py prints nothing. The intake tests on the restored tree read 292 passed, 1 skipped, the round's base count. It is ONE commit, not two: it undoes the product and test changes of d95cf11106, 4215d98f26 and 5cb5ba4dbf together and leaves their records, rows and proofs in place (a plain git revert of those commits would also have removed rows from this append-only file). No history is rewritten; the three commits remain in history and on branch wk-IRPT_ANLREQ-52. THE UNSAFE WINDOW on the trunk is every commit from 87202fbaed up to but not including 114c77fb01: a resident package built from a pin in that window carries the reverted reader. INHERITED, not read by this seat: the resident the host runs is at a pin that does not contain 87202fbaed (2.0.0_SA_COO~G2 msg 6052, its own ancestry read with a positive control), and 2.0.0_SA_COO~G2 states it builds none from that window. The two Lambda functions that package these files were never exposed: the source map pins the files at older commits and both builds equalled live for them (RECORD, the census of cell AR-y-145).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 114c77fb01 and git diff 35c3c4bd45 HEAD over the two paths (empty), run by this seat",
+      "intake tests 292 passed on the restored tree, run by this seat",
+      "CTO msg 6054",
+      "2.0.0_SA_COO~G2 msg 6052"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This seat's defect: it merged a reader change without asking what re-reads a stored input; the release census found it, after the merge, not before. The checks of cells AR-y-142 and AR-y-143 no longer pass on the trunk, by design; their orders stay complete as build records. The re-land is its own cell and first settles what read_input compares (the reader's version stored with the input, or the holdings alone): a contract choice brought to the CTO with what each costs on inputs already stored. The portal form's re-post and closed details (on DEV 6eb13c5e875f) are NOT reverted: they work against the service of today."
+}
+```
