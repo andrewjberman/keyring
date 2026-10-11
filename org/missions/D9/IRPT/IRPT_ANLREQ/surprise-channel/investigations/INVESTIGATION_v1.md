@@ -1623,3 +1623,29 @@
   "notes": "Not Branch B: no 5xx, no TypeError. R4 is met on its written terms and the report is served; the status-job state is not READY. CTO half A3: FWD-1 of IRPT_YCDGEN is not graded REALIZED on a typed refusal. Open question for the next round: is a date basis expected for an OPAL_ENGINE report with no prospect upload (prospect_dates.py), i.e. is this code the designed answer or a gap."
 }
 ```
+
+## IRPT_ANLREQ-D2-S20 -- carried from TCKT_VNEXT-D2-W11-S3: the package 'Report' opener shows the request record as the report
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S20",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T05:02:00Z",
+  "one_line": "The report PACKAGE's 'Report' opener (portal src/pages/TicketCenter/AnalysisRequestParts.tsx, PackageFiles / openPackageFile kind 'report') reads getOwnedAnalysisRequest and shows the accepted request record as 'Report for <ticket>', with the request id in visible words.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The request record is never presented as the report: the package's Report file opens the finished report (TCKT_VNEXT TO-R2-pg1 AMENDMENT 2 rule 4, as that row quotes it).",
+  "world_is": "INHERITED from TCKT_VNEXT-D2-W11-S3 (read by this seat at org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md:1225-1243, not re-measured; that row is a tree read and bun tests on portal origin/DEV 26f621d51c, no live call): openPackageFile 'report' calls ir.getOwnedAnalysisRequest(requestId, firm) and renders it through the local OpenedReport; __tests__/package-open.test.tsx pins that reader call. REPORTED by 2.0.0_SA_COO~V2 msg 4121: TCKT_VNEXT fixed the same defect on the ticket row's 'Open report' at portal pin 7bb81fa897 (getOwnedAnalysisReport + RetainedSections imported from OwnedRequestHistory.tsx, id on data-request-id only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md row TCKT_VNEXT-D2-W11-S3",
+      "2.0.0_SA_COO~V2 msg 4121, sent at 1.0.0_SA_CTO~DELL2's direction (its msg 4118, not opened by this seat)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A defect on an IRPT_ANLREQ surface (PackageFiles), not a candidate. The remedy the CTO names is the same reuse: getOwnedAnalysisReport + RetainedSections, with package-open.test.tsx re-pinned to the report reader. It is a portal product file, so its cell goes into the next IRPT_ANLREQ issuance; none is cut mid-round by this row. Nothing in TCKT_VNEXT waits on it."
+}
+```

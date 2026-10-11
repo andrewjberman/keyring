@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_TCKT_VNEXT~8</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -138,7 +138,59 @@ Dry-run at base: AC4 FAIL (missing tests) as expected; AC1-AC3 PASS.
 Proof: add AC4 to your existing instance and re-validate with ids comma-separated:
 `python .tools/proof-of-spec-check.py <instance> R2-rn1-AC1,R2-rn1-AC2,R2-rn1-AC3,R2-rn1-AC4`. Flip to `complete` only when all four pass.
 
-<expected_criteria>R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4</expected_criteria>
+### AMENDMENT 2 (2026-10-11, issuer `2.0.0_SA_COO~V2`) -- REOPENED: the runner's inherited shell is not safe to run
+
+**Inherited state:** AC1-AC4 are met and merged (@de661bb225). Keep all of it. The issuer's original face told you to keep the
+round-1 "row, token, cleanup and trace code as they are". That was the issuer's error: round 1's own rulings changed those parts
+(rows TCKT_VNEXT-D2-S20 and D2-S19; the CTO's round-2 analysis section 4 item 3), and the copy still carries the old behaviour:
+a 2-hour token (`:237`), a cleanup that deletes the row FIRST (`:848`, which WIDENS the token until it expires), a zero-call read
+with no positive control, and a trace header that says round 1. Fix these in `fwd1_run.py`:
+
+D1. **Token expiry is an argument.** `--exp-minutes N` is REQUIRED, an integer from 5 to 60; the token's `exp` is `iat + N*60`.
+    No default and no 7200 anywhere. The trace records `iat`, `exp` and N.
+D2. **Rollback order (the S20 fix).** Cleanup does, in this order: (1) complete every ticket the run created; (2) WAIT until the
+    token's `exp` has passed (sleep function replaceable by a test); (3) only then delete the PROFILE row and read it back ABSENT
+    with ConsistentRead. The trace records the `exp`, the delete time (later than `exp`) and the absent read. The same order holds
+    on every STOP path after the row was written: no path deletes the row before `exp`.
+D3. **Precheck before any write.** `--expect-irpt-status-sha <prefix>` is REQUIRED. Before the row is written, the runner reads the
+    live `irpt-status` CodeSha256 (through an AWS client that a test can replace) and STOPS with the named result
+    `IRPT_STATUS_BUILD_MISMATCH` (recording both values) unless it starts with the prefix. Nothing is written on that stop.
+D4. **Zero-call read with a positive control.** The data-refresh read over `iat`..`exp` is VOID (named `ZERO_CALL_VOID`) when the
+    count of log streams searched is 0. It also runs the SAME filter over the ticket API's log group
+    (`/aws/lambda/opal-ticket-api`) as a positive control, which must find the filer at least once; a control that finds nothing
+    makes the zero VOID too. Only `streams searched > 0` AND `control found >= 1` AND `data-refresh matches == 0` is recorded
+    `ZERO_CALLS_PROVEN`.
+D5. **The report-route arms (the deployed id check, live on opal-ticket-api since 2026-10-11T04:19Z).** After hop (e) is met and
+    before hop (f): POST the journey ticket's `/report` with the malformed id `sar1b-000000000000000000000000`; expect HTTP 400 with
+    `code == "INVALID_REPORT_REQUEST_ID"` and record it as arm `report_id_malformed_refused`. Anything else is the named failure
+    `REPORT_ID_ARM_UNEXPECTED` and the run stops before hop (f). Hop (f) then sends the issued `REQ-` id: a 200 is arm
+    `report_id_well_formed_stored`; a 400 from this route on the ISSUED id is the named result `BRANCH_B_ISSUED_ID_REFUSED`: stop at
+    once, do not retry, run cleanup per D2.
+D6. **The old test ticket.** `--close-ticket <ticket id>` (optional, repeatable): in cleanup step (1) the runner also completes
+    each named ticket if it reads `in_progress` and is assigned to the filer, and records its status before and after. A ticket in
+    any other state is recorded as found and left alone.
+D7. **The trace header names this run.** `--run-label` (required; for example `R2-tr-1`), `--pair` (required; the pair's path and
+    pin as one string) and `--executor` (required) replace the hard-coded `SA-r-1b`, `v2.2`, `order_pin` and the `amendment_3` /
+    `amendment_4...` blocks, which are removed. Keep `--read27` and `--advisor-opaque`.
+D8. Still NO AWS call and NO network call from you: every new behaviour is proven with the fake layer.
+
+<criterion id="R2-rn1-AC5" cell_refs="R2-rn-1"><invocation>python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py rn-safety</invocation><expect>RN-SAFETY-OK</expect></criterion>
+`R2-rn1-AC5`: tests `test_token_exp_is_the_argument_and_capped`, `test_row_is_deleted_only_after_exp`,
+`test_tickets_are_completed_before_the_row_is_touched`, `test_zero_call_read_is_void_on_zero_streams`,
+`test_zero_call_read_needs_its_positive_control`, `test_irpt_status_sha_mismatch_is_a_stop_before_any_write` exist and pass.
+
+<criterion id="R2-rn1-AC6" cell_refs="R2-rn-1"><invocation>python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py rn-arms</invocation><expect>RN-ARMS-OK</expect></criterion>
+`R2-rn1-AC6`: tests `test_malformed_report_id_arm_expects_typed_400`, `test_issued_id_refused_by_report_route_is_branch_b`,
+`test_old_test_ticket_is_closed_in_the_same_run`, `test_trace_header_names_this_run_not_round_one` exist and pass. Six criteria in
+all on this order: the two amendments each changed what the runner must do, and AC1-AC4 must still pass.
+
+Dry-run at base: AC5 and AC6 FAIL (missing tests) as expected; AC1-AC4 PASS.
+
+Proof: add AC5 and AC6 to your instance and re-validate with
+`python .tools/proof-of-spec-check.py <instance> R2-rn1-AC1,R2-rn1-AC2,R2-rn1-AC3,R2-rn1-AC4,R2-rn1-AC5,R2-rn1-AC6`. Flip to
+`complete` only when all six pass. Rows, if needed: `TCKT_VNEXT-D2-W8-S<k>` with k from 6 upward.
+
+<expected_criteria>R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6</expected_criteria>
 
 Dry-run at base: all three FAIL (absent), as expected.
 
@@ -167,7 +219,7 @@ org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4. The instance is at
+Criterion ids: R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6. The instance is at
 `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~8/TCKT_VNEXT.TO-R2-rn1.fwd1-runner-reads-the-served-request-id.proof_of_spec.json`.
 Validate it with `python .tools/proof-of-spec-check.py <instance> R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3` before the flip.
 </proof_of_spec>
