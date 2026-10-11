@@ -81,7 +81,7 @@ AC3 outputs, and the commit hash.
 before the window: it is inert until a producer deletes at the canonical home). Row `ADVI_FIRMBKTS-D1-S29`. The QA runner shares the
 role and receives the same Allow (stated in the COO addendum); `FB-g-15`'s guard keeps QA off canonical.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>DELGRANTAPPLY</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-16</to_id>

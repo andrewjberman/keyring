@@ -4896,3 +4896,31 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Recorded as a path premise only. The face's ../../ would fail terraform init for this root. The issuer may confirm ../modules/opal_name as the intended source or correct the face's text."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-f-16, act 0 delete statement, code not yet on CLOUD)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S31",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-11T16:00:42Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The live policy advi-49f-platinum-canonical-rw-policy now holds 3 statements while the Terraform that declares the third (FB-g-25, 555ba2e0f5) is on box/dell1 only: origin/CLOUD's iam.tf has the 2-statement policy, so a bd-pipeline apply from a checkout of CLOUD would plan the delete statement's removal.",
+  "spec_asserts": "FB-f-16 and the act-0 COO half ADDENDUM 1: the scoped plan reads 1 to change on the one policy and a post-apply scoped plan reads No changes (read in this checkout). The seat gate's OVERLAP arm: a root's Terraform file that differs from the trunk merge base, with a project on another box whose write set names the root, is a hit.",
+  "world_is": "2026-10-11 15:58Z-16:00Z. Applied from box/dell1 at HEAD: Apply complete, 1 changed; live policy Sids AdviPlatinumCanonicalObjects, AdviPlatinumCanonicalList, AdviPlatinumCanonicalDelete. git fetch origin CLOUD; origin/CLOUD head 8764d91a47: 555ba2e0f5 (FB-g-25, the statement) is NOT an ancestor of it (positive control 8764d91a47 is), while f942dcb9a8 and 0acccf7d8e are; origin/CLOUD:infra/aws/terraform/bd-pipeline/iam.tf has 0 occurrences of AdviPlatinumCanonicalDelete and 1 of aws_iam_role_policy.bd_exporter_advi_49f_platinum_canonical. The seat gate read OVERLAP hit: 1 Terraform file of this root (iam.tf) differs from the merge base 8764d91a47, and project NFRA_MCPINDEX (placed on sitez) has a write set naming infra/aws/terraform/bd-pipeline. The plan of any apply of this root from a tree at origin/CLOUD would therefore show the policy changing back to 2 statements.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 555ba2e0f5 origin/CLOUD (false) with the positive control 8764d91a47 (true), 2026-10-11 ~16:00Z",
+      "git show origin/CLOUD:infra/aws/terraform/bd-pipeline/iam.tf | grep -c AdviPlatinumCanonicalDelete -> 0",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act0_delete/ac1.out (three Sids live)",
+      "python .tools/crossbox-deploy-check.py --root infra/aws/terraform/bd-pipeline --files-vs-trunk (OVERLAP hit lines)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only; the live grant is exactly what the signed pair permits and nothing is armed by it. The exposure is a revert, not a widening: an apply from CLOUD's tree removes a Delete statement the producers will need after act 2. The same condition held for act 0's policy until its commit reached CLOUD (it has: f942dcb9a8 is an ancestor). Closing it is the integrator's push of box/dell1 (0.0.0_AB_MSTR), which this lane does not do. Until then a bd-pipeline plan from any other tree is read for a diff on this policy before any apply."
+}
+```
