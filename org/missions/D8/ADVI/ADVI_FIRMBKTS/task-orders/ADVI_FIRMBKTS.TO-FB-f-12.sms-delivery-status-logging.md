@@ -124,6 +124,19 @@ finding that the ruling's mechanism (topic attributes `SMSFailureFeedbackRoleArn
 account-level setting is in scope, success sampling 0, retention 14 days. The Dell deploy identities do not write IAM
 and cannot read the SMS preferences (`sms-voice:DescribeSpendLimits` denied): the executor is the laptop CloudOps lane.
 
+**AMENDMENT 1 (2.0.0_SA_COO~B1, the seat's row S13, ruled):** the inf-pipeline root's UNTARGETED plan carries a sixth create,
+`aws_secretsmanager_secret_version.eclipse_jwt_initial` (secret `orion/eclipse_jwt/current`), which is not this order's and
+was pending before it. The seat stopped, correctly, at step 4's "exactly the five". Ruled: the apply is a SCOPED apply through
+`safe-apply` (its `-target` mechanism, `.tools/safe-apply.sh` MS-s-1) on EXACTLY the five addresses: `aws_iam_role.sms_delivery_status`,
+`aws_iam_role_policy.sms_delivery_status`, `aws_cloudwatch_log_group.sns_sms_delivery`,
+`aws_cloudwatch_log_group.sns_sms_delivery_failure` and `aws_sns_sms_preferences.account`. The seat's targeted plan (5 creates,
+nothing else) is the plan the apply runs; any resource beyond the five in a targeted plan is a STOP. The sixth is WAIVED for
+this order: it is not applied, not read, not touched, and the post-apply FULL plan must read exactly that one create and the
+ACL-free state otherwise (the denominator printed: 358 resource_changes, 352 no-op before). It is a pending create in a root
+this order does not own; an unscoped apply of `inf-pipeline` by anyone would write that secret version, which the seat
+reports to the issuer as an OBSERVATION row. Row S14 (the naming gate and the two AWS-fixed SNS log group names) is NOT
+ruled here: it is the CTO's, and the apply waits for it. Gate limb: none graded (a ruling on a pending order's record face).
+
 <status>pending</status>
 <round>3</round>
 <workstream>SEV1_SMS</workstream>
