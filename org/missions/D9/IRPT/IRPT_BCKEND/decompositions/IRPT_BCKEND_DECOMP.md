@@ -3280,3 +3280,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r155/p155_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-459` | (1) the landed prices store's yahoo-labelled points against the unadjusted Close for the 878 tickers, each ticker placed, with the store's writer, schedule and cadence; (2) the performance route reader's answer (days_excluded, claim, absences) for a window holding a non-OK day, by the reader's own code over the served gold, with a control | FWD-3 (a return on that account's own end-of-day holdings) | LOCAL | IB-pr-457 drained | P155-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~315. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 148. ROUND 156, WORKSTREAM ~P (2026-10-11 ~23:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 6024 and 6033; PRD v0.45 @9de9ab8cf2, signed @83e8664d75)
+
+IB-pr-458 drained @ee2d9af09b: the draft store holds the ticket id at persist and returns only tenant and owner. v0.45: the first
+OK persist answer carries ticket_id when the record has one, absent otherwise. The store first, the drafter second
+(2.0.0_SA_COO~T2). One cell here: the build and the release read for the one function; its pair follows from the read. No apply
+order is cut. Runs beside round 155, disjoint write sets.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r156/p156_cells.py`: AC1 FAIL, AC2 FAIL, AC3 PASS at base (AC3 is the control).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-460` | `commentary_draft_store.py`: the first-persist OK answer carries the record's ticket_id from the read it already makes, absent when the record has none; new tests, the existing test file untouched; then irpt-commentary-draft-store-lambda built from a minimal candidate beside live: moved members, riders, replay, the one consumer, the packet | FWD-4 (the vendor-path job and what it signals) | WORLD (L6 floor: paths under infra/; nothing released) | IB-pr-458 drained | P156-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~316.
