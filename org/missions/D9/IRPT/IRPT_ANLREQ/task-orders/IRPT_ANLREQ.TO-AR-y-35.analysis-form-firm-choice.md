@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~51</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -123,6 +123,38 @@ yet; writing them is this step.
    {...}}}`. `what_is_visible` is a description, not a verdict: the issuer and the CTO judge. Say so plainly if a state could not be
    reached, and do not substitute another state for it.
 5. Commit the PNGs, fixtures, any driver script and the manifest (workspace worktree, your deliverables folder).
+
+---
+
+**AMENDMENT 3 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~09:1xZ): REOPENED on the issuer's reading of the three screenshots. ONE defect, and
+it is the issuer's own specification.** Gate limb that graded this amendment: read from this commit's own output.
+
+The issuer read `shots/firm-choice-loaded.png`, `shots/firm-choice-load-failed.png` and `shots/package-report-opened.png` (workspace commit
+`ae0604ca71`). The route and the light canvas read right on all three; the opened report is navy on a white panel and legible; the
+failure banner is a red icon beside navy text on white.
+
+**The defect, in `firm-choice-load-failed.png`:** after the load has FAILED, the Firm control still reads "Loading firms...". The banner
+says the firms could not be loaded and the control beside it says they are loading. AMENDMENT 1 caused it: it told you `firms` "stays
+`null`" on failure, and step 2 makes `null` read "Loading firms...". A failed load and a load in flight must not look the same.
+
+**Repair:**
+1. `AnalysisRequestFields` takes one more prop, `firmsFailed?: boolean`. When it is true the Firm control is disabled and its one option
+   reads exactly `Firms not loaded` (never "Loading firms..."). `firms === null` with `firmsFailed` false or absent still reads
+   "Loading firms...".
+2. `TicketCenter.tsx` passes `firmsFailed` true exactly when its directory-context call failed, and false again when a retry starts.
+   The banner sentence and the refusal to submit are unchanged.
+3. `analysis-firm-choice.test.tsx` gains ONE test, named exactly `a failed load reads Firms not loaded and never Loading firms`.
+4. Re-take ONLY `shots/firm-choice-load-failed.png` (the same command and fixtures as before, from a fresh build of the portal
+   worktree at its new HEAD), read it, and update its entry and `portal_commit` in `shots/MANIFEST.json`. The other two shots stay; add
+   a member `"portal_commit_of_other_shots": "21cac46b"` so the manifest says which build each came from.
+
+Criteria are unchanged in number: AC1 (now five tests in the file), AC2 and AC3 must print their tokens, and the issuer's typecheck
+criterion of the chain's first order applies here too -- run
+`python C:/dev/wk-irpt-anlreq-51/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py portal-tsc --portal C:/dev/wk-irpt-anlreq-51/portal`
+and report its line (it must print `PORTAL-TSC-OK`). Update the proof instance and flip back to `complete` only then.
+
+**Not yours, noted for the CTO's review of the candidate:** the page shows two dark panels (New Ticket and Ticket Board) and the form's
+fields are the page's existing dark fields; both were there before this cell. Do not restyle anything.
 
 <criterion id="AR35-y-AC3" cell_refs="AR-y-35"><invocation>python C:/dev/wk-irpt-anlreq-51/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py y35-shots --root C:/dev/wk-irpt-anlreq-51</invocation><expect>Y35-SHOTS-OK</expect></criterion>
 `AR35-y-AC3`: the three PNGs exist, and the manifest records for each the Ticket Center route, the light canvas `rgb(244, 246, 250)`
