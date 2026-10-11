@@ -25429,3 +25429,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-W283-S1 -- the ungated session policy re-enters the Lambda module's depends_on, so the plan shows a Lambda update
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W283-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~283",
+  "surfaced_at": "2026-10-11T08:38:21Z",
+  "one_line": "With the two session policies ungated, the plan adds exactly the two policies but ALSO shows an in-place update of module.irpt_performance_adapter.aws_lambda_function.this, because lambda.tf's depends_on names aws_iam_role_policy.performance_approved_session; STOP per the face's refusal clause.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "unedited tree at 0311c5f85d: terraform plan -lock=false in infra/aws/terraform/investor-reporting/performance: 'No changes.' (rc 0); org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~283/IB120-1_plan_baseline_unedited.txt",
+      "after removing the four counts: 'Plan: 2 to add, 1 to change, 0 to destroy.' adds = aws_iam_role_policy.performance_approved_session and aws_iam_role_policy.performance_approved_inf_session; the change = module.irpt_performance_adapter.aws_lambda_function.this (last_modified, s3_object_version, source_code_hash -> known after apply) because module.irpt_performance_adapter.data.aws_s3_object.artifact is deferred ('depends on a resource or a module with changes pending'); IB120-1_plan_after_edit.txt",
+      "infra/aws/terraform/investor-reporting/performance/lambda.tf lines 62-65: the module's depends_on lists aws_iam_role_policy.performance_approved_session; while that resource had count 0 the dependency was empty, so the plan never showed it",
+      "the Lambda's own inputs (zip bytes, environment) are not edited by this change: the update is an artifact of the deferred data read, whose real value an apply would only learn by reading it; this cannot be told from a real artifact change at plan time"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-422 item 3: the plan's adds are exactly the two policies; no change to any other resource, no change to the Lambda or its environment; data sources read at plan time are not adds.",
+  "world_is": "The plan has 2 adds, 0 destroys and 1 in-place Lambda update (plus one data source read deferred to apply). The naming limb (naming-apply-gate.py --plan-json) rc 0: both new policy names CONFORMANT, 4 existing out-of-pattern names WARN. Not proceeded past: no census, no packet, no proof, order left pending. Resolution options for the issuer or CTO (not taken by the worker): (a) drop aws_iam_role_policy.performance_approved_session from the module depends_on in lambda.tf (a lambda.tf edit the face does not name; it lifts the ordering of policy before function, which Branch A restores by applying the policies first); (b) accept the update line as a plan-time artifact and rule so; (c) apply the policies with -target first.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

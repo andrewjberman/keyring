@@ -140,7 +140,7 @@ Read-only: the rest of the repository, the checks under `org/missions/D8/ADVI/AD
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~20/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.proof_of_spec.json`.
   <criterion id="AC1" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-20 &amp;&amp; timeout 100 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_reads.py --root /c/dev/wk-firmbkts-20; echo "exit=$?"</invocation><expect>ROUND 3 READ CENSUS: ALL SITES ROUTED, NOT-SERVED OR EXEMPT</expect></criterion>
-  <criterion id="AC2" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-20 &amp;&amp; timeout 110 python -m unittest discover -s data/black_diamond/scripts/gold/tests -p "test_platinum_dest.py" -k TestSource -k TestListTarget -k TestCanonicalNegativeArm 2&gt;&amp;1 | tail -n 3</invocation><expect>^OK$</expect></criterion>
+  <criterion id="AC2" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-20 &amp;&amp; timeout 110 env -u FORCE_COLOR python -m unittest discover -s data/black_diamond/scripts/gold/tests -p "test_platinum_dest.py" -k TestSource -k TestListTarget -k TestCanonicalNegativeArm 2&gt;&amp;1 | tail -n 3</invocation><expect>^OK$</expect></criterion>
   <criterion id="AC3" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-20 &amp;&amp; timeout 115 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_producers.py --arms static --root /c/dev/wk-firmbkts-20; echo "exit=$?"</invocation><expect>ROUND 3 PRODUCERS STATIC: 4 of 4 arms</expect></criterion>
   <criterion id="AC4" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-20 &amp;&amp; timeout 110 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_census.py --census org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json --root /c/dev/wk-firmbkts-20; echo "exit=$?"</invocation><expect>ROUND 3 PRODUCER CENSUS: 3 of 3 arms</expect></criterion>
 </proof_of_spec>
@@ -218,6 +218,20 @@ arm, and the census line numbers are re-read. The pair's blast radius will name 
 issuer, GATE viii read `<placeholders>` at HEAD (`NONE`) and the new invocations carry no token; four mechanical criteria
 (a fourth with its one-line reason on the face), each dry-run at base (AC1 FAIL as expected: 69 unrouted; AC2 FAIL:
 `source` absent; AC3 and AC4 PASS as controls).
+
+**AMENDMENT 6 (2.0.0_SA_COO~B1, phase A3 drained @19fb066b50):** worker ~20 built the seam reads, lists and deletes:
+census 127 sites, ROUTED 22 -> 88, NOT-SERVED 36, EXEMPT 0 -> 3, UNROUTED 69 -> 0; the 15 new unit tests pass; AC3 and AC4
+PASS; the issuer re-read all four on the merged tree plus `r3_rotation.py` 3 of 3, the view in sync, `validate` over 15
+files and `targets` exit 0. AC2 read FAIL by its literal as the worker ran it: the shell sets `FORCE_COLOR=3` and
+Python's unittest colours the OK line, so `^OK$` cannot match (row D1-W20-S3). The defect is the issuer's invocation:
+it is now `env -u FORCE_COLOR python -m unittest ...` (expect unchanged); the issuer's re-read with that form reads
+`Ran 15 tests ... OK`. Rows ruled: D1-W20-S1 (legacy-copy PUTs follow the seam): inside the CTO's ADDENDUM 5, which keeps the
+legacy home untouched under `canonical` and makes the rollback the mode back to `legacy`; no copy is needed at a home no
+reader follows; carried to the pair as a stated fact. D1-W20-S2 (three caller-bucket helpers exempt): accepted, each call
+probes a non-served key at base; a future caller probing a served key needs a seam-aware signature (a follow-up, not a
+precondition). D1-W20-S4 (log text names the pipeline bucket under `canonical`): display only, follow-up; phase B's
+verification reads listings, not logs. Gate limb: a criterion invocation amended on a non-terminal order by its issuer; no
+placeholder declared.
 
 **PHASE B (STAGED; NOT A FACE).** Un-park conditions, all required, each read from a file at HEAD:
 1. Phase A merged with AC1 `4 of 4`, and `FB-f-8` (act 1, the advTenant deploy) is `complete`.
