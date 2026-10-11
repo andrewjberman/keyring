@@ -10,7 +10,7 @@
  "subject": "AMGT_CORPUS r45 au-1/au-2 WRITE: bronze ingest + four-count at site Z (pair signed, STOP 0-4)",
  "body_path": "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-WRITE-R45-au1.bronze-ingest-and-four-count-sitez.md",
  "opened_at": "2026-10-11T09:34:21Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T09:35:56Z",
   "bus_message_id": "ebbd3bb5-bb8a-4089-a909-4151f6b393be"
@@ -21,8 +21,8 @@
   "bus_message_id": "1f2599d6-f59f-4536-974e-8ed610999c95"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T10:40:10Z",
+  "from_by": "2.0.0_SA_COO~C1",
   "to_at": "2026-10-11T10:12:58Z",
   "to_by": "0.7.0_AE_CloudOps~ZC"
  }
