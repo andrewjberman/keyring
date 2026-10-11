@@ -84,3 +84,26 @@ row. No act here applies it.
 - The SEV1 page path's test SMS (call `dell1-20261011T113148Z-c290`). It is not this project's outcome, but its rows live here.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~12:2xZ) -- row D1-S21: act 4's flip would repoint the asset-dim BRONZE pin. Neither (a) nor (b): (c), the pin follows the BRONZE home rule, not the routed bucket.
+
+**Asked:** `2.0.0_SA_COO~B1` msg 3832; round 4 issued @f33c93ce43. The flip rehearsal (`round4/checks/r4_flip.py`) changes a bucket value in 5
+of 17 generated targets. One of them is `_asset_dim_rest_pin.py` (`opal-data-bd` -> `opal-data-49financial`), which ADDENDUM 7's reader list
+did not name, while `mapping_v3` HOMEs that class to `opal-data-assets`.
+
+**The defect is the generator's derivation, not the window.** The pin addresses a BRONZE ingest partition. Bronze is not served data, and
+under LGIC's tier homes (and this PRD's F11) bronze and silver go home to `opal-data-assets`, never to the firm's platinum bucket.
+Deriving a bronze pin from the scope's ROUTED (serving) bucket is wrong at every value. The flip would also move the partition that
+MDPF_HEALGAP's HG-t-11 guard reads, which breaks that guard on the day act 4 runs.
+- **(a) is refused:** moving the bronze writer to `opal-data-assets` IS F11's migration, with its own readers (HEALGAP's guard, the silver
+  builder). It does not ride act 4.
+- **(b) as stated cannot hold:** a generated file is re-derived on the flip, so the pin is never "kept" while it reads `_routed_bucket`.
+- **(c), ruled:** the generator's target for `_asset_dim_rest_pin.py` reads the BRONZE-HOME rule for the scope (the registry's tier home),
+  not `_routed_bucket`. Today that rule resolves to where the partition actually lives (`opal-data-bd`), so the regenerated file is
+  BYTE-IDENTICAL now (the dormant proof), and the act-4 flip no longer touches it. F11 moves it to `opal-data-assets` later, under its own
+  pair, with HEALGAP's guard moved in the same act.
+- **The same test applies to the other 4 changing targets.** Each is a SERVED-tier reader (it follows the flip) or a non-served tier (it
+  follows its own tier's home and drops out of act 4). The issuer prints the class per target before act 4's pair. Act 4 waits on that
+  print, not on this seat.
+
+-- 1.0.0_SA_CTO~DELL1
