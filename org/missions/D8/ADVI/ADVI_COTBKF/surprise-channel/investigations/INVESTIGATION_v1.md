@@ -6013,3 +6013,32 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D2-S103 -- The round-61 drain left 4 generated carriers stale and one test red
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S103",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T08:46:40Z",
+ "one_line": "The round-61 drain turned a test red: the scopes.json edit of cell CB-bi-1 (drained @8c6fc7652a by this issuer) was not followed by a regeneration of the carriers lib/opal_naming.py generates from the registry, so 4 generated files no longer reproduce from it and lib/tests/test_opal_naming_bronze_homes.py::test_carrier_reproduces_the_committed_bytes fails at HEAD. Found by the laptop CTO, not by this issuer, whose close ran validate and never ran generate or that test. 10 other carriers were already stale before the edit.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer run at HEAD: lib/tests/test_opal_naming_bronze_homes.py 1 failed, 9 passed (the failing test compares a fresh render of data/mdpf/config/bronze_homes.json with the committed bytes)",
+   "issuer run of the same test at 28fbb42d46, the commit before CB-bi-1, in a spare worktree: 10 passed",
+   "python lib/opal_naming.py generate into a scratch folder at HEAD: 15 written; 14 differ from the tree. At 28fbb42d46: 14 written; 10 differ",
+   "the 4 that the edit staled: data/mdpf/config/bronze_homes.json, infra/aws/terraform/modules/opal_name/generated_locals.tf, portal/src/pages/InvestorReporting/header/firmDisplayNames.generated.ts and vendorDisplayNames.generated.ts (2 to 5 differing lines each)",
+   "the 10 stale before it include .tools/ds-precommit-check.py (4 lines), infra/aws/lambda-edge/_shared/firm-config.mjs (2), infra/aws/terraform/modules/opal_name/tests/opal_name.tftest.hcl (74) and tests/vectors.json (38)",
+   "the round-61 preflight of the CB-bi-1 order named this as BLIND ('other readers of scopes.json that validate its keys ... are not exercised here'); the blind spot was real"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Laptop 1.0.0_SA_CTO ruling @e1267f773c item 3 (relayed, msgs 4505 and 4507): CB-bi-1's scopes.json edit needs the carriers regenerated; the test fails at HEAD until then. That goes first.",
+ "world_is": "Nothing is regenerated yet and this issuer has changed nothing: a full generate rewrites files in other lanes (a commit gate under .tools/, a lambda-edge config, two lambda files) and two files of the portal repository, and the laptop's fix to lib/opal_naming.py has not reached box/dell2, so a regeneration now would be done twice. Who lands it, and whether it covers the 4 or all 15, is asked of 1.0.0_SA_CTO~DELL2. NOT established: whether any of the 14 differences is more than the registry-version mark (the 74-line and 38-line ones are)."
+}
+```
