@@ -128,7 +128,7 @@ Rows: id `NFRA_OPLGTW-Z-W46-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - The 10:45Z scheduled day is the parallel QA arm (OG-tm-1 AC2); this order does not wait for it.
 - Pre-cut: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>33</round>
 <slot>~46</slot>
 <fabric>site-z</fabric>

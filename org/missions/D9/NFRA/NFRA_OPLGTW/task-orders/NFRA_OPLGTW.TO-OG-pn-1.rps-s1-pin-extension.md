@@ -110,7 +110,7 @@ ask's path, commits, rows.
   opened before the apply (C3) -- the 12:15Z sweep converts the six dates after the deploy, so the apply IS the served
   move. Graded by GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>33</round>
 <workstream>RPS-PIN</workstream>
 <slot>~50</slot>
