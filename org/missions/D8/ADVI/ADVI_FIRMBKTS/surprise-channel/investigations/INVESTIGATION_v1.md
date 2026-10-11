@@ -2856,3 +2856,32 @@ Opened as the worker's step-4 finding list. One row per read site, form OBSERVAT
   }
 ]
 ```
+
+## Row filed by 2.0.0_SA_COO~B1 (round 3, ADDENDUM 4 condition 1: E_01 and E_24)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S14",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T08:27:25Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "THE CTO'S ADDENDUM 4 CONDITION 1 ON E_01 AND E_24: E_01 IS NOT A SERVED-KEY WRITER UNDER THE MODULE'S OWN RULE AND LAST WROTE 2026-04-07; E_24 HAS NO LAUNCHER AND NO SendCommand NAMING IT IN 45 DAYS (0 OF 4,010)",
+  "spec_asserts": "ROUND_ANALYSIS.round2.md ADDENDUM 4 condition 1: no writer of 49 Financial's platinum is left on legacy when the switch moves; E_01 and E_24 are read, and carried in the same act or shown dead with a denominator, before the window opens. The census (PRODUCER_CENSUS.json) lists both under class gold/artifacts/.",
+  "world_is": "E_01 writes gold/account_quality_tiers_{date}.json and gold/account_quality_tiers.parquet (E_01 header lines 30-32; objects listed in opal-data-bd under that prefix: 3 of 3). platinum_dest.destination() in canonical mode returns (opal-data-bd, same key) for those keys, so E_01 moves nothing and writes one home under either mode; its newest object has LastModified 2026-04-07T07:12:22Z (187 days before this read). The census class column for E_01 is wrong; its census line is not a served-class write. E_24 is a manual rebuild tool (header: 'No gold pipeline needed ... Usage: python3 E_24 --upload') that writes the served key gold/artifacts/advisor_fee_efficiency.json (canonical: advi/49financial/platinum/artifacts/advisor_fee_efficiency.json); it is not in gold_dispatch.sh's catalog, and a search of the first-party corpus (81,118 files) names it only in logs and audit files, never as a launch. Run history, measured 45 days (2026-08-27 to 2026-10-11): CloudTrail SendCommand events read 4,010 over 81 pages, complete, 0 name E_24 or E_01 (1 names gold_dispatch, 2026-10-01T04:11Z); StartSession events read 1 (a shell session cannot be attributed to a script, so a session run is not excluded by this read). A hand run of E_24 after the mode moves, without the export, writes the legacy key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/aws s3api list-objects-v2 --bucket opal-data-bd --prefix gold/account_quality_tiers (3 objects; newest 2026-04-07T07:12:22Z)",
+      "python: platinum_dest.destination('gold/account_quality_tiers_2026-04-02.json','canonical') == ('opal-data-bd', same key); destination('gold/artifacts/advisor_fee_efficiency.json','canonical') == ('opal-data-49financial', 'advi/49financial/platinum/artifacts/advisor_fee_efficiency.json')",
+      "data/black_diamond/scripts/gold/gold_dispatch.sh:110-121 catalog: 12 of the 14 census writers; E_01 and E_24 absent",
+      "PRODUCER_CENSUS.json E_01 entry: runner UNKNOWN, schedule null",
+      "boto3 cloudtrail lookup_events EventName=SendCommand, 2026-08-27 to 2026-10-11, 81 pages, 4,010 events, body contains E_24: 0, E_01: 0, gold_dispatch: 1 (2026-10-01T04:11Z); EventName=StartSession: 1 event"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "E_01: retire from the census as a non-served-key writer (reason above, denominator 3 of 3 objects). E_24 reads dead under ADDENDUM 4's own test (no schedule, no caller, no SendCommand naming it in 45 days: 0 of 4,010) with one residual: 1 StartSession in the window. The act-2 pair proposes it retired from the census on that denominator and records the residual; the CTO rules. Owner: 2.0.0_SA_COO~B1."
+}
+```
