@@ -35,17 +35,17 @@ directory and holdings reads stay on the live row. You build it DORMANT: today e
    destination class that starts the template) to `{"bucket": <the scope's routed bucket>, "legacy": <the row's template>,
    "canonical": <the seam's destination key for it>}`. Reuse that function's derivation (do not copy-and-type it); no
    key, bucket or firm literal is typed in the builder. A tenant with no registered owner has no entry.
-2. **The read.** In `infra/aws/lambda/investor-reporting/_authz/loaders.py` (hand-kept code outside the generated block): `CANONICAL_BUCKETS` is the frozenset of the
-   comma-separated environment variable `IRPT_PLATINUM_CANONICAL_BUCKETS` (unset or empty: empty). `load_ownership(tenant)`:
+2. **The read.** In `infra/aws/lambda/investor-reporting/_authz/loaders.py` (hand-kept code outside the generated block): `CANONICAL_PLATINUM_BUCKETS` is a second GENERATED
+   module constant in the same file (see Amendment 1; no environment variable). `load_ownership(tenant)`:
    when `tenant` is in `OWNERSHIP_READ`, read bucket = the entry's `bucket` and key = its `canonical` if that bucket is in
-   `CANONICAL_BUCKETS`, else its `legacy`; otherwise exactly as today (`bucket_for(tenant)` and
+   `CANONICAL_PLATINUM_BUCKETS`, else its `legacy`; otherwise exactly as today (`bucket_for(tenant)` and
    `OWNERSHIP_KEY_TEMPLATE.format(firm=tenant)`). The directory, holdings and policy loaders are NOT changed. The "absent
    map is an empty map" and "present but unreadable raises" behavior is unchanged; no authorization artifact is cached.
 3. **Regenerate** `infra/aws/lambda/investor-reporting/_authz/loaders.py`'s generated blocks with the builder (`python lib/opal_naming.py generate --out /c/dev/wk-firmbkts-39 --target
    infra/aws/lambda/investor-reporting/_authz/loaders.py`); never by hand.
 4. **A test** `infra/aws/lambda/investor-reporting/_authz/tests/test_ownership_read.py` in the folder's own style: (i) a registered owner reads (routed bucket, legacy key) with the
-   variable unset, while its directory read uses the directory map's bucket; (ii) naming the routed bucket in the
-   variable reads the canonical key; (iii) naming another bucket reads the legacy key; (iv) an unregistered tenant reads
+   variable unset, while its directory read uses the directory map's bucket; (ii) setting the module's `CANONICAL_PLATINUM_BUCKETS` to the routed bucket
+   reads the canonical key; (iii) setting it to another bucket reads the legacy key; (iv) an unregistered tenant reads
    `bucket_for` and the template key. A test that cannot fail is not a control: state in your report the one-line
    mutation of `load_ownership` that makes (ii) fail and the one that makes (i) fail.
 
@@ -63,6 +63,7 @@ directory and holdings reads stay on the live row. You build it DORMANT: today e
 lib/opal_naming.py
 infra/aws/lambda/investor-reporting/_authz/loaders.py
 infra/aws/lambda/investor-reporting/_authz/tests/test_ownership_read.py
+infra/aws/lambda-edge/_shared/firm-config.mjs
 org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~39/
 org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -93,8 +94,21 @@ outputs, the two mutations and the commit hash.
 
 **ISSUER NOTES:** cut on the CTO's round-3 ADDENDUM 7 (msg 3900): "one dormant IRPT cell before act 2 ... so the validator
 and IRPT read one authorization location at every moment"; re-carving the class is refused; act 4's pair names this cell
-(its deploy and the Terraform env `IRPT_PLATINUM_CANONICAL_BUCKETS` are act 4's). The IRPT Lambdas are not protected
+(its deploy is act 4's, in the same act that flips the routed value). The IRPT Lambdas are not protected
 functions; their deploy path is the act's.
+
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-11 ~14:5xZ):** the engagement is the registry's value alone, never an environment
+variable or a typed bucket (the CTO's ADDENDA 4 and 7; the naming gate): the builder renders `CANONICAL_PLATINUM_BUCKETS`
+(the sorted unique canonical destination buckets of the platinum destination classes: today `opal-data-49financial`) as a
+generated constant into `loaders.py` AND as `export const CANONICAL_PLATINUM_BUCKETS` into `_shared/firm-config.mjs` (a
+later cell makes the router and the validator import it; this cell edits neither). While the routed bucket is a legacy alias
+it is not in the list, so every read is today's (the dormant proof); the act-4 flip puts the routed bucket in it. Check
+`r4_irptown.py` W1 and W3 read this. Gate limb: GATE viii reads `<placeholders>NONE</placeholders>` at HEAD and no token.
+
+**AMENDMENT 2 (2.0.0_SA_COO~B1, after the worker's rows D1-W39-S1 and S2):** `infra/aws/lambda-edge/_shared/firm-config.mjs` is
+added to `<paths>` (the generated `CANONICAL_PLATINUM_BUCKETS` JS block lands there; regenerate it with the builder, add no
+hand edit). Row S2 (AC3 read the issuer's amendment commits on the branch as outside) is a check artifact: AC3 is graded from
+the merge diff at the drain. Gate limb: GATE viii reads `<placeholders>NONE</placeholders>` at HEAD and no token.
 
 <status>pending</status>
 <round>4</round>

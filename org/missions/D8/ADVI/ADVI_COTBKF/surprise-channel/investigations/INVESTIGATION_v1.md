@@ -6540,3 +6540,51 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W103-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~103",
+ "surfaced_at": "2026-10-11T13:48:43Z",
+ "one_line": "CB-bp-3: the custodian's mark on a held position (cottonwood gold canonical holdings, bd_snapshot) starts 2026-06-08, after all four events, so the CTO's comparison has no date to run on and each event is UNAPPLIED_NO_HELD_DATE; the only custodian-side price before the events is a trade price derived from Amount/Quantity.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "C:/dev/ajb_workspace/.scratch/advi_cotbkf/fwd3/price_cache/cottonwood-gold-canonical-holdings.16278a1c4f6b.parquet: 564,563 rows, one source value bd_snapshot, dates 2026-06-08..2026-10-06; rows for the 4 CUSIPs 154/17/119/159 (cusip-keyed), all on or after 2026-06-08; dates before each event 0",
+   "data/cot/scripts/gold/B_00.canonical_holdings.py lines 142-177: price = BD-reported market_value / units, source 'bd_snapshot'; data/assets/scripts/analysis/commonwealth_price_census.py line 59 comment calls it the custodian mark",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~103/SPINOFF_CLAIMS.json custodian_print and events[].evidence; second candidate other_candidate_prints[0] (trade price, 16/4/4/1 dates compared): readings APPLY / DO_NOT_APPLY / APPLY / APPLY(one date)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO round-68 ruling: the factor is applied for an event iff it reproduces the custodian's price on the dates before it where an account held the security; the estate holds an independent print of that price.",
+ "world_is": "The held-position mark exists only from 2026-06-08, so under the ruling's words every event is left UNAPPLIED. A custodian-delivered trade price exists on 16/4/4/1 held dates before the events inside the price table's window and was reported as a second candidate, not decided on. Whether the ruling admits it is the CTO's; not changed here."
+}
+```
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W103-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~103",
+ "surfaced_at": "2026-10-11T13:48:43Z",
+ "one_line": "CB-bp-3: the round-67 'independent cottonwood step' (0.8132, 0.9400, 0.9524, 0.9654) equals Yahoo's step divided by the factor to four digits, and the silver price cache here steps exactly as Yahoo does (1.0243, 0.9973, 1.0058, 1.0176) with raw points = Yahoo Adj Close x one constant per ticker; the round-67 price test is the with-factor table's own step and not an independent print.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~100/ADDED_SPLITS.json price_moving_cusips: cottonwood close ratio 0.8132/0.9400/0.9524/0.9654 and Yahoo 1.0766/0.9973/1.0058/1.0176; arithmetic 1.0766413/1.324=0.8132, 0.9973071/1.061=0.9400, 1.0057682/1.056=0.9524, 1.0175773/1.054=0.9654",
+   "C:/dev/ajb_workspace/.scratch/advi_cotbkf/fwd3/price_cache/cottonwood-silver-canonical-prices.16278a1c4f6b.parquet raw point step across the four dates 1.0243/0.9973/1.0058/1.0176; raw / Yahoo Adj Close (yahoo_census cache) constant 1.0240/0.9616/1.0265/1.0343 on 448/1291/270/82 pre-event dates",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~103/SPINOFF_CLAIMS.json other_candidate_prints[1] and not_established"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "ADDED_SPLITS.md section 3 (c): the cottonwood store steps down across each event date where the unrepaired Yahoo close is continuous, independent evidence the factor is real.",
+ "world_is": "In the local silver cache the store does not step down; it steps as Yahoo does. The 0.8132 family is the with-factor price table's step (served x factor), so 'Yahoo ratio over cottonwood ratio = factor' recovers the factor by construction. The events remain real by the custodian's acca/lica rows; the price test did not show it. Not changed here."
+}
+```
