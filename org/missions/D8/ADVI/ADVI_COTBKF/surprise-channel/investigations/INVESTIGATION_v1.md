@@ -5464,3 +5464,30 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D2-W85-S1 -- the holdings source of the bond count is local copies; absent copies refuse the build and the mint
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W85-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~85",
+ "surfaced_at": "2026-10-11T05:30:00Z",
+ "one_line": "The order gave no source for the holdings of an account-day; the count reads local copies (account_day_value and the transactions cache under the day directory's parent), so the build and the mint now REFUSE when those copies are absent.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "commonwealth_account_return_daily.py load_bond_inputs/load_fixed_income_cusips: base = parent of the day directory; files fwd3_serve_r34/account_day_value.parquet (columns account, date, cusip) and tx_cache/trade_year=*/*.parquet (Cusip, Asset_Type)",
+   "real read: 778 Fixed Income CUSIPs and 141,555 bond-holding account-days, equal to the round-57 counts; the 3,325-file count ran in 10 s",
+   "the build reads the S3 silver account_day_value with a new cusip column (not read from S3 here: no S3 call was allowed), so that the column exists in the served table is UNVERIFIED by this worker",
+   "conftest.py: an autouse fixture answers 'no bond holdings' for test_commonwealth_ard_apply only, because those older tests fake S3 and carry no holdings files"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The order names where round 57 read the holdings but not where --bond-check, the mint and the build read them in a fresh checkout; it says a normal build or apply is unchanged when the count is 0.",
+ "world_is": "A fresh checkout without .scratch/advi_cotbkf/tx_cache or fwd3_serve_r34 gets REFUSED from the mint and the build, where before it did not; the S3 silver account_day_value is assumed to carry the cusip column the local copy carries."
+}
+```
