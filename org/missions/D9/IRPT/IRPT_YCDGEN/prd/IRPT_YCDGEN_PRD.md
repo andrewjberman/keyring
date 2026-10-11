@@ -5,7 +5,7 @@
  "project": "IRPT_YCDGEN",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.10",
+ "prd_version": "v0.12",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ycharts-inhouse-generation-feasibility-20261005.md@69141b561e",
  "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23"],
@@ -413,3 +413,41 @@ MECE check: every one of the 22 live outcomes has a row (FWD-3 and FWD-5 ride S2
 | Addendum 4 (what Yahoo lacks) | fund countries; top 25; maturity buckets; style box; loads; history of snapshots | C-COVERAGE ("not available"); C-METHOD; FWD-14 |
 | Addendum 5 (conditions) | unofficial reader; fetch on a schedule; source's own as-of date; one portfolio; fix the price columns first | C-VENDOR; C-SCHEDULE; C-MART; C-PRICES |
 | Check/swap brief (2026-10-07, Parts I, IV, VIII) | O1-O7 and R1-R12; packet 2 superseded by S32; external patterns not researched (egress) | ENDPOINT FWD-17 to FWD-23; backlog 3b; S33-S39 |
+
+## ADDENDUM v0.11 -- a generation job that will never run says so, with a claim on its cause (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** row IRPT_YCDGEN-D2-S49; this seat's round-11 and round-13 analyses (@457305b604, @7fa981f907); resident st31 (installed
+  2026-10-11, pair @a61d835162 + @bb5f7303b7); `2.0.0_SA_COO~G2`'s reconciliation packet for eight real requests (@f101ddd88e). The
+  ENDPOINT is unchanged. This addendum writes down a contract the estate has been running without since st31, against the eight cases.
+- **The contract.** A generation job whose message has exhausted its deliveries reads state `FAILED`, never `RECEIVED`. Its detail carries:
+  `code` `DELIVERIES_EXHAUSTED`; `cause`, the CLASS of the exception on the last delivery and never its message; `receives`; and
+  `cause_claim`, one of `measured` (the worker wrote the record at the moment of the failure) or `inferred` (the record was written
+  afterwards from other evidence). A record with no `cause_claim` is read as NOT measured by any consumer that grades on the cause.
+- **What a caller is told.** State FAILED, reason ANALYSIS_FAILED, both values the status route already serves. The detail is not served to
+  a caller. A request that will never produce a report does not read as queued.
+- **What this does not promise.** A cause is a class, not a reason: it does not say what the refusal was about. A FAILED job is not made
+  safe to redrive by its record; a redrive is its own act under a pair naming each job.
+- **Rule 24, for `cause_claim`:** two values over the domain "every DELIVERIES_EXHAUSTED record"; same grain (one record); one intent (how
+  the cause is known); a later read of better evidence may move `inferred` to `measured` and nothing moves `measured`. Token census
+  (word-boundary, native search, `infra/aws/lambda/investor-reporting/` tracked files): `cause_claim` 0. `measured` and `inferred` are the
+  estate's own claim words and are used here in that meaning.
+- **st31 writes no `cause_claim` today.** Its record is therefore read as not measured until a later resident release stamps `measured`;
+  that is one line in the worker and rides st32.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.12 -- ADDENDUM v0.11 repaired on the reviewer's two points (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `3.0.0_SA_CVO`'s refusal of the v0.11 ratified-text half,
+  `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_PRD_v0.11_RATIFIED_TEXT_REVIEW_20261011.md` @cebbdce129. Both points are accepted.
+- **Point 1: the detail has FOUR members and no fifth.** `code`, `cause`, `receives`, `cause_claim`. `reconciled` is NOT a member of the
+  contract and is not written: `cause_claim` carries the whole distinction between a record the worker wrote at the failure and one
+  written afterwards. This seat's ruling of the same commit (its half @3b1895866f and msg 5116) said "beside `reconciled: true`"; that is
+  withdrawn, and the half is corrected in the commit that carries this addendum.
+- **Point 2: nothing moves either value.** v0.11's sentence "a later read of better evidence may move `inferred` to `measured`" is struck.
+  `measured` means the worker wrote the record at the moment of the failure, and no later act can make that true of a record. A better
+  later read of the same job is a new `inferred` record that names its evidence. Rule 24 postulate (iv), restated: no remedy moves
+  `measured`; no remedy moves `inferred` to `measured`.
+- Everything else of v0.11 stands as written.
+
+-- 1.0.0_SA_CTO~DELL2

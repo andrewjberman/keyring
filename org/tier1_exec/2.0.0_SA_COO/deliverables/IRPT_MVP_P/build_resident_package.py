@@ -121,6 +121,43 @@ def core_outputs(state_json=None):
     return state["serial"], outputs
 
 
+PACKAGER_KEYS = ("api_base", "secret_name")
+
+
+def optional_bindings(analysis_ready_queue_url=None, commentary_ready_queue_url=None, packager=None):
+    """IRPT_ANLREQ AR-g-41: the three OPTIONAL resident bindings, validated by the runtime's own rule; {} when none is given.
+
+    A queue url is an https://sqs. string; `packager` is exactly api_base/secret_name (non-empty strings, api_base
+    https://). secret_name is a NAME: nothing here reads a secret or calls AWS. A bound commentary queue needs the packager
+    principal (without it every message dead-letters), and a packager needs the queue it serves."""
+    queues = (("analysis_ready_queue_url", analysis_ready_queue_url),
+              ("commentary_ready_queue_url", commentary_ready_queue_url))
+    for key, value in queues:
+        if value is not None and (not isinstance(value, str) or not value.startswith("https://sqs.")):
+            raise ValueError("BINDING_QUEUE_URL:" + key)
+    if packager is not None:
+        if (not isinstance(packager, dict) or set(packager) != set(PACKAGER_KEYS)
+                or any(not isinstance(packager[k], str) or not packager[k].strip() for k in PACKAGER_KEYS)
+                or not packager["api_base"].startswith("https://")):
+            raise ValueError("BINDING_PACKAGER_KEYS")
+    if commentary_ready_queue_url is not None and packager is None:
+        raise ValueError("BINDING_PACKAGER_REQUIRED")
+    if packager is not None and commentary_ready_queue_url is None:
+        raise ValueError("BINDING_PACKAGER_WITHOUT_QUEUE")
+    given = {"analysis_ready_queue_url": analysis_ready_queue_url,
+             "commentary_ready_queue_url": commentary_ready_queue_url, "packager": packager}
+    return {key: value for key, value in given.items() if value is not None}
+
+
+def parse_packager(text):
+    """`api_base=<url>,secret_name=<name>` -> dict; a malformed pair gives a dict optional_bindings refuses."""
+    pairs = {}
+    for part in text.split(","):
+        key, sep, value = part.partition("=")
+        pairs[key.strip()] = value.strip() if sep else ""
+    return pairs
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--pin", required=True, help="commit whose blobs are packaged")
@@ -143,9 +180,23 @@ def main(argv=None):
                         help="file of repo paths (one per line), each existing at --pin, taken from --pin")
     parser.add_argument("--state-json", default=None, metavar="FILE",
                         help="read the core state document from FILE instead of S3 (offline tests)")
+    parser.add_argument("--analysis-ready-queue-url", default=None, metavar="URL",
+                        help="optional binding: the I3 queue a READY job sends to (https://sqs. URL)")
+    parser.add_argument("--commentary-ready-queue-url", default=None, metavar="URL",
+                        help="optional binding: the I4 queue the resident polls into the packager; needs --packager")
+    parser.add_argument("--packager", default=None, metavar="api_base=URL,secret_name=NAME",
+                        help="optional binding: the packager principal (a secret NAME, never read here); needs "
+                             "--commentary-ready-queue-url")
     args = parser.parse_args(argv)
     if bool(args.base_pin) != bool(args.files_from):
         raise SystemExit("--base-pin and --files-from go together")
+    try:
+        optional = optional_bindings(
+            analysis_ready_queue_url=args.analysis_ready_queue_url,
+            commentary_ready_queue_url=args.commentary_ready_queue_url,
+            packager=parse_packager(args.packager) if args.packager is not None else None)
+    except ValueError as refusal:
+        raise SystemExit(str(refusal))
 
     pin = git("rev-parse", args.pin).strip()
     base = git("rev-parse", args.base_pin).strip() if args.base_pin else pin
@@ -240,6 +291,9 @@ def main(argv=None):
                        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
                        "generated_by": "2.0.0_SA_COO~P build_resident_package.py"},
     }
+    if optional:
+        bindings.update(optional)
+        bindings["provenance"]["optional_bindings"] = sorted(optional)
     if args.opal_map:
         bindings["opal_map"] = {"path": "../" + OPAL_MAP_MEMBER,
                                 "sha256": next(d for d, p in sums if p == OPAL_MAP_MEMBER)}

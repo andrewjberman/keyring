@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~51</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -59,6 +59,33 @@ spawn amendment and in the contract document that amendment cites -- read them t
    - `the request record is never shown in place of a refused report`
    Existing tests keep their names; change only what the new argument forces.
 5. Do not restyle anything. Do not touch the form, the filing sequence or any file outside the grant.
+
+---
+
+**SPAWN AMENDMENT (AMENDMENT 1, issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~14:0xZ): both predecessors are terminal; the facts this face
+said it would give.** Gate limb that graded this amendment: read from this commit's own output.
+
+- **Portal branch:** `wk-IRPT_ANLREQ-51-portal-r7`, cut from portal DEV `cece88f603` (round 6's form change is ON DEV at that commit).
+- **The interface, as cell `AR-y-71` committed it** (merged @31d02ad19c; read it in
+  `docs/contracts/investor-reporting/v1/routes.json`, the `analysis-report` route's `query` object, and
+  `docs/contracts/investor-reporting/v1/CONTRACT.md`, the vocabulary row for the new reason):
+  - operation `analysis-report`, `GET /api/scoped/investor-reporting/analysis/{jobId}/sections`;
+  - the selector is the QUERY STRING member `ticket_id` (beside `selected_tenant`), the ticket service's id form;
+  - the refusal a caller reads is `status.public_reason_code` = `REPORT_TICKET_MISMATCH`. It is served ONLY to a caller already
+    admitted to the request. It is NOT `NOT_FOUND` and it is not a waiting state.
+- **What the page says** (CTO ruling msg 4984): in words, that this ticket's recorded report belongs to another ticket; NO waiting
+  state, no report section, not the request record. On DEV `isReportNotReady` (`analysisRequest.ts`) treats only NOT_READY, NOT_FOUND
+  and 404 as waiting, so the new value already falls out of that branch: make its presentation deliberate, not an accident of a rethrow.
+- **One more thing in this cell's grant, by CTO condition (msg 5045, item 4), row `IRPT_ANLREQ-D2-W52-S7`:** the portal's generated
+  contract-named reason-code set must contain the new value, or `src/pages/InvestorReporting/__tests__/fe-s-40/reason-codes.test.ts`
+  (its arm at about line 243) goes red and a page prints the code as "not defined by the v1 contract". Regenerate it with the
+  generator `src/pages/InvestorReporting/__tests__/fe-s-40/gen-named-codes.mjs` (read it for its entry point and what file it writes:
+  `CONTRACT_NAMED_REASON_CODES` in `src/pages/InvestorReporting/render/Page.tsx` or wherever it writes) and commit EXACTLY what it
+  writes. Never hand-edit the generated set, the generator or the test. The generator reads the contract documents from the workspace
+  worktree, which carries the new row. Run that test file and report its line. If the generator changes anything beyond adding the
+  one value, list every other change and why; if it would drop or rewrite something by hand, STOP that step and file a row.
+  The grant widens by exactly the file(s) that generator writes.
+- The typecheck criterion `AR72-y-AC3` covers the regenerated file too.
 
 ### ACCEPTANCE
 

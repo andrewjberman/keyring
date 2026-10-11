@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~290</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -68,6 +68,22 @@ portal's sections reader already reads `computation_validation` (CTO msg 4923), 
    schema or the answer. `packaged_in_functions`: functions whose row in `infra/aws/lambda/ci/lambda-source-map.json` stages the
    response schema file (do not edit the map).
 
+**AMENDMENT 1 (issuer, 2026-10-11, on row IRPT_BCKEND-D2-W290-S1).** The registry `_contracts/tests/test_seam_paired.py` builds
+(`_response_validator`, about lines 408-418; `_ref_published_path`, about lines 382-389) knows only the v1 folder, so a `$ref` into
+the v2 report contract cannot resolve there. The v2 schema stays where its owner put it (PRD ADDENDUM v0.28 item 30: IRPT_YCDGEN
+cuts that file); it is not copied and its shapes are not inlined. Ruling, inside this cell:
+- GRANTED: `infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py`, for ONE bounded edit: the registry also
+  loads `_contracts/AnalysisReport.v2.schema.json` under its own `$id`, and `_ref_published_path` resolves a `$ref` to THAT `$id`
+  to THAT file. Nothing else in the file changes: no assertion, no expected value, no skip, no other id admitted. A `$ref` to any
+  other non-v1 id must still return what it returned before; show that with one control line in the record
+  (`registry_control: {v2_ref_resolves: true, other_non_v1_ref_resolves: false}`).
+- The schema structure is the candidate the previous worker measured
+  (`deliverables/0.9.0_WK_IRPT_BCKEND~290/CANDIDATE_analysis-report.response.schema.json.txt`): `anyOf` of the two closed forms,
+  the vendor form unchanged. Adopt it as it stands unless a criterion fails on it.
+- Then steps 3 to 5 of the face, the three criteria, the proof, the commit, the flip.
+- STOP with a row if the bounded edit is not enough (a second place builds a registry and refuses the reference), naming it.
+Gate limbs that graded this modification: GATE (viii) (placeholders); the `<paths>` block gains one file.
+
 <criterion id="IB130-1-AC1" cell_refs="IB-pr-432"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r130/p130_cells.py" . IB130-1-AC1</invocation><expect>IB130-1-AC1 PASS</expect></criterion>
 <criterion id="IB130-1-AC2" cell_refs="IB-pr-432"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r130/p130_cells.py" . IB130-1-AC2</invocation><expect>IB130-1-AC2 PASS</expect></criterion>
 <criterion id="IB130-1-AC3" cell_refs="IB-pr-432"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r130/p130_cells.py" . IB130-1-AC3</invocation><expect>IB130-1-AC3 PASS</expect></criterion>
@@ -92,6 +108,7 @@ the response schema's `data` member: (a) the members `provider`, `request_ref`, 
 
 <paths>
 docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json
+infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py
 infra/aws/lambda/investor-reporting/_contracts/fixtures/analysis-report.sections.opal.valid.json
 infra/aws/lambda/investor-reporting/_contracts/fixtures/analysis-report.sections.vendor.valid.json
 infra/aws/lambda/investor-reporting/_contracts/fixtures/analysis-report.sections.opal.invalid.json

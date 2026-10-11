@@ -6516,3 +6516,101 @@ round.** Never edit an existing row.
  "world_is": "The price input's as_of is a second live read (the price store object's LastModified today), so the input's file hash is not reproducible either; the returns are. Not established: whether any consumer reads the as_of column or the input's sha256. Not changed here (the order pins the split store only)."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S116",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T13:18:17Z",
+  "one_line": "L9 round 67: CB67bo2-AC2 MET. Re-derived by this seat from the two price tables: 3,034 points differ on 4 securities, each scaled by one constant equal to the reciprocal of its factor, every moved date before the entry's date. Independence from the store rests on the custodian's corporate-action rows, which the worker read and this seat did not. One fact for the CTO's open question on spin-offs: the return on the event's own date moves by 0.00004; the differences are spread over the weeks before it in both directions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_67_DRAIN_END_20261011.md @2326dc3955 (msg 4966)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_67_L9_GRADE_20261011.md",
+      "this seat's own diff 2026-10-11T13:18:17Z of the served run's price table (.scratch/advi_cotbkf/r34/after/security_day_price.parquet) against today's (wk-cotbkf-80/.scratch/w97/r28/after), 2,124,908 rows each, 0 rows on one side only: 3,034 points differ, on 4 securities, 649 / 1,876 / 392 / 117; for each the last differing date is the day before the entry's date (2022-04-10, 2025-10-29, 2021-09-30, 2020-11-16) and the ratio of old to new price is one constant per security (0.7553, 0.9425, 0.9470, 0.9488), the reciprocal of the entry's factor. On the returns: the 28 differing values are in 1 account, both signs (11 up, 17 down), the largest on 2020-11-09, and the difference on the entry's own date 2020-11-17 is 0.00004. Printed: commonwealth_flows.py:73 and :80 (the two corporate-action row types are internal, no value crosses the boundary)"
+    ]
+  },
+  "spec_asserts": "CB67bo2-AC2 (JUDGMENT, graded by 3.0.0_SA_CVO at L9): each class rests on evidence independent of the store; 'dated before the days they move' is shown per CUSIP with its dates; an unconfirmed split is called unconfirmed.",
+  "world_is": "All three limbs hold. Not read by this seat: the custodian's rows; Proof A's run. Round 66's fourth limb is still open: the two rules have not been compared at the served instant's pin.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W103-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~103",
+ "surfaced_at": "2026-10-11T13:48:43Z",
+ "one_line": "CB-bp-3: the custodian's mark on a held position (cottonwood gold canonical holdings, bd_snapshot) starts 2026-06-08, after all four events, so the CTO's comparison has no date to run on and each event is UNAPPLIED_NO_HELD_DATE; the only custodian-side price before the events is a trade price derived from Amount/Quantity.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "C:/dev/ajb_workspace/.scratch/advi_cotbkf/fwd3/price_cache/cottonwood-gold-canonical-holdings.16278a1c4f6b.parquet: 564,563 rows, one source value bd_snapshot, dates 2026-06-08..2026-10-06; rows for the 4 CUSIPs 154/17/119/159 (cusip-keyed), all on or after 2026-06-08; dates before each event 0",
+   "data/cot/scripts/gold/B_00.canonical_holdings.py lines 142-177: price = BD-reported market_value / units, source 'bd_snapshot'; data/assets/scripts/analysis/commonwealth_price_census.py line 59 comment calls it the custodian mark",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~103/SPINOFF_CLAIMS.json custodian_print and events[].evidence; second candidate other_candidate_prints[0] (trade price, 16/4/4/1 dates compared): readings APPLY / DO_NOT_APPLY / APPLY / APPLY(one date)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO round-68 ruling: the factor is applied for an event iff it reproduces the custodian's price on the dates before it where an account held the security; the estate holds an independent print of that price.",
+ "world_is": "The held-position mark exists only from 2026-06-08, so under the ruling's words every event is left UNAPPLIED. A custodian-delivered trade price exists on 16/4/4/1 held dates before the events inside the price table's window and was reported as a second candidate, not decided on. Whether the ruling admits it is the CTO's; not changed here."
+}
+```
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W103-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~103",
+ "surfaced_at": "2026-10-11T13:48:43Z",
+ "one_line": "CB-bp-3: the round-67 'independent cottonwood step' (0.8132, 0.9400, 0.9524, 0.9654) equals Yahoo's step divided by the factor to four digits, and the silver price cache here steps exactly as Yahoo does (1.0243, 0.9973, 1.0058, 1.0176) with raw points = Yahoo Adj Close x one constant per ticker; the round-67 price test is the with-factor table's own step and not an independent print.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~100/ADDED_SPLITS.json price_moving_cusips: cottonwood close ratio 0.8132/0.9400/0.9524/0.9654 and Yahoo 1.0766/0.9973/1.0058/1.0176; arithmetic 1.0766413/1.324=0.8132, 0.9973071/1.061=0.9400, 1.0057682/1.056=0.9524, 1.0175773/1.054=0.9654",
+   "C:/dev/ajb_workspace/.scratch/advi_cotbkf/fwd3/price_cache/cottonwood-silver-canonical-prices.16278a1c4f6b.parquet raw point step across the four dates 1.0243/0.9973/1.0058/1.0176; raw / Yahoo Adj Close (yahoo_census cache) constant 1.0240/0.9616/1.0265/1.0343 on 448/1291/270/82 pre-event dates",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~103/SPINOFF_CLAIMS.json other_candidate_prints[1] and not_established"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "ADDED_SPLITS.md section 3 (c): the cottonwood store steps down across each event date where the unrepaired Yahoo close is continuous, independent evidence the factor is real.",
+ "world_is": "In the local silver cache the store does not step down; it steps as Yahoo does. The 0.8132 family is the with-factor price table's step (served x factor), so 'Yahoo ratio over cottonwood ratio = factor' recovers the factor by construction. The events remain real by the custodian's acca/lica rows; the price test did not show it. Not changed here."
+}
+```
+
+## ADVI_COTBKF-D2-W101-S1 -- A third clean-checkout input of the as_traded regrade is untracked and has no flag: the Yahoo Close cache
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W101-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~101",
+ "surfaced_at": "2026-10-11T13:57:44Z",
+ "one_line": "A third clean-checkout input of the as_traded regrade is untracked and has no flag: the Yahoo Close cache read from a fixed path <root>/.scratch/advi_cotbkf/yahoo_census (YAHOO_CACHE), 3580 files, 250 MB.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/silver/commonwealth_daily_valuation.py: YAHOO_CACHE = _ROOT / '.scratch' / 'advi_cotbkf' / 'yahoo_census'; apply_price_basis(cache_dir=None) uses it and raises FileNotFoundError 'as_traded needs the cached Yahoo pulls; ... is not a directory (no fallback to the store's points)' when a ticker needs it and the directory is absent; neither the valuation main nor the regrade main has a flag for it",
+   "C:/dev/wk-cotbkf-83 (clean worktree, no .scratch) has no such directory; the pinned copy is C:/dev/ajb_workspace/.scratch/advi_cotbkf/yahoo_census (3580 entries, 250M); the round-67 Proof A worktree C:/dev/wk-cotbkf-81 held its own copy at the same relative path",
+   "worker ~101 copied the pinned directory into its own worktree at .scratch/advi_cotbkf/yahoo_census (gitignored) before the clean run; no foreign worktree's scratch was on any command line"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bp-1 item 3: the regrade runs from a clean checkout with no extra flag, the pinned local caches under C:/dev/ajb_workspace/.scratch/advi_cotbkf being the only inputs, and the price cache copied into the worker's scratch as SPLIT_STORE_PIN.json describes.",
+ "world_is": "The as_traded price basis also needs the Yahoo Close cache at a default path under the checkout's own .scratch; a truly empty checkout stops there with FileNotFoundError before any table. The order does not name this copy; it was made by cp -r from the pinned directory, read-only on the source. Not changed here (a flag or a tracked pointer would be new surface outside the order). Not established: that the pinned directory is the one the served round-34 run read."
+}
+```

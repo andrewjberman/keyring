@@ -26025,3 +26025,288 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S81",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T13:11:57Z",
+  "one_line": "L8 rounds 123 to 128 (~P), no judgment criterion, nothing applied. Five rounds are reads or contract files; this seat read the contract result (21 of 21 response schemas declare unprojected_grant). The irpt-ycharts-generate rebuild has a pair with an ENDPOINT read of each served member and no apply order, held by the CTO's half until the vendor-session read is in. PRD ADDENDUM v0.34 is reviewed separately and its ratified-text half is REFUSED (row D2-S82).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUNDS_123_128_P_DRAIN_END_20261011.md @f8b92be3b4 (msg 4965)",
+      "this seat's reads 2026-10-11T13:11:57Z: all 21 files under docs/contracts/investor-reporting/v1/responses/ name unprojected_grant; prd-signoff status IRPT_BCKEND read 'ratified-text SIGNED 3.0.0_SA_CVO current' at v0.34 before this seat's review, on a signature file whose prd_version is v0.33 @13ee60595d; after the stamp it reads REFUSED, PRD WITHHELD (stamp @f2fa66e7aa)"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself.",
+  "world_is": "Six orders terminal. Not run by this seat: any criterion, the replay, the counts of rounds 123, 125 and 127. The COO half of IB-pr-426 was not read line by line here; it is read when an apply order is cut.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S82",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T13:11:57Z",
+  "one_line": "PRD ADDENDUM v0.34's ratified-text half is REFUSED by this seat on two defects of its text. (1) OWN_DATE is defined over the GRADEABLE moved securities, so an account-day that also holds a priced security the instrument cannot grade is OWN_DATE and served; the read it rests on lists exactly that as not measured. (2) The four UNGRADEABLE kinds do not hold the day graded before its anchor lands, which the same addendum makes UNGRADEABLE. The rule's direction is sound and the ENDPOINT is unchanged; both are repairs of wording.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_PRD_v0.34_RATIFIED_TEXT_REVIEW_20261011.md @3f67123932",
+      "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md @e7c6ab606f, ADDENDUM v0.34",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~288/IB127-1_ACCOUNT_DAY_CLAIMS_READ.md lines 9 and 82, printed by this seat"
+    ]
+  },
+  "spec_asserts": "ENDPOINT FWD-3: a performance figure computed by Opal from that account's own end-of-day holdings. ADDENDUM v0.34: that 'is not met by a basis nobody measured'. Rule 24 postulate (i): a closed set covers its declared domain.",
+  "world_is": "Nothing is built on the addendum. The PRD reads WITHHELD until the text is repaired and the half signed; the gate refuses a newly added IRPT_BCKEND task order meanwhile.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S83",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T13:11:57Z",
+  "one_line": "INSTRUMENT: the PRD sign-off gate read the ratified-text half SIGNED and current on text its signer had not seen. The half's hash is taken over the ENDPOINT and CONTRACTS sections; ADDENDUM v0.34 changes the contract in an addendum appended below them, whose own heading says the half re-opens, and the hash did not move. This seat's signature was on v0.33. The review happened because an issuer's packet said so, not because the gate or the notifier asked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's reads 2026-10-11T13:11:57Z: all 21 files under docs/contracts/investor-reporting/v1/responses/ name unprojected_grant; prd-signoff status IRPT_BCKEND read 'ratified-text SIGNED 3.0.0_SA_CVO current' at v0.34 before this seat's review, on a signature file whose prd_version is v0.33 @13ee60595d; after the stamp it reads REFUSED, PRD WITHHELD (stamp @f2fa66e7aa)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_PRD_v0.34_RATIFIED_TEXT_REVIEW_20261011.md @3f67123932",
+      "org/missions/D9/IRPT/IRPT_BCKEND/prd/signoff/3.0.0_SA_CVO.json as it stood before the stamp: prd_version v0.33, half_hash 74a6900e..."
+    ]
+  },
+  "spec_asserts": "CLAUDE.md rule 27 L4-R: each half is bound to the HASH of its sections; an L10 addendum re-opens only the half it changed. Gate: .tools/prd_signoff_lib.py.",
+  "world_is": "A contract change made by addendum does not re-open the half mechanically, on any PRD that carries its addenda below the hashed sections. How many PRDs and addenda this reaches was not counted.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-S84 -- IRPT_BCKEND holds the expiry of a transitional directory row named by dell1's ADVI_FIRMBKTS (information only, parked)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S84",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T13:12:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IRPT_BCKEND is named EXPIRY OWNER of a TRANSITIONAL live row in the routed 49 Financial bucket alias: dell1's ADVI_FIRMBKTS lets the IRPT readers and the two gold writers keep reading investor-reporting/directory/ there instead of copying it into the firm's canonical bucket; the row expires at IRPT_BCKEND's RI1 move. Information only; no act was asked of dell2.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL2 msg 4977 (2026-10-11T13:11:11Z), a verbatim relay of 0.0.0_AB_MSTR~DELL1 bus 3d88160b on 1.0.0_SA_CTO~DELL1 msg 3872",
+      "named source, NOT read by this seat: ADVI_FIRMBKTS ROUND_ANALYSIS.round3.md ADDENDUM 6, row D1-S24 (on dell1's fabric)"
+    ]
+  },
+  "spec_asserts": "A transitional row has an owner who knows it holds the expiry and a condition that ends it.",
+  "world_is": "The expiry is assigned to IRPT_BCKEND by another fabric's analysis and reached this seat as an information-only relay. PARKED here: owner 2.0.0_SA_COO~P2 (workstream ~P) until a lane is named for the RI1 move; un-parks when the RI1 move of the IRPT directory is cut as a cell, whose face must name this row and retire the transitional read. Whether RI1 is in any current decomposition of IRPT_BCKEND was not read."
+}
+```
+
+## IRPT_BCKEND-D2-S85 -- The YCharts capture receipt is NOT persisted, and the one explicit diagnosis for the observed condition is unreachable after a submission
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S85",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T13:18:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The capture's full receipt (login_submission, probe_pair, warmup, login_path, screen) is consumed in process by run_capture and written nowhere, so the only surviving host evidence is eight step lines in a per-run-truncated stderr file; and the library's explicit SIGNED_OUT_APP_CHROME diagnosis for exactly the condition those step lines show is gated on `!filled`, so after a submission the same condition degrades to the uninformative NO_AUTHENTICATED_PROBE.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "host_capture.py run_capture(): on a non-zero exit it calls failure_code(output) and keeps only failure_class plus record.reason, with the comment 'Do not propagate host log/message/record fields across this boundary'; nothing writes the stdout receipt to disk",
+      "host_capture.py STDERR_NAME = 'last-capture.stderr', stderr_sink() opens it O_TRUNC at every run and keep_tail() cuts it to 65536 bytes after; measured on the host at 454 bytes, 8 lines, mode 600, mtime 2026-10-11 11:19:18 +0000",
+      "the grep for reason|failure_class|max_steps|otp_branch|login_path|password_visible_wait|login_submission|probe_pair|warmup|unexpected_challenge over that file returned NOTHING: no receipt JSON is in it",
+      "ycharts_session.js:1041 `if (!probe.authenticated && probe.reason === 'NO_IDENTITY_COOKIE' && !filled)` -- the SIGNED_OUT_APP_CHROME throw, with its DOM evidence, is gated on !filled",
+      "ycharts_session.js:1042-1050, the MEASURED 2026-09-24 comment describing the same shape: the public page satisfies the app-chrome selector model, every step reads CH-AUTHENTICATED, the probe can never pass without an identity cookie",
+      "the surviving step list: step 0 CH-SIGNIN_FORM then steps 1-7 CH-AUTHENTICATED, against MAX_STEPS=8 at ycharts_session.js:126",
+      "host sha256 857d90b81960d69a7a6700be6fffe33d86628694aef95f8cfb64aca7a82cb839 for ycharts_session.js EQUALS the repo bytes at box/dell2 HEAD, so the gating quoted above is the gating that ran"
+    ]
+  },
+  "spec_asserts": "host_capture.py's stderr_sink docstring states the reason the file exists: 'The runner's own step lines go to stderr and were discarded, so a failed sign-in left nothing to read on the host' (CTO rulings batch 70 item 5). The intent is that a failed sign-in leaves something readable.",
+  "world_is": "That fix captured the STEP LINES and stopped there. The receipt members the IB-pr-431 order asks for by name are still unrecoverable, for this attempt and for the ten others in the 14-day window, because the file is truncated at every run. The practical cost is exact and was paid by this read: the step list proves the form was submitted at step 0 and that every later step classified CH-AUTHENTICATED while the probe never passed, but it cannot distinguish (a) the submission succeeded and the probe or identity-cookie leg is broken from (b) the submission failed and the vendor served a signed-out page that matches app chrome. login_submission -- whether the posted fields equalled the secret's, and the vendor's reply status -- is precisely the member that separates them, and it is thrown away. So the cause of a YCharts sign-in failure is structurally INFERRED on this host, never measured, and will stay so. The second half compounds it: the library already knows this condition by name and fails explicitly for it with the DOM evidence 'the next model needs', but only before a submission; after one, the same screen state produces a generic MAX_STEPS exhaustion. Two cheap remedies are named rather than chosen: persist the thrown record's non-secret members beside the step lines (the file already exists and is 0600), and extend the SIGNED_OUT_APP_CHROME condition to the filled case, or give the filled case its own named reason. OWNER: IRPT_BCKEND's runner cells under 2.0.0_SA_COO~P2 and 1.0.0_SA_CTO~DELL2; neither change is in this read-only order's grant and neither was made."
+}
+```
+
+## IRPT_BCKEND-D2-S86 -- An SSM send whose script was empty returned Status Success with rc 0: acceptance read as execution
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S86",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T13:18:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A send-command whose local shell quoting had already failed handed SSM the empty string; SSM accepted it, ran nothing, and reported Status Success with ResponseCode 0 and empty output, so a CommandId and a Success both existed for a read that never happened.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ssm command id a6f50ae7-fe10-43d3-b86d-db3b9154e71e, get-command-invocation: Status Success, ResponseCode 0, StandardOutputContent empty, StandardErrorContent empty",
+      "ssm list-commands Parameters.commands for that id records exactly [\"\"] -- the empty string, read back from SSM rather than assumed",
+      "the local call printed 'sed: -e expression #1, char 13: unknown option to `s'' BEFORE the send, and still produced a CommandId"
+    ]
+  },
+  "spec_asserts": "The order states it directly: 'Every host command's script is recorded verbatim; its status is read with get-command-invocation (a CommandId alone proves only that SSM accepted it).' CLAUDE.md rule 22a carries the same class.",
+  "world_is": "The order's warning is about a CommandId versus a status. This case is one layer worse and the layer is worth recording: the STATUS was Success too. Success means the document ran to completion, and a document whose command list is one empty string completes immediately and cleanly. Nothing was read, nothing was written, no bound was touched, and had the operator not checked the output content the finding would have been reported as read-and-empty rather than never-read. What makes it a trap rather than a slip is that the two obvious oracles -- a CommandId exists, and the status is Success -- BOTH read healthy. The sound oracle is the output content, or the recorded parameters. GENERAL REMEDY, which this read adopted after the fact: build the parameters as a JSON file and pass it with --cli-input-json rather than interpolating a script into a shell string, so a quoting failure cannot produce a well-formed empty send. OWNER: no one but this seat; recorded for the next operator on this host, and because AC3 of this order enumerates host commands by their script and a void send has none to enumerate."
+}
+```
+
+## IRPT_BCKEND-D2-S87 -- BLOCKING for AC3 only: the bounds regex matches a two-file sha256sum that executes nothing
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S87",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T13:18:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB129-1-AC3's forbidden pattern (bash|sh|node|nodejs)\\s+\\S*(run-ycharts-session|ycharts_session) fires on `sha256sum /opt/.../run-ycharts-session.sh /opt/.../ycharts_session.js`, because the alternative `sh` matches the TAIL of the first filename and \\S* then walks to the second path; the command executes nothing, and AC3 FAILs on a read that honoured every bound.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p129_cells.py IB129-1-AC3 run at the record: 'FAIL: host command 44e8d106-6deb-4bfd-8f41-9df61eaf9e51 matches the forbidden pattern' with that regex; IB129-1-AC1 PASS and IB129-1-AC2 PASS at the same record",
+      "the match demonstrated locally: re.search returns the text 'sh /opt/investor-reporting-ycharts/ycharts_session' -- the .sh tail of argument one, the space, then argument two",
+      "CONTROL, same pattern: 'bash /opt/.../run-ycharts-session.sh' matches (the real execution case it exists to catch), while hashing each file in its OWN command matches neither",
+      "the command's actual effect: sha256sum of two files, whose output was the two digests later shown EQUAL to the repo bytes -- a pin check, not an invocation"
+    ]
+  },
+  "spec_asserts": "AC3 grades that no host command 'starts, stops or restarts a unit, runs the session runner, reads or writes a secret value, touches a queue or calls the vendor'. The order also says: never weaken a check, do not edit p129_cells.py, and if a criterion cannot be met as written, file a row and report.",
+  "world_is": "The pattern is sound for what it targets and the wording of AC3 is satisfied in substance: nothing ran the runner. It is the REGEX that cannot tell `sha256sum a.sh b.js` from `sh b.js`, because it anchors on no word boundary and allows \\S* to cross an argument boundary. The collision is not exotic: HostCapture pins exactly these two files and verifies both before every capture, so hashing or stat-ing the pair in one command is the natural way to check the pin, and any future cell that does it will fail AC3 the same way. NOTHING WAS DONE ABOUT IT HERE: the check was not edited, the record was not doctored to hide the command, and the command is listed verbatim as the order requires, so AC3 reads FAIL and the order's status stays pending. The narrow fix is a word boundary and a tighter separator, for example (^|\\s)(bash|sh|node|nodejs)\\s+[^\\s]*(run-ycharts-session|ycharts_session), which still catches the execution case and no longer matches the two-file hash. OWNER: 2.0.0_SA_COO~P2 as the check's author. The remaining read is unaffected: AC1 and AC2 pass and the findings stand on their own evidence."
+}
+```
+
+## IRPT_BCKEND-D2-S88 -- This seat cannot read the irpt-jobs lease rows: kms:Decrypt is denied to its user, and the read was taken through the host's role instead
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S88",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T13:18:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A GetItem on the irpt-jobs lease row from this seat's own session is denied -- kms:Decrypt on the table's CMK is not granted to cloudops-dell2-agent-user -- so the lease and job rows that hold the capture cooldown and the refresh intent are unreadable from the operator side; the row was read through the host's own role, which holds the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws dynamodb get-item on irpt-jobs, key tenant=_opal job=ycharts-session, from this seat: AccessDeniedException, 'kms:Decrypt on resource arn:aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111 because no identity-based policy allows the kms:Decrypt action', principal arn:aws:iam::313476888478:user/cloudops-dell2-agent-user",
+      "the same GetItem through SSM on i-0167fd745ad906a66, ssm command id c045516c-6d6b-4c05-9e7c-adc123c2cc61, Status Success: the item returned with fence_token 27, lease_expires_at 0, lease_owner irpt-ycharts-runner/866356",
+      "the order's own preflight anticipates this: 'comp-iam: DECLARED-NOT-APPLICABLE -- the applier's existing SSM and describe rights are used, and a refusal is a row'"
+    ]
+  },
+  "spec_asserts": "The order's step 3 asks for the runner's stored state by describe calls and listings, and permits reading the refresh marker's current value where it is not a secret.",
+  "world_is": "Two consequences, one small and one worth a decision. The small one: no grant was sought or added, and no bound was bent -- the read was taken through the instance's own role, which the order names as the read path for that host, and it wrote nothing. The one worth a decision: an operator diagnosing this host cannot see the operational rows that decide its behaviour -- capture_not_before, which gates whether another sign-in can be attempted, and intent_session_refresh, which is the per-job one-shot that bounds lock-out -- without going through the instance. That is a real diagnostic handicap for any cell asked to read this subsystem, and it is the reason this read reports the cooldown's EFFECT, measured five times from journal spacing, rather than the attribute's value. It is not obviously wrong that an operator user lacks the data key; it is a choice, and it should be a deliberate one rather than a surprise met mid-incident. OWNER: 1.0.0_SA_CTO~DELL2 to say whether the operator role should hold kms:Decrypt on that key for read, or whether host-mediated reads are the intended and only path. Nothing here holds the order."
+}
+```
+
+## IRPT_BCKEND-D2-W288-S2 -- DATA: one valued row with zero Units fits none of the five ungradeable kinds (sixth_reason_rows 1)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W288-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~288",
+  "surfaced_at": "2026-10-11T13:38:17Z",
+  "one_line": "Over the 85 graded days one non-cash row (Units zero, Market Value above zero) fits none of the five ungradeable kinds and has no price; it is counted as sixth_reason_rows 1 and not fitted to a kind.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB127-2_account_day_claims_v035.json sixth_reason_rows: rows 1, account_days 1, rows_by_sign_of_units_and_market_value units_zero_mv_pos 1; the one account-day reads UNGRADEABLE by its other rows (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~288/, this cell's commit)",
+      "probe in ib429_claims_v035.py: non-cash rows typed no_price by IB-pr-429's row_types whose Market Value is non-zero, over the 85 cached partitions, counts only"
+    ]
+  },
+  "spec_asserts": "PRD ADDENDUM v0.35: a row that fits none of the five kinds and still cannot be placed is a sixth reason, counted separately and filed, never fitted to one of the five.",
+  "world_is": "Exactly one row of the 85 partitions has Units 0 and a positive Market Value, is not cash-flagged, carries no usable price, and is neither NO_CUSIP (needs Units above zero) nor NEGATIVE_POSITION. The instrument cannot place it at a close. Rule 4 reads 'rows with no price' as nothing to grade, so it adds no kind. Its account-day reads UNGRADEABLE by other rows, so no claim and no serving count depends on it. Whether a sixth kind is wanted for such rows is not decided here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W290-S1 -- IB-pr-432: the v2 report schema is outside the registry test_seam_paired builds, so the Opal-form $ref cannot resolve there; STOP
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W290-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~290",
+  "surfaced_at": "2026-10-11T13:04:17Z",
+  "one_line": "IB-pr-432 STOP: a $ref from the sections response schema into the v2 report contract cannot resolve in test_seam_paired's registry, which loads only the v1 folder; the order's step 2 says stop",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py lines 408-418 (_response_validator): the registry is built from os.listdir(V1) filtered to *.schema.json, each file registered under '../<name>' and 'opal://irpt/contracts/v1/<name>' only; the v2 schema (opal://irpt/contracts/v2/AnalysisReport.schema.json, file _contracts/AnalysisReport.v2.schema.json) is not loaded",
+      "same file lines 382-389 (_ref_published_path): returns None for any $ref not starting '../' or 'opal://irpt/contracts/v1/'; test_every_declared_route_has_a_response_contract_whose_refs_resolve asserts that is not None for every data $ref, so it would fail on analysis-report once the base failure on analysis-request-original stops masking it",
+      "measured in this worktree: with the data member changed to two closed forms (anyOf; vendor branch as today; Opal branch with provider, request_ref, sections, computation_validation by $ref into opal://irpt/contracts/v2/AnalysisReport.schema.json#/$defs/opal_engine/properties/*, retained_ref by the v1 $ref), IB130-1-AC1 printed PASS (4 of 4 arms, 60 schema files) and test_served_members_ar_y_32.py passed, but 'python -m pytest _contracts -q -p no:cacheprovider -rf' gave '3 failed, 202 passed': the two base failures plus test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[analysis-report] with referencing.exceptions.Unresolvable: opal://irpt/contracts/v2/AnalysisReport.schema.json#/$defs/opal_engine/properties/request_ref; so IB130-1-AC2 cannot pass",
+      "candidate schema kept at org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~290/CANDIDATE_analysis-report.response.schema.json.txt; the response schema file itself is restored to base (git diff empty); no fixture, no record, no proof written; the order stays pending",
+      "second structural finding: that control's _data_for returns the whole document when data has 'oneOf' (test_seam_paired.py line 748), so the candidate uses 'anyOf' (branches disjoint by provider) and lists the vendor member names under data.properties with description-only schemas so the slice at line 753 still names them; a shared typed 'sections' there is impossible because v1 and v2 Opal section items differ"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-432 build step 2: the $ref into the v2 schema must resolve where the repo's own tests resolve it; if the v2 file is outside the folder the registry loads, STOP and file a row saying which line builds the registry and what it loads; do not edit a test, copy the v2 schema into another folder, or inline its shapes.",
+  "world_is": "The registry at test_seam_paired.py:408-417 loads only docs/contracts/investor-reporting/v1/*.schema.json; the v2 report contract sits in infra/aws/lambda/investor-reporting/_contracts/ and is not in it, so any $ref to it makes the analysis-report control test (passing at base) raise Unresolvable. The cell cannot be met inside its write grant: the remedies (register the v2 file in that test's registry, or publish the v2 schema under v1, or inline) each need a path outside <paths> or are forbidden by the face.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W290-S2 -- IB-pr-432: ops/tests/test_owned_report.py pins the old data member of the sections response schema and goes red on the new one
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W290-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~290",
+  "surfaced_at": "2026-10-11T13:18:52Z",
+  "one_line": "IB-pr-432: the changed sections response schema turns ops/tests/test_owned_report.py::test_sections_projection_matches_existing_closed_response_schema red; that reader is outside the order's paths",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/tests/test_owned_report.py lines 163-182: the test loads the response schema's data member, asserts every key of data.properties equals {'$ref': 'opal://irpt/contracts/v1/AnalysisReport.schema.json#/properties/<key>'}, replaces each with the v1 subschema and validates the vendor sections answer against data directly (a bare validator, no registry)",
+      "measured in this worktree: with the base schema, 'python -m pytest ops/tests/test_owned_report.py -q -p no:cacheprovider -k closed_response_schema' gave '1 passed'; with the changed schema (anyOf of the two closed forms, the candidate of row IRPT_BCKEND-D2-W290-S1) the same command fails at line 169 (the vendor member names under data.properties carry a description, not the v1 $ref); the whole ops file otherwise gives 34 passed with test_retained_ref_served.py",
+      "no schema shape that admits the Opal form can satisfy that test unedited: a v1 $ref on data.properties.sections would also grade the Opal sections (different item shape) and the anyOf branches carry opal:// refs the test's bare validator cannot resolve; the test needs the same registry the _contracts suite builds. The test is outside this order's <paths>, so it is not edited; the _contracts suite (criterion AC2) is unaffected"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-432 step 4 and AC2 grade the _contracts suite only; the face names no other reader and grants no path outside the schema, the one _contracts test file, three fixtures and the deliverables.",
+  "world_is": "A second reader of the response schema, ops/tests/test_owned_report.py, pins the old data member shape and goes red on the schema this order publishes. Left alone it is red at the drain's repo-wide hygiene run. The remedy is a bounded edit of that one test (resolve the data branches through the registry of the _contracts test, and assert the Opal and vendor answers against their branches); it needs a grant of ops/tests/test_owned_report.py, which the issuer holds.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

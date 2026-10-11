@@ -11944,3 +11944,159 @@ name the one known failure instead of silently inheriting it.
   "notes": "Related in kind to the manifest defects MP-r-2 and MP-x-4 already recorded for this same service (the release tree carrying its own stale vintage, and safe-ec2-deploy.sh writing a stale previous_deployed_commit). Those two were about the deployed_* fields and are handled; this row is about file_checksums, which neither covered. Cheap fix for whoever owns it: regenerate the 10 entries from the deployed release bytes at the next gateway release, or drop the field if nothing consumes it -- this seat did not establish whether anything reads it, and says so rather than assuming."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S85",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T12:42:14Z",
+  "one_line": "OG-tl-1's transcript-allowlist deploy hunk (deploy-to-ec2.sh reads data/transcripts/scripts/teams/meeting_allowlist.json into TRANSCRIPT_MEETING_ALLOWLIST) exists ONLY on the release chain (78afad4283, 765fcfb239, 2a5966dfbd, 6aadf7db37) and was never drained back: box/sitez HEAD and origin/CLOUD write the allowlist EMPTY, so any gateway release cut from trunk instead of the live ref silently revokes the 4-meeting allowlist.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: grep -c 'meeting_allowlist.json' in infra/aws/ec2/opal-gateway/deploy-to-ec2.sh = 5 at 78afad4283, 765fcfb239, 2a5966dfbd and 6aadf7db37 (live), and 0 at box/sitez HEAD and origin/CLOUD (TRANSCRIPT_MEETING_ALLOWLIST appears 6 times vs 2)",
+      "MEASURED: 765fcfb239 (rel-nfra-oplgtw-tl1b, the deployed OG-tl-1 release) and 78afad4283 are NOT ancestors of box/sitez HEAD",
+      "The json itself IS at HEAD; only the deploy-script read is missing",
+      "Surfaced by 0.0.0_AB_MSTR~Z msg 33273 (GC escalation on C:/tmp/og-reltl1): 'CLOUD's deploy-to-ec2.sh still writes the allowlist EMPTY (line 439)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-tl-1 complete (allowlist LIVE on the gateway) means the allowlist survives later gateway releases.",
+  "world_is": "It survives only because every release since was re-cut on the live ref. Trunk's deploy script still writes the allowlist empty, so a trunk-cut release would revoke it with no error.",
+  "notes": "DISARM, standing until the drain-back lands: every gateway release is cut on the LIVE ref read by host md5, never on trunk. The queued MX-r-10 v2 is on 6aadf7db37 and CT-i-11 follows on MX-r-10's live ref; both carry the hunk. REMEDY: a round-34 cell drains the allowlist hunk back onto box/sitez's deploy-to-ec2.sh (3-way over HEAD's printf, which carries E2's key and ab-2's unreleased market_update key), graded by grep and a positive control. This is the rl-15 A8 drain-back class, unchecked for OG-tl-1."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W51-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~51",
+  "surfaced_at": "2026-10-11T12:29:07Z",
+  "one_line": "rl16.AC1 PASSES in Phase C but it reads the Phase A record (release a88661b145 on base 1e32562729), not the live re-cut 6aadf7db37 on 2a5966dfbd; so AC1's PASS does not measure the bytes now served.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash rl16.AC1.sh -> 'base 1e32562729 -> release a88661b145: files differing 11; outside E2's paths 0 (want 0); .pptx-pair tokens in the release gateway tree 0 (want 0)' RESULT: PASS exit=0",
+      "RUN the host read (SSM d0717075-9a19-45c4-a57d-c8d61d0036f5): served_release 6aadf7db37a8605389110e08bb64f6e15e1d3026; installed tools.py md5 55a9babfb36152b45dc36b5a1f492140 and destructive_ops.py md5 3b691b19e5ced0cef62fad9d26e3d3da, equal to the EC2_MANIFEST file_checksums entries the applier set for those two files"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order AC1: the release carries E2's .xlsx pair and nothing else (re-run at Phase C, recorded as it stands).",
+  "world_is": "AC1 grades rl16_release.json (Phase A: a88661b145). OG-ap-6 deployed the re-cut 6aadf7db37 (content-equal by patch-id per the applier's ap6.AC1). No record was edited. The served-side equivalence is carried by ap6.AC1/AC2 and by this Phase C read, not by rl16.AC1.",
+  "notes": "Recorded literally, not repaired."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W51-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~51",
+  "surfaced_at": "2026-10-11T12:29:07Z",
+  "one_line": "bad_quarter_refused was exercised through the installed MODULE entry site_to_s3.copy_site_file_to_s3 (quarter 2026Q9) with counting stand-ins for graph_call and s3_client, not through the registered MCP tool wrapper (which needs a verified caller identity and would be denied before reaching the quarter check).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN host program rl16_c_ssm_prog.py: RL16C_AUX tools=67 graph_calls=0 s3_calls=0; body bad_quarter_refused true, objects_written 0",
+      "READ tools.py copy_site_file_to_s3: the wrapper calls _run() first, which returns 'no verified identity established' without a principal; the wrapper only forwards to site_to_s3.copy_site_file_to_s3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order A1: 'ONE call through the installed code's own entry for copy_site_file_to_s3 with quarter 2026Q9 ... refused, before any read or write'.",
+  "world_is": "The installed module raised SiteToS3Refused on 2026Q9 before invoking either stand-in; the identity/tier/entitlement gates in _run were not exercised by this read. objects_written is the count of stand-in s3 calls (0), which cannot write by construction. The .env was parsed in memory: one value compared, one key tested for presence, nothing printed.",
+  "notes": "The wrapper path was not exercised; a real caller-identity call would need a user token and is outside this order's bounds."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S86",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-10-11T14:20Z",
+  "one_line": "NFRA_OPLGTW.TO-OG-o-5 (round 16, complete since 2026-10-03) has NO parseable <status> tag at HEAD: the worker's A1 fix commit bfe0028826 replaced the order's instruction sentence through its status line, so '<status>complete</status>' now sits inside an unclosed backtick span on line 97. surprise-row-gate counts the order non-terminal project-wide and refuses every new remediation row, which blocks round 33's slug.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "Every terminal task order carries exactly one parseable <status> tag (the order's own step 3: 'edit this order's ONE <status> tag IN PLACE').",
+  "world_is": "git show of the order at each commit: 101cfbc5f4 has a real tag at line 84 ('<status>complete</status>'); 0da94bba7c has a real tag at line 107 ('<status>pending -- A1 ...</status>'); bfe0028826 and HEAD have line 97 reading '3. If AC1 PASSes, edit this order's ONE `<status>complete</status>' and no other status line. The A1 re-cut's work itself is committed (bfe0028826 'runbook 7.3 re-cut'). Gate output on this seat's round-33 slug: 'NEW remediation row while 1 of 150 task order(s) under NFRA_OPLGTW are NOT terminal at HEAD: NFRA_OPLGTW.TO-OG-o-5.runbook-section7-remedy.md [<no status tag>]'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show {101cfbc5f4,0da94bba7c,bfe0028826,HEAD}:org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-o-5.runbook-section7-remedy.md | grep -n '<status>'",
+      "safe-commit surprise-row-gate refusal on REMEDIATION_v16.md, 2026-10-11 ~14:1xZ"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Remedy, the issuer's: restore step 3's sentence as written at 0da94bba7c line 97, and put ONE '<status>complete</status>' on its own line where the tag stood (after A1's AC1 re-run; o5.AC1.sh is the instrument). Re-run it first if A1's PASS is not on record. This seat's round-33 slug is held at org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPLGTW_REMEDIATION_v16_HELD_20261011.md and lands on the repair."
+}
+```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S87",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T13:51:02Z",
+  "one_line": "Disarms NFRA_OPLGTW-Z-S86: TO-OG-o-5 again carries ONE parseable '<status>complete</status>' on its own line, with step 3, step 4 and the record face restored as written at 0da94bba7c. The basis is the worker's instance at bfe0028826, which records A1's AC1 PASS (rb 3 of 3).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~21/NFRA_OPLGTW.TO-OG-o-5.runbook-section7-remedy.proof_of_spec.json at bfe0028826: AC1 PASS, 'rb.AC1-AC3 passing 3 of 3'",
+      "ORDER repair in this commit: one status tag counted by regex ^<status>[^<]*</status>$"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The unparseable tag is fixed; the order is terminal at HEAD again, so surprise-row-gate no longer counts it open.",
+  "spec_asserts": "Z-S86: every terminal order carries exactly one parseable <status> tag.",
+  "world_is": "OG-o-5 does again; the gate's non-terminal count for NFRA_OPLGTW drops to 0.",
+  "notes": "Citing row; Z-S86's text is untouched. The drift found while re-running o5.AC1 is the next row."
+}
+```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S88",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T13:51:02Z",
+  "one_line": "The runbook's section 7.2 rollback list does not name the live gateway release 6aadf7db37 (deployed 2026-10-11 by OG-ap-6), so rb.AC2 FAILs at HEAD and o5.AC1 reads rb 2 of 3. Every gateway release moves the live ref, and no release cell carries the runbook update.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/rb.AC2.sh at HEAD: 'manifest history: 193 commits, 48 distinct deployed_commit values; live 6aadf7db37' / '7.2 names live=no; targets named 3, without guard 0, not in manifest history 0' / RESULT: FAIL",
+      "RUN rb.AC1 PASS and rb.AC3 PASS at HEAD (positive controls)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The runbook's 7.2 names the live release as a rollback anchor (rb.AC2).",
+  "world_is": "It names 3 older targets, not the live 6aadf7db37.",
+  "notes": "INERT: no rollback is in flight. CARRY: round-34 E4 batch repair, plus a release-cell clause so that each gateway release updates 7.2 (the class recurs on MX-r-10 and CT-i-11)."
+}
+```

@@ -2914,3 +2914,39 @@ AC2 a bound, PASS at base; AC3 FAIL at base (no record).
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~290. Class WORLD by the L6 floor (paths name
 infra/); it deploys nothing. The ratified-text signer 3.0.0_SA_CVO is told at issuance.
+
+## 124. ROUND 132, WORKSTREAM ~P (2026-10-11 ~13:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5025)
+
+IB-pr-431's read (0.7.0_AE_CloudOps~IB2, @6a254507a6): the host's sign-in was not rejected; the form was submitted and the probe
+never passed; the read cannot say whether the vendor accepted the credentials, because login_submission and probe_pair are
+persisted nowhere and the signed-out-app-chrome diagnosis is gated on no submission. No session bundle has been written since
+2026-10-05T10:04Z. The CTO ruled one BUILD-ONLY cell; the vendor path stays stopped, and the change reaches the host only in a
+resident release under its own pair (st32, IRPT_YCDGEN's issuer). The first sign-in after it is ONE request on the CTO's word.
+
+(Round 131's number is not used: the v0.35 re-count runs as IB-pr-429 AMENDMENT 2 after the L6 gate refused a new order.)
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r132/p132_cells.py`: AC1-AC3 FAIL at base. Measured at base: the existing offline
+suite exits 0 under the netguard preload; the session tests read 118 passed, 1 skipped.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-434` | the capture persists login_submission and probe_pair as closed secret-free members; the signed-out-app-chrome diagnosis fires after a submission under its own code; stderr kept per run | FWD-4 (a session is usable only when verified from the transport; never an endless login contest) | WORLD | IB-pr-431 read | P132-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~292. Class WORLD by the L6 floor; build only,
+no request sent, nothing deployed.
+
+## 125. ROUND 133, WORKSTREAM ~P (2026-10-11 ~14:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5082)
+
+The re-count under PRD ADDENDUM v0.35/v0.36 (IB-pr-429 AMENDMENT 2, branch wk-IRPT_BCKEND-288b @4f263f004c): UNGRADEABLE 42,967,
+ACCT_OWN_DATE 20,138, NOTHING_TO_GRADE 13,636, ACCT_PRIOR_DATE 55; 57.3 percent of 75,796 eligible account-days blank; 382 of 999
+accounts never served; OUTSIDE_ANCHOR on 34,437 account-days. The CTO ruled: the serving rule stands; a cash-flagged priced row
+outside the anchor is cash only where the source's own price is equal on the day and the prior trading day; the sixth reason is
+a refusal of the stamp; the next cell reads the anchor's coverage from what the estate already holds. No gold producer before it.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r133/p133_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-435` | the securities behind OUTSIDE_ANCHOR ranked by account-days with the half and ninety-percent counts; the cash rule counted; whether a held price store carries each security's close | FWD-3 (Cottonwood's figure on a basis somebody measured) | LOCAL | IB-pr-429 AMENDMENT 2 (its instrument, read from its branch) | P133-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~293. DIRECT-ACT (one read-only cell, LOCAL).

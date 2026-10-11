@@ -5983,3 +5983,75 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S13",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T13:24:56Z",
+  "one_line": "The income reason now served on method row 3 names one channel ('FWD-3 does not separate income'), while row 3 is the positions-based method for any entry. A later positions-based channel that does separate income would inherit a served sentence that is false for it. Raised in this seat's round 66 read (row D2-S11) and served since round 67; filed here as its own row so it has a carrier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's served reads of 2026-10-11 (investigation row IRPT_DASHBD-D2-S12): Cottonwood's method row 3 states income absent with a reason that names FWD-3; the prior versions of both keys are retained and the overwrite was captured first",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:119-134 at commit 17304421c8, read by this seat",
+      "investigation rows IRPT_DASHBD-D2-S11, D2-S12"
+    ]
+  },
+  "spec_asserts": "Rule 24 postulate (ii), same grain: a method row's fact is a fact of the method_version, the grain the table has.",
+  "world_is": "One channel uses row 3 today, so the sentence is true of every row it describes now. Not established: whether a second positions-based channel is planned.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W99-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~99",
+  "surfaced_at": "2026-10-11T14:11:31Z",
+  "one_line": "DB-b-124: the thresholds file the handler reads (MEASURED_THRESHOLDS_R1.json) was deleted from the tree by df127f168c because the removal set carried real client account numbers, and its last tracked blob holds 14 account-number-shaped digit runs; a tracked copy for DB-b-125 cannot be the served bytes verbatim, so 'sha256 recorded against the served copy' will read unequal by construction.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The CTO analysis (item 3) and row D2-W85-S1's remedy: the thresholds file sits tracked where the handler reads it and its sha256 is recorded against the served copy; the order for DB-b-125 expects an equal-to-served answer.",
+  "world_is": "Run today at base 2524ab9c7c: git ls-files on both paths handler.thresholds_path() reads returns nothing for the file (the 0.4.0_DS_ClientPlatform~S folder tracks only the two SUPERSEDED_* files); df127f168c deleted the file that was at the second path. Counted by regex on the blob at df127f168c^ (counts only, nothing printed): 14 digit runs of 8 or more digits, plus the five threshold keys and their bases. The client-data rule forbids re-tracking those bytes, so any tracked copy is a scrubbed file with a different sha256; whether the served object itself carries the same digit runs was not read (no AWS call made).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:122-132",
+      "commit df127f168c (git show --name-status: D on the 0.4.0_DS_ClientPlatform~S/MEASURED_THRESHOLDS_R1.json path)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~99/ROW_STATE.json (row IRPT_DASHBD-D2-W85-S1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W99-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~99",
+  "surfaced_at": "2026-10-11T14:11:31Z",
+  "one_line": "DB-b-124: the order asks which safe-apply gates ran in which mode for DB-b-123's apply, but DB-b-123 was two S3 puts by emit_method_row(upload=True) with a deploy ledger, not a Terraform apply, so APPLY-WHO, CROSSBOX-DEPLOY and the HALT gate were not in its path and its record names no gate mode.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order for DB-b-124 (W87-S1 start point): the last apply (DB-b-123) named a worker as applier again, so its record and ledger say which gates ran in which mode.",
+  "world_is": "METHOD_ROW3_APPLY.json carries keys_written (2) and s3_writes 2, no safe-apply call; its ledger entry has 3 legs and no gate mode; a Grep of the ~98 folder for WARN, ENFORCE, safe-apply, APPLY-WHO and HALT returns 0 hits. Mode of the two seat gates today, run: .tools/safe-apply.sh:93-94 makes each ENFORCE only with a switch file in org/mcp, and none exists in this worktree or the base checkout (both WARN). So row D2-W87-S1's hazard (a worker apply valid only while the gates warn) describes safe-apply and does not describe a served S3 write by a worker; whether the same worker-as-actor concern should cover that second route is a ruling this worker does not make.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~98/METHOD_ROW3_APPLY.json",
+      "org/critical_paths/change_management/20261011T1035Z_irpt-dashbd-db-b-123-method-row3-income-20261011_deploy_completion.md",
+      ".tools/safe-apply.sh:93-94"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

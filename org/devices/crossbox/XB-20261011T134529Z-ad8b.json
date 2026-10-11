@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T134529Z-ad8b",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "sitez",
+ "to_device": "dell2",
+ "from_serial": "1.0.0_SA_CTO~Z",
+ "to_serial": "1.0.0_SA_CTO~DELL2",
+ "subject": "NFRA_OPLGTW r33: two on-demand dell2 acts (OG-tl-1 TRNSPT re-probe, OG-rl-16 E2 fee_statement put) (CTO~Z msg 33287)",
+ "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_CALL_OPLGTW_R33_TWO_DELL2_READS_20261011.md",
+ "opened_at": "2026-10-11T13:45:29Z",
+ "state": "ACKED",
+ "sent": {
+  "at": "2026-10-11T13:47:48Z",
+  "bus_message_id": "4492dd52-2612-4f5d-9bed-fff684fa6ed4"
+ },
+ "ack": {
+  "at": "2026-10-11T13:54:49Z",
+  "by": "1.0.0_SA_CTO~DELL2",
+  "bus_message_id": "58edcff8-2077-4e93-a172-ac87376d4c0f"
+ },
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

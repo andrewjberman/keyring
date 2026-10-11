@@ -5085,6 +5085,136 @@
 }
 ```
 
+## DSGN_IRPTV1-D2-W54-S1 -- IV-e-98: IVE26-AC3 still fails after the regeneration, on its ARM 3 alone, for two causes that are not in the wire folder
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W54-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~54",
+  "surfaced_at": "2026-10-11T13:01:30Z",
+  "one_line": "IV-e-98: with the wire folder regenerated, iv-e-26.wire-regen.test.ts ARM 1 (0 of 27 files drift) and ARM 2 (data optional) pass, but ARM 3 fails on the fe-s-13 content-pins subprocess: its 3 tests fail on unprojected_grant and the test hard-codes 17 operations where the client consumes 24 (18 at base)",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~54/targeted_c.txt: REGENERATION DRIFT: 0 of 27 file(s) changed by a fresh run -- (none); CONSUMED OPERATIONS OFFERED: 24 of 24; VERDICT: WIRE-REGEN-FAILED -- content-pins.test.ts rc=1, expected 0; consumed operations offered 24 of 24, expected 17 of 17.",
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~54/step0_base_clean.txt (base 73806e29): the same arm failed with 'consumed operations offered 18 of 18, expected 17 of 17' and the same content-pins rc=1.",
+      "content-pins.test.ts findings (at base and after): 'comparison-catalogue: response envelope no longer declares unprojected_grant' and 'analysis-request-pdf: ...' -- the same two findings as row IRPT_ANLREQ-D2-W51-S6. consumed.ts's WIRE_CONSUMED_ENVELOPE_FIELDS holds unprojected_grant because contracts/envelope.ts parseIrEnvelope reads it; gen-consumed.ts derives the list from that read.",
+      "iv-e-17.bridge-dropped.test.ts (IVE17-AC3) fails at base and after on the same hard-coded 17."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order item 6: IVE26-AC3 fails at base because the generator could not render three members; it should now pass.",
+  "world_is": "The three members are rendered and the generator is idempotent (ARM 1, ARM 2). ARM 3 is a different claim: it runs the content-pins battery and asserts rc 0 and '17 of 17'. The battery is red on the envelope field unprojected_grant for two operations whose response schemas do not declare it, and the expected count 17 is a stale literal (the client's route table carries 24 operations; 18 in the committed consumed.ts at base). Neither is produced by gen-wire or gen-consumed; clearing them means changing contracts/envelope.ts's read, or content-pins.test.ts, or this test's literal -- each an assertion or a neighbouring cell's code this order did not name, and the order forbids weakening an assertion it did not name. ive26.outcome is recorded NOT_FIXED with this reason. The 6 base failing ids are the same 6 after (new_failing_ids []).",
+  "notes": "No act taken beyond measuring. Row IRPT_ANLREQ-D2-W51-S6 (moved to this issuer) names the same two findings."
+}
+```
+
+## DSGN_IRPTV1-D2-W54-S2 -- IV-e-98: the order's '13 type errors in 8 files' premise measured 18 errors in 11 files on this base
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W54-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~54",
+  "surfaced_at": "2026-10-11T13:01:30Z",
+  "one_line": "IV-e-98: regenerating the folder at portal 73806e29 surfaced 18 type errors in 11 files, not the 13 in 8 files the order and row IRPT_ANLREQ-D2-W51-S7 name",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~54/typecheck_regen.txt: 18 error TS lines: investor-reporting.ts 2, owned-requests.ts 1, responses.ts 3, iv-e-106 1, iv-e-116 2, iv-e-62 2, iv-e-66 1, iv-e-74 2, iv-e-80 1, mvp-selection/owned-history.test.ts 1, tabs/analysis/tests/owned-reopen.test.tsx 2.",
+      "Base before any change: typecheck_base.txt, bun run typecheck 0 errors."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order item 5: fix the 13 type errors the regeneration surfaces.",
+  "world_is": "The sibling counted on its own base, which lacked the iv-e-99 reader and the tests that build history pages; this base carries them, so the history page types fail in more places. All 18 are fixed at their causes (the generator's union lookup, and the reader's page type being declared as the wire page); none by cast or ts-ignore; typecheck reads 0 after.",
+  "notes": "Per-error cause and fix are in WIRE_REGEN.json type_errors."
+}
+```
+
+## DSGN_IRPTV1-D2-W54-S3 -- IV-e-98: no hand-added export in the wire folder has a consumer; the 'consumers lean on the hand edits' premise does not hold for the exports
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W54-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~54",
+  "surfaced_at": "2026-10-11T13:01:30Z",
+  "one_line": "IV-e-98: the three hand-added exports (AnalysisReportResponseDataWire, AnalysisReportOpalResponseDataWire, WIRE_CONSUMED_OPAL_FIELDS) are imported by 0 of 1112 portal source files outside the folder, so all three are deleted rather than emitted or moved",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Native Grep over portal/src *.ts and *.tsx for the five names (the three exports and the two private Extract aliases): hits only in contracts/wire/{responses,index,consumed}.ts, adapt.ts's own local re-declaration of the aliases (a type of its own, not an import), coverage.test.ts's own local alias, and one comment in fe-s-47/no-status-reason.test.ts. Denominator: 1140 tracked ts/tsx files under portal/src, 1112 outside contracts/wire/.",
+      "adapt.ts declares its own AnalysisReportYchartsWire, AnalysisReportOpalWire and AnalysisReportSliceWire union; AnalysisReportResponseWire (the envelope) is imported by nothing but the folder's index.ts."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order steps 1 and 2: each hand-added export has consumers that import it, and is placed GENERATOR_EMITS or MOVED_OUTSIDE.",
+  "world_is": "Zero consumers for each, so the order's own rule applies: deleted, consumers 0, MOVED_OUTSIDE with now_in '(deleted, no consumer)'. The breakage the sibling saw came from the regenerated owned-history page and from the generator's union lookup, not from consumers of these exports.",
+  "notes": "WIRE_CONSUMED_OPAL_FIELDS documented what the adapter reads from the Opal branch; that documentation is lost with the constant. Nothing reads it."
+}
+```
+
+## DSGN_IRPTV1-D2-W54-S4 -- IV-e-98: row IRPT_YCDGEN-W3-S21 does not reproduce at this base; a whole-scope run leaves the tree clean before and after
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W54-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~54",
+  "surfaced_at": "2026-10-11T13:01:30Z",
+  "one_line": "IV-e-98: bun test src/pages/InvestorReporting left git status empty at 73806e29 (before any edit) and at the final commit; the one command run in place on an unchanged tree lists 2 modified files with an empty git diff (core.autocrlf)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~54/step0_base.txt: git status --short empty after the run (1173 tests, 374 files). Final: the run at 66c788f4 left git status --short empty (step7_after.txt).",
+      "The in-place writers were gen-wire and gen-consumed run as commands; the tests generate into a temp directory (iv-e-26 per row W165-S2, and iv-e-98 from the start); the consumed generator no longer writes on import.",
+      "After bun run gen-all.ts on the committed tree: git status --short listed ComparisonCatalogue.ts and consumed.ts as modified while git diff --stat was empty -- the generators write LF over a CRLF working copy under core.autocrlf=true; git checkout -- contracts/wire cleared it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order item 7 / row W3-S21: a whole-scope run leaves four tracked contracts/wire files modified.",
+  "world_is": "suite_leaves_tree_clean is true at the base and the end. The writer W3-S21 suspected is gone at this base; I did not bisect when it left. Running the one command by hand can show stat-only modified entries under autocrlf; the content is identical.",
+  "notes": "Not fixed here: the CRLF working-copy artifact belongs to the checkout's line-ending config."
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S15",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T13:35:10Z",
+  "one_line": "L8 rounds 18 and 20 and IV-e-95, no judgment criterion; the issuer asked this seat's judgment on five hand-added types deleted on a zero-consumer count it had not re-run. Re-run by this seat: sound. At the base no file outside the generated folder imported any of the five (one test named two in a comment); on DEV now the three exported names are gone and the two aliases live on as local declarations. The candidate is on portal DEV at 1f0b1d68, which the packet said it was not at its send.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 5015 (IV-e-95 drained @85b3758e3f; round 20 IV-e-100 @7914dec2a5; round 18 IV-e-98 @9a574656d7)",
+      "this seat's reads 2026-10-11T13:35:10Z: portal origin/DEV is 1f0b1d68, the wire-folder candidate, so it HAS landed since the issuer's send; word-boundary search on it: the three exported names (AnalysisReportResponseDataWire, AnalysisReportOpalResponseDataWire, WIRE_CONSUMED_OPAL_FIELDS) occur in 0 files; the two aliases occur only as local type declarations in contracts/adapt.ts:929-930 and one test; at the base 73806e29 the only file outside the wire folder naming any of the five was one test, in a comment (fe-s-47/no-status-reason.test.ts:152); positive control: OwnedAnalysisRequestWire is named by 9 files outside the folder"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself.",
+  "world_is": "The deletion removed nothing a consumer used. Not run by this seat: typecheck, the suite, the reader census's probes (the worker's; no live body was read).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## DSGN_IRPTV1-D2-W57-S1 -- IV-e-101: the whole-scope base at portal 582ffe6e measured 2 failing, not the 6 the spawn named; the two are IVE26-AC3 (gen-wire idempotence) and the producer-fixtures declared-route envelope test, and both fail identically after the change
 
 ```json
@@ -5135,6 +5265,105 @@
   "spec_asserts": "IV-e-101 item 2: any other vendor-worded string in the opened-report surface is treated the same way or listed.",
   "world_is": "The opened-request dialog (OwnedRequestHistory's HeroDialog: ProspectJobStatus, the Technical details block, RetainedSections, SectionBlock) carried two vendor-worded strings for an Opal report, 'Extraction validation:' and 'Vendor attribution:' (plus the v1 unsupported-reason sentence 'the producer's extraction validation is ...', printed for an UNSUPPORTED section), and all three now read Opal's words (a rendered read of the whole dialog's textContent, collapsed details included, finds no vendor or extraction word for an Opal report). The three strings above are other surfaces: the print/export document (render/analysis/AnalysisDocument.tsx, which has no Opal branch), the Analysis tab's preview panel (a vendor PDF preview, which is by design about a vendor artifact), and a component the Opal view never feeds. None was changed: outside this order's cell.",
   "notes": "The print/export document is the one a principal could be handed; whether it needs the same treatment is the issuer's and the CTO's call."
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S10",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T14:00:11Z",
+  "one_line": "IV-e-97 part 1: the order's premise fails. With package.json unchanged, `bun install` (bun 1.4.2) rewrites nothing: bun.lock is byte-equal afterwards, so the lock cannot be refreshed by the route the order names. lock.refreshed is false and IV97-AC1 fails as written; no lock commit was made.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun install at portal 1f0b1d68 (package.json dependencies, devDependencies and overrides untouched): rc 0, output 'bun install v1.4.2 ... 1 package installed' (xlsx only), `git status --short` empty, cmp of bun.lock against the copy taken before: identical; installed top-level count 251 before and after, same names, happy-dom 20.14.5, typescript 5.9.3, vite 7.3.5, react 19.2.4, playwright-core 1.60.0 (junction intact) before and after (evidence folder: bun_install.txt, installed_before.txt, installed_after.txt, versions_before.txt, versions_after.txt)",
+      "probes on COPIES of package.json and bun.lock in a scratch folder outside both repos, nothing installed, no repo file touched: `bun install --lockfile-only` rewrites nothing (differs only in line endings: the working-tree lock is CRLF, the index blob LF; 0 differing lines after stripping CR); `bun add --dev typescript-eslint@^8.60.1 --lockfile-only` (same range) 0 differing lines; `bun update typescript-eslint --lockfile-only` moves typescript-eslint itself 8.60.1 -> 8.71.1 and rewrites package.json, 140 differing lines; deleting the lock and resolving fresh gives 418 entries against 495, 210 entries at a different version, 97 removed, 20 added, and the stale pins move to @typescript-eslint/* 8.71.1 and ts-api-utils 2.5.0 (lockprobe1..4 folders and *_install.txt in the evidence folder)",
+      "the stale entries named by row D2-W49-S3 are still in the committed lock: @typescript-eslint/eslint-plugin, scope-manager, type-utils, visitor-keys at 8.46.4 and ts-api-utils at 2.1.0 beside typescript-eslint 8.60.1; the earlier worker saw the re-resolve only after changing package.json (a dependency add), which this order forbids",
+      "build at portal 1f0b1d68 before and after the install: 88 files, 8,320,201 bytes, digest bd6819c692f03f530af402c3f3b03456eabda9179a595a43cc4f25d2f0293b00 both times (hash_before.txt, hash_after.txt)"
+    ]
+  },
+  "spec_asserts": "Order IV-e-97 item 1: `bun install` with package.json unchanged re-resolves five packages and prunes 57 entries, once, on its own commit; lock.refreshed true.",
+  "world_is": "On bun 1.4.2 a plain install of an unchanged package.json is a no-op, so the lock stays as it is, with the stale pins in it. Routes that would change it are all ones the order did not name: touch package.json (add then remove a dev dependency), `bun update <pkg>` (moves typescript-eslint to 8.71.1 and rewrites package.json), or delete the lock and resolve fresh (210 entries move; the build hash would then need re-proving). This worker took none of them. Which route, or whether the lock clause of IV97-AC1 is re-worded, is not decided here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S11",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T14:00:12Z",
+  "one_line": "IV-e-97: the build hash method as the spawn prompt words it ('sorted relative-path order') gives 6702334..., not the issuer's bd6819c6...; the issuer's number is reproduced only when the relative paths are sorted case-insensitively. Same 88 files and 8,320,201 bytes either way.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 1f0b1d68, bun run build rc 0, dist hashed with sha256 over, for each file in order, the relative path (posix, utf-8) then the file bytes: plain sorted order 67023341f296bed009ab2fa6cb25a35e898aa92aaaa3c4181d1b5a42554af914; order sorted with key=str.lower bd6819c692f03f530af402c3f3b03456eabda9179a595a43cc4f25d2f0293b00 (equal to the issuer's measurement); the other orders tried (walk order, directory-then-name, separators) matched neither (hashdist.py, hash_before.txt in the evidence folder)"
+    ]
+  },
+  "spec_asserts": "The issuer's build hash at portal 1f0b1d68 is bd6819c692f03f530af402c3f3b03456eabda9179a595a43cc4f25d2f0293b00 by sorted relative path.",
+  "world_is": "build_hash_before equals the issuer's number under the case-insensitive sort; both sorts are recorded in TOOLING.json and every comparison in this order is made under the same one. The record states the sort.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S12",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T14:00:13Z",
+  "one_line": "IV-e-97 part 3: this box has no pandas_market_calendars (python 3.14.7), so the package branch of the frontier was exercised by a stub in the new test, not by the real package. The generator's refusal runs against the real package on any box that has one; this worker did not run it there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fe-s-40/calendar-source.test.ts ARM B prints 'calendar_source() = NYSE/pandas_market_calendars' from a stub module written to a scratch folder and put first on PYTHONPATH; the stub answers valid_days from lib/trading_calendar.py's NYSE_HOLIDAYS_FALLBACK, so ARM B equalling ARM A shows the generator writes the same bytes from either branch, not that the real package agrees with the set",
+      "lib/trading_calendar.py lines 48-52 name lib/tests/test_nyse_fallback_equals_package.py as the proof that the fallback set equals the package for every covered year; it needs the package and was not run here",
+      "the generated module differs from the committed one in the header and one new field (calendarSourceClaim); MARKET_CLOSED_WEEKDAYS (170 weekdays, 2010-2027) and the calendarSource value are unchanged, and the production build is byte-equal after the change (88 files, bd6819c6...)"
+    ]
+  },
+  "spec_asserts": "Order IV-e-97 item 3: the output carries the source as a claim a reader can reject on, with the day data proven identical.",
+  "world_is": "Day data is proven identical between the active branch and the fallback set by the generator on every run, and between the two simulated branches by the test; identity with the real package is held by the frontier's own test on a box with the package.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-S16 -- IV-e-101's Opal wording is UNEXERCISED on a served Opal report: its evidence is synthetic
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S16",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T14:41:30Z",
+  "one_line": "IV-e-101 (an Opal report opened on the page prints no vendor wording; portal 58e15f4c on DEV) is UNEXERCISED on a served Opal report: its evidence is a screenshot of synthetic data produced by a driver script, and a static-markup test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~57/OPAL_WORDING.json and opal-report.opal.png @a1ba0a7cc1: synthetic fixture, instrument opal-report-driver.mjs (scripts/ui-smoke.mjs cannot type into the Client search)",
+      "the screenshot was read by this seat: Computation validation: CERTIFIED and Source: Opal Capital Analysis, no vendor word",
+      "1.0.0_SA_CTO~DELL2 msg 5037 item 2: state that on the row as UNEXERCISED on a served Opal report",
+      "the reader census (deliverables/0.9.0_WK_DSGN_IRPTV1~56/READER_CENSUS.json): an OPAL_ENGINE request on live was never exercised"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_YCDGEN FWD-1: the firm's principal opens an Opal report on the page and every reason the page states is true (ADDENDUM 8.2's bar).",
+  "world_is": "APPLIED on portal DEV, EXERCISED only against synthetic data. Not screenshotted: an Opal report with a non-CERTIFIED verdict or a NOT_AVAILABLE section (held by the static-markup test only). The same holds for the Holdings change (IV-e-96) and will hold for IV-e-102 and IV-e-105 until a rendered walk or the sitting reads a served report.",
+  "notes": "Owner of the exercise: the sitting itself, or a measuring identity if Andrew grants one (IRPT_YCDGEN ROUND-12 ANALYSIS section 2). Nothing is armed: a wording change with a vendor report pinned unchanged."
 }
 ```
 

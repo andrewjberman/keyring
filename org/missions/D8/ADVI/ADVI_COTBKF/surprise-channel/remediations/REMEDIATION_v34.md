@@ -30,7 +30,11 @@ slug dispositions; both gate the CB-al-2 mint.
    "round": "v54"
   },
   "closed": false,
-  "disarm_owner": "2.0.0_SA_COO~C2"
+  "disarm": {
+   "state": "ARMED",
+   "owner": "2.0.0_SA_COO~C2",
+   "at": null
+  }
  },
  {
   "id": "ADVI_COTBKF-D2-S60",
@@ -51,7 +55,11 @@ slug dispositions; both gate the CB-al-2 mint.
    "round": "v54"
   },
   "closed": false,
-  "disarm_owner": "1.0.0_SA_CTO~DELL2"
+  "disarm": {
+   "state": "ARMED",
+   "owner": "1.0.0_SA_CTO~DELL2",
+   "at": null
+  }
  },
  {
   "id": "ADVI_COTBKF-D2-W66-S1",
@@ -73,7 +81,11 @@ slug dispositions; both gate the CB-al-2 mint.
    "round": "v54"
   },
   "closed": false,
-  "disarm_owner": "2.0.0_SA_COO~C2"
+  "disarm": {
+   "state": "ARMED",
+   "owner": "2.0.0_SA_COO~C2",
+   "at": null
+  }
  },
  {
   "id": "ADVI_COTBKF-D2-S77",

@@ -2794,3 +2794,124 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-11T13:04:00Z",
+  "one_line": "AR-y-61: the face says reuse requestReport's revision handling and do not write it twice, and also says do not change requestReport; both cannot hold, so requestReport's inline revision block was replaced by a call to one shared helper, behaviour unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal wk-IRPT_ANLREQ-51-portal-r6 d99cb10d, src/pages/TicketCenter/analysisRequest.ts: reportRefBody(requestId, requestRevision) holds the Number() / isFinite / null handling that requestReport carried inline; requestReport and the new recordStep both call it. The signature, throw behaviour and body sent by requestReport are unchanged.",
+      "The existing analysis-form-i1.test.tsx was edited where the new behaviour forced it: wire() gives the record stub a ticket carrying report_ref, the expected call order gains 'record', the old assertion that recordTicketReport is called 0 times by the filing now expects 1, and the retry result is read as step.analysis.ok. No test was renamed."
+    ]
+  },
+  "spec_asserts": "Face: reuse requestReport's revision handling without writing it twice; do not change requestReport.",
+  "world_is": "Reusing the logic without duplicating it required touching requestReport's body (one inline block became one helper call). Choice made: no duplicate, behaviour of requestReport unchanged; the issuer may prefer the other reading.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T13:40:56Z",
+  "one_line": "AR-y-71 amendment 1: the new public reason REPORT_TICKET_MISMATCH can only be declared where the boundary's closed set lives, _authz/served.py BOUNDARY_ADDITIONS, which is outside this order's <paths>; without that one line the boundary answers UNEXPECTED and three of the seven binding tests fail.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:332 status_envelope raises EntryError for a code outside BOUNDARY_REASONS and :887 public_reason_for clamps any such code to UNEXPECTED; BOUNDARY_REASONS = errors.PUBLIC_REASONS + BOUNDARY_ADDITIONS (:140-147). SELECTION_UNSUPPORTED was added the same way (BOUNDARY_ADDITIONS, a CONTRACT.md row, the entry's reasons table).",
+      ".owned-paths.yaml maps infra/aws/lambda/investor-reporting/_authz/** to lane IRPT_LIVE_SCOPE_P; this order's <paths> are ops/, _contracts/, docs/contracts/investor-reporting/v1/ and this file, so the edit is a lane refusal, not made.",
+      "Measured at ops/tests/test_report_ticket_binding.py in this worktree: without the edit 3 of 7 fail (the updated mismatch test, the admitted-caller test and the admitted half of the not-admitted test), each reading public_reason_code UNEXPECTED where REPORT_TICKET_MISMATCH is expected; with the one line applied (org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r7/served_py_boundary_addition.patch, applied for the run and reverted) 7 of 7 pass, _contracts fails 2 and _authz/tests fails 4, the same counts as the base.",
+      "Committed here: the exception class ReportTicketMismatch (ops/owned_report.py), its reasons-table entry (ops/entry.py), the CONTRACT.md row, the routes.json note, the tests and the census."
+    ]
+  },
+  "spec_asserts": "Amendment 1 step 1: add the new value everywhere the public-reason set is declared (the entry boundary's reason table, the status envelope's contract, any enum under docs/contracts or _contracts), each in its own style. The order's <paths> do not include _authz/.",
+  "world_is": "The set is declared in two places the order's paths do not reach for the boundary (served.py BOUNDARY_ADDITIONS, and errors.py PUBLIC_REASONS which this change does not use) and in the status schemas only as the pattern ^[A-Z0-9_]+$ (no enum, so nothing to add there). The one-line patch is saved beside the census. Until it is applied by a seat that holds the _authz lane, AC1 and AC2 of this order cannot print OK from the committed tree and the order stays in_progress.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T13:40:56Z",
+  "one_line": "Reader census for REPORT_TICKET_MISMATCH: no portal reader at PROD or DEV refuses it at runtime, but the portal test fe-s-40 F40-AC7 (reason-codes.test.ts) re-reads CONTRACT.md and fails once the new CONTRACT.md row sits beside the portal until render/Page.tsx's generated set is regenerated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (cut the regeneration of render/Page.tsx CONTRACT_NAMED_REASON_CODES with node src/pages/InvestorReporting/__tests__/fe-s-40/gen-named-codes.mjs into the portal work that lands with, or before, the merge of this CONTRACT.md row)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C wk-irpt-anlreq-51/portal show origin/PROD:src/pages/InvestorReporting/__tests__/fe-s-40/reason-codes.test.ts (37aa1247ee) and origin/DEV (f00c7b8ee8), lines 243 and 259: the renderer's CONTRACT_NAMED_REASON_CODES (20 codes) must equal the set read from docs/contracts/investor-reporting/v1/ by the rule 'a code-shaped token after public_reason_code, return(s) or refused with'.",
+      "docs/contracts/investor-reporting/v1/CONTRACT.md:79 (added by this change) is in that grammar, as the SELECTION_UNSUPPORTED row is; the test was not run (the portal is read-only for this worker), its failure is read from the code.",
+      "The full reader list is org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r7/PUBLIC_REASON_READERS.json: 17 SERVICE rows, 31 PORTAL rows at PROD and 32 at DEV; the one REFUSES row is this test."
+    ]
+  },
+  "spec_asserts": "Amendment 1 step 4: a portal reader that REFUSES the new value is a finding to state; it must be on PROD before the service change is released.",
+  "world_is": "At runtime every portal path that can receive the value (sanitizePublicReasonCode, requirePublicStatus, adaptStatusEnvelope, parseIrEnvelope, envelopeFromRefusal, StatusPanel) passes it through; Page.tsx would print it flagged 'code not defined by the v1 contract'. The only refusal is a test. The value is also not emitted to any current portal build, since neither PROD nor DEV sends ticket_id.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S50",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T14:21:25Z",
+  "one_line": "L8 rounds 5 to 7 (Y), no judgment criterion: nothing from rounds 3 to 7 is live on the service (read live: revision 6). The issuer's ordering finding is confirmed in source by this seat: the live report read refuses any query member but selected_tenant, so the round-7 portal change, which sends the ticket's id, must not reach DEV before the service carries its half. It has not: the candidate is not on DEV. Row D2-S49 answers this seat's row D2-S48: 4 history requests in the 61 minutes, one script, no browser.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND7_Y_L8_COMPILE_20261011.md @24ffff9b45 (msg 5106)",
+      "this seat's reads 2026-10-11T14:21:25Z: irpt-status live CodeSha256 6idtFvAm...wxc=, LastModified 2026-10-11T11:26:53Z; at the live pin 361c44fa9d ops/entry.py:164-165 raises UNEXPECTED_OWNED_READ_QUERY for any query member other than selected_tenant; portal origin/DEV is cece88f6; the round-7 portal candidate 5f64f409b0 is not an ancestor of it; a search of the DEV endpoint client finds no ticket_id on the report read",
+      "investigation row IRPT_ANLREQ-D2-S49 (the CTO's read of the portal distribution's log)"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself.",
+  "world_is": "The form's record step is on portal DEV and unexercised; the report-to-ticket binding is merged on the service side and not released. Not run by this seat: any test; the hop trace.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S51",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T14:21:25Z",
+  "one_line": "ARMED: the round-7 portal candidate (5f64f409b0) makes the ticket's Open report read send ticket_id. The live irpt-status refuses any query member but selected_tenant, so if that candidate reaches portal DEV before the service release carrying AR-y-71, every ticket's Open report read is refused. The candidate is approved-pending and held only by the issuer's word to the integrator (msg 5099). It is the morning's release-5 failure in reverse: a consumer ahead of its service.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's reads 2026-10-11T14:21:25Z: irpt-status live CodeSha256 6idtFvAm...wxc=, LastModified 2026-10-11T11:26:53Z; at the live pin 361c44fa9d ops/entry.py:164-165 raises UNEXPECTED_OWNED_READ_QUERY for any query member other than selected_tenant; portal origin/DEV is cece88f6; the round-7 portal candidate 5f64f409b0 is not an ancestor of it; a search of the DEV endpoint client finds no ticket_id on the report read",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND7_Y_L8_COMPILE_20261011.md @24ffff9b45 (msg 5106)"
+    ]
+  },
+  "spec_asserts": "IRPT_ANLREQ FWD-1: the finished report opens from the ticket. A never-widen pair names every consumer of a changed answer, in both directions.",
+  "world_is": "Not on DEV at this read. Nothing mechanical stops the landing: the hold is a message. Disarm: the service release carrying AR-y-71 is live and read, or the candidate is gated on the live function's answer.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

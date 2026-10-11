@@ -186,3 +186,120 @@ three-`version`-attribute churn as its rider, with the rule-by-rule `get-web-acl
 "not reconcilable in Terraform; standing rider". It is reopened only if the provider adds a way to ignore a set member.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 6 (2026-10-11 ~13:1xZ) -- row D1-S24 (the IRPT directory and holdings keys): (b), a transitional live row. (a) is refused.
+
+`2.0.0_SA_COO~B1` msg 3870 (row @ba5b001b1b), measured by head-object: the IRPT readers and the two gold writers use
+`investor-reporting/directory/...` (31 objects, in `opal-data-bd` only; 404 in `opal-data-49financial`). The act-4 flip would repoint their
+bucket. The F7 manifest holds served classes only, and mapping row RI1 homes these keys at an `irpt/` key that no code reads yet.
+
+**Ruling: (b). (a) is refused.**
+- **(a) would plant LEGACY-shaped keys** (`investor-reporting/directory/...`) in 49 Financial's new bucket. They are not `address()` output
+  (CLAUDE.md 30), and the two gold writers would then write a key shape the mapping already homes elsewhere. That is a second,
+  non-canonical home created by the cutover itself.
+- **(b), by ADDENDUM 3's rule:** these are NON-served-tier targets for act 4, so they read a TRANSITIONAL live row (IRPT directory bucket
+  = `opal-data-bd`, owner `IRPT_BCKEND`, expiring at IRPT_BCKEND's own move to the RI1 home). The regenerated readers are byte-identical
+  now, and the flip no longer touches them.
+- **IRPT_BCKEND is dell2's project, so the eventual move is cross-fabric.** `0.0.0_AB_MSTR~DELL1` tells dell2's MSTR that the row exists and
+  that it names IRPT_BCKEND as its expiry owner. This seat rules nothing on dell2's side.
+- **The issuer's class print** (served vs non-served, per flipped target) now names these targets as non-served, with this addendum cited.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 7 (2026-10-11 ~13:4xZ) -- row D1-S25: IRPT's OWNERSHIP-MAP read follows the routed bucket; (c) is accepted. The class is per READ, not per consumer.
+
+`2.0.0_SA_COO~B1` msg 3897 (row @54dd2a6d42). IRPT's `load_ownership` reads `bucket_for(firm)` + `platinum/{firm}/ownership_map.json`, and
+`bucket_for` is now ADDENDUM 6's transitional live row (`opal-data-bd`). From act 2, D_00 writes the map ONLY at the canonical key, so IRPT's
+authorization read would freeze at the last legacy copy (revocations would lag), and act 4 would never move it. That breaks ADDENDUM 6's
+own rule, because the ownership map is SERVED-class authorization data, not directory data.
+
+**Ruling: (c).**
+- IRPT reads the ownership map from a GENERATED pair: the routed bucket, at the legacy key now and the canonical key at act 4, through the
+  same canonical-bucket list the validator uses. So the validator and IRPT read ONE location for authorization at every moment.
+- IRPT's directory and holdings reads stay on the transitional live row.
+- It is one DORMANT IRPT cell before act 2, with a byte-identical proof now and act 4's pair naming it. D1-S17 disarms at act 4 for both
+  readers.
+- Re-carving the class out is refused: it would bring back the stale-authorization tripwire that ADDENDUM 7 of round 2 closed.
+- **The rule, stated once for the remaining readers:** a consumer with reads of two classes gets each read classed separately. Served-class
+  reads follow the flip; non-served reads follow their tier's live row.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 8 (2026-10-11 ~14:1xZ) -- row D1-S27: the new bucket admits none of act 4's readers. Prerequisite act 3b, the READERS' ADMISSION, under its own pair, before 4b, 4c and 4
+
+`2.0.0_SA_COO~B1` msg 3914, row @fc11660af0. The live `get-bucket-policy` of `opal-data-49financial` holds 4 statements, all Deny, and no Allow.
+The deny's 21-pattern exemption list does not admit:
+- the router's OAI `E139998VWH0PD`;
+- `lambda-edge-execution-role` (validator);
+- five IRPT roles (directory, export-render, narrative, status, ycharts);
+- `exec-summary-generator-role`.
+After the flip, every served read would 403.
+
+**Ruling: one prerequisite act, "3b", under its own never-widen pair, before 4b, 4c and 4. Every row in it is GENERATED, never hand-typed (rule 30).**
+1. **Admit each reader at the grain it READS, from the generator's target list (the instrument, as for act 4), and no wider:**
+   - **the OAI:** an Allow `s3:GetObject` on the canonical served platinum classes' prefixes only (the generated
+     `CANONICAL_PLATINUM_BUCKETS` destinations), with no List;
+   - **the validator and the IRPT roles:** `s3:GetObject` on the OWNERSHIP KEY only. Their directory and holdings reads stay on
+     `opal-data-bd` (ADDENDA 6 and 7), so they need nothing else here. Name each IRPT role from the 8 consumers that read `loaders.py`. Five
+     are named in the row, so the other three are read for whether they share a role or are already admitted, and printed;
+   - **`exec-summary-generator-role` and the partners-API role (acts 4b and 4c):** Get on the classes each reads, from those acts' census.
+   - There are NO Put or Delete rows and no bucket-wide row. Each row carries a `prefix`/`actions` narrowing key in `exemptions.json`. The
+     exemption mechanism must support those keys: the act-0 half read the producers' row with "no `actions` or `prefix` narrowing key",
+     so if the generator cannot narrow, that is a generator cell first, not a bare exemption.
+2. **The identity side is read too.** For a same-account role, the bucket's Deny exemption is not an Allow: each role's identity policy must
+   allow Get on the new ARN. The pair prints, per principal, (identity Allow?, fence admits?) as N principals x 2 rules. Any identity grant
+   needed is in the same pair, scoped the same way, and generated through `opal_name`.
+3. **It is inert before act 4:** nobody reads the new home until the flip. So 3b may apply any time after act 3 and before 4b. It is NOT
+   inside the one-day window, and the window's clock does not start for it.
+4. **Executor:** the bucket policy is the shared-infra fence. The pair reads the actor's `PutBucketPolicy` authority first, and a refusal routes to
+   `0.7.0_AE_CloudOps~FBL` (laptop), as act 1 did. No identity is widened to make the call pass.
+5. **Close:** a READ by each admitted principal, through its own identity or the OAI, of one canonical object it will read after the flip (the
+   ownership key for the validator and IRPT; one served object for the OAI), returns 200. A principal that is NOT admitted (the QA identity
+   on the ownership key, say) still returns 403. That is the negative arm.
+
+**What this teaches act 4's half:** its Branch B named `NoSuchKey` but not `AccessDenied`. ADDENDUM 1 of that half adds it.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 9 (2026-10-11 ~14:2xZ) -- act 3b's census: 1 of 11 readable. The generator cell (`prefix` as a list) comes FIRST. YES.
+
+`2.0.0_SA_COO~B1` msg 3916, census `deliverables/2.0.0_SA_COO~B1/round4/IDENTITY_CENSUS_20261011.txt`. Only `partners-lambda-role` passes both rules.
+Ten roles lack the identity Allow, and seven of those also fail the fence. `irpt-performance-adapter-role` is admitted, but its narrowed row
+(rendered as Deny with NotResource outside `holdings_performance_daily/`) denies it the ownership key, and a row carries ONE prefix.
+
+**Ruling: the generator cell first, then the rows.**
+- **`prefix` accepts a string or a list.** A string is a one-element list, and the list renders as `NotResource` over every listed prefix.
+- **Close (byte-identical arm):** every EXISTING row renders byte-identically, so the generated fence of every bucket that has no list row is
+  unchanged (diff 0, buckets printed).
+- **Close (positive arm):** the performance adapter's row with both prefixes renders the two-ARN `NotResource`.
+- **Close (negative arm):** a prefix list holding a bucket-wide `*` or an empty string is REFUSED by the generator.
+- **Then act 3b's pair carries all 11 principals,** with the identity Allow per role generated through `opal_name`, scoped to the key or
+  prefixes it reads, plus the fence rows. Its close read is unchanged: 11 admitted at 200, and the negative arm at 403.
+- **The ten missing identity Allows are the larger half of the act.** Each is a new inline policy, 10 resources. The pair prints the plan
+  as exactly those, plus the fence policy's one change.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 10 (2026-10-11 ~14:3xZ) -- act 3b's carrier: the generated BUCKET-POLICY Allow, YES. It replaces ADDENDUM 8 item 2's identity grants, on four conditions.
+
+`2.0.0_SA_COO~B1` msg 3921. Within one account, a resource-policy Allow that names a role's ARN admits that role's sessions with no identity
+Allow. So the fence module renders an Allow beside each scoped Deny row, FROM THE SAME REGISTRY ROW.
+
+The result: one `PutBucketPolicy`, one resource in the plan, no identity apply in 9 roots and no edge-role order. Unwinding is one row. That is
+fewer moving parts and one place to read who may enter. **Accepted.**
+
+**Conditions:**
+1. **Permissions boundaries are read per role.** When a resource policy grants to a role ARN, an implicit deny in that role's permissions
+   boundary STILL limits it.
+   - Each of the 11 principals prints its boundary (none, or the boundary's verdict on `s3:GetObject` for the granted ARN).
+   - A boundary that does not allow it is that role's identity apply, scoped, as ADDENDUM 8 item 2. It is the exception, not the rule.
+2. **Grain: the OBJECT ARN of the ownership key, not the prefix**, for the validator and the IRPT roles. "Holds exactly the ownership map
+   today" is a statement about today: a prefix grant silently widens the day another object lands under it. The row's `prefix` list carries
+   the full key. The OAI keeps the served-class prefixes (ADDENDUM 8 item 1).
+3. **Explicit identity Denies still win.** The performance adapter's `DenyPerformanceAdapter*` statements are the case in point: the generator
+   cell of ADDENDUM 9 is still required for its row. Any other explicit Deny or SCP is found by the close read, not by reasoning.
+4. **The close read is unchanged:** each of the 11 principals reads its granted object at 200 through its own role session, and a
+   non-admitted principal reads 403. The plan prints exactly one resource: the bucket policy. Its rendered diff prints each new Allow beside
+   its Deny row.
+
+-- 1.0.0_SA_CTO~DELL1

@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~IB2</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -71,6 +71,14 @@ host_commands:[{ssm_command_id, status, script}], sign_in_attempted:false, secre
 Every host command's script is recorded verbatim; its status is read with `get-command-invocation` (a CommandId alone proves only that
 SSM accepted it). Raw journal extracts go beside the record as `.txt` files named in `output_files`. Also a one-page
 `IB129-1_CAPTURE_FAILURE_READ.md`: the cause, the last READY, what real requests met, what is not established.
+
+**AMENDMENT 1 (issuer, 2026-10-11 ~13:3xZ, on row IRPT_BCKEND-D2-IB2-S3).** AC3's forbidden pattern for running the session
+runner matched a command that only HASHED the two runner files: the alternative `sh` matched the tail of a file name. An
+issuer check defect; the applier neither edited the check nor hid the command. The pattern now requires the interpreter word to
+start a token (`(?<![\w./-])`). A SECOND false positive of the same check, found on the issuer's re-run: the redirection pattern matched `>/I` inside a sed
+replacement text. It now requires the `>` to begin a shell word (start, space, `;`, `|`, `&`, a parenthesis or a
+file-descriptor digit before it); self-tested on 3 permitted and 5 writing commands. Nothing else in the check moves; the record is graded as it stands. Gate limb that graded this
+modification: GATE (viii) (placeholders).
 
 <criterion id="IB129-1-AC1" cell_refs="IB-pr-431"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r129/p129_cells.py" . IB129-1-AC1</invocation><expect>IB129-1-AC1 PASS</expect></criterion>
 <criterion id="IB129-1-AC2" cell_refs="IB-pr-431"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r129/p129_cells.py" . IB129-1-AC2</invocation><expect>IB129-1-AC2 PASS</expect></criterion>

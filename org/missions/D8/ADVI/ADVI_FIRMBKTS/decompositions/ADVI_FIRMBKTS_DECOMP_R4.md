@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 11,
- "chains": 10,
+ "cells": 19,
+ "chains": 17,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -111,3 +111,48 @@ byte-identical now, out of act 4. Cell `FB-g-11` (worker `~32`, workstream `BRON
 scopes.json`, `lib/opal_naming.py` and the 15 tracked generated targets that cover `scopes.json`; no edge to another
 cell). Act 4's pair prints the four remaining flipped targets by tier class. Cells 10 -> 11, chains 9 -> 10. Act 4's
 un-park no longer waits on the CTO for this row; it waits on this cell's merge.
+
+## Amendment 3 (2.0.0_SA_COO~B1, 2026-10-11 ~12:5xZ): cells `FB-g-12` and `FB-g-13` added by the CTO's round-3 ADDENDUM 4 (msg 3853)
+
+`FB-g-1` (the validator's key) and `FB-g-2` (the producers' grant) built and passed their checks and could not commit:
+the enforcing naming gate refuses new hand-kept carriers of `49financial` and of key strings (rows D1-W24-S3,
+D1-W25-S1). The CTO ruled (a): generate. `FB-g-12` renders the per-firm ownership-key block into
+`_shared/firm-config.mjs` (the validator reads it); `FB-g-13` makes the `opal_name` module expose a scope's bucket and
+canonical platinum prefix (the grant reads them and names its policy through `name`). Workstream `OWNKEYS`; both after
+`FB-g-11`; `FB-g-1` and `FB-g-2` are re-seated after them with amended faces. Cells 11 -> 13; chains 10 -> 11 (the two
+builder cells are one chain with the cells they unblock, `{FB-g-12, FB-g-1}` and `{FB-g-13, FB-g-2, FB-g-8}`, so the
+chain count rises by one over the nine independent builds above).
+
+## Amendment 4 (2.0.0_SA_COO~B1, 2026-10-11 ~13:2xZ): cell `FB-g-14` added by the CTO's round-3 ADDENDUM 6 (msg 3871)
+
+Row D1-S24: the flip would repoint the IRPT directory and holdings readers and writers at a bucket holding none of their
+keys. The CTO ruled (b): one transitional `product_live.irpt` row (`opal-data-bd`, owner IRPT_BCKEND, expiring at its RI1
+move) which the IRPT bucket map targets read; (a) a copy at the same keys is refused. Cell `FB-g-14` (worker `~37`,
+workstream `IRPTLIVE`; write set `infra/logic/registry/scopes.json`, `lib/opal_naming.py` and the 15 tracked generated
+targets; edge: after `FB-g-11`, merged). After it, act 4's value-changing set is `firm-config.mjs` alone. Cells 13 -> 14,
+chains 11 -> 12.
+
+## Amendment 5 (2.0.0_SA_COO~B1, 2026-10-11 ~14:2xZ): cells `FB-g-15` and `FB-g-16` added (the CTO's act-0 condition; ADDENDUM 7)
+
+`FB-g-15` (workstream `QAGUARD`): the dispatcher refuses a QA invocation that arrives with `BD_PLATINUM_MODE=canonical`
+preset, the CTO's condition carried from the act-0 sign-off (msg 3895) to act 2, because the QA runner shares the role the
+grant widens. `FB-g-16` (workstream `IRPTOWN`): the IRPT loaders read the ownership map from a generated pair (routed
+bucket; legacy key now, canonical at act 4 through an environment list), the CTO's ADDENDUM 7 on row D1-S25; the directory
+and holdings reads stay on the transitional live row. Both are dormant builds ahead of act 2; act 4's pair names
+`FB-g-16`. Cells 14 -> 16, chains 12 -> 14.
+
+## Amendment 6 (2.0.0_SA_COO~B1, 2026-10-11 ~15:0xZ): cell `FB-g-17` added (the canonical-bucket list is the registry's, not three hand lists)
+
+The engagement of the canonical keys must be the registry's one value (the CTO's ADDENDA 4 and 7; the naming gate refuses a
+typed bucket). `FB-g-16` renders `CANONICAL_PLATINUM_BUCKETS` (the destination classes' unique canonical buckets) into
+`firm-config.mjs` and `loaders.py`; `FB-g-17` (worker `~40`, workstream `CANONLIST`) makes the router and the validator
+import it. After it the act-4 flip is the one alias marker. Edge: after `FB-g-16`. Cells 16 -> 17, chains 14 -> 15.
+
+## Amendment 7 (2.0.0_SA_COO~B1, 2026-10-11 ~15:5xZ): cells `FB-g-19` and `FB-g-20` added (act 3b, the readers' admission; CTO ADDENDA 8 and 9)
+
+Row D1-S27 found the canonical bucket carrying no Allow and a fence admitting none of act 4's readers; the CTO ruled one
+prerequisite act, 3b, with every row generated (ADDENDUM 8), after a generator cell (ADDENDUM 9). `FB-g-19`: the exemption
+grammar's `prefix` takes a string or a list (the performance adapter reads two prefixes). `FB-g-20`: the module exposes a
+scope's canonical ownership key, so the readers' identity grants are generated through `opal_name`. Workstream `FENCE3B`.
+The act's remaining cells (the registry rows, the OAI allow in the shared-infra bucket policy, ten identity grants, the
+executor's order and the pair) follow these two. Cells 17 -> 19, chains 15 -> 17.

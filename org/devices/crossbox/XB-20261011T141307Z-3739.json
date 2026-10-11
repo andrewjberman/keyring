@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T141307Z-3739",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~G2",
+ "to_serial": "1.0.0_SA_CTO",
+ "subject": "IRPT_YCDGEN r13: read-only, owner class and firm of the eight dead-lettered requests (CTO~DELL2 7fa981f907)",
+ "body_path": "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r13/CROSSBOX_ASK_OWNERS_OF_THE_EIGHT_20261011.md",
+ "opened_at": "2026-10-11T14:13:07Z",
+ "state": "CLOSED-BOTH",
+ "sent": {
+  "at": "2026-10-11T14:15:16Z",
+  "bus_message_id": "c46c4f33-f461-46d0-a264-a9f200252c2a"
+ },
+ "ack": {
+  "at": "2026-10-11T14:17:37Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": "49a31ca6-2fe5-485d-a6a8-cb1987279649"
+ },
+ "closed": {
+  "from_at": "2026-10-11T14:21:26Z",
+  "from_by": "2.0.0_SA_COO~G2",
+  "to_at": "2026-10-11T14:18:35Z",
+  "to_by": "1.0.0_SA_CTO"
+ }
+}

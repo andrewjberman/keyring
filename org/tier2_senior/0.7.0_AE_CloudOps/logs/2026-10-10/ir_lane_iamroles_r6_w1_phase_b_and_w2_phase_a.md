@@ -431,9 +431,10 @@ has to find round 7 here. Round 6's record above is unchanged.
 | `x-3` | READ-ONLY: the smartx drift table | **complete** @`c951e42cae` |
 | `x-4` | RETIRE `lambda-test-role` -- detach, delete, read back | **complete** @`d0bc5431ef` |
 | `x-5` | narrow `opal-portal-s3-read`: 12 dead ARNs out of a WRITE+DELETE statement | **complete** @`219ce410d9` |
-| `x-6` | PHASE A survey for the smartx deploy | **PHASE A done** @`3fade2bc55`, PHASE B on its pair |
+| `x-6` | deploy smartx-pipeline's three drifted Lambda versions + the ratified output nulls | **complete** @`c1d69f1fc1` |
 
-Rows filed: `Z-S38`, `Z-S39`, `Z-S40`. `Z-S39` became cell `x-5`. `Z-S41` is the issuer's, correcting me.
+Rows filed: `Z-S38`, `Z-S39`, `Z-S40`, `Z-S42`. `Z-S39` became cell `x-5`. `Z-S41` is the issuer's,
+correcting me, and `Z-S42` is filed against myself. **ALL SIX ORDERS ARE COMPLETE.**
 
 ## R7.1 THE CHAIN WORTH RECORDING, BECAUSE IT STARTS WITH MY OWN DEFECT
 
@@ -501,6 +502,29 @@ resolved safely -- my apply added 0 -- but the mechanism is direction-agnostic, 
 `.open_deploys/` cannot catch a change that finished before you looked.** The `x-5` half then bound the plan
 SHAPE directly instead, because PHASE A flagged it.
 
+**7. A PRE-APPLY INBOX GUARD CAN FAIL TOWARD CLEAN, AND MINE DID** (`Z-S42`, filed against myself). A
+`~lane` seat is structurally unhaltable, so HALTGT cannot be cited and the direct inbox read is the only
+pre-apply mail guard it has. The expression I wrote and cited in **three** apply records is unsound three ways:
+run from a **worktree** the inbox path does not exist, so it prints `0` -- indistinguishable from an empty
+inbox, and rule 14b is what sends a seat to a worktree; from the shared tree it **over-counts by one**, because
+`ls -1` renders `read/` with a trailing slash that `^read$` never matches; and `ls -1` **hides the dotfiles**
+that are the only real files there. No round-7 apply was taken over unread mail -- verified afterwards with
+`ls -a` -- so the defect is in the EVIDENCE, not the acts. **On x-6's apply it printed `unread: 1` and I
+applied anyway**, which was the wrong order of operations independently of the count being wrong.
+
+**8. A BYTE-COUNTER IS NOT A DATA-COUNTER ON JSON.** A stray `U+8BC1` from my own typing reached a ledger leg's
+proof text. The markdown carried it as a **raw byte**, so a non-ASCII byte count found it; the sentinel **JSON
+carried it ESCAPED** as a backslash-u sequence, so the same count read **0** on that file while the value still
+held the character. The sharper form of the ASCII rule: on JSON, count the DECODED values, or grep for the
+escape.
+
+**9. REFUSE THE WEAK ORACLE TWICE, NOT ONCE.** x-6's deploy changed exactly one thing -- a docstring line in
+`smartx_jwt_reader.py`. `RoleLastUsed` was already excluded (finding 5), but **"the function started" is also
+too weak**: a `START` line cannot distinguish a working deploy from one whose changed module is never reached.
+The evidence cited is the changed module's own `[smartx_jwt_reader] OK` line plus the pull's closing status
+object (7 of 7 models, 0 errors). The same shape appeared in x-5, where 239 clean authorizer invocations proved
+assumability but not S3, so a function that actually wrote to a kept bucket was found instead.
+
 ## R7.3 WHERE I WAS WRONG, AND HOW IT WAS CAUGHT
 
 | what | how it surfaced |
@@ -527,8 +551,18 @@ that is the argument for printing both every time.
 
 ## R7.5 CURRENT STATE AND WHAT IS OWED
 
-**Nothing of mine is open.** Four NEVER-2 entries opened and closed with every leg proven and every close
-committed by hand; `.open_deploys/` carries 0 `iamroles` sentinels at HEAD. Five proof instances VALID rc=0,
+**Nothing of mine is open.** **SEVEN** NEVER-2 entries across round 7, every one mine and every one reading
+CLOSED at HEAD, enumerated rather than counted from memory: `market-overview` (x-1 row 14), `narrow-smartx`
+and `narrow-news-pipeline` (x-2's two acts), `family-c-shared-infra` (x-1 row 6), `narrow-portal-s3` (x-5),
+`retire-row7` (x-4) and `smartx-deploy` (x-6). **FOUR of those seven needed their close committed BY HAND**,
+which is finding 1 -- the four I ran `close` on after the defect was known, so I checked each against HEAD.
+`.open_deploys/` carries 0 `iamroles` sentinels at HEAD and on disk.
+>
+> **THIS COUNT HAS NOW BEEN WRONG TWICE, WHICH IS THE POINT.** It first read "Four" (I had counted only the
+> entries opened after the session resumed), was corrected to "Six" -- correct at that moment -- and is now
+> **SEVEN**, because `x-6` added one after the correction. Both errors were caught by ENUMERATING the entries
+> at HEAD rather than re-reading my own sentence. In a record whose argument is that a count needs its
+> denominator printed beside it, a count I carried in my head was wrong twice in one session. Five proof instances VALID rc=0,
 four of them first try (`x-2` needed six formatting fixes, all mine, before the invocations were extracted from
 the order's bytes rather than retyped -- which is why the later four passed first time).
 
