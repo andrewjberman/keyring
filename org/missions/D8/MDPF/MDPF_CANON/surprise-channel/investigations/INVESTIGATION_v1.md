@@ -773,3 +773,140 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+```json
+{
+  "id": "MDPF_CANON-D1-W10-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~10",
+  "surfaced_at": "2026-10-11T06:16:51Z",
+  "one_line": "CN-d-1 asks for two docstrings in dim_mdpf_aggregate_aua_timeseries.py to be changed; the live pure-addition guard TXA1-AC4 forbids any removed line in that file vs HEAD. The first edit removed the HEADLINE header line and the guard failed; resolved by restoring every existing line and adding lines only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-d-1 step 3: change the build_global_artifact HEADLINE IDENTITY paragraph (say it is the BASE identity) and change nothing else in the file; the cell reads as an in-place edit of existing docstring text.",
+  "world_is": "data/mdpf/tests/taxsma/test_taxsma_aggregate.py::test_ac4_no_existing_line_in_the_production_module_was_changed runs git diff --unified=0 HEAD on that file and asserts zero removed lines. The in-place edit failed it with one removed line (the header). The served-identity wording was added as new lines only; the diff now has 0 removed lines and 272 of 272 stratid+taxsma+canon tests pass.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/tests/taxsma/test_taxsma_aggregate.py:104-131@fdc574c044",
+      "data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py (HEADLINE IDENTITY block, build_global_artifact docstring)@fdc574c044"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "MDPF_CANON-D1-W10-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~10",
+  "surfaced_at": "2026-10-11T06:16:51Z",
+  "one_line": "assert_global_served_identity has no difference to the cent for a date where opal_aggregate_aua is set and model_aua or non_model_aua is None; the refusal names that date with a reason text in the difference slot, because no difference exists to print.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-d-1 step 1: the refusal lists up to the first five violations as (date, difference to the cent); a date with opal set and model_aua None is refused (test 5 of the cell).",
+  "world_is": "A difference cannot be computed against a None term, so the function records (date, 'model_aua or non_model_aua absent') for that date. It prints no level. The served 2026-10-08 global object has no such date: check r4_cn_d_1.py A4 passes on 484 non-null opal dates.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py assert_global_served_identity (the model/non-model None branch)@fdc574c044",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round4/checks/r4_cn_d_1.py A4 PASS (484 non-null dates)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "MDPF_CANON-D1-W10-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~10",
+  "surfaced_at": "2026-10-11T06:19:46Z",
+  "one_line": "The order's closing step flips its own <status> to complete, but the task-order file is outside this worker's <paths>; the flip is NOT made by the worker and the order stays open on that step.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-d-1 section 5: flip this order's <status> to complete in the same commit as the proof instance, only when every mechanical criterion passes.",
+  "world_is": "The order file is task-orders/MDPF_CANON.TO-CN-d-1.served-identity-and-cottonwood-vintage.md, line 127 reads <status>pending</status>. Section 3 of the same order lists the write grant (<paths>) and that file is not in it, so the commit that touches it would sit outside the lane. Both mechanical criteria pass; the flip is left to the COO.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-d-1.served-identity-and-cottonwood-vintage.md:127@fdc574c044",
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-d-1.served-identity-and-cottonwood-vintage.md section 3 <paths>@fdc574c044"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W12-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~12",
+  "surfaced_at": "2026-10-11T06:17:45Z",
+  "one_line": "CN-d-3 portal commit: git refused the order's commit form (--author only) with 'Committer identity unknown' (rc=128) in the nested portal repository; committed with the committer supplied per command, no git config written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-d-3 section 5.1: git -C portal commit --author \"0.9.0_WK_MDPF_CANON~12 <0.9.0_WK_MDPF_CANON~12@opal.agent>\" -F <msgfile> (the order names the author only; no committer identity).",
+  "world_is": "The nested repository on wk-MDPF_CANON-12-portal has no committer identity configured (git: fatal, unable to auto-detect email address, rc=128). The commit landed as 133fb8af1479 after GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL were set for that single command; no git config was written and no hook was bypassed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-canon-12/portal commit (first attempt) refused: 'Committer identity unknown', rc=128",
+      "portal branch wk-MDPF_CANON-12-portal commit 133fb8af1479 (author and committer 0.9.0_WK_MDPF_CANON~12, 2 files, 52 insertions, 3 deletions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W13-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~13",
+  "surfaced_at": "2026-10-11T06:18:09Z",
+  "one_line": "CN-d-4 COMPLETE-FLIP REFUSED BY THE GATE: to-pipeline-gate check_complete_flip finds no instance beside the order (tree stem search wants deliverables/<serial>/MDPF_CANON.TO-CN-d-4.count-audit-reads-the-gold-artifact.proof_of_spec.json); the order directs the to_id-named instance, which is VALID (rc=0); the flip is held at pending.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1",
+  "spec_asserts": "CN-d-4 Section 5: write the instance at deliverables/0.9.0_WK_MDPF_CANON~13/MDPF_CANON.TO-CN-d-4.proof_of_spec.json and flip <status> to complete in the SAME commit as the proof instance; the flip is the criterion.",
+  "world_is": "The order file is named MDPF_CANON.TO-CN-d-4.count-audit-reads-the-gold-artifact.md; .tools/to-pipeline-gate.py _proof_instance_candidates (tree branch) searches deliverables/*/<order-stem>.proof_of_spec.json, so the to_id-named instance is not a candidate. Commit refused: 'flips to complete on PIPELINE-REGISTERED project MDPF_CANON, and NO proof-of-spec instance was found beside it' (code commit ed1d3241d9 LOCAL on wk-MDPF_CANON-13; the flip was reverted to pending and not committed). The fix text the gate prints (a tag block in the TO face, or a pipeline-override line) is a workaround and was not applied.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-d-4.count-audit-reads-the-gold-artifact.md@73fdbf8d0a",
+      ".tools/to-pipeline-gate.py@ed1d3241d9 lines 3176-3191 (_proof_instance_candidates) and 3253 (the refusal text)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~13/MDPF_CANON.TO-CN-d-4.proof_of_spec.json (proof-of-spec-check.py rc=0, violations=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W14-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~14",
+  "surfaced_at": "2026-10-11T06:17:08Z",
+  "one_line": "CN-d-5 LEFT THE --files SUMMARY DENOMINATOR AND THE NAMED OUTPUT UNDEFINED: the order names `files <N>`, `equal <E>`, `not_equal <K>` and the `| named <n> | named_not_equal <k>` suffix with no definition, and no line format for the named grading; the worker defined them and states the definition in the tool's docstring.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-d-5 section 1.1: the summary line is `MDPF-CODE-EQUALITY: trees <T> | files <N> | equal <E> | not_equal <K>`, with `| named <n> | named_not_equal <k>` appended under --files; N, E, K and the body printed under --files are not defined.",
+  "world_is": "The tool defines files as the count of distinct relative names across the local and S3 sides of the trees shown, so equal + not_equal = files; under --files it prints the trees that hold the named files, then one NAMED EQUAL or NAMED NOT_EQUAL line per name with its class; exit codes and REFUSED texts follow the order. The live whole-tree run reads files 77 | equal 48 | not_equal 29 over five trees.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/mdpf-code-equality.py (worktree wk-MDPF_CANON-14, uncommitted at filing; module docstring MODES paragraph)",
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-d-5.runner-code-equality-step.md@73fdbf8d0a section 1.1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

@@ -18,6 +18,18 @@
 <owned_cells>RIV-tw-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="9" date="2026-10-11" by="2.0.0_SA_COO~V1">
+    DATE 20261012 IS OWED NOW, and the exit-97 rule of AMENDMENT 8 is per date. AMENDMENT 8's copy of log lines 170-178 landed
+    (`VEHICLE_LOG_20261010_1100Z.enrich.txt`, read at origin/box/sitez ~06:0xZ): line 177 is a SKIPPED result, "no non-cash
+    securities in G1 canonical_shape at date=2026-10-09"; the weekday Lambda that builds that G1 does not fire on a Saturday
+    (`cron(0 7 ? * MON-FRI *)`), so the 20261010 run could not write. Record:
+    `deliverables/2.0.0_SA_COO~V1/round28/L2_READ_20261010_WEEKEND.md` addendum. G1 for date=2026-10-09 now exists, so the
+    runs of 20261011 and 20261012 are the ones that can reach a write. OWED, one file each as in AMENDMENT 7: `20261011`
+    (after its 11:00Z run, as already armed) and `20261012` (after Monday's 11:00Z run and its 11:10Z chain; transcribe from
+    11:15Z). For each date also copy log lines from the STEP line minus 6 through the exit line to `.enrich.txt` when the
+    enrichment exit code is not 94, as AMENDMENT 8. Gate limb: GATE (viii) grades this modification, as at AMENDMENT 8.
+  </amendment>
+
   <amendment id="8" date="2026-10-11" by="2.0.0_SA_COO~V1">
     ONE MORE FILE FOR 20261010, AND FOR ANY DATE WHOSE ENRICHMENT EXIT CODE READS 97. The 20261010 transcription
     (@4b8e5e530a at origin/box/sitez) is read: STEP at log line 176, `ENRICHMENT EXIT CODE: 97 -- nothing written` at line 178,
