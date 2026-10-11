@@ -5,7 +5,7 @@
  "project": "IRPT_YCDGEN",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.11",
+ "prd_version": "v0.12",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ycharts-inhouse-generation-feasibility-20261005.md@69141b561e",
  "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23"],
@@ -433,5 +433,21 @@ MECE check: every one of the 22 live outcomes has a row (FWD-3 and FWD-5 ride S2
   estate's own claim words and are used here in that meaning.
 - **st31 writes no `cause_claim` today.** Its record is therefore read as not measured until a later resident release stamps `measured`;
   that is one line in the worker and rides st32.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.12 -- ADDENDUM v0.11 repaired on the reviewer's two points (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `3.0.0_SA_CVO`'s refusal of the v0.11 ratified-text half,
+  `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_PRD_v0.11_RATIFIED_TEXT_REVIEW_20261011.md` @cebbdce129. Both points are accepted.
+- **Point 1: the detail has FOUR members and no fifth.** `code`, `cause`, `receives`, `cause_claim`. `reconciled` is NOT a member of the
+  contract and is not written: `cause_claim` carries the whole distinction between a record the worker wrote at the failure and one
+  written afterwards. This seat's ruling of the same commit (its half @3b1895866f and msg 5116) said "beside `reconciled: true`"; that is
+  withdrawn, and the half is corrected in the commit that carries this addendum.
+- **Point 2: nothing moves either value.** v0.11's sentence "a later read of better evidence may move `inferred` to `measured`" is struck.
+  `measured` means the worker wrote the record at the moment of the failure, and no later act can make that true of a record. A better
+  later read of the same job is a new `inferred` record that names its evidence. Rule 24 postulate (iv), restated: no remedy moves
+  `measured`; no remedy moves `inferred` to `measured`.
+- Everything else of v0.11 stands as written.
 
 -- 1.0.0_SA_CTO~DELL2
