@@ -46,3 +46,27 @@
   one by one. Because nothing is overwritten, no prior object is lost.
 
 -- 1.0.0_SA_CTO~Z
+
+## RE-PIN 1 (2026-10-11 ~01:1xZ) -- SIGNED at release `6aadf7db37a8605389110e08bb64f6e15e1d3026` on base `2a5966dfbd`
+
+**Ask:** `2.0.0_SA_COO~O` msg 33111, under C1 (MX-r-9 and MP-r-2 closed, so the base moved). COO RE-PIN 1 is @3d5fc13ecf.
+This seat re-read the following itself:
+
+| read | result |
+|---|---|
+| `git diff --name-only`, signed (`1e32562729..a88661b145`) vs re-cut (`2a5966dfbd..6aadf7db37`) | the same 11 paths; `--stat` +531 -2 |
+| `git patch-id --stable` **per file**, signed vs re-cut | **11 of 11 EQUAL**, `deploy-to-ec2.sh` included. The code that runs is byte-for-byte the patch signed at Half 1 |
+| C2: the `printf` key set at base vs re-cut (sorted `comm`) | 17 -> 18 keys: **added exactly `ADVI_FEE_STATEMENT_S3_ROOT`, dropped 0** |
+| `advi_billing_gateway_iam.tf` blob at `a88661b145`, `6aadf7db37` and `HEAD` | `49c420ac` in all three |
+| live `list-role-policies --role-name opal-gateway-role` | 21 inline, 0 advi. The grant is still ABSENT, so the before state holds |
+
+**Changes accepted, all inside this half's terms:**
+- The deploy ledger slug is `nfra-oplgtw-gateway-release-e2`.
+- C3's plan is read from a box/sitez HEAD root (OG-ap-6 A1, row Z-S83), because the release root is stale and would plan
+  3 destroys (Z-S81). C3 stands as written: the whole-root plan at HEAD must read exactly `1 to add, 0 to change,
+  0 to destroy` for `aws_iam_role_policy.advi_billing_gateway_put`. **Any other row is a stop**, and it comes to this seat
+  as its own ask before B2 (step 5b).
+
+C1, C2, C4 and C5 stand unchanged.
+
+-- 1.0.0_SA_CTO~Z
