@@ -214,7 +214,8 @@ _sm_recover_killed() {
 # Owner 4.0.0_SA_CRO~A (1.0.0_SA_CTO msg 107030). rc: 0 merged, 1 refused, 2 usage, 4 conflict handed back, 5 tree drop.
 _SM_T0="${EPOCHREALTIME:-}"
 _SM_ARGS="$*"
-_SM_AUDIT="$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)/../org/git-author-override-audit.log"
+case "${AGENTBUS_DEVICE:-}" in ""|*[!a-z0-9-]*) GAO_REL="org/git-author-override-audit.log" ;; *) GAO_REL="org/git-author-override-audit.${AGENTBUS_DEVICE}.log" ;; esac  # one file per box (shape (a), MSTR consensus 2026-10-11); unset device -> legacy shared file
+_SM_AUDIT="$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)/../$GAO_REL"
 _SM_ERR="$(git rev-parse --path-format=absolute --git-path "safe-merge.err.$$" 2>/dev/null || echo '')"
 _sm_row() { echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) $1  ${OPAL_AGENT_SERIAL:-unknown}  $2" >> "$_SM_AUDIT" 2>/dev/null || true; }
 _sm_secs() {

@@ -22,7 +22,8 @@ set -uo pipefail
 
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 HOOK="$REPO_ROOT/.git/hooks/pre-commit"
-AUDIT_LOG="$REPO_ROOT/org/git-author-override-audit.log"
+case "${AGENTBUS_DEVICE:-}" in ""|*[!a-z0-9-]*) GAO_REL="org/git-author-override-audit.log" ;; *) GAO_REL="org/git-author-override-audit.${AGENTBUS_DEVICE}.log" ;; esac  # one file per box (shape (a), MSTR consensus 2026-10-11); unset device -> legacy shared file
+AUDIT_LOG="$REPO_ROOT/$GAO_REL"
 
 CYCLE_S=300
 HOOK_S=""
