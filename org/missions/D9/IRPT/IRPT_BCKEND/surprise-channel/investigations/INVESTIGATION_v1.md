@@ -25586,3 +25586,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-S76 -- The unscoped round-close check is REFUSED for every round by one untagged order of another workstream (TO-APPLY-Y77)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S76",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T10:28:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "round-close-check.py without --workstream reads IRPT_BCKEND round 122 as REFUSED: 13 seat-folder orders carry no <round> tag and are counted in every round, and one of them, IRPT_BCKEND.TO-APPLY-Y77 (issued by 2.0.0_SA_COO~Y2, complete), has no proof instance at the name the checker expects. Scoped to --workstream ~P the same round reads MAY-CLOSE (1 order, proof ok).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/round-close-check.py --project IRPT_BCKEND --round 122: orders=14, complete=6, proof_bad=1, verdict=REFUSED, PROOF-BAD IRPT_BCKEND.TO-APPLY-Y77",
+      "the same with --workstream ~P: orders=1, complete=1, proof_ok=1, verdict=MAY-CLOSE",
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/task_orders/IRPT_BCKEND.TO-APPLY-Y77.irpt-ycharts-generate-release6-custody.md: issued_by 2.0.0_SA_COO~Y2, status complete"
+    ]
+  },
+  "spec_asserts": "A round whose orders are all complete with valid proofs may close.",
+  "world_is": "An untagged complete order of another workstream with a missing or differently named proof instance refuses every round's unscoped close check for the project. Owner of the order: 2.0.0_SA_COO~Y2; owner of the checker: 1.0.0_SA_CTO."
+}
+```
