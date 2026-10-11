@@ -2915,3 +2915,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S52",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T14:49:00Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W52-S7: the portal's generated contract-named reason set on DEV now holds REPORT_TICKET_MISMATCH, so the contract-set test no longer refuses the trunk's contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_ANLREQ-D2-W52-S7 (ARMED, disarm owner 2.0.0_SA_COO~Y2): the portal test reason-codes.test.ts F40-AC7 goes red in any checkout holding the new contract row beside the portal until the generated set is regenerated.",
+  "world_is": "MEASURED by this seat: portal origin/DEV reads b92696c1ed (ls-remote, after 0.0.0_AB_MSTR~DELL2's receipt msg 5163), which carries ONE file changed against e7045ad636, src/pages/InvestorReporting/render/Page.tsx, generator output only; on b92696c1ed this seat ran reason-codes.test.ts: 2 pass, 0 fail, and the typecheck rc 0. Between the contract row reaching the workspace trunk (worker commit 359da3005f, merged by this seat 31d02ad19c at about 14:0xZ) and this landing (about 14:45Z) the test read red on DEV with the workspace at trunk: found by 2.0.0_SA_COO~D2 (msg 5134), not by this seat. No deployed function serves the reason. NOT run by this seat: the whole Investor Reporting suite on DEV. PROD is unchanged (37aa1247ee) and its set does not hold the value; it needs it before any function serves the reason, which is release 5's return.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal origin/DEV b92696c1ed, ls-remote by this seat",
+      "bun test reason-codes.test.ts on b92696c1ed by this seat: 2 pass 0 fail",
+      "0.0.0_AB_MSTR~DELL2 msg 5163; 2.0.0_SA_COO~D2 msg 5134"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This seat's miss: the fix for a test the worker's census had named sat inside a candidate held for another reason, while the contract row that turns the test red went to the trunk. The re-release packet's order of return must put the portal's reason set on PROD before the service: added to this seat's owed list for that packet."
+}
+```
