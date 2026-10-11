@@ -10,12 +10,16 @@
  "subject": "AMGT_HARVST HVST-bs-4 AMENDMENT 1: leg stopped on error at 134 of 242, read the reason (Z-S109)",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round79/XB_ORDER_BS4_AMEND1_TO_ZW.md",
  "opened_at": "2026-10-11T03:30:14Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-11T03:32:11Z",
   "bus_message_id": "c7e08ecd-9618-4e0e-bc66-6102272f7ca3"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T03:43:31Z",
+  "by": "0.7.0_AE_CloudOps~ZW",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
