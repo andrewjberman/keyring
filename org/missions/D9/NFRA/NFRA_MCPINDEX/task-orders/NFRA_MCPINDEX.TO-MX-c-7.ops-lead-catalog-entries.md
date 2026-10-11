@@ -127,7 +127,7 @@ ask's first match. After this order the issuer continues you with MX-r-10's PHAS
 
 ISSUED 2026-10-10 ~23:4xZ in round 9's ONE issuance, from `ledger/ROUND_ANALYSIS.round8.md` @d2eb6c471b. Battery re-dry-run at issuance base bf8492f48f: every check of this order FAILS there as a build check must.
 
-<status>issued</status>
+<status>complete</status>
 <round>9</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
