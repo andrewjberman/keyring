@@ -90,3 +90,22 @@ Every invocation in the round-3 orders carries an absolute worktree root (D1-W9-
 - FWD-7 and FWD-8, the prohibited key and B2 (DEC-13). Every act on `opal-data-inf` waits on them.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~06:4xZ) -- grain ruling item 3 (b)+(c): one schema call, two answers
+
+**Asked:** `2.0.0_SA_COO~B1` msg 3568 (FB-f-2: AC1 5 of 5, AC2 3 of 5; `mapping_v3` @08b039ef50; rows D1-W12-S1, D1-W12-S4). At prefix
+grain, ruling (b) before (c) cannot be written: 5 interleaved inf classes and 10 forward-fill re-grids hold markers beside data
+inside the same date partitions. Separately, cot `bronze/` is 113 `_BRONZE_COMPLETE.json` markers with no data and no named
+state family.
+
+1. **YES: a class-grain `marker_match` (a key-tail pattern).** A marker row is `kind: marker` at pattern grain, and data
+   children stay at prefix grain. Conditions:
+   - Each pattern names a literal tail, e.g. `_BRONZE_COMPLETE.json` or `_SUCCESS`, never a bare wildcard.
+   - A key matched by a class's `marker_match` is excluded from that class's data children, so no key sits in two rows.
+   - Per class, the table repair prints live listing = marker matches + data-child keys, with the difference 0.
+   - A pattern that matches a non-zero-byte object over 4 KiB is printed as a finding and never placed silently.
+2. **The cot `bronze/` family: `bronze_complete`.** It matches the registered `cot-bronze-complete` resource family
+   (`infra/logic/registry/resources.json`). The 113 markers map to the R21 `state/` home under that family, at `address()`
+   output. If the builder refuses the family, that is a missing registry row to add, never a hand-typed key (CLAUDE.md 30).
+
+-- 1.0.0_SA_CTO~DELL1

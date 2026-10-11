@@ -1155,3 +1155,197 @@ write: **1 row** (`S1`).
   "notes": "Owner of the disposition: the issuer (2.0.0_SA_COO~B1) or the COO's flip, which can read the record face. The proof instance and evidence are committed with the channel row; no status edit was made here. Remedy is a flip of the order's <status> to complete at the COO's commit, or a face that carries the element in lines 1-80."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W12-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~12",
+  "surfaced_at": "2026-10-11T06:34:46Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "RULE (b) BEFORE (c) CANNOT BE REPRESENTED AT THE PREFIX GRAIN: MARKERS SIT BESIDE DATA IN EVERY INTERLEAVED RE-GRID, SO ARMS T2 AND T3 CANNOT PASS",
+  "spec_asserts": "Ruling (b) of ROUND_ANALYSIS.round2.md section 2 item 3: completion markers carry kind marker, map to the R21 state home, and are never re-gridded beside data. Ruling (c): classes that interleave markers and data are split by (b), then re-gridded per date partition with no child cap. Check arm T2: no re-grid holds markers beside data. Check arm T3: every round-2 interleaved FAULT class is re-gridded per date partition, or placed.",
+  "world_is": "(1) Ten round-2 re-grids hold a _complete/ child beside data children: bd forwardfill_v2 allocations (15 marker objects beside 133 data objects), realized, transactions, unrealized; cot forwardfill_v2 account_attributes, allocations (59 beside 142), holdings, realized, transactions, unrealized. A kind-marker child in any of them fails T2. (2) Five round-2 interleaved classes hold a marker and data in the same date partition: inf bronze/eclipse 134 of 134 date partitions, bronze/eclipse_qa 67 of 67, bronze/orion-api 1,711 of 2,473, gold/eclipse 132 of 132, silver/eclipse 132 of 132. A date-partition child includes its marker object (the prefix grain has no exclusion), so a per-file marker child is counted twice and the children stop summing to the live listing. The per-date re-grid is not executed: the five stay FAULT, owner 1.0.0_SA_CTO~DELL1, reason restated without the child cap. Result: T2 reads 0 kind-marker rows and T3 reads 5 STILL-INTERLEAVED; AC2 reads 3 of 5.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mapping_v2.json re-grid children: 10 rows with a parent and a _complete/ prefix (bd forwardfill_v2 allocations, realized, transactions, unrealized; cot forwardfill_v2 account_attributes, allocations, holdings, realized, transactions, unrealized)",
+      "live full bucket listing .scratch/live/bucket_full.json (ListObjectsV2 only, opal-data-inf at 2026-10-11T06:30:24Z): bronze/eclipse 1798 objects, 134 marker-named, 134 partitions all holding both; bronze/orion-api 17170 objects, 2473 partitions, 1711 holding both; gold/eclipse 529 / 132 / 132; silver/eclipse 660 / 132 / 132; bronze/eclipse_qa 871 / 67 / 67",
+      "check run: python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_mapping.py --arms repair --root <worktree>: T2 FAIL (markers=0), T3 FAIL (5 STILL-INTERLEAVED)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No disarm owner is named because the row is INERT. Decision needed from the CTO (ruling (b) and (c) against the representation) or the issuer 2.0.0_SA_COO~B1 (a grammar that lets a child exclude a named object, or a ruling that such classes stay whole). The worker did not choose: the ten re-grids and the five classes are unchanged in kind. Scratch: .scratch/evid.py, .scratch/build_v3.py."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W12-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~12",
+  "surfaced_at": "2026-10-11T06:34:46Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "RULE (d) OVERLAP-0 MERGES CANNOT BE EXECUTED FROM MAPPING_V2: SEVEN NEW CLASSES RECORD NO DESTINATION, SO THE TABLE THEY MERGE INTO IS NOT IN THE ROW",
+  "spec_asserts": "Ruling (d): a new class that collides with a round-1 placed class is a deliberate merge with its reason at a measured key overlap of 0 (or a split at overlap above 0); the round-1 row is not displaced by default.",
+  "world_is": "mapping_v2.json FAULT rows with reason 'destination-key overlap 0 of N keys with the group' are bd bronze/ (71 objects), bd gold/advisor_rolling_flows.json, bd gold/architect_leaderboard.json, bd gold/perf_report.json, bd gold/pipeline-complete.json, cot gold/firm_composition.json, cot silver/ (107 objects). None carries dest, dest_pattern or the group's table, so the table each would merge into cannot be recomputed from the row. The eighth, cot bronze/, is surprise ADVI_FIRMBKTS-D1-W12-S4. All eight stay FAULT, owner 1.0.0_SA_CTO~DELL1. T4 still passes: the 29 shared tables in the final rows are all ruled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python filter over mapping_v2.json rows: disposition FAULT and 'overlap 0 of' in reason returns 8 rows (bd 5, cot 3), listed in the surprise text",
+      "mapping_v2.json has no dest or dest_pattern key on any of those eight rows (FAULT rows in v2 carry reason, rule and fault_owner only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: the issuer 2.0.0_SA_COO~B1, to record the destination table of each FAULT class in the round-3 table, or to rule the group's table. Not placed in this cell because placing one needs a destination that the ruling does not name."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W12-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~12",
+  "surfaced_at": "2026-10-11T06:34:46Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "RULE (b) WOULD RE-ADDRESS PLACED COMPLETION-MARKER ROWS: A ROUND-1 SILVER MARKER GROUP SITS IN THE SILVER TIER, AND THE COPIED-UNCHANGED RULE FORBIDS A KIND FIELD ON PLACED ROWS",
+  "spec_asserts": "Ruling (b): completion markers carry kind marker and map to the R21 state home. Repair step 4: every v2 row that was not FAULT is copied unchanged. Check arm S5: every class round 2 placed keeps its disposition, address and pattern.",
+  "world_is": "silver/_silver_complete/ (inf, HOME, silver tier, 1,543 census objects) is a completion-marker group placed in the silver tier by round 1. Re-homing it to state would change a placed address (S5 forbids). gold/meta/pull-complete.json (inf, MOVE, state/meta, 1 object) is a completion marker already in the state tier; adding kind marker would change a copied row (step 4 forbids). Both are left as placed with no kind field. T2 therefore reads no kind-marker row from these two.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mapping_v2.json row opal-data-inf silver/_silver_complete/: disposition HOME, dest tier silver, table _silver_complete",
+      "mapping_v2.json row opal-data-inf gold/meta/pull-complete.json: disposition MOVE, dest tier state, table meta",
+      "census.json class opal-data-inf silver/_silver_complete/ objects 1543"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: the CTO. A ruling is needed on whether a placed completion marker is re-homed (a placed-address change that the difference control forbids as written) or kept with the silver home. Not decided here."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W12-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~12",
+  "surfaced_at": "2026-10-11T06:34:46Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "THE ONLY STANDALONE COMPLETION-MARKER CLASS HAS NO NAMED STATE FAMILY, SO ARM T2 READS ZERO KIND-MARKER ROWS",
+  "spec_asserts": "Ruling (b): completion markers map to the R21 state home of the class they mark. Check arm T2 needs at least one kind-marker row, all on tier state, and no re-grid mixing markers with data.",
+  "world_is": "cot bronze/ (cottonwood, 113 objects, every one a _BRONZE_COMPLETE.json marker, one per date partition, no data object) is a pure completion-marker class. It is FAULT with overlap 0 of 113. Placing it needs a state/{family}/ table name. The address builder accepts any table name (state/bronze, state/complete and state/markers all return valid addresses), so the name is a decision. Ruling (b) does not name the family, and R21 (infra/logic/02_DOCTRINE.md lines 74 and 588-592) keys state by request or run and never by table and date, while these markers are keyed by table and date. The class stays FAULT. AC2 cannot pass until the family is named.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live listing opal-data-cot bronze/: 113 objects, 113 basenames matching complete (case-insensitive), 113 date partitions (.scratch/evid.py)",
+      "python address() probe: lib/opal_naming.py address('advi','cottonwood','state',T,'2026-10-09',object='_BRONZE_COMPLETE.json') returns a valid s3 address for T in bronze, complete, markers, bronze-complete",
+      "infra/logic/02_DOCTRINE.md line 74 (state: keyed by request or run, never by table+date) and lines 588-592 (R21)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: the CTO, to name the state family for bronze completion markers or to rule that they are not state. The worker did not pick a family: the table name is not in the ruling. Without it, T2 fails (AC2 3 of 5)."
+}
+```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S1",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T06:40:25Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "comp-pipescript io UNDER-REPORTS D_04 WRITES (ONE PRINTED, 25 IN THE CODE) AND LISTS A READ AS A WRITE",
+    "spec_asserts": "FB-f-6 step 1: comp-pipescript io <script> --pipeline bd-gold --no-portal prints each script's WRITES; D_04 alone writes platinum/accounts/, platinum/advisors/, platinum/clients/ and platinum/firm/.",
+    "world_is": "`.tools/comp-pipescript io D_04 --pipeline bd-gold --no-portal --json` prints one write: partner_analytics_key -> gold/artifacts/partner_analytics/header_metrics_{*}.json. D_04.client_portal_summary.py:1974-1975 READS that key (_read_json(partner_analytics_key(gran))). The 25 D_04 platinum writes in the census go through _write_batch (line 277) and _write_json_to_s3 (lines 269-270), which the graph does not resolve. The premise that D_04 is the only writer of platinum/firm/ is also false (see ADVI_FIRMBKTS-D1-W16-S2).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-pipescript io D_04 --pipeline bd-gold --no-portal --json (LOCAL run at worktree HEAD 576e574de4) -> writes=[partner_analytics_key]",
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1974-1975 (read of partner_analytics_key(gran) via _read_json)",
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:269-270 and 277-292 (_write_json_to_s3 / _write_batch put_object Bucket=BUCKET)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json (25 D_04 writer entries, each line re-read by r3_census.py C2)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The census (line reads, grader 3 of 3) is the blast-radius source for FB-f-6; the graph was not used for write attribution. The resolver is org/modules/graph/pipeline_cli.py behind the .tools shim."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S2",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T06:40:25Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B1",
+    "one_line": "D_00f WRITES A SERVED PLATINUM KEY TO A HARD-CODED opal-data-bd OUTSIDE THE BD_S3_BUCKET SEAM, SO A STEP-2 ENV REPOINT WOULD LEAVE ONE WRITER BEHIND",
+    "spec_asserts": "FB-f-6 spec: step 2 repoints the producers that write 49F's served platinum keys to opal-data-49financial; lib/config.py:14 is the one bucket every gold script reads and writes; D_04 alone writes platinum/firm/ among the served classes.",
+    "world_is": "D_00f.advisor_nna_canonical.py:87 sets S3_BUCKET = 'opal-data-bd' as a literal and does not import lib.config, so it is not one of the 42 seam importers. Lines 91-92 build OUTPUT_KEY = OUTPUT_PREFIX + 'firm/advisor_nna_canonical.json' (OUTPUT_PREFIX defaults to 'platinum/'); line 928 calls _write_json_s3(artifact, OUTPUT_KEY), which put_objects to S3_BUCKET at line 768. The script runs in gold_dispatch.sh PHASE_D5 (lines 622-623). Result: platinum/firm/ has a second writer outside the seam, and an env-var repoint of BD_S3_BUCKET does not move it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_00f.advisor_nna_canonical.py:87 (S3_BUCKET = 'opal-data-bd' literal)",
+        "data/black_diamond/scripts/gold/D_00f.advisor_nna_canonical.py:91-92 and 928 and 768 (OUTPUT_KEY, _write_json_s3 call, put_object Bucket=S3_BUCKET)",
+        "data/black_diamond/scripts/gold/gold_dispatch.sh:622-623 (PHASE_D5: run_background D_00f)",
+        "PRODUCER_CENSUS.json bucket_seam: 42 importers, D_00f not among them (grader C3 recount 42 = 42)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED because the step-2 act makes it live. Disarm before step 2 is signed: move D_00f onto the seam (a producer edit, owned by the lane that owns D_00f) or name it in the step-2 blast radius. The census proposes no repoint (FB-f-6 bounds)."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S3",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T06:40:25Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "comp-pipescript RESOLVES ONE OF THE 26 E-SERIES bd-gold IDS, AND E_01 AND E_24 WRITE SERVED KEYS WITH NO DISPATCH ENTRY",
+    "spec_asserts": "FB-f-6 step 1: comp-pipescript io <script> --pipeline bd-gold --no-portal prints each bd-gold script's WRITES, so every writer script can be read by its id.",
+    "world_is": "comp-pipescript io returns 'Script not found' (rc 1) for 25 ids E_00..E_17 and E_19..E_25 (E_01 suggests 'Did you mean: E_18, D_01, C_01?'); only E_18 resolves. E_01.account_quality_tiers.py:333-340 writes gold/artifacts/account_quality_tiers_{date}.json and E_24.rebuild_fee_scorecard.py:254 writes gold/artifacts/advisor_fee_efficiency.json, both to opal-data-bd. gold_dispatch.sh has no E_ id in its CATALOG or PHASE_* blocks, so the runner of E_01 and E_24 is not declared in the repository.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-pipescript io E_01 --pipeline bd-gold --no-portal (LOCAL run) -> 'Script not found: E_01. Did you mean: E_18, D_01, C_01?'; sweep rc=1 for 25 of 26 E-series ids",
+        "data/black_diamond/scripts/gold/E_01.account_quality_tiers.py:333-340 and E_24.rebuild_fee_scorecard.py:254 (put_object Bucket=S3_BUCKET)",
+        "data/black_diamond/scripts/gold/gold_dispatch.sh (no E_ entry in CATALOG or PHASE_* blocks; grep run)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Writes were read by line, not by the graph. Runner and schedule for these two writers are recorded as UNKNOWN in PRODUCER_CENSUS.md section 5."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S4",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T06:40:25Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "THE WORKER FACE ASKS FOR THE ORDER'S <status> TO BE FLIPPED, BUT THE FACE CARRIES NO <status> AND THE ORDER FILE IS OUTSIDE THIS WORKER'S <paths>",
+    "spec_asserts": "FB-f-6 section 5: flip this order's <status> to complete in the same commit as the proof instance and the two deliverables, only when AC1 passes.",
+    "world_is": "The worker face (lines 1-96 of ADVI_FIRMBKTS.TO-FB-f-6.producer-census.md, the only part this worker reads) contains no <status> element. The order file is not in this order's <paths> (the deliverables folder and the investigation file). The flip was not made; the order file was not edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-6.producer-census.md lines 1-96 (read at offset 1, limit 96): no <status> element",
+        "the same file's <paths> block (lines 71-74): deliverables folder and INVESTIGATION_v1.md only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "AC1 passes 3 of 3 on the committed census; the proof instance validates. The status flip, if it is still wanted, belongs to the issuer or to a grant that names the order file."
+  }
+]
+```
