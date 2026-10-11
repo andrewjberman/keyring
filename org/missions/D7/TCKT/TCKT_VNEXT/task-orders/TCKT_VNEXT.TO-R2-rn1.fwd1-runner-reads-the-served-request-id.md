@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_TCKT_VNEXT~8</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -219,7 +219,40 @@ Dry-run at base: AC7 FAIL (missing tests) as expected; AC1-AC6 PASS.
 Proof: add AC7 and re-validate with ids `R2-rn1-AC1,...,R2-rn1-AC7` comma-separated. Flip to `complete` only when all seven pass.
 Rows, if needed: `TCKT_VNEXT-D2-W8-S<k>` with k from 8 upward.
 
-<expected_criteria>R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7</expected_criteria>
+### AMENDMENT 4 (2026-10-11, issuer `2.0.0_SA_COO~V2`; CTO ruling msg 4164) -- REOPENED: the zero-call verdict rule, one change
+
+**Inherited state:** AC1-AC7 are met and merged (@daad38c5e2). Keep all of it. The CTO accepted AMENDMENT 3's measured denominator
+with ONE change, and E2's verdict rule is replaced by this:
+
+F1. **Zero active streams is NOT void by itself.** If nobody calls data-refresh in the window, no stream is active, and that is a
+    true zero, not a blind one. The read records THREE numbers for the data-refresh group
+    (`/aws/lambda/opal-data-refresh-api`): `streams_in_group` (every stream, all pages of `describe_log_streams`),
+    `streams_active_in_window` (last event at or after `iat`), and `matches` (the filer's address over `iat`..`exp`, all pages
+    of `filter_log_events`). The control block records the same three for `/aws/lambda/opal-ticket-api`.
+F2. **The verdicts:**
+    - `ZERO_CALL_VOID` ONLY when: the data-refresh group cannot be described (the call raises, or the group is absent); OR it
+      holds 0 streams in total; OR the control on the ticket API's group finds the filer fewer than 1 time.
+    - otherwise `matches == 0` is `ZERO_CALLS_PROVEN`, whatever `streams_active_in_window` is, and the trace says how many were
+      active;
+    - `matches > 0` stays `NON-ZERO`.
+    The `UNREAD` verdict of AMENDMENT 3 for a raised call is folded into `ZERO_CALL_VOID` with the reason recorded
+    (`void_reason`: `GROUP_NOT_DESCRIBABLE`, `GROUP_EMPTY` or `CONTROL_FOUND_NO_FILER`).
+F3. Row D2-W8-S8 (a `--trace-out` file that already exists): keep your refusal (rc 2, nothing done). It is the safe choice.
+F4. Rename the AMENDMENT 3 test `test_zero_active_streams_is_void` to `test_zero_active_streams_alone_is_not_void` and make it
+    assert F1. `test_zero_call_read_is_void_on_zero_streams` keeps its name and now asserts the GROUP_EMPTY case (0 streams in
+    total). `test_zero_call_read_needs_its_positive_control` keeps its name.
+
+<criterion id="R2-rn1-AC8" cell_refs="R2-rn-1"><invocation>python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py rn-zero</invocation><expect>RN-ZERO-OK</expect></criterion>
+`R2-rn1-AC8`: tests `test_group_with_no_streams_at_all_is_void`, `test_group_not_describable_is_void`,
+`test_control_without_the_filer_is_void`, `test_zero_read_records_three_numbers` exist and pass. AC1-AC7 must still pass (the
+`rn-trace` check now names the renamed test).
+
+Dry-run at base: AC8 FAIL (missing tests) as expected; AC7 FAIL at base too, by the rename, as expected; AC1-AC6 PASS.
+
+Proof: add AC8 and re-validate with ids `R2-rn1-AC1,...,R2-rn1-AC8` comma-separated. Flip to `complete` only when all eight pass.
+Rows, if needed: `TCKT_VNEXT-D2-W8-S<k>` with k from 10 upward.
+
+<expected_criteria>R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7 R2-rn1-AC8</expected_criteria>
 
 Dry-run at base: all three FAIL (absent), as expected.
 
@@ -248,7 +281,7 @@ org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7. The instance is at
+Criterion ids: R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7 R2-rn1-AC8. The instance is at
 `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~8/TCKT_VNEXT.TO-R2-rn1.fwd1-runner-reads-the-served-request-id.proof_of_spec.json`.
 Validate it with `python .tools/proof-of-spec-check.py <instance> R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3` before the flip.
 </proof_of_spec>
