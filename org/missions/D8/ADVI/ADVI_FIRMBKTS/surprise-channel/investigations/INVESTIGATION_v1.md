@@ -3088,6 +3088,54 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
     "spec_asserts": "TO-FB-f-9 phase A3 step 3: route the listing through platinum_list_target(); the order names no literal-key rule for the listing.",
     "world_is": "The naming gate grades a literal S3 prefix in any added line and refuses it when the remediation already lists the literal; the seam call needs a prefix value, so the literal is derived from the builder. Behaviour is identical: the derived prefix equals the base literal.",
     "notes": "Recorded because the order did not say the listing prefix must come from the builder. The derived value equals the base literal; no key changes. Owner of the remediation: the issuer."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W21-S1",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~21",
+    "surfaced_at": "2026-10-11T09:19:00Z",
+    "one_line": "FB-f-9 phase A4 stopped: its two bounds cannot both hold, 'no non-ASCII in the file' versus 'the diff is the two blocks and one argument', because gold_dispatch.sh already carries 19 non-ASCII lines at base; no edit made.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/gold_dispatch.sh@938e2ed2c4: python byte scan of the file: 19 lines hold bytes above 127 (lines 44, 49, 146, 154, 324, 369, 487, 517, 559, 921, 1074, 1125, 1132, 1389, 1410, 1443, 1482, 1484, 1500; 58 bytes in total)",
+        "git ls-files --eol on the same path: i/lf w/lf attr/text eol=lf; the LF bound holds, the non-ASCII bound does not",
+        "AC1 at base (r3_dispatch.py --arm export): 'FAIL the PLATINUM-MODE block is absent', 'ROUND 3 DISPATCH EXPORT: CASES FAIL', exit=1",
+        "AC2 at base (r3_dispatch.py --arm gate): 'FAIL the GATE-READ-LOCATION block is absent', 'ROUND 3 DISPATCH GATE: CASES FAIL', exit=1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A4 bounds: (1) the diff against base is the two marked blocks and the one replaced aws s3 cp argument, nothing else; (3) LF line endings and no non-ASCII in the file; if something cannot be met within the paths, file a surprise row and stop.",
+    "world_is": "The base file carries 19 non-ASCII lines outside the edit zones. Clearing them widens the diff beyond bound (1); keeping them breaks bound (3). The two bounds cannot both hold on this file. No edit was made by this worker.",
+    "notes": "Issuer decision: re-cut bound (3) to 'no non-ASCII introduced by this act' (the two blocks are ASCII by construction), or order a separate ASCII clean-up cell. CLAUDE.md section 4: a file already carrying non-ASCII takes all non-ASCII out or every reader explicit, never a subset. The order's proof instance carries AC1 and AC2 as FAIL, measured at base."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W21-S2",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~21",
+    "surfaced_at": "2026-10-11T09:19:00Z",
+    "one_line": "On the --chain downstream path the freshness gate reads before any sync of code/gold into SCRIPTS, so the step-2 gate block falls back to the legacy URI under canonical wherever lib/ is not already in SCRIPTS; the order's dirname contingency is not shown to reach lib/ on the runner.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gold_dispatch.sh@938e2ed2c4 L1305-1307: check_freshness runs when _should_check_freshness=1 (full|downstream, L1276-1280), before any run_chain on the downstream path",
+        "gold_dispatch.sh@938e2ed2c4 L1249-1258: silver-prep-pre run_chain runs only for chain full, so the gate sees a sync for full and none for downstream",
+        "gold_dispatch.sh@938e2ed2c4 L664-666: sync_scripts defines the code/gold sync; its callers are L473 (run_chain) and L532 (run_chain_parallel), after the gate on downstream (L1393-1404)",
+        "gold_dispatch.sh@938e2ed2c4 L78: SCRIPTS=/tmp/gold_layer_scripts; run-gold-layer.sh@HEAD SCRIPTS_DIR=/home/ubuntu/gold-layer/scripts (L17-48) receives its own code/gold sync (L87); the dispatcher's directory on the runner is not established here",
+        "gold_dispatch.sh@938e2ed2c4 L250 (the step-2 python line discards stderr) with the step-2 fallback: an import failure returns empty and falls to the legacy URI silently"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 step 2: the gate location comes from lib/platinum_dest.py source(); if the lib is absent the location falls back to today's legacy URI; if the freshness function runs before the sync, add the dispatcher's directory as a second search path.",
+    "world_is": "The gate runs before the first sync on the downstream path, so SCRIPTS holds no lib/ on a fresh instance (an earlier run on the same instance may have synced it). Under mode canonical the fallback reads the legacy header_metrics.json, whose data_as_of is frozen. The dirname contingency reaches lib/ only if the dispatcher runs from a directory that holds lib/, which this worker did not establish.",
+    "notes": "ARMED: if the step-2 and step-1 blocks land as written and the mode is exported in production, a fresh-instance downstream run reads the frozen legacy value. Not armed by this act: no edit made, and the contingency was not applied because the stop precedes the edit. Disarm: the issuer re-cuts the gate placement, or the sync precedes the gate on the downstream path."
   }
 ]
 ```
