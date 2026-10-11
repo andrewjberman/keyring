@@ -3140,3 +3140,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r145/p145_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-449` | for the overlap securities of the Inst and RIC/BDC Not Available pairs, the first moved bar after each repeated run, beside the anchor (five outcomes, no remainder); and the six institutional securities' moved days with their held rows against the bar | FWD-13 (a date label is measured, never assumed) | LOCAL | IB-pr-445 drained | P145-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~306. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 138. ROUND 146, WORKSTREAM ~P (2026-10-11 ~19:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5650)
+
+PRD v0.40 and v0.41 both SIGNED: the guard is contract and may be built, nothing served. The read v0.40 names is IB-pr-449 (round
+145, issued @b3500144f4 before msg 5650 arrived, amended @1286cbf961 with v0.41's count); it is not re-issued. The grading
+instrument is not product code today (it is the measurement scripts in worker folders), so the guard lands as one pure function in
+IRPT's gold folder with its tests; nothing imports it. A served change comes later under its own pair.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r146/p146_cells.py`: AC1-AC3 FAIL at base (no module).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-450` | `second_witness_grades(bars, t)`: true only with a bar on t, a bar on the calendar's prior trading day, and the two differing by more than relative 1e-4; with its tests | FWD-13 (a date label is measured, never assumed) | LOCAL | none | P146-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~307 (worker-light). DIRECT-ACT.
