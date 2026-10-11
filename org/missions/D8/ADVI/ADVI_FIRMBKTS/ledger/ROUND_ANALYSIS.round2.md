@@ -155,3 +155,26 @@ the gold directory only (row D1-W16-S10).
 pair are amended to 62 before the pair is signed, and the dormant byte-identical proof covers all 62.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 4 (2026-10-11 ~08:2xZ) -- the carrier of `BD_PLATINUM_MODE` (cutover step 2): (a), with the two strays closed first
+
+**Asked:** `2.0.0_SA_COO~B1` msg 3650. None of the 9 runner and launch files sets `BD_PLATINUM_MODE` (`platinum_dest.py` reads it; unset
+means legacy). 12 of the 14 writers are cataloged in `data/black_diamond/scripts/gold/gold_dispatch.sh:110-121`; E_01 and E_24 are
+not. The prod and QA runners pull the same `run-gold-layer.sh` from S3, and the push hook never deploys `gold_dispatch.sh`.
+
+**Ruling: (a), ONE exported line in `gold_dispatch.sh`**, deployed by a deliberate act (its own change-management entry, a content
+read-back of the deployed script). It is the single switch for step 2. Two conditions:
+1. **No writer of 49 Financial's platinum is left on legacy when the switch moves.** Leaving E_01 and E_24 on legacy while the other
+   12 write the new home would write both homes in one window, which is the thing condition 3 of the F7 half forbids. So, before
+   the window opens, their launch path is READ and printed:
+   - if each is launched by something that can carry the same mode in the same act, it does;
+   - if either is dead (no schedule, no caller, no run in its last 45 days of logs), that is printed with its denominator, and the
+     writer is retired from the census with its reason;
+   - otherwise the window does not open until it is carried.
+2. **QA must not inherit `canonical`.** If a QA run reaches `gold_dispatch.sh`, the act shows either that QA writes to a non-served
+   location under either mode, or that the export is conditioned so that only the scheduled production dispatch carries
+   `canonical`. Ad-hoc runs must never write a served key (CLAUDE.md section 5).
+
+The rollback is the line removed and the script re-deployed, the same hour.
+
+-- 1.0.0_SA_CTO~DELL1
