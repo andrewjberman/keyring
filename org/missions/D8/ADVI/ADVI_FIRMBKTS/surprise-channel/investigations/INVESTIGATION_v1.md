@@ -4451,3 +4451,29 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not changed by the worker: the amendment asked for this block in the carrier, and the carrier now carries exactly it. Issuer decision needed: the W5 drift clause should exempt blocks the builder adds (or compare against a base regenerated without them). Like S2, a check artifact the issuer grades at the drain. AC1 is recorded as 4 of 5, not re-measured."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S27",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T15:00:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The live bucket policy of opal-data-49financial has NO Allow statement and its fence admits none of the act-4 readers' principals: after the flip the CloudFront origin (OAI), the validator and six IRPT/partner readers would be refused at the new bucket.",
+  "spec_asserts": "Round-3 analysis section 3 item 1 and ADDENDUM 7: act 4 is the value flip with every regenerated reader deployed in the same act; acts 4b and 4c route the two partner Lambdas to the canonical home first; the readers' pairs name their authorization (round-3 act 1 COO half: the serving grant on the new bucket 'is read from the live bucket policy at the amendment').",
+  "world_is": "aws s3api get-bucket-policy opal-data-49financial (the dell1 CloudOps identity, 2026-10-11 ~15:0xZ): 4 statements, all Effect Deny: DenyForeignFirmPrincipals (Principal *, s3:*, ArnNotLike aws:PrincipalArn over 21 patterns: role/*-49f-*, three service-linked roles, bd-exporter-ec2-role, infrastructure-ops-lambda-role, infrastructure-snapshot-role, opal-advi-stitch-landing-role, opal-drift-producer-codebuild-role, opal-globgrph-derive-runner-task, opal-globgrph-incremental-updater, opal-news-lambda-role, partners-lambda-role, security-sweep-dedicated-role, user/Andrew_Berman, Andrew_Berman_Console, Opal_Terminal, role/irpt-holdings-role, user/cloudops-dell2-agent-user, user/cloudops-dell1-agent-user, role/irpt-performance-adapter-role) and three DenyPerformanceAdapter* statements. Allow statements: none. The edge router addresses the S3 origin by mutating request.origin.s3 under OAI E139998VWH0PD (index.mjs:14-16, 487-494: 'new partner buckets require OAI canonical user in bucket policy (per-bucket, no wildcard)'); the OAI principal is neither in the deny's exemption list nor granted by an Allow. Principals read by act 4 or 4b: lambda-edge-execution-role (validator, ownership map; router and guard share it) NOT admitted; irpt-directory-role, irpt-export-render-role, irpt-narrative-role, irpt-status-role, irpt-ycharts-generate-role (ownership map) NOT admitted; exec-summary-generator-role (4b) NOT admitted; admitted: irpt-49f-reporting-read-role (pattern), irpt-holdings-role, irpt-performance-adapter-role (with its three scoped denies), partners-lambda-role (its IAM allow reads opal-data-*). The registry's exemptions.json for this bucket lists the same set (the live policy equals the desired plane).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api get-bucket-policy --bucket opal-data-49financial, 2026-10-11 ~15:0xZ, parsed: statements and the 21 ArnNotLike values printed",
+      "infra/logic/registry/exemptions.json opal-data-49financial rows (19 principals)",
+      "infra/aws/lambda/ci/lambda-source-map.json iam_role for the eight irpt consumers, partners-lambda-role, lambda-edge-execution-role; infra/aws/terraform/exec-summary/iam.tf (exec-summary-generator-role)",
+      "infra/aws/lambda-edge/shared-advisor-router/index.mjs lines 14-16 and 487-494 (OAI origin auth)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "An endpoint question for 1.0.0_SA_CTO~DELL1 (a never-widen class: it ADMITS principals to a fenced firm bucket). Placement read from the evidence: one prerequisite act before acts 4b and 4c and 4, under its own pair, through the registry (exemptions.json rows, scoped by `actions` s3:GetObject and `prefix` the canonical platinum prefix where the row grammar allows; the OAI Allow on the served prefix, never bucket-wide) and the shared-infra apply of s3-49financial.tf; each reader role's own IAM Allow on that prefix read separately. Acts 4, 4b and 4c's un-park names this row; act 2 and 3 are not blocked by it (their identities are admitted)."
+}
+```
