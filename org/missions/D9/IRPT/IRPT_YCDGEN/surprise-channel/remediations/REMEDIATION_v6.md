@@ -175,15 +175,15 @@ Graduated, round label v8: 11 rows, OPEN. ARMED: 6 (D2-S38, S16, W6-S1, W6-S2, D
   "owner": "2.0.0_SA_COO~G2",
   "round": "v8",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~G2",
    "round": "v8"
   },
-  "closed": false,
+  "closed": true,
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~G2",
-   "at": null
+   "at": "2026-10-11T19:40:12Z"
   }
  },
  {

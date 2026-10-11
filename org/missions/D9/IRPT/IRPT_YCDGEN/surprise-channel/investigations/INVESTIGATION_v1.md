@@ -4250,3 +4250,26 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "CHECK VERDICT reads FOUND on 33 hits that are ALL key-name matches; the three value-shaped tests read 0. 25 of the 33 name credential-ish fields whose values are hashed here; 8 are the token pattern matching the probe pair's own with_token_/without_token_ arm names, which hashes four diagnostic classes per arm. So the verdict overstates the concern in the safe direction and under-reports the diagnosis in a way that costs the reader eight values."
 }
 ```
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S62",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T19:40:12Z",
+  "one_line": "L8 round 14, no judgment criterion. FWD-1 is not met and was not run. Row D2-W7-S1 (a research build shipped no logo) is closed: the builder's filter now takes the logo's file ending, read by this seat in the code with its tests passing. Three rows stay ARMED with their owner: S16 (waits on one accepted submission from a browser), D2-S38 and D2-S45. The vendor sign-in is answered by a firewall challenge on its probe; the vendor path is stopped and the question is with Andrew.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r14/ROUND14_DRAIN_END_READ_20261011.md @8e099e4110 (msg 5670)",
+      "this seat's read 2026-10-11T19:40:12Z of org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py at commit 049834ad31: the research filter's list of endings gains .svg, one line; the file is unchanged from that commit to HEAD; its test file run by this seat, 31 passed. Not run by this seat: a research build"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27). Remediation row D2-W7-S1's remedy: one research build lists the logo among its members.",
+  "world_is": "The issuer's dry-run build at the st32 pin lists the logo with one member flag (its statement, not re-run). The running resident already carries the logo. The rest of the rollback has not run on st32.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
