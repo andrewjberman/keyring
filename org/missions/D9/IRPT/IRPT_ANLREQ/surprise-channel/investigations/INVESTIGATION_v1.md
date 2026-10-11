@@ -2035,3 +2035,30 @@
   "notes": "Other GT test files that build a served.Entry without load_service_profile would have the same live read; only the two custody files were changed, per the cell."
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W54-S2 -- the required acting_principal_id keyword breaks the ops/tests setup helper, outside this order's grant (199 tests)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-11T07:45:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The required acting_principal_id keyword on DynamoAcceptance.accept breaks one setup helper in ops/tests, which is outside this order's grant, and with it 199 tests in eleven ops/tests files and 36 in ycharts/generate/tests",
+  "spec_asserts": "TO-AR-y-37 build step 7: existing tests that call accept(...) directly get a synthetic principal id and nothing else changes; the grant lists ycharts/generate/tests/ only.",
+  "world_is": "MEASURED: infra/aws/lambda/investor-reporting/ops/tests/test_owned_requests.py:57-58 (setup) calls acceptance_module.DynamoAcceptance.accept(owner, dict(body, request_id=token), ref, ingestion_revision='v1', destination_revision='offline-v1') directly. With the new required keyword it raises TypeError 'missing 1 required keyword-only argument: acting_principal_id'. setup() is imported by other ops tests, so `pytest ops/tests` at this worktree gives 38 failed, 161 errors (all 199 carry that TypeError) in test_history_client_scope.py, test_history_pool.py, test_original_reader.py, test_owned_entry.py, test_owned_report.py, test_owned_requests.py, test_owned_status.py, test_pdf_link.py, test_persist_inputs.py, test_prospect_dates.py, test_read_memo.py. The same helper also fails 36 tests inside ycharts/generate/tests (test_publisher.py 25, test_publication_worker.py 11, all the same TypeError; the whole folder gives 36 failed, 461 passed, 30 skipped, 1 xfailed, 0 custody failures). Every other direct caller of accept (4 files under ycharts/generate/tests/) was updated. The fix is one added keyword in ops/tests/test_owned_requests.py:58: add acting_principal_id='synthetic-principal-one' to that call. Not made: the file is not in the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/tests/test_owned_requests.py:50-61 (setup)",
+      "pytest -q infra/aws/lambda/investor-reporting/ops/tests at the worktree after the acceptance.py change: 38 failed, 94 passed, 22 skipped, 161 errors, 199 of 199 carrying the TypeError"
+    ]
+  },
+  "notes": "The release that ships the acceptance.py writer must ship that one-line test edit in the same act; the issuer may re-cut it into a seat whose grant holds ops/tests. No production caller is affected: the only production call of accept is submission_service.py, updated."
+}
+```
