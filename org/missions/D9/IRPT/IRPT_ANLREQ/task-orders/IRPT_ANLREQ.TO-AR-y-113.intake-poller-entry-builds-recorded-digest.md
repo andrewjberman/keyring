@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~53</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>pending</status>
+<status>complete -- CLOSED AS A RESULT by issuer 2.0.0_SA_COO~Y2 2026-10-11 ~19:1xZ on CTO ruling msg 5610: AR113-y-AC1 retired (AMENDMENT 2); AR113-y-AC2 prints Y113-RESULT-OK and the proof instance is VALID rc 0, both run by the issuer. The map entry is unchanged and does NOT build: 21 of 28 members of the live irpt-intake-poller package have no blob in git. The remedy is a release of the poller by IRPT_BCKEND (IB-s-6), not this order.</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -96,12 +96,28 @@ tree able to reproduce the function. Authoring a new file would change the diges
 The `<paths>` grant gains `infra/aws/lambda/investor-reporting/intake/firm_registry.json` (below). Gate limb that graded this
 amendment: read from this commit's own output.
 
+---
+
+**AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~19:0xZ): the cell is CLOSED AS A RESULT on CTO ruling msg 5610. Criterion
+`AR113-y-AC1` is RETIRED; criterion `AR113-y-AC2` grades the result's record.** `AR113-y-AC1` printed `Y113-POLLER-FAIL` at both
+seatings (`a9abef6755`, `eb5e6da5eb`) and can never print OK: 21 of the 28 members of the live package have no blob in git (the
+served `firm_registry.json` was never tracked; 20 `fixtures/graph` members are live with CRLF where every commit holds LF), so no
+map entry can build the live digest. The CTO: "the criterion is retired. The map is not edited to pretend otherwise. The naming
+gate's refusal stands; no override." The remedy is a RELEASE of the poller by its owning project (IRPT_BCKEND, IB-s-6), after one
+read of whether the running code opens that file; it is not this order's.
+THE ISSUER'S OWN DEFECT: AMENDMENT 1 ruled on the first stop as if one missing member were the whole problem; it was one of 21.
+The proof instance is re-stated by the issuer to the criterion below (the worker's FAIL evidence for the retired criterion is
+kept in it as a declared exclusion). Gate limb that graded this amendment: read from this commit's own output.
+
 ### ACCEPTANCE
 
-<criterion id="AR113-y-AC1" cell_refs="AR-y-113"><invocation>python C:/dev/wk-irpt-anlreq-53/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r11/ar11_checks.py y113-poller --root C:/dev/wk-irpt-anlreq-53</invocation><expect>Y113-POLLER-OK</expect></criterion>
-`AR113-y-AC1`: a build with no parity skip prints the digest the entry records as deployed.
+<criterion id="AR113-y-AC2" cell_refs="AR-y-113"><invocation>python C:/dev/wk-irpt-anlreq-53/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r11/ar11_checks.py y113-result --root C:/dev/wk-irpt-anlreq-53</invocation><expect>Y113-RESULT-OK</expect></criterion>
+`AR113-y-AC2`: the record states the finding (live equals the recorded digest; no commit holds the served member; fewer members equal
+live than the package holds; the build does not equal the target), and neither the map entry nor the source folder was changed.
 
-<expected_criteria>AR113-y-AC1</expected_criteria>
+(retired by AMENDMENT 2: the former criterion AR113-y-AC1 ran `ar11_checks.py y113-poller` and expected `Y113-POLLER-OK`; it printed `Y113-POLLER-FAIL`.)
+
+<expected_criteria>AR113-y-AC2</expected_criteria>
 
 ## BOUNDS
 
@@ -121,10 +137,10 @@ org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: AR113-y-AC1. The instance is at
+Criterion ids: AR113-y-AC2 (AMENDMENT 2: AR113-y-AC1 is retired). The instance is at
 `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/IRPT_ANLREQ.TO-AR-y-113.intake-poller-entry-builds-recorded-digest.proof_of_spec.json`.
 Its `to_id` is exactly `IRPT_ANLREQ.TO-AR-y-113`. Validate it AFTER its commit with
-`python .tools/proof-of-spec-check.py <instance> AR113-y-AC1`; flip `<status>` to `complete` only when it prints VALID.
+`python .tools/proof-of-spec-check.py <instance> AR113-y-AC2`; flip `<status>` to `complete` only when it prints VALID.
 </proof_of_spec>
 
 <preflight>
