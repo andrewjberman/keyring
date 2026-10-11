@@ -35,6 +35,14 @@ ONE digest; both pulls were driven once and graded; the commentary function was 
 The clock in CTO condition 3 was honoured: the act ran 21:00Z to 21:32Z, inside the 23:15Z boundary and clear of the
 mail pull's own 23:30Z fire, so tonight's scheduled fire runs the new bytes.
 
+**ORGANIC ARM, read at 23:48Z (ADDENDUM 1 of the report).** Tonight's scheduled fire ran and is clean:
+`MAIL-PULL-FIRE run=20261011T233012Z window_days=7 listed=12 admitted=0 landed=0 skipped_known=0 list_refusals=0
+silver_rows=0 held_out=0` -- exactly one such line since 23:25Z, no `ERROR`, `Traceback` or timeout, run record 516 B
+and `silver.json` 128 B at 23:30:45Z, field for field the driven invoke. It ran on THIS act's bytes by measurement,
+not by the clock: at 23:48:53Z all three functions still read `auyn4Ivl...` with `LastModified` unchanged at
+21:19:37 / 21:19:49 / 21:19:43Z. The commentary function's log is still at 2 `START` lines since 00:00Z. Monday's
+13:00Z Teams fire and the first real draft's `provenance.withheld` remain the only unexercised arms.
+
 ## Blockers
 
 **None for this lane.** Zero orders open, the ledger is closed, the status flip is the issuer's.
