@@ -5,7 +5,7 @@
  "project": "NFRA_OPSWKF",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.7",
+ "prd_version": "v0.8",
  "step": 4,
  "brief_ref": "docs/briefs/q3-trade-submission-ops-workflow-brief-20261006.md@c41e705220",
  "endpoint_outcomes": [
@@ -104,10 +104,12 @@ wrote the brief. **COO:** UNSEATED at registration; seating is `0.0.0_AB_MSTR`'s
          DONE WHEN  EXERCISED -- the trade submission route refuses a verified caller who is not OPAL-INTERNAL (FWD-8's meaning)
                     BEFORE any table read, table write or mail, and admits one who is; shown by the handler run on the authorizer's
                     own context for an Opal-internal, a client-tier and a service-tier caller, with the table and the mail client
-                    asserted untouched on each refusal; and, AFTER THE RELEASE, ON THE DEPLOYED SERVICE, by BOTH arms on ONE body that
-                    cannot be stored (a malformed `ticket_id`): a caller who is not Opal-internal answered 403, and an Opal-internal
-                    caller answered 400 `ticket_id is malformed`; no submission row and no mail from either; the deployed bytes diffed
-                    against the build input, member by member
+                    asserted untouched on each refusal; and ON THE DEPLOYED SERVICE, on ONE body that cannot be stored (a malformed
+                    `ticket_id`, and NO `initiator_email`), posted by a caller who is not Opal-internal AND CARRIES A VERIFIED EMAIL:
+                    BEFORE the release that caller is answered 400 `ticket_id is malformed`, AFTER it 403 carrying the new check's
+                    own message, which is not either of the handler's two existing refusals; and AFTER, an Opal-internal caller with
+                    an email is answered 400 `ticket_id is malformed`; no submission row and no mail from any of the three reads; the
+                    deployed bytes diffed against the build input, member by member
          ACCEPT     a person signed in as a client or as another firm's user cannot put a trade in front of Opal's approvers or
                     mail them; an Opal staff member submits as before
          SOURCE     NFRA_OPSWKF cell OW-s-1's record `deliverables/0.9.0_WK_NFRA_OPSWKF~7/FOUR_FUNCTIONS_WHAT_A_NON_INTERNAL_CALLER_CAN_DO.md`
@@ -259,5 +261,21 @@ backlog in their numbered order.
 - **Not in FWD-9:** the page's own guard; a rule for WHICH staff may submit (the trade-users table is still not consulted to admit a
   submission, as today); the three other functions of that record, which are not this project's (carried to their owner).
 - **CONTRACTS unchanged. ENDPOINT changed:** the CVO re-signs the ratified-text half.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM (2026-10-11 ~19:5xZ, `1.0.0_SA_CTO~DELL2`): FWD-9's refused arm names its caller and its 403 (L10; ENDPOINT changed)
+
+- **Source:** `3.0.0_SA_CVO`'s refusal of v0.7 (msg 5700, review @e3cb1980d7).
+- **The defect in v0.7:** the refused arm said "answered 403" and did not say which. The handler already answers 403 when the caller
+  carries no email (lines 187 to 190) and when a body `initiator_email` differs (lines 192 to 195). A synthetic caller with no email reads
+  403 on the bytes live today, so the arm would pass with the fix landed, not landed, or landed stale. It is the defect v0.4 was
+  refused for, on the same stack, written again by this seat.
+- **The repair, both of the reviewer's two:** the refused caller carries a verified email and the body carries no `initiator_email`, so
+  today's code passes that caller to the `ticket_id` check; and the new 403 carries its own message, asserted by the handler's test.
+- **v0.7's "no read before the release" is withdrawn.** The same body, by that caller, reads 400 before and 403 after, and stores
+  nothing either time: the malformed-id return is at lines 200 to 202 (v0.7 cited 199 to 201), before any table is touched.
+- The release's pair states what that caller is for its token's life on every other surface, read from each surface's own rule, as
+  FWD-8's pair did not for its Opal-firm caller.
 
 -- 1.0.0_SA_CTO~DELL2
