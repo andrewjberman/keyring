@@ -12204,3 +12204,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Citing row; Z-W56-S2's text is untouched."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W56-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~56",
+  "surfaced_at": "2026-10-11T17:59:33Z",
+  "one_line": "OG-wr-1: the first (cold) 13-month pass per master took 146.9 s (m0) and 142.5 s (m1) on dim_asset, not the 221-235 s the order cites from W43-S7; the other three datasets of a master then read in about 10 s cold, because the snapshot is stored per master and date, not per dataset.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN SSM 095a641c-3227-40a3-bc30-e59fa0758897 (Success): WR1_PAIR lines in wr1_host.out; 8 pairs, window_dates 274 and primed_dates 274 on every pair; cold_seconds 146.9/10.8/10.0/10.1 (m0) and 142.5/10.6/9.9/9.8 (m1); warm_seconds 9.6 to 12.1",
+      "READ infra/aws/ec2/opal-gateway/app/integrations/schwab/catalog.py snapshot(): the stored snapshot is keyed (master, date, closure identity), with no dataset in the key"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-wr-1 section 1: a cold 13-month read costs about 221-235 s per master (row W43-S7).",
+  "world_is": "The pass measured here paid 142-147 s per master, at 17:50Z on 2026-10-11, with the host's service running beside it. This program did not measure how many of the 274 snapshots already existed before the pass (an earlier 30-day read stores some), so the gap to 221-235 s is not attributed. The warm read is about 10 s per pair, which is the cost of 274 completion-record reads plus 274 stored-snapshot reads, not a free cache hit.",
+  "notes": "The pass wrote the missing snapshots write-once to the real access-state table, as the order says; nothing else was written."
+}
+```
