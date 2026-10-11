@@ -5034,3 +5034,53 @@
   "notes": "No act taken. A consumer that expects retained_ref on the sections view (for example to open the retained report) would find no member to read it from."
 }
 ```
+
+## DSGN_IRPTV1-D2-W53-S8 -- IV-e-95 part 2: regenerating the request corpus with fe-s-13/gen-corpus.ts DELETES a hand-added `_captured` member of comparison-catalogue.request.json; the generator is out of step with the committed corpus
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S8",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T12:26:00Z",
+  "one_line": "IV-e-95 part 2: running fe-s-13/gen-corpus.ts (the one documented way to regenerate default.json) rewrote fixtures/wire/requests/comparison-catalogue.request.json without its `_captured` member; the worker restored the file from git and committed only the generator and default.json",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff after `bun run src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts` at portal 00989b8b: comparison-catalogue.request.json lost the line `\"_captured\": \"DSGN_IRPTV1 row S40 (1.0.0_SA_CTO RULINGS batch 158): captured from the page's own catalogue read ...\"`; every other regenerated request file and fe-s-14-print-v1.json differed from the index in line endings only. Restored with git checkout; portal commit 73806e29 touches neither."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The documented regeneration invocation (gen-corpus.ts, as fe-s-81's header states) reproduces the committed fixture files.",
+  "world_is": "The generator writes every request record from its own template and has no `_captured` member, so a later regeneration by anyone silently drops the S40 capture note from the committed corpus. Not fixed here: the generator's request-record writer is not part of this order's cell.",
+  "notes": "No act taken beyond restoring the file; whether the generator should carry `_captured` for that operation, or the note belong elsewhere, is the owner's call."
+}
+```
+
+## DSGN_IRPTV1-D2-W53-S9 -- IV-e-95 part 2: the base at 00989b8b measured 8 failing, not 7; the eighth is fe-s-14/published-map.test.ts failing at its 5000 ms default timeout under whole-scope load, and it passes alone
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S9",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T12:26:00Z",
+  "one_line": "IV-e-95 part 2: the whole-scope base run at 00989b8b listed 8 failing ids, one more than the 7 the spawn named; the extra one is the fe-s-14 published-map test timing out at 5007.69 ms, and it passes in isolation",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~53/s2_base_00989b8b.txt: `F14-AC16 -- the published map is a v1 statement > PUBLISHED MAP ... [5007.69ms]` (Ran 1173 tests across 374 files, 1138 pass, 27 skip, 8 fail, 170.81s); the same test alone: 2 pass, 0 fail; the run after the map change (s2_after_73806e29.txt, 110.01s) did not fail it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The base failing set at 00989b8b is the 7 ids the spawn named.",
+  "world_is": "The test re-reads and parses a response schema per key from disk with the runner's 5 s default timeout, so a loaded machine (other workers share it) can fail it with no code cause. It is in the base set of this worker's id comparison; the worker's record does NOT list it under fixed_ids (nothing repaired it; the later run simply did not time out) and names it as `base_flake_not_counted_as_fixed`. With 17 keys instead of 12 the work per run is higher; no timeout was set or changed here.",
+  "notes": "No act taken."
+}
+```
