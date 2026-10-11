@@ -46,7 +46,17 @@ PHASE A -- no apply, no AWS write:
   3. STOP. Report the survey's lines to 2.0.0_SA_COO~ZI. The pair(s)
      ledger/NEVER_WIDEN_ROUND7_X-1_{COO,CTO}_HALF.md are written against your survey.
 
-PHASE B -- only on the issuer's GO, after both halves are SIGNED and row 14's module is amended into <paths>:
+AMENDMENT A1-r7 (issuer, 2026-10-11 ~05:4xZ, on PLAN_SURVEY_family_c.md @a921f7130f):
+  - ROW 14 HOME = infra/aws/terraform/market-overview/ (the survey's proposal: the only module where a portal_api
+    sibling, opal-portal-data-proxy, is declared). Move the .tf.draft there as zz_adopt_family_c_row14.tf.proposed.
+    -target is LOAD-BEARING there: the module would otherwise RECREATE the deleted bucket market_data_v2 + 3 sub-resources.
+  - ROW 14 NAMING: the hole-count ratchet asks a vocabulary row for the token 'sentiment', asked of 4.0.0_SA_CRO~Z.
+    If that row is at HEAD when step 5 runs, take no override. If not, the audited placement override is admitted,
+    because its limb reaches this refusal.
+  - ROW 6 waits on shared-infra planning (the one() selector at s3-lgic-firm-buckets.tf:197, tipped by 5f962296ae),
+    a cross-project client-data scoping decision routed to 1.0.0_SA_CTO~Z. ROW 14's PHASE B does NOT wait for row 6:
+    the two are separate modules, separate pairs and separate ledgers.
+PHASE B -- only on the issuer's GO, after both halves are SIGNED for that module:
   4. Read .open_deploys/ for the module, then open a deploy-ledger entry `iamroles-r7-family-c-<module>` per module.
   5. Rename to `.tf` and COMMIT the declaration on your worktree branch BEFORE any import (A4-r6, row Z-S27). Use the
      placement override only if the gate still refuses an adopted name; take no author override. Then `safe-apply`
@@ -80,6 +90,8 @@ G-21: no alert, monitor or schedule.  G-25: no Access Analyzer.
 <paths>
 infra/aws/terraform/shared-infra/zz_adopt_family_c_row6.tf.proposed
 infra/aws/terraform/shared-infra/zz_adopt_family_c_row6.tf
+infra/aws/terraform/market-overview/zz_adopt_family_c_row14.tf.proposed
+infra/aws/terraform/market-overview/zz_adopt_family_c_row14.tf
 org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round7/
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
