@@ -25955,3 +25955,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-W290-S2 -- IB-pr-432: ops/tests/test_owned_report.py pins the old data member of the sections response schema and goes red on the new one
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W290-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~290",
+  "surfaced_at": "2026-10-11T13:18:52Z",
+  "one_line": "IB-pr-432: the changed sections response schema turns ops/tests/test_owned_report.py::test_sections_projection_matches_existing_closed_response_schema red; that reader is outside the order's paths",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/tests/test_owned_report.py lines 163-182: the test loads the response schema's data member, asserts every key of data.properties equals {'$ref': 'opal://irpt/contracts/v1/AnalysisReport.schema.json#/properties/<key>'}, replaces each with the v1 subschema and validates the vendor sections answer against data directly (a bare validator, no registry)",
+      "measured in this worktree: with the base schema, 'python -m pytest ops/tests/test_owned_report.py -q -p no:cacheprovider -k closed_response_schema' gave '1 passed'; with the changed schema (anyOf of the two closed forms, the candidate of row IRPT_BCKEND-D2-W290-S1) the same command fails at line 169 (the vendor member names under data.properties carry a description, not the v1 $ref); the whole ops file otherwise gives 34 passed with test_retained_ref_served.py",
+      "no schema shape that admits the Opal form can satisfy that test unedited: a v1 $ref on data.properties.sections would also grade the Opal sections (different item shape) and the anyOf branches carry opal:// refs the test's bare validator cannot resolve; the test needs the same registry the _contracts suite builds. The test is outside this order's <paths>, so it is not edited; the _contracts suite (criterion AC2) is unaffected"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-432 step 4 and AC2 grade the _contracts suite only; the face names no other reader and grants no path outside the schema, the one _contracts test file, three fixtures and the deliverables.",
+  "world_is": "A second reader of the response schema, ops/tests/test_owned_report.py, pins the old data member shape and goes red on the schema this order publishes. Left alone it is red at the drain's repo-wide hygiene run. The remedy is a bounded edit of that one test (resolve the data branches through the registry of the _contracts test, and assert the Opal and vendor answers against their branches); it needs a grant of ops/tests/test_owned_report.py, which the issuer holds.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
