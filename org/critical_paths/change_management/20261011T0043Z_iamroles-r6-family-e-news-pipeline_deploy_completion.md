@@ -1,0 +1,25 @@
+# Deploy Completion Record
+**Date opened:** 2026-10-11T00:43:06.464030+00:00
+**Status:** CLOSED -- nothing stranded -- closed 20261011T005702Z
+**Deploy:** NFRA_IAMROLES202609 IAM-w-3 PHASE B module 2: adopt codebuild-semantic-clustering-role into news-pipeline (-target import + FOUR default tags)
+**Authored by:** 0.7.0_AE_CloudOps~IR
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 6.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| TF | activation | aws_iam_role.codebuild_semantic_clustering_role | the SAVED targeted plan reads 1 to import / 0 to add / 1 to change / 0 to destroy, tags_all is the only changed attribute, and the keys are EXACTLY FOUR -- Environment, ManagedBy, Project, System=NewsPipeline; a fifth key is NOT SIGNED and is a STOP | Plan SAVED with -out and the apply ran that exact file, so the applied plan IS the graded plan. Graded from show -json per resource_change: 1 resource_change, 1 non-no-op (aws_iam_role.codebuild_semantic_clustering_role, actions=[update], importing codebuild-semantic-clustering-role), EXACTLY 1 attribute differing (tags_all), ZERO non-no-op addresses that are not the adopted role. tags_all {} -> EXACTLY FOUR keys Environment=Production ManagedBy=Terraform Project=OpalPortal System=NewsPipeline, compared against an expected dict written from THIS module provider block -- four here against three in the sibling module, which is the difference the pair insists on. assume_role_policy, inline_policy, managed_policy_arns and description all unchanged; description stays ABSENT, which matters because the live role has none and a plan that set it would be NOT SIGNED. 0 destroys. Summary verbatim: Plan: 1 to import, 0 to add, 1 to change, 0 to destroy. Apply verbatim: Apply complete! Resources: 1 imported, 0 added, 1 changed, 0 destroyed. safe-apply gates: comp-tagauthz PASSED over 0 candidate resources, recorded with its denominator; tombstone-gate CLEAN 0 creates vs 7 tombstones. | CLOSED 20261011T005702Z |
+| TRUST | verify | codebuild-semantic-clustering-role | THE STOP CONDITION FOR THIS ROLE: get-role shows the trust principal STILL codebuild.amazonaws.com AFTER the apply, read LIVE. This role is IN ACTIVE USE (RoleLastUsed 2026-09-11), so a trust change is an authorization move on something that actually runs; also description must stay ABSENT, since the live role has none and the declaration omits it | THE STOP CONDITION, read from the WORLD after the apply. aws iam get-role --role-name codebuild-semantic-clustering-role returns trust principal {"Service": "codebuild.amazonaws.com"} -- UNCHANGED -- and Description None, still absent. This condition was never theoretical: row 3 is the ONE role adopted in this round that is in active use (RoleLastUsed 2026-09-11), and it trusts CodeBuild rather than Lambda, so a copied sibling trust would have silently changed WHO MAY ASSUME a role that something actually runs on, an authorization move wearing a custody move clothes, while the plan summary still read as one import. The principal was read live at PHASE A, carried into the declaration, confirmed before==after in the graded plan JSON, and confirmed again here from AWS -- three independent points, none of them the apply own output. Also live and unchanged: inline [CodeBuildSemanticClusteringPolicy], 0 attached managed, path /, max_session 3600, PermissionsBoundary None. list-role-tags reads EXACTLY FOUR keys. No permission moved. | CLOSED 20261011T005702Z |
+| REPLAN | verify | infra/aws/terraform/news-pipeline | the targeted re-plan reads 0 to add, 0 to change, 0 to destroy, recorded in POST_APPLY_family_e.md; AND after the drain the untargeted plan in the SHARED tree reads 0 to destroy (A4-r6, row Z-S27) | Targeted re-plan verbatim: "No changes. Your infrastructure matches the configuration." The UNTARGETED module plan ALSO reads "No changes" across all 141 of this module addresses, so the module is fully absorbed with no residue. PHASE A negative control read "No changes" BEFORE the act, so before and after agree. POST_APPLY_family_e.md carries both canonical POST-APPLY-PLAN lines with the verbatim terraform output quoted beside them; AC2 reads 2. The post-drain shared-tree read is recorded in the drain commit. | CLOSED 20261011T005702Z |
+
+## Log
+
+- 20261011T004306Z OPENED by 0.7.0_AE_CloudOps~IR with 3 leg(s)
+- 20261011T005702Z LEG TF closed: Plan SAVED with -out and the apply ran that exact file, so the applied plan IS the graded plan. Graded from show -json p
+- 20261011T005702Z LEG TRUST closed: THE STOP CONDITION, read from the WORLD after the apply. aws iam get-role --role-name codebuild-semantic-clustering-role
+- 20261011T005702Z LEG REPLAN closed: Targeted re-plan verbatim: "No changes. Your infrastructure matches the configuration." The UNTARGETED module plan ALSO 
+- 20261011T005702Z CLOSED -- all 3 legs proven
