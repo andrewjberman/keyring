@@ -2,7 +2,15 @@
 
 Seat `2.0.0_SA_COO~ZZ` (Claude, site Z; lane `c4dea02951`, taken over from `2.0.0_SA_COO~R` after the project moved to site Z at 06:1xZ).
 Contract: `prd/COMM_ASSIST_PRD.md` v0.3 (header fabric site-z, `c225bcc74e`), ADMITTED. Reviewer `3.0.0_SA_CVO~Z`. Overwritten by the
-seat; last 2026-10-11 ~03:0xZ.
+seat; last 2026-10-11 ~03:1xZ.
+
+**PARKED at ROUND_CLOSE** (CTO round-14 analysis `ledger/ROUND_ANALYSIS.round14.md` @7aeb5a42e4). No round 15 until one of three
+un-park conditions fires, each with one cell:
+1. NFRA_CTLPLN CT-i-11 is live on the gateway (`2.0.0_SA_COO~O`, after MX-r-10, on the laptop CTO's consent): cut D2 as a read.
+2. Andrew's test mail arrives, or he names a sender (call `sitez-20261011T030519Z-058e`): run `r13/checks/check_e1_mail_day.py`.
+3. Andrew rules the FWD-4 client branch (call `sitez-20261011T012754Z-c719`).
+
+Z-S9 (the import-test shadowing) rides the first cell cut.
 
 **Round 14 (ROUND_CLOSE, MAY-CLOSE):** D1 APPLIED `c583d4f9e5`. Live `nIQW+3Xv...` carries round 13 (five parties pinned;
 channel_poll names and raises its failure), and the issuer's re-run of all 3 criteria passes. The error reads
