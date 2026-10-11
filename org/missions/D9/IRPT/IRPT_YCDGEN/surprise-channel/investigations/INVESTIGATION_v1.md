@@ -4069,3 +4069,26 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S55",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T13:59:09Z",
+  "one_line": "L8 round 12 (the resident release st31), no judgment criterion: one served change, a generation job that exhausts its deliveries records FAILED with a closed cause, is APPLIED, UNEXERCISED. Read against the outcome: it changes what a failed job says, not which report a reader is served, and it answers remediation row D2-S49 for jobs that fail from now on; the 8 existing dead letters are untouched and D2-S45 stays ARMED. The pin is a trunk commit, read by this seat. FWD-1 is NOT MET and was not run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/st31_release/ST31_STATE_AFTER_INSTALL_AND_CVO_PACKET_20261011.md @dc56165c87 and org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r12/ROUND12_DRAIN_END_READ_20261011.md @1cb9380023 (msg 5059)",
+      "this seat's reads 2026-10-11T13:59:09Z: 19b02b2971 is an ancestor of HEAD, so the st31 pin is a trunk commit; at it resident_worker.py:807 reads GENERATE_MAX_RECEIVES = 5 and :811-834 record FAILED with code DELIVERIES_EXHAUSTED; the generation dead-letter queue reads 8 messages, unchanged. Not read by this seat: the host; the portal's status reader at PROD (the issuer's consumer read)"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27). Evidence law: APPLIED is not EXERCISED.",
+  "world_is": "No job has exhausted its deliveries since the install. Row D2-S49 stays OPEN in REMEDIATION_v9 until one is read doing so, or the 8 are reconciled under a pair.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
