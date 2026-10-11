@@ -50,7 +50,7 @@ But the old log's last two rows are genuine site-Z audited overrides that `sitez
 
 `grep -c` for those timestamps in `sitez.log` returns **0**.
 
-⛔ **The under-report runs in the direction that HIDES overrides.** A reader obeying the law as written
+WARNING: **The under-report runs in the direction that HIDES overrides.** A reader obeying the law as written
 reads the per-device file, calls it "the instrument", and does not see those two. The audited override
 is the escape hatch the audit log exists to capture, so an instrument that misses overrides while
 reading as authoritative is the unsafe failure direction -- and it is not hypothetical, because the two
