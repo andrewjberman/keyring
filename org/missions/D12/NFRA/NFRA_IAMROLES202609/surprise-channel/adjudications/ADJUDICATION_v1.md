@@ -1138,3 +1138,195 @@ is written beside it on purpose.
 ```
 
 -- 3.0.0_SA_CVO~Z
+
+---
+
+## ROUND 7 -- L8 + L9 (C-S34 to C-S41)
+
+**By:** `3.0.0_SA_CVO~Z`, 2026-10-11 ~15:0xZ, on `2.0.0_SA_COO~ZI` msgs 33295/33298 (`ledger/COMPLETION_REPORT.round7.json @173ab4c121`; 6 of 6 terminal, proofs VALID). AC4 x6 graded at C-S34 to C-S39: five PASS, and x-3 FAIL narrow. All 5
+undispositioned round-7 rows (Z-S38 to Z-S42) are dispositioned at C-S40 and C-S41. The slug is `remediations/REMEDIATION_v7.Z.md`.
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S34",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T15:00Z",
+    "one_line": "L9 grade, TO-IAM-x-1 AC4 (judgment): PASS -- both adoptions moved custody only; row 6's in-use trust is unchanged; the survey named every tag and both naming verdicts before the pairs were signed.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-x-1 AC4: did each apply move custody without moving a permission or row 6's in-use trust, and did the survey name every tag and the naming verdict before the pair was signed?",
+    "world_is": "PERMISSIONS: CloudTrail since issuance shows exactly one IAM write on each adopted role, a TagRole, and no policy, trust or attachment write. Live: lambda-ec2-runtime-monitor-role trust lambda.amazonaws.com (the survey's 'in-use trust', PLAN_SURVEY_family_c.md :69/:305), inline EC2RuntimeMonitorPolicy, attached AWSLambdaBasicExecutionRole; sentiment_query_api-role trust lambda.amazonaws.com, inline DynamoDBAccess, attached AWSLambdaBasicExecutionRole. TAGS: live {Environment=Production, ManagedBy=Terraform, Project=OpalPortal, System=SharedInfra} and {..., System=MarketOverview} equal the surveyed tags_all deltas (:288, :377). NAMING: row 6 NO-SYSTEM-ASKED / PASS and row 14 NAMING-PLACE REFUSE are both named in the survey (:26, :35, :41). ORDER: survey @a921f7130f (05:28Z) precedes row 14's CTO half @1e7ff2decd (05:43Z); row 6's re-survey @6c18b9c2b3 (09:07Z) precedes its COO half @4309620d05 (09:11Z) and CTO half @85cbea7549 (09:17Z). CARRIED: Z-S40, row 6's halves quoted a NOT-SIGNED baseline that was already stale when signed (graduated at C-S41).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudTrail lookup-events by ResourceName since the round-7 issuance (2026-10-11T04:47Z), auto-paginated: lambda-ec2-runtime-monitor-role 1 TagRole; sentiment_query_api-role 1 TagRole; opal-smartx-lambda-role 2 DeleteRolePolicy; codebuild-semantic-clustering-role 1 PutRolePolicy; lambda-test-role 1 DetachRolePolicy + 1 DeleteRole; opal-portal-lambda-role 1 PutRolePolicy -- and nothing else on any of them",
+        "aws iam list-role-tags / get-role / list-role-policies / list-attached-role-policies on both roles, ~14:4xZ",
+        "deliverables/0.7.0_AE_CloudOps~IR/round7/PLAN_SURVEY_family_c.md",
+        "git log of the survey and pair commits"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-x-1 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S35",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T15:00Z",
+    "one_line": "L9 grade, TO-IAM-x-2 AC4 (judgment): PASS -- every removed resource is non-existent live with a live control, and the remaining statements, trusts and tags are untouched.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-x-2 AC4: did each removed statement name only non-existent resources, read live against a positive control, and is every remaining statement, the trust and the tags byte-identical to before?",
+    "world_is": "REMOVED, re-read now: head-bucket opal-data-smartx, opal-code-smartx and codebuild-semantic-clustering-artifacts all 404 (no owner anywhere, so no squatting); control opal-data-news-v2 resolves. secretsmanager list-secrets name opal/smartx/config gives 0 in us-east-2 and 1 in us-east-1 (control). The two deleted smartx documents (ROLLBACK_* @af85a44c38, committed before the act @a88e0f4cdd) name exactly those resources. REMAINING: opal-smartx-lambda-role now holds only opal-smartx-logs, and CloudTrail shows 2 DeleteRolePolicy and no PutRolePolicy, trust or tag write, so logs, trust and tags are untouched. CodeBuildSemanticClusteringPolicy live vs its pre-image: 4 statements both; exactly one ARN (codebuild-semantic-clustering-artifacts/*) left S3Access; the other 3 statements are byte-identical as JSON. Target 4 (sentiment_query_api-role DynamoDBAccess, us-east-2 table) was HELD by A3-r7 and is live unchanged.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudTrail lookup-events by ResourceName since the round-7 issuance (2026-10-11T04:47Z), auto-paginated: lambda-ec2-runtime-monitor-role 1 TagRole; sentiment_query_api-role 1 TagRole; opal-smartx-lambda-role 2 DeleteRolePolicy; codebuild-semantic-clustering-role 1 PutRolePolicy; lambda-test-role 1 DetachRolePolicy + 1 DeleteRole; opal-portal-lambda-role 1 PutRolePolicy -- and nothing else on any of them",
+        "aws s3api head-bucket x4; secretsmanager list-secrets in us-east-2 and us-east-1",
+        "deliverables/0.7.0_AE_CloudOps~IR/round7/ROLLBACK_news_CodeBuildSemanticClusteringPolicy.json vs live get-role-policy (statement-set diff)",
+        "deliverables/0.7.0_AE_CloudOps~IR/round7/NARROW_SURVEY.md"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-x-2 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S36",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T15:00Z",
+    "one_line": "L9 grade, TO-IAM-x-3 AC4 (judgment): FAIL (narrow) -- the two DEPLOY recommendations follow from live evidence, but rest_pull's HOLD rested on 'no commit produced these bytes', which the table never tested, so the CTO could not rule from the table alone.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-x-3 AC4: does each recommendation follow from evidence read live, and would the CTO rule the act from this table alone?",
+    "world_is": "SMARTX_DRIFT_TABLE.md: assets_daily_pull and jwt_refresher are DEPLOY on equal ETag and size between the running and new S3 versions, which is sound and was read live. rest_pull is HOLD because 'the new version has DIFFERENT bytes (6608 vs 6610) and NO COMMIT produced them'. The table measured sizes and ETags and the git window 08-15..08-22, but never diffed the two artifacts' contents against the repo source. 1.0.0_SA_CTO~Z did (ruling @20c0a85d55): the only difference is a docstring path (data/orion -> data/inf) matching commit 46d0b98aef, which the table itself lists as rest_pull's last source commit. The ruling says 'The table's HOLD and its \"no commit\" are corrected', so the act was ruled from the table plus a read the cell could have made. The outcome was safe: x-6 deployed all three under a pair, and C-S39 grades that deploy.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.7.0_AE_CloudOps~IR/round7/smartx_drift/SMARTX_DRIFT_TABLE.md (lines 13-25, 44-62, 134-155 read)",
+        "git show 20c0a85d55 (1.0.0_SA_CTO~Z ruling E4)",
+        "row Z-S41 (the CTO's corrections, recorded by the issuer)"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S37",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T15:00Z",
+    "one_line": "L9 grade, TO-IAM-x-4 AC4 (judgment): PASS -- the facts were re-read live before the delete, and the site-Z record rebuilds the role as it was, checked against CloudTrail's own request parameters.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-x-4 AC4: were the five facts re-read live before the delete, and does the site-Z record rebuild the role exactly as it was?",
+    "world_is": "ORDER: RECREATE_lambda-test-role.md was committed @a3994c4cb7 at 12:02:44Z; CloudTrail DetachRolePolicy is at 12:05:43Z and DeleteRole at 12:07:37Z, so the record and its live reads precede the delete. INDEPENDENT PRE-IMAGE: CloudTrail requestParameters show exactly one DetachRolePolicy, policyArn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole, and no DeleteRolePolicy and no UntagRole. That equals the record's one attach-role-policy, its '0 inline policies' and its 'Tags []'. NOW: get-role lambda-test-role returns NoSuchEntity, while control get-role lambda-ec2-runtime-monitor-role resolves. CARRIED: the trust, path, description and max-session values rest on the record's own live read alone. DeleteRole's request carries no trust, so no second plane exists for them, and the record says so (section 1: RoleId and CreateDate will differ).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cloudtrail lookup-events ResourceName=lambda-test-role (CloudTrailEvent requestParameters)",
+        "aws iam get-role lambda-test-role (NoSuchEntity) and a control role",
+        "deliverables/0.7.0_AE_CloudOps~IR/round7/retire_row7/RECREATE_lambda-test-role.md"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-x-4 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S38",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T15:00Z",
+    "one_line": "L9 grade, TO-IAM-x-5 AC4 (judgment): PASS -- exactly the 12 dead ARNs left opal-portal-s3-read, independently confirmed against the July Terraform declaration; all six buckets read 404; the portal role's 12 functions ran 983 times with 0 errors after the change.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-x-5 AC4: did exactly the 12 dead ARNs leave, with every reference found filed as a row, and did a real portal invocation succeed after the change?",
+    "world_is": "DIFF: the live inline policy opal-portal-s3-read on opal-portal-lambda-role vs its pre-image (ROLLBACK @1edacd5cf7) gives 16 -> 4 resources, 12 removed, 0 added, and non-resource fields equal. The removed set is the six buckets opal-data-aaii-sentiment, opal-data-portal-s3, opal-data-smartx, opal-data-smartx-v2, opal-market-data-v2 and opal-portal-data (bucket + /*). INDEPENDENT PRE-IMAGE: infra/aws/terraform/shared-infra/opal-portal-lambda-role.tf at the issuance @8b61ddf94f declares 8 buckets, those six plus opal-data-news-v2 and opal-data-portal-v2, and at HEAD only the two live ones. CloudTrail: one PutRolePolicy. LIVE: head-bucket returns 404 for all six; control opal-data-portal-v2 resolves. REFERENCES: the survey's census (env + code of the role's 12 functions, word-boundary) reads 0 for all six, so no row was owed. It states one function's code (opal-session-analytics) was not censused, and that function ran 336 times with 0 errors after the change. INVOCATIONS: CloudWatch AWS/Lambda Sum over the 12 functions on the role, 11:41-15:00Z: Invocations 983, Errors 0 (opal-portal-authorizer 360, opal-session-analytics 336, opal-news-ai-sentiment 282, plus 3 more).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "get-role-policy vs deliverables/0.7.0_AE_CloudOps~IR/round7/portal_s3/ROLLBACK_opal-portal-s3-read.json",
+        "git show 8b61ddf94f and HEAD :infra/aws/terraform/shared-infra/opal-portal-lambda-role.tf",
+        "aws s3api head-bucket x7",
+        "cloudwatch get-metric-statistics Invocations/Errors per function on the role",
+        "deliverables/0.7.0_AE_CloudOps~IR/round7/portal_s3/PORTAL_S3_SURVEY.md :14-19, :54-84"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-x-5 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S39",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T15:00Z",
+    "one_line": "L9 grade, TO-IAM-x-6 AC4 (judgment): PASS -- all three live CodeSha256 equal the plan's after-values, and the apply moved nothing but the ruled drift.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-x-6 AC4: did live CodeSha256 match the plan for all three, and did the apply move nothing but the ruled drift?",
+    "world_is": "LIVE get-function-configuration: smartx-assets-daily-pull 4Iw0TWcez71pRQoUK0GXPxGMOAsVMIgMBIGhk+JRk8k=, smartx-jwt-refresher MCsLEpIgbLtNDTbSDke9CnlBCmxEhN5slexYv2FIjSc=, smartx-rest-pull lM6cnuZTetkFwkGmxQqBFslExfqwGp+WhqFYOYM81xE=, all LastModified 13:11:01Z. These equal SMARTX_DEPLOY_SURVEY.md's after column (:21-23; the first two unchanged, rest_pull SnPi... -> lM6cn...). SCOPE: CloudTrail UpdateFunctionCode, 12:30-14:00Z, shows exactly these three by the applier at 13:11:01-02Z, plus one opal-ticket-api by cloudops-dell2-agent-user at 13:34Z, another project. No UpdateFunctionConfiguration in the window. Memory, timeout and role are unchanged. The three output nulls are state-only and were ratified.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function-configuration x3",
+        "cloudtrail lookup-events UpdateFunctionCode20150331v2 / UpdateFunctionConfiguration20150331v2, 12:30-14:00Z",
+        "deliverables/0.7.0_AE_CloudOps~IR/round7/smartx_deploy/SMARTX_DEPLOY_SURVEY.md"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-x-6 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S40",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T15:00Z",
+    "one_line": "Round 7 L8: Z-S38 and Z-S41 DISMISSED -- the shared-infra blocker was cleared by its owner (and the late filing is the applier's own record correction); the smartx version-tracking gap carries no owner by the CTO's E4 ruling.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The L8 compile dispositions every undispositioned row of the round.",
+    "world_is": "Z-S38: shared-infra plans at HEAD after ADVI_COTBKF @8c6fc7652a moved the one() selector onto an explicit field (it was disposed, not widened). Row 6 then applied (C-S34). Its second finding is the applier filing late against itself. Z-S41: 1.0.0_SA_CTO~Z's E4 ruling @20c0a85d55 records the s3_object_version design gap INERT with no owning project ('a future project that takes smartx-pipeline inherits it'). A remediation row needs an owner, so the row stands as the record and is not graduated.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S38",
+      "NFRA_IAMROLES202609-Z-S41"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "investigation rows Z-S38, Z-S41",
+        "git show 20c0a85d55",
+        "ledger/COMPLETION_REPORT.round7.json @173ab4c121"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Cleared by its owner, or recorded ownerless by the CTO's ruling."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S41",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T15:00Z",
+    "one_line": "Round 7 L8: Z-S39, Z-S40 and Z-S42 GRADUATE to REMEDIATION_v7.Z -- the account-wide dead-bucket sweep and market-overview drift, never-widen halves signed against a stale baseline, and an ARMED pre-apply inbox check that fails toward CLEAN.",
+    "class": "OBSERVATION",
+    "spec_asserts": "A standing defect leaves the round as an owned remediation row.",
+    "world_is": "Z-S39: its named instance (opal-portal-s3-read) is narrowed and graded at C-S38. Two parts stand: no sweep has looked for other roles granting Allows on non-existent GLOBAL bucket names (the squatting class), and the market-overview module still plans to re-create the deleted opal-market-data-v2. Z-S40: a pair can be signed against a baseline another seat has already changed. It resolved safely here (the owner's apply removed the drift), but the mechanism is direction-agnostic. Z-S42: the lane's pre-apply inbox check prints 0 from a linked worktree because the inbox path is absent there, the same reading as an empty inbox, and a ~lane seat has no HALTGT. ARMED by its filer.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S39",
+      "NFRA_IAMROLES202609-Z-S40",
+      "NFRA_IAMROLES202609-Z-S42"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "investigation rows Z-S39, Z-S40, Z-S42",
+        "ledger/COMPLETION_REPORT.round7.json @173ab4c121 surprise_rows_for_l10"
+      ]
+    },
+    "disposition": "GRADUATED"
+  }
+]
+```
+
+-- 3.0.0_SA_CVO~Z

@@ -6127,3 +6127,98 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W102-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~102",
+  "surfaced_at": "2026-10-11T14:43:24Z",
+  "one_line": "DB-b-127: COLUMNS_NULL's method_version text is corrected in the adapter, but the tracked Cottonwood build manifest still carries the old 'NULL on purpose' text, and the key stays inside a dict named for nulls (ROW_FOR_ISSUER).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order for DB-b-127: the adapter's COLUMNS_NULL entry says method_version is NULL on purpose; correct it to what the code does (3) if that changes nothing the adapter writes to an object, its manifest's verify, or the minted table.",
+  "world_is": "COLUMNS_NULL is used at two places only: the build manifest key columns_null and the build report's 'Nulls:' line. --apply, --stamp-manifest and --verify-served read the manifest file and the day files, never the literal; the day manifests and the dim row come from the producer. So the VALUE text was changed (the key method_version kept, so the columns_null key set is unchanged), and what it moves is: the text a future --out build writes under columns_null.method_version and in the local report. Nothing served or minted moves. NOT moved by this cell and left for the issuer: the tracked manifest org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~79/ard_cottonwood_manifest.json (another project's file, outside the grant) still carries the old text under columns_null, and an entry named method_version under a dict of nulls is itself a misfit that only removing the key (a manifest key-set change, a re-build) would settle.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py (COLUMNS_NULL; uses at the build manifest and the report)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~102/COTTONWOOD_ADAPTER.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W102-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~102",
+  "surfaced_at": "2026-10-11T14:43:24Z",
+  "one_line": "DB-b-127: method row 3 as emitted for Cottonwood does not itself state as-traded close or net of fees; its fee_basis is the pointer PER_ENTRY_FEE_TREATMENT and its value_basis defers to 'the entry's declared price_basis' (ROW_FOR_ISSUER).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-127 / row W89-S1: method row 3 is read for a sentence false or unstated for Cottonwood.",
+  "world_is": "Dry run emit_method_row(None, firm_scope(entry), thresholds, upload=False, src=entry) for _commonwealth_delivery returns row 3 whose value_basis reads 'account value rebuilt from positions at the entry's declared price_basis, plus the entry's declared cash' and whose fee_basis is PER_ENTRY_FEE_TREATMENT; neither says as_traded or net_of_fees. Those two facts are stated only in the day manifest beside each returns partition (price_basis as_traded, fee_treatment net_of_fees, from sources.json), so a reader of dim_return_method alone cannot tell the Cottonwood channel is as-traded close and after fees. Nothing in the row is false; the two facts are unstated in the row. Not edited here: a change to row 3 needs its own rule-24 record. Disposition proposed: ROW_FOR_ISSUER.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:119-133 (METHOD_ROWS row 3)",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1981-2039 (emit_method_row)",
+      "data/assets/scripts/gold/irpt_reporting/sources.json (_commonwealth_delivery)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W102-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~102",
+  "surfaced_at": "2026-10-11T14:43:24Z",
+  "one_line": "DB-b-127: method row 3's flow_convention is the producer's default END, not a stated or measured Cottonwood fact (ROW_FOR_ISSUER).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-127 / row W89-S1: the row inherits a flow convention measured for the custodian channel; read it for Cottonwood.",
+  "world_is": "emit_method_row writes flow_convention as `winner or \"END\"` and the Cottonwood adapter's method_row_probe passes no winner, so the row says END by default with no claim beside it. The value agrees in effect with Cottonwood's own pipeline: commonwealth_daily_returns.py sets FLOW_TIMING = \"end\" (line 65, 'set by hand after reading commonwealth_flow_timing.py's result') and the day manifest's formula r_t = (V_t - F_t) / V_(t-1) - 1 is the end-of-day form. What is unstated: that the END on the row is the Cottonwood result and not the custodian channel's measured winner reaching Cottonwood by default; whether the served FWD-3 table was built with the end timing was not read here. Disposition proposed: ROW_FOR_ISSUER (a claim for the value in the row, or the reading stated in the row's wording).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:2002",
+      "data/assets/scripts/silver/commonwealth_daily_returns.py:65",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py (method_row_probe)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W102-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~102",
+  "surfaced_at": "2026-10-11T14:43:24Z",
+  "one_line": "DB-b-127: the Cottonwood directory the reporting read mints from lists 0 published account keys, so the gold-to-directory id join is NOT_ESTABLISHED; the gold id form and the directory's declared raw-key form differ in shape on 12 of 12 ids read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row W96-S3 / need N14: one counts-only measure of whether the gold's account id joins the directory's.",
+  "world_is": "Read (boto3, no write): one gold partition (the manifest's last day), column account_id only by ranged reads: 12 rows, 12 distinct ids, 0 null; form: a custodian account number of 8 or 9 characters mixing digits and letters, not digits-only, no firm prefix, none starting with the z09 prefix. The directory artifact raw_account_for mints from is the list of published account= prefixes under the firm's platinum reporting table (entry.py _published_accounts): the list call succeeded (no AccessDenied) and returned 0 prefixes, so directory ids = 0 and minted-ids-equal = 0 of 0; the join is not measurable against an empty directory. _ids/raw_keys.json DECLARES the directory's raw key for Cottonwood as a vendor account key with the firm prefix z09 (11 characters, from fact_allocations.AccountID / fact_model_assignment.external_id); that is a declaration, not a measure of the artifact. If the platinum table is later published from that z09 key, the two forms would not join (consistent with the 0 of 75 neighbour days in the holdings cross-check); the mapping between the custodian number and the vendor key was not read here (bounds: one partition, one column, no other prefix). INERT while FWD-11's reporting read stays deferred.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting/entry.py:220-242",
+      "infra/aws/lambda/investor-reporting/_ids/raw_keys.json (cottonwood.account)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~102/COTTONWOOD_ADAPTER.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
