@@ -3065,3 +3065,26 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S56",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T17:47:44Z",
+  "one_line": "CORRECTION of this seat's row D2-S48 and of its round 4 read file and slug: the Investor Reporting page is NOT a page a firm login can open. On portal PROD and DEV its route requires an admin, an Opal-internal and a Dev user, by Andrew's word of 2026-09-22. This seat repeated 'client-facing' from the packets without reading the router. Two consequences: the refused history view of release 5 could only have been met by Opal staff; and the PROD push of the portal's history reader and reason set changes an Opal-internal page, which under the push law does not wait on Andrew's word.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's read 2026-10-11T17:47:44Z of portal src/App.tsx on origin/PROD 37aa1247 and origin/DEV ca23f110: line 462 routes /investor-reporting through ProtectedRoute requireAdmin requireInternal requireDev; line 107 gives the nav entry the same three; lines 460-461 cite Andrew-direct 2026-09-22 ('marked in tsx for admin and isDev only'); line 614 gives the print view the same three plus a render claim. Found first by worker row DSGN_IRPTV1-D2-W59-S2",
+      "CLAUDE.md, Agent Autonomy: a portal PROD push that changes a CLIENT-FACING page waits on Andrew's word; an Opal-internal page does not"
+    ]
+  },
+  "spec_asserts": "This seat's row D2-S48: 'The view is on portal PROD, a page a firm login can open.' The round 4 packet and CTO msgs 4805 and 4819: the PROD push is a client-facing push and waits on Andrew's word.",
+  "world_is": "The page is staff-only by its route on both trunks. Whether the release-5 re-release is held on Andrew's word for any other reason is the CTO's to say; the class of the page is not that reason. The print view's render-claim path was not read further.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
