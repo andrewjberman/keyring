@@ -323,11 +323,12 @@ def apply_hunks(pre_text, hunks):
 
 # --------------------------------------------------------------------------- string extraction
 class Lit:
-    __slots__ = ("value", "raw", "line", "hint", "permitted", "label", "block", "built")
+    __slots__ = ("value", "raw", "line", "hint", "permitted", "label", "block", "built", "live_held")
 
     def __init__(self, value, raw, line, hint=None):
         self.value, self.raw, self.line, self.hint = value, raw, line, hint
         self.permitted, self.label, self.block, self.built = False, False, None, False
+        self.live_held = False  # set by the live limb (FWD-8): the census LIVE plane holds this exact name, so it is not a placement candidate
 
 
 def _call_name(func):
@@ -1876,8 +1877,114 @@ def _pattern_row(lit, rulings=None, place_fn=None, path="?"):
             "place() in root %s says %s, not PATTERN: %s: WARN" % (root, res["kind"], res["detail"]), "WARN")
 
 
+# --------------------------------------------------------------------------- the round-23 limbs (LGIC_ENFORCE FWD-8)
+# Limb (a): a staged RENAME is graded against its SOURCE's HEAD bytes. safe-commit diffs the staged path alone, so an R100
+# rename reads as an added file; the source's deletion is outside that pathspec. Limb (b): a literal whose exact name the
+# census LIVE plane holds is EXISTING (an adoption declares a resource already running). EXISTING is never CONFORMANT.
+LIVE_BUDGET = 300  # seconds: census_live's budget for the running-name read
+_RENAMES = {}  # the whole index's {dest: source} renames, read once per run (limb a); a test may replace "map"
+_LIVE = {"read": None, "done": False, "nodes": {}, "vintage": "", "error": ""}  # limb b, once per run; read None = limb off
+
+
+class _LiveFailed(Exception):
+    """The live read failed or printed no vintage: the caller leaves `new` as it is (fail closed to today's behaviour)."""
+
+
+def _rename_map(raw):
+    """{dest: source} of the R rows of `git diff --cached -M --name-status -z` output (raw bytes). -z keeps paths unquoted."""
+    fields = raw.decode("utf-8", errors="replace").split("\0")
+    out, i = {}, 0
+    while i < len(fields):
+        st = fields[i]
+        if not st:
+            i += 1
+        elif st[:1] == "R" and i + 2 < len(fields):
+            out[fields[i + 2]] = fields[i + 1]
+            i += 3
+        else:
+            i += 2
+    return out
+
+
+def _staged_renames():
+    """The whole index's renames (not the staged pathspec: the source is outside it). A failed git call is no renames."""
+    if "map" not in _RENAMES:
+        rc, out, _err = git_in(_diff_repo(), "diff", "--cached", "-M", "--name-status", "-z")
+        _RENAMES["map"] = _rename_map(out) if rc == 0 else {}
+    return _RENAMES["map"]
+
+
+def _head_bytes(repo, rel):
+    """The HEAD bytes of `rel` as text, or None when HEAD carries no such file or the git call fails."""
+    rc, out, _err = git_in(repo, "show", "HEAD:%s" % rel)
+    return text_of(out) if rc == 0 else None
+
+
+def _live_read_plane(nm):
+    """(nodes, vintage, command) of the census LIVE plane, through lib/opal_naming.py census_live (the one reader)."""
+    return nm.mod.census_live(budget=LIVE_BUDGET)
+
+
+def _live_reset(reader):
+    """Install `reader` as the live plane for this run (None = the limb is off) and clear the once-per-run cache."""
+    _LIVE.update(read=reader, done=False, nodes={}, vintage="", error="")
+
+
+def _live_holder(nm, value):
+    """(node type, vintage) when the live plane holds the exact name `value`, None when it runs nowhere. Raises _LiveFailed
+    when the read fails or cannot print its vintage. The read runs once per run; a failure is cached and raised every time."""
+    if not _LIVE["done"]:
+        _LIVE["done"] = True
+        try:
+            nodes, vintage, _shown = _LIVE["read"](nm)
+            if not vintage or not str(vintage).strip() or "UNREAD" in str(vintage):
+                raise ValueError("the live read printed no vintage")
+            _LIVE["vintage"] = str(vintage).strip()
+            for nd in nodes:
+                _LIVE["nodes"].setdefault(nd["name"], nd["type"])
+        except Exception as exc:  # any failure of the read: fail closed, never a zero
+            _LIVE["error"] = " ".join(("%s: %s" % (type(exc).__name__, exc)).split())
+    if _LIVE["error"]:
+        raise _LiveFailed(_LIVE["error"])
+    typ = _LIVE["nodes"].get(value)
+    return None if typ is None else (typ, _LIVE["vintage"])
+
+
+def _live_limb(nm, lit, note):
+    """Limb (b) for one NEW literal: the value of `new` after the live read (False = the plane holds the name). The
+    one-line why text goes into `note` ('held' on a hit, 'failed' on a failed read; judge() prints 'failed' on REFUSE rows)."""
+    try:
+        hit = _live_holder(nm, lit.value)
+    except _LiveFailed as exc:
+        note["failed"] = "LIVE-READ-FAILED: %s" % str(exc)[:120]
+        return True
+    if hit is None:
+        return True
+    lit.live_held = True
+    note["held"] = ("RUNNING-LIVE %s '%s' read from the live plane, %s: EXISTING, not minted by this diff"
+                    % (hit[0], lit.value, hit[1]))
+    return False
+
+
 def judge(nm, path, lit, pre_text, waivers=None):
-    """(line verdict, canonical, why, counts-as) for one literal, or None when it is not graded."""
+    """(line verdict, canonical, why, counts-as) for one literal, or None when it is not graded. The live limb's one line
+    joins the why text: RUNNING-LIVE on any row of a name the plane holds; LIVE-READ-FAILED on a REFUSE row only."""
+    note = {}
+    j = _judge(nm, path, lit, pre_text, waivers, note)
+    if j is None:
+        return None
+    extra = []
+    if "held" in note:
+        extra.append(note["held"])
+    if "failed" in note and j[3] == "REFUSE":
+        extra.append(note["failed"])
+    if not extra:
+        return j
+    return (j[0], j[1], "%s; %s" % (j[2], "; ".join(extra)), j[3])
+
+
+def _judge(nm, path, lit, pre_text, waivers, note):
+    """The verdict of judge() (its body is the DEC-6 matrix); `note` collects the live limb's text."""
     if _resolves_to_tracked(lit.value):
         return None  # a value resolving to a tracked path at HEAD is a CITATION (R-11), not a mint
     typ, graded_as = nm.classify(lit.value, lit.hint)
@@ -1889,6 +1996,10 @@ def judge(nm, path, lit, pre_text, waivers=None):
         # ungraded; the gate then read PASS 0 graded. The registry's per-firm key rulings are the other way to know it is a key.
         return None if lit.built or lit.hint else _pattern_row(lit, path=path)
     new = pre_text is None or not _in_pre(lit, pre_text)
+    # Limb (b), LAZY: read the live plane only for a NEW literal that the branches below would REFUSE (a hand-kept carrier, or
+    # an OUT-OF-PATTERN / ALIAS name). A CONFORMANT or NOT-GRADED name is never refused, so it never pays for the read.
+    if new and _LIVE["read"] is not None and (carr or (typ is not None and nm.grade(typ, graded_as)[0] in ("OUT-OF-PATTERN", "ALIAS"))):
+        new = _live_limb(nm, lit, note)
     carr_txt = ""
     if carr:
         carr_txt = "; hand-kept carrier of %r outside every permitted context: read it through lookup(%r)" % (carr[0], carr[1])
@@ -2003,7 +2114,13 @@ def grade_file(nm, f, post_from_index):
         elif os.path.isfile(os.path.join(diff_repo, *f["old"].split("/"))):
             with open(os.path.join(diff_repo, *f["old"].split("/")), "rb") as fh:
                 pre_text = text_of(fh.read())
-    post_lines, added = apply_hunks(pre_text or "", f["hunks"])
+    base_text = pre_text if f["old"] is not None else ""  # the hunks of an add are relative to nothing, renamed or not
+    if f["old"] is None:
+        # Limb (a): a staged RENAME destination is graded against its SOURCE's HEAD bytes as the pre-image.
+        src = _staged_renames().get(path)
+        if src:
+            pre_text = _head_bytes(diff_repo, src)  # None when HEAD has no such source: today's NEW reading
+    post_lines, added = apply_hunks(base_text or "", f["hunks"])
     if not added:
         return []
     post_text = "\n".join(post_lines) + "\n"
@@ -2178,8 +2295,8 @@ def _note_file(path, pre_text, post_text):
 
 def _note_place(nm, path, lit, pre_text, j):
     """Remember a NEW stored name that was graded as a name (not a carrier, not a declared exception) for the step."""
-    if j is None or j[0] in _NOT_A_NAME_VERDICTS or (not lit.built and nm.carrier(lit.value)):
-        return
+    if j is None or j[0] in _NOT_A_NAME_VERDICTS or lit.live_held or (not lit.built and nm.carrier(lit.value)):
+        return  # a name the live plane holds is EXISTING, not minted by this diff: no placement candidate (FWD-8)
     typ, _graded_as = nm.classify(lit.value, lit.hint)
     if typ is None:
         return
@@ -2417,6 +2534,8 @@ def run(args):
         raise GateError("lib/opal_naming.py or the registry cannot be loaded: %s: %s" % (type(exc).__name__, exc)) from None
     rows = []
     _place_reset()
+    _RENAMES.clear()  # the renames of THIS index, read once for this run
+    _live_reset(_live_read_plane)  # the live limb is on for a graded commit; self-test arms keep it off unless they inject a plane
     for f in files:
         rows += grade_file(nm, f, args.post_from_index)
     meta = domain_meta(files)
@@ -2641,6 +2760,111 @@ def pattern_self_test():
     return ok
 
 
+def _added_diff(path, text):
+    """A one-file unified diff of an ADDED file (`--- /dev/null`): the shape safe-commit's pathspec diff gives a rename destination."""
+    body = text.rstrip("\n").split("\n")
+    return "--- /dev/null\n+++ b/%s\n@@ -0,0 +1,%d @@\n%s" % (path, len(body), "".join("+%s\n" % ln for ln in body))
+
+
+def _grade_added(nm, path, text, name):
+    """The gate's rows for the literal `name` in the added file `path` (grade_file on a parsed diff; no git read, no network)."""
+    f = parse_diff(_added_diff(path, text))[0]
+    return [r for r in grade_file(nm, f, False) if r[3] == name]
+
+
+def rename_self_test(nm):
+    """The RENAME arm (LGIC_ENFORCE round 23, FWD-8 limb a). The destination of a staged rename is graded against its SOURCE's
+    HEAD bytes, so a name it carries is EXISTING and is not refused; the same bytes staged as a COPY (no R row) stay NEW and
+    are refused. The rename map and the HEAD read are replaced for the arm and restored after."""
+    global _head_bytes
+    name = "pipeline-chain"
+    text = 'resource "aws_iam_policy" "probe" {\n  name = "%s"\n}\n' % name
+    src = "infra/aws/terraform/zz-selftest/probe.tf.proposed"
+    dst = "infra/aws/terraform/zz-selftest/probe.tf"
+    copy = "infra/aws/terraform/zz-selftest/probe_copy.tf"
+    saved_map, saved_head = dict(_RENAMES), _head_bytes
+    try:
+        _RENAMES.clear()
+        _RENAMES["map"] = {dst: src}  # the index's one R row: src renamed to dst
+
+        def _arm_head(repo, rel):  # HEAD holds the source with these bytes
+            return text if rel == src else None
+
+        _head_bytes = _arm_head
+        renamed = _grade_added(nm, dst, text, name)
+        copied = _grade_added(nm, copy, text, name)  # no R row names this path: a copy
+    finally:
+        _RENAMES.clear()
+        _RENAMES.update(saved_map)
+        _head_bytes = saved_head
+        _place_reset()
+    ok_rename = len(renamed) >= 1 and not any(r[6] == "REFUSE" for r in renamed)
+    shown = ", ".join("%s %s" % (r[0], r[6]) for r in renamed) or "no row"
+    print("SELF-TEST arm rename admitted: a staged rename graded against its source's HEAD bytes -> %s: %s"
+          % (shown, "ok" if ok_rename else "FAIL"))
+    ok_copy = len(copied) >= 1 and all(r[6] == "REFUSE" for r in copied)
+    shown = ", ".join("%s %s" % (r[0], r[6]) for r in copied) or "no row"
+    print("SELF-TEST arm rename copy control: the same bytes staged as a copy (no R row) -> %s: %s"
+          % (shown, "ok" if ok_copy else "FAIL"))
+    return ok_rename and ok_copy
+
+
+def adopt_self_test(nm):
+    """The ADOPT arm (LGIC_ENFORCE round 23, FWD-8 limb b). A NEW name the census LIVE plane holds is EXISTING: admitted, with
+    RUNNING-LIVE, the node type and the vintage in its why text. A name the plane does not hold is refused as NEW, as today. A
+    read that raises, or prints no vintage, is refused with LIVE-READ-FAILED and never RUNNING-LIVE. The plane is replaced
+    for each arm (no network) and restored after."""
+    name = "pipeline-chain"
+    path = "infra/aws/terraform/zz-selftest/adopt.tf"
+    text = 'resource "aws_iam_policy" "probe" {\n  name = "%s"\n}\n' % name
+    vint = "2026-10-10 00:00:00 UTC (self-test stub)"
+
+    def plane(nodes, vintage=vint):
+        return lambda _nm: (nodes, vintage, "self-test stub")
+
+    def unreadable(_nm):
+        raise OSError("self-test stub: the live read cannot run\nsecond line")
+
+    held_plane = plane([{"type": "IAM_POLICY", "name": name, "arn": ""}])
+    other_plane = plane([{"type": "IAM_ROLE", "name": "self-test-other", "arn": ""}])
+    unread_plane = plane([{"type": "IAM_POLICY", "name": name, "arn": ""}], "UNREAD")
+    saved = dict(_LIVE)
+    try:
+        _live_reset(held_plane)
+        held = _grade_added(nm, path, text, name)
+        _live_reset(other_plane)
+        absent = _grade_added(nm, path, text, name)
+        _live_reset(unreadable)
+        failed = _grade_added(nm, path, text, name)
+        _live_reset(unread_plane)
+        undated = _grade_added(nm, path, text, name)
+    finally:
+        _LIVE.clear()
+        _LIVE.update(saved)
+        _place_reset()
+    def has(rows, token):  # the token sits in one of the rows' why text
+        return any(token in r[5] for r in rows)
+
+    ok_held = (len(held) >= 1 and not any(r[6] == "REFUSE" for r in held)
+               and has(held, "RUNNING-LIVE IAM_POLICY '%s' read from the live plane, %s" % (name, vint))
+               and not has(held, "LIVE-READ-FAILED"))
+    print("SELF-TEST arm adopt held: the plane holds %s as IAM_POLICY -> %s: %s"
+          % (name, ", ".join("%s %s" % (r[0], r[6]) for r in held) or "no row", "ok" if ok_held else "FAIL"))
+    ok_absent = (len(absent) >= 1 and all(r[6] == "REFUSE" for r in absent) and has(absent, "NEW and")
+                 and not has(absent, "RUNNING-LIVE") and not has(absent, "LIVE-READ-FAILED"))
+    print("SELF-TEST arm adopt absent control: a name the plane does not hold -> %s: %s"
+          % (", ".join("%s %s" % (r[0], r[6]) for r in absent) or "no row", "ok" if ok_absent else "FAIL"))
+    ok_failed = (len(failed) >= 1 and all(r[6] == "REFUSE" for r in failed) and has(failed, "LIVE-READ-FAILED")
+                 and not has(failed, "RUNNING-LIVE"))
+    print("SELF-TEST arm adopt read-failed control: the read raises -> %s: %s"
+          % (", ".join("%s %s" % (r[0], r[6]) for r in failed) or "no row", "ok" if ok_failed else "FAIL"))
+    ok_undated = (len(undated) >= 1 and all(r[6] == "REFUSE" for r in undated) and has(undated, "LIVE-READ-FAILED")
+                  and not has(undated, "RUNNING-LIVE"))
+    print("SELF-TEST arm adopt vintage-unreadable control: the read prints UNREAD -> %s: %s"
+          % (", ".join("%s %s" % (r[0], r[6]) for r in undated) or "no row", "ok" if ok_undated else "FAIL"))
+    return ok_held and ok_absent and ok_failed and ok_undated
+
+
 def self_test():
     """--self-test: judge() on a NEW group-A name takes the fourth verdict and passes, and (the difference control) a NEW
     group-B name is still refused. Reads no diff, writes no log. Returns 0 when both arms hold."""
@@ -2657,6 +2881,8 @@ def self_test():
     ok = pattern_self_test() and ok
     ok = place_self_test() and ok
     ok = override_self_test() and ok
+    ok = rename_self_test(nm) and ok
+    ok = adopt_self_test(nm) and ok
     print("NAMING-GATE-SELF-TEST: %s" % ("PASS" if ok else "FAIL"))
     return 0 if ok else 1
 
