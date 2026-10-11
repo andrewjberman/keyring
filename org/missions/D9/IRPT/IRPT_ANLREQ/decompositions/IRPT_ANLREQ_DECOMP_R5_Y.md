@@ -24,3 +24,15 @@ fanout: 1 of 1 chains, cap 8, reason: one read-only cell, cut on the DIRECT-ACT 
 
 - The remaining hops themselves: the CTO cuts them, or carries a closer to Andrew, on this table (msg 4860).
 - Release 5's return: waits on the portal history reader on PROD (CTO msgs 4805, 4819), which is Andrew's word.
+
+## AMENDMENT 1 (2026-10-11 ~12:1xZ): the CTO round-5 analysis arrived after this decomposition was cut
+
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_ANLREQ_ROUND_5_Y_20261011.md` @ca8aa78b88, section 4, three items.
+The round's one issuance (@957aed1f3f) stands; no further cell is cut.
+
+| item | lands as |
+|---|---|
+| 1. The FWD-1 trace table | cell `AR-y-51` above (the same cell, ruled in msg 4860) |
+| 2. The re-release packet for release 5, written and not applied | the issuer's own document, no cell: `deliverables/2.0.0_SA_COO~Y2/release5/NEVER_WIDEN_PAIR_ANLREQ_RELEASE5_RERELEASE_IRPT_STATUS.md` |
+| 3. The un-pin of the two members rides that release, not before | section 3 of that packet; no act now |
+
