@@ -5619,3 +5619,29 @@
   "world_is": "Measured text: IVE98 throws UnrenderableSchemaError at analysis-report.response.schema.json#/properties/data/properties/request_ref; F14-AC13 and F57-AC2 do not throw there, they fail on a missing slice property in the committed analysis-report entry of fixtures/smoke/default.json. Left red as instructed (not this cell's, and the contract is not edited). A later cell can read whether AnalysisReport.valid.json carries undated_sections and add it to the slice in gen-corpus.ts DATA_FOR_OPERATION['analysis-report'] once the schema is settled."
 }
 ```
+
+## DSGN_IRPTV1-D2-W58-S8 -- IV-e-103: the 130% weight is neither the page nor the producer's shape: the ~53 holdings-face driver mutated the all-accounts body it served
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W58-S8",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~58",
+  "surfaced_at": "2026-10-11T16:25:30Z",
+  "one_line": "The 130.0% / 20.0% on the unpicked Holdings view (row DSGN_IRPTV1-D2-W53-S7) comes from the served numbers: holdings-face-driver.mjs (~53 folder) oneBody() filters ALL_BODY.data.nodes into the one-account body WITHOUT copying the node objects, then rewrites their of_total and denominator in place, so the later-served all-accounts body carries each account's own share (SGM1 0.6 + 0.7 = 1.3 under a 1,000,000 card total); the page reads of_total as served (contracts/adapt.ts:1165) and prints it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~58/served-body-check.mjs run on the ~53 fixture: before oneBody SGM1 nodes read of_total 0.3 and 0.35 over denominator 1000000; after oneBody (shared) 0.6 and 0.7 over 500000, sum 1.2999999999999998; with the nodes copied (copied) 0.3 and 0.35, sum 0.6499999999999999",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~58/holdings-face-driver.fixed.mjs (the one-line copy fix) run in client mode: Securities table 65.00% / $650,000.00 and 10.00% / $100,000.00, map 65.0% and 10.0% (weight-130.fixed-driver-client.png); the unfixed ~53 driver run in the same worktree reads 130.00% and 20.00% (reproduced, .scratch/client.png, not committed)",
+      "portal c3a03c24 rendered with the same fixture body read straight through parseIrEnvelope('holdings-snapshot') and HoldingsTab (renderToStaticMarkup, a temporary probe test, deleted, portal tree clean): 65.00% and 10.00%"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IV-e-103: the 130% is either the synthetic fixture supplying inconsistent numbers or the page picking the wrong denominator (a third source was not named).",
+  "world_is": "The inconsistent numbers are the HARNESS's, not the fixture file's (holdings-face.no-pick.fixture.json is self-consistent: of_total = amount / 1,000,000 on every node) and not the page's (SecurityList.tsx:239 weight = n.pctOfTotal, adapt.ts:1165 pctOfTotal = node.percentages.of_total, one-account fold sums served weights only, no denominator of its own). Verdict recorded FIXTURE_DEFECT with product_files_changed []. Consequence for earlier records: the driver-client screenshots and any weight read from a two-account client taken with the ~53 driver (holdings-face.driver-client.png, re-run and read here) print the mutated weights; driver-back.png was not read here; the one-account picker view reads 70% / 10% per the order (its own body is recomputed per account). The ~53 folder is outside this order's grant and is not edited; the corrected driver sits in ~58 beside the row."
+}
+```
