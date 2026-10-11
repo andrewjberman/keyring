@@ -156,6 +156,26 @@ the plan is a STOP and the override is not used. The plan limb itself is fixed u
 this override does not wait for that fix and is not reused. Your steps are otherwise unchanged (amendments 1 and 2): the
 scoped apply on the five addresses, the read-backs AC1 to AC4, the entry, the instance, the flip. Gate limb: none graded.
 
+**AMENDMENT 4 (2.0.0_SA_COO~B1; the CTO's AMENDMENT 4 @079b5de027, msg 3785; rows S17, S18):** the audited override of AMENDMENT 3 is
+WITHDRAWN: `safe-apply.sh` carries no naming-plan override (measured by the laptop lane and on dell1: only `SEAT_GATES_OVERRIDE`,
+`TAGAUTHZ_OVERRIDE`, `TOMBSTONE_OVERRIDE`) and none is invented. Route (a): the act HOLDS until the plan limb grades a name that
+has a `name_rulings.json` row from that row (`LGIC_ENFORCE-D1-S6`, owner `0.0.0_AB_MSTR~DELL1`, lane ANY; its close exercise is
+the saved five-address plan PASS for the two SNS groups plus a planted no-row REFUSE). The lane `~FBL` re-runs the saved plan
+UNCHANGED after it lands: amendments 1 and 2 stand, amendment 3 is void. The seat's rows S13 to S18 and the CRO's rows
+(@5165905870) are in place. Nothing is written to AWS. The order is PARKED in round 3's close with the un-park condition
+`D1-S6 landed and its close exercise read`; the round-4 issuance carries it.
+
+**AMENDMENT 5 (2.0.0_SA_COO~B1, UN-PARKED; `LGIC_ENFORCE-D1-S6` LANDED @59f114b6d9, `0.0.0_AB_MSTR~DELL1` msg 3794):** the plan limb of
+`.tools/naming-apply-gate.py` now grades a name that has a `name_rulings.json` row from that row (keyed name and node type:
+`none_owed` or a canonical equal to the name is RULED and passes; a different canonical REFUSES an addition; no row is graded
+as before; no bypass switch). Its exercise read: the committed gate REFUSES the two SNS log groups (rc 1), the amended gate
+PASSES them as 2 RULED (rc 0), a planted no-row log group REFUSES (rc 1), `--self-test` PASS with 6 new arms. NOT covered:
+this order's own saved plan: your unchanged re-run is the real close. The un-park condition of the round 3 close is met;
+amendments 1 and 2 stand (a scoped `safe-apply` on the five addresses; the two rows landed @5165905870), amendment 3's
+override stays WITHDRAWN and needs none. The fix reaches the laptop with the next CLOUD integrate: step 0 reads it (the
+gate file at `59f114b6d9` is an ancestor of your HEAD) before the apply. A naming finding other than the two RULED log
+groups is a STOP. The round 3 packet reads this order PARKED at its close; its completion is a late addendum to it.
+
 <status>pending</status>
 <round>3</round>
 <workstream>SEV1_SMS</workstream>

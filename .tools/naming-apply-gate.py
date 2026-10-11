@@ -279,6 +279,25 @@ def judge_capped(mod, node_type, s):
     return verdict, canon, why, False
 
 
+def ruling_amend(rulings, node_type, name, base, addition):
+    """LGIC_ENFORCE-D1-S6 (row ADVI_FIRMBKTS-S17/S18): a name that has a name_rulings.json row is graded from that row, as the
+    commit limb already does. none_owed, or a canonical equal to the name, is RULED (passes); a different canonical is a REFUSE
+    for an addition (WARN for an existing resource, which this limb never blocks); a name with no row is `base` unchanged.
+    The row is keyed (name, node type), the loader's own key. grade() itself never reads the file."""
+    row = (rulings or {}).get((name, node_type))
+    if row is None:
+        return base
+    if row.get("none_owed"):
+        return ("RULED", name, "RULED as %s: name_rulings.json: %s" % (node_type, str(row["none_owed"]).strip().rstrip(".")), False)
+    canon = row.get("canonical")
+    if canon == name:
+        return ("RULED", name, "RULED as %s: name_rulings.json names this exact string as canonical" % node_type, False)
+    why = "name_rulings.json rules %s -> %s, a different name than this one" % (name, canon)
+    if addition:
+        return ("REFUSE", canon, why, True)
+    return ("WARN", canon, why + " -- not an addition, so this only WARNs", False)
+
+
 def run(d):
     ng = _load(COMMIT_LIMB, "naming_gate_for_apply")
     types = dict(ng.TF_NODE)
@@ -449,6 +468,12 @@ def run_plan(path, root_arg=None, notes=None):
         raise GateError("%s carries no resource_changes array (is it a `terraform show -json` document?)" % path)
     graded, pending = [], []
     notes = [] if notes is None else notes
+    try:
+        rulings = _rootcheck().load_name_rulings()
+    except Exception as exc:  # rows unread: grade as before (a refusal stays a refusal), and say so
+        rulings = {}
+        notes.append("NAMING RULINGS-NOTICE name_rulings.json could not be read (%s: %s); no name is graded from a row"
+                     % (type(exc).__name__, exc))
     for rc in changes:
         if not isinstance(rc, dict) or rc.get("mode") != "managed":
             continue
@@ -467,6 +492,7 @@ def run_plan(path, root_arg=None, notes=None):
             verdict, canon, why, refuses = judge(mod, node_type, name)
         else:
             verdict, canon, why, refuses = judge_capped(mod, node_type, name)
+        verdict, canon, why, refuses = ruling_amend(rulings, node_type, name, (verdict, canon, why, refuses), addition)
         if addition:
             pending.append((len(graded), name, node_type))
         graded.append((verdict, address, name, canon,
@@ -603,6 +629,25 @@ def self_test():
         arm = got is want
         ok = ok and arm
         print("SELF-TEST arm %s -> addition=%s: %s" % (label, got, "ok" if arm else "FAIL"))
+    # The ruling arms (LGIC_ENFORCE-D1-S6): a name with a name_rulings.json row is graded from the row, a name without is not.
+    base = ("REFUSE", "RAISE", "RAISE as LOG_GROUP", True)
+    rows = {("none-owed-name", "LOG_GROUP"): {"none_owed": "AWS fixes this name."},
+            ("same-name", "LOG_GROUP"): {"canonical": "same-name"},
+            ("old-name", "LOG_GROUP"): {"canonical": "new-name"}}
+    for label, name, addition, want_verdict, want_refuses in (
+            ("none_owed row", "none-owed-name", True, "RULED", False),
+            ("canonical equal to the name", "same-name", True, "RULED", False),
+            ("different canonical, an addition", "old-name", True, "REFUSE", True),
+            ("different canonical, existing", "old-name", False, "WARN", False),
+            ("no row: graded as before", "unruled-name", True, "REFUSE", True)):
+        got = ruling_amend(rows, "LOG_GROUP", name, base, addition)
+        arm = got[0] == want_verdict and got[3] is want_refuses
+        ok = ok and arm
+        print("SELF-TEST arm ruling %s -> %s refuses=%s: %s" % (label, got[0], got[3], "ok" if arm else "FAIL"))
+    got = ruling_amend(rows, "IAM_POLICY", "none-owed-name", base, True)  # the row is keyed by type as well as by name
+    arm = got == base
+    ok = ok and arm
+    print("SELF-TEST arm ruling row of another type does not apply -> %s: %s" % (got[0], "ok" if arm else "FAIL"))
     ok = place_self_test() and ok
     print("NAMING-APPLY-GATE-SELF-TEST: %s" % ("PASS" if ok else "FAIL"))
     return 0 if ok else 1
