@@ -4804,3 +4804,79 @@
   "notes": "BLOCKING for IV95-AC2 only; IV95-AC1 and IV95-AC3 stand. Owner of the decision: 2.0.0_SA_COO~D2 (the limit of four), with 1.0.0_SA_CTO~DELL2 for which side (consumer reader or producer fixture) moves. Not done: the CONTROL-arm pin to a named key, the fe-s-1/fe-s-14 follow and the mutants, which depend on the final excused list; no weaker variant was built to fit under four."
 }
 ```
+
+## DSGN_IRPTV1-D2-W53-S5 -- IV-e-96: the account picker the walks used is the Performance tab's own, whose choice was tab-local and unseen by Holdings; the header's picker hands the tabs no account
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S5",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T11:53:00Z",
+  "one_line": "IV-e-96: the account picker the walks used is the Performance tab's own, whose choice was tab-local and unseen by Holdings; the header's picker hands the tabs no account",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ tabs/reporting/ReportingTab.tsx (focusedAccountId state, AccountFilter onFocusChange) and header/HeaderSelectionContext.ts at base 11f25102; walk 20261011T0730Z hops 4 and 6 name the same picker label format; rendered by the driver: choosing the second account in that select then opening Holdings shows that account's Models / SMAs / Client (holdings-face.driver-picker.png)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order and the CTO ruling say the Holdings face opens on the account picked in 'the header's account picker (hop 4)', which 'hands the picked account to the tabs'.",
+  "world_is": "Two things are called a picker. The header's Client search yields HeaderSelection.row and .selection (header/HeaderSelectionContext.ts); an ACCOUNT row narrows it, but the server may answer with the whole set. The Account select the walks used (hop 4 '****9237 / Brokerage'; hop 6 'picker label reads YTD unavailable') is AccountFilter in the Performance tab, wired at tabs/reporting/ReportingTab.tsx (focusedAccountId useState, onFocusChange={setFocusedAccountId}); that choice was tab-local and nothing handed it to Holdings. Before the change the Holdings default was decided at tabs/holdings/HoldingsTab.tsx line 248 (useState<string | null>(null) for focusedAccountId, base 11f25102). The candidate therefore also adds a one-way, request-free notice (HeaderSelection.pickedAccountId / onPickAccount, held in index.tsx, cleared on every new header selection, set only by an explicit choice in the Performance picker, not by its preselect). This touches index.tsx, HeaderSelectionContext.ts and ReportingTab.tsx beyond HoldingsTab.tsx, all inside the order's portal/src/pages/InvestorReporting/ grant.",
+  "notes": "The CTO should read whether carrying the Performance pick across tabs is what ruling D2-S7 meant; if only the header's account row was meant, the ReportingTab and index.tsx hunks are removable and the rest stands."
+}
+```
+
+## DSGN_IRPTV1-D2-W53-S6 -- IV-e-96: scripts/ui-smoke.mjs cannot pick a client, so the order's named screenshot instrument stops before any client or account is chosen; screenshots came from a supplementary driver
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S6",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T11:53:00Z",
+  "one_line": "IV-e-96: scripts/ui-smoke.mjs cannot pick a client, so the order's named screenshot instrument stops before any client or account is chosen; screenshots came from a supplementary driver",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: smoke_fill_probe.txt (copied to ui-smoke-stop.txt in the folder) reads FILL-FAIL: Client search=Sample -- locator.fill: Timeout 30000ms exceeded.",
+      "The driver's own stdout per mode is in driver_client.txt, driver_picker.txt, driver_back.txt (evidence folder): LOC /investor-reporting, CANVAS rgb(244, 246, 250), TILES read per state."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: screenshot the built page with node scripts/ui-smoke.mjs --dist ... --fixtures ... in at least a picked-account state and a no-picked-account state.",
+  "world_is": "ui-smoke stops at the header's role=combobox 'Client search': `--fill \"Client search=Sample\"` timed out (FILL-FAIL, control names listed: Client search, Performance, Holdings, Analysis; no Browse button on the page), `--clickrole combobox:Client search` opens no list, and ui-smoke has no typing step. It also serves one static body per URL, so POST /selections cannot answer a client read and a one-account read differently. Reached by ui-smoke: the Holdings tab with no client picked (the sample body), which is neither required state. Nothing was faked. The three PNGs in the folder come from holdings-face-driver.mjs (same recipe: auth stub, CORS echo, scripts/ui-dist.mjs, full-page screenshot, body background as CANVAS) plus typing, an Account select choice and request-aware fixtures; it is NOT the order's named instrument. IV96-AC2 is graded on those PNGs and is the issuer's to accept or refuse on that ground.",
+  "notes": "Owner of the decision: 2.0.0_SA_COO~D2 (accept the supplementary driver's PNGs, or extend ui-smoke with a typing step for a later order)."
+}
+```
+
+## DSGN_IRPTV1-D2-W53-S7 -- IV-e-96: the fixture-fed Holdings treemap and table print weights over 100 percent when the page carries two accounts' securities (130.0% on a synthetic fixture); not touched
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S7",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T11:53:00Z",
+  "one_line": "IV-e-96: the fixture-fed Holdings treemap and table print weights over 100 percent when the page carries two accounts' securities (130.0% on a synthetic fixture); not touched",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ holdings-face.driver-client.png and holdings-face.driver-back.png (identical in this region); fixture bodies are in holdings-face.no-pick.fixture.json (denominator.value 1000000 on every node)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The Securities map and table weights read against the total on screen.",
+  "world_is": "In holdings-face.driver-client.png (synthetic two-account fixture, each account 500,000 of 1,000,000) the map and table print SGM1 130.0% and Sample Client Fund 20.0%, i.e. each security's amount over a 500,000 base though the card total reads 1,000,000. Not investigated beyond the one render: it may be an artefact of the synthetic fixture's per-node denominators or a real denominator choice in SecurityList; HoldingsTab/SecurityList code was not changed by this order.",
+  "notes": "No act taken; a real-data read is needed before calling it a defect."
+}
+```
