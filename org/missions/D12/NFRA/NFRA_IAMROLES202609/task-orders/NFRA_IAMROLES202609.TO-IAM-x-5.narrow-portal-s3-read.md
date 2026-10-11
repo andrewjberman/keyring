@@ -101,7 +101,7 @@ Every invocation runs under `timeout 120`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the assignee ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>PORTAL_S3</workstream>
 <slot>0.7.0_AE_CloudOps~IR</slot>
