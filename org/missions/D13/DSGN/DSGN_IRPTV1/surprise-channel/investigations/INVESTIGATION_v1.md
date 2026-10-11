@@ -4001,3 +4001,84 @@
   "notes": "A served-page wording defect on a client-facing page. Whether the remedy is a kind on the served disclosure (IRPT_ANLREQ's) or a kind-neutral sentence is the CTO's call at the next analysis."
 }
 ```
+
+## DSGN_IRPTV1-D2-W47-S1 -- The ruled bound 'every request a GET but the sign-in' does not describe the Investor Reporting page: POST /selections WRITES one immutable item and PO
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W47-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~47",
+  "surfaced_at": "2026-10-11T06:59:29Z",
+  "one_line": "The ruled bound 'every request a GET but the sign-in' does not describe the Investor Reporting page: POST /selections WRITES one immutable item and POST /directory/resolve only reads, and neither is the sign-in.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 1cd1cf252e src/pages/InvestorReporting/index.tsx:111 (POST resolve on open) and :247 (POST selections on the client pick); tabs/reporting/accountFocus.ts:68 (one-account POST selections)",
+      "infra/aws/lambda/investor-reporting/_scope/selection_store.py:45 put_item with attribute_not_exists on tenant and request_revision, reached from directory/entry.py:313-315",
+      "infra/aws/lambda/investor-reporting/directory/entry.py:261-304 resolve() calls no store; deliverables/0.9.0_WK_DSGN_IRPTV1~47/FWD1_TRACE_HOPS.json non_get_requests"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling msg 4198 (as relayed in TO-IV-e-87): a read-only synthetic identity whose every request is a GET but the sign-in itself.",
+  "world_is": "The page reaches every account-level hop through a POST /selections that writes a content-addressed, immutable record, and opens through a POST /directory/resolve that only reads. Both are non-GET and neither is the sign-in. The draft pair lists both for the halves and shapes neither away.",
+  "notes": "Inert: nothing is run. It arms only if a run order cites a signed pair that treats these POSTs as inside the bound without ruling on them. Open questions 1 and 2 of the packet."
+}
+```
+
+## DSGN_IRPTV1-D2-W47-S2 -- GET /performance/{accountSetId} is a read-through store: a miss computes and persists a report, and for the named client's firm the fresh path is the 
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W47-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~47",
+  "surfaced_at": "2026-10-11T06:59:29Z",
+  "one_line": "GET /performance/{accountSetId} is a read-through store: a miss computes and persists a report, and for the named client's firm the fresh path is the vendor branch, which spends a single-use vendor authorization if an approved plan is installed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/retained.py:321,324,330,338 artifacts.put, retention.promote, reports.persist, index.publish on the fresh path; :279-285 the reopen path",
+      "performance/installed.py:68 holdings sources are installed for two other firms only; retained.py:78,193,304-315 so the named firm takes the vendor branch; performance/authorization.py:90 refusal and :94 claim put_item",
+      "portal ReportingTab.tsx:748-751 the page issues GET /performance unless the PATH B answer is already held, and :685-713 once per listed account; the route's operation_kind says read (performance/entry.py:281)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A GET is a read; the performance route's contract operation_kind is read.",
+  "world_is": "The performance GET can write the retained store and, where a server-approved single-use plan matches, claim it and call the vendor. Whether the live function has a plan installed is not readable from the tree (performance/lambda.tf:51-54 sets it only when a Terraform variable is non-null).",
+  "notes": "Inert until a run. The draft pair makes the plan check a pre-write step and adds a persist read to the zero-write step. Open question 3 of the packet."
+}
+```
+
+## DSGN_IRPTV1-D2-W47-S3 -- The portal authenticates its page by a refresh cookie (POST /auth/refresh), so a minted token with no cookie cannot open the page; a signed-in browser
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W47-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~47",
+  "surfaced_at": "2026-10-11T06:59:29Z",
+  "one_line": "The portal authenticates its page by a refresh cookie (POST /auth/refresh), so a minted token with no cookie cannot open the page; a signed-in browser also posts analytics events and prefetches five 49financial advisor-intelligence files for any internal-tier claim.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 1cd1cf252e src/contexts/AuthContext.tsx:174 POST /auth/refresh with credentials include; :246-257 initAuth; src/api/api-client.ts:46 reads a stored token but :61-80 a failed refresh clears it and redirects to /login",
+      "AuthContext.tsx:36,42,44-68 prefetchAdvisorIntelligence sends the 49financial override when the claim firm is opal-capital; src/services/analytics.ts:777 POST ingest on a timer (:177) and sendBeacon on unload (:774)",
+      "comp-find 'auth/refresh' over infra/aws/lambda: 0 hits across 5663 files, so the refresh handler and the analytics ingest handler are NOT in the tree read; their server-side writes are NOT_ESTABLISHED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The precedent pair's page step: 'the token set as the page's session, no password, no login-route change'. The ruling msg 4198 asks for a signed-in trace on portal DEV under a minted read-only identity.",
+  "world_is": "The page's AuthContext is authenticated only by the refresh cookie. A token in storage alone leaves the page unauthenticated (it shows 'Loading your signed-in context'). Whether any agreed way exists to open the page for the synthetic identity is not established.",
+  "notes": "Inert: nothing is run. The draft pair defaults the page step to NOT RUN (PAGE-NOT-RENDERED) and puts the question to the halves (open questions 4, 5, 7). The PRD's FWD-1 DONE WHEN ends in the rendered page."
+}
+```
