@@ -62,3 +62,17 @@ TR-rv-22 is re-pointed.
 | `TR-rv-22` | RE-POINTED: no gateway recovery exists (the 4 reads answer 502). The 4 are stated LOST by this route with their dates (2026-04-10, 04-13, 05-04, 06-01) unless the CTO names another source; the issuer writes that statement at round close | FWD-3 | ISSUER | LOCAL | -- | TR-ra-22 |
 
 Chain B = TR-rc-22 (done) -> TR-rf-22 -> TR-ra-22 -> TR-rv-22. Battery: `r22_checks.py rf22` at base: FAIL (absent).
+
+## AMENDMENT 3 (issuer, 2026-10-11 ~03:1xZ) -- the same hole on the LISTING call; TR-ra-22 HALTED until it merges
+
+The issuer's deploy packet predicted that the research_meeting listing reads REFUSED. Read at 03:07Z it does not: the listing raises
+`GatewayGraphError` 502, which is not a `Refused`, so the run would still end before its record. The packet's section 3 was a prediction,
+not a read; the applier was halted before any build (msg to 0.7.0_AE_CloudOps~TR2, 03:08Z). Issuer ruling inside this decomposition
+(`to-pipeline-gate.py` grades the new order at this commit).
+
+| cell | item | outcome | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|
+| `TR-rl-22` | the BUILD: `_pull_series` records a row-scoped gateway error on the LISTING of one series as that series REFUSED (class and status in the detail) and the run continues; run-wide refusals still raise; two tests | FWD-3 | dell2 worker (workstream `pullfixlist`: write surface `teams/pull.py` and `test_pull_read_refused.py`) | LOCAL | worker-light | TR-rf-22 |
+| `TR-ra-22` | UNCHANGED in scope, RE-PINNED: the deploy now builds from TR-rl-22's merged commit; the packet gets an addendum and the CTO half is re-asked against the new pin | FWD-1, FWD-3 | ISSUER pair + applier `0.7.0_AE_CloudOps~TR2` | WORLD | -- | TR-rl-22 |
+
+Chain B = TR-rc-22 (done) -> TR-rf-22 (done) -> TR-rl-22 -> TR-ra-22 -> TR-rv-22. Battery: `r22_checks.py rl22` at base: FAIL (missing).
