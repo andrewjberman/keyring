@@ -5960,3 +5960,31 @@ round.** Never edit an existing row.
  "world_is": "The date is not the cause (every year shows it) and the build does what it states (an unpriced position is left blank). The cause is coverage of the price source: before 2021 at most ONE security is priced on the sampled dates, and since 2021 about 4 in 10 securities are; every Fixed Income security and most mutual funds, cash equivalents and annuities are unpriced. NOT established: why the price stores hold almost nothing before 2021 (a start date of the store, or a narrower join), and what share of account VALUE the unpriced positions are (a null value cannot be summed). 206 unpriced securities with a symbol are the ones a price request could cover; the 253 without a symbol need an identifier first."
 }
 ```
+
+## ADVI_COTBKF-D2-S101 -- The 1,757 measured days with no holdings are emptied-account days; 24 of them could be wrong
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S101",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T08:25:41Z",
+ "one_line": "The 1,757 minted account-days that are MEASURED with no holdings row are EMPTY-AT-DAY-END days: every one has market_value_eod exactly 0, and 1,755 of them carry a non-zero external flow. They are the day an account is emptied: nothing is held at the end, so no position row exists, and the return is the form (V_t - F_t) / V_(t-1) - 1 with V_t = 0. That explains the class. It does not clear every row: 24 of them carry an absolute return above 1% and 3 above 100%, where the day's outflow did not equal the prior day's value. Those 24 are the cells of this table that could be WRONG rather than blank, and no plausibility band ran on them (thresholds are absent for Cottonwood).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer read of the 3,325 minted day files joined to the holdings table (account, date): 107,316 measured rows, 1,757 with no holdings row that day, over 916 accounts and 594 days from 2013-04-26 to 2026-06-22; all 916 accounts appear in the holdings table on other days",
+   "of the 1,757: market_value_eod == 0 on 1,757, > 0 on 0, null on 0; external_flow != 0 on 1,755 and == 0 on 2; total_return_daily == 0 on 187 and != 0 on 1,570; absolute return > 0.01 on 24; absolute return > 1 on 3",
+   "rows per account: median 2, maximum 36; 1 account has 20 or more such days",
+   "FWD-3 daily_returns for the same rows: cash_leg 'method_r28' on 1,757 of 1,757",
+   "the rule: data/assets/scripts/silver/commonwealth_daily_returns.py lines 10 to 16 (the return form; a fee is not a flow; a day that cannot be worked out is null with its reason)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "1.0.0_SA_CTO~DELL2 msg 4471: a return with no holdings behind it is the one cell of the table that could be wrong rather than blank; explain it or flag it before a reader binds.",
+ "world_is": "Explained as a class (an emptied account has value 0 and no position rows) and FLAGGED in part: 24 rows, 3 of them above 100%, where the outflow and the prior value disagree. NOT established: the cause in those 24 (a transfer valued on another basis, a flow dated a day off, or a prior value that was itself partial), and whether the 2 rows with a zero flow and a zero value are real. A reader that binds this table should treat a measured row with market_value_eod 0 as a close-out day; the producer's plausibility band would have caught the 3 if thresholds existed."
+}
+```
