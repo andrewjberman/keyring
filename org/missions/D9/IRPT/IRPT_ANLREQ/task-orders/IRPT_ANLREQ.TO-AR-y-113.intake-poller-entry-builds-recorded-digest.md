@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~53</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>pending</status>
+<status>complete -- CLOSED AS A RESULT by issuer 2.0.0_SA_COO~Y2 2026-10-11 ~19:1xZ on CTO ruling msg 5610: AR113-y-AC1 retired (AMENDMENT 2); AR113-y-AC2 prints Y113-RESULT-OK and the proof instance is VALID rc 0, both run by the issuer. The map entry is unchanged and does NOT build: 21 of 28 members of the live irpt-intake-poller package have no blob in git. The remedy is a release of the poller by IRPT_BCKEND (IB-s-6), not this order.</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
