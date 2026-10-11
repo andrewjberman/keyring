@@ -3389,6 +3389,32 @@
 
 ```json
 {
+  "id": "IRPT_ANLREQ-D2-W53-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-11T21:36:00Z",
+  "one_line": "TO-AR-y-141: the order asks which deployed Lambda function asks the provider whether a ticker exists; none does. The ask runs in the resident process on EC2 i-0167fd745ad906a66, and no lambda-source-map entry packages resolution_broker.py or resident_session.py; the only live-answer route found without a new grant is an upload through a direct invoke of irpt-ycharts-generate, which writes records and is not a read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-141 item 1: 'where that runs (which Lambda function, read from lambda-source-map.json: which entries package these files)' and item 3: 'a read that writes is not a read'; decomp premise that a seat can ask with one command.",
+  "world_is": "MEASURED: infra/aws/lambda/ci/lambda-source-map.json functions.irpt-ycharts-generate lists uploads.py, upload_resolution.py, upload_entry.py, template_reader.py, security_resolution.py, portfolio.py, resident_worker.py but NOT resolution_broker.py, resident_session.py or operation_lease.py (membership test False x3; no other entry lists any of 9 files searched); its POST half has no resolve_template (upload_resolution.py:102-113). The call is resolution_broker.py:102 inside the resident (resident.tf header: one supervised process on i-0167fd745ad906a66). The live ask by a seat needs an upload (Y75 y75_x1_arms.py:87-88), which writes UPLOAD#/NORMALIZATION#/RETENTION#/ARTIFACT# rows, a stored original, a queue message, a lease update and a synthetic filer row. Not looked at: whether the host is running now, the seat's exact IAM identity, any live answer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r14/TOTAL_LABEL_PROVIDER_ASK.json",
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf lines 1-20; iam.tf; org/tier2_senior/0.7.0_AE_CloudOps~DELL2/deliverables/irpt_y75/y75_x1_arms.py and Y75-1_release5b_after_reads.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer's live-ask Tier-2 order must name the writes above and the cleanup; S3 deletes stay Andrew's act. Recorded as form only; no significance judged."
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S12 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
   "id": "IRPT_ANLREQ-D2-W52-S12",
   "project": "IRPT_ANLREQ",
   "fabric": "dell2",
@@ -3411,6 +3437,8 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W52-S13 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
 
 ```json
 {
