@@ -4646,3 +4646,29 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "No action taken by this worker; the list is a per-device input, not this cell's. Filed for the owner of the client-data check to judge whether dell1 needs the list placed."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S29",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T15:05:05Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The act-0 grant on the producers' role allows PutObject, GetObject and ListBucket on the canonical prefix but NOT DeleteObject; D_02 and D_04 delete departed advisors' files with delete_objects and never read its Errors, so after act 2 their stale-cleanup silently removes nothing at the canonical home.",
+  "spec_asserts": "Round-3 act 2 pair and the act-0 grant (FB-g-2, applied by FB-g-8): the producers' role is allowed what the producers do at the canonical home once act 2 moves their mode. Code comments in both scripts say the stale-advisor cleanup exists because orphan files are double-counted in AUA.",
+  "world_is": "infra/aws/terraform/bd-pipeline/iam.tf:1300-1315 (policy advi-49f-platinum-canonical-rw-policy): AdviPlatinumCanonicalObjects Action [s3:PutObject, s3:GetObject], AdviPlatinumCanonicalList Action [s3:ListBucket]; no s3:DeleteObject. data/black_diamond/scripts/gold/D_04.client_portal_summary.py:789-812 and D_02.advisor_client_detail.py:3245-3280 compute stale advisor ids, list their keys, and call s3.delete_objects(Bucket=db, Delete={'Objects': objs}) with db and dk from platinum_destination(k) (the canonical bucket after act 2); the response is not read. boto3 delete_objects answers 200 with an Errors list for per-key AccessDenied, so no exception is raised. _lib/atomic_write.py (a delete_object of its staging key) has no caller under the gold scripts (0 files). Effect: after act 2 a departed advisor's served objects and entity files stay at the canonical home, which the scripts' own comments say double-counts AUA downstream.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/bd-pipeline/iam.tf lines 1300-1315 read at HEAD",
+      "D_04.client_portal_summary.py lines 770-812 and D_02.advisor_client_detail.py lines 3245-3284 read at HEAD",
+      "Grep over data/black_diamond/scripts/gold for delete_object(s): D_04, D_02, _lib/atomic_write.py (no importer) only",
+      "the boto3 S3 DeleteObjects contract: per-key failures return in Errors with HTTP 200 (documented behavior; not exercised here)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A never-widen class (it adds a delete grant on the canonical home). Placement read from the evidence: an addendum to the act-0 grant pair adding one statement, s3:DeleteObject on the same prefix ARN, before act 2; the departed-advisor path only runs when an advisor leaves, so the harm is latent, not daily. Alternative the CTO may prefer: the producers read Errors and fail loud, plus the grant. Not cut as a cell until ruled."
+}
+```
