@@ -4451,3 +4451,76 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not changed by the worker: the amendment asked for this block in the carrier, and the carrier now carries exactly it. Issuer decision needed: the W5 drift clause should exempt blocks the builder adds (or compare against a base regenerated without them). Like S2, a check artifact the issuer grades at the drain. AC1 is recorded as 4 of 5, not re-measured."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W40-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~40",
+  "surfaced_at": "2026-10-11T14:09:24Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The router spec test 'even a map that names the firm's own bucket changes nothing while the list is empty' relied on the handler default being the empty list; it now passes an explicit empty list (one call edited). No other spec changed.",
+  "spec_asserts": "FB-g-17 1a.1: read test/canonical-platinum.spec.mjs and make the smallest edit that keeps every spec's intent. 2.1: the router's spec file(s) change only if a spec referenced the deleted local.",
+  "world_is": "The spec did not name the deleted local. It called handleWithMap(event, MAP) with the handler default (index.mjs line 161), which is now the generated list. That list names the firm's own bucket, which MAP maps to, so the call would take the canonical path. The call now passes an empty list as its third argument, which keeps the test's title and intent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "canonical-platinum.spec.mjs line 51 at the worktree C:/dev/wk-firmbkts-40: handleWithMap(ev(...), MAP) with no list argument, before the edit",
+      "index.mjs line 161 at the worktree: canonicalBuckets = CANONICAL_PLATINUM_BUCKETS default parameter",
+      "bash run-gate.sh after the edits at the worktree: 51 pass, 0 fail, rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The failure-without-edit is reasoned from the code, not run. Issuer may rule whether an edit under test/ is the intended reach of the 2.1 bound."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W40-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~40",
+  "surfaced_at": "2026-10-11T14:09:24Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The round-4 validator check's K1 label says the helper exports a frozen EMPTY list. The list is now the generated one (length 1), and K1 still passes because the arm does not test length.",
+  "spec_asserts": "r4_validator.py K1 (round-4 check, issuer 2.0.0_SA_COO~B1): ownership_key.mjs exports a frozen EMPTY CANONICAL_PLATINUM_BUCKETS. FB-g-17 1a.2: the list is the generated one.",
+  "world_is": "AC2 output at the worktree after the edits: 'helper exports: {names:[CANONICAL_PLATINUM_BUCKETS, ownershipMapKey], frozen:true, len:1}' and 'PASS K1'. The arm checks the export names and frozenness only, so the label and the measured list disagree while the check still reads 4 of 4.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r4_validator.py --arms key run at the worktree after the edits: helper exports len:1, K1 PASS, ROUND 4 VALIDATOR KEY: 4 of 4 arms",
+      "r4_validator.py line 6 (K1 text) and lines 58-59 (the K1 arm tests names and frozen only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The check is the issuer's and was not edited. The label is for the issuer to amend."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W40-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~40",
+  "surfaced_at": "2026-10-11T14:09:24Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The router's v15 header comment still says the canonical list is EMPTY today. The bounds keep every line other than the local definition and its comment, so the header now contradicts the imported list.",
+  "spec_asserts": "FB-g-17 1a.1 and 2.1: the router change is the import, the deleted local and one updated comment sentence; every other line stays.",
+  "world_is": "index.mjs line 76 (v15 header) reads 'listed in CANONICAL_PLATINUM_BUCKETS (EMPTY today)', and lines 80-81 describe a registry edit plus a list entry. The list is now the generated registry list. The header was left unchanged as the bounds require.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "index.mjs line 76 at the worktree C:/dev/wk-firmbkts-40 after the edits: 'listed in CANONICAL_PLATINUM_BUCKETS (EMPTY today)'",
+      "index.mjs lines 80-81 at the worktree after the edits"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not edited, because 1a.1 says every other line stays. A header-only update needs an issuer grant."
+}
+```
