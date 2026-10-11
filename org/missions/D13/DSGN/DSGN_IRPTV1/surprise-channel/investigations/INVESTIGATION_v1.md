@@ -4027,3 +4027,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-S5 -- the single upload-review wording stands only while the served correction carries no kind; FWD-20 (IRPT_YCDGEN) supersedes it
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S5",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T06:51:41Z",
+  "one_line": "Follows row DSGN_IRPTV1-D2-W46-S1 (rows are not edited in place): the upload review's single wording '<uploaded>, analysed as <to_value>' (portal 1cd1cf25) is the honest cell only WHILE the served correction carries no kind. IRPT_YCDGEN's PRD FWD-20 reads 'Someone reading the report can tell a corrected typo from a stand-in'; when FWD-20's cell serves the kind, the Holding cell and its disclosure line in ProspectComposer.tsx follow it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 4309 (2026-10-11 06:51Z), correcting its msg 4223",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_YCDGEN_ROUND_8_20261011.md @fe73849335, section 4",
+      "row DSGN_IRPTV1-D2-W46-S1 (the join of original.symbol to disclosures.corrections) and row DSGN_IRPTV1-D2-S3 (the disclosure sentence is false for a typo correction)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_YCDGEN FWD-20: a reader can tell a corrected typo from a stand-in.",
+  "world_is": "The served correction carries no kind today, so the upload review states one wording for both. The page half is owed when the kind is served; it is not cut.",
+  "notes": "For the next seat to touch portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx: the Holding cell (~line 569) and the disclosure sentence (~line 545) both change with the served kind."
+}
+```
