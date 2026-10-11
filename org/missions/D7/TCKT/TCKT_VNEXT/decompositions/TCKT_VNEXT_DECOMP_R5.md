@@ -63,3 +63,14 @@ carrying the address does not reach the log line.
 
 Dry-run at the base (box/dell2, 2026-10-11 ~19:4xZ, 175 ticket tests): ml-digest FAIL absent, ml-regress FAIL (175 below 178),
 fn-fence FAIL absent, fn-regress FAIL (175 below 179), ac-read FAIL absent, all as expected.
+
+## AMENDMENT 1 (2026-10-11 ~19:4xZ) -- by CTO ruling msg 5682
+
+- **FWD-6 (`R5-c6-1`): the design is ruled as proposed.** `svc-commentary` sets the draft on the EXISTING ticket the request
+  names, firm-bound by its env list, and creates no ticket. An internal caller records "final commentary sent"; the server stamps
+  who and when from the verified identity, never the body, written once. Both writes are served changes: ONE pair, naming every
+  reader of the ticket's commentary members with one read through each. The cell stays NOT CUT until `R5-ml-1` drains (same
+  file); its one remaining dependency is that edge.
+- **FWD-5 (`R5-qa-1`): a created time does NOT meet it.** An elapsed age is owed, computed on the page from the created time
+  already served; no service change. The page is `2.0.0_SA_COO~Y2`'s: passed to that seat as one line (msg sent 19:4xZ). FWD-5
+  reads OPEN on that cell landing on DEV.
