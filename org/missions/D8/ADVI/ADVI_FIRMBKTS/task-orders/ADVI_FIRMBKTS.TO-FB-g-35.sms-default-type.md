@@ -72,7 +72,7 @@ alarm actions) and ruled one attribute on the existing preferences (msg 4021). B
 CTO's is a STOP and a re-rule. Plan: 1 to change, that attribute. Close: one real SEV1 publish delivered, which waits on Andrew's
 word (the CTO is asking). Workstream `SMSTYPE`. Class WORLD by the path floor.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>SMSTYPE</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-35</to_id>
