@@ -2885,3 +2885,133 @@ Opened as the worker's step-4 finding list. One row per read site, form OBSERVAT
   "notes": "E_01: retire from the census as a non-served-key writer (reason above, denominator 3 of 3 objects). E_24 reads dead under ADDENDUM 4's own test (no schedule, no caller, no SendCommand naming it in 45 days: 0 of 4,010) with one residual: 1 StartSession in the window. The act-2 pair proposes it retired from the census on that denominator and records the residual; the CTO rules. Owner: 2.0.0_SA_COO~B1."
 }
 ```
+
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~20 (FB-f-9 phase A3, step 3 and the read census)
+
+Routing the read census UNROUTED sites and the negative arm surfaced the rows below. Base line numbers at 56c2234580. Hazard INERT throughout: BD_PLATINUM_MODE is unset in this cell and no run is made.
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W20-S1",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~20",
+    "surfaced_at": "2026-10-11T08:47:03Z",
+    "one_line": "Legacy-copy PUTs (the dual writes to the legacy key) now go through platinum_destination(), so under canonical each copy lands at the canonical home of its legacy name and not at the legacy home",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C_06 client_mix_timeseries.py:373 and :389 legacy put of lk, base 56c2234580",
+        "D_00 portal_aggregates.py:215 legacy put of lk, base 56c2234580",
+        "D_01 partner_analytics.py:2561 legacy put (comment 'Dual-write to legacy key during migration'), base 56c2234580",
+        "D_03 composition_artifacts.py:213, :514, :535, :559, :585, :596 legacy puts, base 56c2234580",
+        "E_01 account_quality_tiers.py:316 and :345 legacy puts, base 56c2234580"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A3 step 3: a PUT the census lists as UNROUTED is routed through platinum_destination(); the dual-write sites are the reason the census lists them, and D_01 names its copy a dual write to the legacy key during migration.",
+    "world_is": "Mode unset: each legacy copy names the same bucket and key as before (identity). Mode canonical: a copy whose legacy key is a served class lands at the canonical template, the same place its primary write lands for the same output, so no object is left at the legacy home for that copy and readers that follow source() read the canonical copy. The migration intent of the copy (a legacy-readable object during the window) is not carried by the seam. The issuer or the CTO should rule whether these copies stay at the legacy home under canonical before phase B.",
+    "notes": "Filed while routing the census's UNROUTED puts. Base line numbers at 56c2234580. No mode is set in this cell, so the hazard is not live here; it is live the moment BD_PLATINUM_MODE=canonical runs these scripts."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W20-S2",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~20",
+    "surfaced_at": "2026-10-11T08:47:03Z",
+    "one_line": "Three helpers take the bucket as a caller argument (helpers.s3_object_exists, D_01 _load_aua_certification, etf_classifier IdentityResolver.from_s3), and the seam ignores a bucket argument, so the three calls are marked exempt instead of routed",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/helpers.py:36 s3_client.head_object(Bucket=bucket, Key=key) with a caller-supplied bucket, base 56c2234580",
+        "D_01 partner_analytics.py:386 s3_client.get_object(Bucket=bucket, Key=key), base 56c2234580; sole caller passes S3_BUCKET at base",
+        "lib/etf_classifier.py:332 get_object(Bucket=bucket, Key=lots_key), base 56c2234580; from_s3 default bucket is S3_BUCKET",
+        "callers of s3_object_exists at base: C_02, C_04, E_00, E_19 (probe keys: silver/allocations, silver/prices, gold/positions_cube, gold/accounts_dimension_latest.parquet)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A3 step 3 (prefer routing; the seam is the identity for a non-served key) and bound 2 (with the mode unset every line touched names the same bucket, prefix and key as today).",
+    "world_is": "Routing these calls through platinum_source(key) would return S3_BUCKET whatever bucket the caller passed, so a caller on another bucket would change its legacy result. At base every caller passes the pipeline bucket and probes a non-served key, so the exemption changes nothing today. The three lines carry '# seam: exempt' with that reason. A future caller that probes a served key on the pipeline bucket is not routed by these helpers and needs a seam-aware signature.",
+    "notes": "Exempt, not routed, by design. The census counts the three as EXEMPT (3 of 127), so the read census reads UNROUTED 0."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W20-S3",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~20",
+    "surfaced_at": "2026-10-11T08:47:03Z",
+    "one_line": "AC2 cannot match its '^OK$' expectation on this device: FORCE_COLOR=3 is set in the worker shell, so unittest colours the OK line with ANSI escapes, while the same run with FORCE_COLOR unset prints a plain OK",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "shell: FORCE_COLOR=3, PYTHON_COLORS and NO_COLOR unset (measured in the worker shell)",
+        "AC2 invocation tail -n 3 output: the OK line is the escape sequence for green OK then reset (od -c read)",
+        "control: env -u FORCE_COLOR of the same invocation prints a plain OK line, rc 0, Ran 15 tests"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 proof AC2: invocation of the three new test classes, tail -n 3, expected to match ^OK$.",
+    "world_is": "In this worker shell the literal invocation ends with a colour-coded OK line (rc 0, 15 tests, all pass), so the literal regex does not match. The test module cannot change the runner's colour decision, and the colour is set by the environment, not by the code. The literal verdict depends on the environment the proof checker runs in.",
+    "notes": "Filed so the COO and the proof checker read the same environment fact. Not a code defect: the tests pass in both runs."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W20-S4",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~20",
+    "surfaced_at": "2026-10-11T08:47:03Z",
+    "one_line": "Print and log lines beside the routed writes and reads still print s3://<S3_BUCKET or BUCKET>/<key>; under canonical the printed location is the legacy bucket, not the bucket the call used",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "E_01 account_quality_tiers.py log lines naming s3://{S3_BUCKET}/{parquet_key} and s3://{S3_BUCKET}/{json_key} (routed puts above them)",
+        "D_01 partner_analytics.py print 'Loading s3://{S3_BUCKET}/{key}' and 'Uploaded to s3://{S3_BUCKET}/{key}' (routed read and put)",
+        "D_03 composition_artifacts.py print 's3://{BUCKET}/{key}' after the routed write; C_05, C_07, C_08, E_24 log lines name S3_BUCKET beside routed writes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A3 step 3: each routed call names its seam destination; the message beside a routed write is the audit trail of where it went.",
+    "world_is": "Mode unset: the printed bucket is the bucket used, unchanged. Mode canonical: the printed location is S3_BUCKET while the write goes to the class bucket, so an operator reading the run log would look in the wrong bucket. The prints were not edited in this cell (the bound is the call, not the message).",
+    "notes": "A display-only mismatch under canonical; no call is affected. The print sites are listed by file, not by key."
+  }
+]
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~20 (naming gate at the first commit attempt)
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W20-S5",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~20",
+    "surfaced_at": "2026-10-11T08:58:00Z",
+    "one_line": "The naming gate (LGIC_ENFORCE) refused the literal 'gold/entities/advisors/' in the routed D_02 listing as an out-of-pattern S3 key assigned to remediation ADVI_FIRMBKTS; resolved by deriving the advisor entity root from advisor_book_key() in the same file",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "D_02 advisor_client_detail.py:3248 base literal in paginate(Prefix='gold/entities/advisors/', Delimiter='/') at 56c2234580",
+        "commit-gate: naming-gate REFUSE D_02 advisor_client_detail.py:3252 gold/entities/advisors/ EXISTING and OUT-OF-PATTERN as S3Key in remediations.json for ADVI_FIRMBKTS (run at the first commit attempt)",
+        "lib/s3_layout.py advisor_book_key() returns f'gold/entities/advisors/{advisor_id}/book.json'; advisor_book_key('_').rsplit('/', 2)[0] + '/' == 'gold/entities/advisors/' (measured)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A3 step 3: route the listing through platinum_list_target(); the order names no literal-key rule for the listing.",
+    "world_is": "The naming gate grades a literal S3 prefix in any added line and refuses it when the remediation already lists the literal; the seam call needs a prefix value, so the literal is derived from the builder. Behaviour is identical: the derived prefix equals the base literal.",
+    "notes": "Recorded because the order did not say the listing prefix must come from the builder. The derived value equals the base literal; no key changes. Owner of the remediation: the issuer."
+  }
+]
+```
