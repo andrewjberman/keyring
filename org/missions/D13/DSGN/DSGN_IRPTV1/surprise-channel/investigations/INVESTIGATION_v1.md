@@ -5214,3 +5214,56 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-W57-S1 -- IV-e-101: the whole-scope base at portal 582ffe6e measured 2 failing, not the 6 the spawn named; the two are IVE26-AC3 (gen-wire idempotence) and the producer-fixtures declared-route envelope test, and both fail identically after the change
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W57-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~57",
+  "surfaced_at": "2026-10-11T13:24:26Z",
+  "one_line": "IV-e-101 STEP 0: `bun test src/pages/InvestorReporting` at portal 582ffe6e read 1144 pass, 27 skip, 2 fail across 1173 tests in 374 files, where the spawn said to expect 6 failing",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~57/base_suite.txt: `Ran 1173 tests across 374 files`, 1144 pass, 27 skip, 2 fail; the two failing lines are `IVE26-AC3 -- gen-wire.ts regeneration is idempotent, data is optional, content pin still 17 of 17 > every arm holds` and `producer fixtures > every DECLARED route still publishes the RESPONSE ENVELOPE this client parses`",
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~57/after_suite.txt (portal 6f0a813b): 1147 pass, 27 skip, 2 fail across 1176 tests in 375 files; the same two ids"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The base failing set at the DEV tip is 6 ids (the spawn: expect 6 failing; that set is the base for new_failing_ids).",
+  "world_is": "The base failing set read at 582ffe6e is 2 ids, the two named above. new_failing_ids is computed against the measured 2, not the 6. Not investigated: which four ids the spawn's 6 included.",
+  "notes": "No act taken."
+}
+```
+
+## DSGN_IRPTV1-D2-W57-S2 -- IV-e-101: three more vendor-worded strings sit OUTSIDE the opened-request dialog and are not changed here: the Analysis print/export document prints 'Vendor attribution:' for every report, the Analysis tab's preview panel is labelled 'Vendor preview', and ExtractionCoverage prints 'Partial extraction'
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W57-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~57",
+  "surfaced_at": "2026-10-11T13:24:26Z",
+  "one_line": "IV-e-101 searched the opened-report surface for vendor and extraction words (every file under tabs/analysis, the state/ folder, format.ts, ProspectJobStatus.tsx, ProspectSourceDates.tsx, components/ExtractionCoverage.tsx, render/analysis/AnalysisDocument.tsx); three strings outside the dialog still read the vendor's words for an Opal report",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/analysis/AnalysisDocument.tsx lines 77-80 @582ffe6e: `Vendor attribution:` in every section block of the print/export document; the file has no OPAL_ENGINE or provider branch (grep of OPAL|isOpal|provider: only the footer text 'OPAL CAPITAL' and a render-options line)",
+      "portal/src/pages/InvestorReporting/tabs/analysis/VendorPdfPreview.tsx line 14 @582ffe6e: VENDOR_PREVIEW_LABEL = 'Vendor preview -- not the Opal report', rendered by AnalysisTab.tsx line 427 beside the selected request",
+      "portal/src/pages/InvestorReporting/components/ExtractionCoverage.tsx lines 9 and 17 @582ffe6e: 'Partial extraction', 'Extraction gaps'; the Opal slice view carries no extractionCoverage, so it renders nothing for an Opal report on the opened-request surface, and IV-e-101 also stops RetainedSections from mounting it for an Opal report"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IV-e-101 item 2: any other vendor-worded string in the opened-report surface is treated the same way or listed.",
+  "world_is": "The opened-request dialog (OwnedRequestHistory's HeroDialog: ProspectJobStatus, the Technical details block, RetainedSections, SectionBlock) carried two vendor-worded strings for an Opal report, 'Extraction validation:' and 'Vendor attribution:' (plus the v1 unsupported-reason sentence 'the producer's extraction validation is ...', printed for an UNSUPPORTED section), and all three now read Opal's words (a rendered read of the whole dialog's textContent, collapsed details included, finds no vendor or extraction word for an Opal report). The three strings above are other surfaces: the print/export document (render/analysis/AnalysisDocument.tsx, which has no Opal branch), the Analysis tab's preview panel (a vendor PDF preview, which is by design about a vendor artifact), and a component the Opal view never feeds. None was changed: outside this order's cell.",
+  "notes": "The print/export document is the one a principal could be handed; whether it needs the same treatment is the issuer's and the CTO's call."
+}
+```
