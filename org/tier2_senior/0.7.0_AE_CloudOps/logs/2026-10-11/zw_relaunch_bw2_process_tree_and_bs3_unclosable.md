@@ -243,3 +243,24 @@ So the honest statement is: the row's cause is NOT established by me, the CRLF m
 it, and a plausible cause is an in-flight law migration whose owner is the seat that landed rule 14a.
 Still not re-filed, for the same reason as before. Recorded because "the class is owned" was doing work
 that only "this class is owned, and I did not check whether this row belongs to it" can honestly do.
+
+---
+
+## Addendum 5, 17:4xZ: HVST-bs-4 step 5 done -- the leg re-declared
+
+`dj-20261011T174257Z-3489019`, LIVE, window to 2026-10-13T17:42Z. Both pids were verified alive first
+(36228 the marked shell, 13220 the driver).
+
+Marked **the driver itself** this time, not the shell. The original marker exempts winpid 36228 and its
+subtree, so the driver's protection was indirect and would have evaporated if that shell died; 13220 is
+now exempt on its own account. Two markers cover it.
+
+Done early rather than at the wire, because the mean pace is not a safe predictor here: observed gaps
+include 17.4 and 52.4 minutes, and over the whole run (37 pairs, 04:01Z to 16:21Z) the average is about
+20 min/pair, putting completion near 2026-10-12T16:00Z. Against the ORIGINAL marker's 2026-10-13T04:01Z
+that was ~12 h of headroom, not the ~15.6 h addendum 3 projected from a 2-gap sample. An expired marker
+exempts nothing, so the reaper would have killed a leg that was working.
+
+Not messaged to the issuer: ~20 vs ~17.6 min/pair does not change their planning -- step 6 is still
+tomorrow, not today -- and addendum 3's message already said the figure could move and named its sample.
+Leg at 37 of 107, 0 faults.
