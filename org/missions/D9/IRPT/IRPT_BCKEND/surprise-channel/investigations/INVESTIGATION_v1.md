@@ -27189,3 +27189,50 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The library, wrapper and probe did not change (see the read file), but the host's vendor traffic did: research runs began on the same account and session 2026-10-04T18:42Z, before the 2026-10-05T14:41Z failure. The records do not say whether that traffic bears on the vendor's treatment of the session; it is a change on our side that a read of the capture code alone would miss."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W305-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~305",
+  "surfaced_at": "2026-10-11T19:09:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The task order's premise that dropping firm_registry.json from the poller's package is an outage does not hold for the live bytes: the handler returns before any registry read, because LiveTransport raises unconditionally.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live package irpt-intake-poller CodeSha256 YpE2MyUwdGzMfLaUGXi8cClxoVHFFmOz5LT1BYmoTa8= (downloaded bytes' base64 sha256 equal), read 2026-10-11T19:04:26Z: poller.py:479-502 lambda_handler returns at :492 on LiveCallRefused; graph_client.py:240 raises unconditionally; the registry reads (keys.py:293 and its callers) all sit under run_scan (poller.py:503)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~305/IB144-1_poller_firm_registry_read.json reached_at_run_time"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-447 Why: a release from the tree that drops a file the running code opens is an outage; firm_registry.json is served and declared in the source map.",
+  "world_is": "The running code opens the file only below run_scan, which the deployed handler cannot reach while LiveTransport cannot construct; the six live .py members are byte-equal to the tree's, so a release carries the same refusal. The drop is NO_EFFECT today and would become an outage only if a later change lets the transport construct."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W305-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~305",
+  "surfaced_at": "2026-10-11T19:09:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The served firm_registry.json has the same parsed content as the tree's generated view data/firm_registry.json, differing only by the view's _generated key (5229 vs 5326 bytes), so the 'no true source' note is true of the bytes but not of the content.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py:98 VIEWS lists data/firm_registry.json as a generated carrier; :982 _firm_registry_rows builds its rows from scopes.json",
+      "parsed comparison of the live member with data/firm_registry.json at the worktree HEAD: firms, pseudo and _meta equal, top-level keys differ by _generated; bytes not equal",
+      "infra/aws/lambda/ci/lambda-source-map.json irpt-intake-poller _staged_from_note and the other irpt-* entries' staged_from of data/firm_registry.json"
+    ]
+  },
+  "spec_asserts": "The source-map note for irpt-intake-poller says no true source could be declared for firm_registry.json because its served content has no git blob in reachable history (row IRPT_BCKEND-W4-S34).",
+  "world_is": "The other irpt-* functions stage the same file from data/firm_registry.json, and that view parses equal to the poller's served copy; only the byte form differs. Whether declaring staged_from data/firm_registry.json is acceptable is not decided here."
+}
+```
