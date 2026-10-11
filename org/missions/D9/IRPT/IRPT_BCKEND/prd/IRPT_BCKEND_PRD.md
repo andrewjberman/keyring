@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.36",
+ "prd_version": "v0.37",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -860,5 +860,40 @@ ENDPOINT is not edited.
   `NEGATIVE_POSITION` 0, in each of the three trees. Not swept: the rest of the repo.
 - **No producer is built under either name yet,** so the rename costs nothing. The re-count in flight (IB-pr-429 AMENDMENT 2) prints its table
   under the new names.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.37 -- a second WITNESS of the date basis; a witness never supplies a served figure (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `2.0.0_SA_COO~P2`'s reads of 2026-10-11, IB-pr-436 (eight funds) and IB-pr-438
+  (`deliverables/0.9.0_WK_IRPT_BCKEND~296/IB136-1_ALL_SECURITIES_NAV_EFFECT_READ.md`, drained @34a6a32212). Read by this seat: that record's
+  method paragraph, fetch paragraph, sizing table and control (lines 3, 13, 22, 33, 38, 40). Not re-run by this seat. The ENDPOINT is unchanged.
+- **What v0.34 to v0.36 called "the anchor" is one witness, and a second is admitted.** A WITNESS is an independent close for one security on
+  one date. The closed set is two: `SCHWAB_ANCHOR`, the close the grading instrument has used until now; and `YAHOO_CLOSE`, the unadjusted
+  Close returned for the security's ticker by the reader the read used (`fetch_yahoo` / `read_yahoo_close`).
+- **How a row is graded against a witness, as the read did it:** the row's own price is its Market Value divided by its Units; it sits at a
+  close when it equals the witness's close within a relative tolerance of 1e-4. It is compared with the witness's close for day t and for the
+  prior trading day. The ordered claim rule of v0.35, with v0.36's names, is unchanged.
+- **A witness NEVER supplies a number that is served.** A return is computed from the source's own values, as before. A witness decides one
+  thing: whether a day is served or blank. So an error in a witness has one safe direction and one unlikely one: a wrong close blanks a day;
+  to pass a day wrongly it would have to equal the source's own mark within 1e-4 by chance.
+- **`date_basis_witnesses`** is a new member beside `date_basis_claim` on every account-day: the list of the witnesses used for that day's
+  rows, drawn from the closed set of two. Empty on a `NOTHING_TO_GRADE` day.
+- **`OUTSIDE_ANCHOR` keeps its name and now means:** no admitted witness holds a close for that security on that date. A security the source
+  carries with no ticker (bonds and plan share classes, 375 of 737 in the read) has no `YAHOO_CLOSE` and stays `OUTSIDE_ANCHOR`. One fund,
+  FPNIX, returned no data and stays so. No witness is sought for either in this addendum.
+- **A ticker that is not the held instrument cannot pass a day.** That a ticker's bars are those of the held security was NOT checked by the
+  read. The rule needs no such check to be safe: a wrong instrument's close will not equal the source's mark within 1e-4, the row reads
+  `NEITHER_CLOSE`, and the day is blank.
+- **In production the witness is fetched on a schedule, never on demand.** A day graded before its `YAHOO_CLOSE` is in hand carries
+  `ANCHOR_NOT_LANDED`, as v0.35 already provides, and is graded again when it lands. The reader is unofficial; its failure blanks days and
+  breaks nothing else. A scheduled producer of it is cut under its own cell and is not ordered here.
+- **The cost, as a SIZING and not a stamp** (the read's table, the same 75,796 eligible account-days): blank 58.2 percent with one witness,
+  37.0 percent with two; accounts never served 382, then 181. Nothing has been stamped under this addendum.
+- **Rule 24, for `date_basis_witnesses`:** (i) domain: every source of an independent close this project grades against; two members, and a
+  third enters only by addendum; (ii) grain: one witness per security-date, lifted to the account-day as a list; (iii) one intent: who
+  witnessed, and nothing about the result; (iv) no remedy here moves a value. Token census (word-boundary, this seat, native search,
+  tracked files, over `data/assets/scripts/`, `infra/aws/lambda/investor-reporting/` and `portal/src/`): `date_basis_witnesses` 0,
+  `SCHWAB_ANCHOR` 0, `YAHOO_CLOSE` 0, in each. Not swept: the rest of the repo.
 
 -- 1.0.0_SA_CTO~DELL2
