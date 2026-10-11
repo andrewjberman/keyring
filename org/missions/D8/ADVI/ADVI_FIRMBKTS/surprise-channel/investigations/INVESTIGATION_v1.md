@@ -4796,3 +4796,28 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Form only; nothing armed. For the gate owner: (1) a sentinel the gate counts as OPEN while the entry reads CLOSED is the DRIFT class the ledger's own check names; the sentinel's location is the open question. (2) The match is by root path token, so a disjoint one-resource apply and an unrelated cross-box call read as a STOP. This lane's practice at this act: --dry-seat-gates first, then read each hit's resource set before the apply."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W46-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~46",
+  "surfaced_at": "2026-10-11T15:30:31Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The FB-g-24 face names lib/platinum_dest.py as the seam, but no such file exists under lib/; the seam is data/black_diamond/scripts/gold/lib/platinum_dest.py.",
+  "spec_asserts": "Face section 1a.1 derives each class's canonical directory from the canonical destination of lib/platinum_dest.py for a key under the legacy prefix.",
+  "world_is": "Glob under the worktree lib/ for platinum_dest*.py returned no files at 92a9b27704. The module is data/black_diamond/scripts/gold/lib/platinum_dest.py (destination(legacy_key, mode) at line 59), importing lib.platinum_dest_view. r4_modclass.py imports it with data/black_diamond/scripts/gold on sys.path. The worker derived each directory from opal_naming._platinum_build(), the derivation platinum_prefix and ownership_key use; AC1 M2 reads the seam's destination and reports 11 of 11 classes equal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Glob lib/**/platinum_dest*.py at /c/dev/wk-firmbkts-46/lib returned No files found at 92a9b27704",
+      "data/black_diamond/scripts/gold/lib/platinum_dest.py:24-25 read at the worktree: imports S3_BUCKET from lib.config and PLATINUM_CLASSES from lib.platinum_dest_view; destination() at line 59",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_modclass.py:96 read at the worktree: from lib import platinum_dest as pd, with data/black_diamond/scripts/gold on sys.path"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken beyond the derivation the face names. The path is the issuer's wording; the check reads the module from the gold folder. AC1 passes on this path. Recorded as a path premise only."
+}
+```
