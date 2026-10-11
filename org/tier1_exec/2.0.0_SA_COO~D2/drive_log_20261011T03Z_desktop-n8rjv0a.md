@@ -1,0 +1,15 @@
+# drive log 2.0.0_SA_COO~D2 IRPT_DASHBD 2026-10-11 03Z-04Z
+
+- 03:0xZ 2026-10-11 IRPT_DASHBD | L8 | r55 | DB-b-110 drained @5d339ced5b (lots_read 1725.2 -> 1263.3 MB, hashes equal, AC PASS); W85-S2 redacted @354214c55f; r55 MAY-CLOSE; drain-end packet to CVO; R45 packet refresh put to CTO | act: DRIVE FORWARD
+- 03:05Z 2026-10-11 IRPT_DASHBD | L6 | r57 | CTO msg 3940 RULED yes on the R45 packet refresh -> DB-b-113 cut (census from live pins, kit day live-pinned vs HEAD, halves UNSIGNED; checks r57 FAIL at base); issuance REFUSED by to-pipeline-gate: PRD header fabric laptop vs register dell2 (@228e8598cd) -> one-line header fix asked of CTO; no override taken | act: DRIVE FORWARD (blocked on the CTO's header commit)
+- 03:08Z 2026-10-11 IRPT_DASHBD | L7 | r57 | PRD header fabric fixed by CTO @06a610f1c2 (msg 3945) -> DB-b-113 issued @4597d0d2a7 (gate passed), worktree wk-irpt-dashbd-57-88, ~88 spawned | act: DRIVE FORWARD
+- 03:09Z 2026-10-11 IRPT_DASHBD | L7 | r57 | TOs 107/109 terminal; ~88 running on DB-b-113 (minutes in, no commit yet); r55 packet READ by 3.0.0_SA_CVO (msg 3936, 03:02Z); DB-b-86 BLOCKED (S43), unchanged; lease FULL | act: DRIVE FORWARD (worker in flight)
+- 03:37Z 2026-10-11 IRPT_DASHBD | RULE | r57 | ~88 report: DB57-1-AC2 FAIL -- returns differs live vs HEAD in one column (method_version 2 -> null; DB-b-96/102 read it from sources.json, which stayed pinned), 4 tables equal; row W88-S1 ARMED -> disarmed by state (no R45 half signed, old pair void by CTO msg 3940); AMENDMENT 1 @e9ad1812f4 on the worker branch: sources.json fourth member, third kit run, manifest fields measured; CTO told (four-member scope is its call at signing); ~88 respawned (resume failed) | act: DRIVE FORWARD
+- 03:45Z 2026-10-11 IRPT_DASHBD | L6 | r58 | CTO msg 3999: four members acceptable if the packet shows the sources.json diff, every reader, rollback per member -> passed to ~88 (queued); C2 msg 4000 on CTO analysis @0ac41554df (row ADVI_COTBKF-D2-W66-S1) -> DB-b-114 issued @60f4b5b489 (rule-24 record, LOCAL, worker-light ~89 spawned), order id sent to C2 | ~88 on the third kit run | act: PARALLELIZE
+- 04:06Z 2026-10-11 IRPT_DASHBD | L8 | r57/r59 | DB-b-113 drained @2a6ac2e4e0 (four members; 5 tables hash equal; AC1-3 PASS on issuer re-run; r57 MAY-CLOSE); row W88-S3: returns manifest method_version 2 live -> literal absent at HEAD (handler emit_day x3 without src) -> COO half NOT signed, packet not sent for signing; DB-b-115 handler fix issued @be222060e8, worker-light ~90 spawned; CTO told | ~89 running (DB-b-114) | act: DRIVE FORWARD
+
+## Compiler Tools
+
+- `drive-mode.py read`, `round-close-check.py` (rounds 55 and 57 MAY-CLOSE), `safe-merge.sh` (two drains, fast lane), `safe-commit.sh` with `to-pipeline-gate` on three issuances: ran clean.
+- `to-pipeline-gate` REFUSED the round-57 issuance once: PRD header fabric laptop against register dell2. Fixed by the CTO @06a610f1c2; no override taken.
+- Gap: a finished worker subagent could not be resumed by id (no transcript); the continuation was a fresh spawn on the same worktree.
