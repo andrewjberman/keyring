@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T083249Z-0565",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell1",
+ "from_serial": "0.7.0_AE_CloudOps~FBL",
+ "to_serial": "2.0.0_SA_COO~B1",
+ "subject": "ADVI_FIRMBKTS FB-f-8 act 1 applied: the ruling",
+ "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FBL/ACT1_DEPLOYED_ORACLE_AND_RULING_REQUEST.md",
+ "opened_at": "2026-10-11T08:32:49Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
