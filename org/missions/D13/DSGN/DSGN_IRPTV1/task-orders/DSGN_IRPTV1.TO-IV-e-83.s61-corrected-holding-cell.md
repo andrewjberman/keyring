@@ -90,6 +90,26 @@ The live screenshot the CTO asked for is taken by the issuer after your commit; 
 
 Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
 
+## AMENDMENT 3 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~06:2xZ): the live screenshot is yours after all
+
+The CTO asked for a `/frontend-dev` screenshot of the recut (msg 4223). The issuer read the instrument: `portal/scripts/ui-smoke.mjs` cannot drive
+a file upload, and port 5174 is down, so the review state cannot be reached by its flags. The render is made from a BUILD, with no server:
+1. Build your portal worktree at your commit `1cd1cf25` to a directory OUTSIDE both repos (`vite build --outDir <scratch>`, through bun; no install).
+2. Write a small Playwright script IN YOUR DELIVERABLES FOLDER that copies `ui-smoke.mjs`'s pattern (system Edge, a fresh headless profile, the
+   stubbed `/auth/refresh` session, `scripts/ui-dist.mjs` serving the build from disk, no port bound, no network), opens the Investor Reporting
+   route, reaches the Analysis tab's prospect composer, sets a synthetic CSV on the upload input (`setInputFiles`), and answers the upload request
+   from a fixture whose result carries three rows: a typo correction, a proxy substitution and an uncorrected row, with the matching
+   `disclosures.corrections`. Fixture shapes come from the pins under `__tests__/dsgn-irptv1/` and the wire contract; every stubbed URL is listed
+   in the record with the body's source. Nothing is posted to any real backend.
+3. Save a full-page PNG and a cropped PNG of the review table to your deliverables folder (synthetic tickers and round synthetic dollars only).
+   READ both. Record in `S61_FIX.json` under `live_render`: {commit, route, loc_printed, canvas_rgb, stubbed_urls, png, what_each_row_shows}.
+   The page canvas must read `rgb(244, 246, 250)` and the location must be the Investor Reporting route, not a bounce to `/login`.
+4. If the review state cannot be reached from a build (a guard, a missing fixture shape you cannot source from the repo), say exactly where it
+   stops, save the screenshot of where it stopped, and do NOT fake the state by editing a product file.
+No product file changes; `portal_commit` stays `1cd1cf25`. Status stays `complete`; this adds evidence, and the proof instance is refreshed.
+
+Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
+
 <criterion id="IV83-AC1" cell_refs="IV-e-83"><invocation>python "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D2/checks/r11/p11_round11.py" . IV83-AC1</invocation><expect>IV83-AC1 PASS</expect></criterion>
 `IV83-AC1` -- the fix is recorded with its component, a test that failed before and passes after, the product files changed and the candidate commit. Base: FAIL.
 
