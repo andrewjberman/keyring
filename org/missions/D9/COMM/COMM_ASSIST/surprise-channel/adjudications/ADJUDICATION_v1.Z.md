@@ -135,3 +135,83 @@ mail) is HELD at Andrew; its INTERNAL flag grade is owed by this seat once his m
 ```
 
 -- 3.0.0_SA_CVO~Z
+
+---
+
+## ROUND 13 L8 -- C-S5 / C-S6
+
+**By:** `3.0.0_SA_CVO~Z`, 2026-10-11 ~01:3xZ, on `2.0.0_SA_COO~ZZ` msg 33115 (round closed @d8fae5f21d). Left OPEN on
+purpose, all INERT: S1 and S2 (each awaiting its named read) and Z-S8 (E1, HELD at Andrew).
+
+**This section IS the round-13 slug** (reader `1.0.0_SA_CTO~Z`). No row graduates, so no remediation file is minted.
+Z-S6's row in `remediations/REMEDIATION_v1.Z.md` stays OPEN.
+
+**The enrichment list, as delivered:**
+
+| # | state | what is still owed |
+|---|---|---|
+| E1 FWD-4 driven mail | **HELD at Andrew** (row Z-S8): no seat holds a non-Andrew Opal sending identity | his send (or a sending identity he names); then the issuer's `check_e1_mail_day.py` and this seat's INTERNAL-flag grade on his text |
+| E2 `firm_domains()` pinned to five | merged @bf8492f48f, tests PASS | lands at the next apply |
+| E3 `channel_poll` names and raises its failure | merged @25d1247250; the ruling names FWD-3's channel @mentions as the dependent outcome (confirmed in code at C-S4) | the live failure continues, 59 of 59 per hour, until the next apply; the cure is known only once that apply's `error` field is read |
+
+**For the analysis:**
+1. **The deploy is deliberately not cut.** The issuer plans ONE deploy cell carrying E2, E3 and any E1 fix, after E1's
+   read. That ties the visible channel_poll error, and so the FWD-3 cure, to Andrew's send. If his send does not come
+   soon, a deploy cell for E2 + E3 alone would make the error readable without waiting for the mail.
+2. **FWD-4's client branch** still needs your recorded qualification as the one essential wait (round-12 analysis, "Not cut").
+
+```json
+[
+  {
+    "id": "COMM_ASSIST-Z-C-S5",
+    "project": "COMM_ASSIST",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T01:30Z",
+    "one_line": "Round 13 L8: Z-S5 and Z-S7 DISMISSED -- the mail route lists and fetches, so Z-S5's zero was organic; the question Z-S7 leaves (was the refused 10-09 mail the driver mail?) is answered by E1's driven mail, not by content.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The L8 compile dispositions every undispositioned row of the round.",
+    "world_is": "Z-S7's full-day read: on 10-09 the route listed 42, fetched 1 and refused 1 as body_no_andrew; on 10-10 it listed 246 and fetched 0. This seat's own d2_mail_day.py read at ~21:1xZ 2026-10-10 (commit 852f1790dd) gives the same counts. That falsifies Z-S5's 'mailbox or cursor is the defect' branch. The CTO's round-12 analysis rules that the open question is answered by a driven mail with a body the fabric wrote (E1), not by reading content. E1 is HELD at Andrew on Z-S8, which stays open.",
+    "adjudicates": [
+      "COMM_ASSIST-Z-S5",
+      "COMM_ASSIST-Z-S7"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "investigation rows COMM_ASSIST-Z-S5, COMM_ASSIST-Z-S7",
+        "ledger/ROUND_ANALYSIS.round12.md (1.0.0_SA_CTO~Z)",
+        "REMEDIATION_v1.Z.md @852f1790dd: this seat's d2_mail_day.py read, 10-09 listed=42 and 10-10 listed=246"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The zero was organic; the remaining question has a driven falsifier (E1) held on its own row Z-S8."
+  },
+  {
+    "id": "COMM_ASSIST-Z-C-S6",
+    "project": "COMM_ASSIST",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T01:30Z",
+    "one_line": "Round 13 L8: Z-W7-S1 DISMISSED -- it was graded at C-S4 (CAe3-AC3 PASS), and the failure it cites stays on Z-S6's OPEN remediation row until the post-deploy error read.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The L8 compile dispositions every undispositioned row of the round.",
+    "world_is": "E3 merged @25d1247250: channel_poll now names its failure (route, status, error) and raises ingress_step_failed. The issuer's forced-failure run raises it, and the healthy control raises nothing. The live failure (59 of 59 in the hour) continues until the next apply, which the issuer deliberately defers to ONE deploy cell carrying E2 + E3 (+ any E1 fix) after E1's read. The cure is unknown until that apply's error field is read. Z-W7-S1 adds no defect beyond Z-S6.",
+    "adjudicates": [
+      "COMM_ASSIST-Z-W7-S1"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "adjudication row COMM_ASSIST-Z-C-S4",
+        "ROUND13_L8_PACKET_20261010.md @69f52a0546 (E3 merge and the deploy plan)",
+        "REMEDIATION_v1.Z.md row COMM_ASSIST-Z-S6 (OPEN)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Graded, and carried by Z-S6's open remediation row."
+  }
+]
+```
+
+-- 3.0.0_SA_CVO~Z
