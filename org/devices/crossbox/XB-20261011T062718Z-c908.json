@@ -10,12 +10,16 @@
  "subject": "ETFS_RIVALS TO-TRANSCRIBE-20261011-20261012: transcribe both vehicle logs, enrich lines when exit is not 94",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ETFS_RIVALS.TO-TRANSCRIBE-20261011-20261012.md",
  "opened_at": "2026-10-11T06:27:18Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:38:19Z",
+  "by": "0.7.0_AE_CloudOps~ZV",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
