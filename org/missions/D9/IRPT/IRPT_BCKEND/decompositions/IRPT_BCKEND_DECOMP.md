@@ -3212,7 +3212,7 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r150/p150_cells.py`: AC1-AC3 FAIL at 
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~310. Not direct-act (above the size floor).
 
-## 143. ROUND 151, WORKSTREAM ~P (2026-10-11 ~21:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5863; IRPT_YCDGEN PRD v0.13 @e31454a778, signed @6f8aeb03b7)
+## 143. ROUND 151, WORKSTREAM ~P (2026-10-11 ~21:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5863; IRPT_YCDGEN PRD v0.13 @39c807e066, signed @6f8aeb03b7)
 
 SERVICE FIRST: the worker's half is merged and dormant (@dddafd6832); the submission and acceptance half is IRPT_BCKEND's; the
 form's half follows only after this half's release is live and read. One build cell here; its release pair is a later act and

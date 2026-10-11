@@ -13,7 +13,7 @@
 <round>151</round>
 <workstream>~P</workstream>
 
-**Directive:** D9 | **Fabric:** dell2 | **Ordered by:** `1.0.0_SA_CTO~DELL2` msg 5863 (IRPT_YCDGEN PRD v0.13 @e31454a778, signed @6f8aeb03b7) | **Decomp cell:** `IB-pr-455` (decomposition section 143) | **outcome_ref:** FWD-4
+**Directive:** D9 | **Fabric:** dell2 | **Ordered by:** `1.0.0_SA_CTO~DELL2` msg 5863 (IRPT_YCDGEN PRD v0.13 @39c807e066, signed @6f8aeb03b7) | **Decomp cell:** `IB-pr-455` (decomposition section 143) | **outcome_ref:** FWD-4
 
 ---
 
