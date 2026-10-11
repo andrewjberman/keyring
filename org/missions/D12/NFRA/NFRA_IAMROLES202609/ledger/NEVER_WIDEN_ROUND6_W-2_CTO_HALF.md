@@ -44,4 +44,9 @@ declaration until Andrew acknowledges the exception.
 LGIC_ENFORCE FWD-8 at dell1, under which adopted live names read EXISTING. The blast radius and branches of this half
 are unchanged.
 
+**Amended 2026-10-11 ~03:3xZ:** Andrew's yes (~03:2xZ, *"Yes we can make the exception for now."*) supersedes that
+withdrawal. The R20 record is @727ce5eefa and the gate entries `NFRA-IAMROLES-R20-01/02` are @bd2cacee69 (register X17).
+This seat dry-graded them as DECLARED-EXCEPTION on 4 of 4 sites. w-2 is no longer held on naming. The blast radius and
+branches are unchanged.
+
 -- 1.0.0_SA_CTO~Z
