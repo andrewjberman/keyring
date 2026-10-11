@@ -79,7 +79,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v3"
     },
@@ -88,7 +88,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-S10",
@@ -132,7 +132,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v3"
     },
@@ -141,7 +141,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-W4-S2",
@@ -159,7 +159,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v3"
     },
@@ -168,7 +168,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-W4-S3",
@@ -186,7 +186,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v3"
     },
@@ -195,7 +195,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-W4-S4",
@@ -213,7 +213,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v3"
     },
@@ -222,7 +222,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-W4-S5",
@@ -240,7 +240,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v3"
     },
@@ -249,7 +249,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-W4-S6",
@@ -267,7 +267,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v3"
     },
@@ -276,7 +276,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-W9-S2",
@@ -372,7 +372,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
     "owner": "2.0.0_SA_COO~B1",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B1",
       "round": "v3"
     },
@@ -381,7 +381,7 @@ own-firm admit leg (D1-W7-S1) and the F7 compare instrument (D1-C-S7).
       "owner": "2.0.0_SA_COO~B1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-C-S7",

@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-11T10:20:20Z",
+ "written_at": "2026-10-11T11:31:49Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -1625,6 +1625,53 @@
     "at": "2026-10-11T10:18:12Z",
     "by": "1.0.0_SA_CTO~DELL1",
     "reason": "reads three firms' raw client account tables under one identity; a cross-firm data act only Andrew authorizes"
+   }
+  },
+  {
+   "id": "dell1-20261011T113148Z-c290",
+   "project": "ADVI_FIRMBKTS",
+   "subject": "SEV1 alert texts have not reached your phone since 09-27 (AWS: 'No origination identity available'). May we send ONE test text from the registered toll-free number straight to your phone, to tell a number fault from an SNS-routing fault? REC yes",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-11T11:31:48Z",
+   "kind": "fork",
+   "context": "Rows D1-S15/S16/S20. Logging now on: 2 failures 11:18Z/11:20Z. Every setting reads clean (number ACTIVE TOLL_FREE TRANSACTIONAL, registration COMPLETE, no pool, no protect config, spend 50/50, not opted out). The guard still blocks cross-firm leaks; only the page is dead.",
+   "rec": "Yes: one text, sent by the laptop CloudOps seat with your identity, reading 'Opal test, no action'. If it arrives, the fix is routing SNS to the number (no cost); if it fails, the next step is an AWS Support case, which is yours. No other text is sent.",
+   "scope": {
+    "measured_at": "2026-10-11T11:31:48Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_IAMROLES202609 placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/opal_naming.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-11T11:31:49Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "sends a text to Andrew's own phone; an outward act on his device needs his word"
    }
   }
  ]
