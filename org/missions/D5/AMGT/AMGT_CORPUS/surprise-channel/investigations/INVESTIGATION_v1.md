@@ -4406,6 +4406,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "Two choices the order did not state were made: the FactSet file is held to the same raise rule, so an absent dictionary never reads as no description; and a headerless FIGURE row carries row_formats None, the same as its row_values.",
   "notes": "Both are one-line reversals if the issuer rules otherwise; neither changes the served field for any name that has a period header and a present file.",
   "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S12",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T16:36:13Z",
+  "one_line": "The S10 drift is not store drift: the round-46 base module, run on the same live store, reads FIGURE 3381 HEADING 316 CONTROL 62, the cut's figures exactly; the earlier 3549/93/117 came from the no-header state of the first build on three names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "base module = git show 92de80e612:lib/research/corpus/team_sheet.py run --census on the live store (2026-10-11, rc 0): 'team_sheet row classes FIGURE 3381 HEADING 316 CONTROL 62 sum 3759 rows 3759'",
+      "amended reader (CRPS-aw-2 amendment 1) on the same store: 'team_sheet row classes FIGURE 3529 HEADING 107 CONTROL 123 sum 3759 rows 3759'",
+      "per-row diff base to amended (matched on sheet row and label, 95 served names): HEADING to FIGURE 177 (CLX 65, ML FP 65, BABA 47), HEADING to CONTROL 32, FIGURE to CONTROL 29; no other transition",
+      "on CLX, ML FP and BABA the base header is a later 2015..2030 year row (16 periods from column D); the amended header is Financial Summary at row 9 (15 periods, 2016..2030 from column E)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-aw-1 amendment 1 expectation: HEADING rises back toward 284 and FIGURE sits near 3352 plus the rows round 46 misclassed.",
+  "world_is": "FIGURE 3352 plus the 177 rows is 3529, which the amended reader reads. HEADING 284 is not reachable with that FIGURE count: the 177 rows leave HEADING, so HEADING is 316 - 177 - 32 = 107. The 177 rows hold numbers in the true period columns 2016..2030, so the rule the amendment states makes them FIGURE.",
+  "notes": "For the issuer to compare the expected 284 against the 107 measured here; the per-name reading is in the census lines recorded in the worker report.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
 }
 ]
 ```
