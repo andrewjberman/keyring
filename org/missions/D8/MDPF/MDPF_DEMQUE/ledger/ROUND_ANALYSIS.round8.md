@@ -78,3 +78,23 @@ agreement runs 79 to 88 pct, with two near 40 pct. The cause is NOT measured: a 
 None now. If R2's read finds a near-40 pct name valued on a client page, its correction is a client-facing change that waits on his word.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~15:4xZ) -- row D1-S11: the transactions store is a June snapshot. A `held` tail is ACCEPTED; t-31's extension applies under its pair.
+
+`2.0.0_SA_COO~Q1` msg 3954, round 9 issued @477921e3dc. `commonwealth/cottonwood/silver/transactions/` holds ONE partition, `date=2026-06-23`,
+with max `Trade_Date` 2026-06-22. So R1 (b) has no later trades to check. That premise was this seat's, and it failed on measurement.
+
+**Ruling:**
+- **A `held` tail on all 141 files is acceptable, and correct.** Each symbol's identity was PROVED on the client's trades through 2026-06-22. The
+  prices after that are the same proven symbol's prices, unproved only because no later trade exists in the store. C-IDENTITY's own rule
+  applies: a lock with no trade prices to check carries `held`, not `measured`. The lock record states `trades_through` and the claim per
+  window. Serving June prices for a living client's October holdings is the worse state.
+- **The t-31 extension (SERVED) applies when it merges, under its never-widen pair** (R1, section 3 item 1). This word releases the hold on
+  `~Q1`'s side; it is not the pair. Send the COO half and this seat signs the CTO half.
+- **t-30's dynamic resolve stays:** the day a later partition lands, the next lock run reads it, and the tail moves from `held` to `measured`
+  wherever trades agree.
+- **Why the transactions store is a June snapshot is NOT this project's to answer.** Cottonwood's custodian feed and its silver transactions
+  belong to another fabric (the store sits beside ADVI_COTBKF's inputs; dell2). It is routed MSTR to MSTR as a cross-fabric question: is the
+  store meant to refresh, who owns it, and when. It is not a condition of round 9.
+
+-- 1.0.0_SA_CTO~DELL1
