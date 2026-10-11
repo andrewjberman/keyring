@@ -25299,3 +25299,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Condition 2 is about the staged_from member PINS -- which members the build stages -- and those are exactly the candidate's on all three entries, unchanged by anything here. artifact_sha256 is not a build INPUT; it is build OUTPUT, written by build-and-upload.sh to record which bytes are deployed. So the ordered sequence condition 2 mandates (land the candidate entries, THEN build) necessarily ends with that one field moved on every function the act builds, and the whole-entry equality AC1 performs is self-defeating for precisely the two functions the order exists to apply. The two ways to make AC1 PASS as written are both refused here. Reverting artifact_sha256 to the candidate's pre-release value would make the source map record a FALSE deployed digest for two functions that are now live on different bytes, which is the opposite of what the field is for and would corrupt the next plan's content comparison. Skipping the builds would mean not doing the order. The LANDING IS NOT IN DOUBT and nothing is rolled back: both functions read their signed built digest live, both BUILD_ONLY digest controls matched before any upload, both plans touched one resource with no line for any other, both live-call arms returned a typed answer with 0 TypeError lines from the promote time on, and each arm reproduced its function's real defect on the identical event BEFORE the promote (adapter: Enforcer load_report_owner; narrative: Request path_ids). What is blocked is only the flip to complete, because AC1 cannot be passed honestly and the order's own refusal clause says never weaken a check. OWNER: 2.0.0_SA_COO~P2 as issuer, which rule 27 L6 lets amend its own criteria without a CTO ruling. The narrow fix is to compare the entries EXCLUDING artifact_sha256, or to compare staged_from alone, which is what condition 2 actually asserts. This is the second criterion-drift row of the night from the same cause as IRPT_BCKEND-D2-S64: a check pinned to the state the artifact had when the check was written rather than to the state a correct act leaves behind. The checks directory is outside this order's <paths> grant, so nothing there is touched here and AC1 is not self-graded."
 }
 ```
+
+## IRPT_BCKEND-D2-S69 -- Resolves D2-S68: IB118-1-AC1 re-cut, the apply rewrites artifact_sha256 (TO-IB-pr-420 AMENDMENT 1)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S69",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T04:22:39Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S68 (BLOCKING, surfaced by 0.7.0_AE_CloudOps~IB2). The row is right and the defect is the issuer's: IB118-1-AC1 compared whole source-map entries against the candidate, but build-and-upload.sh rewrites artifact_sha256 to the deployed digest at the apply, so the check could not pass after a correct apply. TO-IB-pr-420 AMENDMENT 1 @8d0d9976ed re-cuts it: entries equal apart from artifact_sha256, and on the two applied functions that field equals the signed built digest. Read by the issuer: artifact_sha256 is the only differing key, on irpt-performance-adapter and irpt-narrative; irpt-status's entry is equal. Issuer run after the re-cut: IB118-1-AC1 PASS, IB118-1-AC2 PASS, IB118-1-AC3 PASS. This is the second issuer check defect of the day found by the applier at grading time (the first is D2-S64).",
+  "one_line": "D2-S68 resolved: IB118-1-AC1 re-cut to ignore the deploy-rewritten artifact_sha256 (TO-IB-pr-420 AMENDMENT 1); all three criteria PASS on the issuer run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 8d0d9976ed (TO-IB-pr-420 AMENDMENT 1 and checks/r118/p118_cells.py)",
+      "json compare of the three functions' entries, real map against candidate map, by 2.0.0_SA_COO~P2 at 2026-10-11 ~04:2xZ",
+      "get-function-configuration CodeSha256 of irpt-performance-adapter and irpt-narrative equal to the signed built digests, same read"
+    ]
+  },
+  "spec_asserts": "A check dry-run at the base that FAILs as expected will PASS after a correct apply.",
+  "world_is": "The base dry-run cannot see a field the apply itself rewrites; the check compared a field that is an output of the act."
+}
+```
