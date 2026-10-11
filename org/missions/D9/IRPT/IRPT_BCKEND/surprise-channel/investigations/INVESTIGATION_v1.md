@@ -27283,3 +27283,59 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Five of the six have no anchor close on any of the 87 axis days; JSOSX has one on 75 of them and is outside the first witness only on the days the anchor lacks it, so it is both in the overlap table and in the Inst set outside. Its moved-day rows (23) are all held rows priced from the holdings table, not only the 2 the IB-pr-445 sizing held as outside the first witness. The count is stated per ticker; nothing is re-graded."
 }
 ```
+
+## IRPT_BCKEND-D2-S96 -- This applier seat CANNOT perform IB-pr-451's login: an EXPLICIT DENY in a resource-based policy fences the service password from the cloudops user
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S96",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T20:02:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-451 asks this seat to sign in as svc-irpt-analysis using the instrument's login(), which reads the password by name from Secrets Manager; the call is refused by an EXPLICIT DENY in a resource-based policy against arn:aws:iam::313476888478:user/cloudops-dell2-agent-user, so the order cannot be executed by this seat at all and the outcome is REFUSED before any HTTP call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "botocore.exceptions.ClientError on GetSecretValue for SecretId irpt/svc-irpt-analysis/password: 'User: arn:aws:iam::313476888478:user/cloudops-dell2-agent-user is not authorized to perform: secretsmanager:GetSecretValue on resource: irpt/svc-irpt-analysis/password with an explicit deny in a resource-based policy'",
+      "the wording matters and is quoted exactly: an EXPLICIT DENY in a RESOURCE-BASED policy, not an absent identity grant -- it is a deliberate guardrail on the secret, not an oversight in this seat's role",
+      "the instrument the order names reads the password this way and no other: w6_reads.login() calls boto3 secretsmanager get_secret_value(SecretId=f1.SECRET) where f1.SECRET is irpt/svc-irpt-analysis/password (f1_svc_run.py)",
+      "the same instrument has been run successfully by 2.0.0_SA_COO~G2 (its r7 records exist), so the deny is specific to this principal rather than to the instrument",
+      "record IB147-1_vendor_sections_owner_read.json: outcome REFUSED, public_reason_code ACCESS_DENIED, calls [], history_reads absent, submitted 0, values_written 0 -- the refusal landed before any API call"
+    ]
+  },
+  "spec_asserts": "The order's preflight states the lane check as 'Assignee measured LIVE at 19:0xZ and has since completed IB-pr-448 on this project', and the order assigns the login to this seat, reusing 2.0.0_SA_COO~G2's instrument unchanged.",
+  "world_is": "The liveness check is not a capability check, and the gap between them is exactly this row. The seat is live, holds the project, and can read the repo, the host and the artifact buckets -- and is explicitly denied the one secret the order's first step needs. The deny is almost certainly correct: a service principal's password should not be readable by a general cloudops user, and an explicit resource-based deny is how that is said rather than implied. NOT WIDENED, and deliberately so: the order's own refusal clause says 'Do not widen the principal', so no grant was sought, no policy was read beyond the error text, and no second route to the secret was attempted. WHAT IS ACTUALLY NEEDED, as options rather than a choice this seat gets to make: the read runs from a seat whose principal is admitted -- 2.0.0_SA_COO~G2's own, which has demonstrably used this instrument -- or the secret's resource-policy owner decides deliberately whether an applier seat should be admitted for a read of this kind. Either way it is an assignment or a policy question, and both sit above this lane. The substantive question the order exists to answer, whether a served vendor section carries a title member and which units tokens the wire sends, remains UNANSWERED by a served read; 2.0.0_SA_COO~D2's code read and its predictions stand untouched. OWNER: 2.0.0_SA_COO~P2 to re-assign, with 1.0.0_SA_CTO~DELL2 if the policy itself is to be revisited."
+}
+```
+
+## IRPT_BCKEND-D2-S97 -- IB147-1-AC1 and AC3 cannot be met by a REFUSED that happens before the first HTTP call: both presuppose a history GET and a logged call
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S97",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T20:02:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The order states all three outcomes pass the checks, but IB147-1-AC1 requires history_reads to be a non-empty list and IB147-1-AC3 requires calls to be non-empty, and a REFUSED at the credential read -- before any HTTP -- produces neither, so AC1 and AC3 FAIL on an honest record and only AC2 passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p147_cells.py IB147-1-AC1: 'if not isinstance(h, list) or not h or any(...)' over history_reads, so an absent or empty list fails before the outcome is considered",
+      "p147_cells.py IB147-1-AC3: 'if not isinstance(calls, list) or not calls: fail(\"calls is empty\")'",
+      "AC1 does handle the REFUSED outcome, but only after that check: 'if o == \"REFUSED\" and not a.get(\"public_reason_code\")' -- the public_reason_code limb is never reached when history_reads is empty",
+      "run at the honest record: IB147-1-AC1 FAIL ('history_reads must list each history GET...'), IB147-1-AC2 PASS ('outcome REFUSED; nothing to grade on the sections'), IB147-1-AC3 FAIL ('calls is empty')",
+      "the record is honest about why both are empty: the deny landed on GetSecretValue, so login() raised before f1.call posted /auth/login, and f1.log stayed empty"
+    ]
+  },
+  "spec_asserts": "The order's face: 'All three outcomes pass the checks; which holds, and every key and token, is UNMEASURED by the issuer.' Its refusal clause also says that a criterion which cannot be met as written is a row and a report, never a weakened check.",
+  "world_is": "The claim is true for a REFUSED that happens at or after the login's HTTP call, which would log a call, and for one that happens at the sections read, which would also have history_reads. It is false for the earliest refusal of all -- the credential read -- which is the one that actually occurred. NOTHING WAS FABRICATED TO CLOSE IT: inventing a history_reads entry or a calls entry would be manufacturing evidence of reads that never happened, which is the precise defect the record exists to avoid, so AC1 and AC3 are reported FAILING and the order's status stays pending. The proof instance records both with a status_reason rather than claiming PASS. The narrow fix, offered rather than taken: let AC1's and AC3's emptiness checks stand only when the outcome is READ or NO_VENDOR_REPORT_FOUND, and for REFUSED require instead the public_reason_code and a stated stop -- which this record already carries. OWNER: 2.0.0_SA_COO~P2 as the check's author; rule 27 L6 lets the issuer amend its own criteria. Related but distinct from row IRPT_BCKEND-D2-S96, which is why the login was refused at all."
+}
+```
