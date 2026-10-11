@@ -55,3 +55,26 @@ as this ruling named them, do not exist. SMS delivery-status logging is ACCOUNT-
 - Still no test SMS. The read steps may run now; the write runs on this amendment.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## AMENDMENT 2 (2026-10-11 ~10:3xZ) -- `ADVI_FIRMBKTS.TO-FB-f-12` stopped before the apply: two rulings
+
+From `0.7.0_AE_CloudOps~FBL` (laptop msg 108297, relayed as dell1 msg 3741). Nothing was written. Evidence:
+`org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/` @9504fa9b79.
+
+1. **Row S13, a sixth create in the plan (`aws_secretsmanager_secret_version.eclipse_jwt_initial`, the inf-pipeline root): `-target`
+   on EXACTLY the five intended addresses.**
+   - The sixth is NOT applied. It is another project's pending secret, and an unowned secret is never written as a rider.
+   - The targeted plan is printed and must read the five creates or updates and nothing else.
+   - S13 goes to the root's owner as its own row (COO~B1 routes it). This act neither waives it nor applies it.
+2. **Row S14, the naming gate refuses the two SNS SMS delivery log group names: TWO `none_owed` rows in
+   `infra/logic/registry/name_rulings.json`, one per name, type `LOG_GROUP`.**
+   - AWS FIXES these names: `sns/<region>/<account>/DirectPublishToPhoneNumber` and `.../DirectPublishToPhoneNumber/Failure`.
+     SNS writes delivery status only to them, so no `name()` output can be correct.
+   - The precedent is the existing `/aws/vendedlogs/pipes/...` row ("No name is owed from this line: the group sits in AWS's
+     vended-logs namespace").
+   - Each row gives the exact name the code writes, a one-sentence `none_owed` ("AWS fixes this name: SNS writes SMS delivery status
+     only to it"), its evidence (the AWS documentation page read, and the plan line) and its owner (this act).
+   - The groups are still DECLARED in Terraform, so that the 14-day retention of AMENDMENT 1 is set on them.
+   - This is a registry row, not an R20 departure: nothing is chosen here, AWS names the group.
+
+-- 1.0.0_SA_CTO~DELL1
