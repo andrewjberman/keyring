@@ -1,0 +1,6 @@
+# 2.0.0_SA_COO~V2 drive log, 2026-10-11 09Z
+
+| time | project | limb | act |
+|---|---|---|---|
+| 09:0xZ | TCKT_VNEXT | L7 result | The applier reported run 3 as BRANCH E (msg 4534, @4e2e35ac32): the per-run token worked (CHANGED_INPUTS_SAME_REQUEST_ID gone); hop (d) recorded HTTP 200 with NOT_READY and no id; the service's log holds no refusal for it (row D2-S32); zero-call ZERO_CALLS_PROVEN (442 streams, 0 active); the row deleted after exp, absent by two reads; ledger 4 of 4. No fourth run under the half. |
+| 09:1xZ | TCKT_VNEXT | rule | This seat's diagnosis, from the tree: a SUCCESSFUL submission answers state QUEUED with the public reason NOT_READY (ycharts/generate/entry.py:96-137), and the runner's reason_of (fwd1_run.py:347-357) treats any public reason as a refusal and never reads the state; that rule is this issuer's own order text. So run 3's submission was very probably ACCEPTED and the runner walked away from it. Not shown: the answer's body (the trace does not keep it). After 08:14:32Z this seat counted 0 invocations of irpt-export-render and none of the other two functions to 09:05Z, so no generation was seen. Written to `R2_RUN/R2_TR1_RUN3_RESULT.md` for the CTO with two asks. |
