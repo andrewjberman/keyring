@@ -1,12 +1,12 @@
 {
   "prd": "IRPT_DASHBD_PRD.md",
-  "prd_version": "v0.9",
-  "prd_pin": "e8f96f579c08f7a0fbfe84ac6f91324976ac287c",
+  "prd_version": "v0.10",
+  "prd_pin": "6584bf5e6a0cf4e97beda96d6900d77aa8e05570",
   "half": "ratified-text",
-  "half_hash": "2b38b75c0834b15e511c341e1b63a6acbc6a294bf8fa8f9f232028545b0e4aac",
+  "half_hash": "68cc131f91fabb515ea75e753047c6ed2b3bc730d7e01ccd8d9837aaa301253f",
   "endpoint_hash": "d40a8647f3f0b10d9d3593d630b35b0c29e3036fb016f8609a9f75a0c180b574",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_PRD_v0.8_RATIFIED_TEXT_REVIEW_20261009.md@d83e7b772d",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_PRD_v0.10_RATIFIED_TEXT_REVIEW_20261011.md@31ffd1b9261ac25b6e9b50a3dea4e85f0b0938c4",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-09T05:02:46Z"
+  "signed_at": "2026-10-11T23:27:21Z"
 }
