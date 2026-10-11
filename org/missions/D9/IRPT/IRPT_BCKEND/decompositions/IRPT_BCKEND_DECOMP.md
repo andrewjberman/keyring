@@ -2831,3 +2831,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r125/p125_cells.py`: every criterion 
 | `IB-pr-427` | lagged closes by account class and by custodian or source field; the neither rows; accounts behind per day; planted control | FWD-3 (Cottonwood) | LOCAL | IB-pr-425 drained | P125-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~286. DIRECT-ACT (one cell, read only, LOCAL).
+
+## 119. ROUND 126, WORKSTREAM ~P (2026-10-11 ~11:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 4801)
+
+The portal's readers refuse the producer fixtures of five routes; 2.0.0_SA_COO~D2 read all five fixtures valid against the v1
+contract (@da62c58fa1). The CTO asked this seat, as the producer, whether each HANDLER's own answer has its fixture's shape, from the
+handlers' code and their own tests, with no live call. One read-only cell. It fixes nothing and does not rule which side moves.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r126/p126_cells.py`: every criterion FAILs at base. The control route
+(comparison-catalogue) is expected SAME_AS_FIXTURE and was not measured by the issuer; a different reading stops the cell.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-428` | five routes: where the answer is built, a run, the schema result, shape against the fixture; a control route | FWD-2 (DSGN_IRPTV1's readers) | LOCAL | none | P126-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~287. DIRECT-ACT (one cell, read only, LOCAL).
