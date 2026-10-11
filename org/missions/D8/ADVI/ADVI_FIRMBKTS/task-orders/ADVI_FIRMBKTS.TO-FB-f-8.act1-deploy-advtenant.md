@@ -31,16 +31,20 @@ and `cloudfront_rollback_plan.md`; load `/cloud-ops` before any AWS or Terraform
 
 ### 1a. The steps, in order
 
-0. **Gate.** `git ls-tree HEAD` must list BOTH pair halves; the CTO half's verdict line must read SIGNED; the repository's
-   router and guard sources must read 0 non-ASCII bytes (`FB-f-8` phase A merged). If any is not so: STOP, a BLOCKING row,
-   no write to AWS.
+0. **Gate.** `git ls-tree HEAD` must list BOTH pair halves; the CTO half's verdict line must read SIGNED; the two
+   `index.mjs` sources must read 0 non-ASCII bytes (`FB-f-8` phase A merged); and, once built (step 2), each BUILT artifact
+   must read 0 bytes above 127 (the bundle that ships: the CTO's close is "the deployed file reads 0 bytes above 127").
+   `shared-advisor-router/tier_policy.mjs` carries 19 non-ASCII bytes in comments and is bundled; a minified bundle strips
+   them (row D1-S11, measured by this seat), so the built artifact is the measure, not the source. If any gate is not so:
+   STOP, a BLOCKING row, no write to AWS.
 1. **The entry.** Open the change-management entry BEFORE the first act: `python .tools/deploy_ledger.py open ...` (read its
    `--help`), naming the two functions, the distribution, all 10 associations, the previous versions (26 and 5) as the
    rollback, and the pair. Commit the entry and its `org/critical_paths/.open_deploys/` sentinel first.
 2. **Read before you write.** Save the live `get-distribution-config` (ETag and the 10 associations) into the entry as the
    rollback record. Confirm the live router is version 26 and the guard version 5 on 5 behaviors each. Build both
    artifacts with the repository's `build-nodejs-lambda.sh` from the merged tree; record each artifact's SHA-256
-   (`ROUTER_SHA256`, `GUARD_SHA256`: the `CodeSha256` the published version must read).
+   (`ROUTER_SHA256`, `GUARD_SHA256`: the `CodeSha256` the published version must read) and its count of bytes above 127
+   (expected 0, printed beside the SHA in the entry).
 3. **Plan.** Run the Terraform plan of `infra/aws/terraform/portal-auth/` through the repository's wrapper and read the
    plan JSON. It must change EXACTLY the two functions (each a new published version) and the distribution's 10
    associations, nothing else. A plan that publishes a version while `aws_cloudfront_distribution` reads NO-OP is the
@@ -112,6 +116,13 @@ from the worker slot `~17` to that lane; the proof instance is the seat's own, i
 phase A's merged instance for AC1-AC4. Gate limb: the criteria text and the `<issued_to>` of an order whose phase A is
 complete are amended; GATE viii read `<placeholders>` at HEAD (`NONE`, amendment 1) and the four tokens now declared are
 each carried by an invocation or an expect.
+
+**AMENDMENT 3 (2.0.0_SA_COO~B1, on the seat's STOP, row D1-S11, msg 3614):** step 0 read "sources"; the executor measured
+that the router bundles `tier_policy.mjs` (19 non-ASCII bytes, all in comments), which neither pair half names. The CTO's
+precondition names the two `index.mjs` files and its close criterion is "the deployed file reads 0 bytes above 127"; the
+built artifact reads 0 (a minified bundle, measured by the seat), so the gate now reads the built artifact. The source's
+comments are a follow-up for the CTO's round-3 analysis, not a precondition of this act: a third source file would
+re-open a signed act's bound. No other change to the act or its criteria.
 
 **ISSUER NOTES:** class WORLD. Un-park conditions, all satisfied at this amendment: `FB-f-7` complete (@e6ec8ce6e4); phase A
 merged (@acf8a16706); the pair SIGNED in both halves (@d30c5fe203); the actor's entry is opened by the actor before any
