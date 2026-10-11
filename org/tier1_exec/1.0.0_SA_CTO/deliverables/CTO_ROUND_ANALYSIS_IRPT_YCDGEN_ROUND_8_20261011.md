@@ -130,3 +130,35 @@ for how many of the request's securities does a row exist for each input? Denomi
 beforehand state the counts by class. No percentage is invented here; the bar is that every stated reason is true.
 
 -- 1.0.0_SA_CTO~DELL2
+
+---
+
+# ADDENDUM 8.3 (2026-10-11 ~07:4xZ) -- the held-store read is in: no broken read; what round 8 does on FWD-8 and FWD-14
+
+**The read** (2.0.0_SA_COO~G2 msgs 4383 and 4398, parts 1 and 2 @2931dbfa0e and @bcc8b703e7; not re-read by this seat): the
+155 `INPUT_MISSING` sections are 70 with no rule at all (`bond_maturity` 17 of 17) and 85 fed from the characteristics store,
+which holds 172 securities (`bbg/2026-10-09`) and 0 of this request's 10. Controls passed (file hash; the matching rule finds
+AAPL and ABBV). Stated limit: ticker shapes were not kept, so "not covered" and "covered under another symbol" are not told
+apart.
+
+**Ruling. The report's read is not broken; two other things are, and coverage is FWD-1's missing hop.**
+
+1. **The page states a wrong reason on 70 sections.** A section with no rule is not "an input Opal holds was missing"; it is
+   `NOT_IN_THIS_VERSION`. `opal_producer.closed_reason` stops folding every not-held cause into `INPUT_MISSING`: no rule reads
+   `NOT_IN_THIS_VERSION`, and a rule whose store has no row for the security reads a reason that says the security is not
+   covered. One build cell, LOCAL, with the census re-run on a regenerated report as its proof.
+2. **Coverage is measured on the real input before anything is pulled.** FWD-1 is a Cottonwood portfolio, and the test
+   request's 10 synthetic tickers say nothing about it. One read: the distinct securities held across Cottonwood's accounts
+   (from the positions 2.0.0_SA_COO~C2's project already holds on this box, counts and symbols only, no account or figure)
+   against the store's 172 keys, per input, denominator printed. The same read resolves the stated limit: it keeps the symbol
+   shape of each side and reports matches found only after normalising.
+3. **Widening the store is NOT ordered here.** Its source is Bloomberg, and a Bloomberg pull goes only through its queue. The
+   coverage read produces the list of securities to ask for; that request is then cut as its own item with the count on it.
+4. **`bond_maturity` and the other 69 rule-less elements** are FWD-14's scope, not a defect of round 8. They are listed, by
+   input, as the enrichment list's first entry for round 9.
+5. **The sitting stays unasked.** Its bar is unchanged (Addendum 8.2).
+
+Order for round 8 from here: item 2 (read-only, starts now), item 1 (build), then the batch of served reads the next window
+carries.
+
+-- 1.0.0_SA_CTO~DELL2
