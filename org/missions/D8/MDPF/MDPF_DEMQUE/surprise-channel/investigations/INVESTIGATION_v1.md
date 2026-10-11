@@ -951,6 +951,46 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "dq_t33_real.py:60-68, the arms dict, where second_superseded reads the end state and supersedes_new reads the delta"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W29-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~29",
+    "surfaced_at": "2026-10-11T16:40:06Z",
+    "one_line": "DQ-t-37 says test_demque_extend_frontier.py keeps passing UNEDITED, but two of its tests pass --today 2026-10-12, later than the local date 2026-10-11, so the new refusal raises SystemExit on them and the suite is red until those tests pin the local date.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-DQ-t37 build item 2 and the ACCEPTANCE block: test_demque_extend_frontier.py and test_demque_extend_guard.py keep passing UNEDITED; if one passes a today later than the real date, that is a surprise row, not an edit (they should pin the local date by monkeypatch).",
+    "world_is": "pytest over test_demque_extend_frontier.py, test_demque_extend_guard.py and test_demque_extend_future.py at the worktree (extend_frontier.py with the DQ-t-37 refusal, 2026-10-11): 2 failed, 7 passed. The failures are test_plan_window_ends_at_the_expected_last_trading_day_and_lists_every_locked_symbol (plan(root, today='2026-10-12')) and test_apply_resets_exactly_the_plan_symbols_and_replaces_the_standing_request_file (its second apply(today='2026-10-12')); both raise '--today 2026-10-12 is after the local date 2026-10-11'. They pass on or after 2026-10-12 and fail before it. The guard file passes 3 of 3; test_demque_extend_frontier.py is unedited. Hazard INERT: the refusal writes nothing and touches no served, pacer or queue state, and the daily run uses the real date, so it is not affected.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/test_demque_extend_frontier.py@d5f215229d: test_plan_window_ends_at_the_expected_last_trading_day_and_lists_every_locked_symbol calls xf.plan(root, today=\"2026-10-12\"); test_apply_resets_exactly_the_plan_symbols_and_replaces_the_standing_request_file calls xf.apply(root, ..., today=\"2026-10-12\")",
+        "python -m pytest -q test_demque_extend_frontier.py test_demque_extend_guard.py test_demque_extend_future.py (cwd data/mdpf/scripts/demque, 2026-10-11): 2 failed, 7 passed; SystemExit: --today 2026-10-12 is after the local date 2026-10-11: the extension plans no future day"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W29-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~29",
+    "surfaced_at": "2026-10-11T16:40:06Z",
+    "one_line": "The order says to pin the local date by monkeypatch 'the way test_demque_extend_frontier.py does for its dates', but that file has no monkeypatch at all; it passes literal today= strings. The new test file pins the local date its own way.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-DQ-t37 build item 2: test_demque_extend_future.py monkeypatches date.today in the module 'the way test_demque_extend_frontier.py does for its dates'.",
+    "world_is": "test_demque_extend_frontier.py@d5f215229d has no monkeypatch call and no fixture; its dates are today= arguments. test_demque_extend_future.py (new, uncommitted when this row was filed) pins the local date with a local_day fixture that sets xf.date to a date subclass whose today() returns 2026-10-11. No existing test file was edited. Hazard INERT: a test-only pinning choice; no served, pacer or queue state is involved.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "read of data/mdpf/scripts/demque/test_demque_extend_frontier.py@d5f215229d: imports are json, os, pandas, demand_queue, extend_frontier, price_store, yahoo_pull; no monkeypatch; every date is a today= literal",
+        "data/mdpf/scripts/demque/test_demque_extend_future.py (new, uncommitted at row time): local_day fixture monkeypatches xf.date to _PinnedDate, today() = 2026-10-11"
+      ]
+    }
   }
 ]
 ```
