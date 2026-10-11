@@ -82,7 +82,7 @@ to `complete` only if both PASS.
   `gateway-49f-advi-billing-put-policy` parsed it (rc=0, 1 statement, PutObject) and FAILED only on the resource. The
   control record was removed.
 
-<status>pending</status>
+<status>complete</status>
 <round>34</round>
 <workstream>APPLY-R34</workstream>
 <slot>~AE</slot>
