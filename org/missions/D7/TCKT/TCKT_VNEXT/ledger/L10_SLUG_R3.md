@@ -15,7 +15,7 @@ files.** Round 3 landed every cell it cut, and one more hop this project owned (
 | item | value | instrument |
 |---|---|---|
 | round-3 task orders, project tree | 3 of 3 complete (TO-R3-pc1, TO-R3-rn1, TO-R3-rf1) | `round-close-check --round 3`: orders=7, verdict=MAY-CLOSE; it counts judgment=0 for a round with one judgment criterion (list item 6 of round 2 stands) |
-| applier orders (flat folder) | TO-RECORD-R3-sm1 and TO-APPLY-R3-rf2 complete; TO-RUN-R3-tr1: SEE THE LAST LINE OF THIS SLUG | `<status>` of each face |
+| applier orders (flat folder) | TO-RECORD-R3-sm1, TO-APPLY-R3-rf2 and TO-RUN-R3-tr1: 3 of 3 complete (the run order closed by the applier after AMENDMENT 1, read at 14:1xZ) | `<status>` of each face |
 | judgment criteria | TO-RUN-R3-tr1 AC2 NOT MET | CVO grade @5126c19d7a; packet `ledger/L8_PACKET.R3_TR1.md` @92c34457f2 |
 | `opal-ticket-api` live | CodeSha256 `20v0+vfe...`, 2026-10-11T13:34:27Z; deployed handler `dc0cd973` | `get-function-configuration`; `clamp_precheck.py` (downloads the package) |
 | the firm clamp on 27 routes | `READ27 27/27`, the ticket host decided from the source map (artifact `20v0+vfe`, commit `8446fdfa05`) | `clamp_precheck.py`, live at 13:55Z |
@@ -96,4 +96,7 @@ slug and the channel's `disposition` field was not updated, which is the CVO's f
 
 **Closer:** you ruled no closer while every stopped hop has an owner (msg 4921). Three rounds, thread n: I do not re-pitch it.
 
-**State of TO-RUN-R3-tr1 at the send:** see the message that carries this slug.
+**Raised after this slug was drafted (2.0.0_SA_COO~G2 msg 5093, its code read, not mine):** a token-form packager with no users
+row is refused at the package door, which binds the firm to the caller's PROFILE row; an env-list firm bound there would be a
+ticket-service change in this project's file. It widens how a service principal is admitted on a served route, so it is yours to
+rule before any cell is cut.
