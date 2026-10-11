@@ -3547,3 +3547,82 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Owner: 1.0.0_SA_CTO (the grader's rule), per the gate's own text. Routes for the issuer and CTO: (A) the CTO adds a log-group shape or a registry row for AWS-fixed service log groups (sns/<region>/<account>/DirectPublishToPhoneNumber[/Failure]); (B) a deliberate departure as an R20 register entry Andrew acknowledges; (C) drop the two aws_cloudwatch_log_group resources and set retention another way, which the order does not describe. This seat used none of them and bypassed nothing. Together with row S13 the order cannot reach its apply."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FBL (FB-f-12, amendment 1 observation)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S15",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~FBL",
+  "surfaced_at": "2026-10-11T10:34:12Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The inf-pipeline root carries a standing pending create, aws_secretsmanager_secret_version.eclipse_jwt_initial (secret orion/eclipse_jwt/current): an unscoped safe-apply of that root by anyone writes that secret version.",
+  "spec_asserts": "TO-FB-f-12 amendment 1: the sixth create 'was pending before' the order and the seat reports it as an OBSERVATION row.",
+  "world_is": "The untargeted plan of infra/aws/terraform/inf-pipeline read 358 resource_changes, 352 no-op, 6 create on 2026-10-11 ~10:2xZ; five were this order's, the sixth is this resource. This seat has not read why it is pending and has not touched it. Until its owner disposes of it, every unscoped apply of the root writes a secret version, and every full plan after TO-FB-f-12 will list it as exactly one create.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/plan_untargeted.out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner unknown to this seat; the issuer routes it. Not blocking this order after amendment 1."
+}
+```
+
+## Row filed by 2.0.0_SA_COO~B1 (round 3, TO-FB-f-12 row S13 routed to the root's owner)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S19",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T10:31:57Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps (the inf-pipeline root's author class; project ADVI_ECLDAT.001)",
+  "one_line": "THE inf-pipeline ROOT HOLDS A PENDING, UNAPPLIED aws_secretsmanager_secret_version.eclipse_jwt_initial: ANY UNSCOPED APPLY OF THAT ROOT CREATES A NEW CURRENT VERSION OF orion/eclipse_jwt/current",
+  "spec_asserts": "TO-FB-f-12 step 4 (before amendment 1): the plan changes exactly the role, its policy, the log groups and the SMS preferences; the CTO's AMENDMENT 2 item 1: the sixth create is not applied and is routed to the root's owner as its own row.",
+  "world_is": "The laptop lane's untargeted plan of infra/aws/terraform/inf-pipeline read 358 resource_changes, 352 no-op, 6 create: the five of this order and aws_secretsmanager_secret_version.eclipse_jwt_initial (infra/aws/terraform/inf-pipeline/secrets.tf:40, secret orion/eclipse_jwt/current, authored by ADVI_ECLDAT.001, 0.6.1_AE_PartnerETL, 2026-05-14). The resource is a create, so the state does not hold it; a secret-version create makes a new AWSCURRENT version, which would replace the JWT the inf-jwt-trigger Lambda captured. The order's apply is scoped to the five addresses and does not touch it (evidence: deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/plan_untargeted.out, commit 9504fa9b79).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "evidence_f12/plan_untargeted.out: Plan: 6 to add, 0 to change, 0 to destroy",
+      "evidence_f12/pre_act_record.txt: 358 resource_changes, 352 no-op, 6 create",
+      "git log -- infra/aws/terraform/inf-pipeline/secrets.tf: 8ff9ee1ff9 ECLDAT.001"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not applied and not waived by this project: the CTO's AMENDMENT 2 says 'S13 goes to the root's owner as its own row'. The owner reads whether the resource should be imported, removed or applied deliberately (it may overwrite a live captured JWT). Until then no unscoped apply of inf-pipeline: safe-apply's scoped mechanism is the only apply that is safe in that root."
+}
+```
+
+## Row filed by 0.7.0_AE_CloudOps~FBL (FB-f-12, amendment 2 commit)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S16",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~FBL",
+  "surfaced_at": "2026-10-11T10:40:49Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-12 amendment 2: the two none_owed rows the CTO ruled cannot be committed by this seat: infra/logic/registry/name_rulings.json is in lane PLATFORM_LOGIC_DOCS, whose permitted agents are 4.0.0_SA_CRO and its tilde lanes only, although the order's <paths> names infra/logic/registry/.",
+  "spec_asserts": "TO-FB-f-12 amendment 2 and the CTO's AMENDMENT 2 @fcf621a1c8: 'The seat adds the two rows in the same commit as the Terraform (the registry directory is already in this order's <paths>)'.",
+  "world_is": "safe-commit of infra/aws/terraform/inf-pipeline/inf-ops-alerts-sms-delivery-status.tf plus infra/logic/registry/name_rulings.json, 2026-10-11 ~10:5xZ: the naming gate graded the Terraform WARN (the two log-group lines RAISE, no refusal once the rows are present) and the owned-paths check refused with 'lane=PLATFORM_LOGIC_DOCS ... agent=0.7.0_AE_CloudOps~FBL not in permitted_agents'. The lane's text holds the scope deliberately narrow (4.0.0_SA_CRO and its laptop tilde lanes; a repeat override for a standing action is a coverage gap to close). Nothing was committed and no override was taken. Prepared and parked: evidence_f12/inf-ops-alerts-sms-delivery-status.tf.txt (the Terraform) and evidence_f12/name_rulings_two_none_owed_rows.patch (the two rows; git apply --check clean). Without the rows the root's hole-count ratchet refuses the Terraform commit (row S14).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit refusal ~10:5xZ, owned-paths lane violation (block mode), lane PLATFORM_LOGIC_DOCS",
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/name_rulings_two_none_owed_rows.patch"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Routes, none taken: (A) 4.0.0_SA_CRO (the registry's owner and the lane's permitted agent) applies the patch and commits it; this seat then commits the Terraform and applies; (B) the issuer or the CTO names this seat's audited GIT_COMMIT_AUTHOR_OVERRIDE for the one commit, in writing, which the lane text says is the pattern for a one-off; (C) the lane's permitted_agents gains this lane for this order. This seat will not self-authorize an override that a lane text says it narrowed on purpose. The scoped apply of amendment 1 follows whichever lands."
+}
+```

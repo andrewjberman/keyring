@@ -1298,6 +1298,32 @@ def _save_unindexed_red_state(state: dict) -> None:
     UNINDEXED_RED_STATE.write_text(json.dumps(state, indent=2), encoding="utf-8")
 
 
+def _clock_is_tracked_here(state: dict) -> bool:
+    """A --red scan may stamp a ledger's alert clocks (last_red_at, last_held_nudge_at) into the TRACKED file only
+    when the ledger belongs to THIS box (its `device`). A foreign ledger's clocks go to the side file instead: a
+    stamp written into another box's tracked ledger is an uncommitted edit no seat made, which HELDs that box's
+    pass when the owner closes the ledger and CLOUD deletes it (dell2 govern cycle 10, 2026-10-11; the laptop's
+    10 remote ledgers of 2026-10-10 07:24Z were the same class). A ledger with no device is nobody's: side file."""
+    dev = state.get("device")
+    return bool(dev) and dev == _this_device()
+
+
+def _read_clock(state: dict, key: str) -> str | None:
+    if _clock_is_tracked_here(state):
+        return state.get(key)
+    return _load_unindexed_red_state().get(f"foreign-clock:{state.get('slug')}:{key}")
+
+
+def _stamp_clock(state: dict, key: str, value: str) -> None:
+    if _clock_is_tracked_here(state):
+        state[key] = value
+        _save(state)
+        return
+    side = _load_unindexed_red_state()
+    side[f"foreign-clock:{state.get('slug')}:{key}"] = value
+    _save_unindexed_red_state(side)
+
+
 def _red_alert_unindexed(md: Path, reason: str, age_h: float) -> None:
     """RED delivery for an UNINDEXED open ledger -- the gate-bypass that the
     sentinel-only scan was blind to. Same alert-not-block class as _red_alert."""
@@ -1471,13 +1497,12 @@ def cmd_check(args) -> int:
                       f"re-read={rr.get('kind')}={rr.get('value')} open-verify={open_legs} "
                       f"author={state['author']}{ptag}{fnote} -- nudge the gate or reconsider")
                 if args.red:
-                    last = state.get("last_held_nudge_at")
+                    last = _read_clock(state, "last_held_nudge_at")
                     if last and (now - datetime.fromisoformat(last)).total_seconds() < HELD_NUDGE_SUPPRESS_HOURS * 3600:
                         print(f"  (HELD-STALE nudge suppressed -- last {last}, re-nudges each {HELD_NUDGE_SUPPRESS_HOURS}h)")
                     else:
                         _held_nudge_alert(state, held_days)
-                        state["last_held_nudge_at"] = now.isoformat()
-                        _save(state)
+                        _stamp_clock(state, "last_held_nudge_at", now.isoformat())
             else:
                 held_count += 1
                 hd = f"{held_days:.1f}d" if held_days is not None else "?"
@@ -1502,13 +1527,12 @@ def cmd_check(args) -> int:
         print(f"OPEN: {state['slug']} age={age_h:.1f}h window={window}h [{flag}] "
               f"stranded={open_legs} author={state['author']}{gate_note}{fnote}")
         if args.red and age_h > window:
-            last_red = state.get("last_red_at")
+            last_red = _read_clock(state, "last_red_at")
             if last_red and (now - datetime.fromisoformat(last_red)).total_seconds() < window * 3600:
                 print(f"  (RED suppressed -- last alert {last_red}, re-alerts each {window}h)")
             else:
                 _red_alert(state, age_h)
-                state["last_red_at"] = now.isoformat()
-                _save(state)
+                _stamp_clock(state, "last_red_at", now.isoformat())
 
     # --- Layer 2: gate-bypass scan -- OPEN markdown ledgers with NO sentinel ---
     # (the false-clean class the sentinel-only scan was structurally blind to).

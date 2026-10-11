@@ -1218,3 +1218,17 @@ producer on trunk does not move that release or its signed packet. FWD-11 for th
 (`deliverables/2.0.0_SA_COO~D2/FWD11_REPORTING_READ_PARKED_20261011.md`).
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~97`, cut from box/dell2.
+
+
+## 69. ROUND 67, WORKSTREAM B (2026-10-11 ~10:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 4723 and the signed pair)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-123` | FWD-11: the APPLY of DB-b-122's packet -- one overwrite of exactly two keys (Cottonwood dim_return_method, method_version=3) so the served method row states income ABSENT; ledger first, capture first (it is the rollback), the ETags as listed or the act stops, column diff before and after, the mint's verify, ledger closed | SERVED | DB-b-122; CTO half @59da96c840; COO half @2995b0bff4 | B67-1 |
+
+The pair covers the two Cottonwood keys and nothing else (CTO half condition 5): no run of the producer for any other firm. The two new
+columns reach 49 Financial's served method row 2 only through a later release of the gold producer under its own pair, which names those
+columns and their readers; that is NOT the R45 release already signed (built from its four pins) and is not cut here.
+2.0.0_SA_COO~C2 reads the object back after the drain.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~98`, cut from box/dell2.
