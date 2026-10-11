@@ -4476,6 +4476,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "The spec says code rows and codes in the same breath. The template line therefore counts each code once, and the census line counts each row once; on a repeated code the two sums differ by the repeats.",
   "notes": "For the issuer to choose per code or per row for the template line; the census line is per row by construction (its sum equals the rows).",
   "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S15",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T19:22:09Z",
+  "one_line": "A master answer keeps the template's FIGURE row classes and row_counts (FIGURE 126 per name) while its row_values and row_formats are None, as AMENDMENT 3 requires; a reader that counts FIGURE rows without checking row_values will show the template's rows as figures with no numbers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/team_sheet.py _answer (AMENDMENT 3 branch): row_values and row_formats are [None]*len(rows), periods [], and row_classes, row_counts and row_labels are the template's",
+      "live census (read-only, 2026-10-11): 'team_sheet row classes FIGURE 11467 HEADING 359 CONTROL 438'; the 63 master names carry FIGURE 126 each (8505 rows), and rows_with_values 0 on them",
+      "lib/research/corpus/tests/test_template_round47.py test_a_master_answer_carries_rows_but_no_team_values asserts the None values beside FIGURE classes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 3: a master answer's row_values and row_formats are None per row and periods is []; rows, row_classes, row_numbers, row_counts, row_labels are unchanged.",
+  "world_is": "The page and the census read row_classes and row_counts as the team's rows; on a master answer those counts describe the template's rows (8505 FIGURE rows across the 63 master names) and not one value among them. The count FIGURE 11467 in the census line includes those rows.",
+  "notes": "For the issuer to decide whether the census class line should split master FIGURE rows from own FIGURE rows; the own-only count is FIGURE 3529 with rows_with_values 3529.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
 }
 ]
 ```
