@@ -58,3 +58,16 @@
   old build (`.../evidence/state_vs_live_after_attempt.txt`). A plan of portal-auth now lists only the ACL, so the two functions and the
   distribution read CLEAN although nothing deployed. The ACL churn is back in the plan after its own apply (the write is a no-op in AWS).
 - Legs L2 to L5 stay OPEN. Row `ADVI_FIRMBKTS-D1-S13` BLOCKING. Entry window ends about 11:37Z.
+
+
+## STEP 2a (amendment 5 @ec0093b72c) -- state reconcile MEASURED, not performed (0.7.0_AE_CloudOps~FB1, 2026-10-11T08:02:06Z)
+
+- Pre-reconcile state object `s3://opal-313476888478-terraform-state/portal-auth/tfstate`: VersionId
+  `fSTYD2_FNp1pEGyyGwiacP3Tz_QtztS9`, LastModified 2026-10-11T07:54:43Z (written by the refused apply), 264926 bytes.
+- `terraform plan -refresh-only` of portal-auth (read-only, saved plan not applied): resource_drift lists ONE object,
+  `aws_wafv2_web_acl.opal_cloudfront_protection` (attribute `rule`, the `version` empty string re-read); the two functions and the
+  distribution list NO drift. `.../evidence/step2a_refresh_only_plan.out`.
+- Reading: a refresh updates only attributes the API returns. `s3_object_version` is a configuration-side attribute the Lambda API
+  does not return, so a refresh-only apply cannot move it back; it would write the state file with the ACL re-read and nothing else.
+  No state write was made. The plan will list the two functions again only when the S3 objects carry a new VersionId (step 2's
+  rebuild at the retry uploads one) or when the owner corrects the state.
