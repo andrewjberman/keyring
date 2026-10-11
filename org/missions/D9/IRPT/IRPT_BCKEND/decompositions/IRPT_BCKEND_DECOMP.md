@@ -3240,3 +3240,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r152/p152_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-456` | every source-map entry packaging one of the three changed members (by subtraction), each built from a minimal candidate map and set beside live: moved members, riders, the minimal-release word; the entanglements; every reader of the accepted record re-counted at base with the pair's read through each; replay arms; the packet | FWD-4 (the vendor-path job and what it signals) | WORLD (live reads and builds; nothing uploaded) | IB-pr-455 drained | P152-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~312.
+
+## 145. ROUND 153, WORKSTREAM ~P (2026-10-11 ~22:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 5896 and 5933; PRD v0.44 @84fec7b9b4, signed @7b75b691c1)
+
+IB-pr-454 drained @ddf890e1f6: the grading module exists with no importer. v0.44 fixes the window at 40 trading days, floor 20.
+The next cell is the producer's design as a READ, not a build: where the module would be called, what it would serve, every
+consumer of the date-basis member; with one count the CTO asked for. Runs beside IB-pr-456 (round 152), disjoint write sets.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r153/p153_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-457` | the candidate call sites with their schedules and what each lacks; where each module input lives (a landed source of the second witness's bars, or none); every consumer of the date-basis member and of the gold it rides on, by subtraction, with the read a release makes through each; the security-days the short-history floor leaves ungraded split from the repeat rule's | FWD-3 (a return on that account's own end-of-day holdings) and FWD-13 | LOCAL | IB-pr-454 drained | P153-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~313. DIRECT-ACT (one read-only cell, LOCAL).
