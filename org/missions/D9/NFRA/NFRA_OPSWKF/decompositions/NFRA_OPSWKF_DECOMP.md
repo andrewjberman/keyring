@@ -100,3 +100,35 @@ K = OW-k-1 -> OW-k-r-1. Fan-out 6 of 6 chains, cap 8.
 - `comp-adversary`: APPLICABLE at the drain on OW-e-1/e-2/e-3 (an identity change and a fence).
 - Drain checks (on no face): `commit-gate.sh` on every touched `.py`; the whole ticket-center suite and both trade
   handler suites once after the merge; portal typecheck on DEV.
+
+## WORKSTREAM S -- FWD-8, the trade dashboard service answers Opal staff only (PRD v0.5 @b7dfe287f1; released by `1.0.0_SA_CTO~DELL2` msg 5533 on `3.0.0_SA_CVO`'s verdict @287ea37a51)
+
+A disjoint surface: `infra/aws/lambda/trade-pipeline/trade-dashboard-api/` only, which no round-1 cell wrote. The release
+opens FWD-8's cells ONLY; every other cell of the project stays under the sequence wait (`org/missions/SEQUENCE.yaml`
+change_log @4c783054ae). Remedy shape as the owner ruled it (laptop CTO @8e9ca364d7): the router passes the event to every
+handler; each requires tier `internal`; the caller's own-record route is unchanged.
+
+| cell | builds | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|
+| `OW-s-1` | A read, by hand, of the four OTHER functions the census names (`trade-submission-handler`, `opal-research-pull-enqueue`, `opal-portal-data-proxy`, `opal-portal-content-api` GET): for each, its routes and what a verified caller whose tier is not internal can do, with a `path:line` basis. One record; nothing is changed and nothing is called | FWD-8 (the addendum's first cell) | NOT-EVALUATED | dell2 worker | LOCAL | worker-light | -- |
+| `OW-s-2` | `dashboard_api.py`: the router passes `event` to every handler; a `_require_internal(event)` (authorizer context `tier` == `internal`, exact match, fail closed) refuses with 403 before any table or S3 access on the eight routed reads, the `by-date` branch and the default branch; `get_users_me` unchanged; new test file with an internal, a client-tier and a service-tier caller | FWD-8 | NOT-EVALUATED | dell2 worker | WORLD (path floor: a Lambda handler; the worker applies nothing) | worker | -- |
+| `OW-s-d-1` | The release under its pair: every caller of the eight routes named (the portal's pages first) with one read through each; the negative arm run ONCE BEFORE the release by a synthetic non-internal identity (one firm, a token of minutes, the row deleted in the act); the apply (cross-box to the laptop's cloud-ops seat if no dell2 seat can apply `trade-pipeline`); ledger opened and closed | FWD-8 | NOT-EVALUATED | ISSUER cuts the pair and the apply order; the applier applies | WORLD | -- | OW-s-2 drained |
+| `OW-s-r-1` | After the release, on the deployed service: one of the eight routes read by the synthetic non-internal caller, REFUSED; one read as an internal session, served; the deployed bytes diffed against the build input member by member | FWD-8 | NOT-EVALUATED | ISSUER | WORLD | -- | OW-s-d-1 closed |
+
+**Write set.** `OW-s-1`: its own deliverables folder only. `OW-s-2`:
+`infra/aws/lambda/trade-pipeline/trade-dashboard-api/src/dashboard_api.py`;
+`infra/aws/lambda/trade-pipeline/trade-dashboard-api/tests/test_internal_only.py` (new).
+
+**Chains.** S1 = OW-s-1; S2 = OW-s-2 -> OW-s-d-1 -> OW-s-r-1. Fan-out 2 of 2 chains, cap 8.
+
+**Rule 24 record (workstream S).** Domain: the nine route keys of `trade-dashboard-api` in the census ADDENDUM 1 table,
+plus the two router branches that table's prose names (`by-date`, and the default branch any other path falls to). By
+subtraction: nine routes less `users/me` = the eight FWD-8 names, all in OW-s-2; the two branches are in OW-s-2 so no path
+of the router is left ungated; the four other functions are OW-s-1 (read only, placed by its record). Remainder: the
+portal route's internal-only guard (the PRD names it a follow-on, not FWD-8's proof); the three aggregate functions at
+`dashboard_api.py:413-513`, which the router never calls. Same grain: one worker cell per write set. State coherence:
+no cell moves `users/me`, the submit or workflow handlers, any table, any grant, or the portal.
+
+**Battery (workstream S).** `comp-iam`: DECLARED-NOT-APPLICABLE (no grant changes). `comp-schedule`:
+DECLARED-NOT-APPLICABLE. `comp-adversary`: APPLICABLE at the drain on OW-s-2 (an authorization change). Checks, dry-run
+at the base: `deliverables/2.0.0_SA_COO~O2/S_CHECKS/ow_s_checks.py`.

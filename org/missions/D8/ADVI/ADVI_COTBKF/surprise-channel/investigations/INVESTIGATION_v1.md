@@ -6956,3 +6956,50 @@ round.** Never edit an existing row.
  "world_is": "The cache holds only date, Close and Adj Close (no dividend column; its dividend steps are read from Adj/Close). The custodian-implied factor matches Yahoo's own on 103 of 104 pairs, but the build's close departs from Close 1.0 to 2.3 times as far as that factor (CPXIX 1.0; the other eight 1.6 to 2.3), so 0 to 2 of 4 to 18 pairs per fund are within 2 percent; the readings rest on shape (steps on distributions, correlation 0.95 to 1.0), a rule I set after the first run and state in the md. Three round-70 CONSTANT_SCALE funds (AMBFX, BALCX, OIEJX) read adjusted. 120 of the 124 untested funds have no cache file (119 on the custodian-holdings store only). Why the store over-adjusts was not read."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S122",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T18:22:31Z",
+  "one_line": "L9 round 71: CB71bs1-AC2 MET for the nine and for the count; the independent-source limb is NOT met for the other 63 of 72, whose test reads the vendor against itself. This seat confirmed the nine on a third source: on 87 of 92 reinvestment dates the build's close is below the price the custodian's reinvestment rows show the fund traded at, in all nine funds, by as much as half on the earliest dates and near the traded price on the newest.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_71_DRAIN_END_20261011.md @70281800e0 (msg 5530)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_71_L9_GRADE_20261011.md",
+      "this seat's re-derivation 2026-10-11T18:22:31Z, from sources the worker's test did not use as a price: the custodian's 1,121 reinvestment rows for the nine funds (local transaction cache, 14 year files), price taken as amount over quantity, 221 reinvestment events; matched by date to the build's close (.scratch/advi_cotbkf/r34/after/security_day_price.parquet) on 92 events. The store's close is below the reinvestment price by more than 0.5 percent on 87 of 92 and above on 1; every one of the nine shows it; the ratio runs from 0.47 at the lowest to about 1.0 at the latest dates, and is higher in the last third of each fund's dates than in the first"
+    ]
+  },
+  "spec_asserts": "CB71bs1-AC2 (JUDGMENT, graded by the CVO at L9): the distributions come from a source independent of the close series; each reading follows from the comparison shown, and UNDECIDED is used where it does not; the whole-table count states what was tested and what was not; no correction is sized on what was not tested.",
+  "world_is": "Not examined: 129 of the 221 reinvestment events, which have no close on that date in the local price table. Not re-derived: the 63 other series, the reach, the 124 untested. No return was recomputed. Nothing was applied or served in the round.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W120-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~120",
+  "surfaced_at": "2026-10-11T18:49:50Z",
+  "one_line": "CB-bt-2: the custodian's dvr row is dated a trading day AFTER the day Yahoo's Adj Close / Close ratio steps for 8 of the 9 funds, so a same-date comparison of the cache's unadjusted Close with the reinvestment price matches on 45 of 93 dates while the previous trading day's Close matches on 88 of 93.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~120/UNADJUSTED_SOURCE_READ.json (this worker's commit): sources[0].one_trading_day.previous equal_half 88 of 93; same date 45 of 93; on_yahoo_ex_date_step_day 93 of 93",
+      "local transaction cache .scratch/advi_cotbkf/tx_cache (1,121 dvr rows, 221 fund-date cells, 93 on or after 2020-06-29) against .scratch/advi_cotbkf/yahoo_census/<ticker>.csv; read 2026-10-11, no fetch"
+    ]
+  },
+  "spec_asserts": "CB-bt-2 step 2: each candidate source is compared with the custodian's reinvestment price on the reinvestment's own date (same date first; within one trading day reported separately).",
+  "world_is": "On its own date Yahoo's unadjusted Close equals the price on 45 of 93 dates (CPXIX 17 of 17, the other eight under a majority); on the previous trading day it equals it on 88 of 93, and Close on Yahoo's own ex-date step day on 93 of 93. The step day is the previous trading day of the row for eight funds and the row's own date for CPXIX. No custodian field naming ex-date, record date or pay date was read, so why the row trails the ex-date is not established; the 128 cells before 2020-06-29 precede every source and were not tested.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

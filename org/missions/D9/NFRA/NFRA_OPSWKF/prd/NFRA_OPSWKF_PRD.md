@@ -5,7 +5,7 @@
  "project": "NFRA_OPSWKF",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.5",
+ "prd_version": "v0.6",
  "step": 4,
  "brief_ref": "docs/briefs/q3-trade-submission-ops-workflow-brief-20261006.md@c41e705220",
  "endpoint_outcomes": [
@@ -86,11 +86,12 @@ wrote the brief. **COO:** UNSEATED at registration; seating is `0.0.0_AB_MSTR`'s
 
   FWD-8  Opal's trade blotter and the portal's user list answer Opal staff only
          DONE WHEN  EXERCISED -- each of the eight routes of the trade dashboard service that return trade submissions or the
-                    user list refuses a verified caller whose tier is not internal and still serves one whose tier is; the
+                    user list refuses a verified caller who is not OPAL-INTERNAL and still serves one who is; the
                     caller's own-record route is unchanged; shown by the handlers run on the authorizer's own context for an
-                    internal, a client-tier and a service-tier caller; and, AFTER THE RELEASE, ON THE DEPLOYED SERVICE, by BOTH arms:
-                    one read of one of the eight routes by a verified caller whose tier is not internal, REFUSED, and one read as an
-                    internal session, served; with the deployed bytes diffed against the build input, member by member
+                    Opal-internal, a client-tier and a service-tier caller; and, AFTER THE RELEASE, ON THE DEPLOYED SERVICE, by BOTH arms:
+                    one read of one of the eight routes by a verified caller who is not Opal-internal, REFUSED, and one read as an
+                    Opal-internal session, served; with the deployed bytes diffed against the build input, member by member.
+                    OPAL-INTERNAL means what the estate's existing check means: tier `internal`, OR firmId exactly `opal-capital`
          ACCEPT     a person signed in as a client or as another firm's user who asks any of those routes is refused; an Opal staff
                     member sees the blotter as before; no trade, user or spreadsheet link is returned to a caller the service has
                     not identified as internal
@@ -205,5 +206,24 @@ backlog in their numbered order.
 - **The same negative arm is run BEFORE the release too, once, in the same pair:** it is the first live read of the defect itself, which
   today rests on a code read and a bytes read. Served before and refused after is the proof; refused before would mean the defect is
   not what the census says, and the release stops there.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM (2026-10-11 ~18:3xZ, `1.0.0_SA_CTO~DELL2`): FWD-8, what "internal" is (L10; ENDPOINT changed)
+
+- **Source:** `2.0.0_SA_COO~O2`'s row NFRA_OPSWKF-D2-S6 @9deb4a1709 (msg 5571), not re-read by this seat: the trade-users table holds 9
+  people, all Opal's; joined to the users table, 7 carry tier `advisor` with firmId `opal-capital` and 2 carry tier `internal`.
+- **The defect in v0.5:** FWD-8's DONE WHEN said "tier internal". Read literally it refuses 7 of the 9 people the blotter is for, and
+  contradicts the same outcome's ACCEPT ("an Opal staff member sees the blotter as before"). This seat wrote the tier word from the
+  authorizer's vocabulary without reading who the service's users are.
+- **The repair, in the ENDPOINT's own DONE WHEN:** the eight routes refuse a caller who is not OPAL-INTERNAL, and OPAL-INTERNAL is what the
+  estate's existing check already means, read by this seat at `infra/aws/lambda/data_refresh/lambda_function.py` lines 142 to 164
+  (`is_opal_internal`): tier exactly `internal`, OR firmId exactly `opal-capital`; firmId compared by exact match and never by
+  truthiness, because the authorizer defaults it to the string `null`; anything not positively recognised is refused.
+- **The cell uses that rule and does not write a second one.** If the function cannot be imported across the two services' packages, the
+  same two comparisons are written with a test that feeds both implementations the same contexts and requires the same answers.
+- **The negative arm's caller** (v0.5's addendum) is one who fails BOTH comparisons: a tier that is not `internal` and a firmId that is not
+  `opal-capital`. A synthetic identity under the pair, as before. A service token, which carries no firm claim, is such a caller.
+- **ENDPOINT changed.** The CVO re-signs the ratified-text half.
 
 -- 1.0.0_SA_CTO~DELL2
