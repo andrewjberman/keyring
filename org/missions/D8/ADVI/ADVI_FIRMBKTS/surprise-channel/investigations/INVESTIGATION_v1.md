@@ -4846,3 +4846,27 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not a worker decision to widen: the import is the minimum that makes the ordered sys.exit(2) run. The issuer may rule whether the import is an accepted part of the bound or should become raise SystemExit(2) instead; the AC1 check accepts either."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W49-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~49",
+  "surfaced_at": "2026-10-11T15:53:44Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "safe-commit's commit-gate checked 0 of 1 file (the registry JSON is outside its graded suffixes) and the client-data check printed WARN with the hashed account-id list absent; commit 3a6d8aa89d was not checked for client account ids (a repeat of ADVI_FIRMBKTS-D1-W43-S2 and W45-S2).",
+  "spec_asserts": "The commit gate checks each staged file it admits, and the client-data check runs on every commit it admits.",
+  "world_is": "The commit-gate printed 'checked 0 of 1 file(s) -- NOTHING WAS CHECKED' for infra/logic/registry/exemptions.json, a suffix it does not grade. The client-data check printed WARN: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt. The one added row carries account id 313476888478, the id the file's own account_id field names and every existing row already carries; whether that number is on the hashed list is unknown, because the list is absent. The registry row's validation is AC1 (r4_exec.py, 4 of 4 arms) and AC2 (r4_scope.py), not the commit gate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 3a6d8aa89d: 'commit-gate checked 0 of 1 file(s) -- NOTHING WAS CHECKED' and 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids'",
+      "infra/logic/registry/exemptions.json _about.account_id and account_id field read at the worktree: 313476888478"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken by this worker; the commit was not refused and the list is a per-device input. Filed for the owner of the commit gate and the client-data check to judge the un-graded JSON suffix and the device's missing list."
+}
+```
