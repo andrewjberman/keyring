@@ -5177,3 +5177,29 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Surfaced for the issuer. The coordinator's correction to 83995c26e6 was applied; no file of the check was edited. For the COO: the T3 arm reads 0 of 0 lines as a PASS when the base is empty, so an unresolved base can pass one arm vacuously. A guard that fails on an empty base would close that gap. The checker is the COO's file and is not edited here."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W58-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~58",
+  "surfaced_at": "2026-10-11T17:19:19Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-g-36 says to use 'the placeholders the fixtures use', but opal-partners-data has no test fixture or event sample in the tree; the census events therefore use ACCT_PLACEHOLDER / ADV_PLACEHOLDER / REL_PLACEHOLDER and the firm key 49financial (scopes.json), chosen by the worker.",
+  "spec_asserts": "FB-g-36 1a (task-orders/ADVI_FIRMBKTS.TO-FB-g-36.partners-event-census.md lines 31-32 at 8658d57df1): the event is built 'from a test fixture of the Lambda's own tests where one exists, else from the fields lambda_function.py reads'; 'no real client identifier, use the placeholders the fixtures use'.",
+  "world_is": "The Lambda directory holds no test file and no event sample: ls-tree of infra/aws/lambda/v2_portal/partners/ at HEAD lists only README.md and the seven opal-partners-data files, none a test. Neither test that names the Lambda directory (data/black_diamond/scripts/gold/tests/test_lambda_seam_parity.py, org/modules/graph/tests/test_pii_masking_reachability.py) holds lambda_handler, httpMethod or requestContext. So the fixture branch is absent and the placeholder convention has no referent; the worker built each event from the fields lambda_function.py reads (httpMethod, path, queryStringParameters.firmId, requestContext.authorizer.allowedFirmIds) and chose the placeholder spellings itself.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r --name-only HEAD infra/aws/lambda/v2_portal/partners/ at 8658d57df1: README.md, deploy.sh, etf_classification.py, etf_classifier.py, lambda_function.py, platinum_dest_view.py, pseudonymizer.py, served_seam.py; no test or fixture file",
+      "git show HEAD:data/black_diamond/scripts/gold/tests/test_lambda_seam_parity.py | grep lambda_handler|httpMethod|requestContext returns rc=1 (no match)",
+      "git show HEAD:org/modules/graph/tests/test_pii_masking_reachability.py | grep lambda_handler|httpMethod|requestContext returns rc=1 (no match)",
+      "grep httpMethod|requestContext|queryStringParameters|rawPath partners/README.md at HEAD returns no line; infra/logic/registry/scopes.json:14-19 key 49financial, bucket opal-data-49financial"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Surfaced for the issuer. The census is built from the handler's own field reads and passes AC1 at 4 of 4 arms; the events are synthetic by the order's design, so an entity-keyed event reads a placeholder key and returns the seam's 404 body, while the three firm-level events (gold/artifacts filters, platinum/firm clients-tab, gold/views firm composition) name no entity and would read live objects if the firm row exists. Whether FIRM#49financial exists in opal-users-v2 is not checked (no AWS call). For the issuer: a fixture or a named placeholder convention for this Lambda would settle the spelling. No Lambda file was edited."
+}
+```
