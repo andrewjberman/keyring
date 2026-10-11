@@ -1293,3 +1293,48 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S8",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T05:32:28Z",
+  "one_line": "R2-rn-1 AMENDMENT 3 E1: the order says --trace-out is created if absent and holds one run, but not what happens when the path already holds a trace; I made main() refuse (rc 2, nothing done) a path that exists and is non-empty.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fwd1_run.py main(): the trace-out guard at the top of main(); test_trace_out_is_required_and_is_the_only_file_written asserts the refusal leaves the file's bytes unchanged and makes no AWS or HTTP call"
+    ]
+  },
+  "spec_asserts": "E1: the runner writes its trace to THAT file only, creating it if absent, as one JSON object for this run, with no run_N appending into an older file.",
+  "world_is": "The order is silent on an existing file. Overwriting would destroy an older run's record and appending is forbidden, so the runner refuses before any write. INERT: a reused path stops the run before the row is written; the issuer picks a fresh path per run. If the issuer wants overwrite-in-place instead, it is a one-line change in main().",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S9",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T05:32:28Z",
+  "one_line": "R2-rn-1 AMENDMENT 3 E2: the new denominator calls logs:DescribeLogStreams on two log groups; whether the run's AWS identity may call it was not read (no AWS call allowed), and a denied call makes the zero-call verdict UNREAD, not PROVEN.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "fwd1_run.py _streams_active_in_window calls logs.describe_log_streams(orderBy=LastEventTime, descending=True) on /aws/lambda/opal-data-refresh-api and /aws/lambda/opal-ticket-api, every page",
+      "the earlier read already needed logs:FilterLogEvents; whether the same identity holds logs:DescribeLogStreams was not read"
+    ]
+  },
+  "spec_asserts": "E2: the denominator is the count of log streams whose last event time is at or after iat, from describe_log_streams, every page read.",
+  "world_is": "If the identity lacks logs:DescribeLogStreams the call raises, data_refresh_zero_calls records verdict UNREAD (never a zero) and the issuer's run pair sees UNREAD in the trace. The fake tests cannot show the live permission. INERT because the failure direction is UNREAD.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
