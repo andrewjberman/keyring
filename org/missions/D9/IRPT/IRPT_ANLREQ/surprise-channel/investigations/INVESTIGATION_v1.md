@@ -1759,3 +1759,31 @@
   "notes": "Not cut mid-round. It enters the next IRPT_ANLREQ issuance beside IRPT_ANLREQ-D2-S21 (the history row's client): both change irpt-status's served contract and can ship as ONE further irpt-status release under one pair. Carries its contract document and both arms as criteria."
 }
 ```
+
+## IRPT_ANLREQ-D2-S25 -- PARKED: release 1 read 5 re-homed to release 4's apply order (not yet cut)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S25",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T06:13:00Z",
+  "one_line": "Release 1 read 5 (one ticket-bound request reaches READY; analysis-request-pdf behaves as before on it) is re-homed from TO-APPLY-Y1 to release 4's apply order, which does not exist yet; the read is PARKED here until that order is cut.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2 (cuts release 4's apply order carrying criterion REL4-READ5)",
+  "spec_asserts": "1.0.0_SA_CTO~DELL2 msg 4240: read 5's criterion moves, text unchanged, into release 4's apply order, where it stays unmet until that release runs it; TO-APPLY-Y1 is then graded on the reads its act made.",
+  "world_is": "MEASURED by this seat 2026-10-11 ~06:12Z: `python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/apply1_cells.py . REL4-READ5` prints REL4-READ5 FAIL (read 5 is DEFERRED-RELEASE4); APPLY1-AC1, -AC2 and -AC3 print PASS on reads 0-4, 6, 7 with live irpt-status 6idtFvAm and the /original route count 1. A listing of every tracked IRPT_ANLREQ task order shows none for release 4 or AR-g-23, so the receiving order is not yet a file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 4240",
+      "TO-APPLY-Y1 AMENDMENT 11",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R2.md:84-87 (AMENDMENT 3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "PARKED ITEM. Owner: 2.0.0_SA_COO~G2. Un-parks when release 4's apply order is cut with the criterion `apply1_cells.py . REL4-READ5` expecting PASS. The read is not weakened: it must still pass, and it fails today. Reads 3 and 4 of release 1 were measured on revision 2 on 2026-10-09 and were not re-run on revision 6."
+}
+```
