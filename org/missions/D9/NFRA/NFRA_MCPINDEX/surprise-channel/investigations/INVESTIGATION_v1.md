@@ -6299,6 +6299,28 @@ carries none.
     "spec_asserts": "The round-close gate's own outer test suite passes, so a regression in round-close-check.py shows as a failing case.",
     "world_is": "5 of 24 cases fail on HEAD for reasons unrelated to any recent fix, so a new regression in this tool would be hidden among standing failures.",
     "notes": "Routed by 1.0.0_SA_CTO~Z (msg 33071) to the Z-C-S42 family owner. Disarms when the suite reads 24/24 (or each case is re-scoped with a reason)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W32-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~32",
+    "surfaced_at": "2026-10-11T00:14:59Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The gateway suite reads 41 failed (711 passed) on a full tree at 9a072fa60a, not the 34-38 the order cites, and 99 failed-or-errored (49 failed, 50 errors, 525 passed, 21 skipped) on a sparse cone, where 14 modules fail at COLLECTION on the absent org/standards/NFRA_OPLGTW_CONTRACT.json.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Baselines recorded in infra/aws/ec2/opal-gateway/tests/baseline/failing_ids_full.txt (41 ids) and failing_ids_sparse.txt (99 ids), header line 1 of each carries commit, shape, command and counts.",
+        "Sparse run without --continue-on-collection-errors aborts at collection: '1 warning, 14 errors in 5.37s', rc=2, zero tests run; the sparse baseline therefore records the --continue-on-collection-errors run."
+      ]
+    },
+    "spec_asserts": "The gateway suite fails 34-38 tests, order-dependent, and a drain can grade it by failing-ID delta against one baseline per tree shape.",
+    "world_is": "The full-tree count was 41 on this run; the sparse cone needs the org/standards contract file or --continue-on-collection-errors to run at all, so a drain's sparse tree must run with that flag to be graded by suite_delta.py --shape sparse.",
+    "notes": "Order-dependence means a later full run may differ from the 41 recorded; suite_delta.py reports NEW/FIXED by id so a count drift shows as named ids. Failing ids by file are in the worker report."
   }
 ]
 ```
