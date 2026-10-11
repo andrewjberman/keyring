@@ -12127,3 +12127,30 @@ name the one known failure instead of silently inheriting it.
   "notes": "Citing row; W35-S1's text is untouched. With E3 not cut, C:/tmp/wk-oplgtw-r30-35's KEEP condition (E3 cut) is void: the tree can be dropped, the branch kept."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S90",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T15:45:34Z",
+  "one_line": "Corrects NFRA_OPLGTW-Z-S89's evidence: 41b0c7903b is NOT an ancestor of the live c3af8687e4 (the R50 code reached the release by another path). The disarm of W35-S1 rests on the CONTENT read in the live release, not on that commit's ancestry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: git merge-base --is-ancestor 41b0c7903b c3af8687e4 -> not an ancestor",
+      "MEASURED: git show c3af8687e4:infra/aws/ec2/opal-gateway/app/server.py: _within_send_budget defined at :388, used at :703 and :712 (positive read of the live bytes; 1.0.0_SA_CTO~Z read the same by content, msg 33327)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-S89's conclusion stands on the content read. Only its 'introduced by ... released in r29' lineage claim is withdrawn; the live bytes carry the send-gate.",
+  "spec_asserts": "Z-S89: R50 is live because 41b0c7903b was released in r29.",
+  "world_is": "R50 is live: the content is in c3af8687e4's server.py. 41b0c7903b is not in that release's ancestry.",
+  "notes": "Citing row; Z-S89's text is untouched. A release-content claim is read from the release's bytes, never from merge-base ancestry (cherry-picked and re-cut releases break ancestry)."
+}
+```
