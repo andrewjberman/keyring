@@ -2769,3 +2769,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S49",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-11T12:50:00Z",
+  "one_line": "Row IRPT_ANLREQ-D2-S48 answered by its owner: in the 61 minutes release 5 was live, the portal's own distribution logged 4 history-route requests, all from one script at one address and none from a browser. No person's page is shown to have met the refused history view.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's read of /aws/lambda/irpt-status, 2026-10-11T10:25:40Z to 11:26:53Z: 688 events, 191 invocations, 55 refusals logged, 6 naming analysis-request-history (all NOT_FOUND); the function names a route only when it refuses, so successful history reads are not countable there.",
+      "2.0.0_SA_COO~P2 msg 4892: API 7k3ed8px20 has one stage with no access log configured.",
+      "2.0.0_SA_COO~P2 msg 4895 (its read, not this seat's): the portal's CloudFront distribution keeps standard logs; 286 rows in the window; GET /api/scoped/investor-reporting/analysis/requests: 4 requests, 4 status 200, at 11:17Z and 11:18Z, one address, user-agent Python-urllib; all 93 investor-reporting rows in the window are status 200, Python-urllib, one address.",
+      "2.0.0_SA_COO~D2 msg 4934 (its read at portal PROD 37aa1247ee): IR_ROUTE_BASE is a relative path and VITE_PORTAL_API_URL is empty in .env.production, so the PROD page calls its own origin, the distribution above."
+    ]
+  },
+  "spec_asserts": "Row D2-S48: read the function's history-route requests in the window, how many and from which class of login; then the CTO decides whether anyone is told.",
+  "world_is": "Through the route a browser takes, 4 history requests reached the service in the window and none was a browser's. Stated limits: 98 of the function's 191 invocations did not pass that distribution and their callers are unread (the 55 logged refusals read NO_PRINCIPAL-class, consistent with seats calling the API directly, which is an inference); a build-time override of the portal's API address in CI was not read; the caller's class is not in any log. On this evidence nobody is told as an affected user. Andrew has been told the outage and its 61 minutes at this terminal.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
