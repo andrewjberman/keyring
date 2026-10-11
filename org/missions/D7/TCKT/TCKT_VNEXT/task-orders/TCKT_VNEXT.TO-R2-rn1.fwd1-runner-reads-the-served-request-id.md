@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_TCKT_VNEXT~8</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -311,7 +311,50 @@ Dry-run at base: AC9 and AC10 FAIL (missing tests) as expected; AC1-AC8 PASS.
 Proof: add AC9 and AC10 and re-validate with ids `R2-rn1-AC1,...,R2-rn1-AC10` comma-separated. Flip to `complete` only when all ten pass.
 Rows, if needed: `TCKT_VNEXT-D2-W8-S<k>` with k from 10 upward.
 
-<expected_criteria>R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7 R2-rn1-AC8 R2-rn1-AC9 R2-rn1-AC10</expected_criteria>
+### AMENDMENT 6 (2026-10-11, issuer `2.0.0_SA_COO~V2`) -- REOPENED: the runner read an ACCEPTED submission as a refusal
+
+**Inherited state:** AC1-AC10 are met and merged (@f4153fc637). Keep all of it. The third live run (2026-10-11 08:14Z) sent the new
+per-run token; hop (d) got HTTP 200 with the public reason `NOT_READY`, and the runner named it `BRANCH_E_SUBMISSION_REFUSED`. The
+service logged NO refusal. The reason is in the service's own code,
+`infra/aws/lambda/investor-reporting/ycharts/generate/entry.py:96-137`: a SUCCESSFUL submission answers
+`{"identity": ..., "stage": ..., "_status": status_envelope(OPERATION, "NOT_READY", state="QUEUED", ...)}`. An accepted submission
+carries the public reason `NOT_READY` beside the state `QUEUED`. This runner's `reason_of` (`fwd1_run.py`, near `:347`) treats any
+`status.public_reason_code` as a refusal and never reads `status.state`, and the original rule 4 of this order said "a non-empty
+reason means refused". **That rule was the issuer's error for this route, and it is WITHDRAWN for the submission answer.**
+
+J1. **Read the envelope before you code.** Read `ycharts/generate/entry.py:96-137`, the `status_envelope` function and its
+    `REFUSAL_STATE` constant in `infra/aws/lambda/investor-reporting/_authz/served.py` (near `:323`), and the published response
+    contract `docs/contracts/investor-reporting/v1/responses/analysis-requests.response.schema.json`. From them, write down in
+    your report: where the accepted answer carries the request id (expected: `data.identity.request_id`), what `status.state`
+    reads on an acceptance and on a refusal, and whether `data` is present on a refusal.
+J2. **Hop (d), the submission answer, is classified by STATE and IDENTITY, not by the presence of a reason code:**
+    - ACCEPTED when the answer's `data.identity.request_id` matches `^REQ-[0-9a-f]{24}$` AND `status.state` is not the refusal
+      state. The request id is taken from `data.identity.request_id`. The public reason (`NOT_READY`) and the state (`QUEUED`) are
+      recorded on the hop as `accepted_reason` and `accepted_state`. Hops (e)-(g) then run as built.
+    - REFUSED (`BRANCH_E_SUBMISSION_REFUSED`, unchanged) when `status.state` is the refusal state, or the HTTP status is not 2xx.
+    - Neither (a 200 that is not a refusal and carries no `REQ-` id under `data.identity`): the named failure
+      `SUBMISSION_ANSWER_UNREADABLE`, a failure of the runner's reading and NOT a refusal by the service; if the answer carries no
+      id, the request-list fallback of rule 2 (the one new row) still applies before this failure is named.
+J3. **The trace keeps what was missing.** For hop (d) record the answer's top-level keys, the keys of `data`, the keys of `status`,
+    `status.state`, `status.public_reason_code`, and the HTTP status. Keys and those two strings only: no values of `data` beyond
+    the request id.
+J4. Apply the same state-first reading to hop (e)'s finished-report read ONLY where your J1 reading shows a non-refusal state can
+    carry a public reason there too; say in your report what you found and what you did. Do not change `NOT_READY_CODES` or the
+    polling rule for a refusal state.
+J5. Nothing else changes: tokens, cleanup, the arms, the zero-call rule, the arguments.
+
+<criterion id="R2-rn1-AC11" cell_refs="R2-rn-1"><invocation>python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py rn-accept</invocation><expect>RN-ACCEPT-OK</expect></criterion>
+`R2-rn1-AC11`: tests `test_queued_with_not_ready_and_an_identity_is_accepted`, `test_request_id_is_taken_from_data_identity`,
+`test_refusal_state_is_a_refusal_whatever_the_code`, `test_submission_answer_keys_and_state_are_traced`,
+`test_accepted_without_a_req_id_is_a_named_failure_not_a_refusal` exist and pass. The fake answers in these tests are built from the
+service's own envelope shape as you read it in J1, not from a guess. AC1-AC10 must still pass.
+
+Dry-run at base: AC11 FAIL (missing tests) as expected; AC1-AC10 PASS.
+
+Proof: add AC11 and re-validate with ids `R2-rn1-AC1,...,R2-rn1-AC11` comma-separated. Flip to `complete` only when all eleven pass.
+Rows, if needed: `TCKT_VNEXT-D2-W8-S<k>` with k from 11 upward.
+
+<expected_criteria>R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7 R2-rn1-AC8 R2-rn1-AC9 R2-rn1-AC10 R2-rn1-AC11</expected_criteria>
 
 Dry-run at base: all three FAIL (absent), as expected.
 
@@ -331,6 +374,7 @@ docs/contracts/investor-reporting/v1/
 infra/aws/lambda/investor-reporting/ops/owned_requests.py
 infra/aws/lambda/investor-reporting/ops/
 infra/aws/lambda/investor-reporting/ycharts/generate/
+infra/aws/lambda/investor-reporting/_authz/served.py
 portal/src/api/endpoints/investor-reporting.ts
 org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -341,7 +385,7 @@ org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7 R2-rn1-AC8 R2-rn1-AC9 R2-rn1-AC10. The instance is at
+Criterion ids: R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7 R2-rn1-AC8 R2-rn1-AC9 R2-rn1-AC10 R2-rn1-AC11. The instance is at
 `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~8/TCKT_VNEXT.TO-R2-rn1.fwd1-runner-reads-the-served-request-id.proof_of_spec.json`.
 Validate it with `python .tools/proof-of-spec-check.py <instance> R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3` before the flip.
 </proof_of_spec>
