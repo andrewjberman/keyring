@@ -300,3 +300,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S9",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-11T02:30:00Z",
+  "one_line": "BLOCKING: the first scheduled daily write (2026-10-10 13:30Z) built 12 of 16 A4 objects -- global refused by the producer's cross-axis gate, 49financial and two inflection types held by the legacy CONFLICT guard -- so FWD-1 is not REALIZED and CN-a-2 AC3 cannot grade.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ROUND2_CLOSE carried item 1 and the round-1 analysis section 3: the 2026-10-10 13:30Z fire writes the four types x four scopes at their address() paths, prior partitions unchanged, global byte-identical to its legacy figures, and the first account_units partitions exist for 49financial, inflection and global.",
+  "world_is": "r2_daily.py read --fire 2026-10-10T13:30:00Z: 1 of 4 arms. WRITTEN 4 of 12 series (inflection/account_distribution 2026-10-10; cottonwood x3 2026-10-09). UNCHANGED PASS 540 of 540. PARITY 5 of 5 equal, global compared 0. UNITS 2 of 3, global missing. The Lambda's log (RequestId 996aca3d, one invocation, 13:30:37Z-13:31:37Z) ends 'cycle complete: 12/16 A4 objects built; errors=[global]'. Global: 'CROSS-AXIS COHERENCE GATE FAILED (global) -- REFUSING TO EMIT', check (v), 5 models on 2026-10-09 with model_value=None against account_count present; the value leg's own line reads 'aum_daily ... day 2021-09-02..2026-10-08', one trading day behind the count leg's axis_last 2026-10-09. 49financial and inflection: six 'CONFLICT (recorded, not overwritten)' lines on existing legacy dated JSON; that set equals the arm-1 missing set outside global (set equality; the mechanism is INFERRED, not read from code). The fire fell on Saturday 2026-10-10, T-1 frontier Friday 2026-10-09.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round2/DAILY_READ_20261010T1330Z.md",
+      "r2_daily.py read --fire 2026-10-10T13:30:00Z, exit 1, run 2026-10-11T02:2xZ against snapshot @9f652c3086",
+      "aws logs filter-log-events /aws/lambda/mdpf-gold-lambda 2026-10-10T13:20Z-14:30Z, 329 lines; lines 289-303 (global gate), 316-326 (R1 INCOMPLETE, CONFLICT, PARTIAL, cycle complete)"
+    ]
+  },
+  "notes": "Not a defect shown in CN-a-2's writer: where a scope was built its parquet matches the legacy values (arm 3, 5 of 5). The shortfall sits at the producer's input gate and conflict guard. One fire is one sample; the next fires (2026-10-11 13:30Z if the schedule runs weekends, and the 2026-10-12 trading-day fire) are the negative/positive arms. Also on the log, ungraded: A7 reconciliation ERROR on mdpf_aggregate_aua, ROW11 frontier-stamp STALE on 49financial and inflection. Routing: the CVO's L9 grades CN-a-2 AC3 on this read; whether the guard or the value-feed lag is a project cell is the CTO's call at the round-2 analysis.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
