@@ -21,8 +21,8 @@
   "bus_message_id": "004d3038-320e-4673-8b38-a4dc42b0c353"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T16:58:08Z",
+  "from_by": "2.0.0_SA_COO~G2",
   "to_at": null,
   "to_by": null
  }

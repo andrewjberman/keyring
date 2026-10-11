@@ -6813,3 +6813,27 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W113-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~113",
+ "surfaced_at": "2026-10-11T16:53:44Z",
+ "one_line": "CB-br-3: the widened scan's new NOISY fund series are a dividend-adjusted-close shape (ratio 0.5 rising to 1.0 in jumps at distribution dates), not scales; the only CONSTANT_SCALE it adds rests on 3 pairs over 17 days.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~113/CLOSE_VS_TRADE_SCAN_WIDE.md section 3 hand-read: AMCPX, AMRMX, CWGIX, WGIFX, CPXIX, FINFX, NEWFX, AWSHX, WMFFX each start at close/reinvestment-price 0.47 to 0.84 and reach about 1.00 by 2025-2026 (WGIFX 0.686 to 1.004, WMFFX 0.648 to 0.998)",
+   "CLOSE_VS_TRADE_SCAN_WIDE_DETAIL.json print_types: dvr median ratio 1.0000, 91.7 percent within 2 percent on 1,141 pairs of 71 AGREES securities, so the reinvestment price is the market level and the close is the series that departs",
+   "CLOSE_VS_TRADE_SCAN_WIDE.json fixed_income and not_established: every FI close in the table begins 2026-06-08, every FI trade is on or before 2026-05-05, 0 pairs; the transactions carry one Symbol per CUSIP, so a ticker change is not observable"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-br-3: widening the pairing shrinks the 346 too-few, the 50 and the 1,700; fixed income's unit is established from nearest-date pairs within 3 days; (c) CUSIPs whose ticker changed are reported.",
+ "world_is": "The 3-trading-day rule adds 54 pairs and moves 1 of 346 (the table holds a security only from its first held day); reinvestment prints (admitted: dvr, leu, TRCISU on a median-within-2-percent test over AGREES securities) move 19 more, 8 of them into NOISY as ramp-shaped fund series, which the six classes do not name as a shape. Fixed income has 0 pairs within 3 trading days (unit read from distributions only); no CUSIP lists two symbols. I added a rounding guard (summed Quantity at least 0.05) on non-trade prints that the order did not name. Not established: how many of the AGREES securities carry the same ramp on dates the scan cannot see."
+}
+```
