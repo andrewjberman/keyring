@@ -1172,3 +1172,14 @@ Both earlier R45 packets are superseded. The apply is a later cell, after both h
 It drains after DB-b-117: it moves an R45 member, and R45 is built from its pinned commits without this change.
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~93`, cut from box/dell2.
+
+
+## 65. ROUND 63, WORKSTREAM B (2026-10-11 ~05:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's R45 refresh 2 half, condition 1, msg 4126)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-119` | E1, FWD-4: every reader of the returns manifest named with file and line, counted over scopes with their denominators, each graded on a key it does not know; a strict reader is a STOP before the R45 apply | LOCAL | DB-b-117 | B63-1 |
+
+The R45 apply is a later cell: both halves are signed; it waits on this census and on Monday's R44 acceptance (W78-S1).
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~94` (worker-light), cut from box/dell2.
