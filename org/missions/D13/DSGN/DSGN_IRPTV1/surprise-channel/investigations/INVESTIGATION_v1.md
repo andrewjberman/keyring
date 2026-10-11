@@ -4776,3 +4776,31 @@
   "notes": "BLOCKING for IV95-AC2 only; IV95-AC1 and IV95-AC3 stand. Owner of the decision: 2.0.0_SA_COO~D2 (with the CTO where it touches the consumer's readers). Options the worker did NOT take: (a) take the five bodies from fixtures/wire/ copies (three exist and parse; the two custody ones do not exist), (b) exempt the custody routes from the fe-s-75 and fe-s-81 parse arms by name (they are read by validateCustodyReport), (c) fix the three readers or the three producer fixtures (product files / another project's files). Not 'build the four that fit and excuse the five': the excuse would state a false reason."
 }
 ```
+
+## DSGN_IRPTV1-D2-W53-S4 -- IV-e-95 part 2 under AMENDMENT 2 STOPPED: validateCustodyReport refuses both producer custody fixtures, so six routes are excused, over the limit of four
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T11:00:55Z",
+  "one_line": "IV-e-95 part 2 under AMENDMENT 2 STOPPED on its own clause: validateCustodyReport REFUSES both producer custody fixtures, so the excused set measures SIX (3 reader-refused envelope routes + 2 reader-refused custody routes + analysis-request-original), over the order's limit of four.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED, one bun probe (C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~53/amend2_reader_refusals.txt, rc 0) applying the consumer's reader to each producer fixture's `instance` (infra/aws/lambda/investor-reporting/_contracts/fixtures/<name>.valid.json): envelope routes through parseIrEnvelope(op, envelope{data: instance}): directory-browse (DirectoryPage.valid.json) REFUSED, text \"investor-reporting directory-browse: response envelope field 'data' does not satisfy the v1 contract\"; analysis-request-history (OwnedAnalysisRequestHistory.valid.json) REFUSED, \"investor-reporting analysis-request-history: response envelope field 'data' does not satisfy the v1 contract\"; analysis-input-upload (AnalysisUploadResult.valid.json) REFUSED, \"investor-reporting analysis-input-upload: response envelope field 'data' does not satisfy the v1 contract\"; selection-create, comparison-catalogue, analysis-request-read, analysis-request-pdf ACCEPTED.",
+      "MEASURED, same probe, validateCustodyReport(instance) (contracts/envelope.ts:140-155): custody-report-read (custody-report-read.response.valid.json) REFUSED, \"investor-reporting custody-report-read: response envelope field 'data' does not satisfy the v1 contract\"; custody-report-persist (custody-report-persist.response.valid.json) REFUSED, the same text. Cause by reading the guard: it requires report.accounts to be an array and the read fixture's report holds only composition_sha256; the persist fixture has no `report` member at all (it carries sha256), and the product has no reader for the persist answer (grep of portal/src: custody-report-persist appears only in investor-reporting.ts route table and the fe-s-14 and fe-s-57 tests).",
+      "MEASURED: analysis-request-original has no producer fixture: Grep for the name over infra/aws/lambda/investor-reporting/_contracts returns 0 matches in 0 files (re-read this session); the earlier search of docs/contracts (responses 21 files, examples 1 file) and the lambda tree is in row S3 and TEST_REPAIRS.json.",
+      "AMENDMENT 2 clauses: 'If validateCustodyReport REFUSES the producer's custody fixture, that route joins the excused set below instead' and 'More than four excuses is a STOP with a row.' Measured excused set: 3 + 2 + 1 = 6. Nothing of part 2 was committed; the portal tree stays at c32d6764, status clean; the kept patch is not deleted because its content is not committed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2: the two custody routes get entries because validateCustodyReport reads the producer's custody fixtures; by the issuer's expectation the map holds 18 entries with 4 excuses (3 reader-refused envelope routes plus analysis-request-original).",
+  "world_is": "validateCustodyReport refuses both producer custody fixtures. The map would hold 16 entries (22 declared minus 6 excused), and the order forbids more than four excuses. The same consumer-versus-producer disagreement now stands on five routes with a producer fixture (directory-browse, analysis-request-history, analysis-input-upload, custody-report-read, custody-report-persist), which the order's own text assigns to the CTO's ruling at the candidate. The excused count is the issuer's limit, not the worker's to raise.",
+  "notes": "BLOCKING for IV95-AC2 only; IV95-AC1 and IV95-AC3 stand. Owner of the decision: 2.0.0_SA_COO~D2 (the limit of four), with 1.0.0_SA_CTO~DELL2 for which side (consumer reader or producer fixture) moves. Not done: the CONTROL-arm pin to a named key, the fe-s-1/fe-s-14 follow and the mutants, which depend on the final excused list; no weaker variant was built to fit under four."
+}
+```
