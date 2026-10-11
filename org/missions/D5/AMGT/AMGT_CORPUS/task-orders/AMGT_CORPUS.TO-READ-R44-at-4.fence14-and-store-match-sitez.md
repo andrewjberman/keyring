@@ -4,7 +4,7 @@
     <issued_by>2.0.0_SA_COO~C1</issued_by>
     <issued_to>0.7.0_AE_CloudOps~ZC</issued_to>
     <date>2026-10-09</date>
-    <status>pending</status>
+    <status>complete</status>
     <project_code>AMGT_CORPUS</project_code>
   </metadata>
 <direct_act>true</direct_act>
@@ -62,3 +62,13 @@ EGRESS CLASS, declared: NONE beyond Opal's own S3 reads. No Bloomberg, no vendor
     master-template count. AC2 (the store matches the drive at the current folder count) is the issuer's to grade.
   </report>
 </task_order>
+
+## CLOSE AMENDMENT (2026-10-11 ~07:4xZ, the issuer `2.0.0_SA_COO~C1`)
+
+The READ was executed: evidence `deliverables/0.7.0_AE_CloudOps~Z/evidence/r44_at4_fence14_store_match_sitez.txt` @2274227184.
+AC1 read 1 (PASS, mutant 0, stable). AC2 is a JUDGMENT criterion and carries no verdict in the instance; the CVO graded it NOT MET
+(`surprise-channel/adjudications/ADJUDICATION_v55.md` @d521b21ac7: store 356 objects against 378 drive files at 102 folders). The order's
+act is done; the owed ingest is the FWD-1 ingest cell, cut from the round-44 analysis ENRICHMENT LIST, not a rework of this read.
+Instance (VALID, rc 0): `deliverables/2.0.0_SA_COO~C1/AMGT_CORPUS.TO-READ-R44-at-4.fence14-and-store-match-sitez.proof_of_spec.json`.
+Gate limb that graded this modification: none (a status flip). The seat-home transport copy under
+`org/tier2_senior/0.7.0_AE_CloudOps/task_orders/` still reads pending; its disposition is named at the round-44 slug.

@@ -2715,3 +2715,20 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r118/p118_cells.py`: every criterion 
 | `IB-pr-420` | source-map entries landed; adapter then narrative applied under the pair; live-call arm each; ledger | FWD-2 | WORLD | IB-pr-416 complete, pair signed | P118-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.7.0_AE_CloudOps~IB2.
+
+## 112. ROUND 119, WORKSTREAM ~P (2026-10-11 ~07:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 4416)
+
+Round 118 is terminal 1 of 1. The DSGN_IRPTV1 FWD-1 walk of 2026-10-11 07:30Z breaks at Performance: the applied adapter admits the
+request and refuses it at `performance/authorization.py:90`, the one-use vendor plan gate (4 of 4 requests, `VendorEgressRefused`,
+public code OBJECT_NOT_COVERED). The CTO ruled the gate retired by Andrew-direct 2026-10-09 (egress open except Bloomberg; its two
+vendors are Black Diamond and Orion). One cell removes the plan requirement, keeps and tests the packaged-path, own-mapping,
+caller's-firm-and-accounts and use-record-as-a-log behaviours, rebuilds the adapter from one commit and writes the never-widen packet.
+The change WIDENS served output, so the apply comes by a later order under a pair.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r119/p119_cells.py`: every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-421` | vendor performance path without the one-use plan; kept behaviours tested; adapter rebuilt; packet | FWD-2 (DSGN_IRPTV1 FWD-1's Performance hop) | WORLD | IB-pr-420 applied | P119-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~282.
