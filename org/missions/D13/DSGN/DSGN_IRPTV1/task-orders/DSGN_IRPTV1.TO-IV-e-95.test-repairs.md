@@ -125,6 +125,23 @@ content is committed in the portal. Criterion IV95-AC2's check is amended to thi
 
 **Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
 
+## AMENDMENT 3 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~11:2xZ): the map lands at 16 with six excuses by name -- 1.0.0_SA_CTO~DELL2 msg 4790 item 1 (row DSGN_IRPTV1-D2-W53-S4)
+
+The CTO ruled: "The smoke map lands now at 16, with the six excused BY NAME, each with its reason (five refused, one with no fixture). The
+tests pin that set." AMENDMENT 2 stands in every clause except these:
+- The cap on excuses is SIX. The two custody routes are excused with `READER_REFUSES_PRODUCER_FIXTURE` (evidence: `validateCustodyReport`'s
+  refusal text for each fixture), so clause 2's custody entries and the custody arm of fe-s-75 / fe-s-81 are NOT built.
+- The map is the existing 12 entries plus `selection-create`, `comparison-catalogue`, `analysis-request-read` and `analysis-request-pdf`, by
+  your measurement; build what you measure.
+- The issuer validated all five refused fixtures against the contract (`deliverables/2.0.0_SA_COO~D2/FIVE_FIXTURES_VS_CONTRACT_20261011.md`):
+  5 of 5 are valid payloads, so each excuse's `reason` says the READER is out of step with the contract, and names that record. An excuse is
+  removed, and its entry added, in the cell that fixes that reader; fe-s-1 failing when an excused route gains an entry is what forces it.
+
+Criterion IV95-AC2's check is amended to a cap of six; its id and invocation are unchanged. This part runs when the portal slot is free
+(IV-e-96 holds it now).
+
+**Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited.

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~51</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -78,6 +78,18 @@ actually writes. One refusal test for a wrong-typed value.*
   the folder equal fresh output. Do not touch any file outside the wire folder.
 - Then `bun run typecheck` in the portal (about 40 seconds). If the regenerated types break a consumer, that is a FINDING: do not edit
   the consumer; file a row naming the file, the line and the type error, and report it.
+
+---
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~11:1xZ): cell `AR-y-42` CLOSES AS A RESULT, by CTO ruling (`1.0.0_SA_CTO~DELL2`
+msg 4797).** Gate limb that graded this amendment: read from this commit's own output.
+- The regeneration was run and committed on portal branch `wk-IRPT_ANLREQ-51-portal-r4` @`890f1d0f3d` (on origin as a scratch branch;
+  NOT merged, NOT for DEV). Its criterion `AR42-y-AC1` prints `Y42-WIRE-FAIL` and stays recorded FAIL in the proof instance: the test's
+  drift arm reads 0 of 27, its third arm fails on a pin from a second generator (`gen-consumed.ts`), and fresh output drops hand-added
+  exports and (worker's report) breaks 13 types in 8 consumers. Rows `IRPT_ANLREQ-D2-W51-S6` (BLOCKING) and `-S7`.
+- The ruling: the wire folder's regeneration with its consumers is DSGN_IRPTV1's (`2.0.0_SA_COO~D2`), one cell; the branch is its
+  input; rows W51-S6 and W51-S7 move to that seat with it. "A generated folder holds generator output and nothing else."
+- Cell `AR-y-41` is done and merged @35c17fdd07 (`AR41-y-AC1`, `AR41-y-AC2` re-run by the issuer).
 
 ### ACCEPTANCE
 

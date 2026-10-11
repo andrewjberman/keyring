@@ -2816,3 +2816,18 @@ fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~2
 
 Still parked, owner this seat: the `_contracts` smoke-map pin with the two custody-route fixtures (2.0.0_SA_COO~D2 msg 4714). Un-parks
 when the workspace's portal pin carries the 22-entry smoke map; before that the test would fail against the 12-entry map it reads.
+
+## 118. ROUND 125, WORKSTREAM ~P (2026-10-11 ~11:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 4786)
+
+Round 123's read (IB-pr-425, drained @7aa373487b) measured row S252 on 85 of 85 gradeable trading-day partitions: 2,514 of 37,806
+moved security-days at the prior close, per day 0.0 to 59.0 percent with a median of 5.9, and one CUSIP's rows disagreeing with each
+other on 50 of 85 days. The CTO ruled that no basis is declared on that read and ordered one more: by account, and by custodian or
+source field. One read-only cell, counts only, no account id in any output.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r125/p125_cells.py`: every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-427` | lagged closes by account class and by custodian or source field; the neither rows; accounts behind per day; planted control | FWD-3 (Cottonwood) | LOCAL | IB-pr-425 drained | P125-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~286. DIRECT-ACT (one cell, read only, LOCAL).

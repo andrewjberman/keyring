@@ -6361,3 +6361,28 @@ round.** Never edit an existing row.
  "world_is": "76 nine-character CUSIPs have the same shape as an account id. The set limb, which compares against the real ids, reads 0. The remedy is a repair cell in round 66: the scan learns to tell a declared security identifier from an account id without widening into a blanket exemption, and the suite returns to green. Until then the suite at the base is red on this one test and every other test passes."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S114",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T11:12:58Z",
+  "one_line": "L9 round 65: CB65bm1-AC2 MET and CB65bm2-AC3 MET. This seat re-derived the outlier record's totals and all six rows of its threshold table from the local returns table, and printed every guide line the Bloomberg request quotes. Left for the CTO's threshold: 56 'leftover balance' days sit on a base of 100.00 or more; 206 of 207 outliers are positive; 122 days between 10 and 100 percent on such a base are unexamined. 'Nothing was sent' is met on the documents, not on a read of the queue.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_65_DRAIN_END_20261011.md @66db401fb2 (msg 4792)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_65_L9_GRADE_20261011.md",
+      "this seat's re-derivation 2026-10-11T11:12:58Z from the local returns table (fwd3_serve_r34/daily_returns.parquet), counts only: 107,311 measured days with a positive prior value; the threshold table's six rows re-derive exactly (above 10 percent: 64 / 130 / 179; above 100 percent: 55 / 95 / 57; above 1,000 percent: 48 / 42 / 3); 207 outliers, 147 dated 2026-05-20 to 2026-06-10, 89 on 2026-05-22 or 2026-06-09, 206 positive and 1 negative, on 170 accounts. The record's five classes sum to 207 and to 55 / 95 / 57 by band",
+      "this seat's reads: the two security lists hold 3,102 and 1,306 rows, each with distinct CUSIPs, 0 shared between them, 4,408 in all, and no account column; printed integrations/bloomberg/READ_HERE.md lines 41-42, 122-123, 152-154 and 161-162, each as the request quotes it; printed data/assets/scripts/analysis/commonwealth_price_need_file.py:41-46 (the Yahoo classes; all else to Bloomberg) and the PRD's v0.4 ADDENDUM 2 (Andrew's word on the two sources); both request documents open with STATUS: WRITTEN, NOT SENT. The returns table reads 1,559,175 UNPRICED rows against the request's 1,559,722 blank-for-price account-days"
+    ]
+  },
+  "spec_asserts": "CB65bm1-AC2 and CB65bm2-AC3 (JUDGMENT, graded by 3.0.0_SA_CVO at L9), as each order states them.",
+  "world_is": "Every limb holds on this seat's reads. Not re-derived: the placing of each of the 207 days in its class; the per-leg unblank counts; the reach counts of method_r29.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
