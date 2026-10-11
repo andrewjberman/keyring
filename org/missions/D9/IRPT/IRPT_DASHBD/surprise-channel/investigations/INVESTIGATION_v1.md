@@ -6645,3 +6645,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W115-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~115",
+  "surfaced_at": "2026-10-11T19:47:23Z",
+  "one_line": "DB-b-142: at the cent the comparison over the 51 contested segments differs on 51 flow days (18 segments), 50 reproduced by counting each transaction id once and 1 not (the Other Fee expense row); the method's flow term (lines 713-717, 706) leaves an administrative expense out, so the served flow rightly omits it; the shared code table's class for that one row was not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-142 item 2: the fee row is classed by the method's own rule cited from the code; if the method counts it a flow and the served flow omits it, a row with the day count.",
+  "world_is": "The method's rule is read from account_return_daily.py lines 702-706 and 713-717 and METHOD_ROWS row 2 line 123 (fee_basis GROSS_ONLY): the flow term holds class EXTERNAL, FEE-MANAGEMENT and inter-account legs, and a FEE-ADMIN expense stays inside the return. The Other Fee row (type Expense) is the only Other Fee row on the 235 flow days, and the day reproduces to half a cent only with it left out; all 56 days carrying a Management Fee row (the class the method counts) reproduce with it counted. So the served number follows the rule and there is no defect row. NOT_ESTABLISHED: the custodian's fact_trn code row for this one Other Fee leg and the shared code table's class for it were outside the order's read grant (the Black Diamond copy and the served gold), so the class FEE-ADMIN is inferred from the rule's text and the served number's behaviour, not read from that row. A 1-day fact_trn read by a later order would settle it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~115/CENT_REREAD.json",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 702-706, 713-717, 123",
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~115/c2_compare.py, c4_types.py (private, outside the repo)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
