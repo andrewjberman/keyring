@@ -25,3 +25,43 @@ conditions.
    rollback applies.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~15:2xZ) -- the post-act read: Branch A, NOT a STOP. Row D1-S5: the av-2 surface is held from PROD until two fixes.
+
+`2.0.0_SA_COO~C1` msg 3941, evidence `deliverables/2.0.0_SA_COO~C1/evidence/r46_av4_post_act_20261011.md` @21e3d2303f. Live `VNcX9ntm`:
+`team_sheet` equals stored /12 on 95 of 95; four names 4 of 4 EQUAL; unmapped 0 (FIGURE 3,381 = Bloomberg 482 + team 2,899).
+
+**Condition 2 is MET in intent; the pixel instrument was over-strict, and this seat wrote it.** The PROD-built page differs on 67 of 86 shots.
+Every differing region is one of:
+- the per-request clock line;
+- a 1-px hairline;
+- the lead panel's daily chatter (live data);
+- ONE content change: SAN FP's name "Banco Santander S.A." to "Sanofi".
+
+The name change is `AMGT-ff-4`'s signed, intended effect, carried by the same redeploy (its CTO half @c53a86ef41). The Model tab's rows area is
+EQUAL on all three names, and that is the surface the condition protects. **Not a STOP; no rollback.** The lesson for the next such condition:
+the instrument is a region diff with the known-moving lines masked and a content diff of text, not whole-page pixels.
+
+## Row D1-S5 -- the DEV Model tab reads worse for the 32 own-workbook names. HOLD av-2 from any PROD promote; two fixes FIRST.
+
+On DEV, 1,348 of 3,381 FIGURE rows (40%) are labelled by raw field codes (`BEST_EBIT`, `IS_ADJUSTED_OPERATING_INCOME`), and 72% of team float
+cells print more than 4 decimals. The ruling was built as written. So the rule is incomplete, not the build, and both fixes are this seat's
+to state:
+1. **A row labelled by a Bloomberg field code is MARKET DATA, not team judgment.** It is the sheet's own data-feed block. Under round-45
+   ADDENDUM 1 precedence it is Bloomberg's:
+   - Where the served block carries the field, it shows the Bloomberg figure.
+   - It is ALWAYS labelled by the field's human name from the vendor's own field dictionary (Bloomberg's field description), never by the
+     code.
+   - This is NOT the refused label map: it is the vendor's definition of its own mnemonic, one source, not a hand-kept second truth.
+   - A code the dictionary cannot name renders "data-feed field <CODE>" with the why. Close: 0 raw codes as labels, with the denominator.
+2. **Display follows the cell's OWN number format; storage stays verbatim.** "As the workbook saved it" means the value AND the format the analyst
+   sees.
+   - The write captures each value's Excel `number_format` (a method /13 field, its own pair).
+   - The page renders by that format, and the title keeps the full stored value.
+   - Close: 0 cells print beyond their format's decimals, and a percent-formatted cell renders as a percent.
+
+**Until both land, av-2's Model-tab change does not reach PROD.** PROD promotion is Andrew's call `e7f2`. Because a DEV-to-PROD promote carries
+everything on DEV, this hold is stated on that call, so his choice is informed: promote with av-2 reverted for the promote, or wait for the
+fix. These are round 47's first two cells.
+
+-- 1.0.0_SA_CTO~DELL1

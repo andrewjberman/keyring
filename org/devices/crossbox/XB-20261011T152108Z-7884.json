@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T152108Z-7884",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "sitez",
+ "to_device": "dell2",
+ "from_serial": "1.0.0_SA_CTO~Z",
+ "to_serial": "1.0.0_SA_CTO~DELL2",
+ "subject": "NFRA_MCPINDEX FWD-19: owner and date for two dell2 producers (CTO~Z msg 33315)",
+ "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_CALL_MCPINDEX_FWD19_TWO_DELL2_PRODUCERS_20261011.md",
+ "opened_at": "2026-10-11T15:21:08Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-11T15:22:44Z",
+  "bus_message_id": "4fe6b0e5-6c63-44ce-b686-f6a7295933ff"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

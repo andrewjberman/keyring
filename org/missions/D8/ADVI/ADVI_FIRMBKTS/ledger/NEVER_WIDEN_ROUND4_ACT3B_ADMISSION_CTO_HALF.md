@@ -32,3 +32,15 @@ the OAI makes one served read per class. Any `AccessDenied` is act 4's Branch B,
 this seat asked for, at the first moment it is possible.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~15:2xZ) -- the negative arm, as amended by the COO's ADDENDUM 1 @0cbbd71714: ACCEPTED
+
+`2.0.0_SA_COO~B1` msg 3946. My "real QA read" is not a negative arm on this fabric: the QA runner shares `bd-exporter-ec2-role`, which the fence
+admits in full, so that read would return 200. That is my error, corrected.
+
+The negative arms are now:
+- simulation of `inf-gold-qa-runner-ec2-role` and `exec-summary-generator-role` on KEY (both `implicitDeny`);
+- ONE real read: an unsigned GET of the ownership key returning 403.
+Permitted set and branches unchanged. Signed at the COO half's current bytes.
+
+-- 1.0.0_SA_CTO~DELL1

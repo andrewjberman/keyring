@@ -1965,3 +1965,28 @@ issuer's GO after the three halves re-pin at the re-cut sha (CTO C1).
 | `OG-ap-6` | -- | Re-cut E2's three commits on 2a5966dfbd and prove the patch-ids equal; then the one PutObject policy and the gateway deploy under their own ledgers. | WORLD | ~AE | worker |
 
 **fanout:** 1 start, cap 8.
+
+## ADDENDUM R3-T.42 (2.0.0_SA_COO~O, 2026-10-11 ~15:3xZ) -- round 34, ONE issuance
+
+**Source.** `1.0.0_SA_CTO~Z`'s round-33 analysis `ledger/ROUND_ANALYSIS.round33.md` @2672b8d28a section 3: round-32's
+E1-E5 plus E6-E8. Also the gateway queue's CT-i-11 release, which the laptop CTO consented to under XB-b98e @de13ed0e00,
+with Addendum 1 @4f285abe22.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-db-1` | E6 | Drain OG-tl-1's allowlist deploy hunk back onto trunk's deploy-to-ec2.sh (row Z-S85). FIRST. | WORLD | ~54 | worker-light |
+| `OG-br-1` | E4 | Batch repair: runbook 7.2 to the live ref (Z-S88); manifest checksums from the served release (Z-S84); the dispatcher _build_note (S70); the SI2 puller's lock release and range print (W39-S1/S2); the failing-test baseline read (W45-S4, W47-S2). | WORLD | ~54 | worker-light |
+| `OG-mu-1` | E1 | The .pptx market_update writer: intake's content-addressed key (W49-S3) and one builder-fed PutObject grant (W49-S4). Phase A plus the ask. | WORLD | ~55 | worker |
+| `OG-gw-1` | E2 | Rebuild mcportal-grant-writer from the live release (W42-S1, the opal-gateway half of W39-S5). Phase A: build, targeted plan, ask. | WORLD | ~56 | worker |
+| `OG-wr-1` | E5 | Prime the 13-month window once per master; measure the warm read on the served gateway (W43-S7, ruling (d)). | WORLD | ~56 | worker |
+| `OG-dq-1` | E7 | READ ONLY: name the actor that drained opal-assets-silver-dlq, and read its current messages (Z-S77). | SERVED | ~57 | worker |
+| `OG-bd-1` | E8 | Census the callers of blackdiamond_list_fees; deny it to unprofiled principals only if the census is clean (W45-S2, ruling @135719d313). | WORLD | ~57 | worker |
+| `OG-ap-7` | queue | APPLY: NFRA_CTLPLN CT-i-11's /hx/teams/* routes, re-cut on live c3af8687e4. B1 re-cut and ask; B2 deploy on GO. | WORLD | ~AE | applier |
+
+**E3 is not cut.** Its restart-free route to the lost answer (W35-S1) is OG-rf-1's R50 send-gate (@41b0c7903b): the
+token grants answer once their consuming transaction is sent. It has been live since r29 and is in c3af8687e4
+(`_within_send_budget` x3). The issuer's citing row disarms W35-S1.
+
+**Chains: 7 independent cells plus 1 applier.** Slots queue by write set and kind: ~54 runs db-1 then br-1, ~56 runs
+gw-1 then wr-1, ~57 runs dq-1 then bd-1.
+**fanout:** 4 of 7 chains, cap 8. Reason: Andrew-direct 2026-10-10 slower pacing for the usage limit (relay msg 33086).

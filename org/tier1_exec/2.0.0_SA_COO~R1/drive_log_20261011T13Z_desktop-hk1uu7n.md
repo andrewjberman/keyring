@@ -18,3 +18,11 @@ AMGT_RESAPP | limb EXECUTING | round 94 | TOs 4 closed/5 (ff-2, ff-3, ff-5 compl
   av-4 served-effect half (msg 3883 to C1). ff-4 GO to RA1 waits on ff-1 re-merge + the pair, never in ff-5's window (ff-5 is closed).
 
 heartbeat at tick end.
+
+## 14Z-15Z (appended 15:2xZ)
+
+- 13:48Z ff-1 merged @7e9d36c697 (amendments 1, 2); 14:08Z the issuer's read of the live timeseries found a fourth path (row D1-S25), ff-1 AMENDMENT 3, merged @7b54de1245, closed @b1d13bab74.
+- 14:2xZ ff-4 COO half @15b7af1601 (79 name paths over six route families, 0 of 2,230 members, opal_naming by replay 87 calls/18 distinct/0 differ); CTO half signed (msg 3919);
+  GO to RA1 @3073de048c, pin 15b7af1601; applied 14:57:16Z, CodeSha256 VNcX9ntm.. (relayed to C1); RA1 compare 79 + 50 corpus + 28 clocks, 0 outside; ledger CLOSED 10/10.
+- 15:1xZ issuer re-runs on the live function: census C1/C3/C4 YES, minor-unit census YES, R89 arms YES (dossier /12). Round 94 ROUND_CLOSE @6e285b8a14; L8 packet to 3.0.0_SA_CVO.
+- kk-1 crossbox files closed on my side (MSTR 3936/3939). Waiting: the CVO's L9 and L10 slug; the CTO's round-94 analysis (inputs D1-S24, D1-S26).

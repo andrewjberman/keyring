@@ -19,16 +19,18 @@
 | 13:2xZ-14:0xZ | pair | av-4 leg p: COO half @148053efdb, CTO half SIGNED (msg 3888) with two conditions: leg v Branch A before the GO (met) and one name per class on PROD's built page unchanged in pixels. Pre-act walks: PROD-built (origin/PROD 37aa1247) 13:21Z-13:26Z, DEV-built (f00c7b8e) 13:54Z-13:59Z, 86 shots each, walker 401 after. A send naming RA1 an act was refused (LD-0529); resent to R1 and the CTO. |
 | 14:0xZ | reads | av-10 PRE-READ (a prediction from the stored /12 field on DEV f00c7b8e): FIGURE 3381 = Bloomberg 482 + team 2899 + why 0 + refused 0, unmapped 0; 316 heading rows, 0 CONTROL rendered. R1 (msg 3910): ff-1 reopened (a fourth served path), ff-4's GO earliest ~15:00Z; nothing of mine ends at 14:15Z. |
 
+| 14:5xZ-15:3xZ | served | av-4 leg p: RA1 applied ff-4 14:57:16Z (CodeSha256 VNcX9ntm..). Post-act read Branch A: four names 4/4 EQUAL, team_sheet equals stored /12 95/95, new keys 95/95, dossier_fields and posture equal 95/95; live rendered census FIGURE 3381 = Bloomberg 482 + team 2899, unmapped 0. Condition 2: PROD-built page 19 of 86 shots equal; 67 differ by the clock line, hairlines, lead chatter and SAN FP's header name (ff-4's signed effect, R1 msg 3944). Evidence @21e3d2303f. |
+| 15:2xZ | rulings | CTO msg 3947 (ADDENDUM 1 to the av-4 CTO half): not a STOP; Branch A stands. Row D1-S5 becomes round 47's first two cells: (1) field-code rows are market data labelled by the vendor field dictionary, 0 raw codes as labels; (2) team cells render by their own Excel number format, captured at a /13 write under its own pair, full value in the title. av-2 does not reach PROD until both land. |
+
 ## Open (owner and un-park condition)
 
 | item | owner | un-parks when |
 |---|---|---|
 | av-5 portal DEV landing: DONE @f00c7b8ee8 (CTO approved msg 3875; MSTR~DELL1 landed, receipt msg 3878); PROD untouched | -- | `/prod-deploy` is a separate act on Andrew's push law, not this round |
-| av-4 API redeploy carrying /12 (AMGT_RESAPP ff-4 window; CTO half signed; both conditions are mine: leg v met, pre-act baselines taken) | 2.0.0_SA_COO~R1 / 0.7.0_AE_CloudOps~RA1 | R1's GO, earliest ~15:00Z; then my post-act read (four names, 95, PROD/DEV pixel compare) |
-| av-10 rendered re-read (FWD-12, FWD-20) | 2.0.0_SA_COO~C1 | av-3, av-4, av-5 served |
+| L9 on FWD-11/12/15/16/20/21 (packet @21e3d2303f, with the live read) | 3.0.0_SA_CVO | the CVO reads it |
+| round 47 (the CTO's round-46 analysis): D1-S5's two cells (vendor-dictionary labels; the team's own number format at a /13 write under its own pair), the FWD-15 wording re-sign, FWD-12/20 grades | 1.0.0_SA_CTO~DELL1 then me | the round-46 analysis |
 | FWD-15 header-line wording (row D1-S4): RULED (msg 3875) graded on the Posture tab, the header line not restored; the ENDPOINT wording lands with the round-46 analysis for one CVO re-sign | 1.0.0_SA_CTO~DELL1 | the round-46 analysis |
 | L9 on FWD-11/15/16/21 (packet ROUND46_GRADED_READS_PACKET.md @fc008c0dbf, extended @69a2beadfc) | 3.0.0_SA_CVO | the CVO reads it |
-| av-11 packet extended with av-10 | 2.0.0_SA_COO~C1 | av-10 |
 
 ## Compiler Tools
 
