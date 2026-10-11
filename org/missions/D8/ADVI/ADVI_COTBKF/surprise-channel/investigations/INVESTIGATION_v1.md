@@ -6225,3 +6225,26 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W95-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~95",
+  "surfaced_at": "2026-10-11T10:35:43Z",
+  "one_line": "Criterion CB65bm2-AC2 of ADVI_COTBKF.TO-CB-bm-2 names an invocation that cannot run as written: its path variable D is set to 'DIorg/missions/.../~95/PRICE_REQUESTS.json' (a stray 'DI' prefix and the file name PRICE_REQUESTS.json where the folder was meant), so D+'PRICE_REQUEST_YAHOO.md' is a path that does not exist.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-bm-2.price-requests.md line 74 (the CB65bm2-AC2 invocation), read at HEAD 5d51ad0c54 on branch wk-ADVI_COTBKF-95",
+      "run as written, the invocation raises FileNotFoundError on 'DIorg/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~95/PRICE_REQUESTS.jsonPRICE_REQUEST_YAHOO.md'; run with D='org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~95/' (the folder) the same print line runs and its expectation holds; both outputs are in the worker's proof_of_spec instance"
+    ]
+  },
+  "spec_asserts": "CB65bm2-AC2 is a command that prints PRICE-REQUESTS-STATUS yahoo_not_sent=True bloomberg_not_sent=True.",
+  "world_is": "The command as written fails before printing. The criterion's meaning (both request documents exist, are marked written and not sent, and each csv has its rows) was checked with the one-token correction of D; no other change. The order was not amended by this worker.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
