@@ -5015,3 +5015,52 @@ round.** Never edit an existing row.
   "world_is": "0 hits proves absence of the three shapes only. The test bounds the shapes (no hit inside a longer capital/digit run) to drop the 14 document-id false positives; that is stated in its docstring. The tracked manifest was additionally checked by a different instrument: 0 of the private manifest's 1533 account keys occur in its text. Also: commonwealth_asf_source.py held no runtime literal (one docstring example), so it needed no private config; the runtime literal moved to config is a rejected-candidate security identifier in commonwealth_sweeps.py whose shape is account-like."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S76",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T02:55:30Z",
+  "one_line": "L9 rounds 50-52: CB50ax1-AC2 MET (served writer and B_00 equal the repo bytes, no opal_naming import, own firm and 4 keys resolve from the served sidecars, both loaders raise; 6 passed, gold suite 50 passed). CB51ay1-AC2 MET (80 of 80 moved files equal the parent blob and the outside copy, copies precede the commit; 75 of 77 redaction files are pure token swaps, the other 2 are the id test and a rename completed @9a57426ebe with 7 token swaps). CB52az1-AC2 MET (config hash equals the pin and both refusal arms raise; 3325 of 3325 manifest days equal round 47's; sweeps rule data identical on 42 of 42 names). The SWEEP-REGRADE line itself was not re-run by this seat.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_50_51_DRAIN_END_20261009.md @244e0507ff (msg 3843)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_52_DRAIN_END_20261009.md @c533298ac5 (msg 3822)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUNDS_50_52_L9_GRADE_20261010.md",
+      "this seat's reads: s3://opal-data-cot/code/gold/ 5 keys fetched and hashed; git show 63448cccd2, b4aafe78f4, 9a57426ebe, c1624bf45d, d78a646ac1; C:/dev/_cotbkf_private_evidence_20261009/ MOVED_20261009.json (80 entries), config/commonwealth_sweeps.json sha256 b1d93408...; pytest data/cot/scripts/gold/tests 50 passed"
+    ]
+  },
+  "spec_asserts": "CB50ax1-AC2, CB51ay1-AC2 and CB52az1-AC2 are JUDGMENT criteria graded by 3.0.0_SA_CVO at L9 and never self-graded (the three task orders' criteria blocks).",
+  "world_is": "All three hold on this seat's own reads. The account-set check this seat ran at HEAD still finds set members in 64 of 456 non-channel project files and 3 of 183 code files: the three-shape zeros of rounds 51 and 52 are not clean, which rows D2-S75, D2-W78-S2 and D2-W79-S2 already state and round 53 owns.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S77",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T02:55:30Z",
+  "one_line": "data/assets/scripts/silver/commonwealth_sweeps.py:729 sets the private config's default to a device path (C:/dev/_cotbkf_private_evidence_20261009/config/commonwealth_sweeps.json) and :750 loads it at import. On any box or runner without that path, and without COTBKF_SWEEPS_CONFIG set, the module raises at import, and so does every module that imports it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_sweeps.py:728-750 at HEAD (SWEEPS_CONFIG_DEFAULT, load_sweeps_config, the module-level call)",
+      "this seat's run: load_sweeps_config('C:/nonexistent_dir_xyz/none.json') raised SweepsConfigError",
+      "CLAUDE.md section 5: never write device-specific logic into the workspace; derive, do not hardcode"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 5: device-specific logic is not written into the workspace; a path is derived. The CTO containment ruling @0e8209c33c item 3 puts the rule data outside the repo and does not name where.",
+  "world_is": "The default path exists on dell2 only. The fail-closed load is correct; the default is the defect. No served pipeline was read to import this module (not checked), so the standing is INERT.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
