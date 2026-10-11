@@ -633,6 +633,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "dq_t26_real.py output at this worktree: new finish=2026-10-17, superseded 2026-10-13 kept with its reason, qva OPEN with cells_drawn 5858"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S9",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-11T05:37:51Z",
+    "one_line": "The D1-S8 re-draw wrote 18 of the 32 three-column price files to seven columns; the other 14 re-drew and were REJECTED:LOW_TRADE_AGREEMENT by the lock, so price_store.write left their three-column files in place and 127 of 141 are served with seven columns.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Round-7 analysis item 3 (ROUND_ANALYSIS.round7.md @f5553ca3d5): the 32 symbols are re-drawn through the pacer and the row closes on a served read of 141 of 141 files with seven columns.",
+    "world_is": "2026-10-11T05:26Z-05:35Z, run_daily_draw.sh once on dell1 after redraw_stale.py --apply (32 pacer entries reset, one tier-2 request enqueued): stored 32 = LOCKED+written 18, REJECTED:LOW_TRADE_AGREEMENT+not written 14. redraw_stale.py --list afterwards reads total 141, stale 14 (LCEYX, FTHSX, HLMEX, IWS, IWP, IWN, IWO, VSEIX, PFORX, RPIFX, VSS, VWO, MISIX, PIMSX). Trade agreement of the 14: 116/141 to 613/748 (IWS 200/240). Each of these 14 had been written to three columns on 2026-10-09 under an earlier LOCK, so the same name now fails the lock it passed. The cause (lock floor or threshold change, or the transaction set) was not measured here. C-PRICES (total return on every price table) is not met for these 14.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "run log: scratchpad s8_redraw_run.log, daily_draw.py output line stored[] (18 LOCKED written, 14 REJECTED:LOW_TRADE_AGREEMENT not written)",
+        "python data/mdpf/scripts/demque/redraw_stale.py --list at 2026-10-11 ~05:40Z: total 141, stale 14",
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R8_CHECKS/dq_t28_stale.py: STALE-OK n=14 of 141"
+      ]
+    }
   }
 ]
 ```
