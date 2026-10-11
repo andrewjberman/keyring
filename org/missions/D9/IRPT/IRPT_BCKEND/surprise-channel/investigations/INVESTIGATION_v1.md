@@ -25891,3 +25891,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W289-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~289",
+  "surfaced_at": "2026-10-11T12:34:22Z",
+  "one_line": "TO-IB-pr-430 AMENDMENT 1 stop condition: the handler path refuses the synthetic firm id F-49F at infra/aws/lambda/investor-reporting/_scope/prospect.py:34 (`firm not in firm_ids()`), because F-49F is not in the firm registry, so the upload answer cannot reach NORMALIZED with it; stopped, no other spelling tried, no hand edit.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/prospect.py line 34: `if principal_class not in {\"FIRM_ADVISOR\", \"FIRM_OPERATIONS\"} or firm not in firm_ids() or not subject:` then line 35 `raise ProspectOwnershipRefused(\"verified firm advisor or operations owner required\")`; resolve_prospect_owner is called by intake/tests/test_uploads.py UploadIntegrationTests.setUp (line 42) and by the guarded entry on every request (prospect.py lines 78 and 92)",
+      "firm_ids() is infra/aws/lambda/investor-reporting/_ids/ids.py lines 145-155: the enabled kind=client firms of data/firm_registry.json (located by _find_registry, ids.py lines 112-140, env IRPT_FIRM_REGISTRY first); measured at this worktree it returns ('49financial', 'cottonwood', 'inflection'), F-49F in registry: False",
+      "probe .scratch/probe_f49f.py (rc 0, run from the worktree root): resolve_prospect_owner(claims with x-firm-id F-49F) raised ProspectOwnershipRefused 'verified firm advisor or operations owner required'; control, same call with the source test's own claims, returned firm_id 49financial",
+      "the five sibling fixtures carrying F-49F are data documents validated against schemas; none passes through resolve_prospect_owner, so their use of the id does not show the handler path accepts it"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1 of TO-IB-pr-430 expects the handler path to accept the synthetic principal firm id F-49F (carried by five sibling fixtures) and the upload answer to reach NORMALIZED with it; its stop clause says: if the handler path refuses a firm id that is not in the firm registry, STOP and file a row saying exactly which line refuses.",
+  "world_is": "The handler path refuses F-49F at _scope/prospect.py:34 because the firm registry holds only 49financial, cottonwood and inflection as enabled client firms. Getting a NORMALIZED answer with a non-registry firm id would need either a registry that lists F-49F (IRPT_FIRM_REGISTRY pointing at a synthetic registry file, a second difference from the source test the amendment does not authorize) or an edit to _scope/prospect.py or the registry (outside the order's paths). The worktree still holds the unstaged four schema files, the two fixtures (AnalysisUploadResult.valid.json still carries the registry spelling at line 58) and the deliverables folder; nothing but this row is committed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
