@@ -4017,3 +4017,31 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "Found by the YCD-a-11 journey read at hop 12. Settled by one served read: an internal principal's GET /status/{jobId} with no selected_tenant (expect the refusal the history file names), and by whether Andrew has a client selected at the sitting. Not an existing row: S28 (IV-e-74) is cited only in a portal comment and is not in this channel."
 }
 ```
+
+## IRPT_YCDGEN-D2-S53 -- FIRM-NAMED cottonwood NO rests on an ABSENT attribute, not on a list that lacks cottonwood: andrew@opalinvest.com's PROFILE row carries NO allowedFirmIds at all (shape=ABSENT count=0), and three different states collapse to the same NO
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S53",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~YC2",
+  "surfaced_at": "2026-10-11T12:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "FIRM-NAMED cottonwood NO rests on an ABSENT attribute, not on a list that lacks cottonwood: andrew@opalinvest.com's PROFILE row carries NO allowedFirmIds at all (shape=ABSENT count=0), and three different states collapse to the same NO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-11T12:44:21Z by 0.7.0_AE_CloudOps~YC2 under IRPT_YCDGEN.TO-APPLY-j2 AMENDMENT 1 @76744e25ce, script rc=0, ONE query on opal-users-v2 index email-index (Limit 2) then ONE ConsistentRead get_item on the PK the index names, SK=PROFILE, four named attributes. Output, whole: INDEX email-index rows=1 more=NO / INDEX-KEY pk_form=OTHER sk=PROFILE / PROFILE andrew@opalinvest.com status=active userType=Dev firmId=opal-capital / ALLOWED-FIRMS shape=ABSENT count=0 ids=- / FIRM-NAMED cottonwood NO. Record org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_j2/PROFILE_FIRMS_READ_2_20261011.txt",
+      "THE ROW EXISTS and is not the question: status=active, userType=Dev, firmId=opal-capital. What is missing is the one attribute the rule reads. The script's own shape classifier is what makes this visible: it distinguishes ABSENT from STRING, LIST, STRING_SET and OTHER:<keys>, and it printed ABSENT -- so the attribute is not present-and-empty and not present-as-an-empty-collection, it is not there. count=0 and ids=- are consequences of that, not independent measurements.",
+      "The collapse is in the criterion's own vocabulary, not only in the data: AC2 of the order admits exactly FIRM-NAMED cottonwood YES, FIRM-NAMED cottonwood NO, or one of three absence lines about the ROW. It offers no line for an absent ATTRIBUTE on a present row, so that state is reported as NO. The denominator for this claim is the four output branches the amended script can emit after a row is found, of which one (NO) is reached from three distinct world states."
+    ]
+  },
+  "notes": "INERT: this is a READING hazard on an answer, not an armed state, and nothing is pending on it. THE POINT: a reader taking FIRM-NAMED cottonwood NO at face value concludes that the filer has a firm list which does not include cottonwood. The measured truth is that the filer has no firm list. Those are the same NO and may not be the same thing to the rule the answer feeds -- served.py lines 1063-1066, per the decomp context: an on-behalf upload needs a named advisor only when the tenant is in the filer's allowedFirmIds. Whether that code treats a MISSING attribute as an empty set, raises on it, or takes a different branch entirely is NOT established here: this seat read the table, not served.py, and says so rather than guessing. NOT ADJUDICATED: which rule Andrew's Prospect upload takes is the issuer's and the CTO's call, and row IRPT_YCDGEN-D2-S4 is not dispositioned by this read -- this is its input. The absence is consistent with D2-S4's picture (no partner firm has a FIRM_OPERATIONS-resolvable row, cottonwood has no FIRM_ADVISOR-capable row) and adds the filer's own side of it. Disarm: 2.0.0_SA_COO~G2 states, on the record, which of the three states served.py's rule actually sees, or has the CTO rule it. CHEAP FIX FOR THE NEXT READ, offered not implemented: the script already knows the shape, so a future criterion can expect FIRM-NAMED <firm> NO|YES beside shape=, which makes the three states distinguishable at the criterion rather than only in the body.",
+  "spec_asserts": "org/tier2_senior/0.7.0_AE_CloudOps~YC2/task_orders/IRPT_YCDGEN.TO-APPLY-j2.one-profile-row-read-dell2.md @76744e25ce: the objective is that the read says whether that row names cottonwood, and AC2 grades it as FIRM-NAMED cottonwood YES or NO, or one of three ROW-absence lines. decomp_context: an on-behalf upload needs a named advisor only when the tenant is in the filer's allowedFirmIds (served.py lines 1063-1066), and whether his own profile row names cottonwood decides which rule his Prospect upload takes. The order's own comp-adversary line already names this trap class: taking an absent attribute for an empty list.",
+  "world_is": "The row names no firms at all. allowedFirmIds is ABSENT on andrew@opalinvest.com's PROFILE item (shape=ABSENT, count=0, ids=-), while the item itself is present and active (userType=Dev, firmId=opal-capital). So FIRM-NAMED cottonwood NO is reached from the ABSENT state, and the same NO would be printed for a present-but-empty value and for a present list not containing cottonwood. The question the order asked -- does that row name cottonwood -- is answered NO; the question the rule needs answered -- what does the rule see when the attribute is missing -- is not, and is not this seat's to answer."
+}
+```

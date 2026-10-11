@@ -11944,3 +11944,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "Related in kind to the manifest defects MP-r-2 and MP-x-4 already recorded for this same service (the release tree carrying its own stale vintage, and safe-ec2-deploy.sh writing a stale previous_deployed_commit). Those two were about the deployed_* fields and are handled; this row is about file_checksums, which neither covered. Cheap fix for whoever owns it: regenerate the 10 entries from the deployed release bytes at the next gateway release, or drop the field if nothing consumes it -- this seat did not establish whether anything reads it, and says so rather than assuming."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S85",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T12:42:14Z",
+  "one_line": "OG-tl-1's transcript-allowlist deploy hunk (deploy-to-ec2.sh reads data/transcripts/scripts/teams/meeting_allowlist.json into TRANSCRIPT_MEETING_ALLOWLIST) exists ONLY on the release chain (78afad4283, 765fcfb239, 2a5966dfbd, 6aadf7db37) and was never drained back: box/sitez HEAD and origin/CLOUD write the allowlist EMPTY, so any gateway release cut from trunk instead of the live ref silently revokes the 4-meeting allowlist.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: grep -c 'meeting_allowlist.json' in infra/aws/ec2/opal-gateway/deploy-to-ec2.sh = 5 at 78afad4283, 765fcfb239, 2a5966dfbd and 6aadf7db37 (live), and 0 at box/sitez HEAD and origin/CLOUD (TRANSCRIPT_MEETING_ALLOWLIST appears 6 times vs 2)",
+      "MEASURED: 765fcfb239 (rel-nfra-oplgtw-tl1b, the deployed OG-tl-1 release) and 78afad4283 are NOT ancestors of box/sitez HEAD",
+      "The json itself IS at HEAD; only the deploy-script read is missing",
+      "Surfaced by 0.0.0_AB_MSTR~Z msg 33273 (GC escalation on C:/tmp/og-reltl1): 'CLOUD's deploy-to-ec2.sh still writes the allowlist EMPTY (line 439)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-tl-1 complete (allowlist LIVE on the gateway) means the allowlist survives later gateway releases.",
+  "world_is": "It survives only because every release since was re-cut on the live ref. Trunk's deploy script still writes the allowlist empty, so a trunk-cut release would revoke it with no error.",
+  "notes": "DISARM, standing until the drain-back lands: every gateway release is cut on the LIVE ref read by host md5, never on trunk. The queued MX-r-10 v2 is on 6aadf7db37 and CT-i-11 follows on MX-r-10's live ref; both carry the hunk. REMEDY: a round-34 cell drains the allowlist hunk back onto box/sitez's deploy-to-ec2.sh (3-way over HEAD's printf, which carries E2's key and ab-2's unreleased market_update key), graded by grep and a positive control. This is the rl-15 A8 drain-back class, unchecked for OG-tl-1."
+}
+```

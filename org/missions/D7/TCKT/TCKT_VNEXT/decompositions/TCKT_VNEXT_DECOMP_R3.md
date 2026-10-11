@@ -55,3 +55,27 @@ resident release st30 is installed and its V1 is green"; the run is that release
 **Edge added:** `R3-rn-1` -> `R3-tr-1`. Write set: the slot's own `fwd1_runner/` folder, shared with no other open order.
 
 Dry-run at the base: rn-row FAIL (missing tests) and rn-regress FAIL (50 passed, below 56), as expected.
+
+## ADDENDUM 2 (2026-10-11 ~12:5xZ) -- round 3 gains the report-id cell, by CTO ruling msg 4921
+
+The read-only hop trace of IRPT_ANLREQ (`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/trace/FWD1_HOP_TRACE.md`,
+hop 16, row IRPT_ANLREQ-D2-W52-S5) found that nothing records `report_ref` on a ticket filed by the form's one-step sequence: the
+ticket service writes it at create only for the commentary service, and on the report path only for the assignee of an in_progress
+ticket. The page's Open controls need it. The CTO ruled one build cell here, after a code read; this seat read
+`infra/aws/lambda/ticket_center/lambda_function.py` (sha256 prefix cf10e19e) at lines 112, 627-632 and 1339-1389 and confirms it,
+as did `2.0.0_SA_COO~Y2` (msg 4928).
+
+**The issuer's design, stated so the deploy pair can refuse it:** the report path also admits the ticket's CREATOR, on its own
+analysis-request ticket that is not completed, carries an attachment and has no report recorded; once. The one-step form holds the
+service-issued id at that moment. The alternative, the packager's post setting it, was not taken: it waits on hops 9 to 14 and its
+`report_ref` string has no fixed shape in this service.
+
+| cell | builds | list item | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|---|
+| `R3-rf-1` | the ticket service's report path admits the creator of a one-step analysis-request ticket, write-once, with a named refusal code; six tests | CTO msg 4921 item 2 | FWD-1 | cut | one order, workstream RF | WORLD (path floor; nothing is applied) | worker | none |
+
+No edge. Write set: `infra/aws/lambda/ticket_center/lambda_function.py` and one new test file, shared with no other open order.
+NOT in this cell: the deploy (its own packet and pair), and the portal form's call to this path after its analysis post (named to
+the CTO as the hookup this cell needs; the form is another project's write surface).
+
+Dry-run at the base: rf-filer FAIL (absent test file) and rf-regress FAIL (161 passed, below 167), as expected.

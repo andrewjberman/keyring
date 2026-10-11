@@ -527,8 +527,14 @@ that is the argument for printing both every time.
 
 ## R7.5 CURRENT STATE AND WHAT IS OWED
 
-**Nothing of mine is open.** Four NEVER-2 entries opened and closed with every leg proven and every close
-committed by hand; `.open_deploys/` carries 0 `iamroles` sentinels at HEAD. Five proof instances VALID rc=0,
+**Nothing of mine is open.** **SIX** NEVER-2 entries across round 7, every one mine and every one reading
+CLOSED at HEAD -- `market-overview` (row 14), `narrow-smartx` and `narrow-news-pipeline` (x-2's two acts),
+`family-c-shared-infra` (row 6), `narrow-portal-s3` (x-5) and `retire-row7` (x-4). **THREE of those six
+needed their close committed BY HAND**, which is finding 1 -- the three I ran `close` on after the defect was
+known, so I checked each against HEAD. `.open_deploys/` carries 0 `iamroles` sentinels at HEAD and on disk.
+(This paragraph first read "Four", which was simply wrong: I counted the entries I opened after the session
+resumed rather than the round's six. A miscount in a record whose whole argument is about printing counts is
+worth correcting in place rather than leaving.) Five proof instances VALID rc=0,
 four of them first try (`x-2` needed six formatting fixes, all mine, before the invocations were extracted from
 the order's bytes rather than retyped -- which is why the later four passed first time).
 
