@@ -4337,6 +4337,75 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "Close (a) is reachable for 646 FIGURE rows (56 Bloomberg mnemonics, descriptions as stored). It is not reachable for 702 FIGURE rows from anything the estate holds: FactSet data-item codes have no dictionary here, and the PM-facing page may not name another vendor. And (b): BEST_FPERIOD_OVERRIDE is a Bloomberg override name, not a field, so field_map.json does not carry it and cannot mark it.",
   "notes": "Options for 1.0.0_SA_CTO~DELL1, one decision: (1) the feed block (rows below the model, labelled by code only) is plumbing duplicating the team's own labelled rows: class it CONTROL by block, counted and never rendered; (2) a CTO-ratified hand map of the 50 codes to plain words, each carrying its claim as team-workbook code, inferred; (3) 0 raw codes as the fallback label 'Team model line' with the code in the title. The issuer cuts the 56-code lookup and the CONTROL rule for the override names as a literal list, and holds the rest.",
   "disarm_owner": "1.0.0_SA_CTO~DELL1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S9",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T16:22:29Z",
+  "one_line": "CRPS-aw-1 asked for the labels line 'after the class line' of the --census CLI; the round-46 test (outside this order's paths) pins the row-classes line as the line directly after the class line, so the labels line was placed after the row-classes line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/tests/test_team_sheet_round46.py:217-219 (base 92de80e612): class_line + 1 must equal 'team_sheet row classes FIGURE 10 HEADING 4 CONTROL 2 sum 16 rows 16'",
+      "lib/research/corpus/team_sheet.py _main (round-47 working tree): the 'team_sheet labels ...' print follows the 'team_sheet row classes ...' print; the class line and its neighbour are unchanged",
+      "AC2 runs test_team_sheet_round46.py; the order's paths do not include it, so its literal could not be edited"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-aw-1 section 1 item 5: the --census CLI keeps its lines and adds, after the class line, the team_sheet labels line.",
+  "world_is": "Adding the labels line directly after the class line breaks round-46 test line 219, which the order's AC2 also runs. The labels line is printed after the row-classes line instead: the class line is still followed by its row-classes neighbour, round 46 stays green, and the order's wording is met in the loose sense.",
+  "notes": "For the issuer to decide at the round-47 analysis: whether the round-46 test is re-pinned to the new line order, or the labels line is moved to sit directly after the class line.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S10",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T16:22:29Z",
+  "one_line": "The live team-sheet census at the round-47 build reads 3549 FIGURE rows over the same 32 own workbooks the cut measured at 3381 FIGURE rows; the denominators do not reconcile, so the cut's 1348 code-labelled count cannot be checked against the store by this order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m lib.research.corpus.team_sheet --census (live store, this worktree, 2026-10-11, rc=0): 'team_sheet classes own_new 21 own_model 11 master 0 master_absent 63 sum 95 served 95' and 'team_sheet row classes FIGURE 3549 HEADING 93 CONTROL 117 sum 3759 rows 3759'",
+      "the order's preflight (cut on HEAD cbd78d8653): 'Measured on the live served payloads (32 own workbooks): 1348 of the 3381 FIGURE rows carry a raw field code'",
+      "the round-47 change moves rows FIGURE to CONTROL only (by-name rule); it cannot add FIGURE rows, so a 3549 live count against a 3381 cut is a store or payload difference, not a rule effect"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Preflight of CRPS-aw-1: the cut measured 3381 FIGURE rows on the 32 own workbooks of the live served payloads, 1348 of them code-labelled.",
+  "world_is": "The live bronze census now reads 3549 FIGURE rows on the same 32 own workbooks (21 own_new, 11 own_model), and the labels census reads 1442 identifier-labelled rows (678 Bloomberg held, 724 FactSet line, 40 Bloomberg line) over 3759 rows. The served payloads and the bronze store are not the same measurement, and this order did not re-measure the served payloads.",
+  "notes": "The /13 write leg (CRPS-aw-3) re-derives the payloads; its counts, not this census, are the reconciling measurement.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S11",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T16:22:29Z",
+  "one_line": "CRPS-aw-1 specified the RAISE rule for the field map only; the reader also raises when the FactSet descriptions file is missing or unparsable, and a sheet without a period header carries row_formats None (no period columns to align with).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/team_sheet.py _factset_entries (round-47 working tree): a missing or unparsable factset_descriptions.json raises, as the field map does; the order's text names only the field map",
+      "lib/research/corpus/team_sheet.py _reading: row_formats is None unless the row is FIGURE and a period header exists, aligned with row_values, which are None in that case",
+      "lib/research/corpus/tests/test_team_sheet_round47.py: test_a_missing_field_map_raises and test_an_unparsable_field_map_raises cover the field map; no test pins the factset file or the headerless formats"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-aw-1 section 1 items 3 and 4: the field map RAISES when missing or unparsable; row_formats is None unless the row is FIGURE, then the period-column formats aligned with row_values.",
+  "world_is": "Two choices the order did not state were made: the FactSet file is held to the same raise rule, so an absent dictionary never reads as no description; and a headerless FIGURE row carries row_formats None, the same as its row_values.",
+  "notes": "Both are one-line reversals if the issuer rules otherwise; neither changes the served field for any name that has a period header and a present file.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
 }
 ]
 ```
