@@ -6253,3 +6253,32 @@ round.** Never edit an existing row.
  "world_is": "The rule as stated reaches 7 measured days. The issuer amended the order (AMENDMENT 1): method_r29 is added as a selectable version with the grant widened to the two files, and the default stays method_r28. Whether r29 becomes the default, and whether the re-mint covers 7 days or 2, is the CTO's; no re-mint order is cut. The other 64 of the 71 days are not measured, so the rule changes no served number on them today."
 }
 ```
+
+## ADVI_COTBKF-D2-W96-S2 -- CB-bm-3 method_r29 would lose the r28 valuation repairs: commonwealth_daily_valuation.py compares the leg against r28
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W96-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~96",
+ "surfaced_at": "2026-10-11T10:38:14Z",
+ "one_line": "CB-bm-3 AMENDMENT 1 cannot be met inside the grant: commonwealth_daily_valuation.py selects the round-28 valuation repairs by cash_leg == sw.CASH_LEG_METHOD_R28 (lines 875 and 939), so a method_r29 leg would silently lose the split repair and the distribution close-step blanking. Worker stopped at the refusal clause before editing any product file.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/silver/commonwealth_daily_valuation.py line 875: r28 = cash_leg == sw.CASH_LEG_METHOD_R28 and rule == RULE_LIST; under r28 only: split_plan/apply_splits (877-879), dvr_close_step_days + blank_account_days + write_repair (886-890), REPAIR_MD and LAST_PLAN (898-901); else-branch at 891 unlinks a stale REPAIR_PARQUET",
+   "same file line 939: if args.cash_leg == sw.CASH_LEG_METHOD_R28: store_splits is loaded; under any other leg store_splits stays None",
+   "same file line 913: --cash-leg takes choices=sw.CASH_LEGS, so adding method_r29 to CASH_LEGS (the amendment) makes it selectable here and it would take the non-r28 branch of lines 877, 886, 888, 898 and 939",
+   "data/assets/scripts/silver/commonwealth_daily_valuation.py is in the order's Do-NOT-touch list; AMENDMENT 1 widened the grant to commonwealth_daily_returns.py and commonwealth_sweeps.py only",
+   "commonwealth_account_return_daily.py (the mint adapter): no comparison against r28, no cash_leg/flow_rule selection (grep of R28|r28|CASH_LEG|cash_leg|flow_rule|METHOD_LEGS: lines 401 and 591 are column names only)",
+   "reach re-run this session over the same cache: 4115 / 71 / 7, agreeing with worker ~96's first run"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB-bm-3 AMENDMENT 1: method_r29 is r28 plus the one withholding change and drops nothing r28 does; the grant covers commonwealth_flows.py, commonwealth_daily_returns.py, commonwealth_sweeps.py and the tests.",
+ "world_is": "r28's split repair and dvr close-step blanking live in commonwealth_daily_valuation.py behind cash_leg == CASH_LEG_METHOD_R28. A method_r29 cash leg would run the valuation WITHOUT them, so r29 would be weaker than r28 in the mint path, which the amendment forbids. The file is outside the grant, so the order needs a widened grant (lines 875, 886, 888, 898, 939 and the docstring at 859 would take r29 beside r28) or a different design: for example the CTO may rule that r29 is a flow-rule version only, selected independently of the cash leg. Not established: whether other callers outside the three granted files and the two read files select behaviour by the r28 leg."
+}
+```
