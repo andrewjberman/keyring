@@ -1,4 +1,4 @@
-# ADVI_FIRMBKTS task order -- `FB-f-9` -- WINDOW ACT 2: THE PLATINUM PRODUCERS' PER-OUTPUT DESTINATION (PHASE A3: READS, LISTS AND DELETES FOLLOW THE SEAM, DORMANT)
+# ADVI_FIRMBKTS task order -- `FB-f-9` -- WINDOW ACT 2: THE PLATINUM PRODUCERS' PER-OUTPUT DESTINATION (PHASE A4: THE DISPATCHER'S GATE READ AND THE MODE EXPORT, DORMANT)
 
 <!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
 
@@ -6,160 +6,112 @@
 <decomp_doc>org/missions/D8/ADVI/ADVI_FIRMBKTS/decompositions/ADVI_FIRMBKTS_DECOMP_R3.md</decomp_doc>
 <owned_cells>FB-f-9</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_ADVI_FIRMBKTS~20</issued_to>
+<issued_to>0.9.0_WK_ADVI_FIRMBKTS~21</issued_to>
 <issued_by>2.0.0_SA_COO~B1</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
-comp-schedule: DECLARED-NOT-APPLICABLE -- phase A3 adds or changes no cron, rule, schedule or cadence and edits no launch or runner file.
-comp-iam: DECLARED-NOT-APPLICABLE -- repository files only: no AWS act and no grant.
-comp-adversary: RUN by the issuer -- `r3_reads.py` reads 127 S3 data call sites in the 14 writers and the 8 gold lib modules they import at base: ROUTED 22, NOT-SERVED 36, EXEMPT 0, UNROUTED 69 (so AC1 FAILS at base by construction). Blindness: the census resolves a key only through module constants, `lib.s3_layout` names, f-string prefixes and one-return key builders; a key it cannot resolve counts UNROUTED until you route it or mark it, never silently NOT-SERVED. It reads syntax, not behavior: dormancy rests on the seam's identity in `legacy` mode (the unit tests), not on a run of each script.
+comp-schedule: DECLARED-NOT-APPLICABLE -- phase A4 edits one shell file in the repository; it adds or changes no cron, rule, schedule or cadence and deploys nothing (a `.sh` is never deployed by the push hook; the act deploys it by a deliberate leg).
+comp-iam: DECLARED-NOT-APPLICABLE -- repository file only: no AWS act and no grant.
+comp-adversary: RUN by the issuer -- `r3_dispatch.py --arm export` and `--arm gate` read FAIL at base (both blocks absent) and 8 of 8 and 3 of 3 on a reference file carrying the two blocks (the same blocks this face orders). Blindness: the arms run the two marked blocks in bash with stub variables; they do not run `gold_dispatch.sh`, so the block's PLACEMENT in the file (after argument parsing; inside the freshness function) is your reading, stated in your report with line numbers.
 EGRESS CLASS, declared: NONE.
 </preflight>
 
-## 1. THE CELL -- `FB-f-9` phase A3 (round 3, enrichment item 1, step 2; the CTO's ADDENDUM 5, which amends ADDENDUM 2 condition 2)
+## 1. THE CELL -- `FB-f-9` phase A4 (round 3, enrichment item 1, step 2; the CTO's ADDENDUM 4 carrier and the act-2 CTO half's ADDENDUM 1 row 1)
 
-Phases A and A2 are merged: every platinum WRITE of the 14 writers goes through `lib/platinum_dest.py destination()`. The
-CTO has ruled that READS, LISTS and DELETES of a served-class (platinum) key follow the same seam: one `BD_PLATINUM_MODE`
-moves a key's write and its readers together, and a list or delete path never touches the legacy home under `canonical`.
-You build that, DORMANT: with the mode unset every call you touch names the same bucket, prefix and key it names today.
-You run nothing and move nothing.
+The dispatcher `data/black_diamond/scripts/gold/gold_dispatch.sh` is the one switch for the platinum mode (ADDENDUM 4) and its freshness gate reads
+a served key from the legacy home. You edit that one file in two places, DORMANT: with the mode unset the file's behavior
+is byte-identical to today's. You run nothing and deploy nothing.
 
 ### 1a. The facts you start from
 
-- `lib/platinum_dest.py`: `destination(legacy_key, mode=None) -> (bucket, key)`; `legacy` (mode unset) returns
-  `(S3_BUCKET, legacy_key)`; `canonical` returns the new home for a key under a served class prefix (the 11 classes of
-  `lib/platinum_dest_view.py PLATINUM_CLASSES`: rows `(legacy_prefix, bucket, key_template)`, the template ending in
-  `{tail}`) and `(S3_BUCKET, legacy_key)` for any other key. An unknown mode is a `ValueError`.
-- The census `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_reads.py` (read it first; run it with `--list`) prints every S3 data call site in the 14 writers
-  and the 8 lib modules they import, with its class. A site is ROUTED when its `Bucket` is bound from a seam call
-  (`platinum_destination`, `platinum_source` or `platinum_list_target`, by name, directly or through a tuple unpack),
-  NOT-SERVED when its key resolves statically outside every served prefix, EXEMPT when its line or the line above carries
-  `# seam: exempt <reason>`, UNROUTED otherwise. At base: 127 sites, 22 / 36 / 0 / 69.
-- Worker 0.9.0_WK_ADVI_FIRMBKTS~19 filed 35 read sites by hand (rows `ADVI_FIRMBKTS-D1-W19-S1` to `S35` in
-  `surprise-channel/investigations/INVESTIGATION_v1.md`; read them). They are a subset: the census is the denominator.
-  S35 is `D_04.client_portal_summary.py` listing `platinum/advisors/` and deleting stale keys on the legacy bucket.
+- `lib/platinum_dest.py` (merged): `source(legacy_key, mode=None) -> (bucket, key)`; the mode is read from the environment
+  variable `BD_PLATINUM_MODE` (unset = `legacy`, `legacy` returns `(S3_BUCKET, key)` where `S3_BUCKET` is `BD_S3_BUCKET`
+  defaulting to `opal-data-bd`).
+- `data/black_diamond/scripts/gold/gold_dispatch.sh` sets `SCRIPTS="/tmp/gold_layer_scripts"` near its top (the directory the runner syncs `code/gold/`
+  into, including `lib/`), parses its arguments into the shell variables `MODE` (`chain`, `single`, `group`, `from`) and
+  `DRY_RUN` (`0` or `1`), and at about line 249, inside the freshness check, reads the gate's date with
+  `gold_as_of=$(aws s3 cp "s3://${BD_S3_BUCKET}/gold/artifacts/summary/header_metrics.json" - ...)`.
+- That key is a served-class key: written at the new home under `canonical`, so the legacy read would return a frozen
+  `data_as_of`. The chain's QA runner is the same script with `GOLD_KEEP_ALIVE=1` (the runner script
+  `infra/aws/ec2/bd-gold-layer-runner/run-gold-layer.sh` reads it) and a marker file `/tmp/GOLD_QA_REBUILD`.
 
 ### 1b. The steps
 
-0. Work in `/c/dev/wk-firmbkts-20`. Begin every shell call with `cd /c/dev/wk-firmbkts-20 &&`.
-1. **The seam, `lib/platinum_dest.py`.** Add, beside `destination`:
-   - `source(legacy_key, mode=None) -> (bucket, key)`: for a READ; the same resolution as `destination` (reads follow
-     writes).
-   - `list_target(legacy_prefix, mode=None) -> (bucket, prefix, to_legacy)`: for a LIST or PAGINATE. In `legacy`:
-     `(S3_BUCKET, legacy_prefix, identity)`. In `canonical`, when `legacy_prefix` starts with a served class prefix:
-     `(class bucket, key_template with {tail} replaced by legacy_prefix[len(class_prefix):], to_legacy)` where
-     `to_legacy(dest_key)` returns `class_prefix + dest_key[len(template_root):]` (`template_root` = the template without
-     its trailing `{tail}`) and raises `ValueError` for a key outside `template_root`. When `legacy_prefix` is a PROPER
-     prefix of a served class prefix (a listing that would span served and non-served keys): `ValueError`. Otherwise
-     `(S3_BUCKET, legacy_prefix, identity)`.
-   - Both read the mode exactly as `destination` does and refuse an unknown mode.
-   - A DELETE of a key you listed uses `destination(legacy_key)` for its bucket and key (the listing returned legacy-shaped
-     keys through `to_legacy`).
-2. **Unit tests, `tests/test_platinum_dest.py`** (unittest, standard library; add cases, keep the existing ones). Put them in
-   three `unittest.TestCase` classes named exactly `TestSource`, `TestListTarget` and `TestCanonicalNegativeArm`:
-   (a) `legacy`: `source` and `list_target` return `(S3_BUCKET, key)` and `(S3_BUCKET, prefix, identity)` for one key of
-   each of the 11 classes; (b) `canonical`: `source(k) == destination(k)` for those 11, and `list_target` returns the
-   class bucket and a prefix that is NOT the legacy prefix, with `to_legacy(dest_prefix + tail)` equal to the legacy key;
-   (c) a prefix spanning two classes raises `ValueError`; (d) a non-served prefix is the identity in both modes; (e) the
-   NEGATIVE ARM: with a recording fake client (a class whose `get_object`, `head_object`, `list_objects_v2`,
-   `get_paginator(...).paginate`, `delete_object` and `delete_objects` record the `Bucket` and `Prefix`/`Key` they get),
-   drive each routed LIST and DELETE helper that is a module-level function of the 14 writers or the libs (import the
-   script with `importlib.util.spec_from_file_location`; replace its module-level `s3` and bucket names with the fake;
-   mode `canonical`) and assert the recorded calls name 0 legacy served prefixes. A list or delete that sits inline in
-   `main()` and cannot be driven is named by file:line in your report; the census still covers it.
-3. **Route every UNROUTED site** the census lists, in the 14 writers and the lib modules, until it reads UNROUTED 0:
-   - a read of a key: `b, k = platinum_source(<the key expression>)` and `Bucket=b, Key=k` (a helper such as `_read_json`
-     or `_read_parquet` is routed once, inside the helper, so every caller follows);
-   - a list or paginate: `b, p, to_legacy = platinum_list_target(<prefix>)`; page results come back with `to_legacy`
-     applied so the rest of the function sees legacy-shaped keys exactly as today;
-   - a delete: `b, k = platinum_destination(<legacy key>)`; D_04's advisor cleanup (row S35) lists through the seam and
-     deletes through `destination`, so under `canonical` it never lists or deletes the legacy prefix;
-   - a PUT the census lists as UNROUTED is a served write the earlier phases missed, or a non-served write whose key the
-     census could not resolve: route it through `platinum_destination` (identity for a non-served key) unless the key is a
-     plain non-served literal, and file a row if it changes the writer census count;
-   - a call on a bucket that is NOT the pipeline bucket (a literal or another config bucket), or a key that is provably
-     non-served but dynamic: add `# seam: exempt <one-line reason>` on the call line. Prefer routing: the seam is the
-     identity for a non-served key, so routing it costs nothing.
-   Import the seam names in each edited script as `from lib.platinum_dest import destination as platinum_destination,
-   source as platinum_source, list_target as platinum_list_target` (only the names it uses).
-4. **The census line numbers.** `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json` names each writer line by number
-   and AC4 re-reads it against the file; your insertions shift lines. Re-read each entry of every script you edited and
-   set its `line` to the line now holding the same statement (a text read); change no other field. Same for
-   `PRODUCER_CENSUS.md` where it prints numbers.
+0. Work in `/c/dev/wk-firmbkts-21`. Begin every shell call with `cd /c/dev/wk-firmbkts-21 &&`.
+1. **The mode export.** After the argument parsing (the point where `MODE` and `DRY_RUN` are final, and before any use of the
+   mode by a child), add exactly this marked block (the check reads it by its two marker lines):
+   ```
+   # >>> PLATINUM-MODE (ADVI_FIRMBKTS FB-f-9) >>>
+   if [ "${MODE:-}" = "chain" ] && [ "${DRY_RUN:-0}" = "0" ] && [ "${GOLD_KEEP_ALIVE:-0}" != "1" ] \
+      && [ ! -f "${GOLD_QA_MARKER:-/tmp/GOLD_QA_REBUILD}" ] && [ -z "${BD_PLATINUM_MODE+x}" ]; then
+       export BD_PLATINUM_MODE=canonical
+   fi
+   # <<< PLATINUM-MODE (ADVI_FIRMBKTS FB-f-9) <<<
+   ```
+   The block never overrides a value already set, and it fires only for a scheduled production chain. NOTE: while this
+   file is not deployed the block does nothing on the runner; it is the deployed file that moves the mode.
+2. **The gate read.** Replace the `gold_as_of=$(aws s3 cp "s3://${BD_S3_BUCKET}/gold/artifacts/summary/header_metrics.json" -
+   ...` read so that its location comes from this marked block, placed immediately before it inside the same function, and
+   the `aws s3 cp` reads `"$gold_hm_loc"`; keep the rest of the pipeline (`| python3 -c ...`, the redirections) byte-for-byte:
+   ```
+   # >>> GATE-READ-LOCATION (ADVI_FIRMBKTS FB-f-9) >>>
+   gold_hm_loc=$("${GOLD_PYTHON:-python3}" -c 'import sys; sys.path.insert(0, sys.argv[1]); from lib.platinum_dest import source; b, k = source("gold/artifacts/summary/header_metrics.json"); print("s3://%s/%s" % (b, k))' "$SCRIPTS" 2>/dev/null)
+   [ -n "$gold_hm_loc" ] || gold_hm_loc="s3://${BD_S3_BUCKET}/gold/artifacts/summary/header_metrics.json"
+   # <<< GATE-READ-LOCATION (ADVI_FIRMBKTS FB-f-9) <<<
+   ```
+   If the lib is absent the location falls back to today's legacy URI (the check's third case). Find, by reading the file,
+   whether the freshness function runs AFTER the `aws s3 sync` of `code/gold/` into `$SCRIPTS` on a runner (the sync is
+   at about line 665) or before it; if before, the lib is not there on the first gate read and the fallback would
+   silently read the legacy home under `canonical`: say so in a row (class OBSERVATION) with the two line numbers, and in
+   that case ALSO add the dispatcher's own directory as a second search path in the block (`$(dirname "$0")`), keeping
+   `$SCRIPTS` first so the check still passes.
+3. **Shell syntax.** `bash -n data/black_diamond/scripts/gold/gold_dispatch.sh` exits 0.
+4. **Find, do not fix, the same shape elsewhere in this file.** List every other `aws s3 ls`, `aws s3 cp`, `aws s3 sync` or
+   `aws s3api` in `gold_dispatch.sh` whose key is under one of the 11 served legacy prefixes
+   (`gold/artifacts/`, `gold/entities/{accounts,advisors,clients}/`, `gold/platinum/firm/`, `gold/views/`,
+   `platinum/{49financial,accounts,advisors,clients,firm}/`): file ONE row per site (OBSERVATION: line, what it reads,
+   what the mode does to it) and change nothing at that site.
 
 ## 2. BOUNDS
 
-1. Repository files only: no AWS call, no run of any gold script, no edit to a launch, runner or schedule file, no change
-   to `lib/config.py`, `lib/platinum_dest_view.py`, `lib/opal_naming.py` or any registry file. The mode is never set here.
-2. With the mode unset every line you touch names the same bucket, prefix and key as today, and the pages a listing
-   returns are the same: if an edit would change a `legacy` result, STOP and file a BLOCKING row.
-3. NO new delete and NO widened delete: a delete you route deletes exactly what it deletes today, moved to the key's
-   seam destination. Do not add a delete, a copy or a write that does not exist at base.
-4. Reads of non-platinum tiers (bronze, silver, gold canonical) stay on `S3_BUCKET`: the seam is the identity for them.
-5. Do not edit a check or the census beyond step 4's line numbers. No bucket name typed anywhere. Client ids appear in keys:
-   your report names counts and script paths, never a key. No non-ASCII in code; LF line endings. If something cannot be
-   met within your paths, file a surprise row and stop.
+1. One file changes: `data/black_diamond/scripts/gold/gold_dispatch.sh`. The diff against base is the two marked blocks and the one replaced `aws s3
+   cp` argument, nothing else (`git diff --unified=0` shows 3 hunks at most, plus the lines of your step-2 contingency).
+2. With the mode unset and a non-chain mode, a dry-run, `GOLD_KEEP_ALIVE=1` or the QA marker, the file does exactly what it
+   does today. Under a scheduled chain with the mode unset the only difference is the exported variable (the point of the
+   act). No new delete, copy, write or alert. No change to any other file, launch script or schedule.
+3. LF line endings; no non-ASCII in the file. If something cannot be met within your paths, file a surprise row and stop.
 
 ## 3. SURFACES
 
 <paths>
-data/black_diamond/scripts/gold/lib/platinum_dest.py
-data/black_diamond/scripts/gold/tests/test_platinum_dest.py
-data/black_diamond/scripts/gold/C_05.client_tax_liability.py
-data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py
-data/black_diamond/scripts/gold/C_07.advisor_attribution.py
-data/black_diamond/scripts/gold/C_08.advisor_fee_efficiency.py
-data/black_diamond/scripts/gold/D_00.portal_aggregates.py
-data/black_diamond/scripts/gold/D_00b.portal_timeseries.py
-data/black_diamond/scripts/gold/D_00c.portal_leaderboard.py
-data/black_diamond/scripts/gold/D_00f.advisor_nna_canonical.py
-data/black_diamond/scripts/gold/D_01.partner_analytics.py
-data/black_diamond/scripts/gold/D_02.advisor_client_detail.py
-data/black_diamond/scripts/gold/D_03.composition_artifacts.py
-data/black_diamond/scripts/gold/D_04.client_portal_summary.py
-data/black_diamond/scripts/gold/E_01.account_quality_tiers.py
-data/black_diamond/scripts/gold/E_24.rebuild_fee_scorecard.py
-data/black_diamond/scripts/gold/lib/advisor_nna_attribution.py
-data/black_diamond/scripts/gold/lib/display_label.py
-data/black_diamond/scripts/gold/lib/etf_classifier.py
-data/black_diamond/scripts/gold/lib/exclusions.py
-data/black_diamond/scripts/gold/lib/floored_percentiles.py
-data/black_diamond/scripts/gold/lib/gold_utils.py
-data/black_diamond/scripts/gold/lib/helpers.py
-data/black_diamond/scripts/gold/lib/mix_views.py
-org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json
-org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.md
-org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~20/
+data/black_diamond/scripts/gold/gold_dispatch.sh
+org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~21/
 org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
-Read-only: the rest of the repository, the checks under `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/` and `round3/checks/`.
+Read-only: the rest of the repository, the checks under `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/`.
 
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~20/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-20 &amp;&amp; timeout 100 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_reads.py --root /c/dev/wk-firmbkts-20; echo "exit=$?"</invocation><expect>ROUND 3 READ CENSUS: ALL SITES ROUTED, NOT-SERVED OR EXEMPT</expect></criterion>
-  <criterion id="AC2" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-20 &amp;&amp; timeout 110 env -u FORCE_COLOR python -m unittest discover -s data/black_diamond/scripts/gold/tests -p "test_platinum_dest.py" -k TestSource -k TestListTarget -k TestCanonicalNegativeArm 2&gt;&amp;1 | tail -n 3</invocation><expect>^OK$</expect></criterion>
-  <criterion id="AC3" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-20 &amp;&amp; timeout 115 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_producers.py --arms static --root /c/dev/wk-firmbkts-20; echo "exit=$?"</invocation><expect>ROUND 3 PRODUCERS STATIC: 4 of 4 arms</expect></criterion>
-  <criterion id="AC4" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-20 &amp;&amp; timeout 110 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_census.py --census org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json --root /c/dev/wk-firmbkts-20; echo "exit=$?"</invocation><expect>ROUND 3 PRODUCER CENSUS: 3 of 3 arms</expect></criterion>
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~21/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.proof_of_spec.json`.
+  <criterion id="AC1" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-21 &amp;&amp; timeout 100 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_dispatch.py --arm export --root /c/dev/wk-firmbkts-21; echo "exit=$?"</invocation><expect>ROUND 3 DISPATCH EXPORT: ALL CASES PASS</expect></criterion>
+  <criterion id="AC2" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-21 &amp;&amp; timeout 100 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_dispatch.py --arm gate --root /c/dev/wk-firmbkts-21; echo "exit=$?"</invocation><expect>ROUND 3 DISPATCH GATE: ALL CASES PASS</expect></criterion>
 </proof_of_spec>
 
-AC1 is the CTO's AST census (UNROUTED 0), FAIL at base (69). AC2 runs the three new test classes (the legacy identity, the
-canonical equality and the canonical negative arm); at base none exists, so it selects no test and does not read OK. AC3 is the
-phase A build still dormant and identical in `legacy` over all 52,910 manifest keys (PASS at base as a control). AC4 is
-the census still reading the writer lines at their numbers (PASS at base; it FAILS if step 4 is skipped, because your
-insertions move lines): a fourth criterion, carried because the line binding is the census's own design. Each
-invocation terminates inside its bound.
+AC1 runs the export block under eight environments (a scheduled chain reads `canonical`; `single`, `group`, a dry-run,
+the QA keep-alive and the QA marker read unset; a value already set is kept), FAIL at base. AC2 runs the gate block with the
+mode unset (today's URI, byte-identical), with `canonical` (the module's own answer for the key) and with the lib absent
+(today's URI), FAIL at base. Two criteria: nothing else on this order is a mechanical claim. Each invocation terminates
+inside its bound.
 
 ## 5. WHEN YOU ARE DONE
 
-Instance at `D/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.proof_of_spec.json`, `D` = `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~20`.
-Commit the seam, the tests, the routed scripts and libs, the census files and your rows, then the instance second (its
-artifact rows pin to the commit that holds them). **Do not flip this order's `<status>`:** phase B is the issuer's to
-amend. Row ids: `ADVI_FIRMBKTS-D1-W20-S<k>`, `k` from 1, `surfaced_at` from `date -u +%FT%TZ`. Report once: the AC1
-output in full, the census counts before and after, the list of sites you could not drive in the negative arm (file:line),
-which of the 35 rows each fixed (by row id), and the commit hash.
+Instance at `D/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.proof_of_spec.json`, `D` = `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~21`.
+Commit the file and your rows, then the instance second (its artifact rows pin to the commit that holds them). **Do not
+flip this order's `<status>`.** Row ids: `ADVI_FIRMBKTS-D1-W21-S<k>`, `k` from 1, `surfaced_at` from `date -u +%FT%TZ`.
+Report once: the AC1 and AC2 outputs in full, the line numbers of the two blocks and of the sync, the sites of step 4
+(count and line numbers), `bash -n`'s exit, and the commit hash.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
@@ -233,6 +185,15 @@ precondition). D1-W20-S4 (log text names the pipeline bucket under `canonical`):
 verification reads listings, not logs. Gate limb: a criterion invocation amended on a non-terminal order by its issuer; no
 placeholder declared.
 
+**AMENDMENT 7 (2.0.0_SA_COO~B1, phase A4; the CTO's act-2 half ADDENDUM 1 @6ac66a8950, msg 3677, row 1):** phase A3 is
+drained and the CTO signed act 2 with a precondition (outside readers) that the issuer's census (`ledger/R3_ACT2_OUTSIDE_READERS_CENSUS.md`)
+answered: the dispatcher's own freshness gate reads `gold/artifacts/summary/header_metrics.json` from the legacy home, a
+producer-class reader, which the CTO ruled routed now, dormant, with the byte-identical proof. The mode export of the COO
+half is the same file: it is written here as a marked block that the deploy leg ships, so the repository file and the
+deployed file are one reading. The face above replaces phase A3's (closed, in history). Two criteria, each dry-run at
+base (FAIL as expected) and on a reference file (8 of 8 and 3 of 3). Gate limb: the `<issued_to>`, `<paths>` and
+criteria of a staged-open order are amended by its issuer; GATE viii read `<placeholders>` at HEAD (`NONE`).
+
 **PHASE B (STAGED; NOT A FACE).** Un-park conditions, all required, each read from a file at HEAD:
 1. Phase A merged with AC1 `4 of 4`, and `FB-f-8` (act 1, the advTenant deploy) is `complete`.
 2. The never-widen pair for the mode move reads SIGNED in both halves
@@ -258,7 +219,7 @@ disarm owner this seat) is closed by phase A's `D_00f` change and by AC1's D3.
 <status>pending</status>
 <round>3</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-9</to_id>
-<slot>~20</slot>
+<slot>~21</slot>
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
