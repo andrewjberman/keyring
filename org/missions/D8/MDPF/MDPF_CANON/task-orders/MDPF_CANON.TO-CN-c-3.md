@@ -102,7 +102,7 @@ issuer picked this reader from the census's dependency order: it is the only rea
 slice closes a whole surface (writer plus reader) and moves no served output. Runs in slot ~9's queue AFTER `CN-c-2`; one chain. The
 `/seams` read is the issuer's at the drain (a worker has no skill tool). Base box/dell1. LF only.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <to_id>MDPF_CANON.TO-CN-c-3</to_id>
 <slot>~9</slot>
