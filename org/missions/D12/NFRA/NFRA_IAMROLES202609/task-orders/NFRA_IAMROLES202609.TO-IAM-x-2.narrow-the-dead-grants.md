@@ -57,6 +57,23 @@ PHASE A -- no apply, no AWS write:
   3. STOP. Report to 2.0.0_SA_COO~ZI. The pair(s) ledger/NEVER_WIDEN_ROUND7_X-2_{COO,CTO}_HALF.md are written against
      your survey and name, per module, exactly which statements leave and that nothing else moves.
 
+AMENDMENT A3-r7 (issuer, 2026-10-11 ~06:5xZ, on NARROW_SURVEY.md @6b0ba5dac4, msg 33223) -- THIS GOVERNS PHASE B:
+  - TARGETS 1 + 2 (opal-smartx-s3-access, opal-smartx-secrets on the ORPHAN opal-smartx-lambda-role): DELETE through the
+    IAM API, not Terraform: `aws iam delete-role-policy` for each, under ONE NEVER-2 entry `iamroles-r7-narrow-smartx`
+    whose rollback leg is `aws iam put-role-policy` with each policy's as-live document, saved first to
+    .../round7/ROLLBACK_smartx_<policy>.json from get-role-policy. Remove the inert zz_narrow_z_s23.tf.proposed in
+    the same commit; it is never applied. The x-4 ruling took the same route. It avoids the two-apply
+    import-then-remove, and the canon collision smartx-s3-access / opal-smartx-s3-access disappears, because the
+    colliding name never enters the module. smartx-pipeline is NOT applied.
+  - TARGET 3 (CodeBuildSemanticClusteringPolicy, news-pipeline): the rule of removal is extended to RESOURCE GRAIN for
+    this target. From statement `S3Access`, remove ONLY `arn:aws:s3:::codebuild-semantic-clustering-artifacts/*`
+    (read 404). `opal-data-news-v2/*`, the statement's actions and the other three statements stay byte-identical.
+    This is the cell's own WHY at its sharpest: a global bucket name with read+write on an IN-USE role. Terraform:
+    import, then the one-element Resource edit, -target only, in the A4-r6 order.
+  - TARGET 4 (DynamoDBAccess on sentiment_query_api-role, market-overview): HELD. Nothing is applied. Wrong-region,
+    not dead; no squatting hazard; the role's only data grant. DELETE vs REPOINT is a product call (a repoint is a
+    widening), carried to 1.0.0_SA_CTO~Z in the round's L10 slug. Remove the inert zz_narrow_row14.tf.proposed.
+  - The pair(s) are written per act: smartx (2 policy deletes) and news-pipeline (1 Resource element).
 PHASE B -- only on the issuer's GO, after both halves are SIGNED:
   4. Read .open_deploys/ for the module, then open a deploy-ledger entry `iamroles-r7-narrow-<module>` per module.
   5. Commit the declaration on your worktree branch BEFORE any import (A4-r6, row Z-S27); then `safe-apply` with
@@ -107,8 +124,8 @@ directory (`to_id` NFRA_IAMROLES202609.TO-IAM-x-2).
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="IAM-x-2"><invocation>bash -c "f=org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round7/NARROW_SURVEY.md; test -f \$f || { echo MISSING:\$f; exit 2; }; echo removed=\$(grep -c '^REMOVED: ' \$f) dead=\$(grep -c -E '^REMOVED: .+ LIVE-READ: [A-Za-z]+\$' \$f) control=\$(grep -c -E '^CONTROL: .+ FOUND\$' \$f)"</invocation><expect>`removed=N dead=N control=M` with N at least 3 and equal in both places, and M at least 1 -- every removed ARN carries a live non-existence read, beside at least one positive control</expect></criterion>
-  <criterion id="AC2" cell_refs="IAM-x-2"><invocation>grep -c -E '^POST-APPLY-PLAN: .+: 0 to add, 0 to change, 0 to destroy$' org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round7/POST_APPLY_narrow.md</invocation><expect>exactly 3 -- each of the three modules (smartx-pipeline, news-pipeline, market-overview; A2-r7) plans clean after its narrowing; fewer is a finding recorded in that file</expect></criterion>
-  <criterion id="AC3" cell_refs="IAM-x-2"><invocation>bash -c "echo open=\$(ls -a org/critical_paths/.open_deploys/ | grep -c 'iamroles-r7-narrow') closed=\$(grep -l '^\*\*Status:\*\* CLOSED' org/critical_paths/change_management/*iamroles-r7-narrow* 2>&1 | grep -c '\.md\$')"</invocation><expect>`open=0` and `closed=3` -- three ledger entries (one per module, A2-r7) whose own Status line reads CLOSED</expect></criterion>
+  <criterion id="AC2" cell_refs="IAM-x-2"><invocation>grep -c -E '^POST-APPLY-PLAN: .+: 0 to add, 0 to change, 0 to destroy$' org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round7/POST_APPLY_narrow.md</invocation><expect>exactly 1 -- news-pipeline plans clean after its one-element narrowing (A3-r7: smartx deletes go through the IAM API with no plan; market-overview is held); fewer is a finding recorded in that file</expect></criterion>
+  <criterion id="AC3" cell_refs="IAM-x-2"><invocation>bash -c "echo open=\$(ls -a org/critical_paths/.open_deploys/ | grep -c 'iamroles-r7-narrow') closed=\$(grep -l '^\*\*Status:\*\* CLOSED' org/critical_paths/change_management/*iamroles-r7-narrow* 2>&1 | grep -c '\.md\$')"</invocation><expect>`open=0` and `closed=2` -- two ledger entries (smartx IAM-API deletes, news-pipeline apply; A3-r7) whose own Status line reads CLOSED</expect></criterion>
   <criterion id="AC4" cell_refs="IAM-x-2" judgment="true"/>
 </proof_of_spec>
 
