@@ -141,3 +141,47 @@ that ran. Push state LOCAL at `6a254507a6`; the integrator moves origin.
 4. `[whoever resumes the YCharts path]` Read this first: `lease_expires_at` is 0 and the one-shot intent is
    per JOB, so the next request WILL attempt one fresh sign-in. The stop is doing real work.
 5. `[0.7.0_AE_CloudOps~IB2]` **Monday 14:15Z+**: the one fire read that closes IB-pr-413 L4 and IB-pr-404 L6.
+
+---
+
+## ADDENDUM, 2026-10-11 ~14:1xZ -- both blockers cleared and the order is COMPLETE
+
+The Blockers section above is superseded. Recorded rather than left reading "blocked", because a stale
+log is read as the position.
+
+1. **AC3** -- the issuer fixed both false positives at AMENDMENT 1 `@8655d3c005`, including a SECOND one
+   this seat had not found: the redirection pattern matched `>/I` inside the `sed` replacement text of my
+   own command. The fix was verified in both directions before being accepted -- 10 of 10 control cases,
+   still catching `bash ...run-ycharts-session.sh` and a real `>` write, no longer catching
+   `sha256sum a.sh b.js` or the `sed` text. AC1, AC2 and AC3 then all PASS on the record **unedited**.
+2. **The row ids** -- the order's `IRPT_BCKEND-D2-IB2-S<k>` form cannot match `SURPRISE_ID_RE`, which
+   permits one mid-segment and not two. Measured, then **asked** rather than renumbered unilaterally; the
+   issuer answered yes and recorded the id form on its own face as an issuer defect. Renumbered to
+   `IRPT_BCKEND-D2-S85` through `-S88`, free-checked immediately before the edit, with no old-form id left
+   in the channel, the record, the one-page read or the proof.
+3. **The corpus baseline** -- cleared by its own owner between the two commit attempts: the six standing
+   failures in ADVI_COTBKF's remediation file are gone and the pass reads `new=0`.
+
+Rows committed `@4279488e47`; proof VALID; status complete `@ce3ccbf3a7`. That commit also unblocked the
+issuer's IB-pr-429 re-count and IB-pr-432, which had been refusing on the uncommitted rows.
+
+### One correction against myself, and one habit to change
+
+`4279488e47`'s commit message states it carried the authorised `# surprise-row-override:` line. **It did
+not.** I wrote the message expecting to need the override, then tried the plain commit first so an
+authorised override would not be spent where it was not required -- and the gate passed clean. I did not
+re-read the message against that outcome before committing. No override was used or honoured: there is no
+audit entry, the corpus pass printed `0 STANDING outside the act`, and the phrase sat in prose inside
+backticks rather than at the start of a line, so the gate's regex never matched it and the gate was never
+asked. Corrected in the record as `correction_to_commit_4279488e47` and reported to the issuer.
+
+The narrow lesson: **a commit message written before the gate has ruled is a claim about the future, and
+it has to be re-read against what the gate actually did.**
+
+The second, and it bit three times today: **prose containing backticks must never travel through a shell
+argument.** It cost a mangled ledger proof on IB-pr-420, it is the whole content of row D2-S63 (a prose
+line inside a heredoc that became a redirect and left a 20-byte file in the repo root), and it wrecked the
+first attempt at this very addendum, where every backtick became command substitution. The log file was
+confirmed byte-identical to its commit afterwards, so nothing partial landed. The rule that actually works
+is the one CLAUDE.md already states for commit messages and this seat should apply to **all** prose: write
+it with a non-shell writer to a file, and let only the path travel through argv.

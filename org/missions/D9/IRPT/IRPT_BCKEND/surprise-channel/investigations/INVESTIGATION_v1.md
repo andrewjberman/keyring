@@ -26255,3 +26255,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-W290-S1 -- IB-pr-432: the v2 report schema is outside the registry test_seam_paired builds, so the Opal-form $ref cannot resolve there; STOP
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W290-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~290",
+  "surfaced_at": "2026-10-11T13:04:17Z",
+  "one_line": "IB-pr-432 STOP: a $ref from the sections response schema into the v2 report contract cannot resolve in test_seam_paired's registry, which loads only the v1 folder; the order's step 2 says stop",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py lines 408-418 (_response_validator): the registry is built from os.listdir(V1) filtered to *.schema.json, each file registered under '../<name>' and 'opal://irpt/contracts/v1/<name>' only; the v2 schema (opal://irpt/contracts/v2/AnalysisReport.schema.json, file _contracts/AnalysisReport.v2.schema.json) is not loaded",
+      "same file lines 382-389 (_ref_published_path): returns None for any $ref not starting '../' or 'opal://irpt/contracts/v1/'; test_every_declared_route_has_a_response_contract_whose_refs_resolve asserts that is not None for every data $ref, so it would fail on analysis-report once the base failure on analysis-request-original stops masking it",
+      "measured in this worktree: with the data member changed to two closed forms (anyOf; vendor branch as today; Opal branch with provider, request_ref, sections, computation_validation by $ref into opal://irpt/contracts/v2/AnalysisReport.schema.json#/$defs/opal_engine/properties/*, retained_ref by the v1 $ref), IB130-1-AC1 printed PASS (4 of 4 arms, 60 schema files) and test_served_members_ar_y_32.py passed, but 'python -m pytest _contracts -q -p no:cacheprovider -rf' gave '3 failed, 202 passed': the two base failures plus test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[analysis-report] with referencing.exceptions.Unresolvable: opal://irpt/contracts/v2/AnalysisReport.schema.json#/$defs/opal_engine/properties/request_ref; so IB130-1-AC2 cannot pass",
+      "candidate schema kept at org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~290/CANDIDATE_analysis-report.response.schema.json.txt; the response schema file itself is restored to base (git diff empty); no fixture, no record, no proof written; the order stays pending",
+      "second structural finding: that control's _data_for returns the whole document when data has 'oneOf' (test_seam_paired.py line 748), so the candidate uses 'anyOf' (branches disjoint by provider) and lists the vendor member names under data.properties with description-only schemas so the slice at line 753 still names them; a shared typed 'sections' there is impossible because v1 and v2 Opal section items differ"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-432 build step 2: the $ref into the v2 schema must resolve where the repo's own tests resolve it; if the v2 file is outside the folder the registry loads, STOP and file a row saying which line builds the registry and what it loads; do not edit a test, copy the v2 schema into another folder, or inline its shapes.",
+  "world_is": "The registry at test_seam_paired.py:408-417 loads only docs/contracts/investor-reporting/v1/*.schema.json; the v2 report contract sits in infra/aws/lambda/investor-reporting/_contracts/ and is not in it, so any $ref to it makes the analysis-report control test (passing at base) raise Unresolvable. The cell cannot be met inside its write grant: the remedies (register the v2 file in that test's registry, or publish the v2 schema under v1, or inline) each need a path outside <paths> or are forbidden by the face.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W290-S2 -- IB-pr-432: ops/tests/test_owned_report.py pins the old data member of the sections response schema and goes red on the new one
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W290-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~290",
+  "surfaced_at": "2026-10-11T13:18:52Z",
+  "one_line": "IB-pr-432: the changed sections response schema turns ops/tests/test_owned_report.py::test_sections_projection_matches_existing_closed_response_schema red; that reader is outside the order's paths",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/tests/test_owned_report.py lines 163-182: the test loads the response schema's data member, asserts every key of data.properties equals {'$ref': 'opal://irpt/contracts/v1/AnalysisReport.schema.json#/properties/<key>'}, replaces each with the v1 subschema and validates the vendor sections answer against data directly (a bare validator, no registry)",
+      "measured in this worktree: with the base schema, 'python -m pytest ops/tests/test_owned_report.py -q -p no:cacheprovider -k closed_response_schema' gave '1 passed'; with the changed schema (anyOf of the two closed forms, the candidate of row IRPT_BCKEND-D2-W290-S1) the same command fails at line 169 (the vendor member names under data.properties carry a description, not the v1 $ref); the whole ops file otherwise gives 34 passed with test_retained_ref_served.py",
+      "no schema shape that admits the Opal form can satisfy that test unedited: a v1 $ref on data.properties.sections would also grade the Opal sections (different item shape) and the anyOf branches carry opal:// refs the test's bare validator cannot resolve; the test needs the same registry the _contracts suite builds. The test is outside this order's <paths>, so it is not edited; the _contracts suite (criterion AC2) is unaffected"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-432 step 4 and AC2 grade the _contracts suite only; the face names no other reader and grants no path outside the schema, the one _contracts test file, three fixtures and the deliverables.",
+  "world_is": "A second reader of the response schema, ops/tests/test_owned_report.py, pins the old data member shape and goes red on the schema this order publishes. Left alone it is red at the drain's repo-wide hygiene run. The remedy is a bounded edit of that one test (resolve the data branches through the registry of the _contracts test, and assert the Opal and vendor answers against their branches); it needs a grant of ops/tests/test_owned_report.py, which the issuer holds.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

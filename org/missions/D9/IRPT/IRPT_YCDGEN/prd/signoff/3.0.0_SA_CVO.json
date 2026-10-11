@@ -1,13 +1,12 @@
 {
   "prd": "IRPT_YCDGEN_PRD.md",
-  "prd_version": "v0.11",
-  "prd_pin": "3b1895866f3592f9948e80c87f131479720036aa",
+  "prd_version": "v0.12",
+  "prd_pin": "aa4a647f6e784040e13b017459da51d689dc1a6b",
   "half": "ratified-text",
   "half_hash": "08db6524eaff15b6574b13d35e3c668a5acc82dd3aceb6ecfdbbc9a553210469",
   "endpoint_hash": "49717e2ed5af3b024d807041ba8447b45a21e7548c89efbc8faf0dd0c21792c9",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_PRD_v0.11_RATIFIED_TEXT_REVIEW_20261011.md@cebbdce129e6b17537b842a11bc0d61dfe484276",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_PRD_v0.12_RATIFIED_TEXT_REVIEW_20261011.md@ca4cdf3fb958fe4de5098e0fd8659badd463a1dd",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-11T14:29:46Z",
-  "reason": "ADDENDUM v0.11: the contract omits the reconciled member the ruling writes; the inferred-to-measured transition contradicts the definitions"
+  "signed_at": "2026-10-11T14:36:42Z"
 }
