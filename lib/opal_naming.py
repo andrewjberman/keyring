@@ -154,8 +154,8 @@ TARGET_REGISTRY_KEYS = {
     "data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py": ("scopes", "tiers"),
     ".tools/ds-precommit-check.py": ("scopes",),
     # ASSET_DIM_REST_PIN -- _blk_asset_dim_rest_pin() reads the scope row only (its key, short,
-    # pipeline_trees[].vendor and the routed bucket alias). It does NOT read tiers.json: this
-    # pipeline is pre-LGIC and its bronze sits in the firm's ROUTED bucket alias, not the tier
+    # pipeline_trees[].vendor and its tier_live bronze bucket, scopes.json). It does NOT read tiers.json: this
+    # pipeline is pre-LGIC and its bronze sits in the scope's transitional tier_live bucket, not the tier
     # home, so a tiers.json move must leave these bytes unchanged (r6-undeclared-inert). It does
     # not read systems.json either -- the key grammar is a format, and the source token comes
     # from the scope's own pipeline_trees row.
@@ -368,6 +368,13 @@ def _routed_bucket(scope_row):
     return scope_row["bucket"]
 
 
+def _tier_live_bucket(scope_row, tier):
+    """The bucket a scope's data of one tier LIVES in today (scopes.json tier_live), or None.
+
+    A transitional record of where a tier sits now; it never moves the served (routed) bucket."""
+    return ((scope_row.get("tier_live") or {}).get(tier) or {}).get("bucket")
+
+
 def _buckets_of_firms(reg):
     """Every provisioned bucket of a FIRM scope: its bucket and its bucket aliases."""
     out = []
@@ -468,6 +475,25 @@ def validate(reg_dir=None, systems_file=None):
                 refuse(where, "vendor", "%r is not a VENDOR system row" % row.get("vendor"))
         if not isinstance(row.get("bucket_provisioned"), bool):
             refuse(where, "bucket_provisioned", "missing: true or false")
+        if "tier_live" in row:
+            tl = row["tier_live"]
+            if not isinstance(tl, dict):
+                refuse(where, "tier_live", "a dict of tier -> live record")
+            else:
+                for tier, live in tl.items():
+                    lw = "%s.tier_live.%s" % (where, tier)
+                    if tier not in tiers:
+                        refuse(lw, "tier", "%r is not a tier of tiers.json (NAMING_SCHEMA.json key.tier)" % tier)
+                    if not isinstance(live, dict):
+                        refuse(lw, "record", "a dict of bucket, transitional, owner and expiry")
+                        continue
+                    if not isinstance(live.get("bucket"), str) or not live.get("bucket"):
+                        refuse(lw, "bucket", "missing or empty")
+                    if not isinstance(live.get("transitional"), bool):
+                        refuse(lw, "transitional", "missing: true or false")
+                    for f in ("owner", "expiry"):
+                        if not isinstance(live.get(f), str) or not live.get(f).strip():
+                            refuse(lw, f, "missing or empty")
         for sp in _spellings(row):
             if by_spelling.get(sp, key) != key:
                 refuse(where, "aliases", "%r already resolves to scope %r" % (sp, by_spelling[sp]))
@@ -1030,9 +1056,11 @@ def _blk_asset_dim_rest_pin(reg, h16, path):
     if not trees:
         raise RegistryError("scope 49financial registers no pipeline tree vendor")
     vendor = trees[0]["vendor"]
-    bucket = next((a["spelling"] for a in (scope.get("aliases") or [])
-                   if "bucket" in (a.get("planes") or []) and a.get("routed")), scope["bucket"])
     tier, table = "bronze", "assets_dim_rest"
+    bucket = _tier_live_bucket(scope, tier)
+    if bucket is None:
+        raise RegistryError("scope %s has no tier_live row for tier %s: add one to scopes.json"
+                            % (scope["key"], tier))
     pin = {
         "scope": scope["key"],
         "scope_short": scope["short"],
