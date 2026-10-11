@@ -23849,3 +23849,77 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Judgment, not a defect: the order's UNREADABLE arm was read as covering any failure to obtain the subject's cap from its own block. The owner may prefer a propagating exception on a derivation fault (a route 500 is loud) to a named UNREADABLE (served, and says why). The choice is one line in _with_subject_cap and is the issuer's to rule."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W353-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~353",
+  "surfaced_at": "2026-10-11T03:33:13Z",
+  "one_line": "Step 4 retires add_security._research_folders_disclosure, but lib/research/identity/tests/test_writers_carry_issuer.py (not in this order's <paths>) patches that name at three sites. The identity folder reads 3 failed, 270 passed, so AC2 cannot pass without an edit outside <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Step 4: retire the twin _research_folders_disclosure; a test in lib/research/identity/tests that patches the retired name is repointed to the helper, never deleted. The order's <paths> lists test_write_pool_union.py and test_crosswalk_refuses_absent_library.py and does not list test_writers_carry_issuer.py.",
+  "world_is": "test_writers_carry_issuer.py lines 34, 47 and 53 patch add_security._research_folders_disclosure. With the twin retired, those three tests ERROR with AttributeError. The worker repointed the one patch inside <paths> (test_write_pool_union.py line 93) and did not touch the out-of-path file, because a path it lacks is a BLOCKING row, not an override.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/tests/test_writers_carry_issuer.py:34,47,53 at 3f97e49c5f (mock.patch.object on add_security._research_folders_disclosure)",
+      "python -m pytest lib/research/identity/tests -q in the worktree at the change: 3 failed, 270 passed, the three failures AttributeError on the retired patch target"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner's choice: widen <paths> by test_writers_carry_issuer.py, and the repoint is three lines (the patch target becomes crosswalk._research_folders_for_disclosure); or keep the name alive. The retirement is committed as ordered. AC2 is FAIL on this row."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W353-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~353",
+  "surfaced_at": "2026-10-11T03:33:13Z",
+  "one_line": "The check's door A reads the real opal-data-harvest bucket (GET only) through crosswalk.load_issuer_sources(), against the preflight's 'stubbed S3 client'. Only the put side is faked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Preflight: the check runs over a stubbed S3 client, and nothing is put anywhere real. Bounds: run nothing against the real opal-data-harvest bucket.",
+  "world_is": "add_security._build_document calls crosswalk.load_issuer_sources() with no client, which builds a real boto3 S3 client and GETs the SEC ticker partition. The base run printed 'SEC CACHE: partition date=2026-09-22 object=s3://opal-data-harvest/sec/...'. Only the write_pool put goes to the fake. The worker ran the check before and after the change; both runs were read-only GETs against the real bucket and no put reached it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/crosswalk.py:1148-1160 at 3f97e49c5f (load_issuer_sources builds boto3.client when client is None)",
+      "lib/research/identity/add_security.py _build_document at 3f97e49c5f calls crosswalk.load_issuer_sources() with no client",
+      "r89_write_pool_guard.py run output at 3f97e49c5f: 'SEC CACHE: partition date=2026-09-22 object=s3://opal-data-harvest/sec/...'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The AC1 invocation belongs to the issuer and this worker did not edit it. A stub on load_issuer_sources would be the owner's change to the check."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W353-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~353",
+  "surfaced_at": "2026-10-11T03:33:13Z",
+  "one_line": "The two guards disagree in one direction: main's pre-build refusal needs a LibraryAbsentError, while write_pool refuses any absent document over a served count. A non-absent library failure therefore reaches write_pool, which raises ValueError (traceback, no put) instead of main's exit 2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 3: main keeps its early refusal as it is. The two guards are the same rule at two depths and must not disagree: where main's guard fires, write_pool is never reached.",
+  "world_is": "Where main's guard fires (absent reason named and served folders present), main returns 2 before write_pool, so the stated constraint holds. The reverse case: research_folders None with _library_absent_reason None (for example a PermissionError) lets main build an absent document, and write_pool raises ValueError, which main does not catch. Strictly safer (no put), but the text and exit form differ from main's REFUSED exit 2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/crosswalk.py main() at 3f97e49c5f: the write_pool guard gate on research_folders None and _library_absent_reason non-None",
+      "lib/research/identity/crosswalk.py write_pool at the worktree: _refuse_absent_over_served runs whenever a served document exists and the document carries no folders"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left as ordered: main is unchanged. An owner may choose to make main's gate match write_pool's, or to catch the ValueError in main. This row carries no action for the worker."
+}
+```
