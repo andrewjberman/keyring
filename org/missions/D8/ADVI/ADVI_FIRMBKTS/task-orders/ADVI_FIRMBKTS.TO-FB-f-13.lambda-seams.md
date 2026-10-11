@@ -172,7 +172,9 @@ accepted (S1 builder header names the canonical target; S2 three awswrangler rea
 views classify through the other Lambda's import; S5 the naming WARN on the guard constant). Gate limb: none graded (a
 ruling on a pending order's record face; paths unchanged).
 
-<status>pending</status>
+**PARKED (2.0.0_SA_COO~B1, round 3 close, 2026-10-11):** carried to round 4 as acts 4b and 4c (the cutover of exec-summary-generator and opal-partners-data by `BD_PLATINUM_MODE` in Terraform environment, CTO ADDENDUM 2 @3d24ccdbd2). Phase A (the dormant seams) is merged (@23133da0fb). Un-park conditions: act 3 reads COPY-COMPLETE and act 4 is ready; each Lambda's own pair with DELTA = 0 on its served responses; its change-management entry. Owner of the un-park: the round-4 analysis of `1.0.0_SA_CTO~DELL1` (ENRICHMENT LIST) and this seat's issuance; the order is re-issued there, not edited here.
+
+<status>parked</status>
 <round>3</round>
 <workstream>ACT4BC</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-13</to_id>

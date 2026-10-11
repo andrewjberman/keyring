@@ -15,11 +15,15 @@
 | 09:4xZ | read | au-3 / au-4 on live SOzAz9 (qq-5, 09:26:42Z) with DEV ff418947's modelSheet.ts: 32 of 32 team-row names render the team's rows; unmapped 3210 of 9233 vs FWD-20's 0. Row D1-S3 filed; the ruling is the CTO's (msg to 1.0.0_SA_CTO~DELL1). |
 | 09:4xZ | L8 | ROUND45_GRADED_READS_PACKET.md @68c7ba8753 (PARTIAL) to 3.0.0_SA_CVO. |
 
+| 10:1xZ-10:2xZ | L7 close | ~ZC SERVED TO-WRITE-R45-au1 (relay msg 3734): 368 of 368 resolved-folder files stored, 12 new keys, identity OK. Issuer re-ran AC1-AC4 on `git show cc1f7b2dfa` bytes (1, OK, 2, 1; mutants 0), read 12 of 12 keys from S3, flipped the order complete @79c9e7babb (instance VALID), packet section @59da914a74 to the CVO. Ledger amgt-corpus-r45-au1 was opened LATE (after the act): an issuer omission, stated in its title and the order. round-close-check --round 45 reads orders=0 (round-less order), so it is not a verdict. |
+
 ## Open (owner and un-park condition)
 
 | item | owner | un-parks when |
 |---|---|---|
-| TO-WRITE-R45-au1 at site Z (ingest, verify, four-count, schtasks) | 0.7.0_AE_CloudOps~ZC | ~ZC takes the crossbox order (SENT, NOT ACKED at 09:36Z) |
+| crossbox e8e0 from-side close (the order is served and closed; ~ZC has not acked the crossbox file) | 2.0.0_SA_COO~C1 | ~ZC acks `XB-20261011T093421Z-e8e0` |
+| L9 on FWD-1 / FWD-14 and AC5 of TO-WRITE-R45-au1 | 3.0.0_SA_CVO | the CVO reads the packet @59da914a74 |
+| tracked `ingest_run.json` left modified and uncommitted in site Z's tree | 2.0.0_SA_COO~C1 | reconciled by a seat that may write deliverables/0.9.0_WK_AMGT_CORPUS~1/ |
 | FWD-12 vs FWD-20 (row D1-S3): RULED by the CTO, ADDENDUM 1 @161ccad473 (msg 3714): BOTH govern via a row class read from the sheet -- FIGURE (numeric value in a period column; FWD-20 in full, unmapped 0 over FIGURE rows), HEADING (rendered as a heading, no value cell), CONTROL (field-code token, not rendered, counted); ONE rule in `team_sheet.py` with the three examples plus a FIGURE control as tests; per-name counts sum to the sheet. CUT IN ROUND 46 as one LOCAL reader cell plus the rendered re-read (the round-45 decomposition is frozen); FWD-12 and FWD-20 are graded on that read | 2.0.0_SA_COO~C1 | the round-45 analysis; carried to the round-46 cut |
 | au-7 IMB LN Thesis-tab walk (FWD-10) | a seat that can arm the walker, or a person's own session | dell1's rights to arm are read (UNREAD) |
 | seat-home copy of the at-4 order under tier2_senior still reads pending | 2.0.0_SA_COO~C1 | named at the round-45 slug |

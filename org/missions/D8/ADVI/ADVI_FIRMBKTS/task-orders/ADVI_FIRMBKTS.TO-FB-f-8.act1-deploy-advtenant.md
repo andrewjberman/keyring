@@ -175,7 +175,7 @@ value, F6 deploy). The window's order puts this act first and it changes nothing
 
 <status>complete</status>
 <round>3</round>
-<to_id>ADVI_FIRMBKTS.TO-FB-f-8</to_id>
+<to_id>ADVI_FIRMBKTS.TO-FB-f-8.act1-deploy-advtenant</to_id>
 <slot>~FBL</slot>
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
