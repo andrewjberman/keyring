@@ -1733,3 +1733,29 @@
   "notes": "This seat's defect: a precondition on another seat's act was recorded on a carrier that seat does not read. The applier was told at 05:28Z to finish step B (never half-landed), run the read-only simulate, and HOLD before the test invoke. Nothing is rolled back by this row."
 }
 ```
+
+## IRPT_ANLREQ-D2-S24 -- ruled onto IRPT_ANLREQ: analysis-report returns retained_ref (Export on Analysis)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S24",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T06:09:00Z",
+  "one_line": "A served cell is ruled onto IRPT_ANLREQ: analysis-report returns the retained report's ref as `retained_ref` (the member name and shape Performance already serves), so the Analysis Export dialog can follow it (1.0.0_SA_CTO~DELL2 msg 4235; DSGN_IRPTV1 rows W46-S2 and W46-S3).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO msg 4235 item 1: analysis-report returns that ref as retained_ref, contract document updated, both arms tested; a served response gaining a member, under its own never-widen pair. Item 2: Export follows the owned-history dialog; the legacy request list gets nothing new. Item 3: the page half is DSGN_IRPTV1's, a later round, after item 1 is live.",
+  "world_is": "READ by this seat at box/dell2 HEAD, infra/aws/lambda/investor-reporting/ops/owned_report.py:122-132 (the lines printed beside this row at its commit): read() builds the ref for a READY request from the generation job's detail and checks the report row against it; the ref is not a member of the answer. INHERITED, not opened by this seat: DSGN_IRPTV1 rows W46-S2 and W46-S3 (2.0.0_SA_COO~D2 is to send their ids), and the member's shape on the Performance response.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 4235",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:122-132 at box/dell2 HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not cut mid-round. It enters the next IRPT_ANLREQ issuance beside IRPT_ANLREQ-D2-S21 (the history row's client): both change irpt-status's served contract and can ship as ONE further irpt-status release under one pair. Carries its contract document and both arms as criteria."
+}
+```
