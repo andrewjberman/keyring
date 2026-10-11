@@ -1742,3 +1742,67 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-S34 -- w-2 PHASE B is refused at the COMMIT by a DIFFERENT naming limb than w-1 was -- the 'bd' firm-carrier clause, which the audited placement override does not reach
+
+```json
+[
+{
+    "id": "NFRA_IAMROLES202609-Z-S34",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-11T00:10:00Z",
+    "one_line": "The step-5 rename of zz_adopt_family_a.tf is refused 4 times as 'NEW and OUT-OF-PATTERN as IAM_ROLE: REFUSE; hand-kept carrier of 'bd' outside every permitted context: read it through lookup('49financial')' -- the gate's OLDER limb, which prints no NAMING-PLACE line and which the '# naming-place-override:' escape does NOT convert; w-2 PHASE B therefore cannot commit its declaration, and by A4-r6's ruled order nothing was applied, so there is NO destroy window this time.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S25 and the issuer's ruling in A4-r6/A5-r6 treat the naming refusal on an adopted pre-existing role as a PLACEMENT refusal, liftable by '# naming-place-override:' with no author override (A5-r6 @f37fb5892d, after Z-S26 was fixed at source @b7c27ef5b0). w-1's PHASE B landed exactly that way. The w-2 never-widen pair (COO @1ad6f36ca2, CTO @dadc1ec69a) signs a 2-import / 0-add / 2-change / 0-destroy targeted apply and the GO (msg 33097) names the A4-r6/A5-r6 order of acts.",
+    "world_is": "The assumption that one override covers the whole adoption program is FALSE, and w-2 is where it breaks. The gate has TWO refusal limbs and they are reached by different names. For w-1's opal-smartx-lambda-role and for BOTH of w-3's roles the verdict is a PLACEMENT row -- 'NEW name the canon places as FIX. Owed: use <form>' -- counted as NAMING-PLACE and converted to 'NAMING OVERRIDDEN' by the audited override. For w-2's two roles the verdict is the OLDER limb instead, because judge() finds a non-None CARRIER: 'bd' is a firm token mapping to 49financial, and the carrier branch fires ABOVE the placement path and counts as plain REFUSE. MEASURED RATHER THAN READ OFF THE SOURCE: the commit was run twice with a valid, non-empty '# naming-place-override:' line in the message file, and the gate printed 'NAMING-GATE: REFUSE 4 graded' with NO NAMING-PLACE line and NO 'OVERRIDDEN' or 'IGNORED' line at all -- the override is not refused, it is not applicable. The canonical forms the gate asks for ({system}-49f-merge-daily-lambda-role, {system}-49f-pipeline-task-role) are unreachable anyway: an IAM role cannot be renamed in place, so adopting under a different name is a create-plus-delete WORLD act outside this cell's BOUNDS and outside the signed pair. The remedy the canon itself names is the R20 DECLARED EXCEPTION, which judge() consumes ABOVE every NEW branch and which therefore would lift this: it requires a HEAD-committed register entry whose pinned record carries its id (authority_ok) and whose count holds (r20_exception_ok), under infra/logic/registry/ -- NOT in this order's <paths> -- and CLAUDE.md Rule 30 says a deliberate departure is an R20 register entry ANDREW ACKNOWLEDGES, so it is a sovereign call and not an AE's. THE COST THIS TIME WAS ZERO, AND THAT IS THE POINT: A4-r6's rewritten step 5 put the commit BEFORE the import, so the refusal landed with nothing in AWS and nothing in shared state. The identical refusal class in w-1 arrived AFTER the apply and left a live IAM role planned for destruction (Z-S27). The ordering fix is doing exactly what it was written to do, on its first real exercise. The ledger entry iamroles-r6-family-a (opened @ae27a5f5f8, per NEVER-2) is HELD-PRE-APPLY on this named gate rather than left open or closed on a lie; nothing is half-landed and the two roles are exactly as found.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "safe-commit, verbatim, 4 rows: '[naming-gate] NAMING REFUSE infra/aws/terraform/bd-pipeline/zz_adopt_family_a.tf:64 bd-merge-daily-lambda-role -> {system}-49f-merge-daily-lambda-role' / \"why: NEW and OUT-OF-PATTERN as IAM_ROLE: REFUSE; hand-kept carrier of 'bd' outside every permitted context: read it through lookup('49financial')\"; same at :116, :152, :157 for both roles",
+            "'[naming-gate] NAMING-GATE: REFUSE 4 graded' with NO 'NAMING-PLACE:' line and no OVERRIDDEN/IGNORED line, on two separate runs both carrying a valid '# naming-place-override:' line -- the override is inapplicable, not denied",
+            "CONTRAST, same session, same override text, w-3's two declarations: 4 rows of 'NAMING OVERRIDDEN ... [placement refusal overridden, audited]' and 'NAMING-GATE: WARN 4 graded'. So the override works where the verdict is a placement row and not where a carrier is found",
+            ".tools/naming-gate.py judge(): carr = nm.carrier(lit.value) is non-None for 'bd'; the carrier branches return counts-as REFUSE, while apply_override() converts only rows whose counts-as is PLACE-REFUSE; the module header states 'The older limb's REFUSE is not affected by the override'",
+            "nothing applied: no terraform apply ran, bd-pipeline state holds neither role, and both roles read Tags [] with one inline policy each after the refusal",
+            "ledger iamroles-r6-family-a -> HELD-PRE-APPLY on this gate; opened @ae27a5f5f8"
+        ]
+    },
+    "notes": "The ask is a sovereign one and is NOT in this lane's write surface: an R20 declared exception (or a registry row) for the two pre-existing 'bd' role names, owner 1.0.0_SA_CTO~Z, acknowledged by Andrew per Rule 30. Until it lands, w-2 PHASE B cannot commit its declaration and must not import. IMPORTANT FOR SEQUENCING: w-3 PHASE B is NOT blocked by this -- its two names take the placement path and the existing override lifts them, measured this session -- so the issuer may choose to land w-3 first, which would invert the w-2-before-w-3 order its own halves assert. That ordering is the issuer's call, not this seat's. Cites Z-S25, Z-S26, Z-S27, Z-S35. The channel's dispositions stay the CVO's at L9."
+}
+]
+```
+
+## Z-S35 -- my own error: a gate PROBE that used the real safe-commit invocation committed two live .tf files; reverted, and the general lesson is that a dry run must differ from the act in MECHANISM, not in intent
+
+```json
+[
+{
+    "id": "NFRA_IAMROLES202609-Z-S35",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-11T00:12:00Z",
+    "one_line": "Wanting to know whether w-3 would hit w-2's carrier refusal, I ran the REAL safe-commit invocation on w-3's two renamed .tf files as a 'probe'; the gate passed them, so safe-commit committed them (6f484247ee) -- two live PHASE B declarations with no GO, no ledger entry and under w-2's commit message. Reverted @3011a6dad2; local only, never drained, never on origin, nothing applied to AWS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "My own row Z-S27 prescribes, for exactly this situation, 'prove the commit path end to end BEFORE touching AWS -- run the real safe-commit invocation on the renamed .tf and read whether it lands'. The order's step 5 authorises committing a renamed .tf only for the cell under a GO, after its pair is signed, with its ledger entry open.",
+    "world_is": "The prescription I wrote is ambiguous in a way I did not notice until it misfired on me: 'run the real safe-commit invocation and read whether it lands' describes an act whose success condition IS the landing, so there is no probe-shaped version of it. A probe whose only difference from the act is the operator's intention is not a probe. w-3's names passed the gate (placement rows, override applies), so safe-commit correctly did what it is built to do and committed, adding infra/aws/terraform/portfolio-management/zz_adopt_family_e.tf and news-pipeline/zz_adopt_row3.tf as LIVE files -- w-3 PHASE B's act, which had no GO at that moment, no ledger entry, and a commit message describing w-2. WHAT IT DID NOT DO, measured rather than assumed: no apply, no import and no AWS call of any kind; git merge-base --is-ancestor reads NO against box/sitez, so the files never reached the shared branch, no peer's plan ever saw them, and the Z-S27 destroy window never opened -- the very window being guarded against. REMEDY TAKEN: git revert, not git reset, so the mistake stays on the record and no commit is lost; and the override's audit ROW IS DELIBERATELY KEPT rather than reverted with it, because the override really was taken and an append-only audit log that loses the record of a mistaken act is worse than one that carries it. The two .tf files alone are reverted. THE SAFE PROBE, for a successor: stage the rename and let the gate grade the staged index WITHOUT the commit limb, or run it on a throwaway branch that is then deleted -- the difference has to be in the mechanism. The useful finding the probe did produce is in Z-S34 and stands on its own evidence: w-3's names take the placement path and the existing override lifts them, where w-2's do not.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "6f484247ee: '3 files changed, 230 insertions(+)' -- news-pipeline/zz_adopt_row3.tf, portfolio-management/zz_adopt_family_e.tf, org/audit/naming-place-override-audit.jsonl",
+            "git merge-base --is-ancestor 6f484247ee box/sitez -> NO (local only; never drained, never pushed)",
+            "3011a6dad2: '2 files changed, 229 deletions(-)', deleting both .tf files and KEEPING the audit row",
+            "git ls-tree -r HEAD | grep 'zz_adopt.*\\.tf$' after the revert -> only smartx-pipeline/zz_adopt_family_b.tf, which is w-1's applied declaration; the other three remain .tf.proposed",
+            "no terraform apply was invoked at any point in w-2 PHASE B or in the probe; bd-pipeline state holds neither Family A role"
+        ]
+    },
+    "notes": "Filed against myself rather than left in a commit message, because the ambiguity is in row Z-S27's PRESCRIPTION, which other cells are meant to follow -- w-3 PHASE B will read it next. Suggested re-wording for the issuer, who owns Z-S27: 'stage the renamed .tf and let the gate grade the staged index without committing, or probe on a throwaway branch'. Cites Z-S27, Z-S34. The channel's dispositions stay the CVO's at L9."
+}
+]
+```
