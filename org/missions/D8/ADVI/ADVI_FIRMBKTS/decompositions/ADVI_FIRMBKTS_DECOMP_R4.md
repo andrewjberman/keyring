@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 41,
- "chains": 39,
+ "cells": 42,
+ "chains": 40,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -250,3 +250,9 @@ STAGED (`parked`) for the window. Cells 38 -> 40, chains 36 -> 38.
 Act 4 is two executors under one pair: `FB-f-11` is now the dell1 leg (the eight IRPT consumers, the before and after
 authorization sample, the first hour) and `FB-f-19` the laptop leg (router, guard, validator). Both are STAGED (`parked`) for the
 window. Cells 40 -> 41, chains 38 -> 39.
+
+## Amendment 23 (2.0.0_SA_COO~B1, 2026-10-11 ~17:3xZ): cell `FB-g-35` added (c290: the SMS default type)
+
+The census (`FB-g-32`) read 54 publishers, 38 of them AWS services that cannot set a message attribute. The CTO withdrew the
+per-publish form and ruled one attribute on the existing account preferences (AMENDMENT 6, msg 4021). `FB-g-35` writes it; its
+apply is the laptop lane's. Cells 41 -> 42, chains 39 -> 40.
