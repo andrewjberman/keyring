@@ -3155,3 +3155,16 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r146/p146_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-450` | `second_witness_grades(bars, t)`: true only with a bar on t, a bar on the calendar's prior trading day, and the two differing by more than relative 1e-4; with its tests | FWD-13 (a date label is measured, never assumed) | LOCAL | none | P146-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~307 (worker-light). DIRECT-ACT.
+
+## 139. ROUND 147, WORKSTREAM ~P (2026-10-11 ~19:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5665)
+
+Row DSGN_IRPTV1-D2-S21 ruled: the page carries the title for the 33 codes and maps the 12 unit tokens; no schema change now.
+The producer's side owes one owner read confirming both on a SERVED vendor answer, key names only. One read-only cell.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r147/p147_cells.py`: AC1-AC3 FAIL at base (no record).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-451` | one owner read of a served vendor report's sections through the service principal: is there a title or label member, the section_type and units tokens with counts; key names only, GET only | FWD-5 (what a reader of a finished report is served) | WORLD (declared; reads only, by an applier) | none | P147-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.7.0_AE_CloudOps~IB2.
