@@ -4430,6 +4430,52 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "FIGURE 3352 plus the 177 rows is 3529, which the amended reader reads. HEADING 284 is not reachable with that FIGURE count: the 177 rows leave HEADING, so HEADING is 316 - 177 - 32 = 107. The 177 rows hold numbers in the true period columns 2016..2030, so the rule the amendment states makes them FIGURE.",
   "notes": "For the issuer to compare the expected 284 against the 107 measured here; the per-name reading is in the census lines recorded in the worker report.",
   "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S13",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T16:55:41Z",
+  "one_line": "AMENDMENT 2 defines the template line's t as FactSet-prefix codes two or more labels reference, and f as the other unmeasured codes; a two-labelled code without a FactSet prefix fits neither, so t counts every two-labelled unmeasured code and the identity c = n + t + f + b holds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-CRPS-aw-1 AMENDMENT 2 item B / the --labels line: 't FactSet-prefix codes that two or more distinct labels reference; f codes with no measured label that are not two-labelled; c = n + t + f + b'",
+      "lib/research/corpus/template.py label_census: counts two_label across all identifier codes; the aw9 check and its b4 line hold either way (its codes are all FactSet-prefixed)",
+      "b is computed as the codes the field map or the entries file describes, held; the entries file is empty at this commit, so b equals the field-map count"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-aw-1 AMENDMENT 2 item B: t counts FactSet-prefix codes that two or more distinct labels reference; the template line's codes equals n + t + f + b.",
+  "world_is": "A two-labelled code outside the FactSet prefixes (a Bloomberg-form code with no field-map description) is counted in t, so the identity holds. Whether any served name carries one was not measured: the census labels line does not print t, and the --labels line was run on the aw9 fixture only.",
+  "notes": "For the issuer to confirm or restate t as FactSet-prefix only, with the non-FactSet two-labelled codes in f; a one-line change in template.label_census.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S14",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T16:55:41Z",
+  "one_line": "The template --labels line counts distinct identifier codes (the first row that carries each code), while the team_sheet census labels line counts rows, so the two lines can differ on a sheet that repeats a code.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/template.py label_census: seen.setdefault(label['code'], kind) then one count per distinct code",
+      "lib/research/corpus/team_sheet.py _main: label_counts incremented per entry of row_labels (one per counted row)",
+      "the team sheet repeats EQY_FUND_YEAR above and below its header (CRPS-aw-1 AMENDMENT 1 fixture), so a repeated code is the normal case in the served sheets"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-aw-1 AMENDMENT 2 item A: the --labels line is over the identifier-form code rows, with codes = n + t + f + b; item B: the census labels line gains measured after factset_held.",
+  "world_is": "The spec says code rows and codes in the same breath. The template line therefore counts each code once, and the census line counts each row once; on a repeated code the two sums differ by the repeats.",
+  "notes": "For the issuer to choose per code or per row for the template line; the census line is per row by construction (its sum equals the rows).",
+  "disarm_owner": "2.0.0_SA_COO~C1"
 }
 ]
 ```
