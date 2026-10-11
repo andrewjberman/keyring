@@ -12154,3 +12154,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Next step is the CTO's call (data-event logging on the queue before 2026-10-12T16:00Z, or a read of 16:00Z schedulers naming it). This worker changed nothing; its 156 receive calls used visibility-timeout 0 and deleted nothing."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W57-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~57",
+  "surfaced_at": "2026-10-11T17:36:27Z",
+  "one_line": "OG-bd-1 STOPS at step 2: the caller census of blackdiamond_list_fees finds 2 distinct callers (5 calls, 2026-10-01..10-08), both unprofiled. Denying the tool to unprofiled principals would deny a real user; an Andrew admission call (C8) is owed.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~57/BD1_CENSUS.json: window audit/dt=2026-06-24..2026-10-11 (110 day partitions), 255023 records scanned, 0 malformed, 0 errors; 5 blackdiamond_list_fees records; 2 callers; unprofiled 2",
+      "RUN bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r34/checks/bd1.AC1.sh -> '... distinct callers of blackdiamond_list_fees 2; unprofiled 2 / RESULT: FAIL / exit=1'",
+      "RUN boto3 scan + strong get of POLICY#<tid>#<oid>/principal_profile in gateway-access-state-table: caller A principal 6810043e-d171-4adc-9975-068b35e179da/2e21f8e5-55ca-45c1-91b9-a4607bf28d4f (4 calls, tier master_admin, outcome ok, 2026-10-01 x3 and 2026-10-06) has NO profile; the store holds 1 principal_profile in 859 items, owned by another oid"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Ruling @135719d313 / order step 1: every caller of blackdiamond_list_fees is a profiled principal, so the deny breaks no one; the census names each principal by '<tid>/<oid>'.",
+  "world_is": "Caller A (principal above, 4 calls, tier master_admin) is unprofiled: the deny would end its access. Caller B (1 call, 2026-10-08, tier standard, outcome denied by the tier gate) has no recorded principal and matches no profile; counted unprofiled because profiled is not established. The audit record of this tool carries NO principal key (integrations/base.py log_call passes none), so a principal had to be recovered from gw_login records by email digest (caller A: 2 gw_login records; caller B: 0).",
+  "notes": "Owed: Andrew's admission call (C8, per the CTO ruling step 3) naming principal A (4 calls) and caller B (1 call, unresolved principal); this worker grants and profiles nothing. No deny built; tests/test_og_bd1.py not written; order left pending. A separate fix (not this order's): pass principal into audit.log_call in integrations/base.py, so the next census needs no digest join."
+}
+```
