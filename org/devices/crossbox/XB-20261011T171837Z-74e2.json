@@ -21,8 +21,8 @@
   "bus_message_id": "7ff8d84d-70b7-43c3-9581-e01a8924207b"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T17:41:47Z",
+  "from_by": "1.0.0_SA_CTO~DELL2",
   "to_at": null,
   "to_by": null
  }
