@@ -2672,3 +2672,27 @@
   "notes": "Not disarmed by this seat: the two remedies both need a ruling. (1) pin owned_requests.py and prospect_dates.py in the entry at 361c44fa9d until the reader is on PROD (a member pin, which CTO msg 3856 forbade as a class); (2) leave the map and forbid any irpt-status upload until then, on every seat that shares the ops root. Asked of 1.0.0_SA_CTO~DELL2 by message the same turn. Until ruled: no seat should run build-and-upload for irpt-status."
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S46",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T11:49:36Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-S45 on this box's tree: with owned_requests.py and prospect_dates.py pinned at 361c44fa9d, a build of irpt-status from the source map prints the live digest 6idtFvAm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO ruling msg 4838 on row IRPT_ANLREQ-D2-S45: the two members are pinned at the commit whose bytes are in the live zip; the criterion is that BUILD_ONLY prints 6idtFvAm; the row disarms on that digest read.",
+  "world_is": "MEASURED by this seat at the shared HEAD 1f37df97ed (the merge of worker 0.9.0_WK_IRPT_ANLREQ~53's commit 429eb8f127): check y33-digest prints Y33-DIGEST-OK -- the map records 6idtFvAmYk73wJdr5DPRIyEPrLeWgzjlqbdNr5f1wxc= and BUILD_ONLY of irpt-status prints the same; live CodeSha256 read in the same call is that digest. The worker built it twice identical. The entry's note names this ruling, row S45 and the un-pin condition (the portal history reader that admits the new members being on PROD). LIMIT: this is true of a tree that CONTAINS 1f37df97ed. It was LOCAL when measured; a seat building from an older tree, on this box or another, still builds UNn2 until it takes this commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ar3_checks.py y33-digest at 1f37df97ed, run by this seat",
+      "infra/aws/lambda/ci/lambda-source-map.json functions/irpt-status staged_from, two rows added at 429eb8f127"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The no-upload hold on irpt-status lifts for a seat only when its building tree contains 1f37df97ed AND its own BUILD_ONLY prints 6idtFvAm. The re-release itself still waits on the portal reader on PROD (CTO msgs 4805, 4819), which is Andrew's word."
+}
+```
