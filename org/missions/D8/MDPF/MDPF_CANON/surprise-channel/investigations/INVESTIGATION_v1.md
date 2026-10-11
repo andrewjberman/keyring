@@ -350,3 +350,128 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W8-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~8",
+  "surfaced_at": "2026-10-11T03:09:41Z",
+  "one_line": "CN-c-1 states 12 global by_model entries are held at one firm (6 at three or fewer accounts); the stated rule gives 10 in aggregate-aua-timeseries. The six-at-three-or-fewer count reproduces; the 12 does not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO MDPF_CANON.TO-CN-c-1 section 1 (path@335258e392): the global figure has 12 by_model entries held at ONE firm, 6 of them at three or fewer accounts, each value equal to that firm's.",
+  "world_is": "Read-only get, 2026-10-08, opal-data-assets, four scopes, three objects each. aggregate-aua-timeseries: 10 global by_model entries held by exactly one firm under key match (6 at three or fewer accounts; 10 of 10 value-equal to that firm's); 11 if cottonwood key divz (display Dividend SMA, absent from data/mdpf/scripts/gold/mdpf_model_registry.json) is matched by display name alone; 2 null entries and 2 zero-firm entries (see row S2). account-distribution: 9 of 14 single-firm (2 total_aum equal). aum-metrics: 2 of 7 single-firm (2 equal). Union of single-firm names across the three objects: 10. Denominator: 41 global by_model entries read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api get-object, bucket opal-data-assets, portal/gold/mdpf/{global,49financial,inflection,cottonwood}/{aum-metrics,account-distribution,aggregate-aua-timeseries}/2026-10-08.json (read-only, 12 objects)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~8/X2_GLOBAL_BASIS.md (Single-firm entries and Method sections)",
+      "data/mdpf/scripts/gold/mdpf_model_registry.json@335258e392 (divz absent; _changelog v4 renames)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The basis states the count this method yields and does not correct the cell text; the 12 is the issuer's figure and its reconciliation is for the issuer and the CTO."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W8-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~8",
+  "surfaced_at": "2026-10-11T03:09:41Z",
+  "one_line": "Two global by_model entries (opal_growth_sma 45 accounts, opal_div_sma 40 accounts) carry a non-null figure and nonzero account counts at 2026-10-08 while no firm scope holds either entry on that date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (routes to the owner of the global fold, dim_mdpf_aggregate_aua_timeseries.py)",
+  "spec_asserts": "The round-2 basis premise, carried into CN-c-1: every combined (global) figure sums at least 2 firms.",
+  "world_is": "aggregate-aua-timeseries global by_model at 2026-10-08: opal_growth_sma and opal_div_sma are non-null with nonzero account_count. 49financial account_count is null for both at 2026-10-08; its last nonzero date for both is 2026-07-17. inflection has no growth key; cottonwood has no growth key and its divz is unmatched. Measured: the global account_count at 2026-10-08 equals its 2026-07-17 value, and both equal the 49financial 2026-07-17 value; the global model_value at 2026-10-08 is not equal to its 2026-07-17 value. Min firms at the as-of for these entries is 0. The mechanism that carries them was not read beyond the global meta by_model_channels and cottonwood_carry keys.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api get-object, opal-data-assets, portal/gold/mdpf/global/aggregate-aua-timeseries/2026-10-08.json and portal/gold/mdpf/49financial/aggregate-aua-timeseries/2026-10-08.json (read-only)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~8/X2_GLOBAL_BASIS.md (Method: zero-firm entries)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Hazard ARMED: the fold re-emits these carried entries on each run. The basis states them as emitted; it does not argue they are safe."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W8-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~8",
+  "surfaced_at": "2026-10-11T03:09:41Z",
+  "one_line": "Served global opal_aggregate_aua at 2026-10-08 is not equal to global model_aua plus non_model_aua (tolerance 0.011); the identity the fold states at dim_mdpf_aggregate_aua_timeseries.py:2257 holds on 460 of 484 non-null dates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (routes to the owner of the global fold, dim_mdpf_aggregate_aua_timeseries.py)",
+  "spec_asserts": "dim_mdpf_aggregate_aua_timeseries.py:2257 (docstring): opal_aggregate_aua[i] == model_aua[i] + non_model_aua[i] at every date; the build-time assertion _assert_global_composition (:1858) states the same identity.",
+  "world_is": "Served global aggregate-aua-timeseries at 2026-10-08: the identity does not hold at the as-of; it holds on 460 of the 484 non-null dates of the global axis (9 of 493 dates are null). Measured as holding: global model_aua equals the sum of the three firms' model_aua; global non_model_aua equals 49financial's. The size of the gap is not characterised here. The step that produces the served opal_aggregate_aua after the build assertion was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api get-object, opal-data-assets, portal/gold/mdpf/global/aggregate-aua-timeseries/2026-10-08.json (read-only; identity checked over the full date axis)",
+      "data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py@335258e392:2257 and :1858"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The headline family's min firms is 3 by the fold's leg rule (:2424-2425) and all four legs being non-null at the as-of; this row does not depend on the identity holding."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W8-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~8",
+  "surfaced_at": "2026-10-11T03:09:41Z",
+  "one_line": "The cell's expectation that each single-firm global value equals that firm's value holds for 2 of 9 single-firm entries in the account-distribution object; the other 7 do not match their one firm's total_aum.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-c-1 section 1 and AC3 (path@335258e392): each global entry held at one firm has a value equal to that firm's value at the as-of.",
+  "world_is": "account-distribution 2026-10-08: global entries held at one firm are 9; value equal (total_aum, relative tolerance 1e-6) for 2 (inflection 50/50 blends). The 7 cottonwood-held entries are not equal. The cottonwood object's generated_at is 2026-10-09T13:31Z; the global and inflection objects are 2026-10-08T13:31Z, so build time may account for the difference. Not characterised. In aggregate-aua-timeseries and aum-metrics the same comparison holds for every single-firm entry.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api get-object, opal-data-assets, portal/gold/mdpf/{global,cottonwood,inflection}/account-distribution/2026-10-08.json (read-only; generated_at read)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~8/X2_GLOBAL_BASIS.md (Single-firm entries)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed because the cell's value-equality expectation does not hold on this object; the basis reports the measured booleans."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W8-S5",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~8",
+  "surfaced_at": "2026-10-11T03:10:37Z",
+  "one_line": "CN-c-1 says moving X2 from OWED to GRANTED is Andrew's act, but infra/logic/06_CONFORMANCE_LEDGER.md already reads X2 GRANTED (Andrew-direct 2026-09-15) on the round-2 basis that the CTO's 2026-10-08 read contradicts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "Andrew (decider of X2 per ledger row line 136); routed by 2.0.0_SA_COO~D1",
+  "spec_asserts": "TO CN-c-1 section 1 (path@335258e392): the X2 row cites the new basis; its status is not changed, since moving X2 from OWED to GRANTED is Andrew's acknowledgement.",
+  "world_is": "infra/logic/06_CONFORMANCE_LEDGER.md@335258e392 line 136: X2 status **GRANTED**, decider Andrew, decided 2026-09-15, PERMANENT; line 116 and line 226 carry the same GRANTED state. The OWED premise in the cell does not match the row. The grant's stated basis (aggregate counts only, every global figure sums at least 2 firms, per the round-2 basis) is contradicted in part by the served output (rows MDPF_CANON-D1-W8-S1 to S4). The status is left unchanged, as the cell directs.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/06_CONFORMANCE_LEDGER.md@335258e392:136 (X2 row, GRANTED)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~5/X2_GLOBAL_BASIS.md (round-2 basis, read-only)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~8/X2_GLOBAL_BASIS.md (round-3 basis, Method)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed as a premise failure: the cell's OWED premise does not match the ledger. Whether the GRANTED state should be re-read against the new basis is Andrew's act; this cell does not change it."
+}
+```
