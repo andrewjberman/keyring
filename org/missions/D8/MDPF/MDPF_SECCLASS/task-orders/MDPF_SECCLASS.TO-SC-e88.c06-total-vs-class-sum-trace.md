@@ -85,7 +85,9 @@ reads these field names):
 ### ACCEPTANCE
 
 <criterion id="SC20-e88-AC1" cell_refs="SC-e-88"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R20_CHECKS/c06_gap_record_check.py gap</invocation><expect>C06-GAP ok=True</expect></criterion>
-`SC20-e88-AC1` -- the record's three published gaps equal the served ones, its recomputed gaps agree within $0.05, and a cause is shown.
+`SC20-e88-AC1` -- the record's three published gaps equal the served ones; at least one date reproduces from today's partitions (its
+recomputed total equals the published total within $0.05) with its recomputed gap within $0.05 and every listed residual inside the
+6-decimal rounding bound; a date that does not reproduce is drift, not a failure; a cause is shown. (Amended, see AMENDMENT 1.)
 <criterion id="SC20-e88-AC2" cell_refs="SC-e-88"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R20_CHECKS/c06_gap_record_check.py scope</invocation><expect>C06-SCOPE ok=True</expect></criterion>
 `SC20-e88-AC2` -- the record holds no relationship id, account id or client name.
 
@@ -140,3 +142,14 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: CTO round-19 analysis section 3 item 2 (msg 3419); row D1-S27; DECOMP_R20.
+
+## AMENDMENT 1 (2.0.0_SA_COO~M1, 2026-10-11 ~04:0xZ) -- AC1 reads the dates that reproduce
+
+The cut assumed all three served firm-daily snapshots reproduce from today's canonical holdings partitions. Worker ~78 measured that
+2026-10-08 reproduces to the cent and that 2026-10-06 and 2026-10-07 do not (their partitions were rewritten after the snapshot; row
+`MDPF_SECCLASS-D1-W78-S1`). That is a premise defect in the cut, not in the worker's record. AC1's checker
+(`R20_CHECKS/c06_gap_record_check.py gap`) now grades a date that reproduces on its gap AND on the rounding bound (each listed residual
+at most `total_mv * 4.5e-6`, which out-of-class mass would break by orders of magnitude), counts a non-reproducing date as drift, and
+needs at least one reproducing date. Worker ~78's record is unchanged by this amendment. Record text that says the criterion is left to
+fail predates it. AC2 is unchanged. Gate limb: none graded this modification (an issuer amendment of its own criterion, no
+`<placeholders>`, not a newly-added order).
