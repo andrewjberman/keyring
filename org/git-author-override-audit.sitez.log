@@ -21,3 +21,29 @@
 2026-10-11T06:20:58Z MERGE-ATTEMPT  0.7.0_AE_CloudOps~IR  rc=0  secs=10.88  graded=0/3 fast-lane  args=(wk-iamroles-r7-x1b -m drain(NFRA_IAMROLES202609.TO-IAM-x-1 PHASE B row 14, 0.7.0_AE_CloudOps~IR): the adopted declaration and its closed ledger into box/sitez IN THE SAME SESSION as the apply (A4-r6); row 6 remains held on shared-infra)  first=(none)
 2026-10-11T06:21:06Z LANDED-2P  0.0.0_AB_MSTR~Z  2d630eaabd  paths=10  validate=31.13s  wait=0.15s  hold=1.63s  build=1.04s  ref=0.54s  post-commit=5.13s  attempt=1
 2026-10-11T06:21:08Z LANDED-2P  0.7.0_AE_CloudOps~ZC  088da62c7b  paths=4  validate=29.53s  wait=0.50s  hold=1.70s  build=1.17s  ref=0.46s  post-commit=4.47s  attempt=1
+2026-10-11T06:22:00Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-11T06:22:04Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-11T06:22:19Z LANDED-2P  0.0.0_AB_MSTR~Z  599601c896  paths=1  validate=20.15s  wait=0.18s  hold=1.55s  build=0.98s  ref=0.43s  post-commit=7.47s  attempt=1
+2026-10-11T06:22:22Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=3  secs=0.39  skipped=overlap holder=2088021
+2026-10-11T06:22:27Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=4.44  graded=n/a  args=(--verify-merge e251f5a17a55d406efdc5fb43e8273bb3d02119e)  first=(none)
+2026-10-11T06:22:42Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=5.02  graded=n/a  args=(--verify-merge bb3687a73daec3ff0dafdf44cf55648fd7fce258)  first=(none)
+2026-10-11T06:22:44Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=41.73  held=dirty-overlap graded=3/100  phases: t_fetch=3.67s t_merge_cloud=16.24s a2.t_merge_cloud=14.22s
+2026-10-11T06:24:04Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=4.92  graded=n/a  args=(--verify-merge e425eedfe7d5ba9d07ea55ba0779db732f93228d)  first=(none)
+2026-10-11T06:24:06Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=27.00  held=dirty-overlap graded=3/100  phases: t_fetch=1.99s t_merge_cloud=17.58s
+2026-10-11T06:25:13Z PASS  0.7.0_AE_CloudOps~ZC  1  (all paths in-lane) act=7151b1cadfc2 paths=1:org/tier2_senior/0.7.0_AE_CloudOps~ZC/logs/2026-10-11/zc_three_crossbox_orders_ten_closed_a18_blocked.md
+2026-10-11T06:25:21Z PASS  0.7.0_AE_CloudOps~ZC  1  (all paths in-lane) act=7151b1cadfc2 paths=1:org/tier2_senior/0.7.0_AE_CloudOps~ZC/logs/2026-10-11/zc_three_crossbox_orders_ten_closed_a18_blocked.md
+2026-10-11T06:25:36Z LANDED-2P  0.7.0_AE_CloudOps~ZC  cac9184c7d  paths=1  validate=23.88s  wait=0.30s  hold=1.98s  build=1.08s  ref=0.83s  post-commit=6.56s  attempt=1
+2026-10-11T06:32:23Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=4.67  graded=n/a  args=(--verify-merge 0aca5ad6daacc926cf2c64ba3e71b9f5c9380d2f)  first=(none)
+2026-10-11T06:32:25Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=22.02  held=dirty-overlap graded=3/132  phases: t_fetch=1.65s t_merge_cloud=14.28s
+2026-10-11T06:33:03Z PASS  0.7.0_AE_CloudOps~ZV  2  (all paths in-lane) act=fb9bbf8989ee paths=2:org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009.proof_of_spec.json|org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/ETFS_RIVALS.TO-PREFLIGHT-bbg-signin-20261009.proof_of_spec.json
+2026-10-11T06:33:11Z PASS  0.7.0_AE_CloudOps~ZV  2  (all paths in-lane) act=fb9bbf8989ee paths=2:org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009.proof_of_spec.json|org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/ETFS_RIVALS.TO-PREFLIGHT-bbg-signin-20261009.proof_of_spec.json
+2026-10-11T06:33:25Z LANDED-2P  0.7.0_AE_CloudOps~ZV  876cfb049f  paths=2  validate=27.06s  wait=0.27s  hold=1.84s  build=0.97s  ref=0.75s  post-commit=5.99s  attempt=1
+2026-10-11T06:33:42Z PASS  0.0.0_AB_MSTR~Z  2  (all paths in-lane) act=74b26f926c23 paths=2:org/devices/crossbox/XB-20261011T055045Z-2c8e.json|org/devices/crossbox/XB-20261011T055134Z-bd43.json
+2026-10-11T06:33:49Z PASS  0.0.0_AB_MSTR~Z  2  (all paths in-lane) act=74b26f926c23 paths=2:org/devices/crossbox/XB-20261011T055045Z-2c8e.json|org/devices/crossbox/XB-20261011T055134Z-bd43.json
+2026-10-11T06:34:02Z LANDED-2P  0.0.0_AB_MSTR~Z  8449443fc7  paths=2  validate=24.01s  wait=0.16s  hold=2.23s  build=1.32s  ref=0.82s  post-commit=4.71s  attempt=1
+2026-10-11T06:34:27Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=5.63  graded=n/a  args=(--verify-merge e22749769853874bfddea8df3d907c9c282fe8f0)  first=(none)
+2026-10-11T06:34:39Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=34.57  took=eec935feae hold=2.64s graded=5/132 pushed=e227497698  phases: t_fetch=2.82s t_merge_cloud=16.56s t_land=2.67s t_push=7.03s
+2026-10-11T06:36:15Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0ae6cdbdd0c8 paths=1:org/devices/crossbox/XB-20261011T055236Z-0989.json
+2026-10-11T06:36:21Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0ae6cdbdd0c8 paths=1:org/devices/crossbox/XB-20261011T055236Z-0989.json
+2026-10-11T06:36:34Z LANDED-2P  0.0.0_AB_MSTR~Z  057ebec698  paths=1  validate=25.69s  wait=0.15s  hold=2.19s  build=1.58s  ref=0.55s  post-commit=5.29s  attempt=1
+2026-10-11T06:38:14Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=15.95  took=already-current pushed=057ebec698  phases: t_fetch=2.53s t_push=7.30s
