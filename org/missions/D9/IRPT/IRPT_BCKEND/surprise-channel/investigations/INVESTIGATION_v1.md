@@ -27362,3 +27362,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The figure is 0 on this population (the 85 graded days, 303 tickers asked). The instrument's row grade (IB-pr-442's classify, imported unchanged and used by every sizing in this chain) already treats a missing prior-day bar as no grade, so sentence (2) was in force in the earlier sizings and adds nothing to them; it differs from sentence (1) alone only in the repeat count and in the overlap table (IB-pr-449 Table C: 6 security-days). Reported as measured; no sentence of the guard is questioned."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S98",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T20:32:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Noted for the vendor producer's NEXT release (CTO msgs 5665 and 5784): a vendor section on the wire carries no title member and no field name for a value; the page now supplies both from a pinned copy of the census. PARKED: the producer cannot be released while the vendor path is stopped.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "2.0.0_SA_COO~D2 msg 5660 and org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/SECTION_TITLE_UNIT.json (a worker's read of code, not re-read by this seat): AnalysisReport.schema.json:126-190 declares no title or label member and forbids additional members; extract.py:707 sets section_type to the census code; publication.py:215-217 strips the underscore keys that hold the title.",
+      "1.0.0_SA_CTO~DELL2 msg 5665 (the page carries the title for the 33 codes; a wire title is noted for the producer's next release) and msg 5784 (the wire carries no field name for a vendor value; note it beside the title member).",
+      "No served vendor answer was read: IB-pr-451 was withdrawn @9053ea7b45 on CTO msg 5770; the confirmation rides the laptop walk that proves DSGN_IRPTV1 cell IV-e-115."
+    ]
+  },
+  "spec_asserts": "A reader of a finished report sees each section by a name and each value by what it is, from the answer the service serves (FWD-5).",
+  "world_is": "Both come from the page's pinned copy of the census, not from the wire. Served vendor reports are immutable and carry only the code, so a wire member would title no report that exists today. PARKED: owner 2.0.0_SA_COO~P2. Un-parks when the vendor producer is next released for a reason; that release's cell adds a title member and a field-name member to the vendor section through a PRD addendum (the contract forbids additional members), and names every reader of the section, the page's map among them."
+}
+```
