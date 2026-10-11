@@ -12154,3 +12154,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Citing row; Z-S89's text is untouched. A release-content claim is read from the release's bytes, never from merge-base ancestry (cherry-picked and re-cut releases break ancestry)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W54-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~54",
+  "surfaced_at": "2026-10-11T16:07:00Z",
+  "one_line": "OG-db-1 step 2(b) names org/modules/graph/compproof/manifest_check_cli.py, which does not exist; the file is org/modules/graph/manifest_check_cli.py, so the preflight checks that path and AC2's clean arm can pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: git ls-files | grep manifest_check_cli = org/modules/graph/manifest_check_cli.py only; clean sparse tree built from HEAD 3a40dffdcc reported 'missing org/modules/graph/compproof/manifest_check_cli.py' (rc=1, AC2 clean arm FAIL) until the path was corrected",
+      "FILE .tools/commit_gate_runner.py:105 'import manifest_check_cli' resolves beside comp_constants_cli in org/modules/graph/ (sys.path), not under compproof/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-db-1 step 2(b): the manifest-commit import closure includes org/modules/graph/compproof/manifest_check_cli.py.",
+  "world_is": "That path is absent at HEAD; the module is org/modules/graph/manifest_check_cli.py. The worker used the real path (the closure's intent is the import set), not the order's literal text.",
+  "notes": "Order text unchanged by the worker; the issuer may amend step 2(b)."
+}
+```

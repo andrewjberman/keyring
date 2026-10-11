@@ -3013,3 +3013,21 @@ type-field question are graded.
 | `IB-pr-439` | the instrument-type field; both witnesses per type (equal, one day off, neither); the sizing under v0.38; a count of fund-dates with a priced custodian purchase or redemption | FWD-3 (Cottonwood's figure on a basis somebody measured) | LOCAL | IB-pr-438 drained | P137-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~297. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 130. ROUND 138, WORKSTREAM ~P (2026-10-11 ~16:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 5373 and 5376)
+
+Two read-only cells with disjoint write sets and no edge between them.
+(a) 2.0.0_SA_COO~D2's row DSGN_IRPTV1-D2-S18: in a portal fixture the Holdings card reads a total the table under-lists, because two
+SMA sleeve nodes have no security node beneath them. The CTO asks whether a SERVED holdings answer can carry such a leaf.
+(b) IB-pr-439's read (branch wk-IRPT_BCKEND-297 @e6462bdd4a): the holdings source states no instrument type, so no class is admitted
+to the second witness and 58.2 percent stands; the transactions table beside it carries SEC Asset Type and Share Class Type by CUSIP
+and dated trade prices. The CTO ruled one cell produces the two tables an addendum would rest on; the field classes nothing yet.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r138/p138_cells.py`: six criteria, all FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-440` | the holdings producer's rule on a sleeve leaf with no security node, read in code; such leaves counted in one firm's served answer for one day | FWD-5 (missing attribution stays visible) | LOCAL | none | P138-a |
+| `IB-pr-441` | both witnesses per instrument type, the type joined by CUSIP from the transactions table; each priced fund trade beside the reader's bar for its date and the days either side | FWD-3 (a basis somebody measured) | LOCAL | IB-pr-439 (its instrument, read from its branch if not merged) | P138-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two independent read-only cells. Assignees: 0.9.0_WK_IRPT_BCKEND~298, ~299. DIRECT-ACT each.

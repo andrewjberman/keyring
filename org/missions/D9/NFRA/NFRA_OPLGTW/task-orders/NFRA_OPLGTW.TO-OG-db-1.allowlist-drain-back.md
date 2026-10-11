@@ -94,7 +94,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-db-1.allowlist-drain-back.proof
   because it lands with E6 in the same wrapper. Adds step 2 and AC2. db1.AC2 base FAIL as expected on all three arms;
   the temporary worktrees were removed (0 left). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>34</round>
 <slot>~54</slot>
 <fabric>site-z</fabric>
