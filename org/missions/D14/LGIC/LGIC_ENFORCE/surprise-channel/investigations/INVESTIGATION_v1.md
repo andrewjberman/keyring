@@ -6435,3 +6435,50 @@ that exception is precisely what hid this, so it is stated rather than relied on
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "LGIC_ENFORCE-D1-S8",
+    "project": "LGIC_ENFORCE",
+    "fabric": "dell1",
+    "surfaced_by": "1.0.0_SA_CTO~DELL1",
+    "surfaced_at": "2026-10-11T14:41:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The naming gate prints NAMING ERROR on a path a sparse release cone omits (org/missions/DIRECTIVES.yaml); site Z row NFRA_OPLGTW W51-S3.",
+    "spec_asserts": "A gate verdict distinguishes an absent-by-cone path from a broken name.",
+    "world_is": "Site Z measured NAMING ERROR on a skip-worktree path in a sparse cone (NFRA_OPLGTW REMEDIATION_v16, ROUND_ANALYSIS.round33 @2672b8d28a).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "XB-20261011T143409Z-d00e",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/CROSSBOX_ANSWER_LGIC_NAMING_GATE_ROWS_W51S3_W49S2_20261011.md"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Owner 1.0.0_SA_CTO~DELL1. Ruled in the crossbox answer: SKIP-absent only for a tracked skip-worktree path; a missing file in a full checkout stays ERROR. Next round's enrichment."
+  },
+  {
+    "id": "LGIC_ENFORCE-D1-S9",
+    "project": "LGIC_ENFORCE",
+    "fabric": "dell1",
+    "surfaced_by": "1.0.0_SA_CTO~DELL1",
+    "surfaced_at": "2026-10-11T14:41:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "address() accepts any snake_case table for a registered root; fee_statement and market_update have no tables row (site Z row NFRA_OPLGTW W49-S2).",
+    "spec_asserts": "Rule 30: a builder refusal is a missing registry row to add; the registry is the canon.",
+    "world_is": "address() renders an unregistered table without refusal (site Z measurement, REMEDIATION_v16).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "XB-20261011T143409Z-d00e",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/CROSSBOX_ANSWER_LGIC_NAMING_GATE_ROWS_W51S3_W49S2_20261011.md"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Owner 1.0.0_SA_CTO~DELL1. Ruled: refuse, ordered census -> rows added -> refusal, with byte-identical and replay arms. Next round's enrichment."
+  }
+]
+```

@@ -5338,3 +5338,31 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-S16 -- IV-e-101's Opal wording is UNEXERCISED on a served Opal report: its evidence is synthetic
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S16",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T14:41:30Z",
+  "one_line": "IV-e-101 (an Opal report opened on the page prints no vendor wording; portal 58e15f4c on DEV) is UNEXERCISED on a served Opal report: its evidence is a screenshot of synthetic data produced by a driver script, and a static-markup test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~57/OPAL_WORDING.json and opal-report.opal.png @a1ba0a7cc1: synthetic fixture, instrument opal-report-driver.mjs (scripts/ui-smoke.mjs cannot type into the Client search)",
+      "the screenshot was read by this seat: Computation validation: CERTIFIED and Source: Opal Capital Analysis, no vendor word",
+      "1.0.0_SA_CTO~DELL2 msg 5037 item 2: state that on the row as UNEXERCISED on a served Opal report",
+      "the reader census (deliverables/0.9.0_WK_DSGN_IRPTV1~56/READER_CENSUS.json): an OPAL_ENGINE request on live was never exercised"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_YCDGEN FWD-1: the firm's principal opens an Opal report on the page and every reason the page states is true (ADDENDUM 8.2's bar).",
+  "world_is": "APPLIED on portal DEV, EXERCISED only against synthetic data. Not screenshotted: an Opal report with a non-CERTIFIED verdict or a NOT_AVAILABLE section (held by the static-markup test only). The same holds for the Holdings change (IV-e-96) and will hold for IV-e-102 and IV-e-105 until a rendered walk or the sitting reads a served report.",
+  "notes": "Owner of the exercise: the sitting itself, or a measuring identity if Andrew grants one (IRPT_YCDGEN ROUND-12 ANALYSIS section 2). Nothing is armed: a wording change with a vendor report pinned unchanged."
+}
+```
