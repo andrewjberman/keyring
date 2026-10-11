@@ -4909,3 +4909,50 @@
   "notes": "No act taken; a real-data read is needed before calling it a defect."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S13",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T12:29:17Z",
+  "one_line": "L8/L9 rounds 17 and 19, no judgment criterion; the issuer asked this seat's judgment on a reader made looser than the contract on purpose. Read on portal DEV: sound as a transitional reader -- each present member is checked as the contract types it and any other key is refused -- with one gap: it admits mixtures neither answer is (some rows with the new members, some without). It is on DEV and not on PROD. The tolerance's removal is a named later cell and needs an owner.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4903 (round 19 IV-e-99 drained @d4fa29cbe1; round 17 IV-e-96 drained @e0253035f6)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_ROUNDS_17_19_L9_READ_20261011.md",
+      "this seat's read 2026-10-11T12:29:17Z of portal origin/DEV 00989b8b src/pages/InvestorReporting/contracts/owned-requests.ts:100-137: the page reader requires items and next_cursor, admits unreadable_rows when present (a non-negative integer) and refuses any other key; the row reader admits client_id (the contract's pattern, or null) and client_claim (one of three values) when present and passes the rest through the unchanged single-request reader; origin/PROD 37aa1247 still holds the exact two-key reader"
+    ]
+  },
+  "spec_asserts": "CTO ruling (B), msg 4818: the reader is transitional and admits both answers the service can serve. The ratified contract requires the three members.",
+  "world_is": "Read from the DEV source. Not run by this seat: the tests, typecheck or the suite (7 failing of 1,173 is the issuer's). No rendered walk exists.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S14",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T12:29:17Z",
+  "one_line": "The Holdings face, opened on a picked account, shows two totals with no label between them (the Identity band's household figure over 2 accounts, and Total Assets for one account at half of it), names the picked account nowhere, and lists securities that sum to 80 percent of the total with no row and no sentence for the SMA 20 percent. Seen on one driver screenshot of a synthetic fixture; the 130 percent weight of row D2-W53-S7 is the same family.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's read of deliverables/0.9.0_WK_DSGN_IRPTV1~53/holdings-face.driver-picker.png (a driver build on a synthetic fixture): the Identity band reads 1,000,000.00 over 2 accounts; the Holdings face below reads Total Assets 500,000.00 with Models 350,000.00, SMAs 100,000.00 and Client 50,000.00, a 'Back to all accounts' link and no name for the picked account; the securities map and table list two rows, 70.00% and 10.00%, 400,000.00 in all, with no row and no sentence for the SMA 20 percent",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_ROUNDS_17_19_L9_READ_20261011.md"
+    ]
+  },
+  "spec_asserts": "DSGN_IRPTV1 FWD-1: a person picks an account and reads its Models / SMAs / Client split. portal/DESIGN.md governs how a figure states its base.",
+  "world_is": "Fixture values on a driver build. Not established on real data or on the deployed page.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
