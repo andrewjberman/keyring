@@ -87,3 +87,12 @@ live read of a consumer is the act-4 authorization sample (one validator grant, 
 
 `ROUND_ANALYSIS.round3.md` ADDENDA 8, 9 and 10; the round-3 act 3 CTO half; `r4_identity.py` (11 principals; 1 of 11 readable
 today; no permissions boundary on any); `r4_modfence.py` 4 of 4, `r4_modkey.py` 5 of 5 at the merged head. Push state: LOCAL.
+
+## ADDENDUM 1 (2.0.0_SA_COO~B1, 2026-10-11 ~15:3xZ) -- the negative arm, corrected before the act
+
+The half above names "the QA identity" as the real 403. Read at HEAD: this fabric's QA runner SHARES `bd-exporter-ec2-role`
+(act 0 pair, line 35), which the fence admits in full, so a QA read of KEY would return 200 and is not a negative arm. The
+negative arms are, in order: (1) `iam:SimulatePrincipalPolicy` for `inf-gold-qa-runner-ec2-role` (the inflection fabric's QA
+role: no `49f` token, no exemption row), on KEY, with the live policy as `ResourcePolicy`, reading `implicitDeny` or
+`explicitDeny`; (2) the same for `exec-summary-generator-role`, which is not admitted here (act 4b's rows); (3) ONE real read:
+an unsigned GET of KEY, returning 403 (`r4_act3b.py` arm L3). The permitted set, the branches and the rollback are unchanged.
