@@ -6299,6 +6299,29 @@ carries none.
     "spec_asserts": "The round-close gate's own outer test suite passes, so a regression in round-close-check.py shows as a failing case.",
     "world_is": "5 of 24 cases fail on HEAD for reasons unrelated to any recent fix, so a new regression in this tool would be hidden among standing failures.",
     "notes": "Routed by 1.0.0_SA_CTO~Z (msg 33071) to the Z-C-S42 family owner. Disarms when the suite reads 24/24 (or each case is re-scoped with a reason)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W30-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~30",
+    "surfaced_at": "2026-10-11T00:20:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-o-1's order defines census `served` as 'a producer whose objects are SERVED today', but ops_census.py (o1.AC1) rejects a GAP census in which ANY candidate reads served=true, so the census can only grade if `served` means 'survives as a source of the trade_rec shape'. 6 of 8 candidates (BD, Schwab, Orion-inf, COT and Commonwealth transactions, Eclipse silver) sit on served prefixes with no status at the fixture grain.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-o-1.ops-trade-rec-reader.md: `served` true only for a producer whose objects are SERVED today (a scheduled producer writing a served prefix), not a one-off file.",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round9/checks/ops_census.py: `if any(k.get(\"served\") for k in cands): bad.append(\"verdict GAP but a candidate reads served=true\")`.",
+        "Census census_trade_rec.json (this worker's deliverables folder) records served=false on all 8 candidates, with the literal facts kept in two extra fields (served_prefix true on 6 of 8, producer_scheduled true on 6 of 8) and a served_semantics_note; o1.AC1 reads `candidates 8, each with a denominator 8 of 8; verdict GAP; violations 0`."
+      ]
+    },
+    "spec_asserts": "A GAP census marks a candidate served=true only if its objects are served today, and a GAP verdict means no served source carries both statuses.",
+    "world_is": "Six candidates have served prefixes and a schedule yet lack the statuses, so under the order's literal definition they read served=true and the instrument refuses the GAP verdict; the census had to read `served` as 'is a source of the shape'. Judgment of which reading is intended is the issuer's.",
+    "notes": "No effect on the verdict: under either reading no candidate carries both statuses at the fixture grain. MX-c-7 should cite the census's verdict, owner and per-candidate reason, not its served flags alone."
   }
 ]
 ```
