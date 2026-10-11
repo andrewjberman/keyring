@@ -5126,3 +5126,28 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Recorded for the CTO's call on whether committed on-call numbers belong in Terraform source. Not remediated: the paths are outside this order's write grant."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W52-S6",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~52",
+  "surfaced_at": "2026-10-11T16:53:14Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-g-32 AC1 arm S2 checks that each cited code file exists, not that the cited line exists; a publisher cited at a nonexistent line passes S2 and a nonexistent file fails it.",
+  "spec_asserts": "FB-g-32 preflight comp-adversary and AC1: the census proves the file's shape and that cited code lines exist; AC1 reads every publisher typed and located.",
+  "world_is": "r4_smscensus.py census() at S2 tests os.path.isfile(root/path) for kind code and never reads the line number. A mutant copy of the written census with where set to an existing file and line 99999 still PASSES S2 (S2 publishers=54, PASS). A mutant with a nonexistent file fails S2 (2 of 4 arms). So the line half of the located claim is not checked by the arm.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-firmbkts-52/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_smscensus.py S2 block at d0cbb79075: os.path.isfile(os.path.join(root, *m.group(1).split('/'))) is the only path test; the line number group is matched and not used",
+      "r4_smscensus.py --arms census on a mutant with where line 99999 at the worktree: PASS S2, S2 publishers=54 (run in .scratch, not committed)",
+      "r4_smscensus.py --arms census on a mutant with a nonexistent file: FAIL S2, 2 of 4 arms, exit=1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The line check is not performed by this worker's census; the worker verified its 16 code lines by reading each one (each carries its publish call). For the issuer: a line test in S2 would close the gap. The checker is the COO's file and is not edited here."
+}
+```
