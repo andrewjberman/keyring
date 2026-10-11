@@ -3410,3 +3410,56 @@
   "notes": "The issuer's live-ask Tier-2 order must name the writes above and the cleanup; S3 deletes stay Andrew's act. Recorded as form only; no significance judged."
 }
 ```
+
+## IRPT_ANLREQ-D2-W52-S12 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S12",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T21:30:00Z",
+  "one_line": "TO-AR-y-142: the face names the multi-sheet fixture and the fixture population under intake/tests/fixtures/holdings/ and 'ycharts/ test fixtures that hold sheets'; neither exists there. The fixtures are in intake/fixtures/holdings/ (7 csv, 2 xlsx) and intake/fixtures/graph/attachments/ (4 csv-text .bin); the ycharts tree holds no csv or xlsx fixture.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of infra/aws/lambda/investor-reporting/intake/tests/fixtures: lookup_capture/ only (3 json)",
+      "infra/aws/lambda/investor-reporting/intake/fixtures/holdings/FIXTURE_MANIFEST.json (11 files)",
+      "ls of ycharts/extract/fixtures and ycharts/generate/fixtures: pdf, json, har, py only",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r14/CLOSED_LISTS_RULE24.json (population_note)"
+    ]
+  },
+  "spec_asserts": "Face of IRPT_ANLREQ.TO-AR-y-142: fixture holdings_multi_sheet.xlsx and the Rule 24 population lie under infra/aws/lambda/investor-reporting/intake/tests/fixtures/ and the ycharts test fixtures.",
+  "world_is": "The census was taken over the folders that exist (13 files, 14 sheets); the ycharts population is 0 sheets. The Rule 24 denominators are stated against that population.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S13 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S13",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T21:30:01Z",
+  "one_line": "TO-AR-y-142: the reader's finding() carries no description and the words for a code live in uploads.py CORRECTION_WORDS (outside this order's paths), so to give the three new ERROR findings words in the reader I added an optional description member to finding() (present only when given) and carried the words in template_reader.WORDS; the sheets-not-read line is a NOTICE finding SHEETS_NOT_READ (the place DUPLICATE_SYMBOL_MERGED already uses), not a new result member. test_template_reader.py::test_prefer_named_sheet_other_sheets_and_columns_ignored changed because that answer now carries the NOTICE.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py finding() and WORDS",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:58-93 (_with_correction_words keeps a description already on an unmapped code)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_correction_words.py:81 (an unmapped code gets no description: only TICKER_CHECK_UNAVAILABLE asserted)"
+    ]
+  },
+  "spec_asserts": "Face of IRPT_ANLREQ.TO-AR-y-142: 'ERROR finding ... with words'; findings shaped 'code, row, description'; sheets note goes where the answer already carries notes.",
+  "world_is": "TO-AR-y-143 will add CORRECTION_WORDS for the same codes; its test of 'every finding code has words' must accept either source, and the words in WORDS and in CORRECTION_WORDS must not diverge. Not run: the form's rendering of a description on a NOTICE of an accepted answer.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
