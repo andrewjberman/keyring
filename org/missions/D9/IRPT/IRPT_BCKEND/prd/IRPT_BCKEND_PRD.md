@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.43",
+ "prd_version": "v0.44",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -1066,5 +1066,35 @@ ENDPOINT is not edited.
   against the whole distribution; and the seven-security cost.
 - **Rule 24:** no value is added to any set; a second predicate on the same witness, same two outcomes, moving no claim of
   `SCHWAB_ANCHOR`.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.44 -- the repeated-share rule's window is fixed (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `3.0.0_SA_CVO`'s note on v0.43 (msg 5796: as written the same security-day can be graded in one run and not in another); and
+  `2.0.0_SA_COO~P2`'s product form IB-pr-454, `deliverables/0.9.0_WK_IRPT_BCKEND~310/IB150-1_PRODUCT_FORM_RUN_READ.md`, merged
+  @ddf890e1f6 (msg 5889), **its 28 lines read whole by this seat before this addendum was written; not re-run.** The issuer re-ran the
+  criteria; the counts are the worker's. The ENDPOINT is unchanged.
+- **v0.43's "over the days of the grading run" is REPLACED. THE WINDOW is the 40 trading days ending at the graded day, that day
+  included, by `lib/trading_calendar.py`.** Over the days of that window on which `YAHOO_CLOSE` has a bar and a bar for the prior
+  trading day (the COMPARED days), when the bar repeats on more than half of them, it gives no grade for that security on the graded
+  day. **With fewer than 20 compared days in the window it gives no grade.** The grade of a security-day therefore depends on that day
+  and the 40 before it and on nothing else: the product form's test asserts the same grade across two run lengths.
+- **Why 40, from the record:** the number of securities the rule takes on one or more days, by window, reads 30, 22, 14, 14, 14 at 10,
+  20, 40, 60 and 85 days, and the number that change verdict inside the run 27, 18, 8, 7, 7. A short window lets a spell of a few
+  repeated bars take a security that otherwise moves; from 40 the set stops growing. **Both numbers are chosen on that table and
+  stated as chosen: 40, and a floor of half the window.** The record says itself that 40 is not shown to be right.
+- **What it takes and costs, as sized over 76,796 account-days:** 14 securities on one or more days (v0.43's seven, each on every day,
+  and seven more on part of the run); 287 account-days no longer freed and 2 accounts no longer ever served; blank 43.9865 percent,
+  never served 249, freed 12,195. With the rule off the module reproduces the nine-pair sizing member for member (43.9218 percent,
+  247, 12,482).
+- **The distribution v0.43 owed** (the last graded day, 300 securities of the nine pairs outside the first witness, share of repeated
+  days in tenths): 248, 26, 14, 3, 2, 2, 2, 1, 2, 0. Seven above one half; 288 of 300 below three tenths. The threshold sits in a
+  thin part of the distribution: 4 securities lie between four tenths and six tenths.
+- **Stated, not solved:** the rule cannot tell a stale feed from a fund that does not move; it gives no grade for either. Nothing
+  measured says the seven added securities' moved bars are dated wrong; they lose their grade on the days the rule takes them, and a
+  day with no grade is blank, never wrong.
+- **Nothing is served by this addendum.** The module `data/assets/scripts/gold/irpt_reporting/date_basis_grading.py` has no importer,
+  no producer, no schema and no schedule. Those are the next cells and the served change's own pair.
 
 -- 1.0.0_SA_CTO~DELL2
