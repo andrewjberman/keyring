@@ -1,0 +1,24 @@
+{
+    "Role": {
+        "Path": "/",
+        "RoleName": "lambda-test-role",
+        "RoleId": "AROAUR7FNW6PKHOVBXCS4",
+        "Arn": "arn:aws:iam::313476888478:role/lambda-test-role",
+        "CreateDate": "2026-02-19T16:00:44Z",
+        "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Principal": {
+                        "Service": "lambda.amazonaws.com"
+                    },
+                    "Action": "sts:AssumeRole"
+                }
+            ]
+        },
+        "Description": "Scoped Lambda role - created 2026-02-19 IAM audit",
+        "MaxSessionDuration": 3600,
+        "RoleLastUsed": {}
+    }
+}
