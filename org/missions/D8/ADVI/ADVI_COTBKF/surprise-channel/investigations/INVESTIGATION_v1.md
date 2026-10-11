@@ -6956,3 +6956,27 @@ round.** Never edit an existing row.
  "world_is": "The cache holds only date, Close and Adj Close (no dividend column; its dividend steps are read from Adj/Close). The custodian-implied factor matches Yahoo's own on 103 of 104 pairs, but the build's close departs from Close 1.0 to 2.3 times as far as that factor (CPXIX 1.0; the other eight 1.6 to 2.3), so 0 to 2 of 4 to 18 pairs per fund are within 2 percent; the readings rest on shape (steps on distributions, correlation 0.95 to 1.0), a rule I set after the first run and state in the md. Three round-70 CONSTANT_SCALE funds (AMBFX, BALCX, OIEJX) read adjusted. 120 of the 124 untested funds have no cache file (119 on the custodian-holdings store only). Why the store over-adjusts was not read."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S122",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T18:22:31Z",
+  "one_line": "L9 round 71: CB71bs1-AC2 MET for the nine and for the count; the independent-source limb is NOT met for the other 63 of 72, whose test reads the vendor against itself. This seat confirmed the nine on a third source: on 87 of 92 reinvestment dates the build's close is below the price the custodian's reinvestment rows show the fund traded at, in all nine funds, by as much as half on the earliest dates and near the traded price on the newest.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_71_DRAIN_END_20261011.md @70281800e0 (msg 5530)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_71_L9_GRADE_20261011.md",
+      "this seat's re-derivation 2026-10-11T18:22:31Z, from sources the worker's test did not use as a price: the custodian's 1,121 reinvestment rows for the nine funds (local transaction cache, 14 year files), price taken as amount over quantity, 221 reinvestment events; matched by date to the build's close (.scratch/advi_cotbkf/r34/after/security_day_price.parquet) on 92 events. The store's close is below the reinvestment price by more than 0.5 percent on 87 of 92 and above on 1; every one of the nine shows it; the ratio runs from 0.47 at the lowest to about 1.0 at the latest dates, and is higher in the last third of each fund's dates than in the first"
+    ]
+  },
+  "spec_asserts": "CB71bs1-AC2 (JUDGMENT, graded by the CVO at L9): the distributions come from a source independent of the close series; each reading follows from the comparison shown, and UNDECIDED is used where it does not; the whole-table count states what was tested and what was not; no correction is sized on what was not tested.",
+  "world_is": "Not examined: 129 of the 221 reinvestment events, which have no close on that date in the local price table. Not re-derived: the 63 other series, the reach, the 124 untested. No return was recomputed. Nothing was applied or served in the round.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
