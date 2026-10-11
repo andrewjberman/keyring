@@ -5489,3 +5489,31 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W88-S3 -- DB-b-113: the four-member candidate's returns manifest writes the literal absent for method_version and the three method fields where the live code writes method_version 2
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W88-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~88",
+  "surfaced_at": "2026-10-11T04:05:00Z",
+  "one_line": "DB-b-113 AMENDMENT 1 item 3: measured on the kit, the returns manifest the four-member candidate writes states method_version, valuation_source, fee_treatment and price_basis as the literal absent, where the live code writes method_version 2 (and no key for the other three); the five table hashes are equal, so this is manifest content only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "AMENDMENT 1 item 3: record the returns manifest's method_version and the three method fields as each run wrote them; if the four-member run writes the literal absent where live writes a value, file a row and put it in the packet as an open question.",
+  "world_is": "manifest_probe.py (same folder) calls each kit's own emit_day with the arguments handler.py:579 and :620 pass (no src), against a capturing stub S3. LIVE kit: method_version 2; valuation_source, fee_treatment and price_basis are not keys of the manifest. THREE-member kit and FOUR-member kit (sources.json at HEAD): method_version, valuation_source, fee_treatment, price_basis all the string absent, and the method sentence states the formula with the three fields absent and no custodian claim. The four-member run's five table hashes equal the live run's, returns included (the column method_version is 2 on both); only the manifest differs. Cause: handler.py calls emit_day without src, and HEAD's build_manifest reads the fields from src (account_return_daily.py:1845-1857, method_version_of 1802-1823). Nothing was edited; the question is for the halves and the issuer (served manifest content at release), not decided here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~88/R45_REFRESH_DELTA0.json manifest_method_fields",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~88/manifest_probe.py",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:579,620",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1802-1860"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
