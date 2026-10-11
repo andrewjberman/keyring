@@ -23993,3 +23993,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "The issuer's error, recorded in ISSUER_READS.md and decomposition s.98e. Ruled by the issuer: round 91, first cell of the ENRICHMENT LIST; no pipeline-override taken."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W371-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~371",
+  "surfaced_at": "2026-10-11T07:10:52Z",
+  "one_line": "The AC1 invocation 'cd \"$(git rev-parse --show-toplevel)\"' resolves to the BASE checkout when the agent shell starts in the base: the shell cwd resets between Bash calls, so the literal invocation ran the checker against C:/dev/ajb_workspace and printed a base-tree FAIL (no such function).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-pp-1 section 4, AC1 invocation: cd \"$(git rev-parse --show-toplevel)\" && PYTHONPATH=\"$(pwd)\" python <checker>; the worker runs it in its own worktree C:/dev/wk-resapp-371.",
+  "world_is": "Measured 2026-10-11 at 07:10Z: a fresh Bash call starts at pwd /c/dev/ajb_workspace and 'git rev-parse --show-toplevel' prints C:/dev/ajb_workspace, so the literal invocation names the base checkout. The first AC1 run printed 'FAIL N1 ... has no attribute name_match_fields' for that reason. Re-run with the worktree named explicitly (cd /c/dev/wk-resapp-371, PYTHONPATH=/c/dev/wk-resapp-371): PASS N1-N8, R90 NAME MATCH: YES, exit=0. The base run wrote nothing (the checker is read-only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Bash call 2026-10-11T07:10Z: pwd /c/dev/ajb_workspace; git rev-parse --show-toplevel -> C:/dev/ajb_workspace",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round90_prep/checks/r90_name_match.py at 687fee6df5 (the checker run against both trees)",
+      "git -C /c/dev/wk-resapp-371 rev-parse --show-toplevel -> C:/dev/wk-resapp-371 and python import of lib.research.peers.numeric_tickers from the worktree root has name_match_fields"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed: the order's invocation is literal and was not edited. The worker recorded the worktree-anchored run as its AC1 output. No hazard is armed by this row. Whether the proof-of-spec invocation should anchor to the worktree path is the issuer's call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W371-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~371",
+  "surfaced_at": "2026-10-11T07:10:52Z",
+  "one_line": "AMENDMENT 1's N8 refuses a name carrying a Class or Series designator, which makes the inherited star-ticker fixture 'Shopify, Inc. Class A' (the route fixture and the star-ticker test) a refusal, not a match; the fixture was re-keyed to 'Shopify, Inc.' and the designated form added as a refused arm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-pp-1 section 1 (AMENDMENT 1): a name carrying a Class or Series designator is refused although its cleaned form matches one held company; the same name without the designator matches. Section 1 item 1 test list asks for the designator tests to be added to the file.",
+  "world_is": "Measured 2026-10-11 at 07:10Z in the worktree: before the amendment the star-ticker test and the route fixture named '*SHOP' 'Shopify, Inc. Class A' and expected SHOP_CN_Equity; under N8 that member is not a candidate. The checker's own N2 fixture ('Zeta Holdings, Inc.') carries no designator and passes. The edited test file has 44 passed, 0 failed across the four AC2 files (pytest, exit 0).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/peers/numeric_tickers.py name_candidate with _LISTING_DESIGNATOR at 687fee6df5 plus the worktree edit",
+      "lib/research/peers/tests/test_name_match_non_numeric.py at 1797ef3fd7 (the inherited fixture) and the worktree edit",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round90_prep/checks/r90_name_match.py N8 arms (4 of 4 PASS)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded because the inherited fixture contradicted the amendment and the edit changes an inherited test. The ARMED row AMGT_RESAPP-D1-W371-S1 is not disarmed by this row: its disarm_owner 2.0.0_SA_COO~R1 owns that. The code now refuses the designated form, which is the mechanism S1 asked the issuer to rule on."
+}
+```
