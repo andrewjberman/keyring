@@ -1358,7 +1358,7 @@ round.** Never edit an existing row.
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "FWD-6: the delivery's performance file covers every transacting account.",
-  "world_is": "Set difference of Account_Number: transactions 1,533, performance 1,519, performance-minus-transactions 0, transactions-minus-performance 14 (4876983, acct#1db6cb1a, acct#2f400a83, acct#536d0c1e and ten cv-prefixed accounts).",
+  "world_is": "Set difference of Account_Number: transactions 1,533, performance 1,519, performance-minus-transactions 0, transactions-minus-performance 14 (acct#55e39882, acct#1db6cb1a, acct#2f400a83, acct#536d0c1e and ten cv-prefixed accounts).",
   "notes": "Surfaced building TO CB-g-3 (the FWD-6 coverage statement)."
 }
 ```
@@ -5195,5 +5195,30 @@ round.** Never edit an existing row.
  "disposition": "UNDER_INVESTIGATION",
  "spec_asserts": "CB53ba1-AC2: every redaction diff is token substitutions of account ids only. The round-52 packet: the per-day hashes of the clean manifest equal round 47's, 3325/3325.",
  "world_is": "440 of the round-53 substitutions replaced parts of sha256 digests, not account ids, in one file; the hashes of that file are gone at HEAD. The round-53 packet @e336d32f61 said the issuer did not re-read the 60-file diff; this row is what that unread diff held."
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S81",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T03:22:00Z",
+  "one_line": "L9 round 53: CB53ba1-AC2 NOT MET. The redaction @82049024b3 is not token substitutions only: 440 substitutions fell inside sha256 values of the tracked manifest (431 hash values changed), and 3 code files changed by more than a token. The named exception is a non-account (MET). The SWEEP-REGRADE limb is not graded: neither side was re-run. The containment itself holds: this seat's account-set run reads 0 of 458 non-channel project files and 0 of 184 code files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_53_DRAIN_END_20261011.md @e336d32f61 (msg 3951)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_53_L9_GRADE_20261011.md",
+      "this seat's account-set run at HEAD (2026-10-11T03:22:00Z): 4,710 entries (file sha256 81aa5aff...), word-bounded; 0 of 458 non-channel project files, 0 of 184 code files; the channel read 1 of 70 files before this commit's redaction and 0 after",
+      "this seat's read of the manifest at 82049024b3^, 82049024b3 and HEAD: before, 0 tokens and 3325 intact 64-hex values in each of sha256, content_sha256 and manifest_sha256; after, 440 acct# tokens, every one inside a hash value: 156 sha256, 127 content_sha256 and 148 manifest_sha256 values changed (431 values)"
+    ]
+  },
+  "spec_asserts": "CB53ba1-AC2 (JUDGMENT, graded by 3.0.0_SA_CVO at L9): every redaction diff is token substitutions only; the SWEEP-REGRADE line is identical before and after; each named exception is a non-account by the account set.",
+  "world_is": "Limb 1 fails on the manifest and on 3 code files; limb 2 is unread; limb 3 holds. The round's purpose, no account-set member in the tracked project files or code, is met on this seat's read.",
+  "disposition": "UNDER_INVESTIGATION"
 }
 ```
