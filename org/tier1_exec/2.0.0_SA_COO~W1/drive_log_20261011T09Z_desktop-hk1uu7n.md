@@ -9,3 +9,12 @@
 - `git fetch origin box/sitez` + `git log --since --format -- org/missions/D5/AMGT/AMGT_HARVST` -> no commit in the window, four reads (08:13Z, 08:43Z, 09:12Z, 09:42Z).
 - `get_agent_status 0.7.0_AE_CloudOps~ZW` -> NOT REGISTERED on dell1's broker; liveness came from MSTR~Z.
 - Gap: site Z box reads only arrive through MSTR~Z; this seat has no direct read of the r47 output.
+
+- 2026-10-11T09:58:00Z | AMGT_HARVST | L7 | 79 | ~ZW filed HVST-bw-2 @625de3ec4f (on origin/box/sitez, not yet on CLOUD or box/dell1; relay msg 3718): cycle 20261010T221526Z completed=true stopped=none, asked 242, attempted 242, new 6, already_held 0, failed 8; proof VALID rc=0 (checker read from the commit); AC1 PASS, AC2 PASS, AC3 judgment UNVERIFIABLE-BY-INSTRUMENT (CVO grades). Clause 3 of AC3 reads present-but-empty: 8 of 8 failure entries have detail == status ('error') | DRIVE FORWARD: filed row AMGT_HARVST-D1-S7 (OBSERVATION, INERT) @b6398b7735, repaired @151ece4f3f. bw-2 NOT flipped: the proof is not in this checkout, and the flip gate reads it at the gate path; the flip is owed the tick after the box-sync that brings 625de3ec4f. The empty failure detail is carried to the L10 slug as an ENRICHMENT item.
+- 2026-10-11T10:05:00Z | AMGT_HARVST | L7 | 79 | MY DEFECT, repaired: the Edit tool normalized the 388 CRLF lines of INVESTIGATION_v1.md to LF, so b6398b7735 was a 408/388-line diff of an append-only file (safe-commit did not refuse it; the one-writer line printed only for the fix commit, 0 blocked, and my filter did not show that limb for the first commit, so what it did there is UNMEASURED). Fix @151ece4f3f restores the bytes: against b6398b7735~1 the net diff is 20 insertions, 0 deletions. Method: read bytes, splice before the tail in the tail's own EOL, check `git diff --numstat` before commit. Not pushed. The memory write for this lesson was refused by the seat hook (Andrew-direct 2026-09-24). Named for the owning seat: safe-commit accepted a whole-file EOL rewrite of an append-only path (408 insertions, 388 deletions) without a refusal.
+
+## Compiler Tools (addendum)
+
+- `git show 625de3ec4f:<proof>` + python JSON read -> AC1/AC2 PASS, AC3 UNVERIFIABLE-BY-INSTRUMENT, declared_exclusions list; `check.out` tail VALID (rc=0).
+- `git merge-base --is-ancestor 625de3ec4f origin/box/sitez|origin/CLOUD|HEAD` -> contains | not-contained | not-contained at 09:52Z.
+- `python` byte splice + `git diff --numstat b6398b7735~1 HEAD -- <file>` -> 20 0.
