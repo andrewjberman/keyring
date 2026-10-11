@@ -6149,3 +6149,31 @@ round.** Never edit an existing row.
   "notes": "For the reviewer: this seat treats D2-S92 as closed by ruling and asks that the standing be graded on these facts. If the reviewer holds that a hazard nothing refuses stays ARMED, that grade stands and this row is its record."
 }
 ```
+
+## ADVI_COTBKF-D2-S108 -- The method row is another project's producer output and already states income_basis = cash_when_received for every version
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S108",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T09:53:41Z",
+ "one_line": "The method row the CTO named as the carrier for 'income is ABSENT by design' (msg 4615) is written by ANOTHER project's producer, and that producer writes income_basis = cash_when_received on every method row, version 3 included. So the row beside Cottonwood's table states an income basis for a table whose two income columns are null on every row. Found while preparing round 65; nothing was cut on it.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/gold/irpt_reporting/account_return_daily.py line 1969 (issuer read at HEAD): emit_method_row builds the row with the literal \"income_basis\": \"cash_when_received\"; it is not read from METHOD_ROWS (lines 115 to 125), whose version 3 entry carries valuation_source, value_basis, value_basis_ruling and fee_basis only; one hit for income_basis in the file",
+   "data/assets/scripts/silver/commonwealth_account_return_daily.py line 116: the mint adapter imports that producer ('THE producer; imported, never edited') and line 835 writes the method row through its emit_method_row(upload=True)",
+   "the producer's last three commits are IRPT_DASHBD workers' of 2026-10-11 (ac6a174677, 3438a03703, 91e3ec5a47): the file is in another project's write surface and is being changed today",
+   "adapter lines 154 to 159 (COLUMNS_NULL) and the tracked manifest's columns_null: income_received and income_return are NULL because FWD-3 does not separate income (it is inside the value through the cash leg)",
+   "issuer verify of the served mint at 2026-10-11T07:40:03Z ended method_row=match; which fields that match compares was not read for this row, and the served method row object was not opened for this row"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO msg 4615: the method row states, per income column, ABSENT by design and why, and the verify reads it back; round 65, its own pair.",
+ "world_is": "The carrier is not this project's file to edit, and it already carries a sentence about income that reads the other way. Two things are not established: whether 'cash_when_received' is a true description of version 3 (income arriving as cash inside the value) or only of version 2; and whether the served object carries that field today (code read only). No reader binds the income columns or the method row for Cottonwood (CTO msg 4615; 0 readers of the mint). The CTO is asked which project's cell changes the producer."
+}
+```
