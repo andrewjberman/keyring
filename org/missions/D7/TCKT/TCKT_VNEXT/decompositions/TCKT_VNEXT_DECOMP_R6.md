@@ -42,3 +42,18 @@ the runs' census.
 comp-schedule: DECLARED-NOT-APPLICABLE (no schedule; a staged read is run once by hand on a reported trigger and is NOT a
 monitor: nothing polls, alerts or notifies). comp-iam: `R6-fn-1` reads who may invoke the function (its resource policy and this
 box's own simulate) and adds no grant. comp-adversary: `R6-fn-1` IS the adversarial act.
+
+## AMENDMENT 1 (2026-10-11 ~23:2xZ) -- `R6-fn-1` issued; the attached file's arms, by CTO msgs 6001 and 6011
+
+- `R6-fn-1`: both halves signed (pair @942f1c7bf9, CTO half @16308d2aae); TO-RUN-R6-fn1 issued @99d6638059 (five direct-invoke GETs).
+- The pair's AMENDMENT 1 (@bd3d77373b), signed by the CTO @3e33c58b7b: **arm F1** is the file's live arm for exactly what it
+  shows, with no new act: the fifth run's census, a firm-scoped internal caller refused IRPT's original-file route for two other
+  firms, its own firm passing the fence.
+- **Arm F2 is OWED and is `2.0.0_SA_COO~Y2`'s cell** (`irpt-status` is that seat's): another firm's CLIENT asking for the original
+  of a real request, expect the refusal; its twin, the record's own owner, expect the signed link's presence only. Its pair goes
+  to the CTO. **FWD-2 is NOT offered as met for the file before F2.**
+- Row TCKT_VNEXT-D2-S46 filed, ARMED, owner the CTO: any holder of `lambda:InvokeFunction` on a function behind the portal
+  authorizer can be any caller to it.
+
+FWD-2 reads at this amendment: for the TICKET, on TO-RUN-R6-fn1's result and the CVO's grade; for the FILE, F1 measured and F2
+owed in another project.
