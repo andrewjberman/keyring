@@ -10,12 +10,16 @@
  "subject": "AMGT_HARVST: ack then close 12 superseded dell1->sitez ORDERs (list in body; db6a is not to be acted on)",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round79/XB_ORDER_CLOSE_SUPERSEDED_TO_ZW.md",
  "opened_at": "2026-10-11T05:50:35Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:03:00Z",
+  "by": "0.7.0_AE_CloudOps~ZW",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

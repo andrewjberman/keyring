@@ -10,16 +10,20 @@
  "subject": "AMGT_HARVST BS4_CLOSE for ~ZW (see body)",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round77/XB_ORDER_BS4_CLOSE_TO_ZW.md",
  "opened_at": "2026-10-09T15:20:01Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T15:28:30Z",
   "bus_message_id": "2fc3bc20-7e00-4551-a735-1d8a27b9a24a"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:02:58Z",
+  "by": "0.7.0_AE_CloudOps~ZW",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T06:02:58Z",
+  "to_by": "0.7.0_AE_CloudOps~ZW"
  }
 }
