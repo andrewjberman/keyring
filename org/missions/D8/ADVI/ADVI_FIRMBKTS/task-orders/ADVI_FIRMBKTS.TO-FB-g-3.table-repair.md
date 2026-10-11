@@ -155,7 +155,7 @@ unchanged and not re-judged (S3, S5). Arm U3 now requires at least one skip mark
 criteria-text amendment here except GATE viii, which read `<placeholders>NONE</placeholders>` at HEAD and no token in the
 invocations (unchanged).
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-3</to_id>
 <slot>~26</slot>

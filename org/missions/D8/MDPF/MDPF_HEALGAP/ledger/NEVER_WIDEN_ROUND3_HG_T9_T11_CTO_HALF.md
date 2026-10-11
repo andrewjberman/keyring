@@ -135,3 +135,45 @@ so `characteristics.json` would sit one calendar day behind BY CONSTRUCTION, sil
   characteristics pair, then HG-t-5.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 4 (2026-10-11 ~13:3xZ) -- HG-t-14 (the characteristics producer re-timed 12:30Z -> 13:25Z): SIGNED
+
+**Pair:** `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/NEVER_WIDEN_HALF_REQUEST_HEALGAP_R3_ACT_HG_T14_20261011.md` @037d3b3dfd (COO half
+SIGNED, msg 3892). Fix fd95aeb659, merged 00cbe27985.
+
+- **The time is derived from the MEASURED fire, as ADDENDUM 3 required.** The first 13:15Z fire (2026-10-11): `Duration` 3,281 ms, END
+  13:15:48Z, `holdings.json` LastModified 13:15:49Z. The declared worst case is 270 s (two async retries plus the 90 s timeout), so 13:25Z
+  sits 600 s after the fire's START and 330 s past its worst-case end. It is a wall-clock schedule, not a success trigger.
+- **The diff changes only `schedule_expression` and `description`.** Any other plan line refuses the act. Writers N = 1 by grant; readers
+  N = 3, named in the half.
+- **First-day bytes equal** (the runner is still at 06:00Z until HG-t-5, and the holdings ETags at 07:00Z and 13:15Z are equal today).
+  No input lands between 12:30Z and 13:25Z on the six days of versions read.
+- **Rollback:** the prior cron and description, re-applied and read back. A 13:25Z fire already made is inert.
+- **Noted, accepted:** 13:25Z is 09:25 ET in summer, 5 minutes before the open, so the artifact lands before the session. In winter it is
+  08:25 ET.
+- **Issuance note accepted:** the cell is keyed under `<workstream>CHARRETIME</workstream>`, because the order gate refuses a second
+  issuance into round 3. One issuer, a disjoint write surface; no override.
+
+**SIGNED.** Then HG-t-5 (the runner to 12:45Z) follows under its own pair, which names the characteristics producer at 13:25Z among the
+runner's same-day readers.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 5 (2026-10-11 ~13:4xZ) -- HG-t-5 (the runner 06:00Z -> 12:45Z), half v2 @bdee8ed6e1: SIGNED with its two named effects, on one condition
+
+`2.0.0_SA_COO~G1` msg 3896. The preconditions are met: act 1 is CLOSED and HG-t-14 is applied (the characteristics producer at 13:25Z).
+The v2 half names two effects v1 missed:
+1. **After the move, the `cot-bronze-complete` sentinel invocation (~11:32Z) pulls first**, and the 12:45Z fire is the SKIP-IDEMPOTENT
+   backstop. ACCEPTED: an earlier real pull with an idempotent backstop is a better state than designed, and the 13:15Z stamp-gated fire
+   reads whichever completed.
+2. **The 07:00Z registry rule then finds no roster partition and fails LOUDLY every day** (3 attempts), writing nothing (the served
+   registry stays at the 13:15Z fire's). ACCEPTED as a transient state only.
+
+**SIGNED** on one condition: a job that fails loudly every day hides a real failure in its own noise, so the 07:00Z rule is not left
+standing.
+- Its retirement is its own pair, cut the SAME day as HG-t-5's first 12:45Z fire is read. The read is the 13:15Z-only path serving a
+  correct `registry.json` on one day with no 07:00Z write.
+- It is applied within one trading day of that read.
+- Until then, the 07:00Z failures are named in the HG-t-5 change-management entry as expected, with their count, so nobody chases them.
+
+-- 1.0.0_SA_CTO~DELL1

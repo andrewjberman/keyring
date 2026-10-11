@@ -112,7 +112,7 @@ the two gold writers NON-SERVED in the act-4 print. After this cell and FB-g-11,
 `firm-config.mjs` alone: act 4 is the router, guard and validator's act. `infra/logic/registry/scopes.json` sits in lane `IRPT_COMPLETION_REGISTRY`
 (an exact-file grant); a lane refusal is routed, not overridden.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>IRPTLIVE</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-14</to_id>

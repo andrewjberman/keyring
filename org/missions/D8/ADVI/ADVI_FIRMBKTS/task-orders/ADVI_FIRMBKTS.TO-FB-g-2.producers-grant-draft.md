@@ -111,7 +111,7 @@ purpose. FB-g-8 (staged) applies it: the scoped `-target` must name BOTH the mod
 module's outputs), the ledger entry, both pair halves, then a live get-role-policy read. The policy's live NAME is now
 `advi-49f-platinum-canonical-rw-policy` (the builder's output); FB-g-8's criteria are amended to it at un-park.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-2</to_id>
 <slot>~36</slot>

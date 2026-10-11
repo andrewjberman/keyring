@@ -378,6 +378,15 @@ def _routed_bucket(scope_row):
     return scope_row["bucket"]
 
 
+def _irpt_bucket(reg, scope_row):
+    """The bucket the IRPT readers and writers address: the transitional live row (scopes.json product_live, keyed by
+    the PRODUCT scope lookup() resolves for the IRPT product) while IRPT_BCKEND's move is pending, else the routed
+    bucket. A scope with no such row keeps its routed bucket."""
+    product = lookup("irpt", reg)["key"]
+    live = ((scope_row.get("product_live") or {}).get(product) or {}).get("bucket")
+    return live if live else _routed_bucket(scope_row)
+
+
 def _tier_live_bucket(scope_row, tier):
     """The bucket a scope's data of one tier LIVES in today (scopes.json tier_live), or None.
 
@@ -494,6 +503,29 @@ def validate(reg_dir=None, systems_file=None):
                     lw = "%s.tier_live.%s" % (where, tier)
                     if tier not in tiers:
                         refuse(lw, "tier", "%r is not a tier of tiers.json (NAMING_SCHEMA.json key.tier)" % tier)
+                    if not isinstance(live, dict):
+                        refuse(lw, "record", "a dict of bucket, transitional, owner and expiry")
+                        continue
+                    if not isinstance(live.get("bucket"), str) or not live.get("bucket"):
+                        refuse(lw, "bucket", "missing or empty")
+                    if not isinstance(live.get("transitional"), bool):
+                        refuse(lw, "transitional", "missing: true or false")
+                    for f in ("owner", "expiry"):
+                        if not isinstance(live.get(f), str) or not live.get(f).strip():
+                            refuse(lw, f, "missing or empty")
+        if "product_live" in row:
+            pl = row["product_live"]
+            if not isinstance(pl, dict):
+                refuse(where, "product_live", "a dict of PRODUCT scope key -> transitional live record")
+            else:
+                for pkey, live in pl.items():
+                    lw = "%s.product_live.%s" % (where, pkey)
+                    try:
+                        prow = lookup(pkey, reg)
+                    except KeyError:
+                        prow = {}
+                    if prow.get("key") != pkey or prow.get("class") != "PRODUCT":
+                        refuse(lw, "product", "%r is not a scope key of class PRODUCT in scopes.json" % pkey)
                     if not isinstance(live, dict):
                         refuse(lw, "record", "a dict of bucket, transitional, owner and expiry")
                         continue
@@ -907,7 +939,7 @@ def _firm_registry_rows(reg):
             "aliases": [sp for sp, pl in planes if "catalog" in pl],
             "kind": t["kind"],
             "enabled": t["enabled"],
-            "bucket": _routed_bucket(s),
+            "bucket": _irpt_bucket(reg, s),
             "email_domain": t.get("email_domain"),
             "scopes": dict(t["surfaces"]),
         }
@@ -1054,7 +1086,7 @@ def _blk_ownership_keys(reg, h16, path):
 
 
 def _blk_firm_bucket_map(reg, h16, path):
-    m = {tid: _routed_bucket(s) for tid, s, _t, _own in _tenants(reg)}
+    m = {tid: _irpt_bucket(reg, s) for tid, s, _t, _own in _tenants(reg)}
     body = ('def firm_bucket_map() -> "dict[str, str]":\n'
             '    """Every tenant\'s bucket, generated from the identity registry (LGIC_ENFORCE DEC-5)."""\n'
             "    return " + _py_lit(m, 4))
