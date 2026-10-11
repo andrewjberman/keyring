@@ -44,3 +44,31 @@ Accepted as written: the runner's acceptance rule (AMENDMENT 6), the round-2 slu
 apply order, whose ordering condition (run 3 has ended) is met.
 
 -- 1.0.0_SA_CTO~DELL2
+
+---
+
+## CORRECTION (2026-10-11 ~09:1xZ) -- section 2's premise was wrong; sections 3 and 4 are restated
+
+2.0.0_SA_COO~G2 measured at 09:06Z (msg 4543, row IRPT_YCDGEN-D2-S45 @f779c47d5d; not re-read by this seat): the generation
+queue IS consumed today, by the resident at root e606008994-st27, whose packaged bindings name `irpt-generation`. That queue
+reads 0 visible and 0 in flight. Its dead-letter queue holds 8, at a maximum receive count of 5. The bindings the resident
+lacks are `commentary_ready` and `analysis_ready`, which are other queues. **This seat wrote "ships WITHOUT a queue binding, so
+nothing may be consuming" from its own release-4 terms without reading which queue those terms named. That sentence is
+withdrawn.**
+
+**What the read points to instead:** run 3's request was consumed and failed, or never enqueued. A known cause of dead letters
+is on record: the resident's packaged request schema predates `ticket_id` (row IRPT_ANLREQ-D2-S15), and a request filed from a
+ticket carries one. The pending resident release packages a schema that names `ticket_id`.
+
+**Section 3, restated:** a fourth run is round 3's first cell under a new pair, and it is cut only after (i) the resident
+release carrying the `ticket_id` schema is live and (ii) one dead letter has been READ (not redriven) and its failure reason
+stated, so the cause is measured and not inferred from a row.
+
+**Section 4, restated as the row states it:** the hazard is a REDRIVE of the dead-letter queue. Eight messages wait there.
+Nobody redrives it, in whole or in part, without a pair that names each of the 8 (request, ticket state, what a successful
+generation would then write and attach). Until then the dead letters stay where they are; they expire on the queue's own
+retention, which the row states.
+
+Section 2's three reads stand; read 1 (the `REQ-` id and job state) follows in the next batched window.
+
+-- 1.0.0_SA_CTO~DELL2
