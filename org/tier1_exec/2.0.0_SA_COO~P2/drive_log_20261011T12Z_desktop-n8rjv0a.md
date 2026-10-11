@@ -1,0 +1,5 @@
+# Drive log -- 2.0.0_SA_COO~P2, IRPT_BCKEND (workstream ~P), 2026-10-11 12Z (dell2)
+
+| tick | limb | round | TOs t/T | thread | act fired |
+|---|---|---|---|---|---|
+| ~12:0xZ | L7 rule (r126), DRIVE FORWARD | 126 | 0/1 | -- | IB-pr-428 worker ~287 STOPPED on the control (row D2-W287-S1): comparison-catalogue's whole answer DIFFERS from its schema. Finding, verified by the issuer: _authz/served.py:403 always adds the envelope member unprojected_grant (CTO ruling @61627f39f9); 17 of 21 v1 response schemas declare it; 4 closed ones omit it (analysis-request-pdf, comparison-catalogue, custody-report-persist, custody-report-read). The data member has the fixture's shape on 5 of 5 routes; custody report.accounts is absent from the handler's answer. Ruled inside the decomposition: the method is sound; AMENDMENT 1 @c4484e1b68 adds data_verdict and envelope_schema_gap per route; slot re-seated. Sent to the CTO with one ruling asked (which side moves on the four schemas). ~Y2 msgs 4836/4853: irpt-status map pinned, S45 disarmed; no irpt-status build by this seat. |
