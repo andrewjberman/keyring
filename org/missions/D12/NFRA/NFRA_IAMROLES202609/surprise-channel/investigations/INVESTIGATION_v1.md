@@ -2029,3 +2029,37 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+## Z-S43 -- market_data_v2 was NOT "deleted out of band": Andrew ruled it, it is TOMBSTONED, and safe-apply would already refuse the recreate -- so two committed artifacts of this project state the premise backwards
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S43",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-11T17:00:00Z",
+    "one_line": "infra/aws/terraform/tombstones.json carries opal-market-data-v2 with deleted 2026-07-30, verified_absent (HeadBucket 404), declaration_removed 'NOT YET -- TF-debt A7, OPEN', and why 'Andrew ruled DELETE (semantic note 18)'. So market-overview's 4-to-add drift is Terraform trying to RESURRECT a bucket Andrew ruled deleted, not a bucket going missing -- and safe-apply's tombstone-gate already checks every planned create against that list, so the recreate would be REFUSED. Two committed artifacts of this project state the premise backwards: the IAM-y-2 cell text calls the bucket 'deleted out of band', and so does my own PLAN_SURVEY_family_c.md.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IAM-y-2's cell text: \"market-overview's market_data_v2 (deleted out of band; the module would re-create it)\". And PLAN_SURVEY_family_c.md @6c18b9c2b3 section 5, mine: \"An S3 bucket this module manages has been DELETED out of band, and an unscoped apply here would RECREATE it plus its three sub-resources.\" The x-1 COO half quotes that reading as the reason -target is load-bearing in market-overview.",
+    "world_is": "THE DELETION WAS RULED, GATED AND RECORDED, and the record was there to be read the whole time. infra/aws/terraform/tombstones.json entry, verbatim: {\"name\": \"opal-market-data-v2\", \"type\": \"aws_s3_bucket\", \"deleted\": \"2026-07-30\", \"verified_absent\": \"2026-07-30 (HeadBucket 404)\", \"declaration_removed\": \"NOT YET -- TF-debt A7, OPEN\", \"why\": \"Frozen-at-creation-day estate; Andrew ruled DELETE (semantic note 18).\"}. RULINGS_LEDGER.jsonl line 44 carries the DELETE-GATED ruling and line 48 the execution, whose gate is more thorough than anything this project has run: \"0/192 lambda env refs + 0 portal two-hop + 0 refs in DEPLOYED code of the 2 portal-critical modeled readers (market-overview-tiered-generator, portal-data-proxy -- zips pulled and grepped) + frozen at creation day 7.2mo. 474 objects archived local-only, 474 versions purged, head_bucket 404, positive control 200, buckets 35->34\". THREE CONSEQUENCES. (1) THE RISK IS INVERTED: an untargeted market-overview apply would not restore something lost, it would undo a ruling. (2) THE RECREATE IS ALREADY GATED AND NOBODY IN ROUND 7 NAMED IT: safe-apply runs a tombstone-gate against that list, and on my own x-6 apply it printed 'checked 0 create(s) in this plan against 7 tombstone(s)'. An untargeted market-overview apply plans a create of a tombstoned bucket, so the gate would refuse it. -target was still the right call -- a gate you did not know you were relying on is not a control you can cite, and the x-1 pair could not have cited this one -- but the hazard was never as open as round 7's records imply, and three of my records describe it as though a single unscoped apply would silently recreate a data bucket. (3) THE DECLARATION DEBT IS KNOWN, TRACKED AND OPEN BY THIS LANE'S OWN CHOICE: 'TF-debt A7'. RULINGS_LEDGER line 115 records that 0.7.0_AE_CloudOps -- this seat, in July -- found A6/A7 (the opal-data-aaii-v2 and opal-market-data-v2 declaration removals) in its own sweep and DISOWNED them as NOT-AUTHORIZED, on the ground that they read as an obvious continuation of a thread Andrew had opened but were not inside his approval. So the open debt is a deliberate scope decision of this seat's, not neglect, and reopening it is Andrew's or the CTO's rather than mine. AND THE BUCKET'S ONLY REFERENCE IS UNEXERCISABLE: 1 live IAM grant (role/market-data-generator-lambda-role, inline market-data-generator-permissions, write=yes), 0 environment variables (checked live on three candidate functions), 0 deployed code references. That role reads RoleLastUsed null -- never assumed -- and the served graph carries an IAM_ROLE and an IAM_POLICY node for it but NO LAMBDA node, so no function exists on it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/tombstones.json -- 7 tombstones, the opal-market-data-v2 entry read in full",
+        "infra/system/ontology/worldmodel/20_rulings/RULINGS_LEDGER.jsonl lines 44, 48 and 115",
+        "the x-6 apply's own output: '[tombstone-gate] checked 0 create(s) in this plan against 7 tombstone(s)'",
+        "aws iam get-role --role-name market-data-generator-lambda-role -> RoleLastUsed null",
+        "comp-find --corpus aws 'market-data-generator' -> 2 hits across 2891 nodes: IAM_ROLE=1 IAM_POLICY=1, no LAMBDA node",
+        "get-function-configuration Environment.Variables on market-data-generator, opal-market-overview-tiered-generator, opal-portal-data-proxy -> 0 references each",
+        "deliverables/0.7.0_AE_CloudOps~IR/round8/DEAD_BUCKET_SWEEP.md section 6",
+        "PLAN_SURVEY_family_c.md @6c18b9c2b3 section 5 (the artifact this corrects)"
+      ]
+    },
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "notes": "THE GENERAL LESSON IS NOT ABOUT THIS BUCKET. 'Deleted out of band' was an INFERENCE from a plan's shape -- four resources to add, therefore something vanished unexpectedly -- and it was never checked against the estate's own records, which held the answer in a file named tombstones.json that the very gate I ran on three applies reads. A plan tells you what Terraform intends; it cannot tell you whether the world's state was INTENDED. The cheap check is to grep the tombstone list for any name a plan wants to create, and it costs one read. SECOND FINDING IN THE SAME SHAPE, from the sweep this row came out of: of 7 absent names in live grants, only this one is tombstoned -- 6 have NO record that anyone decided they should be gone, and 5 of those carry write. The reverse check is what makes that meaningful: 5 of the 6 tombstoned S3 buckets have had their grants cleaned up, so the pattern exists and was followed, and the six untombstoned absences are not 'how it is always done'. Cites Z-S39 and Z-S40. Dispositions stay the CVO's at L9."
+  }
+]
+```
