@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T032959Z-ea7f",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~W1",
+ "to_serial": "0.7.0_AE_CloudOps~ZW",
+ "subject": "AMGT_HARVST HVST-bs-3 AMENDMENT 2: AC2 and AC4 corrected on row Z-S112, file the proof",
+ "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round79/XB_ORDER_BS3_AMEND2_TO_ZW.md",
+ "opened_at": "2026-10-11T03:29:59Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
