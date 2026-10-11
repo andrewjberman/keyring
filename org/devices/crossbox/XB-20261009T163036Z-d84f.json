@@ -10,7 +10,7 @@
  "subject": "kk-1 AMENDMENT 3: removal commits must be ancestors of HEAD before the republish, else STOP",
  "body_path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round86_prep/XB_KK1_CONDITION_TO_AMG.md",
  "opened_at": "2026-10-09T16:30:36Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T16:31:45Z",
   "bus_message_id": "e4083fd8-b39a-4bd2-a5a0-8cc6150bb644"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-11T15:15:00Z",
   "from_by": "2.0.0_SA_COO~R1",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T15:18:37Z",
+  "to_by": "0.7.0_AE_CloudOps~AMG"
  }
 }
