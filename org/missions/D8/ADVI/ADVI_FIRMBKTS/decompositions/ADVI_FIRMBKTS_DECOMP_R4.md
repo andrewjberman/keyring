@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 9,
- "chains": 8,
+ "cells": 11,
+ "chains": 10,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -92,3 +92,22 @@ spawns nothing.` Seven orders are `pending` at the cut (six workers and two seat
 | `comp-schedule` | every build cell DECLARED-NOT-APPLICABLE (no cron, rule or cadence changes); the staged acts read it at the act |
 | `comp-iam` | `FB-g-8` and `FB-g-9`: the actor's own identity read at the act, resource-scoped, never `*`; `FB-g-2` drafts the grant, makes no AWS call; the rest DECLARED-NOT-APPLICABLE |
 | `comp-adversary` | each build cell's criteria are dry-run at base (FAIL as expected) and, where a bound or control, PASS; fixtures prove the checks pass on a conforming build |
+
+## Amendment 1 (2.0.0_SA_COO~B1, 2026-10-11 ~12:5xZ): cell `FB-g-10` added by the CTO's round-3 ADDENDUM 2 (msg 3843)
+
+Row D1-S19 has no owner in the tree (ADVI_ECLDAT has no project home; `0.7.0_AE_CloudOps~DELL1` holds no order on the
+root, msg 3837). The CTO ruled: remove the pending `aws_secretsmanager_secret_version.eclipse_jwt_initial` block, issued
+by this seat and executed by `0.7.0_AE_CloudOps~DELL1`; import refused; no apply. Cell `FB-g-10` (seat order, workstream
+`INFJWT`, slot `~DELL1`, write set `infra/aws/terraform/inf-pipeline/secrets.tf` and its evidence folder; no edge to any
+other cell). Cells 9 -> 10, chains 8 -> 9. Fan-out: 9 of 9 chains, cap 8 as the cap of workers spawned at once (six
+subagents; three seat orders).
+
+## Amendment 2 (2.0.0_SA_COO~B1, 2026-10-11 ~12:5xZ): cell `FB-g-11` added by the CTO's round-3 ADDENDUM 3 (msg 3845)
+
+Row D1-S21 is ruled: the issuer measured that the CTO's ADDENDUM 1 premise (the bronze-home rule resolves to
+`opal-data-bd`) was false (`tiers.json` homes FIRM bronze to `opal-data-assets`), and the CTO accepted ONE transitional
+`tier_live.bronze` row in the 49financial scope (owner F11, removed by F11's act), which the pin's renderer reads:
+byte-identical now, out of act 4. Cell `FB-g-11` (worker `~32`, workstream `BRONZELIVE`; write set `infra/logic/registry/
+scopes.json`, `lib/opal_naming.py` and the 15 tracked generated targets that cover `scopes.json`; no edge to another
+cell). Act 4's pair prints the four remaining flipped targets by tier class. Cells 10 -> 11, chains 9 -> 10. Act 4's
+un-park no longer waits on the CTO for this row; it waits on this cell's merge.

@@ -3728,3 +3728,80 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not this order set's to rule: the destination of a producer after the window is an endpoint question for 1.0.0_SA_CTO~DELL1. Two placements read from the evidence: (a) the pin follows the table's HOME (renderer reads the tier home, opal-data-assets), so writer, table and data agree after act 3's copy; (b) the pin is carved out of the flip and keeps opal-data-bd until its own move. Act 4's un-park condition names this row. No cell is cut on it until ruled."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W29-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~29",
+  "surfaced_at": "2026-10-11T12:23:31Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The worktree /c/dev/wk-firmbkts-29 carries a dirty submodule gitlink at portal, so the AC3 write-surface bound (r4_scope.py) reads FAIL on a path the worker never wrote.",
+  "spec_asserts": "TO-FB-g-7 section 4 AC3: r4_scope.py --allow the script, the test, the deliverables folder and the investigation file exits 0 with 'ROUND 4 SCOPE: OK', the worktree's changed set being the write surface.",
+  "world_is": "After commit 0e4e8e8b0c (script and test only) git status --short in the worktree reads ' M portal' beside the two committed files and the new instance. git diff --submodule=short -- portal reads index c96efe1714784162c4134450da33ce6fd6226b60 against worktree Subproject commit 8ed372cb72659b96a5cfb4000a20b8ae315b9be7; git ls-tree HEAD portal reads 160000 commit c96efe1714 (the branch's recorded gitlink); git -C portal rev-parse HEAD reads 8ed372cb72. The worker issued no act on portal. The gitlink state was present in the worktree when the scope check first ran. Output: 'CHANGED portal <-- OUTSIDE', 'ROUND 4 SCOPE: FAIL 3 changed, 1 outside, 0 required missing', exit=1. The cause (checkout-time submodule advance or a drift of the worktree's portal checkout) was not investigated and no state was reset.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round4/checks/r4_scope.py run in /c/dev/wk-firmbkts-29 at 2026-10-11T12:2xZ, exit=1, the CHANGED/OUTSIDE lines quoted above",
+      "git diff --submodule=short -- portal and git ls-tree HEAD portal at 0e4e8e8b0c (dell1 branch base, worktree of 0.9.0_WK_ADVI_FIRMBKTS~29)",
+      "the ajb_workspace repo's own git status at session start also lists ' M portal' (the parent tree, not this worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-g-6, WAF ACL reconcile)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S22",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-11T12:26:35Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-g-6: neither of the CTO's two forms clears the portal-auth ACL plan on this provider (ignore_changes on the groups' version cannot index a set; an explicit null is a no-op); the only form that reads No changes is ignore_changes on the whole rule array, which the file's own comments record as refused, so no edit was made.",
+  "spec_asserts": "TO-FB-g-6 step 2: try (i) ignore_changes naming the groups' version, (ii) an explicit version = null on the three managed_rule_group_statement blocks, (iii) the smallest third form that clears the plan while changing no rule name, priority, action, override or statement; bound 2: if the only clearing form changes behavior, stop and file a BLOCKING row. AC1: the targeted plan reads No changes.",
+  "world_is": "Targeted plan of aws_wafv2_web_acl.opal_cloudfront_protection (terraform 1.15.8, aws provider 5.100.0, lock file tracked): base = 1 to change (three managed groups, version '' in state to null in config). Form (i) with paths rule[3..5].statement[0].managed_rule_group_statement[0].version: 'Error: Cannot index a set value' x3. Form (ii) explicit version = null x3: the same 1 to change, no effect. Form (iii-a) version = '': 'expected length of ...version to be in the range (1 - 128), got ' x3. Form (iii-b) ignore_changes = [tags, tags_all, rule]: 'No changes', measured with the file restored afterwards and never committed. A version pin is not available for ip-reputation (list-available-managed-rule-group-versions returns CurrentDefaultVersion None and 0 versions) and for the other two (Version_1.23, Version_1.26) it stops following AWS's default and plans as an update. Root cause as observed: the provider's flatten stores the empty string where AWS stores no Version, and the config can neither name nor omit it in a way the set-element comparison accepts. The file (waf-cloudfront.tf lines 371-377 and 415-421) records that ignore_changes on a WAF rule array was refused because the array is the security control and ignoring it blinds Terraform to a moved rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/g6/forms_tried.txt",
+      "g6/baseline_targeted.out, g6/form_i_ignore_changes_paths.out, g6/form_ii_explicit_null.out, g6/form_iii_a_empty_string.out, g6/form_iii_b_ignore_rule_array_MEASURE_ONLY.out (the provider's own plan text per form)",
+      "r4_waf.py --arms waf --root /c/dev/wk-firmbkts-30 at the unchanged base: A1 FAIL, A2 PASS, A3 PASS, 2 of 3, exit 1",
+      "infra/aws/terraform/portal-auth/waf-cloudfront.tf lines 371-377 and 415-421 (the recorded refusal)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the call: 1.0.0_SA_CTO~DELL1 (the S12 ruling named two forms; both fail here) and the issuer for the order. Options, none applied: (A) lift the recorded refusal for the whole rule array, with its lost evidence replaced by a separate assertion (for example a check block over a data read of the live ACL's six rule names and priorities), which is a change beyond one resource and beyond this order's one file; (B) keep the ACL as the named rider of every portal-auth apply, which the act-1 ADDENDUM 1 already covers (the apply writes the same six rules and the churn returns, as measured at 07:54Z: AWS read byte-identical before and after); (C) a provider version that stores no empty string (a lock file and version constraint change, outside this order's file, and a provider upgrade for the whole root). This lane recommends B until the CTO rules on A, because A removes the one control that shows a moved rule. The order stays pending and no file changed in the worktree: git diff of waf-cloudfront.tf is empty."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S23",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-11T12:36:00Z",
+  "one_line": "TO-FB-g-10 AC1 and AC2 cannot be graded as written on dell1: the full plan dies on two AccessDenied reads for cloudops-dell1-agent-user, and AC1's grep counts the state-refresh line that names the resource whether or not the block is in config.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-FB-g-10 step 3 and AC1/AC2: the root's full unscoped terraform plan, run by this seat, lists no eclipse_jwt_initial and ends Plan: 0 to add or No changes; grep -c eclipse_jwt_initial reads 0.",
+  "world_is": "Measured 2026-10-11T12:34Z in /c/dev/wk-firmbkts-31 after the one-block edit (secrets.tf, fmt clean): terraform plan -refresh=true rc=1 in 11 s with two errors and no Plan line. (1) aws_sns_sms_preferences.account: sms-voice:DescribeSpendLimits denied to user/cloudops-dell1-agent-user. (2) aws_ssm_parameter.inf_gold_last_trigger_mode: ssm:GetParameter on /inf/gold/last-trigger-mode denied. Separately, the first output line is 'aws_secretsmanager_secret_version.eclipse_jwt_initial: Refreshing state...' with the config block removed, so grep -c reads 1; the laptop evidence plan_untargeted.out prints the same line at :232 beside 'will be created' at :508, so the line is printed for the state entry before refresh drops it and AC1 as written cannot read 0 until a state write. AC3 (SECRET VERSION: UNCHANGED, AWSCURRENT f57eb0dc-439b-4f46-859e-17fb00d968cb of 2 versions) and AC4 (ROUND 4 SCOPE: OK, 3 changed, 0 outside) pass. The id shape the order names, ADVI_FIRMBKTS-D1-DELL1-S<k>, does not match the gate's id grammar (fabric coordinate = one capital plus digits), so this row is D1-S23.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "/c/dev/wk-firmbkts-31/org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~DELL1/evidence/plan_full_after.out lines 1, 413-423 (uncommitted)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/plan_untargeted.out lines 232 and 508",
+      "r4_secretver.py and r4_scope.py runs, 2026-10-11T12:35Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The edit is NOT committed: the verifying plan could not run, so 'adds nothing new' is unproven. Two ways forward, both the issuer's: run steps 3 and AC1/AC2 from an identity that can read those two objects (the laptop did), or grant dell1 the two reads under its own order; and read AC1 as a count of the '# ... will be' plan line rather than the refresh line."
+}
+```

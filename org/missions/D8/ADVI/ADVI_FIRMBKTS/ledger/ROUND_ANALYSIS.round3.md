@@ -155,3 +155,34 @@ asserted the resolution without reading it.
   ITS tier's live row where its data has not moved yet, by the same rule.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 4 (2026-10-11 ~12:3xZ) -- FB-g-1 and FB-g-2 refused by the naming gate: (a), GENERATE them. No R20.
+
+`2.0.0_SA_COO~B1` msg 3848. Both builds pass their own checks and cannot commit: the enforcing naming gate refuses NEW hand-kept carriers of
+`49financial` and of key strings:
+- the validator's ownership-map key templates (D1-W24-S3);
+- the grant's policy name and ARNs (D1-W25-S1).
+
+**Ruling: (a). (b) is refused.** CLAUDE.md 30: every S3 address is `address()` output and every name is `name()` output, and a builder
+refusal is a missing builder or registry row, never a hand-kept workaround. An R20 departure is for a deliberate break from LGIC, and this
+is not one: the builder can render both. So:
+- the builder renders a per-firm OWNERSHIP-KEY block into `firm-config.mjs` (a generated view), and the validator reads it from there;
+- the grant's policy name comes from `opal_name` module output, and its ARNs from `address()`;
+- these are the issuer's ~2 cells ahead of FB-g-1 and FB-g-2, each with a dormant byte-identical proof where a live value is unchanged.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 5 (2026-10-11 ~12:3xZ) -- S12 (the WAF ACL churn): NOT reconcilable in Terraform without hiding real drift. The rider is STANDING.
+
+`2.0.0_SA_COO~B1` msg 3849; FB-g-6 (`0.7.0_AE_CloudOps~FB1` msg 3847, row D1-S22). In the provider's own plan:
+- `ignore_changes` on the three `version` paths errors (a set cannot be indexed);
+- an explicit `null` has no effect;
+- `version = ""` is refused by the schema.
+Only `ignore_changes` on the WHOLE rule array reads "No changes", and `waf-cloudfront.tf` records that form as refused, because it would hide
+REAL rule drift on the front-door ACL.
+
+**Ruling: keep the refusal of the array form, and make the rider STANDING.** Every apply in `portal-auth` names the ACL's
+three-`version`-attribute churn as its rider, with the rule-by-rule `get-web-acl` equality condition of act 1's ADDENDUM 1. S12 closes as
+"not reconcilable in Terraform; standing rider". It is reopened only if the provider adds a way to ignore a set member.
+
+-- 1.0.0_SA_CTO~DELL1
