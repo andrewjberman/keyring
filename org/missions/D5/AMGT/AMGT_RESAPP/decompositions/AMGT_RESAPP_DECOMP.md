@@ -9934,3 +9934,67 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order (the queue's producer draws at site Z)
 ```
+
+## 100. ROUND 92 -- THE UNIT-AWARE CURRENCY, THE UNIVERSE HOME, THE BLOCK BOUND; THE STORED-DRIVER WRITE AND THE ONE REDEPLOY STAGED. Three worker orders + two staged seat orders + one staged cell + one issuer act
+
+**Input:** the CTO~DELL1 round-91 analysis `ledger/ROUND_ANALYSIS.round91.md` @f6eb45c478 (items 1-7; msg 3649). Prep in
+`deliverables/2.0.0_SA_COO~R1/round92_prep/checks/` (r92_currency_guard, r92_minor_unit_census, r92_universe_home, r92_block_bound,
+r92_driver_reverified). Every check was dry-run at the base on 2026-10-11 and each build arm FAILs while its controls PASS; each
+worker-order check was also run against a throwaway candidate held outside the tree (r92_currency_guard 4 of 4, r92_universe_home 6 of 6,
+r92_block_bound 5 of 5 with r91_locator still 13 of 13).
+
+### 100a. MEASURED AT THE CUT
+
+- **Item 1/2 (C-S55, the 156 stale reasons):** census of the live function over 243 subjects, 2,230 member rows: 12 rows on 5 UK securities
+  (AZN, BP, IMB, RIO, SSE) serve `GBp` beside the scanner's POUND price (AZN 120.32 against the record's PX_LAST 11998.0 GBp); every other
+  served currency (USD 125, CHF 9, EUR 8, JPY 6, HKD 1) equals its record's own CRNCY; 156 rows serve a currency beside the producer's stored
+  reason text. The CTO's round-91 text said 13 rows: the rebuilt objects (pp-3) carry 12.
+- **Item 3 (the universe home):** the refresh's one address is an existing object (`CURRENT_VINTAGE`); the fake-S3 check reproduces round
+  91's STOP at the base (the put lands on `date=2026-08-06`).
+- **Item 5 (W372-S3):** a synthetic `2025 = 18.08` verifies against a text whose figure is stated for 2024; a bound at the next DIFFERENT
+  year token refuses it and leaves a figure stated far from its label verifying.
+- **Item 4 (the stored-driver write):** the production re-verification in dry-run over all 12 stored analysis objects: ASML 1 -> 0 points,
+  BABA 0 -> 2, SAP 1 -> 3, nine equal. The served driver is the drafting object's, spliced from the newest analysis (`drafting_build
+  --splice-driver --only-keys`, round 52 precedent): two writes, both overwrites of existing keys with VersionIds.
+- **Item 6 (the rendered read) and item 7 (pp-4):** the read is an issuer act done after the redeploy; pp-4 stays on the DEMQUE answer.
+
+### 100b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-qq-1` | a minor-unit currency is never served beside a scanner price; a served currency carries no stale reason (items 1, 2) | `~381` | worker | LOCAL until qq-5 | `lib/research/peers/price_currency.py`, `lib/research/api/scoped_amgt.py`, one new test | C-S55, D1-S14 |
+| `AMGT-qq-2` | the candidate universe's pool home follows the scanner's vintage (item 3) | `~382` | worker | LOCAL | `lib/research/peers/universe.py`, one new test | pp-3 STOP, option C |
+| `AMGT-qq-3` | a located period's block stops at another year's label (item 5) | `~383` | worker | LOCAL | `lib/research/filings/analyze.py`, one new test | W372-S3 |
+| `AMGT-qq-4` | the stored drivers re-verified and spliced into the drafting objects (item 4) -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | `filings/v1/` and `drafting/v1/` (3 names, overwrites with VersionIds); ledger | Z-W266-S3 on the page |
+| `AMGT-qq-5` | the ONE redeploy: pp-1's identity and qq-1's currency (item 1) -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger | pp-1, qq-1, oo-5, nn-5 |
+| `AMGT-qq-6` | FWD-38's rendered-page read on ASML, BA and ROG (item 6) -- ISSUER ACT, after qq-5 | `2.0.0_SA_COO~R1` | issuer act | LOCAL (reads) | `round92_prep/QQ6_RENDERED_READ_*.md` | FWD-38 |
+| `AMGT-qq-7` | the DEMQUE answer's reader and wiring (item 7) -- STAGED, no order | -- | worker | LOCAL until a redeploy | `lib/research/api/scoped_amgt.py` | D1-S14 |
+
+**Uncovered, with its owner:** `AMGT-nn-6`, FWD-16, the model API key -- Andrew (analysis section 4).
+
+### 100c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: analysis items 1-7. 1 and 2 -> qq-1 (+ qq-5 carries it); 3 -> qq-2; 4 -> qq-4; 5 -> qq-3; 6 -> qq-6; 7 -> qq-7.
+  Printed denominator 7 of 7 items placed (3 worker orders, 2 staged seat orders, 1 issuer act, 1 staged cell).
+- **(ii) Same grain.** qq-1 is one decorator and one rule file; qq-2 one module; qq-3 one function of the verifier.
+- **(iii) Intent coherence.** qq-1..qq-3 are code; qq-4 and qq-5 the two world acts, one on stores and one on code; qq-6 reads.
+- **(iv) What a cell does NOT move.** qq-1 changes only what is served beside a record-derived minor-unit code and removes a stale reason
+  where a code is served, and no price, identity or other field; qq-2 changes where the producer writes and reads its universe, never the
+  universe's content; qq-3 narrows what the verifier accepts and rewrites no stored object; qq-4 writes three names' drivers and nothing
+  else; qq-5 moves only the function's code, each member admitted by blob and its member-by-member table measured before the pair.
+
+### 100d. EDGES AND FAN-OUT
+```
+qq-1 --> qq-5              (the redeploy carries what is merged; pp-1, oo-5, nn-5 are already merged)
+qq-3 --> qq-4              (the stored-driver write runs only after the bound is merged)
+qq-4 and qq-5 never share a window (the CTO's sequencing rule: the second re-measures against the state the first left)
+qq-2 independent; qq-6 after qq-5; qq-7 on the DEMQUE answer
+fanout:
+  cap: 8
+  orders_total: 5          (qq-1, qq-2, qq-3 spawned; qq-4, qq-5 staged seat orders)
+  chains_total: 3          (qq-1 -> qq-5 ; qq-3 -> qq-4 ; qq-2)
+  wave_0: [qq-1 ~381, qq-2 ~382, qq-3 ~383]
+  wave_1 staged: [qq-5 RA1 (qq-1 merged, the pair measured member by member), qq-4 RA1 (qq-3 merged, the pair from the re-read)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```
