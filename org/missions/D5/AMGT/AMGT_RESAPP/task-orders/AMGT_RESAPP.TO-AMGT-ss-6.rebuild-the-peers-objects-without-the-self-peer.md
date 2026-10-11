@@ -23,7 +23,7 @@ CTO~DELL1 round-92 analysis item 3, second half. `AMGT-ss-3` (merged before this
 company by held identity and builds the held-name index once per batch; `AMGT-ss-5` has landed the universe at the scanner's vintage. ONE
 batch over the 243 MEASURED subjects, from the checkout at the GO's pin, writing a NEW partition (never an existing one):
 
-`python -m lib.research.peers.engine --as-of <the batch date> --write-as-of <a partition string that sorts AFTER 2026-10-11T0707Z, e.g. 2026-10-11T1100Z> --write-pool`
+`python -m lib.research.api.peers_rebuild --as-of <the batch date> --write-as-of <a partition string that sorts AFTER 2026-10-11T0707Z, e.g. 2026-10-11T1100Z> --write-pool` (the caller above the peers package that builds the held-name index; `python -m lib.research.peers.engine` runs WITHOUT the rule and must not be used)
 
 It writes `peers/v1/<security_key>/<write-as-of>.json` for each subject; every reader picks the latest partition by plain string order. BEFORE
 it: run `r93_self_peer_census.py --write-baseline <file>` (the 243-route read of the live function, the pair's before column) and the single-
