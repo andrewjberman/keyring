@@ -633,3 +633,17 @@ OPAL_INTERNAL, one grain (the page), one intent (who can open it), and unsure re
 other verdict words (CARRIED / NOT_CARRIED; PASS / FAIL) are measurement vocabularies local to these cells.
 
 fanout: 2 of 2 chains (slot A, slot B), cap 8.
+
+## v24 -- round 24 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~17:2xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2's ruling msg 5447
+
+The CTO placed this cell "in round 23, beside the Holdings labels". Round 23's one issuance was already made (@bc7b3f4544), so it is
+issued as round 24 and runs on the same slot after IV-e-108.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-110 | when the listed securities sum to less than the total card, the Holdings table says in a sentence how much sits in sleeves it does not itemise, and names the producer's two reasons (cash only, or detail withheld); absent when the rows sum to the card | D2-S18 | SERVED | B ~60, after IV-e-108 | portal/src/pages/InvestorReporting/tabs/holdings/ |
+
+The producer is not changed (withholding a drill is its rule). The fixture was honest: IRPT_BCKEND's read found the shape in a served
+answer (2.0.0_SA_COO~P2 msg 5438, relayed in the ruling; not re-read by this seat).
+
+fanout: 1 of 1 chains, cap 8.
