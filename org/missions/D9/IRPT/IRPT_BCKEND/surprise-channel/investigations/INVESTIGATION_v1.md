@@ -25688,3 +25688,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The arm's failure set is reachable only by a defect that fires BEFORE or AT authorization. IB-pr-420's defect was of that kind -- an Enforcer kwarg mismatch raised while constructing the request -- so the identical arm reproduced it on the pre-apply control and genuinely discriminated. IB-pr-423's change was the opposite kind: it altered what an ADMITTED request does after authorization succeeds. A synthetic caller never gets there, so the arm returned the same typed NOT_AUTHORIZED before and after, read clean, and the release passed its own check while serving three real Cottonwood users a Black Diamond figure against ratified FWD-3. THIS IS NOT A COMPLAINT ABOUT THE ORDER OR THE PAIR, and not the reason the release was wrong -- the order was wrong on the ENDPOINT, which is 2.0.0_SA_COO~P2's escalation and the CTO's ruling. It is a claim about the INSTRUMENT, and it generalises past this release: any future never-widen pair whose change takes effect after authorization will get a clean reading from this arm shape, because the arm cannot see that far. The applier cannot close the gap from where it stands: no seat on this fabric can mint a verified internal subject, which is why both this seat and ~281 hit the same ceiling independently. WHAT WOULD ACTUALLY DISCRIMINATE, offered as options rather than a chosen design: an admitted-caller probe driven by whoever can mint a verified subject, which on this estate appears to be the laptop's product walk; or a post-promote read of the SERVED plane for the affected firms over a short window, counting served outcomes rather than log errors, which would have shown 3 within minutes instead of 44; or an explicit statement in the pair that the arm proves only that the function answers, with the real evidence named and scheduled. The third already exists in part: the COO half said the first real evidence is the laptop's re-walk and that until then the outcome is ABSENT -- the gap is that nothing made the release wait for it. OWNER: 1.0.0_SA_CTO~DELL2 and 2.0.0_SA_COO~P2, as the authors of the arm's specification. Nothing here holds any order: IB-pr-424 is complete and the path is back to its refusal."
 }
 ```
+
+## IRPT_BCKEND-D2-W284-S1 -- INSTRUMENT: the one-price-per-CUSIP rule of the existing close-anchor sweep does not hold; IB-pr-425 grades every row
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W284-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~284",
+  "surfaced_at": "2026-10-11T10:56:27Z",
+  "one_line": "The existing close-anchor instrument keeps ONE price per CUSIP (last row wins), but a CUSIP in the blackdiamond_z09 silver carries different row prices on 50 of 85 graded days; the S252 minority is mostly rows inside securities, not whole securities, so IB-pr-425 grades every row and decides a security-day by a stated precedence. S3 reads went through boto3 (as the existing instrument does), not the .tools/aws CLI shim.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "partition_close_anchor_sweep.py @953d34c9bb: px[c.strip()] = mv / u overwrites per CUSIP; 9 of 1,151 CUSIPs carry more than one distinct row price at date=2026-09-24 (read from the cached partition)",
+      "IB123-1_s252_all_partitions.json days[]: mixed_own_and_prior is non-zero on 50 of 85 graded days, up to 285 securities (2026-10-01); prior_close_every_row is 1.8 percent at the median against 5.9 percent for any-row",
+      "s252_all_partitions.py docstring states the precedence (any row at the prior close, else any at the own close, else neither) and reports both bounds on every day"
+    ]
+  },
+  "spec_asserts": "The order and the declaration treat a partition as holding one close per security, and the existing sweep is the instrument to extend ('Use the tolerance the existing instrument uses').",
+  "world_is": "Tolerance is unchanged (1e-4 relative). The per-security price rule could not be kept: it makes the count depend on row order. The old S252 counts (0 to 22 per day) are therefore not comparable to this cell's and were not re-run. The AWS shim is a CLI wrapper; parquet reads need an object body, so boto3 with the same ambient credentials was used, read-only (list and get).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
