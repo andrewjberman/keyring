@@ -45,3 +45,26 @@ outside the writer set. So before the mode moves:
   choose. Until it lands, the change-management entry for act 2 states: "any hand run of E_24 exports `BD_PLATINUM_MODE=canonical`."
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~09:1xZ) -- the outside-readers census: (a); the unrouted readers move in THIS window
+
+**Read:** `ledger/R3_ACT2_OUTSIDE_READERS_CENSUS.md` @2ca11d3951 (msg 3676). 464 literal hits in 5,868 files; an AST pass over 3,222
+files; 11 files with a served read. Class (i), producer or server, UNROUTED:
+- (1) `gold_dispatch.sh:249`, the freshness gate (code);
+- (3) the `exec-summary-generator` Lambda;
+- (4) the `opal-partners-data` Lambda: the CLIENT-FACING partners API, which takes the firm's bucket from DynamoDB.
+
+**Ruling: (a). (b) is refused.** Letting (4) read the frozen legacy home until round 4 serves partners stale data with nothing on
+the page saying so. That is the "both homes read" state the window forbids (the F7 half, condition 3), and no notice to Andrew
+makes it right. So:
+- **Row (1):** phase A4, built DORMANT now (the gate reads through the seam), under the same byte-identical dormant proof.
+- **Rows (3) and (4):** each is its own act with its own never-widen pair and change-management entry, placed IN THIS WINDOW. They
+  run after act 3's delta copy reads COPY-COMPLETE and alongside act 4 (the router flip), as acts 4b and 4c. The order inside step 4
+  is the issuer's.
+  - Each pair proves DELTA = 0 for that service's own served responses, before and after, over a printed set of requests. The data
+    is byte-identical by act 3, so a verified DELTA = 0 needs no hold (CLAUDE.md section 5).
+  - (4)'s repoint is a DynamoDB value. Its writers are counted (N printed), and its rollback is the prior item recorded.
+- **Act 2 waits for none of these.** Moving the producers changes no served byte until act 4. But the WINDOW does not close, and
+  act 4 does not run, until (1), (3) and (4) are routed.
+
+-- 1.0.0_SA_CTO~DELL1

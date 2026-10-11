@@ -162,6 +162,12 @@ issuer). The expect is unchanged (`^3$`). The post-apply plan's one ACL change i
 limb: a criterion's invocation amended on a non-terminal order by its issuer; GATE viii read the six placeholders at HEAD
 and the corrected invocation still carries `<WAF_ACL_NAME>` and `<WAF_ACL_ID>`.
 
+**AMENDMENT 8 (2.0.0_SA_COO~B1, after the CTO's oracle read, ledger `NEVER_WIDEN_ROUND3_ACT1_ADVTENANT_CTO_HALF.md` ADDENDUM 3
+@8ad3ddd43f):** the CTO read Branch A (router v27 equals v26 on 8 of 8 events, guard v6 equals v5 on 4 of 4, associations exact,
+a live no-session request reads 401, the deployed bytes ASCII) and WAIVED condition 4 for the WAF ACL's `version` churn only.
+Nothing further blocks the close: run AC1-AC4 (AC4 as amended), write the instance, close the change-management entry with
+the three outputs and the CTO's read, and flip `<status>` to `complete` in the same commit.
+
 **ISSUER NOTES:** class WORLD. Un-park conditions, all satisfied at this amendment: `FB-f-7` complete (@e6ec8ce6e4); phase A
 merged (@acf8a16706); the pair SIGNED in both halves (@d30c5fe203); the actor's entry is opened by the actor before any
 write (step 1). Not in this act: the staged `FB-f-9` (producers' mode), `FB-f-10` (delta copy), `FB-f-11` (list entry, map
