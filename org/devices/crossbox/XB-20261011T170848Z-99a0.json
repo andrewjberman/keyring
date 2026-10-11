@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T170848Z-99a0",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~B1",
+ "to_serial": "0.7.0_AE_CloudOps~FBL",
+ "subject": "ADVI_FIRMBKTS FB-f-20 c290: SNS default SMS type, 1 to change; pre-read can STOP",
+ "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-20.sms-default-type-apply.md",
+ "opened_at": "2026-10-11T17:08:48Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-11T17:12:19Z",
+  "bus_message_id": "23916939-7950-4a3d-b4cb-75a423049a49"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
