@@ -563,3 +563,29 @@ write: **1 row** (`S1`).
   "notes": "FB-e-6 builds the path gated on the registry's own map (FIRM_BUCKET_MAP[scope] === resolved bucket), so no request changes until the map does. The cutover is the CTO's, with F10 and the advTenant remedy."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W10-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~10",
+  "surfaced_at": "2026-10-11T04:06:27Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1",
+  "one_line": "THE TO-PIPELINE GATE CANNOT FIND A TREE PROOF INSTANCE NAMED AS THE ORDER NAMES IT, SO A VALID INSTANCE CANNOT FLIP ITS ORDER TO complete",
+  "spec_asserts": "ADVI_FIRMBKTS.TO-FB-e-7 section 5: the instance is at deliverables/0.9.0_WK_ADVI_FIRMBKTS~10/ADVI_FIRMBKTS.TO-FB-e-7.proof_of_spec.json, and the order's status flips to complete in the same commit as the instance.",
+  "world_is": "The instance at that path is VALID (proof-of-spec-check.py rc=0 on AC1,AC2,AC3, all PASS) and is committed at 7329f897dd. The flip commit is REFUSED by the TO issuance gate: 'NO proof-of-spec instance was found beside it'. to-pipeline-gate.py resolves a tree instance only by the TO file stem (ADVI_FIRMBKTS.TO-FB-e-7.s11-tolerant-load.proof_of_spec.json, lines 3176-3191) or by a backticked path inside the order's <proof_of_spec> block (lines 3156-3173), and this order's block names no instance path. The order therefore cannot reach complete under the gate as written. The flip is NOT committed; the order stays pending on the branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check.py ... ADVI_FIRMBKTS.TO-FB-e-7.proof_of_spec.json AC1,AC2,AC3 -> VALID (rc=0) @7329f897dd",
+      "safe-commit flip attempt, 2 attempts (before and after the instance commit): to-pipeline-gate REFUSED, 'NO proof-of-spec instance was found beside it'",
+      ".tools/to-pipeline-gate.py:3156-3191 @62f4b5441e (stem and tag lookup)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not worked around: the instance was NOT renamed to the stem name, the order's <proof_of_spec> block was NOT edited, and no pipeline-override line was added (the TO is pipeline-registered). Disarm candidates for the owner: a stem-named mirror, or the gate reading the instance path from the order's section 5 'Instance at' line. The gate's own FIX text asks for the two blocks in the TO face."
+}
+```
