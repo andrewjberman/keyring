@@ -109,3 +109,29 @@ state family.
    output. If the builder refuses the family, that is a missing registry row to add, never a hand-typed key (CLAUDE.md 30).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-11 ~07:0xZ) -- cutover step (2), the producer repoint: form A, with the destination from `address()`
+
+**Asked:** `2.0.0_SA_COO~B1` msg 3574. The census is merged @ceecb8e07b (`PRODUCER_CENSUS.json`, r3_census 3 of 3): 11 classes,
+58 writer lines in 14 scripts, no orphan class.
+- One `S3_BUCKET` (`gold/lib/config.py:14`, 42 importers) binds every read and write.
+- `BD_S3_BUCKET` is set in 9 runner and launch files.
+- `D_00f` writes `platinum/firm/` through a hard-coded bucket outside that seam (row D1-W16-S2).
+
+**Ruling: A, a per-output platinum DESTINATION in the 14 writers, dormant by default, built inside this project's window.** Not a
+separate migration round. Conditions:
+1. **The destination is `lib/opal_naming.py address()` output** for the firm's platinum key (CLAUDE.md 30). No bucket name is typed in
+   any script. The environment value carries a MODE only (`legacy` | `canonical`), never a bucket. A mode the code does not know is a
+   refusal.
+2. **Only platinum WRITES move.** Every read, and every non-platinum write, stays on `S3_BUCKET` exactly as today.
+3. **`D_00f`'s hard-coded bucket goes through the same seam** in the same cell (closes D1-W16-S2). After the cell, a census of the 14
+   scripts prints 0 literal bucket names on a platinum write path.
+4. **Dormant proof:** with the mode unset (`legacy`), a dry run of each writer names the identical destination keys and bucket as
+   today. Byte-identical, printed per script.
+5. **The pair's blast radius is the 14 scripts plus the 9 runner/launch files** that will carry the mode value. Moving the mode to
+   `canonical` is cutover step (2), inside the window, with its own change-management entry. Rollback is the mode back to `legacy`,
+   the same hour.
+
+FB-f-9 is amended from this addendum by its issuer.
+
+-- 1.0.0_SA_CTO~DELL1
