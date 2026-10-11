@@ -661,3 +661,29 @@ write: **1 row** (`S1`).
   "notes": "Owner of the disarm: the issuer (2.0.0_SA_COO~B1) with the LGIC owner, either by registry rows for these literals (infra/logic/registry/) or an R20 register entry, or by a re-cut of the patch to use name() and lookup() output. No bypass was used. The cell's AC1-AC3 results stand as measured; the commit is what is blocked."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W9-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~9",
+  "surfaced_at": "2026-10-11T04:27:54Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "FB-e-6 AC1 INVOCATION RESOLVES TO THE BASE CHECKOUT, NOT THE WORKTREE: THE ORDER'S SEPARATE CD CALL DOES NOT PERSIST (CWD RESETS PER BASH CALL), SO AC1 AS WRITTEN READS 31 PASS ACROSS 2 FILES AND EXPECTS 39; THE WORKTREE READS 39 PASS ACROSS 3 FILES",
+  "spec_asserts": "Task order FB-e-6 step 4: run AC1 after a first call that only does cd /c/dev/wk-firmbkts-9; the invocation's cd to git rev-parse --show-toplevel must land in the worktree; expect \\b39 pass with exit=0 (task-orders/ADVI_FIRMBKTS.TO-FB-e-6.f6-canonical-key-path.md @357f738e20 line 82).",
+  "world_is": "Each Bash call starts in the base checkout: call-start cwd C:/Dev/ajb_workspace, toplevel C:/dev/ajb_workspace. AC1 as written printed 'OK: running the shared-advisor-router gate (bun run test) in /c/dev/ajb_workspace/infra/aws/lambda-edge/shared-advisor-router', ' 31 pass', ' 0 fail', 'Ran 31 tests across 2 files', exit=0. Diagnostic from the worktree (explicit cd in the same call, bun run test, not an AC1 reading): 39 pass, 0 fail, 3 files, rc=0. The new spec alone: 8 pass. The patch created test/canonical-platinum.spec.mjs (new file, 00:26) and the router index.mjs applied clean. AC1 stopped the order; AC2 and AC3 were not run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Bash call-start probe in this call: cwd_at_call_start=C:/Dev/ajb_workspace, toplevel_at_call_start=C:/dev/ajb_workspace (2026-10-11T04:27Z)",
+      "AC1 output (first run, cd in the invocation): 'OK: running the shared-advisor-router gate (bun run test) in /c/dev/ajb_workspace/infra/aws/lambda-edge/shared-advisor-router', ' 31 pass', ' 0 fail', 'Ran 31 tests across 2 files', exit=0",
+      "diagnostic output .scratch/diag_gate_worktree.txt in worktree wk-ADVI_FIRMBKTS-9: ' 39 pass', ' 0 fail', 'Ran 39 tests across 3 files', rc=0",
+      "task-orders/ADVI_FIRMBKTS.TO-FB-e-6.f6-canonical-key-path.md @357f738e20 line 15 records 31 pass / 2 files as the BASE reading; the same trap is recorded as ADVI_FIRMBKTS-D1-W9-S2 (AC1 run 1, cwd C:/Dev/ajb_workspace)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recurrence of ADVI_FIRMBKTS-D1-W9-S2: the AC1 invocation's cd is resolved from the call-start cwd, which is the base. The order's step-4 cd-only call cannot pin the worktree because the cwd does not persist between Bash calls. Owner of the disarm: the issuer (2.0.0_SA_COO~B1), by stating AC1 with an absolute worktree path in the invocation (or a cd inside the same call), a re-cut that the checker accepts. The worker did not rewrite the invocation text, did not commit, did not flip the status, and wrote no proof instance, because step 4 stops on a non-matching AC1. Scratch files: .scratch/diag_canonical_spec.txt, .scratch/diag_gate_worktree.txt."
+}
+```
