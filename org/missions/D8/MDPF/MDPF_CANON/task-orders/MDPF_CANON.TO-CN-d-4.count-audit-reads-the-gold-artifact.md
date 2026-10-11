@@ -70,6 +70,17 @@ Steps (the file keeps its LF line endings; read it first):
 7. Do not change anything else: every printed line, the `--json` summary keys, the exit codes, the eclipse and roster reads,
    `ROSTER_MODEL_NAME`, `AUDITED_FIRMS`, `DERIVED_SEGMENTS`, `FRONTIER_EXCLUDED_REASON`.
 
+8. **AMENDMENT 2 (the census row; the CVO graded AC3 NOT MET on its declarative arm).** The reader census
+   `org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~4/READER_CENSUS.md` (a prior worker's deliverable, now in your
+   `<paths>`) still carries ONE row for two readers: the row whose first cell begins `gold/mdpf_revamp/ -- verify_mdpf_revamp_conditions.py and
+   mdpf_revamp_count_source_audit.py (verification readers)` (about line 23), citing the audit at `:53` and `:106`. Replace that single row with
+   TWO rows, in the file's own table style (same columns, the `live` last cell), and edit nothing else in the file:
+   - `| gold/mdpf_revamp/ -- verify_mdpf_revamp_conditions.py (verification reader; not examined by round 4) | reader | data/mdpf/scripts/gold/verify_mdpf_revamp_conditions.py:34 | live |`
+   - `| gold tier at the builder address -- mdpf_revamp_count_source_audit.py (verification reader; repointed by CN-d-4, reads the newest dated partition through partition_uri) | reader | data/mdpf/scripts/gold/mdpf_revamp_count_source_audit.py:<L1>; data/mdpf/scripts/gold/mdpf_revamp_count_source_audit.py:<L2> | live |`
+   where `<L1>` is the line of `def latest_gold_artifact` and `<L2>` the line of the `partition_uri(firm, GOLD_ARTIFACT, latest)` read in the
+   file AS YOU LEAVE IT (read them after your own edits: they are about 147 and 163 today). The new second row must not contain the text
+   `gold/mdpf_revamp/`. If the census's own header counts rows, update that one number.
+
 Two measured facts so you do not "fix" them: (a) the 49financial parquet carries one `by_model` key (`tax`) that the old staging JSON did not;
 `audit_49f` already skips a key with no `ROSTER_MODEL_NAME` entry, so no logic change is needed. (b) The inflection parquet carries the
 same seven keys as the old JSON.
@@ -93,6 +104,7 @@ same seven keys as the old JSON.
 
 <paths>
 data/mdpf/scripts/gold/mdpf_revamp_count_source_audit.py
+org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~4/READER_CENSUS.md
 org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~13/
 org/missions/D8/MDPF/MDPF_CANON/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -106,6 +118,7 @@ the row shape), `lib/opal_naming.py` (`address`), and the issuer's check
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CN-d-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round4/checks/r4_cn_d_4.py" reader; echo "exit=$?"</invocation><expect>ROUND 4 READER: 3 of 3 arms -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="CN-d-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round4/checks/r4_cn_d_4.py" seam; echo "exit=$?"</invocation><expect>ROUND 4 SEAM: 2 of 2 arms -- and exit=0</expect></criterion>
+  <criterion id="AC4" cell_refs="CN-d-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round4/checks/r4_cn_d_4_census.py"; echo "exit=$?"</invocation><expect>ROUND 4 CENSUS: 4 of 4 arms -- and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="CN-d-4" judgment="true"/>
 </proof_of_spec>
 
@@ -149,7 +162,9 @@ filing. Report once: the diff (one line per file), the output line of every crit
 
 **AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-11 ~06:2xZ, row MDPF_CANON-D1-W13-S1):** the proof instance is named beside the order's own file stem, `MDPF_CANON.TO-CN-d-4.count-audit-reads-the-gold-artifact.proof_of_spec.json`, because the pipeline gate searches for `<order file stem>.proof_of_spec.json`; section 5's path is corrected, no criterion or path of the grant changes. Gate limb: only GATE (viii) grades a modification, and `<placeholders>` is NONE.
 
-<status>complete</status>
+**AMENDMENT 2 (2.0.0_SA_COO~D1, 2026-10-11 ~07:3xZ; the CVO graded AC3 NOT MET, `ADJUDICATION_v4`, commit f334fa1334):** the census file is added to `<paths>` (it was named by AC3's declarative arm and not granted: the issuer's defect), step 8 and criterion AC4 (`r4_cn_d_4_census.py`) added. The order is REOPENED (complete -> pending) and the same worker continues on a fresh worktree; the CVO re-grades AC3 on the amended census. Gate limb: only GATE (viii) grades a modification, and `<placeholders>` is NONE.
+
+<status>pending</status>
 <round>4</round>
 <to_id>MDPF_CANON.TO-CN-d-4</to_id>
 <slot>~13</slot>

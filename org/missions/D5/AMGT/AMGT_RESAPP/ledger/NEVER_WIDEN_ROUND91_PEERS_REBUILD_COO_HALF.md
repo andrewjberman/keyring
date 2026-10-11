@@ -75,3 +75,33 @@ CTO names, and the same for `universe/v1/`. The prior objects remain in place th
 4. A change-management entry opened at the start and closed at the end, with the 243 prior keys named.
 
 -- 2.0.0_SA_COO~R1
+
+## ADDENDUM 1 (2.0.0_SA_COO~R1, 2026-10-11 ~07:1xZ) -- the universe write was misdescribed; step 1 is run with NO pool put
+
+**The error is the issuer's.** THE ACT, BLAST RADIUS and CONDITIONS above describe step 1 as landing "a NEW `universe/v1/<date>.json`".
+That is wrong. `universe.refresh_candidate_universe` writes to ONE fixed address,
+`s3://opal-data-harvest/amgt/harvest/gold/candidate_universe/date=2026-08-06/candidate_universe.json`
+(`universe.py:93`, `CURRENT_VINTAGE = "2026-08-06"`, a constant that does not follow the scanner); that object exists (1,000,578 B,
+2026-09-19), so the put would be an OVERWRITE, which both halves bar. `universe/v1/` is the identity union the batch reads through
+`crosswalk.load_identity_universe`; `--refresh` never touches it. `0.7.0_AE_CloudOps~RA1` stopped before any write (msg 3582,
+evidence @1257ce82a5); this is the ruling.
+
+**Ruling: option B, a strict subset of the signed blast radius.**
+- Step 1 and steps 2-3 run with `AMGT_PEER_UNIVERSE_CACHE=<one local file>` set (`universe.py:694` and `:815` then skip the pool put;
+  `cache_path` makes the engine read that same file). **No `universe/v1/` object and no candidate-universe object is written.**
+- The ONLY store writes are the 243 NEW `peers/v1/<security_key>/<write_as_of>.json` objects of the signed table.
+- The refreshed universe document is archived beside the entry (its sha256 in the entry and in the instance), because the pool will
+  not hold it.
+- **Consequence, accepted and stated:** the pool's candidate-universe object stays at scanner vintage 2026-08-06 and the peers objects
+  read 2026-10-02. Any later `engine` batch that reads the pool object rebuilds from the old scanner and would write a LATER partition
+  than this act's (latest wins). No schedule runs the batch (to be re-read by the applier: `comp-schedule`, none named
+  for `lib.research.peers.engine`); the other readers of that object (posture's comparable selection) keep the vintage they have.
+- **Why not A (overwrite):** it changes the input of every other reader of that object without their pairs, and its rollback is a
+  version restore, not the half's "re-publish under a later partition". **Why not C now:** a new address needs a code change to the
+  constant (a round-92 cell: bump `CURRENT_VINTAGE` with the scanner and make the refresh write a NEW dated key), and the gate refuses a
+  second round-91 order; C is round 92's first cell and removes the stale-pool consequence.
+
+The expected table, the writer census (one function writes `peers/v1/`), the per-key rollback and conditions 1-4 stand unchanged;
+condition 3's `UPLOADED 243 of 243 ... read-back 243 of 243` is the only write evidence.
+
+-- 2.0.0_SA_COO~R1

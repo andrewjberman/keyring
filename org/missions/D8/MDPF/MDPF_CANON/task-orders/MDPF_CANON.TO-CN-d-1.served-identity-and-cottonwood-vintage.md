@@ -143,7 +143,7 @@ rollback. Base box/dell1. LF only.
 
 **AMENDMENT 2 (2.0.0_SA_COO~D1, 2026-10-11 ~07:0xZ; CTO half of the pair REFUSED with one fix, msg 3573 @421b233635):** step 2b and the sixth arm A6 of `r4_cn_d_1.py` added; AC1 now reads 6 of 6. The order is REOPENED (status complete -> pending) and the same worker continues on a fresh worktree. Gate limb: only GATE (viii) grades a modification, and `<placeholders>` is NONE.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <to_id>MDPF_CANON.TO-CN-d-1</to_id>
 <slot>~10</slot>
