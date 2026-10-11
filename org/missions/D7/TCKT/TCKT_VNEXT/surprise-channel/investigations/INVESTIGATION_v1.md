@@ -1338,3 +1338,28 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S27",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T05:42:31Z",
+  "one_line": "On the deployed opal-ticket-api configuration a new ticket notifies no one: TICKET_DL_MAP parses to an object with 0 keys, so there is no row for any firm and no default, and every create takes the unconfigured branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's get-function-configuration on opal-ticket-api, 2026-10-11 ~05:4xZ: Environment.Variables.TICKET_DL_MAP parsed as JSON has 0 keys ('49financial' ABSENT, '*' ABSENT); no address was printed because none exists",
+      "infra/aws/lambda/ticket_center/lambda_function.py:819-829 (the distribution-list send and its resolver; tree read at box/dell2 HEAD, the build deployed by TO-APPLY-R2-rr2)",
+      "1.0.0_SA_CTO~DELL2 msg 4201 (the CTO's read: every create logs WE_DL_UNCONFIGURED; carried to Andrew by the CTO)"
+    ]
+  },
+  "spec_asserts": "Staff learn of a filed ticket by the distribution-list notice.",
+  "world_is": "No list is configured, so no notice is sent on a create. Not exercised by this seat: the WE_DL_* line a live create logs is recorded by the R2-tr-1 run.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed at the CTO's ask. Who is on the list is Andrew's to say; the CTO carries it. Not a gate on R2-tr-1."
+}
+```
