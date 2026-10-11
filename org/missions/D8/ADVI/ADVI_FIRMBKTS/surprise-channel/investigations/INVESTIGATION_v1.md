@@ -4846,3 +4846,55 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not a worker decision to widen: the import is the minimum that makes the ordered sys.exit(2) run. The issuer may rule whether the import is an accepted part of the bound or should become raise SystemExit(2) instead; the AC1 check accepts either."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W51-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~51",
+  "surfaced_at": "2026-10-11T16:08:08Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-g-29 call-chain premise: the validator's ownership call site (index.mjs:491, getOwnershipMap) carries no lowercase ownership token, so the census chain ends on the key line index.mjs:175 inside the read, not on the call line.",
+  "spec_asserts": "FB-g-29 cell 1a and round-4 r4_invoke.py V2: each call_chain ends on the line that calls the ownership read, and that line carries the token load_ownership or ownership (case-sensitive).",
+  "world_is": "index.mjs:491 is 'map = await getOwnershipMap(payload.firmId);' (camelCase, no lowercase ownership token). getOwnershipMap is defined at index.mjs:164 and its key line index.mjs:175 'const key = ownershipMapKey(firmId, bucket);' carries the token. The census chain therefore passes through the call line at index.mjs:491 and ends at index.mjs:175 so that V2 passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs:491 read at the worktree: 'map = await getOwnershipMap(payload.firmId);'",
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs:164 read at the worktree: 'async function getOwnershipMap(firmId) {'",
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs:175 read at the worktree: 'const key = ownershipMapKey(firmId, bucket);'",
+      "r4_invoke.py --arms census at the worktree: 'V2 call chains verified against the tree: True', exit=0 (the token test is load_ownership|ownership applied to the last chain line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as a premise note only. The census is complete and AC1 passes; the issuer may rule whether the validator chain should end on the call line with a token-bearing check instead."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W51-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~51",
+  "surfaced_at": "2026-10-11T16:08:08Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The auth-validator-edge census event cannot reach its ownership read from the tree alone: it needs a live, signed, non-admin JWT, which the repository does not hold and no test fixture builds.",
+  "spec_asserts": "FB-g-29 cell 1a: build each event from a test fixture in the function's own tests where one exists, else from the fields the handler's entry reads; reads_ownership is true only when the event reaches the validator's ownership read.",
+  "world_is": "auth-validator-edge/tests has no CloudFront viewer-request fixture (no Records, cf, request, authorization or Bearer match). The event is built from index.mjs:118 (the account uri pattern) and index.mjs:334-345 (the Records cf.request and Authorization shape). It reaches index.mjs:491 only when verifyWithSlots (index.mjs:381) accepts the token against a key from Secrets Manager, the payload is non-admin with advisorId and firmId (index.mjs:87-96 and :221-227), and the tier gate passes (index.mjs:403-426). The census carries a placeholder token; the act-4 actor must supply a live non-admin session token.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "native Grep of infra/aws/lambda-edge/auth-validator-edge/tests for Records, cf, request, authorization and Bearer: No matches found",
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs:381 read at the worktree: 'const payload = verifyWithSlots(jwt, token, slots, { algorithms: RS256 });'",
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs:221-227 read at the worktree: payload.role and payload.firmRole admin return null; a non-admin without advisorId returns an empty list",
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs:403-407 read at the worktree: isAdminBypass on role, firmRole, tier internal or userType Dev"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as a premise note only. The act-4 actor needs a live token to run this one event; the census does not carry one."
+}
+```
