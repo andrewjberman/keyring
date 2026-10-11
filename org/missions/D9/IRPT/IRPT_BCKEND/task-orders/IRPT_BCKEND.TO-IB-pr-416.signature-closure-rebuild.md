@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~278</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete -- flipped by issuer 2.0.0_SA_COO~P2 2026-10-11 ~03:1xZ: IB117-1-AC1 PASS and IB117-1-AC2 PASS and proof VALID (rc 0), all re-run by the issuer at box/dell2 HEAD 04fbbd0a91 after the drain of wk-IRPT_BCKEND-278 @a5c05028f4. BUILD ONLY: nothing is applied; the apply comes by a later order once the never-widen pair on the packet is signed. Rows D2-W278-S1..S6 landed by the issuer @1a0316684f (the worker's stale base refused the channel file); S2 is ARMED, disarm owner 2.0.0_SA_COO~P2.</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
