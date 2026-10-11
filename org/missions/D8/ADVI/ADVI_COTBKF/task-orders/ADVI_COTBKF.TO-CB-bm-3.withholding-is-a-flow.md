@@ -54,6 +54,35 @@ account whether or not a withdrawal row sits beside it.
 **If the reach is much wider than two measured days, do NOT narrow the rule to fit two: report the count. Whether a wider re-mint is
 wanted is not yours to decide.**
 
+### AMENDMENT 1 (2026-10-11T10:34, issuer `2.0.0_SA_COO~C2`) -- a NEW rule version `method_r29`, NOT the default; the grant is widened
+
+Worker ~96 stopped at the refusal clause, correctly (row ADVI_COTBKF-D2-W96-S1): the rule is versioned, and a new version cannot be
+made in `commonwealth_flows.py` alone. It measured the reach first: 4,115 account-days carry a cash withholding row; 71 of them have
+no same-day cash `lo`; 7 of the 71 are measured days. **This amendment replaces step 2 of THE CELL. Steps 1, 3 and 4 stand; the reach
+in step 1 is already measured and is re-used, not re-derived, unless your own run disagrees.**
+
+**Step 2, replaced.** Add the rule as the NEXT version, `method_r29`, the way `method_r28` was added, and leave `method_r25` to
+`method_r28` byte-for-byte as they are:
+- `commonwealth_flows.py`: under `method_r29` a cash withholding row (`ftax`, `stax`) is an external outflow whether or not a cash `lo`
+  rides the same day; under every earlier rule it rides or it is not a flow, as today. The reason text says which.
+- `commonwealth_sweeps.py`: `method_r29` joins `CASH_LEGS` as a selectable leg. **`CASH_LEG_DEFAULT` stays `method_r28`.** Making a rule
+  the default has been the CTO's act (its ADDENDUM 3 made r28 the default); it is not this order's.
+- `commonwealth_daily_returns.py`: the consumer passes the rule to the withholding test (near line 118), and wherever the code selects
+  a behaviour by `flow_rule == fl.FLOW_RULE_METHOD_R28` (near line 156, the in-kind repair) `method_r29` gets the SAME behaviour as r28:
+  r29 is r28 plus this one change and drops nothing r28 does. Find every such comparison in the three files and list them in your report.
+- Change nothing else in those two files.
+
+**Tests, added to step 3:** under `method_r28` a withholding with no `lo` is still NOT a flow (the old answer, unchanged); under
+`method_r29` it is; under `method_r29` every r28-only repair still applies (assert it on the in-kind repair); the default leg is still
+`method_r28`.
+
+**The record's `flow_rule_version` is `method_r29`.** Its three reach counts are 4115, 71 and 7 unless your own run disagrees, in which
+case that is the refusal clause.
+
+**Your surprise rows take the next free `ADVI_COTBKF-D2-S<k>` id**, read at write time. Append your row with a writer that adds lines
+at the end of the file and rewrites nothing else: the earlier row commit changed trailing whitespace on 206 existing lines and was not
+merged for that reason.
+
 ### ACCEPTANCE
 
 <criterion id="CB65bm3-AC1" cell_refs="CB-bm-3"><invocation>env -u COTBKF_SWEEPS_CONFIG python -m pytest data/assets/scripts/silver/tests -q</invocation><expect>passed</expect></criterion>
@@ -67,8 +96,8 @@ wanted is not yours to decide.**
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below, your deliverables folder and the file of this order.
-- **Do NOT touch:** `commonwealth_daily_returns.py`, `commonwealth_daily_valuation.py`, the mint adapter, any manifest, anything under
-  `data/assets/scripts/gold/`. If the fix cannot be made in `commonwealth_flows.py` alone, stop: that is the refusal clause.
+- **Do NOT touch:** `commonwealth_daily_valuation.py`, the mint adapter, any manifest, anything under `data/assets/scripts/gold/`.
+  (AMENDMENT 1 widened the grant to `commonwealth_daily_returns.py` and `commonwealth_sweeps.py`, for the three edits it names only.)
 - **Do NOT run the build, `--apply` or `--verify-served`.** No AWS or S3 call. No push.
 - **No gate override** of any kind and no `--force`. If a gate refuses and the fix is not an ordinary correction inside your grant,
   stop and report its exact refusal line.
@@ -79,6 +108,8 @@ wanted is not yours to decide.**
 
 <paths>
 data/assets/scripts/silver/commonwealth_flows.py
+data/assets/scripts/silver/commonwealth_daily_returns.py
+data/assets/scripts/silver/commonwealth_sweeps.py
 data/assets/scripts/silver/tests/
 org/missions/D8/ADVI/ADVI_COTBKF/deliverables/
 org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md

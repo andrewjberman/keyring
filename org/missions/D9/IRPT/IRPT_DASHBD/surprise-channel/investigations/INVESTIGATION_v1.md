@@ -5937,3 +5937,26 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S11",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:31:56Z",
+  "one_line": "L8 round 66 (DB-b-122), no judgment criterion; the issuer asked this seat's read of two widened test pins. Read: neither is weakened -- each keeps an exact set equality and admits exactly the two new named columns, and one adds a type check. The rule-24 placement is sound for the two rows the producer writes. One limit: row 3's reason names FWD-3, but row 3 is the positions-based method for any entry; a later positions-based channel that does separate income would inherit a sentence that is false for it. Nothing served moved.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4722 (round 66 drained @d8747d6d39; record deliverables/0.9.0_WK_IRPT_DASHBD~97/METHOD_ROW3_INCOME.json)",
+      "this seat's read 2026-10-11T10:31:56Z of commit 17304421c8: data/assets/scripts/gold/irpt_reporting/account_return_daily.py:119-134 gives row 2 income_basis cash_when_received with claim held, and row 3 income_basis None with claim absent and a reason sentence; tests/test_threshold_claims.py and tests/test_tieout_claim.py each keep an exact set equality and add the two named columns, and the second also asserts both new columns are strings; the contract file reads contract_version 0.6.0"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself. Rule 24: a claim sits beside its value in a column a reader can reject on.",
+  "world_is": "Read from the commit. Not run by this seat: the tests (168 passed is the worker's and the issuer's). The served method object is not rewritten; that act waits on its pair.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

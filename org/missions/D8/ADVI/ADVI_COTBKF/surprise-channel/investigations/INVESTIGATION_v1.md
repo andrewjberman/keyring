@@ -6225,3 +6225,31 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D2-S111 -- CB-bm-3 could not be met in one file; the withholding rule reaches 7 measured days, not 2
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S111",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T10:34:30Z",
+ "one_line": "Re-files worker ~96's row ADVI_COTBKF-D2-W96-S1 (its commit fd47dde9c0 is NOT merged: it changed trailing whitespace on 206 existing lines of this file). CB-bm-3 as cut could not be met: the flow rule is versioned and a new version needs two files outside the order's grant. And the withholding rule reaches 7 measured days, not the 2 the round-64 record found. An issuer defect in the cut: the order granted one file for a change that needs three.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "worker ~96's report (its run over the silver transactions cache, 14 files, 1,416,497 rows; not re-run by the issuer): 4,115 account-days carry a cash ftax or stax row; 71 of them have no same-day cash lo (147 rows, 30 accounts); 7 of the 71 are measured days in the FWD-3 returns table; the join is exact string equality of the account id and the calendar date",
+   "worker ~96's read: data/assets/scripts/silver/commonwealth_daily_returns.py lines 117 to 118 call fl.rides_withdrawal(t) with the frame only, and line 156 selects the in-kind repair by flow_rule == fl.FLOW_RULE_METHOD_R28; issuer print of lines 117, 118 and 156 at this row's surfaced_at shows the same call and the same comparison",
+   "issuer read of data/assets/scripts/silver/commonwealth_sweeps.py lines 93 to 97: CASH_LEGS lists the selectable legs and CASH_LEG_DEFAULT = CASH_LEG_METHOD_R28, made the default by the CTO's ADDENDUM 3",
+   "issuer read of the worker's commit: numstat 231 added 206 removed on this file; with --ignore-space-at-eol 25 added 0 removed; 0 carriage returns in either version",
+   "the order as cut @c15e72c38f granted commonwealth_flows.py and the tests only"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO round-65 analysis section 3 item 3: Class D is two days; one fix cell; the affected days are re-minted under their own pair, and only those days.",
+ "world_is": "The rule as stated reaches 7 measured days. The issuer amended the order (AMENDMENT 1): method_r29 is added as a selectable version with the grant widened to the two files, and the default stays method_r28. Whether r29 becomes the default, and whether the re-mint covers 7 days or 2, is the CTO's; no re-mint order is cut. The other 64 of the 71 days are not measured, so the rule changes no served number on them today."
+}
+```

@@ -1601,3 +1601,147 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S36",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-11T10:22:41Z",
+  "one_line": "TO-RECORD-R3-sm1's objective and bounds both say 'no AWS write', but the recorder it orders me to run carries an `aws sns publish` to opal-infrastructure-alerts on its half-landed branch -- so a RECORD order's no-AWS-write bound is not a property of the recorder, only of the branch it happens to take.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/record-terraform-deploy.sh:871 `aws sns publish --region \"${REGION:-us-east-1}\" --topic-arn arn:aws:sns:us-east-1:313476888478:opal-infrastructure-alerts ...` -- one hit across one file scanned, inside the else branch of the comp-lambdamap reconcile-deployed call at :862-866",
+      "the branch is the C1 persistent-half-landed path: it fires when a just-deployed function's live CodeSha256 does not match its S3 artifact after a 45 s settle retry, and it is best-effort (`>/dev/null 2>&1 || echo` keeps the recorder going if the publish fails)",
+      "TCKT_VNEXT.TO-RECORD-R3-sm1 @11c612ede3 objective: 'A git record only: no AWS write, no apply, no build, no upload'; its bounds repeat 'No AWS write'",
+      "IT DID NOT FIRE on this run, and that is measured rather than assumed: the reconcile printed 'reconcile-deployed: 1 reconciled, 0 first-recorded, 0 HELD, 0 left unrecorded, 0 already-in-parity' then '[RECONCILED] opal-ticket-api: ywAvsfx/j3RTZOoO.. -> t1EoiJRZWXBsSc0H..' and 'reconcile: OK (deployed set in parity)' -- the OK branch, not the ALERT branch",
+      "why it could not have fired here: the R2-pk-2 apply fully landed and I verified it three ways before this order -- live CodeSha256 t1EoiJRZ... equals the uploaded object's content-sha256, and the deployed package re-downloaded from Code.Location hashes its single member to the pinned cf10e19e..."
+    ]
+  },
+  "spec_asserts": "The order states a flat bound, 'no AWS write', for an act whose whole mechanism is a third-party script the order itself names and tells the executor to run unmodified ('If it refuses, quote the refusal and STOP: do not hand-edit the map').",
+  "world_is": "The bound holds for the path this run took and does not hold for the script. A RECORD order that runs this recorder can publish to SNS whenever the reconcile finds a persistently half-landed function -- which is exactly the state a record act is most likely to meet, since it runs right after an apply. So the bound is satisfied here by the deploy having fully landed, not by anything the order or the executor controls. Two things follow, both narrow. First, an executor who reads 'no AWS write' as a guarantee would be surprised by a publish; I read the code before running it because step 1 told me to, which is the only reason this was visible in advance rather than after the fact. Second, the publish is a notification, and the estate carries a standing moratorium on building alert/SNS/notification paths without Andrew's explicit word -- this is a PRE-EXISTING path in shared CI tooling and nothing here builds or extends one, so the moratorium is not breached; it is named because a future reader comparing the two sentences would otherwise have to work out which applies.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Reported in the order's own designated place as well: step 1 asks the executor to state what the recorder writes and commits from the CODE and to say where the code disagrees with the order, with the code winning. This row is the durable carrier, because the divergence outlives this order and the next RECORD order will inherit it. No act proposed and nothing hand-edited: the recorder ran unmodified and its commit 6a5bee406c touched exactly the three paths its own pathspec permits (the map, the CHANGELOG, the reconcile audit log). The remedy, if any, is the issuer's and the CTO's: either the bound is restated as 'no AWS write on the success path, one best-effort SNS publish if the reconcile finds a half-landed function', or the recorder's alert limb is made conditional on a flag. Separately noted, not mine to file: the recorder's own [one-writer] WARN says infra/aws/lambda/ci/source-map-reconcile-audit.jsonl is the laptop's unsuffixed file being written from dell2, and labels itself 'WARN until C-QUEUE' -- an owned, known condition."
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S37",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:28:33Z",
+  "one_line": "L9 round 1: TO-RUN-SA-r-1 AC2 NOT MET. The one-firm proof holds on what was exercised (21 of 21 arms with a cottonwood leg read FIRM_BINDING, 0 admits; 5 of 6 ticket routes not exercised), but 0 of 7 hops ran: the run stopped before the hops on a data-refresh route that admitted the token. The stop was the right act. Graded on the applier's trace of 2026-10-09, which cannot be re-read live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4720 (round-close-check --round 1 reads two judgment criteria UNGRADED by id)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_R1_SA_R1_L9_GRADE_20261011.md",
+      "this seat's count 2026-10-11T10:28:33Z over org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/sa_r1/sa_r1_trace.json (run SA-r-1-2026-10-09T15:40:57Z, the applier's file, claim measured): 27 arms, 22 exercised; 21 carry a cottonwood leg and 21 of 21 read FIRM_BINDING, 0 admitted; the 22nd is the ticket list, which carries no cottonwood leg and shows a filter (8 tickets, one requester firm); 5 ticket routes not exercised, each with its stated reason; the ticket-create arm refused 400 on a missing attachment before the firm check; 0 of 7 hops carry a status; named failure STOP_BEFORE_HOPS on a data-refresh admit (200)"
+    ]
+  },
+  "spec_asserts": "TO-RUN-SA-r-1 AC2 (JUDGMENT, graded by the CVO at L9): the trace -- the one-firm proof with zero cottonwood admits, and every hop recorded with its artifact.",
+  "world_is": "The first limb holds on the exercised arms; the second does not: no hop ran. The trace is the applier's own record.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S38",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:28:33Z",
+  "one_line": "L9 round 1: TO-RUN-SA-r-1b AC2 NOT MET. This row restates, under the order's id, the grade this seat gave on 2026-10-10 in row TCKT_VNEXT-D2-S21 (61 of 61 reads returned INVALID_REQUEST_ID; the runner polled its own idempotency token, so no run read a finished report). The grade does not change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4720 (round-close-check --round 1 reads two judgment criteria UNGRADED by id)",
+      "investigation row TCKT_VNEXT-D2-S21",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_SA_R1B_L9_GRADE_20261010.md"
+    ]
+  },
+  "spec_asserts": "TO-RUN-SA-r-1b AC2 (JUDGMENT, graded by the CVO at L9).",
+  "world_is": "Graded NOT MET on 2026-10-10. Row D2-S21 named the criterion as 'SA-r-1b AC2', without the order's id, and the round-close check could not match it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S11",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T12:30:00Z",
+  "one_line": "R3-rn-1: the order's constant ROW_LIFETIME_SECONDS = 7200 collides with an existing test that bars the literal 7200 from the runner's code; coded as 2 * 60 * 60 (value 7200).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~8/fwd1_runner/test_fwd1_runner.py test_token_exp_is_the_argument_and_capped asserts '7200' not in _code_only(run.__file__) (no two-hour TOKEN anywhere in the code)",
+      "fwd1_run.py: ROW_LIFETIME_SECONDS = 2 * 60 * 60; the new test asserts run.ROW_LIFETIME_SECONDS == 7200"
+    ]
+  },
+  "spec_asserts": "TO-R3-rn1 item 1: ROW_LIFETIME_SECONDS = 7200 (a module constant), and no earlier test is weakened.",
+  "world_is": "A literal 7200 in the runner's code fails the older test, whose intent is that the token never lives two hours (the ROW does, the token does not). The value is 7200; only the spelling differs. The older test was not edited.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S12",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T12:30:00Z",
+  "one_line": "R3-rn-1: the order names the trace field `cleanup: \"PENDING_ROW_DELETE\"`, but trace[\"cleanup\"] is already an object that holds the cleanup record; the state is coded as trace[\"cleanup\"][\"state\"].",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fwd1_run.py build_trace: \"cleanup\": {\"row_removed_read_back_absent\": False, \"tickets_completed\": {}}; the existing tests read trace[\"cleanup\"][\"row_deleted_at_unix\"] and the other keys",
+      "fwd1_run.py leave_row_in_place and finish_cleanup write state PENDING_ROW_DELETE then DONE, with row_left_in_place, row_delete_not_before (ISO and unix), known_limit, row_deleted_at, row_removed_read_back_absent and finished_by, all inside trace[\"cleanup\"]; job_last_read is top level"
+    ]
+  },
+  "spec_asserts": "TO-R3-rn1 items 1 and 2: the trace carries cleanup: \"PENDING_ROW_DELETE\" and later cleanup: \"DONE\".",
+  "world_is": "A string cannot replace the object without breaking the earlier tests and losing the ticket and wait record. A reader of the trace looks for cleanup.state, not a string at cleanup.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S13",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T12:30:00Z",
+  "one_line": "R3-rn-1: 'accepted' is coded as 'hop (d) was not refused', so two hop (d) outcomes with no usable REQ id (SUBMISSION_ANSWER_UNREADABLE and REQUEST_ID_UNRESOLVED) also leave the row in place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fwd1_run.py hop_d_analysis: submitted_at_unix is set whenever submission_refusal() returns None; the runner's own test names the first case 'accepted without a REQ id'",
+      "test_accepted_submission_leaves_the_row_and_exits_3 covers an answer with state QUEUED and an identity that carries no request_id"
+    ]
+  },
+  "spec_asserts": "TO-R3-rn1 item 1: the row is left in place when hop (d) is classified ACCEPTED by the existing state-and-identity rule.",
+  "world_is": "The existing rule classifies a refusal by state and HTTP status; an answer that is not a refusal and carries no usable id is not classified as accepted or refused by it, yet the service may have queued a job whose start re-reads the row. Leaving the row costs two hours of a synthetic row; deleting it could kill a job. Chosen: leave it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
