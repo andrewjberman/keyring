@@ -52,11 +52,11 @@ Graduated, round label v75: 2 rows, OPEN, INERT. This seat made no read of its o
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v75",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v75"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
