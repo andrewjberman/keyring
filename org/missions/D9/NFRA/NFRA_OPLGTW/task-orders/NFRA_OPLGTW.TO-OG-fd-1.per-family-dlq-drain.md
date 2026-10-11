@@ -52,6 +52,11 @@ failures land in another family's report (row Z-S91: six Schwab failures went to
    - the live grade the applier will run: plant one synthetic family-A message, run family B's sweep, and read that the
      message survives and A's report carries it.
 5. Run AC1, commit, REPORT, STOP.
+6. **(A1, row Z-W58-S1)** The Schwab Lambda has its OWN `drain_dlq` (`data/assets/scripts/silver/schwab_runtime.py:247`, called at `:380`).
+   It still deletes every message on the shared queue. Make it per-family by the same rule (family `schwab`), and add
+   `test_fd1_ac04` to `data/assets/scripts/silver/tests/test_schwab_runtime.py`: a planted non-schwab message survives the
+   schwab sweep, a schwab message is drained and reported, and an unattributable one is never deleted. Add the Schwab
+   package to the ask's per-family delta and deploy order, then run AC2.
 
 ## 2. BOUNDS
 
@@ -65,6 +70,8 @@ failures land in another family's report (row Z-S91: six Schwab failures went to
 data/assets/scripts/silver/mirror_conversion.py
 data/assets/scripts/silver/etf_conversion.py
 data/assets/scripts/silver/tests/test_mirror_conversion.py
+data/assets/scripts/silver/schwab_runtime.py
+data/assets/scripts/silver/tests/test_schwab_runtime.py
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -74,6 +81,7 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
+  <criterion id="AC2" cell_refs="OG-fd-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r35/checks/fd1.AC2.sh; echo "exit=$?"</invocation><expect>(?s)test_schwab_runtime\.py: pytest rc=0; named test passed 1 of 1; failed/error lines 0.*test_mirror_conversion\.py: pytest rc=0.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC1" cell_refs="OG-fd-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r35/checks/fd1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)test_mirror_conversion\.py: pytest rc=0; named tests passed 3 of 3; failed/error lines 0.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -82,12 +90,14 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 ## 5. WHEN YOU ARE DONE
 
 Write the proof instance at `W/NFRA_OPLGTW.TO-OG-fd-1.per-family-dlq-drain.proof_of_spec.json`. Validate it AFTER your
-LAST commit with `python .tools/proof-of-spec-check.py <instance> AC1 --governing-order <this order>`; artifact rows pin
+LAST commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing-order <this order>`; artifact rows pin
 to the commit that carried them. Phase A leaves the order `pending`. Report once.
 
 <!-- ===================== RECORD FACE ===================== -->
 
 **ISSUER NOTES:**
+- A1 (issuer, 2026-10-11 ~23:5xZ, row Z-W58-S1): Schwab's own drain_dlq joins the cell (step 6, AC2, paths), so one deploy
+  closes the class for all six families. fd1.AC2 base FAIL as expected. Gate limb: GATE (viii) on the modified order.
 - Round 35, E1. Pre-cut: fd1.AC1 base FAIL as expected (named tests 0 of 3; the existing suite rc=0, so the harness
   runs). A copy-equality limb was dropped at the cut: copies 0 of 4 equal; they are snapshots, not mirrors.
 
