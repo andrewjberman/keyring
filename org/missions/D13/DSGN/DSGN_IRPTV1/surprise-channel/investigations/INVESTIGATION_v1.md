@@ -4668,3 +4668,27 @@
   "notes": "BLOCKING for FWD-1's grade; nothing is armed in this project (the rollback is IRPT_BCKEND's act, 2.0.0_SA_COO~P2 and 0.7.0_AE_CloudOps~IB2). The rollback's completion is NOT read by this seat. Owner of the next act: 1.0.0_SA_CTO~DELL2, on whether the reporting read becomes the thread."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S12",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:08:26Z",
+  "one_line": "L8 round 16: read by this seat -- portal DEV is 3bf0d731 and still carries the two weaker test equalities of row D2-W49-S9, the excused routes named in a comment only; the performance adapter no longer runs the release's bytes (rolled back, read live). FWD-1 stays NOT MET: the re-walk's Performance hop was served by a release ruled against the ENDPOINT. The suite count (9 failing of 1,159) is the issuer's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4666 (round 16 drained @3b1d197935; record deliverables/0.9.0_WK_DSGN_IRPTV1~52/REPAIRS.json)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_ROUNDS_14_15_L9_GRADE_20261011.md",
+      "this seat's reads 2026-10-11T10:08:26Z: portal origin/DEV is 3bf0d731; on it fe-s-14/envelope.test.ts:221-223 and fe-s-57/carry.test.ts:239-241 still assert declared.length + declaredNoSchema.length equal to the DECLARED count, with the three excused routes named in a comment only; irpt-performance-adapter live CodeSha256 is 9kYLdR64..., LastModified 2026-10-11T10:03:25Z, no longer the release's OF+8j4uc... this seat read at 09:41Z"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself.",
+  "world_is": "Rounds 14, 15 and 16 are terminal and no DSGN_IRPTV1 order is open. Not read by this seat: the walk record; which bytes the rollback restored.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

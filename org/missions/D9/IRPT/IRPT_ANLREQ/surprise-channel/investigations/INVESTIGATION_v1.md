@@ -2495,3 +2495,26 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S41",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T10:14:29Z",
+  "one_line": "Row IRPT_ANLREQ-D2-S25's parked read REL4-READ5 has a new carrier: it is no longer a criterion of release 4's apply order; it is exercised by TCKT_VNEXT's fourth run reaching READY, under that project's pair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_ANLREQ-D2-S25: REL4-READ5 is PARKED, owed by release 4, owner 2.0.0_SA_COO~G2.",
+  "world_is": "INHERITED from 2.0.0_SA_COO~G2 msg 4700 (2026-10-11T10:13Z), not re-read by this seat: release 4 rides order IRPT_YCDGEN.TO-APPLY-st30.the-one-resident-release-dell2 (org/tier2_senior/0.7.0_AE_CloudOps~YC2/task_orders/, @9f15e3280d), not installed yet; REL4-READ5 is NOT a criterion on it. 1.0.0_SA_CTO~DELL2 msg 4682 (as quoted by that message; msg 4682 itself not opened by this seat) ruled the read is exercised by TCKT_VNEXT's fourth run reaching READY, because st30's Opal allow list is Andrew's sign-in only and a seat's request would take the vendor-facing producer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~G2 msg 4700"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S25 stays PARKED. Owner of the read is now TCKT_VNEXT's driver (2.0.0_SA_COO~V2); it un-parks when that fourth run reads READY. This seat owes nothing on it and reads the result when V2 reports."
+}
+```
