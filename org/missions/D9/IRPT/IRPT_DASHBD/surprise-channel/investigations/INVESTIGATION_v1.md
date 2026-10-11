@@ -5359,3 +5359,79 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W85-S1 -- DB-b-110: the kit-day handler run needs MEASURED_THRESHOLDS_R1.json, which no tracked path holds; an untracked copy of the pre-crash private file was used
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W85-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~85",
+  "surfaced_at": "2026-10-10T02:40:00Z",
+  "one_line": "DB-b-110: the handler's --local run REFUSES on the 2026-10-08 kit day because MEASURED_THRESHOLDS_R1.json is tracked at neither of the two paths handler.thresholds_path() reads; the run used an untracked copy of the pre-crash worker's private-evidence file, staged beside the producer and never committed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 1: run the handler's stages locally on the 2026-10-08 kit as kit_run_day.py does; handler.THRESHOLDS_REPO names deliverables/0.4.0_DS_ClientPlatform~S/MEASURED_THRESHOLDS_R1.json as the repo path.",
+  "world_is": "At HEAD 8658c32241 git ls-files holds only MEASURED_THRESHOLDS_R1.SUPERSEDED_CONTAMINATED_INKIND_UNIT_PRICE.json and MEASURED_THRESHOLDS_R1.SUPERSEDED_PRE_INKIND_FIX.json under that folder; neither handler path exists, so handler.local exits 'REFUSED: the measured thresholds are absent'. The worker copied C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~85/MEASURED_THRESHOLDS_R1.json (sha256 551920f0c364490d87cac260d5df2ad601ff7dac44f56043176065a3c3c2d177) to data/assets/scripts/gold/irpt_reporting/MEASURED_THRESHOLDS_R1.json, untracked and not committed; the same file served both the before and the after run, so the returns table (the one that reads it) is graded on equal input. Whether that private file is the thresholds the served gold is graded against is not established here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:122-133 (THRESHOLDS_PACKAGED, THRESHOLDS_REPO, thresholds_path)",
+      "git ls-files over org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.4.0_DS_ClientPlatform~S/ at 8658c32241"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W85-S2 -- DB-b-110: client-data-check blocks account_return_daily.py on a pre-existing docstring id (line 36); committed with the audited override, line not redacted
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W85-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~85",
+  "surfaced_at": "2026-10-10T03:10:00Z",
+  "one_line": "DB-b-110: client-data-check blocks any commit of account_return_daily.py because a docstring line 36 (unchanged at HEAD) names one served account id; this worker committed the cut with the audited CLIENT_DATA_ALLOW override and did not redact the line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order bound: no account number in a committed .md; the repo carries counts, sha256 and reason codes only. The producer file is in the order's grant for the cut.",
+  "world_is": "The gate (list of 29587 hashes) found 1 token in 1 staged file, data/assets/scripts/gold/irpt_reporting/account_return_daily.py line 36, a module docstring sentence about a +56.10% one-day return. Line 36 is byte-identical at HEAD 8658c32241 (sha256 of the line compared) and outside every hunk of this worker's diff (hunks at 349-420 and 426-430). Redacting a docstring of the served producer is a neighbouring defect and was not done; the commit used CLIENT_DATA_ALLOW naming this row, audited by safe-commit. Every later commit of that file will meet the same block until the id is redacted by a seat with that grant. The token is not printed here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py line 36 at 8658c32241 (token not printed)",
+      ".tools/git-hooks/client-data-check.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T03:04:16Z",
+  "one_line": "L8/L9 rounds 55-56, workstream B: no judgment criterion. This seat's reads agree with both packets: the gold Lambda is live at MemorySize 3008 with CodeSha256 oNgy4rnr unchanged, and the one dry run under 3008 reads 277.4 s and 1,672 MB. The Lambda has not run since that dry run, so no scheduled run has exercised 3008. DB-b-110's five output hashes are the worker's record (equal before and after); this seat re-ran the test folder (112 passed) and did not re-measure memory.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/IRPT_DASHBD_ROUNDS_55_56_B_DRAIN_END_20261009.md @90310834e8 (msg 3869)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/IRPT_DASHBD_ROUND_55_B_DRAIN_END_DB_B_110_20261011.md @be5f9a4b74 (msg 3936)",
+      "this seat's live reads 2026-10-11T03:04:16Z: get-function-configuration irpt-49f-reporting-gold-lambda MemorySize 3008, CodeSha256 oNgy4rnr..., Timeout 900, LastModified 2026-10-09T17:32:02Z, Active/Successful; REPORT line of request ecfbecbd: Duration 277355.56 ms, Memory Size 3008 MB, Max Memory Used 1672 MB; 0 REPORT lines after 2026-10-09T18:03Z",
+      "this seat's runs at HEAD: pytest data/assets/scripts/gold/irpt_reporting/tests 112 passed; the served-id hash list (29,587 hashes) reads 0 hits in the channel's INVESTIGATION_v1.md, account_return_daily.py and account_activity_lots.py",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~85/STAGE_MEMORY.json (lots_read 1725.2 -> 1263.3 MB; process peak 1725.2 -> 1459.1 MB; 5 of 5 output hashes equal)"
+    ]
+  },
+  "spec_asserts": "Spine L8/L9 (CLAUDE.md rule 27): the CVO compiles the channel on the drain-end packet and reads the served state itself, never the producer's report.",
+  "world_is": "Rounds 55 and 56 are terminal (round 55: 3 of 3 complete; round 56: 1 of 1). The memory step is APPLIED and exercised once by a dry run; the first scheduled run under 3008 has not happened. The stage cut is committed and not deployed (it rides the R45 release).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

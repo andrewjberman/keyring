@@ -63,7 +63,7 @@ scripts keeps passing.
 line are recorded, not presumed, and listed in the CSV.
 
 <criterion id="CB13m1-AC3" cell_refs="CB-m-1" judgment="true"/>
-`CB13m1-AC3` -- JUDGMENT, graded by `3.0.0_SA_CVO` at L9: account D49141617 read again across its span, with 0 cash-in-lieu residuals.
+`CB13m1-AC3` -- JUDGMENT, graded by `3.0.0_SA_CVO` at L9: account acct#0e4ff3a3 read again across its span, with 0 cash-in-lieu residuals.
 
 <expected_criteria>CB13m1-AC1,CB13m1-AC2,CB13m1-AC3</expected_criteria>
 

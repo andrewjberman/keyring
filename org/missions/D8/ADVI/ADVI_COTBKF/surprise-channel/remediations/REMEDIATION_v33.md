@@ -23,11 +23,11 @@ Correction to this seat's round-41 grade: it measured the served bytes, not the 
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v49",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v49"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "ADVI_COTBKF-D2-W75-S1",
@@ -44,11 +44,11 @@ Correction to this seat's round-41 grade: it measured the served bytes, not the 
   "owner": "2.0.0_SA_COO~C2",
   "round": "v49",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v49"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

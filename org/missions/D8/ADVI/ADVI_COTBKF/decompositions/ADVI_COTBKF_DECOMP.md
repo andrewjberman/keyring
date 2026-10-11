@@ -32,7 +32,7 @@ cells: they are the issuer's acts after the drain, under one change-management l
    Round 1 lands that one zip. Row `ADVI_COTBKF-S1`.
 3. **The transactions file.** Pipe-delimited, one header line, 20 columns as the brief lists (F2). 1,416,501 physical lines: header +
    1,416,500, against the brief's 1,416,497 rows. The 3-line difference is unexplained and is the worker's to account for (blank
-   lines, a trailer, or embedded line breaks), never to drop silently. `Account_Number` carries leading zeros (`01001355831`): a string.
+   lines, a trailer, or embedded line breaks), never to drop silently. `Account_Number` carries leading zeros (`acct#c9405219`): a string.
 4. **Builder output (rule 30, C-SOURCE)**, `lib/opal_naming.address('commonwealth','cottonwood',<tier>,<table>,'date=2026-06-23')`:
    - bronze zip: `s3://opal-data-assets/commonwealth/cottonwood/bronze/portfolio_accounting/date=2026-06-23`
    - bronze manifest: `s3://opal-data-assets/commonwealth/cottonwood/bronze/manifest/date=2026-06-23`

@@ -19,15 +19,15 @@ ISSUER act with the round-1 landing tool, no cell) and the document INDEX (a cel
    `Quantity`, `Amount`); performance 88,654; positions 469 (`AccountNumber`); coverage 5 kinds. 4,634 distinct CUSIPs.
 2. **The 2016 break (row S2):** the 311 accounts trading in 2013 all end by 2017-12-29; the longest single-account history starts
    2016-01. `li` "Contribution to Asset" rows: 2015 1,736 -> 2016 14,216 -> 2017 2,939; `trfi`/`trfo` "Position Transfer In/Out" first
-   appear in 2016 (534 / 318). Old account numbers are 11 digits (`01001355831`); the long 2016+ ones alphanumeric (`D49141617`).
+   appear in 2016 (534 / 318). Old account numbers are 11 digits (`acct#c9405219`); the long 2016+ ones alphanumeric (`acct#0e4ff3a3`).
 3. **The imaging archives** (in `%USERPROFILE%\Downloads\Files.zip`, not yet in bronze): `HKE.zip` 11,075 members (11,033 PDF, 17
    `Listing.csv`), `HJH.zip` 11,042 (11,000 PDF, 17 listings), `4XF.zip` 2,498 (2,456 PDF, 17 listings): 51 listings. Top folders ADVS,
    CLNT, NCSD, QSMT, REPR, STMT, TXRP. Listing layouts differ by type: REPR `ReportID, ReportSectionID, ReportVersionID, FileName, DocType,
    DocName, NumberOfPages`; STMT `ReportID, ReportSectionID, ReportVersionID, FileName, Acct, DisplayName, StmtDate` (values carry a
    leading space; `ReportVersionID` a leading apostrophe). The first STMT listing read holds 5 rows against 7,724 STMT PDFs in that archive:
-   the listings may not index every PDF -- the cell accounts for every PDF either way. Statement accounts read like `RGY-006818` (NFS).
+   the listings may not index every PDF -- the cell accounts for every PDF either way. Statement accounts read like `acct#7b5bf6ff` (NFS).
 4. **Current Cottonwood accounts** (`s3://opal-data-cot/gold/dimensions/accounts_dimension_latest.parquet`, Cottonwood's own bucket, same
-   firm): 994 rows; `account_id` like `z0926725961`, `relationship_id`, `account_open_date` and `first_transaction_date` mostly 2026-05/06,
+   firm): 994 rows; `account_id` like `acct#c6ac42e6`, `relationship_id`, `account_open_date` and `first_transaction_date` mostly 2026-05/06,
    `account_registration_type`, `account_type`; names mostly null. The holdings history is `s3://opal-data-cot/gold/canonical/holdings/<date>.parquet`.
 5. **Cross-firm law:** this project reads only `opal-data-assets/commonwealth/cottonwood/` and `opal-data-cot`; never `opal-data-bd` or
    `opal-data-inf` (CTO ruling on W6-S2).

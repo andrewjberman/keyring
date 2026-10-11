@@ -31,9 +31,9 @@ write NOTHING to S3: `--apply` is the issuer's act.
 - **Commonwealth** (this project's silver, `s3://opal-data-assets/commonwealth/cottonwood/silver/`): transactions (1,416,497 rows, 1,533
   accounts in `Account_Number`; columns include `Cusip`, `Symbol`, `Quantity`, `Amount`, `Trade_Date`, `Transaction_Type`,
   `Transaction_Description`, `Advisor_ID`), positions (469 rows, 83 accounts in `AccountNumber`, one day 2026-06-23, `Cusip`, `Quantity`).
-  Account numbers: old 11-digit (`01001355831`) and 2016+ alphanumeric (`D49141617`).
+  Account numbers: old 11-digit (`acct#c9405219`) and 2016+ alphanumeric (`acct#0e4ff3a3`).
 - **Current Cottonwood** (Cottonwood's own firm bucket, the same firm): `s3://opal-data-cot/gold/dimensions/accounts_dimension_latest.parquet`
-  (994 accounts; `account_id` like `z0926725961`, `relationship_id`, `account_open_date` and `first_transaction_date` mostly 2026-05/06,
+  (994 accounts; `account_id` like `acct#c6ac42e6`, `relationship_id`, `account_open_date` and `first_transaction_date` mostly 2026-05/06,
   `account_type`, `account_registration_type`; names mostly null) and the holdings history `s3://opal-data-cot/gold/canonical/holdings/<date>.parquet`
   (read its columns first). Read nothing from `opal-data-bd` or `opal-data-inf` (the cross-firm law).
 - The current accounts open around 2026-05/06, and the delivery ends 2026-06-23: the clients appear to have moved custodian then, with
