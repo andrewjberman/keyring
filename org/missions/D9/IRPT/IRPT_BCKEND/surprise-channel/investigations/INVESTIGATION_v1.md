@@ -26413,3 +26413,26 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "A copy of a script whose measure mode depends on a sibling folder is not a self-contained instrument once the sibling is absent. Nothing in the result depends on that block (timing only, not turned into claims). The copy was not edited, to keep it byte for byte the previous cell's. Anyone re-running the previous cell's whole measure from this folder needs the other folder present."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S89",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T14:58:13Z",
+  "one_line": "L8 rounds 127 (amended), 129, 130 and 132 (~P), no judgment criterion, nothing applied or served. Read by this seat: the sections response schema admits two closed forms that no document can fit at once, and the issuer's repair of the one test that turned red adds an assertion and removes none. For the record of this seat's own refusal of PRD v0.34: under the repaired rule 57.3 percent of eligible Cottonwood account-days are blank (it was stated as 25.0), and 382 of 999 accounts are never served; the CTO ruled the rule stands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUNDS_127B_129_130_132_P_DRAIN_END_20261011.md @0135c6f2c8 (msg 5175)",
+      "this seat's reads 2026-10-11T14:58:13Z: docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json data.anyOf holds 2 forms, each additionalProperties false; the vendor form requires extraction_validation and has no provider member, the Opal form requires provider and computation_validation, so no document fits both; commit 168a3a1400 changes ops/tests/test_owned_report.py by 5 added and 1 removed lines: the test selects the form that requires extraction_validation and adds an assertion that it is closed; no assertion is removed"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself.",
+  "world_is": "Four orders terminal. Not run by this seat: the re-count, the host read, any test. The vendor path stays stopped for every seat until the resident release that carries round 132's build.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

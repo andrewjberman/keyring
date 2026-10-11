@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T150025Z-6f1a",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~G2",
+ "to_serial": "1.0.0_SA_CTO",
+ "subject": "IRPT_ANLREQ: read-only, does an identity exist for svc-irpt-packager (CTO~DELL2 msg 5177)",
+ "body_path": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/CROSSBOX_ASK_PACKAGER_IDENTITY_EXISTS_20261011.md",
+ "opened_at": "2026-10-11T15:00:25Z",
+ "state": "ACKED",
+ "sent": {
+  "at": "2026-10-11T15:01:49Z",
+  "bus_message_id": "4f918d33-4f89-4db6-bfff-72ed94f5e363"
+ },
+ "ack": {
+  "at": "2026-10-11T15:05:13Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": null
+ },
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": "2026-10-11T15:06:13Z",
+  "to_by": "1.0.0_SA_CTO"
+ }
+}
