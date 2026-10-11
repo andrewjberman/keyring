@@ -10,12 +10,16 @@
  "subject": "MDPF_DEMQUE.TO-DQ-t27 -- round 8 DQ-t-27: the STANDING non-trading-day history drawer at site Z",
  "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t27.sitez-standing-nontrading-drawer.md",
  "opened_at": "2026-10-11T07:34:42Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-11T07:36:13Z",
+  "bus_message_id": "6d3301e7-336c-4248-b53e-2e7bb5b06cfa"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T07:41:08Z",
+  "by": "0.7.0_AE_CloudOps~ZQ",
+  "bus_message_id": "475297a9-1f75-459b-b19c-293cc8789d4a"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
