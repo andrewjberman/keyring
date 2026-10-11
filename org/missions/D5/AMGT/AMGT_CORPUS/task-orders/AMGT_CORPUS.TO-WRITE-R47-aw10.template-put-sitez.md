@@ -14,6 +14,7 @@
 as round 45's TO-WRITE-R45-au1: a crossbox ORDER to the site-Z Codex lane for AMGT_CORPUS. The crossbox file is opened only after BOTH never-widen
 halves are signed (STOP 0 below). WORKSTREAM `TEMPLATE`: a disjoint write surface (one bronze key, one evidence file) and a different lane
 (~ZC) from the round's two worker orders; GATE (x) keys the census by (workstream, round) (Rule 27). -->
+<!-- AMENDMENT 1 (2026-10-11 ~18:2xZ, issuer 2.0.0_SA_COO~C1; after ~ZC's STOP 3, site Z msg 33355, row AMGT_CORPUS-Z-S92): (a) step 3's invocation gains `PYTHONPATH=.` (the script imports lib.research; `python <path>` puts the script's directory on sys.path, so the first form failed with rc=1); (b) the locate script now ALSO lists the files directly inside the library root's PARENT folder, because the SharePoint item sits in `Shared Documents/Asset Management/`, the parent of the derived root `.../Asset Management/Research` (the issuer's Graph listing of that folder), and the first walk covered the root only. Criteria, paths and every other step are unchanged. Gate limb that graded this modification: GATE (viii) reads the modified order (placeholders NONE declared at HEAD). -->
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <placeholders>NONE</placeholders>
@@ -56,7 +57,8 @@ lane: 0.7.0_AE_CloudOps~ZC applies under the signed pair (COO half deliverables/
        `lib/research/harvest/store.py` print values that begin `e03d6a8acf65`, `0442f28ed1f6`, `34b344de8ed1`. Any other value: write nothing, report.
     2. STOP 2: no `python` process on this machine has `lib.research.corpus.template` in its command line.
     3. Open the evidence file (path below) with a header line (date UTC, HEAD). Under `## locate` copy whole:
-       `python org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round47/aw10_locate.py`.
+       `PYTHONPATH=. python org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round47/aw10_locate.py`
+       (it walks the library root and lists the files directly in the root's parent folder; exit 0 only with exactly one match).
        STOP 3 unless it printed `matches 1`. STOP 4 unless its last line reads `size_equal True`. Either: write nothing further, commit the evidence, report.
     3a. CONDITION OF THE CTO HALF (signed, msg 4031): site Z's own Windows scheduled tasks are not in the repo, so before any put list them under
        `## scheduled tasks` with `schtasks /query /fo LIST /v`, print the denominator (the number of tasks listed), copy whole the blocks of every task
