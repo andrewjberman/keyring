@@ -125,9 +125,9 @@ the signed-in walk that CTO msg 101108 deferred to Andrew.
     },
     "closed": false,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~D",
-      "at": null
+      "at": "2026-10-11T10:22:40Z"
     }
   },
   {

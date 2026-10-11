@@ -1,0 +1,113 @@
+# TO ADVI_COTBKF.TO-CB-bm-3.withholding-is-a-flow -- round 65 CB-bm-3: a tax withholding is an outflow with or without a withdrawal row; its reach measured first
+
+<to_id>ADVI_COTBKF.TO-CB-bm-3</to_id>
+<project>ADVI_COTBKF</project>
+<issued_to>0.9.0_WK_ADVI_COTBKF~96</issued_to>
+<issued_by>2.0.0_SA_COO~C2</issued_by>
+<issued_date>2026-10-11</issued_date>
+<status>issued</status>
+<direct_act>true</direct_act>
+<risk>LOCAL</risk>
+<worker_class>worker</worker_class>
+<placeholders>NONE</placeholders>
+<round>65</round>
+<workstream>~C2</workstream>
+
+**Directive:** D8 | **Fabric:** dell2 (placement DELL2) | **Decomp cell:** `CB-bm-3` (`decompositions/ADVI_COTBKF_DECOMP.round65.md`) |
+**outcome_ref:** FWD-3 | **depends_on:** none
+
+---
+
+## WORKER FACE
+
+### THE CELL
+
+**Read first:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_ADVI_COTBKF_ROUND_65_20261011.md` section 3 item 3; the round-64 record
+`org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~92/FLAGGED_DAYS.json` (class
+`WITHHOLDING_WITH_NO_WITHDRAWAL_ROW`) and its `.md`; `data/assets/scripts/silver/commonwealth_flows.py` lines 150 to 230 (the
+withholding rule `R25_RIDING_WITHHOLDING`, `RIDING_WITHDRAWAL_TYPE`, `rides_withdrawal`) and the file's header on how a flow rule is
+versioned; `data/assets/scripts/silver/commonwealth_daily_returns.py` lines 100 to 125.
+
+**The defect (ruled a defect of the form by the CTO).** A federal or state tax withholding (`ftax`, `stax`) counts as an external flow
+ONLY when it rides a same-day cash withdrawal (`lo`). On two measured days a withholding equal to the whole balance is the only cash
+leaving, there is no `lo` row, the flow reads zero and the day's return reads -100 percent. Money withheld and paid away has left the
+account whether or not a withdrawal row sits beside it.
+
+**Your item. No AWS call. You do NOT re-run the build, re-mint or serve anything; the re-mint is a later order under its own pair.**
+
+1. FIRST measure the reach, before changing code, over the whole silver transactions cache
+   (`C:/dev/ajb_workspace/.scratch/advi_cotbkf/tx_cache/trade_year=*/*.parquet`, with
+   `COTBKF_SWEEPS_CONFIG=C:/dev/_cotbkf_private_evidence_20261009/config/commonwealth_sweeps.json` in the command line of anything
+   that imports a commonwealth script): the account-days carrying a cash withholding row; of them, those with NO same-day `lo`; of
+   THOSE, how many are measured days in `C:/dev/ajb_workspace/.scratch/advi_cotbkf/fwd3_serve_r34/daily_returns.parquet` (a non-null `return`). Counts only.
+2. Make the change in `commonwealth_flows.py`, the smallest that states the rule: a cash withholding row is an external outflow
+   whether or not a withdrawal rides the same day. Follow the file's OWN convention for changing a flow rule (if the file versions its
+   rules, add this the way the last version was added and leave the earlier versions reproducible; say which you did and why). Fix the
+   comments and the reason text that say "only where it rides".
+3. Tests in `data/assets/scripts/silver/tests/` (synthetic rows only): a withholding with no `lo` is a flow; a withholding with a
+   same-day `lo` is unchanged (still counted once, never twice); a day with neither is unchanged. Keep every existing assertion's `==`;
+   if an existing test asserted the old rule, change its expectation and say so in your report, by name.
+4. Write the reach record `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~96/WITHHOLDING_FLOW_REACH.json` with exactly these keys: `withholding_account_days`, `no_withdrawal_account_days`,
+   `no_withdrawal_measured_days`, `rule_change` (one sentence), `flow_rule_version` (the name the code now runs under), `tests_added`
+   (names), `tests_changed` (names), `not_established`.
+
+**If the reach is much wider than two measured days, do NOT narrow the rule to fit two: report the count. Whether a wider re-mint is
+wanted is not yours to decide.**
+
+### ACCEPTANCE
+
+<criterion id="CB65bm3-AC1" cell_refs="CB-bm-3"><invocation>env -u COTBKF_SWEEPS_CONFIG python -m pytest data/assets/scripts/silver/tests -q</invocation><expect>passed</expect></criterion>
+`CB65bm3-AC1` -- the silver suite passes with the variable unset: 0 failed, 0 errors, 12 skipped as before this order.
+
+<criterion id="CB65bm3-AC2" cell_refs="CB-bm-3"><invocation>python -c "import json;d=json.load(open('org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~96/WITHHOLDING_FLOW_REACH.json',encoding='utf-8'));print('WITHHOLDING-FLOW-RECORD withholding_account_days=%d no_withdrawal_account_days=%d no_withdrawal_measured_days=%d flow_rule_version=%s tests_added=%d tests_changed=%d'%(d['withholding_account_days'],d['no_withdrawal_account_days'],d['no_withdrawal_measured_days'],d['flow_rule_version'],len(d['tests_added']),len(d['tests_changed'])))"</invocation><expect>WITHHOLDING-FLOW-RECORD withholding_account_days=</expect></criterion>
+`CB65bm3-AC2` -- the reach is recorded with its three counts, the rule's version and the tests by name. The issuer reads the counts.
+
+<expected_criteria>CB65bm3-AC1,CB65bm3-AC2</expected_criteria>
+
+## BOUNDS
+
+- **Grant.** The `<paths>` block below, your deliverables folder and the file of this order.
+- **Do NOT touch:** `commonwealth_daily_returns.py`, `commonwealth_daily_valuation.py`, the mint adapter, any manifest, anything under
+  `data/assets/scripts/gold/`. If the fix cannot be made in `commonwealth_flows.py` alone, stop: that is the refusal clause.
+- **Do NOT run the build, `--apply` or `--verify-served`.** No AWS or S3 call. No push.
+- **No gate override** of any kind and no `--force`. If a gate refuses and the fix is not an ordinary correction inside your grant,
+  stop and report its exact refusal line.
+- **Never print** an account id or an account's amount; the reach is counts.
+- **Refusal clause.** If a criterion cannot be met as written, stop. Write the reason in your report and a NEW surprise row: the next
+  free `ADVI_COTBKF-D2-S<k>` id read from the channel at write time, `"fabric": "dell2"`, `surfaced_at` read from the clock. Do not
+  weaken or skip a test.
+
+<paths>
+data/assets/scripts/silver/commonwealth_flows.py
+data/assets/scripts/silver/tests/
+org/missions/D8/ADVI/ADVI_COTBKF/deliverables/
+org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+The block is your WRITE grant. Everything else named here you READ and never edit. The one channel write allowed is your own NEW row.
+
+<decomp_ref>
+<decomp_doc>org/missions/D8/ADVI/ADVI_COTBKF/decompositions/ADVI_COTBKF_DECOMP.round65.md</decomp_doc> (round 65), cell `CB-bm-3`.
+<owned_cells>CB-bm-3</owned_cells>
+</decomp_ref>
+
+<proof_of_spec>
+Criterion ids: CB65bm3-AC1, CB65bm3-AC2. Instance at
+`org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~96/ADVI_COTBKF.TO-CB-bm-3.withholding-is-a-flow.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> CB65bm3-AC1,CB65bm3-AC2` BEFORE the flip. Both are mechanical.
+</proof_of_spec>
+
+**REPORT:** the three reach counts, measured BEFORE the change; the rule change in one sentence and the version it runs under; the diff of `commonwealth_flows.py`; tests added and tests changed, by name; the pytest line; the `WITHHOLDING-FLOW-RECORD` line; commits; every gate refusal, verbatim.
+
+---
+
+## RECORD FACE
+
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE one hand-run script and its tests; nothing is re-run or served.
+comp-iam: DECLARED-NOT-APPLICABLE no AWS call.
+comp-adversary: RUN -- the reach is measured before the change and is not pinned to two, so a wide rule shows itself; a withholding beside a withdrawal is tested as counted once; BLIND: what the changed flow does to returns on the affected days, which only the re-mint order measures.
+lane: the <paths> block IS the grant (worker RULING 1).
+</preflight>
+
+Source: `1.0.0_SA_CTO~DELL2` round-65 analysis @1e9128413f (msg 4715), section 4 item 3; `3.0.0_SA_CVO` REMEDIATION_v37 @054e94e8fc.
