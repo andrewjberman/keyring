@@ -10,16 +10,20 @@
  "subject": "IRPT_ANLREQ: read-only, does an identity exist for svc-irpt-packager (CTO~DELL2 msg 5177)",
  "body_path": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/CROSSBOX_ASK_PACKAGER_IDENTITY_EXISTS_20261011.md",
  "opened_at": "2026-10-11T15:00:25Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T15:05:13Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T15:06:13Z",
+  "to_by": "1.0.0_SA_CTO"
  }
 }
