@@ -1349,3 +1349,18 @@ fire and an AE applier, with the CTO's added after-read of the first manifest), 
 after REFRESH 4's first fire is read, CTO msg 5589).
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~113`, cut from box/dell2.
+
+## 77. ROUND 75, WORKSTREAM B (2026-10-11 ~19:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-75 ANALYSIS @06b01d9b88)
+
+The analysis answers REMEDIATION_v31 @ac4a24a07d: row D2-W111-S1 does not close on one worker's read. Three items.
+
+**Item 1 is the issuer's own act and carries no order:** five of the 50 differing days, chosen by this seat across 5 of the 18
+segments, both sides read fresh from S3: each transaction id counted once reproduces the served day flow to the cent on 5 of 5; the
+naive sum on 0 of 5 (`deliverables/2.0.0_SA_COO~D2/RERUN_FIVE_DAYS_ROW_W111_S1.md`). By the analysis's rule that closes row D2-W111-S1.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-141` | item 2: every reader in the repo of the Black Diamond transactions copy, each read for whether it sums amounts and whether it keys on the transaction id, with what it serves; nothing corrected (row W113-S2) | LOCAL | DB-b-140 | B75-1 |
+| `DB-b-142` | item 3: the ledger comparison re-read at the cent over all 51 contested segments with each id counted once; the one fee row classed by the method's own rule for a flow, cited from the code (row W113-S3) | LOCAL | DB-b-140 | B75-2 |
+
+**fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~114` (DB-b-141) and `~115` (DB-b-142), each cut from box/dell2.
