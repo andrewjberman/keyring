@@ -1,7 +1,7 @@
 # Never-widen half (DRAFT): MDPF_HEALGAP round 3, drain act HG-t-5 -- the cottonwood runner's daily fire moves 06:00Z -> 12:45Z
 
 **Author:** `2.0.0_SA_COO~G1` (dell1), 2026-10-11 ~08:5xZ. **For:** `1.0.0_SA_CTO~DELL1`, who owes the CTO half.
-**Status:** DRAFT. COO half NOT yet signed. **Precondition (mine, not yet met):** ACT 1 (HG-t-9 v2) is applied (read live 05:2xZ,
+**Status:** DRAFT; waits on HG-t-14's apply (the CTO's order of acts, ADDENDUM 3). COO half NOT yet signed. **Precondition (mine, not yet met):** ACT 1 (HG-t-9 v2) is applied (read live 05:2xZ,
 ledger `healgap-r3-act1-satellites-stamp-gated-v2-20261011`) AND one 13:15Z fire is read back (L5). Nothing is applied by this
 document. One OPEN DECISION below (section 3) is the CTO's before this half is worth signing.
 
@@ -36,7 +36,7 @@ Census: `comp-find 'cottonwood/bronze/rebalancer_model|rebalancer_model_detail|r
 | silver-etf `mirror_conversion.py` (census hit) | NOT READ: its trigger was not read here | unread | UNREAD -- named, not graded |
 | gold floor / MDPF daily runner | 13:30Z | silver | unchanged clock; margin ~43 min |
 | `cot-satellites-registry-producer` | 07:00Z + 13:15Z (HG-t-9, applied) | `rebalancer_model_detail` | 07:00Z reads YESTERDAY's bronze; the 13:15Z stamp-gated fire serves today's |
-| **`cot-satellites-characteristics-producer`** | **12:30Z** | `holdings.json` (the registry producer's output) + positioning + BBG T-1 | **reads the 07:00Z holdings, built on yesterday's bronze; `holdings.json` is rewritten at 13:15Z, after it. `characteristics.json` then carries holdings one day behind on every day** |
+| **`cot-satellites-characteristics-producer`** | **12:30Z; 13:25Z once HG-t-14 is applied (read before this act)** | `holdings.json` (the registry producer's output) + positioning + BBG T-1 | **reads the 07:00Z holdings, built on yesterday's bronze; `holdings.json` is rewritten at 13:15Z, after it. `characteristics.json` then carries holdings one day behind on every day** |
 
 **The finding, measured from the producer's own text:** `satellites-characteristics-producer.tf:316-353` sets 12:30Z as "AFTER the
 Bloomberg pull ... margin over the registry producer's 07:00Z fire", and records `holdings_as_of` in the artifact
@@ -44,7 +44,8 @@ Bloomberg pull ... margin over the registry producer's 07:00Z fire", and records
 After the move the order inverts: runner 12:45Z, holdings (final) 13:15Z, characteristics 12:30Z. Its input is not wrong or missing,
 so it does not raise; it is one calendar day stale by construction. This is a served-output change not named in the HG-t-5 order.
 
-**OPEN DECISION (the CTO's; POSN_ASTTAX's served key, not this project's):**
+**RULED (B) by the CTO, msg 3655, ADDENDUM 3 @c3cc34f2d0: the characteristics rule is re-timed FIRST, as its own pair (cell `HG-t-14`, order @60ee1f8f3d,
+half `NEVER_WIDEN_HALF_REQUEST_HEALGAP_R3_ACT_HG_T14_20261011.md`), to `cron(25 13 * * ? *)`; HG-t-5 is applied only after it.** The options as asked:
 - (A) Apply HG-t-5 alone and accept `characteristics.json` one day behind `holdings.json` from the first post-move day.
 - (B) **Recommended:** re-time `cot-satellites-characteristics-producer-daily` to after the 13:15Z fire (it must stay after the
   07:00 ET Bloomberg pull, which it does at any time past 12:30Z) FIRST, as its own pair; HG-t-5 second. The re-time is harmless
