@@ -69,11 +69,14 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="HVST-bs-3"><invocation>powershell -NoProfile -Command "(Get-ScheduledTask -TaskName 'Opal Data Harvest - Continuous Cycle').Actions.Arguments"</invocation><expect>--publishers bbg wsj barrons</expect></criterion>
-  <criterion id="AC2" cell_refs="HVST-bs-3"><invocation>powershell -NoProfile -Command "(Get-ScheduledTask -TaskName 'Opal Data Harvest - Continuous Cycle').Actions.WorkingDirectory"</invocation><expect>wk-harvest-runner-pin-c1be67f53c</expect></criterion>
-  <criterion id="AC4" cell_refs="HVST-bs-3"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round75/bs3_gc_dryrun.out</invocation><expect>EXEMPT PID</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-bs-3"><invocation>powershell -NoProfile -Command "(Get-ScheduledTask -TaskName 'Opal Data Harvest - Continuous Cycle').Actions.WorkingDirectory"</invocation><expect>wk-harvest-runner-pin-(c1be67f53c|b5a7a3a4b6)</expect></criterion>
+  <criterion id="AC4" cell_refs="HVST-bs-3"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round75/bs3_gc_zero_age_dryrun.out</invocation><expect>EXEMPT PID</expect></criterion>
   <criterion id="AC3" cell_refs="HVST-bs-3" judgment="true"/>
 </proof_of_spec>
 
+- (AMENDMENT 2, row AMGT_HARVST-Z-S112) AC2 accepts either pin: HVST-bw-1 re-pinned the task's WorkingDirectory to
+  `b5a7a3a4b6` on purpose (state dir carried). AC4 reads `bs3_gc_zero_age_dryrun.out`, the dry run at `-MinAgeSeconds 0`, which
+  lists the runner's python PIDs EXEMPT; the default-age run has no aged candidate and lists none. File the proof now.
 - AC3 is the per-publisher acceptance in step 4. It is graded by the CVO from your records, never self-graded.
 - The checker reads `<expect>` as a regular expression.
 - INSTANCE NAMED EXACTLY
@@ -109,6 +112,10 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   `wk-harvest-runner-pin-c1be67f53c` and a reaper dry run lists the runner EXEMPT before close. This amendment carries C-e
   into step 1, a new step 6, AC2's expect and a new AC4. bbg stays on `1.0.0_SA_CTO~DELL1`'s ruling (msg 1512):
   bloomberg.com web collection is not a Terminal draw.
+- **AMENDMENT 2 (2026-10-11 ~03:4xZ, issuer; GATE (viii) graded the modification, no other limb):** on row Z-S112 from
+  `0.7.0_AE_CloudOps~ZW` (bus 0add10a8). AC2 and AC4 as written could not pass after bw-1 (AC2 names the old pin; AC4 reads the
+  default-age dry run, which lists "0 candidate(s) EXEMPT"). The evidence of C-e is on origin: `bs3_gc_zero_age_dryrun.out` lines
+  58-59, PIDs 10928 and 10528 python.exe EXEMPT in the pin worktree. Not superseded: AC3's per-publisher acceptance stays live.
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>

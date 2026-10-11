@@ -461,3 +461,130 @@ write: **1 row** (`S1`).
   "notes": "Does not move the system/firm/tier result: the opened file holds no answer and no arm. It bounds the 'contents' clause, which round 1 does not grade mechanically. Enrichment candidate for round 2: a reader face that withholds the project folder from the reader's worktree (a sparse checkout of reading_list.json alone) and asks for answers written without a parser, or graded on the table slot."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T03:23:44Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1",
+  "one_line": "THE PRODUCERS STILL WRITE opal-data-bd's PLATINUM DAILY, SO A COPY IS A SNAPSHOT AND A ROUTER FLIP BEFORE THEIR REPOINT SERVES A DAY-OLD COPY",
+  "spec_asserts": "ROUND_ANALYSIS.round1.md item 5: F6's deploy 'waits on F7's copy reading byte-identical at every served key' and is the round's last act; FWD-4: firm users see exactly what they saw before on the day their data moves. DEC-17: never a dual write or a shadow copy.",
+  "world_is": "2026-10-11 02:5xZ: head-object on opal-data-bd platinum/firm/advisor_nna_canonical.json reads LastModified 2026-10-11T01:11:26Z, and the live manifest of the 11 served classes counts 52,910 objects against the census's 52,851 two days earlier (59 new keys); every census class's last_modified_max sits in 2026-10-09 05:27Z-06:15Z. The producers rewrite these keys daily and nothing yet writes advi/49financial/platinum/. A router flip after a copy reads that copy: the morning after it serves yesterday's numbers, and byte-identity at the moment of the copy proves nothing about the next day. The copy is therefore a snapshot (r2_f7.py compare prints source-changed-since-manifest as its own count).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r2_f7.py manifest at 2026-10-11T02:5xZ: objects=52910 placed=52910 refused=0 collisions=0",
+      "aws s3api head-object --bucket opal-data-bd --key platinum/firm/advisor_nna_canonical.json -> LastModified 2026-10-11T01:11:26+00:00",
+      "census.json classes gold/artifacts/ ... platinum/firm/: last_modified_max 2026-10-09T05:27:19Z .. 06:15:33Z (round 1 listing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "RULED by the issuer inside decomposition v2: F6's DEPLOY is not a round-2 cell (DECOMP_R2 'Not in round 2'). The round builds the path dormant (no behavior change) and copies a snapshot. Un-park: the CTO places F10's platinum-producer repoint (or a resync inside the flip window with the producers redirected), and the advTenant remedy if a map value changes. The disarm owner is the CTO because the placement is his."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T03:23:44Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "NO *-cot-* ROLE IS ASSUMABLE BY THE dell1 CLOUDOPS USER AND BOTH IAM SIMULATORS ARE REFUSED TO IT, SO F4's NEGATIVE ARM CANNOT BE EXERCISED DIRECTLY",
+  "spec_asserts": "ROUND_ANALYSIS.round1.md item 3: the NEGATIVE arm must be EXERCISED, not read from policy text: a role/*-cot-* principal attempts one read-only GET on opal-data-inflection and is refused.",
+  "world_is": "aws iam get-role on the 9 roles whose name contains -cot-: trust principals are lambda.amazonaws.com (3), scheduler.amazonaws.com (1), role/mdpf-gold-lambda-role (2), role/mdpf-daily-runner-ec2-role (1), role/irpt-ycharts-runner-role (1) and the two Andrew users (1); the group policies of cloudops-dell-agents-group carry no sts:AssumeRole; iam:SimulatePrincipalPolicy on a role and iam:SimulateCustomPolicy were refused to user/cloudops-dell1-agent-user. One route exists with no new IAM object: i-0167fd745ad906a66 (irpt-ycharts-runner, running, SSM Online) holds role/irpt-ycharts-runner-role, which irpt-cot-ycharts-research-role trusts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws iam get-role --role-name <the 9 roles> --query Role.AssumeRolePolicyDocument.Statement[].Principal (printed at the cut)",
+      "botocore ClientError AccessDenied for iam:SimulatePrincipalPolicy and iam:SimulateCustomPolicy as user/cloudops-dell1-agent-user",
+      "boto3 ec2 describe-instances: i-0167fd745ad906a66 running, instance profile irpt-ycharts-runner-profile; ssm describe-instance-information: 4 managed instances, PingStatus Online"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Cell FB-e-4 runs the one SSM command r2_f4_send.py builds. ssm:SendCommand for the dell1 user is INFERRED, not measured: a refusal is a BLOCKING row on that cell, not a recut. The alternative, minting a probe role, is row IRPT_BCKEND-S107's exposure and an IAM-plane act."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S6",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T03:23:44Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "ENRICHMENT ITEM 6's 'LITERAL RENAME' IS ALREADY DONE BY ADVI_COTBKF, SO THE S11 CELL IS THE TOLERANT LOAD AND ITS TEST ONLY",
+  "spec_asserts": "ROUND_ANALYSIS.round1-addendum.md section 2 item 6: the literal rename in build_canonical_prices_v2.py with the tolerant-load patch in the same diff; the new name is builder output.",
+  "world_is": "build_canonical_prices_v2.py at fda1c4f0cc reads every input key from legacy_addresses.json rows beside the writer (CB-ap-1, CB-at-1, CB-ax-1 @19b3550e8a); no literal key remains in the loaders. The patch ADVI_FIRMBKTS_INPUT_S00_TOLERANT_LOAD.patch @091ccbafa2 applies to the builder clean (git apply --check rc 0); its TEST still types silver/historical_prices.parquet and the naming gate refuses it (NAMING REFUSE :46, reproduced). A test reading the writer's own INPUT_ADDRESSES passes the gate (3 passed; the existing price tests 12 passed).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git apply --check <patch> rc=0 at fda1c4f0cc",
+      "python .tools/naming-gate.py --diff <patch> --enforce -> NAMING REFUSE data/cot/scripts/gold/test_s00_missing_tier2.py:46",
+      "issuer scratch run: 3 passed + 12 passed + NAMING-GATE: PASS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The optional S_00 SSM step is dropped (MDPF_DEMQUE closed its S_00 SUPERSEDED, msg 1368: nothing consumes canonical_prices.parquet; the step would add a production step to the cot daily chain)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S7",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T03:23:44Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1",
+  "one_line": "THE STAFF PROXY (?firm=49financial) ALREADY RESOLVES TO opal-data-49financial TODAY, SO A BUCKET-KEYED CANONICAL REWRITE WOULD CHANGE IT WITH NO REGISTRY EDIT, AND firm-config.mjs FORBIDS A SHARED-BUCKET VALUE CHANGE BEFORE THE advTenant REMEDY",
+  "spec_asserts": "DEC-3: the tenant assertion is today's boundary, no wider and no narrower; shared-advisor-router index.mjs:252: bucket = `opal-data-${firmParam}` for opal-capital; firm-config.mjs header: do not make two firmIds share a bucket value, the advTenant remedy lands FIRST.",
+  "world_is": "With the router at fda1c4f0cc, firmId opal-capital with ?firm=49financial resolves bucket opal-data-49financial and serves the LEGACY key there (a 404 NoSuchKey today, the bucket holding no legacy keys). An ungated 'canonical when the bucket is a firm bucket' rewrite would silently turn that request into a served read of the new keys. FIRM_CONFIG maps mockadv and 49financial to the same bucket (opal-data-bd) today; the cutover edit makes both resolve to opal-data-49financial and is the shared-bucket change the header warns about.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/shared-advisor-router/index.mjs:239-253 @fda1c4f0cc",
+      "infra/aws/lambda-edge/_shared/firm-config.mjs:29-63 @fda1c4f0cc",
+      "r2_f6.mjs diff: a build with no registry gate reads 183 of 193 identical (10 staff-proxy events differ); the gated build reads 193 of 193"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "FB-e-6 builds the path gated on the registry's own map (FIRM_BUCKET_MAP[scope] === resolved bucket), so no request changes until the map does. The cutover is the CTO's, with F10 and the advTenant remedy."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S8",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T03:55:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARM OF D1-S4 AND D1-S7 BY THEIR DISARM OWNER: F6'S FLIP, THE F10 PRODUCER REPOINT, A DELTA COPY AND THE advTenant REMEDY ARE ONE CUTOVER WINDOW, PLACED IN ROUND 3; UNTIL THEN THE COPY IS INERT AND THE F6 PATH IS GATED ON THE REGISTRY MAP",
+  "spec_asserts": "D1-S4: a router flip before the producers repoint serves a day-old copy. D1-S7: an ungated bucket-keyed rewrite would change the ?firm=49financial staff proxy with no registry edit, and firm-config.mjs forbids a shared-bucket value change before the advTenant remedy.",
+  "world_is": "Neither hazard can fire in round 2. F6 is built dormant and not deployed. FB-e-6 gates the canonical path on FIRM_BUCKET_MAP[scope] === the resolved bucket, so no request changes until the map does (D1-S7 notes: 193 of 193 identical on the gated build). F7's copy is NEW keys only and nothing reads them (CTO half, condition 2). Placement: round 3 carries ONE cutover family, and nothing of it is cut before F7 reads COPY-COMPLETE and F6 is built. The family, in order inside one window, each with its own never-widen pair: (1) the advTenant remedy lands first; (2) the F10 platinum producers repoint to address() keys in opal-data-49financial; (3) a delta copy against a fresh manifest reads COPY-COMPLETE; (4) the FIRM_CONFIG map value moves and F6 deploys. No window leaves both homes written or both read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND2_F7_COPY_CTO_HALF.md (conditions 1-3; the D1-S4 section)",
+      "ADVI_FIRMBKTS-D1-S4 notes: un-park on the CTO placing F10's repoint or a resync inside the flip window, plus the advTenant remedy if a map value changes",
+      "ADVI_FIRMBKTS-D1-S7 notes and evidence: FB-e-6 gated build 193 of 193 identical; the cutover named as the CTO's, with F10 and the advTenant remedy"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolves D1-S4 and D1-S7 as hazards (the D1-S8 shape used elsewhere for a disarm); GRADUATED stays the CVO's L9 field. The round-3 enrichment list carries the cutover family as one item."
+}
+```

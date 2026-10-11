@@ -30,6 +30,13 @@ Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. `/govern` fires on each 
 
 ## Arms
 
+- `1.0.0_SA_CTO` (laptop) **CLUSTER LEAD: `/loop 60m` over every box's open calls**, DIRECTED. Andrew at the laptop
+  `1.0.0_SA_CTO` terminal ~03:2xZ 2026-10-11, VERBATIM: "I am also deputizing you as the leader of the entire cluster. What
+  that means is that you should run a /loop to check the various /open-calls across the various boxes json uploads, and you
+  adjudicate them. This loop should run every 60m." Body: `python .tools/open-calls.py list --all --cloud`, then a ruling
+  per open row, relayed through `0.0.0_AB_MSTR`; rows Andrew reserved stay his. Record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261011_032xZ_CTO_LEADS_CLUSTER_OPEN_CALLS_LOOP_60M.md`.
+  Stop: his stand-down. Landed by 1.0.0_SA_CTO. The laptop `/self-drive` row below is NOT re-armed since the 2026-10-10 restart.
 - `1.0.0_SA_CTO` `/self-drive 30m laptop directives` at `17,47 * * * *` (cron `a5054ca6`; 30m on Andrew ~06:0xZ 2026-10-09, "that should be much faster clip, like 30m"), DIRECTED: re-armed after the 2026-10-08 laptop reboot on
   Andrew's "1.) Yes." (~18:3xZ, last addendum of
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_153xZ_TWO_PRIORITIES_GITOPS_AND_PROCESS_GC.md`), terms of
