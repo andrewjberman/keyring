@@ -4120,3 +4120,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "The journal reaches back to 2026-09-24T09:35:20Z, 13 days before the window opens, so COVERAGE is FULL and retention explains nothing. Across 8535 journal lines in the 47-hour window, ZERO lines contain any of the eight request ids, and there are ZERO tracebacks. The resident was working and refusing in that window -- 40 retained_for_retry lines over five classes -- but it logged none of the eight ids. So the cause of the eight dead letters is not in the resident journal, and the benign explanation for its absence is measured false rather than assumed away."
 }
 ```
+
+## IRPT_YCDGEN-D2-S57 -- Two tests in ycharts/generate/tests fail on the trunk since AR-g-41 merged: the issuer's regress check for that cell and for AR-g-42 did not run that folder
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S57",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T15:07:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "Two tests in ycharts/generate/tests fail on the trunk since AR-g-41 merged: the issuer's regress check for that cell and for AR-g-42 did not run that folder",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-11 ~15:0xZ by 2.0.0_SA_COO~G2 on box/dell2: `python -m pytest -q infra/aws/lambda/investor-reporting/ycharts/generate/tests` reads 2 failed, 505 passed (1 expected failure). The two are test_package_poll.py::test_e_both_bindings_carry_the_packager_and_ready_sends_to_the_bound_url and ::test_e_only_the_commentary_binding_adds_the_packager_and_leaves_i3_unset, both raising ResidentInstallRefused RESIDENT_PACKAGER_REQUIRED. Cause, by reading: reports/resident_installed.py line 105-106 (IRPT_ANLREQ AR-g-41, merged @fb4aaf8fa2) refuses a bindings document that carries commentary_ready_queue_url without a packager member; the two tests bind the commentary queue and give no packager member. The rule is the intended one; the two tests are stale. The folder read 507 passed, 0 failed at the st31 pin 19b02b2971, cut before that merge."
+    ]
+  },
+  "notes": "The issuer's own defect, in a check: IRPT_ANLREQ ar_g42_checks.py `regress` (and the AR-g-41 check before it) ran ycharts/research, the resident factory file, the binding file and the builder file, and not ycharts/generate/tests, where test_package_poll.py builds the same runtime. Both cells were drained on those checks. Nothing shipped on it: the host runs 19b02b2971-st31, cut before the merge. REMEDY: the two tests are repaired in IRPT_YCDGEN.TO-YCD-d-13, whose suite criterion runs the whole folder; st32 is not built from a pin where the folder fails.",
+  "spec_asserts": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_g42_checks.py mode `regress`: prints AR-G42-REGRESS-OK over four sets and is the regression criterion of TO-AR-g-42; the st31 packet states `ycharts/generate` 507 passed, 0 failed as a release fact.",
+  "world_is": "MEASURED 2026-10-11 ~15:0xZ by 2.0.0_SA_COO~G2 on box/dell2: `python -m pytest -q infra/aws/lambda/investor-reporting/ycharts/generate/tests` reads 2 failed, 505 passed (1 expected failure). The two are test_package_poll.py::test_e_both_bindings_carry_the_packager_and_ready_sends_to_the_bound_url and ::test_e_only_the_commentary_binding_adds_the_packager_and_leaves_i3_unset, both raising ResidentInstallRefused RESIDENT_PACKAGER_REQUIRED. Cause, by reading: reports/resident_installed.py line 105-106 (IRPT_ANLREQ AR-g-41, merged @fb4aaf8fa2) refuses a bindings document that carries commentary_ready_queue_url without a packager member; the two tests bind the commentary queue and give no packager member. The rule is the intended one; the two tests are stale. The folder read 507 passed, 0 failed at the st31 pin 19b02b2971, cut before that merge."
+}
+```

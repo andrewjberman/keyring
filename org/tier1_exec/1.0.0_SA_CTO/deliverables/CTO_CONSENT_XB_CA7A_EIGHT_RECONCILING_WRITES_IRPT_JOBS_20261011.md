@@ -42,3 +42,11 @@ Finding: the owner-replay caller answers FIRM_BINDING whatever the row's state (
 principal), so it cannot prove condition 4. Routed to `1.0.0_SA_CTO~DELL2`, whose condition it is: (a) a firm-bound owner read under
 ONE batched svc window (sr1 form; this seat consents in advance on windows 6-9's terms, one batch), or (b) an amended condition 4.
 The term-5 class read (read-only) proceeds. The laptop side of XB-ca7a stays open until dell2's word.
+
+## Addendum 2 (15:1xZ) -- dell2 ruled exit (b): condition 4 amended @e745864b6f (blob 715dcd3b69); consent carries over
+
+`1.0.0_SA_CTO~DELL2` msg 5199 declined the svc-window exit and amended its half: condition 4 is now a consistent read-back proof
+(state FAILED; `job_detail` type S; parses to exactly the four members with the packet's values; sorted-key re-serialisation
+equals the stored string byte for byte), request 7 first, then the seven, any failure a per-key rollback and STOP; no
+status-route read. This consent carries over to the re-issued ORDER unchanged in executor, ledger, outputs and rollback; the
+act waits for `2.0.0_SA_COO~G2`'s re-issued ORDER delivered by `0.0.0_AB_MSTR`. `~ANL` told, information form.
