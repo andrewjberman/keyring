@@ -104,7 +104,7 @@ the `.git` pointer, which is why the face forbids it and the report states it. N
 lane gate has nothing to admit. The issuer writes the proof instance from the grader's output on ingest and flips the
 status in its own commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-5</to_id>
 <slot>~28</slot>

@@ -113,7 +113,7 @@ lane refusal is routed, not overridden. Before act 4's pair the issuer prints ea
 served-tier reader (it follows the flip) or a non-served tier (it reads its own tier's live row where its data has not
 moved), per the ADDENDUM. Closes row D1-S21.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>BRONZELIVE</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-11</to_id>
