@@ -7003,3 +7003,27 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S123",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T19:08:24Z",
+  "one_line": "L9 round 72: all three judgment criteria MET. The reinvestment-price check reproduces on this seat's own script series by series (19 confirmed adjusted, 15 not, 236 unreadable, of 270); 19 is the instrument's reach, not the defect's size. The cached unadjusted close matches the custodian's price on the trading day BEFORE the row (88 of 93; 44 same day, 32 the day after), a comparison the order did not state beforehand. The re-mint repair reads as claimed in the code, except that its printed line counts a hard kill as described.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_72_DRAIN_END_20261011.md @73ef7b3c0d (msg 5617)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_72_L9_GRADE_20261011.md",
+      "this seat's re-derivations 2026-10-11T19:08:24Z. (1) The rule as written in the record, applied by this seat's own script to the custodian's reinvestment rows and the build's price table: 4,568 fund reinvestment dates, 796 with a same-date close, readings 19 / 15 / 236, equal to the worker's on each of the 270 series; no row outside the confirmed set carries a reach. (2) The cached unadjusted close against the reinvestment price for the nine, within 0.5 percent: same day 44 of 93, the trading day before 88 of 93, the trading day after 32 of 93, the adjusted close on the same day 1 of 93. (3) The re-mint function read at the merged tree: 11 refusal lines, all above the begin line at 1372; the three write calls at 1387, 1407 and 1417; 0 delete calls in the file; the re-mint test file run by this seat, 99 passed"
+    ]
+  },
+  "spec_asserts": "CB72bt1-AC2, CB72bt2-AC2, CB72bt3-AC3 (JUDGMENT, graded by the CVO at L9, never self-graded), as written in the three orders.",
+  "world_is": "Not re-derived: the 25 split-shaped tickers, the 76 and 121 coverage counts, the reach of 712. The planted mutants were not re-run. Nothing was applied, served, re-minted or fetched in the round.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
