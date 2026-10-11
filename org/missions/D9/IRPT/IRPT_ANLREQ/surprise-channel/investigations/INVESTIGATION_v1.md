@@ -2243,3 +2243,81 @@
   "notes": "The release that ships the acceptance.py writer must ship that one-line test edit in the same act; the issuer may re-cut it into a seat whose grant holds ops/tests. No production caller is affected: the only production call of accept is submission_service.py, updated."
 }
 ```
+
+## IRPT_ANLREQ-D2-W51-S1 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-11T07:25:00Z",
+  "one_line": "AR-y-35 step 4 STOP: AnalysisRequestFields is mounted in portal TicketCenter.tsx:406 (outside the order's paths), and TicketCenter holds no list of the firms the caller's profile allows; the only served list lives in Investor Reporting page state behind a live resolveDirectoryContext call. Nothing built.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:406-413 (portal branch wk-IRPT_ANLREQ-51-portal @eb735c6c): the only mount of AnalysisRequestFields; passes form, onChange, onFile, fileName, disabled, models. Holds analysisForm.firm as typed text (:198 catalogueFirm = analysisForm.firm.trim()) and no list of firms. Not in the order's paths.",
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx (in paths): the Firm input and answersFromForm; holds no firm list, receives none.",
+      "portal/src/contexts/AuthContext.tsx:36,818-823 and AuthContext.context.ts:32: claims carry one firmId (opal-capital for internal users) and canAccessFirm(firmId) returns true for any firm for an internal caller; there is no list of allowed firms.",
+      "portal/src/pages/InvestorReporting/header/firm.ts:1-60 (firmOptions, selectableFirmIds) and contracts/adapt.ts:713-718: the served list is ResolvedScope.permittedFirms, adapted from permitted_firm_catalogue; it is obtained by InvestorReportingApi.resolveDirectoryContext (src/api/endpoints/investor-reporting.ts:1238) and held in the Investor Reporting page's own state (src/pages/InvestorReporting/index.tsx, imports at :34-35). No shared provider or hook exposes it: comp-find for ScopeProvider/ScopeContext/useScope over portal/src returned 0 of 1414 files.",
+      "Reaching it from the ticket page needs a new fetch (resolveDirectoryContext with a ResolveScopeRequest) plus a state hook in TicketCenter.tsx, or a new shared hook; the order forbids inventing a new fetch, endpoint or constant list, so steps 1-3, 5 and 6 were not built (a firms prop with no supplier would leave the form disabled on 'Loading firms...' in production)."
+    ]
+  },
+  "spec_asserts": "AR-y-35 step 4: the portal already holds the firms the signed-in caller may act for, and the list can be passed in from the component that mounts AnalysisRequestFields, which is AnalysisRequestParts.tsx itself.",
+  "world_is": "The mount is TicketCenter.tsx (outside paths). The served list (ResolvedScope.permittedFirms) exists only inside the Investor Reporting page after a live scope-resolve call; TicketCenter has no list and no hook to it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S2 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-11T07:54:00Z",
+  "one_line": "AR-y-35 AMENDMENT 1: IrpAnalysisClient is declared in portal src/pages/TicketCenter/analysisRequest.ts (outside the grant) and does not declare resolveDirectoryContext; the page types the call locally instead of widening it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/analysisRequest.ts:30-37 (portal branch wk-IRPT_ANLREQ-51-portal @0e2d21b6): interface IrpAnalysisClient declares uploadAnalysisInput, submitAnalysisRequest, getOwnedAnalysisReport only; the file is not in the order's paths.",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:233 @0e2d21b6: the page casts its client to Pick<InvestorReportingApi, 'resolveDirectoryContext'> (InvestorReportingApi is exported from src/api/endpoints/investor-reporting.ts:848) inside loadAllowedFirms; no other file changed. Portal tsc (tsconfig.app.json) reports no error in TicketCenter.tsx or AnalysisRequestParts.tsx."
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: if IrpAnalysisClient does not declare resolveDirectoryContext, widen that type where the page declares it; if it is declared outside the grant, file a row naming the file and stop on that point only.",
+  "world_is": "The type is in analysisRequest.ts, outside the grant. The point was not widened; the page uses a local Pick of the exported InvestorReportingApi type, which gives the same call with no change to the shared interface.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S3 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-11T07:54:00Z",
+  "one_line": "AR-y-35: the order names no request body for resolveDirectoryContext and the portal has no DOM test library, so the page's once-per-showing effect is checked by loader test plus a source count, not by a mounted page; the request body was not run against any server.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:80-90 @0e2d21b6: loadAllowedFirms sends { tenant: 'bootstrap', requested: all-null } with no selectedTenant (the shape Investor Reporting's index.tsx:122-135 sends for a non-internal caller minus selectedTenant), and treats an answer holding no permittedFirms (a Global context) as a failed read. Not run against a live route (order: never call a live API).",
+      "portal/package.json: no happy-dom, jsdom, react-test-renderer or testing-library dependency (read of the file, grep of the five names returned only the react line); renderToStaticMarkup does not run effects, so the fourth test calls loadAllowedFirms once with a stub client, renders the options, and counts the page's single call site in the TicketCenter.tsx source."
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: mount the page's form path with a stubbed client and assert ONE call and the options rendered.",
+  "world_is": "No mount is possible without a DOM. If a live resolve with no selected_tenant answers an internal caller with a Global context rather than a ResolvedScope, the form states the not-loaded message for that caller until the request is changed; the issuer should look at this at the drain.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

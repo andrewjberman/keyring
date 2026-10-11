@@ -1610,6 +1610,12 @@ def _slots(nm, toks, typ, v, first_of_segment=None):
             # NO-SYSTEM-ASKED (C-VERDICT, BF-t-2): an AWS service name, an inline policy name or a library layer
             # is never a system, and no later token or row resolved one. The system slot is empty, not blank.
             sysv, placeholder = "", _NO_SYSTEM_ASKED
+    elif typ == "IAM_POLICY" and nm is not None and _PASCAL_POLICY.match(nm):
+        # NO-SYSTEM-ASKED reaches an inline policy name whose first word is in NO vocabulary too (1.0.0_SA_CTO
+        # ruling on ADVI_COTBKF-D2-S98, 2026-10-11): `RestrictedPrefixGetPutList` used to RAISE R1.f on
+        # 'restricted' before the branch above could read it, so no inline policy named outside V1/V3 could be
+        # graded at all. One PascalCase token is never a system; the slot is empty, not blank, not a defect.
+        sysv, placeholder = "", _NO_SYSTEM_ASKED
     else:
         raise RaiseDefect("R1.f: %r is in no vocabulary; no registry row resolves it" % t1)
     if nm is not None and not placeholder:

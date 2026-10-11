@@ -325,11 +325,10 @@ try {
 } catch {
   [Console]::Error.WriteLine(("WARN: liveness unreadable ({0}) -- ORPHANED class disabled this run" -f $LivenessPath))
 }
-# A file that PARSES but maps too few live serials is not a verdict either: a read during a rewrite, or a pid race, left an
-# empty or partial map, and every owner-keyed poller then read ORPHANED (dell2 2026-10-11 08:31Z: 'owners: 0' with 32
-# sessions up, 16 pollers killed). Fewer live serials than half the live sessions -> treat as unreadable (fail closed).
-if ($liveSerials -ne $null -and $sessions.Count -gt 0 -and $liveSerials.Count -lt [math]::Ceiling($sessions.Count / 2)) {
-  [Console]::Error.WriteLine(("WARN: liveness maps {0} live serial(s) for {1} session(s) ({2}) -- too few to trust; ORPHANED class disabled this run" -f $liveSerials.Count, $sessions.Count, $LivenessPath))
+# A file that PARSES but yields ZERO live owners while sessions are up is not a verdict either (dell2 08:31Z: a read
+# during a rewrite left an empty map, every owner-keyed poller was classed ORPHANED, 16 were killed). Fail closed.
+if ($null -ne $liveSerials -and $liveSerials.Count -eq 0 -and @($sessions).Count -gt 0) {
+  [Console]::Error.WriteLine(("WARN: liveness parsed but 0 owner serial(s) live with {0} session(s) up -- ORPHANED class disabled this run" -f @($sessions).Count))
   $liveSerials = $null
 }
 

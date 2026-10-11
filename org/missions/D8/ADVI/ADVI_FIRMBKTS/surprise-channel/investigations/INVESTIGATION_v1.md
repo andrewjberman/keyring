@@ -2077,3 +2077,838 @@ write: **1 row** (`S1`).
   "notes": "This seat did not read the apply role at step 2 as the order asks; the read would have surfaced the deny before the plan, and the ACL write was a no-op in AWS, so no harm landed. Owner of the call: the owner of cloudops-dell-agent-deploy-policy and the never-widen pair's two signers; this seat will not change IAM, assume another identity or run update-function-code. Routes the issuer may weigh: (A) the apply runs from an identity outside the deny (these two functions were applied on 2026-08-21 and 2026-09-14, so one exists; which is not read here); (B) the policy owner narrows the deny for a bounded window. Either way a plan will not show the functions until the S3 objects carry a new VersionId (a re-run of build-nodejs-lambda.sh uploads identical bytes under a new one, inside the permitted set) or the owner corrects the state; this seat has done neither. Until then the Terraform state is the one place that says the deploy is done, and it is not. The two S3 objects remain the live inputs of any portal-auth plan."
 }
 ```
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~19 (FB-f-9 phase A2, step 4: read-back sites of served platinum keys)
+
+Opened as the worker's step-4 finding list. One row per read site, form OBSERVATION, hazard INERT: the mode (BD_PLATINUM_MODE) is unset everywhere in this cell. Base line numbers at a45a4384d9.
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S1",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key EMPLOYEE_LEADERBOARD at D_04.client_portal_summary.py:369 reads BUCKET while writer D_00c.portal_leaderboard.py:1390 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:369 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_00c.portal_leaderboard.py:1390 writer line @a45a4384d9 (census writer entry, runner PHASE_D1)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/artifacts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:369 (_read_json(...)) reads EMPLOYEE_LEADERBOARD from BUCKET (S3_BUCKET). Its key is in served platinum class gold/artifacts/ (lib/platinum_dest_view.py). The writer D_00c.portal_leaderboard.py:1390 writes it through destination() (runner PHASE_D1). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D1 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S2",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key CLIENTS_TAB at D_04.client_portal_summary.py:370 reads BUCKET while writer D_00.portal_aggregates.py:1120 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:370 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_00.portal_aggregates.py:1120 writer line @a45a4384d9 (census writer entry, runner PHASE_D1)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/artifacts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:370 (_read_json(...)) reads CLIENTS_TAB from BUCKET (S3_BUCKET). Its key is in served platinum class gold/artifacts/ (lib/platinum_dest_view.py). The writer D_00.portal_aggregates.py:1120 writes it through destination() (runner PHASE_D1). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D1 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S3",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key ADVISOR_FEE_EFFICIENCY at D_04.client_portal_summary.py:371 reads BUCKET while writer C_08.advisor_fee_efficiency.py:555 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:371 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/C_08.advisor_fee_efficiency.py:555 writer line @a45a4384d9 (census writer entry, runner PHASE_C5)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/artifacts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:371 (_read_json(...)) reads ADVISOR_FEE_EFFICIENCY from BUCKET (S3_BUCKET). Its key is in served platinum class gold/artifacts/ (lib/platinum_dest_view.py). The writer C_08.advisor_fee_efficiency.py:555 writes it through destination() (runner PHASE_C5). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_C5 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S4",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key MIX_DAILY_SUMMARY at D_04.client_portal_summary.py:468 reads BUCKET while writer C_06.client_mix_timeseries.py:420 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:468 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py:420 writer line @a45a4384d9 (census writer entry, runner PHASE_C5)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/views/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:468 (_read_json(...)) reads MIX_DAILY_SUMMARY from BUCKET (S3_BUCKET). Its key is in served platinum class gold/views/ (lib/platinum_dest_view.py). The writer C_06.client_mix_timeseries.py:420 writes it through destination() (runner PHASE_C5). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_C5 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S5",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key FIRM_MIX_VIEWS at D_04.client_portal_summary.py:469 reads BUCKET while writer D_03.composition_artifacts.py:529 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:469 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_03.composition_artifacts.py:529 writer line @a45a4384d9 (census writer entry, runner PHASE_D1)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/artifacts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:469 (_read_json(...)) reads FIRM_MIX_VIEWS from BUCKET (S3_BUCKET). Its key is in served platinum class gold/artifacts/ (lib/platinum_dest_view.py). The writer D_03.composition_artifacts.py:529 writes it through destination() (runner PHASE_D1). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D1 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S6",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key FIRM_COMPOSITION at D_04.client_portal_summary.py:470 reads BUCKET while writer D_03.composition_artifacts.py:774 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:470 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_03.composition_artifacts.py:774 writer line @a45a4384d9 (census writer entry, runner PHASE_D1)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/views/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:470 (_read_json(...)) reads FIRM_COMPOSITION from BUCKET (S3_BUCKET). Its key is in served platinum class gold/views/ (lib/platinum_dest_view.py). The writer D_03.composition_artifacts.py:774 writes it through destination() (runner PHASE_D1). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D1 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S7",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key ACCOUNT_TEAM at D_04.client_portal_summary.py:637 reads BUCKET while writer C_07.advisor_attribution.py:479 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:637 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/C_07.advisor_attribution.py:479 writer line @a45a4384d9 (census writer entry, runner PHASE_C4)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/views/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:637 (_read_parquet(...)) reads ACCOUNT_TEAM from BUCKET (S3_BUCKET). Its key is in served platinum class gold/views/ (lib/platinum_dest_view.py). The writer C_07.advisor_attribution.py:479 writes it through destination() (runner PHASE_C4). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_C4 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S8",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key TIMESERIES_CHART at D_04.client_portal_summary.py:1869 reads BUCKET while writer D_00b.portal_timeseries.py:1412 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1869 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_00b.portal_timeseries.py:1412 writer line @a45a4384d9 (census writer entry, runner PHASE_D2)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/artifacts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1869 (_read_json(...)) reads TIMESERIES_CHART from BUCKET (S3_BUCKET). Its key is in served platinum class gold/artifacts/ (lib/platinum_dest_view.py). The writer D_00b.portal_timeseries.py:1412 writes it through destination() (runner PHASE_D2). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D2 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S9",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key FIRM_MIX_VIEWS at D_04.client_portal_summary.py:1870 reads BUCKET while writer D_03.composition_artifacts.py:529 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1870 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_03.composition_artifacts.py:529 writer line @a45a4384d9 (census writer entry, runner PHASE_D1)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/artifacts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1870 (_read_json(...)) reads FIRM_MIX_VIEWS from BUCKET (S3_BUCKET). Its key is in served platinum class gold/artifacts/ (lib/platinum_dest_view.py). The writer D_03.composition_artifacts.py:529 writes it through destination() (runner PHASE_D1). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D1 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S10",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key CLIENTS_TAB at D_04.client_portal_summary.py:1967 reads BUCKET while writer D_00.portal_aggregates.py:1120 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1967 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_00.portal_aggregates.py:1120 writer line @a45a4384d9 (census writer entry, runner PHASE_D1)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/artifacts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1967 (_read_json(...)) reads CLIENTS_TAB from BUCKET (S3_BUCKET). Its key is in served platinum class gold/artifacts/ (lib/platinum_dest_view.py). The writer D_00.portal_aggregates.py:1120 writes it through destination() (runner PHASE_D1). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D1 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S11",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key TIMESERIES_CHART at D_04.client_portal_summary.py:2066 reads BUCKET while writer D_00b.portal_timeseries.py:1412 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2066 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_00b.portal_timeseries.py:1412 writer line @a45a4384d9 (census writer entry, runner PHASE_D2)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/artifacts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2066 (_read_json(...)) reads TIMESERIES_CHART from BUCKET (S3_BUCKET). Its key is in served platinum class gold/artifacts/ (lib/platinum_dest_view.py). The writer D_00b.portal_timeseries.py:1412 writes it through destination() (runner PHASE_D2). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D2 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S12",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key EMPLOYEE_LEADERBOARD at D_04.client_portal_summary.py:2280 reads BUCKET while writer D_00c.portal_leaderboard.py:1390 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2280 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_00c.portal_leaderboard.py:1390 writer line @a45a4384d9 (census writer entry, runner PHASE_D1)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/artifacts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2280 (_read_json(...)) reads EMPLOYEE_LEADERBOARD from BUCKET (S3_BUCKET). Its key is in served platinum class gold/artifacts/ (lib/platinum_dest_view.py). The writer D_00c.portal_leaderboard.py:1390 writes it through destination() (runner PHASE_D1). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D1 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S13",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key CLIENTS_TAB at D_04.client_portal_summary.py:2359 reads BUCKET while writer D_00.portal_aggregates.py:1120 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2359 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_00.portal_aggregates.py:1120 writer line @a45a4384d9 (census writer entry, runner PHASE_D1)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/artifacts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2359 (_read_json(...)) reads CLIENTS_TAB from BUCKET (S3_BUCKET). Its key is in served platinum class gold/artifacts/ (lib/platinum_dest_view.py). The writer D_00.portal_aggregates.py:1120 writes it through destination() (runner PHASE_D1). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D1 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S14",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key CLIENTS_TAB at D_04.client_portal_summary.py:2515 reads BUCKET while writer D_00.portal_aggregates.py:1120 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2515 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_00.portal_aggregates.py:1120 writer line @a45a4384d9 (census writer entry, runner PHASE_D1)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/artifacts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2515 (_read_json(...)) reads CLIENTS_TAB from BUCKET (S3_BUCKET). Its key is in served platinum class gold/artifacts/ (lib/platinum_dest_view.py). The writer D_00.portal_aggregates.py:1120 writes it through destination() (runner PHASE_D1). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D1 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S15",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key HEADER_METRICS at D_04.client_portal_summary.py:2578 reads BUCKET while writer D_00.portal_aggregates.py:1126 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2578 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_00.portal_aggregates.py:1126 writer line @a45a4384d9 (census writer entry, runner PHASE_D1)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/artifacts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2578 (_read_json(...)) reads HEADER_METRICS from BUCKET (S3_BUCKET). Its key is in served platinum class gold/artifacts/ (lib/platinum_dest_view.py). The writer D_00.portal_aggregates.py:1126 writes it through destination() (runner PHASE_D1). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D1 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S16",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key TIMESERIES_CHART at D_04.client_portal_summary.py:2579 reads BUCKET while writer D_00b.portal_timeseries.py:1412 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2579 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_00b.portal_timeseries.py:1412 writer line @a45a4384d9 (census writer entry, runner PHASE_D2)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/artifacts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2579 (_read_json(...)) reads TIMESERIES_CHART from BUCKET (S3_BUCKET). Its key is in served platinum class gold/artifacts/ (lib/platinum_dest_view.py). The writer D_00b.portal_timeseries.py:1412 writes it through destination() (runner PHASE_D2). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D2 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S17",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key ACCOUNT_TEAM at D_04.client_portal_summary.py:2837 reads BUCKET while writer C_07.advisor_attribution.py:479 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2837 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/C_07.advisor_attribution.py:479 writer line @a45a4384d9 (census writer entry, runner PHASE_C4)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/views/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2837 (_read_parquet(...)) reads ACCOUNT_TEAM from BUCKET (S3_BUCKET). Its key is in served platinum class gold/views/ (lib/platinum_dest_view.py). The writer C_07.advisor_attribution.py:479 writes it through destination() (runner PHASE_C4). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_C4 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S18",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key partner_analytics_key(...) at D_04.client_portal_summary.py:1977 reads BUCKET while writer D_01.partner_analytics.py:2548 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1977 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_01.partner_analytics.py:2548 writer line @a45a4384d9 (census writer entry, runner PHASE_D2)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/artifacts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1977 (_read_json(key), key = partner_analytics_key(gran)) reads partner_analytics_key(...) from BUCKET (S3_BUCKET). Its key is in served platinum class gold/artifacts/ (lib/platinum_dest_view.py). The writer D_01.partner_analytics.py:2548 writes it through destination() (runner PHASE_D2). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D2 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S19",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key advisor_book_key(...) at D_04.client_portal_summary.py:2640 reads BUCKET while writer D_02.advisor_client_detail.py:1580 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2640 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_02.advisor_client_detail.py:1580 writer line @a45a4384d9 (census writer entry, runner PHASE_D3)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/entities/advisors/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2640 (_batch_read_json(book_keys), advisor_book_key(aid)) reads advisor_book_key(...) from BUCKET (S3_BUCKET). Its key is in served platinum class gold/entities/advisors/ (lib/platinum_dest_view.py). The writer D_02.advisor_client_detail.py:1580 writes it through destination() (runner PHASE_D3). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D3 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S20",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key advisor_book_key(...) at D_04.client_portal_summary.py:2854 reads BUCKET while writer D_02.advisor_client_detail.py:1580 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2854 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_02.advisor_client_detail.py:1580 writer line @a45a4384d9 (census writer entry, runner PHASE_D3)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/entities/advisors/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2854 (_batch_read_json(book_keys), advisor_book_key(aid)) reads advisor_book_key(...) from BUCKET (S3_BUCKET). Its key is in served platinum class gold/entities/advisors/ (lib/platinum_dest_view.py). The writer D_02.advisor_client_detail.py:1580 writes it through destination() (runner PHASE_D3). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D3 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S21",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key advisor book.json objects at D_04.client_portal_summary.py:2293 reads BUCKET while writer D_02.advisor_client_detail.py:1580 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2293 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_02.advisor_client_detail.py:1580 writer line @a45a4384d9 (census writer entry, runner PHASE_D3)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/entities/advisors/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2293 (_batch_read_json(book_keys) from _list_prefix(gold/entities/advisors/, /book.json)) reads advisor book.json objects from BUCKET (S3_BUCKET). Its key is in served platinum class gold/entities/advisors/ (lib/platinum_dest_view.py). The writer D_02.advisor_client_detail.py:1580 writes it through destination() (runner PHASE_D3). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D3 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S22",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key client_aua_timeseries_key(...) at D_04.client_portal_summary.py:2656 reads BUCKET while writer D_02.advisor_client_detail.py:2218 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2656 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_02.advisor_client_detail.py:2218 writer line @a45a4384d9 (census writer entry, runner PHASE_D3)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/entities/clients/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:2656 (_batch_read_json(ts_keys), client_aua_timeseries_key(rid)) reads client_aua_timeseries_key(...) from BUCKET (S3_BUCKET). Its key is in served platinum class gold/entities/clients/ (lib/platinum_dest_view.py). The writer D_02.advisor_client_detail.py:2218 writes it through destination() (runner PHASE_D3). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D3 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S23",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key client_aua_timeseries_key(...) at D_04.client_portal_summary.py:617 reads BUCKET while writer D_02.advisor_client_detail.py:2218 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:617 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_02.advisor_client_detail.py:2218 writer line @a45a4384d9 (census writer entry, runner PHASE_D3)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/entities/clients/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:617 (_batch_read_json(rel_ts_keys), client_aua_timeseries_key(r)) reads client_aua_timeseries_key(...) from BUCKET (S3_BUCKET). Its key is in served platinum class gold/entities/clients/ (lib/platinum_dest_view.py). The writer D_02.advisor_client_detail.py:2218 writes it through destination() (runner PHASE_D3). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D3 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S24",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key account_aua_timeseries_key(...) at D_04.client_portal_summary.py:1099 reads BUCKET while writer D_02.advisor_client_detail.py:2271 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1099 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_02.advisor_client_detail.py:2271 writer line @a45a4384d9 (census writer entry, runner PHASE_D3)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/entities/accounts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1099 (_batch_read_json(acct_keys), account_aua_timeseries_key(aid)) reads account_aua_timeseries_key(...) from BUCKET (S3_BUCKET). Its key is in served platinum class gold/entities/accounts/ (lib/platinum_dest_view.py). The writer D_02.advisor_client_detail.py:2271 writes it through destination() (runner PHASE_D3). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D3 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S25",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key account_aua_timeseries_key(...) at D_04.client_portal_summary.py:1332 reads BUCKET while writer D_02.advisor_client_detail.py:2271 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1332 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_02.advisor_client_detail.py:2271 writer line @a45a4384d9 (census writer entry, runner PHASE_D3)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/entities/accounts/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1332 (_batch_read_json(b5_keys), account_aua_timeseries_key(a)) reads account_aua_timeseries_key(...) from BUCKET (S3_BUCKET). Its key is in served platinum class gold/entities/accounts/ (lib/platinum_dest_view.py). The writer D_02.advisor_client_detail.py:2271 writes it through destination() (runner PHASE_D3). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_D3 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S26",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key client_timeseries_key(...) at D_04.client_portal_summary.py:1218 reads BUCKET while writer C_06.client_mix_timeseries.py:383 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1218 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py:383 writer line @a45a4384d9 (census writer entry, runner PHASE_C5)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/entities/clients/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1218 (_batch_read_json(ts_keys), client_timeseries_key(rid)) reads client_timeseries_key(...) from BUCKET (S3_BUCKET). Its key is in served platinum class gold/entities/clients/ (lib/platinum_dest_view.py). The writer C_06.client_mix_timeseries.py:383 writes it through destination() (runner PHASE_C5). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_C5 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S27",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key MIX_DAILY_SUMMARY at D_03.composition_artifacts.py:482 reads BUCKET while writer C_06.client_mix_timeseries.py:420 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_03.composition_artifacts.py:482 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py:420 writer line @a45a4384d9 (census writer entry, runner PHASE_C5)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/views/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_03.composition_artifacts.py:482 (get_object(Bucket=BUCKET, Key=MIX_DAILY_SUMMARY)) reads MIX_DAILY_SUMMARY from BUCKET (S3_BUCKET). Its key is in served platinum class gold/views/ (lib/platinum_dest_view.py). The writer C_06.client_mix_timeseries.py:420 writes it through destination() (runner PHASE_C5). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_C5 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S28",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key REL_ARCHITECT_LOOKUP at D_03.composition_artifacts.py:691 reads BUCKET while writer C_07.advisor_attribution.py:481 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_03.composition_artifacts.py:691 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/C_07.advisor_attribution.py:481 writer line @a45a4384d9 (census writer entry, runner PHASE_C4)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/views/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_03.composition_artifacts.py:691 (_read_parquet(...)) reads REL_ARCHITECT_LOOKUP from BUCKET (S3_BUCKET). Its key is in served platinum class gold/views/ (lib/platinum_dest_view.py). The writer C_07.advisor_attribution.py:481 writes it through destination() (runner PHASE_C4). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_C4 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S29",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key ACCOUNT_TEAM at D_03.composition_artifacts.py:835 reads BUCKET while writer C_07.advisor_attribution.py:479 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_03.composition_artifacts.py:835 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/C_07.advisor_attribution.py:479 writer line @a45a4384d9 (census writer entry, runner PHASE_C4)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/views/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_03.composition_artifacts.py:835 (_read_parquet(...)) reads ACCOUNT_TEAM from BUCKET (S3_BUCKET). Its key is in served platinum class gold/views/ (lib/platinum_dest_view.py). The writer C_07.advisor_attribution.py:479 writes it through destination() (runner PHASE_C4). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_C4 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S30",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key REL_ARCHITECT_LOOKUP at D_02.advisor_client_detail.py:378 reads BUCKET while writer C_07.advisor_attribution.py:481 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_02.advisor_client_detail.py:378 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/C_07.advisor_attribution.py:481 writer line @a45a4384d9 (census writer entry, runner PHASE_C4)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/views/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_02.advisor_client_detail.py:378 (_load_parquet(...)) reads REL_ARCHITECT_LOOKUP from BUCKET (S3_BUCKET). Its key is in served platinum class gold/views/ (lib/platinum_dest_view.py). The writer C_07.advisor_attribution.py:481 writes it through destination() (runner PHASE_C4). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_C4 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S31",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key ACCOUNT_TEAM at D_02.advisor_client_detail.py:396 reads BUCKET while writer C_07.advisor_attribution.py:479 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_02.advisor_client_detail.py:396 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/C_07.advisor_attribution.py:479 writer line @a45a4384d9 (census writer entry, runner PHASE_C4)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/views/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_02.advisor_client_detail.py:396 (_load_parquet(...)) reads ACCOUNT_TEAM from BUCKET (S3_BUCKET). Its key is in served platinum class gold/views/ (lib/platinum_dest_view.py). The writer C_07.advisor_attribution.py:479 writes it through destination() (runner PHASE_C4). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_C4 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S32",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key ACCOUNT_TEAM at D_01.partner_analytics.py:360 reads BUCKET while writer C_07.advisor_attribution.py:479 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_01.partner_analytics.py:360 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/C_07.advisor_attribution.py:479 writer line @a45a4384d9 (census writer entry, runner PHASE_C4)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/views/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_01.partner_analytics.py:360 (_read(...)) reads ACCOUNT_TEAM from BUCKET (S3_BUCKET). Its key is in served platinum class gold/views/ (lib/platinum_dest_view.py). The writer C_07.advisor_attribution.py:479 writes it through destination() (runner PHASE_C4). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_C4 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S33",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key ACCOUNT_TEAM at C_08.advisor_fee_efficiency.py:657 reads BUCKET while writer C_07.advisor_attribution.py:479 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/C_08.advisor_fee_efficiency.py:657 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/C_07.advisor_attribution.py:479 writer line @a45a4384d9 (census writer entry, runner PHASE_C4)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/views/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/C_08.advisor_fee_efficiency.py:657 (_read_s3(...)) reads ACCOUNT_TEAM from BUCKET (S3_BUCKET). Its key is in served platinum class gold/views/ (lib/platinum_dest_view.py). The writer C_07.advisor_attribution.py:479 writes it through destination() (runner PHASE_C4). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_C4 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S34",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "read-back of served platinum key ACCOUNT_TEAM_KEY at D_00f.advisor_nna_canonical.py:808 reads BUCKET while writer C_07.advisor_attribution.py:479 puts it through destination(); canonical mode would read the pre-cutover copy",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_00f.advisor_nna_canonical.py:808 read site @a45a4384d9",
+        "data/black_diamond/scripts/gold/C_07.advisor_attribution.py:479 writer line @a45a4384d9 (census writer entry, runner PHASE_C4)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json @a45a4384d9 (census class gold/views/)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix, the same shape elsewhere ... file ONE row per site (class OBSERVATION, the file and line, what it reads and what the mode does to it) and change nothing at that site.'",
+    "world_is": "data/black_diamond/scripts/gold/D_00f.advisor_nna_canonical.py:808 (_read_s3_parquet(ACCOUNT_TEAM_KEY)) reads ACCOUNT_TEAM_KEY from BUCKET (S3_BUCKET). Its key is in served platinum class gold/views/ (lib/platinum_dest_view.py). The writer C_07.advisor_attribution.py:479 writes it through destination() (runner PHASE_C4). Mode unset: read and write name the same bucket and key, unchanged. Mode canonical: the writer lands at the view destination and this read still returns the pre-cutover object or a miss, per the helper.",
+    "notes": "Writer runner PHASE_C4 per the census; the reader runs in D_04 PHASE_D4 of the same gold dispatch. Not changed by this cell (TO bound 4). Line numbers at base a45a4384d9; D_04 lines at or after 2468 sit one line later in the worktree after the phase A2 insertion. Live only when BD_PLATINUM_MODE is set to canonical, which this cell never sets; the mode act is phase B, the issuer to amend."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W19-S35",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~19",
+    "surfaced_at": "2026-10-11T08:21:05Z",
+    "one_line": "D_04 advisor stale-cleanup lists the served platinum/advisors/ prefix on BUCKET and deletes stale keys on BUCKET; canonical mode lists and deletes the legacy copy, not the destination",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:786 and :794 _list_prefix on BUCKET over platinum/advisors/ @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:802 s3.delete_objects(Bucket=BUCKET) @a45a4384d9",
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:806 _write_batch(items) runs after the cleanup @a45a4384d9"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 phase A2 step 4: 'Find, do not fix ... a read of a platinum key a writer wrote earlier in the same run by another route (a helper that reads it back) ... file ONE row per site ... change nothing at that site.'",
+    "world_is": "D_04.client_portal_summary.py:786 and :794 read the served prefix platinum/advisors/ through _list_prefix, which lists BUCKET only; :802 deletes the stale keys from BUCKET. The advisor items are written at :806, after the list, so the list sees prior-run objects, not this run. Mode unset: unchanged. Mode canonical: the list sees the legacy copy only, so stale objects at the destination are never listed or removed, and the delete touches the legacy bucket.",
+    "notes": "Filed as a read of a same-prefix key written by prior runs of the same writer, not a same-run read-after-write: the write follows the list in the same function. Line numbers at base a45a4384d9; the worktree numbers are one higher from line 2468 on. Live only when BD_PLATINUM_MODE is set to canonical; this cell never sets it."
+  }
+]
+```
+
+## Row filed by 2.0.0_SA_COO~B1 (round 3, ADDENDUM 4 condition 1: E_01 and E_24)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S14",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T08:27:25Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "THE CTO'S ADDENDUM 4 CONDITION 1 ON E_01 AND E_24: E_01 IS NOT A SERVED-KEY WRITER UNDER THE MODULE'S OWN RULE AND LAST WROTE 2026-04-07; E_24 HAS NO LAUNCHER AND NO SendCommand NAMING IT IN 45 DAYS (0 OF 4,010)",
+  "spec_asserts": "ROUND_ANALYSIS.round2.md ADDENDUM 4 condition 1: no writer of 49 Financial's platinum is left on legacy when the switch moves; E_01 and E_24 are read, and carried in the same act or shown dead with a denominator, before the window opens. The census (PRODUCER_CENSUS.json) lists both under class gold/artifacts/.",
+  "world_is": "E_01 writes gold/account_quality_tiers_{date}.json and gold/account_quality_tiers.parquet (E_01 header lines 30-32; objects listed in opal-data-bd under that prefix: 3 of 3). platinum_dest.destination() in canonical mode returns (opal-data-bd, same key) for those keys, so E_01 moves nothing and writes one home under either mode; its newest object has LastModified 2026-04-07T07:12:22Z (187 days before this read). The census class column for E_01 is wrong; its census line is not a served-class write. E_24 is a manual rebuild tool (header: 'No gold pipeline needed ... Usage: python3 E_24 --upload') that writes the served key gold/artifacts/advisor_fee_efficiency.json (canonical: advi/49financial/platinum/artifacts/advisor_fee_efficiency.json); it is not in gold_dispatch.sh's catalog, and a search of the first-party corpus (81,118 files) names it only in logs and audit files, never as a launch. Run history, measured 45 days (2026-08-27 to 2026-10-11): CloudTrail SendCommand events read 4,010 over 81 pages, complete, 0 name E_24 or E_01 (1 names gold_dispatch, 2026-10-01T04:11Z); StartSession events read 1 (a shell session cannot be attributed to a script, so a session run is not excluded by this read). A hand run of E_24 after the mode moves, without the export, writes the legacy key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/aws s3api list-objects-v2 --bucket opal-data-bd --prefix gold/account_quality_tiers (3 objects; newest 2026-04-07T07:12:22Z)",
+      "python: platinum_dest.destination('gold/account_quality_tiers_2026-04-02.json','canonical') == ('opal-data-bd', same key); destination('gold/artifacts/advisor_fee_efficiency.json','canonical') == ('opal-data-49financial', 'advi/49financial/platinum/artifacts/advisor_fee_efficiency.json')",
+      "data/black_diamond/scripts/gold/gold_dispatch.sh:110-121 catalog: 12 of the 14 census writers; E_01 and E_24 absent",
+      "PRODUCER_CENSUS.json E_01 entry: runner UNKNOWN, schedule null",
+      "boto3 cloudtrail lookup_events EventName=SendCommand, 2026-08-27 to 2026-10-11, 81 pages, 4,010 events, body contains E_24: 0, E_01: 0, gold_dispatch: 1 (2026-10-01T04:11Z); EventName=StartSession: 1 event"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "E_01: retire from the census as a non-served-key writer (reason above, denominator 3 of 3 objects). E_24 reads dead under ADDENDUM 4's own test (no schedule, no caller, no SendCommand naming it in 45 days: 0 of 4,010) with one residual: 1 StartSession in the window. The act-2 pair proposes it retired from the census on that denominator and records the residual; the CTO rules. Owner: 2.0.0_SA_COO~B1."
+}
+```
+
+## Row filed by 0.7.0_AE_CloudOps~FBL (FB-f-8, phase B, step 5 read-back)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S12",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~FBL",
+  "surfaced_at": "2026-10-11T08:27:45Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-8 act 1 APPLIED on the laptop (Branch A holds on every live read) but the pair's condition 'a post-apply plan reads no changes' is NOT met: the plan still lists aws_wafv2_web_acl.opal_cloudfront_protection (1 to change) because UpdateWebACL cannot clear the provider's stored empty Version; also AC4 as written reads 0, not 3, because OverrideAction.Count is an empty object.",
+  "spec_asserts": "COO half ADDENDUM 1 Branch A: after the apply 'the post-apply plan reads no changes (the ACL's standing churn is gone, which is the only observable effect)'; CTO ADDENDUM 1 condition 4: 'a post-apply plan reads no changes'; order AC4: wafv2 get-web-acl --query \"length(WebACL.Rules[?OverrideAction.Count])\" expects ^3$.",
+  "world_is": "Apply 08:21:33Z-08:23:57Z through safe-apply of the saved plan: 'Apply complete! Resources: 0 added, 4 changed, 0 destroyed.' Distribution Deployed, ETag E1OAC26XEP0FDI to ELAAK8OWYOWV1; router v27 (CodeSha256 cOG/BuFhy9xcL7EF+4u5VexRZGjDdJq3h364PAPkYsw= equals the built artifact) x5 and guard v6 (YIgGtFjZwFltdXbviIx5dOQbb6FsOAUtIB96caAI0xs= equals the artifact) x5; exactly 10 of 40 associations changed and the distribution config is otherwise identical. The ACL reads 6 rules identical to the pre-act read (names, priorities, actions, statements), the three groups Count, default Allow, LockToken 848a6d0b-d69f-40e0-876a-cfc0ce40b6b2 before and after: the write changed nothing in AWS, as dell1 row ADVI_FIRMBKTS-D1-S13 measured on 2026-10-11. The post-apply plan reads 'Plan: 0 to add, 1 to change, 0 to destroy', the ACL only (the three managed-group rules replaced). AC4's invocation returns 0 because JMESPath treats the empty object {} as false; the same query with '!=null' returns 3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence/plan_after_apply.out",
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence/pre_get_web_acl.json against post_get_web_acl.json: equal modulo Version representation, LockToken unchanged",
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence/pre_get_distribution_config.json against post_get_distribution_config.json: 10 associations differ, nothing else"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This seat did NOT roll back: the rollback of the associations would not clear the plan line, the ACL is byte-equal to the pre-act read, and a second apply is outside the order's bounds (2.0.0_SA_COO~B1 / 1.0.0_SA_CTO~DELL1 own the call). The ACL's standing churn is a provider representation that the API round-trip drops, so it will persist while the ACL stays in this root; the fix is outside this act (ignore_changes on the three version attributes, or moving the ACL to its own root). The order stays open until the two signers either waive condition 4 for this ACL or rule otherwise; the CTO oracle read is requested meanwhile."
+}
+```
