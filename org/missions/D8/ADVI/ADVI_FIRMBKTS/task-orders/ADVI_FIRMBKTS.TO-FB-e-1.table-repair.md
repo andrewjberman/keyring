@@ -170,8 +170,8 @@ Read-only: `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/census.json` and `ma
 ## 5. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="FB-e-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_mapping.py" --arms structure; echo "exit=$?"</invocation><expect>ROUND 2 MAPPING STRUCTURE: 5 of 5 arms -- and exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="FB-e-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_mapping.py" --arms repair; echo "exit=$?"</invocation><expect>ROUND 2 MAPPING REPAIR: 4 of 4 arms -- and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-e-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_mapping.py" --arms structure; echo "exit=$?"</invocation><expect>ROUND 2 MAPPING STRUCTURE: 5 of 5 arms</expect></criterion>
+  <criterion id="AC2" cell_refs="FB-e-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_mapping.py" --arms repair; echo "exit=$?"</invocation><expect>ROUND 2 MAPPING REPAIR: 4 of 4 arms</expect></criterion>
 </proof_of_spec>
 
 AC1 is the seam against the real neighbour: it rebuilds every MOVE and HOME address through `address()` and refuses one

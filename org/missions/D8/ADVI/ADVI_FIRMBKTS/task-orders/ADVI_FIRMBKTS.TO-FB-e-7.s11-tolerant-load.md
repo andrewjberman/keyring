@@ -160,9 +160,9 @@ Read-only: the patch under `org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="FB-e-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 python -m pytest -q -p no:cacheprovider data/cot/scripts/gold/tests/test_s00_missing_tier2.py; echo "exit=$?"</invocation><expect>3 passed -- and exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="FB-e-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_s11.py"; echo "exit=$?"</invocation><expect>S11 NAMING GATE: PASS -- and exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="FB-e-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 115 python -m pytest -q -p no:cacheprovider data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py data/cot/scripts/gold/tests/test_canonical_prices_input_resolution.py; echo "exit=$?"</invocation><expect>12 passed -- and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-e-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 python -m pytest -q -p no:cacheprovider data/cot/scripts/gold/tests/test_s00_missing_tier2.py; echo "exit=$?"</invocation><expect>3 passed</expect></criterion>
+  <criterion id="AC2" cell_refs="FB-e-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_s11.py"; echo "exit=$?"</invocation><expect>S11 NAMING GATE: PASS</expect></criterion>
+  <criterion id="AC3" cell_refs="FB-e-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 115 python -m pytest -q -p no:cacheprovider data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py data/cot/scripts/gold/tests/test_canonical_prices_input_resolution.py; echo "exit=$?"</invocation><expect>12 passed</expect></criterion>
 </proof_of_spec>
 
 AC1 is the built behavior. AC3 is the difference control: the writer's two existing price tests still read 12 passed with
