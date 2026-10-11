@@ -650,10 +650,11 @@ def validate(reg_dir=None, systems_file=None):
     firm_buckets = set(_buckets_of_firms(reg))
     # A row's key set is CLOSED (NFRA_CTLPLN CT-d-2 AMENDMENT 4; CTO msg 106230): a reader meeting a key it does not know
     # REFUSES, never ignores, because the fence renders an ignored key as a FULL admission. `actions` and `prefix` are
-    # the optional pair that scopes an exemption to those S3 actions under that key prefix (read set only: no write
-    # action, no GetObjectVersion, no ListBucketVersions). The firm token a prefix must carry is read from scopes.json.
+    # the optional pair that scopes an exemption to those S3 actions under that key prefix (no GetObjectVersion, no
+    # ListBucketVersions, and no write action but s3:PutObject, FB-g-23: it renders on the Deny side only, never an Allow).
+    # The firm token a prefix must carry is read from scopes.json.
     row_keys = ("principal", "arn", "reason", "signoff_ref", "actions", "prefix")
-    scoped_actions = ("s3:GetObject", "s3:ListBucket", "s3:GetBucketLocation")
+    scoped_actions = ("s3:GetObject", "s3:ListBucket", "s3:GetBucketLocation", "s3:PutObject")
     bucket_firm = {}
     for s in scopes:
         if s.get("class") == "FIRM":
@@ -691,7 +692,7 @@ def validate(reg_dir=None, systems_file=None):
                 continue
             acts, pre = r["actions"], r["prefix"]
             if not (isinstance(acts, list) and acts and all(isinstance(a, str) and a in scoped_actions for a in acts)):
-                refuse(rwhere, "actions", "a non-empty list drawn from the closed read set %s" % ", ".join(scoped_actions))
+                refuse(rwhere, "actions", "a non-empty list drawn from the closed scoped set %s" % ", ".join(scoped_actions))
             # FB-g-19 (CTO round-3 ADDENDUM 9): prefix is one string or a non-empty list of strings; every member is held to
             # the rules of the string form, and the firm token is checked on every member
             # FB-g-21 (CTO round-3 ADDENDUM 10): a member NOT ending in / is an exact OBJECT KEY, held to the same rules (non-empty,
