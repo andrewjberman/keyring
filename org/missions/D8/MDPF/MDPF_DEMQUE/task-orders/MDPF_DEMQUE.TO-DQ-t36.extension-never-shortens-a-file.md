@@ -11,6 +11,7 @@
 <placeholders>NONE</placeholders>
 <round>9</round>
 <workstream>EXTGUARD</workstream>
+**AMENDED by the issuer 2.0.0_SA_COO~Q1, 2026-10-11 ~16:4xZ (row MDPF_DEMQUE-D1-W28-S1, BLOCKING; issuer defect in the AC2 check and this order's base arm; no `<paths>` change):** the order named `--today 2026-06-30` as a frontier "before every file's end". The store's latest `valid_to` is 2026-06-23, so 2026-06-30 is AFTER it and a plan for it is correct. The arm is `--today 2026-06-15` (before every file's end, 2026-06-22/23). Your guard is right and stays as built; only the day in the check and in this text changed.
 **Directive:** D8 | **Fabric:** dell1 (placement dell1) | **Decomp cell:** `DQ-t-36` (`decompositions/MDPF_DEMQUE_DECOMP.md`, ROUND 9 -- CUT, amended) |
 **outcome_ref:** C-PRICES | **depends_on:** DQ-t-31 (merged @1961d4ee7a)
 
@@ -23,12 +24,12 @@
 `DQ-t-36` (issuer defect in DQ-t-31, found by the issuer reading the merged bytes before signing its never-widen half). `extend_frontier.py`
 (`data/mdpf/scripts/demque/`) takes the window end from `expected_last_trading_day(--today)` and `price_store.write` clips each file to the lock's
 `[valid_from, valid_to]`. A manual `--today` earlier than a file's current end therefore plans a window that SHORTENS the served file, and `--apply`
-would write that request and reset the pacer. The measured arm at the base: `extend_frontier.py --plan --today 2026-06-30` exits 0 and prints a plan
-ending 2026-06-30, while every file ends 2026-06-22 or 2026-06-23.
+would write that request and reset the pacer. The measured arm at the base: `extend_frontier.py --plan --today 2026-06-15` exits 0 and prints a plan
+ending 2026-06-15, while every file ends 2026-06-22 or 2026-06-23.
 
 **Build** (in `extend_frontier.py`, and a NEW test file):
 1. `plan()` computes `latest_end = max(valid_to)` over the rows `price_store.index` returns (ISO dates). When `frontier < latest_end` it raises
-   `SystemExit` with a message that names the frontier and `latest_end` ("frontier 2026-06-30 is before the store's latest valid_to 2026-06-23: the
+   `SystemExit` with a message that names the frontier and `latest_end` ("frontier 2026-06-15 is before the store's latest valid_to 2026-06-23: the
    extension never shortens a served file"). `apply()` calls `plan()` first, so it writes no request file and resets no pacer entry in that case.
    A frontier equal to or after `latest_end` plans as before. No other behavior changes; the `--plan` JSON keys are unchanged.
 2. NEW `test_demque_extend_guard.py` (pytest; a LOCAL store root under `tmp_path`, a pacer JSON and a queue folder in `tmp_path`, no network)
@@ -41,7 +42,7 @@ ending 2026-06-30, while every file ends 2026-06-22 or 2026-06-23.
 
 <criterion id="DQ9-t36-AC1" cell_refs="DQ-t-36"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t36_tests.py</invocation><expect>GUARD-OK</expect></criterion>
 <criterion id="DQ9-t36-AC2" cell_refs="DQ-t-36"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t36_real.py</invocation><expect>GUARD-REAL-OK</expect></criterion>
-`DQ9-t36-AC1` -- the three named tests. `DQ9-t36-AC2` -- on the REAL served store (S3 read only): `--plan --today 2026-06-30` exits non-zero with no
+`DQ9-t36-AC1` -- the three named tests. `DQ9-t36-AC2` -- on the REAL served store (S3 read only): `--plan --today 2026-06-15` exits non-zero with no
 JSON plan and names the store's latest `valid_to`; `--plan --today 2026-10-12` still prints a plan ending 2026-10-12 with 141 symbols.
 
 <expected_criteria>DQ9-t36-AC1,DQ9-t36-AC2</expected_criteria>
