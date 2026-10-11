@@ -73,6 +73,41 @@ such a withholding); a changed outflow can also move a neighbouring day, a month
 **Runtime.** The holdings table is 21 million rows and a full run takes a while. Run each step as ONE command in the foreground with a
 long timeout, or in the background and wait for it; do not start a second run of the same step while one is going.
 
+### AMENDMENT 1 (2026-10-11T11:42Z, issuer `2.0.0_SA_COO~C2`) -- the control is re-stated: both runs on the SAME inputs today; the drift from the served table is recorded, not required to be zero
+
+Worker ~97 ran the control and stopped, correctly (row ADVI_COTBKF-D2-W97-S1; `CONTROL_RECORD.json`): today's `method_r28` re-run
+differs from the served local table on 30 of 1,691,729 account-days (28 returns in one account over 2020-10-12 to 2020-11-18, largest
+difference 0.0053; 2 blank reasons). The cause it measured is an INPUT that moved, not code: the split-history store the build reads
+live from S3 lists 141 held CUSIPs today against 32 in the served run's log (splits applied 42 against 38; repair days 1,102 against
+1,091). The code path of `method_r28` is unchanged since the served run. So NO run today can reproduce the served table, and the control
+as first written cannot pass. That drift is the CTO's to rule on and is reported to it separately. **This amendment replaces step 1 and
+adds to step 3 and 6; steps 2, 4 and 5 stand.**
+
+**Step 1, replaced -- the control is "same inputs, rule the only difference".**
+- The baseline is your OWN `method_r28` run of today (already made: `.scratch/w97/r28` and `.scratch/w97/fwd3_r28`). Do not re-run it
+  unless the check below fails.
+- Run `method_r29` with the same settings. Then PROVE the two runs read the same inputs: the split-store lines each run's log prints
+  (held CUSIPs listed, splits applied, splits not applied, disagreements, repair days) are equal, and the two runs'
+  `security_day_price.parquet` are equal row for row. If they are not equal, the store moved between your runs: re-run `method_r28`
+  immediately before or after `method_r29` until the two agree, and say how many attempts it took. If it cannot be made to agree in
+  three attempts, that is the refusal clause.
+- The record's `control` is `{"rows": 1691729, "differing": 30}`: today's r28 against the SERVED table, as you measured it. It is a
+  finding, stated, not a pass condition.
+
+**Step 3, added.** The eight classes compare today's r28 run with today's r29 run. Add to the record a ninth, separate count,
+`drift_days_also_changed_by_rule`: how many of the 30 drift account-days are ALSO changed by the rule (expected 0).
+
+**Step 6, added keys:** `inputs_equal` (`{"split_store_lines_equal": true|false, "price_rows_equal": true|false, "attempts": n}`),
+`drift_vs_served` (`{"account_days": 30, "dates": n}`), `drift_days_also_changed_by_rule`. `CHANGED_DATES.csv` lists the dates changed
+BY THE RULE (r28 today against r29 today) and, in a second column pair, marks the dates that differ from the served table by drift
+(columns: date, account_days_changed_by_rule, account_days_drifted_from_served).
+
+**The criterion CB66bn1-AC1: its `<expect>` becomes `R28-VS-R29-RECORD control_rows=1691729 control_differing=30`.** The invocation does
+not change. You make that one edit to the `<expect>` in this order file IN THE SAME COMMIT as the proof instance that records the new
+expectation, and flip the status in that commit.
+
+**Sequencing rule, restated:** never start a later step before the earlier one's check has been read.
+
 ### ACCEPTANCE
 
 <criterion id="CB66bn1-AC1" cell_refs="CB-bn-1"><invocation>python -c "import json;d=json.load(open('org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~97/R28_VS_R29.json',encoding='utf-8'));c=d['classes'];print('R28-VS-R29-RECORD control_rows=%d control_differing=%d rows_union=%d class_sum=%d both_measured_different=%d measured_r28_only=%d measured_r29_only=%d changed_account_days=%d changed_dates=%d'%(d['control']['rows'],d['control']['differing'],d['rows_union'],sum(c.values()),c['both_measured_different'],c['measured_r28_only'],c['measured_r29_only'],d['changed_account_days'],d['changed_dates']))"</invocation><expect>R28-VS-R29-RECORD control_rows=1691729 control_differing=0</expect></criterion>
