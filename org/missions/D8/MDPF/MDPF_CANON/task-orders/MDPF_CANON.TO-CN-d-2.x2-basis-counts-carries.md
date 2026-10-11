@@ -96,7 +96,7 @@ Report once: the diff (one line per file), the output line of every criterion, t
 ADDENDUM 1 @187b53dbe6. Slot ~11, its own chain (a document and one ledger cell; it shares no file with `CN-d-1`). It moves no served output.
 FWD-3 stays NOT REALIZED until Andrew's X2 call fe9b whatever this cell reads. Base box/dell1. LF only.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <to_id>MDPF_CANON.TO-CN-d-2</to_id>
 <slot>~11</slot>
