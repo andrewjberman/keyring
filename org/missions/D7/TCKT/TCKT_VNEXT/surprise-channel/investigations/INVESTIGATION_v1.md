@@ -1363,3 +1363,31 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "notes": "Filed at the CTO's ask. Who is on the list is Andrew's to say; the CTO carries it. Not a gate on R2-tr-1."
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S28",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-11T06:02:00Z",
+  "one_line": "R2-tr-1's AC1 instrument, reread_27.py, decides opal-ticket-api by membership in a HAND-MAINTAINED set of two deployed-member hashes, so the signed R2-rr-2 deploy -- a third hash -- makes it print NOT-RELEASED and drop that host's 6 routes: READ27 reads 21/27 and the run STOPS at branch D, while the clamp it is meant to detect is provably still there.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R1_RUN/reread_27.py:35-38 TICKET_OK = {04f5727beb... '# V12 (contains SA-k-1)', 670686262068808f... '# R13 (V12 + AR-v-21 + OW-l-1)'}; :57 ok = (h in TICKET_OK) if fn == 'opal-ticket-api'; :62 prints 'CLAMPED' if ok else 'NOT-RELEASED'; :66 exit 0 only when done == total",
+      "the live deployed member is ca3be34307f70079e48c4a26d1f711e47318285f2cf2722fdf0cfdcbd637eade -- the R2-rr-2 build, landed by this seat 2026-10-11T04:19:14Z under both signed halves (ledger 20261011T0403Z_tckt-vnext-r2-rr2-report-id-shape-20261011, closed @5660c698f1) -- and it is NOT a member of that two-element set",
+      "the run's own output, printed before any write: 7 hosts read CLAMPED, opal-ticket-api reads 'opal-ticket-api 6 2026-10-11T04:19:14 ca3be343 NOT-RELEASED', and the total is 'READ27 21/27'. 27 minus that host's 6 routes is exactly 21, so the whole shortfall is this one host",
+      "THE CLAMP IS INTACT, measured not argued: git diff --numstat between the R13 pin 5a36586b5f and the deployed build's pin a366ce52ec on infra/aws/lambda/ticket_center/lambda_function.py reads 4 added / 0 REMOVED, so every byte of R13 -- and of the SA-k-1 clamp inside it -- is still in the deployed file. Control on that zero: the same instrument reports non-zero removals for this exact file in 18 of its last 40 history rows",
+      "the whole behavioural delta is the 4 inserted lines: one compiled REPORT_REQUEST_ID pattern and a three-line fullmatch refusal returning 400 INVALID_REPORT_REQUEST_ID",
+      "the live package pulled from the function's own Code.Location hashes its member to ca3be343... and still carries allowedFirmIds 12 times, plus INVALID_REPORT_REQUEST_ID once"
+    ]
+  },
+  "spec_asserts": "TCKT_VNEXT.TO-RUN-R2-tr1 @ec3d0fd6c1 proof_of_spec AC1: reread_27.py expect READ27 27/27; and the pair's step 1 and the GO's step 2 both make that read a precheck whose failure is a STOP before the identity row is written. The script's own docstring describes the opal-ticket-api limb as checking the live file 'against the V12 pin's bytes ... or, after R13, against R13's', which states the allow-list is extended by hand per signed build.",
+  "world_is": "The instrument is an ALLOW-LIST over deployed bytes, so it reads NOT-RELEASED for any build it has not been told about -- including a build landed correctly under a signed never-widen pair by the immediately preceding cell of the same round. R2-rr-2 (the report-id shape check) and R2-tr-1 (the thread re-run that exercises it) were cut into the same round, and the first one's success is what makes the second one's AC1 fail. The failure mode is the one that matters here: the script cannot distinguish 'the clamp was removed' from 'the file changed for an unrelated, signed reason', and both render as the same NOT-RELEASED line and the same non-zero exit. Read as a clamp regression it would be alarming; it is not one. Nothing about the live clamp changed, and nothing in the world is unsafe, which is why this row is INERT -- it is BLOCKING only in the sense that AC1 cannot be met as written and so the FWD-1 thread re-run did not run.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This seat did NOT edit the script to clear its own criterion. reread_27.py sits under deliverables/2.0.0_SA_COO~V2/R1_RUN/, outside this order's <paths>, and widening an acceptance instrument so that it admits the build under test would be the wrong act whoever owned the file. The call belongs to 2.0.0_SA_COO~V2 and 1.0.0_SA_CTO~DELL2: either TICKET_OK gains the R2-rr-2 hash ca3be343... as a signed release build input, or AC1 is restated against something that is not a hand-maintained hash set. Branch D was taken as the pair defines it -- nothing of the journey ran, no row written, no token minted, no mail path entered, nothing retained under any tenant -- and the ledger closed with 4 of 4 legs dispositioned. A second run needs a new GO. Related: [[TCKT_VNEXT-D2-S25]] is the same shape one layer down -- a per-deploy record that a signed build silently ages out of."
+}
+```
