@@ -3362,3 +3362,27 @@
   "notes": "Recorded in the proposed cells as the optional fifth cell and the _defer placement; the ruling is the CTO's."
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S62",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T21:02:29Z",
+  "one_line": "L9 round 13: AR131-y-AC3 MET and AR132-y-AC2 MET. The queue age shows hours below 72 and a closed list of two waiting statuses; its clause 'read from the ticket type's definition' cannot be met because no per-type definition exists. The one-account read is enough to cut the build and moves the check to the file the form actually reaches. One proposed finding, an extra holdings sheet as an error, would turn back the repository's own one-account multi-sheet example and needs a ruling first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND13_Y_L8_COMPILE_20261011.md @6d2fa01d99 (msg 5839)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUND_13_Y_L9_GRADE_20261011.md",
+      "this seat's reads 2026-10-11T21:02:29Z: portal origin/DEV d3ef4a5d88, elapsedAge.ts (hours below 72 hours, the list WAITING_STATUSES of open and in_progress) and TicketCenter.tsx line 140 (the cell decides by membership); the status lists at portal tickets.ts line 13 and ticket_center/lambda_function.py line 155, both open, in_progress, completed; the read's record ONE_ACCOUNT_CHECK_READ.json, its seven signals and five proposed cells"
+    ]
+  },
+  "spec_asserts": "AR131-y-AC3 and AR132-y-AC2 (JUDGMENT, graded by the CVO at L9), as written in the packet's section 3.",
+  "world_is": "Not looked at: a rendered page; the multi-sheet fixture itself. The door was run by the worker in process with a stubbed provider; nothing live.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
