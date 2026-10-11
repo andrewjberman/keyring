@@ -1,0 +1,6 @@
+2026-10-11T06:40:13Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=1.12  graded=n/a  args=(--verify-merge 0cd937b92e500dfc494f8b5ef36480b8b05db84d)  first=(none)
+2026-10-11T06:40:19Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=0  secs=16.47  pushed=0cd937b92e merged=(box/laptop(graded=0/0)) held=(none)  phases: t_fetch=2.98s t_merge_laptop=7.43s t_push=5.32s
+2026-10-11T06:40:35Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=1.95  graded=n/a  args=(--verify-merge 98fbf460e482d894ff4e435c71113d81dea3c82f)  first=(none)
+2026-10-11T06:40:42Z BOX-SYNC  0.0.0_AB_MSTR  mode=box  rc=0  secs=22.88  took=0cd937b92e hold=1.36s graded=0/0 pushed=98fbf460e4  phases: t_fetch=3.04s t_merge_cloud=10.74s t_land=1.39s t_push=5.60s
+2026-10-11T06:40:45Z PASS  0.0.0_AB_MSTR  1  (all paths in-lane) act=59af71316152 paths=1:org/audit/archive/laptop/interim/git-author-override-audit.laptop.20261011T064040Z.log
+2026-10-11T06:40:53Z LANDED-2P  0.0.0_AB_MSTR  d672ffefa7  paths=1  validate=7.45s  wait=0.06s  hold=0.88s  build=0.46s  ref=0.39s  post-commit=3.52s  attempt=1
