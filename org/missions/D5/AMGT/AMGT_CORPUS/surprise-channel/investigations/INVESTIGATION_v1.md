@@ -4157,6 +4157,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "~ZC is a SIBLING lane of ~Z, not a lane of it, so ADHC_OWNPTH.004 refuses every path under deliverables/0.7.0_AE_CloudOps~Z/. The order's two halves cannot both be satisfied without the escape: honour the path and the lane gate refuses; honour the lane and AC1's invocation reads a path that does not exist. This executor honoured the path (AC1 must remain runnable verbatim for the grader) and used GIT_COMMIT_AUTHOR_OVERRIDE, which is the documented, audited escape for a lane refusal (CLAUDE.md 14a).",
   "notes": "Disarm is a one-line choice by the issuer, either direction: cut the path as deliverables/<issued_to>/ and move the AC1 invocation with it, or issue the cell to 0.7.0_AE_CloudOps~Z. GENERALISES beyond this cell -- any AMGT_CORPUS order that names a ~Z deliverables path while issuing to a sibling ~Z* lane hits the same refusal, and the refusal is silent in the cut (the gate fires only at the executor's commit, after the work is done). This row records the defect; it builds no gate and changes no order.",
   "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-S3",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-11T09:41:56Z",
+  "one_line": "FWD-12 and FWD-20 cannot both read DONE on the page as built: with the team's own rows served, the census of rendered rows reads unmapped 3210 of 9233 over 95 names, against FWD-20's 'unmapped reads 0'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/evidence/r45_au3_au4_rendered_rows_20261011.txt: au3 compared 32 equal 32 (the rendered first group equals the team sheet's rows); au4 CENSUS shown 5008 refused 26 absent 989 unmapped 3210 of 9233; unmapped rows that read the team-row sentence 3210 of 3210; 236 distinct labels; controls c1 FIRED-AS-EXPECTED, c2 63 of 63",
+      "portal origin/DEV ff418947 src/pages/SecurityAnalysis/modelSheet.ts:487-505 (the team-row branch: a label matching no row spec gets mnemonic null and TEAM_ROW_NO_FIGURE) and tabs/ModelTab.tsx:542-549 (the seven arguments passed)",
+      "live opal-amgt-scoped-api CodeSha256 SOzAz9/gfKE++UOSB8qWSDJvhOsDQMoE+DDPzaFbeSI= LastModified 2026-10-11T09:26:42Z: team_sheet classes master_absent 63, own_new 21, own_model 11, sum 95"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-12 (PRD ADDENDUM D): for a name whose folder holds a figure-carrying workbook the rows are that workbook's team sheet, in its order and labels. FWD-20: a census of the rendered rows prints shown / refused / absent / unmapped with the denominator, and unmapped reads 0.",
+  "world_is": "The 32 names with an own workbook render all of the team sheet's labels, and 3210 of those rows have no field behind them (read as the team-row sentence, in words, never a barred word). Many are not figure lines but the sheet's own header and override rows: Year, Financial Summary, FE_ESTIMATE, BEST_FPERIOD_OVERRIDE, EQY_FUND_YEAR, IMPLIED SHARES. The 63 other names have no team rows (master_absent; the master template is not in the library) and render the base rows. So FWD-12 'the team's rows' and FWD-20 'unmapped 0' conflict until the rows are mapped to fields or the row-label rule excludes non-line rows.",
+  "notes": "This is a reading of the sheet builder the page calls on live served data, not a browser DOM walk. Which of the two outcomes yields, or whether the label rule (at-1's: a label with two or more numbers in columns A to D) is tightened, is the CTO's: an ENDPOINT-level call, so the issuer cuts nothing on it. Carried to the CTO in the round-45 reads packet.",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1"
 }
 ]
 ```

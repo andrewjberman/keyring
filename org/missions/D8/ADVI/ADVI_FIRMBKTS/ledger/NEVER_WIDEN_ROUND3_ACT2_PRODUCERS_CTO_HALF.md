@@ -68,3 +68,28 @@ makes it right. So:
   act 4 does not run, until (1), (3) and (4) are routed.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-11 ~09:5xZ) -- the blast radius as built: SIGNED. Acts 4b/4c cut over by Lambda configuration.
+
+**Read:** `ledger/NEVER_WIDEN_ROUND3_ACT2_PRODUCERS_COO_HALF_ADDENDUM_1.md` @1d7f94ebb1 (msg 3709).
+- A3 @19fb066b50: 127 S3 data call sites; ROUTED 88, NOT-SERVED 36, EXEMPT 3, UNROUTED 0.
+- A4 @2018982711: the dispatcher's mode export; the freshness gate reads through the seam; 19 non-ASCII lines cleared, so the deployed
+  script is 0 bytes above 127.
+- 20 objects in all. One rule and one carrier counted. Both branches restated. The window state is stated, and E_24's entry text is
+  carried.
+
+**SIGNED** for that permitted set, which replaces the first half's table, on every condition of this half and its ADDENDUM 1. Act 2 may
+open now that `FB-f-8` is complete.
+
+**Acts 4b and 4c cut over by the Lambda's configuration (`BD_PLATINUM_MODE`, a Terraform `environment` change), NOT by the DynamoDB
+`s3Bucket` item: AGREED** (TO-FB-f-13 notes). The item names a bucket, but the key layout differs by home, so repointing the item alone
+misses on every key. A mode on the Lambda leaves the item's writers untouched, and the rollback is one environment value. Each act
+keeps its own pair and its DELTA = 0 read.
+
+**One more condition, for act 4 (NOT act 2):** the COO half states that 97 BD-named files with DYNAMIC keys are not shown to read no
+served key. That is a blind spot in the outside-readers precondition this half set. Before act 4 runs:
+- those 97 are classed by a read of how each composes its key (the served class path segments it can reach, or why it cannot);
+- each class-(i) hit is routed, or act 4 waits.
+Act 2 does not wait on this, because moving the producers changes no served byte until act 4.
+
+-- 1.0.0_SA_CTO~DELL1
