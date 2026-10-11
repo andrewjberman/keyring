@@ -31,6 +31,10 @@ no transcription at origin/box/sitez or origin/CLOUD, so nothing is graded. Row 
 **ADDENDUM 7 (2026-10-11 ~05:15Z, on COO~V1 msg 3500): no grade changes. Row D1-C-S8 names the RIV-wc-1 and RIV-wc-2 orders
 by full id with their existing J1 MET grades (row D1-C-S1), so round-close-check can find them.**
 
+**ADDENDUM 8 (2026-10-11 ~05:55Z, on COO~V1 msg 3532): RIV-tc-1 J1 stays NOT MEASURED, now for a different reason. The
+2026-10-10 transcription landed; its enrichment leg exited 97 ('nothing written'), so the run did not REACH the leg. Row
+D1-C-S9.**
+
 ```json
 [
   {
@@ -208,6 +212,28 @@ by full id with their existing J1 MET grades (row D1-C-S1), so round-close-check
         ".tools/round-close-check.py:380-410 (grade_criterion)",
         "python .tools/round-close-check.py --project ETFS_RIVALS --round 28, box/dell1, 2026-10-11 05:1xZ (graded=4 of 9 before this row)",
         "2.0.0_SA_COO~V1 msg 3500"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S9",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-11T05:55Z",
+    "one_line": "RIV-tc-1 J1 stays NOT MEASURED. The 2026-10-10 11:00Z vehicle run is transcribed, but its enrichment leg exited 97 ('nothing written'), so the issuer's reader prints NOT-REACHED and the run is not J1-readable. The one pre-merge control run, 2026-10-09, exited 94 ('landed'). The first post-merge run therefore exits differently, and the cause line (log line 177) is not copied, so it is not yet known whether tc-1's code caused it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "tc-1 J1 (AMENDMENT 2): read on the first scheduled vehicle run after the merge that REACHED the enrichment leg; the leg's lines and exit code are unchanged with the switch unset. tw1_j1_read.py: REACHED needs the STEP line, an enrichment exit code other than 97, and no vendor-session-failure line.",
+    "world_is": "- Subject: `python tw1_j1_read.py origin/box/sitez 20261010` (b74d364fce) and `... origin/CLOUD 20261010` (78c1e121d2) each read a 38-line transcription from deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261010_1100Z.txt. Each prints STEP line 176, '178: RIVALFUNDS ENRICHMENT EXIT CODE: 97 -- nothing written.', 0 vendor-session-failure lines, 0 HISTORY OWED lines, 'J1-READ: NOT-REACHED -- J1 reads UNVERIFIABLE for this run, never PASS'.\n- Positive control: the same reader on 20261009 at both refs prints REACHED (exit 94 'landed'), so the reader works.\n- Other legs on 10-10: pull, publish, ETF, constituents and price exit 0; the rivalfunds Bloomberg leg exits 90 'landed, batch whole'. The fetch happened, and the enrichment step wrote nothing.\n- Disagreement: the transcription's footer says 'No vendor-session-failure line found ... J1-readable'. It applies only the session-failure test, while the issuer's reader also excludes exit 97. This seat follows the reader: the reader's rule is the order's, and the transcriber says its file never grades.\n- Not read: why the leg exited 97. Log line 177, the module's JSON reason, is not copied. AMENDMENT 8 (@cca8a8d4c7, per msg 3532) asks 0.7.0_AE_CloudOps~ZV for lines 170-178. Exit 94 before the merge and exit 97 on the first run after it is a watch item, not ARMED, because nothing fires on it: if line 177 shows the cause is in tc-1's code, tc-1's 'exit code unchanged' clause reads NOT MET on that run, and this seat says so then. If line 177 shows nothing was due that day, J1 waits for the next REACHED run.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/tw1_j1_read.py, run at origin/box/sitez b74d364fce and origin/CLOUD 78c1e121d2 for 20261010 (NOT-REACHED) and 20261009 (REACHED)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261010_1100Z.txt at origin/CLOUD 78c1e121d2 (git show)",
+        "this file, ETFS_RIVALS-D1-C-S3 (10-09 exit 94) and ETFS_RIVALS-D1-C-S7",
+        "2.0.0_SA_COO~V1 msg 3532"
       ]
     },
     "disposition": "GRADUATED"

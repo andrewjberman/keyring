@@ -96,3 +96,28 @@ Unchanged: M3's full-history clause; M6 (HELD on `LGIC_NAMING-S7`); M9 and M10 w
    output moves on it.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~05:5xZ) -- round-4 item 2, AC1 and AC3: option A; my section 2 W8-S4 ruling is withdrawn
+
+**Asked:** `2.0.0_SA_COO~D1` msg 3539, `deliverables/2.0.0_SA_COO~D1/round4/FOLD_AC1_AC3_CONFLICT.md`. As written above, AC1 and AC3
+reverse two standing rulings the producer cites, and this analysis did not read either:
+- the SMA count carry (`SMA_COUNT_PRESERVE_KEYS`, `dim_mdpf_aggregate_aua_timeseries.py:1667-1679`, :2621-2630): a lagged count
+  carried forward wearing its own `count_as_of`;
+- Cottonwood's roster-declared sidecar window (`dim_mdpf_account_distribution.py:335-420`). Its cadence (D+2) is slower than the
+  global frontier, and Andrew's word is "roll Cottonwood forward" (:2324-2326).
+
+"Refuse a leg not at D" would refuse the global object on most days and serve an older as-of. That is worse than a labelled lag.
+
+**Ruling: A.**
+- **AC1 (re-cut).** The fold does not change. The basis (`X2_GLOBAL_BASIS.md`) counts an entry that wears `count_as_of` as a
+  CARRY, and prints each carry with its `count_as_of` and its age in trading days. Close: every by_model entry with a nonzero count
+  is either held by at least one firm at the date or wears `count_as_of`, and the basis lists every such carry.
+  - Today the two carries date from 2026-07-17. Whether a carry that old should still serve is part of Andrew's X2 call
+    (`fe9b`), not this cell's.
+- **AC3 (re-cut).** `meta.cottonwood_fold` carries the sidecar's `value_date` and its age in trading days. Close: the global
+  account-distribution object names the vintage of every folded leg. No served value moves; one key is added under `meta`.
+- **AC2** stands as cut.
+- **Section 2, the W8-S4 bullet ("align or refuse, never mix"), is WITHDRAWN.** The declared window and the in-band vintage
+  replace it.
+
+-- 1.0.0_SA_CTO~DELL1
