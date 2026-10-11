@@ -6414,3 +6414,55 @@ round.** Never edit an existing row.
  "world_is": "It does not: 30 differ. The split store is a live S3 input with no flag to pin or point to a local copy (load_store_splits takes the S3 client), so no run now can reproduce the round-34 served table and no r28-versus-r29 comparison can be tied to it. The r29 regrade was started once by mistake before the control was compared and was stopped about 83 seconds in; it wrote no finished table. Not established: whether the served S3 tables (not the local copy) equal the local copy (round 34's verify read hash_same=True for all three), and what the 109 added split-store CUSIPs change in the daily returns beyond the 30 days seen. Ways forward for the issuer: re-baseline on a re-minted r28 under today's store, then run r29 against it, or pin the split store."
 }
 ```
+
+## ADVI_COTBKF-D2-W99-S1 -- The regrade command of CONTROL_RECORD.json crashes at r25_month_lines in a fresh worktree
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W99-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~99",
+ "surfaced_at": "2026-10-11T12:35:25Z",
+ "one_line": "The regrade command of CONTROL_RECORD.json crashes at r25_month_lines in a fresh worktree: its default read-only inputs (round 22/24 grades, round 27 diff_trace, movers, causes parquets under deliverables/~41,~42,~43,~46,~50) are untracked and exist only in another worker's worktree.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "first regrade run of Proof A in C:/dev/wk-cotbkf-81 (code af1f0d4a73, 489 s, both arms and the pin line done): FileNotFoundError org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~46/month_grades_before.parquet, raised in commonwealth_sweep_regrade.py r25_month_lines (line 876) from main (line 1695); no month_grades_*.parquet was written, so the serve build that followed exited rc 1 in 2 s",
+   "git ls-files of deliverables/0.9.0_WK_ADVI_COTBKF~43, ~46, ~50 lists no parquet; the same files exist untracked in C:/dev/wk-cotbkf-80 (the ~97 worker's tree) and nowhere under C:/dev/ajb_workspace",
+   "fix used, no code change: the same command re-run with --traced, --round22, --r24-grades, --movers, --causes pointed at read-only copies under .scratch/w99/inputs (copied from the wk-cotbkf-80 files); 587 s, rc 0. Those inputs feed only the report sections (regression classes, traced months, movers), not the valuation or the returns"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bo-1 Proof A: the regrade command of CONTROL_RECORD.json (with --split-store-as-of added) runs from the worktree root and writes month_grades_before/after.parquet for the serve build.",
+ "world_is": "It does not in a worktree that lacks the untracked round 22/24/27 parquets: it stops after the valuation arms, at the report. Re-running with the five input flags pointed at copies of those files passes. Not established: that the copies are byte-identical to the files the round-34 run read (they affect the report only; the returns table compared equal)."
+}
+```
+
+## ADVI_COTBKF-D2-W99-S2 -- A second live S3 read in the regrade is not pinned: the as-traded price input's as_of colu
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W99-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~99",
+ "surfaced_at": "2026-10-11T12:35:25Z",
+ "one_line": "A second live S3 read in the regrade is not pinned: the as-traded price input's as_of column is the first price store's current LastModified (head_object), and it differs between the served run and a pinned re-run while every other column of the input is equal.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "commonwealth_sweep_regrade.py main (the line after 'if dv.PRICE_BASIS_AS_TRADED in (...)'): store_as_of = s3.head_object(Bucket, Key)['LastModified'].strftime('%Y-%m-%d') for pc.STORES[0], passed to dv.write_price_input; it names no instant and is not part of the new split-store pin",
+   "C:/dev/ajb_workspace/.scratch/advi_cotbkf/r34_price_input.parquet vs .scratch/w99/proofA_price_input.parquet (C:/dev/wk-cotbkf-81): 2134958 rows both, same columns; every column other than as_of equal row for row; as_of values served {2026-06-09, 2026-10-09}, pinned re-run {2026-10-09, 2026-10-11}; the file sha256 differs for that reason (served c55d686e... in c2_r34_regrade.txt, re-run 635e1ee8...)",
+   "the daily_returns compared equal on 1691729 of 1691729 rows, so the column does not reach the returns"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bo-1 names one unpinned input of the build, the split store.",
+ "world_is": "The price input's as_of is a second live read (the price store object's LastModified today), so the input's file hash is not reproducible either; the returns are. Not established: whether any consumer reads the as_of column or the input's sha256. Not changed here (the order pins the split store only)."
+}
+```
