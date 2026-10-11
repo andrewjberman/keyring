@@ -26436,3 +26436,174 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-W294-S1 -- IB-pr-436: the Yahoo reader returns no bars for FPNIX, one of the nine funds; its 85 fund-days are no_nav_found
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W294-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~294",
+  "surfaced_at": "2026-10-11T15:09:13Z",
+  "one_line": "IB-pr-436: the Yahoo reader returns no bars for FPNIX, one of the nine funds; its 85 fund-days are no_nav_found",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fetch_yahoo in data/assets/scripts/silver/commonwealth_price_basis_census.py, ONE call, ten tickers, window 2026-06-08 to 2026-10-10: nine returned 87 bars each; FPNIX answered 'possibly delisted; no price data found (1d 2026-06-08 -> 2026-10-10)' and the reader cached a none_reason marker",
+      "ADVI_COTBKF's cache (<main root>/.scratch/advi_cotbkf/yahoo_census/FPNIX.csv, 2026-10-09) already held the same none_reason marker for the 2020-06-27 to 2026-10-10 window, read only",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~294/IB134-1_fund_nav_basis.json: funds[FPNIX] nav_days_found 0 of 86, no_nav_found 85"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-436: if the reader cannot return a fund's NAV, record it as no_nav_found for that fund's days, say what the call returned, file a row; no retry, no other source.",
+  "world_is": "The reader has no NAV for FPNIX at all, in this fetch or in the older cache. FPNIX is the 9th ranked security (12,115 account-days in IB-pr-435); its fund-days cannot be graded from this source, and 3 of the 583 account-days whose only outside-anchor rows are these funds hold it. No other source was tried, by the bound.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W294-S2 -- IB-pr-436: yfinance on this box is 1.7.0, the order says 1.2.0; the reader ran unchanged and returned bars
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W294-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~294",
+  "surfaced_at": "2026-10-11T15:09:13Z",
+  "one_line": "IB-pr-436: yfinance on this box is 1.7.0, the order says 1.2.0; the reader ran unchanged and returned bars",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I -c 'import yfinance; print(yfinance.__version__)' in the worktree printed 1.7.0 before the single fetch call",
+      "fetch_yahoo (BATCH 50, auto_adjust=False, group_by ticker) ran without edit and returned 9 of 10 tickers with 87 daily bars each; FSMAX Close equals the ADVI_COTBKF cache on 86 of 86 common dates"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-436: yfinance 1.2.0 is importable on this box (measured by the issuer).",
+  "world_is": "The installed version is 1.7.0. Nothing failed, the reader and the cache layout worked as the order describes; recorded so a later reader of the order does not assume 1.2.0.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W294-S3 -- IB-pr-436: the majority-mark rule shows no prior-day fund-day, but 497 rows (33 days) equal only the prior day's NAV and 42 equal neither; the account-day effect is graded row by row
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W294-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~294",
+  "surfaced_at": "2026-10-11T15:09:13Z",
+  "one_line": "IB-pr-436: the majority-mark rule shows no prior-day fund-day, but 497 rows (33 days) equal only the prior day's NAV and 42 equal neither; the account-day effect is graded row by row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~294/IB134-1_fund_nav_basis.json: totals equals_prior_day_nav_only 0, equals_neither 0; row_level_outcomes equals_prior_day_nav_only 497, equals_neither 42, of 124,645 rows with a NAV (eight funds)",
+      "row_level_prior_rows_by_day: 33 of 85 days, 2 to 22 rows a day on 30 days from 2026-08-26, 17 on 2026-06-22, 41 on 2026-07-02, 3 on 2026-07-31; row_level_neither_rows_by_day: 14 rows on each of 2026-09-01, 2026-10-01, 2026-10-02",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~294/ib436_measure.py: effect() classifies each fund row of an account-day by its own mark against the day's and prior day's NAV"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-436: the fund-day's mark is chosen by the many-marks rule (the mark held by the most rows) and the five outcomes are per fund-day; the account-day effect is stated 'every such fund's mark'.",
+  "world_is": "Counting only the majority mark, every resolvable fund-day is the day's NAV; the minority rows (a few per fund on a third of the days) are visible only row by row. The worker added the row-level counts beside the five outcomes and graded the account-day effect per fund row (not per fund-day mark), which found 1 account-day with a prior-day row and 3 with no NAV. Done without an instruction; the fund-day outcomes the checks grade are unchanged by it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S90",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T15:36:53Z",
+  "one_line": "L8 rounds 133 and 134 (~P), no judgment criterion, both read-only; nothing is built, re-graded or served. Read against the outcome: the question these rounds open is whether an unofficial public reader may be the anchor for a served Cottonwood figure, and the packet rightly leaves it to the PRD. The NAV claim is stated as inferred, with one source and one control. One fact for row D2-W294-S2: this box's default python imports yfinance 1.2.0, the issuer's figure.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUNDS_133_134_P_DRAIN_END_20261011.md @b23f6ec18f (msg 5234)",
+      "this seat's read 2026-10-11T15:36:53Z: the box's default python (3.14.7, the one `python` resolves to) imports yfinance 1.2.0, which agrees with the issuer's read and not the worker's 1.7.0; a second interpreter on the box was not searched for"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27). ENDPOINT FWD-3: a figure computed from that account's own end-of-day holdings; PRD v0.36: a day is served only on a basis that was measured.",
+  "world_is": "Two orders terminal. Not run by this seat: either read. If an anchor built on that reader is ever proposed, it is a contract change and comes to this seat as an addendum.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W295-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~295",
+  "surfaced_at": "2026-10-11T15:31:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Typing the data.properties members with `type` alone renders in the generator but leaves F14-AC13 and F57-AC2 red: those tests read a member with a $ref from the producer document and any other member from the portal's smoke fixture, which has no undated_sections.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-14/envelope.test.ts lines 132-139 and 108-117 (dataFor / publishedMemberOf) at portal b92696c1ed: error 'slice property undated_sections is inline in the contract and absent from the published map for analysis-report'",
+      "run in this worktree after the generator exit 0 with type-only members: IVE98 pass, F14-AC13 fail, F57-AC2 fail; after the v1 $ref on request_ref, extraction_validation, undated_sections, extraction_coverage: 5 pass 0 fail and 4 pass 0 fail"
+    ]
+  },
+  "spec_asserts": "The order says to type each member so the generator renders it (for example a type), without saying how the portal tests read the same members.",
+  "world_is": "A data.properties member must carry a $ref into the v1 AnalysisReport document (true of both forms for the four members that are the same or vendor-only) or be present in the portal smoke fixture; `sections` is not a v1 $ref because the v1 and v2 item shapes differ, and the fixture carries it. The committed schema does this. Nothing in the portal was edited."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W295-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~295",
+  "surfaced_at": "2026-10-11T15:31:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The portal wire generator cannot render the Opal form's $ref into the v2 report schema (opal://irpt/contracts/v2/...): its ref grammar admits only a v1 sibling document, so the order's 'Opal form by $ref into the v2 schema' throws on the Opal form's provider member.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "gen-wire.ts typeForRef regex at portal b92696c1ed line 241: /^(?:\\.\\.\\/|opal:\\/\\/irpt\\/contracts\\/v1\\/)?([A-Za-z]+)\\.schema\\.json(?:#((?:\\/properties\\/[A-Za-z0-9_]+)+))?$/ ; the run printed 'UNRENDERABLE SCHEMA at responses/analysis-report.response.schema.json#/properties/data/oneOf/1/properties/provider: $ref opal://irpt/contracts/v2/AnalysisReport.schema.json#/$defs/opal_engine/properties/provider names no sibling document schema'",
+      "a $ref with a type sibling is still read as a $ref first (renderType line 326); a shapeless allOf member such as {if,then} is skipped by design (carriesShape, lines 305-314)",
+      "the committed schema keeps each v2 $ref's validation inside allOf[{if:{},then:{$ref v2}}] beside a type or const; the p130 arms still pass (IB130-1-AC1 PASS) and the generator exits 0 on 25 of 25 documents and 19 of 24 routes' responses"
+    ]
+  },
+  "spec_asserts": "The order (step 2) says the Opal form is typed 'by $ref into the v2 report schema'; step 5 says to stop only if the generator cannot render anyOf at data at all.",
+  "world_is": "The generator renders the two-form structure, but not a v2 pointer, so the Opal members reach the portal wire as `Readonly<Record<string, unknown>>` / `readonly unknown[]` rather than the typed v2 shapes, while every validator still enforces the v2 shapes. This is an encoding the issuer did not name; if it is not wanted, the alternatives are a generator ref grammar for the v2 document (portal lane, 2.0.0_SA_COO~D2) or a different contract structure (not this cell's call). The wire diff is in the deliverables folder."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W295-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~295",
+  "surfaced_at": "2026-10-11T15:32:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB135-1-AC3 prints FAIL in this worktree because the provisioned portal/ makes test_seam_paired read the worktree's portal fixtures (17 smoke entries) instead of the primary checkout's (12); the base schema gives the same result, and with the smoke file moved aside the criterion prints PASS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "_contracts/tests/test_seam_paired.py lines 50-53 and 76-83: portal_root() tries the worktree's portal/ first and takes the first that holds fixtures/smoke/default.json; CONSUMER_SMOKE_ENTRIES = 12 (line 116)",
+      "pytest in this worktree with portal restored: 4 failed, 233 passed; new failures test_the_consumer_fixture_source_is_named_and_non_empty (assert 17 == 12) and test_the_operation_map_covers_the_consumers_own_denominator (5 operations differ); the base schema (git show HEAD: file) gives the same 4 failed, 233 passed",
+      "with portal/src/pages/InvestorReporting/fixtures/smoke/default.json moved aside for the run and put back after: 'OK: 2 failed (all among the 2 base failures), 235 passed (base 235)' then IB135-1-AC3 PASS"
+    ]
+  },
+  "spec_asserts": "The order says that at base the result is 2 failed, 235 passed, and that after the change it is the same two and no fewer passed.",
+  "world_is": "The base figure was measured with an unpopulated portal gitlink. A worktree carrying the nested portal checkout the order provisions reads a different consumer fixture, so AC3 as written fails there for a reason that is not this schema. Re-run AC3 where portal/ is empty (the drain's checkout) for the order's figure."
+}
+```

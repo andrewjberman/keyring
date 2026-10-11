@@ -6222,3 +6222,146 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W101-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~101",
+  "surfaced_at": "2026-10-11T15:19:19Z",
+  "one_line": "DB-b-126: the order says the R45 release gives 49 Financial's method row 2 two new columns (income_basis_claim, income_basis_reason); the producer's dry run at the four pins gives NINE, and account_return_daily.py moved through four commits since REFRESH_2, not one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-126 item 5 and the CTO half on DB-b-122 condition 5: a release at these pins changes 49 Financial's method row 2 by two new columns, income_basis_claim and income_basis_reason, and the first cell found one member moved after REFRESH_2 (17304421c8, DB-b-122).",
+  "world_is": "Run today (emit_method_row, upload=False, the 49 Financial entry, staged thresholds file, no tieout) at three code states: the live-pinned producer ba544b6064 and REFRESH_2's pin 354214c55f give the SAME 22 columns; the pin 17304421c8 gives 31: 9 ADDED, 0 REMOVED, and among the 22 existing only measured_at differs (re-stamped by every emit). Two of the nine are DB-b-122's; seven (tolerance_claim, large_flow_share_claim, plausibility_band_low_claim, plausibility_band_high_claim, comparability_max_excluded_weight_claim, threshold_claims_source, tieout_tolerance_proposed_claim) came with 91e3ec5a47 and ac6a174677 (DB-b-118, DB-b-120, plus 3438a03703 AMENDMENT 1) and no 49 Financial pair has named them, because REFRESH_2 pinned before they landed. main() also gained a refusal at account_return_daily.py:2131-2133. The packet names all nine with their row-2 values. Five of the nine values depend on the thresholds file a later run is given (staged pin: all held, defaulted_no_claims; the tracked DB-b-125 file on box/dell2: measured, measured, held, held, inferred, stated).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~101/R45_REFRESH3_DELTA0.json (method_row_2_dry_run)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~101/NEVER_WIDEN_PACKET_R45_RELEASE_REFRESH_3.md (section NEW SECTION, tables 2 and 2b)",
+      "git log 354214c55f..HEAD -- data/assets/scripts/gold/irpt_reporting/account_return_daily.py (4 commits)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W101-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~101",
+  "surfaced_at": "2026-10-11T15:19:19Z",
+  "one_line": "DB-b-126: the reporting-gold Lambda this release replaces never writes dim_return_method (the handler omits emit_method_row and the role's Terraform omits the prefix), so the release alone gives method row 2 no new column; they reach a served object only through a later producer main() upload, which no order or pair covers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-126 item 5 and the CTO half on DB-b-122 condition 5: the release changes 49 Financial's served objects 'beyond R45's original scope' by the method row 2's new columns, with blast radius per key.",
+  "world_is": "handler.py:12-16 states it omits the emit_method_row call; reporting-gold iam.tf:88-95 and locals.tf:94-95 grant s3:PutObject on the five gold prefixes and 'not dim_return_method'; the kit capture put 5 objects, none a method row. emit_method_row has callers only in account_return_daily.py main() (:2159, :2213) and the Cottonwood mint (:879, its own scope). So the release moves 0 method-row keys; the two keys (data.parquet, manifest.json under method_version=2) change only on a later main() with --upload, which no trigger found in the files read runs and which no pair covers. Whether the row-2 object exists in the bucket, or whether the bucket is versioned, was NOT read (no S3 listing is granted to this order); p2_prewindow_versions.py:5 calls it versioned. The packet states the per-key radius and rollback for that later act and asks the halves (open question 3) whether the pair covers it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:12-16",
+      "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf:88-95",
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf:94-95",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:2159 and :2213",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~101/NEVER_WIDEN_PACKET_R45_RELEASE_REFRESH_3.md (section NEW SECTION, 1 and 4)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W104-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~104",
+  "surfaced_at": "2026-10-11T15:30:00Z",
+  "one_line": "DB-b-129: of the 244 UNEXPLAINED segments, 154 class from the records already on this box and 90 cannot: no repo or private record holds a per-segment field that names their cause, and the next read is an S3 read this round forbids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row W86-S2 / CTO round-68 analysis section 4 item 6: the 244 are classed by cause from what the records already hold per segment, the remainder printed.",
+  "world_is": "The per-segment record exists on this box (private RESTATED_TIEOUT.json, sha256 equal to the repo record's) and reproduces UNEXPLAINED = 244 of 990. Classed by rule over DB-b-106's codes, the day counts and the ~73 reason: 9 + 1 + 88 + 23 + 10 + 23 = 154. The remaining 90 have DB-b-106 verdict confirmed (event dates agree), Black Diamond day count equal to Opal's, a gap above 0.35 pp, and no measured convention shift (0 of the 244 are among the 74 restated segments). Of the 90, 49 carry nonzero Black Diamond fees reported and 41 zero; 57 sit within 0.70 pp and 33 above. Also: for all 235 FLOW_TIMING/INCOME_DATE members the Opal-side re-link figure is within 0.35 pp by construction of the label, so it does not separate the classes. A next cell needs the two-sided custodian dollar read (the W73_S1_EVIDENCE shape) for these 90 from the firm's 49 Financial Black Diamond tree: an S3 read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~104/UNEXPLAINED_244.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~86/RESTATED_TIEOUT.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~86/restated_tieout.py:55"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W103-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~103",
+  "surfaced_at": "2026-10-11T15:37:30Z",
+  "one_line": "DB-b-128: method_version_of refuses a custodian_reported entry naming row 3, but an entry that declares NO valuation_source is not refused for naming it; 0 of 2 sources.json entries do, so the reworded row-3 reason holds today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-128 rule-24 step: the reason is a property of the method row, so one sentence has to hold for every entry that can name row 3; a channel that separates income must not be able to name it.",
+  "world_is": "account_return_daily.py:1824-1830 compares the entry's valuation_source with the row's class only when the entry declares a non-blank one. RUN: the one declared custodian-equity source with method_version set to 3 raised 'REFUSED: ... does not belong to method row 3'; the underscore entry _commonwealth_delivery names 3 and is the only entry that can (1 of 2). An entry with no valuation_source would pass the check for any row in METHOD_ROWS, so a future channel that separates income and omits that field could name row 3 and be served the sentence 'income is inside the value'. None exists; build_manifest writes the literal absent for such a field. Not edited (outside the order): the producer's guard.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1810-1831 (method_version_of)",
+      "data/assets/scripts/gold/irpt_reporting/sources.json:6,123",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~103/INCOME_REASON.json (entries_that_can_name_row_3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W103-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~103",
+  "surfaced_at": "2026-10-11T15:37:30Z",
+  "one_line": "DB-b-128: two prose lines of the dim_return_method contract (line 6, the authored_under history; line 35, the income_basis column meaning) still give 'FWD-3 does not separate income' as the cause of row 3's absent income; only the example row was ordered reworded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-128 step 3: the test that pins row 3's reason and the contract's example row follow the new wording.",
+  "world_is": "After the edit the example row (income_basis_reason) and the producer carry the method-worded sentence. The contract still names the outcome id as the reason in 2 places: line 6 records the CTO ruling msg 4634 as it was worded (a history, true as a quotation) and line 35 is the column's meaning ('method row 3 states no income basis because FWD-3 does not separate income (it sits inside the value through the cash leg)'). Neither is served or read by code; schema_hash, version 0.6.0 and every column are unchanged. Left as is: not in the order's stated edit. Disposition proposed: ROW_FOR_ISSUER (reword line 35 to the method's reason at the next contract touch).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json:6,35"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S14",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T15:54:08Z",
+  "one_line": "L8 round 68, no judgment criterion, no served write. The round answers this seat's slug of rounds 55 to 67, which graduated nine rows as filed: read now, 1 is closed and 8 are open, both ARMED ones still armed. The income reason is reworded for the method in the code (read by this seat) and is NOT yet served; row D2-S13 stays open until the rewrite lands under its pair. Two findings matter beyond the round: the whole thresholds object is copied into every served manifest, and the release as packaged serves none of method row 2's new columns.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 5259 (round 68 fully drained @780ba55bde; records under deliverables/0.9.0_WK_IRPT_DASHBD~99 to ~104)",
+      "this seat's reads 2026-10-11T15:54:08Z: data/assets/scripts/gold/irpt_reporting/account_return_daily.py:132 carries the reworded reason, which names the positions-based method and no channel; deliverables/0.9.0_WK_IRPT_DASHBD~99/ROW_STATE.json reads 1 of the nine rows CLOSED_BY_EVIDENCE (D2-W86-S1) and 8 STILL_OPEN, the two ARMED among them; UNEXPLAINED_244.json states its claim as inferred and marks CONVENTION 9 as a floor"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself.",
+  "world_is": "Six orders terminal and no IRPT_DASHBD order open. Not run by this seat: any criterion. One served object was read by this seat: 49 Financial's method row 2 manifest, for its keys only.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

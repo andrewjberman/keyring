@@ -1,0 +1,100 @@
+# MDPF_DEMQUE -- ROUND 8, ROUND-N ANALYSIS (`1.0.0_SA_CTO~DELL1`, 2026-10-11 ~15:3xZ)
+
+**Input:** `3.0.0_SA_CVO` slug L10 slug, `surprise-channel/adjudications/ADJUDICATION_v8.md` @50398613b5. 5 of 5 orders complete, MAY-CLOSE;
+every criterion re-run green on the CVO's session (C-S18). ARMED 0. `REMEDIATION_v7` holds two rows owned by this seat: D1-S9 and D1-W22-S1.
+Calendar per `lib/trading_calendar.py`: T-1 frontier 2026-10-09 (Fri); 2026-10-12 (Mon) is trading.
+
+## 1. Graded
+
+- **FWD-3:** still APPLIED, not REALIZED. Its ACCEPT read is Monday 2026-10-12's morning production run, carried as round 7 stated. Round 8's
+  t-27 drew 5,858 of 5,858 on its first fire.
+- **C-PRICES (seven columns on every price table): NOT met, 127 of 141.** The 32 re-drew: 18 LOCKED and written, 14 REJECTED by the lock's
+  90 pct trade-agreement floor (D1-S9). D1-S8 stays open on those 14.
+- **FWD-1, FWD-2, FWD-4 to FWD-9:** not graded this round; the round-6 and round-7 reads stand.
+- **Z-S2 and Z-S3** (re-quote of a partly drawn request; a weekday-priced quote that can never be met): routed by the CVO to `2.0.0_SA_COO~Q1`,
+  whose cells they are. **The ruling rule is round 7's R2:** grade against ONE quote, frozen under the rule in force. A request whose every
+  security reached its end date is CLOSED, with no 0-cell DRAWN lines after completion.
+
+## 2. Rulings
+
+### R1, D1-W22-S1 -- the price store MUST reach the T-1 frontier, daily. Its window is not fixed by design.
+
+The CVO's read (C-S19): 141 files, every one ending 2026-06-22 or 2026-06-23, which is 76 trading days behind 2026-10-09. The cause is in the
+build: `lock.py:23` pins `TX_PARTITION = "date=2026-06-23"`, so every request window is built from a June snapshot of the client's
+transactions, and nothing extends the store after it.
+- **Why the frontier binds:**
+  - CLAUDE.md: everything is T-1 unless declared, and this PRD declares no fixed window.
+  - FWD-1's ACCEPT is a LIVING client's holdings valued on the client's pages, and a living client holds today.
+  - FWD-8's "unchanged history is not pulled again the next day" presumes a daily incremental: append the new dates only.
+- **The remedy has three parts:**
+  - (a) A STANDING tier-1 production request extends every locked symbol's file to the T-1 frontier each trading morning, through the
+    shared pacer (C-YAHOO), appending only new dates (FWD-8). It is scheduled (production pipelines are scheduled, CLAUDE.md section 5) and
+    reaches the frontier by trading days (`lib/trading_calendar`).
+  - (b) The lock reads the LATEST transactions partition, resolved through `opal_naming`, not a pinned date. New trades since June are
+    checked.
+  - (c) The one-time 76-trading-day gap is a tier-2 backfill through the queue, quoted, at the measured ceiling.
+- **Close:**
+  - a served read of 141 of 141 files at max(date) = the T-1 frontier, the denominator printed;
+  - the schedule read as DESIRED and APPLIED;
+  - its first scheduled fire's receipt.
+  The freshness entry carries `freshness_basis: trading-day-frontier`.
+
+### R2, D1-S9 -- the 14 rejected names. NOT a wider band. Measure the cause first; serve the existing files meanwhile, with an honest claim.
+
+The 14 (LCEYX, FTHSX, HLMEX, IWS, IWP, IWN, IWO, VSEIX, PFORX, RPIFX, VSS, VWO, MISIX, PIMSX) each passed a lock on 2026-10-09 and fail now. Their
+agreement runs 79 to 88 pct, with two near 40 pct. The cause is NOT measured: a floor that post-dates their first lock (`52b8a3cca2`,
+2026-10-09T03:35Z), a column difference in the new draw, or the transaction set.
+- **Refused: lowering the floor or widening the band to admit them.** That moves the instrument until the reading passes. C-IDENTITY locks a
+  mapping only when prices agree.
+- **Serving, unchanged, while the cause is measured.** The existing three-column files keep serving. They are as-traded prices that the
+  pages already read, so this is not a new served state. Their lock records carry the claim `held`, not `measured`, with the reason
+  "trade agreement N pct below the 90 pct floor; cause under measurement". C-IDENTITY's own rule for a lock that cannot be proved is
+  applied.
+- **The two names near 40 pct are a different class:** at 40 pct agreement the symbol is likely the WRONG security. Each is read for whether any
+  client page values a holding with it.
+  - If one does, that is a BLOCKING row to this seat BEFORE any page change: Cottonwood pages are client-facing, so a PROD change waits on
+    Andrew's word.
+  - Either way, both go on the unresolved list (FWD-5) with their reason and open dates.
+- **The cause instrument,** per name:
+  - agreement of the client's trade prices against (i) the old locked file's close and (ii) the new draw's `as_traded_close`;
+  - the disagreeing dates listed against the name's ex-dividend and split dates and the trade type (`by`, `sl`, `dvr`);
+  - whether its first lock pre-dates `52b8a3cca2`.
+  The reading decides between three remedies: a draw-column defect (fix the draw), a lock that never met the floor (the claim stays `held`
+  until the data supports it), or a wrong symbol (re-resolve).
+
+## 3. ENRICHMENT LIST (round 9, ONE issuance by `2.0.0_SA_COO~Q1`)
+
+1. **R1 (a) and (b):** the standing daily extension to T-1 and the lock's latest-partition read. Close as R1 states; the schedule is under
+   its own never-widen pair (a new served write cadence).
+2. **R1 (c):** the 76-trading-day backfill, quoted and drawn through the queue. Close: 141 of 141 at the frontier.
+3. **R2's cause instrument over the 14,** read-only, and the `held` claim with its reason on their lock records. Close:
+   - the per-name table, with the cause classed;
+   - the two near-40 pct names read for client-page use, and listed as unresolved.
+4. **Z-S2 and Z-S3** (`~Q1`'s own cells) under round 7's R2.
+5. **Carried, a read only:** FWD-3's Monday 2026-10-12 morning production read.
+
+## 4. ACTS ONLY ANDREW CAN DO (cited)
+
+None now. If R2's read finds a near-40 pct name valued on a client page, its correction is a client-facing change that waits on his word.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~15:4xZ) -- row D1-S11: the transactions store is a June snapshot. A `held` tail is ACCEPTED; t-31's extension applies under its pair.
+
+`2.0.0_SA_COO~Q1` msg 3954, round 9 issued @477921e3dc. `commonwealth/cottonwood/silver/transactions/` holds ONE partition, `date=2026-06-23`,
+with max `Trade_Date` 2026-06-22. So R1 (b) has no later trades to check. That premise was this seat's, and it failed on measurement.
+
+**Ruling:**
+- **A `held` tail on all 141 files is acceptable, and correct.** Each symbol's identity was PROVED on the client's trades through 2026-06-22. The
+  prices after that are the same proven symbol's prices, unproved only because no later trade exists in the store. C-IDENTITY's own rule
+  applies: a lock with no trade prices to check carries `held`, not `measured`. The lock record states `trades_through` and the claim per
+  window. Serving June prices for a living client's October holdings is the worse state.
+- **The t-31 extension (SERVED) applies when it merges, under its never-widen pair** (R1, section 3 item 1). This word releases the hold on
+  `~Q1`'s side; it is not the pair. Send the COO half and this seat signs the CTO half.
+- **t-30's dynamic resolve stays:** the day a later partition lands, the next lock run reads it, and the tail moves from `held` to `measured`
+  wherever trades agree.
+- **Why the transactions store is a June snapshot is NOT this project's to answer.** Cottonwood's custodian feed and its silver transactions
+  belong to another fabric (the store sits beside ADVI_COTBKF's inputs; dell2). It is routed MSTR to MSTR as a cross-fabric question: is the
+  store meant to refresh, who owns it, and when. It is not a condition of round 9.
+
+-- 1.0.0_SA_CTO~DELL1

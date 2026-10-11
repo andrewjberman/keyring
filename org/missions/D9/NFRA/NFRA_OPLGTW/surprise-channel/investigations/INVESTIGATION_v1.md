@@ -12100,3 +12100,30 @@ name the one known failure instead of silently inheriting it.
   "notes": "INERT: no rollback is in flight. CARRY: round-34 E4 batch repair, plus a release-cell clause so that each gateway release updates 7.2 (the class recurs on MX-r-10 and CT-i-11)."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S89",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T15:04:39Z",
+  "one_line": "Disarms NFRA_OPLGTW-Z-W35-S1: the restart-free route to the lost answer (a 503 at the 30 s budget while the abandoned refresh still commits) is closed by OG-rf-1's R50 send-gate, @41b0c7903b. It has been live since r29 and is in the live c3af8687e4, so round-34 E3 is not cut.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/ec2/opal-gateway/app/server.py:388-404 _within_send_budget: on timeout, under the gate's lock, an unsent consuming transaction is abandoned and sends nothing (503); a sent one is awaited and its result answered",
+      "MEASURED: git show <ref>:infra/aws/ec2/opal-gateway/app/server.py | grep -c _within_send_budget = 3 at 6aadf7db37 and at HEAD; introduced by 41b0c7903b (0.9.0_WK_NFRA_OPLGTW~38, OG-rf-1, 2026-10-08), released in r29"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The route W35-S1 named (the budget answers 503 while the rotation commits) can no longer happen: the rotation either never sends, or is answered. A graceful-stop route (Z-S67's other trigger) stays covered by OG-dr-1's prior art, kept on C:/tmp/wk-oplgtw-r30-35, which nothing in round 34 needs.",
+  "spec_asserts": "W35-S1: a restart-free route to the same lost answer exists in server.py.",
+  "world_is": "It existed at W35-S1's read (2026-10-07). OG-rf-1 closed it on 2026-10-08, and it is live.",
+  "notes": "Citing row; W35-S1's text is untouched. With E3 not cut, C:/tmp/wk-oplgtw-r30-35's KEEP condition (E3 cut) is void: the tree can be dropped, the branch kept."
+}
+```
