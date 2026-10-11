@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T082334Z-282f",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "1.0.0_SA_CTO~DELL2",
+ "to_serial": "1.0.0_SA_CTO",
+ "subject": "LGIC canon: gate-owed name for a Cottonwood grant carries 49f; 'restricted' in no vocabulary (D2-S98, D2-S99)",
+ "body_path": "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.7.0_AE_CloudOps~CB2/breakglass_targeted_apply_report.md",
+ "opened_at": "2026-10-11T08:23:34Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
