@@ -10,7 +10,7 @@
  "subject": "ADVI_FIRMBKTS TO-FB-f-12 amendment 3: one audited override for S17",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-12.sms-delivery-status-logging.md",
  "opened_at": "2026-10-11T10:56:55Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T10:57:53Z",
   "bus_message_id": "680c4957-294a-48dc-bbfe-a3e2ab620baa"
@@ -21,8 +21,8 @@
   "bus_message_id": "1639dc55-b9ba-484d-9bc8-c85ebccf5855"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T11:27:40Z",
+  "from_by": "2.0.0_SA_COO~B1",
   "to_at": "2026-10-11T11:23:01Z",
   "to_by": "0.7.0_AE_CloudOps~FBL"
  }

@@ -3679,3 +3679,27 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "This seat will not improvise a bypass: not deleting or editing org/mcp/naming-gate.enforce (a global switch), not editing safe-apply.sh or naming-apply-gate.py (0.0.0_AB_MSTR's and the CTO's), and not a bare terraform apply (banned). Routes: (A) land the plan-limb fix LGIC_ENFORCE-D1-S6 (2.0.0_SA_COO~L1), after which the same saved plan runs unchanged; (B) the owner of safe-apply.sh adds a one-shot audited switch for the naming plan limb and names it; (C) Andrew's word for another way. The saved five-address plan and every other step are ready."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S20",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T11:30:00Z",
+  "one_line": "D1-S15/S16 cause READ: every SEV1 SMS fails with providerResponse 'No origination identity available to send to destination number' -- the registered ACTIVE toll-free number exists but SNS cannot use it for the subscriber's US number; not sandbox, spend, opt-out or registration.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A SEV1 guard publish reaches the on-call phone by SMS (row D1-S15).",
+  "world_is": "Log group sns/us-east-1/313476888478/DirectPublishToPhoneNumber/Failure (retention 14 days, enabled by TO-FB-f-12 @62f7598435): 2 events 2026-10-11 11:18:31Z and 11:20:31Z, destination +1786***7679 (masked), smsType Transactional, providerResponse 'No origination identity available to send to destination number', dwell 120 ms. Earlier reads closed sandbox (false), spend (no datapoints), opt-out (false), origination existence (1 TOLL_FREE ACTIVE Transactional) and registration (US_TOLL_FREE_REGISTRATION COMPLETE). NOT read: whether the number sits in a pool, a protect configuration, the End User Messaging account spend limit, or the number's association to SNS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events on the Failure group, 1.0.0_SA_CTO~DELL1 2026-10-11T11:2xZ",
+      "TO-FB-f-12 complete @62f7598435 (laptop ~FBL, relayed dell1 msg 3804)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL1"
+}
+```
