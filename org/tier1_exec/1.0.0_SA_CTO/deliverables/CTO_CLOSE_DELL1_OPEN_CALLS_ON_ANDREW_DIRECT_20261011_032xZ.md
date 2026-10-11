@@ -17,3 +17,11 @@ therefore the answer is no. ... 5.) Yes delete is fine. 6.) Delete. ... 9.) Does
 Closing a row records the decision. The deletes themselves are the routed seat's acts, each read back after it runs.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## CORRECTION (2026-10-11 ~03:2xZ): items 5 and 6 were already done -- SUPERSEDED, not routed
+
+`0.7.0_AE_CloudOps~CTL` executed both deletes on 2026-10-10 at 13:56Z. Receipt:
+`org/tier2_senior/0.7.0_AE_CloudOps~CTL/deliverables/ADHOC_DELETES_20261010/RECEIPT.md` @46cca3496a (on origin CLOUD).
+`2.0.0_SA_COO~B1` re-read it at ~03:3xZ: keys 404, log group absent, and no second delete (msg 3425, relayed by
+`0.0.0_AB_MSTR~DELL1` msg 3427). The five rows bf6d, 838c, 5f4b, c20b and 69ef therefore close SUPERSEDED by that act.
+The "routed to `2.0.0_SA_COO~B1`" line in the table above is withdrawn. 86a2 reads DECLINED ("Doesn't matter, don't touch").
