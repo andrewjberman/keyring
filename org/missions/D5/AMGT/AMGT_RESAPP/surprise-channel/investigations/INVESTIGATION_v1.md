@@ -24365,3 +24365,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "For the issuer to confirm the reading. The test_scale_window test pins the implemented reading: a digit stops the scan, the word must start within 12 characters, and a longer word such as millions is not read."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W385-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~385",
+  "surfaced_at": "2026-10-11T10:47:34Z",
+  "one_line": "The Edit tool rewrote the append-only investigation file with LF endings: 74 CRLF lines of existing rows (among them AMGT_RESAPP-D1-W371-S3) became LF in commit 79544ec620; commit 1f59ee6d0e restored the base bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Append-only shared file (surprise channel): existing rows are never edited, and the row bytes a seat did not write stay as they were.",
+  "world_is": "The investigation file at base e790da8e1f carries 74 CRLF lines; at commit 79544ec620 it carries 0 (its stat line shows 222 lines changed). The only write to that file in this worktree before 79544ec620 was an Edit-tool string replacement at the file end. Byte writes (cp, python) and safe-commit preserved CRLF in 1f59ee6d0e, so the rewrite is the Edit tool's. Net diff against the base after 1f59ee6d0e: 74 insertions, 0 deletions. A later Edit on this file by any worker may normalize its CRLF lines again.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show e790da8e1f:org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md (74 CRLF lines) against git show 79544ec620 of the same path (0 CRLF), worktree C:/dev/wk-resapp-385, 2026-10-11",
+      "git diff --numstat e790da8e1f 1f59ee6d0e of the same path (74 insertions, 0 deletions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Repaired by this worker in 1f59ee6d0e (bytes restored, rows unchanged). The disarm is the channel owner's: an append to this file must preserve the existing bytes, and the one-writer or Edit path that normalized them is the thing to check."
+}
+```
