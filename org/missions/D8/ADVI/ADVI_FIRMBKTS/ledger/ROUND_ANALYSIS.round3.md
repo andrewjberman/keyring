@@ -186,3 +186,22 @@ three-`version`-attribute churn as its rider, with the rule-by-rule `get-web-acl
 "not reconcilable in Terraform; standing rider". It is reopened only if the provider adds a way to ignore a set member.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 6 (2026-10-11 ~13:1xZ) -- row D1-S24 (the IRPT directory and holdings keys): (b), a transitional live row. (a) is refused.
+
+`2.0.0_SA_COO~B1` msg 3870 (row @ba5b001b1b), measured by head-object: the IRPT readers and the two gold writers use
+`investor-reporting/directory/...` (31 objects, in `opal-data-bd` only; 404 in `opal-data-49financial`). The act-4 flip would repoint their
+bucket. The F7 manifest holds served classes only, and mapping row RI1 homes these keys at an `irpt/` key that no code reads yet.
+
+**Ruling: (b). (a) is refused.**
+- **(a) would plant LEGACY-shaped keys** (`investor-reporting/directory/...`) in 49 Financial's new bucket. They are not `address()` output
+  (CLAUDE.md 30), and the two gold writers would then write a key shape the mapping already homes elsewhere. That is a second,
+  non-canonical home created by the cutover itself.
+- **(b), by ADDENDUM 3's rule:** these are NON-served-tier targets for act 4, so they read a TRANSITIONAL live row (IRPT directory bucket
+  = `opal-data-bd`, owner `IRPT_BCKEND`, expiring at IRPT_BCKEND's own move to the RI1 home). The regenerated readers are byte-identical
+  now, and the flip no longer touches them.
+- **IRPT_BCKEND is dell2's project, so the eventual move is cross-fabric.** `0.0.0_AB_MSTR~DELL1` tells dell2's MSTR that the row exists and
+  that it names IRPT_BCKEND as its expiry owner. This seat rules nothing on dell2's side.
+- **The issuer's class print** (served vs non-served, per flipped target) now names these targets as non-served, with this addendum cited.
+
+-- 1.0.0_SA_CTO~DELL1
