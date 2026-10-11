@@ -6790,3 +6790,50 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W114-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~114",
+  "surfaced_at": "2026-10-11T16:48:08Z",
+  "one_line": "The order and row ADVI_COTBKF-D2-S120 say the flow moves on 44 account-days under method_r29; an exact comparison of the flow column (NaN-aware, no tolerance) on the at-pin tables w104 r28 against r29 and on the hold-list tables w107 r28 against r29 gives 47 account-days over 46 dates, and 44 of the 47 change the outflow (negative-flow) term the late-receipt rule reads. Counts and dates only. The 3 others: 2 zero-to-inflow, 1 inflow-to-zero. Nothing blocked: the rule's results are the same on either count (1 outflow-changed account-day sits in a window).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-cotbkf-83/.scratch/w104/fwd3_method_r28 vs fwd3_method_r29 daily_returns.parquet, flow differs on 47 of 1,691,729 rows, identical set to the w107 hold pair after removing the 988 held rows (which differ from the served table only)",
+      "this seat's run 2026-10-11, signs of the 47: zero to negative 42, negative to larger negative 2, zero to positive 2, positive to zero 1; return differs on 2, value on 0"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-br-4 and investigation row ADVI_COTBKF-D2-S120: the flow differs on 44 account-days under method_r29.",
+  "world_is": "The flow value differs on 47 account-days over 46 dates; 44 of them change the outflow term. Whether the 44 in S120 counted the outflow term only was not checked by this seat.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W113-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~113",
+ "surfaced_at": "2026-10-11T16:53:44Z",
+ "one_line": "CB-br-3: the widened scan's new NOISY fund series are a dividend-adjusted-close shape (ratio 0.5 rising to 1.0 in jumps at distribution dates), not scales; the only CONSTANT_SCALE it adds rests on 3 pairs over 17 days.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~113/CLOSE_VS_TRADE_SCAN_WIDE.md section 3 hand-read: AMCPX, AMRMX, CWGIX, WGIFX, CPXIX, FINFX, NEWFX, AWSHX, WMFFX each start at close/reinvestment-price 0.47 to 0.84 and reach about 1.00 by 2025-2026 (WGIFX 0.686 to 1.004, WMFFX 0.648 to 0.998)",
+   "CLOSE_VS_TRADE_SCAN_WIDE_DETAIL.json print_types: dvr median ratio 1.0000, 91.7 percent within 2 percent on 1,141 pairs of 71 AGREES securities, so the reinvestment price is the market level and the close is the series that departs",
+   "CLOSE_VS_TRADE_SCAN_WIDE.json fixed_income and not_established: every FI close in the table begins 2026-06-08, every FI trade is on or before 2026-05-05, 0 pairs; the transactions carry one Symbol per CUSIP, so a ticker change is not observable"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-br-3: widening the pairing shrinks the 346 too-few, the 50 and the 1,700; fixed income's unit is established from nearest-date pairs within 3 days; (c) CUSIPs whose ticker changed are reported.",
+ "world_is": "The 3-trading-day rule adds 54 pairs and moves 1 of 346 (the table holds a security only from its first held day); reinvestment prints (admitted: dvr, leu, TRCISU on a median-within-2-percent test over AGREES securities) move 19 more, 8 of them into NOISY as ramp-shaped fund series, which the six classes do not name as a shape. Fixed income has 0 pairs within 3 trading days (unit read from distributions only); no CUSIP lists two symbols. I added a rounding guard (summed Quantity at least 0.05) on non-trade prints that the order did not name. Not established: how many of the AGREES securities carry the same ramp on dates the scan cannot see."
+}
+```

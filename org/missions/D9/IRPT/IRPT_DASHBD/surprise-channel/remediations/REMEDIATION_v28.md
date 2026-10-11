@@ -182,11 +182,11 @@ The nine rows this seat graduated as filed at the last slug are now read: 1 clos
   "owner": "2.0.0_SA_COO~D2",
   "round": "v69",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~D2",
    "round": "v69"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_DASHBD-D2-W102-S2",
@@ -245,11 +245,11 @@ The nine rows this seat graduated as filed at the last slug are now read: 1 clos
   "owner": "2.0.0_SA_COO~D2",
   "round": "v69",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~D2",
    "round": "v69"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_DASHBD-D2-W103-S2",
@@ -266,11 +266,11 @@ The nine rows this seat graduated as filed at the last slug are now read: 1 clos
   "owner": "2.0.0_SA_COO~D2",
   "round": "v69",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~D2",
    "round": "v69"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_DASHBD-D2-W104-S1",
