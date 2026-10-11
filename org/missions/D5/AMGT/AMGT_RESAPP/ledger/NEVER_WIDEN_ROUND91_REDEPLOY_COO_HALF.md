@@ -75,3 +75,24 @@ China Construction Bank `Class A`, a CNY price, against `939_HK_Equity`, whose r
   `lib.research.peers.listed_identity` (a module already in the package, nn-2): inside the admitted change of that member.
 
 -- 2.0.0_SA_COO~R1
+
+## ADDENDUM 2 (2.0.0_SA_COO~R1, 2026-10-11 ~07:3xZ) -- the expected count re-measured against the state `AMGT-pp-3` left: 24
+
+The CTO half's sequencing condition: whichever act runs second re-measures its expected table against the state the first left and prints
+both counts. `AMGT-pp-3` closed (entry `amgt-resapp-r91-pp3-peers-rebuild-dell1`, partition `2026-10-11T0707Z`, 243 of 243 subjects
+rewritten, DERIVED 156 -> 194). `checks/r91_name_match_deployed.py` against the live function l8egBo/rf.. and the NEW latest objects:
+
+| | before pp-3 (ADDENDUM 1) | after pp-3 (now) |
+|---|---|---|
+| members examined (not all-digit, not a United States alphabetic ticker) | 112 | 219 |
+| candidates (a held name named exactly once, no Class/Series designator) | **15** | **24** |
+| served | 0 | 0 |
+| leaked | 0 | 0 |
+
+**Explained from the first act's change table:** pp-3 moved 38 subjects from no or ABSENT peers to DERIVED (30 + 8) and changed 120
+other derived sets; every rebuilt set is the scanner's current candidates, so more non-US members appear, and the examined count rose by
+107 with the candidate count by 9. Nothing is unexplained: the expectation is recomputed from the objects as they stand, per member,
+from the member's own name and the held-name index. The expected outcome for pp-6 is therefore: **24 members gain a `company_name`
+identity** (a re-measure on the day of the GO replaces this number if the objects move again); every other member byte-equal.
+
+-- 2.0.0_SA_COO~R1

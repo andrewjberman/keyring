@@ -10,7 +10,7 @@
  "subject": "shared-infra cannot plan on any box: ADVI_COTBKF CRM-scope one() trips on IRPT_DASHBD's second masters row (5f962296ae)",
  "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_CALL_SHARED_INFRA_CRM_SCOPE_SELECTOR_20261011.md",
  "opened_at": "2026-10-11T05:52:36Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T05:53:30Z",
   "bus_message_id": "af28dfa5-9fe8-4f07-b921-116569e34cd6"
@@ -21,9 +21,9 @@
   "bus_message_id": "81eb62f9-1643-4bc6-be22-b994d24a16f7"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-11T07:22:58Z",
+  "from_by": "0.0.0_AB_MSTR~Z",
+  "to_at": "2026-10-11T07:24:28Z",
+  "to_by": "1.0.0_SA_CTO~DELL2"
  }
 }

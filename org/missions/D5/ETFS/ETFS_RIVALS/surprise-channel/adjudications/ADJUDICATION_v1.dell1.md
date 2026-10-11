@@ -35,6 +35,10 @@ by full id with their existing J1 MET grades (row D1-C-S1), so round-close-check
 2026-10-10 transcription landed; its enrichment leg exited 97 ('nothing written'), so the run did not REACH the leg. Row
 D1-C-S9.**
 
+**ADDENDUM 9 (2026-10-11 ~07:50Z, on lines 170-178 @55d280983b): RIV-tc-1 J1 stays NOT MEASURED, and row D1-C-S9's watch
+closes with tc-1's code ruled out. The 97 is a SKIPPED on an empty G1 read for 2026-10-09, and that path pre-dates tc-1 and
+lies outside its diff. J1 is read on the next REACHED run. Row D1-C-S10.**
+
 ```json
 [
   {
@@ -234,6 +238,29 @@ D1-C-S9.**
         "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261010_1100Z.txt at origin/CLOUD 78c1e121d2 (git show)",
         "this file, ETFS_RIVALS-D1-C-S3 (10-09 exit 94) and ETFS_RIVALS-D1-C-S7",
         "2.0.0_SA_COO~V1 msg 3532"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S10",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-11T07:50Z",
+    "one_line": "RIV-tc-1 J1 stays NOT MEASURED; row D1-C-S9's watch closes with tc-1's code ruled out. The 2026-10-10 run's enrichment leg exited 97 because the step returned SKIPPED with 'no non-cash securities in G1 canonical_shape at date=2026-10-09'. That early return is in _daily_dividends, which RIV-e-1 wrote on 09-30; tc-1's diff does not touch it. The run never reached the code tc-1 changed, so it neither proves nor disproves J1. J1 is read on the next scheduled run that REACHES the leg.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "tc-1 J1 (AMENDMENT 2): read on the first scheduled vehicle run after the merge that REACHED the enrichment leg; the leg's lines and exit code are unchanged with the switch unset. Row D1-C-S9: if log line 177 shows that tc-1's code caused the 97, the exit-code clause reads NOT MET.",
+    "world_is": "- Cause: deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261010_1100Z.enrich.txt at origin/box/sitez (@55d280983b, lines 170-178 copied unedited) reads '{\"status\": \"SKIPPED\", \"batch_id\": \"batch-20261010T110725Z\", \"outputs\": [], \"marker\": null, \"detail\": \"no non-cash securities in G1 canonical_shape at date=2026-10-09\"}', then 'RIVALFUNDS ENRICHMENT EXIT CODE: 97 -- nothing written.' The rivalfunds Bloomberg leg just before it landed the 2026-10-09 capture (status OK, exit 90, batch-20261010T110700Z).\n- Where the skip comes from: data/etfs/scripts/rivalfunds/enrichment_bloomberg.py at origin/box/sitez carries that detail string at :626 and :1201. :1199-1201 is _daily_dividends, which returns SKIPPED when _g1_securities(s, date) is empty, before any plan is built. `git log -S` on the string at origin/box/sitez names 14118f0a7e (RIV-e-1, 2026-09-30) and ffb53529cb (RIV-s-4, 2026-10-01).\n- tc-1's diff: fcb3d76903 (RIV-tc-1) changes the file only in hunks at old lines 898-1046 (_market_range, _history_owed_switch, _history_owed). It does not touch _g1_securities or _daily_dividends. The leg stopped at an input read that comes before every line tc-1 changed. Exit 94 on 10-09 and 97 on 10-10 differ because of the input, not the code.\n- Not read: why G1 canonical_shape for 2026-10-09 (a Friday, a trading day) held no non-cash securities when the 11:07Z fire read it. It may not have been built yet, or the read may have failed. That belongs to the issuer and the G1 producer's owner, not to this grade.\n- Next: J1 is read on the first scheduled run after the merge that REACHES the leg. This seat does not predict which fire that will be.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261010_1100Z.enrich.txt at origin/box/sitez (commit 55d280983b)",
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py at origin/box/sitez :626, :1193-1201",
+        "git log -S 'no non-cash securities' origin/box/sitez: 14118f0a7e (RIV-e-1), ffb53529cb (RIV-s-4)",
+        "git show fcb3d76903 (RIV-tc-1) hunk headers: @@ -898, -913, -930, -973, -995",
+        "this file, ETFS_RIVALS-D1-C-S9"
       ]
     },
     "disposition": "GRADUATED"

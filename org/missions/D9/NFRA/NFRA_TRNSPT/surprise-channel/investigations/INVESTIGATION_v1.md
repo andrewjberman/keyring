@@ -1963,3 +1963,52 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S28",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-11T07:51:01Z",
+  "one_line": "Row NFRA_TRNSPT-D2-S22 is DISARMED by its owner on both measured reads: the three functions of the transcripts root read ONE live CodeSha256, and the three fix commits are ancestors of origin CLOUD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's live read 2026-10-11T07:51:01Z, lambda get-function-configuration, 3 of 3 functions: teams-global-transcripts-pull-lambda AI4UQD0ME+ABza1X0BrBjGjpqjN7f2fc0Cdxb88aA/I= (LastModified 05:03:47Z, 1024 MB, 300 s); outlook-global-transcripts-pull-lambda the same digest (07:32:06Z, 1024 MB, 600 s); outlook-global-commentary-draft-lambda the same digest (05:44:45Z, 512 MB, 300 s). Distinct digests: 1.",
+      "this seat's read after git fetch origin CLOUD: merge-base --is-ancestor reads yes for fd74f984ac, 5ae3b3ddd9, 7bca11ddee and 4901eece20 (4 of 4); negative control: box/dell2 HEAD reads NOT an ancestor.",
+      "2.0.0_SA_COO~T2 msg 4432 (TO-APPLY-mp23 flipped @2b6c7a6e2b); the applier's report org/tier2_senior/0.7.0_AE_CloudOps~TR2/deliverables/TR_MP23_MAIL_PULL_REPORT_20261011.md"
+    ]
+  },
+  "spec_asserts": "Row D2-S22 as restated (three functions, one live digest; the three commits on origin CLOUD).",
+  "world_is": "Both reads are met as of 07:51:01Z. An apply of the transcripts root from a tree carrying origin CLOUD now builds the zip the three functions already run. A tree that predates those commits would still revert them: the signing condition that an apply of this root prints its tree's dist zip digest beside the live one stays.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S29",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-11T08:00:00Z",
+  "hazard_standing": "INERT",
+  "one_line": "The gateway's OneDrive search tool fails a positive control: it returns none of five files that a folder listing shows in the same drive, so its zero is not an absence. The file tools also cannot read another user's drive.",
+  "class": "OBSERVATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "gateway list_onedrive folder Recordings (signed-in user Andrew@opalinvest.com), 2026-10-11 ~07:0xZ: 5 files, each named '<title>-<date>_<time>-Meeting Recording.mp4', dated 2026-07-07 to 2026-08-19",
+      "gateway search_files query 'Meeting Recording', same session: 4 hits, all unrelated workspace files, 0 of the 5 listed files",
+      "record org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/R23_TR_OM23_FOUR_MONDAYS_OTHER_ROUTE_20261011.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "search_files: 'Search the user's OneDrive for files by name/content.' A file whose name contains the query, in that drive, is returned.",
+  "world_is": "Five files named with the query phrase sit in the user's own Recordings folder and the search returns none of them. Why is not measured (an index lag, a folder excluded from search, or a ranking cut are all possible). Separately, by design, no file tool reads another user's drive, so a meeting organizer's recordings are out of reach of every tool.",
+  "notes": "For the gateway's owner (NFRA_OPLGTW, site Z), on the CTO's word (msg 4439). Any consumer that reads a search zero as 'no such file' is exposed: TR-om-23 and the Research Meeting folder read both met it. File names, counts and dates only; no file was opened."
+}
+```
