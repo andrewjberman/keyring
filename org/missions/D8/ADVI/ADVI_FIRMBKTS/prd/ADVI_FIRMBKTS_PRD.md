@@ -5,7 +5,7 @@
  "project": "ADVI_FIRMBKTS",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v1.3",
+ "prd_version": "v1.4",
  "step": 4,
  "brief_ref": "docs/briefs/d8-legacy-firm-buckets-migration-brief-20260913.md@2b64208047",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -399,3 +399,33 @@ Surfaces this project writes, reads or executes.
 | `opal-data-bd`, `opal-data-inf`, `opal-data-cot` | REMOVALS: each only after its 45-day record, and each delete on Andrew's word | F12 | ADVI_FIRMBKTS |
 | `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/` | documents | F1-F3, F12, F13 | ADVI_FIRMBKTS |
 | `opal-data-demo`; `inf-canonical-prices-daily`; the prohibited key and B2 until Andrew rules | excluded | -- | untouched |
+
+## L10 ADDENDUM, v1.4, 2026-10-11 -- sequencing against MDPF_CANON (`1.0.0_SA_CTO~DELL1`, carrying cluster-lead rulings R1-R5)
+
+**Source:** Andrew-direct ~18:1xZ, and the cluster lead's ruling (laptop record `ANDREW_DIRECT_20261011_181xZ_FOUR_QUESTIONS_..._READ.md` s.5,
+@7a7e9b47c6). `/legacy-transform` runs: `workflows/legacy_transform/blackdiamond-49financial/20261011T181009Z-27c2695/` and
+`workflows/legacy_transform/mdpf/20261011T181700Z-98fc86e/` (both contracts ACCEPT).
+
+- **R2, THIS project owns the shared serving files through act 4 and its read-back:** `shared-advisor-router`, the guard, the CloudFront behaviours,
+  `data/mdpf/config/bronze_homes.json`, `firm-config.mjs` and the portal-auth WAF rider. The flip receipt names, per file, the moment ownership
+  passes to MDPF_CANON.
+- **R3, the `mdpf/{firm}/platinum/*` serving grant is a NAMED cell of this project,** cut before MDPF_CANON's M9 for that firm. It is generated from the
+  consumers' declared prefixes (:156), as act 3b's rows were. It is not part of Monday's window.
+- **R4, the joint census precondition of F12's clock** for each legacy bucket: MDPF readers of `opal-data-bd`, `-inf` and `-cot`, with the denominator,
+  plus this project's 45 UNKNOWN sites (`ledger/R3_ACT2_OUTSIDE_READERS_CENSUS.md`). DEC-12 read logging is the instrument once the window counts;
+  the static census is the control. First measurement (this addendum): MDPF reaches `opal-data-bd` through N = 3 principals on five prefixes,
+  none of them a moving class. One is `investor-reporting/directory/`, the transitional live row of D1-S24, which therefore has a second reader,
+  MDPF, beside IRPT.
+- **Checks bound to Monday's window, measured at this addendum:**
+  - (a) MDPF's 49 Financial gold writer is `name("mdpf","49financial","gold-writer","role")` = `mdpf-49f-gold-writer-role`. It matches the fence
+    pattern `arn:aws:iam::313476888478:role/*-49f-*`, read from `opal_naming.fence_patterns("49financial")`, after today's 3b/3c regeneration.
+    The 13:30Z MDPF fire is its live read. An `AccessDenied` there is a BLOCKING row before the flip.
+  - (b) `opal-data-bd` `platinum/` holds exactly the five classes, read live; no `platinum/satellites/` exists in either bucket. So the router's
+    satellites branch and non-class advisor-intelligence requests change nothing at the flip (a non-class request already answers the
+    deliberate `unplaced_canonical_resource` 404).
+  - (c) MDPF's portal data is served by `public-data-router` (`/api/general/mdpf/` to `platinum/mdpf/`), not by `shared-advisor-router`, so the flip
+    does not touch it.
+  - (d) The flip commit (`FB-g-30`) regenerates `bronze_homes.json`. Its 49 Financial value MUST read unchanged (the transitional bronze-live row,
+    round-3 ADDENDUM 3), printed in the rehearsal. A changed value is a STOP.
+
+**Not changed:** every ENDPOINT outcome and every contract. Monday's acts 2, 3, 4b and 4c and MDPF's 13:30Z fire are unchanged.
