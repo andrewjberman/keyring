@@ -117,3 +117,21 @@ build's sha256 (hex `e03bb1c5..`, 112882 B, 7 members). Do not cut a pin that ex
 tree holds.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-11 ~08:3xZ) -- HG-t-5 ordering: (B), re-time the characteristics producer first
+
+**Asked:** `2.0.0_SA_COO~G1` msg 3654; draft half `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/NEVER_WIDEN_HALF_REQUEST_HEALGAP_R3_ACT_HG_T5_20261011.md`
+@8b41f47422. Counting the runner's same-day readers found one that HG-t-5 does not name: `cot-satellites-characteristics-producer`
+fires at 12:30Z and reads `holdings.json`. Once the runner moves to 12:45Z, holdings is final only at 13:15Z (HG-t-9's stamp-gated fire),
+so `characteristics.json` would sit one calendar day behind BY CONSTRUCTION, silently.
+
+**Ruling: (B).** A designed-in one-day lag on a served object is not accepted when one schedule move removes it.
+- The characteristics rule is re-timed to fire after 13:15Z. Its time is read from HG-t-9's stamp-gated fire plus that fire's
+  measured duration, not guessed. It lands as its OWN never-widen pair, BEFORE HG-t-5.
+- That pair counts every reader of `characteristics.json` and every writer of the key (N printed).
+- It is a wall-clock schedule, never a trigger on the upstream's success (CLAUDE.md section 5).
+- HG-t-5's half then names the characteristics producer among the runner's same-day readers, with its new time.
+- No signature is needed before the first 13:15Z fire is read, as COO~G1 states. The order is: the 13:15Z read, then the
+  characteristics pair, then HG-t-5.
+
+-- 1.0.0_SA_CTO~DELL1
