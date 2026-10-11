@@ -26121,3 +26121,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The expiry is assigned to IRPT_BCKEND by another fabric's analysis and reached this seat as an information-only relay. PARKED here: owner 2.0.0_SA_COO~P2 (workstream ~P) until a lane is named for the RI1 move; un-parks when the RI1 move of the IRPT directory is cut as a cell, whose face must name this row and retire the transitional read. Whether RI1 is in any current decomposition of IRPT_BCKEND was not read."
 }
 ```
+
+## IRPT_BCKEND-D2-W292-S1 -- the receipt of a no-identity-cookie failure carries no probe_pair by construction; login_submission and the new reason code are what separate the cases
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W292-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~292",
+  "surfaced_at": "2026-10-11T14:07:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "On IB-pr-434 the persisted probe_pair is null in exactly the case the new code SIGNED_OUT_APP_CHROME_AFTER_SUBMIT names, because probeSession returns before the discriminating pair when the browser holds no identity cookie; the pair only exists when an identity cookie was present, so for the 2026-10-11 shape the separating evidence is login_submission plus the reason code, not probe_pair.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js probeSession: the NO_IDENTITY_COOKIE return precedes the pairControl block that builds probe_pair, so record.probe_pair is never set on that path (worktree wk-IRPT_BCKEND-292, built on 70412abcd5)",
+      "infra/aws/ec2/investor-reporting-ycharts/tests/receipt_after_submit.js arm a: the thrown record has login_submission (observed, field names) and probe_pair null"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-434 (CTO msg 5025): the two receipt members login_submission and probe_pair, persisted, are what separate 'credentials accepted, probe broken' from 'credentials rejected, signed-out page looks like the app'.",
+  "world_is": "Both members are persisted when present. When the browser holds no identity cookie after the submission, probe_pair is not built at all (the pair control runs only after the identity-cookie leg passes), so the persisted receipt has login_submission (the reply status and whether the posted fields matched the secret's) and the new reason code, and no probe_pair; the pair appears only on a run whose cookie jar had the identity cookie and whose probe then failed. The build did not add a pair for the no-cookie path (that would be a second vendor request, which the order forbids). Nothing is armed: the persisted receipt states what it holds."
+}
+```
