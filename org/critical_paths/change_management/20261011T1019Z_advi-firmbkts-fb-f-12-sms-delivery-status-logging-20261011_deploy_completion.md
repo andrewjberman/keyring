@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | verify | pre-act reads: get-sms-attributes (every attribute), topic attributes, existing sns delivery log groups | printed in the entry |  | OPEN |
+| L1 | verify | pre-act reads: get-sms-attributes (every attribute), topic attributes, existing sns delivery log groups | printed in the entry | get-sms-attributes: MonthlySpendLimit=50 only; topic opal-infrastructure-alerts no delivery-status attributes; no sns/us-east-1/313476888478/ log groups (0); evidence_f12/pre_act_record.txt | CLOSED 20261011T102414Z |
 | L2 | verify | plan JSON of infra/aws/terraform/inf-pipeline changes EXACTLY role, role policy, 2 log groups, sms preferences | plan summary line |  | OPEN |
 | L3 | activation | safe-apply of the saved plan | apply summary |  | OPEN |
 | L4 | verify | read-back AC1-AC4 + every other SMS attribute byte-equal + post-apply plan no changes | AC outputs + plan line |  | OPEN |
@@ -20,3 +20,4 @@
 ## Log
 
 - 20261011T101924Z OPENED by 0.7.0_AE_CloudOps~FBL with 4 leg(s)
+- 20261011T102414Z LEG L1 closed: get-sms-attributes: MonthlySpendLimit=50 only; topic opal-infrastructure-alerts no delivery-status attributes; no sns/us
