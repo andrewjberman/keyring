@@ -3018,3 +3018,27 @@
   "notes": "The no-upload hold on irpt-commentary-composition-read-lambda is lifted: the map builds what is live. Still open from the census: four members of that entry are unpinned (the class of rows S45 and S53), and the function builds only with the parity skip (row S34): both go into this seat's next issuance by CTO msg 5241."
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S55",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T17:07:52Z",
+  "one_line": "L8/L9 rounds 8 and 9 (Y), no judgment criterion. Release 6 is read live by this seat: the composition read runs the gated build and its role's read grant names both tables. It is reached by no product path; the only requests through the gate are the release's three after-reads. Answers to the packet's two questions: 'live' should always carry 'reached by no product path yet'; and one request returning the same bytes does not make two changed members inert, only one path through them unchanged. The ordering hazard of row D2-S51 still stands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND9_Y_L8_COMPILE_20261011.md @70070b3a69 (msg 5416)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUNDS_8_9_Y_L9_READ_20261011.md",
+      "this seat's reads 2026-10-11T17:07:52Z: irpt-commentary-composition-read-lambda live CodeSha256 DbvBUxTG...Yo4=, LastModified 2026-10-11T16:41:35Z; its role's one inline policy grants dynamodb:GetItem on 2 resources, the requests table and the jobs table; irpt-status live is 6idtFvAm..., revision 6; portal origin/DEV is c3a03c24, its generated reason set holds REPORT_TICKET_MISMATCH (render/Page.tsx:99), and the round-7 portal candidate 5f64f409b0 is still not an ancestor of DEV"
+    ]
+  },
+  "spec_asserts": "Spine L8/L9 (CLAUDE.md rule 27). Evidence law: APPLIED is not EXERCISED; ABSENT is not EXERCISED-AGAINST.",
+  "world_is": "Round 9 reads MAY-CLOSE and no IRPT_ANLREQ order is open. Not read by this seat: the apply record, the census, the laptop's job-row read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
