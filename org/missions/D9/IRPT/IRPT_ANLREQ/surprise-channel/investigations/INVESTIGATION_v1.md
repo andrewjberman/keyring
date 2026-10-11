@@ -3113,3 +3113,107 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S57",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T18:15:32Z",
+  "one_line": "L9 round 10: AR103-y-AC2 MET. Of the 5 members that change a served answer, one reader on portal PROD refuses the new answer (the history reader, by exact key sets at owned-requests.ts:61 and :80) and the other readers admit; a search of PROD found no reader the census did not name. The one inferred INERT row holds (neither caller of accept is packaged), and the live function's map leaves the ownership read on the same bucket and key. Limit: the census read DEV before the ticket page's reader landed there, and that reader sends the ticket id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND10_Y_L8_COMPILE_20261011.md @5b24152a97 (msg 5519)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r10/RETURN_CENSUS_IRPT_STATUS.json (blob 83fe9f0ab6)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUND_10_Y_L9_GRADE_20261011.md",
+      "this seat's reads 2026-10-11T18:15:32Z. Portal origin/PROD 37aa1247: owned-requests.ts:61 and :80 hold exact key sets that refuse the new history page and rows; envelope.ts:193 passes the report answer to adapt with no key-set check; public-status.ts:25 admits any upper-case reason; prospect-dates.ts:41-47 admits a null-dated row. A search of PROD src for the three routes and their readers returns files of the Investor Reporting page and the endpoint module only; the ticket page on PROD has no reader of them. Workspace @487f73663e: the two callers of accept are in files that are not among the entry's 49 members. Live irpt-status configuration: 5 variables, the directory map holds 3 firms, and the one firm the changed ownership read names maps to the same bucket and, by the default key, the same key"
+    ]
+  },
+  "spec_asserts": "AR103-y-AC2 (JUDGMENT, graded by the CVO at L9): every CHANGES_SERVED_ANSWER row names the portal reader that actually decides whether PROD admits the new answer, and no member read INERT changes what a caller is served.",
+  "world_is": "Not re-run by this seat: the worker's two-package calls behind 9 INERT rows. Not searched: readers outside the portal repository. Nothing is released; the pair is written and held.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S58",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-11T18:20:00Z",
+  "one_line": "Row IRPT_ANLREQ-D2-S51 (ARMED: the portal change that sends ticket_id must not reach DEV before the service carries its half) is DISARMED by its disarm owner: the candidate landed on portal DEV with a fallback, so the order of landing no longer matters.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S51"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal DEV 3ebc35ebf2 by 0.0.0_AB_MSTR~DELL2's receipt (msg 5506: fetch, is-ancestor, push rc 0, ls-remote, CI run success on that head); this seat's own ls-remote read of DEV at 17:52Z: 3ebc35eb.",
+      "this seat's read of the branch tip, src/pages/TicketCenter/analysisRequest.ts lines 402 to 451: readTicketReport sends ticket_id and, only on publicReasonCode INVALID_INPUT, reads once more without it; REPORT_TICKET_MISMATCH is never retried.",
+      "2.0.0_SA_COO~Y2 msg 5467 (its read of the LIVE irpt-status package, digest 6idtFvAm): the reasons map serves RequestReadRefused as INVALID_INPUT; the message UNEXPECTED_OWNED_READ_QUERY is never served.",
+      "this seat's read of _authz/served.py lines 874 to 887: the public reason is derived from the exception's class and clamped to UNEXPECTED outside the boundary set."
+    ]
+  },
+  "spec_asserts": "Row D2-S51: the service release carrying AR-y-71 is live and read first; or the portal landing is gated on the live function's answer, not on a message.",
+  "world_is": "The landing is gated on the live function's answer by construction: before the service's half is live the page's first read is refused as INVALID_INPUT and the second, without the id, answers as today. NOT measured: a live refused read arriving at the page as INVALID_INPUT (no live call was made); the first design of this fallback keyed on a message string that is never served, by this seat's own error, and was caught before landing. Debt carried: the fallback is a way around the binding once the service's half is live, and is removed in release 5's return (pair section 6).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W53-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-11T18:40:00Z",
+  "one_line": "AR-y-113 cannot be met by pins: the irpt-intake-poller entry's firm_registry.json member has no git blob anywhere in the object database (14 of 14 blobs of the served size 5229 bytes checked, none has sha256 cc3f2c63...), so the entry cannot build and no digest can equal YpE2MyUw.... The live digest equals the recorded one, so the entry is not stale; the map was left unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live read 2026-10-11T18:29:05Z: .tools/aws lambda get-function-configuration --function-name irpt-intake-poller -> CodeSha256 YpE2MyUwdGzMfLaUGXi8cClxoVHFFmOz5LT1BYmoTa8= (equals the entry's deployed_code_sha256), LastModified 2026-09-11T12:55:52.000+0000, CodeSize 52312",
+      "git cat-file -e 1545ec3442:infra/aws/lambda/investor-reporting/intake/firm_registry.json -> rc 128 'does not exist'; positive control poller.py at the same path and commit present; git log --all --diff-filter=AD on the path -> 0 commits; git check-ignore -> not ignored. So the file was never tracked at that path: it is not a moved file and not present at the deployed commit.",
+      "git cat-file --batch-all-objects: 14 blobs of size 5229, sha256 of each computed, none begins cc3f2c63; sha256 cc3f2c63bb2d8c14a3d65b2bb2215b4089e5e776718a307660a253eebfbd25e3 / 5229 bytes is the served content recorded by row IRPT_BCKEND-W4-S34 (read from the live package on 2026-09-18). data/firm_registry.json at HEAD is 5326 bytes, sha256 f0816a5a....",
+      "BUILD_ONLY=1 build with no skip at HEAD 78533deeb6: gate.py, keys.py, firm_destination_policy.json stage and verify; then 'ERROR: File not found: .../intake/firm_registry.json', 'PARTIAL -- 0 built, 1 failed'. The checker prints Y113-POLLER-FAIL.",
+      "The map's own _staged_from_note on the entry says the same (IRPT_BCKEND IB-rte-4 / W4-S34). No generator of the file was found: poller.py at HEAD has no reference to IRPT_FIRM_REGISTRY."
+    ]
+  },
+  "spec_asserts": "TO-AR-y-113 step 3: the entry takes each missing or differing member from a pinned commit by staged_from rows (pin, sha256 of git show <pin>:<path> bytes).",
+  "world_is": "For the member firm_registry.json no pin exists to name: no commit holds the served bytes. Not done, by the order's own stop: no pin invented, no file created in the source folder, no skip, no trial of other registry versions. Not measured: whether the other 27 members equal the served bytes (that needs the live package, a second live call the order forbids). The order stays pending; a decision on authoring the file (a new blob that would change the digest) or on re-deploying the function is not this worker's.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W53-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-11T18:52:00Z",
+  "one_line": "AMENDMENT 1 of TO-AR-y-113 is blocked twice: the commit gate's naming limb REFUSES the served firm_registry.json (23 graded literals, ENFORCE mode), and 20 of the other 27 members of the live package differ from the tree only in line endings (live CRLF, tree LF) with no commit holding the live bytes.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live read 2026-10-11 via get-function: the package zip (52312 bytes) has base64 sha256 YpE2MyUwdGzMfLaUGXi8cClxoVHFFmOz5LT1BYmoTa8= (equals the entry's deployed_code_sha256); 28 members, all 28 named by files[]; the download link was used once and never printed; zip deleted.",
+      "member firm_registry.json: 5229 bytes, sha256 cc3f2c63bb2d8c14a3d65b2bb2215b4089e5e776718a307660a253eebfbd25e3 (equals the IRPT_BCKEND-W4-S34 figure); read before committing: KIND of content = firm identifiers, storage-bucket names, email domains, scope flags, free-text governance notes; no person's name, no account or money figure, no credential, no token; ASCII only; 135 CRLF line endings.",
+      "bash .tools/safe-commit.sh ... -- infra/aws/lambda/investor-reporting/intake/firm_registry.json -> 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted' / 'NAMING-GATE: REFUSE 23 graded' (each hand-kept firm token, bucket name and email-domain literal graded NEW hand-kept carrier -> lookup(...)). The commit was not made; HEAD unchanged at 10288cf87c. The file was removed from the worktree again so no unpinned file remains in the source folder. safe-commit.sh lines 1053-1170: the audited override is for the PLACEMENT limb only (naming-place-override), and it writes org/audit/..., outside this order's grant; the enforce switch is org/mcp/naming-gate.enforce / NAMING_GATE_ENFORCE. None was used.",
+      "members vs live (comparing the live zip's bytes with the pin blob for the 3 staged members and with the working file at HEAD for the rest): 7 of 28 equal live before any pin (poller.py, graph_client.py, checkpoint.py, outbox.py, gate.py, keys.py, firm_destination_policy.json); firm_registry.json absent from the tree; 20 differ: every fixtures/graph/* member (FIXTURE_MANIFEST.json, 5 delta_*.json, 4 att-*.bin, 5 list_*.json, 5 *.eml). For three sampled members (delta_page1.json, att-0001.bin, AAMk-49f-0001.eml) the difference is line endings only (equal after CRLF-to-LF); the other 17 were not individually checked: the live bytes use CRLF, the tree blobs LF (git ls-files --eol shows i/lf w/lf; delta_page1.json has 1 commit, 1e1aeb1de4, LF). No commit holds the CRLF bytes of any of the 20, so step 4's pin-by-commit cannot be done for them."
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1 steps 3-4: the served firm_registry.json is committed alone in its own commit; every other member with no row that differs from live is pinned to a commit whose blob equals the live bytes; members_equal_live is recorded before and after.",
+  "world_is": "The commit of the served member is refused by the naming gate and is not made, so there is no commit to pin; separately, 20 fixture members have no commit holding their live (CRLF) bytes. Not done: no commit of firm_registry.json, no map edit, no build to the target; no override used and nothing adjusted by trial. Not measured: whether the build script, given pins for the CRLF members, would reproduce the digest (the build stages the pinned bytes, so it should; no pin could be named to test it). The order stays pending. Decisions that are not this worker's: how the served firm_registry.json lands past the naming gate (a registry row, an exemption, or the gate's enforce switch), and where CRLF fixture bytes come from (an issuer-authorised commit of the live bytes of each of the 20, which needs the same gate-passing and a binary-safe path, or a map mechanism that stages the member from outside git).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
