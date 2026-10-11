@@ -25717,3 +25717,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+## IRPT_BCKEND-D2-W285-S2 -- IB-pr-426: PyMuPDF absent on the replay box; the 409 runner cannot reach the upload route
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W285-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~285",
+  "surfaced_at": "2026-10-11T12:10:41Z",
+  "one_line": "IB-pr-426 replay: PyMuPDF (fitz) is not installed on the replay box, so the repository's pin tests that build or read a real PDF cannot run on either zip, and the 409 binding-case runner cannot reach the upload route; both limits are carried in the replay and the packet",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I -c 'import fitz' on this box: ModuleNotFoundError; pytest collection of ycharts/generate/tests/test_publisher.py, test_opal_thread_integration.py, test_publication_worker.py, test_resident_worker.py failed on import fitz (via extract/tests/test_publication.py)",
+      "replay/stubs/fitz.py (committed beside the harness) lets those modules import; any USE raises, so a test that needs a real PDF fails identically on live and built; the replay's no-regression arm counts test ids per tree and passed-on-live-not-on-built, see IB124-1_replay.json",
+      "the ~272 authz_case_runner builds entry.ENTRY; the upload route exists only in reports/generate_installed.build_boundary, so its cases read HARNESS_FileNotFoundError and are excluded from the binding arm; the route arm replays all three routes through the real build_boundary instead",
+      "the publisher validate path was built without a real PDF: replay/sites_probe_426.py stands in for foreign_firm_names and build_publication and uses a fake reports whose validate is (kind, payload); the arm's detail says so"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-426 step 5: the replay runs live zip against built zip offline with in-memory fakes, every route of the function plus the binding cases in IB-pr-416's form.",
+  "world_is": "Every route and the binding cases are replayed, but the PDF-text backend is absent here (the replay reads BackendUnavailable from foreign_firm_names on both zips; whether the Lambda's layers carry PyMuPDF was not read), so tests that need a real PDF are not exercised on either tree, and the upload route is replayed by the route arm and not by the 409 runner. Nothing was classed inert for want of an arm; no served member lacks an arm. For the issuer: the packet's 'What is NOT exercised' lists these; no action is asked of this worker.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_BCKEND-D2-W285-S3 -- IB-pr-426: two stray boto3 S3 requests with a fake key from an early scratch probe, refused
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W285-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~285",
+  "surfaced_at": "2026-10-11T12:10:41Z",
+  "one_line": "IB-pr-426 worker disclosure: an early scratch probe imported the zips' modules before the offline boto3 fake was installed, so two real boto3 S3 GetObject requests with the literal key 'fake' left the box and were refused InvalidAccessKeyId; nothing read, nothing written",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scratch probe C:/dev/_scratch285/work/probe1.py (not committed) ran generate_installed.build_boundary(...).handle on the built and the live tree; its comparison-catalogue case reached loaders._s3() and boto3 answered 'InvalidAccessKeyId ... The AWS Access Key Id you provided does not exist in our records' (printed on both runs), with AWS_ACCESS_KEY_ID=fake and a bucket name from a fake IRPT_DIRECTORY_BUCKET_MAP; two requests, one per tree",
+      "every later probe installs the in-memory boto3 fake before any packaged import and refuses socket connects and non-local name resolution (replay/generate_probe_426.py and the others); earlier pytest runs of the pin tests had a connect guard but not a name-resolution guard, so some tests resolved AWS host names and were refused at connect; the final committed replay ran with both guards and its test results record the refusals counted (IB124-1_replay.json, no-regression arm)",
+      "no vendor call, no write, no credential of this seat's was used; the requests carried the string 'fake' as the access key id"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-426 BOUNDS: BUILD ONLY plus AWS reads through the .tools/aws shim; no vendor call; the replay is offline with in-memory fakes.",
+  "world_is": "Two unauthenticated S3 GetObject requests (fake key) left the box from an early scratch probe, through boto3 rather than the shim, before the offline fake was in place; AWS refused both. No resource was read or changed. Disclosed so the bound reads as it was, not as intended.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
