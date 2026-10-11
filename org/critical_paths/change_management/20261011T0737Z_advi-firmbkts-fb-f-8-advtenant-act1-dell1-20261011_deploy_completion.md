@@ -42,3 +42,19 @@
   `portal-auth/shared-advisor-router-response.zip` VersionId `T39sO4P3JJT0ZMfr6MeZLYWNBHQ55Mk5` CodeSha256
   `vLZcOM0N0p8TMEZzTQcuSzguEV/cTpFu/iDNmFbdhBw=` bytes above 127: 0. Re-read unchanged at 08:0xZ, before the plan.
 - Signed set: pair `@d30c5fe203`, ADDENDUM 1 (WAF rider) CTO half `@d1fe697698`, order amendments 3 `@cfabb1cccc` and 4 `@b26840d8d5`.
+
+
+## APPLY ATTEMPT 2026-10-11 07:53:53Z to 07:54:41Z -- FAILED, nothing live changed (0.7.0_AE_CloudOps~FB1)
+
+- `safe-apply` of the saved plan (4 updates, equal to the signed set): seat gates ADMITTED/CLEAR, comp-tagauthz PASSED. Result:
+  `aws_wafv2_web_acl.opal_cloudfront_protection` Modifications complete after 19s; BOTH `aws_lambda_function` updates failed,
+  `lambda:UpdateFunctionCode` 403 AccessDeniedException "with an explicit deny in an identity-based policy:
+  arn:aws:iam::313476888478:policy/cloudops-dell-agent-deploy-policy" for `user/cloudops-dell1-agent-user`. The distribution update did
+  not run. `.../evidence/apply_attempt_safe-apply.out`, `deny_policy_cloudops-dell-agent-deploy-policy.json`.
+- Live after the attempt (read): distribution ETag `E1OAC26XEP0FDI` Deployed, router `:26` x5 and guard `:5` x5, no new Lambda version
+  (latest 26 and 5), ACL 6 rules byte-identical to the pre-act JSON, LockToken unchanged `848a6d0b-...`, 3 rules Count, default action Allow.
+  Nothing to roll back. `.../evidence/post_apply_get_web_acl.json`.
+- Terraform STATE diverges from live: `s3_object_version` of both functions now holds the NEW artifact versions while the code live is the
+  old build (`.../evidence/state_vs_live_after_attempt.txt`). A plan of portal-auth now lists only the ACL, so the two functions and the
+  distribution read CLEAN although nothing deployed. The ACL churn is back in the plan after its own apply (the write is a no-op in AWS).
+- Legs L2 to L5 stay OPEN. Row `ADVI_FIRMBKTS-D1-S13` BLOCKING. Entry window ends about 11:37Z.
