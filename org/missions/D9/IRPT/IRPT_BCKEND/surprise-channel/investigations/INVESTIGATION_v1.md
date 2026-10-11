@@ -27729,3 +27729,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The producer switch and the I3 gate are in the tree and in the one-tree candidate's scope, not in the live package and not in the minimal candidate. What the resident host runs is its own installed package (install-resident.sh), which this order's AWS reads cannot see, so whether the host takes the Opal branch for an allow-listed principal today is not established here."
 }
 ```
+
+## IRPT_BCKEND-D2-W316-S1 -- No staged_from row pins commentary_draft_store.py in the irpt-commentary-draft-store-lambda map entry: the member is native to source_dir, so the minimal candidate re-pins 0 rows and equals the real map byte for byte
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W316-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~316",
+  "surfaced_at": "2026-10-11T23:26:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "No staged_from row pins commentary_draft_store.py in the irpt-commentary-draft-store-lambda map entry: the member is native to source_dir, so the minimal candidate re-pins 0 rows and equals the real map byte for byte",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~316/candidate_repins.json: rows_repinned 0; store_member.store_in_files true, store_in_staged_from false, source_dir infra/aws/lambda/investor-reporting/reports",
+      "infra/aws/lambda/ci/lambda-source-map.json @b7da10ca46 entry irpt-commentary-draft-store-lambda: staged_from rows are acceptance.py, submission.py, keys.py (pin 283f7e7700) and nine repo-root files; commentary_draft_store.py is in files[] with no staged row",
+      "the candidate map written by make_candidate_map.py has sha256 eec6eea6e30c... equal to the sha256 of lambda-source-map.json at the pin (sha256sum of both files)",
+      "two BUILD_ONLY builds of the function from that candidate are byte-identical and differ from the live package in exactly 1 of 16 members, commentary_draft_store.py"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-460 Part B step 2: in this function's map entry, ONLY the row(s) that pin commentary_draft_store.py are re-pinned to the Part A commit, sha256 recomputed from git show.",
+  "world_is": "No row pins commentary_draft_store.py: it is a native member of the entry's source_dir, which the builder reads from the worktree at the pin. The candidate therefore re-pins 0 rows and is the real map byte for byte; acceptance.py and submission.py stay at their live pins because nothing re-pins them. The release read is unaffected (the built package carries the pin's blob); a Branch A apply needs no map row for this member, only a build from a tree whose store file is that blob."
+}
+```
