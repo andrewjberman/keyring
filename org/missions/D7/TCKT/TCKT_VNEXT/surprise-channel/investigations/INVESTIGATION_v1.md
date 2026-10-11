@@ -1980,3 +1980,58 @@ the denominator. Until then the criterion's expectation is the issuer's to amend
 **not established:** whether any OTHER scoped route created since the 27 was fixed is outside the clamp. I measured the two
 routes this apply added and did not sweep the rest of the API's 121 routes; that sweep is a different read with a different
 denominator.
+
+### TCKT_VNEXT-D2-W24-S1 -- the precheck's table is a list, so the handler rows go to a sibling file
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W24-S1",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~24",
+  "surfaced_at": "2026-10-11T22:10:03Z",
+  "one_line": "TO-R5-pc2 asks for a NEW top-level key ticket_handlers in the precheck's JSON table, but that table is a JSON list with no top-level key, and existing tests read it as a list; the handler rows are written to a sibling file instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~13/clamp_precheck/clamp_precheck.py main(): Path(a.out).write_text(json.dumps(table, indent=1)) where table is the list build_table returns",
+      "test_clamp_precheck.py test_irpt_host_on_a_release_build_is_clamped and test_unreadable_host_is_named_and_the_total_is_not_full iterate json.loads(out) as a list of rows (t['function']); the order says no existing test changes and the existing rows stay byte-identical",
+      "also: the shared test helper ticket_source() gained a lambda_handler router (additive, no existing test body changed) because a deployed member with no lambda_handler now exits non-zero (TICKET_HANDLERS UNREADABLE) rather than passing as 0 handlers"
+    ]
+  },
+  "spec_asserts": "The precheck's JSON table has top-level keys, and a new key ticket_handlers can be added beside the existing ones without changing the existing rows.",
+  "world_is": "The --out table is a bare list of host rows. Wrapping it in an object would change every existing row's container and break the tests that read it as a list. The handler rows are written to <out stem>_ticket_handlers.json as {ticket_handlers, dispatched, classed}; the --out file is byte-identical to before for the same inputs (asserted by test_the_read27_line_and_its_table_rows_are_unchanged).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+### TCKT_VNEXT-D2-S46 -- any holder of lambda:InvokeFunction on a function behind the portal authorizer can be any caller to it
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S46",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T22:43:51Z",
+  "one_line": "Any holder of lambda:InvokeFunction on a function behind the portal authorizer can be any caller to it: a direct invoke goes around the authorizer and the function believes the event's own caller context.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (its own word, msg 6001: 'one row in this project's channel, owner me')",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:300-309 (_actor): the caller's email, userType, firmId and allowedFirmIds are taken from event.requestContext.authorizer.lambda and from nowhere else; nothing in the handler checks that the event came through API Gateway",
+      "aws lambda get-policy on opal-ticket-api (this seat, 2026-10-11 22:4xZ): the RESOURCE policy has one statement, the API Gateway service with the portal API's source ARN; it does not bound identity-based grants",
+      "iam simulate-principal-policy for arn:aws:iam::313476888478:user/cloudops-dell2-agent-user on that function's ARN (this seat, same minute): lambda:InvokeFunction allowed, lambda:GetFunction allowed",
+      "1.0.0_SA_CTO~DELL2 msg 5396: an administrator identity reads every secret and the laptop's agent sessions run as it; by the same reasoning it may invoke any function. NOT read by this seat: which other identities hold lambda:InvokeFunction on this or any other function behind the authorizer",
+      "scope: ONE function read (opal-ticket-api) and ONE identity simulated; the sentence about 'a function behind the portal authorizer' in general is the CTO's and is inferred for every other function"
+    ]
+  },
+  "spec_asserts": "The portal authorizer is the only identity source of the ticket service (the handler's own docstring at line 301).",
+  "world_is": "It is the only identity source the handler READS, and a direct invoke supplies it. An agent identity on this box can therefore call the ticket service as any internal person, any client or any service subject, read and write, with no token. The round-6 direct-invoke act (TO-RUN-R6-fn1) uses exactly this, for five GETs under a signed pair. No grant is added by this project; whether the invoke permission should be narrower is the owner's.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

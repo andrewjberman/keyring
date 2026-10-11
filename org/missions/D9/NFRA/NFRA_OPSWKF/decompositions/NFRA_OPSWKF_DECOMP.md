@@ -163,3 +163,15 @@ route's one handler is OW-s-3; the check precedes every branch, so none is left.
 excludes it); the page's guard; the workflow handler (approve, reject and execute already require a trade-users row and a
 group, by OW-s-1's record). State coherence: no cell moves a grant, an env key, a table, SES, the ticket bridge's rules or
 the portal.
+
+### Workstream S, addition of 2026-10-11 ~22:3xZ (the issuer): the admitted arms by direct invoke, and the second door
+
+PRD v0.9 @d7de5b9217 (ratified-text half SIGNED @59cd7e46ba) reads FWD-9's admitted arm by a direct invoke of the deployed
+function; `1.0.0_SA_CTO~DELL2` msg 5949 adds FWD-8's tier arm by the same method. Both are further reads of cells `OW-sr-2` and
+`OW-sr-1` (order `TO-READ-S3`, under the pair's AMENDMENT 1, both halves signed); no new cell.
+
+| cell | builds | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|
+| `OW-s-5` | A read-only record on the second API that reaches the trade functions (`trade-submission-api`, row D2-S11): the DEPLOYED bytes of `trade-authorizer` and `trade-auth-handler` (what `/auth` issues and to whom; what context the authorizer sets), and that API's request count over 30 days. No call to the API, no invoke, no change. Ordered by `1.0.0_SA_CTO~DELL2` msg 5959, which writes the outcome on the record | FWD-8 and FWD-9 (whether "the service" has a second door that still serves) | NOT-EVALUATED | `0.7.0_AE_CloudOps~DELL2` (live AWS reads a worker subagent does not make) | LOCAL | -- | TO-READ-S3 reported |
+
+**Chains.** S5 = OW-s-5, one seat's queue behind TO-READ-S3. Fan-out 1 of 1 chains, cap 8.

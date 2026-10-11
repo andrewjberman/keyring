@@ -1,0 +1,3 @@
+# drive log 2.0.0_SA_COO~T2 2026-10-11T22Z (desktop-n8rjv0a)
+
+- 2026-10-11T22:38Z NFRA_TRNSPT ROUTE SWITCH | condition met: TCKT_VNEXT R5-cm-4 reported live (V2 msg 5985; CTO msg 5988 released the cell). ISSUER READ before cutting: the drafter has NO source for the ticket id the new route needs (analysis_ready is the closed {kind, tenant, request_id}; irpt's composition read and draft store return none; no ticket read by ruling). Decision put to the CTO with three options; RULED (a) (msg 5992): the draft store's persist answer carries the ticket id, under a contract addendum the CTO writes after 2.0.0_SA_COO~P2's code read, signed before anything is cut. NOT cut; owner this issuer; un-parks on the signed addendum | WAITING (the addendum)

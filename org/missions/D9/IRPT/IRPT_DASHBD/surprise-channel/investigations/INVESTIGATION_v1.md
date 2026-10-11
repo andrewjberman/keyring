@@ -6925,3 +6925,75 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W125-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~125",
+  "surfaced_at": "2026-10-11T22:13:22Z",
+  "one_line": "DB-b-154: the 34 moved medians of 2026-10-09 are the served price in the daily price file and in the first canonical write of that day, but the canonical object's rows for that day were rewritten the same evening (all 34 now linear_interpolation) and again later (28 of 34 yahoo_finance), so 'the final served price' has no single answer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-154 item 2: the served price objects for the day are read and, for each of the 34, the served row's own source column decides whether the median IS the served price; one split of the 34 into final-served, outranked by Yahoo, outranked by override, not placed.",
+  "world_is": "silver/prices/2026-10-09.parquet has one version (2026-10-09T00:14:50Z): 34 of 34 transaction_observed at the un-deduplicated median. canonical_prices.parquet 10-09 rows: version of 2026-10-09T00:14:48Z same 34 of 34; version current at the end of 2026-10-09 (23:03:03Z, and 23:02:48Z) 0 of 34 transaction_observed, all linear_interpolation; current version (2026-10-11T12:48:11Z) 28 yahoo_finance, 4 linear_interpolation, 2 transaction_observed at a price that is not the median. The object has about 4 writer pairs a day with no bd-price-update log event near them. The headline counts are recorded NOT_ESTABLISHED, with the per-object split in by_served_object, because B_01 load_latest_prices (lines 319-361) keeps one row per asset by latest date across the canonical object and every daily file, a tie on a same-date row whose order was not established. Counts only; no name or price. Record: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~125/MOVED_MEDIANS_SEVERITY.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~125/MOVED_MEDIANS_SEVERITY.json (final_served, by_served_object)",
+      "data/black_diamond/scripts/gold/B_01.holdings_lots.py lines 319-361",
+      "infra/aws/lambda/bd-pipeline/bd-price-update/lambda_function.py lines 301-306; data/black_diamond/scripts/silver/bd_price_update.py lines 445-467"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "hazard_standing not assessed by this worker beyond INERT-as-recorded: which object a portal figure ends up using was not followed."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W125-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~125",
+  "surfaced_at": "2026-10-11T22:13:22Z",
+  "one_line": "DB-b-154: whether the bd_price_update.py script runs today is NOT_ESTABLISHED: the Lambda is shown to write the daily price files, the SSM document is a retired no-op, no rule targets the Lambda, ssm:ListDocuments is denied, and the writer of the four-times-daily canonical rewrites is unidentified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-154 item 5: the script path's running today is established from live state (Lambda newest log event against the last write time of the two price objects, and any schedule or document that invokes the script).",
+  "world_is": "bd-price-update newest log stream 2026-10-11, events 00:18:42Z to 00:19:50Z; its daily file and canonical writes of 2026-10-11 (00:19:28Z, 00:19:26Z) fall inside it; the same on 10-10 and 10-09. SSM document opal-bd-allocation-download version 6 is a retired no-op with no price step (get-document). list-rule-names-by-target for the function returned nothing. ssm list-documents: AccessDeniedException for cloudops-dell2-agent-user (ssm:ListDocuments), recorded and not retried another way. The EC2 service bd-price-runner of EC2_MANIFEST.json and SSM command history were not read (outside the order's reads). canonical_prices.parquet has writer pairs about 04:03Z, 09:49Z, 12:47Z and 23:02Z, newer than the Lambda's last event, by a writer not identified. Answer recorded NOT_ESTABLISHED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~125/MOVED_MEDIANS_SEVERITY.json (script_path_runs_today, limits)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_DASHBD-D2-W122-S2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W126-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~126",
+  "surfaced_at": "2026-10-11T22:22:00Z",
+  "one_line": "DB-b-156: served readers of the original silver transactions store key on the FILE's day (B_03.account_gains.py line 327; bd_price_update.py line 265 and its lambda twin line 143), and all 5580 ids of 2026-08-22 and 2026-08-23 now sit in the files two days earlier, so those three readers place the same ids on a different day than before; owner of the readers is the Black Diamond gold and silver pipeline.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Row W124-S1 and the owner's record (1.0.0_SA_CTO~DELL1, box/dell1, BD49F_SILVER_TRANSACTIONS_LOSS_CHECK): no id is lost; whether a reader keyed by FILE day rather than by the transaction's own date reads a different day's figures after the move was left open as this project's question. DB-b-143 (ORIGINAL_STORE_SHAPE.json) listed the readers and did not class what they key on.",
+  "world_is": "Read in this worktree at the lines named: of 17 served readers, 3 are FILE_DAY (B_03.account_gains.py line 327: loads silver/transactions/D.parquet for day D and sums every income-type row as day D; bd_price_update.py line 265 and infra/aws/lambda/bd-pipeline/bd-price-update/lambda_function.py line 143: load the object of the target date and take the median price of every row as that date's), 5 are BOTH, 8 key on the row's own date, 1 uses no day. For the two days the oldest version of each day object (4545 and 1035 distinct ids) was compared with 84 current objects dated 2026-07-20 to 2026-10-11: all 5580 ids are found, each in exactly one current file, the file two days before the old one (2026-08-20 and 2026-08-21), none in the old day's file. No id's own trade_date or return_date equals the old file's day (0 of 5580); return_date equals the new file's day for 5580 of 5580 and trade_date for 4505 and 1030. The ids' own date values are unchanged between versions. Counts only; transaction id and date columns read, no money or account column; no S3 write. NOT_ESTABLISHED: whether those three readers have run since the rewrites (2026-08-26 to 2026-09-02), and whether any served figure for the four days 2026-08-20 to 2026-08-23 changed (no served figure was recomputed; no gold partition read). Owner as DB-b-143 recorded it: Black Diamond gold pipeline (path data/black_diamond/scripts/gold) for B_03; Black Diamond silver pipeline (data/black_diamond/scripts/silver) and the bd-pipeline lambda (infra/aws/lambda/bd-pipeline) for the price update. Record: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~126/FILE_DAY_READERS.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~126/FILE_DAY_READERS.json (readers, days, answer)",
+      "data/black_diamond/scripts/gold/B_03.account_gains.py lines 327-329, 888-893",
+      "data/black_diamond/scripts/silver/bd_price_update.py lines 263-271, 327-344, 821"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "hazard_standing not assessed by this worker: it depends on whether the three file-day readers re-ran after the rewrites and what their fingerprint or incremental logic rebuilt, which was not read."
+}
+```
