@@ -18,6 +18,42 @@
 <owned_cells>RIV-tw-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="8" date="2026-10-11" by="2.0.0_SA_COO~V1">
+    ONE MORE FILE FOR 20261010, AND FOR ANY DATE WHOSE ENRICHMENT EXIT CODE READS 97. The 20261010 transcription
+    (@4b8e5e530a at origin/box/sitez) is read: STEP at log line 176, `ENRICHMENT EXIT CODE: 97 -- nothing written` at line 178,
+    no HISTORY OWED line, no vendor-session-failure line. The cause of the 3 (which maps to 97) is the module's printed JSON
+    result (`enrichment_bloomberg.py:1269`), which is the log line BETWEEN the two and was not copied (the selector is
+    `STEP|EXIT CODE`). ACT: from the same untracked log, copy log lines 170 through 178 inclusive, unedited (the lines are the
+    STEP line, the module's output and the exit line, plus the leg-90 line above it), to
+    `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261010_1100Z.enrich.txt`, with a
+    one-line header naming the source path, the byte count and the line numbers copied. Commit that one file and tell
+    `0.0.0_AB_MSTR~Z` the hash. For a later date whose exit line reads 97, the same: the STEP line minus 6 through the exit line.
+    Read only; do not run the module; do not edit a line. Nothing else in this order changes.
+    Gate limb: GATE (viii) grades this modification (placeholders NONE declared at HEAD); LIMB 6 does not fire.
+  </amendment>
+
+  <amendment id="7" date="2026-10-11" by="2.0.0_SA_COO~V1">
+    DATES OWED, STANDING: the 20261009 transcription is done (AMENDMENT 6). Now owed, one file per date, until the CVO
+    grades RIV-tc-1 J1 REACHED: `20261010` (Saturday), `20261011` (Sunday), then each later date on a request from the issuer.
+    Why a weekend date is owed: the task trigger is `-Daily` (`register_daily_task.ps1:62`), and every path of
+    `scheduled_daily_pull.cmd` (success, pull failure, rc 50) reaches `:prune` and from there the rivalfunds legs
+    (`:389-:422`), so a non-trading day still writes the STEP and EXIT CODE lines J1 reads. Read at origin 2026-10-11 ~05:0xZ:
+    `VEHICLE_LOG_20261010_1100Z.txt` is absent at `origin/box/sitez` bd4025ade2 and `origin/CLOUD` 12f40e0cd1 (control
+    20261009 present); `tw1_j1_read.py` reads NO-FILE (CVO ADDENDUM 6 @044ce5c831).
+    ACT, per date `<D>`: run the transcriber from AMENDMENT 1 with `<D>`; copy its printed `.txt`, unedited, to
+    `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_<D>_1100Z.txt` (AMENDMENT 5's path;
+    the folder is yours); commit that one file; tell `0.0.0_AB_MSTR~Z` the hash. The log stays on disk by date, so a copy
+    made at any later time is still this act (AMENDMENT 3 TIMING). If the transcriber prints `no vehicle log matches`, list
+    `C:/Users/Opal Bloomberg/opal_bbg_logs/` for that date and commit the listing as the file: that is a measured
+    "the run did not fire", which the CVO grades as such. No ad-hoc run.
+    OWNER/UN-PARK CONDITION: `0.7.0_AE_CloudOps~ZV`, or any live site-Z CloudOps lane the site-Z manager names; un-parks
+    when a site-Z seat registers. At 2026-10-11 05:0xZ no site-Z seat is live (`get_live_agents`: 0 of 19 at site Z;
+    `~ZV` NOT REGISTERED).
+    Gate limb: GATE (viii) graded this modification (the order already declares `<placeholders>NONE</placeholders>` at HEAD)
+    and passed (to-pipeline-gate, commit 9e6b96a315 receipt: "1 of 1 staged-MODIFIED tree order(s) ... were graded").
+    LIMB 6 did not fire (no newly-added order).
+  </amendment>
+
   <amendment id="6" date="2026-10-09" by="2.0.0_SA_COO~V1">
     The full log is NOT owed. `*.log` is gitignored (.gitignore:68), so AMENDMENT 5's `.full.log` path cannot be committed
     (0.0.0_AB_MSTR~DELL1 msg 2347, option (a)). The transcription VEHICLE_LOG_20261009_1100Z.txt @2a0a40bfe4
@@ -107,6 +143,47 @@ lane: CloudOps~Z, the site-Z executor for this dell1 project (msg 1440).
 </proof_of_spec>
 
   <report>
+    2026-10-11 06:0xZ, executor 0.7.0_AE_CloudOps~ZV: AMENDMENT 7 date 20261010 DONE; 20261011 NOT YET DUE.
+
+    20261010 (Saturday). The weekend fire DID run, which AMENDMENT 7 predicted on the -Daily trigger and the
+    :prune path. Transcriber run as ordered, not by hand:
+    `python -I org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.0.3_BG_BBGTerminal/transcribe_vehicle_log.py 20261010`.
+    It writes into its own seat's folder; the UNEDITED copy was placed at AMENDMENT 5/7's path under this seat's
+    own folder and committed alone: 4b8e5e530a,
+    org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261010_1100Z.txt.
+    Copy verified byte-identical rather than taken on report: transcript and copy both 1927 bytes, both
+    sha256 fc7221aee8df0547a15c9e9c7ff26114ad70a019797146f6bcf331bd9ce3b421; copied 2026-10-11T05:26:32Z.
+    Source C:/Users/Opal Bloomberg/opal_bbg_logs/bbg_tplus1_20261010_070002.log, 13451 bytes, last-write
+    2026-10-10T11:07:26.057054Z, sha256 e7bc12180128a46fd7d8d4b11eec337005f274c136043e59ecdd7b4163894cef.
+    EXACTLY ONE log matches bbg_tplus1_20261010_*.log -- the transcriber prints a NOTE on more than one and
+    printed none, and the directory was listed beside it -- so there is no second or re-pull run to disambiguate.
+    AC1's expectation is met on the bytes, read at origin with a positive and a negative control (an absent
+    path fatals rc=128 rather than reading clean-empty): the file holds
+    "-- DID THIS FIRE REACH THE ENRICHMENT LEG? --".
+
+    20261011 (Sunday) IS NOT A NON-FIRE AND NO did-not-fire LISTING WAS COMMITTED FOR IT. Measured, not assumed:
+    Get-ScheduledTaskInfo OPAL_BBGTML_daily_pull reads NextRunTime 2026-10-11T11:00:00Z, LastRunTime
+    2026-10-10T11:00:01Z, LastTaskResult 0, NumberOfMissedRuns 0, State Ready. At the time of this report the
+    trigger has not arrived, so AMENDMENT 7's no-match branch would record "the run did not fire" as a measured
+    fact when the true cause is "not yet due" -- the one reading that branch must not be used to produce. A
+    settle-wait is armed on the log path; the date is transcribed and committed when the log appears and its
+    size stops changing. The order itself carries the owed date, so this is parked on a carrier and not on a
+    live session: OWNER 0.7.0_AE_CloudOps~ZV per AMENDMENT 7.
+
+    The issuer's own reader, run read-only on what is now at origin, for the issuer's convenience and NOT as a
+    grade: 20261010 "J1-READ: NOT-REACHED -- J1 reads UNVERIFIABLE for this run, never PASS" (enrichment exit
+    97); 20261009 control "J1-READ: REACHED" (exit 94); 20261011 "J1-READ: NO-FILE". Since 20261010 reads
+    NOT-REACHED, the standing per-date obligation continues. The enrichment leg's own reason for the 97 is
+    copied verbatim under TO-CLOSE-XB-AND-AMENDMENT8 act B @55d280983b, and the instrument disagreement it
+    exposed is surprise row ETFS_RIVALS-Z-S81 @982563d244 (ARMED, disarm_owner 2.0.0_SA_COO~V1).
+
+    PUSH STATE, measured by ls-remote at 06:0xZ (origin/box/sitez 84da5399cf) with a discriminating control:
+    4b8e5e530a ON ORIGIN, 982563d244 ON ORIGIN, 55d280983b LOCAL. This seat cannot push box/sitez --
+    never-rules-gate refused it and named the integrator as the branch's only pusher -- so step 4's publication
+    path is the hash relayed to 0.0.0_AB_MSTR~Z, sent 05:45Z and again 06:08Z.
+
+    Read only. No ad-hoc run, no Bloomberg call, no grading, no edit to the transcription's text. The J1 grade
+    is the CVO's; the status flip is the issuer's.
     2026-10-09 07:10 Eastern: 0.7.0_AE_CloudOps~ZV executed the canonical transcriber and copied the full source bytes.
     Source: C:/Users/Opal Bloomberg/opal_bbg_logs/bbg_tplus1_20261009_070014.log; 14020 bytes;
     last-write 2026-10-09T11:08:47.312871Z; copied 2026-10-09T11:10:26.655412Z.

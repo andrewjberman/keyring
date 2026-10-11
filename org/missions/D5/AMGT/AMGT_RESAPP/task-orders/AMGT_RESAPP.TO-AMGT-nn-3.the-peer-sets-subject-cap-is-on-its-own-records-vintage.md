@@ -8,6 +8,7 @@
 </decomp_ref>
 <issued_to>0.9.0_WK_AMGT_RESAPP~351</issued_to>
 <issued_by>2.0.0_SA_COO~R1</issued_by>
+<to_id>AMGT_RESAPP.TO-AMGT-nn-3</to_id>
 <placeholders>NONE</placeholders>
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- one module, one decorator, one test.
@@ -91,9 +92,10 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** CTO~DELL1 round-88 analysis @6ad172c28d item 4 (D1-S15), the "move to the header's vintage" branch; the "drop with its reason" branch is the ABSENT/UNREADABLE arm (the stored figure is kept and `cap_refresh` says why -- nothing is invented). The portal's subject row already prints the header tile's cap (AV-zzr-1); this brings the API's `peers.subject` to the same record. Member caps and ratios stay as the producer stored them; the stored object is never rewritten. Second order on slot ~351, after nn-2 (one write set, scoped_amgt.py). Served by `AMGT-nn-7`. Checks dry-run at the base: AC1 FAIL (C1, C3); AC2 PASS minus the new nn-2 file (a bound); AC3 FAIL (no file).
 
-<status>staged</status>
+<status>pending</status>
 <round>89</round>
 <slot>0.9.0_WK_AMGT_RESAPP~351</slot>
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- issuer close 2026-10-11T04:1xZ (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-351 @ef149ef3b5, proof instance VALID (worker run); issuer re-run in the worktree: AC1 R89 SUBJECT CAP YES (served cap 621657.4380015999 @ 2026-10-10T13:01:55Z against stored 541931.7824388 @ 2026-09-19T07:53:19Z; C2, C3 PASS), AC2 + AC3 106 passed. Row D1-W351-S1 (a derivation that raises on a read block is served as UNREADABLE, never a 500) ruled: stands.</status>

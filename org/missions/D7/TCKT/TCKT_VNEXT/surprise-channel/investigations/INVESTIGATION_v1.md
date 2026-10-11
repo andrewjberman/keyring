@@ -1040,3 +1040,326 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "notes": "Read from the tree, not exercised. Bears on cell R2-tr-1's oracle and on whether round 2 needs a page cell; with the CTO."
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W11-S1",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~11",
+  "surfaced_at": "2026-10-11T04:06:53Z",
+  "one_line": "The analysis-report read has no typed 'not generated yet' result; the ticket's waiting state is mapped from IrRequestError (reason code NOT_READY or NOT_FOUND, or transport 404), which the tree does not prove the deployed sections route emits for an ungenerated report.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/OwnedRequestHistory.tsx:59-64 readOwnedSections -> api.getOwnedAnalysisReport (called at :334); on ANY throw the page sets reportError and says 'Report sections are not available' -- it does not distinguish not-ready",
+      "portal/src/api/endpoints/investor-reporting.ts:1091-1098 getOwnedAnalysisReport; :970-1041 send() raises IrRequestError(publicReasonCode) for a refused envelope or IrRequestError(httpStatus) for a transport failure; no dedicated not-ready class",
+      "portal/src/pages/InvestorReporting/render/Page.tsx:108 CONTRACT_NAMED_REASON_CODES names NOT_READY and NOT_FOUND",
+      "portal/src/pages/TicketCenter/analysisRequest.ts isReportNotReady (this worker's commit e4b9f8966c on wk-TCKT_VNEXT-11-portal); tests use IrRequestError built with those codes; tree read and unit-tested, not exercised against the deployed route (LOCAL: no AWS or live API call)"
+    ]
+  },
+  "spec_asserts": "Cell R2-pg-1 item 2: a report not yet generated is a stated waiting state, read from how the chosen read reports 'no report yet'.",
+  "world_is": "The chosen read reports it only as a generic IrRequestError. The worker treated public reason code NOT_READY / NOT_FOUND or http 404 as the waiting state and every other failure as an error. If the deployed analysis/{jobId}/sections route answers an ungenerated report with another code or status (for example 409), the ticket shows an error banner instead of the waiting message. Also: OpenedReport in AnalysisRequestParts.tsx (outside this order's paths) is now unused; the panel is OpenedReportPanel in TicketCenter.tsx.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Also: bunx is absent on this box; tsc was run as 'bun x tsc -b'."
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S25",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-11T04:27:59Z",
+  "one_line": "opal-ticket-api's lambda-source-map entry is internally inconsistent and stale: its artifact_sha256 is the 2026-10-09 SA1 build while its last_deployed_commit and last_deployed_at still name the 2026-10-07 deploy, so the one field a reader would reach for as a rollback hash names neither the build that was live before this apply nor the commit beside it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json at box/dell2 HEAD, functions['opal-ticket-api']: artifact_sha256 ywAvsfx/j3RTZOoOvN+znGsRhslUT+92XNgHhcglNQA=, last_deployed_commit da431554186bd74759f3d85bc4423f42a6c4a8f9, last_deployed_at 2026-10-07T19:37:43Z, recorded_by record-terraform-deploy.sh (235 functions in the map as the printed denominator)",
+      "the same three values read identically in the uncommitted working copy, so this is not an artifact of the 4 uncommitted lines in that file -- those move the artifact_sha256 of two OTHER functions and contain 0 ticket lines",
+      "ywAvsfx... is the SA1 build, named as that deploy's uploaded content-sha256 in org/critical_paths/change_management/20261009T0450Z_tckt-vnext-sa1-clamp-20261009_deploy_completion.md leg S1, dated 2026-10-09T045422Z -- two days after the last_deployed_at beside it",
+      "aws lambda get-function-configuration --function-name opal-ticket-api read CodeSha256 HK82TEd0SQWeGqWEEG7HV10QK8agPizblDoXkvITRJA= with LastModified 2026-10-09T11:43:28Z at this order's BEFORE read, and the artifact bucket holds that build as object version TNDfJSNhCarmtqRmFU.jsPUaiO7BLSsK uploaded 2026-10-09T11:40:43Z -- a deploy the map records in no field",
+      "live CodeSha256 after this order's own apply is W03VREoMEmxNaRoADDDWrXE3IycD9c5vodB+rHBAtg0= (object version RI4EX8i.EL18LgmpA54Fixk.hmjLsH4h), which the map also does not carry; this seat cannot write it, because infra/aws/lambda/ci/ is outside the <paths> of TCKT_VNEXT.TO-APPLY-R2-rr2 and owned-paths refuses it"
+    ]
+  },
+  "spec_asserts": "The deployment rules' Rule 4 (canonical home /cloud-ops): every Lambda has an entry in infra/aws/lambda/ci/lambda-source-map.json, and this entry declares itself recorded_by record-terraform-deploy.sh -- a writer that runs per deploy and whose fields are therefore read as naming the last deploy.",
+  "world_is": "For opal-ticket-api the writer's fields have drifted apart and then stopped. artifact_sha256 advanced to the SA1 build on 2026-10-09 while last_deployed_commit and last_deployed_at did not, so within ONE entry the hash and the commit beside it describe different deploys; and neither records the 2026-10-09T11:40Z build that was actually live when this order began, nor this order's own. Rule 4 already states the map does not compare deployed bytes to built-from bytes and that code currency is the assignee's read, which is why this is INERT and why this order measured the live package by content instead. The sharper point is narrower than staleness: a reader doing a rollback could take artifact_sha256 as the previous build's hash. Here that would have been wrong -- the real prior build was HK82TEd0..., and ywAvsfx... is a build two deploys back. The correct rollback source for this apply was established from S3 object versioning and git, not from this file.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Off-task for TO-APPLY-R2-rr2 and filed as one row rather than halting, per CLAUDE.md section 2. No act is proposed here and nothing in this order depended on the map: pipeline, tf_resource and artifact key were read from it and are correct; only the deploy-recording fields are at issue. Owner for the carrier itself is unnamed in this row because record-terraform-deploy.sh is shared infrastructure and /cloud-ops already records it as having known writer failures (the CHANGELOG.json writer plus the owned-paths hook on the Andrew identity); whether that is the cause here was NOT measured."
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W11-S2",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~11",
+  "surfaced_at": "2026-10-11T04:25:50Z",
+  "one_line": "Follow-up to TCKT_VNEXT-D2-W11-S1: the code a not-generated report answers is NOT_FOUND, raised at owned_report.py:119 as AnalysisUnavailable for a job that is not READY.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:119 (read at this worktree's HEAD): `raise AnalysisUnavailable(\"ANALYSIS_REPORT_NOT_READY\")`, guarded at :118 by `if state[\"state\"] != \"READY\":`",
+      "infra/aws/lambda/investor-reporting/ops/entry.py:254 maps \"AnalysisUnavailable\" to \"NOT_FOUND\" (read at this worktree's HEAD)",
+      "portal/src/pages/TicketCenter/analysisRequest.ts isReportNotReady already treats publicReasonCode NOT_FOUND (and NOT_READY, and http 404) as the waiting state, so the shipped mapping covers this code; tree read only, not exercised against the deployed route (LOCAL)."
+    ]
+  },
+  "spec_asserts": "TCKT_VNEXT-D2-W11-S1 asked which code the analysis-report read answers for a report not yet generated.",
+  "world_is": "Per the CTO's read and the worker's re-read of owned_report.py:119 and entry.py:254, a job that is not READY raises AnalysisUnavailable, which the boundary answers NOT_FOUND. S1's code question is answered by this line. S1 is not edited (rows are append-only).",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Appended in binary mode with CRLF line endings, after S1."
+}
+```
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T04:30:40Z",
+  "id": "TCKT_VNEXT-D2-W8-S3",
+  "one_line": "R2-rn-1 AMENDMENT 1 A3: the Write tool refused fwd1_runner/REPORT_READ_REFUSALS.md ('subagents should return findings as text, not write report files'), so the refusal table is not a file; it is in the worker report.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO TCKT_VNEXT.TO-R2-rn1 AMENDMENT 1 A3 orders the file at org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~8/fwd1_runner/REPORT_READ_REFUSALS.md, inside the worker's <paths>",
+      "the Write tool call for that path returned a tool error, the file does not exist in the worktree; this seat did not route around the refusal by another writer",
+      "NOT_READY_CODES in fwd1_run.py carries the classification as a comment and the final worker report carries the full table (32 rows)"
+    ]
+  },
+  "spec_asserts": "A3: write fwd1_runner/REPORT_READ_REFUSALS.md, one row per refusal the finished-report read can raise, with the denominator, marked PROPOSED.",
+  "world_is": "The deliverable file is absent. The table exists only as text in the final worker report. 32 rows: 31 per-request raise sites read in ops/entry.py (1), ops/owned_report.py (11 + 1 re-raise), ops/owned_requests.py (11), _scope/owner_reads.py (3), ycharts/generate/durable_job.py (2), _authz/served.py _owner_read_request (3). Not read: the raise sites inside reports/repository.py and reports/retention.py reached through artifacts.head, retention.require_live, reports.index.get and reports.get (reach the caller by class only).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T04:30:40Z",
+  "id": "TCKT_VNEXT-D2-W8-S4",
+  "one_line": "R2-rn-1 A2/A3: on the finished-report read the public code NOT_FOUND cannot tell a report not yet generated from one that failed, expired or never will be; polling it to the bound records NOT_READY for all of them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:118-119 raises AnalysisUnavailable('ANALYSIS_REPORT_NOT_READY') for ANY state other than READY (CTO lead msg 4041 confirmed by reading)",
+      "infra/aws/lambda/investor-reporting/ops/entry.py:254-255 maps AnalysisUnavailable, RetentionExpired and LeaseRefused each to NOT_FOUND; _authz/errors.py:136 maps KeyError to NOT_FOUND",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py:16 STATES lists the non-READY states; read from the tree, not exercised and not the deployed bytes",
+      "no-such-request is told apart: ops/entry.py:226-228 and _scope/owner_reads.py:28-33 stop an absent or foreign record before the report read, answered NOT_AUTHORIZED at _authz/served.py:985"
+    ]
+  },
+  "spec_asserts": "A2: NOT_READY_CODES names the refusal codes that mean 'not generated yet'; the bound reached is the named result NOT_READY.",
+  "world_is": "NOT_FOUND is in NOT_READY_CODES because it is the only code the not-READY branch can answer. A generation that FAILED answers the same code and is polled 40 times 30 s apart (20 minutes) before NOT_READY is recorded. The status-job operation on the same entry is the read that carries a job's state; the order does not call it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T04:30:40Z",
+  "id": "TCKT_VNEXT-D2-W8-S5",
+  "one_line": "R2-rn-1: round 1 observed an INVALID_REQUEST_ID reason in a refusal envelope, but the HEAD boundary can only emit members of a closed public set and answers a malformed id as INVALID_INPUT, so the tree and the observation disagree on the code vocabulary NOT_READY_CODES depends on.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:88 raises RequestReadRefused('INVALID_REQUEST_ID'), the internal string",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:874-887 public_reason_for returns a code only if it is in BOUNDARY_REASONS (errors.PUBLIC_REASONS plus CONTRACT_VERSION, UNPROJECTED_GRANT, SELECTION_UNSUPPORTED), else UNEXPECTED; INVALID_REQUEST_ID is in neither (grep of served.py and errors.py finds it in neither file)",
+      "TO TCKT_VNEXT.TO-R2-rn1 WHY and rule 4 cite INVALID_REQUEST_ID as the round-1 refusal reason; the runner's existing refusal test uses that string",
+      "tree at box/dell2 HEAD only; the deployed bytes and any layer in front of the lambda were not read (no AWS or network call)"
+    ]
+  },
+  "spec_asserts": "A3: NOT_READY_CODES is set from the handler's refusal codes as the tree has them.",
+  "world_is": "Either the deployed lambda differs from HEAD, or a layer in front of it produced INVALID_REQUEST_ID, or the order's citation paraphrases. If the deployed boundary exposes internal strings, the not-ready answer would read ANALYSIS_REPORT_NOT_READY, which is not in NOT_READY_CODES, and hop (e) would end terminal on the first poll. NOT_READY_CODES is PROPOSED from the tree; the issuer's run pair is what settles it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S26",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T04:50:50Z",
+  "one_line": "L9 round 2 R2-rr-2: TO-APPLY-R2-rr2 AC2 MET. The live opal-ticket-api package, downloaded by this seat, hashes to the live CodeSha256 and holds one member byte-equal to lambda_function.py at pin a366ce52ec (negative control: the pin's parent does not match). The code delta from the previously deployed file (eb80f55340, 67068626) is 4 added lines, the report request-id shape check. Runtime, handler, memory and timeout equal the Terraform file; 8 environment keys. The check's two live arms are not exercised (cell R2-tr-1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/ledger/L8_PACKET.R2_RR2.md @16fcc87ae6 (msg 4098)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_R2_RR2_L9_GRADE_20261011.md",
+      "this seat's download of the live package (get-function Code.Location): zip base64 sha256 W03VREoM..., 1 member, sha256 ca3be343..., equal to git show a366ce52ec:infra/aws/lambda/ticket_center/lambda_function.py",
+      "git diff eb80f55340 a366ce52ec on the handler: 4 insertions, 0 deletions; git show eb80f55340:<file> sha256 67068626...",
+      "get-function-configuration opal-ticket-api: python3.11, lambda_function.lambda_handler, 256 MB, 30 s, 8 env keys, LastModified 2026-10-11T04:19:14Z; infra/aws/terraform/ticket-center :243-246",
+      "org/critical_paths/change_management/20261011T0403Z_tckt-vnext-r2-rr2-report-id-shape-20261011_deploy_completion.md (CLOSED)"
+    ]
+  },
+  "spec_asserts": "TO-APPLY-R2-rr2 AC2 (judgment): the deployed bytes are the pinned file, and nothing else moved.",
+  "world_is": "Holds on this seat's content comparison. The shape check is APPLIED and not exercised live; FWD-1 still needs a run that reads a server-minted request id.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W11-S3",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~11",
+  "surfaced_at": "2026-10-11T04:51:54Z",
+  "one_line": "On origin/DEV 26f621d51c the report PACKAGE's 'Open Report' button (AnalysisRequestParts.tsx PackageFiles/openPackageFile) reads getOwnedAnalysisRequest and shows the request projection as 'Report for <ticket>' with the request id in visible words; the ticket's own 'Open report' (this cell) reads the finished report. Both are called the report; the order said keep DEV's opener untouched, so it is kept.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal origin/DEV 26f621d51c src/pages/TicketCenter/AnalysisRequestParts.tsx: openPackageFile kind 'report' calls ir.getOwnedAnalysisRequest(requestId, firm) and hands the result to showReport; PackageFiles renders it with the local OpenedReport (rows Request, Revision, Firm, request id in a visible dd)",
+      "origin/DEV __tests__/package-open.test.tsx pins the 'owned' reader call for the package Report file (calls toEqual [['owned', ['REQ-13','fir_test']], ...]) and package-r2.test.tsx uses openPackageFile; those tests pass unchanged on the merge 7bb81fa8 (pg-suite 31 pass 0 fail)",
+      "tree read and bun tests only; no live call (LOCAL)"
+    ]
+  },
+  "spec_asserts": "TO-R2-pg1 AMENDMENT 2 C3/C4: one 'Open report' behaviour (this cell's), DEV's package file openers untouched beside it, and DEV's use of OpenedReport kept; rule 4: the request record is never presented as the report.",
+  "world_is": "After the merge two surfaces on one ticket carry the word report: (a) the ticket row's 'Open report' button, which opens the finished report through getOwnedAnalysisReport and RetainedSections, and (b) DEV's package block 'Open Report' button, which still opens the request projection through the local OpenedReport, with the request id in visible words (the UIC-23 rule B2 states). The worker kept (b) exactly as DEV has it, per C3 and C4, and did not judge it a stop condition because the order names this case; the issuer decides whether the package Report opener should read getOwnedAnalysisReport as well (a change to DEV's file and to package-open.test.tsx, outside this order's grant to alter).",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Appended in binary mode with CRLF line endings after S2. INERT: no new behaviour; it is DEV's pre-existing opener."
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S6",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T05:16:32Z",
+  "one_line": "R2-rn-1 AMENDMENT 2: the runner still writes its trace to round 1's two files (TRACE = 2.0.0_SA_COO~V2/R1_RUN/sa_r1b_trace.json and MY_TRACE = 0.7.0_AE_CloudOps~TV2/deliverables/sa_r1/sa_r1b_trace.json) and no D-item or argument names a trace path, so a round-2 run appends its record into round 1's trace files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~V2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fwd1_runner/fwd1_run.py constants TRACE and MY_TRACE (module top) are unchanged from the copy of sa_r1b_run.py:133-134",
+      "save() slots a run whose run_id differs from the file's into the next free run_N key, so it appends and does not overwrite; the round-1 record stays but the file now holds a round-2 section",
+      "D7 replaces the header fields only; D1-D8 and the argument list name no trace path; tree read and fake-layer tests only, nothing was run against AWS"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 2 D7: the trace header names this run (run label, pair, executor); the order expects a round-2 run's trace to be distinguishable from round 1's.",
+  "world_is": "The header now names the run, but the file it lands in is still round 1's R1_RUN trace plus a copy under the TV2 deliverables folder (outside any round-2 grant). Not widened by the worker: no trace-path argument was added because the order's argument list does not name one. The issuer decides before the run pair executes: add a --trace-dir style argument in a further amendment, or accept the append into run_N and read the trace by run_label.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S7",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T05:16:32Z",
+  "one_line": "R2-rn-1 AMENDMENT 2 D4: the zero-call read counts streams from filter_log_events' `searchedLogStreams`, which AWS documents as deprecated (to my recollection, returned empty since May 2023), and its positive control assumes opal-ticket-api logs the filer's email; either makes the read VOID live where the fake layer proves it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "D4 text: the read is VOID when the count of log streams searched is 0; the existing code counts len(r.get('searchedLogStreams', [])) per page (fwd1_run.py _scan_group)",
+      "the deprecation of searchedLogStreams is recalled from the CloudWatch Logs API reference, not read in this session (no network call allowed)",
+      "whether opal-ticket-api writes the filer's email into its log lines was not read; the pattern is the filer email in double quotes, the same filter as the data-refresh read"
+    ]
+  },
+  "spec_asserts": "D4: ZERO_CALLS_PROVEN is reachable when streams searched > 0 and the control over /aws/lambda/opal-ticket-api finds the filer at least once.",
+  "world_is": "If the live field is empty, streams searched is always 0 and the result is always ZERO_CALL_VOID, which fails SAFE (never a false zero) but means the proof cannot be produced; the fake tests cannot tell. The same holds if the ticket API does not log the email. INERT because the failure direction is VOID. For the issuer's run pair: read the control block and searched_log_streams in the trace; a VOID with control found 0 or streams 0 is this row, not a data-refresh call.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S8",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T05:32:28Z",
+  "one_line": "R2-rn-1 AMENDMENT 3 E1: the order says --trace-out is created if absent and holds one run, but not what happens when the path already holds a trace; I made main() refuse (rc 2, nothing done) a path that exists and is non-empty.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fwd1_run.py main(): the trace-out guard at the top of main(); test_trace_out_is_required_and_is_the_only_file_written asserts the refusal leaves the file's bytes unchanged and makes no AWS or HTTP call"
+    ]
+  },
+  "spec_asserts": "E1: the runner writes its trace to THAT file only, creating it if absent, as one JSON object for this run, with no run_N appending into an older file.",
+  "world_is": "The order is silent on an existing file. Overwriting would destroy an older run's record and appending is forbidden, so the runner refuses before any write. INERT: a reused path stops the run before the row is written; the issuer picks a fresh path per run. If the issuer wants overwrite-in-place instead, it is a one-line change in main().",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S9",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T05:32:28Z",
+  "one_line": "R2-rn-1 AMENDMENT 3 E2: the new denominator calls logs:DescribeLogStreams on two log groups; whether the run's AWS identity may call it was not read (no AWS call allowed), and a denied call makes the zero-call verdict UNREAD, not PROVEN.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "fwd1_run.py _streams_active_in_window calls logs.describe_log_streams(orderBy=LastEventTime, descending=True) on /aws/lambda/opal-data-refresh-api and /aws/lambda/opal-ticket-api, every page",
+      "the earlier read already needed logs:FilterLogEvents; whether the same identity holds logs:DescribeLogStreams was not read"
+    ]
+  },
+  "spec_asserts": "E2: the denominator is the count of log streams whose last event time is at or after iat, from describe_log_streams, every page read.",
+  "world_is": "If the identity lacks logs:DescribeLogStreams the call raises, data_refresh_zero_calls records verdict UNREAD (never a zero) and the issuer's run pair sees UNREAD in the trace. The fake tests cannot show the live permission. INERT because the failure direction is UNREAD.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S27",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T05:42:31Z",
+  "one_line": "On the deployed opal-ticket-api configuration a new ticket notifies no one: TICKET_DL_MAP parses to an object with 0 keys, so there is no row for any firm and no default, and every create takes the unconfigured branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's get-function-configuration on opal-ticket-api, 2026-10-11 ~05:4xZ: Environment.Variables.TICKET_DL_MAP parsed as JSON has 0 keys ('49financial' ABSENT, '*' ABSENT); no address was printed because none exists",
+      "infra/aws/lambda/ticket_center/lambda_function.py:819-829 (the distribution-list send and its resolver; tree read at box/dell2 HEAD, the build deployed by TO-APPLY-R2-rr2)",
+      "1.0.0_SA_CTO~DELL2 msg 4201 (the CTO's read: every create logs WE_DL_UNCONFIGURED; carried to Andrew by the CTO)"
+    ]
+  },
+  "spec_asserts": "Staff learn of a filed ticket by the distribution-list notice.",
+  "world_is": "No list is configured, so no notice is sent on a create. Not exercised by this seat: the WE_DL_* line a live create logs is recorded by the R2-tr-1 run.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed at the CTO's ask. Who is on the list is Andrew's to say; the CTO carries it. Not a gate on R2-tr-1."
+}
+```

@@ -112,11 +112,26 @@ fi
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
 [ -n "$ROOT" ] || exit 0
 
+# AUDIT path only. A LINKED worktree's --show-toplevel dies with the worktree, so the
+# verdict row goes to the common dir's parent (the main worktree). Falls back to ROOT.
+# A SUBMODULE's common dir is <super>/.git/modules/<name>, whose parent holds no .git
+# entry and is not a worktree: that parent is refused, so the row stays with ROOT.
+AUDIT_ROOT="$ROOT"
+_GCD="$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null || true)"
+if [ -n "$_GCD" ]; then
+  _GCD_PARENT="$(dirname "$_GCD")"
+  if [ -d "$_GCD_PARENT" ] && [ -e "$_GCD_PARENT/.git" ]; then AUDIT_ROOT="$(cd "$_GCD_PARENT" && pwd)"; fi
+fi
+
 # A merge commit's deletions come from the merged branch, not from this
 # committer. `git pull` (merge) after a legitimate cleanup lands would otherwise
 # false-positive on every lane. NEVER rebase (CLAUDE.md), so merges are the
 # normal integration path and must stay silent here.
-if [ -f "$ROOT/.git/MERGE_HEAD" ] || [ -f "$ROOT/.git/CHERRY_PICK_HEAD" ]; then
+# In a LINKED worktree the merge state lives in that worktree's git dir (resolved below).
+_MERGE_HEAD_PATH="$(git rev-parse --git-path MERGE_HEAD 2>/dev/null || true)"
+_CHERRY_PICK_PATH="$(git rev-parse --git-path CHERRY_PICK_HEAD 2>/dev/null || true)"
+if { [ -n "$_MERGE_HEAD_PATH" ] && [ -f "$_MERGE_HEAD_PATH" ]; } || \
+   { [ -n "$_CHERRY_PICK_PATH" ] && [ -f "$_CHERRY_PICK_PATH" ]; }; then
   exit 0
 fi
 
@@ -158,10 +173,10 @@ AGENT="$(git config user.name 2>/dev/null || echo unknown)"
 MODE="$(_effective_mode)"
 
 _audit() {  # $1 = verdict
-  mkdir -p "$(dirname "$ROOT/$AUDIT_LOG")" 2>/dev/null || true
+  mkdir -p "$(dirname "$AUDIT_ROOT/$AUDIT_LOG")" 2>/dev/null || true
   printf '%s  %-9s  agent=%s  deletions=%s  threshold=%s  mode=%s  attribution=%s\n' \
     "$ISO" "$1" "$AGENT" "$N_DEL" "$THRESHOLD" "$MODE" \
-    "${ATTR_REASON:-<none>}" >> "$ROOT/$AUDIT_LOG" 2>/dev/null || true
+    "${ATTR_REASON:-<none>}" >> "$AUDIT_ROOT/$AUDIT_LOG" 2>/dev/null || true
 }
 
 _show() {

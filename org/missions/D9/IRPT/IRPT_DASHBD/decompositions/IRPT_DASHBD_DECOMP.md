@@ -1139,3 +1139,56 @@ A producer or contract edit, if the record calls for one, is a later cell cut af
 The refreshed R45 packet (DB-b-113) stays UNSIGNED: it is refreshed once more at the handler's new bytes after this cell drains.
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~90` (worker-light), cut from box/dell2.
+
+
+## 62. ROUND 60, WORKSTREAM B (2026-10-11 ~04:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ruling msg 4036, row IRPT_DASHBD-D2-W89-S1)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-116` | FWD-11: one measurement -- every field of the written dim row 3 (income basis included) read against the Cottonwood adapter, verdict ROW3_TRUE or ROW3_FALSE; the dim row 3 partition read at the builder address with a positive control (ADVI_COTBKF's mint waits on it) | LOCAL | DB-b-114 | B60-1 |
+
+True: the stamp is method_version 3. False: a new method row is proposed under rule 24 in a later cell.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~91` (worker-light), cut from box/dell2.
+
+
+## 63. ROUND 61, WORKSTREAM B (2026-10-11 ~04:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's msgs 3940, 3999 and 4029)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-117` | E1, FWD-4: the R45 never-widen packet, second refresh, at the bytes after the handler fix -- four members from their live pins, five output hashes equal on one kit day, every manifest compared field by field against the live one, halves UNSIGNED | WORLD | DB-b-113, DB-b-115 | B61-1 |
+
+Both earlier R45 packets are superseded. The apply is a later cell, after both halves sign this packet and Monday's R44 acceptance (W78-S1).
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~92`, cut from box/dell2.
+
+
+## 64. ROUND 62, WORKSTREAM B (2026-10-11 ~04:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ruling msg 4060)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-118` | FWD-11: the thresholds a method row states carry a per-value claim (measured / inferred / held / absent) in the producer's thresholds input and the dim_return_method row; rule-24 record first, then the change with tests; no S3 write (ADVI_COTBKF's Cottonwood row 3 waits on it) | WORLD (producer floor) | DB-b-116 | B62-1 |
+
+It drains after DB-b-117: it moves an R45 member, and R45 is built from its pinned commits without this change.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~93`, cut from box/dell2.
+
+
+## 65. ROUND 63, WORKSTREAM B (2026-10-11 ~05:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's R45 refresh 2 half, condition 1, msg 4126)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-119` | E1, FWD-4: every reader of the returns manifest named with file and line, counted over scopes with their denominators, each graded on a key it does not know; a strict reader is a STOP before the R45 apply | LOCAL | DB-b-117 | B63-1 |
+
+The R45 apply is a later cell: both halves are signed; it waits on this census and on Monday's R44 acceptance (W78-S1).
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~94` (worker-light), cut from box/dell2.
+
+
+## 66. ROUND 64, WORKSTREAM B (2026-10-11 ~05:2xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ruling msg 4143, row IRPT_DASHBD-D2-W93-S3)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-120` | FWD-11: the dim_return_method contract lists method row 3; tieout_tolerance_proposed takes the same per-value claim as the five thresholds and lands typed; contract 0.5.0; rule-24 record first (one cell before ADVI_COTBKF's Cottonwood mint) | LOCAL | DB-b-118 | B64-1 |
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~95`, cut from box/dell2.

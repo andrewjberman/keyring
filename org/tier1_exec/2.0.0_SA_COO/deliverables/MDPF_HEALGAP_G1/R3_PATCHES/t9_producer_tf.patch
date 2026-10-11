@@ -1,0 +1,91 @@
+diff --git a/infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf b/infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf
+--- a/infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf
++++ b/infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf
+@@ -40,6 +40,11 @@
+ # >> resources happen to use. <<
+ # (2.0.0_SA_COO~Z ruling 11461 accepted this reasoning as the load-bearing part.)
+ # -----------------------------------------------------------------------------
++
++locals {
++  # HG-t-9: the runner's per-day meta prefix (the complete stamp lives here).
++  cot_meta_prefix = "blackdiamond/cottonwood/meta/"
++}
+ 
+ resource "aws_iam_role" "cot_satellites_registry_producer" {
+   name = "cot-satellites-registry-producer-role"
+@@ -76,10 +81,16 @@
+ #                             re-deploy. That is the whole reason the labels are read here
+ #                             rather than baked into the producer.
+ #
+-# ⛔ NO s3:ListBucket ANYWHERE, deliberately. The producer resolves its partition date
++# ⛔ NO s3:ListBucket ON BRONZE, deliberately. The producer resolves its partition date
+ # from the clock (ruling 11461 option (A)), never by listing. Granting a list "just in
+ # case" would be the grant that makes option (C) silently available to a future edit
+ # without anyone ruling on it.
++#
++# ONE EXCEPTION, ruled and narrow (MDPF_HEALGAP HG-t-9, CTO L10 round 2 @1974b85f4e): the
++# 13:15Z stamp-gated fire HEADs the runner's complete stamp under the runner's meta/ prefix.
++# Without ListBucket an ABSENT key answers 403, indistinguishable from a missing grant, so
++# the ListStampPrefix statement admits ListBucket on that ONE prefix only (StringLike on
++# s3:prefix). It cannot enumerate bronze; the handler reads 404 as absent and raises on 403.
+ #
+ # ⛔ NO GetObject ON THE WRITE TARGET. The producer never reads back what it wrote.
+ # A producer verifying its own landing through its own read grant is the self-grading
+@@ -94,6 +105,19 @@
+   policy = jsonencode({
+     Version = "2012-10-17"
+     Statement = [
++      {
++        Sid      = "ReadRunnerCompleteStamp"
++        Effect   = "Allow"
++        Action   = ["s3:GetObject"]
++        Resource = ["arn:aws:s3:::opal-data-assets/${local.cot_meta_prefix}*-complete.json"]
++      },
++      {
++        Sid       = "ListStampPrefix"
++        Effect    = "Allow"
++        Action    = ["s3:ListBucket"]
++        Resource  = ["arn:aws:s3:::opal-data-assets"]
++        Condition = { StringLike = { "s3:prefix" = [local.cot_meta_prefix] } }
++      },
+       {
+         # The roster (membership) and the per-model detail (constituent weights).
+         # BOTH are required: the roster alone yields members with no constituents,
+@@ -302,6 +326,37 @@
+   source_arn    = aws_cloudwatch_event_rule.cot_satellites_registry_producer_daily.arn
+ }
+ 
++module "stamp_gated_rule_name" {
++  source    = "../modules/opal_name"
++  system    = "etfs"
++  scope     = "cottonwood"
++  function  = "satellites-registry-producer"
++  qualifier = "stamp-gated"
++  kind      = "daily"
++}
++
++resource "aws_cloudwatch_event_rule" "cot_satellites_registry_producer_stamp_gated" {
++  name                = module.stamp_gated_rule_name.name
++  description         = "HG-t-9: second fire at 13:15Z; rebuilds only when the runner's complete stamp for today exists."
++  schedule_expression = "cron(15 13 * * ? *)"
++  state               = "ENABLED"
++}
++
++resource "aws_cloudwatch_event_target" "cot_satellites_registry_producer_stamp_gated" {
++  rule      = aws_cloudwatch_event_rule.cot_satellites_registry_producer_stamp_gated.name
++  target_id = "CotSatellitesRegistryProducerStampGated"
++  arn       = module.cot_satellites_registry_producer.function_arn
++  input     = jsonencode({ require_stamp = true })
++}
++
++resource "aws_lambda_permission" "events_cot_satellites_registry_producer_stamp_gated" {
++  statement_id  = "EventBridgeCotSatellitesRegistryProducerStampGated"
++  action        = "lambda:InvokeFunction"
++  function_name = module.cot_satellites_registry_producer.function_name
++  principal     = "events.amazonaws.com"
++  source_arn    = aws_cloudwatch_event_rule.cot_satellites_registry_producer_stamp_gated.arn
++}
++
+ # ⛔ NO ALARM, NO SNS TOPIC, NO SNS SUBSCRIPTION, NO SES SEND, NO FRESHNESS CHECKER,
+ # NO MONITOR -- standing moratorium (Andrew-direct 2026-07-28), restated in TO-6-AE.
+ # The CloudWatch log and the artifact's own `as_of` ARE the record, and the consumer

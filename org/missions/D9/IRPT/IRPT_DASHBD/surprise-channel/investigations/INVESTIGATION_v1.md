@@ -5517,3 +5517,244 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W89-S1 -- DB-b-114: Cottonwood adapter text says method_version NULL while its code stamps 3; row 3 text leaves as-traded and net-of-fees to the entry fields
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W89-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~89",
+  "surfaced_at": "2026-10-11T04:15:00Z",
+  "one_line": "DB-b-114: the Cottonwood adapter's docstring (lines 44 and 69) and its COLUMNS_NULL entry (line 136) still say method_version is NULL on purpose, but the code at line 326 reads the sources.json entry and stamps 3; and METHOD_ROWS row 3 (producer lines 115-127) does not itself state as-traded close or net of fees, and inherits income_basis and flow convention measured for the custodian channel only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py:44,69,136,326,380 @60f4b5b489",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:115-127 @60f4b5b489",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~89/COTTONWOOD_VALUE_RULE24.json"
+    ]
+  },
+  "spec_asserts": "ADVI_COTBKF-D2-W66-S1 and the adapter header assert the producer admits no value that states the method, so method_version stays NULL.",
+  "world_is": "Since DB-b-102 the producer admits row 3 and the entry names it, so the adapter code already stamps 3 and the docstring is stale; the row 3 dimension text leaves as-traded and net-of-fees to the entry fields. No served claim is false today (rows carry NULL; no mint has run).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W90-S1 -- DB-b-115: the criterion counts the lots emit_day call (handler.py:430), which takes no src, so DB59-1-AC1 cannot pass inside the grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W90-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~90",
+  "surfaced_at": "2026-10-11T04:20:00Z",
+  "one_line": "DB59-1-AC1's checker counts handler.py:430 (aal.emit_day, account_activity_lots) as a returns emit_day call that must pass src=, but aal.emit_day has no src parameter; the criterion cannot PASS without a producer edit outside the grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "The order says handler.py calls ard.emit_day three times (~430, ~579, ~620) without src=; DB59-1-AC1 fails any `emit_day` attribute call lacking a src keyword.",
+  "world_is": "Only two calls are ard.emit_day (579, 620) and both now pass src=. Line 430 is aal.emit_day(s3, table, rows, firm, day, *, upload) at account_activity_lots.py:1318, which takes no src; passing src= there raises TypeError, which emit_lots catches and records as a lots failure. The checker (p59_round59.py:35-40) matches on attr name only, so it reports FAIL at line 430.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:430",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py:1318",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r59/p59_round59.py:35-40"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T04:22:33Z",
+  "one_line": "L9 round 58 (DB-b-114): the rule-24 conclusion EXISTING_VALUES_SUFFICE is SOUND; stamping the measured Cottonwood rows return_basis TWR and method_version 3 is truthful. The record left open whether the rows used end-of-day or start-of-day flow timing, which are two different formulas; this seat read the run commit: end of day, the C-METHOD form. One condition rides the mint: the emitted dim row 3 and manifest are read for a sentence false for Cottonwood (row D2-W89-S1) before the first partition.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~89/COTTONWOOD_VALUE_RULE24.json",
+      "msg 4035 (rounds 57 and 58 drained @2a6ac2e4e0, @b01e44444e)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_ROUND_58_L9_GRADE_20261011.md",
+      "this seat's read at the run commit the served rows name (6f70d5cc01): commonwealth_daily_returns.py:65 FLOW_TIMING = \"end\", and commonwealth_fwd3_serve.py:480-481 calls daily_returns with no flow_timing argument, so the rows were computed as ret = (value_t - flow_t) / value_(t-1) - 1; the same two lines read the same at HEAD",
+      "this seat's calls on the sources.json entry _commonwealth_delivery at HEAD: method_version_of -> 3; method_text -> the C-METHOD formula plus valuation_source=positions_x_as_traded_close, fee_treatment=net_of_fees, price_basis=as_traded, with no custodian sentence; the order's check DB58-1-AC1 re-run PASS",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json:161 (return_basis: which arithmetic produced total_return_daily; TWR, the C-METHOD form), read at the cited line",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:9 and :112-125 (the formula; METHOD_ROWS row 3), read at the cited lines"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md rule 24: a value-enum proposal arrives with its four-postulate record and token census. The issuer names the conclusion a judgment for L9 (msg 4035).",
+  "world_is": "The four postulates hold and the one fact the record did not establish (flow timing) is established: end of day. Rounds 57 and 58 are terminal; rows D2-W88-S1 (ARMED) and D2-W88-S3 (ARMED) belong to the R45 release and stay with their disarm owners.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W91-S1 -- DB-b-116: the order's address recipe leaves the firm slot ambiguous; a registry key in it gave four not-found reads
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W91-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~91",
+  "surfaced_at": "2026-10-11T04:25:00Z",
+  "one_line": "DB-b-116: the face says opal_naming.address('irpt', <firm>, ...) for 'the firm scope the Cottonwood entry resolves to'; I first passed the registry key (z09 / 08335338) and the control read was not found too, so two list/head pairs read the wrong address before I rebuilt it with firm_scope() (cottonwood / 49financial).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:327-340,1894 @6bfea3096a",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~91/ROW3_VS_COTTONWOOD.json read_history"
+    ]
+  },
+  "spec_asserts": "The order permits exactly two S3 reads, the dim row 3 address and its positive control.",
+  "world_is": "Six read calls were made: an s3 ls pair and a head-object pair at the key-built (wrong) addresses, all not-found with no data read, then the head-object pair at the firm_scope-built addresses that the record uses. All reads, no object body, no write. The overrun is the worker's mis-build of the address, not a defect of the order's text, which says 'firm scope'.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W92-S1 -- DB-b-117: manifests captured through each kit's own run_backfill under a no-write guard, not by calling the emit functions by hand
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W92-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~92",
+  "surfaced_at": "2026-10-11T04:55:00Z",
+  "one_line": "DB-b-117: the order asks for each kit's emit functions called with the handler's arguments; the manifests were instead captured by running each kit's own handler.run_backfill() under a no-write guard, and the lots status record, which the run does not write, was captured by a forced-refusal call to each kit's record_lots_status.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Capture every manifest or status record the handler's run writes by calling each kit's own emit functions with the arguments the handler actually passes, against a capturing stub.",
+  "world_is": "Calling the emit functions by hand would need hand-built frames and rows; the handler's own run_backfill() reaches all five emit calls with the real arguments, so it was run per kit against a guard client (reads delegated, put_object captured, other write verbs refused, stream_to_parquet stubbed): 5 puts each side. The run writes NO status record on the kit day (every lots day lands), so that object was captured by calling record_lots_status with a forced refusal; the live handler's run_backfill does not call record_lots_status at all (DB-b-97 added it), so the live status record was compared by direct call. The scheduled call site handler.py:624 was not exercised (same expression as :581). The data write is stubbed, so the manifests' landed field is equal by construction.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~92/manifest_capture.py",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~92/R45_REFRESH2_DELTA0.json (capture, manifests)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:546-590 (run_backfill), :458-489 (record_lots_status)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W93-S1 -- DB-b-118: the six threshold-claim columns make the dim_return_method contract (0.3.0) and its round-10 check disagree with the producer's row
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W93-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~93",
+  "surfaced_at": "2026-10-11T04:54:00Z",
+  "one_line": "DB-b-118: emit_method_row now emits six more columns (five <value>_claim plus threshold_claims_source) that org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json (0.3.0) does not declare, and the round-10 check p10_1_ac1 equates the contract's columns to the row literal's keys, so it now fails.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the issuer lands a contract bump in org/standards, outside this order's <paths>; the check pins version 0.3.0 and is re-pinned or retired with it)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r10/p10_1_ac1_method_contract_matches_row.py:48-53 (cols != keys -> fail), read at the cited lines",
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json:2 (contract_version 0.3.0) and :12 (columns), read at the cited lines",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py emit_method_row row literal, six added keys (threshold_claims_of, TO-DB-b-118)",
+      "the other readers of dim_return_method found (107 files carry the term; 246 hits in 68,573 scanned) do not read the row's column set: p1_1_ac1 needs a subset of contract columns, p1_3_ac2 reads flow_convention of the served row, p2_prewindow lists keys; reporting-publish reads method_version from the returns rows"
+    ]
+  },
+  "spec_asserts": "The order: emit_method_row writes the claims, with a known-cost note that the contract is outside the grant; hiding the new keys from the literal to keep the check green was not an option.",
+  "world_is": "The contract declares the row's earlier columns; the producer's row literal now has six more keys. The contract is not bumped, the served schema_hash pin in it will not match a landed row 3, and p10_1_ac1 reports contract-only/row-only differences. No served object moved.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W93-S2 -- DB-b-118: an all-absent threshold row lands the five value columns as null-typed parquet columns
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W93-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~93",
+  "surfaced_at": "2026-10-11T04:55:00Z",
+  "one_line": "DB-b-118: emit_method_row builds the parquet with pa.Table.from_pydict({k: [v]}), so a null threshold value types its column as arrow null, not double; the row ADVI_COTBKF writes for Cottonwood (five values absent) would land five null-typed columns, as tieout_tolerance_proposed already does when no --tieout is passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the producer's table build for the method row is this lane's; the typing of the five columns is decided in the Cottonwood write's own pair, not here)",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py emit_method_row: table = pa.Table.from_pydict({k: [v] for k, v in row.items()}), unchanged by this order",
+      "this seat's own call pa.Table.from_pydict({'a':[None],'b':['absent']}).schema.types -> [DataType(null), DataType(string)]",
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json:175 (schema_hash_provenance already records that a null tieout column changes the hash)",
+      "NOT established: whether any reader of the landed parquet (a Glue/Athena table, the contract's hash check) mishandles a null-typed column; no object was read or written"
+    ]
+  },
+  "spec_asserts": "The order: a row written from thresholds whose five claims are absent with null values states that; nothing about the parquet type of a null value.",
+  "world_is": "The row dict is correct (claims 'absent', values null) and the unit test shows it. The arrow type of the five value columns for that case is null, which this order did not change and which the contract's double-typed hash does not describe.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W93-S3 -- DB-b-118: the contract lists method rows 1 and 2 while METHOD_ROWS holds row 3
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W93-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~93",
+  "surfaced_at": "2026-10-11T05:30:00Z",
+  "one_line": "DB-b-118 AMENDMENT 1: the dim_return_method contract's method_versions lists rows 1 and 2, while the producer's METHOD_ROWS holds rows 2 and 3 (row 3 from DB-b-102); the contract at 0.4.0 does not list row 3, as ordered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:115 METHOD_ROWS, read by importing the module: keys [2, 3]",
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json method_versions: method_version 1 (landed 2026-10-01) and 2; no 3",
+      "AMENDMENT 1 item 2 of IRPT_DASHBD.TO-DB-b-118 orders row 3 not added here and this one row filed"
+    ]
+  },
+  "spec_asserts": "The contract's method_versions enumerates the method versions the producer can write.",
+  "world_is": "The contract lists versions 1 and 2; the producer's METHOD_ROWS writes 2 and 3 (version 1 is the landed legacy row, no longer in METHOD_ROWS). A reader taking method_versions as the set of rows a producer can emit misses row 3. Inert: no row 3 is written by this order, and ADVI_COTBKF writes it under its own pair.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T05:21:36Z",
+  "one_line": "L9 round 62 (DB-b-118): the no-claims rule is SOUND. A thresholds input with no claims is written held (non-null) or absent (null) with threshold_claims_source defaulted_no_claims; it can never read measured, a consumer can tell a defaulted held from a stated one, and no fifth member was added to the law's set. This seat re-ran the three checks (PASS) and the new tests (32 passed). Consequence: the live 49F thresholds file carries no claims, so its next dim row understates two measured thresholds as held.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~93/THRESHOLD_CLAIM_RULE24.json",
+      "msg 4142 (rounds 59-62 drained @bbc9e11292, @2f0664fab0, @6d0b3ce3a8, @4d4e3ee317)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_ROUND_62_L9_GRADE_20261011.md",
+      "this seat's runs at HEAD (2026-10-11T05:21:36Z): p62_round62.py DB62-1-AC1, -AC2, -AC3 PASS; pytest test_threshold_claims.py 32 passed; p59 DB59-1-AC1 PASS; p60 DB60-1-AC1 PASS; p61 DB61-1-AC1 FAIL (its census compares to HEAD's bytes, which DB-b-118 moved after the R45 pin, as the issuer's message says)",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1886-1904 at HEAD: THRESHOLD_CLAIMS is the four members; an input with no threshold_claims key writes held for a non-null value and absent for a null one, with source defaulted_no_claims",
+      "docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md:19 (PROVENANCE: measured / inferred / held / absent) and CLAUDE.md section 4"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 4: a value carries its claim in a field a consumer can reject on (measured / inferred / held / absent); no such field means it may not be treated as measured. Rule 24's four postulates apply to the adopted set.",
+  "world_is": "The rule holds on all four questions this seat put to it. Rounds 59 to 62 are terminal. DB61-1-AC1 reads FAIL at HEAD by construction; the R45 packet's delta was not re-read by this seat.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

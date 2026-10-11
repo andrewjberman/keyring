@@ -1,0 +1,37 @@
+diff --git a/infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py b/infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py
+--- a/infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py
++++ b/infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py
+@@ -51,6 +51,7 @@
+ import json
+ import logging
+ import sys
++from datetime import datetime, timezone
+ from pathlib import Path
+ 
+ # THE ZIP MIRRORS THE REPO -- see build_package.py "THE LAYOUT" for the measurement.
+@@ -69,6 +70,8 @@
+ if str(_GOLD_DIR) not in sys.path:
+     sys.path.insert(0, str(_GOLD_DIR))
+ 
++import boto3  # noqa: E402
++from botocore.exceptions import ClientError  # noqa: E402
+ import build_satellites_registry as producer  # noqa: E402  path set immediately above
+ 
+ logger = logging.getLogger()
+@@ -112,6 +115,16 @@
+ 
+ def lambda_handler(event, context):  # noqa: ANN001 - Lambda signature
+     event = event or {}
++    if event.get("require_stamp"):
++        d = datetime.now(timezone.utc).strftime("%Y-%m-%d")
++        key = "%s/meta/%s-complete.json" % (producer.ROSTER_KEY.split("/bronze/")[0], d)
++        try:
++            boto3.client("s3").head_object(Bucket=producer.ASSETS_BUCKET, Key=key)
++        except ClientError as exc:
++            if exc.response.get("Error", {}).get("Code") in ("404", "NoSuchKey", "NotFound"):
++                logger.info("STAMP-ABSENT date=%s key=%s", d, key)
++                return {"rc": 0, "skipped": "stamp-absent", "date": d}
++            raise
+ 
+     # A QA invocation may ask for a dry run; a SCHEDULED fire never does. The producer
+     # honours --dry-run by deriving and validating without writing.

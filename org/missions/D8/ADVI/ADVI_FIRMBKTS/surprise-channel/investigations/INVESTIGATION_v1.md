@@ -563,3 +563,496 @@ write: **1 row** (`S1`).
   "notes": "FB-e-6 builds the path gated on the registry's own map (FIRM_BUCKET_MAP[scope] === resolved bucket), so no request changes until the map does. The cutover is the CTO's, with F10 and the advTenant remedy."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S8",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T03:55:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARM OF D1-S4 AND D1-S7 BY THEIR DISARM OWNER: F6'S FLIP, THE F10 PRODUCER REPOINT, A DELTA COPY AND THE advTenant REMEDY ARE ONE CUTOVER WINDOW, PLACED IN ROUND 3; UNTIL THEN THE COPY IS INERT AND THE F6 PATH IS GATED ON THE REGISTRY MAP",
+  "spec_asserts": "D1-S4: a router flip before the producers repoint serves a day-old copy. D1-S7: an ungated bucket-keyed rewrite would change the ?firm=49financial staff proxy with no registry edit, and firm-config.mjs forbids a shared-bucket value change before the advTenant remedy.",
+  "world_is": "Neither hazard can fire in round 2. F6 is built dormant and not deployed. FB-e-6 gates the canonical path on FIRM_BUCKET_MAP[scope] === the resolved bucket, so no request changes until the map does (D1-S7 notes: 193 of 193 identical on the gated build). F7's copy is NEW keys only and nothing reads them (CTO half, condition 2). Placement: round 3 carries ONE cutover family, and nothing of it is cut before F7 reads COPY-COMPLETE and F6 is built. The family, in order inside one window, each with its own never-widen pair: (1) the advTenant remedy lands first; (2) the F10 platinum producers repoint to address() keys in opal-data-49financial; (3) a delta copy against a fresh manifest reads COPY-COMPLETE; (4) the FIRM_CONFIG map value moves and F6 deploys. No window leaves both homes written or both read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND2_F7_COPY_CTO_HALF.md (conditions 1-3; the D1-S4 section)",
+      "ADVI_FIRMBKTS-D1-S4 notes: un-park on the CTO placing F10's repoint or a resync inside the flip window, plus the advTenant remedy if a map value changes",
+      "ADVI_FIRMBKTS-D1-S7 notes and evidence: FB-e-6 gated build 193 of 193 identical; the cutover named as the CTO's, with F10 and the advTenant remedy"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolves D1-S4 and D1-S7 as hazards (the D1-S8 shape used elsewhere for a disarm); GRADUATED stays the CVO's L9 field. The round-3 enrichment list carries the cutover family as one item."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S9",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T04:23:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "THE ISSUER CUT FB-e-6 WITHOUT RUNNING THE NAMING GATE ON ITS PATCH: THE GATE REFUSED THE FIRM-NAME TABLE AND THE SPEC'S KEY-SHAPED LITERALS AT THE WORKER'S COMMIT, AND THE ROUTER WAS RE-CUT WITH AN EMPTY CANONICAL-BUCKET LIST",
+  "spec_asserts": "The issuer's cut dry-ran every mechanical check at the base (DISPATCH Step 2) and, for FB-e-7, the naming gate on the diff. FB-e-6's patch @76bff7e7d4 was proved by its own harness and the router's gate, and its infra/ paths are graded by the commit-time naming gate (CLAUDE.md rule 30).",
+  "world_is": "Worker ~9's commit of the v1 patch was refused by naming-gate.py --enforce (35 graded): index.mjs:126 typed the three long-form firm names as a hand-kept scope table, and the new spec typed firm names and platinum-prefixed key strings. The issuer did not run naming-gate.py --diff on the patch before the cut; running it afterwards reproduced the refusal. The re-cut (patch @ F6_ROUTER_EDIT.patch, v3): the router carries an EMPTY CANONICAL_PLATINUM_BUCKETS list and derives a bucket's scope from its own name after the prefix; the spec types no firm name (it reads FIRM_CONFIG) and builds its keys from the router's exported class table; naming-gate.py --diff --enforce on the v3 diff reads PASS 0 graded; the router's gate reads 39 pass; r2_f6.mjs diff 193 of 193, seam 20 of 20 and 10 of 10 controls; a mutant with a non-empty list fails diff 183 of 193 and seam controls 9 of 10.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker ~9 report 2026-10-11 and its row ADVI_FIRMBKTS-D1-W9-S4 (the refusal text)",
+      "python .tools/naming-gate.py --diff <v1 patch> --enforce -> NAMING REFUSE index.mjs:126 and spec lines 40, 52, 55, 81, 83 (issuer's run)",
+      "python .tools/naming-gate.py --diff <v3 patch> --enforce -> NAMING-GATE: PASS 0 graded (issuer's run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The activation changed from the registry's map (rows D1-S4/S7's design) to an explicit list: a cutover now needs the map edit AND one list entry, and the list entry is a hand-kept firm carrier the naming gate will grade, so the cutover cell either registers it (infra/logic/registry/) or generates it from the registry. That is the CTO's round-3 cutover window. The dormant build is stronger than before: it cannot change a request until a list entry exists."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W7-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~7",
+  "surfaced_at": "2026-10-11T03:57:49Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "F4 negative arm N4 passes on the absence of the deny text alone: the cot role's cottonwood read is refused by an identity-side implicit deny, so the fence's admit leg for its own firm is not exercised by this run",
+  "spec_asserts": "Round-2 cell FB-e-4 / PRD F4 (r2_f4.py N4): the cot role's read of opal-data-cottonwood is NOT refused by the resource-based deny, so the difference control shows the fence refuses the other firm's role and admits its own.",
+  "world_is": "Evidence F4_NEGARM_EVIDENCE.json (command f95a10b3-ab60-40b0-a673-3fce3a6258d9, runner i-0167fd745ad906a66, caller assumed-role/irpt-cot-ycharts-research-role/fb-r2-4-negarm): the INF read is refused with 'explicit deny in a resource-based policy'; the COT read is ALSO refused, with 'because no identity-based policy allows the s3:ListBucket action'. The cottonwood refusal is an identity-side implicit deny, not a fence admit. N4 (r2_f4.py:98-100) tests only that the deny phrase is absent from the COT text, so it passes; the fence's admit of its own firm is shown only by policy text (P3), not by an exercised read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~7/F4_NEGARM_EVIDENCE.json @8a41501ebc (COT line: because no identity-based policy allows the s3:ListBucket action)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f4.py:98-100 @8a41501ebc (N4 tests DENY_PHRASE not in COT text only)",
+      "r2_f4.py --arms negative on the evidence file: 4 of 4 arms, rc 0, reproduced on two runs; mutant with the INF deny text removed gives N3 FAIL, 3 of 4, rc 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded, not graded. The cell's acceptance reads as written (AC2 4 of 4). Whether the difference control must exercise the cottonwood admit leg is for the issuer and the L9 adjudicator; the cot role's missing identity permission on opal-data-cottonwood is not ruled on here."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W7-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~7",
+  "surfaced_at": "2026-10-11T04:10:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AC1 and AC2 expect lines read 'ROUND 2 F4 ... ARMS -- and exit=0' on one line, but the invocation prints the arms line and 'exit=0' on two lines, so the expect string never occurs in the verbatim output",
+  "spec_asserts": "Round-2 TO-FB-e-4 AC1 expect: 'ROUND 2 F4 POSITIVE: 3 of 3 arms -- and exit=0'; AC2 expect: 'ROUND 2 F4 NEGATIVE: 4 of 4 arms -- and exit=0'. The invocation's output is the stated line followed by an echo of the exit code.",
+  "world_is": "Verbatim output of both invocations (run at 8a41501ebc in the worktree): 'ROUND 2 F4 POSITIVE: 3 of 3 arms' and 'exit=0' on separate lines; 'ROUND 2 F4 NEGATIVE: 4 of 4 arms' and 'exit=0' on separate lines. Substance matches (3 of 3 and 4 of 4, exit 0). proof-of-spec-check matches expect as a regex on output_evidence and reports both rows VIOLATION (status PASS not matched). Worker recorded the verbatim output and status FAIL; the expect text was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-e-4.f4-arms.md @8a41501ebc (section 4 AC1 and AC2 expect text)",
+      "proof-of-spec-check.py conditional_checks expect match (re.search over output_evidence) @732412e179 -> VIOLATION acceptance[AC1] and acceptance[AC2] on the first run",
+      "AC1 and AC2 invocations run in the worktree @8a41501ebc: 'ROUND 2 F4 POSITIVE: 3 of 3 arms' / 'exit=0'; 'ROUND 2 F4 NEGATIVE: 4 of 4 arms' / 'exit=0'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded, not graded. The format difference is for the issuer and the L9 adjudicator to rule on; the order stays open with AC1 and AC2 recorded FAIL on the mechanical expect match, and no flip is made."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W7-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~7",
+  "surfaced_at": "2026-10-11T04:12:47Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "THE LAYER-2 FLIP GATE CANNOT FIND THE PROOF INSTANCE OF A TREE ORDER WHOSE FILENAME CARRIES A SUFFIX, SO TO-FB-e-4's complete flip is REFUSED although its instance is VALID and both criteria PASS by output",
+  "spec_asserts": "to-pipeline-gate.py check_complete_flip (:3244-3255, :3176-3191): for a tree order the instance is searched as deliverables/*/<stem>.proof_of_spec.json, where <stem> is the ORDER FILENAME minus .md; the <proof_of_spec> block may also name the instance path. The order's own face (section 5) names the instance as ADVI_FIRMBKTS.TO-FB-e-4.proof_of_spec.json.",
+  "world_is": "The order is org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-e-4.f4-arms.md, so the gate's stem is ADVI_FIRMBKTS.TO-FB-e-4.f4-arms and it searches for ADVI_FIRMBKTS.TO-FB-e-4.f4-arms.proof_of_spec.json, which does not exist. The instance is at deliverables/0.9.0_WK_ADVI_FIRMBKTS~7/ADVI_FIRMBKTS.TO-FB-e-4.proof_of_spec.json. The <proof_of_spec> block (section 4) names no instance path, so the tag route finds none. The commit refused with 'flips to complete on PIPELINE-REGISTERED project ADVI_FIRMBKTS, and NO proof-of-spec instance was found beside it'. The instance itself passes proof-of-spec-check.py AC1,AC2 rc=0 VALID.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh of the order flip + instance (0.9.0_WK_ADVI_FIRMBKTS~7 worktree, branch wk-ADVI_FIRMBKTS-7, base 105ca3c82e), 2026-10-11T04:1xZ: 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). Commit aborted; files unstaged.' and the to-pipeline-gate REFUSED line quoted above",
+      "proof-of-spec-check.py ADVI_FIRMBKTS.TO-FB-e-4.proof_of_spec.json AC1,AC2 @worktree -> VALID (rc=0), violations=0",
+      ".tools/to-pipeline-gate.py:3176-3191 @worktree (_proof_instance_candidates: names = (stem + '.proof_of_spec.json', ...) with stem = basename(rel) minus '.md'; tree glob deliverables/*/<n>)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded, not worked around. Not renamed (the instance path is the one the order names), no <proof_of_spec> path added to the issuer's literal block, and no # pipeline-override line added, because the order is in pipeline. The order is left status pending on the worker branch; the criteria are PASS by output. Owner of the choice: the issuer 2.0.0_SA_COO~B1 (name the instance to the order stem, or add its path to the block) or the gate's owner (search by to_id as well as stem)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W8-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~8",
+  "surfaced_at": "2026-10-11T04:10:42Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "THE F7 PROOF INSTANCE IS NAMED BY THE ORDER AS D/ADVI_FIRMBKTS.TO-FB-e-5.proof_of_spec.json, BUT THE COMPLETE-FLIP GATE LOOKS FOR THE ORDER FILE STEM, ADVI_FIRMBKTS.TO-FB-e-5.f7-copy.proof_of_spec.json, SO THE STATUS FLIP IS REFUSED",
+  "spec_asserts": "ADVI_FIRMBKTS.TO-FB-e-5 section 5: the instance sits at D/ADVI_FIRMBKTS.TO-FB-e-5.proof_of_spec.json and the order's <status> flips to complete in the same commit once AC1-AC3 pass; section 1a step 6 commits the instance with the status flip together.",
+  "world_is": "proof-of-spec-check.py on the named instance returns rc=0 (3 of 3 rows, 0 violations). The complete-flip gate (.tools/to-pipeline-gate.py check_complete_flip, candidates from _proof_instance_candidates at lines 3176-3191) takes the order file stem ADVI_FIRMBKTS.TO-FB-e-5.f7-copy and globs deliverables/*/ADVI_FIRMBKTS.TO-FB-e-5.f7-copy.proof_of_spec.json. The order's <proof_of_spec> block (section 4) names no literal instance path, so the tag lookup adds no candidate. The gate refuses the flip with 'NO proof-of-spec instance was found beside it'. The worker did not rename the instance or edit the order's proof block; the order's <status> stays pending in the committed state.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-e-5.f7-copy.md @aca87f5ef8 (section 5 names D/ADVI_FIRMBKTS.TO-FB-e-5.proof_of_spec.json; section 4 proof block names no literal path)",
+      ".tools/to-pipeline-gate.py @aca87f5ef8 lines 3176-3191 (_proof_instance_candidates: stem = basename minus .md)",
+      "commit-attempt output of 0.9.0_WK_ADVI_FIRMBKTS~8 at 2026-10-11T04:10Z: REFUSED, 1 violation, instance not found beside the order"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Needs the COO or CTO ruling: either the instance takes the gate's stem name (ADVI_FIRMBKTS.TO-FB-e-5.f7-copy.proof_of_spec.json) or the order gains a literal <proof_of_spec> instance path. The copy itself is complete and verified (AC1-AC3 PASS); only the status flip waits on this."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W10-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~10",
+  "surfaced_at": "2026-10-11T04:06:27Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1",
+  "one_line": "THE TO-PIPELINE GATE CANNOT FIND A TREE PROOF INSTANCE NAMED AS THE ORDER NAMES IT, SO A VALID INSTANCE CANNOT FLIP ITS ORDER TO complete",
+  "spec_asserts": "ADVI_FIRMBKTS.TO-FB-e-7 section 5: the instance is at deliverables/0.9.0_WK_ADVI_FIRMBKTS~10/ADVI_FIRMBKTS.TO-FB-e-7.proof_of_spec.json, and the order's status flips to complete in the same commit as the instance.",
+  "world_is": "The instance at that path is VALID (proof-of-spec-check.py rc=0 on AC1,AC2,AC3, all PASS) and is committed at 7329f897dd. The flip commit is REFUSED by the TO issuance gate: 'NO proof-of-spec instance was found beside it'. to-pipeline-gate.py resolves a tree instance only by the TO file stem (ADVI_FIRMBKTS.TO-FB-e-7.s11-tolerant-load.proof_of_spec.json, lines 3176-3191) or by a backticked path inside the order's <proof_of_spec> block (lines 3156-3173), and this order's block names no instance path. The order therefore cannot reach complete under the gate as written. The flip is NOT committed; the order stays pending on the branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check.py ... ADVI_FIRMBKTS.TO-FB-e-7.proof_of_spec.json AC1,AC2,AC3 -> VALID (rc=0) @7329f897dd",
+      "safe-commit flip attempt, 2 attempts (before and after the instance commit): to-pipeline-gate REFUSED, 'NO proof-of-spec instance was found beside it'",
+      ".tools/to-pipeline-gate.py:3156-3191 @62f4b5441e (stem and tag lookup)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not worked around: the instance was NOT renamed to the stem name, the order's <proof_of_spec> block was NOT edited, and no pipeline-override line was added (the TO is pipeline-registered). Disarm candidates for the owner: a stem-named mirror, or the gate reading the instance path from the order's section 5 'Instance at' line. The gate's own FIX text asks for the two blocks in the TO face."
+}
+```
+
+```json
+{
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~4",
+  "surfaced_at": "2026-10-11T04:20:38Z",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_FIRMBKTS-D1-W4-S1",
+  "class": "BLOCKING",
+  "one_line": "ROUND-1 COLLISION: cot gold/positions_cube/ AND gold/timeseries/positions_cube/ WRITE THE SAME 171 DATED KEYS, SO 1b (COPY UNCHANGED) AND 1e (A COLLIDING GROUP IS FAULT) CANNOT BOTH HOLD; P2 FAILS ON THIS GROUP",
+  "spec_asserts": "FB-e-1 1b: every round-1 MOVE/HOME row is copied UNCHANGED (check V5). 1e: a destination table shared with overlap above 0 makes EVERY class of the group FAULT. P2: every shared table needs a merge ruling with overlap_keys 0.",
+  "world_is": "mapping.json cot rows gold/positions_cube/ and gold/timeseries/positions_cube/ both map to advi/cottonwood/gold/positions_cube/date=<D>/data.parquet. Live listing (read-only, 2026-10-11): 171 keys per class with the same dates, overlap 342 of 342. Left unchanged and UNRULED in mapping_v2.json; r2_mapping.py --arms repair: P2 FAIL, AC2 3 of 4.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping.json (cot gold/positions_cube/, gold/timeseries/positions_cube/)",
+      "boto3 list_objects_v2 on opal-data-cot, read-only, prefixes gold/positions_cube/ and gold/timeseries/positions_cube/",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v2.json"
+    ]
+  },
+  "notes": "The CTO rules whether one of the two round-1 rows becomes FAULT (a round-1 change) or the table is re-keyed. Neither is taken here."
+}
+```
+
+```json
+{
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~4",
+  "surfaced_at": "2026-10-11T04:20:38Z",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_FIRMBKTS-D1-W4-S2",
+  "class": "OBSERVATION",
+  "one_line": "RS4 COMPLETION MARKERS HAVE NO CLASS IDENTITY IN THEIR DESTINATION: 13 CLASSES IN TWO bd/cot STATE-COMPLETE GROUPS COLLIDE (217 AND 401 SHARED KEYS) AND 1e FAULTS THEM",
+  "spec_asserts": "1c RS4 writes {V}/{F}/state/complete/<seg1>/<rest> with no class segment, so markers from different classes collide whenever the same name recurs.",
+  "world_is": "forwardfill_v2/allocations/_complete/2026-07-20.json and forwardfill_v2/transactions/_complete/2026-07-20.json (cot) both map to blackdiamond/cottonwood/state/complete/_complete/2026-07-20.json under the class-prefix convention. Groups: bd state/complete 5 classes overlap 217; cot state/complete 8 classes overlap 401.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v2.json (state/complete rows)",
+      ".scratch overlap pass, live listing 2026-10-11 (uncommitted, worktree scratch)"
+    ]
+  },
+  "notes": "The convention (matched prefix = class or child prefix) keeps keys unique within a class. Cross-class collisions remain; a rule that carries the kind in the table would clear them."
+}
+```
+
+```json
+{
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~4",
+  "surfaced_at": "2026-10-11T04:20:38Z",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_FIRMBKTS-D1-W4-S3",
+  "class": "OBSERVATION",
+  "one_line": "A ZERO-BYTE MARKER EQUAL TO ITS CLASS PREFIX CANNOT BE A RE-GRID CHILD: bd gold/cohorts/, filters/, nna/, snapshots/, summary/, timeseries/ KEEP THE MARKER IN A FAULT REMAINDER",
+  "spec_asserts": "1c RC: a key ending in / is a zero-byte directory marker, RETIRE. 1d: a re-grid child is a prefix that starts with its parent; the checker forbids two rows with one prefix.",
+  "world_is": "The marker key equals the class prefix (gold/cohorts/ and the like). A child keeping that prefix would duplicate the parent prefix, so the marker sits in the FAULT rest child with the non-MOVE objects. gold/clients/ (bd, 2949 live objects) stays FAULT whole for the same reason plus S5.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v2.json (regrids: bd gold/cohorts/, gold/filters/, gold/nna/, gold/snapshots/, gold/summary/, gold/timeseries/)",
+      "r2_mapping.py repair: duplicates=0 at structure V2"
+    ]
+  },
+  "notes": "The spec does not say how a marker equal to its prefix is split. A FAULT remainder is the conservative reading (1c: a rule that cannot apply as written is FAULT)."
+}
+```
+
+```json
+{
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~4",
+  "surfaced_at": "2026-10-11T04:20:38Z",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_FIRMBKTS-D1-W4-S4",
+  "class": "OBSERVATION",
+  "one_line": "1e TAKEN LITERALLY FAULTS ROUND-1 PLACED CLASSES THAT COLLIDE WITH NEW CLASSES; ONLY THE NEW CLASSES ARE FAULTED HERE, TO KEEP 1b",
+  "spec_asserts": "1e: every class of a colliding group becomes FAULT. 1b: round-1 placed rows are copied unchanged (V5).",
+  "world_is": "Round-1 classes in a new-vs-old overlap: bd gold/artifacts/ (44 keys in the group), bd platinum/advisors/ (980 keys; 77 shared with new gold/advisors/ keys), bd canonical/schwab/gold/account_performance/ and client_performance/, cot gold/artifacts/. The new classes of those groups are FAULT (reason destination-key overlap n of m); the round-1 rows stay.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v2.json (collisions, FAULT rows with reason destination-key overlap)",
+      "r2_mapping.py repair P2 and structure V5"
+    ]
+  },
+  "notes": "A CTO ruling could instead FAULT the round-1 rows (a change the difference control forbids) or key the new rows apart."
+}
+```
+
+```json
+{
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~4",
+  "surfaced_at": "2026-10-11T04:20:38Z",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_FIRMBKTS-D1-W4-S5",
+  "class": "OBSERVATION",
+  "one_line": "INTERLEAVED MARKERS AND DATA: A PREFIX RE-GRID WOULD NEED ONE CHILD PER FILE; 6 CLASSES (23,977 LIVE OBJECTS) STAY FAULT WHOLE ABOVE A 25-CHILD LIMIT THE SPEC DOES NOT SET",
+  "spec_asserts": "1d names children as sub-directories, root files or exclude groups; it sets no limit on the number of children.",
+  "world_is": "bronze/orion-api/ (17170 live objects, 3488 children), bronze/eclipse/ (1798, 270), bronze/eclipse_qa/ (871, 134), gold/eclipse/ (529, 265), silver/eclipse/ (660, 264); gold/clients/ (2949 root JSON beside a marker). Each stays one FAULT row with the reason naming the child count.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v2.json (FAULT rows, reason interleaved completion markers)",
+      "boto3 list_objects_v2 read-only on opal-data-inf and opal-data-bd, 2026-10-11"
+    ]
+  },
+  "notes": "The limit (25) is the worker's, not the spec's. The CTO may rule per-file children or a per-date re-grid."
+}
+```
+
+```json
+{
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~4",
+  "surfaced_at": "2026-10-11T04:20:38Z",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_FIRMBKTS-D1-W4-S6",
+  "class": "OBSERVATION",
+  "one_line": "CENSUS DRIFT: the 226 round-1 FAULT classes hold 114,349 live objects at 2026-10-11T04:01:07Z against 114,045 in census.json (2026-10-09T20:36:32Z); 42 classes differ",
+  "spec_asserts": "Re-grid parent_objects are live counts under the parent (1d).",
+  "world_is": "Per-class live counts exceed census counts by up to 16 objects (bd forwardfill_v2/transactions/ 310 against 306 census). Re-grid denominators use the live listing; census_listed_at stays the census value.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/census.json (listed_at 2026-10-09T20:36:32Z)",
+      ".scratch fault_listing.json, live list 2026-10-11T04:01:07Z (uncommitted)"
+    ]
+  },
+  "notes": "Census figures are kept as the census denominator (444 classes, 238,861 objects). The live difference is recorded here, not re-censused."
+}
+```
+```json
+{
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~4",
+  "surfaced_at": "2026-10-11T04:33:32Z",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_FIRMBKTS-D1-W4-S7",
+  "class": "OBSERVATION",
+  "one_line": "SHELL CWD DOES NOT PERSIST: THE ORDER'S CD-ONLY CALL DID NOT CARRY TO THE NEXT CALL, SO THE CHECKER RAN IN THE BASE CHECKOUT AND READ 0 OF 5 (ABSENT)",
+  "spec_asserts": "Step 4 runs each checker invocation in its own Bash call AFTER a first call that only does cd to the worktree, so the check reads the worktree's files.",
+  "world_is": "The Bash tool resets its working directory between calls: the cd-only call did not persist, so the invocation's cd \"$(git rev-parse --show-toplevel)\" ran git in the base checkout C:/dev/ajb_workspace. The checker printed ABSENT or unreadable (mapping_v2.json not found there) and ROUND 2 MAPPING STRUCTURE: 0 of 5 arms, exit=1. Recovered by prefixing the same call with cd /c/dev/wk-firmbkts-4; the recorded invocation text and the checker output lines are unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_mapping.py@2ca0be7c81 (_root() reads git rev-parse --show-toplevel from the process cwd)",
+      "worker run 2026-10-11: first structure run from the base cwd printed ABSENT and 0 of 5; the same command prefixed with cd to the worktree printed 5 of 5, exit=0"
+    ]
+  },
+  "notes": "Fail-soft: the checker catches the read error and exits 1 with a message, so a bare run from the wrong tree reads as a FAIL on a correct table. Not an order defect in the check text; the cd prefix is the only change, and the worker's proof instance records the order's invocation verbatim."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W9-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~9",
+  "surfaced_at": "2026-10-11T04:02:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-e-6: THE ROUTER AT BASE ALREADY CARRIES 5 NON-ASCII COMMENT LINES (EM DASHES); THE PATCH ADDS NONE, SO THE ORDER'S NO-NON-ASCII BOUND IS NOT MET BY THE BASE FILE AND IS NOT FIXED HERE",
+  "spec_asserts": "Task order FB-e-6 section 2.5: No non-ASCII; LF line endings. Section 2.1: the edit is the patch and nothing else.",
+  "world_is": "At fda1c4f0cc, infra/aws/lambda-edge/shared-advisor-router/index.mjs has 5 lines with non-ASCII characters (base lines 49, 224, 231, 259, 424: em dashes in comments). After git apply of F6_ROUTER_EDIT.patch the same 5 lines remain (new lines 49, 255, 262, 291, 475) and the patch adds 0 non-ASCII lines. Line endings: 0 CR bytes in index.mjs and in the new spec file. The new spec file test/canonical-platinum.spec.mjs has 0 non-ASCII lines.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show fda1c4f0cc:infra/aws/lambda-edge/shared-advisor-router/index.mjs, grep -P '[^\\x00-\\x7F]' = 5 lines @fda1c4f0cc",
+      "infra/aws/lambda-edge/shared-advisor-router/index.mjs in worktree wk-ADVI_FIRMBKTS-9 after git apply, grep -P '[^\\x00-\\x7F]' = 5 lines (same text)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed by this cell: removing the five characters edits lines outside the patch, which section 2.1 forbids. AC1-AC3 do not read it. A later router edit decides it: the whole file goes ASCII, or every reader is explicit (CLAUDE.md section 4, non-ASCII rule)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W9-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~9",
+  "surfaced_at": "2026-10-11T04:02:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B1",
+  "one_line": "FB-e-6 AC1 INVOCATION: cd \"$(git rev-parse --show-toplevel)\" RESOLVES THE SHELL'S OWN CHECKOUT; RUN FROM THE DEFAULT CWD IT GATES THE BASE ROUTER AND READS 31 PASS ACROSS 2 FILES WITH EXIT 0, NOT THE WORKTREE'S 39 ACROSS 3",
+  "spec_asserts": "Task order FB-e-6 section 4 AC1 invocation: export PATH=...; cd \"$(git rev-parse --show-toplevel)\" && timeout 110 bash infra/aws/lambda-edge/shared-advisor-router/run-gate.sh; expect N pass with N at least 36 (39 expected), 0 fail, across 3 files, exit=0. Worker face: cd to the worktree before every Bash call.",
+  "world_is": "Run as the first command of a Bash call whose cwd is the main workspace C:/Dev/ajb_workspace, the invocation's git rev-parse returns that checkout; run-gate.sh does cd \"$(dirname \"$0\")\" and runs bun test there: 31 pass, 0 fail, Ran 31 tests across 2 files, exit=0, with the new spec file absent from that run. Only an explicit prior cd into the worktree gives 39 pass, 0 fail, 3 files, exit=0. Measured 2026-10-11 on dell1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run-gate.sh (worktree wk-ADVI_FIRMBKTS-9, @fda1c4f0cc+patch): line 'cd \"$(dirname \"$0\")\"' then exec bun run test",
+      "AC1 run 1, cwd C:/Dev/ajb_workspace: 'OK: running ... in /c/dev/ajb_workspace/infra/aws/lambda-edge/shared-advisor-router', 31 pass, 0 fail, 2 files, exit=0",
+      "AC1 run 2, after cd /c/dev/wk-firmbkts-9: 'OK: running ... in /c/dev/wk-firmbkts-9/infra/aws/lambda-edge/shared-advisor-router', 39 pass, 0 fail, 3 files, exit=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The false reading has the shape of a pass (exit 0, 0 fail), so the disarm is the issuer's: the next round cut states the invocation with an explicit cd into the worktree, or names the worktree root as the read point. The worker re-ran AC1 from the worktree and the proof records 39 of 39 from the worktree; the run from the default cwd is not the AC1 reading."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W9-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~9",
+  "surfaced_at": "2026-10-11T04:02:30Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "FB-e-6 STATUS FLIP IS OUTSIDE MY WRITE GRANT: task-orders/ADVI_FIRMBKTS.TO-FB-e-6.f6-canonical-key-path.md is not in <paths>, so this worker does not flip <status> pending to complete; AC1-AC3 pass and the proof instance is committed",
+  "spec_asserts": "Task order FB-e-6 section 5: flip this order's <status> to complete in the SAME commit as the proof instance, when AC1-AC3 pass. Section 3 <paths> names the router directory, the 0.9.0_WK_ADVI_FIRMBKTS~9 deliverables folder and INVESTIGATION_v1.md; a worker writes nothing else.",
+  "world_is": "The order file is org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-e-6.f6-canonical-key-path.md line 103, <status>pending</status>, and it is not in the lane grant. AC1 reads 39 pass, 0 fail, 3 files, exit=0; AC2 reads 193 of 193 through handleWithMap and 193 of 193 through handler, exit=0 (twice); AC3 reads 9 of 9, exit=0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task-orders/ADVI_FIRMBKTS.TO-FB-e-6.f6-canonical-key-path.md @f4f01cfb27 line 103 <status>pending</status>; section 3 <paths> at lines 60-64",
+      "AC1-AC3 output lines in the proof instance org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~9/ADVI_FIRMBKTS.TO-FB-e-6.proof_of_spec.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left at pending by the write grant, not by a criterion. The owner of the flip is the issuer (2.0.0_SA_COO~B1) or the lane owner, who can flip it from the proof's result or widen the grant by its own order. The worker did not override the grant."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W9-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~9",
+  "surfaced_at": "2026-10-11T04:06:44Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "FB-e-6 COMMIT REFUSED BY THE NAMING GATE (LGIC_ENFORCE, 35 graded): THE ISSUER'S PATCH AND ITS NEW SPEC CARRY LITERAL FIRM NAMES THE GATE REFUSES AS HAND-KEPT CARRIERS; THE ROUTER CODE IS NOT COMMITTED",
+  "spec_asserts": "Task order FB-e-6 section 1a step 3: commit index.mjs and the new spec together with the proof instance and the status flip. Section 2.1: the edit is the patch and nothing else; no edit outside <paths>, and the patch is never hand-edited.",
+  "world_is": "safe-commit.sh refused the commit with ERROR: BLOCKED -- the naming limb refused. Refusals: index.mjs:126 'inflection' (NEW hand-kept carrier) and test/canonical-platinum.spec.mjs lines 25, 31, 36-38, 42-43, 47-52, 56, 62, 68-71 (NEW hand-kept carriers of '49financial', 'inflection', 'mockadv', and out-of-pattern S3Key literals). The gate's own remedy names infra/logic/registry/ rows and R20 entries, outside this worker's <paths>. Files were unstaged by the gate; the router and spec remain uncommitted in the worktree. The proof and this channel are committed separately.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at worktree wk-ADVI_FIRMBKTS-9, HEAD f4f01cfb27: [naming-gate] NAMING-GATE: REFUSE 35 graded, rc=1",
+      "patch F6_ROUTER_EDIT.patch applied unchanged (git apply rc 0); no hand-edit made"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the disarm: the issuer (2.0.0_SA_COO~B1) with the LGIC owner, either by registry rows for these literals (infra/logic/registry/) or an R20 register entry, or by a re-cut of the patch to use name() and lookup() output. No bypass was used. The cell's AC1-AC3 results stand as measured; the commit is what is blocked."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W9-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~9",
+  "surfaced_at": "2026-10-11T04:27:54Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "FB-e-6 AC1 INVOCATION RESOLVES TO THE BASE CHECKOUT, NOT THE WORKTREE: THE ORDER'S SEPARATE CD CALL DOES NOT PERSIST (CWD RESETS PER BASH CALL), SO AC1 AS WRITTEN READS 31 PASS ACROSS 2 FILES AND EXPECTS 39; THE WORKTREE READS 39 PASS ACROSS 3 FILES",
+  "spec_asserts": "Task order FB-e-6 step 4: run AC1 after a first call that only does cd /c/dev/wk-firmbkts-9; the invocation's cd to git rev-parse --show-toplevel must land in the worktree; expect \\b39 pass with exit=0 (task-orders/ADVI_FIRMBKTS.TO-FB-e-6.f6-canonical-key-path.md @357f738e20 line 82).",
+  "world_is": "Each Bash call starts in the base checkout: call-start cwd C:/Dev/ajb_workspace, toplevel C:/dev/ajb_workspace. AC1 as written printed 'OK: running the shared-advisor-router gate (bun run test) in /c/dev/ajb_workspace/infra/aws/lambda-edge/shared-advisor-router', ' 31 pass', ' 0 fail', 'Ran 31 tests across 2 files', exit=0. Diagnostic from the worktree (explicit cd in the same call, bun run test, not an AC1 reading): 39 pass, 0 fail, 3 files, rc=0. The new spec alone: 8 pass. The patch created test/canonical-platinum.spec.mjs (new file, 00:26) and the router index.mjs applied clean. AC1 stopped the order; AC2 and AC3 were not run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Bash call-start probe in this call: cwd_at_call_start=C:/Dev/ajb_workspace, toplevel_at_call_start=C:/dev/ajb_workspace (2026-10-11T04:27Z)",
+      "AC1 output (first run, cd in the invocation): 'OK: running the shared-advisor-router gate (bun run test) in /c/dev/ajb_workspace/infra/aws/lambda-edge/shared-advisor-router', ' 31 pass', ' 0 fail', 'Ran 31 tests across 2 files', exit=0",
+      "diagnostic output .scratch/diag_gate_worktree.txt in worktree wk-ADVI_FIRMBKTS-9: ' 39 pass', ' 0 fail', 'Ran 39 tests across 3 files', rc=0",
+      "task-orders/ADVI_FIRMBKTS.TO-FB-e-6.f6-canonical-key-path.md @357f738e20 line 15 records 31 pass / 2 files as the BASE reading; the same trap is recorded as ADVI_FIRMBKTS-D1-W9-S2 (AC1 run 1, cwd C:/Dev/ajb_workspace)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recurrence of ADVI_FIRMBKTS-D1-W9-S2: the AC1 invocation's cd is resolved from the call-start cwd, which is the base. The order's step-4 cd-only call cannot pin the worktree because the cwd does not persist between Bash calls. Owner of the disarm: the issuer (2.0.0_SA_COO~B1), by stating AC1 with an absolute worktree path in the invocation (or a cd inside the same call), a re-cut that the checker accepts. The worker did not rewrite the invocation text, did not commit, did not flip the status, and wrote no proof instance, because step 4 stops on a non-matching AC1. Scratch files: .scratch/diag_canonical_spec.txt, .scratch/diag_gate_worktree.txt."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S10",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T05:15:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "THE ROUND-CLOSE CHECK AND THE COMPLETE-FLIP GATE FIND A TREE ORDER'S PROOF INSTANCE BY DIFFERENT RULES, SO SEVEN ORDERS FLIPPED COMPLETE AND THE CLOSE CHECK READ 0 OF 7 PROOFS",
+  "spec_asserts": "CLAUDE.md rule 27 and the canonical spine name one proof instance per order, and the close of a round counts each complete order's instance (round-close-check.py: 'every task order of the round whose status is complete has a proof instance that passes').",
+  "world_is": "to-pipeline-gate.py check_complete_flip resolves an instance by the order file stem OR a backticked path in the order's <proof_of_spec> block (rows D1-W7-S3, D1-W8-S1, D1-W10-S1 cite lines 3156-3191); round-close-check.py proof_state (line 314) resolves it only as deliverables/*/<order stem>.proof_of_spec.json. The round-2 orders named their instances by order id in a proof-block path, so all seven flipped and round-close-check read PROOF-BAD x7, verdict REFUSED. Second tell: 3 of the 7 instances carried artifact rows still reading PENDING-THIS-COMMIT for files committed earlier, which proof-of-spec-check refuses (CCX class) and which the flip gate only meets again when the order is next modified. Repaired by the issuer at e60140c2d2 (seven renames, six pins) and 6f71f434ac (order paths), merged baaa2bbc81; round-close-check --deep then read 7 of 7 VALID, MAY-CLOSE.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/round-close-check.py --project ADVI_FIRMBKTS --round 2 -> PROOFS mode=structural complete=7 proof_ok=0 proof_bad=7, verdict=REFUSED (2026-10-11 ~04:47Z, before the rename)",
+      "the same command with --deep at the merged tree -> proof_ok=7 proof_bad=0, verdict=MAY-CLOSE",
+      ".tools/round-close-check.py:314-316 (stem-only glob) against rows ADVI_FIRMBKTS-D1-W8-S1 and D1-W10-S1 (the flip gate's two lookups)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the disagreement: the gate owner (round-close-check.py and to-pipeline-gate.py are .tools, not this lane). Either the close check reads the proof-block path too, or the order template names the stem form. The issuer's repair is a rename, not a gate edit; it does not prevent the next round's orders from repeating it unless the template changes."
+}
+```

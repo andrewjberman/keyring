@@ -90,6 +90,10 @@ Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. `/govern` fires on each 
     - `2.0.0_SA_COO~Y2` `/canonical-drive` 60m over IRPT_BCKEND workstream Y, and IRPT_ANLREQ as its interim driver (CVO verdict msg 1889),
       CHOSEN. Seating asked of `0.0.0_AB_MSTR~DELL2` by 1.0.0_SA_CTO~DELL2 at ~02:27Z on `2.0.0_SA_COO~G2` msg 3899 (IRPT_YCDGEN FWD-1 waits on
       a workstream-Y re-cut). Same stop.
+    - `2.0.0_SA_COO~D2` `/canonical-drive` 60m over DSGN_IRPTV1 as a SECOND project beside IRPT_DASHBD, CHOSEN, lease FULL (no FAST
+      lease: none is armed without Andrew's word). Ruled by 1.0.0_SA_CTO~DELL2 ~05:1xZ in
+      `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_DSGN_IRPTV1_FROM_WATERMARK_20261002_20261011.md` section 2; no new seat.
+      Stop: DSGN_IRPTV1 reads complete, HELD-AT-STOP, or his stand-down.
     - Not seated: `2.0.0_SA_COO~B2` ADVI_BILLING and `2.0.0_SA_COO~O2` NFRA_OPSWKF (both WAITING in `sequence-check` on Andrew's inputs).
   - No row: the Microsoft Defender CPU sampling Monitor (record section 5). He asked that seat to "keep an eye"; it is a watch, not a loop.
 

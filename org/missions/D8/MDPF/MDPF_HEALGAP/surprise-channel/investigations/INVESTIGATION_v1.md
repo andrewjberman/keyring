@@ -656,6 +656,268 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "The act 3 half and ledger assume that at least one of two dell1 actors (2.0.0_SA_COO~G1 at 06:05Z, 0.0.0_AB_MSTR~DELL1 by 12:00Z) is live to restore the daily target input, so an induce on a production target is bounded to hours.",
     "world_is": "Both actors depend on one box and one usage budget; when the box stopped, nothing on dell1 could restore, and the bound became whenever a seat on ANOTHER device read the ledger (14h23m past the first owner moment). The loss was nil here only because the daily rule has one fire per day and the next fire (06:00Z 2026-10-11) came after the laptop restore; a rule with a shorter period, or a restore that landed after the next fire, would have run a second induced day. REMEDY (one, owner 1.0.0_SA_CTO~DELL1 at the next induce): the half of any later induced act names a restore actor on a DIFFERENT device than the seat that sets the induce, with the ledger path it reads, and says so in the ledger's rollback line. Distinct from MDPF_HEALGAP-S12, which is a fail-safe that outlived its kill; this is a fail-safe chain with no member off the failing box.",
     "notes": "No build asked for: this is a wording rule for the half, not a monitor or alert (standing moratorium). UNDER_INVESTIGATION is deliberate, as in D1-S10/D1-S11: GRADUATED is the CVO's L9 field. Act 3's own outcome (PARTIAL read, heal, C5b) is in the R2 drain-end read."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W10-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~10",
+    "surfaced_at": "2026-10-11T04:03:48Z",
+    "one_line": "On the EC2 path the 6d block rewrites one cottonwood gold partition before the slice: dispatch line 554 runs build_dim_model_portfolio.py --upload for the newest silver assignment date. The slice itself writes no gold partition, but the EC2 path is a second writer of the day partition, which the MDPF_HEALGAP-S1 world_is does not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:549-556 at HEAD d08867926c: cot_date is the newest blackdiamond/cottonwood/silver/fact_model_assignment partition; line 554 runs build_dim_model_portfolio.py --date cot_date --upload before the slice at line 556",
+        "data/assets/scripts/gold/build_dim_model_portfolio.py:538-542: key = GOLD_PREFIX + dim_model_portfolio/date=<date>/data.parquet, GOLD_PREFIX = blackdiamond/cottonwood/gold/ (line 72), then put_object and head_object",
+        "list read 2026-10-11T04:0xZ on opal-data-assets prefix blackdiamond/cottonwood/gold/dim_model_portfolio/: date=2026-10-10 LastModified 2026-10-10T13:30:39Z; the only EC2 launch read is 2026-09-30T13:30:35Z (MDPF_HEALGAP-S1), so the 10-10 launch is UNREAD"
+      ]
+    },
+    "spec_asserts": "MDPF_HEALGAP-S1: which one writes the day's partition is read here. Its world_is says the EC2 slice would re-publish on the newest assignment date only and cannot rewrite a caught-up partition.",
+    "world_is": "When the 6d condition holds, the EC2 path re-uploads gold/dim_model_portfolio/date=<newest silver assignment date> before the slice step, so the EC2 path can rewrite a gold partition on the day. Whether that rewrite is byte-identical to the served partition is UNREAD (the builder re-derives from silver on each run). The slice step (line 556) writes only the revamp object and no gold partition.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W10-S2",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~10",
+    "surfaced_at": "2026-10-11T04:03:48Z",
+    "one_line": "NOOP for the EC2 slice re-publish is UNKNOWN: the slice writes one fixed key unconditionally, and its body carries a date-derived trading-days field, so a same-day re-run is a no-op only if that field and the staged axis match what is served. No served-bytes comparison was read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/assets/scripts/gold/build_cottonwood_mdpf_slice.py:1501: put_object to SLICE_KEY with no skip-if-exists; :1353-1366: trading_days_behind_settled_frontier computed from dt.date.today()",
+        "head-object 2026-10-11T04:0xZ on opal-data-assets gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries.json: LastModified 2026-10-10T13:31:08Z, ETag 50425224d45dc36f6588544bb0525d4d, 162895 bytes; no later write recorded",
+        "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:504-516 and :556: the slice runs after the 6a axis stage of the same run, so its axis input is the EC2 run's own staged copy"
+      ]
+    },
+    "spec_asserts": "TO HG-t-13 NOOP field: YES, NO, or UNKNOWN because a reason, read for whether the EC2 re-publish has the same bytes or keys as what is served.",
+    "world_is": "The key is the same on every run, so the key level is a no-op. The bytes are unread: a same-day re-run matches the served object only if the dim partition, the staged axis and the trading-days value all match, and a later run can change the trading-days field. The read that answers it is a GET of the served key diffed against a rebuild with dt.date.today() held fixed, or the ETag of the served key across two consecutive days.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W7-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~7",
+    "surfaced_at": "2026-10-11T04:05:10Z",
+    "one_line": "HG-t-9's premise says the Cottonwood runner lands bronze after 07:00Z on some days (preflight: after a 12:45Z landing), but the tree's own measured record says it lands 06:00:43-44Z every day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf @c8f7662637 :269 -- 'landing 06:00:43-44Z EVERY day, from cot-rebalancer-runner-daily cron(0 6 * * ? *)'",
+        "infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf @c8f7662637 :286 -- the existing rule description: 'Fires 1h after the measured 06:00:43Z upstream landing.'",
+        "infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf @c8f7662637 :34 -- 'cot-rebalancer-runner-daily cron(0 6 * * ? *) UTC, no timezone'",
+        "infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py @c8f7662637 :99 -- 'landing 06:00:43-44Z daily'",
+        "Not found in the worktree read for this order: any 12:45Z landing measurement (the TO RECORD FACE preflight cites one). The rule cron(0 6 * * ? *) was not read live (read-only AWS not run for this criterion set)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG-t-9 cell: 'On a day the Cottonwood runner lands bronze AFTER 07:00Z the registry serves the previous day'; RECORD FACE preflight: the 13:15Z fire is 'placed after a 12:45Z landing'.",
+    "world_is": "The in-tree measured record places the runner's landing at 06:00:43-44Z every day, before the existing 07:00Z fire. The stamp gate is correct as built (it rebuilds only when the stamp exists), but the stated reason for the 13:15Z slot is not supported by any measurement in this tree. The cell's conditional ('on a day ... after 07:00Z') is not contradicted; the 12:45Z figure is unsourced here.",
+    "notes": "No build asked for and none changed: the handler and the rule are built to the order's text. Disposition is for the CVO's L9 read of the premise, not this worker's."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W7-S2",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~7",
+    "surfaced_at": "2026-10-11T04:05:10Z",
+    "one_line": "The completion stamp this cell grants read on, blackdiamond/cottonwood/meta/<date>-complete.json, is the key the runner writes and the silver reader reads, but the key-rulings registry records meta/ as a non-canonical prefix whose canonical form is state/pull_complete/.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/key_rulings.json @c8f7662637 :172-174 -- key 'blackdiamond/cottonwood/meta/' (bucket opal-data-assets, shape prefix), canonical 'blackdiamond/cottonwood/state/pull_complete/', owner 'The opal-assets Cottonwood pull and silver functions (directive D8)'",
+        "infra/aws/lambda/cot-pipeline/cot-rebalancer-runner/lambda_function.py @c8f7662637 :70 META_PREFIX = SCOPE_PREFIX + 'meta/'; :207-208 _stamp_key -> META_PREFIX + date + '-complete.json' (the writer)",
+        "infra/aws/lambda/opal-assets/opal-assets-silver-blackdiamond/rebalancer_conversion.py @c8f7662637 :417 STAMP_PREFIX = 'blackdiamond/cottonwood/meta/' (the reader)",
+        "The HG-t-9 patch (uncommitted in this worktree) adds the grant Resource arn:aws:s3:::opal-data-assets/blackdiamond/cottonwood/meta/*-complete.json and the s3:prefix condition blackdiamond/cottonwood/meta/ in the producer role policy"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG-t-9 build: the stamp is read at 'meta/<today UTC>-complete.json' under the runner's meta prefix, and the handler derives its prefix from producer.ROSTER_KEY.",
+    "world_is": "The grant and the handler encode the live key, which matches writer and reader. The key-rulings registry nonetheless names a different canonical location for it. Any future move of the stamp key must move this grant and the handler's derivation in the same commit; the registry's disposition for the existing key was not read by this worker.",
+    "notes": "Observation only. No change to the key is made by this cell."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W7-S3",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~7",
+    "surfaced_at": "2026-10-11T04:05:10Z",
+    "one_line": "The HG3-t9-AC2 checker (hg_r3_rules.py --t9-iam) passes a ListBucket statement whose Resource is widened to opal-data-assets/*, so the check does not hold the 'nothing wider' clause on the ListBucket resource.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Control run, this worktree: copy of satellites-registry-producer.tf with the ListBucket Resource changed from arn:aws:s3:::opal-data-assets to arn:aws:s3:::opal-data-assets/* (scratch copy .scratch/mut/m4_tf_bare_bucket_star.tf, uncommitted) -> 'T9IAM-OK stamp GetObject + prefix-conditioned ListBucket, nothing wider' rc=0",
+        "Control run, same checker, a copy with the s3:prefix condition removed -> 'T9IAM-BAD s3:ListBucket carries no s3:prefix condition' rc=1 (the prefix arm does fire)",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_CHECKS/hg_r3_rules.py t9_iam(): the ListBucket arm tests presence of 'ListBucket' and of the prefix condition only; it does not read the statement's Resource"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG3-t9-AC2: 'the role gains GetObject on the stamp pattern and one prefix-conditioned ListBucket and nothing wider'.",
+    "world_is": "The checker does not bind the ListBucket statement to the bucket ARN. The applied patch carries the correct bucket ARN, so this worker's tree is right; the gap is in the checker, which is outside this worker's grant and was not edited.",
+    "notes": "Not fixed here: the checker belongs to the issuer's R3_CHECKS and the criterion text is unchanged. Recorded so the CVO's L9 read sees that AC2 PASS does not cover the ListBucket Resource."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W7-S4",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~7",
+    "surfaced_at": "2026-10-11T04:12:00Z",
+    "one_line": "The TO says the naming gate refuses a new hand-kept cottonwood literal; at commit d90794efd4 the gate WARNs on the stamp prefix literal the patch types in satellites-registry-producer.tf:46 and does not refuse it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output at commit d90794efd4: '[naming-gate] NAMING RAISE-EXISTING infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf:46 blackdiamond/cottonwood/meta/ -> (pre-LGIC key; conformance via its migration project, Rule 30)' and '[naming-gate] NAMING-GATE: WARN 2 graded'",
+        "The same gate's stated reason: 'the same literal is already carried at HEAD in data/assets/scripts/silver/rebalancer_conversion.py, so this copy mints nothing: WARN; hand-kept carrier of cottonwood outside every permitted context: read it through lookup(cottonwood)'",
+        "infra/aws/terraform/modules/opal_name/generated_locals.tf @c8f7662637 :8 and :31 carry the scope registry as generated data; no generated local for the stamp prefix exists in the module"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG-t-9 build text: 'the naming gate refuses a new hand-kept cottonwood literal', so the handler derives the bucket and prefix from producer constants and the rule name is built by opal_name.",
+    "world_is": "The handler carries no typed key (it derives the prefix from producer.ROSTER_KEY). The Terraform does carry the literal in locals cot_meta_prefix, because HCL cannot import the Python constant. The gate grades that line as a WARN on a pre-LGIC key, not a refusal. The rule-name line is CONFORMANT as built by name().",
+    "notes": "Recorded only: the patch is the issuer's, the refusal clause is not triggered (no refusal), and no name was changed by this worker. Whether the literal should come from a generated local is for the CVO's L9 read."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W9-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~9",
+    "surfaced_at": "2026-10-11T04:09:27Z",
+    "one_line": "HG-t-12 grades the outlook transcripts pull EXPOSED-MANUAL, where round 2 graded it RECOVERS: it and the Teams pull share one gateway Microsoft sign-in, which only a person renews when it lapses. The PRD v0.3 addendum's list of person-renewed pulls names neither.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_TRNSPT/STATUS.md:82 read at d08867926c: 'gateway sign-in (the laptop's has lapsed; renewing it is a person act)'",
+        "infra/aws/lambda/transcripts-pull/mail_handler.py:3-5, :9-10 and infra/aws/terraform/transcripts/pull.tf:27-30 read at d08867926c: the mail and transcript routes both read the gateway bearer and sit on the gateway's sign-in",
+        "live list-rules outlook-global-transcripts-pull-daily cron(30 23) and teams-global-transcripts-pull-hourly cron(0 13-22 ? * MON-FRI *) read 2026-10-11T03:59Z-04:09Z; PRD v0.3 addendum (prd/MDPF_HEALGAP_PRD.md:201-203) names four person-renewed pulls and neither"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-6 round 2 graded the outlook pull RECOVERS (its 7-day window refills missed days with nobody acting). The PRD v0.3 addendum names the two canonical-schwab SI2 pulls, schwab-canonical-si2-08403355-pull-daily and astn-wsjft-3am-run as the pulls whose login no machine renews.",
+    "world_is": "A missed day on the outlook pull refills with nobody acting only after a person renews the gateway's Microsoft sign-in. The RECOVERS answer and the EXPOSED-MANUAL answer describe the same login at two points in its life. This census grades both outlook and teams EXPOSED-MANUAL for consistency. The CVO rules which answer stands for outlook. Teams is also unbuilt upstream (the gateway transcript tools are not landed; handler.py:9-10 raises GatewayToolsAbsent by design), so its answer rests on source and STATUS, not on a run."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W9-S2",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~9",
+    "surfaced_at": "2026-10-11T04:09:27Z",
+    "one_line": "bd-asset-dim-pipeline-trigger is graded EXPOSED-MANUAL today, but its 49F login is machine-minted at 00:00Z, 04:35Z and 22:20Z. The v0.3 third answer says only a person can renew the login, so the answer grammar does not describe this row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ssm/opal-bd-asset-dim-download.json:3 and :20-24 read at d08867926c: the REST module mints a bearer from the session secret blackdiamond/49f/session that bd-49f-auto-login already maintains",
+        "infra/aws/lambda/bd-pipeline/bd-49f-session-trigger/lambda_function.py:274-299 read at d08867926c: the full re-mint runs the auto-login OTP when the cookie is not positive-live",
+        "bd-49f-keepalive lambda_function.py:12 and :17-18 read at d08867926c: the keepalive extends the session in place and mints no cookie; live list-rules bd-asset-dim-pipeline-trigger cron(10 22 ? * MON-FRI *) read 2026-10-11"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.3 FWD-6: the third answer, EXPOSED-MANUAL, is for a pull whose login only a person can renew. The answer set is RECOVERS, NOT-EXPOSED because <reason>, or EXPOSED-MANUAL because <reason>.",
+    "world_is": "A machine renews this login at 00:00Z, 04:35Z and 22:20Z. The keepalive extends it between mints without minting. Nothing machine-side renews between the 04:35Z mint and the 22:10Z fire; the fire has no re-attempt, and its as-of is computed at run time. Read today the row is EXPOSED. The census types it EXPOSED-MANUAL because the grammar has no third exposed value, and it names the person's act (re-capture the cookie if the keepalive reports it dead, then re-run the missed as-of). The CVO rules whether 'only a person can renew' should read 'no machine renews before the pull'. RECOVERS is claimed only by the HG-t-11 re-attempt once applied, and is not claimed here."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W9-S3",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~9",
+    "surfaced_at": "2026-10-11T04:09:27Z",
+    "one_line": "The 49F keepalive's dead-cookie alert tells a person to re-capture the .bd.identity cookie, while the session trigger's full mint re-issues the cookie automatically. The two sources disagree on whether a person renews the 49F login.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/bd-pipeline/bd-49f-keepalive/lambda_function.py:12, :17-18, :22-26 and :128-146 read at d08867926c: the keepalive extends in place and mints no cookie; on 401/403 it publishes 'ACTION (D, ~30s): capture a fresh .bd.identity'",
+        "infra/aws/lambda/bd-pipeline/bd-49f-session-trigger/lambda_function.py:274-299 read at d08867926c: the full mint with auto-login OTP runs when the cookie is not positive-live"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The 49F rows of the census assume a machine renews the 49F login at 00:00Z, 04:35Z and 22:20Z. The keepalive alert assumes a dead cookie needs a person.",
+    "world_is": "Both can hold only if a mint can fail to re-issue a dead cookie. The census grades the 04:35Z-anchored 49F rows NOT-EXPOSED on the mint, and bd-asset-dim EXPOSED-MANUAL on the gap between mints. If the keepalive alert is current, a dead cookie before 06:30Z needs a person and residual R1 is a person's act, not a machine's. The CVO rules which text describes current behaviour."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W9-S4",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~9",
+    "surfaced_at": "2026-10-11T04:09:27Z",
+    "one_line": "The open-calls list that PRD v0.3 names as the place an EXPOSED-MANUAL act is listed when owed has no file path located in this worktree. The census names 1.0.0_SA_CTO's open calls as the place, unverified.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_HEALGAP/prd/MDPF_HEALGAP_PRD.md:207-208 read at d08867926c: 'where that act is listed when owed (the open-calls list)'",
+        "Grep 'open.?call|OPEN_CALLS' under org/missions/D8/MDPF/MDPF_HEALGAP returns the task order and the PRD only; Glob **/*open*call* under org/tier1_exec/1.0.0_SA_CTO returns one logs file (logs/2026-08-24/session_1510-1800Z_open_calls_rulings_49f_program_registered.md), not a standing list"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-6 v0.3: an EXPOSED-MANUAL row names where the person's act is listed when owed (the open-calls list).",
+    "world_is": "No standing open-calls file was located, so the 'listed on' cell for the seven EXPOSED-MANUAL rows names a queue this worker could not read. The CVO or 1.0.0_SA_CTO names the file the list lives in. This worker wrote to no list."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W8-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~8",
+    "surfaced_at": "2026-10-11T04:04:00Z",
+    "one_line": "HG3-t11-AC2's checker cannot fail its failed-read arm: a mutant whose guard skips the pull on rc 1 and 2 still prints SSMGUARD-OK, so AC2 is not evidence for the negative arm.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Checker org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_CHECKS/hg_t11_assetdim.py@287ef0d2ee lines 107-110 test only 'pull_bd_asset_dim_rest.py' in run['calls'] for rc 1 and 2. Document line 41 (infra/aws/ssm/opal-bd-asset-dim-download.json, staging 'aws s3 cp .../code/bronze/pull_bd_asset_dim_rest.py') writes that substring to the calls log before any guard line runs, so the test is always true.",
+        "Mutant .scratch/mutant_always_skip.json (line 80-87 guard test changed from -eq 0 to -ge 0) through the checker's own harness: guard_rc=1 script_rc=0 pull_ran=False; guard_rc=2 script_rc=0 pull_ran=False. Run 'HG_T11_DOC=.scratch/mutant_always_skip.json python hg_t11_assetdim.py --ssm' printed 'SSMGUARD-OK ... rc=0'. The negative arm did NOT fire.",
+        "Control .scratch/mutant_noshutdown.json (skip-path 'shutdown -h +2 &' removed) printed 'SSMGUARD-BAD guard read OK but the shutdown was not armed', rc=1: the skip arm discriminates, so the defect is confined to the failed-read arm.",
+        "The patched real document through the same harness: guard_rc=0 gives no RUNUSER pull line, SHUTDOWN armed, script rc 0; guard_rc=1 and guard_rc=2 each give 'RUNUSER -l ec2-user -c cd ... python3 data/black_diamond/scripts/bronze/pull_bd_asset_dim_rest.py pull'. The document meets the bar; the invocation does not evidence it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG3-t11-AC2 (order MDPF_HEALGAP.TO-HG-t11): the document's own shell, run with the instance's tools stubbed: 'guard read failed (rc 1 and 2) -> the pull runs'. Invocation 'hg_t11_assetdim.py --ssm', expect SSMGUARD-OK. The refusal clause: a criterion that cannot be met as written is a stop and a row, and no check is weakened.",
+    "world_is": "The invocation's failed-read arm is satisfied by the staging line, so a regression that makes a failed guard read skip the download still prints SSMGUARD-OK and AC2 cannot gate it. The patched document itself runs the pull on rc 1 and 2 (measured by the same harness). The defect is in the check, not the guard. The checker is outside this order's <paths> grant and was not edited.",
+    "notes": "Owner of the fix is the issuer, 2.0.0_SA_COO~G1: a failed-read arm that reads the RUNUSER pull line, as the skip arm reads its SHUTDOWN line. Nothing was sent; no AWS act; the two patches are committed LOCAL on branch wk-MDPF_HEALGAP-8 for the drain, with no apply."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W7-S5",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~7",
+    "surfaced_at": "2026-10-11T04:59:55Z",
+    "one_line": "HG3-t9-AC1 does not fail on the tree the order starts from: hg_r3_rules.py --t9 prints T9-OK rc=0 on the v1 satellites tf, so the order's sentence 'All three FAIL at the base' is not true of AC1 at the start tree; AC1 does not discriminate the v2 patch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Control run, this worktree: git show 85fe77beb7:infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf saved to .scratch/ctl/base.tf (uncommitted); 'python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_CHECKS/hg_r3_rules.py --t9 .scratch/ctl/base.tf' -> 'T9-OK new_rule=cot_satellites_registry_producer_stamp_gated schedule=cron(15 13 * * ? *) existing=cot_satellites_registry_producer_daily cron(0 7 * * ? *)' rc=0",
+        "git diff --stat 85fe77beb7 9ab36371f1 lists no satellites-registry-producer file, so the blob above is the start tree's pre-patch Terraform at commit 9ab36371f1",
+        "The same start-tree controls: --t9-iam on that blob -> T9IAM-BAD rc=1; hg_t9_stamp_gate.py with HG_T9_HANDLER on the 85fe77beb7 handler blob -> GATE-BAD rc=1. AC1 is the only one of the three criteria that passes on the start tree",
+        "org/missions/D8/MDPF/MDPF_HEALGAP/task-orders/MDPF_HEALGAP.TO-HG-t9.satellites-second-fire-stamp-gated.md@9ab36371f1 line 78: 'All three FAIL at the base'; lines 44-46 state the tree already carries the round-3 v1 change merged at 85fe77beb7"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG-t9 TO line 78: 'All three FAIL at the base (T9-BAD ..., T9IAM-BAD ..., GATE-BAD ...)'; HG3-t9-AC1 expects T9-OK on the rule's presence and schedule.",
+    "world_is": "At the start tree the T9 rule check already passes without the v2 patch (the rule was merged at v1). AC1 therefore gives no signal on the v2 change; AC2 and AC3 do fail on the start tree as the order states.",
+    "notes": "Recorded only: the order's sentence is quoted, not corrected. The AC1 PASS on the patched tree is correct for the rule but is not evidence that this cell's v2 patch changed the rule. For the CVO's L9 read."
   }
 ]
 ```

@@ -499,3 +499,277 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+```json
+{
+  "id": "MDPF_CANON-D1-W9-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~9",
+  "surfaced_at": "2026-10-11T03:04:50Z",
+  "one_line": "CN-c-2 step 2 premise fails: the daily runner does not put lib/opal_naming.py on the Stage-0 pull's import path, so the builder import the cell requires cannot resolve there. Cell stopped at step 2; no file edited, no AWS call.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-c-2 step 2: the Stage-0 script imports from lib.opal_naming (as the sibling gold writer does). If lib/opal_naming.py is NOT on the runner's path for a Stage-0 script, file a BLOCKING row stating what the runner syncs, and stop on this cell.",
+  "world_is": "The runner syncs two trees only: s3://opal-data-mdpf/code/scripts/ to /opt/mdpf/scripts/ and s3://opal-data-mdpf/code/config/ to /opt/mdpf/config/ (dispatch :125, :130). The repo-root lib/ tree is in neither. Stage 0 runs as \"$PY\" \"$S0_SCRIPT\" --date \"$RUN_DATE\" --upload with S0_SCRIPT=/opt/mdpf/scripts/bronze/pull_orion_model_composition.py (dispatch :248, :251) and no PYTHONPATH is exported anywhere in the dispatch or the user-data bootstrap (pip installs only). sys.path[0] is therefore /opt/mdpf/scripts/bronze, and the script has no sys.path insert (its imports end at :49). lib is not a child of that directory, so the import raises ModuleNotFoundError on the runner. The Stage-0 failure is non-fatal to the chain (dispatch :251-262 WARN, chain continues). The sibling gold writer (mdpf_gold_parquet.py:52) resolves its repo-root insert four levels above /opt/mdpf/scripts/gold, which is /, so it has the same gap on the runner (not graded by this cell).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh@2280b72ff4:125,130 (s3 sync of code/scripts and code/config only)",
+      "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh@2280b72ff4:248,251 (S0_SCRIPT and its invocation, no PYTHONPATH)",
+      "data/mdpf/scripts/bronze/pull_orion_model_composition.py@2280b72ff4:37-49 (imports; no sys.path insert)",
+      "infra/aws/ec2/mdpf-daily-runner/user-data.sh@2280b72ff4 (bootstrap: pip installs only, no lib sync)",
+      "data/mdpf/scripts/gold/mdpf_gold_parquet.py@2280b72ff4:52 (sibling lib import)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The stop is at step 2 of CN-c-2. Steps 1 and 3 (the script and the IAM grant) were not edited. The fix is a runner-side decision (what the dispatch syncs or exports, and CloudOps' deploy), not a worker's path choice, so the cell does not type the prefix. AC1 at base: 0 of 3 arms, exit=1."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W9-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~9",
+  "surfaced_at": "2026-10-11T03:17:13Z",
+  "one_line": "CN-c-2 section 1.3 GRANT cannot take its bronze bucket from an opal_name module output: the module exposes scope_bucket per scope and no tier-bucket output, and no scopes.json row maps to opal-data-assets. The grant is not written; the script and the generated homes file are.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-c-2 section 1.3: the runner role's grant on the builder's bronze bucket and prefix takes its bucket from an opal_name module output (module.<m>.scope_bucket[...] or the module's tier-bucket output), never a typed name. If the module cannot express the bronze tier's bucket, add the registry row and regenerate generated_locals.tf; if that needs a ruling, file a row and stop on the criterion.",
+  "world_is": "The FIRM bronze tier home is opal-data-assets (infra/logic/registry/tiers.json FIRM.bronze, home shared, rule R4). The opal_name module's outputs are name, scope_short, scope_long, scope_class, scope_bucket, fence_patterns, account_id, fence_exemption_arns and fence_scoped_statements (infra/aws/terraform/modules/opal_name/main.tf); scope_bucket is per scope and gives opal-data-inflection for inflection and opal-data-mdpf for mdpf, never opal-data-assets. No scopes.json row carries bucket opal-data-assets (the ten buckets listed are all firm, product or master buckets). The registry row the cell names would add a scope or re-home a firm row, a change to the closed scope enumeration; the worker judges that a ruling is needed and does not add it. The iam.tf statements are not written. Consequence to carry to the drain: the Stage-0 script now writes the new home only, so until the grant lands its puts are AccessDenied, and the feeder (CN-c-3) reads the new home only after its own cell lands.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/tiers.json@e4a8f39862 (FIRM.bronze shared opal-data-assets)",
+      "infra/aws/terraform/modules/opal_name/main.tf@e4a8f39862 (output blocks: no tier bucket)",
+      "infra/logic/registry/scopes.json@e4a8f39862 (bucket values; no opal-data-assets row)",
+      "infra/aws/terraform/modules/opal_name/generated_locals.tf@e4a8f39862 (scope_bucket map: inflection -> opal-data-inflection, mdpf -> opal-data-mdpf)",
+      "python lib/opal_naming.py address() on mdpf/inflection/bronze/orion_model_composition/date={date} -> s3://opal-data-assets/mdpf/inflection/bronze/orion_model_composition/date={date}"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker at step 3 (GRANT). Writer check at this commit: 2 of 3 arms (NO TYPED PASS, DEST PASS, GRANT FAIL). Steps 1 and 2 (generator, generated bronze_homes.json, repo test, script) are written and green; the homes check reads 3 of 3. Not deployed. The grant decision (a registry row and regenerate, or a module output for the tier bucket) is the CTO's ruling; the order stays open."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W9-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~9",
+  "surfaced_at": "2026-10-11T03:19:13Z",
+  "one_line": "The commit-time naming limb REFUSES the cell's generated home and its generator: the key_prefix literal in data/mdpf/config/bronze_homes.json (a NEW hand-kept carrier of 'inflection') and the 'mdpf' literal in .tools/gen_mdpf_bronze_homes.py:23 (a hand-kept carrier of 'mdpf'). The cell's code is not committed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-c-2 section 1.1 and bounds 3: the JSON's literals are the commit-time naming gate's to grade; if that gate REFUSES them, file a BLOCKING row with the gate's text and stop, never a workaround.",
+  "world_is": "safe-commit (naming limb, LGIC_ENFORCE DEC-6, ENFORCE mode) on the four paths of the code commit: REFUSE 3 graded. Printed refusals: '.tools/gen_mdpf_bronze_homes.py:23 mdpf -> lookup(mdpf): NEW hand-kept carrier (context rule); hand-kept carrier of mdpf outside every permitted context: read it through lookup(mdpf)'; 'data/mdpf/config/bronze_homes.json:10 mdpf/inflection/bronze/orion_model_composition -> same: CONFORMANT as S3Key, but a NEW hand-kept carrier of inflection outside every permitted context: read it through lookup(inflection)'. The bucket line (json:9, opal-data-assets) printed CONFORMANT as S3_BUCKET. The commit aborted and unstaged the files; no commit landed. The script and the repo test were not named in the refusal. The generator's output is a registry-derived JSON carrier, which the naming gate does not recognise as generated (lib/opal_naming.py's generated carriers carry a generated mark, and this file is written by .tools/, not by lib generate). Resolution is a CTO decision: a permitted generated context for the homes file, or a lib generate target for it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output, 2026-10-11T03:18Z, worktree C:/Dev/wk-canon-9 branch wk-MDPF_CANON-9 at e4a8f39862: [naming-gate] NAMING-GATE: REFUSE 3 graded; rc=1; files unstaged",
+      "lib/opal_naming.py generated-carrier mark (MARK = GENERATED by lib/opal_naming.py from infra/logic/registry@...) at e4a8f39862",
+      ".tools/gen_mdpf_bronze_homes.py@uncommitted (OUT path literal, line 23)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed at step 4 (commit). Stopped on the naming limb, per the order's rule for a refused JSON literal. Code files remain UNCOMMITTED in the worktree: .tools/gen_mdpf_bronze_homes.py, data/mdpf/config/bronze_homes.json, data/mdpf/scripts/gold/tests/test_mdpf_bronze_homes.py, and the modified data/mdpf/scripts/bronze/pull_orion_model_composition.py. Their checks pass in the worktree (homes 3 of 3; writer 2 of 3, GRANT open per S2)."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W9-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~9",
+  "surfaced_at": "2026-10-11T03:46:00Z",
+  "one_line": "The commit-time naming limb REFUSES the code commit on lib/opal_naming.py:73, the new BRONZE_HOME_FEEDS literal naming the scopes 'mdpf' and 'inflection' outside lookup(). The cell's code is not committed; the order stops at step 1.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-c-2 section 1.1 step 1 (the generated target is a lib VIEWS row whose feed map names the scope and tier) and section 2 bound 3 (every new address comes from the builders); a naming-gate refusal is filed as a BLOCKING row with the gate's text and the cell stops, never a workaround.",
+  "world_is": "safe-commit naming limb (LGIC_ENFORCE DEC-6, ENFORCE) on the 8-path code commit: 'NAMING REFUSE lib/opal_naming.py:73 inflection -> lookup(inflection): NEW hand-kept carrier (context rule); hand-kept carrier of inflection outside every permitted context: read it through lookup(inflection)'; 'NAMING OUT-OF-PATTERN lib/opal_naming.py:73 mdpf -> lookup(mdpf): EXISTING hand-kept carrier (context rule): WARN'; 'NAMING-GATE: REFUSE 2 graded'. 'ERROR: BLOCKED -- the naming limb refused. Commit aborted; files unstaged.' Nothing landed. The generated JSON and generated_locals.tf were not named in the refusal. Pre-commit commit-gate printed clean for 7 of 8 files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output, 2026-10-11T03:45Z, worktree C:/Dev/wk-canon-9 branch wk-MDPF_CANON-9 at 9f933161c4 plus uncommitted files: NAMING-GATE: REFUSE 2 graded",
+      "lib/opal_naming.py:73 (uncommitted) BRONZE_HOME_FEEDS = {\"orion_model_composition\": (\"mdpf\", \"inflection\")}"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stopped on the naming limb, per the order's rule for a refused literal. The literal is the cell's own feed declaration: the scope name is typed in lib, not read through lookup(). Resolution is a CTO decision: a permitted context for the declaration, or a registry row for the feed (infra/logic/registry/scopes.json is in this order's paths). No rename, no move, no workaround was made. Code files remain UNCOMMITTED in C:/Dev/wk-canon-9: lib/opal_naming.py, data/mdpf/config/bronze_homes.json, infra/aws/terraform/modules/opal_name/generated_locals.tf, infra/aws/terraform/modules/opal_name/main.tf, infra/aws/terraform/mdpf-pipeline/iam.tf, data/mdpf/scripts/bronze/pull_orion_model_composition.py, lib/tests/test_opal_naming_bronze_homes.py, data/mdpf/scripts/gold/tests/test_mdpf_bronze_homes.py."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W9-S5",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~9",
+  "surfaced_at": "2026-10-11T03:46:00Z",
+  "one_line": "No plane claims data/mdpf/config/bronze_homes.json: as a VIEWS target it is UNCLASSIFIED in 'lib/opal_naming.py targets' (rc=1), and two lib tests that require every target classified FAIL, so libs TESTS is 2 of 3 arms, not 3 of 3.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-c-2 section 1.1 step 1: add the target as a VIEWS row and run 'targets', reading its SHIP / REPO-ONLY placement; the JSON reaches the runner by the existing data/mdpf/config -> code/config path. Section 4 NOTE: 'libs' is 3 of 3 at base, a guard the edit must keep green.",
+  "world_is": "'lib/opal_naming.py targets' with the new VIEWS row: 'UNCLASSIFIED - data/mdpf/config/bronze_homes.json measured: no plane claims it'; rc=1. The S3 probe _sdc().file_to_s3_target and bundle_for_member are both None for the new file; the tracked sibling data/mdpf/config/route_bindings.yaml is also None/None. The runner's config path is the dispatch sync s3://${MDPF_BUCKET}/${CODE_PREFIX}/config/ -> /opt/mdpf/config/ (infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:130), which no classified plane writes. lib/tests/test_opal_naming.py: 94 passed, 2 failed: test_targets_report_covers_every_known_target_exactly_once (asserts nothing UNCLASSIFIED at the cut) and test_cmd_targets_exit_code_tracks_unclassified (asserts exit 0). r3_checks.py libs: TESTS FAIL (pytest rc=1), DECLARED PASS, DELTA0 PASS: 2 of 3 arms. Measured on uncommitted worktree bytes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming.py targets, worktree C:/Dev/wk-canon-9 at 9f933161c4 plus uncommitted, 2026-10-11T03:44Z: UNCLASSIFIED row, TARGETS 14, rc=1",
+      "python -m pytest lib/tests/test_opal_naming.py: 2 failed, 94 passed (both failures name the targets tests)",
+      "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:130 (config sync, read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A SHIP claim is each plane's own record (EN-g-9, R-26); a classification written into targets_report for this file would be a rule no plane wrote, so the cell did not add one, and it did not edit lib/tests (read-only grant). The plane record for data/mdpf/config/*.json would live in .tools/safe_deploy_core.py, outside this order's paths. Resolution is a CTO ruling: a plane claim for the file, or a declared exemption in the classifier. The order stays open; AC3 is FAIL."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W9-S6",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~9",
+  "surfaced_at": "2026-10-11T03:46:00Z",
+  "one_line": "The committed generated_locals.tf predates the registry: regenerating it also adds four '4698' lines (the inflection scope's masters) that HEAD does not carry. Kept what the generator wrote; not hand-reverted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-c-2 section 1.1 step 1: if generating generated_locals.tf moves anything beyond the new local and its mark (drift that predates the cell), keep what the generator wrote and say so in a row; do not hand-revert.",
+  "world_is": "generate --target generated_locals.tf (mark over exemptions.json,scopes.json,tiers.json) against HEAD: the new bronze_homes local and its mark move, and in addition scope_short, scope_long, scope_class and scope_bucket each gain a '4698' key (the masters of the inflection row in scopes.json). The HEAD mark reads over exemptions.json,scopes.json. scopes.json is unmodified in this worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff of infra/aws/terraform/modules/opal_name/generated_locals.tf after generate (scratch diff), worktree at 9f933161c4 plus uncommitted",
+      "infra/logic/registry/scopes.json inflection row masters [\"4698\"] (unmodified, read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The generator output is committed-candidate bytes, not hand-edited. A CTO or CloudOps ruling decides whether the committed locals are regenerated in a separate commit. No apply or plan was run."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W9-S7",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~9",
+  "surfaced_at": "2026-10-11T04:05:46Z",
+  "one_line": "The runner-code SHIP claim for data/mdpf/config/ and data/mdpf/scripts/ is measured from the dispatch sync lines, but nothing in the repo copies the repo tree to the runner's code/ prefix: the copy is a hand step, so the new Stage-0 config reaches the runner only when someone syncs it. Plane not widened; the claim is the measured sync.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (with CloudOps): hand-sync data/mdpf/config/bronze_homes.json to s3://opal-data-mdpf/code/config/ and data/mdpf/scripts/ to code/scripts/ before the first post-deploy daily run",
+  "spec_asserts": "TO CN-c-2 amendment 3, S5: classify data/mdpf/config/ and data/mdpf/scripts/ as SHIP on a runner-code plane, MEASURED from infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh :125 and :130; if the measured sync differs from the plane (for example, nothing automated copies the repo dir to code/), file a row and do not widen the plane.",
+  "world_is": "The measured sync is real (dispatch :125 'aws s3 sync s3://${MDPF_BUCKET}/${CODE_PREFIX}/scripts/', :130 the same for config/, CODE_PREFIX=\"code\", MDPF_BUCKET=\"opal-data-mdpf\"), and the plane is classified SHIP runner-code in targets (rc=0). But no tracked script writes the code/ prefix: a grep of .tools/ and infra/aws/ec2/ for 's3 sync' finds only the runner's reads (dispatch :125, :130, mdpf-dim-backfill-20260729.sh :41, mdpf-catchup-etlfix-ws3.sh :40) and a comment in .tools/safe_deploy_core.py :85. infra/aws/terraform/mdpf-pipeline/iam.tf :196 says the code/ prefix is about 20 commits behind HEAD. The new script raises when /opt/mdpf/config/bronze_homes.json is missing (no fallback, by spec), so a script deployed without its config sync fails Stage 0 of the daily chain.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:28-29, :125, :130 (read; CODE_PREFIX and MDPF_BUCKET assignments and the two sync lines)",
+      "python lib/opal_naming.py targets, worktree C:/Dev/wk-canon-9 at 4d304235d5 plus uncommitted, 2026-10-11T04:05Z: 'SHIP runner-code data/mdpf/config/bronze_homes.json ... :130', TARGETS 14, rc=0",
+      "Native grep of .tools/ and infra/aws/ec2/ for 's3 sync' (no repo writer of the code/ prefix), 2026-10-11T04:05Z",
+      "infra/aws/terraform/mdpf-pipeline/iam.tf:196 (read; the code/ prefix is about 20 commits behind HEAD)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The plane claim stays as the runner's own sync list says (the order forbids widening it). Whether the repo-to-code copy should be automated is a CTO or CloudOps ruling; this row does not propose the mechanism. The ARMED hazard is the missing config sync at deploy, not the classification."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S12",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-11T05:10:00Z",
+  "one_line": "Row MDPF_CANON-D1-W9-S7's hand step is DONE: bronze_homes.json, the Stage-0 writer and the feeder are on s3://opal-data-mdpf/code/ at the repo bytes, the runner pulled to the builder's address once, and the feeder read is DELTA=0. S7's disarm_owner may disposition it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ADHOC.canon-r3-bronze-intake: the three files are copied by hand to code/ before the first post-deploy daily run (row S7 disarm_owner clause); deploy exactly the three files, never a tree sync.",
+  "world_is": "Measured 2026-10-11T05:00-05:06Z on dell1 from box/dell1 (six source paths unchanged since pin d437b0648f): code/config/bronze_homes.json absent before, now ETag b2d27b65d2e766f9ce599503793bb985 464 B; code/scripts/bronze/pull_orion_model_composition.py ETag 0f2ba775.. -> e64b70fe47621d5df4f87c0fa93efa70; code/scripts/gold/build_mdpf_wsc_inflection_feeder.py ETag 2024adcc.. -> ee2412111e130d8c19574b4f07c051cd; each read back byte-equal to the repo file. One Stage-0 run on i-02448edb624a7a7cf (SSM f1b89351-3669-479a-868a-598939f07e92) exit 0, 9 model files + _meta/pull_complete.json under date=2026-10-11 at the builder's keys. History copied 1030 of 1030 objects, source untouched. Feeder local read with --eclipse-date 2026-10-09: 750 rows, DELTA=0 on every data-bearing column (only _ingested_at differs). TWO FACTS THE ORDER DID NOT EXPECT: (1) the runner-policy grant was already live at order start, applied 2026-10-11T04:41:01Z by cloudops-dell1-agent-user (CloudTrail) with no ledger proof left, so the 0/1/0 plan could not be reproduced; (2) the runner was started by this order and is left RUNNING (stopping EC2 is a confirm-class act); the next dispatch stops it at its own end. The rest of code/ is untouched and still behind HEAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20261011T0439Z_mdpf-canon-r3-bronze-intake-dell1-20261011_deploy_completion.md (ledger CLOSED, 7 legs with proof)",
+      "aws s3api head-object / get-object read-backs and cmp against data/mdpf/** at HEAD, 2026-10-11T05:00Z",
+      "aws cloudtrail lookup-events ResourceName=mdpf-daily-runner-ec2-role: PutRolePolicy 2026-10-11T04:41:01Z cloudops-dell1-agent-user",
+      "aws ssm get-command-invocation f1b89351-3669-479a-868a-598939f07e92 (PULL_EXIT=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Evidence row, no defect asserted: records that row MDPF_CANON-D1-W9-S7's hand step was performed and measured. Disposition of S7 and of this row is the COO's and CVO's; the old bronze prefix is not deleted (an S3 delete needs a human's confirmation)."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S13",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T05:50:00Z",
+  "one_line": "DISARM OF D1-W8-S2 BY ITS DISARM OWNER (CTO, per REMEDIATION_v3): the two carried zero-firm entries (opal_growth_sma, opal_div_sma) are SMA-cohort per-model lines that feed no headline and no trend-stack figure; the fold fix is cut in round 4.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "D1-W8-S2: the global fold re-emits by_model entries no firm holds at the date, with counts frozen at 49financial's 2026-07-17 values, on every run.",
+  "world_is": "Served global aggregate-aua-timeseries 2026-10-08 (read 05:4xZ): both entries carry cohort_class 'sma' (45 / 40 accounts; 3,974,709.60 / 17,079,326.24). opal_aggregate_aua 2,147,378,054.74 equals model_aua 1,828,584,618.68 + non_model_aua 289,570,622.57 + sma_additive_aua 410,420.98 (pfde) + tax_additive_aua 28,812,392.51 (tax), so the two carried lines are in no headline sum. The portal Global trend stack builds from non-SMA keys only (ModelPortfolios.tsx nonSmaKeys, cohort_class !== 'sma'). What remains exposed is the two per-model lines wherever a by_model listing includes the SMA cohort. Placement: round-4 cell on the global fold (drop or null a by_model entry no firm holds at the date) under its never-widen pair; Andrew's X2 call dell1-20261011T053810Z-fe9b option A would also fold them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api get-object opal-data-assets portal/gold/mdpf/global/aggregate-aua-timeseries/2026-10-08.json (read-only, 1.0.0_SA_CTO~DELL1 2026-10-11T05:4xZ)",
+      "portal/src/pages/ModelPortfolios.tsx nonSmaKeys filter (Global VALUE re-point block)",
+      "org/missions/D8/MDPF/MDPF_CANON/ledger/ROUND_ANALYSIS.round3.md section 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S14",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T05:50:00Z",
+  "one_line": "DISARM OF D1-W8-S3 BY ITS DISARM OWNER (CTO): no front-end band is derived as total minus model; the Global stack reads non_model_aua as a field, so the additive gap shows as stack-below-line by pfde + tax (about 1.4%) on 24 dates, never as a mislabelled band.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "D1-W8-S3: the fold docstring states opal_aggregate_aua == model_aua + non_model_aua at every date and says the front end derives the non-model band as total minus model.",
+  "world_is": "portal/src/pages/ModelPortfolios.tsx: the (oaa - model_aua) client re-derive is retired (:80); the Global aggregate line is a FIELD READ of opal_aggregate_aua (:789) and the Non-Model band a FIELD READ of non_model_aua (:1872, :2071). So the band is the producer's non_model_aua. On the 24 dates where the headline carries sma_additive_aua + tax_additive_aua, the model bars plus the band sum below the aggregate line by that amount (2026-10-08: 29,222,813.49 of 2,147,378,054.74). Placement: round-4 LOCAL cell corrects the fold docstring to the additive identity; a portal cell renders the two additive components as their own band so the stack meets the line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/ModelPortfolios.tsx:80, :789, :1872, :2071 (main-tree portal pin)",
+      "served global aggregate-aua-timeseries 2026-10-08, the same read as D1-S13"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S15",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T05:50:00Z",
+  "one_line": "DISARM OF D1-W8-S5 BY ITS DISARM OWNER (CTO): the X2 re-read is put to Andrew as open call dell1-20261011T053810Z-fe9b, HELD for him (X2 is his grant); FWD-3 stays NOT REALIZED until he answers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "D1-W8-S5: 06_CONFORMANCE_LEDGER X2 stands GRANTED on the round-2 basis while the round-3 basis reads by_model min firms 0 and non-model series min firms 1.",
+  "world_is": "Open call dell1-20261011T053810Z-fe9b (fork, REC option A: fold by_model entries held at fewer than 2 firms into one line and keep the one-firm series out of global; B: accept and rewrite FWD-3), published to s3 box=dell1 and HELD for Andrew. No served output moves before his word.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/state/dell1/open_calls.json row dell1-20261011T053810Z-fe9b",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~8/X2_GLOBAL_BASIS.md @945e1add0c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

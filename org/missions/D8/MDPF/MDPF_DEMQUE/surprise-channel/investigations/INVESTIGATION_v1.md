@@ -466,6 +466,194 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "1.0.0_SA_CTO~Z msg 32871 via 0.0.0_AB_MSTR~DELL1 msg 2857"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S7",
+    "one_line": "land_cot.py cannot read its consumer's key literals since ADVI_COTBKF moved them onto legacy_addresses, so test_demque_land.py raises SystemExit at collection and aborts the whole demque pytest run.",
+    "spec_asserts": "DQ-t-4 / land_cot.py header: the lander's three keys are read out of build_canonical_prices_v2.py's own source; an extraction that finds nothing is a loud error, never a default.",
+    "world_is": "build_canonical_prices_v2.py line 170 now reads {'bucket': S3_BUCKET, 'key': _legacy_key('silver-historical-prices')} (ADVI_COTBKF CB-av-1 @9cfa6f9584, CB-ax-1 @19b3550e8a, 2026-10-09), so land_cot.py's _consumer_literal(r\"Key='([^']*historical_prices[^']*)'\") matches nothing and raises at import. `pytest data/mdpf/scripts/demque` at origin/CLOUD dcb15f35bb ends in INTERNALERROR with no test run; with test_demque_land.py ignored, 89 passed, 1 failed (the D1-S6 uploader test). The lander fails closed (no write), so the hazard is inert; no served path imports it today.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-11T03:58:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/land_cot.py:25-36 (_consumer_literal, SystemExit)",
+        "data/cot/scripts/gold/build_canonical_prices_v2.py:170 (_legacy_key)",
+        "pytest data/mdpf/scripts/demque at origin/CLOUD dcb15f35bb, 2026-10-11T03:5xZ"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S8",
+    "one_line": "32 of 141 served price files still carry the original 3 columns after the first served total-return write; all 32 are the symbols whose last Yahoo attempt is 2026-10-09, before that write.",
+    "spec_asserts": "DQ-t-21 / C-PRICES: price_store.write serves the four new columns (cash, total_return, tr_source, flags) after the original three for every written name.",
+    "world_is": "served_tr_read.py at origin/CLOUD dcb15f35bb, index written 2026-10-11T02:34:22Z: 109 prices.parquet carry the 7 columns, 32 carry the original 3, 0 other. The 32 symbols equal, by set intersection, the 32 pacer.json entries with last_attempt 2026-10-09 (outcome OK, http 200); the 147 attempted on 2026-10-10 carry 7 columns. Not read: whether the pacer's incremental window ever re-draws those 32, so whether they stay 3-column is open.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-11T03:58:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R7_CHECKS/served_tr_read.py output: 109 / 32 / 0",
+        "~/.opal/demque/pacer.json symbols[*].last_attempt (device-local, dell1), join in the real-run record",
+        "data/mdpf/scripts/demque/price_store.py write path"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W22-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~22",
+    "surfaced_at": "2026-10-11T05:17:53Z",
+    "one_line": "All 32 stale price files end on 2026-06-23, so a redraw request built from each file's own date window (the DQ-t-28 build) ends 2026-06-23, not at the current frontier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/redraw_stale.py --list on the worktree at base ba3ee9bd48 (S3 read, 2026-10-11 ~05Z): total 141, stale 32; every stale row end 2026-06-23; start 2013-04-08 for 31 rows and 2015-10-28 for 1",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t28.redraw-stale-price-files.md build steps 1 and 3: a stale row's start and end are the file's own date min and max; the request end is the latest of the rows' windows",
+        "data/mdpf/scripts/demque/daily_draw.py@ba3ee9bd48 _windows and on_result: the request start and end are passed to lock.check as the lock range"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "the 32 files are re-drawn so the price tables carry seven columns; the redraw request's window is each stale file's own date min and max (TO DQ-t-28 build steps 1 and 3).",
+    "world_is": "the 32 stale files end 2026-06-23 (their last draw's window), so the built request ends there and the draw's lock range would follow it. Whether the 32 then reach the current frontier is not settled. Not read: the end dates of the 109 seven-column files and the lock.json valid_to of the 32. The issuer should read this before running --apply."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W22-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~22",
+    "surfaced_at": "2026-10-11T05:17:53Z",
+    "one_line": "demand_queue.upload_ledger derives its repo root four dirname levels up from the file, which lands on data/, not the repo root, so its lib.opal_naming import holds only under the PYTHONPATH that run_daily_draw.sh exports.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/demand_queue.py@ba3ee9bd48 upload_ledger: root = four os.path.dirname calls on abspath(__file__), then sys.path insert and 'from lib.opal_naming import address'",
+        "python read on the worktree: four dirname calls on demand_queue.__file__ print C:\\dev\\wk-demque-22\\data; lib/opal_naming.py exists at C:\\dev\\wk-demque-22\\lib",
+        "data/mdpf/scripts/demque/run_daily_draw.sh@ba3ee9bd48 line 13: export PYTHONPATH=$ROOT"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "demand_queue.upload_ledger resolves the builder address through lib.opal_naming from the repo root found by its own path.",
+    "world_is": "the four-level path lands on data/, so the import holds only under the PYTHONPATH set by the daily draw script. redraw_stale.py takes the repo root four levels up from its own folder and inserts it itself. Not read: whether any scheduled task calls upload_ledger without that PYTHONPATH."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W23-S1",
+    "one_line": "DQ-t-29 D1-S7 (land_cot.py) cannot be committed as the face specifies: the naming gate refuses the two registry row keys passed to legacy_address(), because legacy_address is not a permitted call context.",
+    "spec_asserts": "Worker face DQ-t-29 section 2: HIST_KEY and TX_PREFIX are read through lib/opal_naming legacy_address(key) on the rows cottonwood-silver-historical-prices and cottonwood-silver-transactions-prefix, and the repaired land_cot.py is committed.",
+    "world_is": ".tools/naming-gate.py@698312232c (lines 22-24) permits a firm token only inside the arguments of key(), address(), name() or lookup(); legacy_address() is not listed. Committing the repaired land_cot.py (safe-commit, before 2026-10-11T05:19:28Z) printed 'NAMING-GATE: REFUSE 3 graded' for data/mdpf/scripts/demque/land_cot.py:71 and :72 (cottonwood-silver-historical-prices, cottonwood-silver-transactions-prefix, NEW hand-kept carrier) and a WARN at :46. Nothing was committed for the lander half; the D1-S6 half committed alone at 27e8ae878a. lib/opal_naming.lookup('cottonwood') returns no legacy key rows, so no permitted builder route reads a legacy row by key. The alternative of composing the key from the firm token was not taken: it routes around the gate.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~23",
+    "surfaced_at": "2026-10-11T05:19:28Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/naming-gate.py@698312232c lines 22-24 (CONTEXT RULE) and 1994-2026 (hand-kept carrier REFUSE)",
+        "lib/opal_naming.py@698312232c line 1941 (legacy_address, not a key/address/name/lookup builder)",
+        "infra/logic/registry/legacy_addresses.json@698312232c rows cottonwood-silver-historical-prices and cottonwood-silver-transactions-prefix",
+        "data/mdpf/scripts/demque/land_cot.py lines 71-72 in the worktree (uncommitted): the two literal row keys"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W21-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~21",
+    "surfaced_at": "2026-10-11T05:17:01Z",
+    "one_line": "The demque folder run (pytest data/mdpf/scripts/demque with test_demque_land.py ignored, as the order names) has one failure outside this order's paths: test_demque_bbg_ledger_upload.py::test_reads_record_lines_and_converts_rows_to_cells_per_mode returns cells None for the fourth row where 14 is expected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-DQ-t25 Tests paragraph: every other test_demque_*.py must keep passing unedited; a failure outside this order's paths is a surprise row and is not edited.",
+    "world_is": "At base ba3ee9bd48 plus this order's uncommitted diff (bbg_quote.py, test_demque_bbg.py, new test_demque_tier_quote.py): 93 passed, 1 failed. The failing test imports bbg_ledger_upload only; that module does not reference bbg_quote and is unchanged in this worktree. The None where 14 is expected reads like the Name-to-literal case row MDPF_DEMQUE-D1-S6 names for bbg_ledger_upload.py; that link is NOT verified here.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timeout 400 python -m pytest data/mdpf/scripts/demque --ignore data/mdpf/scripts/demque/test_demque_land.py -q: 1 failed, 93 passed; assertion [48, 64, 5, None, 2] == [48, 64, 5, 14, 2] at test_demque_bbg_ledger_upload.py:49",
+        "grep of data/mdpf/scripts/demque for bbg_quote: bbg_ledger_upload.py makes no reference to it",
+        "git status in C:/dev/wk-demque-21: only bbg_quote.py, test_demque_bbg.py and test_demque_tier_quote.py changed; bbg_ledger_upload.py not touched"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W21-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~21",
+    "surfaced_at": "2026-10-11T05:17:01Z",
+    "one_line": "TO-DQ-t25 names the tier-1 reserve claim as held or measured and the tier as an int 1-5, but states no rule for an inferred reserve claim or an int tier outside 1-5; the build carries an inferred reserve as its claim and reads any int other than 1 as a backfill.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-DQ-t25 cell text: tier-1 room is the history reserve figure (claim held or measured); tier 2 or above, or no tier, is a backfill.",
+    "world_is": "bbg_quote.py at this worktree quotes a tier-1 request whose reserve claim is inferred as a reserve figure, with finish_date_claim inferred (run: .scratch/edge_arms.py, uncommitted, t1_reserve_inferred). A tier that is an int other than 1 (for example 0 or 6) reads as a backfill by _is_tier1; those values were not run. The three named tests do not pin either arm.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/bbg_quote.py _is_tier1 and _history_tier1 at this worktree (uncommitted diff over ba3ee9bd48)",
+        ".scratch/edge_arms.py run: t1_reserve_inferred finish_date 2026-10-12, allowance_today 125, finish_date_claim inferred"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W21-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~21",
+    "surfaced_at": "2026-10-11T05:26:28Z",
+    "one_line": "TO-DQ-t26 does not place two details of refreeze.py: the re-frozen quote also carries allowance_gap, and the collision counter follows the date (<id>.quote.superseded-<date>-2.json).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-DQ-t26 build item 3: <id>.quote.json carries request_id, channel, cells, finish_date, finish_date_claim, claim, basis, quoted_as_of, refrozen_at, frozen_by, supersedes; the superseded copy is <id>.quote.superseded-<YYYY-MM-DD>.json, and when that name exists it uses -2, -3.",
+    "world_is": "refreeze.py writes those keys plus allowance_gap (None on the real TR request; a named gap when the finish is absent, so a null finish is never unexplained). On a name collision the counter sits after the date: <id>.quote.superseded-<YYYY-MM-DD>-2.json. Both are the builder's reading. The three named tests and dq_t26_real.py exercise neither a collision nor a null finish through refreeze.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/refreeze.py refreeze() new dict and _superseded_name() at this worktree (uncommitted diff over 16b6e889a8)",
+        "dq_t26_real.py output at this worktree: new finish=2026-10-17, superseded 2026-10-13 kept with its reason, qva OPEN with cells_drawn 5858"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S9",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-11T05:37:51Z",
+    "one_line": "The D1-S8 re-draw wrote 18 of the 32 three-column price files to seven columns; the other 14 re-drew and were REJECTED:LOW_TRADE_AGREEMENT by the lock, so price_store.write left their three-column files in place and 127 of 141 are served with seven columns.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Round-7 analysis item 3 (ROUND_ANALYSIS.round7.md @f5553ca3d5): the 32 symbols are re-drawn through the pacer and the row closes on a served read of 141 of 141 files with seven columns.",
+    "world_is": "2026-10-11T05:26Z-05:35Z, run_daily_draw.sh once on dell1 after redraw_stale.py --apply (32 pacer entries reset, one tier-2 request enqueued): stored 32 = LOCKED+written 18, REJECTED:LOW_TRADE_AGREEMENT+not written 14. redraw_stale.py --list afterwards reads total 141, stale 14 (LCEYX, FTHSX, HLMEX, IWS, IWP, IWN, IWO, VSEIX, PFORX, RPIFX, VSS, VWO, MISIX, PIMSX). Trade agreement of the 14: 116/141 to 613/748 (IWS 200/240). Each of these 14 had been written to three columns on 2026-10-09 under an earlier LOCK, so the same name now fails the lock it passed. The cause (lock floor or threshold change, or the transaction set) was not measured here. C-PRICES (total return on every price table) is not met for these 14.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "run log: scratchpad s8_redraw_run.log, daily_draw.py output line stored[] (18 LOCKED written, 14 REJECTED:LOW_TRADE_AGREEMENT not written)",
+        "python data/mdpf/scripts/demque/redraw_stale.py --list at 2026-10-11 ~05:40Z: total 141, stale 14",
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R8_CHECKS/dq_t28_stale.py: STALE-OK n=14 of 141"
+      ]
+    }
   }
 ]
 ```

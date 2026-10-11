@@ -1,9 +1,9 @@
 {
-  "contract_version": "0.3.0",
+  "contract_version": "0.5.0",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md v0.5 @0e7fd8eeb6",
   "authored_by": "0.4.0_DS_ClientPlatform~S",
-  "authored_under": "IRPT_DASHBD.TO-DB-b-1 (C-SHAPE, annex 17c, ADDENDUM ruling 12) with amendments 5 and 6. Row IRPT_DASHBD-S2 recorded that this file waited on the MEASURED thresholds; they are measured and landed, so it is written now. UNCOMMITTED by design: org/standards/ is owned-paths lane ANY_EXEC and this seat is refused there, so the issuer lands it (amendment 4, remedy (1) of row S2). 0.3.0: IRPT_DASHBD.TO-DB-b-18 (0.9.0_WK_IRPT_DASHBD~5) adds the four columns the producer's emit_method_row emits (rows IRPT_DASHBD-W1-S19, W2-S3) and records method_version 2.",
+  "authored_under": "IRPT_DASHBD.TO-DB-b-1 (C-SHAPE, annex 17c, ADDENDUM ruling 12) with amendments 5 and 6. Row IRPT_DASHBD-S2 recorded that this file waited on the MEASURED thresholds; they are measured and landed, so it is written now. UNCOMMITTED by design: org/standards/ is owned-paths lane ANY_EXEC and this seat is refused there, so the issuer lands it (amendment 4, remedy (1) of row S2). 0.3.0: IRPT_DASHBD.TO-DB-b-18 (0.9.0_WK_IRPT_DASHBD~5) adds the four columns the producer's emit_method_row emits (rows IRPT_DASHBD-W1-S19, W2-S3) and records method_version 2. 0.4.0: IRPT_DASHBD.TO-DB-b-118 AMENDMENT 1 (0.9.0_WK_IRPT_DASHBD~93, ordered by 2.0.0_SA_COO~D2; rows IRPT_DASHBD-D2-W93-S1 and S2): the row gains one claim per guard threshold value plus threshold_claims_source (1.0.0_SA_CTO~DELL2 ruling msg 4060), the five value columns become nullable under the claim `absent`, and emit_method_row types the value columns double and the claim columns string so an all-absent row lands typed nulls. 0.5.0: IRPT_DASHBD.TO-DB-b-120 (0.9.0_WK_IRPT_DASHBD~95, ordered by 2.0.0_SA_COO~D2; 1.0.0_SA_CTO~DELL2 ruling msg 4143 on row IRPT_DASHBD-D2-W93-S3): the contract lists method row 3 in method_versions, and tieout_tolerance_proposed takes the same claim as the five thresholds (one new column, tieout_tolerance_proposed_claim; the value is nullable only under the claim `absent` and emit_method_row types it double).",
   "table": "dim_return_method",
   "grain": "ONE ROW PER METHOD VERSION. Not per day, not per account, not per firm: the row describes the arithmetic, and a change to the arithmetic is a new method_version.",
   "partition": "method_version=<int>, one partition per version",
@@ -55,32 +55,68 @@
     {
       "name": "tolerance",
       "type": "double",
-      "nullable": false,
-      "meaning": "the MEASURED guard tolerance: p99 of |r_t - (holdings_price_return + income_return)| over the account-days inside the comparability domain"
+      "nullable": true,
+      "meaning": "the MEASURED guard tolerance: p99 of |r_t - (holdings_price_return + income_return)| over the account-days inside the comparability domain NULL ONLY UNDER THE CLAIM `absent`: a null value is legal only when its *_claim column says absent, and a non-null value never carries absent (the producer refuses both)."
     },
     {
       "name": "large_flow_share",
       "type": "double",
-      "nullable": false,
-      "meaning": "the MEASURED large-flow threshold on |F_t| / V_(t-1)"
+      "nullable": true,
+      "meaning": "the MEASURED large-flow threshold on |F_t| / V_(t-1) NULL ONLY UNDER THE CLAIM `absent`: a null value is legal only when its *_claim column says absent, and a non-null value never carries absent (the producer refuses both)."
     },
     {
       "name": "plausibility_band_low",
       "type": "double",
-      "nullable": false,
-      "meaning": "the lower bound the EMITTED total_return_daily must sit inside (ruling 19 moved this check after selection)"
+      "nullable": true,
+      "meaning": "the lower bound the EMITTED total_return_daily must sit inside (ruling 19 moved this check after selection) NULL ONLY UNDER THE CLAIM `absent`: a null value is legal only when its *_claim column says absent, and a non-null value never carries absent (the producer refuses both)."
     },
     {
       "name": "plausibility_band_high",
       "type": "double",
-      "nullable": false,
-      "meaning": "the upper bound the EMITTED total_return_daily must sit inside"
+      "nullable": true,
+      "meaning": "the upper bound the EMITTED total_return_daily must sit inside NULL ONLY UNDER THE CLAIM `absent`: a null value is legal only when its *_claim column says absent, and a non-null value never carries absent (the producer refuses both)."
     },
     {
       "name": "comparability_max_excluded_weight",
       "type": "double",
+      "nullable": true,
+      "meaning": "the DERIVED ceiling above which the holdings guard does not grade a day: tolerance / max(|band|) per TO-DB-b-1 amendment 6, not a percentile and not chosen by the producer NULL ONLY UNDER THE CLAIM `absent`: a null value is legal only when its *_claim column says absent, and a non-null value never carries absent (the producer refuses both)."
+    },
+    {
+      "name": "tolerance_claim",
+      "type": "string",
       "nullable": false,
-      "meaning": "the DERIVED ceiling above which the holdings guard does not grade a day: tolerance / max(|band|) per TO-DB-b-1 amendment 6, not a percentile and not chosen by the producer"
+      "meaning": "how the writer knows tolerance, one of enums.threshold_claims: measured (computed from the run's own data), inferred (derived from other values by a stated rule), held (given, neither measured nor derived by the writer) or absent (no value; tolerance is then null). A consumer rejects on this field, never on the bare number. When the thresholds input carried no claims the writer states held for a non-null value and absent for a null one, never measured (see threshold_claims_source)."
+    },
+    {
+      "name": "large_flow_share_claim",
+      "type": "string",
+      "nullable": false,
+      "meaning": "how the writer knows large_flow_share, one of enums.threshold_claims: measured (computed from the run's own data), inferred (derived from other values by a stated rule), held (given, neither measured nor derived by the writer) or absent (no value; large_flow_share is then null). A consumer rejects on this field, never on the bare number. When the thresholds input carried no claims the writer states held for a non-null value and absent for a null one, never measured (see threshold_claims_source)."
+    },
+    {
+      "name": "plausibility_band_low_claim",
+      "type": "string",
+      "nullable": false,
+      "meaning": "how the writer knows plausibility_band_low, one of enums.threshold_claims: measured (computed from the run's own data), inferred (derived from other values by a stated rule), held (given, neither measured nor derived by the writer) or absent (no value; plausibility_band_low is then null). A consumer rejects on this field, never on the bare number. When the thresholds input carried no claims the writer states held for a non-null value and absent for a null one, never measured (see threshold_claims_source)."
+    },
+    {
+      "name": "plausibility_band_high_claim",
+      "type": "string",
+      "nullable": false,
+      "meaning": "how the writer knows plausibility_band_high, one of enums.threshold_claims: measured (computed from the run's own data), inferred (derived from other values by a stated rule), held (given, neither measured nor derived by the writer) or absent (no value; plausibility_band_high is then null). A consumer rejects on this field, never on the bare number. When the thresholds input carried no claims the writer states held for a non-null value and absent for a null one, never measured (see threshold_claims_source)."
+    },
+    {
+      "name": "comparability_max_excluded_weight_claim",
+      "type": "string",
+      "nullable": false,
+      "meaning": "how the writer knows comparability_max_excluded_weight, one of enums.threshold_claims: measured (computed from the run's own data), inferred (derived from other values by a stated rule), held (given, neither measured nor derived by the writer) or absent (no value; comparability_max_excluded_weight is then null). A consumer rejects on this field, never on the bare number. When the thresholds input carried no claims the writer states held for a non-null value and absent for a null one, never measured (see threshold_claims_source)."
+    },
+    {
+      "name": "threshold_claims_source",
+      "type": "string",
+      "nullable": false,
+      "meaning": "whether the five *_claim columns were STATED by the thresholds input (stated) or DEFAULTED by the writer because the input carried no claims (defaulted_no_claims); a defaulted `held` is not a deliberately held value, and this column is how a consumer tells the two apart. One of enums.threshold_claims_source."
     },
     {
       "name": "guard_substitution",
@@ -98,7 +134,13 @@
       "name": "tieout_tolerance_proposed",
       "type": "double",
       "nullable": true,
-      "meaning": "the tie-out tolerance DB-b-3 PROPOSES, never one it ratifies. Null in 0.1.0 because DB-b-1 had no basis to assert a number; 0.037 now, measured by DB-b-3 as the preferred convention's p90 rounded up to the next 5 bp. STILL NULLABLE: a future method_version is emitted before its tie-out has run, so the column must be able to say 'not yet proposed'. READ THE MEASUREMENT RECORD BEFORE USING THE VALUE -- row IRPT_DASHBD-S10 and the record's own `sentence` field say this cell recommends AGAINST adopting it as a bar, because the difference it is a percentile of is dominated by the account-days Opal withheld and Black Diamond counted."
+      "meaning": "the tie-out tolerance DB-b-3 PROPOSES, never one it ratifies. Null in 0.1.0 because DB-b-1 had no basis to assert a number; 0.037 now, measured by DB-b-3 as the preferred convention's p90 rounded up to the next 5 bp. STILL NULLABLE: a future method_version is emitted before its tie-out has run, so the column must be able to say 'not yet proposed'. READ THE MEASUREMENT RECORD BEFORE USING THE VALUE -- row IRPT_DASHBD-S10 and the record's own `sentence` field say this cell recommends AGAINST adopting it as a bar, because the difference it is a percentile of is dominated by the account-days Opal withheld and Black Diamond counted. NULL ONLY UNDER THE CLAIM `absent`: a null value is legal only when tieout_tolerance_proposed_claim says absent, and a non-null value never carries absent (the producer refuses both). emit_method_row writes it with the arrow type double, so a null lands typed."
+    },
+    {
+      "name": "tieout_tolerance_proposed_claim",
+      "type": "string",
+      "nullable": false,
+      "meaning": "how the writer knows tieout_tolerance_proposed, one of enums.threshold_claims: measured (computed from the run's own data), inferred (derived from other values by a stated rule), held (given, neither measured nor derived by the writer) or absent (no value; tieout_tolerance_proposed is then null). A consumer rejects on this field, never on the bare number. A stated threshold_claims object may carry the key tieout_tolerance_proposed; when it does not, the writer states held for a non-null value and absent for a null one, never measured (a tie-out that has not been run, as for a source with no tie-out yet, reads absent)."
     },
     {
       "name": "tieout_tolerance",
@@ -160,6 +202,16 @@
     ],
     "day_count": [
       "Account365"
+    ],
+    "threshold_claims": [
+      "measured",
+      "inferred",
+      "held",
+      "absent"
+    ],
+    "threshold_claims_source": [
+      "stated",
+      "defaulted_no_claims"
     ]
   },
   "rule24_record": {
@@ -168,11 +220,13 @@
     "iii_intent_coherence": "The table answers ONE question: what arithmetic produced the numbers that point at it. It deliberately carries no quality counts, no row totals and no per-account figures -- those are account-day facts and live on account_return_daily or in the round's deliverables. guard_substitution is the one apparent exception and is included under this axis deliberately: a withdrawn behaviour is part of the method's definition, and a consumer that cannot see the withdrawal cannot distinguish it from a behaviour never built.",
     "iv_state_coherence": "WHICH VALUES ONE REMEDY DOES NOT MOVE. Re-measuring the guard numbers moves tolerance, large_flow_share and comparability_max_excluded_weight together, because the ceiling is DERIVED from the first and the band; it moves neither the band itself (a PRD default) nor any convention column. DB-b-3 filling tieout_tolerance_proposed moves that column alone and must not touch the others. Implementing a different flow convention is NOT an update to flow_convention: it is a new method_version with its own partition and a recomputation of every return that pointed at the old one.",
     "token_census": "The five enum values that are not already ratified estate terms were introduced with this table at 0.1.0 and the producer is their only writer: TWR_DAILY_GEOMETRIC, cash_when_received, GROSS_ONLY, Account365, and the START/MIDPOINT members declared unused. The column name comparability_max_excluded_weight is new with PRD ruling 18 and appears in the PRD, this order and this producer only.",
-    "token_census_finding": "NO COLLISION. Stated with its limit: this census is over the declared VALUES of a table minted by this round, so there is no prior consumer to collide with. That is a weaker claim than the account_return_daily 0.2.0 census, where an existing estate term could have clashed and the scans were run to check."
+    "token_census_finding": "NO COLLISION. Stated with its limit: this census is over the declared VALUES of a table minted by this round, so there is no prior consumer to collide with. That is a weaker claim than the account_return_daily 0.2.0 census, where an existing estate term could have clashed and the scans were run to check.",
+    "threshold_claims_record": "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~93/THRESHOLD_CLAIM_RULE24.json (0.4.0: the four postulates, the token census and the decision for the per-value claim columns; its one-page reading is THRESHOLD_CLAIM_RULE24.md beside it)",
+    "tieout_claim_and_row3_record": "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~95/ROW3_AND_TIEOUT_CLAIM.json (0.5.0: the four postulates for the tie-out as a sixth member of the claim domain and for listing method row 3, which adds a row and no enum member)"
   },
-  "schema_hash": "73e80ef7920f59134eda5ab06dfea766de295bd71e71b398023b52ae8acbe919",
+  "schema_hash": "10760b7d2daf1fcfcae66ace286b2f541180cc907c930604f389f5bc28a8da9c",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the LANDED parquet carries -- identical to the basis the account_return_daily contract declares, so one method verifies both tables.",
-  "schema_hash_provenance": "COMPUTED FROM THE PRODUCER'S ROW, by the basis this file declares: the 'name:type' of each key emit_method_row emits, with the pyarrow type each value carries (int -> int64, str -> string, float -> double) -- NOT yet read from a served artifact, because method_version 2 is not yet written. It is RE-READ FROM THE SERVED ARTIFACT at the P-2 packet's method-row write, and a difference there is a contract bump, not an in-place edit. Types assume the packet passes --tieout (a float), as the landed version-1 row did; a run without --tieout would type tieout_tolerance_proposed as null and change the hash. The predecessor hash 198109613065ed7b72afd5ff178ac31c7ace2facddf0c65e96a65acfdd42e47d (0.2.0) was computed from the served version-1 artifact; the change is four added columns, not a change of table.",
+  "schema_hash_provenance": "0.5.0: COMPUTED FROM THE PRODUCER'S TABLE, by the basis this file declares: the table_schema emit_method_row(upload=False) returns, now with the five value columns AND tieout_tolerance_proposed float64 (double) and the seven claim columns (the six of 0.4.0 plus tieout_tolerance_proposed_claim) string by explicit arrow type, so a row with no tie-out has the same schema as a row with one (checked by DB64-1-AC1); NOT read from a served artifact, because no 0.5.0 row is written yet. This supersedes the 0.4.0 note below that a run without --tieout types tieout_tolerance_proposed as null: it no longer does. The 0.4.0 text follows. 0.4.0: COMPUTED FROM THE PRODUCER'S TABLE, by the basis this file declares: the table_schema emit_method_row(upload=False) returns, with the five value columns float64 (double) and the six claim columns string by explicit arrow type, so an all-absent row has the same schema as a row with values (checked by DB62-1-AC3); NOT read from a served artifact, because no 0.4.0 row is written yet. Note: with no --tieout, tieout_tolerance_proposed still infers the null type from its None value, as it did at 0.3.0; the contract types it double and the packet that writes a row passes --tieout. The 0.3.0 text follows. COMPUTED FROM THE PRODUCER'S ROW, by the basis this file declares: the 'name:type' of each key emit_method_row emits, with the pyarrow type each value carries (int -> int64, str -> string, float -> double) -- NOT yet read from a served artifact, because method_version 2 is not yet written. It is RE-READ FROM THE SERVED ARTIFACT at the P-2 packet's method-row write, and a difference there is a contract bump, not an in-place edit. Types assume the packet passes --tieout (a float), as the landed version-1 row did; a run without --tieout would type tieout_tolerance_proposed as null and change the hash. The predecessor hash 198109613065ed7b72afd5ff178ac31c7ace2facddf0c65e96a65acfdd42e47d (0.2.0) was computed from the served version-1 artifact; the change is four added columns, not a change of table.",
   "landed_row": {
     "basis": "measured",
     "read_at": "2026-10-01, after DB-b-3's method-row write",
@@ -197,10 +251,11 @@
       "firm": "49financial"
     }
   },
+  "landed_row_note": "The landed row above is the method_version=1 partition as read on 2026-10-01 and predates the claim columns: it carries none of the six. The served method_version=2 partition (the 49F row 2) was likewise written before the claim columns existed (issuer's statement in IRPT_DASHBD.TO-DB-b-118 AMENDMENT 1; not re-read here, no AWS call). Neither is rewritten for 0.4.0, and this file's landed_row block is unchanged by 0.4.0. A reader of a partition that lacks the *_claim columns must read its values as unclaimed, never as measured.",
   "supersedes": {
-    "contract_version": "0.2.0",
-    "schema_hash": "198109613065ed7b72afd5ff178ac31c7ace2facddf0c65e96a65acfdd42e47d",
-    "why": "emit_method_row gained value_basis, value_basis_ruling (method_version 2, 1.0.0_SA_CTO RULINGS batch 193) and tieout_tolerance, tieout_tolerance_ruling (1.0.0_SA_CTO RULINGS batch 181) after 0.2.0 was written, so the emitted row carried four columns the contract did not declare and the parquet schema_hash changed with them; a versioned bump, not an in-place edit (rows IRPT_DASHBD-W1-S19, W2-S3)."
+    "contract_version": "0.4.0",
+    "schema_hash": "700e55f7abb5a0b531ad0f09fb92b430f3712ae692687cad87bd2af5830f0c77",
+    "why": "emit_method_row gained one column (tieout_tolerance_proposed_claim) and types tieout_tolerance_proposed double, so the tie-out tolerance states how the writer knows it (measured / inferred / held / absent) and is nullable only under `absent` (IRPT_DASHBD.TO-DB-b-120, 1.0.0_SA_CTO~DELL2 ruling msg 4143 on row IRPT_DASHBD-D2-W93-S3); and method_versions lists row 3, which METHOD_ROWS[3] already defined and emit_method_row already wrote. A versioned bump, not an in-place edit: the emitted row carries a column the 0.4.0 contract did not declare and the parquet schema_hash changed with it. 0.4.0 itself superseded 0.3.0 (hash 73e80ef7920f59134eda5ab06dfea766de295bd71e71b398023b52ae8acbe919), which superseded 0.2.0 (hash 198109613065ed7b72afd5ff178ac31c7ace2facddf0c65e96a65acfdd42e47d)."
   },
   "method_versions": [
     {
@@ -236,6 +291,25 @@
       "tieout_tolerance_ruling": "1.0.0_SA_CTO RULINGS batch 181",
       "gips_alignment": "GIPS-aligned, not GIPS-compliant",
       "values_read_from": "the producer's source (data/assets/scripts/gold/irpt_reporting/account_return_daily.py, METHOD_VERSION and emit_method_row), NOT a landed parquet: method_version 2 is written by the P-2 packet, which re-reads the served row. The measured guard numbers (tolerance, large_flow_share, band, comparability_max_excluded_weight) are the thresholds file the packet passes and are not asserted here."
+    },
+    {
+      "method_version": 3,
+      "method": "TWR_DAILY_GEOMETRIC",
+      "flow_convention": "END",
+      "flow_convention_basis": "emit_method_row writes `winner or END` and no caller passes a winner, so the written value is END (account_return_daily.py).",
+      "valuation_source": "positions_based",
+      "value_basis": "POSITIONS-BASED EQUITY = account value rebuilt from positions at the entry's declared price_basis, plus the entry's declared cash",
+      "value_basis_ruling": "1.0.0_SA_CTO~DELL2 ADDENDUM 13.2 (msg 3501): a positions-based channel names its own method row, never 2",
+      "price_basis": "LEFT TO THE SOURCE ENTRY: METHOD_ROWS[3] names no price basis; the entry's price_basis field states it (read by method_fields, not written to the dim row)",
+      "income_basis": "cash_when_received",
+      "fee_basis": "PER_ENTRY_FEE_TREATMENT",
+      "fee_basis_note": "LEFT TO THE SOURCE ENTRY: METHOD_ROWS[3] states that fee treatment is per entry and does not say gross or net; the entry's fee_treatment field states it. This contract asserts no gross or net for row 3.",
+      "day_count": "Account365",
+      "tieout_tolerance": 0.0035,
+      "tieout_tolerance_ruling": "1.0.0_SA_CTO RULINGS batch 181",
+      "tieout_tolerance_proposed_note": "LEFT TO THE CALLER: emit_method_row writes the tie-out the caller passes (--tieout) and its claim; with none passed the value is null and tieout_tolerance_proposed_claim reads `absent`. No value is asserted here.",
+      "gips_alignment": "GIPS-aligned, not GIPS-compliant",
+      "values_read_from": "the producer's source (data/assets/scripts/gold/irpt_reporting/account_return_daily.py, METHOD_ROWS[3] and emit_method_row), NOT a landed parquet: no method_version=3 partition has been written (row 3's partition was read absent by IRPT_DASHBD.TO-DB-b-116, deliverables/0.9.0_WK_IRPT_DASHBD~91/ROW3_VS_COTTONWOOD.json). The guard numbers (tolerance, large_flow_share, plausibility_band_low, plausibility_band_high, comparability_max_excluded_weight) and their claims are the thresholds input the writing packet passes and are not asserted here."
     }
   ]
 }

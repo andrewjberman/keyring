@@ -5306,3 +5306,321 @@ round.** Never edit an existing row.
  "world_is": "Every importer is hand-run on dell2 today and takes the variable from the operator's shell or not at all. That includes commonwealth_fwd3_serve, which writes served keys when run with its apply flag by 0.7.0_AE_CloudOps~CB2. The apply for CB-al-2 is not run before this row is dispositioned."
 }
 ```
+
+## ADVI_COTBKF-D2-W83-S1 -- the AC3 regrade needs the gitignored Yahoo cache, which a fresh worktree lacks
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W83-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~83",
+ "surfaced_at": "2026-10-11T03:59:32Z",
+ "one_line": "The SWEEP-REGRADE invocation of CB56bd1-AC3 needs 3,580 cached Yahoo pull files under <worktree>/.scratch/advi_cotbkf/yahoo_census (commonwealth_daily_valuation.YAHOO_CACHE, root-relative, gitignored); a fresh worker worktree has none, so the first before-run stopped with FileNotFoundError after the store loads. The worker copied that directory (250 MB, read-only input) from the base checkout's .scratch into its own worktree .scratch and re-ran; the order does not name this input.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "first before-run log last line: FileNotFoundError, as_traded needs the cached Yahoo pulls; the worktree's .scratch/advi_cotbkf/yahoo_census is not a directory (no fallback to the store's points)",
+   "commonwealth_daily_valuation.py line 202: YAHOO_CACHE = _ROOT / .scratch / advi_cotbkf / yahoo_census",
+   "base checkout directory holds 3,580 entries; the worker copy holds 3,580 entries; copied with cp -r, nothing written under the base checkout"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB56bd1-AC3 names one invocation and its expected last line; the face lists no input other than --data-dir and the private config.",
+ "world_is": "The invocation also reads a gitignored per-checkout cache that a fresh worktree lacks. Any worker re-running AC3 in a new worktree needs the same copy."
+}
+```
+
+## ADVI_COTBKF-D2-W83-S2 -- AC1 and AC2 cannot read passed with the variable unset while the round-55 with-variable arm stands
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W83-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~83",
+ "surfaced_at": "2026-10-11T04:27:44Z",
+ "one_line": "CB56bd1-AC1 and CB56bd1-AC2 cannot read 'passed' as written: test_first_use_with_variable_succeeds (round-55 arm, test_commonwealth_sweeps_config_env.py) asserts COTBKF_SWEEPS_CONFIG is set and loads the real file, so under the criteria's `env -u COTBKF_SWEEPS_CONFIG` it fails (AC1: 1 failed, 7 passed; AC2: 1 failed, 773 passed, 11 skipped). With the variable set the same runs are 8 passed and 774 passed, 11 skipped. The order says the other arms stand; the refusal clause bars weakening or skipping the arm.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "AC1 as written, variable unset, at 41b1094775: 1 failed, 7 passed, rc 1; the one failure is the with-variable arm (assertion: the variable is not set in the test environment)",
+   "AC2 as written, variable unset: 1 failed, 773 passed, 11 skipped, rc 1; skips 11 of 11 as before this order",
+   "variable set: AC1 8 passed rc 0; silver suite 774 passed, 11 skipped rc 0",
+   "the round-55 arm was written to FAIL, not skip, when the variable is absent (its own assertion message); the pin refuses any synthetic file, so no synthetic loader result or temp file can stand for the real one in that arm"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB56bd1-AC1/AC2 run with the variable unset and expect 'passed'; step 3: the round-55 test's other arms stand.",
+ "world_is": "One test needs the real private file by design, so no suite run with the variable unset can be fully green while it stands. The issuer decides: rewrite that arm so the variable is supplied by the test (needs the real path, a device path in a test), or run AC1/AC2 with the variable set for that arm, or drop the arm from the unset runs by a rule the issuer states."
+}
+```
+
+## ADVI_COTBKF-D2-W83-S3 -- AC3 as written needs five persisted inputs that round 51 moved out of the tree
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W83-S3",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~83",
+ "surfaced_at": "2026-10-11T04:27:44Z",
+ "one_line": "CB56bd1-AC3 as written cannot run in this tree: commonwealth_sweep_regrade.py defaults to five persisted parquet inputs under org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~41/~42/~43/~46/~50, all moved out of the repo by round 51 (CB-ay-1), so the invocation stops with FileNotFoundError on the ~46 grades file. The worker ran it with five extra path flags (--r24-grades, --round22, --traced, --causes, --movers) pointing at the moved copies in the private evidence mirror, identically in the before and the after run.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "before-run log last line with the invocation as written (after the Yahoo cache copy of row W83-S1): FileNotFoundError on the ~46 month_grades_before.parquet path in the worktree",
+   "git log: 63448cccd2 removed those files from the tree; the ~46 MOVED_ACCOUNT_DATA.md lists month_grades_after/before.parquet by sha256 and size only",
+   "run with the five flags: last line starts with the AC3 expected text, rc 0; no file copied into the tree"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB56bd1-AC3 names one invocation with --before-list, --after-list, --data-dir and --out only.",
+ "world_is": "The persisted inputs the regrade reads by default live only in the private evidence mirror, so any AC3 re-run needs the flags that point at them. The comparison is still like for like: both runs used the same flags."
+}
+```
+
+## ADVI_COTBKF-D2-S85 -- Round 56 closed by the issuer regrade run; r22_named reads NA where round 53 read 25/25
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S85",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T05:05:00Z",
+ "one_line": "Round 56 closed by the issuer's own SWEEP-REGRADE run (byte-identical to the worker's after-line, 279 of 279 bytes), with one field that differs from round 53's line: r22_named reads NA now and read 25/25 on 2026-10-09. The round-22 inputs were passed by flag this time (the tracked defaults were moved out of the tree in round 51); whether the flag path or a code change since round 53 turns 25/25 into NA was not traced.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer run at box/dell2 after the round-56 drain @8f4b5a22ae, real config, five input flags pointed at the untracked copies in worktree wk-cotbkf-80: last line 'SWEEP-REGRADE sweeps=2 rejected=517 double_drop_months=0 fixed=0 months_before=3678/293/78622 months_after=3678/293/78622 control_same=True regressions=0 movers_back=155 year_chain_same=True r22_named=NA dividend_both=NA price_basis_before=as_traded price_basis_after=as_traded', rc 0",
+   "cmp against deliverables/0.9.0_WK_ADVI_COTBKF~83/regrade_last_line_after.txt: rc 0, 279 of 279 bytes; that file equals the worker's before-line (the worker's cmp)",
+   "round 53's line, from worker ~80's report of 2026-10-10: the same text except r22_named=25/25",
+   "round 56's own before and after agree with each other, so the lazy config load did not move it"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB56bd1-AC3: with the real config the chain output is unchanged. CB53ba1-AC2 cited a SWEEP-REGRADE line carrying r22_named=25/25.",
+ "world_is": "The round-56 control holds (before = after = the issuer's run). One reporting field of the regrade line reads differently from two days ago under a different way of supplying the round-22 inputs. The month counts, the rejected count and the control fields are the same in both lines."
+}
+```
+
+## ADVI_COTBKF-D2-W84-S1 -- the measured rows hold no bond; the held set holds 16 bonds, not 3
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W84-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~84",
+ "surfaced_at": "2026-10-11T05:00:35Z",
+ "one_line": "The order's premise 'Cottonwood's bond holdings inside the measured rows' is empty: 0 of 107,316 measured account-days hold a Fixed Income CUSIP, and the 'bonds' of the held set are 16 CUSIPs by Asset_Type, not the 3 on the hold list.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "fwd3_serve_r34 daily_returns (return not null) 107,316 account-days; account_day_value joined to Asset_Type from the silver transactions: 0 Fixed Income CUSIPs among 252 distinct CUSIPs in 229,743 holding rows of those days",
+   "141,555 account-days hold a Fixed Income CUSIP (772 CUSIPs); all are blank (UNPRICED 141,379, FIRST_DAY 125, DVR_CLOSE_STEP 51); 988 of them are the HELD_SOURCE_UNDER_REVIEW set, which holds 16 Fixed Income CUSIPs, one of them on the hold list",
+   "the record ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~84/BOND_ACCRUAL_MEASURE.json carries the counts and the rule"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Item 2 and 3 of the cell: bond holdings exist inside the measured rows, and the held set is the 3-bond list's 988 account-days.",
+ "world_is": "No measured row holds a bond (they are all blank for want of a bond close), so the clean or dirty answer changes no measured row today; it matters only when bonds are priced. The only stored bond closes (gold canonical holdings, 184 of 778 Fixed Income CUSIPs, 2026-06-08 to 2026-10-06) fall by one half-coupon on the coupon date in 81 of 86 testable bonds."
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S86",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T05:08:20Z",
+  "one_line": "L9 round 57: CB57be1-AC2 MET. The bond-close record's 10 code citations resolve at their lines, its counts carry denominators (this seat recounted the 107,316 measured account-days), and DIRTY follows from 81 of 86 testable bonds stepping down about one half-coupon at the coupon date against 5 of 42 controls. The accrual climb is not resolved and the record says so. Consequence for the mint: method row 3's income basis is not contradicted by any measured row (none holds a bond) and would be false for a bond day priced from this store.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_57_DRAIN_END_20261011.md @6edfe081c7 (msg 4128)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~84/BOND_ACCRUAL_MEASURE.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_57_L9_GRADE_20261011.md",
+      "this seat's read of the record's 14 evidence entries: 10 name a code file and line, and each resolves at that line (commonwealth_daily_valuation.py:444, :440, :296; commonwealth_price_census.py:59, :61; commonwealth_transactions.py:53; commonwealth_fwd3_serve.py:254; commonwealth_cot_price_rewrite.py:67; commonwealth_sweeps.py:1028; account_return_daily.py:1900); 4 name a data file (line 0), both files present on this box",
+      "this seat's recount from .scratch/advi_cotbkf/fwd3_serve_r34/daily_returns.parquet: 1,691,729 rows, 107,316 with a return (the record's measured denominator)"
+    ]
+  },
+  "spec_asserts": "CB57be1-AC2 (JUDGMENT, graded by 3.0.0_SA_CVO at L9): the verdict follows from the cited lines and counts and each citation resolves; the counts carry denominators and the bond rule is stated; income_basis_for_bonds follows from the verdict.",
+  "world_is": "All three limbs hold. Not recomputed by this seat: the coupon-date test and the 0 of 107,316 count. The record's settling_read field is empty; the read is named in its .md.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W85-S1 -- the holdings source of the bond count is local copies; absent copies refuse the build and the mint
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W85-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~85",
+ "surfaced_at": "2026-10-11T05:30:00Z",
+ "one_line": "The order gave no source for the holdings of an account-day; the count reads local copies (account_day_value and the transactions cache under the day directory's parent), so the build and the mint now REFUSE when those copies are absent.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "commonwealth_account_return_daily.py load_bond_inputs/load_fixed_income_cusips: base = parent of the day directory; files fwd3_serve_r34/account_day_value.parquet (columns account, date, cusip) and tx_cache/trade_year=*/*.parquet (Cusip, Asset_Type)",
+   "real read: 778 Fixed Income CUSIPs and 141,555 bond-holding account-days, equal to the round-57 counts; the 3,325-file count ran in 10 s",
+   "the build reads the S3 silver account_day_value with a new cusip column (not read from S3 here: no S3 call was allowed), so that the column exists in the served table is UNVERIFIED by this worker",
+   "conftest.py: an autouse fixture answers 'no bond holdings' for test_commonwealth_ard_apply only, because those older tests fake S3 and carry no holdings files"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The order names where round 57 read the holdings but not where --bond-check, the mint and the build read them in a fresh checkout; it says a normal build or apply is unchanged when the count is 0.",
+ "world_is": "A fresh checkout without .scratch/advi_cotbkf/tx_cache or fwd3_serve_r34 gets REFUSED from the mint and the build, where before it did not; the S3 silver account_day_value is assumed to carry the cusip column the local copy carries."
+}
+```
+
+## ADVI_COTBKF-D2-S88 -- Disarms D2-S60 by citation of the CTO half's AMENDMENT 1
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S88",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T05:35:00Z",
+ "one_line": "DISARMS ADVI_COTBKF-D2-S60, by citation, as the CTO round-58 analysis @1c27ce4263 section 3 asks of this seat: the row's disarm_owner (1.0.0_SA_CTO~DELL2) disarmed it on 2026-10-09 in AMENDMENT 1 of its own R36 half, and no channel row had carried that until now.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_R36_COT_PRICE_REWRITE_CTO_HALF.md line 44, read at HEAD: '## AMENDMENT 1 (~13:4xZ, ... row D2-S60 @f550170df0): condition 2's reading -- GO'; the file's last commit is fa3cabc1ea",
+   "the same amendment, lines 46 to 52: condition 2 reaches only a writer beyond the half's own census; 107 mirror objects read one at a time, exactly 1 writer, the named builder's deployed copy; scheduled writers 0; readers of another firm's prices 0; 'Condition 2 is MET, and D2-S60 is disarmed by this amendment'",
+   "CTO round-58 analysis section 3: D2-S60 does not gate CB-al-2; this seat appends the row citing the amendment"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "An ARMED hazard disarms via its disarm_owner, and the channel carries the disarm.",
+ "world_is": "The disarm was made by its owner in a deliverable two days ago; this row is the channel's copy of it. The issuer did not re-read the 107 mirror objects."
+}
+```
+
+## ADVI_COTBKF-D2-S87 -- Round 58 closed by the issuer run; the bond count's zero has a positive control
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S87",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T05:35:00Z",
+ "one_line": "Round 58 (CB-bf-1, the bond-day guard and the count at the mint) drained @154e0e5a3a and closed by the issuer's run. The zero is not vacuous: the same join that finds 0 measured rows on bond-holding days finds all 141,555 bond-holding account-days in the day files, every one NOT_MEASURABLE. That also re-derives round 57's count by a second instrument.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer run at 154e0e5a3a, default day directory: ARD-COTTONWOOD-BOND-CHECK days=3325 rows=1691729 measured_rows=107316 measured_rows_on_bond_days=0 fixed_income_cusips=778, rc 0 (each of 3,325 files re-hashed against the manifest first)",
+   "issuer positive control over the same files and the same loader: holdings carry 141,555 bond-holding account-days over 208 accounts; the day files carry 1,533 distinct account ids, 208 of them among the bond accounts; day-file rows of ANY basis on a bond-holding account-day: 141,555, return_basis NOT_MEASURABLE on all of them",
+   "tests at the same HEAD, variable unset: test_commonwealth_ard_bond_guard.py 8 passed; silver suite 781 passed, 12 skipped",
+   "issuer read of the adapter diff @86119c13dc: apply_days runs bond_check after its sha check and before any S3 client exists and raises BondDayMeasuredError when the count is not 0; build calls guard_bond_days before a day is written, under method_version 3 only"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO msg 4131 and round-58 analysis section 4 item 1: the count is re-read at the mint on the exact files, 0 or it stops; a guard with a test refuses a measured row on a bond-holding day under method_version 3.",
+ "world_is": "Both are in the tree at 154e0e5a3a. NOT exercised: build() itself was not run (only its guard function is tested, on synthetic frames), and whether the SERVED account_day_value table carries the cusip column the build now reads was not checked (no S3 read was made); the local copy has it. --apply was not run."
+}
+```
+
+## ADVI_COTBKF-D2-W86-S1 -- CB-bg-1 S1
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W86-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~86",
+ "surfaced_at": "2026-10-11T05:40:10Z",
+ "one_line": "CB-bg-1: the order names the sidecar's tenancy (Cottonwood's own, built by address()) but not its source, tier, table or partition; the worker chose them.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/silver/commonwealth_account_return_daily.py constants SIDECAR_SOURCE=irpt, SIDECAR_TIER=gold, SIDECAR_TABLE=account_return_daily_blank_reasons, SIDECAR_PARTITION=source_date=2026-06-23, address = lib/opal_naming.address(...) with object ard_cottonwood_blank_reasons.parquet, printed by the stamp into the tracked manifest's reasons_sidecar.address (bucket opal-data-cottonwood, the day files' bucket)",
+   "address() accepted the address (no refusal); the choice puts the sidecar beside the day table under the same source and tier, in a table name that cannot be read as a prefix of account_return_daily/ (distinct path segment)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bg-1 item 1: reasons_sidecar.address is the output of lib/opal_naming.address() under Cottonwood's own tenancy, built in code, never typed.",
+ "world_is": "address() takes five segments plus the object; the order fixes only the tenancy. Source irpt, tier gold, table and partition are this worker's choice. The CTO or the issuer may re-point them before the mint; the stamp and the mint both read the one function sidecar_address()."
+}
+```
+
+## ADVI_COTBKF-D2-W86-S2 -- CB-bg-1 S2
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W86-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~86",
+ "surfaced_at": "2026-10-11T05:40:10Z",
+ "one_line": "CB-bg-1: --apply now refuses a manifest that is not stamped; the older apply tests (bare manifests) pass only because conftest.py turns that refusal off for their module.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/silver/commonwealth_account_return_daily.py: REQUIRE_STAMPED = True; minted_objects() refuses a manifest lacking reasons_sidecar.address, method_row or vocabulary_notes",
+   "data/assets/scripts/silver/tests/conftest.py: the autouse fixture for the module test_commonwealth_ard_apply sets cw.REQUIRE_STAMPED False, beside the existing load_bond_inputs patch; test_commonwealth_ard_mint_claims runs with it True (11 tests, incl. the unstamped refusal)",
+   "silver suite, variable unset: 792 passed, 12 skipped"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bg-1 item 2 says what the mint writes; it does not say what the mint does on a manifest that states no sidecar or method row, and test_commonwealth_ard_apply (not in the grant) asserts the old days-only lines.",
+ "world_is": "Production keeps the strict refusal; the legacy module is exempted in conftest only. If REQUIRE_STAMPED were set False in production an unstamped manifest would mint days only; nothing in production sets it."
+}
+```
+
+## ADVI_COTBKF-D2-S89 -- Round 59 closed; the CB-al-2 COO half is re-cut and names its widenings
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S89",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T05:49:26Z",
+ "one_line": "Round 59 (CB-bg-1) drained @6e4419bcd7 and closed by the issuer's run; the CB-al-2 COO half is re-cut on it. The mint now writes 3 objects the refused half did not cover (a sidecar holding account ids, and the two objects of method row 3), one of them by a direct put_object outside the producer; the half names both as widenings. Also on record: rows D2-S87 and D2-S88 carry a surfaced_at typed about ten minutes ahead of the clock by this seat (CTO msg 4171); they are append-only and stand as written.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer run at 6e4419bcd7: ARD-COTTONWOOD-MANIFEST-STAMP days=3325 day_hashes_equal=3325/3325 note=present sidecar_rows=1584413 method_version=3; manifest sha256 d2d99d5c4a127635170f77516b52fdfc0c163e151e39649e35569a601ce47b36 before and after the run (0 bytes changed)",
+   "same HEAD: ARD-COTTONWOOD-BOND-CHECK days=3325 rows=1691729 measured_rows=107316 measured_rows_on_bond_days=0 fixed_income_cusips=778",
+   "tests, variable unset: test_commonwealth_ard_mint_claims.py 11 passed; silver suite 792 passed, 12 skipped; IRPT_DASHBD producer tests 160 passed (run, not edited)",
+   "local sidecar sha256 589f72cca730a4fff9fd2852d58ac197aec520e888912ba76cae05542afcfcd1 equals the manifest's reasons_sidecar.sha256; rows 1584413",
+   "live read ~05:45Z of opal-data-cottonwood, first page of up to 1000: account_return_daily/ 0 keys, account_return_daily_blank_reasons/ 0 keys, dim_return_method/ 0 keys; positive control irpt/cottonwood/gold/ 245 keys",
+   "issuer read of apply_days at 384a9a4397: every target key is read before the first write; write order days, sidecar (re-hashed), method row; one LANDED line per object; no delete path"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO round-58 analysis @1c27ce4263 section 4 item 5 and msg 4170: the pair states the manifest by sha256, the method row, the bond count, the sidecar by key and sha256, the blast radius by key list and the rollback per key.",
+ "world_is": "deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R59_ARD_COTTONWOOD_MINT_COO_HALF.md states them and lists in its section 6 what it does not establish: the bucket policy, a real put on the two new keys, build() since round 58, and the deployed Lambda's packaged sources file. The sidecar's table name and partition were the round-59 worker's choice (row D2-W86-S1) and are put to the CTO half."
+}
+```

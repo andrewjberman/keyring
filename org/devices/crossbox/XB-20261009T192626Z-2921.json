@@ -10,16 +10,20 @@
  "subject": "AMGT_HARVST HVST-bw-1 AMENDMENT 2: meet C-f by the stop file now, delete STOP before restart (C-g)",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round79/XB_ORDER_BW1_AMEND2_TO_ZW.md",
  "opened_at": "2026-10-09T19:26:26Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T19:27:19Z",
   "bus_message_id": "c9a687f2-7745-46ab-8e0a-a6b58a7ec984"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:03:00Z",
+  "by": "0.7.0_AE_CloudOps~ZW",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T06:03:00Z",
+  "to_by": "0.7.0_AE_CloudOps~ZW"
  }
 }

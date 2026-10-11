@@ -8,6 +8,7 @@
 </decomp_ref>
 <issued_to>0.9.0_WK_AMGT_RESAPP~352</issued_to>
 <issued_by>2.0.0_SA_COO~R1</issued_by>
+<to_id>AMGT_RESAPP.TO-AMGT-nn-4</to_id>
 <placeholders>NONE</placeholders>
 <direct_act>true</direct_act>
 <preflight>
@@ -28,7 +29,8 @@ CTO~DELL1 round-88 analysis item 5 (row AMGT_RESAPP-S4). `.tools/git-hooks/mass-
 resolution for the AUDIT PATH ONLY:
 
 - add one variable, `AUDIT_ROOT`, resolved from `git rev-parse --path-format=absolute --git-common-dir` (the common dir's parent);
-  when the resolution fails or the parent is not a directory, `AUDIT_ROOT` falls back to `ROOT`;
+  when the resolution fails, or the parent is not a directory, or the parent holds NO `.git` entry (a SUBMODULE's common dir is
+  `<super>/.git/modules/<name>`, whose parent is not a worktree), `AUDIT_ROOT` falls back to `ROOT`;
 - `_audit()` writes to `"$AUDIT_ROOT/$AUDIT_LOG"` (its `mkdir -p` follows);
 - change NOTHING else: the deletion count, the attribution test (`$ROOT/$TRAILER`), the mode logic, the exit codes, the printed
   text and every other use of `ROOT` stay exactly as they are.
@@ -54,7 +56,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; timeout 600)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-nn-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round89_prep/checks/r89_audit_root.sh" --hook "$(pwd)/.tools/git-hooks/mass-deletion-check.sh"; echo "exit=$?"</invocation><expect>PASS A1 (a warn-mode verdict from a linked worktree leaves its row in the shared tree after the worktree is removed), PASS A2 (block mode: exit 1 and a BLOCKED row in the shared tree), PASS A3 (a deletion from the main worktree leaves its row in the main tree); R89 AUDIT ROOT: YES; and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-nn-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round89_prep/checks/r89_audit_root.sh" --hook "$(pwd)/.tools/git-hooks/mass-deletion-check.sh"; echo "exit=$?"</invocation><expect>PASS A1 (a warn-mode verdict from a linked worktree leaves its row in the shared tree after the worktree is removed), PASS A2 (block mode: exit 1 and a BLOCKED row in the shared tree), PASS A3 (a deletion from the main worktree leaves its row in the main tree), PASS A4 (a submodule commit's row lands in a worktree, never under <super>/.git/modules); R89 AUDIT ROOT: YES; and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-nn-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash -n .tools/git-hooks/mass-deletion-check.sh &amp;&amp; bash .tools/git-hooks/mass-deletion-check.sh --mode; echo "exit=$?"</invocation><expect>the script parses (bash -n rc 0), `--mode` prints the gate's ramp state and threshold 25, and exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -82,3 +84,5 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+<status>pending -- AMENDMENT 1 (issuer, 2026-10-11T03:5xZ) on row AMGT_RESAPP-D1-W352-S1 (the worker's finding, measured by the issuer in a throwaway superproject): the first fix @46b12bd496 passes A1-A3 and writes a SUBMODULE commit's row under <super>/.git/modules. AUDIT_ROOT falls back to ROOT when the common dir's parent holds no .git entry; criterion AC1's expect gains A4 (the checker r89_audit_root.sh gained the arm; base PASS, @46b12bd496 FAIL). The portal's hooks dir carries no active commit-msg on dell1, so the arm is unreachable here today; the guard is for a box where it is installed. Graded by to-pipeline-gate on a modification.</status>
+<status>complete -- issuer close 2026-10-11T04:2xZ (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-352 @63d9dc87b6 (fix a51ccfeed8 under AMENDMENT 1), proof instance VALID (worker run); issuer re-run in the worktree: AC1 R89 AUDIT ROOT YES (A1-A4 PASS), AC2 bash -n rc 0 and --mode threshold 25. Row D1-W352-S1 ruled: closed by the AUDIT_ROOT .git-entry guard.</status>

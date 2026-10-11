@@ -1596,3 +1596,140 @@
   "notes": "Enrichment CANDIDATE for a later IRPT_ANLREQ round, not a defect of the current release. No cell is cut for it; the CTO's next round analysis decides whether it enters the enrichment list."
 }
 ```
+
+## IRPT_ANLREQ-D2-S19 -- rev 6 R4: status-job of REQ-5e4149d2 answers ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE; the report itself is served
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S19",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T04:55:00Z",
+  "one_line": "On irpt-status rev 6 (6idtFvAm) the status-job read of REQ-5e4149d2 answers 200 with data.state UNAVAILABLE and public_reason_code ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE (source_dates empty), while the same request's analysis-report serves 257 sections.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-APPLY-Y1 AMENDMENT 8 R4: REQ-5e4149d2's owner read (status-job and analysis-report) answers with no RetentionRefused and no TypeError; release 1's deferred read 6 is that request SERVED.",
+  "world_is": "REPORTED by 2.0.0_SA_COO~G2 msg 4108 (window 6, reads done 04:52:49Z; its record R4_R5_OWNER_READ_REV6_20261011.json was not committed at that send and was not opened by this seat): status-job 200, typed envelope, state UNAVAILABLE, code ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE; analysis-report 200, provider OPAL_ENGINE, CERTIFIED, 257 sections (6 VALUE, 251 NOT_AVAILABLE). MEASURED by this seat at 04:54Z: live 6idtFvAm; /aws/lambda/irpt-status since the promote 04:44:47Z, paginated and counted client-side: START 6, TypeError 0, Traceback 0, RetentionRefused 0, timeouts 0. No baseline exists for this status-job read: rev 3 lacked the reader members and rev 5 raised TypeError on it, so whether the code is new with rev 6 is UNKNOWN.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~G2 msg 4108",
+      "CloudWatch /aws/lambda/irpt-status 2026-10-11T04:44:47Z-04:54:19Z, counts by this seat",
+      "pair release1/NEVER_WIDEN_PAIR_ANLREQ_RELEASE1_REV6_IRPT_STATUS.md section 6 (a typed refusal on R4 is recorded, no rollback)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not Branch B: no 5xx, no TypeError. R4 is met on its written terms and the report is served; the status-job state is not READY. CTO half A3: FWD-1 of IRPT_YCDGEN is not graded REALIZED on a typed refusal. Open question for the next round: is a date basis expected for an OPAL_ENGINE report with no prospect upload (prospect_dates.py), i.e. is this code the designed answer or a gap."
+}
+```
+
+## IRPT_ANLREQ-D2-S20 -- carried from TCKT_VNEXT-D2-W11-S3: the package 'Report' opener shows the request record as the report
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S20",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T05:02:00Z",
+  "one_line": "The report PACKAGE's 'Report' opener (portal src/pages/TicketCenter/AnalysisRequestParts.tsx, PackageFiles / openPackageFile kind 'report') reads getOwnedAnalysisRequest and shows the accepted request record as 'Report for <ticket>', with the request id in visible words.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The request record is never presented as the report: the package's Report file opens the finished report (TCKT_VNEXT TO-R2-pg1 AMENDMENT 2 rule 4, as that row quotes it).",
+  "world_is": "INHERITED from TCKT_VNEXT-D2-W11-S3 (read by this seat at org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md:1225-1243, not re-measured; that row is a tree read and bun tests on portal origin/DEV 26f621d51c, no live call): openPackageFile 'report' calls ir.getOwnedAnalysisRequest(requestId, firm) and renders it through the local OpenedReport; __tests__/package-open.test.tsx pins that reader call. REPORTED by 2.0.0_SA_COO~V2 msg 4121: TCKT_VNEXT fixed the same defect on the ticket row's 'Open report' at portal pin 7bb81fa897 (getOwnedAnalysisReport + RetainedSections imported from OwnedRequestHistory.tsx, id on data-request-id only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md row TCKT_VNEXT-D2-W11-S3",
+      "2.0.0_SA_COO~V2 msg 4121, sent at 1.0.0_SA_CTO~DELL2's direction (its msg 4118, not opened by this seat)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A defect on an IRPT_ANLREQ surface (PackageFiles), not a candidate. The remedy the CTO names is the same reuse: getOwnedAnalysisReport + RetainedSections, with package-open.test.tsx re-pinned to the report reader. It is a portal product file, so its cell goes into the next IRPT_ANLREQ issuance; none is cut mid-round by this row. Nothing in TCKT_VNEXT waits on it."
+}
+```
+
+## IRPT_ANLREQ-D2-S21 -- asked by DSGN_IRPTV1 (W39-S2): the request history row states its request's client
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S21",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T05:12:00Z",
+  "one_line": "A served cell is asked of IRPT_ANLREQ: each row of the viewer's request history states the client its frozen selection names (DSGN_IRPTV1 row W39-S2, CTO round analysis @10d7d46e49 section 3; 2.0.0_SA_COO~D2 msg 4135).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Each history row names its client (DSGN_IRPTV1 UIC-23); per the CTO ruling the served half is a field on the history row derived from the request's frozen selection, the history staying the viewer's own requests.",
+  "world_is": "READ by this seat in the built irpt-status rev 6 zip (6idtFvAm), not exercised: owned_requests.py:198-214 `_selected_client` derives the client by ONE full retained composition read (`artifacts.get`, a blob fetch) per request; the same file's comment at :244-245 says the history 'keeps the head and serves no names (no blob per row)'. So serving the client on every history row costs one blob read per row, or needs the client denormalized where the row is listed. INHERITED from DSGN_IRPTV1-W39-S2 (read at org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md:2801-2815): docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json is additionalProperties false with identity + accepted_at only, so the field is a served contract change. The CTO's ruling says its own claim that _selected_client can serve the history row is inferred, not exercised.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~D2 msg 4135",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_DSGN_IRPTV1_FROM_WATERMARK_20261002_20261011.md:51-52 (W39-S2's served half is sent to 2.0.0_SA_COO~Y2)",
+      "irpt-status zip 6idtFvAm, member owned_requests.py:198-214 and :244-245"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not cut mid-round: IRPT_ANLREQ's open orders are the release-1 apply (TO-APPLY-Y1, closing) and TO-APPLY-t1. The cell enters the next IRPT_ANLREQ issuance with its contract change (schema + generated wire) and the per-row cost question above put to the CTO at the cut; the field name is fixed there, with the contract. It ships as a further irpt-status release. The page half is DSGN_IRPTV1's and follows it."
+}
+```
+
+## IRPT_ANLREQ-D2-S22 -- RULING on S19: the date-basis code on a READY job is designed; no cell
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S22",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T05:23:00Z",
+  "one_line": "RULING on row IRPT_ANLREQ-D2-S19 (1.0.0_SA_CTO~DELL2 msg 4151): ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE on a READY job is the designed answer, not a gap; no cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "owned_status.py answers 'status, without inventing source business dates' (the module docstring, as the ruling quotes it).",
+  "world_is": "READ by this seat at box/dell2 HEAD, infra/aws/lambda/investor-reporting/ops/owned_status.py: PHASES maps READY to (UNAVAILABLE, ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE) at :23; the public state becomes READY / ANALYSIS_READY only when `dates is not None` (:57-58), which needs prospect_dates=True AND `evidence.input()` returning a retained input (:44-50). In the rev 6 zip entry.py:219-223 sets prospect_dates from the request header x-irpt-status-dates == prospect-v1, and prospect_dates.py:257-258 returns None when the composition's browser part carries no input_id. So the durable job state of REQ-5e4149d2 IS READY (the code reaches the READY branch to give this answer); what is unavailable is a date basis. NOT MEASURED: whether window 6's read sent the header, and whether this request has an input_id.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 4151",
+      "infra/aws/lambda/investor-reporting/ops/owned_status.py:23,:43-58 at box/dell2 HEAD",
+      "irpt-status zip 6idtFvAm, entry.py:219-223 and prospect_dates.py:257-258"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Designed behaviour: a READY job read without the date opt-in, or with no retained date basis, answers this code. The CTO ruled no cell. 2.0.0_SA_COO~G2 re-reads once WITH the opt-in; either outcome is recorded as the request's true state. FWD-1's report oracle is analysis-report serving 257 sections, graded by 3.0.0_SA_CVO.",
+  "notes": "Resolves IRPT_ANLREQ-D2-S19."
+}
+```
+
+## IRPT_ANLREQ-D2-S23 -- t1 A2 and B applied without the CTO's transcripts-zip re-read; the applier's pin predates fd74f984ac
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S23",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T05:29:00Z",
+  "one_line": "TO-APPLY-t1 steps A2 and B were applied tonight without the CTO's precondition (msg 3939: re-read the shared transcripts zip, moved by NFRA_TRNSPT TR-ra-22 to the fd74f984ac build); the precondition sat in this seat's runtime tick file and never reached the applier, whose pin predates fd74f984ac.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (asked 05:28Z: accept as landed, or a code-only re-apply at a pin carrying fd74f984ac before the test invoke)",
+  "spec_asserts": "1.0.0_SA_CTO~DELL2 msg 3939: after TR-ra-22 the shared transcripts dist zip is the fd74f984ac build; re-read it before steps A2 and B of ledger irpt-anlreq-t1-commentary-store-and-lambda-20261009. CTO msg 3904: that ledger is 2.0.0_SA_COO~Y2's to close or decide.",
+  "world_is": "MEASURED by this seat 05:26Z-05:28Z. get-function-configuration: irpt-commentary-draft-store-lambda CodeSha256 AsKY+KWL..., LastModified 2026-10-11T04:12:31Z (step A2); outlook-global-commentary-draft-lambda State Active, CodeSha256 plVgBIIX..., LastModified 2026-10-11T05:26:35Z (step B; the function did not exist at 02:4xZ). Ledger at HEAD: A, A2, KEYS closed; B, SIM, INVOKE open. The applier's pin is 4901eece20 (its t1_stepA2_preapply.md and plan commit 7dd84ba3f6): git merge-base --is-ancestor fd74f984ac 4901eece20 rc 1, 36b0bc0423 rc 0, control (pin in origin/CLOUD) rc 0. infra/aws/terraform/transcripts/commentary.tf:281-282 gives the function filename = local.pull_zip, so its bytes are the transcripts zip built at that pin. The applier's four t1 files carry 0 mentions of fd74f984ac or msg 3939. Its inbox since 03:40Z holds 10 messages, none about t1. It resumed a pending order whose GO dated from 2026-10-09 (T2 msg 3594). NOT MEASURED: whether any commentary code path differs between the two zips; TR-ra-22's change is described as the Teams pull.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live get-function-configuration reads, two named functions",
+      "git merge-base reads against pin 4901eece20",
+      "org/mcp/inbox/0.7.0_AE_CloudOps/~DELL2/read/ listing 20261011T03-05",
+      "org/mcp/drive_ticks/2.0.0_SA_COO~Y2.md row 03:0xZ (where the precondition was parked)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This seat's defect: a precondition on another seat's act was recorded on a carrier that seat does not read. The applier was told at 05:28Z to finish step B (never half-landed), run the read-only simulate, and HOLD before the test invoke. Nothing is rolled back by this row."
+}
+```

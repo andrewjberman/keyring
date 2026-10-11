@@ -3006,3 +3006,372 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "Not a 5xx and not every caller (R3 answered 200), so per CTO msg 3781 this is R4 failing alone: recorded, no rollback. Remedy is ~Y2's: co-stage reports/retention.py at the pin its callers expect in the next irpt-status revision. FWD-1 stays ungraded until that serves REQ-5e41."
 }
 ```
+
+## IRPT_YCDGEN-D2-S25 -- updatedAt on svc's PROFILE row has a second writer (/auth/login), so updatedAt continuity is not a no-third-party oracle
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S25",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~YC2",
+  "surfaced_at": "2026-10-11T04:52:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "updatedAt on an opal-users-v2 PROFILE row has a SECOND writer -- /auth/login stamps it -- so the served-read window's standing 'the before-updatedAt equals my own last write, therefore no third party touched this row' inference is not a sound no-third-party oracle; the tell is precision, 3-decimal ms from the login vs 6-decimal us from swap_svc_firm.py.",
+  "spec_asserts": "The never-widen packet and the CTO half for the served-read window declare the blast radius as 'ONE opal-users-v2 item: svc-irpt-analysis's allowedFirmIds, written by one writer, swap_svc_firm.py' (N = 1 writer). The window-1 ledger's W1 and W2 proofs then reason from updatedAt CONTINUITY: 'that before-updatedAt is exactly the st29 W2 write at 12:13:57Z, so this row moved from the state this seat last left it in -- no third party changed it in between', and 'the before-updatedAt is exactly W1's own write, so no third party touched the row inside the window'.",
+  "world_is": "MEASURED, window 6 on dell2. (1) This seat preflight-read the row at ~04:0xZ: updatedAt 2026-10-09T18:00:32.340064Z, the window-5 W2 value. (2) W1's before-read at 04:51:52Z: updatedAt 2026-10-11T04:48:28.516Z -- a write this seat did not make, landing in the gap about 28s after the laptop secret ADD at 04:48:00Z, and reading exactly like a third-party write on the continuity inference. (3) W2's before-read: updatedAt 2026-10-11T04:52:45.136Z, again not this seat's. 2.0.0_SA_COO~G2 msg 4105 identifies both: 'that is my R3 login at 04:48:28Z; /auth/login stamps updatedAt on the row', and the second is its R5 login at 04:52:4xZ. THE DISCRIMINATING TELL IS PRECISION, not the value: swap_svc_firm.py builds its stamp with datetime strftime %f and writes 6-decimal microseconds (04:51:52.420577Z, 04:53:41.258001Z); the login writes 3-decimal milliseconds (04:48:28.516Z, 04:52:45.136Z). SCOPE OF THE CLAIM, stated precisely: this does NOT falsify N = 1 for allowedFirmIds -- no login wrote that property, and both conditional UpdateItems fired on a correct read. What it falsifies is the ORACLE the ledger prose leans on: updatedAt has N >= 2 writers, so updatedAt continuity cannot carry 'no third party touched this row'. It fails in BOTH directions: here it manufactured a discontinuity that the order's STOP branch could have been read onto, and in a window where a login happens to be absent it would silently certify a continuity it did not establish.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_sr1/W1_SWAP_OUT_WINDOW6.txt -- before updatedAt 2026-10-11T04:48:28.516Z (3-decimal), after 04:51:52.420577Z (6-decimal)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_sr1/W2_SWAP_BACK_WINDOW6.txt -- before updatedAt 04:52:45.136Z (3-decimal), after 04:53:41.258001Z (6-decimal)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_sr1/PREFLIGHT_WINDOW6.md -- the ~04:0xZ read showing 2026-10-09T18:00:32.340064Z, which is what made the gap visible",
+      "2.0.0_SA_COO~G2 msg 4105 (R done 04:52:49Z): '/auth/login stamps updatedAt on the row'",
+      "swap_svc_firm.py: now = datetime.datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%S.%fZ'), the 6-decimal form",
+      "window-1 ledger org/critical_paths/change_management/20261009T1304Z_irpt-ycdgen-served-read-20261009_deploy_completion.md, legs W1 and W2, which state the continuity inference in the form this row falsifies"
+    ]
+  },
+  "notes": "Surfaced off-task per CLAUDE.md section 2: filed as one row, the window kept running, and both acts completed inside their bounds. Nothing to disarm -- the state is restored and independently confirmed. The remedy is the packet author's and is a wording/instrument fix for the next window, not a code change: state the continuity claim on allowedFirmIds (the property the bounds actually name), or, if updatedAt continuity is wanted, say which writers can move it and use the decimal precision as the discriminator. Window 6's own ledger legs W1 and W2 already state it in the corrected form."
+}
+```
+
+## IRPT_YCDGEN-D2-S26 -- RESOLVES IRPT_YCDGEN-W1-S3 (price-based elements read NOT_IN_THIS_VERSION through the producer)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S26",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T05:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-W1-S3: price-based elements read NOT_IN_THIS_VERSION through the producer",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: REQ-5e4149d2's sections read provider OPAL_ENGINE; 96 of 257 sections carry reason NOT_IN_THIS_VERSION (methods BUILDER_ONLY 65, VENDOR_SOURCED 22, OWN_SERIES 9) and none of them carries a value."
+    ]
+  },
+  "dismissal_reason": "LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: REQ-5e4149d2's sections read provider OPAL_ENGINE; 96 of 257 sections carry reason NOT_IN_THIS_VERSION (methods BUILDER_ONLY 65, VENDOR_SOURCED 22, OWN_SERIES 9) and none of them carries a value.",
+  "spec_asserts": "IRPT_YCDGEN-W1-S3 as filed (ARMED, disarm_owner 2.0.0_SA_COO~Y; taken by 2.0.0_SA_COO~G2 as that lane's successor).",
+  "world_is": "MEASURED: LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: REQ-5e4149d2's sections read provider OPAL_ENGINE; 96 of 257 sections carry reason NOT_IN_THIS_VERSION (methods BUILDER_ONLY 65, VENDOR_SOURCED 22, OWN_SERIES 9) and none of them carries a value."
+}
+```
+
+## IRPT_YCDGEN-D2-S27 -- RESOLVES IRPT_YCDGEN-W1-S6 (an OPAL_ENGINE document persists and reads back through the v2-aware validator)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S27",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T05:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-W1-S6: an OPAL_ENGINE document persists and reads back through the v2-aware validator",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE at HEAD: infra/aws/lambda/investor-reporting/reports/resident_installed.py:53-56 holds REPORT_SCHEMAS_V2 (AnalysisReport.v2.schema.json) for a document that names a provider. LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: the OPAL_ENGINE report of REQ-5e4149d2 was persisted and is read back, computation_validation.status CERTIFIED."
+    ]
+  },
+  "dismissal_reason": "CODE at HEAD: infra/aws/lambda/investor-reporting/reports/resident_installed.py:53-56 holds REPORT_SCHEMAS_V2 (AnalysisReport.v2.schema.json) for a document that names a provider. LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: the OPAL_ENGINE report of REQ-5e4149d2 was persisted and is read back, computation_validation.status CERTIFIED.",
+  "spec_asserts": "IRPT_YCDGEN-W1-S6 as filed (ARMED, disarm_owner 2.0.0_SA_COO~Y; taken by 2.0.0_SA_COO~G2 as that lane's successor).",
+  "world_is": "MEASURED: CODE at HEAD: infra/aws/lambda/investor-reporting/reports/resident_installed.py:53-56 holds REPORT_SCHEMAS_V2 (AnalysisReport.v2.schema.json) for a document that names a provider. LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: the OPAL_ENGINE report of REQ-5e4149d2 was persisted and is read back, computation_validation.status CERTIFIED."
+}
+```
+
+## IRPT_YCDGEN-D2-S28 -- RESOLVES IRPT_YCDGEN-W1-S7 (the reader serves an OPAL_ENGINE report and its PDF)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S28",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T05:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-W1-S7: the reader serves an OPAL_ENGINE report and its PDF",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE at HEAD: infra/aws/lambda/investor-reporting/ops/owned_report.py:43-82 is provider-aware (_OPAL_REQUIRED names opal_artifact and computation_validation; extraction_validation is not read for OPAL_ENGINE). LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: GET sections HTTP 200 with 257 sections and GET original HTTP 200 with download_route, sha256 and byte_length; KeyError 0, TypeError 0."
+    ]
+  },
+  "dismissal_reason": "CODE at HEAD: infra/aws/lambda/investor-reporting/ops/owned_report.py:43-82 is provider-aware (_OPAL_REQUIRED names opal_artifact and computation_validation; extraction_validation is not read for OPAL_ENGINE). LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: GET sections HTTP 200 with 257 sections and GET original HTTP 200 with download_route, sha256 and byte_length; KeyError 0, TypeError 0.",
+  "spec_asserts": "IRPT_YCDGEN-W1-S7 as filed (ARMED, disarm_owner 2.0.0_SA_COO~Y; taken by 2.0.0_SA_COO~G2 as that lane's successor).",
+  "world_is": "MEASURED: CODE at HEAD: infra/aws/lambda/investor-reporting/ops/owned_report.py:43-82 is provider-aware (_OPAL_REQUIRED names opal_artifact and computation_validation; extraction_validation is not read for OPAL_ENGINE). LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: GET sections HTTP 200 with 257 sections and GET original HTTP 200 with download_route, sha256 and byte_length; KeyError 0, TypeError 0."
+}
+```
+
+## IRPT_YCDGEN-D2-S29 -- RESOLVES IRPT_YCDGEN-W3-S8 (the Opal PDF family is registered and the publisher accepts the retained ref)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S29",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T05:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-W3-S8: the Opal PDF family is registered and the publisher accepts the retained ref",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE at HEAD: infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py:42 OPAL_FAMILY = YCHARTS_OPAL_REPORT, retained under the irpt-ycdgen research policy row. LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: the report of REQ-5e4149d2 is published (sections served CERTIFIED) and its retained original answers with a sha256."
+    ]
+  },
+  "dismissal_reason": "CODE at HEAD: infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py:42 OPAL_FAMILY = YCHARTS_OPAL_REPORT, retained under the irpt-ycdgen research policy row. LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: the report of REQ-5e4149d2 is published (sections served CERTIFIED) and its retained original answers with a sha256.",
+  "spec_asserts": "IRPT_YCDGEN-W3-S8 as filed (ARMED, disarm_owner 2.0.0_SA_COO~Y; taken by 2.0.0_SA_COO~G2 as that lane's successor).",
+  "world_is": "MEASURED: CODE at HEAD: infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py:42 OPAL_FAMILY = YCHARTS_OPAL_REPORT, retained under the irpt-ycdgen research policy row. LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: the report of REQ-5e4149d2 is published (sections served CERTIFIED) and its retained original answers with a sha256."
+}
+```
+
+## IRPT_YCDGEN-D2-S30 -- RESOLVES IRPT_YCDGEN-W3-S9 (a redelivered READY Opal job reads provenance by provider)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S30",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T05:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-W3-S9: a redelivered READY Opal job reads provenance by provider",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE at HEAD only, NOT exercised live (no redelivery was driven): infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:666 reads provenance.get('opal_artifact_ref') before the vendor branch at :669, and tests/test_resident_worker.py:843 is test_redelivered_ready_opal_job_is_acknowledged_without_a_key_error."
+    ]
+  },
+  "dismissal_reason": "CODE at HEAD only, NOT exercised live (no redelivery was driven): infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:666 reads provenance.get('opal_artifact_ref') before the vendor branch at :669, and tests/test_resident_worker.py:843 is test_redelivered_ready_opal_job_is_acknowledged_without_a_key_error.",
+  "spec_asserts": "IRPT_YCDGEN-W3-S9 as filed (ARMED, disarm_owner 2.0.0_SA_COO~Y; taken by 2.0.0_SA_COO~G2 as that lane's successor).",
+  "world_is": "MEASURED: CODE at HEAD only, NOT exercised live (no redelivery was driven): infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:666 reads provenance.get('opal_artifact_ref') before the vendor branch at :669, and tests/test_resident_worker.py:843 is test_redelivered_ready_opal_job_is_acknowledged_without_a_key_error."
+}
+```
+
+## IRPT_YCDGEN-D2-S31 -- RESOLVES IRPT_YCDGEN-W3-S11 (an OPAL_ENGINE document is never stored in the checkpoint)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S31",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T05:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-W3-S11: an OPAL_ENGINE document is never stored in the checkpoint",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE at HEAD: infra/aws/lambda/investor-reporting/ycharts/generate/publication_worker.py:7 (R9: an OPAL_ENGINE document is never stored in the checkpoint) and :96-101 (the CHECKPOINT_BYTES size test applies to kind VENDOR). LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: a 257-section Opal document was published and reads back."
+    ]
+  },
+  "dismissal_reason": "CODE at HEAD: infra/aws/lambda/investor-reporting/ycharts/generate/publication_worker.py:7 (R9: an OPAL_ENGINE document is never stored in the checkpoint) and :96-101 (the CHECKPOINT_BYTES size test applies to kind VENDOR). LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: a 257-section Opal document was published and reads back.",
+  "spec_asserts": "IRPT_YCDGEN-W3-S11 as filed (ARMED, disarm_owner 2.0.0_SA_COO~Y; taken by 2.0.0_SA_COO~G2 as that lane's successor).",
+  "world_is": "MEASURED: CODE at HEAD: infra/aws/lambda/investor-reporting/ycharts/generate/publication_worker.py:7 (R9: an OPAL_ENGINE document is never stored in the checkpoint) and :96-101 (the CHECKPOINT_BYTES size test applies to kind VENDOR). LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: a 257-section Opal document was published and reads back."
+}
+```
+
+## IRPT_YCDGEN-D2-S32 -- RESOLVES IRPT_YCDGEN-W1-S11 (the installed runtime passes the Opal stores for a listed principal)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S32",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T05:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-W1-S11: the installed runtime passes the Opal stores for a listed principal",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: REQ-5e4149d2, filed by the allow-listed service principal on 49financial, holds a report whose provider is OPAL_ENGINE: opal_producer.produce ran to completion on the host for a listed principal."
+    ]
+  },
+  "dismissal_reason": "LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: REQ-5e4149d2, filed by the allow-listed service principal on 49financial, holds a report whose provider is OPAL_ENGINE: opal_producer.produce ran to completion on the host for a listed principal.",
+  "spec_asserts": "IRPT_YCDGEN-W1-S11 as filed (ARMED, disarm_owner 2.0.0_SA_COO~Y; taken by 2.0.0_SA_COO~G2 as that lane's successor).",
+  "world_is": "MEASURED: LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: REQ-5e4149d2, filed by the allow-listed service principal on 49financial, holds a report whose provider is OPAL_ENGINE: opal_producer.produce ran to completion on the host for a listed principal."
+}
+```
+
+## IRPT_YCDGEN-D2-S33 -- RESOLVES IRPT_YCDGEN-W3-S14 (retained artifacts read without RetentionRefused under the deployed registry)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S33",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T05:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-W3-S14: retained artifacts read without RetentionRefused under the deployed registry",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: the status-job read, the sections read and the read of the retained original all answered HTTP 200; the string RetentionRefused appears 0 times over 6 calls in the two window-6 records. The arity split that produced RetentionRefused on rev 5 is row IRPT_ANLREQ-D2-S24, closed by the rev 6 build (IB-pr-416 @c2644f24a4)."
+    ]
+  },
+  "dismissal_reason": "LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: the status-job read, the sections read and the read of the retained original all answered HTTP 200; the string RetentionRefused appears 0 times over 6 calls in the two window-6 records. The arity split that produced RetentionRefused on rev 5 is row IRPT_ANLREQ-D2-S24, closed by the rev 6 build (IB-pr-416 @c2644f24a4).",
+  "spec_asserts": "IRPT_YCDGEN-W3-S14 as filed (ARMED, disarm_owner 2.0.0_SA_COO~Y; taken by 2.0.0_SA_COO~G2 as that lane's successor).",
+  "world_is": "MEASURED: LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: the status-job read, the sections read and the read of the retained original all answered HTTP 200; the string RetentionRefused appears 0 times over 6 calls in the two window-6 records. The arity split that produced RetentionRefused on rev 5 is row IRPT_ANLREQ-D2-S24, closed by the rev 6 build (IB-pr-416 @c2644f24a4)."
+}
+```
+
+## IRPT_YCDGEN-D2-S34 -- RESOLVES IRPT_YCDGEN-W3-S15 (the Opal PDF is retained with a ref and the publisher takes it)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S34",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T05:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-W3-S15: the Opal PDF is retained with a ref and the publisher takes it",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: GET .../analysis/requests/REQ-5e4149d2863aea31cc87d660/original returned sha256 91073ddf1385c0df0935c8a0d04709b5d69377ee70e213629d275f60112a23c9, a byte_length and a download_route: the PDF is a retained artifact with a ref, not an S3-only write."
+    ]
+  },
+  "dismissal_reason": "LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: GET .../analysis/requests/REQ-5e4149d2863aea31cc87d660/original returned sha256 91073ddf1385c0df0935c8a0d04709b5d69377ee70e213629d275f60112a23c9, a byte_length and a download_route: the PDF is a retained artifact with a ref, not an S3-only write.",
+  "spec_asserts": "IRPT_YCDGEN-W3-S15 as filed (ARMED, disarm_owner 2.0.0_SA_COO~Y; taken by 2.0.0_SA_COO~G2 as that lane's successor).",
+  "world_is": "MEASURED: LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: GET .../analysis/requests/REQ-5e4149d2863aea31cc87d660/original returned sha256 91073ddf1385c0df0935c8a0d04709b5d69377ee70e213629d275f60112a23c9, a byte_length and a download_route: the PDF is a retained artifact with a ref, not an S3-only write."
+}
+```
+
+## IRPT_YCDGEN-D2-S35 -- RESOLVES IRPT_YCDGEN-W3-S17 (resident_worker and the publisher name the same Opal family)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S35",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T05:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-W3-S17: resident_worker and the publisher name the same Opal family",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE at HEAD: infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:124 OPAL_PDF_FAMILY = YCHARTS_OPAL_REPORT and publisher.py:42 OPAL_FAMILY = YCHARTS_OPAL_REPORT; a census of OPAL_REPORT_PDF over resident_worker.py, publisher.py and publication_worker.py returns 0 lines. LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: the published report reads back."
+    ]
+  },
+  "dismissal_reason": "CODE at HEAD: infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:124 OPAL_PDF_FAMILY = YCHARTS_OPAL_REPORT and publisher.py:42 OPAL_FAMILY = YCHARTS_OPAL_REPORT; a census of OPAL_REPORT_PDF over resident_worker.py, publisher.py and publication_worker.py returns 0 lines. LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: the published report reads back.",
+  "spec_asserts": "IRPT_YCDGEN-W3-S17 as filed (ARMED, disarm_owner 2.0.0_SA_COO~Y; taken by 2.0.0_SA_COO~G2 as that lane's successor).",
+  "world_is": "MEASURED: CODE at HEAD: infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:124 OPAL_PDF_FAMILY = YCHARTS_OPAL_REPORT and publisher.py:42 OPAL_FAMILY = YCHARTS_OPAL_REPORT; a census of OPAL_REPORT_PDF over resident_worker.py, publisher.py and publication_worker.py returns 0 lines. LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: the published report reads back."
+}
+```
+
+## IRPT_YCDGEN-D2-S36 -- RESOLVES IRPT_YCDGEN-W1-S13 (the map, the classifier client and the research role are in place at release)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S36",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T05:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-W1-S13: the map, the classifier client and the research role are in place at release",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: an OPAL_ENGINE report exists for REQ-5e4149d2 on 49financial, which produce cannot write without the bound Overview map, an importable classifier and an assumable firm research role. The 49financial research role is round 7's cell YCD-a-7 (decomposition IRPT_YCDGEN_DECOMP_R7.md)."
+    ]
+  },
+  "dismissal_reason": "LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: an OPAL_ENGINE report exists for REQ-5e4149d2 on 49financial, which produce cannot write without the bound Overview map, an importable classifier and an assumable firm research role. The 49financial research role is round 7's cell YCD-a-7 (decomposition IRPT_YCDGEN_DECOMP_R7.md).",
+  "spec_asserts": "IRPT_YCDGEN-W1-S13 as filed (ARMED, disarm_owner 2.0.0_SA_COO~Y; taken by 2.0.0_SA_COO~G2 as that lane's successor).",
+  "world_is": "MEASURED: LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: an OPAL_ENGINE report exists for REQ-5e4149d2 on 49financial, which produce cannot write without the bound Overview map, an importable classifier and an assumable firm research role. The 49financial research role is round 7's cell YCD-a-7 (decomposition IRPT_YCDGEN_DECOMP_R7.md)."
+}
+```
+
+## IRPT_YCDGEN-D2-S37 -- RESOLVES IRPT_YCDGEN-S10 (the classifier client module is packaged with the research directory)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S37",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T05:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "RESOLVES IRPT_YCDGEN-S10: the classifier client module is packaged with the research directory",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Packaged by cell YCD-n-6 (merge cb5d6be8a4; packet org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/NEVER_WIDEN_PACKET_BRANCH_B2.md section 1 and its host proof, section 2). LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: produce completed for a listed principal with no LayoutRefused."
+    ]
+  },
+  "dismissal_reason": "Packaged by cell YCD-n-6 (merge cb5d6be8a4; packet org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/NEVER_WIDEN_PACKET_BRANCH_B2.md section 1 and its host proof, section 2). LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: produce completed for a listed principal with no LayoutRefused.",
+  "spec_asserts": "IRPT_YCDGEN-S10 as filed (ARMED, disarm_owner 2.0.0_SA_COO~Y; taken by 2.0.0_SA_COO~G2 as that lane's successor).",
+  "world_is": "MEASURED: Packaged by cell YCD-n-6 (merge cb5d6be8a4; packet org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/NEVER_WIDEN_PACKET_BRANCH_B2.md section 1 and its host proof, section 2). LIVE, window 6, 2026-10-11T04:52:49Z, irpt-status rev 6 (CodeSha256 6idtFvAm...), record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf: produce completed for a listed principal with no LayoutRefused."
+}
+```
+
+## IRPT_YCDGEN-D2-S38 -- status-job with the portal date opt-in is refused INVALID_INPUT for a READY Opal report (SECTION_DATE_CENSUS_INVALID)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S38",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T05:32:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "The portal's own status-job call (date opt-in header) is REFUSED INVALID_INPUT for a READY Opal report: 251 of 257 sections sit undated under `sections`",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED, window 7, 2026-10-11T05:29:50Z, irpt-status rev 6 (CodeSha256 6idtFvAm...): GET /api/scoped/investor-reporting/status/REQ-5e4149d2863aea31cc87d660?selected_tenant=49financial WITH header X-IRPT-Status-Dates: prospect-v1 returns HTTP 200, ok false, state UNAVAILABLE, public_reason_code INVALID_INPUT (record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R6_STATUS_JOB_OPT_IN_REV6_20261011.json). CloudWatch /aws/lambda/irpt-status, correlation corr-62e36c245412: exception_type RequestReadRefused, exception_text SECTION_DATE_CENSUS_INVALID, operation status-job; TypeError 0. Source: infra/aws/lambda/investor-reporting/ops/prospect_dates.py:30-42 section_dates() refuses a report whose `sections` member holds a row without an ISO as_of_date; an undated row is legal only under `undated_sections` with date_claim NONE. The served OPAL_ENGINE report of this request (window-6 record R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf) holds 257 rows under `sections`: 6 with an ISO as_of_date, 251 with as_of_date null; no row carries date_claim and the document has no undated_sections member. The same read WITHOUT the header (04:52:49Z) answers ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE."
+    ]
+  },
+  "notes": "ARMED: every portal status read of a READY OPAL_ENGINE report that sends X-IRPT-Status-Dates: prospect-v1 gets INVALID_INPUT, a third answer neither ruling predicted. Loud (ok false), no data written. Two remedies, a contract call for 1.0.0_SA_CTO~DELL2: the Opal producer writes its undated rows under undated_sections with date_claim NONE (IRPT_YCDGEN, this seat), or section_dates() treats an OPAL_ENGINE document's null as_of_date as undated (ops/prospect_dates.py, the status module's owner). Disarm: one of the two lands and this read answers one of the two predicted branches.",
+  "spec_asserts": "1.0.0_SA_CTO~DELL2 msg 4152: a status-job read of a READY request that sends the portal's date opt-in answers READY / ANALYSIS_READY when the request has retained source provenance, else ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE; 2.0.0_SA_COO~Y2 msg 4155 names the same two branches. The portal client sends the header on its status call (portal/src/pages/InvestorReporting/contracts/prospect-dates.ts:3).",
+  "world_is": "MEASURED, window 7, 2026-10-11T05:29:50Z, irpt-status rev 6 (CodeSha256 6idtFvAm...): GET /api/scoped/investor-reporting/status/REQ-5e4149d2863aea31cc87d660?selected_tenant=49financial WITH header X-IRPT-Status-Dates: prospect-v1 returns HTTP 200, ok false, state UNAVAILABLE, public_reason_code INVALID_INPUT (record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r7/R6_STATUS_JOB_OPT_IN_REV6_20261011.json). CloudWatch /aws/lambda/irpt-status, correlation corr-62e36c245412: exception_type RequestReadRefused, exception_text SECTION_DATE_CENSUS_INVALID, operation status-job; TypeError 0. Source: infra/aws/lambda/investor-reporting/ops/prospect_dates.py:30-42 section_dates() refuses a report whose `sections` member holds a row without an ISO as_of_date; an undated row is legal only under `undated_sections` with date_claim NONE. The served OPAL_ENGINE report of this request (window-6 record R4_R5_OWNER_READ_REV6_20261011.json @46e01935cf) holds 257 rows under `sections`: 6 with an ISO as_of_date, 251 with as_of_date null; no row carries date_claim and the document has no undated_sections member. The same read WITHOUT the header (04:52:49Z) answers ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE."
+}
+```

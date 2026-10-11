@@ -5,7 +5,7 @@
   "fabric": "dell2",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "ROUND_CLOSE",
   "created": "2026-10-03",
   "registered_under_tree": "2026-10-03",
   "placement": "DELL2",
@@ -38,6 +38,6 @@
   "blocking": "Not blocked. Round 1 in flight under 2.0.0_SA_COO~Y. Owned dependencies elsewhere: the YCharts session, its sign-in and the operation lease (IRPT_BCKEND, consumed; named in IRPT_BCKEND PRD v0.25 addendum 25); a retained certified Overview PDF for the map (IRPT_BCKEND's served runs).",
   "fabric_ruling": "laptop: D9 is LAPTOP as a whole (Andrew-direct 2026-09-10); the seat is a laptop lane.",
   "phase": "L3 registered 2026-10-03 @ec37b10ed2; L4 PRD v0.1 @f65ec43d8c ADMITTED (3.0.0_SA_CVO ratified-text half @8b364d6d94; brief half by authorship). L5 decomposition @d2a93927af and L6 ONE issuance @ad781b948a by 2.0.0_SA_COO~Y: round 1, the FWD-1 thread in 4 cells on 3 chains (YCD-k-1 keeper + scrub + X10 row; YCD-m-1 Overview element map; YCD-r-1 runner in the lease + run record; YCD-l-1 Overview layout in Opal's branding). EXECUTING. Round 1 L8 @70a35ee9dc, L9 @2fd59da001, CTO analysis @34daa80ad5 (E1-E5). Round 2 ONE issuance 2026-10-04 ~22:0xZ by 2.0.0_SA_COO~Y: 3 cells on 3 chains (YCD-r-2 runner previous index + stop row; YCD-m-2 map vector charts; YCD-c-2 coverage table + probe map); E1 is Andrew's act. Round 2 drained and closed live (L8 @fda2a4e8c7; L9 @bf98bfc1fb). CTO round-2 analysis (E1-E6). Round 3 ONE issuance 2026-10-05 ~00:5xZ by 2.0.0_SA_COO~Y: 4 cells on 4 chains (YCD-r-3 runner holdings + expand + keeper series; YCD-w-3 map wiring + OWN_SERIES; YCD-l-3 layout computed elements + trace; YCD-m-3 Comparison and Multi maps); E5 is the issuer's close on a new trading day. Round 3 drained, closed live (S5/S6) and compiled (L8 @22f9a0b8c0; L9 @f28e214078). CTO round-3 analysis @033795b666 (E1-E6; W2-S4 ruled: six statistics). Round 4 ONE issuance 2026-10-05 ~05:3xZ by 2.0.0_SA_COO~Y: 4 cells on 4 chains (YCD-r-4 call budget + keeper point objects; YCD-o-4 held-data feed census + security probe map; YCD-l-4 six statistics; YCD-m-4 map label rule + rows); E1's live window measurement and probes, E5 (--end driver) and E6 (render) are the issuer's close acts after the Y-6 page runs release the session.",
-  "last_updated": "2026-10-09",
+  "last_updated": "2026-10-11",
   "placement_ruling": "TARGET BOX dell2 on Andrew-direct 2026-10-07 ~07:0xZ at the 1.0.0_SA_CTO terminal, VERBATIM 'I am ok with your move of the IRPT pair back to Dell2.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_070xZ_DELLS_ARE_WORKHORSES_IRPT_PAIR_DELL2_NO_LANE_CAP_NO_TRUNK_WAIT_SEAT_ON_DELLS.md). It reverses his ~06:1xZ dell1 word of the same night. Its lanes' successors are seated on the Dell directly (same record)."
 }

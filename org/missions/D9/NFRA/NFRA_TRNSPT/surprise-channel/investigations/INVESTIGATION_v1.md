@@ -1714,3 +1714,152 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   }
 ]
 ```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S18",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T04:12:03Z",
+  "one_line": "L8 round 22: no judgment criterion. This seat's reads agree with the close record on the deploy and the one driven run: the live Teams pull carries the rebuilt zip's hash, the 21 failing invocations end at 2026-10-09T22:03Z, and the one invocation since logs no error. The run record's per-series counts are the issuer's read; this seat did not read run.json. The scheduled trigger has not fired on the new code.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/R22_CLOSE.md @733aec56af (msg 4030)",
+      "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/R22_CLOSE_READBACK_20261011.md",
+      "this seat's live reads 2026-10-11T04:12:03Z: teams-global-transcripts-pull-lambda CodeSha256 AI4UQD0M..., LastModified 2026-10-11T03:36:14Z, Active/Successful, equal to the sha256 of the local dist zip (AI4UQD0M...); MemorySize 128, Timeout 300; target of rule teams-global-transcripts-pull-hourly",
+      "this seat's filter-log-events on /aws/lambda/teams-global-transcripts-pull-lambda since 2026-10-09T12:00Z: 107 events, 25 invocations; 21 [ERROR] GatewayGraphError, first 2026-10-09T16:01:13Z, last 22:03:28Z; the one invocation since (2026-10-11T03:38:50Z to 03:40:09Z, 79.3 s) logs no error"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles the channel on the close packet and reads the served state itself, never the producer's report.",
+  "world_is": "TR-ra-22 is APPLIED and exercised once by a seat-driven invoke. The first scheduled fire on the new code is Monday 2026-10-12 13:00Z. Four Monday meetings are ABSENT by this route, and research_meeting's listing is refused.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S19",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T04:12:03Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "The Teams pull runs at its memory ceiling whenever it reads transcript content: Max Memory Used reads 128 of 128 MB on the driven run of 2026-10-11 and on 3 invocations of the 16:00Z fire on 2026-10-09. The driven run landed 1 transcript; a scheduled fire that lands more can be killed at the limit, and the close record does not state this.",
+  "disarm_owner": "2.0.0_SA_COO~T2 -- before the Monday 2026-10-12 13:00Z fire: raise memory_size under a pair, or state why 128 MB holds and read Monday's REPORT line and run.json together.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the same log's 25 REPORT lines: Max Memory Used equals Memory Size (128 of 128 MB) on 4 invocations -- 2026-10-09 16:01, 16:02, 16:04 and the driven run of 2026-10-11 03:40; the other 21 read 98 to 100 MB",
+      "this seat's live reads 2026-10-11T04:12:03Z: teams-global-transcripts-pull-lambda CodeSha256 AI4UQD0M..., LastModified 2026-10-11T03:36:14Z, Active/Successful, equal to the sha256 of the local dist zip (AI4UQD0M...); MemorySize 128, Timeout 300; target of rule teams-global-transcripts-pull-hourly"
+    ]
+  },
+  "spec_asserts": "R22_CLOSE.md: the deployed pull is 'fixed, deployed and driven clean'; its carried list names the scheduled trigger, research_meeting, the 4 ABSENT meetings, the totals line, D2-S17 and a test repair. Memory is not on it.",
+  "world_is": "MemorySize is 128 MB. Four of 25 invocations report the maximum equal to the size, each one a run that read content; none was killed. Whether a run that lands several transcripts exceeds the limit is not measured. grounding for the mechanism (content reads drive the peak): INFERRED from which 4 invocations read 128.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S20",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-11T04:58:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "readers.tf still declares itself 'NOT APPLIED -- plan only' at HEAD, but the second named reader's role is LIVE and has been since 2026-10-09T09:55:13Z, trusting arn:aws:iam::313476888478:user/Opal_Terminal. A reader who takes the file's own header as the state of the world reads the opposite of the world.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/transcripts/readers.tf line 2 at HEAD: 'NOT APPLIED -- plan only. Held by its never-widen pair (the apply is the issuer's, under a CTO + COO sign-off).'",
+      "live read 2026-10-11T04:5xZ: iam get-role teams-global-transcripts-second-reader-role returns Arn arn:aws:iam::313476888478:role/teams-global-transcripts-second-reader-role, CreateDate 2026-10-09T09:55:13Z, trust Principal.AWS arn:aws:iam::313476888478:user/Opal_Terminal -- the role name read from data/transcripts/scripts/teams/NAMES.json second_reader, never typed",
+      "open-deploy entry nfra-trnspt-a18-second-reader-laptop-20261009.json: author 0.7.0_AE_CloudOps, device laptop, status HELD-SOVEREIGN-GATED, leg APPLY closed 20261009T100241Z against targets aws_iam_role.second_reader, aws_iam_policy.second_reader, aws_iam_role_policy_attachment.second_reader and aws_kms_key.transcripts; leg VERIFY still OPEN"
+    ]
+  },
+  "spec_asserts": "readers.tf's header: the second reader is DESIRED and NOT APPLIED, plan only, the apply held by its never-widen pair; and var.second_reader_trust_principal_arns has no default on purpose because the trust principal is the issuer's to name with Andrew's routing.",
+  "world_is": "The role exists and carries a concrete trust principal, so a value WAS supplied to that variable on the laptop at apply time and the applied trust is user/Opal_Terminal. The file's header was not updated. Whether the applied trust principal is the one Andrew routed is NOT MEASURED by this seat -- only that one is applied. The entry's VERIFY leg, which would have read the one-principal key-policy delta, is the leg still open. FOUND WHILE: IRPT_ANLREQ TO-APPLY-t1 step B cannot plan the transcripts root at all without a value for that variable (terraform refuses a required variable regardless of -target), so the applier has to learn the applied value to avoid moving another lane's resource; that is the only reason this was read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S21",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-11T05:25:00Z",
+  "hazard_standing": "INERT",
+  "one_line": "Row D2-S19's hazard is DISARMED by its owner: the Teams pull's MemorySize is 1024 MB since 2026-10-11T05:0xZ (TO-APPLY-rm22, pair complete), code unchanged. The true peak of a content-reading run is still UNMEASURED.",
+  "class": "OBSERVATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer live read 05:1xZ: r22_checks.py rm22 -> R22-RM22-OK memory=1024 pull=AI4UQD0M mail=VGIq85Xx commentary=ABSENT",
+      "applier report org/tier2_senior/0.7.0_AE_CloudOps~TR2/deliverables/TR_RM22_MEMORY_REPORT_20261011.md (plan one resource, one attribute; ledger closed; proof VALID re-checked by the issuer)",
+      "pair: packet R22_TR_RM22_MEMORY_PACKET_20261011.md @f6f35a8841 + CTO half @16fa3b73b8; pull.tf edit @7bca11ddee equals the packet's three lines"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row D2-S19 (ARMED, disarm owner 2.0.0_SA_COO~T2): before the Monday 2026-10-12 13:00Z fire, raise memory_size under a pair or state why 128 MB holds.",
+  "world_is": "memory_size raised 128 -> 1024 under a pair and applied; the driven invoke at 05:05:57Z returned clean with 4 series and landed nothing, so its Max Memory Used (101 MB) is the idle path. The 768 MB threshold of the CTO half's condition 5 is untested, not passed. The first measured peak is owed from the first run that lands a transcript, read from its REPORT line beside its run.json (the Monday 13:00Z fire if a new meeting exists).",
+  "notes": "For the CVO's remediation row D2-S19: disarm state DISARMED at 2026-10-11T05:06Z by this act. Sizes, hashes, statuses and counts only."
+}
+```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S22",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-11T05:35:00Z",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "one_line": "An untargeted apply of infra/aws/terraform/transcripts from a tree lacking fd74f984ac, 5ae3b3ddd9 and 7bca11ddee reverts the Teams pull's code and its memory setting: one dist zip path feeds three functions, and a pre-fix zip was built and applied from on this box at 05:26Z.",
+  "class": "BLOCKING",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer live read 2026-10-11T05:29Z: teams pull AI4UQD0ME+ABza1X0BrBjGjpqjN7f2fc0Cdxb88aA/I= (05:03:47Z, 1024 MB); mail pull VGIq85Xx... unmoved; commentary function plVgBIIXTNPVV/JtDADhavy/BgWQp+kRw6gcwpwHjyA= (05:26:35Z) -- a different zip from the pull's",
+      "1.0.0_SA_CTO~DELL2 msg 4174 (2.0.0_SA_COO~Y2 msg 4173: the commentary function was applied from pin 4901eece20, which lacks fd74f984ac) and its ruling msg 4182",
+      "infra/aws/terraform/transcripts/pull.tf:19 local.pull_zip is a file path read by pull.tf, mail_pull.tf and commentary.tf"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The transcripts root's three functions are built from one zip, and a tree applying the root carries the pull's two fixes and its memory line.",
+  "world_is": "The stack runs three different zips today (pull AI4UQD0M, mail pull VGIq85Xx, commentary plVgBIIX), and at least one tree on dell2 built a zip without the pull fix. The pull itself is unreverted (measured after the 05:26Z apply). Nothing refuses an untargeted apply from a stale tree; the plan would show the pull's source_code_hash and memory_size changing back.",
+  "notes": "Filed on the CTO's ruling (msg 4182). DISARMS on two measured reads, both printed in the disarming row: (1) the commentary function's live CodeSha256 equals the pull's after 2.0.0_SA_COO~Y2's re-apply; (2) git merge-base --is-ancestor of each of the three commits against origin CLOUD reads yes. Until then the CTO's signing condition on this root: the apply is targeted and the tree's dist zip hashes to the pull's live digest before the plan. No new gate. Hashes, times and sizes only."
+}
+```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S23",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-11T05:40:00Z",
+  "hazard_standing": "INERT",
+  "one_line": "RESTATEMENT of row NFRA_TRNSPT-D2-S22's disarm read (1), on the CTO's word (msg 4193): ALL THREE functions of the transcripts root must read one live CodeSha256, not two.",
+  "class": "OBSERVATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 4193, 2026-10-11T05:35Z (citing 2.0.0_SA_COO~Y2's packet @abbb4ac3ac)",
+      "issuer live read 2026-10-11T05:29Z: teams pull AI4UQD0M..., mail pull VGIq85Xx... (LastModified 2026-10-07T23:59:05Z), commentary plVgBIIX... -- three digests",
+      "the row gate refuses an edit of an existing row (0 new rows of 81), so the restatement is this new row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row D2-S22 notes, disarm read (1): the commentary function's live CodeSha256 equals the pull's.",
+  "world_is": "The root has THREE functions on local.pull_zip. The mail pull (outlook-global-transcripts-pull-lambda) has run a third digest since 2026-10-07. Disarm read (1) of D2-S22 is therefore: teams pull, mail pull and commentary all read the same live CodeSha256. Read (2) (the three commits are ancestors of origin CLOUD) is unchanged.",
+  "notes": "The mail pull's re-apply onto the pull's bytes is this issuer's cell at its next issuance (code-only, targeted, its own pair, packet shape as 2.0.0_SA_COO~Y2's: member diff, the mail handler's import closure against the changed set, key producers equal). Not before the Monday 2026-10-12 13:00Z fire: the issuer reads no risk to the mail pull from waiting, since nothing has moved its bytes since 2026-10-07. Hashes and dates only."
+}
+```

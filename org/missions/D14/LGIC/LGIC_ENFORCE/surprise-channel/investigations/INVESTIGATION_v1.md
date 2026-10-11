@@ -6217,3 +6217,121 @@ that exception is precisely what hid this, so it is stated rather than relied on
  "world_is": "The run records ruled=0 / stale=0 (live+repo) and ruled=17 / stale=7 (repo alone), each cut off by an uncarded RAISE that is in the estate today; the loud stop is the unchanged behaviour the order requires, so the whole-estate RULED count is the issuer's to obtain with the cards."
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-D1-W1-S3",
+ "project": "LGIC_ENFORCE",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+ "surfaced_at": "2026-10-11T03:25:03Z",
+ "one_line": "The EN-ac-1 live limb reads the census plane only for a NEW literal whose branch would refuse (a hand-kept carrier, or a typed name graded OUT-OF-PATTERN or ALIAS), not for every NEW literal that classifies to a type as the cell's parenthetical reads.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-ac-1.gate-reads-rename-and-running-name.md: limb (b) says read the plane ONLY when new is true and the literal would otherwise reach a refusing branch (it classifies to a type or is a hand-kept carrier).",
+   ".tools/naming-gate.py@75bd033fa7 _judge(): the trigger is new and (carr, or typ with nm.grade verdict OUT-OF-PATTERN or ALIAS). A CONFORMANT or NOT-GRADED typed name reaches no refusing branch, so no read is made for it.",
+   "Under either reading the verdict and counts are identical for every such literal; only the why text would gain a RUNNING-LIVE line. The narrower trigger avoids a multi-minute live read on every commit that adds a classified name the gate would pass anyway."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Cell EN-ac-1 limb (b): judge() looks the name up in the census LIVE plane ONLY when new is true and the literal would otherwise reach a refusing branch (it classifies to a type or is a hand-kept carrier).",
+ "world_is": "The implementation reads the plane for a NEW carrier, or for a NEW typed name whose grade is OUT-OF-PATTERN or ALIAS, because only those reach a refusing branch. A NEW CONFORMANT or NOT-GRADED typed name is not read. The issuer may ratify the narrower trigger or ask for the literal parenthetical; the gate was not changed for either."
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-D1-W1-S4",
+ "project": "LGIC_ENFORCE",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+ "surfaced_at": "2026-10-11T03:25:03Z",
+ "one_line": "The census LIVE plane holds bd-49f-auto-login as both an IAM_POLICY node and an EC2_INSTANCE node, so a name-only live lookup admits an IAM policy declaration on the strength of an EC2 instance; the limb now matches the declared type.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "The adopt criterion's first run at .tools/naming-gate.py@810f245ca9 printed, for the IAM_POLICY pick bd-49f-auto-login: 'RUNNING-LIVE EC2_INSTANCE bd-49f-auto-login read from the live plane ... EXISTING, not minted by this diff' and returned PASS-R23-ADOPT.",
+   "The same name is an IAM_POLICY node in the plane at 2026-10-11 02:14:17 UTC: load_live picks it as the IAM_POLICY node (the adopt arm's pick), and the re-run at 75bd033fa7 prints 'RUNNING-LIVE IAM_POLICY bd-49f-auto-login read from the live plane, Built from the estate as of 2026-10-11 02:14:17 UTC'.",
+   ".tools/naming-gate.py@75bd033fa7 _live_holder(): the lookup matches the exact name AND the declared type; any type only for a hand-kept carrier, which has no classified type. A self-test control covers a name held only as EC2_INSTANCE."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Cell EN-ac-1 limb (b): a literal whose EXACT name the census LIVE plane holds is EXISTING; the RUNNING-LIVE line prints the node type it matched.",
+ "world_is": "A name can be held by nodes of more than one type. Matching the name alone let a declared IAM_POLICY read as EXISTING on an EC2_INSTANCE's name, so the limb now requires the declared type. A name held only as another type stays NEW and is refused. The spec's 'a node' is read as 'a node of the declared type'; the issuer should confirm that reading."
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-D1-W1-S5",
+ "project": "LGIC_ENFORCE",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+ "surfaced_at": "2026-10-11T03:25:03Z",
+ "one_line": "The standing bar's pytest of lib/tests/test_opal_naming_fourth_verdict.py collects no tests: the file is a mode-script with no test_ functions, so the bar is vacuous under pytest.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python -m pytest lib/tests/test_opal_naming_fourth_verdict.py -q -p no:cacheprovider at the worktree base bb91059bfb: 'no tests ran in 0.03s', exit code 5; with --co: 'no tests collected'.",
+   "lib/tests/test_opal_naming_fourth_verdict.py@bb91059bfb: no def test_ function; defines _lib(), mode_test(), mode_suite(), mode_gates() (lines 39-128) and runs them from __main__ (line 142)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Standing bar: python -m pytest lib/tests/test_opal_naming_fourth_verdict.py -q -p no:cacheprovider must not newly fail.",
+ "world_is": "pytest collects zero tests and exits 5, so the bar cannot fail under pytest. The file's own script modes were not run for this order (not among its invocations). Which invocation the bar means is the issuer's to name."
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-D1-W1-S6",
+ "project": "LGIC_ENFORCE",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+ "surfaced_at": "2026-10-11T03:25:03Z",
+ "one_line": "The adopt criterion's type token is also printed by the verdict text ('as IAM_POLICY'), so PASS-R23-ADOPT held even when its RUNNING-LIVE line named another node type.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "The first adopt run at .tools/naming-gate.py@810f245ca9 printed RUNNING-LIVE EC2_INSTANCE for the IAM_POLICY pick and the check still printed PASS-R23-ADOPT.",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~L1/fixed_inputs/r23/check_en_r23.py arm_adopt(): need(LIVE_TOKEN in text and typ in text and asof.group(1) in text) -- typ is 'IAM_POLICY', which the verdict line 'as IAM_POLICY' also carries."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AC1R23-AC2: the verdict text names the plane's vintage and the node type matched, with RUNNING-LIVE, no LIVE-READ-FAILED.",
+ "world_is": "The token test cannot tell the RUNNING-LIVE node type from the verdict's declared type, so the criterion could pass on a wrong-type match. The gate was fixed at 75bd033fa7 and a self-test control pins it. The check was not edited (its expectation is the issuer's); the self-test wrong-type arm is the discriminating control."
+}
+```
+
+```json
+{
+  "id": "LGIC_ENFORCE-D1-S3",
+  "project": "LGIC_ENFORCE",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T05:50:00Z",
+  "one_line": "Generated registry views lag the registry at box/dell1 HEAD: regeneration writes 14 files and 12 differ (9 in the GENERATED mark only; vectors.json, opal_name.tftest.hcl and portal vendorDisplayNames.generated.ts in content); event_rules.json moves data/firm_registry.json without being named in its mark.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Every generated view equals `python lib/opal_naming.py generate` at HEAD, and each view's mark names every registry file that moves it.",
+  "world_is": "1.0.0_SA_CTO~DELL1 at 05:4xZ: validate OK (54 system rows, 14 scope rows, registry@557f0c882e296291); generate --out <scratch> wrote 14 files; 12 differ from HEAD. Non-mark changed lines: vectors.json 36, opal_name.tftest.hcl 72 (the 4698 rows), vendorDisplayNames.generated.ts 3 (commonwealth, yahoo, yahoo-finance); the other 9 differ only in the mark line. MDPF_CANON-D1-S11 (check_en_r2.py r6) reports event_rules.json moving data/firm_registry.json, a file its mark does not list. Ruling (MDPF_CANON ledger/ROUND_ANALYSIS.round3.md section 2): regenerate at HEAD and declare event_rules.json in that target's mark scope; the portal file lands on portal DEV by its normal path; check_en_r2.py retires as a round-2 fixed input.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I lib/opal_naming.py validate (rc 0) and generate --out <scratch> (14 written), diffed with --strip-trailing-cr against box/dell1 HEAD 2026-10-11T05:4xZ",
+      "row MDPF_CANON-D1-S11"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~L1"
+}
+```
