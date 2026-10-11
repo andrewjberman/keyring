@@ -5,7 +5,7 @@
  "project": "NFRA_OPSWKF",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.3",
+ "prd_version": "v0.4",
  "step": 4,
  "brief_ref": "docs/briefs/q3-trade-submission-ops-workflow-brief-20261006.md@c41e705220",
  "endpoint_outcomes": [
@@ -15,7 +15,8 @@
   "FWD-4",
   "FWD-5",
   "FWD-6",
-  "FWD-7"
+  "FWD-7",
+  "FWD-8"
  ],
  "status": "RATIFIED"
 }
@@ -82,6 +83,18 @@ wrote the brief. **COO:** UNSEATED at registration; seating is `0.0.0_AB_MSTR`'s
                     Claude change its layout; asking for more data is a request to Opal, never a new pipeline he builds; no alert ships
          SOURCE     Andrew-direct 2026-10-09 ~05:xxZ ("a really easy dashboard that he can control the design of on localhost ... tell him he
                     can have his claude just edit it however he wants")
+
+  FWD-8  Opal's trade blotter and the portal's user list answer Opal staff only
+         DONE WHEN  EXERCISED -- each of the eight routes of the trade dashboard service that return trade submissions or the
+                    user list refuses a verified caller whose tier is not internal and still serves one whose tier is; the
+                    caller's own-record route is unchanged; shown by the handlers run on the authorizer's own context for an
+                    internal, a client-tier and a service-tier caller, and, after the release, by one read as an internal session
+         ACCEPT     a person signed in as a client or as another firm's user who asks any of those routes is refused; an Opal staff
+                    member sees the blotter as before; no trade, user or spreadsheet link is returned to a caller the service has
+                    not identified as internal
+         SOURCE     the laptop CTO's ruling of 2026-10-11 on row IRPT_YCDGEN-D2-S60 (its record
+                    `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_XB_74E2_TRADE_DASHBOARD_API_SERVES_ANY_PORTAL_LOGIN_20261011.md`
+                    @8e9ca364d7, relayed verbatim). Not an Andrew-direct word: a security defect ruled MEDIUM and placed here by its owner
 ```
 
 ## CONTRACTS
@@ -144,6 +157,32 @@ backlog in their numbered order.
   - the first panels are trade rec and billing.
 - **NFRA_MCPINDEX (site Z) is a pre-arranged input,** not a wait. Until its serving lands, the adapter reads a fixture of the same shape, and the
   panel says so.
+- **ENDPOINT changed.** The CVO re-signs the ratified-text half.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM (2026-10-11 ~17:4xZ, `1.0.0_SA_CTO~DELL2`): FWD-8, the trade dashboard service serves any portal login (L10; ENDPOINT changed)
+
+- **Source:** `2.0.0_SA_COO~G2`'s census, `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r14/ROUTE_CENSUS_WHAT_A_SERVICE_TOKEN_OPENS_20261011.md`
+  with ADDENDUM 1 @8fdcba9a75 (the whole router and every handler read by that seat), row IRPT_YCDGEN-D2-S60; and the laptop CTO's ruling
+  on it, relayed verbatim in `org/tier0_exec/0.0.0_AB_MSTR/deliverables/relays/RELAY_LAPTOP_CTO_RULING_XB_74e2_20261011T1738Z.md`. This
+  seat read the relay and the census; it read no handler itself.
+- **What was measured, and by whom.** By the census: eight of the service's nine routes are handed only a query string or a path id and
+  cannot see the caller; seven return trade submissions (one of them an hour-long download link to a submission's spreadsheet) and one
+  returns the user list, every row less password and api_key. By the laptop CTO: the deployed bytes equal the repository's; the table holds
+  33 items, Opal's own model and fund trades, with no client, account or firm attribute; and any portal login reaches the routes (one
+  authorizer, the page ungated). Its severity word is MEDIUM: Opal's own blotter, not client data. **The user list is not covered by that
+  word and is named here separately: it returns a row for every portal user to any portal login.**
+- **Admitted as FWD-8, on a surface disjoint from FWD-1 and FWD-7** (the trade pipeline's dashboard service; no ticket, engine or kit file).
+- **The remedy the owner ruled, adopted as the cell's shape:** the router passes the event to every handler; each of the eight requires
+  tier internal; the caller's own-record route stays as it is. The portal's route gaining an internal-only guard is a follow-on and is not
+  FWD-8's proof: the service refuses whatever the page does.
+- **The four other functions the census names** (a trade submission is created for any verified caller with an email; a research pull is
+  enqueued for any ticker; a market-data proxy; a content read) are NOT in FWD-8. Two are verified by the census and two are a search
+  agent's read. The first cell under this addendum reads all four by hand and says, for each, what a non-internal caller can do; each then
+  gets its own line here or its own owner.
+- **Applying it:** if no dell2 seat can apply the trade pipeline, the apply leg goes cross-box to the laptop's cloud-ops seat, as its
+  ruling offers. The pair names every caller of the eight routes (the portal's own pages first) with one read through each.
 - **ENDPOINT changed.** The CVO re-signs the ratified-text half.
 
 -- 1.0.0_SA_CTO~DELL2
