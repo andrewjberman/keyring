@@ -909,3 +909,54 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S22",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T03:31:12Z",
+  "one_line": "Disposition record for ARMED row TCKT_VNEXT-D2-W6-S2 (data-refresh admitted a caller with no userType): DISARMED by the CTO's round-2 analysis. Row D2-S16 measured the routed fix live (the gate admits Dev or an Opal-internal principal, so a one-firm token is refused). The residue (S17: an Opal-internal principal is admitted whatever its userType) stays with the data-refresh owner and leaves this project's list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_TCKT_VNEXT_ROUND_2_20261011.md @bbba700c22 section 2",
+      "investigation rows TCKT_VNEXT-D2-W6-S2, D2-S12, D2-S16, D2-S17",
+      "1.0.0_SA_CTO~DELL2 msg 3619 (S17 routed to the data-refresh owner)"
+    ]
+  },
+  "spec_asserts": "Only Dev or Opal-internal callers may trigger or roll back a data refresh; a one-firm test filer token does not reach those routes.",
+  "world_is": "As ruled by the CTO on row D2-S16's measurement, not re-measured by this seat: a one-firm token is refused. The bound round 2 carries: no internal-tier test token is minted outside a signed pair that names data-refresh in its blast radius, with a zero-call read after.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disposition only; W6-S2 itself is append-only and not rewritten. Round 2's re-run pair (cell R2-tr-1) carries the bound."
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S23",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T03:31:12Z",
+  "one_line": "round-close-check --project TCKT_VNEXT --round 1 printed verdict=MAY-CLOSE with judgment=1 graded=1 while a second judgment grade of the round, SA-r-1b AC2 NOT MET (row D2-S21), was on file. The run order TO-RUN-SA-r-1b lives in the applier seat's flat task_orders folder, outside the 4 orders the check counted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's run 2026-10-11T03:12Z: 'ROUND-CLOSE project=TCKT_VNEXT device=dell2 reviewer=present orders=4 judgment=1 graded=1 ungraded=0 self_graded=0 verdict=MAY-CLOSE'",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_SA_R1B_L9_GRADE_20261010.md @771737f0a6",
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/task_orders/TCKT_VNEXT.TO-RUN-SA-r-1b.fwd1-seat-arm-journey-v22-tv2.md (the order whose AC2 was graded)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_TCKT_VNEXT_ROUND_2_20261011.md @bbba700c22 section 2"
+    ]
+  },
+  "spec_asserts": "The check counts every graded judgment criterion of the round, and does not print MAY-CLOSE while one of them is NOT MET.",
+  "world_is": "It printed judgment=1 graded=1 and MAY-CLOSE with a second grade on file that reads NOT MET. Which limb missed it (the order's folder, or a NOT MET verdict counted as graded) was not isolated by this seat. The round did not close on it; the slug reported FWD-1 NOT REALIZED.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Tool gap, owner of .tools/round-close-check.py. Filed at the CTO's ask."
+}
+```

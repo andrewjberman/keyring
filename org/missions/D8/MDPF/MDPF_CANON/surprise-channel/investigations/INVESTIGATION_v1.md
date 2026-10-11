@@ -475,3 +475,27 @@
   "notes": "Filed as a premise failure: the cell's OWED premise does not match the ledger. Whether the GRANTED state should be re-read against the new basis is Andrew's act; this cell does not change it."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S11",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-11T03:33:24Z",
+  "one_line": "Three of the five check_en_r2.py r6 subcommands read FAIL at box/dell1 HEAD before any MDPF_CANON change: r6-headers-current, r6-undeclared-inert and r6-reproduces.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO ruling msg 3431: the new generate target is proven with opal_naming's own tests plus check_en_r2.py r6 arms.",
+  "world_is": "Run from the repo root at box/dell1 2026-10-11 ~03:3xZ with `python -I <check_en_r2.py> <sub>`: r6-declared-moves -> PASS-DECLARED-MOVES (18 pairs probed, 0 not moved); r6-delta0-ordered -> PASS-DELTA0-IN-ORDER (bucket_for branches taken: mapped True, unmapped True); r6-headers-current -> FAIL-HEADER-STALE (10 generated files; the marks of data/firm_registry.json, firm-config.mjs and directory_runner.py do not hash their listed scopes.json at HEAD); r6-undeclared-inert -> FAIL-UNDECLARED-FILE-MOVES-A-VIEW (10 views probed; data/firm_registry.json moved when event_rules.json was changed, a file its mark does not list); r6-reproduces -> FAIL-GENERATE-DIFFERS (13 written; at least one generated file at HEAD differs from regeneration). lib/tests/test_opal_naming.py reads 96 passed. The checker is an issuer fixed input of 2.0.0_SA_COO~G dated at LGIC_ENFORCE round 2; whether the three FAILs are checker staleness or registry drift at HEAD was not established here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_en_r2.py r6-headers-current / r6-undeclared-inert / r6-reproduces, run at box/dell1 HEAD",
+      "python -m pytest lib/tests/test_opal_naming.py -q -> 96 passed"
+    ]
+  },
+  "notes": "MDPF_CANON CN-c-2 asks only for the two arms that read PASS at the base (r6-declared-moves, r6-delta0-ordered) plus opal_naming's own tests; the other three are not this project's to fix. Routed to the generator's owner (1.0.0_SA_CTO through LGIC_ENFORCE) as a row, not a message.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
