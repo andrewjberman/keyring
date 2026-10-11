@@ -4686,6 +4686,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "At origin/DEV ad774c6f the harness exits 1 on three checks that no AMGT_CORPUS file touches, so AC2 of CRPS-ay-2 pins the failing SET to those three (the change adds none and masks none) instead of an exit code.",
   "notes": "Not an AMGT_CORPUS surface; surfaced for the seats that own those checks. No gate built; no fix attempted here.",
   "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W2-S6",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+  "surfaced_at": "2026-10-11T23:29:07Z",
+  "one_line": "AC2 of CRPS-ay-2 expects the tabs harness to print CHECKS-WRONG-WAY with three named checks, but in this worker's portal worktree at ad774c6f the harness prints CHECKS-OK 21 of 21 both with and without the reference patch.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs@ad774c6f: timeout 120 node tabs.harness.cjs run in worktree C:/tmp/wk-AMGT_CORPUS-49-2/portal with the reference patch applied (portal commit bd66cb6e): last line CHECKS-OK 21 of 21, rc 0; the CHECK lines short_read_refused, short_read_control_served and generation_captions_present read true (expected true).",
+      "The same harness with the patch reverted by git apply -R (then reapplied): last line CHECKS-OK 21 of 21, rc 0. The base's only false CHECK line is coverage_tab_mounted, expected false."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-ay-2 AC2 (proof criterion, order section 4): the output of node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs, tail -1, matches ^CHECKS-WRONG-WAY short_read_refused,short_read_control_served,generation_captions_present$ at portal origin/DEV ad774c6f.",
+  "world_is": "At portal ad774c6f in this worktree the failing set of the tabs harness is empty: the last line is CHECKS-OK 21 of 21 at base and with the patch. The pinned three-check set is therefore not produced here, and AC2's regex does not match. The patch neither adds nor masks a failure in this tree.",
+  "notes": "Differs from AMGT_CORPUS-D1-S8, the issuer's run in a detached portal tree at ad774c6f, which printed CHECKS-WRONG-WAY with the same three names. The cause of the difference is not diagnosed here (candidates: an input the detached tree lacks, or a different tree state). No harness edit was made. AC2 is recorded FAIL on its regex; the order stays open.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
 }
 ]
 ```
