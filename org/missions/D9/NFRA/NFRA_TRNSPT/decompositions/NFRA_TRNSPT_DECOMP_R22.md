@@ -46,3 +46,19 @@ The census (@ac982db915) finds 4 monday_meeting occurrences fetchable but never 
 | `TR-rv-22` | the recovery: the 4 named ids through the scheduled pull's own code path, invoked once for those ids, under ONE pair; before-read each is still held (Graph metadata); same wipe/hold-out, residual re-wipe 0; a meeting no longer held is LOST, stated with its date | FWD-3 | ISSUER pair + applier | WORLD | -- | TR-rc-22 (+ TR-rf-22 if cut) |
 
 Chain B = TR-rc-22 -> (TR-rf-22) -> TR-rv-22. Battery: `r22_checks.py rc22` at base: FAIL (absent).
+
+## AMENDMENT 2 (issuer, 2026-10-11 ~02:5xZ) -- TR-rc-22's verdict and the live read: the pull dies on an aged-out read; fix it, deploy it, and the 4 are LOST by this route
+
+TR-rc-22 drained @7e77ac162b: no selection rule skips by age. The issuer's live read (`deliverables/2.0.0_SA_COO~T2/R22_ROOT_CAUSE_LIVE_READ_20261011.md`,
+row NFRA_TRNSPT-D2-S16) measured the rest: the gateway refuses (502) the content read of every monday_meeting transcript older than about 120 days,
+and the scheduled pull has raised on that read at every fire since 2026-10-09T16:00Z. Issuer ruling inside this decomposition (no gate limb
+grades a decomposition edit; `to-pipeline-gate.py` grades the new order at this commit): TR-rf-22 is split into its build and its deploy, and
+TR-rv-22 is re-pointed.
+
+| cell | item | outcome | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|
+| `TR-rf-22` | the BUILD: `_pull_series` records a refused or corrupt content read of one row as `READ-REFUSED` and continues; run-wide refusals still raise; tests | FWD-3 | dell2 worker (workstream `pullfix`: write surface `teams/pull.py` and its tests) | LOCAL | worker | TR-rc-22 |
+| `TR-ra-22` | the DEPLOY of TR-rf-22's merged commit to `teams-global-transcripts-pull-lambda`, under ONE CTO + COO pair, applied by `0.7.0_AE_CloudOps~DELL2` with a change-management ledger entry; proof = the next fire completes, writes its run record and reaches all four series | FWD-1, FWD-3 | ISSUER pair + applier | WORLD | -- | TR-rf-22 |
+| `TR-rv-22` | RE-POINTED: no gateway recovery exists (the 4 reads answer 502). The 4 are stated LOST by this route with their dates (2026-04-10, 04-13, 05-04, 06-01) unless the CTO names another source; the issuer writes that statement at round close | FWD-3 | ISSUER | LOCAL | -- | TR-ra-22 |
+
+Chain B = TR-rc-22 (done) -> TR-rf-22 -> TR-ra-22 -> TR-rv-22. Battery: `r22_checks.py rf22` at base: FAIL (absent).
