@@ -10,7 +10,7 @@
  "subject": "ADVI_FIRMBKTS TO-FB-f-12 amendment 1: S13 ruled, scoped apply on the five",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-12.sms-delivery-status-logging.md",
  "opened_at": "2026-10-11T10:30:38Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T10:31:59Z",
   "bus_message_id": "f92312cf-097b-4025-a9e2-4f692a9fd1b3"
@@ -21,8 +21,8 @@
   "bus_message_id": "3dcc7798-803c-48b5-a64c-a863e27d363c"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T11:27:40Z",
+  "from_by": "2.0.0_SA_COO~B1",
   "to_at": "2026-10-11T11:23:01Z",
   "to_by": "0.7.0_AE_CloudOps~FBL"
  }

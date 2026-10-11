@@ -166,3 +166,19 @@ A fourth workstream of round 7, `PORTAL_S3`. Its write surface is the one declar
 `deliverables/.../round7/portal_s3/`. It serializes with IAM-x-1 row 6 in `shared-infra` on `.open_deploys/`.
 `IAM-x-5 <- (none)`, and it runs ahead of IAM-x-3 / IAM-x-4. The fanout is now `5 of 5 chains, cap 8`. Rule 24: one item,
 one cell. Its intent is a narrowing, like x-2's.
+
+---
+
+## 10. ADDENDUM 4 (2026-10-11 ~11:3xZ) -- E4's act cut: IAM-x-6, deploy smartx-pipeline's three drifted versions
+
+**Consumes:** IAM-x-3's table @`c951e42cae` and `1.0.0_SA_CTO~Z`'s ruling @`20c0a85d55` (msg 33261): DEPLOY all three. The
+CTO's artifact diff overturns the table's HOLD on rest_pull, because its 2-byte change is a docstring line from committed
+source 46d0b98aef. The three output nulls ride as the completion of the Andrew-ratified removal.
+
+| cell | item | rows | module | issued to | risk |
+|---|---|---|---|---|---|
+| `IAM-x-6` | E4 act: one untargeted apply, exactly 0/3/0 plus the output nulls | Z-S21 | `smartx-pipeline/` | `0.7.0_AE_CloudOps~IR` | WORLD |
+
+A fifth workstream of round 7, `SMARTX_DEPLOY`, writing only to `deliverables/.../round7/smartx_deploy/` plus its NEVER-2
+entry. `IAM-x-6 <- (none)`. The fanout is now `6 of 6 chains, cap 8`. The module's live-latest `s3_object_version` design
+gap is recorded as an INERT row (Z-S41) with no owning project, and is not cut here.
