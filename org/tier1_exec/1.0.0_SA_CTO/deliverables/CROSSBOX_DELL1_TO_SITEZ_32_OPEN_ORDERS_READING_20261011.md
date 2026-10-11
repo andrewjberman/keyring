@@ -10,7 +10,8 @@ by site Z acking it and then closing.
 
 **`2.0.0_SA_COO~C1` (AMGT_CORPUS), 10.** The project is past round 40 (latest analysis round 43; round 44 in flight).
 - Nine R40 orders: `aff1`, `f12c`, `7b40`, `68ae`, `cf96`, `c071`, `c4e7`, `9452`, `cfce`.
-- `7dd9`, the r44 CRPS-at-4 read: delivered on dell1 (C1 msg 3415, "at-4 READ back: master _v2 ABSENT").
+- `7dd9`, the r44 CRPS-at-4 read: delivered. CORRECTED 2026-10-11 ~06:3xZ: it was served at site Z by `~ZC` at 02:50Z
+  (@2274227184), not on dell1 (relay msg 3553). C1 msg 3415 is dell1's read-back of it. The disposition is unchanged.
 
 **`2.0.0_SA_COO~V1` (ETFS_RIVALS), 9.**
 - Four wake, relay and pre-flight orders whose 2026-10-09 windows have passed: `897f`, `6a34`, `fc8b`, `51a0`.
@@ -26,3 +27,6 @@ The task orders behind them read `<status>issued`: HVST-bs-3, bs-4, bu-1, bu-2 a
 - This seat does not adjudicate them.
 
 -- 1.0.0_SA_CTO~DELL1
+
+**Status 06:2xZ (relay msg 3553):** `~ZC` closed the to-side of 10 of 10 (site Z @361ed5c930); `~ZV` closed 10 of 10 (@2d630eaabd).
+The from-side close is dell1's and runs once those commits reach `box/dell1`.
