@@ -762,6 +762,87 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "pyarrow max(Trade_Date) over date=2026-06-23/*.parquet -> 2026-06-22, 1,416,497 rows"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W26-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~26",
+    "surfaced_at": "2026-10-11T15:45:39Z",
+    "one_line": "refreeze.py prices the full request from as_of with 0 drawn, so a re-freeze whose as_of is after draws began reads a finish the remaining cells do not support: the DQ9-t33 AC2 re-freeze (--as-of 2026-10-11) gives finish 2026-10-18 for 15120 cells with 11716 drawn, where the remaining-cells quote gives 2026-10-17.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "refreeze.py docstring: as_of is the day the original quote was frozen, and the re-frozen quote is bbg_quote.quote(request, allowance, 0, as_of). DQ-t-33 item 3 names no drawn_to_date for refreeze.",
+    "world_is": "On scratch copies of the TR request folder (tier 4 history, 15120 cells, ceiling 5858 measured), refreeze.py --as-of 2026-10-11 wrote a second superseded file with supersedes set, and quote_vs_actual reads finish_date 2026-10-18 with cells_drawn 11716. The same request quoted with --today 2026-10-11 and --actuals reads finish 2026-10-17 and cells_remaining 3404.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "dq_t33_real.py run from the worktree: refreeze rc=0 superseded_files=2; qva finish_date 2026-10-18, cells_drawn 11716, cells_quoted 15120",
+        "bbg_quote.py --quote on the real request file with --actuals scratch ledger: cells 15120, cells_remaining 3404, finish_date 2026-10-17",
+        "data/mdpf/scripts/demque/refreeze.py@b3a1f43daa refreeze(): q = bbg_quote.quote(request, allowance, 0, as_of_day)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W26-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~26",
+    "surfaced_at": "2026-10-11T15:45:39Z",
+    "one_line": "bbg_quote.quote() refuses a model_block request whose drawn_to_date is above 0 (ValueError), because the order names no remaining-cells rule for model_block, whose components draw on two channels.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-33 item 1: quote(..., drawn_to_date) walks and dates cells - drawn_to_date. The order does not say how a model_block request with drawn cells is priced.",
+    "world_is": "data/mdpf/scripts/demque/bbg_quote.py quote(): the model_block branch raises ValueError when drawn_to_date is non-zero; with drawn_to_date 0 it prices as before.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/bbg_quote.py quote(): if drawn_to_date: raise ValueError('model_block has no remaining-cells quote ...')",
+        "no model_block case in data/mdpf/scripts/demque/test_demque_quote_remaining.py; the existing model_block test in test_demque_bbg.py passes unedited"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W26-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~26",
+    "surfaced_at": "2026-10-11T15:45:39Z",
+    "one_line": "bbg_quote.py --quote --actuals takes drawn_today over ledger lines whose channel equals the REQUEST channel, not the literal history. The two readings agree for every history request, which is the only class the order sizes, but differ for a bql or reference request.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-33 CLI: drawn_today is the sum of cells_drawn of every channel history line dated today.",
+    "world_is": "data/mdpf/scripts/demque/bbg_quote.py _actuals_drawn(path, request_id, channel, today) filters on the request channel; for the TR request (channel history) that is the literal reading.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/bbg_quote.py _actuals_drawn(): if r.get('channel') == channel and row_day == day",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/requests/DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.json channel history, so the readings agree for the real request"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W26-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~26",
+    "surfaced_at": "2026-10-11T15:45:39Z",
+    "one_line": "quote_vs_actual.read takes the EARLIER of a COMPLETE line's date and the coverage date as drawn_date. The literal reading (the COMPLETE date alone) would move a request covered on time to LATE when its COMPLETE line lands after the finish day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-33 item 2: a line with outcome COMPLETE sets drawn_date to its date (even when the cells never reach the quoted figure); otherwise unchanged.",
+    "world_is": "data/mdpf/scripts/demque/quote_vs_actual.py read(): drawn_date = min(first coverage date, first COMPLETE date). test_complete_row_closes_the_request_and_sets_the_drawn_date covers a COMPLETE line with no coverage, not coverage followed by a later COMPLETE line.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/quote_vs_actual.py read(): closed = sorted COMPLETE dates; if closed and (drawn_date is None or closed[0] < drawn_date)",
+        "data/mdpf/scripts/demque/test_demque_quote_remaining.py test_complete_row_closes_the_request_and_sets_the_drawn_date (r-done ON_TIME on the finish day, r-late LATE)"
+      ]
+    }
   }
 ]
 ```
