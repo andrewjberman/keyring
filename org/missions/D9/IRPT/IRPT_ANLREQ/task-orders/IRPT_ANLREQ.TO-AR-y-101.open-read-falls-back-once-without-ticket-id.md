@@ -65,6 +65,31 @@ ruling: make the order of the two releases not matter.
 6. In your report: `bun run typecheck` result, and the eslint ERROR count of the files you changed (`bunx eslint <files>`; report the
    line it prints, do not fix files you did not change).
 
+---
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~17:4xZ): RE-OPENED. The code this face named is never served; the fallback keys on
+the served reason `INVALID_INPUT`.** The fault is in the face (and in the analysis it copied), not in the first build: CTO msg 5465.
+
+- **Measured by the issuer in the LIVE package of `irpt-status`** (the downloaded zip, digest `6idtFvAm...`, 49 members searched):
+  `UNEXPECTED_OWNED_READ_QUERY` is the MESSAGE of an exception of class `RequestReadRefused` (`entry.py` lines 165 and 185). The
+  served `public_reason_code` is derived from the exception's CLASS through the entry's reasons map, `entry.py` line 252:
+  `"RequestReadRefused": "INVALID_INPUT"`. The message string is never served. So the page sees `INVALID_INPUT`.
+- **What to change, in the portal branch as it stands at `d763d48c` (your earlier commit is inherited state; add a commit, do not
+  rewrite it):** the helper's predicate compares `publicReasonCode === 'INVALID_INPUT'` and is renamed to say what it reads (for
+  example `isInvalidInputRefusal`); its comment says the truth: this is the reason the live service serves for an unknown query
+  member, and it is BROAD -- every refusal of class `RequestReadRefused` on the report read shares it (the live package raises that
+  class at about 25 places in `owned_report.py`, for a bad request id and for binding and retention faults). That breadth is accepted
+  by the CTO: a second read WITHOUT the ticket id on any of them answers exactly as the page reads today. Say that in the comment
+  in two lines.
+- Unchanged and still required: `REPORT_TICKET_MISMATCH` is NEVER retried (it is its own served reason, not `INVALID_INPUT`); one
+  second read at most; every other reason (NOT_FOUND, NOT_AUTHORIZED, UNEXPECTED, a network error) propagates with no second read.
+- The four test names stay exactly as they are. The second test's fake refuses with `publicReasonCode` `'INVALID_INPUT'`. Neither
+  `analysisRequest.ts` nor the test file may contain the quoted string `'UNEXPECTED_OWNED_READ_QUERY'` (the check refuses it; a
+  comment may name the message without quotes).
+- Then: both criteria again, verbatim; a NEW proof instance over the old one (same path), validated after its commit; flip
+  `<status>` to `complete` on VALID. Report typecheck and the eslint error count as before (`bun x eslint`).
+- Gate limb that graded this amendment: read from this commit's own output.
+
 ### ACCEPTANCE
 
 <criterion id="AR101-y-AC1" cell_refs="AR-y-101"><invocation>python C:/dev/wk-irpt-anlreq-51/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r10/ar10_checks.py y101-fallback --root C:/dev/wk-irpt-anlreq-51 --portal C:/dev/wk-irpt-anlreq-51/portal</invocation><expect>Y101-FALLBACK-OK</expect></criterion>
