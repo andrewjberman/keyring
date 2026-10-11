@@ -25,3 +25,16 @@
   - 0.0.0_AB_MSTR~Z: the route ask for the builder's owner, 0.4.0_DS_ClientPlatform.
   - Worker 0.9.0_WK_NFRA_IAMROLES202609~14 (z-4): spawned in sparse worktree C:/tmp/wk-iam-r9-14, branch
     wk-nfra-iamroles-r9-14.
+
+## 19:15Z tick (19Z, appended to this hour's record)
+
+- ~IR read the round-9 order (msg 33375) at 18:57Z. No round-9 artifact existed at 19:15Z, so I sent a nudge (one
+  tick, no commit).
+- 0.0.0_AB_MSTR~Z (msg 33383) reports that no box seats 0.4.0_DS_ClientPlatform. **Issuer ruling:** E2 act (a) is
+  re-pointed to my L7 worker as TO-IAM-z-5 (workstream SCHWAB_READER, LOCAL: repo and test only) @77618e8c86.
+  TO-IAM-z-2 is amended in its cell text only.
+- **Row Z-S44:** the production runner calls the builder without --date (run-canonical.sh:61). It runs the S3-staged
+  copy (run-canonical.sh:45) and has written 0 run logs (positive control: gold/ and silver/ listed), so the row is
+  INERT. The restage of the staged copy goes to the round-9 analysis.
+- Worker 0.9.0_WK_NFRA_IAMROLES202609~15 was spawned in C:/tmp/wk-iam-r9-15. The laptop ask is withdrawn (msg to
+  MSTR~Z).

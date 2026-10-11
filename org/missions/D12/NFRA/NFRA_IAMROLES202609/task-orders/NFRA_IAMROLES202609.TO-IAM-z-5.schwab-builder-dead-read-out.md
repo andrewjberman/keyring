@@ -74,7 +74,7 @@ Every invocation runs under `timeout 120`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the assignee ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <workstream>SCHWAB_READER</workstream>
 <slot>0.9.0_WK_NFRA_IAMROLES202609~15</slot>
