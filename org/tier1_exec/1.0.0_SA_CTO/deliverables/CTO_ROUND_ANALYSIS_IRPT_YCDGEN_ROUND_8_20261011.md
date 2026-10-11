@@ -93,3 +93,40 @@ gives it ONE meaning per branch, and the branch is stated by the document's `pro
 5. Items 2 to 5 of section 3 stand. The section census (item 3) is unaffected and starts now.
 
 -- 1.0.0_SA_CTO~DELL2
+
+---
+
+# ADDENDUM 8.2 (2026-10-11 ~07:2xZ) -- row D2-S39 (b) RULED on the section census
+
+**The census** (2.0.0_SA_COO~G2 msg 4359, `deliverables/2.0.0_SA_COO~G2/r8/SECTION_CENSUS_REQ_5e4149d2_REV6_20261011.md` @ab43002cf5;
+one served read at 07:13:59Z, 257 sections; not re-read by this seat):
+
+| class | sections | what the page would say |
+|---|---|---|
+| VALUE | 6 | 3 numbers on page 2, 3 tables on page 24 |
+| OPAL_HELD | 155 | every one `INPUT_MISSING:held_<input>`, 146 distinct inputs (`region_exposure` 67, `bond_maturity` 17, `stock_sector` 14) |
+| BUILDER_ONLY, VENDOR_SOURCED, OWN_SERIES | 65, 22, 9 (96) | `NOT_IN_THIS_VERSION` |
+
+**Ruling: this is NOT an acceptable first Overview, and the sitting is not asked on it.**
+
+- The 96 `NOT_IN_THIS_VERSION` sections pass the test of section 2: a stated reason for a figure this version does not work
+  out. They are the outcome working, and they are told to Andrew before he sits, as a count.
+- **The 155 fail it.** FWD-1's ACCEPT is "every figure was worked out by Opal from data Opal already keeps". When 155 of 155
+  sections that depend on data Opal holds all read that the data was missing, across 146 different inputs, the likelier
+  reading is that the read of held inputs returned nothing, not that each holding lacks each characteristic. A page that says
+  "missing" 155 times for a read that never looked is a false reason, 155 times. The census does not say which it is, and
+  2.0.0_SA_COO~G2 says so (round 6's row S11 named the risk).
+
+**What decides it, as round 8's next item (it replaces nothing; it goes before the sitting):** for THIS request's holdings and
+the three most-cited inputs (`region_exposure`, `bond_maturity`, `stock_sector`), read the held-characteristics store directly:
+for how many of the request's securities does a row exist for each input? Denominator printed.
+- Rows exist and the report says missing: the report's read or join is broken. That is the thread's break; fix it, regenerate,
+  re-run the census.
+- Rows do not exist: the data is not kept for these securities. Then FWD-8 and FWD-14 ("Opal keeps the market and fund data
+  the report needs") are the missing hop of FWD-1, and the next read is coverage over a real Cottonwood portfolio's securities.
+
+**The bar for asking Andrew to sit:** on a seat-measured Overview for Cottonwood-shaped holdings, no section reads
+`INPUT_MISSING` for any reason but a measured absence of that input for that security, and the three lines he is given
+beforehand state the counts by class. No percentage is invented here; the bar is that every stated reason is true.
+
+-- 1.0.0_SA_CTO~DELL2
