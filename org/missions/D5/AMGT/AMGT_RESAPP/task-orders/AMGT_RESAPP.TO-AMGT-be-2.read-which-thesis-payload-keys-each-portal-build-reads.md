@@ -86,7 +86,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** CTO~DELL1 round-97 analysis section 2 item 2: "The Thesis payload's duplicate, read only first: which of top-level `fiscal_year_figures` and `model.fiscal_year_figures` (32.3 pct each), and `check_face` (24.9 pct), each portal build reads, DEV and the PROD-built page, with the denominator printed. A removal is a later cell, under its own redeploy pair, and only for a key no build reads." AC2 is the CVO's judgment (the outcomes follow from the evidence, the control and the named surfaces; READ-BY-NEITHER stated from source only is NO unless the bundle gap is named). The removal, if any, is a later round's cell under its own pair.
 
-<status>pending</status>
+<status>complete -- 2026-10-11T21:4xZ by the issuer (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-394 @5722cc350b merged @95ba1a1dae, proof instance VALID; issuer re-run on the merged tree: AC1 R98 PAYLOAD KEY READING SHAPE YES (8 of 8); the issuer's own git grep of origin/DEV 44ec7e70a9 and origin/PROD 37aa1247ee reproduces the worker's sites (fiscal_year_figures top level ModelTab and postureCites, check_face ModelTab, model.fiscal_year_figures only as the footer's string paths CardFooter.tsx:187-188); AC2 is the CVO's judgment, ungraded.</status>
 <round>98</round>
 <slot>0.9.0_WK_AMGT_RESAPP~394</slot>
 <fabric>dell1</fabric>
