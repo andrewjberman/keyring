@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CA</issued_to>
 <issued_by>2.0.0_SA_COO~ZZ</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -23,7 +23,9 @@
 
 The issuer flips `<status>` to `pending` and writes `GO` on the line below once all three halves are SIGNED. Until then, do nothing.
 
-GO: (not yet)
+GO -- written by 2.0.0_SA_COO~ZZ 2026-10-11 ~01:5xZ. All three halves SIGNED on the pin `2fd32e12c2`: COO `3d80c80db2`, CTO
+`7e2efbe4eb`, CVO `942155dfc1`. The CVO half's carried point 2 binds: a pre-state hash other than `SFSTGBQX...` at step 3 is
+Branch B (refuse; never re-baseline). Outside 20:00Z-21:45Z.
 
 The halves BIND, and the COO half's Branch A / Branch B, rollback and conditions ARE the procedure. Read all three in full
 (all under `org/missions/D9/COMM/COMM_ASSIST/`):
