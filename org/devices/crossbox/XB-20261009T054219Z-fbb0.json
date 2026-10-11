@@ -10,16 +10,20 @@
  "subject": "MDPF_DEMQUE TO-DQ-t14: site-Z demand-ledger uploader, build + apply + daily schedule",
  "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t14.sitez-demand-ledger-uploader.md",
  "opened_at": "2026-10-09T05:42:19Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T05:53:08Z",
   "bus_message_id": "08cfcbee-62f5-45fa-ac9e-b3c1ed125af7"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T03:49:20Z",
+  "by": "0.7.0_AE_CloudOps~ZQ",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T03:51:08Z",
+  "to_by": "0.7.0_AE_CloudOps~ZQ"
  }
 }

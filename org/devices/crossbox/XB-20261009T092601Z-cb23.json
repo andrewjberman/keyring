@@ -10,16 +10,20 @@
  "subject": "EXECUTE MDPF_DEMQUE.TO-DQ-t18 (OPAL_BBGTML meter) @73cae9cfe6",
  "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t18.sitez-bbgtml-meter.md",
  "opened_at": "2026-10-09T09:26:01Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T09:28:32Z",
   "bus_message_id": "edef5629-d12f-4b7f-b77a-98d0bc561cbe"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T03:49:21Z",
+  "by": "0.7.0_AE_CloudOps~ZQ",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T03:51:09Z",
+  "to_by": "0.7.0_AE_CloudOps~ZQ"
  }
 }
