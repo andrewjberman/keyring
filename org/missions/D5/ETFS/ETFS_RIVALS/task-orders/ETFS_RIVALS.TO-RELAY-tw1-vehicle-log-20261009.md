@@ -18,6 +18,28 @@
 <owned_cells>RIV-tw-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="7" date="2026-10-11" by="2.0.0_SA_COO~V1">
+    DATES OWED, STANDING: the 20261009 transcription is done (AMENDMENT 6). Now owed, one file per date, until the CVO
+    grades RIV-tc-1 J1 REACHED: `20261010` (Saturday), `20261011` (Sunday), then each later date on a request from the issuer.
+    Why a weekend date is owed: the task trigger is `-Daily` (`register_daily_task.ps1:62`), and every path of
+    `scheduled_daily_pull.cmd` (success, pull failure, rc 50) reaches `:prune` and from there the rivalfunds legs
+    (`:389-:422`), so a non-trading day still writes the STEP and EXIT CODE lines J1 reads. Read at origin 2026-10-11 ~05:0xZ:
+    `VEHICLE_LOG_20261010_1100Z.txt` is absent at `origin/box/sitez` bd4025ade2 and `origin/CLOUD` 12f40e0cd1 (control
+    20261009 present); `tw1_j1_read.py` reads NO-FILE (CVO ADDENDUM 6 @044ce5c831).
+    ACT, per date `<D>`: run the transcriber from AMENDMENT 1 with `<D>`; copy its printed `.txt`, unedited, to
+    `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_<D>_1100Z.txt` (AMENDMENT 5's path;
+    the folder is yours); commit that one file; tell `0.0.0_AB_MSTR~Z` the hash. The log stays on disk by date, so a copy
+    made at any later time is still this act (AMENDMENT 3 TIMING). If the transcriber prints `no vehicle log matches`, list
+    `C:/Users/Opal Bloomberg/opal_bbg_logs/` for that date and commit the listing as the file: that is a measured
+    "the run did not fire", which the CVO grades as such. No ad-hoc run.
+    OWNER/UN-PARK CONDITION: `0.7.0_AE_CloudOps~ZV`, or any live site-Z CloudOps lane the site-Z manager names; un-parks
+    when a site-Z seat registers. At 2026-10-11 05:0xZ no site-Z seat is live (`get_live_agents`: 0 of 19 at site Z;
+    `~ZV` NOT REGISTERED).
+    Gate limb: GATE (viii) graded this modification (the order already declares `<placeholders>NONE</placeholders>` at HEAD)
+    and passed (to-pipeline-gate, commit 9e6b96a315 receipt: "1 of 1 staged-MODIFIED tree order(s) ... were graded").
+    LIMB 6 did not fire (no newly-added order).
+  </amendment>
+
   <amendment id="6" date="2026-10-09" by="2.0.0_SA_COO~V1">
     The full log is NOT owed. `*.log` is gitignored (.gitignore:68), so AMENDMENT 5's `.full.log` path cannot be committed
     (0.0.0_AB_MSTR~DELL1 msg 2347, option (a)). The transcription VEHICLE_LOG_20261009_1100Z.txt @2a0a40bfe4
