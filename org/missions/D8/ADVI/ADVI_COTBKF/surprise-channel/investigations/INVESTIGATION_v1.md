@@ -6070,3 +6070,31 @@ round.** Never edit an existing row.
  "world_is": "13 of 15 reproduce from the registry in this box's tree and the red test is green. The 2 portal carriers are in another repository whose local checkout this issuer did not advance or compare. What remains of this issuer's own defect is the practice: a registry edit is closed with generate and the carrier tests, not with validate alone."
 }
 ```
+
+## ADVI_COTBKF-D2-S105 -- Disarms D2-S95: the break-glass role exists under its own pair; an untargeted plan reads it no-op
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S105",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T09:21:44Z",
+ "one_line": "DISARMS ADVI_COTBKF-D2-S95 (its disarm_owner): FWD-7's break-glass role and its inline policy now exist, created on purpose by a targeted apply under their own pair, so an untargeted plan of the shared-infra root no longer carries them as 2 adds. Read live by the issuer, not taken from the applier's report. One defect of this issuer's own on record: the criterion CB62bj1-AC1 names a file path under r62/ and the re-run wrote its after-plan under r63/.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer live IAM read at 2026-10-11T09:18:42Z and 09:20:37Z: get-role returns arn:aws:iam::313476888478:role/cloudops-cot-restricted-breakglass-role, CreateDate 2026-10-11T09:05:05Z, max session 3600, no permissions boundary; trust document 1 statement, ConsoleUserOnly, sts:AssumeRole, principal arn:aws:iam::313476888478:user/Andrew_Berman_Console, no condition; RoleLastUsed is the empty object",
+   "issuer live read: list-role-policies returns exactly ['RestrictedPrefixGetPutList']; attached managed policies 0; get-role-policy: GetPutRestrictedPrefix allows s3:GetObject, s3:GetObjectVersion, s3:PutObject on arn:aws:s3:::opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/*; ListRestrictedPrefix allows s3:ListBucket on the bucket for that prefix only; no delete action",
+   "issuer run of the after-plan check on the applier's saved untargeted plan C:/dev/_cotbkf_private_evidence_20261009/r63/shared_infra_plan_after.json: 'BREAKGLASS-PLAN-AFTER resources=242 the_two=2 the_two_changed=0'; the only non-no-op rows of that plan are the two portal-bucket artifacts of row D2-S92, and nothing was applied from it",
+   "applier 0.7.0_AE_CloudOps~CB2 report deliverables/0.7.0_AE_CloudOps~CB2/breakglass_targeted_apply_report.md ADDENDUM 1 @6a3f653db3: Branch A; 'Apply complete! 2 added, 0 changed, 0 destroyed'; NAMING-PLAN PASS 2 graded, nothing overridden; no AssumeRole on either run (the applier's statements; the apply log was not read by the issuer)",
+   "the pair: COO half @c9afa6bf16, CTO half @129d787f44, both on .tf blob 1985337a9cef839688fe054acc667ed4d4397dc7; proof instance VALID rc 0, invocation alignment 2 of 2 (issuer run)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO half condition 6: row D2-S95 is disarmed by the issuer on proof 2 (an untargeted plan, on dell2, reads the two addresses as no-op).",
+ "world_is": "Proof 2 reads no-op for both addresses and the served role matches both halves field by field. NOT read by the issuer: CloudTrail for AssumeRole events (RoleLastUsed being empty is consistent with no use but lags), and whether the console user can in fact assume the role (no agent may test it). Still open and unrelated to this disarm: no seat applies shared-infra UNTARGETED from dell2 (row D2-S92), and who applied the bucket-policy statements without the role is unfound."
+}
+```
