@@ -40,3 +40,18 @@ helper removed; a handler that stops calling the clamp). `comp-blast` on `lambda
 its write (the file has other readers: `verify-local.sh`, the drift check).
 
 Dry-run at the base (box/dell2, 2026-10-11 ~10:2xZ): pc-rules and pc-hosts FAIL absent, as expected.
+
+## ADDENDUM 1 (2026-10-11 ~10:2xZ) -- round 3 gains the runner cell, by CTO rulings msg 4676 and msg 4696
+
+The worker re-reads the accepted submitter's PROFILE row when a generation job starts (`resident_worker.py:696-717`), and the runner
+deleted that row after the token's `exp`. The CTO ruled the row lives two hours after the submission, flat, with the token's expiry
+unchanged and no job-state read after expiry. Also changed since the issuance (CTO msg 4683): `R3-tr-1`'s first condition is "the
+resident release st30 is installed and its V1 is green"; the run is that release's S2 read and calls the YCharts producer once.
+
+| cell | builds | list item | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|---|
+| `R3-rn-1` | the runner: after an ACCEPTED submission the row is left in place, the run exits with a distinct code, and a second invocation deletes the row no earlier than two hours after the submission and updates the same trace; the trace records the last job state read before expiry. A run with no accepted submission deletes after `exp` as before | rulings 4676, 4696 | FWD-1 | NOT-EVALUATED | dell2 worker, slot ~8 | WORLD by path floor (reads `infra/`); nothing applied | worker | -- |
+
+**Edge added:** `R3-rn-1` -> `R3-tr-1`. Write set: the slot's own `fwd1_runner/` folder, shared with no other open order.
+
+Dry-run at the base: rn-row FAIL (missing tests) and rn-regress FAIL (50 passed, below 56), as expected.
