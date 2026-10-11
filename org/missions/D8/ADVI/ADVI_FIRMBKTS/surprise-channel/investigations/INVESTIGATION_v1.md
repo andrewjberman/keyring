@@ -907,3 +907,127 @@ write: **1 row** (`S1`).
   "notes": "Fail-soft: the checker catches the read error and exits 1 with a message, so a bare run from the wrong tree reads as a FAIL on a correct table. Not an order defect in the check text; the cd prefix is the only change, and the worker's proof instance records the order's invocation verbatim."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W9-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~9",
+  "surfaced_at": "2026-10-11T04:02:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-e-6: THE ROUTER AT BASE ALREADY CARRIES 5 NON-ASCII COMMENT LINES (EM DASHES); THE PATCH ADDS NONE, SO THE ORDER'S NO-NON-ASCII BOUND IS NOT MET BY THE BASE FILE AND IS NOT FIXED HERE",
+  "spec_asserts": "Task order FB-e-6 section 2.5: No non-ASCII; LF line endings. Section 2.1: the edit is the patch and nothing else.",
+  "world_is": "At fda1c4f0cc, infra/aws/lambda-edge/shared-advisor-router/index.mjs has 5 lines with non-ASCII characters (base lines 49, 224, 231, 259, 424: em dashes in comments). After git apply of F6_ROUTER_EDIT.patch the same 5 lines remain (new lines 49, 255, 262, 291, 475) and the patch adds 0 non-ASCII lines. Line endings: 0 CR bytes in index.mjs and in the new spec file. The new spec file test/canonical-platinum.spec.mjs has 0 non-ASCII lines.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show fda1c4f0cc:infra/aws/lambda-edge/shared-advisor-router/index.mjs, grep -P '[^\\x00-\\x7F]' = 5 lines @fda1c4f0cc",
+      "infra/aws/lambda-edge/shared-advisor-router/index.mjs in worktree wk-ADVI_FIRMBKTS-9 after git apply, grep -P '[^\\x00-\\x7F]' = 5 lines (same text)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed by this cell: removing the five characters edits lines outside the patch, which section 2.1 forbids. AC1-AC3 do not read it. A later router edit decides it: the whole file goes ASCII, or every reader is explicit (CLAUDE.md section 4, non-ASCII rule)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W9-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~9",
+  "surfaced_at": "2026-10-11T04:02:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B1",
+  "one_line": "FB-e-6 AC1 INVOCATION: cd \"$(git rev-parse --show-toplevel)\" RESOLVES THE SHELL'S OWN CHECKOUT; RUN FROM THE DEFAULT CWD IT GATES THE BASE ROUTER AND READS 31 PASS ACROSS 2 FILES WITH EXIT 0, NOT THE WORKTREE'S 39 ACROSS 3",
+  "spec_asserts": "Task order FB-e-6 section 4 AC1 invocation: export PATH=...; cd \"$(git rev-parse --show-toplevel)\" && timeout 110 bash infra/aws/lambda-edge/shared-advisor-router/run-gate.sh; expect N pass with N at least 36 (39 expected), 0 fail, across 3 files, exit=0. Worker face: cd to the worktree before every Bash call.",
+  "world_is": "Run as the first command of a Bash call whose cwd is the main workspace C:/Dev/ajb_workspace, the invocation's git rev-parse returns that checkout; run-gate.sh does cd \"$(dirname \"$0\")\" and runs bun test there: 31 pass, 0 fail, Ran 31 tests across 2 files, exit=0, with the new spec file absent from that run. Only an explicit prior cd into the worktree gives 39 pass, 0 fail, 3 files, exit=0. Measured 2026-10-11 on dell1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run-gate.sh (worktree wk-ADVI_FIRMBKTS-9, @fda1c4f0cc+patch): line 'cd \"$(dirname \"$0\")\"' then exec bun run test",
+      "AC1 run 1, cwd C:/Dev/ajb_workspace: 'OK: running ... in /c/dev/ajb_workspace/infra/aws/lambda-edge/shared-advisor-router', 31 pass, 0 fail, 2 files, exit=0",
+      "AC1 run 2, after cd /c/dev/wk-firmbkts-9: 'OK: running ... in /c/dev/wk-firmbkts-9/infra/aws/lambda-edge/shared-advisor-router', 39 pass, 0 fail, 3 files, exit=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The false reading has the shape of a pass (exit 0, 0 fail), so the disarm is the issuer's: the next round cut states the invocation with an explicit cd into the worktree, or names the worktree root as the read point. The worker re-ran AC1 from the worktree and the proof records 39 of 39 from the worktree; the run from the default cwd is not the AC1 reading."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W9-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~9",
+  "surfaced_at": "2026-10-11T04:02:30Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "FB-e-6 STATUS FLIP IS OUTSIDE MY WRITE GRANT: task-orders/ADVI_FIRMBKTS.TO-FB-e-6.f6-canonical-key-path.md is not in <paths>, so this worker does not flip <status> pending to complete; AC1-AC3 pass and the proof instance is committed",
+  "spec_asserts": "Task order FB-e-6 section 5: flip this order's <status> to complete in the SAME commit as the proof instance, when AC1-AC3 pass. Section 3 <paths> names the router directory, the 0.9.0_WK_ADVI_FIRMBKTS~9 deliverables folder and INVESTIGATION_v1.md; a worker writes nothing else.",
+  "world_is": "The order file is org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-e-6.f6-canonical-key-path.md line 103, <status>pending</status>, and it is not in the lane grant. AC1 reads 39 pass, 0 fail, 3 files, exit=0; AC2 reads 193 of 193 through handleWithMap and 193 of 193 through handler, exit=0 (twice); AC3 reads 9 of 9, exit=0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task-orders/ADVI_FIRMBKTS.TO-FB-e-6.f6-canonical-key-path.md @f4f01cfb27 line 103 <status>pending</status>; section 3 <paths> at lines 60-64",
+      "AC1-AC3 output lines in the proof instance org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~9/ADVI_FIRMBKTS.TO-FB-e-6.proof_of_spec.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left at pending by the write grant, not by a criterion. The owner of the flip is the issuer (2.0.0_SA_COO~B1) or the lane owner, who can flip it from the proof's result or widen the grant by its own order. The worker did not override the grant."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W9-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~9",
+  "surfaced_at": "2026-10-11T04:06:44Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "FB-e-6 COMMIT REFUSED BY THE NAMING GATE (LGIC_ENFORCE, 35 graded): THE ISSUER'S PATCH AND ITS NEW SPEC CARRY LITERAL FIRM NAMES THE GATE REFUSES AS HAND-KEPT CARRIERS; THE ROUTER CODE IS NOT COMMITTED",
+  "spec_asserts": "Task order FB-e-6 section 1a step 3: commit index.mjs and the new spec together with the proof instance and the status flip. Section 2.1: the edit is the patch and nothing else; no edit outside <paths>, and the patch is never hand-edited.",
+  "world_is": "safe-commit.sh refused the commit with ERROR: BLOCKED -- the naming limb refused. Refusals: index.mjs:126 'inflection' (NEW hand-kept carrier) and test/canonical-platinum.spec.mjs lines 25, 31, 36-38, 42-43, 47-52, 56, 62, 68-71 (NEW hand-kept carriers of '49financial', 'inflection', 'mockadv', and out-of-pattern S3Key literals). The gate's own remedy names infra/logic/registry/ rows and R20 entries, outside this worker's <paths>. Files were unstaged by the gate; the router and spec remain uncommitted in the worktree. The proof and this channel are committed separately.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at worktree wk-ADVI_FIRMBKTS-9, HEAD f4f01cfb27: [naming-gate] NAMING-GATE: REFUSE 35 graded, rc=1",
+      "patch F6_ROUTER_EDIT.patch applied unchanged (git apply rc 0); no hand-edit made"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the disarm: the issuer (2.0.0_SA_COO~B1) with the LGIC owner, either by registry rows for these literals (infra/logic/registry/) or an R20 register entry, or by a re-cut of the patch to use name() and lookup() output. No bypass was used. The cell's AC1-AC3 results stand as measured; the commit is what is blocked."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W9-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~9",
+  "surfaced_at": "2026-10-11T04:27:54Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "FB-e-6 AC1 INVOCATION RESOLVES TO THE BASE CHECKOUT, NOT THE WORKTREE: THE ORDER'S SEPARATE CD CALL DOES NOT PERSIST (CWD RESETS PER BASH CALL), SO AC1 AS WRITTEN READS 31 PASS ACROSS 2 FILES AND EXPECTS 39; THE WORKTREE READS 39 PASS ACROSS 3 FILES",
+  "spec_asserts": "Task order FB-e-6 step 4: run AC1 after a first call that only does cd /c/dev/wk-firmbkts-9; the invocation's cd to git rev-parse --show-toplevel must land in the worktree; expect \\b39 pass with exit=0 (task-orders/ADVI_FIRMBKTS.TO-FB-e-6.f6-canonical-key-path.md @357f738e20 line 82).",
+  "world_is": "Each Bash call starts in the base checkout: call-start cwd C:/Dev/ajb_workspace, toplevel C:/dev/ajb_workspace. AC1 as written printed 'OK: running the shared-advisor-router gate (bun run test) in /c/dev/ajb_workspace/infra/aws/lambda-edge/shared-advisor-router', ' 31 pass', ' 0 fail', 'Ran 31 tests across 2 files', exit=0. Diagnostic from the worktree (explicit cd in the same call, bun run test, not an AC1 reading): 39 pass, 0 fail, 3 files, rc=0. The new spec alone: 8 pass. The patch created test/canonical-platinum.spec.mjs (new file, 00:26) and the router index.mjs applied clean. AC1 stopped the order; AC2 and AC3 were not run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Bash call-start probe in this call: cwd_at_call_start=C:/Dev/ajb_workspace, toplevel_at_call_start=C:/dev/ajb_workspace (2026-10-11T04:27Z)",
+      "AC1 output (first run, cd in the invocation): 'OK: running the shared-advisor-router gate (bun run test) in /c/dev/ajb_workspace/infra/aws/lambda-edge/shared-advisor-router', ' 31 pass', ' 0 fail', 'Ran 31 tests across 2 files', exit=0",
+      "diagnostic output .scratch/diag_gate_worktree.txt in worktree wk-ADVI_FIRMBKTS-9: ' 39 pass', ' 0 fail', 'Ran 39 tests across 3 files', rc=0",
+      "task-orders/ADVI_FIRMBKTS.TO-FB-e-6.f6-canonical-key-path.md @357f738e20 line 15 records 31 pass / 2 files as the BASE reading; the same trap is recorded as ADVI_FIRMBKTS-D1-W9-S2 (AC1 run 1, cwd C:/Dev/ajb_workspace)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recurrence of ADVI_FIRMBKTS-D1-W9-S2: the AC1 invocation's cd is resolved from the call-start cwd, which is the base. The order's step-4 cd-only call cannot pin the worktree because the cwd does not persist between Bash calls. Owner of the disarm: the issuer (2.0.0_SA_COO~B1), by stating AC1 with an absolute worktree path in the invocation (or a cd inside the same call), a re-cut that the checker accepts. The worker did not rewrite the invocation text, did not commit, did not flip the status, and wrote no proof instance, because step 4 stops on a non-matching AC1. Scratch files: .scratch/diag_canonical_spec.txt, .scratch/diag_gate_worktree.txt."
+}
+```
