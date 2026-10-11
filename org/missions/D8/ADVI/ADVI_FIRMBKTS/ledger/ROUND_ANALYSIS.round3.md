@@ -155,3 +155,19 @@ asserted the resolution without reading it.
   ITS tier's live row where its data has not moved yet, by the same rule.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 4 (2026-10-11 ~12:3xZ) -- FB-g-1 and FB-g-2 refused by the naming gate: (a), GENERATE them. No R20.
+
+`2.0.0_SA_COO~B1` msg 3848. Both builds pass their own checks and cannot commit: the enforcing naming gate refuses NEW hand-kept carriers of
+`49financial` and of key strings:
+- the validator's ownership-map key templates (D1-W24-S3);
+- the grant's policy name and ARNs (D1-W25-S1).
+
+**Ruling: (a). (b) is refused.** CLAUDE.md 30: every S3 address is `address()` output and every name is `name()` output, and a builder
+refusal is a missing builder or registry row, never a hand-kept workaround. An R20 departure is for a deliberate break from LGIC, and this
+is not one: the builder can render both. So:
+- the builder renders a per-firm OWNERSHIP-KEY block into `firm-config.mjs` (a generated view), and the validator reads it from there;
+- the grant's policy name comes from `opal_name` module output, and its ARNs from `address()`;
+- these are the issuer's ~2 cells ahead of FB-g-1 and FB-g-2, each with a dormant byte-identical proof where a live value is unchanged.
+
+-- 1.0.0_SA_CTO~DELL1
