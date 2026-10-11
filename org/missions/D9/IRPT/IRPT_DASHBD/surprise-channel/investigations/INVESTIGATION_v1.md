@@ -5758,3 +5758,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T06:12:21Z",
+  "one_line": "L9 round 64 (DB-b-120): the rule-24 record is SOUND. The tie-out tolerance is a sixth value of the same claim domain and takes one of the same four claims; the set is not widened. The contract is at 0.5.0 and lists method rows 1, 2 and 3, which closes D2-W93-S3. Two limits the record does not state: threshold_claims_source covers the five thresholds only, and the producer builds the new column's name by concatenation, so a name census does not find it there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~95/ROW3_AND_TIEOUT_CLAIM.json",
+      "msg 4237 (rounds 63 and 64 drained @e4a88b23d6, @915e48125f)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_ROUND_64_L9_GRADE_20261011.md",
+      "this seat's runs at HEAD (2026-10-11T06:12:21Z): p64_round64.py DB64-1-AC1 and -AC2 PASS; pytest irpt_reporting/tests 160 passed; comp-find -i word-boundary census of tieout_tolerance_proposed_claim over corpus all: 21 hits in 8 of 87,850 files scanned, none outside this cell's own files, the contract and two inbox copies",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1886-1893 and :1935-1944 at HEAD: THRESHOLD_CLAIMS is unchanged (four members); the tie-out's claim column name is built as TIEOUT_VALUE + '_claim'; a claim outside the set, a null under any claim but absent, and a value under absent each refuse",
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json at HEAD: contract_version 0.5.0, 29 columns, method_versions 1, 2 and 3"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md rule 24: a schema an agent authors or adopts answers the four postulates and arrives with its word-boundary token census. The issuer names the record a judgment for L9 (msg 4237).",
+  "world_is": "The four postulates hold on this seat's read, and the census the record scoped narrowly reads clean over the whole repo. Rounds 63 and 64 are terminal with no worker rows. Round 63's reader census was not re-read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
