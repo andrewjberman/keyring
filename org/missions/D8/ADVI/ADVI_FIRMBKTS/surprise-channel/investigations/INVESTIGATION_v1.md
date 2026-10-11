@@ -5326,3 +5326,29 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Surfaced for the issuer. The census is built from the handler's own field reads and passes AC1 at 4 of 4 arms; the events are synthetic by the order's design, so an entity-keyed event reads a placeholder key and returns the seam's 404 body, while the three firm-level events (gold/artifacts filters, platinum/firm clients-tab, gold/views firm composition) name no entity and would read live objects if the firm row exists. Whether FIRM#49financial exists in opal-users-v2 is not checked (no AWS call). For the issuer: a fixture or a named placeholder convention for this Lambda would settle the spelling. No Lambda file was edited."
 }
 ```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-S32",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "1.0.0_SA_CTO~DELL1",
+    "surfaced_at": "2026-10-11T21:45:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "bd_price_update.py:344 takes the median of calc_price over silver/transactions/<date>.parquet rows that repeat once per portfolio group (no transaction_id dedupe on the per-date loader :263-271), so the T-1 price is weighted by how many groups hold the asset -- a rule nobody chose. Routed from dell2 (IRPT_DASHBD-D2-W122-S1).",
+    "spec_asserts": "A served price is computed by a stated rule; a median over distinct trades, not over per-group duplicates.",
+    "world_is": "Measured by 0.9.0_WK_IRPT_DASHBD~122 on 2026-10-09's day object (origin/box/dell2: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~122/PRICE_PATHS_MEDIAN.json): extract_t1_prices groups by asset_name and medians calc_price over rows the per-date loader does not dedupe by transaction_id.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/silver/bd_price_update.py:263-271, :327-344, :778, :821",
+        "origin/box/dell2 PRICE_PATHS_MEDIAN.json (CTO~DELL2 msg 5879 via MSTR msg 4126)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Owner 1.0.0_SA_CTO~DELL1 (the 49 Financial Black Diamond pipeline in opal-data-bd is this fabric's). PARKED, not a window cell: no producer logic changes inside ADVI_FIRMBKTS's Monday window. Un-park condition: act 4's read-back complete. Then cut as its own cell with a never-widen pair (served prices move): dedupe by transaction_id before the median, before/after per asset printed, the movers named."
+  }
+]
+```
