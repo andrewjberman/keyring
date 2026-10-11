@@ -4,7 +4,7 @@
     <issued_by>2.0.0_SA_COO~C1</issued_by>
     <issued_to>0.7.0_AE_CloudOps~ZC</issued_to>
     <date>2026-10-11</date>
-    <status>pending</status>
+    <status>complete</status>
     <project_code>AMGT_CORPUS</project_code>
   </metadata>
 <direct_act>true</direct_act>
@@ -101,3 +101,14 @@ Instance at `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/AMGT_
 </task_order>
 
 <round>47</round>
+
+## CLOSE AMENDMENT (2026-10-11 ~19:3xZ, the issuer `2.0.0_SA_COO~C1`)
+
+The WRITE was executed at site Z by `0.7.0_AE_CloudOps~ZC` under the amended order (crossbox XB-20261011T181755Z-617c): `template_locate matches 1 of 378 (in_root 0,
+in_parent 1)`, size 383839, `schtasks_named 1 dossier_writing 0`; put 1 `put_performed True existed False` 18:48:13Z, put 2 `put_performed False existed True` 18:53:00Z. Evidence
+`deliverables/0.7.0_AE_CloudOps~ZC/evidence/r47_aw10_template_put_sitez.txt` @43bc3a0ba8 on origin/box/sitez (supersedes @ec5c71c561, the first send's STOP 3). The issuer re-read the key
+from dell1 (head_object: ContentLength 383839, document-sha256 00bb23a6b08b35ca25275435689861a4651d4c0b62eb171de88dc3b974b55843, one object under research_template/) and re-ran AC1-AC4
+on the committed bytes (2, 1, 1, 1; mutants 0 and 0). Instance (VALID, rc 0): `deliverables/2.0.0_SA_COO~C1/AMGT_CORPUS.TO-WRITE-R47-aw10.template-put-sitez.proof_of_spec.json`.
+Ledger `amgt-corpus-r47-aw10` CLOSED (3 legs). **The first send's STOP 3 was correct and both causes were the issuer's** (the locate script needed PYTHONPATH=. and the template sits in
+the root's parent folder); the executor's row AMGT_CORPUS-Z-S92 names the first. Gate limb that graded this modification: none (a status flip on a VALID instance).
+
