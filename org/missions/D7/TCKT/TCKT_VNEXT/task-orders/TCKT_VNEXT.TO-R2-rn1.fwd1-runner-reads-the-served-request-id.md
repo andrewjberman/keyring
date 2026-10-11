@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_TCKT_VNEXT~8</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -190,7 +190,36 @@ Proof: add AC5 and AC6 to your instance and re-validate with
 `python .tools/proof-of-spec-check.py <instance> R2-rn1-AC1,R2-rn1-AC2,R2-rn1-AC3,R2-rn1-AC4,R2-rn1-AC5,R2-rn1-AC6`. Flip to
 `complete` only when all six pass. Rows, if needed: `TCKT_VNEXT-D2-W8-S<k>` with k from 6 upward.
 
-<expected_criteria>R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6</expected_criteria>
+### AMENDMENT 3 (2026-10-11, issuer `2.0.0_SA_COO~V2`) -- REOPENED: your rows D2-W8-S6 and D2-W8-S7, both confirmed
+
+**Inherited state:** AC1-AC6 are met and merged (@ba884bb34e). Keep all of it. Two small changes, both from your own rows:
+
+E1. **The trace path is an argument (row S6, ARMED; the issuer is its disarm owner and this is the disarm).** `--trace-out <path>`
+    is REQUIRED. The runner writes its trace to THAT file only, creating it if absent, as one JSON object for this run (no `run_N`
+    appending into an older file). Remove the `TRACE` and `MY_TRACE` constants and every path that names `R1_RUN`,
+    `sa_r1b_trace.json` or the `0.7.0_AE_CloudOps~TV2` folder. Nothing else is written to disk.
+E2. **The stream denominator is measured, not taken from the API field (row S7, confirmed live by the issuer).** On 2026-10-11 the
+    issuer ran one `filter-log-events` on `/aws/lambda/opal-ticket-api`: it returned 1 event and a `searchedLogStreams` list of
+    length 0. That field is always empty, so D4's rule would read VOID on every run. Replace it: for each log group the read
+    touches, the denominator is the count of log streams whose last event time is at or after `iat` (from `describe_log_streams`,
+    every page read, ordered by last event time; the AWS client stays replaceable by a test). Record it as
+    `streams_active_in_window`. D4's verdicts keep their names and meanings with this denominator: 0 active streams in the
+    data-refresh group is `ZERO_CALL_VOID`; the positive control over the ticket API's group must still find the filer at least
+    once; only active streams > 0, control >= 1 and data-refresh matches == 0 is `ZERO_CALLS_PROVEN`. Do not read
+    `searchedLogStreams` anywhere. The `filter_log_events` calls read every page.
+
+<criterion id="R2-rn1-AC7" cell_refs="R2-rn-1"><invocation>python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py rn-trace</invocation><expect>RN-TRACE-OK</expect></criterion>
+`R2-rn1-AC7`: tests `test_trace_out_is_required_and_is_the_only_file_written`, `test_no_round_one_trace_path_remains` (asserts the
+module source contains none of `R1_RUN`, `sa_r1b_trace`, `searchedLogStreams`), `test_stream_denominator_is_streams_active_in_the_window`,
+`test_zero_active_streams_is_void` exist and pass. Update the two D4 tests of AMENDMENT 2 to the new denominator, keeping their
+names. AC1-AC6 must still pass.
+
+Dry-run at base: AC7 FAIL (missing tests) as expected; AC1-AC6 PASS.
+
+Proof: add AC7 and re-validate with ids `R2-rn1-AC1,...,R2-rn1-AC7` comma-separated. Flip to `complete` only when all seven pass.
+Rows, if needed: `TCKT_VNEXT-D2-W8-S<k>` with k from 8 upward.
+
+<expected_criteria>R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7</expected_criteria>
 
 Dry-run at base: all three FAIL (absent), as expected.
 
@@ -219,7 +248,7 @@ org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6. The instance is at
+Criterion ids: R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4 R2-rn1-AC5 R2-rn1-AC6 R2-rn1-AC7. The instance is at
 `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~8/TCKT_VNEXT.TO-R2-rn1.fwd1-runner-reads-the-served-request-id.proof_of_spec.json`.
 Validate it with `python .tools/proof-of-spec-check.py <instance> R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3` before the flip.
 </proof_of_spec>
