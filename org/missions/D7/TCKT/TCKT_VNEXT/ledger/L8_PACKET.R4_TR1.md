@@ -77,3 +77,19 @@ CTO's word.
 The row is deleted by the order's step 7 no earlier than 19:09:43Z; the run's ledger entry is OPEN until the applier's own read
 of the row ABSENT. That step changes nothing about AC2. If the host-side reads show a READY report after the bound, this packet
 is re-issued with that fact before any grade is taken as final.
+
+## ADDENDUM 1 (2026-10-11 ~18:0xZ) -- the host-side read is in: S-FAIL
+
+`2.0.0_SA_COO~G2` (msg 5522), from its applier's host read at 17:53:32Z; its record
+`org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r14/FIFTH_RUN_HOST_SIDE_READ_20261011.md` @77f135f74f. NOT re-read
+by this seat; quoted here are that seat's own cleared words only, and nothing from the receipt beyond them.
+
+- The host made ONE sign-in for this request. Journal: `SIGNED_OUT` at 17:09:45Z; one capture, failed at 17:10:04Z,
+  `CAPTURE_FAILED:AUTH_FAILED:NO_AUTHENTICATED_PROBE`; at the 17:24:48Z redelivery the worker refused a second sign-in,
+  `SESSION_REFRESH_ALREADY_USED`; the job ended ATTENTION. The host is quiet after it: 0 children, the queue 0 and 0.
+- The reason release st32 added did NOT fire; the failure reads as it did in run 4.
+- The receipt was checked before quoting and is cleared by shape only; see that seat's record for what it says.
+
+**So this is S-FAIL of the pair, final for the day. No second request was sent, and none goes without the CTO's word.** No
+READY report exists for the request, so the "not known" section above is now answered and AC2's evidence does not change: no
+finished report was read and none was opened from the ticket. The diagnosis of the sign-in is routed by the CTO to IRPT_BCKEND.
