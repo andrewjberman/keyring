@@ -50,3 +50,14 @@
 - **Open for the CTO:** act-4 ADDENDUM 2 of the COO half (re-pins); the c290 SNS routing fix's form (Andrew: the text arrived).
 - Push state: box/dell1 is on origin/CLOUD through 57802a7435 (MSTR measured); later commits LOCAL.
 
+
+## 17:20Z tick (B1)
+- FB-g-35 @f55374d418, FB-g-33 @d8fd43457a, FB-g-34 @dd6d2e5df2 merged and graded (r4_modeenv arm E3 relaxed for the merge form: row W57-S1 a check defect, ruled). FB-g-35 order FB-f-20 sent to ~FBL (99a0), acked 17:15:07Z, running.
+- d701: ~FBL own line: earliest start Mon 2026-10-12 13:45Z, waits for the GO commit; act 2 condition (ack with time) met.
+- FB-f-13 re-faced as acts 4b/4c for ~FB1 (parked); r4_execeq.py built (DIFFER pre act 3: 194 vs 192, expected); FB-g-36 (partners events) worker 58 in flight.
+- NEXT: merge worker 58; FB-f-20 close; window GO Monday per runbook (a chain ended, FB-g-36 merged).
+
+## 17:31Z tick (B1)
+- FB-g-36 @5e684dc53e merged, VALID, complete; FB-f-13 step 9 amended (real id per entity class, 200 denominator).
+- FB-f-20 (c290) done by ~FBL 17:19Z (laptop commit 8e2c4a76e6 on origin/box/laptop, ls-remote read): plan 1 to change, diff default_sms_type alone; AC1 Transactional, AC2 50 0, AC3 No changes; no text sent. Graded from the committed evidence (plan.txt, apply.txt, instance); the dell1 identity cannot read SNS attributes, so no independent live read from this seat. 99a0 from-side closed 17:30:30Z (HALF-CLOSED until the to-side record lands).
+- Open: real SEV1 publish (Andrew word, CTO asking); window GO Monday.
