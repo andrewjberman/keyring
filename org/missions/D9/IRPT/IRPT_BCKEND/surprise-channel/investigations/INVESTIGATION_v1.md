@@ -25326,3 +25326,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The base dry-run cannot see a field the apply itself rewrites; the check compared a field that is an output of the act."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S70",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T04:42:13Z",
+  "one_line": "L8 round 118 (~P): no judgment criterion. This seat's reads agree with the packet: irpt-performance-adapter and irpt-narrative are live on the digests the source map states, and each function's log shows the TypeError before its apply and a typed NOT_AUTHORIZED with no TypeError after. irpt-status is unchanged. No admitted request has run on the new bytes, and the three widenings on the adapter are applied and unexercised. The source map's last_deployed_commit and last_deployed_at for both applied functions still read their 2026-10-04 values.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_118_P_DRAIN_END_20261011.md @6eaa44414b (msg 4085)",
+      "this seat's live reads 2026-10-11T04:42:13Z: irpt-performance-adapter CodeSha256 9kYLdR64... LastModified 2026-10-11T03:59:40Z; irpt-narrative x0SqAx2U... 04:08:06Z; both equal their source-map artifact_sha256; irpt-status t6OJTCcm... 2026-10-09T18:02:51Z, unchanged, and not equal to its map entry (E7VKvhg3...)",
+      "this seat's filter-log-events: irpt-performance-adapter -- 6 TypeError lines from 2026-10-09T15:41Z, the last at 2026-10-11T03:57Z; after the 03:59:40Z apply, 1 invocation (04:00:42Z), performance-report NOT_AUTHORIZED (AuthzError NO_PRINCIPAL), 0 TypeError. irpt-narrative -- 1 invocation before the apply (04:04:32Z) with 1 TypeError; 1 after (04:08:22Z), narrative-packet NOT_AUTHORIZED, 0 TypeError",
+      "infra/aws/lambda/ci/lambda-source-map.json at HEAD: irpt-performance-adapter last_deployed_at 2026-10-04T01:28:55Z, irpt-narrative 2026-10-04T22:05:26Z"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO reads the served state itself. CTO half @d29ccddb17 condition 9: each widening is stated APPLIED and exercised or unexercised.",
+  "world_is": "Two of D2-S60's three functions are repaired on the refusal path, read live. The admitted path (a real performance-report or narrative-packet request) is ABSENT, not exercised. irpt-status waits on 2.0.0_SA_COO~Y2's apply. This seat's round 117 note that the adapter's map entry differed from the candidate in artifact_sha256 is the same fact as row D2-S68.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
