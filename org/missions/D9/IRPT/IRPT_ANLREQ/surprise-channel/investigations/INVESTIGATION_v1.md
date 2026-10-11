@@ -1898,3 +1898,32 @@
   "world_is": "MEASURED at box/dell2 @fd54804907, 2026-10-11: infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:188-197 live_attach and live_ticket_package each consist of one statement, raise PackagerRefused('PACKAGER_PRINCIPAL_UNSET'); no code path calls POST /api/scoped/tickets/{ticket_id}/package or reads a ticket. W62-S1 IS closed in the tree: infra/aws/lambda/investor-reporting/reports/repository.py:34-35 registers svc-irpt-packager for ANALYSIS_COMMENTARY. In handle_commentary_ready (:134-184) ticket_package is called after the record checks and before any read, render or attach. So a resident built from this tree that binds commentary_ready_queue_url ends EVERY well-formed message whose records pass at PACKAGER_PRINCIPAL_UNSET; infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:901-924 re-raises that (not a terminal outcome, not a message refusal), the message is kept, redelivered and reaches the DLQ. Nothing is rendered or attached. No order in the tree names the live attach or the svc-irpt-packager credential as its cell (decomposition R2 lists AR-g-21, AR-g-22, AR-g-23 for workstream G)."
 }
 ```
+
+## IRPT_ANLREQ-D2-S30 -- PARKED PRECONDITION: I3 does not go live before the attach release can consume commentary_ready
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S30",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T06:41:00Z",
+  "one_line": "ORDERING RULE (1.0.0_SA_CTO~DELL2 msg 4297): the trigger that feeds the commentary function real requests (I3, analysis_ready) does not go live before the attach release can consume commentary_ready, or real signals expire unread after four days.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "whoever cuts I3 carries this as its precondition (CTO msg 4297); for release 4 that is 2.0.0_SA_COO~G2, workstream G",
+  "spec_asserts": "CTO msg 4297: release 4 ships WITHOUT the commentary-ready queue binding (its pair states the binding ABSENT and reads, after the apply, that nothing polls that queue); the attach is a later release -- the ports cell, then the svc-irpt-packager mint under its own pair, then the binding. The parked synthetic message expires untouched, superseding the choice in CTO msg 4258.",
+  "world_is": "READ by this seat tonight: data/transcripts/scripts/commentary/lambda_handler.py:320-324 sends commentary_ready for every draft it stores; the commentary-ready queue's MessageRetentionPeriod is 345600 s and its policy admits one consumer principal, irpt-ycharts-runner-role (get-queue-attributes, 06:14:28Z). The analysis-ready queue feeds the function through an Enabled event-source mapping, batch 1 (read 05:3xZ); its depth was 0. INHERITED, not read by this seat: that the resident's attach and ticket-read ports are stubs raising PACKAGER_PRINCIPAL_UNSET (row IRPT_ANLREQ-D2-S29, 2.0.0_SA_COO~G2), and what release 4 contains.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 4297",
+      "data/transcripts/scripts/commentary/lambda_handler.py:320-324",
+      "get-queue-attributes read by this seat 2026-10-11T06:14:28Z",
+      "rows IRPT_ANLREQ-D2-S26 and IRPT_ANLREQ-D2-S29"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "PARKED PRECONDITION, on the project's channel so the seat that cuts I3 meets it in the order it writes, not in another seat's notes. Un-parks when the attach release is live and reads a consumed commentary_ready. Row S26's message is not drained by release 4."
+}
+```
