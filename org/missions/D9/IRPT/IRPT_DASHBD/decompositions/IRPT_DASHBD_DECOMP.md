@@ -1392,3 +1392,17 @@ The analysis answers REMEDIATION_v32 @305103f259 with four items. Its item 2 and
 The issuer tracks its own re-run script itself (`deliverables/2.0.0_SA_COO~D2/rerun_five_days.py`, in this issuance's commit).
 
 **fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~118`, `~119`, `~120`, each cut from box/dell2.
+
+## 80. ROUND 78, WORKSTREAM B (2026-10-11 ~21:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 rulings msg 5835 and msg 5827)
+
+Round 77 is drained @f09dfcb6d9 (round-close MAY-CLOSE). Two rulings, three cells.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-148` | FWD-12: msg 5835 -- the tie-out's class set as two questions (does the segment reconcile; which timing did the other system use, classed only where exactly one timing closes, otherwise not determined), returned as a Rule 24 proposal: four postulates, a word-boundary census of each new token, the 51 placed by subtraction, and for the 3 whether any timing closes | LOCAL | DB-b-147 | B78-1 |
+| `DB-b-149` | msg 5827 -- the two price paths that take a median over un-deduplicated rows and serve a price: what each serves and to whom, and whether the median moves on one day with each transaction id counted once; counts only, no price written | LOCAL | DB-b-143 | B78-2 |
+| `DB-b-150` | msg 5827 -- the ids repeating INSIDE one portfolio group in the original store (590 on 2026-10-06): counts by cause on the non-money, non-account columns, or stated unexplained; whether a dedupe on the id alone drops a real row | LOCAL | DB-b-143 | B78-3 |
+
+DB-b-148 is a PROPOSAL: no class is applied in any record until the CTO rules on it.
+
+**fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~121`, `~122`, `~123`, each cut from box/dell2.
