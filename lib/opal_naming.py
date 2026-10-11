@@ -869,14 +869,14 @@ def _block(tag, h16, comment, path, body):
 
 def _adv_tenant(tid, s, own):
     """The tenant directories a firmId may read under platinum/advi/{tenant}/ (the advTenant remedy, LD-0442):
-    a scope's own tenant lists itself; an alias tenant lists the scope's own tenant, which is declared here and
-    never inferred from a shared bucket."""
+    a scope's own tenant lists itself; an alias tenant lists ITSELF and the scope's own tenant, both declared here
+    and never inferred from a shared bucket (so the alias's own directory stays admitted)."""
     if own:
         return [tid]
     own_tenant = s.get("tenant")
     if not own_tenant or own_tenant.get("pseudo"):
         raise RegistryError("alias %r names scope %r, which carries no served tenant of its own" % (tid, s["key"]))
-    return [s["key"]]
+    return [tid, s["key"]]
 
 
 def _blk_firm_config(reg, h16, path):
