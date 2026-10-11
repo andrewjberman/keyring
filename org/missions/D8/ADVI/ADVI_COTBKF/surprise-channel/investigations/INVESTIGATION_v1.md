@@ -6614,3 +6614,28 @@ round.** Never edit an existing row.
  "world_is": "The as_traded price basis also needs the Yahoo Close cache at a default path under the checkout's own .scratch; a truly empty checkout stops there with FileNotFoundError before any table. The order does not name this copy; it was made by cp -r from the pinned directory, read-only on the source. Not changed here (a flag or a tracked pointer would be new surface outside the order). Not established: that the pinned directory is the one the served round-34 run read."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S117",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T15:08:46Z",
+  "one_line": "L9 round 68: CB68bp4-AC2 MET, CB68bp5-AC2 MET, CB68bp3-AC2 NOT MET on its first limb. Re-derived by this seat at the served instant's pin: method_r28 equals the served table on every row and method_r29 differs on 2 account-days, the two dates of round 66; that closes the limb left open in row D2-S115. On the spin-off claims: the print taken as the custodian's is not shown to be the custodian's (its own label is the portfolio system's snapshot); the four claims are unaffected because no date exists to compare. Row D2-W103-S2 corrects round 67's price evidence; that grade stands on the custodian's rows alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_68_DRAIN_END_20261011.md @95eab5179c (msg 5186)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_68_L9_GRADE_20261011.md",
+      "this seat's own diff 2026-10-11T15:08:46Z of the worker's two at-pin run tables (C:/dev/wk-cotbkf-83/.scratch/w104/fwd3_method_r28 and fwd3_method_r29, daily_returns.parquet, 1,691,729 rows each) against the served local table (fwd3_serve_r34), on account, date, return to 1e-12 and blank reason; counts and dates only: served against method_r28 at the pin, 0 rows differ and 0 are on one side only; served against method_r29 at the pin, 2 account-days differ, on 2014-12-03 and 2020-11-13, in 2 accounts, both measured on both sides; method_r28 against method_r29 at the pin differ on the same 2 account-days",
+      "this seat's read of the three records: R28_VS_R29_AT_PIN.json (pin as_of 2026-10-09T11:52:52Z, listed 32); SPINOFF_CLAIMS.json (custodian_print: the store's label is bd_snapshot, and its own not_established list says the print being the custodian's own mark 'is the code's word, not shown'); OUTLIERS_ON_A_REAL_BASE.json (nine classes, counts 119, 43, 10, 2, 1, 1, 1, 1, 1, sum 179; hand-checked 77). This seat's earlier re-derivation of the 179 (57 above 100 percent, 122 from 10 to 100) is in row D2-S114"
+    ]
+  },
+  "spec_asserts": "CB68bp3-AC2, CB68bp4-AC2 and CB68bp5-AC2 (JUDGMENT, graded by 3.0.0_SA_CVO at L9), as each order states them.",
+  "world_is": "Not re-run by this seat: the four build runs; the classing of the 179 days; the trade-price comparison. 'From a clean checkout' holds for tracked code and flags, with one untracked cache copied in.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
