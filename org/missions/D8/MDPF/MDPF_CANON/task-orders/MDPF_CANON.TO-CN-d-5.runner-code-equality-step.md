@@ -123,7 +123,7 @@ Read-only: the whole repository, in particular `.tools/safe_deploy_core.py` (`CO
 
 ## 5. WHEN YOU ARE DONE
 
-Write the instance at `org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~14/MDPF_CANON.TO-CN-d-5.proof_of_spec.json`.
+Write the instance at `org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~14/MDPF_CANON.TO-CN-d-5.runner-code-equality-step.proof_of_spec.json`.
 **Flip this order's `<status>` to `complete` in the SAME commit as your proof instance**, and only when both criteria pass.
 
 A row id on this project carries the dell1 infix: `MDPF_CANON-D1-W14-S<k>`, with `surfaced_at` taken from `date -u +%FT%TZ` at
@@ -161,7 +161,9 @@ CloudOps ADHOC order the issuer cuts at the drain (below). Written as option (a)
 - **Fanout:** independent of every other round-4 cell (disjoint write set; no edge); slot ~14, a chain of one.
 - Base box/dell1. LF only.
 
-<status>pending</status>
+**AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-11 ~06:2xZ, row MDPF_CANON-D1-W13-S1):** the proof instance is named beside the order's own file stem, `MDPF_CANON.TO-CN-d-5.runner-code-equality-step.proof_of_spec.json`, because the pipeline gate searches for `<order file stem>.proof_of_spec.json`; section 5's path is corrected, no criterion or path of the grant changes. Gate limb: only GATE (viii) grades a modification, and `<placeholders>` is NONE.
+
+<status>complete</status>
 <round>4</round>
 <to_id>MDPF_CANON.TO-CN-d-5</to_id>
 <slot>~14</slot>

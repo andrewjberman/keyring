@@ -59,6 +59,19 @@ statements, the break-glass role and the firm bucket policies (each named by add
   changed addresses in your report and a NEW surprise row (id `ADVI_COTBKF-D2-WCB2-S<k>`, `"fabric": "dell2"`, `surfaced_at` from
   the clock).
 
+**AMENDMENT 1 (issuer, 2026-10-11T06:18Z) -- RELEASED: `CB-bi-1` is complete on its branch; plan in its worktree.**
+- **Commit:** `CB-bi-1` is complete @84457822bb on branch `wk-ADVI_COTBKF-88` (its edit is @31263d7d3a). It is NOT merged to
+  `box/dell2` and is not to be merged by you.
+- **Worktree to plan in:** `C:/dev/wk-cotbkf-80` (the directory name says 80; the branch checked out there is `wk-ADVI_COTBKF-88`).
+  Confirm `git -C C:/dev/wk-cotbkf-80 rev-parse --short=10 HEAD` reads `84457822bb` before `init`. The worktree has no
+  `.terraform` directory of its own.
+- **What changed, for your watched set:** one registry attribute on one scope row (`restricted_prefix_hosts`, a list of
+  `systems.json` keys) and the selector at `infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf` line 198, which now reads it.
+  `lib/opal_naming.py` validate reads OK on that branch by the worker's run (not re-run by the issuer).
+- **The control of step 2** is the same root at commit 28fbb42d46 (the branch's base), where the selector still reads `masters`.
+- **Order of your two orders:** this plan proof first, then `ADVI_COTBKF.TO-CB-al-2` (released by its AMENDMENT 5 @a8748799a1). The
+  two do not touch the same resources: this one writes nothing.
+
 <paths>
 org/missions/D8/ADVI/ADVI_COTBKF/deliverables/
 org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md

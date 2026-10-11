@@ -109,7 +109,7 @@ No judgment criterion: both facts are checked on the object and the code.
 
 ## 5. WHEN YOU ARE DONE
 
-Write the instance at `org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~10/MDPF_CANON.TO-CN-d-1.proof_of_spec.json`. **Flip this
+Write the instance at `org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~10/MDPF_CANON.TO-CN-d-1.served-identity-and-cottonwood-vintage.proof_of_spec.json`. **Flip this
 order's `<status>` to `complete` in the SAME commit as your proof instance**, and only when every mechanical criterion passes.
 
 A row id on this project carries the dell1 infix: `MDPF_CANON-D1-W10-S<k>`, with `surfaced_at` taken from `date -u +%FT%TZ` at filing.
@@ -123,6 +123,8 @@ Evidence for the re-cut: `deliverables/2.0.0_SA_COO~D1/round4/FOLD_AC1_AC3_CONFL
 `CN-d-5`, sequenced behind the pending `MDPF_STRATID.TO-APPLY-R2.global-fold-deploy` so neither overwrites the other's bytes; the added `meta`
 keys change the served account-distribution bytes, so the deploy carries a never-widen pair (CTO + COO) naming that blast radius and its
 rollback. Base box/dell1. LF only.
+
+**AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-11 ~06:2xZ, row MDPF_CANON-D1-W13-S1):** the proof instance is named beside the order's own file stem, `MDPF_CANON.TO-CN-d-1.served-identity-and-cottonwood-vintage.proof_of_spec.json`, because the pipeline gate searches for `<order file stem>.proof_of_spec.json`; section 5's path is corrected, no criterion or path of the grant changes. Gate limb: only GATE (viii) grades a modification, and `<placeholders>` is NONE.
 
 <status>pending</status>
 <round>4</round>
