@@ -25659,3 +25659,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-S79 -- INSTRUMENT GAP: a live-call arm driven by a synthetic principal cannot validate a change whose effect begins AFTER authorization, and the IB-pr-423 release is the proof
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S79",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T10:28:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The pair for IB-pr-421/422 specified its post-promote check as one GET that the function refuses typed, which an applier can only drive with a synthetic principal; such a call refuses at NO_PRINCIPAL before the operation's compute, so it is structurally incapable of observing any behaviour that begins after authorization -- which is exactly where that release's defect lived, and the arm read clean while real Cottonwood users were served vendor figures for 44 minutes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "COO half @468df7baa4 step 3 and CTO half @7a01aa805a condition 2: 'one GET of the performance route as a non-49F caller' that 'answers typed', with 0 TypeError and 0 AccessDenied in the log group from the promote on",
+      "this seat's IB-pr-423 arm, run 16 s after the 09:19:10Z promote: StatusCode 200, typed NOT_AUTHORIZED, exception_text NO_PRINCIPAL, 0 TypeError, 0 AccessDenied, and eight vendor-reach indicators each 0 -- recorded in IB121-1_vendor_path_release_after_reads.json",
+      "the same window read after the rollback: 3 served outcomes of 31 events between 09:19:10Z and 10:03:25Z, corroborating 2.0.0_SA_COO~P2's escalation count of three served at 09:45Z",
+      "_authz/served.py handle(): the firm-binding and verified-subject limbs refuse BEFORE 'the OPERATION this function serves' resolves a compute, so a caller with no verified internal subject cannot reach the vendor path by construction",
+      "0.9.0_WK_IRPT_BCKEND~281's IB117-4 read reached the same ceiling on three functions, recording 'refused before the split' and 'a synthetic principal cannot supply' the verified subject",
+      "the IB-pr-421 packet's own 'What is NOT exercised' section says no real vendor call was made and the credential-read denial was 'read from the Terraform and the live role's policy list, not observed by an invocation'"
+    ]
+  },
+  "spec_asserts": "The pair's step 3 treats one typed-answering GET plus a clean log window as the post-promote evidence that the release is sound, with a 500, a TypeError or an AccessDenied as the failure set and Branch B as the response.",
+  "world_is": "The arm's failure set is reachable only by a defect that fires BEFORE or AT authorization. IB-pr-420's defect was of that kind -- an Enforcer kwarg mismatch raised while constructing the request -- so the identical arm reproduced it on the pre-apply control and genuinely discriminated. IB-pr-423's change was the opposite kind: it altered what an ADMITTED request does after authorization succeeds. A synthetic caller never gets there, so the arm returned the same typed NOT_AUTHORIZED before and after, read clean, and the release passed its own check while serving three real Cottonwood users a Black Diamond figure against ratified FWD-3. THIS IS NOT A COMPLAINT ABOUT THE ORDER OR THE PAIR, and not the reason the release was wrong -- the order was wrong on the ENDPOINT, which is 2.0.0_SA_COO~P2's escalation and the CTO's ruling. It is a claim about the INSTRUMENT, and it generalises past this release: any future never-widen pair whose change takes effect after authorization will get a clean reading from this arm shape, because the arm cannot see that far. The applier cannot close the gap from where it stands: no seat on this fabric can mint a verified internal subject, which is why both this seat and ~281 hit the same ceiling independently. WHAT WOULD ACTUALLY DISCRIMINATE, offered as options rather than a chosen design: an admitted-caller probe driven by whoever can mint a verified subject, which on this estate appears to be the laptop's product walk; or a post-promote read of the SERVED plane for the affected firms over a short window, counting served outcomes rather than log errors, which would have shown 3 within minutes instead of 44; or an explicit statement in the pair that the arm proves only that the function answers, with the real evidence named and scheduled. The third already exists in part: the COO half said the first real evidence is the laptop's re-walk and that until then the outcome is ABSENT -- the gap is that nothing made the release wait for it. OWNER: 1.0.0_SA_CTO~DELL2 and 2.0.0_SA_COO~P2, as the authors of the arm's specification. Nothing here holds any order: IB-pr-424 is complete and the path is back to its refusal."
+}
+```
