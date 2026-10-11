@@ -1066,3 +1066,77 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "notes": "Also: bunx is absent on this box; tsc was run as 'bun x tsc -b'."
 }
 ```
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T04:30:40Z",
+  "id": "TCKT_VNEXT-D2-W8-S3",
+  "one_line": "R2-rn-1 AMENDMENT 1 A3: the Write tool refused fwd1_runner/REPORT_READ_REFUSALS.md ('subagents should return findings as text, not write report files'), so the refusal table is not a file; it is in the worker report.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO TCKT_VNEXT.TO-R2-rn1 AMENDMENT 1 A3 orders the file at org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~8/fwd1_runner/REPORT_READ_REFUSALS.md, inside the worker's <paths>",
+      "the Write tool call for that path returned a tool error, the file does not exist in the worktree; this seat did not route around the refusal by another writer",
+      "NOT_READY_CODES in fwd1_run.py carries the classification as a comment and the final worker report carries the full table (32 rows)"
+    ]
+  },
+  "spec_asserts": "A3: write fwd1_runner/REPORT_READ_REFUSALS.md, one row per refusal the finished-report read can raise, with the denominator, marked PROPOSED.",
+  "world_is": "The deliverable file is absent. The table exists only as text in the final worker report. 32 rows: 31 per-request raise sites read in ops/entry.py (1), ops/owned_report.py (11 + 1 re-raise), ops/owned_requests.py (11), _scope/owner_reads.py (3), ycharts/generate/durable_job.py (2), _authz/served.py _owner_read_request (3). Not read: the raise sites inside reports/repository.py and reports/retention.py reached through artifacts.head, retention.require_live, reports.index.get and reports.get (reach the caller by class only).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T04:30:40Z",
+  "id": "TCKT_VNEXT-D2-W8-S4",
+  "one_line": "R2-rn-1 A2/A3: on the finished-report read the public code NOT_FOUND cannot tell a report not yet generated from one that failed, expired or never will be; polling it to the bound records NOT_READY for all of them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:118-119 raises AnalysisUnavailable('ANALYSIS_REPORT_NOT_READY') for ANY state other than READY (CTO lead msg 4041 confirmed by reading)",
+      "infra/aws/lambda/investor-reporting/ops/entry.py:254-255 maps AnalysisUnavailable, RetentionExpired and LeaseRefused each to NOT_FOUND; _authz/errors.py:136 maps KeyError to NOT_FOUND",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py:16 STATES lists the non-READY states; read from the tree, not exercised and not the deployed bytes",
+      "no-such-request is told apart: ops/entry.py:226-228 and _scope/owner_reads.py:28-33 stop an absent or foreign record before the report read, answered NOT_AUTHORIZED at _authz/served.py:985"
+    ]
+  },
+  "spec_asserts": "A2: NOT_READY_CODES names the refusal codes that mean 'not generated yet'; the bound reached is the named result NOT_READY.",
+  "world_is": "NOT_FOUND is in NOT_READY_CODES because it is the only code the not-READY branch can answer. A generation that FAILED answers the same code and is polled 40 times 30 s apart (20 minutes) before NOT_READY is recorded. The status-job operation on the same entry is the read that carries a job's state; the order does not call it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T04:30:40Z",
+  "id": "TCKT_VNEXT-D2-W8-S5",
+  "one_line": "R2-rn-1: round 1 observed an INVALID_REQUEST_ID reason in a refusal envelope, but the HEAD boundary can only emit members of a closed public set and answers a malformed id as INVALID_INPUT, so the tree and the observation disagree on the code vocabulary NOT_READY_CODES depends on.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:88 raises RequestReadRefused('INVALID_REQUEST_ID'), the internal string",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:874-887 public_reason_for returns a code only if it is in BOUNDARY_REASONS (errors.PUBLIC_REASONS plus CONTRACT_VERSION, UNPROJECTED_GRANT, SELECTION_UNSUPPORTED), else UNEXPECTED; INVALID_REQUEST_ID is in neither (grep of served.py and errors.py finds it in neither file)",
+      "TO TCKT_VNEXT.TO-R2-rn1 WHY and rule 4 cite INVALID_REQUEST_ID as the round-1 refusal reason; the runner's existing refusal test uses that string",
+      "tree at box/dell2 HEAD only; the deployed bytes and any layer in front of the lambda were not read (no AWS or network call)"
+    ]
+  },
+  "spec_asserts": "A3: NOT_READY_CODES is set from the handler's refusal codes as the tree has them.",
+  "world_is": "Either the deployed lambda differs from HEAD, or a layer in front of it produced INVALID_REQUEST_ID, or the order's citation paraphrases. If the deployed boundary exposes internal strings, the not-ready answer would read ANALYSIS_REPORT_NOT_READY, which is not in NOT_READY_CODES, and hop (e) would end terminal on the first poll. NOT_READY_CODES is PROPOSED from the tree; the issuer's run pair is what settles it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
