@@ -5015,3 +5015,56 @@ round.** Never edit an existing row.
   "world_is": "0 hits proves absence of the three shapes only. The test bounds the shapes (no hit inside a longer capital/digit run) to drop the 14 document-id false positives; that is stated in its docstring. The tracked manifest was additionally checked by a different instrument: 0 of the private manifest's 1533 account keys occur in its text. Also: commonwealth_asf_source.py held no runtime literal (one docstring example), so it needed no private config; the runtime literal moved to config is a rejected-candidate security identifier in commonwealth_sweeps.py whose shape is account-like."
 }
 ```
+
+## ADVI_COTBKF-D2-W80-S1 -- The order's account set (the 'account' column of the served month_grades table plus local parquets' 'account' 
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W80-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~80",
+ "surfaced_at": "2026-10-10T22:30:00Z",
+ "one_line": "The order's account set (the 'account' column of the served month_grades table plus local parquets' 'account' column) is 2285 ids, but Cottonwood-side ids also live in account_id / Account_Number / AccountNumber / old_, new_, newest_, commonwealth_, normalized_, current_account columns; the pinned set is widened to 4710 ids.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "account-column-only set: 2285 distinct ids, sha256 28e015003d7723c297e94db50ef712cd61951c72974ae2036e16868b63b77bf5 (held outside the repo)",
+   "widened set: 4710 distinct ids, sha256 81aa5aff50140751577312fde08a195584c60105b6872ba271ae9309f1be7188, pinned in data/assets/scripts/silver/tests/_cotbkf_acct_check.py@693846835a"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-ba-1 step 1: the account set is the 'account' column of the served table and of the local parquets.",
+ "world_is": "The 'account' column alone misses 2425 account ids the tracked files can carry under other column names; the widened set is a superset, so every check the narrower set would make is still made."
+}
+```
+
+## ADVI_COTBKF-D2-W80-S2 -- CB53ba1-AC1 cannot be met as written: after the re-sweep of every in-scope file inside the write grant, the do
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W80-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~80",
+ "surfaced_at": "2026-10-10T22:30:00Z",
+ "one_line": "CB53ba1-AC1 cannot be met as written: after the re-sweep of every in-scope file inside the write grant, the docs test still reads 38 shape hits and 32 account-set hits in 12 completed task orders under task-orders/, which is outside the order's <paths>; 7 of them are the orders the face forbids touching (row D2-S74) and 5 more (a-2, c-3, c-4, m-1, v-1) were not named by anyone.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~C2",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python -m pytest test_cotbkf_no_account_ids.py test_cotbkf_code_no_account_ids.py -q at 82049024b3: 1 failed, 1 passed; the docs test prints 'DENOMINATOR ... 12 files with hits; 38 shape hits; 32 account-set hits'; the code test passes",
+   "hits by file (shape/set): CB-a-2 1/1, CB-ab-1 3/3, CB-ac-2 2/2, CB-ad-1 2/2, CB-c-3 3/3, CB-c-4 2/2, CB-d-3 3/3, CB-m-1 1/1, CB-n-1 6/5, CB-v-1 1/1, CB-w-1 11/7, CB-y-2 3/2; all 12 carry <status>complete</status>",
+   "redacted texts for the 7 parked orders are held outside the repo at C:/dev/_cotbkf_private_evidence_20261009/redacted_TOs/ (row D2-S74); the other 5 have none",
+   "after the widened shapes: surprise-channel/ (the CVO's, not edited) carries 17 shape hits and 18 account-set hits in 5 files: INVESTIGATION_v1 13/14, ADJUDICATION_v11 1/1, v13 1/1, v28 1/1, REMEDIATION_v14 1/1"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-ba-1 step 3: in-scope tracked files (both tests' scopes) are re-swept; the face forbids touching the 7 parked orders and grants no task-orders/ path.",
+ "world_is": "The docs test scopes every tracked file under the project minus surprise-channel/, so task-orders/ is in its scope but outside the write grant; the cleartext in those 12 orders stays tracked and the test stays red until a seat with a task-orders/ grant (and a TO-gate route for completed orders) substitutes the tokens. Nothing was weakened and no test was exempted."
+}
+```
