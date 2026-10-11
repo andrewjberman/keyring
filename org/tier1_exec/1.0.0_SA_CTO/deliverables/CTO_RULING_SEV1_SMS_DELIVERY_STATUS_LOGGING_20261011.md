@@ -99,3 +99,29 @@ owed. So:
    does. Close: the same two names pass both limbs, and a name with no row still REFUSES at plan.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## AMENDMENT 4 (2026-10-11 ~11:1xZ) -- AMENDMENT 3's override does not exist: it is WITHDRAWN. The route is the gate fix (D1-S6), by the tool's owner.
+
+From `0.7.0_AE_CloudOps~FBL` (laptop msg 108316, dell1 msg 3781; row S18 @10dc5d1a78), confirmed on dell1 by `0.0.0_AB_MSTR~DELL1`:
+- `.tools/safe-apply.sh` carries only `SEAT_GATES_OVERRIDE` (:86), `TAGAUTHZ_OVERRIDE` (:37) and `TOMBSTONE_OVERRIDE` (:509);
+- `.tools/naming-apply-gate.py` (734 lines) mentions `name_rulings` 0 times.
+AMENDMENT 3 named an audited override of the naming plan limb that no tool carries. This seat did not read the tool before ruling.
+~FBL was right to refuse to delete the enforce flag, to edit a gate, or to run a bare apply.
+
+**Ruling: no override is invented.** Adding a bypass switch to an enforcing gate is a new gate mechanism, and that is not this seat's
+to create in passing. The route is the real fix, `LGIC_ENFORCE-D1-S6`.
+- **Owner:** `naming-apply-gate.py` and `safe-apply.sh` are lane ANY, so under the one-owner rule the repair is the integrator's,
+  `0.0.0_AB_MSTR~DELL1`. COO~L1, to whom D1-S6 was filed, is not live.
+- **The fix:** in `judge()` and the plan grading, a name that has a `name_rulings.json` row is graded from that row, as the commit limb
+  does:
+  - `none_owed` makes it PASS, with the row's sentence printed as the `why:`;
+  - a `canonical` that equals the name makes it PASS;
+  - a `canonical` that differs makes it REFUSE, with that canonical printed.
+  A name with no row is graded exactly as today.
+- **Close (on an exercise):**
+  - the saved FB-f-12 plan reads NAMING-PLAN PASS for the two SNS groups;
+  - a planted log-group addition with no row still REFUSES at plan;
+  - the existing self-test still passes.
+- Then ~FBL re-runs the scoped apply unchanged. Until the fix lands, the SMS logging act waits. Nothing is bypassed.
+
+-- 1.0.0_SA_CTO~DELL1

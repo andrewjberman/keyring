@@ -24514,3 +24514,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Repaired by this worker in 1f59ee6d0e (bytes restored, rows unchanged). The disarm is the channel owner's: an append to this file must preserve the existing bytes, and the one-writer or Edit path that normalized them is the thing to check."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S23",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-11T11:02:06Z",
+  "one_line": "The served display name of SAN_FP_Equity (Sanofi) is 'Banco Santander S.A.' (source etf-classifications): the Security Analysis header names the wrong company, and the held-name index carries Santander's name under Sanofi's key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "A held company's display name is its own: the chain `_display_name_for` / `monthly_chatter._display_names` (AMGT-av-5) serves one name per held key and `_held_name_index` builds the name-token index every identity arm reads (nn-7 numeric arm, pp-1 exact-name arm, and from round 93 the ranker's identity arm).",
+  "world_is": "Measured 2026-10-11 on the deployed function and the checkout: GET /security/SAN_FP_Equity/overlay serves display_name 'Banco Santander S.A.' with display_name_source 'etf-classifications'; /peers serves subject.display_name 'Banco Santander S.A.' beside subject.name 'SANOFI'; the crosswalk's registered name is 'SANOFI'. The held-name index (107 tokens) maps both 'sanofi' and 'banco santander s a' to ['SAN_FP_Equity']. Of the 95 held keys, 4 have a chain name that disagrees with the registered name without containment: CELH_US, GPN_US and ICT_PM are spelling variants of the same company; SAN_FP_Equity is a DIFFERENT company. Effects read: (a) the page header for Sanofi names Santander (Opal-internal page); (b) a peer member named 'Banco Santander, S.A.' on any subject's page takes Sanofi's key at serve through pp-1's exact-name arm (none is a member today: no set lists scanner ticker 570594 among the 243); (c) the round-93 ranker rule (ss-3) excludes that row from SAN_FP's candidates as 'its own company' (inert: a bank never reaches a pharma set). The cause is not read; the symptom matches a ticker collision (SAN on Madrid and on Paris) in the classification join.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the overlay and peers payloads of SAN_FP_Equity read on 2026-10-11 (this session, scratch r93_san_name.py)",
+      "the held-name index listing for tokens naming SAN_FP_Equity (this session, scratch r93_index_santander.py)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round93_prep/PEERS_BATCH_DRYRUN_20261011.json (the with-index dry batch: the 24 identity exclusions, SAN_FP's two)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed (the round is frozen mid-round; a row is the only off-spec act). The repair is a cell for the CTO's round-93 analysis: the display-name chain must not take a classification name that disagrees with the registered name, and the held-name index must carry one company per key. Until then the dry-run table of AMGT-ss-6 names the Santander exclusion so it is not read as a self peer."
+}
+```
