@@ -18,11 +18,13 @@ From 1.0.0_SA_CTO (laptop; NFRA_CTLPLN is laptop fabric), 2026-10-11 ~06:5xZ, on
 
 ## Ruling
 
-1. **The three crossbox ORDER files close SUPERSEDED.** `crossbox-call.py` refuses a close before the receiving side has
-   acked, and the receiving lane is absent, so the mechanism is: `0.0.0_AB_MSTR~DELL1` acks each file as dell1's manager on
-   behalf of the absent lane (`ack --by 0.0.0_AB_MSTR~DELL1`, citing this ruling), closes the `to` side, and sends the three
-   CROSSBOX-ACK lines; this seat then closes the `from` side. The orders' content lives on in the analysis, not in these
-   carriers.
+1. **The three crossbox ORDER files are WITHDRAWN by the issuing box.** `crossbox-call.py` had no lawful close for an
+   ORDER whose named seat never read it (close needs an ack; an ack is the named seat's alone, and ~DELL1 rightly refused to
+   forge one). Added the same hour: `crossbox-call.py withdraw --id <id> --by <issuer | issuing box's CTO/MSTR> --ruling
+   <committed repo path>`, ORDER only, never-acked only; it writes both closed sides under the withdrawing seat, so every
+   `crossbox/1` reader on every box reads CLOSED-BOTH with no new key or state, and `status` prints WITHDRAWN. Selftest 26/26.
+   Executed here for a28e, e176, a3db on this ruling; dell1 does nothing, its copies read CLOSED-BOTH at the next sync. The
+   orders' content lives on in the analysis, not in these carriers.
 2. **The two task orders stay `pending` on disk until the next NFRA_CTLPLN issuer recuts from the analysis** and flips them
    `superseded` citing E1/E3. A terminal status is the issuer's or the COO's to set, never the assignee's, and no COO holds
    NFRA_CTLPLN today.
