@@ -206,6 +206,42 @@
         "register_ref": "X16",
         "occurrences": 1
       }
+    },
+    {
+      "id": "NFRA-IAMROLES-R20-01",
+      "file": "infra/aws/terraform/bd-pipeline/zz_adopt_family_a.tf",
+      "literal": "bd-merge-daily-lambda-role",
+      "remediation": "LGIC_ENFORCE FWD-8 (adopted live names read EXISTING) or the role's own R19 rename",
+      "purpose": "NFRA_IAMROLES202609 IAM-w-2: adopt the LIVE role bd-merge-daily-lambda-role into bd-pipeline under its live name (import only; an IAM role cannot be renamed in place); occurrences = resource name, import id, one header comment",
+      "authority": {
+        "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_R20_NFRA_IAMROLES_W2_BD_ROLE_NAMES_20261011_Z.md",
+        "pin": "727ce5eefa33f9cae5bd0e36bc83afcfeeeb68d1"
+      },
+      "as_of_cutoff": "2026-12-31",
+      "owner": "1.0.0_SA_CTO~Z",
+      "read_context": {
+        "kind": "r20_exception",
+        "register_ref": "X17",
+        "occurrences": 3
+      }
+    },
+    {
+      "id": "NFRA-IAMROLES-R20-02",
+      "file": "infra/aws/terraform/bd-pipeline/zz_adopt_family_a.tf",
+      "literal": "bd-pipeline-task-role",
+      "remediation": "LGIC_ENFORCE FWD-8 (adopted live names read EXISTING) or the role's own R19 rename",
+      "purpose": "NFRA_IAMROLES202609 IAM-w-2: adopt the LIVE role bd-pipeline-task-role into bd-pipeline under its live name (import only; an IAM role cannot be renamed in place); occurrences = resource name, import id, one header comment",
+      "authority": {
+        "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_R20_NFRA_IAMROLES_W2_BD_ROLE_NAMES_20261011_Z.md",
+        "pin": "727ce5eefa33f9cae5bd0e36bc83afcfeeeb68d1"
+      },
+      "as_of_cutoff": "2026-12-31",
+      "owner": "1.0.0_SA_CTO~Z",
+      "read_context": {
+        "kind": "r20_exception",
+        "register_ref": "X17",
+        "occurrences": 3
+      }
     }
   ],
   "_r20_exception_kind": "A third read_context kind, r20_exception (landed by 1.0.0_SA_CTO 2026-09-30 on Andrew's 'yes thats fine on naming exception' at 1.0.0_SA_CTO~O, relay 103235): the gate HONOURS an R20 DECLARED EXCEPTION (infra/logic/02_DOCTRINE.md R20; the register row is a 06_CONFORMANCE_LEDGER.md section 6 row such as X11). Entry fields are the usual nine; read_context is exactly {kind: r20_exception, register_ref: <row id>, occurrences: <int>=1>}; as_of_cutoff is a YYYY-MM-DD date or the word PERMANENT; authority is a full pin plus a record that carries the entry id (Andrew's acknowledgement record). It is the ONLY kind that reaches a NEW literal, in any file type, and it grades naming only: the count must hold, and it advances no remediation and proves nothing about reads versus writes."

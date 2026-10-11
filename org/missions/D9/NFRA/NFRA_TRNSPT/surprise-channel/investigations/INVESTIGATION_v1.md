@@ -1687,5 +1687,30 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "world_is": "Each fire lands the new rows listed ahead of the first aged-out row, then dies: no run record, no listing snapshot, and ocio_ic, asset_management_ic and research_meeting are never reached. The round-21 PASS was read from S3 keys alone; the function's outcome was an error. The 4 unlanded meetings (2026-04-10, 04-13, 05-04, 06-01) are not recoverable through the gateway (content aged out; inferred from the 118-to-125-day boundary). 2026-06-08 has aged out since it landed.",
     "notes": "Fix cut as TR-rf-22 (build, LOCAL) and TR-ra-22 (deploy, WORLD, pair + applier). Next scheduled fire 2026-10-12T13:00Z. Supersedes the recoverable claim in row D2-S15. Dates, statuses and counts only."
   }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-S17",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.7.0_AE_CloudOps~TR2",
+    "surfaced_at": "2026-10-11T03:45:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "The transcripts Terraform root cannot be planned or applied at all without a -var: readers.tf:15 declares second_reader_trust_principal_arns with NO default and the root carries no tfvars file, so every applier on this root must supply a value, and the only sound source for it is applied state.",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan -target=aws_lambda_function.pull in infra/aws/terraform/transcripts, 2026-10-11T03:3xZ: 'Error: No value for required variable' on readers.tf line 15; rc=1, no plan produced",
+        "infra/aws/terraform/transcripts/readers.tf:15-18 declares the variable with type list(string) and no default; the file's own header says the defaultlessness is deliberate",
+        "ls -a infra/aws/terraform/transcripts/: no *.tfvars or *.auto.tfvars file in the root",
+        "readers.tf:20-25 local.named_reader_arns concatenates aws_iam_role.second_reader.arn into the key policy's named readers (main.tf NamedReadersUseTheKey), so the variable reaches the KMS key that pull.tf:96-121 depends on through aws_kms_grant.pull and aws_kms_alias.transcripts",
+        "aws iam get-role teams-global-transcripts-second-reader-role at 03:3xZ: the applied trust principal is exactly arn:aws:iam::313476888478:user/Opal_Terminal (one statement, one principal)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-APPLY-ra22 step 3 and the packet's section 0 state the act as `safe-apply` in infra/aws/terraform/transcripts targeted at aws_lambda_function.pull, with no variable input named; readers.tf's header states the root is plan-only for the reader resources and that a plan without the variable is refused.",
+    "world_is": "The reader resources are APPLIED, not plan-only: ledger nfra-trnspt-a18-second-reader-laptop-20261009 closed its APPLY leg at 2026-10-09T09:55Z with 3 added and 1 changed, so the role, policy, attachment and key exist and the trust principal lives in applied state. The defaultless variable therefore no longer gates an unapplied intent; it gates EVERY plan and apply of this root, including an act that targets only the Lambda. This lane supplied the value by READING the applied trust policy and passing it in a tfvars file OUTSIDE the repo, and the targeted plan then showed exactly one resource changing. The hazard is the next applier: a value typed from memory or left as a guess would not refuse, and on an UNTARGETED apply of this root it would rewrite the second reader's assume-role policy -- a widening of who may read the transcripts tier, which no half covers. The durable fix is a committed tfvars (or a default) carrying the value Andrew's routing already named, so the variable stops being a per-applier guess; that is a decision for the issuer's pair and 1.0.0_SA_CTO~DELL2, not this lane.",
+    "notes": "Found while executing TO-APPLY-ra22; the order completed and nothing was widened (mail pull unchanged, commentary function still absent, targeted 0-diff re-plan clean). Names, dates and statuses only. Id note: the middle segment is a DEVICE COORDINATE from the device register, not a lane name -- only D1, D2 and Z are registered, so an applier on dell2 writes into D2-S<n> like every other dell2 writer. S17 was the next free index across all 24 channel documents at 03:5xZ; 2.0.0_SA_COO~T2 writes the same sequence, and the row gate's uniqueness check is what keeps two writers from landing one index."
+  }
 ]
 ```

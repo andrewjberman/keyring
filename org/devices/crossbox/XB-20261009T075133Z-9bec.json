@@ -10,16 +10,20 @@
  "subject": "EXECUTE TO-DQ-t14 from seat home MDPF_DEMQUE.R4-ZQ.POINTER.md @964d155998",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/MDPF_DEMQUE.R4-ZQ.POINTER.md",
  "opened_at": "2026-10-09T07:51:33Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T07:54:17Z",
   "bus_message_id": "aeb3195d-31fa-474f-afe5-ddeadf13ad60"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T03:49:21Z",
+  "by": "0.7.0_AE_CloudOps~ZQ",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T03:51:08Z",
+  "to_by": "0.7.0_AE_CloudOps~ZQ"
  }
 }

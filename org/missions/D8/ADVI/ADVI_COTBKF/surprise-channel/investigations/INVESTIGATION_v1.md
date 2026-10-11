@@ -5222,3 +5222,87 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D2-S82 -- Disarms D2-S80: the mint manifest is restored and the boundary test is in the tree
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S82",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T03:40:00Z",
+ "one_line": "DISARMS ADVI_COTBKF-D2-S80 (its disarm_owner, on the CTO's condition in the round-54 analysis @0ac41554df section 3): the mint manifest is restored to its round-52 bytes and the boundary test is in the tree. CB-bb-1 drained @05b0f0b2f2.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer run at box/dell2 HEAD 05b0f0b2f2: manifest sha256 924987f6369300d530ddc9fa5793befa4c4edc291c5e83a99c5288a36811c1cb, 0 acct# tokens in the file",
+   "issuer re-hash of the round-47 local day files against the manifest: sha256 match 3325 of 3325, differ 0, local file missing 0; sha256-named fields not 64 hex: 0",
+   "comp-find for the damage signature '[0-9a-f]acct#[0-9a-f]{8}|acct#[0-9a-f]{9,}', corpus all: 0 hits across 87054 files scanned; NOT covered: 25607 binary, 2 unreadable, 1649 ephemeral-floor files",
+   "pytest test_cotbkf_acct_check_hex.py + both id tests at the same HEAD: 7 passed; docs test 461 files 0 hits, code test 72 files 0 hits; silver suite 765 passed, 11 skipped",
+   "issuer read of the fix @2eb7ed857e: 6 added lines in scan_text, an exact 64-character lower-case hex run bounded on both sides; SHAPES, the guards and set_spans untouched"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO round-54 analysis section 3: D2-S80 disarms when the restored file reads 0 tokens inside a hash and the test is in the tree.",
+ "world_is": "Both conditions read true at 05b0f0b2f2. The ruling's further test (every sha256 field asserts 64 hex) is cut as CB-bc-1 and is not in the tree yet; the issuer's one-off read of those fields is 0 not 64 hex."
+}
+```
+
+## ADVI_COTBKF-D2-S83 -- Evidence for D2-S77: the device default is removed; the suite now needs the variable set
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S83",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T03:48:00Z",
+ "one_line": "Evidence for the remediation of ADVI_COTBKF-D2-S77 (REMEDIATION_v34, owner this issuer, round v54): the device default is removed. CB-bc-1 (cut as round 55) drained @1f79a8182c. A consequence the ruling implies and nothing had stated: the silver suite now fails at collection on any box, dell2 included, unless COTBKF_SWEEPS_CONFIG is set.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer read of the fix @7f62b1b6cd: SWEEPS_CONFIG_DEFAULT deleted; the path is the argument or COTBKF_SWEEPS_CONFIG; neither -> SweepsConfigError; the sha256 pin and the import-time load are unchanged",
+   "issuer run at box/dell2 HEAD 1f79a8182c with the variable set: test_commonwealth_sweeps_config_env.py 3 passed; silver suite 769 passed, 11 skipped",
+   "same HEAD, variable NOT set: silver suite 20 errors, all at collection; cot gold tests 50 passed (they do not import the module)",
+   "test_cotbkf_manifest_hash_fields.py: DENOMINATOR manifests=1 sha_fields=9977 not_64_hex=0, 1 passed (the CTO ruling's 64-hex assertion for row D2-S80)",
+   "worker importer census: 23 tracked .py files name commonwealth_sweeps (a pattern match, not an import-statement check), 0 outside data/assets/scripts/silver/"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "REMEDIATION_v34 remedy for D2-S77: the path comes from COTBKF_SWEEPS_CONFIG alone (absent -> the same named error); state where a second box gets the file.",
+ "world_is": "The module carries no device path at 1f79a8182c; the docstring of load_sweeps_config states the second-box route. Whether the 20 collection errors without the variable are announced to other seats or absorbed by a fixture is asked of 1.0.0_SA_CTO~DELL2 and not decided here."
+}
+```
+
+## ADVI_COTBKF-D2-S84 -- No non-test importer of commonwealth_sweeps has a stated source for COTBKF_SWEEPS_CONFIG
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S84",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T03:51:00Z",
+ "one_line": "With the device default removed (CB-bc-1 @1f79a8182c), no non-test importer of commonwealth_sweeps has a source for COTBKF_SWEEPS_CONFIG other than the shell of whoever runs it: 11 scripts import the module directly, more reach it through them, and none sets or documents the variable. They fail closed at import (SweepsConfigError), so nothing runs wrongly; but none of these files may be deployed or scheduled anywhere until it has a stated source for the variable (CTO msg 4017).",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Grep for an import statement of commonwealth_sweeps over **/*.py in the workspace: 22 files, 11 non-test scripts and 11 tests, all under data/assets/scripts/silver/",
+   "the 11 scripts: commonwealth_fwd3_serve, commonwealth_flows, commonwealth_div_dating_trace, commonwealth_diff_trace, commonwealth_daily_valuation, commonwealth_daily_returns, commonwealth_price_need, commonwealth_nonmatch_census, commonwealth_mover_classes, commonwealth_sweep_regrade, commonwealth_mover_causes",
+   "transitive importers exist beyond those 11 (for example commonwealth_split_recount, commonwealth_scale_trace, commonwealth_non_positive_base, commonwealth_flow_timing, commonwealth_split_level_probe); the listing was read to its first 60 lines and is NOT a complete count",
+   "Grep for eight of the script names over **/*.{tf,yaml,yml,json,sh,ps1,toml,cfg}: 165 occurrences in 27 files, every one a proof instance, a manifest or a fixture under org/; 0 in a Terraform, schedule or shell file. So no Lambda or EC2 entry point was found by this read; a schedule defined in a file type outside that glob is not covered",
+   "issuer run at 1f79a8182c without the variable: the silver suite reads 20 errors at collection"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO msg 4017: list every non-test importer and where each gets the variable at run time; an importer with no source for it is a BLOCKING row before that file is deployed anywhere.",
+ "world_is": "Every importer is hand-run on dell2 today and takes the variable from the operator's shell or not at all. That includes commonwealth_fwd3_serve, which writes served keys when run with its apply flag by 0.7.0_AE_CloudOps~CB2. The apply for CB-al-2 is not run before this row is dispositioned."
+}
+```

@@ -909,3 +909,134 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S22",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T03:31:12Z",
+  "one_line": "Disposition record for ARMED row TCKT_VNEXT-D2-W6-S2 (data-refresh admitted a caller with no userType): DISARMED by the CTO's round-2 analysis. Row D2-S16 measured the routed fix live (the gate admits Dev or an Opal-internal principal, so a one-firm token is refused). The residue (S17: an Opal-internal principal is admitted whatever its userType) stays with the data-refresh owner and leaves this project's list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_TCKT_VNEXT_ROUND_2_20261011.md @bbba700c22 section 2",
+      "investigation rows TCKT_VNEXT-D2-W6-S2, D2-S12, D2-S16, D2-S17",
+      "1.0.0_SA_CTO~DELL2 msg 3619 (S17 routed to the data-refresh owner)"
+    ]
+  },
+  "spec_asserts": "Only Dev or Opal-internal callers may trigger or roll back a data refresh; a one-firm test filer token does not reach those routes.",
+  "world_is": "As ruled by the CTO on row D2-S16's measurement, not re-measured by this seat: a one-firm token is refused. The bound round 2 carries: no internal-tier test token is minted outside a signed pair that names data-refresh in its blast radius, with a zero-call read after.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disposition only; W6-S2 itself is append-only and not rewritten. Round 2's re-run pair (cell R2-tr-1) carries the bound."
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S23",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T03:31:12Z",
+  "one_line": "round-close-check --project TCKT_VNEXT --round 1 printed verdict=MAY-CLOSE with judgment=1 graded=1 while a second judgment grade of the round, SA-r-1b AC2 NOT MET (row D2-S21), was on file. The run order TO-RUN-SA-r-1b lives in the applier seat's flat task_orders folder, outside the 4 orders the check counted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's run 2026-10-11T03:12Z: 'ROUND-CLOSE project=TCKT_VNEXT device=dell2 reviewer=present orders=4 judgment=1 graded=1 ungraded=0 self_graded=0 verdict=MAY-CLOSE'",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_SA_R1B_L9_GRADE_20261010.md @771737f0a6",
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/task_orders/TCKT_VNEXT.TO-RUN-SA-r-1b.fwd1-seat-arm-journey-v22-tv2.md (the order whose AC2 was graded)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_TCKT_VNEXT_ROUND_2_20261011.md @bbba700c22 section 2"
+    ]
+  },
+  "spec_asserts": "The check counts every graded judgment criterion of the round, and does not print MAY-CLOSE while one of them is NOT MET.",
+  "world_is": "It printed judgment=1 graded=1 and MAY-CLOSE with a second grade on file that reads NOT MET. Which limb missed it (the order's folder, or a NOT MET verdict counted as graded) was not isolated by this seat. The round did not close on it; the slug reported FWD-1 NOT REALIZED.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Tool gap, owner of .tools/round-close-check.py. Filed at the CTO's ask."
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S1",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T03:40:00Z",
+  "one_line": "R2-rn-1: the request-list history item carries no ticket id and no input_id, so the order's 'match on the ticket id or input_id' cannot be done; the runner matches on a before/after difference of REQ ids instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json (properties list)",
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequestHistory.schema.json",
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:229-231 _public, :313-363 history (tree HEAD of this worktree, not diffed against deployed bytes)",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~8/fwd1_runner/fwd1_run.py hop_d_analysis; test_fwd1_runner.py test_falls_back_to_request_list_when_answer_has_no_id, test_ambiguous_request_list_is_a_named_failure"
+    ]
+  },
+  "spec_asserts": "TO TCKT_VNEXT.TO-R2-rn1 rule 2: when the submission answer has no id, pick the ONE row of GET .../analysis/requests that belongs to this submission, matching on a field that ties it to this run (the journey ticket id or the uploaded input_id, whichever the schema carries).",
+  "world_is": "OwnedAnalysisRequestHistory.schema.json items are OwnedAnalysisRequest, whose only properties are identity{tenant_firm_id, request_id, revision, immutable, ingestion_gate_revision, destination_policy_revision}, accepted_at, and (single read only) comparisons, composition, persist_inputs; the history omits composition (_public returns {identity, accepted_at}). Neither ticket_id nor input_id is on a history item. fwd1_run.py hop_d_analysis therefore reads the list just BEFORE the submission and just after it and takes the ONE REQ id present only in the second (0 or >1 is REQUEST_ID_UNRESOLVED). This ties by novelty, not by an identifier of this run: a concurrent submission by the same firm in the window makes it ambiguous (a named failure, never a wrong id).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S2",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T03:40:00Z",
+  "one_line": "R2-rn-1: the single-request read the runner polls (analysis-request-read) is OwnedAnalysisRequest, which has no `stage` property, so hop (e) as ordered cannot observe a stage on the served read; the runner names STAGE_ABSENT after one poll.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/responses/analysis-request-read.response.schema.json (grep -c \"stage\" = 0)",
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json (grep -c \"stage\" = 0)",
+      "docs/contracts/investor-reporting/v1/AnalysisRequest.schema.json properties.stage enum",
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:233-255 read, :229-231 _public",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~8/fwd1_runner/test_fwd1_runner.py test_missing_stage_is_a_named_failure_not_a_pass"
+    ]
+  },
+  "spec_asserts": "TO TCKT_VNEXT.TO-R2-rn1 rule 3: poll GET .../analysis/requests/<REQ id> and read the contract field `stage` (AnalysisRequest.schema.json: RECEIVED, PARSED, NEEDS_CORRECTION, READY, SUBMITTING, GENERATED, RELEASED, FAILED); poll while in flight, GENERATED or RELEASED ends the hop OK.",
+  "world_is": "responses/analysis-request-read.response.schema.json refs OwnedAnalysisRequest.schema.json (data), and neither file contains the string \"stage\" (grep -c = 0 on both); owned_requests.py read() returns {identity, accepted_at} plus optional comparisons/composition only. `stage` lives on AnalysisRequest.schema.json, which the owned read route does not serve. So a live poll can read no stage; a 200 with no stage is recorded by fwd1_run.py as the named failure STAGE_ABSENT after ONE poll (not polled 40 times, not read as a pass). The runner's tests pass against canned bodies that carry `stage`; whether the deployed irpt-status adds `stage` to the read is NOT measured here (no AWS or network call was made).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S24",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T03:51:15Z",
+  "one_line": "The portal's ticket link does not open a report. openReport reads analysis-request-read for the ticket's report_ref.request_id, and that route answers {identity, accepted_at} as soon as the request is ACCEPTED with a retained composition. None of its refusal codes means not-yet-generated, so a 200 there does not show that a report was made.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/analysisRequest.ts:178-183 openReport -> deps.ir.getOwnedAnalysisRequest(requestId, ticket.answers?.firm)",
+      "portal/src/api/endpoints/investor-reporting.ts:214 analysis-request-read = GET {IR_ROUTE_BASE}/analysis/requests/{requestId}; :1068 getOwnedAnalysisRequest",
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:230-241 read() returns _public(record) = identity + accepted_at; :163-190 _validate, :192-196 _materialize, :215-227 _final",
+      "the same file's RequestReadRefused codes (26 raise sites read by this seat): identity, composition, authorization, retention and history bindings; no code names report generation",
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json: required identity, accepted_at; no stage",
+      "1.0.0_SA_CTO~DELL2 msg 4015 (hop (e) oracle = the route the ticket's own link opens)",
+      "tree read at box/dell2 HEAD; not the deployed bytes"
+    ]
+  },
+  "spec_asserts": "FWD-1 ACCEPT (PRD :30-31): the report is made from the filed file, and the finished report opens from the ticket.",
+  "world_is": "From the ticket the page opens the accepted request record. Whether a report was generated is answered by other routes (analysis-request-pdf, the analysis-report read) that the ticket link does not call. A journey run graded on the ticket link alone would pass with no report made.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Read from the tree, not exercised. Bears on cell R2-tr-1's oracle and on whether round 2 needs a page cell; with the CTO."
+}
+```

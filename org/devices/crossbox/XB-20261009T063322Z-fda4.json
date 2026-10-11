@@ -10,16 +10,20 @@
  "subject": "TO-DQ-t14 authority = the mission-tree order file; no task_orders/ copy",
  "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t14.sitez-demand-ledger-uploader.md",
  "opened_at": "2026-10-09T06:33:22Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T06:35:42Z",
   "bus_message_id": "c7cb4bba-3a46-4be1-b642-dcd158689997"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T03:49:21Z",
+  "by": "0.7.0_AE_CloudOps~ZQ",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T03:51:08Z",
+  "to_by": "0.7.0_AE_CloudOps~ZQ"
  }
 }
