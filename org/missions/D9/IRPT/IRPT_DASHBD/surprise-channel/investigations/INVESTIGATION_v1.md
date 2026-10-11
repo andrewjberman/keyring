@@ -5543,3 +5543,83 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W90-S1 -- DB-b-115: the criterion counts the lots emit_day call (handler.py:430), which takes no src, so DB59-1-AC1 cannot pass inside the grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W90-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~90",
+  "surfaced_at": "2026-10-11T04:20:00Z",
+  "one_line": "DB59-1-AC1's checker counts handler.py:430 (aal.emit_day, account_activity_lots) as a returns emit_day call that must pass src=, but aal.emit_day has no src parameter; the criterion cannot PASS without a producer edit outside the grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "The order says handler.py calls ard.emit_day three times (~430, ~579, ~620) without src=; DB59-1-AC1 fails any `emit_day` attribute call lacking a src keyword.",
+  "world_is": "Only two calls are ard.emit_day (579, 620) and both now pass src=. Line 430 is aal.emit_day(s3, table, rows, firm, day, *, upload) at account_activity_lots.py:1318, which takes no src; passing src= there raises TypeError, which emit_lots catches and records as a lots failure. The checker (p59_round59.py:35-40) matches on attr name only, so it reports FAIL at line 430.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:430",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py:1318",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r59/p59_round59.py:35-40"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T04:22:33Z",
+  "one_line": "L9 round 58 (DB-b-114): the rule-24 conclusion EXISTING_VALUES_SUFFICE is SOUND; stamping the measured Cottonwood rows return_basis TWR and method_version 3 is truthful. The record left open whether the rows used end-of-day or start-of-day flow timing, which are two different formulas; this seat read the run commit: end of day, the C-METHOD form. One condition rides the mint: the emitted dim row 3 and manifest are read for a sentence false for Cottonwood (row D2-W89-S1) before the first partition.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~89/COTTONWOOD_VALUE_RULE24.json",
+      "msg 4035 (rounds 57 and 58 drained @2a6ac2e4e0, @b01e44444e)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_ROUND_58_L9_GRADE_20261011.md",
+      "this seat's read at the run commit the served rows name (6f70d5cc01): commonwealth_daily_returns.py:65 FLOW_TIMING = \"end\", and commonwealth_fwd3_serve.py:480-481 calls daily_returns with no flow_timing argument, so the rows were computed as ret = (value_t - flow_t) / value_(t-1) - 1; the same two lines read the same at HEAD",
+      "this seat's calls on the sources.json entry _commonwealth_delivery at HEAD: method_version_of -> 3; method_text -> the C-METHOD formula plus valuation_source=positions_x_as_traded_close, fee_treatment=net_of_fees, price_basis=as_traded, with no custodian sentence; the order's check DB58-1-AC1 re-run PASS",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json:161 (return_basis: which arithmetic produced total_return_daily; TWR, the C-METHOD form), read at the cited line",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:9 and :112-125 (the formula; METHOD_ROWS row 3), read at the cited lines"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md rule 24: a value-enum proposal arrives with its four-postulate record and token census. The issuer names the conclusion a judgment for L9 (msg 4035).",
+  "world_is": "The four postulates hold and the one fact the record did not establish (flow timing) is established: end of day. Rounds 57 and 58 are terminal; rows D2-W88-S1 (ARMED) and D2-W88-S3 (ARMED) belong to the R45 release and stay with their disarm owners.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W91-S1 -- DB-b-116: the order's address recipe leaves the firm slot ambiguous; a registry key in it gave four not-found reads
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W91-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~91",
+  "surfaced_at": "2026-10-11T04:25:00Z",
+  "one_line": "DB-b-116: the face says opal_naming.address('irpt', <firm>, ...) for 'the firm scope the Cottonwood entry resolves to'; I first passed the registry key (z09 / 08335338) and the control read was not found too, so two list/head pairs read the wrong address before I rebuilt it with firm_scope() (cottonwood / 49financial).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:327-340,1894 @6bfea3096a",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~91/ROW3_VS_COTTONWOOD.json read_history"
+    ]
+  },
+  "spec_asserts": "The order permits exactly two S3 reads, the dim row 3 address and its positive control.",
+  "world_is": "Six read calls were made: an s3 ls pair and a head-object pair at the key-built (wrong) addresses, all not-found with no data read, then the head-object pair at the firm_scope-built addresses that the record uses. All reads, no object body, no write. The overrun is the worker's mis-build of the address, not a defect of the order's text, which says 'firm scope'.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

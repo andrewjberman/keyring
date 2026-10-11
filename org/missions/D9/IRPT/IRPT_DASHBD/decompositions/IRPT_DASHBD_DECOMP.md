@@ -1150,3 +1150,25 @@ The refreshed R45 packet (DB-b-113) stays UNSIGNED: it is refreshed once more at
 True: the stamp is method_version 3. False: a new method row is proposed under rule 24 in a later cell.
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~91` (worker-light), cut from box/dell2.
+
+
+## 63. ROUND 61, WORKSTREAM B (2026-10-11 ~04:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's msgs 3940, 3999 and 4029)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-117` | E1, FWD-4: the R45 never-widen packet, second refresh, at the bytes after the handler fix -- four members from their live pins, five output hashes equal on one kit day, every manifest compared field by field against the live one, halves UNSIGNED | WORLD | DB-b-113, DB-b-115 | B61-1 |
+
+Both earlier R45 packets are superseded. The apply is a later cell, after both halves sign this packet and Monday's R44 acceptance (W78-S1).
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~92`, cut from box/dell2.
+
+
+## 64. ROUND 62, WORKSTREAM B (2026-10-11 ~04:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ruling msg 4060)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-118` | FWD-11: the thresholds a method row states carry a per-value claim (measured / inferred / held / absent) in the producer's thresholds input and the dim_return_method row; rule-24 record first, then the change with tests; no S3 write (ADVI_COTBKF's Cottonwood row 3 waits on it) | WORLD (producer floor) | DB-b-116 | B62-1 |
+
+It drains after DB-b-117: it moves an R45 member, and R45 is built from its pinned commits without this change.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~93`, cut from box/dell2.

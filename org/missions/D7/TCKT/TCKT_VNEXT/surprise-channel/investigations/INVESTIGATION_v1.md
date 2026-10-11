@@ -1066,3 +1066,30 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "notes": "Also: bunx is absent on this box; tsc was run as 'bun x tsc -b'."
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S25",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-11T04:27:59Z",
+  "one_line": "opal-ticket-api's lambda-source-map entry is internally inconsistent and stale: its artifact_sha256 is the 2026-10-09 SA1 build while its last_deployed_commit and last_deployed_at still name the 2026-10-07 deploy, so the one field a reader would reach for as a rollback hash names neither the build that was live before this apply nor the commit beside it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json at box/dell2 HEAD, functions['opal-ticket-api']: artifact_sha256 ywAvsfx/j3RTZOoOvN+znGsRhslUT+92XNgHhcglNQA=, last_deployed_commit da431554186bd74759f3d85bc4423f42a6c4a8f9, last_deployed_at 2026-10-07T19:37:43Z, recorded_by record-terraform-deploy.sh (235 functions in the map as the printed denominator)",
+      "the same three values read identically in the uncommitted working copy, so this is not an artifact of the 4 uncommitted lines in that file -- those move the artifact_sha256 of two OTHER functions and contain 0 ticket lines",
+      "ywAvsfx... is the SA1 build, named as that deploy's uploaded content-sha256 in org/critical_paths/change_management/20261009T0450Z_tckt-vnext-sa1-clamp-20261009_deploy_completion.md leg S1, dated 2026-10-09T045422Z -- two days after the last_deployed_at beside it",
+      "aws lambda get-function-configuration --function-name opal-ticket-api read CodeSha256 HK82TEd0SQWeGqWEEG7HV10QK8agPizblDoXkvITRJA= with LastModified 2026-10-09T11:43:28Z at this order's BEFORE read, and the artifact bucket holds that build as object version TNDfJSNhCarmtqRmFU.jsPUaiO7BLSsK uploaded 2026-10-09T11:40:43Z -- a deploy the map records in no field",
+      "live CodeSha256 after this order's own apply is W03VREoMEmxNaRoADDDWrXE3IycD9c5vodB+rHBAtg0= (object version RI4EX8i.EL18LgmpA54Fixk.hmjLsH4h), which the map also does not carry; this seat cannot write it, because infra/aws/lambda/ci/ is outside the <paths> of TCKT_VNEXT.TO-APPLY-R2-rr2 and owned-paths refuses it"
+    ]
+  },
+  "spec_asserts": "The deployment rules' Rule 4 (canonical home /cloud-ops): every Lambda has an entry in infra/aws/lambda/ci/lambda-source-map.json, and this entry declares itself recorded_by record-terraform-deploy.sh -- a writer that runs per deploy and whose fields are therefore read as naming the last deploy.",
+  "world_is": "For opal-ticket-api the writer's fields have drifted apart and then stopped. artifact_sha256 advanced to the SA1 build on 2026-10-09 while last_deployed_commit and last_deployed_at did not, so within ONE entry the hash and the commit beside it describe different deploys; and neither records the 2026-10-09T11:40Z build that was actually live when this order began, nor this order's own. Rule 4 already states the map does not compare deployed bytes to built-from bytes and that code currency is the assignee's read, which is why this is INERT and why this order measured the live package by content instead. The sharper point is narrower than staleness: a reader doing a rollback could take artifact_sha256 as the previous build's hash. Here that would have been wrong -- the real prior build was HK82TEd0..., and ywAvsfx... is a build two deploys back. The correct rollback source for this apply was established from S3 object versioning and git, not from this file.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Off-task for TO-APPLY-R2-rr2 and filed as one row rather than halting, per CLAUDE.md section 2. No act is proposed here and nothing in this order depended on the map: pipeline, tf_resource and artifact key were read from it and are correct; only the deploy-recording fields are at issue. Owner for the carrier itself is unnamed in this row because record-terraform-deploy.sh is shared infrastructure and /cloud-ops already records it as having known writer failures (the CHANGELOG.json writer plus the owned-paths hook on the Andrew identity); whether that is the cause here was NOT measured."
+}
+```

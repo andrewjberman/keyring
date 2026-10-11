@@ -177,7 +177,7 @@ worker): this cell's IAM (`safe-apply`), the script into `code/scripts/bronze/`,
 bronze is NOT deleted here (DEC-8: an S3 delete needs a human's confirmation) and its existing objects are copied by CloudOps at the drain.
 Base box/dell1. LF only.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <to_id>MDPF_CANON.TO-CN-c-2</to_id>
 <slot>~9</slot>

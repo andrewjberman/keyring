@@ -21,3 +21,11 @@ stage: /canonical-flow DRIVE FORWARD (outcome 1). Empty-tick rule not applicable
 | .tools/prd-signoff.py status | worked: ADMITTED after the CVO's re-sign |
 | .tools/round-close-check.py | worked: MAY-CLOSE |
 | .tools/wk-provision.sh | root worktree OK; nested portal worktree refused on a stale branch (gap: it does not skip portal for a cell that names no portal path) |
+
+## 04:3xZ close
+
+- 04:25Z CTO close read @97b794cd7a (FWD-8 REALIZED, CVO msg 3477); 04:31Z grades @fcc7dab4a3 (FWD-1..8 REALIZED against my report @af0bac6412).
+- D1-W1-S5 disposed @bf389eaff4 (the bar is the script's own `--gates` mode; planted regression rc=1, pytest reads green).
+- Atomic close @acc6955bcf: status complete, dep_stage CLOSED, `closed` 2026-10-11; missions-tree-index check 0 violations.
+- Push state: LOCAL @acc6955bcf on box/dell1; origin/box/dell1 read 7b423de725 (ls-remote). No push by this seat.
+- Standing: D1-W1-S2 OPEN with 1.0.0_SA_CTO~DELL1 (two cards to 4.0.0_SA_CRO). Stale `wk-LGIC_ENFORCE-1-portal` branch (round 20) left; not this round's.

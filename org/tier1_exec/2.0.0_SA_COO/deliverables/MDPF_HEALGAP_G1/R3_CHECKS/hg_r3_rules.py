@@ -92,6 +92,27 @@ def t9_iam(path: str) -> int:
         bad.append("s3:ListBucket carries no s3:prefix condition on blackdiamond/cottonwood/meta/")
     if re.search(r'opal-data-assets/blackdiamond/cottonwood/meta/\*"', blk):
         bad.append("a bare meta/* resource")
+    # the ListBucket statement, read exactly (worker ~7, row D1-W7-S3): Resource is the bucket ARN and nothing else,
+    # and the s3:prefix condition names the one meta prefix with no wildcard.
+    li = blk.find("s3:ListBucket")
+    if li >= 0:
+        start = blk.rfind("{", 0, li)
+        end, depth = None, 0
+        for j in range(start, len(blk)):
+            depth += {"{": 1, "}": -1}.get(blk[j], 0)
+            if depth == 0:
+                end = j
+                break
+        stmt = blk[start:end + 1] if end else blk[start:]
+        res = re.search(r'Resource\s*=\s*(\[[^\]]*\]|"[^"]*")', stmt)
+        want = "arn:aws:s3:::opal-data-assets"
+        got = re.findall(r'"([^"]+)"', res.group(1)) if res else []
+        if got != [want]:
+            bad.append("the s3:ListBucket Resource is %r, want exactly [%r]" % (got, want))
+        pre = re.search(r's3:prefix"?\s*=\s*(\[[^\]]*\]|"[^"]*")', stmt)
+        pv = re.findall(r'"([^"]+)"', pre.group(1)) if pre else []
+        if pv != ["blackdiamond/cottonwood/meta/"]:
+            bad.append("the s3:ListBucket prefix condition is %r, want exactly ['blackdiamond/cottonwood/meta/']" % (pv,))
     for m in re.finditer(r'Action\s*=\s*\[([^\]]*)\]', blk):
         acts = m.group(1)
         seg = blk[m.end():m.end() + 400]
