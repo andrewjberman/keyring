@@ -39,6 +39,15 @@ dossier's `team_sheet` field; the serving API returns that stored field as store
 2. **CONTROL by name.** A counted row whose label matches `^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*_OVERRIDE$`, or equals `EQY_FUND_YEAR`, is class
    CONTROL wherever it sits (above or below the period header) and whatever its cells hold; its `row_values` entry is None. Such a row is never
    the period header: the header search skips it (a fund-year row of increasing years above the real header must not become the header).
+   **AMENDMENT 1 (issuer, 2026-10-11 ~17:1xZ; the period header itself).** Round 46's header test required ALL of a row's numeric cells to be
+   integer years; measured on the live store it took the `EQY_FUND_YEAR` row as the header on CLX, ML FP and BABA (their true header
+   `Financial Summary` carries a side-panel number far to the right) and classed ~190 model rows above it HEADING. Replace the test, in the
+   header search and in the later-year-row rule alike: a counted row is a YEAR ROW when its integer-year cells (integers 1990..2100) number at
+   least 3, are strictly increasing in column order, and make up at least 80% of the row's numeric cells; a non-year number elsewhere on the
+   row (a side panel) does not disqualify it. The period columns are the YEAR cells' columns (a stray number is not a period). A named
+   CONTROL row is never the header and, being a year row, stays CONTROL by name. Every other class rule is unchanged. The refreshed check is in
+   `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round47/aw1_check.py` (the header row now carries a stray number in
+   column Y): your current code reads `aw1 build 1/4 control 2/2` on it. Add a case to your round-47 test for it.
 3. **Labels.** `reading` gains `row_labels`, aligned with `rows`: None unless the label matches `^[A-Z][A-Z0-9]*(_[A-Z0-9]+)+$`; for such a
    label a dict `{"text", "source", "claim", "cite", "code", "why"}`:
    - the code is a `mnemonic` of `integrations/bloomberg/research/field_map.json` (key `fields`, a list): `text` = that field's
