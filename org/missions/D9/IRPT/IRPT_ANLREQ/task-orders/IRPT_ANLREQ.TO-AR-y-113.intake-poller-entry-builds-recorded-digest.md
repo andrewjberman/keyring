@@ -63,6 +63,39 @@ entry that cannot build cannot reproduce what is live. The map's job is to repro
    "build": {"parity_skip": false, "sha256_first": "...", "sha256_second": "...", "members": <n>, "equals_target": true|false},
    "diff_lines": {"added": <n>, "removed": <n>}}`. Commit the map and this record.
 
+---
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~18:5xZ): the issuer rules on your stop (row `IRPT_ANLREQ-D2-W53-S2`). The served
+file has no blob in git, so its LIVE bytes are committed and pinned.** Your stop was right: the face forbade putting a file in the
+source folder and gave you one live call. This amendment lifts both, narrowly. The earlier seating's commit `a9abef6755` (the row, the
+record, a proof whose criterion row reads FAIL) is inherited state.
+
+Why this is the right repair and not a workaround: the map's job is to reproduce what is LIVE; the live package holds a member that
+no commit holds; the only source of its bytes is the live package itself. Committing exactly those bytes, verified by hash, makes the
+tree able to reproduce the function. Authoring a new file would change the digest and is NOT what this does.
+
+1. ONE more live read: `.tools/aws lambda get-function --function-name irpt-intake-poller`; use its `Code.Location` link ONCE, in the
+   same command, to download the zip into a temp folder OUTSIDE the worktree; NEVER print, log, write or report the link. The zip's
+   base64 sha256 must equal `YpE2MyUwdGzMfLaUGXi8cClxoVHFFmOz5LT1BYmoTa8=`, or STOP. Hash every member (sha256 hex).
+2. The member `firm_registry.json`: its sha256 must be `cc3f2c63bb2d8c14a3d65b2bb2215b4089e5e776718a307660a253eebfbd25e3` (5229 bytes),
+   the figure row IRPT_BCKEND-W4-S34 recorded; if it is not, record what you read and go on with what you read. READ the file before
+   committing it: it should hold firm identifiers and storage names only. If it holds a person's name, an account or money figure, a
+   credential or a token, STOP, commit nothing, and file a row saying which KIND of thing (never the value).
+3. Write those exact bytes (binary, no newline conversion) to `infra/aws/lambda/investor-reporting/intake/firm_registry.json` and commit
+   that ONE file alone (its own commit; the message says it is the served member of the live package, with the zip digest and the
+   member's sha256). Confirm `git show <that commit>:<path>` hashes to the same sha256.
+4. In the map entry add ONE `staged_from` row for `firm_registry.json` in the form of the entry's existing rows, `pin` = that commit,
+   `sha256` = the member's. For every OTHER member, compare the live zip's bytes with (i) its pin's blob if it has a row, else (ii)
+   the working file at HEAD: where a member with no row differs from live, find the commit whose blob equals the live bytes
+   (`git log --format=%H -- <repo path>`, compare `git show <c>:<path>` by sha256) and pin it there; if no commit matches, STOP on
+   that member and say so. Record `members_equal_live: <n> of <total>` before and after your pins.
+5. Then steps 4 and 5 of the face (build twice with no skip to the target digest; the record, now also with `"served_member_commit":
+   "<hash>"` and `"members_equal_live"`), the criterion verbatim, a fresh proof instance at the same path validated after its commit,
+   and the flip on VALID. Delete the zip when you are done.
+
+The `<paths>` grant gains `infra/aws/lambda/investor-reporting/intake/firm_registry.json` (below). Gate limb that graded this
+amendment: read from this commit's own output.
+
 ### ACCEPTANCE
 
 <criterion id="AR113-y-AC1" cell_refs="AR-y-113"><invocation>python C:/dev/wk-irpt-anlreq-53/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r11/ar11_checks.py y113-poller --root C:/dev/wk-irpt-anlreq-53</invocation><expect>Y113-POLLER-OK</expect></criterion>
@@ -78,6 +111,7 @@ entry that cannot build cannot reproduce what is live. The map's job is to repro
 
 <paths>
 infra/aws/lambda/ci/lambda-source-map.json
+infra/aws/lambda/investor-reporting/intake/firm_registry.json
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
