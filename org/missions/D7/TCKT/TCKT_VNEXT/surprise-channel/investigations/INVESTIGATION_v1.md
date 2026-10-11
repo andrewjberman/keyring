@@ -1676,3 +1676,72 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S11",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T12:30:00Z",
+  "one_line": "R3-rn-1: the order's constant ROW_LIFETIME_SECONDS = 7200 collides with an existing test that bars the literal 7200 from the runner's code; coded as 2 * 60 * 60 (value 7200).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~8/fwd1_runner/test_fwd1_runner.py test_token_exp_is_the_argument_and_capped asserts '7200' not in _code_only(run.__file__) (no two-hour TOKEN anywhere in the code)",
+      "fwd1_run.py: ROW_LIFETIME_SECONDS = 2 * 60 * 60; the new test asserts run.ROW_LIFETIME_SECONDS == 7200"
+    ]
+  },
+  "spec_asserts": "TO-R3-rn1 item 1: ROW_LIFETIME_SECONDS = 7200 (a module constant), and no earlier test is weakened.",
+  "world_is": "A literal 7200 in the runner's code fails the older test, whose intent is that the token never lives two hours (the ROW does, the token does not). The value is 7200; only the spelling differs. The older test was not edited.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S12",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T12:30:00Z",
+  "one_line": "R3-rn-1: the order names the trace field `cleanup: \"PENDING_ROW_DELETE\"`, but trace[\"cleanup\"] is already an object that holds the cleanup record; the state is coded as trace[\"cleanup\"][\"state\"].",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fwd1_run.py build_trace: \"cleanup\": {\"row_removed_read_back_absent\": False, \"tickets_completed\": {}}; the existing tests read trace[\"cleanup\"][\"row_deleted_at_unix\"] and the other keys",
+      "fwd1_run.py leave_row_in_place and finish_cleanup write state PENDING_ROW_DELETE then DONE, with row_left_in_place, row_delete_not_before (ISO and unix), known_limit, row_deleted_at, row_removed_read_back_absent and finished_by, all inside trace[\"cleanup\"]; job_last_read is top level"
+    ]
+  },
+  "spec_asserts": "TO-R3-rn1 items 1 and 2: the trace carries cleanup: \"PENDING_ROW_DELETE\" and later cleanup: \"DONE\".",
+  "world_is": "A string cannot replace the object without breaking the earlier tests and losing the ticket and wait record. A reader of the trace looks for cleanup.state, not a string at cleanup.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S13",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T12:30:00Z",
+  "one_line": "R3-rn-1: 'accepted' is coded as 'hop (d) was not refused', so two hop (d) outcomes with no usable REQ id (SUBMISSION_ANSWER_UNREADABLE and REQUEST_ID_UNRESOLVED) also leave the row in place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fwd1_run.py hop_d_analysis: submitted_at_unix is set whenever submission_refusal() returns None; the runner's own test names the first case 'accepted without a REQ id'",
+      "test_accepted_submission_leaves_the_row_and_exits_3 covers an answer with state QUEUED and an identity that carries no request_id"
+    ]
+  },
+  "spec_asserts": "TO-R3-rn1 item 1: the row is left in place when hop (d) is classified ACCEPTED by the existing state-and-identity rule.",
+  "world_is": "The existing rule classifies a refusal by state and HTTP status; an answer that is not a refusal and carries no usable id is not classified as accepted or refused by it, yet the service may have queued a job whose start re-reads the row. Leaving the row costs two hours of a synthetic row; deleting it could kill a job. Chosen: leave it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
