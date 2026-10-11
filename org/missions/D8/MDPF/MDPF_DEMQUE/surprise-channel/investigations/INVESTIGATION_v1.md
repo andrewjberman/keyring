@@ -1176,6 +1176,26 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "aws s3 cp opal-data-cot/platinum/clients/<rel>/composition.json for the four candidate households (this seat)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S13",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-11T16:58:12Z",
+    "one_line": "The three funds the cause rule classed wrong-symbol (FTHSX, PFORX, RPIFX) have a median trade-price / daily-close ratio of 1.00 and a 10th-90th percentile spread of about plus or minus 2 to 4 percent, so their trade prices centre on the symbol's close but do not fall inside the 0.5 percent band; no date offset of up to two trading days improves agreement.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "CTO ADDENDUM 4 (msg 4020): the three funds stay unresolved, with a row on whether fund trade prices are comparable to a daily close. ROUND9_LOCK_CAUSE_14.md classed them `wrong-symbol` by the rule (both agreements below 60).",
+    "world_is": "2026-10-11 ~17:2xZ, read-only probe (this seat; lock._load_transactions + lock.trade_prices, one paced yahoo_pull.pull per name, scratch pacer): per name, share of trade dates within 0.5 pct of the close shifted by -2..+2 trading days: FTHSX 19.5/23.3/40.7/25.0/18.2 (627 dates), PFORX 38.2/41.9/42.9/42.5/41.7 (513), RPIFX 37.9/39.0/39.2/39.5/38.7 (651); control LCEYX (87.2 pct at lag 0) 51.7/65.4/87.2/65.4/56.4 (211). Median of trade price / same-day close: FTHSX 1.0000, PFORX 1.0001, RPIFX 1.0000; 10th-90th percentile FTHSX 0.974-1.016, PFORX 0.966-1.019, RPIFX 0.960-1.019; LCEYX 0.994-1.000. So lag 0 is the best offset for FTHSX and a flat 38-43 pct for PFORX and RPIFX, and the trade prices centre on the close. What the spread is (fees in Amount, a Quantity or Amount convention, or per-lot NAV timing) was NOT measured, and neither was whether the symbol is the right share class. `wrong-symbol` is the rule's label, not a finding.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "scratchpad lag_probe.py output (this seat, 2026-10-11 ~17:2xZ): FTHSX/PFORX/RPIFX/LCEYX lag table and ratio quantiles",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/ROUND9_LOCK_CAUSE_14.md"
+      ]
+    }
   }
 ]
 ```

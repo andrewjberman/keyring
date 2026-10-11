@@ -10,7 +10,7 @@
  "subject": "IRPT_ANLREQ: the packager mint, a WRITE (one IAM grant, one service token, one secret) under a signed pair",
  "body_path": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/CROSSBOX_ASK_PACKAGER_MINT_20261011.md",
  "opened_at": "2026-10-11T16:09:45Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T16:10:37Z",
   "bus_message_id": "619688d8-29fc-458c-ae81-fd1562e894e6"
@@ -21,9 +21,9 @@
   "bus_message_id": "004d3038-320e-4673-8b38-a4dc42b0c353"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-11T16:58:08Z",
+  "from_by": "2.0.0_SA_COO~G2",
+  "to_at": "2026-10-11T17:06:52Z",
+  "to_by": "1.0.0_SA_CTO"
  }
 }
