@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CB2</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -41,7 +41,7 @@
 
 ### ACCEPTANCE
 
-<criterion id="CB61bi2-AC1" cell_refs="CB-bi-2"><invocation>python -c "import json,re;d=json.load(open('C:/dev/_cotbkf_private_evidence_20261009/r61/shared_infra_plan.json',encoding='utf-8'));rc=d.get('resource_changes',[]);pat=re.compile(r'lgic_firm|restricted|breakglass|crm',re.I);w=[x for x in rc if pat.search(x['address'])];mv=[x for x in w if x['change']['actions']!=['no-op']];oth=[x for x in rc if not pat.search(x['address']) and x['change']['actions']!=['no-op']];print('CRM-PLAN resources=%d watched=%d watched_changed=%d other_changed=%d'%(len(rc),len(w),len(mv),len(oth)))"</invocation><expect>watched_changed=0</expect></criterion>
+<criterion id="CB61bi2-AC1" cell_refs="CB-bi-2"><invocation>python -c "import json,re;d=json.load(open('C:/dev/_cotbkf_private_evidence_20261009/r61/shared_infra_plan.json',encoding='utf-8'));rc=d.get('resource_changes',[]);fed=[x for x in rc if re.search(r'lgic_firm',x['address'])];mv=[x for x in fed if x['change']['actions']!=['no-op']];na=[x for x in rc if 'restricted_breakglass' in x['address'] and x['change']['actions']==['create']];print('CRM-PLAN-FED fed=%d fed_changed=%d never_applied_creates=%d'%(len(fed),len(mv),len(na)))"</invocation><expect>CRM-PLAN-FED fed=10 fed_changed=0 never_applied_creates=2</expect></criterion>
 `CB61bi2-AC1` -- the plan succeeded (the JSON exists), the watched set is not empty, and 0 watched resources change. Report the
 watched count: a watched count of 0 is a failed read, not a pass.
 
@@ -81,6 +81,17 @@ statements, the break-glass role and the firm bucket policies (each named by add
   -> `CRM-PLAN-FED fed=10 fed_changed=0 never_applied_creates=2`.
 - Record that line in your proof instance as CB61bi2-AC1's evidence, keep your first reading (`watched_changed=2`) beside it, validate,
   and flip `<status>` to complete. `CB61bi2-AC2` stays PENDING-ADJUDICATION. Do this AFTER `ADVI_COTBKF.TO-CB-bj-1`.
+
+**AMENDMENT 3 (issuer, 2026-10-11T08:29Z) -- the criterion ELEMENT and the proof instance move together, in ONE commit, by the assignee on this instruction.**
+- AMENDMENT 2 changed the criterion in prose and left the element of `CB61bi2-AC1` with the superseded invocation and bar. The
+  issuer tried to edit the element alone: `to-pipeline-gate` refused the commit, because the proof instance records the element's old
+  invocation and the two then diverge. So neither file can move without the other.
+- The exact replacement element, one line, is the whole content of
+  `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/CB61bi2_AC1_ELEMENT_REPLACEMENT.txt`.
+- `0.7.0_AE_CloudOps~CB2`: replace the one element line of `CB61bi2-AC1` in this order with that file's line, byte for byte; set the
+  instance's recorded invocation for that criterion to the same invocation and keep `CRM-PLAN-FED fed=10 fed_changed=0
+  never_applied_creates=2` as its evidence with your first reading beside it; validate; commit both files together. This is the
+  issuer's bar written by the issuer, so writing it in is not you setting your own bar. `<status>` stays complete; nothing is re-run on AWS.
 
 <paths>
 org/missions/D8/ADVI/ADVI_COTBKF/deliverables/

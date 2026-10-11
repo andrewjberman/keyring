@@ -25351,3 +25351,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-W282-S1 -- the adapter's role holds no Secrets Manager read, so the vendor path this cell opens fails at the credential read
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W282-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~282",
+  "surfaced_at": "2026-10-11T08:19:12Z",
+  "one_line": "The role irpt-performance-adapter-role has no secretsmanager:GetSecretValue grant: both session-read policies in retained.tf are count-gated on var.approved_performance_plan, which is unset. Once the plan gate is gone, a fresh Cottonwood or Inflection request logs its use row and then the transport's credential read is denied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/performance/retained.tf @247a30072a lines 176-215: data.aws_secretsmanager_secret.performance_cot_session / performance_inf_session and aws_iam_role_policy.performance_approved_session / performance_approved_inf_session each carry count = (performance_plan_firm == <firm> ? 1 : 0); performance_plan_firm is null when var.approved_performance_plan is null",
+      "live read 2026-10-11 via .tools/aws iam list-role-policies --role-name irpt-performance-adapter-role: 7 policies (directory-read, logs, ownership-map-read, selection-read, service-profile-read, render-grant-read, retained); none is a session-read policy",
+      "live read via get-function-configuration: Environment.Variables keys are IRPT_PERFORMANCE_MAPPING_AS_OF, IRPT_DIRECTORY_BUCKET_MAP, IRPT_REQUESTS_TABLE, IRPT_CONTRACTS_DIR, IRPT_EVIDENCE_BUCKET, IRPT_FIRM_REGISTRY, IRPT_BD_HELPERS_PATH: no plan variable is set, which is why every admitted request ends at authorization.py line 90 today",
+      "the same retained policy DOES grant dynamodb:PutItem on the requests table under LeadingKeys of the three served firms and kms:GenerateDataKey via DynamoDB, so the use-record write is permitted; Secrets Manager is the one missing permission"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-421 item 7: the packet says whether the function's role already holds every permission the new path needs (read the Terraform and say; change none).",
+  "world_is": "It does not. Landing the built zip alone (Branch A) turns the current refusal OBJECT_NOT_COVERED into a different failure: the fresh request writes one use row, then bd_live.cottonwood_cookie / orion_live.orion_session_jwt call GetSecretValue and are denied, so the FWD-2 user still sees no figure. This cell changed no IAM, as ordered. An IAM change (two exact-secret read policies not gated on a plan) is a separate order and an apply surface the Dells cannot write.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W282-S2 -- a vendor-calculated report reopens as a named refusal, so a repeat fresh request is refused after the first one is served
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W282-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~282",
+  "surfaced_at": "2026-10-11T08:19:12Z",
+  "one_line": "Once the plan gate is gone, the first fresh Cottonwood request persists an accepted report and serves it; the second identical request finds the pointer and is refused RetainedVendorFigureRefused (batch 66 item 2), so a vendor figure is served exactly once per firm, account set and window.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/retained.py @247a30072a: reopen(existing, check_engine_series=True) raises RetainedVendorFigureRefused when lineage.provider is not the holdings basis; the fresh path's own call passes check_engine_series=False",
+      "replay arm cache_hit_no_vendor_call in org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~282/IB119-1_replay.json: the built tree computes an accepted Cottonwood report once (1 transport construction, 1 use row), then both trees answer the repeat with refused/RetainedVendorFigureRefused, 0 transport constructions, 0 use rows",
+      "performance/tests/test_vendor_use_gate.py::test_cache_hit_never_calls_vendor_a_reopen_builds_no_transport_and_writes_no_use_record asserts the same on the repo tree"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-421 item 2: cache_hit_never_calls_vendor -- reopening an accepted report (the retained path) builds no transport and writes no use record.",
+  "world_is": "True for the retained path as built, but for a vendor-calculated report the reopen is refused by name rather than served, so the user-visible effect of landing is one served figure and then DEPENDENCY_UNAVAILABLE on a repeat. The retained.py rule is unchanged by this cell (outside its intent); whether a vendor figure should now reopen is a ruling for the CTO, not a defect fixed here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W282-S3 -- one performance test fails for a calendar reason that touches nothing this cell changed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W282-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~282",
+  "surfaced_at": "2026-10-11T08:19:12Z",
+  "one_line": "test_holdings_gold_calendar_gap.py::test_the_fallback_calendar_is_graded_in_its_own_years_and_clipped_outside_them fails because the trading-calendar hardcoded fallback covers 2010-2027 and the test reaches 2028.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest over performance/tests at cd833e66cb: 1 failed, 268 passed; the failure is trading_calendar.CalendarCoverageError: calendar source NYSE/hardcoded-fallback-2010-2027 does not cover year 2028 (date 2028-01-07); install pandas_market_calendars or extend the generated fallback, raised at lib/trading_calendar.py line 151",
+      "the test file references neither authorization nor any module this cell changed (a count of those names in it reads 0)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-421 item 3: run the whole performance/tests directory and report its last line; a failure that predates the change is named with its node id and left.",
+  "world_is": "One failure outside the cell: performance/tests/test_holdings_gold_calendar_gap.py::test_the_fallback_calendar_is_graded_in_its_own_years_and_clipped_outside_them. Left as ordered. Not re-run on the pre-change tree (its failure is date-driven and the file references no module this cell changed).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
