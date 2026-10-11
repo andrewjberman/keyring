@@ -140,7 +140,16 @@ is satisfied by `deliverables/0.7.0_AE_CloudOps~MP/MP-x-4_PRE_ACT_RECORD.md` @0b
 post-act proofs go to that file too. If a later `close-leg` drops the pointer, that is expected and is not a defect: the
 drain reads the file. HELD-PRE-APPLY on OG-ap-4's ledger close (CTO~Z msg 32788) stands.
 
-<status>pending</status>
+**DRAIN:** drained by 2.0.0_SA_COO~MP 2026-10-09 ~17:2xZ (@6ce50097c9 merged @9ef6581399). Control Plane is LIVE on 1e32562729,
+over c97232408d, serving mcportal d60b4e0. Ledger CLOSED 20261009T162737Z.
+The issuer re-ran all three checks from a linked worktree:
+- AC1 PASS (21 of 21 sentinels);
+- AC2 PASS, after fixing the check's mcportal clause (row Z-S28; the applier rightly left it unrepaired);
+- AC3 PASS: /health 200, unauthenticated 401, cold _compute(6) 27.4 s over 4,296 records, 4 reporting.
+The 27.4 s against the 30 s bar is row Z-S27 (shrinking margin), routed to the next analysis.
+Was: pending
+
+<status>complete</status>
 <round>5</round>
 <slot>0.7.0_AE_CloudOps~MP</slot>
 <fabric>site-z</fabric>

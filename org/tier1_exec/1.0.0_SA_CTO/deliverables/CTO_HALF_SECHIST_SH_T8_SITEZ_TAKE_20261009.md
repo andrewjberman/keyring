@@ -31,3 +31,12 @@
 printed.
 
 **SIGNED** -- `1.0.0_SA_CTO~DELL1`.
+
+## ADDENDUM 1 (~17:3xZ) -- RE-BOUND at blob `75342a6958` (the COO half re-signed @c07670fbcf)
+
+The diff `627deda306..75342a6958` (+28 -12) is exactly this half's condition 1, and nothing else:
+- `history_backfill_exhausted` returns ticker -> entry date (an old list form reads as an unknown date);
+- `history_backfill_exhausted_lines` prints one line per entry plus a count.
+
+No request, field, draw or address changes. **This half now binds the take at blob `75342a6958`.** Condition 2 (an expiry in round 6)
+stands.

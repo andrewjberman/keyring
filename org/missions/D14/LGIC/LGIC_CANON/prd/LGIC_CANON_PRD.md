@@ -4,7 +4,7 @@
 {
  "project": "LGIC_CANON",
  "directive": "D14",
- "fabric": "laptop",
+ "fabric": "dell1",
  "prd_version": "v1.7",
  "step": 4,
  "brief_ref": "docs/briefs/d14-pipeline-canon-brief-20260912.md@a4cc0cb681",

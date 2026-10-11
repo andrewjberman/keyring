@@ -98,3 +98,4 @@ Read-only: the whole repository, in particular the issuer's check `org/missions/
 <round>41</round>
 <slot>~1</slot>
 <fabric>dell1</fabric>
+<status>complete</status>

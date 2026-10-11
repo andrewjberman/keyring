@@ -1,0 +1,8 @@
+# Drive log 2.0.0_SA_COO~R1 -- 2026-10-09 17Z (AMGT_RESAPP)
+
+2026-10-09T17:06:24Z | AMGT_RESAPP | L7 | r86 | 4/5 | WAIT: XB-c46b (AMENDMENT 4) SENT 17:00:31Z, committed 08a87f4a36; laptop ACK owed; crosswalk key unwritten; D1-S18 filed @ea8c0b2eb8 (scoped watchlist ignores selected_tenant; carried); deadline 17:28Z
+2026-10-09T17:15:09Z | AMGT_RESAPP | L7 | r86 | 4/5 | WAIT: XB-c46b DELIVERED to ~AMG 17:08:48Z (msg 2875); crosswalk key unwritten; deadline 17:28Z
+2026-10-09T17:25:40Z | AMGT_RESAPP | L7 | r86 | 4/5 | DRIVE FORWARD: kk-1 republish LANDED 17:20:53Z (crosswalk/v1/2026-10-09.json d3y5Cbs6ygTMvKj28fSvbR4ciDsyPv.9, prior CHWQWAM0... kept), before the 17:28Z deadline; issuer re-read AC1 YES (C1-C5, 6 admitted, folders 102, 204 of 243 issuer.cik), AC2 r84_listing deployed YES 3/3; AC3 + ancestry lines + close wait on ~AMG's drain to CLOUD
+2026-10-09T17:35:14Z | AMGT_RESAPP | L7 | r86 | 4/5 | WAIT on ~AMG drain (no ~AMG commit on origin since the publish); RULED msg 2900 (CORPUS C1 asks the next scoped-API release carry dossier.py /8): no deploy cell in round 86 (decomposition frozen) -> carried to the round-86 analysis (packet section 5), reply sent to C1
+2026-10-09T17:44:53Z | AMGT_RESAPP | L7 | r86 | 4/5 | NUDGE: ~AMG no drain 2 ticks after the 17:20Z publish -> nudge via MSTR~DELL1 for the drain + report (ancestry lines, AC3)
+2026-10-09T17:58:02Z | AMGT_RESAPP | L7 | r86 | 4/5 | WHILE WAITING: XB-f170 (drain+report) SENT 17:52:06Z; built round86_prep/checks/r86_real_run.sh and ran it ahead: every served outcome YES (description, sentences 0 of 98, crosswalk C1-C5 folders 102, listing 3/3, yield 31/29, writers 8 passed, store 5/5 x2, r80-r82), live HZoC2x unchanged before/after; the close re-runs it --with-ac3 after ~AMG's drain

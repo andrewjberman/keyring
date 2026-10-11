@@ -23,7 +23,7 @@
 ### THE CELL
 
 FWD-3's daily-return chain (`data/assets/scripts/silver/`, default cash leg `method_r28`, run by `commonwealth_sweep_regrade.py`) moved
-4 account-months from MATCH under `method_r26` to DIFF under `method_r28`: B3S728504 and B3S728506, 2023-05 and 2023-06 (row
+4 account-months from MATCH under `method_r26` to DIFF under `method_r28`: acct#79d02c2c and acct#4a890dd1, 2023-05 and 2023-06 (row
 D2-W53-S3; `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~53/`). The worker's unmeasured guess: pay-date versus
 ex-date dividend dating, which the split-scaled position now weights more. Dividends in the delivery carry the pay date only. Ex-dates are
 available from dell1's price store `s3://opal-data-assets/yahoo/global/silver/price_history/cusip=<CUSIP>/dividends.parquet` (the CUSIPs

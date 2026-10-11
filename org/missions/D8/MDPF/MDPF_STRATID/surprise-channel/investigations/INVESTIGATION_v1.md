@@ -384,6 +384,177 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Row D1-S4: the deployed rebalancer_schemas.py imports a module absent from S3.",
     "world_is": "Both modules are present and import; the hazard is disarmed. Whether the next scheduled silver run reads the S3 list cleanly is ledger L3."
+  },
+  {
+    "id": "MDPF_STRATID-D1-W7-S1",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~7",
+    "surfaced_at": "2026-10-09T16:30:57Z",
+    "spec_asserts": "TO-ST-u1 R4: declaring Cottonwood OUTSIDE re-points ONE round-1 test (test_undeclared_firm_member_not_counted in test_stratid_global_fold.py); 'Weaken no other round-1 test'; the order's <paths> grants test_stratid_global_fold.py and the new round-2 test file and no other test file.",
+    "world_is": "A second round-1 test asserts Cottonwood undeclared and fails once the registry row lands: data/mdpf/tests/stratid/test_stratid_basis.py::test_undeclared_firm_population_is_not_counted asserts 'cottonwood' not in reg.SMA_FIRM_POPULATION and sma_global_basis_of('divz','cottonwood') is None (lines 53-58, the cottonwood half). The file is outside this order's <paths>, so it is left unedited and RED. Its inflection half still holds. The criteria do not run it (AC3 runs st_t3_tests.py, which is test_stratid_global_fold.py only).",
+    "one_line": "ST-u-1's registry change (SMA_FIRM_POPULATION['cottonwood']='outside') turns round 1's test_stratid_basis.py::test_undeclared_firm_population_is_not_counted red; the file is outside TO-ST-u1's <paths>, so it is left for the issuer to grant and re-point (cottonwood half to 'declared outside').",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured: python -m pytest data/mdpf/scripts/gold/tests/test_category_views_null_tail_guard.py data/mdpf/tests/taxsma data/mdpf/tests/stratid -> '1 failed, 260 passed'; the one failure is test_stratid_basis.py::test_undeclared_firm_population_is_not_counted, AssertionError: assert 'cottonwood' not in {'49financial': 'inside', 'cottonwood': 'outside'}",
+        "the same file's test_member_firm_row_overrides_firm_default passes (it monkeypatches cottonwood outside itself), and every other test under those three paths passes at the ST-u-1 change",
+        "the failing line is test_stratid_basis.py:54 at the worktree HEAD of this branch; the registry edit is data/mdpf/scripts/gold/mdpf_category_registry.py SMA_FIRM_POPULATION, required by criterion ST2-u1-AC2 arm 'build'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Id uses the D1 fabric coordinate as the existing worker rows of this channel do (the order text names MDPF_STRATID-W7-S<k>). Suggested re-point for the file's owner: replace the cottonwood half with sma_global_basis_of('divz','cottonwood') == additive and SMA_FIRM_POPULATION['cottonwood'] == 'outside' (the new test_cottonwood_declared_outside already asserts both); keep the tax/cottonwood line (None only because tax is a scope-row member, check before keeping)."
+  },
+  {
+    "id": "MDPF_STRATID-D1-W7-S2",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~7",
+    "surfaced_at": "2026-10-09T16:31:58Z",
+    "spec_asserts": "TO-ST-u1 R2: 'Every Cottonwood cohort_class sma member is either counted or named withheld on every Global date it has a value'; seam arm A reads the SERVED Cottonwood slice, which carries two sma members (divz, pfde).",
+    "world_is": "In the real build, apply_taxsma_overlay runs before apply_sma_sleeve_overlay and puts a Cottonwood `tax` leaf (cohort_class 'sma', source_basis carve_out, no overlap_model_value) into the Cottonwood by_model. With Cottonwood OUTSIDE its firm default makes that leaf ADDITIVE, so the sleeve fold would take it as a candidate and name it OVERLAP_UNMEASURED on every date (counted nothing, but a flood of false held-out rows); the served-slice seam cannot see it because the slice is read before the Tax overlay. Resolved inside the order's paths: the sleeve fold skips TAXSMA_TAX_MEMBER_ID (Tax's own fold owns that leaf at every firm), pinned by test_cottonwood_tax_leaf_is_the_tax_folds_not_the_sleeve_folds. A reading of R2 that counts the Tax leaf as one of 'every Cottonwood sma member' is the opposite call; the issuer decides.",
+    "one_line": "ST-u-1 declares Cottonwood outside, which would make the post-TaxSMA Cottonwood `tax` leaf a sleeve-fold candidate; the seam (served slice, pre-Tax) cannot see it. The fold now skips the Tax leaf, owned by the Tax fold.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "mdpf_gold_consolidator.py: build order is apply_taxsma_overlay (line 2506) then apply_sma_sleeve_overlay (line 2508); apply_taxsma_overlay writes c['by_model']['tax'] = _taxsma_by_model_entry(cown, ccov, fcot) for Cottonwood, which returns cohort_class 'sma', source_basis from sma_basis_of('tax','cottonwood') = carve_out, and no overlap key",
+        "measured by the new test: without the skip, a Cottonwood tax leaf in the overlay input yields sma_additive_withheld rows with member_id 'tax'; with it, none and sma_additive_aua is unchanged",
+        "the seam's served slice carries exactly two sma members (arm A prints divz and pfde), so it is blind to the post-Tax leaf"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "MDPF_STRATID-D1-W7-S3",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~7",
+    "surfaced_at": "2026-10-09T16:40:04Z",
+    "spec_asserts": "TO-ST-u2 build step 2: 'A carve-out-only member (49financial) states False, and its by_firm basis says why'; TO-ST-u1 R1: by_firm firm_id is 49financial for an entry with no firms at Global. TO-ST-u2's <paths> grant the consolidator and its own test file only.",
+    "world_is": "ST-u-1 as committed (fab599bcea) emitted by_firm only for a member with a firm-listed entry, so a carve-out-only row (49financial divz/pfoe) had none, and ST-u-1's own test test_fully_overlapped_member_held_out_by_name_not_added asserted its absence. ST-u-2 needs it, so the consolidator now emits by_firm at Global for every carve-out no-firms entry (firm_id 49financial) and the one ST-u-1 test assertion became the stronger by_firm == [{49financial, carve_out, 30.0}]. That edits data/mdpf/tests/stratid/test_stratid_round2_firm_basis.py, an ST-u-1 file outside TO-ST-u2's <paths>, in the same commit. The Tax leaf (a no-firms ADDITIVE entry summing 49financial and Cottonwood) is deliberately given no by_firm: no single firm owns the amount.",
+    "one_line": "ST-u-2 needs by_firm on carve-out-only Global rows; that reverses ST-u-1's absence assertion in its own test file, which TO-ST-u2's <paths> do not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured: with the consolidator change and the ST-u-1 test unchanged, test_fully_overlapped_member_held_out_by_name_not_added fails on `'by_firm' not in {...}` (1 failed, 19 passed across the three stratid test files)",
+        "the ST-u-1 criteria still pass after the change: st_u1_tests U1-OK, st_u1_seam SEAM-OK, st_u1_regress U1-REGRESS-OK (st_u2_regress re-runs all three)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "MDPF_STRATID-D1-W7-S4",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~7",
+    "surfaced_at": "2026-10-09T16:40:04Z",
+    "spec_asserts": "TO-ST-u2 build step 2: tree row `inside_model_figure` is 'a bool on the frontier date. It is True if any part of the member's dollars is held out as inside a Model, and False otherwise.'",
+    "world_is": "A held-out entry has two reasons. OVERLAP is a measured overlap > 0 (inside a Model). OVERLAP_UNMEASURED is a sleeve held out whole because nobody measured whether it is inside a Model. A bool cannot carry 'unknown', so the order's text leaves the unmeasured case undecided. Implemented: inside_model_figure is True only for a held-out entry with reason OVERLAP; an OVERLAP_UNMEASURED entry is named in `held_out` with its own reason and leaves the bool False (pinned by test_tree_member_names_held_out_amounts). A reader who reads the bool alone sees False for a sleeve that may be inside a Model; the `held_out` entry beside it carries the reason. The alternative reading (any held-out entry makes it True) is a one-line change in _state_inside_model; the issuer decides. The by_model entry's own inside_model_figure is tri-state (None when unmeasured), as the order says.",
+    "one_line": "The tree row's bool inside_model_figure cannot express an unmeasured overlap; implemented as True only for a measured overlap, with the unmeasured case named in held_out under its own reason.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "apply_sma_sleeve_overlay already emits two reasons into sma_additive_withheld: SMA_WITHHELD_OVERLAP and SMA_WITHHELD_UNMEASURED (mdpf_gold_consolidator.py), so both can reach a tree row's frontier-date held_out",
+        "the order's by_model rule for the same field is explicitly tri-state (True / False / None when unmeasured); the tree row's rule is bool-only, so the two fields differ in what they can say"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "MDPF_STRATID-D1-S7",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-09T20:30:00Z",
+    "one_line": "ARMED: the deployed build_cottonwood_mdpf_slice.py (ST-w-7, ff1a8867a6) imports opal_unidentified at module level, which is in neither home -- the mdpf-gold-lambda package (cottonwood scope fails, global skipped, qa_local 20:14:51Z) nor s3://opal-data-mdpf/code/scripts/{silver,assets_gold,gold}/ (runner step 6d). The issuer's CTO-condition-3 import closure covered the consolidator and registry, not the slice.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps~DELL1 under MDPF_STRATID.TO-APPLY-R2 forward-fix amendment (F1 first-mint to runner silver, F2 one package line + redeploy), before the 2026-10-10 12:52Z dispatch",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudOps~DELL1 msg 3129 / row MDPF_CANON-D1-S3 @7ce182e0ca: qa_local invoke 20:14:51Z errors [cottonwood, global], 8 of 16 A4 objects, 'ModuleNotFoundError: No module named opal_unidentified'",
+        "issuer read 20:2xZ: head-object 404 for opal_unidentified.py under code/scripts/silver, assets_gold, gold (3 of 3); build_package.py lists opal_strategy_matcher.py (:170) but not opal_unidentified.py",
+        "build_cottonwood_mdpf_slice.py:130-136 imports opal_unidentified at module level; opal_unidentified.py imports only __future__ and re"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO half condition 3: before D1, list every module the shipped files import and read each from S3 and the package manifest; any absent module ships first.",
+    "world_is": "The slice's new import was never in the closure read; the module shipped to neither home, so the next scheduled run of either path fails the Cottonwood scope (and the Global lambda skips global)."
+  },
+{
+  "id": "MDPF_STRATID-D1-W6-S5",
+  "project": "MDPF_STRATID",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_STRATID~6",
+  "surfaced_at": "2026-10-09T20:53:48Z",
+  "one_line": "ST-w-8 pad (every scope gains unidentified_strategies=None) breaks the existing test data/mdpf/tests/stratid/test_stratid_global_fold.py::test_cottonwood_and_49financial_views_unchanged, whose :166 asserts the added key set is exactly {sma_additive_aua, sma_additive_withheld}; this also turns R2_CHECKS/st_u2_regress.py to U2-REGRESS-BAD (chain st_u1_regress -> st_t3_tests). The test file is outside A11's write grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest data/mdpf/tests/stratid data/mdpf/tests/taxsma: 1 failed, 262 passed (test_cottonwood_and_49financial_views_unchanged, set-equality at :166 now also holds 'unidentified_strategies')",
+      "st_u2_regress.py last lines: U1-REGRESS-BAD st_t3_tests.py / U2-REGRESS-BAD st_u1_regress.py",
+      "fix is one line: expected set gains 'unidentified_strategies' at test_stratid_global_fold.py:166 and the value assertion at :167 is unchanged; not made, outside <paths>"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A11: the pad moves no figure and st_u2_regress.py must read U2-REGRESS-OK; the grant is mdpf_gold_consolidator.py and the new test file only.",
+  "world_is": "An existing round-1 test pins the exact added-key set of the overlay, so the A11 pad necessarily fails it; the regress chain reads BAD until the issuer widens the grant or edits the line."
+},
+  {
+    "id": "MDPF_STRATID-D1-S8",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-09T21:35:00Z",
+    "one_line": "DISARM of MDPF_STRATID-D1-S7: both homes carry opal_unidentified and the key-set pad. Runner: opal_unidentified.py first-minted 20:30:33Z (sha256 6b9c1d7f == pin), isolated import of the runner S3 copies IMPORT-OK. Lambda: package at 88e974ca10 live 21:10:34Z, qa_local 21:11:54Z green 16 of 16 errors [] with L-1 key-set identity PASS on all 4 artifact types.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "issuer download of the live mdpf-gold-lambda package 21:1xZ: mdpf_gold_consolidator.py, opal_unidentified.py, mdpf_category_registry.py, build_cottonwood_mdpf_slice.py == git show 88e974ca10 (4 of 4)",
+        "CloudOps~DELL1 msg 3216: qa_local 21:11:54Z status green, errors [], a4_objects_built 16, 'L-1 key-set identity PASS' x4; previous pin as negative control",
+        "slice sha256 7ab6f5ce identical at HEAD, in s3 assets_gold and at 88e974ca10"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row D1-S7: the deployed slice imports a module absent from both homes, and its new key breaks the L-1 key-set identity.",
+    "world_is": "Both are fixed in both homes and proven on the shipped bytes. The scheduled 2026-10-10 12:52Z dispatch and 13:30Z fire are the real runs (ledger L4)."
+  },
+  {
+    "id": "MDPF_STRATID-D1-S9",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-11T02:30:00Z",
+    "one_line": "The 2026-10-10 13:30Z scheduled-floor fire (the first scheduled run of the round-2 code) did NOT emit Global: the global scope refused at the cross-axis coherence gate (5 Opal fixed-income models carry account_count and model_value=None on 2026-10-09). Round-2 L4 (FWD-2, FWD-6) is therefore UNREAD, not failed; the 12:52Z backstop also read NOT-YET, so the runner step 6d (ledger W2 L3 runner-log half) did not run.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "mdpf-gold-lambda log stream 2026/10/10/[$LATEST]aee71e75 (13:30:37Z-13:31:37Z): 'SCOPE FAILED (isolated): global -- AssertionError: CROSS-AXIS COHERENCE GATE FAILED (global) -- REFUSING TO EMIT'; (v) presence disagreement 5 across 1 date: 2026-10-09 opal_ultra_short_term/short_term/intermediate/long_term_conservative/long_term_aggressive model_value=None, account_count 192/841/2034/3476/1431; 'cycle complete: 12/16 A4 objects built ... errors=[global]'",
+        "served: portal/gold/mdpf/global/aggregate-aua-timeseries newest key 2026-10-08.json LastModified 2026-10-09T13:31:40Z (comp-freshness --raw, age 36.8h at 02:2xZ); r2_run_read.py prints R2-RUN-READ FAIL on exactly those pre-round-2 bytes (no inside_model_figure/held_out), so that FAIL is not a grade of round 2",
+        "git diff --stat 23c47d3837 88e974ca10 -- data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py (the gate's file): empty, unchanged by round 2; the same assertion fired 2026-10-01T11:58:59Z on this log group",
+        "aum_daily line in the same stream: 'day 2021-09-02..2026-10-08' (the 49F value axis ends 2026-10-08) while Cottonwood measured 2026-10-09 (slice LastModified 2026-10-10T13:31:08Z, dates end 2026-10-09)",
+        "mdpf-feeder-trigger log stream 2026/10/10/[$LATEST]42e1390d: backstop and accelerator both 'NOT-YET dispatched false' (looked_for s3://opal-data-inf/gold/eclipse/2026-10-10/_meta/gold_complete.json and s3://opal-data-bd/schwab/silver/rps/date=20261010/data.parquet absent)",
+        "served Cottonwood slice, version IlnFtQxJ vs the prior run's ti203WCy: by_model keys 16 of 16 equal, sma members {divz, pfde} equal, 0 model_value cells differ on the 493 common dates; new key unidentified_strategies as_of 2026-10-09, names_scanned 18, config_source s3://opal-data-etfs/config/etf_universe.json, rows [Opal_Muni_Sleeve 553337.61 RULE_NOT_COUNTED]"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-APPLY-R2 leg L4 and ledger mdpf-stratid-w2-wiring-silver L3: the 2026-10-10 12:52Z dispatch and 13:30Z fire are the real runs; r2_run_read.py reads Global's run-date object.",
+    "world_is": "INFERRED, not exercised against pre-round-2 bytes: the Saturday fire's run date is Friday 2026-10-09, Cottonwood measured it and the 49F value axis did not, so Global's frontier date carries counts with no values and the unchanged gate refuses. Global's prior emit stays authoritative; nothing broken was served. L4 re-points to the first fire that emits a Global object for a date on which all three scopes carry values (expected the 2026-10-12 13:30Z fire); L3 waits for the first dispatch that is not NOT-YET."
   }
 ]
 ```

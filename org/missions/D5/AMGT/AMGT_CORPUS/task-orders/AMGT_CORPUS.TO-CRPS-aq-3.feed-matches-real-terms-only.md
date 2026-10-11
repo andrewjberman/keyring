@@ -100,3 +100,4 @@ build limb exactly) with `aq3_base_snapshot.json`.
 <round>41</round>
 <slot>~2</slot>
 <fabric>dell1</fabric>
+<status>complete</status>

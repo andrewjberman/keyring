@@ -9599,3 +9599,105 @@ fanout:
 AMGT-kk-1 runs on a laptop CloudOps seat (no synced research library on dell1), re-addressed at the GO by a crossbox ORDER through
 0.0.0_AB_MSTR~DELL1, and carries the CTO's guard: crosswalk.py refuses to publish research_universe ABSENT over a served count (AC3,
 landed before the republish), so W341-S1 is impossible from any box. kk-1 is the round's only writer of crosswalk.py.
+
+## 95. ROUND 87 -- A FAILED DESCRIPTION IS NEVER SERVED, NU'S DESCRIPTION EMPTY, THE REDEPLOY WITH DOSSIER /9, THE STALE-ROW PASS. Four orders
+
+**Input:** the CTO~DELL1 round-86 analysis `ledger/ROUND_ANALYSIS.round86.md` @2eba7c172b (R1-R3; ENRICHMENT LIST 1-4). Checks in
+`deliverables/2.0.0_SA_COO~R1/round87_prep/checks/` (r87_withheld, r87_dossier, r87_rows).
+
+### 95a. MEASURED AT THE CUT
+
+- **R1:** `read_drafted_sections` computes `company_description_verdict` (scoped_amgt.py:4266) and serves the sentences even when it
+  reads FAILED; live and local, NU serves 1 sentence under FAILED; the other four drafted names read NO_SENTENCES. The verdict exists on
+  company_description only. r87_withheld AC1 NO (deployed and local).
+- **R1 deploy:** live `HZoC2x` (pin 4c929a2ffe) packages dossier.py at METHOD `amgt-corpus-dossier/7`; box/dell1 HEAD carries `/8`, ruled
+  never served (AMGT_CORPUS CTO half ADDENDUM 1) -- the build pin must carry `/9` (C1 msgs 2900, 2970). Since 4c929a2ffe the closure roots
+  also moved `lib/opal_naming.py` and `infra/logic/registry/*` (other projects) and this project's kk-1/kk-4 identity code.
+- **R3:** `comp-surprise --project AMGT_RESAPP --json`: 505 remediation rows, 125 `closed: false` (the analysis counted 99).
+- **Item 4 (carried from round 85):** the crosswalk republish with research_universe and the fresh-draw verbatim yield (W338-S1) were
+  DONE in round 86 (kk-1 @004fabb655, folders 102; kk-5 @bd312dba46, 31 of 31 verbatim). No cell: a cell is never cut for coverage alone.
+
+### 95b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-ll-1` | the reader withholds a FAILED description (R1, code) | `~346` | worker-light | LOCAL | `api/scoped_amgt.py`, one test | R1 |
+| `AMGT-ll-2` | NU's company_description set empty (R2) | `~347` | worker-light | SERVED | one drafting key; ledger | R2 |
+| `AMGT-ll-3` | redeploy: ll-1 + dossier /9, never /8 (R1 deploy + CORPUS leg p) | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger | R1 |
+| `AMGT-ll-4` | one disposition pass over the open remediation rows (R3) | `~348` | worker | LOCAL | its deliverables folder | R3 |
+
+**Not cut:** item 4 (done in round 86); FWD-16 (Andrew's hold); the key rotation (Andrew's act); rows D1-S18 (watchlist selector) and
+S3 (library override) -- not on the analysis's list, still carried in `round86/CARRIED_TO_ROUND87.md`.
+
+### 95c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: R1-R3 + item 4. R1 -> ll-1 (code) + ll-3 (deploy); R2 -> ll-2; R3 -> ll-4; item 4 -> done (round 86).
+- **(ii) Same grain:** one module, one key, one deploy, one records pass.
+- **(iii) Intent:** ll-1 and ll-2 both bear on NU's served description -- ll-2 waits for ll-1's report so ll-1's local negative case
+  (NU FAILED) is still live when it is graded.
+- **(iv) What a cell does NOT move:** ll-1 never touches a PASSED or NO_SENTENCES section or any other section; ll-2 moves only NU's
+  company_description; ll-3 moves only the function's code (no IAM, route, schedule); ll-4 edits no channel file.
+
+### 95d. EDGES AND FAN-OUT
+```
+ll-1 --> ll-2 (ordering: ll-1's report first)
+ll-1 --> ll-3 (merged) ; AMGT_CORPUS round 42 (dossier /9) --> ll-3
+ll-4 independent
+fanout:
+  cap: 8
+  orders_total: 4
+  chains_total: 2
+  wave_0: [ll-1 ~346, ll-4 ~348]
+  wave_1 staged: [ll-2 ~347 (ll-1 reported), ll-3 RA1 (ll-1 merged + dossier /9 hash + the CTO half of the ll-3 pair)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```
+
+## 96. ROUND 88 -- THE WITHHOLD DRIVEN, THE EMPTY-STATE CARD, THE SELECTOR CONTRACT, THE LIBRARY ROOT, THE FILING-SENTENCE FLAG. Three orders + one issuer act
+
+**Input:** the CTO~DELL1 round-87 analysis `ledger/ROUND_ANALYSIS.round87.md` @08279f2a4f (items 1-5). Prep in
+`deliverables/2.0.0_SA_COO~R1/round88_prep/` (GROUP_SELECTOR_NOTES, ROW_DISPOSITION_R1, checks r88_planted, r88_package).
+
+### 96a. MEASURED AT THE CUT
+
+- **Item 1:** the withhold is deployed (b7Lj1J; the live member is byte-equal to HEAD, sha256 5b987a17...) but no live FAILED
+  description exists. `AMGT_DRAFTING_ROOT` points the reader at a directory, so the DEPLOYED reader can be driven on a copy.
+- **Item 2:** `ThesisCards.tsx:425-428` prints the served `reason` (an engineering string) on an empty description.
+- **Item 3:** the scoped contract (`investor-reporting/_scope/global.py:161-230`) refuses an OPAL_GLOBAL principal's off-list selection
+  (FIRM_NOT_PERMITTED) and IGNORES a firm principal's; `scoped_amgt` reads no selector and classifies no principal.
+- **Item 4:** `library.py` skips a set-but-missing root silently. **W345-S2:** schema pins generated true.
+
+### 96b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-mm-1` | the withhold DRIVEN on a planted copy (item 1) -- ISSUER ACT | `2.0.0_SA_COO~R1` | direct act | LOCAL (reads) | `round88_prep/MM1_PLANTED_RUN_20261009.txt` | R1 exercised |
+| `AMGT-mm-2` | the plain empty-state card (item 2) | `~349` | worker-light | LOCAL | portal `ThesisCards.tsx`, one harness | item 2 |
+| `AMGT-mm-3` | three repairs: selector contract, library root, generated flag (items 3-4, W345-S2) | `~350` | worker | LOCAL | five modules, three tests | D1-S18, S3, W345-S2 |
+| `AMGT-mm-4` | redeploy carrying mm-3 | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger | D1-S18, W345-S2 |
+
+**Item 5 (the 17 carried rows):** `round88_prep/ROW_DISPOSITION_R1.md` -- CLOSED 3, CUT 3 (into mm-3/mm-4), CARRIED 11 (2 to the
+round-88 packet, 2 to Andrew, 7 issuer reads this round).
+
+### 96c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: items 1-5. 1 -> mm-1; 2 -> mm-2; 3 -> mm-3(a) + mm-4; 4 -> mm-3(b); 5 -> the disposition file (3 rows cut into
+  mm-3). Uncovered: FWD-16 and the key rotation (Andrew).
+- **(ii) Same grain:** mm-3 batches three small repairs into ONE cell (the analysis's repair batching).
+- **(iii) Intent:** mm-1 reads; mm-2 is the page; mm-3 is code; mm-4 ships mm-3's served half.
+- **(iv) What a cell does NOT move:** mm-1 writes no store; mm-2 never changes a served description's rendering; mm-3 never refuses a
+  firm principal's selection; mm-4 moves only the function's code.
+
+### 96d. EDGES AND FAN-OUT
+```
+mm-3 --> mm-4
+mm-1 done at the cut; mm-2 independent
+fanout:
+  cap: 8
+  orders_total: 3
+  chains_total: 2
+  wave_0: [mm-2 ~349, mm-3 ~350]
+  wave_1 staged: [mm-4 RA1 (mm-3 merged + the CTO half)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```

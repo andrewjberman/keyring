@@ -22,6 +22,10 @@ After `/next-calls <CODE> --drive` has run its sequence, every tick counts itsel
 - `THIRD-EMPTY-TICK` -- write to the CRO now (below).
 - `WAITING <UB> <state>` -- a file is in flight; keep running `/next-calls` each tick (work found still counts as work).
 - `RESUME <UB>` -- the fold is signed: drive on it, then `unblock.py resume --id <UB> --by <you>`.
+- `WAITING DATED <owner> UNTIL <time>` / `WAITING OWED ...` / `WAITING CALL ...` -- **a dependency with a live owner and a
+  time is a wait: record it, do not count it** (1.0.0_SA_CTO @ba20ac668b, item 4). Tick with `--wait-until <UTC> --owner
+  <serial | schedule:<name>>` for a dated event (e.g. a scheduled pull), `--owed-ledger` / `--owed-call` for the other two.
+  The count stays 0 while the owner is live and the time is ahead; a dead owner counts as before, and the chase applies.
 
 Before writing to the CRO, the COO has fanned out: FREE work goes to more worker subagents, never to another COO. A deploy goes
 to a CloudOps seat as always, and needs no reminder.

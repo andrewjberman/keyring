@@ -26,9 +26,9 @@
 through ONE table (`data/assets/scripts/silver/commonwealth_signs.py`), leaves exactly 5 account-security pairs holding a non-zero fraction
 under one share after their last transaction (`fractional_residuals=5`, listed with their type histories in
 `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~29/fractional_residuals.csv`):
-- B37631286 and B3S706372, both on CUSIP 74440B405 (0.029 and 0.02);
-- B3S605716 and B3S622848, both on 07399D345 (0.00086 each, after CAF rows);
-- RGY007151 on 60934N500 (0.003, from a single `li`).
+- acct#fa82ce1d and acct#3b5864a2, both on CUSIP 74440B405 (0.029 and 0.02);
+- acct#9bd1ed4d and acct#87772861, both on 07399D345 (0.00086 each, after CAF rows);
+- acct#2f33cbcc on 60934N500 (0.003, from a single `li`).
 
 Explain each from its transaction rows in the applied silver transactions
 (`opal_naming.address("commonwealth", <cottonwood scope via opal_naming.lookup>, "silver", "transactions", "date=2026-06-23")`) and class it

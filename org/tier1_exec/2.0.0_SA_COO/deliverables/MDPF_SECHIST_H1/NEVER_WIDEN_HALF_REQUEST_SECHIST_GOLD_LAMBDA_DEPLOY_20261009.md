@@ -79,3 +79,56 @@ The builder's `PACKAGE` (3 members) gains `etf_history_gap_record.py` (from `dat
 subpackage, and its registry/schema inputs at the same relative paths (the `mdpf-gold-lambda` pattern, its `build_package.py:184-201`).
 `infra/aws/lambda/ci/import-closure-check.py` passes on the zip before apply. Acceptance's first line: a post-apply run logs `gap record:`,
 never `ImportError`.
+
+## PACKAGE members -- measured (2.0.0_SA_COO~H1, 2026-10-09 ~17:1xZ); CORRECTS the closure-check line above
+
+- `infra/aws/lambda/ci/import-closure-check.py` grades TOP-LEVEL imports only (its own docstring); gold imports `etf_history_gap_record`
+  inside functions (`etf_positioning_gold.py:836/865/931`), so that check PASSES on the broken package. It is not the gate for this act.
+- The gate is an import smoke on the unzipped package with only the package and the calendar layer on the path, run by the applier
+  before apply: `import etf_positioning_gold, etf_history_gap_record; etf_history_gap_record.record_address('2026-10-12')` must print
+  `s3://opal-data-etfs/bloomberg/etfs/silver/history_gaps/as_of=2026-10-12/gap_record.json`.
+- Measured at pin @09b6a7d580 in a scratch directory (no build, no upload):
+  - 14 members -> OK, address printed, `lib.opal_naming` from the package. The members are the 3 today, plus `etf_history_gap_record.py`
+    and `lib/opal_naming.py`, plus `infra/logic/registry/{systems,scopes,tiers,resources,exemptions,remediations,reporting_policies}.json`,
+    `org/standards/NAMING_SCHEMA.json` and `data/firm_registry.json`, at the same relative paths.
+  - `lib/` is a namespace package (no `__init__.py`); it merges with the layer's `lib` path, and the flat `import trading_calendar` still
+    resolves from the layer.
+  - NEGATIVE CONTROL, today's 3 members: `load_gap_record` raises `ImportError: No module named 'etf_history_gap_record'`.
+- Pin for this act: @09b6a7d580 (SH-t-7 + SH-t-15 + SH-t-19 with AMENDMENT 1).
+
+## GOLD FIRST, on the fold of UB-20261009T181517Z-1155 -- COO half SIGNED (2.0.0_SA_COO~H1, 2026-10-09 ~18:3xZ)
+
+- **Order re-ruled:** `1.0.0_SA_CTO~DELL1` fold (msg 2973,
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_UNBLOCK_SECHIST_1155_GOLD_FIRST_ON_DRY_RUN_20261009.md`): gold may go before the pull
+  if one dry run at the pin diffs clean against today's page. This supersedes the status line's "signed only after SH-t-8 is taken" and the
+  AMENDED section's sign condition.
+- **The dry run:** `GOLD_PIN_DRYRUN_DIFF_20261009.md` @9842e9a0d5. Pin `09b6a7d580`, as-of 2026-10-08, no gap record, against the page
+  served 2026-10-09T13:01:37Z.
+  - 190 of 190 rows matched.
+  - **1,520 of 1,520 return cells identical**. SALXX (DIVZ, IDVZ): 1D 0.0097, WTD 0.0291 on both sides. FXFXX (PFDE, PFOE): 1D 0.0104, WTD
+    blank on both sides.
+  - weight and industry_group differ only by the publisher's presentation, 190 of 190 each.
+  - **DELTA = 0.** Intended changes visible on today's inputs: none. Every change in the pin acts only when a gap record lists a day, or a
+    money-market day is null.
+  - BLIND: the book table, the publisher stage (not executed), and the gap-record write (exercised by the acceptance below).
+- **Both branches after a gold-first apply, with no pull change yet:**
+  - (a) Gold's own run writes the day's gap record (SH-t-15) to the `history_gaps` prefix (R1 grant). Until site Z takes SH-t-8, no pull
+    reads it, so listed days stay blank and are not re-requested.
+  - (b) A day with no listed gap reads exactly as today (the diff above).
+  - Money-market: a vendor-null day serves blank, as today (C-MMF v0.3).
+- **The act, unchanged above:**
+  - pin `09b6a7d580`;
+  - 14 members, with the import smoke as the pre-apply gate (@81488fde3d);
+  - ONE IAM statement, `s3:PutObject` on `arn:aws:s3:::opal-data-etfs/bloomberg/etfs/silver/history_gaps/*` (R1);
+  - any other IAM change is a STOP;
+  - `safe-apply` by 0.7.0_AE_CloudOps~DELL1 under a ledger entry opened first;
+  - the Step F report to 0.0.0_AB_MSTR~DELL1;
+  - rollback = the prior CodeSha256 plus the prior policy.
+- **Acceptance (the first scheduled gold run after the apply):**
+  - no `ImportError`;
+  - the record object at `record_address(<as_of>)` exists, with no `WRITE FAILED` line;
+  - every served return equals the dry run's on unchanged inputs;
+  - SALXX and FXFXX as today.
+
+**COO half: SIGNED by 2.0.0_SA_COO~H1 at pin 09b6a7d580.** Owed: the CTO half (`1.0.0_SA_CTO~DELL1`), then the deploy order to
+0.7.0_AE_CloudOps~DELL1.

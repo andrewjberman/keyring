@@ -6140,6 +6140,261 @@ carries none.
     "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
     "world_is": "No half or applier can anchor on 51 any longer: the order names the rule and the two keys by name; the applier's rows now pass the row gate.",
     "notes": "The COO half of MX-r-9's never-widen pair is written at the GO by this seat, naming the rule and the count read on the then-live host."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S92",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MX",
+    "surfaced_at": "2026-10-09T19:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-r-9 PHASE B LANDED CORRECTLY ON THE SERVICE BUT MISLABELLED ITS ARTIFACTS, MY ERROR: deploy-to-ec2.sh derives the artifact NAME and the git-ref METADATA from the deploy worktree's HEAD, and I left the two shipped files as UNCOMMITTED working-tree edits over a HEAD detached at the base, so opal-gateway-d3c31e972e.tar.gz was never written (404), -latest carries my bytes stamped git-ref 1e32562729, and the SIGNED rollback key opal-gateway-1e32562729.tar.gz was OVERWRITTEN with my bytes. Plane 1 of the train's STOP gate now reads a ref that is not what is serving, so the NEXT release on this host (E2's .xlsx, per A6) would cut on a stale base.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SERVICE CORRECT, by content: SSM md5 of /opt/opal-gateway/app/integrations/opal_discover/integration.py = 34f36796d6b19eebe17d715c7ae7c041 and app/refs/DATA_CATALOG.yaml = 7e9e40bb185f266aa293a7d29ad67e6d, both EQUAL to the release tree's local md5; systemctl active; /health 200; .env 52 lines; MainPID 873208.",
+        "head-object opal-gateway-d3c31e972e.tar.gz: 404 Not Found. The declared L1 proof (both keys carry git-ref d3c31e972e) CANNOT be met as written and is REFUSED with this measurement.",
+        "head-object opal-gateway-latest.tar.gz: git-ref 1e32562729..., LastModified 2026-10-09T19:42:09Z, 525795 B, ETag 0eed0817911cb0de98e41b61f2d06823 -- my release's bytes under the base's ref.",
+        "head-object opal-gateway-1e32562729.tar.gz: 525795 B, ETag 0eed0817911cb0de98e41b61f2d06823 -- IDENTICAL to -latest, i.e. the signed rollback target was overwritten. Before the act it was 518165 B, ETag b96315a523842ec46579b146c450faa9 (recorded in ANNOUNCE v2 section 2 and independently in the CTO half 4d4a6d1368).",
+        "MITIGATION MEASURED: get-bucket-versioning Status=Enabled; list-object-versions on that key returns the prior version t6Dv5giTH_t44Ae_FlV3.LcFyQOOVPOh, 518165 B, ETag b96315a523842ec46579b146c450faa9, LastModified 2026-10-09T16:11:31Z -- the base artifact's own bytes, so the rollback handle is RECOVERABLE.",
+        "The deploy itself reported OK and its own ENV_KEYS_BEFORE/AFTER lists are identical at 52 keys with MAIL_SENDER_DOMAIN_TABLE present and ADVI_FEE_STATEMENT_S3_ROOT absent."
+      ]
+    },
+    "spec_asserts": "ANNOUNCE v2 section 2 and both halves pin the artifact keys at the apply as opal-gateway-d3c31e972e.tar.gz plus -latest, 'both to carry git-ref = d3c31e972e8c6fdb26dda98a1d9ff55ced0ced89', and name opal-gateway-1e32562729.tar.gz as the VERSIONED rollback target to be preserved.",
+    "world_is": "Neither holds. The artifact is named and stamped after the worktree HEAD (the base), not after the deploy-only commit, and the rollback key's current version is my release. The service is nonetheless exactly the intended release, verified by content on the host.",
+    "notes": "CAUSE, mine: I sealed the deploy-only commit with `git commit-tree` (a loose object) and never moved the worktree HEAD onto it, so the two shipped files were uncommitted working-tree modifications at deploy time. deploy-to-ec2.sh computes SHA and the git-ref metadata from `git rev-parse HEAD` of the calling tree, which was still the base. The correct procedure is for the deploy tree's HEAD to BE the deploy-only commit. PHASE A's ANNOUNCE also used commit-tree, but PHASE A never deployed, so the defect could not surface there; MP-x-4's applier had its release on the branch HEAD, which is why its artifact carried its own sha. SECOND DEFECT, same act, separate: the wrapper's manifest auto-commit was REFUSED because the commit-gate's runner cannot import comp_constants_cli from the sparse deploy tree (ModuleNotFoundError at .tools/commit_gate_runner.py:96), so the manifest record is UNCOMMITTED -- a third cone-gap of the same family as A5's folder and the data/transcripts/scripts/teams path that refused the first invocation (fail-closed, no upload, measured clean). PROPOSED REPAIR, held for the disarm_owner and NOT executed: (a) copy VersionId t6Dv5giTH_t44Ae_FlV3.LcFyQOOVPOh back onto opal-gateway-1e32562729.tar.gz, restoring the signed rollback handle; (b) ONE re-deploy with the deploy tree's HEAD at d3c31e972e so both keys are named and stamped correctly -- DELTA=0 on the service, since the host already runs those exact bytes. Escalated to the disarm_owner at 19:53:15Z with the same measurements."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S93",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MX",
+    "surfaced_at": "2026-10-10T22:08Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "THE Z-S92 LABEL REPAIR IS LANDED AND READ BACK: acts (a) and (b) of the issuer's GO (msgs 32997/33003, re-sent 33009 after the ~25h site-Z outage) both executed, the artifact plane now names what is serving, and the ledger nfra-mcpindex-r8-discover-release is CLOSED on all four legs. Z-S92 is ARMED and its disarm_owner is 2.0.0_SA_COO~MI, so this row carries the evidence for that disarm and does NOT disarm it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRE-ACT CONTROL, measured by this seat and not taken from the issuer's report: at 21:2xZ the rollback key and -latest both held 525795 B / ETag 0eed0817911cb0de98e41b61f2d06823 stamped git-ref 1e32562729, the d3c31e972e key was 404, and list-object-versions on the rollback key returned exactly 2 versions and 0 delete markers. Nothing had moved since 2026-10-09T19:42Z.",
+        "ACT (a) 21:24:27Z -- s3api copy-object of VersionId t6Dv5giTH_t44Ae_FlV3.LcFyQOOVPOh onto opal-gateway-1e32562729.tar.gz with --metadata-directive COPY; no delete. Independent head-object read back 518165 B, ETag b96315a523842ec46579b146c450faa9, git-ref 1e32562729, ContentType application/x-tar, SSE AES256. The mislabelled bytes survive as VersionId ACLA5fh9zEq7a9ydJMrmnarDnc3M6FIC, so (a) is itself reversible.",
+        "THE ISSUER'S STOP CONDITION ('if (b) would move any host byte, STOP') WAS TESTED BEFORE THE APPLY, NOT AFTER: the candidate's 103 files were byte-compared to the bytes the host was running -- 100 code files from the committed tree at d3c31e972e, and the 3 dashboard files from a REPRODUCED bun install --frozen-lockfile plus bun run build at the manifest's pinned mcportal_commit d60b4e0. 103 of 103 equal, 0 different. The dashboard build is byte-reproducible (index.html 1fa9201f90d2, index-a6wjv_wv.css a3f955ef7991, index-CrZMj-00.js 4137cd37ec45 on both sides), which is what made (b) a re-label rather than a new act.",
+        "ACT (b) 21:49-21:50Z -- ONE safe-ec2-deploy.sh run from the deploy tree with HEAD COMMITTED at d3c31e972e (the root cause removed: index blob == commit blob == on-disk content for both shipped files, so rev-parse HEAD finally names the deploy commit) and DEPLOY_BASE_REF=1e32562729. The stale-base guard read the live ref at both reads, equal. Halt gate rc=0 from the deploy tree; a negative control pointed at a tree where this lane is not seated read rc=3 BLOCKED (lane-no-inbox), so the gate discriminates. HALT_OVERRIDE was not used.",
+        "READ-BACK (1), the issuer's first ledger gate: the rollback key's ETag == b96315a523842ec46579b146c450faa9. Met, and still met after (b) -- the key is untouched at LastModified 21:24:27Z and DISTINCT from the two new keys.",
+        "READ-BACK (2), the issuer's second ledger gate: host md5 of both shipped files UNCHANGED (integration.py 34f36796d6b19eebe17d715c7ae7c041, DATA_CATALOG.yaml 7e9e40bb185f266aa293a7d29ad67e6d -- byte-identical to the values recorded in Z-S92), /health 200, .env 52 keys. Measured well past the two files: the FULL host census reads 105 of 105 files md5-UNCHANGED across the act, 0 appeared, 0 disappeared, 0 changed. MainPID moved 873208 -> 915778 (the expected restart) and ActiveEnterTimestamp is now Sat 2026-10-10 21:50:03 UTC.",
+        "PLANE 1 IS TRUE AGAIN: opal-gateway-d3c31e972e.tar.gz is PRESENT (was 404) with git-ref d3c31e972e8c6fdb26dda98a1d9ff55ced0ced89, and -latest carries the same ref and the same ETag 8e81c94230a54ef80a88d03950e93c81. The next release on this host (E2's .xlsx, per A6) can now cut on a ref that is actually serving, which was the hazard Z-S92 named.",
+        "PLANE 2 IS TRUE AGAIN: EC2_MANIFEST.json services.opal-gateway now reads deployed_commit d3c31e972e..., deployed_at 2026-10-10T21:50:16Z, deployed_by 0.7.0_AE_CloudOps~MX, previous_deployed_commit 1e32562729....",
+        "r9.AC2 PASS exit=0 (3 of 3 datasets state a measured as-of equal to served; the issuer's dry-run read 0 of 3). r9.AC3 PASS exit=0 (first match expected 9 of 9, write asks with class and grant 3 of 3; the dry-run read 0 of 9 and 0 of 3). Both match their <expect> strings verbatim.",
+        "EXCLUSIONS held, with positive controls so the zeroes are absences and not broken predicates: copy_site_file_to_s3 = 0 files under the host's app/ and deploy/ while blackdiamond_list_fees = 8 and opal_discover = 10. ENABLED_INTEGRATIONS reads the same 7 ids as before. The .env key SET is equal (0 added, 0 removed), MAIL_SENDER_DOMAIN_TABLE present, ADVI_FEE_STATEMENT_S3_ROOT absent on both sides.",
+        "A case-insensitive pptx sweep on the host returns 3 files, NOT 0, and the honest reading is that none of them is E2's pptx tool pair: app/tools.py:653,655,656 are an OOXML magic-byte sniff and its routing hint, :914 is the long-standing read_document tool's docstring, and app/refs/DATA_CATALOG.yaml:1266 is read_document's capability line. All 3 files are inside the byte-identical 105, so none was introduced here. Recorded because 'pptx absent' would have been a false claim."
+      ]
+    },
+    "spec_asserts": "The issuer's GO (33009, re-sending 32997 and 33003) requires (a) before (b), a versioned copy and never a delete, read-back of ETag b96315a5 on the rollback key, then ONE re-deploy with HEAD committed at d3c31e972e reading back the d3c31e972e key present, -latest at git-ref d3c31e972e, host md5 of both shipped files UNCHANGED, /health 200, .env 52, r9.AC2 and r9.AC3 -- and a STOP instead of (b) if (b) would move any host byte.",
+    "world_is": "Every one of those holds, in that order, and the byte condition was proven in advance rather than discovered afterwards: 103 of 103 artifact files equal before the apply and 105 of 105 host files unchanged after it. The ledger is CLOSED on all four legs with proof strings. What remains is not this seat's: Z-S92 is ARMED and only 2.0.0_SA_COO~MI can disarm it, and the issuer owes COO~O and COO~MP the word that the host slot is free.",
+    "notes": "The second defect Z-S92's notes already record -- safe-ec2-deploy.sh's own manifest commit refused in the sparse deploy tree (commit-gate ModuleNotFoundError: comp_constants_cli at .tools/commit_gate_runner.py:96) -- REPRODUCED exactly on this run, so it is not re-filed here. Its consequence was handled rather than worked around: the wrapper's manifest file could NOT simply be copied into the shared checkout, because the deploy tree's manifest is based on d3c31e972e's parent and is stale on three further fields -- it would have REVERTED MP-x-4's release_note and previous_deployed_commit (c97232408d) and re-populated 10 file_checksums that the shared tree deliberately keeps empty under _checksums_note 'not maintained'. Only this release's own five fields were applied by hand in the shared checkout, asserting the prior deployed_commit was still 1e32562729 before writing; the resulting diff is 6 insertions and 6 deletions and touches 0 other services. A deploy wrapper whose record lands only on a detached deploy tree is a writer the shared tree cannot see, which is why this was landed in the shared checkout under this seat's own author line."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S94",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MX",
+    "surfaced_at": "2026-10-10T22:08Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "THE GATEWAY HOST ACCUMULATES ORPHANED DASHBOARD ASSETS: /opt/opal-gateway holds 105 files where the deployed artifact holds 103, and the 2 extras are content-hashed vite assets from an OLDER mcportal build (dashboard/assets/index-BP6X9XJd.js and index-BqfQgt7G.css) that no index.html references. The deploy extracts the tarball over the existing directory and prunes nothing, so every mcportal rebuild whose content hash changes leaves its predecessor behind for good.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Host census (ssm:2f6ac6b4-617f-4b5e-953a-71d4a66cade3) reads HOST_FILE_COUNT=105 under app/ deploy/ dashboard/ requirements.txt identity_tool_allowlist.txt, excluding *.log, audit.jsonl and __pycache__. The deployed artifact, downloaded and extracted, holds 103 files.",
+        "The set difference is exactly 2 and it is one-directional: ONLY-ON-HOST = ['dashboard/assets/index-BP6X9XJd.js', 'dashboard/assets/index-BqfQgt7G.css']; ONLY-IN-ARTIFACT = 0; BYTE-DIFFERENT = 0 across the 103 shared paths. So the host is a strict superset of the artifact, which is the signature of extract-without-prune rather than of drift.",
+        "The host's live dashboard/index.html references index-CrZMj-00.js and index-a6wjv_wv.css, not the two orphans, so nothing served points at them.",
+        "They are a real former release, not corruption: a content sweep finds index-BP6X9XJd.js in 84 places across the repo, all of them .runtime/crash-investigation-20260929 scratch archives from the mx-r3, oa-9 and oa-10 release comparisons, where the then-current dashboard/index.html references it as its own script tag.",
+        "NOT CAUSED BY THIS ACT and not new to it: both files are present in the BEFORE census and the AFTER census with identical md5s, inside the 105 of 105 unchanged. They predate the MX-r-9 release entirely.",
+        "The denominator this matters to is the preservation argument: a release that proves 'every other live file is byte-equal' by comparing the host to the artifact is comparing a 103-file artifact against a 105-file host, so the claim is sound only because the difference is one-directional and was enumerated. A future release that reports a bare count match would be reading two different populations."
+      ]
+    },
+    "spec_asserts": "Section 1 item 2 and AMENDMENT A2 require that every live file other than the two shipped ones is preserved byte-for-byte, and the release records a host-versus-artifact file census as the proof of that preservation.",
+    "world_is": "Preservation holds, but the two populations are not the same size and never were: the host carries 2 orphaned dashboard assets the artifact does not ship, so host == artifact is false as an equality while artifact subset-of host is true. Stating the census as a bare 'N of N' hides that, which is why this row names the direction and the 2 files.",
+    "notes": "No remedy is proposed or taken here: pruning dashboard/assets on the host is a change to deploy-to-ec2.sh's extract step, which is outside this order's two-file content cut and belongs to the gateway surface (NFRA_OPLGTW) rather than to NFRA_MCPINDEX. The cost of leaving it is disk only -- 2 files, roughly 270 KB today -- and it grows by one asset pair per mcportal content-hash change, so it is INERT rather than BLOCKING. The useful fix for readers is cheaper than the fix for the host: future releases should state the preservation census as a one-directional subset with the extras enumerated, which is how it is stated in this release's record."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S95",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-10T22:30Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Z-S92 is remediated by the applier's label repair (ledger CLOSED 4/4 @3cc6f5e6ec) and both CTO read-backs were re-measured by the issuer; Z-S93 is that repair's evidence carrier and asserts no defect; Z-S94 is an inert disk-only observation on NFRA_OPLGTW's deploy surface, recorded here and told to 2.0.0_SA_COO~O.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S92",
+      "NFRA_MCPINDEX-Z-S93",
+      "NFRA_MCPINDEX-Z-S94"
+    ],
+    "one_line": "RULES Z-S92 (ARMED), Z-S93 and Z-S94 at the MX-r-9 repair close: Z-S92 is DISARMED -- the label repair landed, ledger nfra-mcpindex-r8-discover-release CLOSED 4/4 @3cc6f5e6ec, and both of 1.0.0_SA_CTO~Z's read-backs (msg 33001) were re-measured by the issuer, not taken from the applier's report; Z-S93 is the applier's evidence carrier for that disarm; Z-S94 (2 orphaned dashboard assets on the host) is INERT and outside this project's surface.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer re-measure 22:2xZ, ssm e80b1708-1830-4e0e-8f0c-51315404dd92: integration.py md5 34f36796d6b19eebe17d715c7ae7c041 and DATA_CATALOG.yaml md5 7e9e40bb185f266aa293a7d29ad67e6d, equal to the values Z-S92 recorded on 10-09; /health 200; .env 52 lines; opal-gateway active, MainPID 915778, ActiveEnterTimestamp 2026-10-10 21:50:03 UTC.",
+        "head-object opal-gateway-1e32562729.tar.gz: ETag b96315a523842ec46579b146c450faa9, git-ref 1e32562729 (read-back 1). head-object -latest and opal-gateway-d3c31e972e.tar.gz: both 525792 B, ETag 8e81c94230a54ef80a88d03950e93c81, git-ref d3c31e972e8c6fdb26dda98a1d9ff55ced0ced89 (was 404).",
+        "r9.AC1 PASS exit=0 (entry at HEAD 1, sentinel no, OPEN/HELD 0, 30 of 30 scanned); r9.AC2 PASS exit=0 (3 of 3, ssm 1c43624e); r9.AC3 PASS exit=0 (9 of 9, 3 of 3, ssm a334d45a) -- all three run by the issuer after the 21:50Z restart.",
+        "CLOSED told to 2.0.0_SA_COO~O, 2.0.0_SA_COO~MP and 0.0.0_AB_MSTR~Z (msgs 33030-33032), releasing the gateway queue to MP-r-2 then OG-rl-16."
+      ]
+    },
+    "spec_asserts": "Every ARMED row disarms via its disarm_owner; Z-S92's hazard was that plane 1 (the S3 artifact labels) named a ref that was not serving, so the next release on the host would cut on a stale base.",
+    "world_is": "Plane 1 and plane 2 (EC2_MANIFEST.json @1df2cdb295) both name d3c31e972e, which is what the host serves, and the rollback key holds the base's own bytes again. Z-S94's 2 orphaned assets are referenced by no served index.html and cost disk only; pruning them is a change to deploy-to-ec2.sh's extract step, which is NFRA_OPLGTW's surface, not this project's.",
+    "notes": "Z-S94 is not routed as a remedy from here: this row records it, and 2.0.0_SA_COO~O (NFRA_OPLGTW) is told in one line with this row's id. The applier's second Z-S92 defect (the deploy wrapper's manifest auto-commit refused in a sparse tree, ModuleNotFoundError comp_constants_cli at .tools/commit_gate_runner.py:96) reproduced on this run and was handled by a committed manifest record @1df2cdb295; it stays a carried note in Z-S92 and Z-S93."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S96",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-10T23:18Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "RULES the remedy for NFRA_IAMROLES202609-Z-S29 (routed here by its Z-S31): MX-f-1 (3d7fb62105) gave bd_silver_allocations and bd_silver_unrealized freshness_basis: trading-day-frontier without as_of_field or frontier_page_trading_days, so infra/aws/terraform/bd-pipeline/bd-served-vintage-alarm.tf cannot plan (4 x Unsupported attribute). REMEDY: guard the comprehension's if clause with can(e.as_of_field) && can(e.frontier_page_trading_days); the YAML and alarm coverage do not change. WRITE: inside NFRA_IAMROLES202609.TO-IAM-w-2 by its issuer's amendment, because this project has no lawful slot for it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Negative arm at box/sitez HEAD, shared tree: f1r.AC1 -> init rc=0, plan rc=1, Unsupported attribute=4, Error lines=4, RESULT: FAIL; f1r.AC2 -> 7 keys (5 bd_platinum_* + bd_silver_allocations + bd_silver_unrealized) where 5 are wanted, RESULT: FAIL.",
+        "Census of gold_freshness_config.yaml: 37 entries, 7 trading-day-frontier; the 5 daily platinum entries carry both fields, the 2 weekly silver entries carry neither.",
+        "No resource in infra/aws/terraform/bd-pipeline reads local.bd_served_vintage_keys or local.bd_served_keys_json (Grep: 2 hits, both their own definitions at bd-served-vintage-alarm.tf:26 and :38). The served-vintage alarm stack was destroyed by 9781bbb266 (2026-07-17), so the guard changes no resource by construction.",
+        "Why not this project: to-pipeline-gate refused a MX-f-1r order three ways -- LOCAL is below the WORLD floor an infra path infers; a direct act must be LOCAL; round 7 already has its one issuance; and round 9 waits on round 8's L10 by 1.0.0_SA_CTO~Z's ruling (call 9c9d)."
+      ]
+    },
+    "spec_asserts": "MX-f-1's cell ruled 'no change to whether the gate blocks' and touched one YAML file; no other module's plan was to move.",
+    "world_is": "A second reader of that YAML, a dead Terraform comprehension, reads the two new frontier entries' missing fields unguarded, and bd-pipeline cannot plan. The guard restores the 5-key map that held before 3d7fb62105.",
+    "notes": "The checks f1r.AC1.sh (plan: 0 Unsupported attribute, rc 0 or 2) and f1r.AC2.sh (exactly the 5 bd_platinum_* keys) are in deliverables/2.0.0_SA_COO~MI/round8/checks/ for the w-2 amendment to cite. Adding the two fields to the YAML instead was rejected: it would assert an as_of_field the weekly silver parquet does not carry. This row disarms when bd-pipeline plans clean at HEAD; ~ZI owns Z-S29's disarm."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S97",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.0.0_AB_MSTR~Z",
+    "surfaced_at": "2026-10-10T23:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": ".tools/tests/test_round_close_and_research.py reads CLOSE-GATES-TEST 19/24 at box/sitez a163c61b93. 5 failures already exist without the Z-C-S42 fix: 4 cases call rcc.read_orders(d, None, None) against the 4-argument read_orders(src, proj_dir, rnd, ws), and 1 ENFORCE case reads rc=0 where a refusal is expected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~C",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "With a163c61b93: CLOSE-GATES-TEST cases=19/24 ok=False; FAIL lines: ENFORCE 'reviewer present but a judgment criterion ungraded is refused' (rc=0), and four TypeError: read_orders() missing 1 required positional argument: 'ws' (no to_id; to_id present; pending then complete; complete then pending).",
+        "With only the a163c61b93 regex reverted: the same 5 FAIL lines plus the round-close-check --selftest case (the new J2 case), 18/24; so the 5 are not caused by a163c61b93.",
+        "read_orders gained its ws parameter in 8902e8bc26 (NFRA_CTLPLN.TO-CT-s-8, 2026-10-08); the test calls it with 3 arguments at .tools/tests/test_round_close_and_research.py:279."
+      ]
+    },
+    "spec_asserts": "The round-close gate's own outer test suite passes, so a regression in round-close-check.py shows as a failing case.",
+    "world_is": "5 of 24 cases fail on HEAD for reasons unrelated to any recent fix, so a new regression in this tool would be hidden among standing failures.",
+    "notes": "Routed by 1.0.0_SA_CTO~Z (msg 33071) to the Z-C-S42 family owner. Disarms when the suite reads 24/24 (or each case is re-scoped with a reason)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W31-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~31",
+    "surfaced_at": "2026-10-11T00:10:47Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-o-2 census verdict is GAP, but ops_census.py forbids served=true on any candidate under GAP, so two producers whose objects ARE served today (BD silver fees, 2002 partitions; Schwab fact_trn, 569 partitions) are recorded served=false with the reason carried in the row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The order says served is true only for a producer whose objects are SERVED today (a scheduled producer writing a served prefix).",
+    "world_is": "ops_census.py (round9/checks) says 'verdict GAP but a candidate reads served=true' is a violation, so under GAP served means 'serves the billing fields', not 'is served'. BD silver fees and Schwab fact_trn are scheduled and served today yet lack AUM, billing period and paid status. They are recorded served=false and each reason says so; a reader of the census alone would read them as unserved.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "round9/checks/ops_census.py lines 'if any(k.get(\"served\") for k in cands): bad.append(\"verdict GAP but a candidate reads served=true\")'.",
+        "Live listing 2026-10-11: s3://opal-data-bd/silver/fees/ 2002 dated partitions newest 2026-10-08 (17344 rows); s3://opal-data-assets/schwab/08335338/silver/fact_trn/ 569 date partitions newest 2026-10-09.",
+        "census_billing.json in deliverables/0.9.0_WK_NFRA_MCPINDEX~31/ (verdict GAP, owner ADVI_BILLING, o2.AC1 violations 0)."
+      ]
+    },
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "notes": "The gap statement in the census names which fields each producer lacks, so the information is kept; only the boolean is overloaded. Worker ~30's MX-o-1 census may meet the same instrument line."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W32-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~32",
+    "surfaced_at": "2026-10-11T00:14:59Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The gateway suite reads 41 failed (711 passed) on a full tree at 9a072fa60a, not the 34-38 the order cites, and 99 failed-or-errored (49 failed, 50 errors, 525 passed, 21 skipped) on a sparse cone, where 14 modules fail at COLLECTION on the absent org/standards/NFRA_OPLGTW_CONTRACT.json.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Baselines recorded in infra/aws/ec2/opal-gateway/tests/baseline/failing_ids_full.txt (41 ids) and failing_ids_sparse.txt (99 ids), header line 1 of each carries commit, shape, command and counts.",
+        "Sparse run without --continue-on-collection-errors aborts at collection: '1 warning, 14 errors in 5.37s', rc=2, zero tests run; the sparse baseline therefore records the --continue-on-collection-errors run."
+      ]
+    },
+    "spec_asserts": "The gateway suite fails 34-38 tests, order-dependent, and a drain can grade it by failing-ID delta against one baseline per tree shape.",
+    "world_is": "The full-tree count was 41 on this run; the sparse cone needs the org/standards contract file or --continue-on-collection-errors to run at all, so a drain's sparse tree must run with that flag to be graded by suite_delta.py --shape sparse.",
+    "notes": "Order-dependence means a later full run may differ from the 41 recorded; suite_delta.py reports NEW/FIXED by id so a count drift shows as named ids. Failing ids by file are in the worker report."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W30-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~30",
+    "surfaced_at": "2026-10-11T00:20:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-o-1's order defines census `served` as 'a producer whose objects are SERVED today', but ops_census.py (o1.AC1) rejects a GAP census in which ANY candidate reads served=true, so the census can only grade if `served` means 'survives as a source of the trade_rec shape'. 6 of 8 candidates (BD, Schwab, Orion-inf, COT and Commonwealth transactions, Eclipse silver) sit on served prefixes with no status at the fixture grain.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-o-1.ops-trade-rec-reader.md: `served` true only for a producer whose objects are SERVED today (a scheduled producer writing a served prefix), not a one-off file.",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round9/checks/ops_census.py: `if any(k.get(\"served\") for k in cands): bad.append(\"verdict GAP but a candidate reads served=true\")`.",
+        "Census census_trade_rec.json (this worker's deliverables folder) records served=false on all 8 candidates, with the literal facts kept in two extra fields (served_prefix true on 6 of 8, producer_scheduled true on 6 of 8) and a served_semantics_note; o1.AC1 reads `candidates 8, each with a denominator 8 of 8; verdict GAP; violations 0`."
+      ]
+    },
+    "spec_asserts": "A GAP census marks a candidate served=true only if its objects are served today, and a GAP verdict means no served source carries both statuses.",
+    "world_is": "Six candidates have served prefixes and a schedule yet lack the statuses, so under the order's literal definition they read served=true and the instrument refuses the GAP verdict; the census had to read `served` as 'is a source of the shape'. Judgment of which reading is intended is the issuer's.",
+    "notes": "No effect on the verdict: under either reading no candidate carries both statuses at the fixture grain. MX-c-7 should cite the census's verdict, owner and per-candidate reason, not its served flags alone."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S98",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-11T00:58Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "W30-S1 and W31-S1: the reading is confirmed and no defect is asserted. W32-S1: its hazard is removed by recording the measured baselines and the sparse-run flag as the drain's procedure.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W30-S1",
+      "NFRA_MCPINDEX-Z-W31-S1",
+      "NFRA_MCPINDEX-Z-W32-S1"
+    ],
+    "one_line": "RULES the three round-9 worker rows at their drains. W30-S1 and W31-S1 (INERT): CONFIRMED. In a census, served means a producer survives as a source of the reader's SHAPE; the literal facts stay in served_prefix and producer_scheduled. Both verdicts are GAP either way: trade-rec owner unowned, billing owner ADVI_BILLING. W32-S1 (ARMED): DISARMED. The measured baselines (full 41 failing IDs, sparse 99) replace the analysis's '34-38'. A sparse-tree drain must pass --continue-on-collection-errors, or collection aborts on 14 modules and runs nothing (rc 2).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MX-o-1 drained @bac72d2e3a: o1.AC1 PASS (8 candidates, verdict GAP), AC2/AC3 PASS by branch, re-run by the issuer in the worker tree; instance VALID.",
+        "MX-o-2 drained @92dc842a98: o2.AC1 PASS (6 candidates, verdict GAP, owner ADVI_BILLING), AC2/AC3 PASS by branch; instance VALID.",
+        "MX-x-6 drained @ea11910486: x6.AC1 2 of 2 named tests (12 of 12 in the file; the worker's revert control failed only the refusal test); x6.AC2 SELF-TEST PASS; instance VALID. Baselines: tests/baseline/failing_ids_full.txt (41), failing_ids_sparse.txt (99)."
+      ]
+    },
+    "spec_asserts": "ROUND_ANALYSIS.round8.md section 3 cites the gateway suite red at 34-38 failures; the census contract defines served as 'objects served today'.",
+    "world_is": "The full-tree suite reads 41 failing IDs and the sparse tree 99, 50 of them collection errors from a missing org/standards/NFRA_OPLGTW_CONTRACT.json. Under a GAP verdict the census validator needs served=false, so served carries the shape-survival meaning.",
+    "notes": "Both FWD-19 readers are GAP, so MX-c-7 catalogues E-30 GAP (unowned) and E-31 GAP (ADVI_BILLING), and MX-r-10 ships only the catalog and E2's discover change. FWD-19 is NOT done, and the L10 slug says so. The schwab (24 full) and grant (2 full, 9 sparse) failing IDs go to 2.0.0_SA_COO~O."
   }
 ]
 ```

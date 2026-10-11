@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T183312Z-e563",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~V1",
+ "to_serial": "0.7.0_AE_CloudOps~ZV",
+ "subject": "ETFS_RIVALS TO-MERGE-tc1 AMENDMENT 2: step 5 under site Z commit lock (a-e), then merge",
+ "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009.md",
+ "opened_at": "2026-10-09T18:33:12Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-09T18:34:07Z",
+  "bus_message_id": "f20943c7-eca6-49ff-95c7-3b1ff2649224"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

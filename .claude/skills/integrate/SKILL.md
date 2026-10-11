@@ -90,6 +90,11 @@ git worktree remove "$WT"; git branch -D integrate/$TS
 - **A box that conflicts is HELD, not resolved under the clock:** abort that merge, carry on with the others, and send
   that box's MSTR one agentbus message naming the conflicting paths. That box resolves it in its next box pass, by
   taking the trunk, so the conflict is settled where the work was written.
+- **ONE OWNER REPAIRS A TRUNK BREAK** (1.0.0_SA_CTO ruling 2, `CTO_RULINGS_GPT_FEEDBACK_AUTONOMY_BRIEF_20261009.md`
+  @ba20ac668b; ledger LD-0640). A break in a trunk-shared file (a conflict, a bad merge, a broken schema) is repaired only
+  by the seat that owns the file's lane, on its own box (`python .tools/owned-paths-validate.py --check-path <serial>
+  <path>` names the lane). Every other box takes `CLOUD` at its next pass and does not repair it too. An unowned path
+  (lane ANY) is repaired by the integrator's box. Two boxes repairing the same break is how a fix collides with itself.
 - **Before the laptop itself switches:** its own commits are still on `CLOUD` with no box branch. Push them first,
   on their own (Steps 1-2: they deploy on that push), then run this pass. The deploy gate REFUSES an integration push
   that also carries commits from no box branch, because those would never deploy.

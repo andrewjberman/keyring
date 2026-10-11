@@ -177,8 +177,8 @@ its row and says so.
 
 | Serial | Launch arming |
 |---|---|
-| `0.0.0_AB_MSTR` (and every `~<lane>`) | `/watcher`, `/agentbus`, `/integrate` once each, then `/govern 30m` (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_174xZ_MSTR_GOVERN_30M_LOOP_AT_INSTANTIATION.md`). No other cron. |
-| `2.0.0_SA_COO` (base) | `/watcher` once. `/drive` v2 standing 20m over EXECUTING / ROUND_CLOSE / DECOMP projects (`org/tier0/ledger/LD-0530.md`). |
+| `0.0.0_AB_MSTR` (and every `~<lane>`) | `/watcher`, `/agentbus`, `/integrate` once each, then `/govern 60m` (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_174xZ_MSTR_GOVERN_30M_LOOP_AT_INSTANTIATION.md`; 60m by `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261010_23xxZ_SLOWER_PACING_LOOPS_60M_KEEP_DRIVING_OFF.md`). No other cron. |
+| `2.0.0_SA_COO` (base) | `/watcher` once. `/canonical-drive` standing 60m over EXECUTING / ROUND_CLOSE / DECOMP projects (`org/tier0/ledger/LD-0530.md`; 60m by `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261010_23xxZ_SLOWER_PACING_LOOPS_60M_KEEP_DRIVING_OFF.md`). |
 | every other serial and `~lane` | `/watcher` once. Zero crons. Event-driven. Keep the broker summary accurate: `WORKING: <task>` / `IDLE: available` / `BLOCKED: <what>` / `BLOCKED-SOVEREIGN: <decision>`. |
 | Codex seats | per `org/mcp/CODEX_INBOX_MONITOR.md`. Zero crons. |
 

@@ -850,3 +850,62 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## TCKT_VNEXT-D2-S20 -- the pair's 'remove the row' rollback WIDENS the token rather than narrowing it; only the 2h exp actually bounds it
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S20",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-09T17:44:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The pair's stated rollback -- 'remove the row' -- does not narrow the token, it WIDENS it. The row is what narrows an internal caller; with the row gone, _internal_allowed_firms returns None, which the boundary reads as NO RESTRICTION, so for the remainder of its 2h life the still-valid token may select ANY registry tenant on the IRPT plane and CREATE a ticket for ANY firm. The run's own reach was NARROWER than its post-rollback reach.",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 with 2.0.0_SA_COO~V2 -- the never-widen pair's rollback clause is theirs. INERT in fact for runs 1-4 because the token lived only in the executor's process memory, was never printed, stored or committed, and that process has exited; but the clause is wrong as written for any future run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py (deployed member 87d9ecc4, resolved by content from pin 74a62fb46c) _internal_allowed_firms: 'Returns None = UNCHANGED (no row, no attribute, or an empty list)'",
+      "same file, Entry.handle: `listed = self._internal_allowed_firms(...)` then `if listed is not None and selected not in listed: return refuse(..., FIRM_BINDING)`. listed None therefore refuses NOTHING, and an internal caller may name any tenant bucket_for() maps",
+      "infra/aws/lambda/ticket_center/lambda_function.py _profile_scope: no PROFILE row returns (None, None); _in_profile_scope returns `scope is None or str(firm) in scope`, i.e. TRUE for every firm once the row is gone; _firm_allowed is already TRUE for every firm because a tier-internal token's authorizer allowedFirmIds is ALL. So _create_firm_allowed admits ANY firm after cleanup",
+      "the token is unaffected by the row's deletion: the authorizer verifies the JWT signature and claims, and v2.2's exp is iat+2h (run 4: iat 17:19:43Z, exp 19:19:43Z), so roughly 100 minutes of wider reach followed each run's cleanup",
+      "pair v2.1/v2.2 blast radius, 'Rollback': 'remove the row; the 2h exp bounds the token; complete the ticket' -- the first clause is presented as the narrowing act"
+    ]
+  },
+  "spec_asserts": "Pair v2.1 and v2.2 both state the rollback as: remove the row, the 2h exp bounds the token, complete the ticket. Removing the row is offered first and reads as the act that takes the reach away; the row LIST [49financial] is described as 'the only client reach'.",
+  "world_is": "The row is the NARROWING, not the grant. Deleting it deletes the narrowing and leaves the grant (the token's tier-internal claim) standing until exp, so the post-rollback token is strictly WIDER than the token the run exercised. The only real bound is exp, which the pair also names -- so the rollback is sound ONLY because of its second clause, and the first clause works against it. A rollback that widens the subject it is rolling back should be stated as such, or the row should be left in place until exp and removed after.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S21",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T02:37:48Z",
+  "one_line": "L9 round 1 FWD-1 seat-arm run: SA-r-1b AC2 NOT MET. Hops (e) and (g) never read a request: 61 of 61 analysis-request-read calls in 17:21:15-17:32:15Z were refused INVALID_REQUEST_ID on the live irpt-status log (60 polls plus hop (g)'s second read); the HTTP 200s were refusal envelopes. The runner polled the idempotency token it sent (sar1b-<24 hex>), and the read plane accepts REQ-<24 hex> only. Hop (f) stored that token as the ticket's report_ref, so the report cannot open from the ticket. irpt-export-render ran 0 times in the window.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/ledger/L8_PACKET.SA_RUN.md @5617aaa82d",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R1_RUN/sa_r1b_trace.json sha256 0532f0aa...0c16 (this seat's hash)",
+      "this seat's filter-log-events on /aws/lambda/irpt-status, 2026-10-09T17:21:15Z-17:32:15Z: 65 invocations, 61 irpt_error operation analysis-request-read public_reason_code INVALID_INPUT, each with RequestReadRefused INVALID_REQUEST_ID, first 17:21:39, last 17:31:59",
+      "same read on /aws/lambda/irpt-ycharts-generate: 5 invocations, 1 refusal (analysis-requests MISSING_REQUEST_FIELD 17:21:23); on /aws/lambda/irpt-export-render: 0 invocations",
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:18 REQUEST_ID = REQ-[0-9a-f]{24}; :86-88 raises INVALID_REQUEST_ID (tree HEAD f7268537db, not diffed against deployed bytes)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/sa_r1/sa_r1b_run.py:559-569 (rid falls back to rid_sent)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1363-1369 (report request_id: non-empty string, at most 200 characters, no shape check)",
+      "this seat's query of irpt-requests: AccessDenied kms:Decrypt for cloudops-dell2-agent-user on key 7f4d3042",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_SA_R1B_L9_GRADE_20261010.md"
+    ]
+  },
+  "spec_asserts": "SA-r-1b AC2: the one-firm proof with zero cottonwood admits, and every hop recorded with its artifact. FWD-1 ACCEPT (PRD :30-31): the report is made from that file without anyone re-typing the holdings, and the finished report opens from the ticket.",
+  "world_is": "The run submitted an analysis (hop (d) not refused) and never read it: every read named an id the read plane refuses. No report generation is shown, and the ticket's report_ref names an id that cannot be opened. The packet's cause (state polled instead of stage) is not the cause; a runner that reads stage fails the same way. The census half (82 armed, 0 off-list admits) is the producer's record, not re-run by this seat.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

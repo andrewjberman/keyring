@@ -152,3 +152,168 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "ARMED, and this is the part that needs a decision rather than a note: step 2's commit 780f31c7cd leaves the secret ARN as the variable's COMMITTED DEFAULT while the act is deferred. That is deliberate under the halves (committed, never -var, because the root is shared) but it now means ANY apply of infra/aws/terraform/transcripts by any project -- NFRA_TRNSPT owns the rest of it -- lands MAIL_BEARER_SECRET and this unreviewed package without passing Branch A. Three dispositions, all the issuer's with the signers: (a) re-sign the halves on the measured b1b8f5b4fe..HEAD packaged diff and re-cut the apply; (b) revert 780f31c7cd to default \"\" until the re-sign, which re-disarms the shared root; (c) pin the package by building at b1b8f5b4fe. This seat applied nothing and holds. ALSO FOR THE RECORD: the halves' Branch B enumerates 7 registry files by name while build.sh:28 packages them by glob, so the enumeration cannot keep up with the build -- the durable fix is to state the packaged set as the glob."
 }
 ```
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S4",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZZ",
+  "surfaced_at": "2026-10-09T17:07:37Z",
+  "one_line": "Issuer ruling on COMM_ASSIST-Z-S3 (amendment A6): the PHASE B GO is withdrawn, the committed mail-key default is reverted to empty until re-issue, the build is pinned at 2ad98c2e3a, and the COO half is re-cut (re-cut 2) on the measured drift. None of the drift reaches C-MAIL's sender set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ (disarm of COMM_ASSIST-Z-S3 executed by this row; the revert of the default is A6's first act, by 0.7.0_AE_CloudOps~CA)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer read b1b8f5b4fe..2ad98c2e3a over the packaged paths: 7 files +857/-6; COMM code 0 lines; the registry leaf census shows 4 changed leaves (key_rulings x3 metadata, reporting_policies policies[2].firms), the rest additive; legacy_addresses.json new.",
+      "mail_requests.firm_domains() reads reg['scopes'] (scopes.json) and MAIL_PARTIES_PATH (mail_parties.json), both unchanged in that span; reporting_policies.json is not read by the mail path.",
+      "name(teams, global, chat-assist, lambda, handler) at the pin = teams-global-chat-assist-handler-lambda (unchanged)."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled inside the issuer's decomposition: re-cut on the measured diff and the pinned build; the CTO and CVO re-sign before Phase B is re-issued. The hazard (a committed default with no signed package) is disarmed by A6's revert.",
+  "spec_asserts": "The package Phase B ships equals the halves' measured table.",
+  "world_is": "The trunk kept moving under the packaged paths after the halves were measured; a pinned build is the only way the measured table equals what ships."
+}
+```
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S5",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZZ",
+  "surfaced_at": "2026-10-09T19:22:53Z",
+  "one_line": "Since the 18:33Z mail deploy, the poller's mail route has LISTED ZERO messages across 10 polls / 36 calls in ~48 min, every party domain included (Opal internal among them, Friday afternoon). Calls succeed (failed 0, refused 0), so either no party mail arrived or the route reads a mailbox or cursor other than the one intended.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~ZZ/r12/checks/d2_mail_day.py --day 2026-10-09 at 19:21Z: poll_lines=10 domains=40 listed=0 fetched=0 sent=0 calls=36 refused=0 failed=0; considered_lines=0.",
+      "Deploy a3057a3ed1: the mail step went live at 18:33Z (mail_poll calls 4, domains 4, failed 0)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-4: mail from the five parties naming Andrew reaches the poller.",
+  "world_is": "Zero listed in ~48 min. The discriminating act is the close plan's 19:30Z driver: one Opal-staff mail naming Andrew. If it is listed, the zero was organic; if not, the route's mailbox or cursor is the defect.",
+  "notes": "Not BLOCKING: the close plan's driver mail is the falsifier and is already scheduled. The issuer resolves this row on that read."
+}
+```
+
+## COMM_ASSIST-Z-S6 -- channel_poll fails its one call on EVERY ingress invocation and never raises ingress_step_failed; 63 of 63 in the hour BEFORE this deploy
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S6",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~CA",
+  "surfaced_at": "2026-10-09T19:39:55Z",
+  "one_line": "The ingress's channel_poll step has been failing its one call on EVERY invocation, long before this deploy: 63 occurrences of {\"event\": \"channel_poll\", \"failed\": 1, \"channels\": 0, \"mentions\": 0, \"read\": 0} in the hour BEFORE the apply, and it continues after. Found while reading step 7's log window; not caused by the mail deploy and not a rollback trigger.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "POST-APPLY window (18:33:30Z onward), /aws/lambda/teams-global-chat-assist-ingress-lambda: every invocation logs {\"calls\": 1, \"channels\": 0, \"event\": \"channel_poll\", \"failed\": 1, \"mentions\": 0, \"read\": 0}.",
+      "CONTROL, the hour BEFORE the apply (17:30Z-18:33Z), same log group, filter-pattern channel_poll: 63 of 63 messages carry \"failed\": 1 and none carries \"failed\": 0. Denominator printed by a uniq -c over the extracted field. So the condition PRE-DATES the apply and this act did not cause it.",
+      "The same window shows the deploy's own steps healthy: ingress_poll continuing, 0 ingress_step_failed, 0 not-configured, and mail_poll {calls:4, domains:4, failed:0, sent:0}. So channel_poll is an isolated step, not a symptom of the mail change.",
+      "Read as log lines only, per the order's step 7; no message content was read."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ingress's steps either succeed or log ingress_step_failed. FWD-3: no refusal fails silently.",
+  "world_is": "channel_poll fails its single call on every invocation and does NOT raise ingress_step_failed, so the failure is counted in a field and never escalated. 0 channels and 0 mentions are read as a result. Whether any product outcome depends on that step is NOT established here -- this seat only measured the counter, and naming the consequence needs the ingress owner.",
+  "notes": "NOT this seat's and NOT part of CA-d-2: step 8's rollback fires on an AFTER failure CAUSED by the act, and the control shows this is not one, so the deploy correctly stood. Filed because a per-invocation failure that never escalates is exactly the FWD-3 silent-refusal shape. Owner is the COMM ingress's issuer; routed by filing rather than by message, since the CTO is copied on decisions only."
+}
+```
+
+## COMM_ASSIST-Z-S7 -- cites Z-S5: the mail route LISTS (the zero was organic); the one mail considered was refused before the model as body_no_andrew; FWD-4 still not exercised
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S7",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZZ",
+  "surfaced_at": "2026-10-10T21:05Z",
+  "one_line": "Z-S5's falsifier read: the mail route is NOT blind. Full day 2026-10-09 lists 42 and fetches 1; that one mail reached the considered step and was refused before the model as considered_body_no_andrew, so texted_ok=0. Day 2026-10-10 (to ~21:0xZ) lists 246 across 246 poll lines and fetches 0. FWD-4 stays APPLIED, not EXERCISED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~ZZ/r12/checks/d2_mail_day.py --day 2026-10-09 at ~21:05Z 2026-10-10: poll_lines=64 domains=256 listed=42 fetched=1 sent=1 calls=253 refused=0 failed=0 considered_lines=1 considered_ok=0 considered_body_no_andrew=1; MAIL-CLOSE texted_ok=0 refused_before_model=1 exercised=False.",
+      "Same reader, --day 2026-10-10: poll_lines=246 domains=984 listed=246 fetched=0 sent=0 calls=984 refused=0 failed=0 considered_lines=0; exercised=False.",
+      "Counted from log lines only; no mail content was read (the reader counts, never reads)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-4: mail from the five parties naming Andrew reaches the poller and is texted to him.",
+  "world_is": "The route lists and fetches, so Z-S5's 'mailbox or cursor is the defect' branch is falsified and its zero was organic. The single considered mail failed the names-Andrew test. Whether that mail was the 19:30Z driver mail is NOT established from counts. The 10-10 shape (listed equals poll lines, fetched 0) reads as one already-seen message re-listed each poll and skipped, and is unconfirmed.",
+  "notes": "Resolves Z-S5's open question (the listing). What remains is FWD-4's exercise: one party mail whose body names Andrew. If the 19:30Z driver mail did name him, the body_no_andrew test is the defect. That is the discriminating question for the round-12 analysis, and only the sender or the CVO's flag judgment can answer it without this seat reading content."
+}
+```
+
+## COMM_ASSIST-Z-S8 -- round 13 E1: no seat can send the driven mail from a non-Andrew Opal mailbox; routed to Andrew
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S8",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZZ",
+  "surfaced_at": "2026-10-10T23:30Z",
+  "one_line": "Round 13 E1 needs ONE mail to Andrew from an Opal mailbox other than his own. The issuer names opalbloomberg@opalinvest.com, but no seat can send from it today: the estate's only application-credential path (irpt/graph/app-registration) does not exist, and the gateway's Graph access is delegated per user, with this seat's identity reading Andrew@opalinvest.com.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws secretsmanager describe-secret --secret-id irpt/graph/app-registration at ~23:1xZ 2026-10-10: ResourceNotFoundException.",
+      "opalgateway whoami from this seat at ~23:0xZ: userPrincipalName Andrew@opalinvest.com.",
+      "infra/aws/lambda/investor-reporting/intake/graph_client.py auth_state(): the gateway's Graph model is DELEGATED per user and establishes no application grant.",
+      "check_e1_body_considered.py at base a89f5575b1: the driven body passes considered() as ok in plain-text and HTML shapes; the nameless control is refused as body_no_andrew."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round-12 analysis E1: a seat sends ONE mail from an Opal-domain mailbox other than Andrew's; if no seat can send from one, the cell's first act records that and the row goes to Andrew.",
+  "world_is": "No seat holds a sending identity other than Andrew's. The send needs Andrew's hand: either an Opal colleague sends the exact text in decompositions/COMM_ASSIST_DECOMP.round13.md (cell CA-e-1) to Andrew@opalinvest.com, or he names or signs in a sending identity a seat may use. The rest of the round (E2, E3) does not wait on it.",
+  "notes": "Routed to Andrew through 0.0.0_AB_MSTR~Z as one ask. On the send, the issuer runs check_e1_mail_day.py for the send day and resolves this row with a new citing row."
+}
+```
+
+## COMM_ASSIST-Z-W7-S1 -- cites Z-S6: channel_poll 59 of 59 failed; dependent outcome is channel @mentions reaching Andrew's phone
+
+```json
+{
+  "id": "COMM_ASSIST-Z-W7-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~7",
+  "surfaced_at": "2026-10-10T23:30Z",
+  "one_line": "Cites COMM_ASSIST-Z-S6: channel_poll failed on 59 of 59 invocations in the last hour (calls=1, channels=0); the call most plausibly failing is teams (GET /teams). The code now names and raises it; the cure is unknown until the error field is read after deploy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "logs filter-log-events, /aws/lambda/teams-global-chat-assist-ingress-lambda, us-east-1, last 3600 s, pattern channel_poll: 59 lines, 59 of 59 failed=1, all calls=1 channels=0 read=0 mentions=0 (max-items 200, not cut short).",
+      "data/transcripts/scripts/teams_chat/channel_mentions.py poll(): calls=1 with an empty team list is the gw.teams() call; the deployed code logs no error text, so the call is inferred, not read.",
+      "infra/aws/ec2/opal-gateway/app/teams_route.py and server.py:1118-1121: the teams, channels and channel_messages routes exist in source; their deployed state and ALB routing are not established.",
+      "deliverables/0.9.0_WK_COMM_ASSIST~7/CHANNEL_POLL_RULING.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "COMM_ASSIST-Z-S6 / FWD-3: no refusal fails silently; channel @mentions of Andrew reach his phone.",
+  "world_is": "The outcome that depends on the channels step is FWD-3's 'every Teams message reaches his phone' for channel @mentions: 0 channel mentions are read while channel_poll fails 59 of 59 per hour. After the next deploy the channel_poll line carries error and the step logs ingress_step_failed; whether the cure is COMM's own code or the gateway (another project) is not established until that error is read.",
+  "notes": "The order named id COMM_ASSIST-W7-S1; the row gate requires the site-z coordinate, so it is filed as Z-W7-S1. Z-S6 is cited, not edited. Ruling file in the worker deliverables folder."
+}
+```

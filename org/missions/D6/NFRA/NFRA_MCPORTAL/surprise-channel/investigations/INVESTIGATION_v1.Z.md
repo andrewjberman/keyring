@@ -1116,6 +1116,221 @@
     "spec_asserts": "MP-x-4 section 4 says the proof_of_spec criteria are to be run 'from your worktree root', and the cell is directed (section 1, row Z-W5-S2) to work in a linked worktree with a no-cone sparse pattern list. Together those presume the checks run correctly from a sparse linked worktree.",
     "world_is": "A check that reaches into the nested mcportal repo cannot run correctly from a linked worktree, because git checks that repo out in the main tree only -- and because the call is wrapped in 2>/dev/null it degrades to a FALSE NEGATIVE instead of an error. Separately, a no-cone sparse list silently omits paths that the deploy script and the checks read (data/transcripts/, mcportal/), so 'run it from your worktree root' is only safe once the pattern list is widened to every path the instruments touch -- which is not discoverable from the order.",
     "notes": "Issuer's call; MP-x-4 is NOT blocked, since the substance is verified and the criterion is expected to pass on the post-drain run. Per BOUNDS 3 the criterion was NOT repaired and the check was not edited (section 3 makes it read-never-write): it is REFUSED with its measurement. Options: (a) give x4.AC2.sh the same `_main/mcportal` fallback deploy-to-ec2.sh:40-44 already has -- the minimal fix, and it makes the check worktree-agnostic; (b) drop the 2>/dev/null on that call so an absent repo surfaces as an error rather than a `no`, which is the SILENCE half of the defect and worth fixing regardless of (a); (c) state in the order that this criterion is graded on the merged index by the issuer, not by the cell. Also worth landing somewhere durable: the no-cone pattern list a gateway release needs is .tools/ org/ lib/ infra/ ops/ data/transcripts/ plus the root config files, and mcportal must be reachable for AC2."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S29",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-09T17:23Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S28",
+      "NFRA_MCPORTAL-Z-S27"
+    ],
+    "one_line": "Z-S28 FIXED at the check: x4.AC2.sh and r2.AC2.sh now resolve mcportal from the MAIN worktree and fail LOUD on an unreadable repo or a missing commit, instead of a 2>/dev/null false 'no'. x4.AC2 PASSES from a linked worktree. Z-S27 (cold-read margin shrinking) is confirmed by the issuer's own run, 27.4 s over 4,296 records at ~17:2xZ against the 30 s bar. It is routed as an ENRICHMENT for the next CP2/round-6 analysis (warm the body cache at boot, or more fetch threads), and it is a known risk for MP-r-2's AC3, which times three cold reads.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "x4.AC2 from C:/tmp/mp-cp2-issue (linked worktree): 'contains d60b4e0=yes ... RESULT: PASS'. r2.AC2's mcportal clause reads 'contains d60b4e0=yes' (control) and FAILs on the CP2 file set, as expected before MP-r-2.",
+        "x4.AC3 ssm 2b3b0d1c-a4de-4029-93b8-c361d6c54bfc: compute_s=27.4 reporting=4 scanned=4296. The applier's series: 13.6-16.8 s at ~3,150 records (14:0xZ), 24.2 s at 4,040 (16:2xZ)."
+      ]
+    },
+    "spec_asserts": "Z-S28: x4.AC2's mcportal clause false-negatives in a linked worktree. Z-S27: cold read under 30 s.",
+    "world_is": "The check is fixed in both scripts. The cold read is still under the bar, with about 9% headroom at 17Z, and is warm-cached after the first read in the live process.",
+    "notes": "Z-S27's remedy is NOT cut here: GATE (x) admits no new order into round 5 or CP2 round 1. If MP-r-2's step 2 measures over 30 s it STOPS as written, and the remedy becomes the first cell of the next round."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S30",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MP",
+    "surfaced_at": "2026-10-09T18:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MP-r-2 STOPPED AT STEP 2, BEFORE THE LEDGER WAS OPENED AND BEFORE ANY DEPLOY: admin_fabric_overlap._compute(6) read 31.611 s on the gateway host, OVER the order's 30 s bar (half the ALB's 60-second idle timeout). Three cold samples: 31.611 / 24.508 / 22.333 s over 4543-4546 activity records. The other two handlers are far inside the bar -- gitstate 5.135 / 3.680 / 3.546 s, calls 0.460 / 0.427 / 0.459 s. Step 2 says any one over 30 s STOPS and the issuer re-cuts, so nothing was opened, built, uploaded or deployed.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MP",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED on the host under the instance role arn:aws:sts::313476888478:assumed-role/opal-gateway-role/i-07dccb1615503ac99 (SSM c6cc7a81-0465-42df-801a-22c71d74ce87, Status=Success), running the RELEASE's three handler modules plus app/refs/overlap_rules.json in a scratch copy of the live app/ package under the host venv /opt/opal-gateway/.venv/bin/python. Per CLAUDE.md Rule 12 the driver went local -> S3 -> host pull; no Python was inlined into an SSM command and nothing was written on the VM. THREE SAMPLES, each a FRESH INTERPRETER so each in-process cache is empty by construction.",
+        "THE NUMBERS, per handler, with their denominators. overlap _compute(6): 31.611 s / 24.508 s / 22.333 s over records_scanned 4543 / 4544 / 4546, records_skipped 0 -- min 22.333, max 31.611, mean 26.151, so the WORST sample is 1.611 s OVER the bar and headroom at the worst is 0.95x. gitstate _compute(): 5.135 / 3.680 / 3.546 s, 4 boxes, worst margin 24.865 s. calls _compute('open'): 0.460 / 0.427 / 0.459 s, 4 boxes and 18 calls, worst margin 29.540 s. All three imported and ran -- this is a LOAD finding, not an import or wiring failure.",
+        "IT STRADDLES THE BAR, AND THAT IS THE DANGEROUS SHAPE: 2 of 3 samples (24.508, 22.333) are UNDER 30 s. A cell that took ONE pre-act sample would have had a ~2-in-3 chance of reading a pass and shipping a page whose first open can exceed half the ALB idle timeout. The order's 'any one over 30 s' plus three samples is what caught it; a single-sample gate would not have.",
+        "THIS IS Z-S27's MECHANISM, now realised on a second handler. overlap reads the SAME fabric activity store as admin_fabric over a rolling 6-hour window, and that window's record count has been climbing all day: ~3,150 at 14:0xZ, ~3,790 at 15:5xZ, 4,040 at x4.AC3 16:2xZ, 27.4 s at the issuer's x4.AC3 re-run, and 4,543-4,546 here at ~18:3xZ. The GO named this as a known risk and set the stop in advance.",
+        "WHY overlap IS SLOWER THAN admin_fabric ON THE SAME STORE: admin_fabric read 24.2 s over 4,040 records at 16:2xZ while overlap reads 31.6 s over 4,543 -- consistent with the same per-record cost plus a larger record count, not with a defect unique to overlap. On that reading the two handlers will cross the bar at roughly the same store size, so fixing only overlap would leave admin_fabric a short time behind it.",
+        "NOTHING WAS DONE TO THE WORLD, verified after the measurement: /opt/opal-gateway/app/admin_fabric_overlap.py still ABSENT (so the release is NOT live), service active, MainPID 864717 unchanged from MP-x-4's release, and the scratch directory removed by a trap. No ledger entry was opened for nfra-mcportal-cp2-release, no artifact was built or uploaded, and no POST was ever made to /api/admin/fabric/calls/close (BOUNDS 2 reserves the one real close for Andrew in MP-q-1).",
+        "STEPS 0, 1 AND 3 ARE DONE AND HOLD, so the re-cut starts from a known-good base: step 0's route hookup is committed at 354d58bc30 on wk-mcportal-cp2-r2 with 58 of 58 admin and fabric tests passing; step 1's release tree rel-nfra-mcportal-cp2 at 74d2522f22 carries a census of exactly 8 gateway files with 0 outside infra/aws/ec2/opal-gateway and 0 .xlsx/.pptx; mcportal_commit is set to bc37107 and its own bun cache pre-check reads 77 of 77 rc=0."
+      ]
+    },
+    "spec_asserts": "TO MP-r-2 step 2: 'Over SSM, run the release's three _compute functions ... Any one over 30 s (half the ALB's 60-second idle timeout): STOP with a BLOCKING row naming the time. The issuer re-cuts.' BOUNDS 1 adds that no handler is edited in this cell and 'a load-condition failure stops it, it does not tune.' The GO repeated it: 'A step-2 read over 30 s STOPS, as written.'",
+    "world_is": "One of the three handlers is over the bar on its worst of three cold samples -- admin_fabric_overlap._compute(6) at 31.611 s against 30 s -- while the other two are far inside it. So the cell stops exactly as written, with nothing opened and nothing deployed, and the decision is the issuer's. The cause is load, not wiring: all three modules imported and returned real bodies, and the driver is the rolling 6-hour activity-store window that Z-S27 already recorded as growing through the working day.",
+    "notes": "Issuer's call; this seat stops here and tunes nothing (BOUNDS 1). Options, and their costs as measured rather than guessed: (a) narrow overlap's default window, the same remedy MP-x-4's order named for admin_fabric -- note that NO cold 2-hour figure exists for either handler yet, so that needs its own fresh-interpreter measurement before it is relied on; (b) bound the work instead of the window (cap keys scanned, or paginate), the only option that does not degrade again as the store grows -- and on the per-record reading above, admin_fabric will need the same treatment within hours of overlap; (c) warm the body cache at boot, which moves the cost off the first open but not off a cold restart; (d) re-measure overnight, when the rolling window empties, and ship into the quiet period -- cheapest today and the weakest, since the bar would be breached again the next working day. Do NOT read this row as a request for an alarm or monitor: that is under a standing moratorium and needs Andrew's explicit word. The re-cut should also expect the live base to have moved again (MX-r-9 is ahead of MP-r-2 in the gateway queue). Figures and their denominators: org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MP/MP-r-2_PRE_ACT_RECORD.md."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S31",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MP",
+    "surfaced_at": "2026-10-09T19:41Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "EVERY .py COMMIT ON THIS DEVICE IS BLOCKED. commit-gate's ruff limb spawns ruff as `[sys.executable, '-m', 'ruff', ...]` and a Windows Application Control policy now refuses that: OSError [WinError 4551]. The ruff BINARY runs fine (ruff 0.15.11, rc=0) and the code under test PASSES the gate's exact check, so this is a failure to RUN the linter being reported as 'BLOCKED: ruff check failed' -- a failure to execute wearing the costume of a lint failure. It began within the hour: this seat's own .py commit passed the same gate at ~17:4xZ.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MP",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "REPRODUCIBLE, twice, from worktree C:/tmp/mp-r2: `.tools/safe-commit.sh ... -- infra/aws/ec2/opal-gateway/app/admin_fabric.py` -> 'ERROR: BLOCKED -- commit-gate failed (py_compile / ruff / lint). Commit aborted; files unstaged.' with '[commit-gate] OSError: [WinError 4551] An Application Control policy has blocked this file' and '[commit-gate] BLOCKED: ruff check failed on ...'. Asked the repository rather than the output: HEAD unchanged at 04ab813b4d and the file still reads ' M' -- nothing committed.",
+        "THE SPAWN PATH IS THE FAULT, read from the source: .tools/commit_gate_runner.py:145-148 runs subprocess.run([sys.executable, '-m', 'ruff', 'check', '--target-version', 'py39', '--extend-select', 'FA', target], cwd=WORKSPACE). Measured directly: `python -m ruff --version` -> the same WinError 4551, reproducibly; `ruff --version` via the binary on PATH (/c/Users/.../Python311/Scripts/ruff) -> 'ruff 0.15.11', rc=0. So ruff is installed, the pinned 0.15.11 the contract names, and executable -- only the python -m launch is refused.",
+        "THE CODE IS CLEAN BY THE GATE'S OWN CRITERIA, so nothing is being hidden by the block: the gate's EXACT invocation re-run through the working binary -- `ruff check --target-version py39 --extend-select FA infra/aws/ec2/opal-gateway/app/admin_fabric.py` -- prints 'All checks passed!' rc=0. py_compile and ds-precommit are not implicated; the gate's own message lists all three ('py_compile / ruff / lint') which is why the banner has to be read past.",
+        "IT IS DEVICE-WIDE, NOT THIS CELL'S. commit-gate is CLAUDE.md rule 14 and binds EVERY .py edit by every seat on this box. Any seat committing Python here right now hits it, and the message it gets points at its own code rather than at the policy.",
+        "IT IS NEW, which bounds the cause: this seat committed infra/aws/ec2/opal-gateway/app/admin_api.py through the same gate at 354d58bc30 about an hour earlier and the gate printed '[commit-gate] All checks passed!' including its ruff step. So the Application Control policy, or what it admits, changed between those two commits. Nothing in this cell changed the toolchain.",
+        "NO BYPASS WAS TAKEN, and none is available to this seat: safe-commit's --force covers contamination only, GIT_COMMIT_AUTHOR_OVERRIDE covers the LANE check, and neither reaches a gate refusal. Rule 14 offers no override for commit-gate, so the remedy edit stays UNCOMMITTED in the worktree rather than landing around the gate."
+      ]
+    },
+    "spec_asserts": "CLAUDE.md rule 14: 'Every `.py` edit passes `.tools/commit-gate.sh` (py_compile + ds-precommit + ruff py39). Universal.' commit-gate.sh:47 adds 'If ruff is absent, gate exits 1 immediately (ruff is required, not optional)' -- which presumes the two states are ruff PRESENT-and-runnable or ABSENT.",
+    "world_is": "There is a third state the gate does not model: ruff PRESENT and runnable as a binary, but not launchable as `python -m ruff` because an OS Application Control policy refuses it. The gate reports that as a lint failure on the author's file, so the signal points at the wrong thing. Meanwhile no .py can be committed on this device, including a load remedy the issuer ordered and whose measurement already passes its bar.",
+    "notes": "Not this seat's to fix and routed accordingly; it belongs with whoever owns the toolchain on this box (0.0.0_AB_MSTR~Z holds device infrastructure; LD-0116 bars a Tier-2 seat from messaging MSTR directly, so this goes through the issuer). Options: (a) have the runner resolve the ruff BINARY (shutil.which('ruff')) and fall back to `python -m ruff`, mirroring how safe-apply resolves terraform device-agnostically -- the minimal fix, and it makes the gate work wherever ruff is installed at all; (b) add an explicit RUFF env override, same shape as SAFE_APPLY_TERRAFORM; (c) have the Application Control policy admit the launch; (d) at minimum, distinguish 'ruff could not be EXECUTED' from 'ruff REPORTED findings' in the gate's own message, because the current wording sends the author looking for a lint problem in correct code. Until one of those lands, .py work on this device cannot be committed. The MP-r-2 remedy edit (FETCH_THREADS 8 -> 32 plus a matching max_pool_connections) sits uncommitted in C:/tmp/mp-r2 on wk-mcportal-cp2-r2, with 58 of 58 tests passing and its re-measure already inside the bar."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S32",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MP",
+    "surfaced_at": "2026-10-09T19:41Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "A MEASUREMENT TRAP, caught in this seat's own driver before it reached a report: admin_fabric_overlap delegates its S3 read to admin_fabric, which caches bodies in a MODULE-LEVEL dict, so measuring admin_fabric._compute(6) and then overlap._compute(6) IN ONE PROCESS makes the second a WARM read. It read 1.490 s that way against 13.741 s cold -- a manufactured ~9x 'improvement' that would have been reported as the remedy's effect. Only the FIRST handler in a process is cold.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MP",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED BOTH WAYS on the same host, same remedied bytes, within minutes. Four handlers in ONE process (admin_fabric first): admin_fabric 13.328 / 13.582 / 13.016 s, overlap 1.490 / 1.442 / 1.378 s. One handler PER process, cache verified empty at start (body_cache_entries_at_start = 0 on all 12 samples): admin_fabric 13.345 / 13.404 / 13.828 s, overlap 13.723 / 13.741 / 13.171 s. admin_fabric is unchanged between the two shapes because it ran FIRST either way; overlap moves 1.4 s -> 13.7 s, which localises the artefact to the second-handler position, not to the handler.",
+        "THE MECHANISM, read from the source rather than inferred: app/admin_fabric_overlap.py:29-30 imports admin_fabric and its constants; :91 uses admin_fabric._s3_client(); :98 admin_fabric._list_keys(); :99 admin_fabric._read_records(). _read_records fills admin_fabric._BODY_CACHE (admin_fabric.py:~56 _cache_put, CACHE_CAP 20000), a module-level dict. The two handlers read the SAME keys from the same prefix over the same window, so the first one's fetch warms essentially everything the second needs.",
+        "WHY IT WAS CAUGHT RATHER THAN SHIPPED: the per-handler improvement was implausible in a way the numbers themselves exposed. The remedy raises a FETCH THREAD POOL from 8 to 32, so the ceiling on its effect is about 4x on the fetch-bound part -- but overlap appeared to improve ~21x (31.611 s -> 1.490 s) while admin_fabric, which shares the very same pool, improved only ~2x. One number moving 10x further than its own shared mechanism allows is the tell.",
+        "THE EARLIER STOP IS UNAFFECTED, which matters because a cell was stopped on it: in the step-2 driver overlap ran FIRST, so its 31.611 s was a genuine cold read and row Z-S30's breach stands. gitstate and calls ran after it in that same process; they do not share admin_fabric's cache in the same way and their times are 1-2 orders of magnitude inside the bar, so nothing turns on it -- but they were not strictly cold either, and that is stated rather than glossed.",
+        "A LIKE-FOR-LIKE CONTROL WAS THEN RUN so the remedy's real effect is not left to inference: the LIVE module at FETCH_THREADS=8, overlap cold in its OWN process, read 20.753 s over 4,699 records, against the remedied 13.741 s worst over ~4,697. So the honest figure is about 1.5x, not 21x. Note also that the unremedied configuration spans 20.753 s to 31.611 s at comparable record counts, so its run-to-run variance is wide and a single sample of it could land either side of the bar."
+      ]
+    },
+    "spec_asserts": "MP-r-2 step 2 and AMENDMENT 5 require cold samples -- three fresh-interpreter cold reads of each handler -- and treat 'fresh interpreter' as sufficient for coldness.",
+    "world_is": "A fresh interpreter is necessary but NOT sufficient when two handlers share a module-level cache. Coldness is per-CACHE, not per-process: the second handler in a process reads the first's cache no matter how new the process is. The rule that actually holds is ONE HANDLER PER INTERPRETER, and it is cheap to verify directly -- the driver now prints body_cache_entries_at_start, which must be 0.",
+    "notes": "No action is owed by anyone; this is banked so the next cell measuring these handlers does not rediscover it. Carry-forward: measure ONE handler per process, assert the shared cache is empty at start, and treat any improvement larger than the mechanism's own ceiling as a measurement artefact until a like-for-like control says otherwise. Figures: deliverables/0.7.0_AE_CloudOps~MP/MP-r-2_PRE_ACT_RECORD.md."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S33",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-09T19:52Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S31",
+      "NFRA_MCPORTAL-Z-S32",
+      "NFRA_MCPORTAL-Z-S30"
+    ],
+    "one_line": "DISARMS Z-S31 for this project. The commit-gate's `python -m ruff` spawn is refused by Windows Application Control (WinError 4551), reproduced from the issuer's seat. The gate FAILS CLOSED and no bypass is taken: MP-r-2 keeps its AMENDMENT 5 edit uncommitted until the gate can execute ruff, and it waits on MX-r-9's ledger close regardless. The device and gate fault is routed to 0.0.0_AB_MSTR~Z. Z-S30 is answered: AMENDMENT 5 meets the bar, 12 of 12 cold samples at or under 30 s, max 13.828 s, a ~1.5x gain against the 8-thread control's 20.753 s. Z-S32 (a warm-cache measurement trap) is accepted; its contaminated figures were discarded by the applier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer reproduction ~19:4xZ from the shared tree: `python -m ruff --version` raises OSError [WinError 4551] An Application Control policy has blocked this file; ruff is installed at AppData/Roaming/Python/Python314/site-packages/ruff.",
+        "Applier msg 32978 and MP-r-2_PRE_ACT_RECORD.md: one handler per fresh interpreter, empty cache. admin_fabric 13.345/13.404/13.828 s, overlap 13.723/13.741/13.171 s, gitstate 3.854/3.445/3.812 s, calls 0.590/0.574/0.639 s. Tests 58/58."
+      ]
+    },
+    "spec_asserts": "Z-S31 ARMED: every .py commit on site Z is blocked by the gate's inability to run ruff. Z-S30: the overlap cold read exceeded 30 s.",
+    "world_is": "Z-S31 blocks commits but corrupts nothing (fail-closed). This project holds rather than bypasses, and the owner fix is routed. Z-S30's remedy is measured and meets the tightened bar.",
+    "notes": "The remedy halves the cold read but does not make it constant: the record count still grows through the day (Z-S27). A boot-time cache warm stays an enrichment for the next analysis."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S34",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MP",
+    "surfaced_at": "2026-10-09T20:03Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S31"
+    ],
+    "one_line": "CORRECTS Z-S31's DIAGNOSIS, which has already been routed to 0.0.0_AB_MSTR~Z. It is NOT 'python -m ruff is blocked' and NOT device-wide: Python311 `-m ruff` WORKS (ruff 0.15.11, rc=0) and only Python314 `-m ruff` is refused (WinError 4551). commit-gate.sh:59 runs `exec python ...`, and on this box `python` resolves to C:\\Program Files\\Python314 while ruff is installed for Python311. So the gate picks an interpreter whose bundled ruff.exe the policy refuses. The fix is a one-line interpreter/binary resolution, not an IT policy change.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MP",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, both interpreters, same shell, minutes apart. `python -m ruff --version` (python -> C:\\Program Files\\Python314\\python.exe, 3.14.7) -> OSError [WinError 4551] An Application Control policy has blocked this file. `python3 -m ruff --version` (python3 -> C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\python.exe, 3.11.9) -> 'ruff 0.15.11', rc=0. So the SAME `-m ruff` launch succeeds or fails purely by which interpreter runs it.",
+        "THE MODULE IS PRESENT UNDER BOTH, which rules out 'not installed for 3.14' as the cause: `importlib.util.find_spec('ruff')` returns True under Python314 AND under Python311. What differs is the bundled ruff executable each site-packages carries -- the policy admits Python311's and refuses Python314's. The directly-invoked `ruff` on PATH that works is Python311's Scripts\\ruff.",
+        "THE GATE'S INTERPRETER IS THE LINK, read from the source: .tools/commit-gate.sh:59 is `exec python \"$SCRIPT_DIR_WIN/commit_gate_runner.py\" \"$@\"`, and commit_gate_runner.py:145-148 then spawns [sys.executable, '-m', 'ruff', ...]. sys.executable is therefore whatever bare `python` resolved to -- Python314 here -- so the gate reaches for the one ruff the policy refuses.",
+        "THIS EXPLAINS A SYMPTOM Z-S31's DIAGNOSIS DID NOT COVER, which is why it should be preferred: this seat committed a .py through the SAME gate about an hour earlier (354d58bc30, '[commit-gate] All checks passed!'). 'An OS policy changed in the last hour' had to assume an unobserved policy edit; 'bare python resolves to Python314' explains it if PATH resolution differed for that invocation, and needs no unobserved change.",
+        "SCOPE IS NARROWER THAN Z-S31 CLAIMED, and the claim is retracted: Z-S31 said it blocks EVERY .py commit on this box. Measured truth is that it blocks any seat whose bare `python` resolves to Python314; a seat resolving to Python311 passes the gate. That scope is PATH-dependent per shell and was NOT measured across other seats -- Z-S31 inferred device-wide from 'OS policy', which is the wider population than the one sample supported.",
+        "NOTHING ABOUT THE REMEDY OR ITS MEASUREMENT CHANGES: AMENDMENT 5's bar is still met (12 of 12 cold samples, max 13.828 s), the file still passes ruff's exact check through the working binary, the edit is still UNCOMMITTED with no override taken, and the issuer has ruled it stays that way until the gate can execute ruff."
+      ]
+    },
+    "spec_asserts": "Z-S31 asserted that commit-gate's ruff limb cannot execute because 'a Windows Application Control policy now refuses `python -m ruff`', and that the block reaches every .py commit on this device.",
+    "world_is": "The refusal is interpreter-specific, not launch-mode-specific: Python311's `-m ruff` runs and Python314's does not. commit-gate's bare `python` is Python314 on this box, so the gate alone trips it while a hand-run ruff succeeds. The blast radius is every seat whose `python` resolves to Python314, which is a PATH property of each shell rather than a property of the device, and it was not measured outside this session.",
+    "notes": "Routed for 0.0.0_AB_MSTR~Z, who already holds Z-S31 -- this row is the correction that makes it cheap to fix. Preferred fix, smallest first: (a) have commit_gate_runner resolve the ruff BINARY (shutil.which('ruff')) and only fall back to [sys.executable, '-m', 'ruff'], exactly how .tools/safe-apply.sh resolves terraform device-agnostically -- one function, and it makes the gate correct wherever ruff is installed at all; (b) add a RUFF env override, same shape as SAFE_APPLY_TERRAFORM; (c) pin commit-gate.sh:59 to the interpreter that owns the pinned ruff (python3 / Python311 here) rather than bare `python`, which also removes the silent dependence on PATH order; (d) independently of all three, make the gate distinguish 'ruff could not be EXECUTED' from 'ruff REPORTED findings' -- the present wording, 'BLOCKED: ruff check failed on <file>', sends the author looking for a lint problem in correct code, and that is the part that cost this cell the most time. An IT policy change is NOT needed for any of (a)-(d)."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S35",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-10T21:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S34",
+      "NFRA_MCPORTAL-Z-S31"
+    ],
+    "one_line": "DISARMS Z-S34 for this project, and narrows its diagnosis. The ruff refusal is INTERMITTENT, not deterministic per interpreter: Python314 `-m ruff --version` was refused once at 20:57Z and then read rc=0 in 6 of 6 runs from the same seat minutes later. `.tools/commit-gate.sh` passed the AMENDMENT 5 file (clean 1 of 1, rc=0), and the applier committed it through the gate @ea58e3662d with no override. MP-r-2 is no longer blocked by the toolchain; it waits only on MX-r-9's ledger close.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED 2026-10-10 ~20:57Z, issuer seat, shared tree: `python -m ruff --version 2>&1 | head -2` printed a Traceback (`<frozen runpy>` line 203). Bare `ruff --version` (Python311 Scripts) read 'ruff 0.15.11'.",
+        "MEASURED ~21:0xZ, the same seat: `python` -> C:\\Program Files\\Python314\\python.exe. `python -m ruff --version` read 'ruff 0.15.11' rc=0 in 6 of 6 runs (5 looped, 1 piped). Python311 `-m ruff` read 'ruff 0.15.11'.",
+        "MEASURED ~21:0xZ in C:/tmp/mp-r2: `bash .tools/commit-gate.sh infra/aws/ec2/opal-gateway/app/admin_fabric.py` -> 'All checks passed!' and 'OK: pre-commit gate clean for 1 of 1 file(s)', rc=0.",
+        "git -C C:/tmp/mp-r2 log: ea58e3662d (0.7.0_AE_CloudOps~MP, 17:13:54 -0400) fix(... MP-r-2 AMENDMENT 5 ...); the worktree is clean afterwards."
+      ]
+    },
+    "spec_asserts": "Z-S34: Python314's bundled ruff is refused by Application Control and Python311's is admitted, so a gate whose bare `python` is Python314 always fails.",
+    "world_is": "The same Python314 `-m ruff` launch failed once and passed 6 times within about 10 minutes. The refusal is a time- or state-dependent property of the policy or its cache, not a fixed property of the interpreter. This also explains Z-S34's own unexplained symptom (354d58bc30 passed the same gate an hour before the refusal) without needing a PATH difference.",
+    "notes": "No act owed by this project. Z-S34's fix (a), resolving the ruff binary before falling back to `-m ruff`, still reduces exposure and stays with 0.0.0_AB_MSTR~Z as gate owner. Z-S34(d), telling 'could not EXECUTE ruff' apart from 'ruff REPORTED findings', is the part that matters for an intermittent fault: on a refusal, re-run once before you look for a lint defect."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S36",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MP",
+    "surfaced_at": "2026-10-10T21:31:53Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S35",
+      "NFRA_MCPORTAL-Z-S34",
+      "NFRA_MCPORTAL-Z-S31"
+    ],
+    "one_line": "CORROBORATES Z-S35 on a wider denominator and adds the part neither prior row has: the refusal is recorded in NEITHER Windows log, so an empty event log CANNOT grade the fix. Python314 `-m ruff --version` read rc=0 in 20 of 20 trials -- superseding Z-S35's 6 of 6 and finishing the falsification of Z-S34's interpreter-split mechanism -- Python311 20 of 20, and the real `.tools/commit-gate.sh` on the AMENDMENT 5 file 5 clean of 5. Over the 1,185 `Microsoft-Windows-CodeIntegrity/Operational` events spanning the whole 30-hour refusal window, 0 name ruff or python. Whoever grades 0.0.0_AB_MSTR~Z's fix must grade it by EXECUTING ruff over a printed denominator, never by reading these logs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED 2026-10-10 21:1x-21:2xZ, applier seat, each figure beside its denominator: `python -m ruff --version` under C:/Program Files/Python314/python.exe (3.14.7, what bare `python` resolves to here) -> 20 rc=0, 0 WinError 4551, DENOMINATOR 20. Under Python311 -> 20 rc=0, 0 WinError 4551, DENOMINATOR 20. So the interpreter is NOT the discriminator, and Z-S34's deterministic mechanism is falsified on the very interpreter it named.",
+        "THE REAL CONSUMER, not a proxy: `bash .tools/commit-gate.sh infra/aws/ec2/opal-gateway/app/admin_fabric.py` run 5 times in C:/tmp/mp-r2 -> 5 rc=0, 0 refusals, DENOMINATOR 5. The gate is what Rule 14 binds, so it is the oracle; `-m ruff --version` alone is only its precondition.",
+        "THE INSTRUMENT DOES NOT SEE THIS FAULT, which is the reusable finding. `Microsoft-Windows-CodeIntegrity/Operational` over the 30 hours from 2026-10-09 15:22Z (spanning the first refusal ~2026-10-09 20:0xZ, the 20:57Z refusal and the clean window): 1,185 events, 790 Id=3089 and 395 Id=3033, and 0 of 1,185 name ruff or python. The 395 Id=3033 blocks are ALL SentinelOne's `SentinelAmsi64.dll` refused into `svchost.exe` with status 0xC0000428 -- a separate standing condition, not this fault and not this project's to own.",
+        "THE SECOND LOG IS ALSO SILENT: `Microsoft-Windows-AppLocker/EXE and DLL` holds only Id=8001 policy-application notices (2026-10-10 20:49:42Z, 2026-10-09 07:01:06Z, 2026-10-08 20:58:15Z) and no block event; `AppLocker/MSI and Script` returned no events at all. So BOTH candidate instruments read clean while the fault WAS occurring.",
+        "ONE CORRELATE, NAMED AS A CORRELATE AND NOT A CAUSE: the AppLocker policy application at 2026-10-10T20:49:42Z sits 8 minutes before the last observed refusal (20:57Z) and ~13 minutes before the clean window. But the ONSET -- between 354d58bc30 passing the gate and the 2026-10-09 20:0xZ refusals -- has NO corresponding event in either log, so the pair is a coincidence in time and not a mechanism. Stating it as a cause would be the error this row exists to prevent.",
+        "DOWNSTREAM STATE, measured not assumed: the AMENDMENT 5 remedy is committed @ea58e3662d through safe-commit with no override, the suite at the committed bytes read 58 passed / 0 failed, and the cell's record is superseded in place @73547dcfd1 (`deliverables/0.7.0_AE_CloudOps~MP/MP-r-2_PRE_ACT_RECORD.md`). Nothing was deployed: live `FETCH_THREADS` is still 8 and no entry exists for slug `nfra-mcportal-cp2-release`."
+      ]
+    },
+    "spec_asserts": "A Windows Application Control refusal of an executable is recorded by the OS, so the code-integrity and AppLocker logs can be read to confirm whether the fault is still occurring -- and an empty log over the window grades it absent.",
+    "world_is": "Neither log recorded it. 0 of 1,185 CodeIntegrity events over the 30-hour window naming ruff or python, and no AppLocker block event, while the fault demonstrably occurred twice inside that window (2026-10-09 ~20:0xZ and 2026-10-10 20:57Z). A clean log here is an ABSENT reading from an instrument that cannot see the object, which is not a negative -- the exact shape CLAUDE.md's ABSENT != EXERCISED-AGAINST corollary names.",
+    "notes": "No act owed by this project; MP-r-2 waits on MX-r-9's ledger close alone. For 0.0.0_AB_MSTR~Z as gate owner: (1) grade any fix by EXECUTING ruff N times with N printed, never by reading the event logs, because this row shows they are blind to it; (2) a non-reproduction over 45 clean trials is NOT a fix -- the fault's rate is unmeasured at the low end and one refusal in seven was real an hour earlier; (3) under an INTERMITTENT fault, Z-S34's fix (d) -- telling 'ruff could not be EXECUTED' apart from 'ruff REPORTED findings' -- is worth more than before, because the correct response to a refusal is to re-run once, and the present wording sends the author hunting a lint defect in correct code instead. Fix (a), resolving the ruff BINARY before falling back to `-m ruff`, still reduces exposure and costs one function."
   }
 ]
 ```

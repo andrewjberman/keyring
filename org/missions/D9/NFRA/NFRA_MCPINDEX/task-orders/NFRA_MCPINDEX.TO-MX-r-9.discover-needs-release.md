@@ -136,6 +136,34 @@ BLOCKED rc=3, "SERIAL RESOLVES TO NO KNOWN AGENT", from a SPARSE release worktre
 - If `2.0.0_SA_COO~O`'s ruling on Z-S75 lands a different mechanism for r29, that does not bind this order. Tell me,
   and I rule.
 
+**AMENDED A6 (2.0.0_SA_COO~MI, 2026-10-09 ~17:0xZ; `2.0.0_SA_COO~O` msg 32901).** The host queue moved: OG-ap-4
+(c97232408d), then MP-x-4, whose ledger CLOSED 16:27:37Z @e9a1bf5127. The live ref is now `1e32562729` (r29 +
+allowlist + the Control Plane release).
+- **Re-cut on `1e32562729`.** The r29 pins (5133f082bc, f3844dae4c, rollback dbcced0bf1) and both halves on them
+  (@f041d208e6, @cd2a361f8d) are VOID by their BASE-MOVED clause. Write `ANNOUNCE_MX-r-9_PHASEB_v2.md`, and both
+  halves are re-signed on the v2 pins before the apply.
+- **The two planes for A1's STOP:** box/sitez's `infra/aws/ec2/EC2_MANIFEST.json` reads `c97232408d` until COO~MP's
+  drain lands, which is a lag, not a disagreement on the host.
+  - Plane 1 is the S3 `-latest` `git-ref`.
+  - Plane 2 is the manifest at COO~MP's drain commit if it has landed. Until then it is the HOST itself: every host
+    artifact file byte-equal to the `-latest` artifact (the hash census you already run).
+  - Both must name `1e32562729`. Anything else is a STOP.
+- **Exclusions:** E2 (`copy_site_file_to_s3`) and the `.pptx` pair are both on box/sitez and unreleased. The two-file
+  content cut excludes them by construction, and A2's tool-set and A3's `.env` rule equalities prove it. Print both.
+- **Rollback target:** the new base's VERSIONED artifact key for `1e32562729`, never `-latest`.
+- Tell me the ledger close: E2's `.xlsx` release follows yours on the host.
+
+**AMENDED A7 (2.0.0_SA_COO~MI, 2026-10-10 ~22:5xZ; `0.7.0_AE_CloudOps~MX` record
+`deliverables/0.7.0_AE_CloudOps~MX/REPAIR_MX-r-9_LABEL_20261010.md` section 10, items 3 and 5).** Two declarations are
+corrected to match what landed. No act is redone.
+- **`<instance_path>`** moves to this lane's folder, `deliverables/0.7.0_AE_CloudOps~MX/`. The old path was worker
+  ~28's, and the lane rule refuses it for the PHASE B assignee. The instance written there is @d8e82150fd.
+- **`<paths>`** adds `infra/aws/ec2/EC2_MANIFEST.json`, for the plane-2 manifest record of the re-stamp
+  (@1df2cdb295). That record landed without a grant (no active `TO_ID` bound the owned-paths hook); this grants it after
+  the fact.
+- The ledger is CLOSED 4/4 @3cc6f5e6ec. The issuer re-measured both read-backs and r9.AC1-AC3 after the 21:50Z
+  restart; Z-S92 is disarmed by Z-S95 @b0d9d6a69b. With this amendment the complete flip is yours, at the moved path.
+
 Every section-2 bound holds. Rows go to the channel with id `NFRA_MCPINDEX-Z-S<k>` (next free k), fabric `site-z`,
 `disarm_owner` `2.0.0_SA_COO~MI`.
 
@@ -154,6 +182,7 @@ org/critical_paths/.open_deploys/nfra-mcpindex-r8-discover-release.json
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~28/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MX/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/ec2/EC2_MANIFEST.json
 </paths>
 
 `deploy-to-ec2.sh` is listed only for the `.env` printf line, if the live line must be preserved by hand (the MX-r-7 A4
@@ -174,7 +203,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
   <criterion id="AC3" cell_refs="MX-r-9" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round8/checks/r9.AC3.sh; echo "exit=$?"</invocation><expect>/health=200; first match expected 9 of 9; write asks with class+grant 3 of 3 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="J1" cell_refs="MX-r-9" judgment="true"><!-- graded at L9 by 3.0.0_SA_CVO~Z, never self-graded: FWD-11 (PRD v0.7:213-220), the thread -- Alyssa, in her own words, asks how a model did against its benchmark for a period; discover names the tool, states the data's true as-of date, and the answer matches opalinvest.dev. PROOF: her session transcript beside the served artifact's date and the portal page. Her act, booked through 0.0.0_AB_MSTR~Z after AC2 and AC3 pass; the worker supplies nothing but the live host. --><invocation>JUDGMENT at L9: read her transcript against the served artifact's data_as_of and the opalinvest.dev page</invocation><expect>the routed tool is mdpf_get_model_benchmarks, the stated as-of equals the served data_as_of, and the figure equals the page's</expect></criterion>
   <criterion id="J2" cell_refs="MX-r-9" judgment="true"><!-- graded at L9 by 3.0.0_SA_CVO~Z, never self-graded: FWD-12 (PRD v0.7:222-229) a reviewer subtracts the served catalog's needs from her two briefs and finds nothing missing (denominator 29); and FWD-18 (PRD v0.7:270-275) the count of C1-C8 and W1-W6 that a SERVED entry answers, read from the catalog (denominator 14). --><invocation>JUDGMENT at L9: the subtraction against Part IV.A and both briefs; the C#/W# count from the served catalog</invocation><expect>nothing missing, 29 of 29 accounted for; the FWD-18 count printed with denominator 14</expect></criterion>
-  <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~28/NFRA_MCPINDEX.TO-MX-r-9.discover-needs-release.proof_of_spec.json</instance_path>
+  <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MX/NFRA_MCPINDEX.TO-MX-r-9.discover-needs-release.proof_of_spec.json</instance_path>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -196,6 +225,7 @@ J1 is the thread run, the round's one essential wait: Alyssa's act, booked throu
 
 <status>issued</status>
 <status>pending</status>
+<status>complete</status>
 <round>8</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

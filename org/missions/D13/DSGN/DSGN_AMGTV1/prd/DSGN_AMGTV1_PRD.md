@@ -5,10 +5,10 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "dell1",
- "prd_version": "v0.18",
+ "prd_version": "v0.19",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27"],
  "status": "DRAFT"
 }
 ```
@@ -112,7 +112,7 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     identity field on 3 bubbles and 3 bars; no mark names a company
                     by a code alone.
 
-  FWD-3  A PM can read how names moved over time without untangling a knot of
+  ~~FWD-3~~ RETIRED v0.6 -- A PM can read how names moved over time without untangling a knot of
          lines
          DONE WHEN  EXERCISED -- the history view walked with ten or more names
          ACCEPT     With ten or more names, the dates do not overlap, each line is
@@ -447,6 +447,8 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
          SOURCE     Andrew N6 ("easy to read text"); UI/UX brief O8 (SAUX-03, 04,
                     14, 22, 24, 26, 29-36)
 ```
+
+**v0.19 (1.0.0_SA_CTO~DELL1, 2026-10-09 ~17:1xZ), header only:** FWD-3, RETIRED at v0.6 (Andrew 2026-10-01 rejected the line-history view), leaves `endpoint_outcomes`. Its card stays below as the record of its retirement, and its number stays vacant. No other outcome changes.
 
 ## CONTRACTS
 

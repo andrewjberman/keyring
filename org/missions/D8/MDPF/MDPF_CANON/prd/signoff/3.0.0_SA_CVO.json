@@ -1,11 +1,12 @@
 {
   "prd": "MDPF_CANON_PRD.md",
-  "prd_version": "v2.5",
-  "prd_pin": "062c062749116c479ad44690ea9202cd1439ba0f",
+  "prd_version": "v2.9",
+  "prd_pin": "12adb879638c1922e9ebf3d3c95bd13e8deb029e",
   "half": "ratified-text",
-  "half_hash": "427180b197964a7ca699247d1463f4cb263b19b523a84d23fc02d043d8ea9704",
+  "half_hash": "544bf90841d68c68b4959dad71b53516bc5f7c74735642216a78f5e3756387d5",
+  "endpoint_hash": "1a31840f178365bde7a4c49b3927f01378edabba7bd0cdc75d04dcdbd63c63aa",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_CANON_v2.5_RATIFIED_TEXT_HALF_20260916.md@dabede56b6",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_CANON_PRD_V29_RATIFIED_TEXT_REVIEW_20261009.md@435cf1dbbd",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-16T19:04:46Z"
+  "signed_at": "2026-10-09T18:37:17Z"
 }

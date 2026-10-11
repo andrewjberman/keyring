@@ -1,0 +1,53 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "LGIC_CANON",
+ "round": 5,
+ "graded_by": "1.0.0_SA_CTO~DELL1",
+ "graded_utc": "2026-10-09T19:50Z",
+ "report_ref": "org/missions/D14/LGIC/LGIC_CANON/ledger/COMPLETION_REPORT.round5.json@8e70ed9d32",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-k-5-r3.canon-coordinates.proof_of_spec.json@abf00c6c15",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 4 (1.0.0_SA_CTO round-4 analysis, deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND4_ANALYSIS.md @fe2d71cb2a, 5 of 6 REALIZED). Not regressed in round 5: no round-5 cell touched it; the CVO's close read (ADJUDICATION_v3 @f8dd527644) re-ran lib/tests at 214 passed."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~3/LGIC_CANON.TO-CN-r-1.fwd2-record.proof_of_spec.json@83afab6973",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 4 (1.0.0_SA_CTO round-4 analysis, deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND4_ANALYSIS.md @fe2d71cb2a, 5 of 6 REALIZED). Not regressed in round 5: no round-5 cell touched it; the CVO's close read (ADJUDICATION_v3 @f8dd527644) re-ran lib/tests at 214 passed."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~3/LGIC_CANON.TO-CN-r-2.fwd3-record.proof_of_spec.json@6386bd663a",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 4 (1.0.0_SA_CTO round-4 analysis, deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND4_ANALYSIS.md @fe2d71cb2a, 5 of 6 REALIZED). Not regressed in round 5: no round-5 cell touched it; the CVO's close read (ADJUDICATION_v3 @f8dd527644) re-ran lib/tests at 214 passed."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~7/LGIC_CANON.TO-CN-n-3.naming-compare.proof_of_spec.json@dd226198db",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 4 (1.0.0_SA_CTO round-4 analysis, deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND4_ANALYSIS.md @fe2d71cb2a, 5 of 6 REALIZED). Not regressed in round 5: no round-5 cell touched it; the CVO's close read (ADJUDICATION_v3 @f8dd527644) re-ran lib/tests at 214 passed."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/CANON_RUN_R5.json@835ab108a5",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5, clause by clause against the v1.7 ACCEPT. Run end to end on the 49financial practice wave: 16 steps, 17 units, 15 reached, 2 carded. Both carded units are steps 10 and 16, owner ADVI_FIRMBKTS: the firm-bucket gap (the address() home key in opal-data-49financial reads 404; the router repoint has not landed). That is the ACCEPT's carve-out verbatim: carded with owner, never holds the outcome, graded on the steps the wave can reach. No judgement call: step 13 census COMPLETE (175 judged, 8 ruled, raise 0); step 14a derives 8 of 8 of 49financial's pages, 0 carded (core plus tenant.pages, ruling ledger/ROUND_ANALYSIS.round5.md ADDENDUM 1). Dashboard exactly as before: served hash before == after (0de2f0f6), live_acts empty. Corroborated by the CVO's independent re-run (ADJUDICATION_v3 @f8dd527644, PASS-R5-RUN, PASS-R5-STEP13, --check OK). The first genuinely new firm re-runs it as confirmation; steps 10 and 16 re-run when ADVI_FIRMBKTS lands."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~2/LGIC_CANON.TO-CN-l-3-r3.state-plane.proof_of_spec.json@04357c8cb7",
+   "state_observed": "APPLIED",
+   "note": "REALIZED at round 4 (1.0.0_SA_CTO round-4 analysis, deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND4_ANALYSIS.md @fe2d71cb2a, 5 of 6 REALIZED). Not regressed in round 5: no round-5 cell touched it; the CVO's close read (ADJUDICATION_v3 @f8dd527644) re-ran lib/tests at 214 passed."
+  }
+ ]
+}

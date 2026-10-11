@@ -1353,3 +1353,486 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-S21 -- an UNSCOPED PHASE B apply of smartx-pipeline carries three Lambda code deploys and three output removals that no cell authorized
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S21",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-09T18:13:01Z",
+    "one_line": "IAM-w-1 PHASE A measured the module's plan and the adoption is only part of it: an UNSCOPED safe-apply of infra/aws/terraform/smartx-pipeline would ALSO move three aws_lambda_function resources to new s3_object_versions (one also a new source_code_hash) and drop three outputs to null -- pre-existing module drift, proved pre-existing by a negative control, that an IAM custody move would carry into the world with it.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell binds PHASE B to 'a plan that equals the survey's (N to import, 0 to add, 0 to destroy, plus only the tag updates the pair names)' and BOUNDS it to 'NO PERMISSION MOVES: the role's policies, trust and usage are untouched (C-TWO-REMEDIES)'. Deployment rule 4 and NEVER-2 additionally require an IMAGE/code act to name every family it moves in a deploy-ledger entry.",
+    "world_is": "With zz_adopt_family_b.tf present the module plans 'Plan: 1 to import, 0 to add, 4 to change, 0 to destroy.' With the same file MOVED OUT and nothing else changed it plans 'Plan: 0 to add, 3 to change, 0 to destroy.' So the adoption's own delta is 1 import plus 1 tags_all change on the role, and the other 3 changes are PRE-EXISTING DRIFT: aws_lambda_function.assets_daily_pull (s3_object_version XmkW9C_XX1J_6sREU2VZ2naPbfmRQa7O -> QNIiMQgfRzxG_KrI_6mVxJDjJbZFOnsd), aws_lambda_function.jwt_refresher (lRZrP4cIcsSbeYBd8SIB6_W8No75LiDw -> HAmOeAkTP0mT6304E9OvUVTpk_GhC8hh), aws_lambda_function.rest_pull (Way7ManCnOWA8bAdT8YIAzZ0ncPu4ino -> g_1WqvOSlrPbM1uf8nFcy0uG9SB4xXwb, source_code_hash SnPiO8B8AxABQOxJ2wfoPDFaCxaVeGmcDsVPv0JrzaE= -> lM6cnuZTetkFwkGmxQqBFslExfqwGp+WhqFYOYM81xE=), plus outputs autostart_lambda_arn, autostart_role_arn and eventbridge_rule_arn going to null. PHASE A applied nothing, so nothing has landed. PHASE B needs the never-widen pair to name EITHER a '-target aws_iam_role.opal_smartx_lambda_role' scoped apply (safe-apply grades the scoped plan for a targeted apply) OR the drift resolved by the smartx pipeline's owner first. This seat applies nothing until the pair names which.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform -chdir=infra/aws/terraform/smartx-pipeline plan -input=false -lock=false, worktree /c/tmp/iam-w1 branch wk-iamroles-r6-w1 @097d3bcc3e, Terraform v1.15.8, provider hashicorp/aws v5.100.0 -- both the with-file and the negative-control runs, minutes apart against the same state",
+        "org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~Z/round6/PLAN_SURVEY_family_b.md sections 3 and 5 (prepared uncommitted; see Z-S22)"
+      ]
+    },
+    "notes": "Adjacent to but distinct from Z-W13-S1 (carried in Z-S20), which is about smartx-assets-daily-pull RUN failures; this row is about the module's Terraform drift. The role's own tags_all change was separately measured as authorization-neutral (survey section 4) and is NOT part of this hazard. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
+
+## Z-S22 -- amendment A1-r6 re-addressed w-1 and w-4 to ~IR but left their deliverable write surface in ~Z's folder, which owned-paths refuses
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S22",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-09T18:13:01Z",
+    "one_line": "Both orders name deliverables/0.7.0_AE_CloudOps~Z/round6/ as this lane's write surface, but the owned-paths lane TREE_DELIVERABLES admits only the serial named by the sub-folder or a ~lane of it -- and ~IR is not a ~lane of ~Z -- so safe-commit refuses every deliverable of w-1 and w-4 from the lane the amendment addressed them to.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "w-1 step 2 writes PLAN_SURVEY_family_b.md and w-4 (a) writes DEFER_ROWS_5_16.md, both under deliverables/0.7.0_AE_CloudOps~Z/round6/, both listed in the orders' <paths>, and both told to commit under this lane's own author line. w-4 AC3 further requires 'git log --format=%an' on DEFER_ROWS_5_16.md to return exactly one line, 0.7.0_AE_CloudOps~IR, and w-4 (b) says 'Take no author override.'",
+    "world_is": "safe-commit refused with 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: ...PLAN_SURVEY_family_b.md -- lane=TREE_DELIVERABLES ...; agent=0.7.0_AE_CloudOps~IR not in permitted_agents' (clause 4, ADHC_OWNPTH.004). The refusal is the gate working as designed, not a fluke: all 8 commits ever made under deliverables/0.7.0_AE_CloudOps~Z/ were authored by 0.7.0_AE_CloudOps~Z itself, so the gate has never admitted a peer lane there. The two escapes do not apply -- --force bypasses contamination checks only and never a lane refusal (CLAUDE.md 14a), and GIT_COMMIT_AUTHOR_OVERRIDE would both break w-4 AC3 and is the author override w-4 forbids. THE THREE DELIVERABLES ARE WRITTEN AND SIT UNCOMMITTED IN THE SHARED TREE for the issuer to land as carrier, exactly as amendment A1 row Z-S19 already established for the w-4 (b) row edits: deliverables/0.7.0_AE_CloudOps~Z/round6/PLAN_SURVEY_family_b.md, .../DEFER_ROWS_5_16.md, and the two prepared row first-lines in deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md. The issuer's choices: land them as carrier (and then w-4 AC3 cannot read ~IR as the author, so the criterion needs amending with it), or amend both orders' <paths> and criteria to deliverables/0.7.0_AE_CloudOps~IR/round6/. The inert .tf.proposed was NOT affected and is committed @8b6cfcf18a -- infra/ is not a TREE_DELIVERABLES path.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the safe-commit refusal text quoted above, run in worktree /c/tmp/iam-w1 on branch wk-iamroles-r6-w1",
+        "git log --format=%an -- org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~Z/ | sort | uniq -c -> '8 0.7.0_AE_CloudOps~Z', denominator 8 of 8",
+        "amendment A1-r6 @2b2091822f, which set <issued_to> to 0.7.0_AE_CloudOps~IR on w-1..w-4 while the <paths> blocks kept 0.7.0_AE_CloudOps~Z/round6/"
+      ]
+    },
+    "notes": "Structural, not incidental: it reaches every deliverable of all four w-orders, so w-2 and w-3 will hit it on their GO too. Surfaced, not adjudicated -- the amendment is the issuer's (Andrew-direct 2026-09-24 lets the issuer amend its own task-order criteria without a CTO ruling). The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
+
+## NFRA_IAMROLES202609-Z-S23 -- opal-smartx-lambda-role grants S3 on two buckets that do not exist, and Secrets Manager on a us-east-2 ARN while the secret lives in us-east-1.
+
+```json
+{
+  "id": "NFRA_IAMROLES202609-Z-S23",
+  "project": "NFRA_IAMROLES202609",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~Z",
+  "surfaced_at": "2026-10-09T19:25:00Z",
+  "one_line": "opal-smartx-lambda-role's inline grants point at nothing live: opal-smartx-s3-access names opal-data-smartx and opal-code-smartx (both NoSuchBucket), and opal-smartx-secrets names secret:opal/smartx/config-* in us-east-2 while the only such secret is in us-east-1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws iam get-account-authorization-details (298 roles): opal-smartx-s3-access = s3:GetObject,s3:ListBucket on arn:aws:s3:::opal-data-smartx(/*), arn:aws:s3:::opal-code-smartx(/*); opal-smartx-secrets = secretsmanager:GetSecretValue on arn:aws:secretsmanager:us-east-2:313476888478:secret:opal/smartx/config-*",
+      "aws s3api get-bucket-policy --bucket opal-data-smartx and --bucket opal-code-smartx: both 'An error occurred (NoSuchBucket)'",
+      "aws secretsmanager list-secrets --filters Key=name,Values=opal/smartx/config: arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/smartx/config-IKCzE6"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IAM-w-1 adopts opal-smartx-lambda-role as it stands (policies omitted by rule), treating it as the live smartx Lambdas' working role.",
+  "world_is": "As written, the role's S3 and secret grants reach nothing. Either the Lambdas run on another role, or they fail on read, or the buckets and secret were renamed (LGIC). This does not touch the w-1 tag act and does not hold it. The issuer reads which Lambdas assume this role and routes the grant repair to smartx-pipeline's owner."
+}
+```
+
+## Z-S24 -- the issuer disarms Z-S21 and Z-S22 (ruled in A2-r6) and rules Z-S23: opal-smartx-lambda-role is an orphan no Lambda assumes
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S24",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-10T21:12:00Z",
+    "one_line": "Issuer's disarm of Z-S21 and Z-S22 (disarm_owner this seat, both ruled by A2-r6 @3293b97a90) and ruling on Z-S23: the dead S3/secret grants sit on a role no Lambda assumes, so they reach nothing because nothing runs on them; w-1's tag act is unaffected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S21 and Z-S22 are ARMED with disarm_owner 2.0.0_SA_COO~ZI; Z-S23 asks the issuer to read which Lambdas assume opal-smartx-lambda-role and route the grant repair to smartx-pipeline's owner.",
+    "world_is": "Z-S22: A2-r6 moved every round-6 deliverable path to deliverables/0.7.0_AE_CloudOps~IR/round6/; ~IR committed PLAN_SURVEY_family_b.md and DEFER_ROWS_5_16.md there under its own author line @4dff2b348a, and w-4 closed complete @55d980ad2c -- the refusal cannot recur, DISARMED. Z-S21: A2-r6 binds PHASE B step 5 of w-1, w-2 and w-3 to a -target apply on the adopted aws_iam_role resource(s) only; the never-widen pair for w-1 (COO @f2c325cac8, CTO @f5444083a8) names '-target only'; at 21:0xZ 2026-10-10 list-role-tags on opal-smartx-lambda-role reads Tags [] and no IAMROLES deploy-ledger entry is open, so nothing has landed and the three Lambda drifts cannot ride PHASE B, DISARMED. The drift itself stays with smartx-pipeline's owner on Z-S20's route. Z-S23: no Lambda assumes the role. The served graph (vintage 2026-10-10 12:57Z, 2893 nodes) shows opal-smartx-lambda-role with LAMBDA=0, against a positive control: smartx-assets-pull-role reads LAMBDA=1. The module declares four functions on four other roles (assets_pull, ingestion_lambda, jwt_refresher, rest_pull), and live smartx-assets-daily-pull runs on smartx-assets-pull-role. RoleLastUsed is 2025-12-30. So there is no grant repair to route: the role's honest remedy is RETIRE, a WORLD act outside round 6's cells. It goes to 1.0.0_SA_CTO~Z in round 6's L10 slug as an enrichment candidate. It does not hold w-1, which adopts and tags the role as it stands.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 3293b97a90 (A2-r6), 4dff2b348a, 55d980ad2c, f2c325cac8, f5444083a8",
+        "aws iam list-role-tags --role-name opal-smartx-lambda-role -> {\"Tags\": []}; get-role RoleLastUsed 2025-12-30T23:24:50Z",
+        "comp-find 'opal-smartx-lambda-role' --corpus aws -> 4 hits / 2893 nodes, BANDS IAM_POLICY=3 IAM_ROLE=1; control comp-find 'smartx-assets-pull-role' --corpus aws -> BANDS IAM_POLICY=2 IAM_ROLE=1 LAMBDA=1",
+        "infra/aws/terraform/smartx-pipeline/{assets-pull-lambda,lambdas,rest-pull}.tf role = lines; aws lambda get-function-configuration smartx-assets-daily-pull -> role/smartx-assets-pull-role"
+      ]
+    },
+    "notes": "Cites Z-S21, Z-S22, Z-S23. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
+
+## Z-S25 -- the naming gate reads an ADOPTED pre-existing resource name as NEW, so every FWD-4 adoption cell is refused at commit
+
+```json
+[
+{
+    "id": "NFRA_IAMROLES202609-Z-S25",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-10T22:15:00Z",
+    "one_line": "naming-gate.py decides NEW from the FILE'S PRE-IMAGE (judge(): new = pre_text is None or not _in_pre(lit, pre_text)), and an adoption's declaration is necessarily new text, so opal-smartx-lambda-role -- live in AWS since 2025-11-20 -- was graded 'NEW name the canon places as FIX. Owed: use smartx-lambda-role' and REFUSED at commit, although that commit was a pure R100 rename of bytes already at HEAD; w-2 (bd-merge-daily-lambda-role, bd-pipeline-task-role) and w-3 (Family E) will hit the same refusal.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Rule 30: every resource name is lib/opal_naming.py name() output, a builder REFUSAL is a missing registry row to add under infra/logic/registry/ and never a hand-typed workaround, and a deliberate departure is an R20 register entry Andrew acknowledges -- with the stated NON-APPLICATION that existing pipelines reach conformance through their own migration project (R19), never as a rider. The w-1 cell's BOUNDS are custody-only, NO PERMISSION MOVES, and the signed never-widen pair (COO @f2c325cac8, CTO @f5444083a8) signs exactly one import plus four default tags.",
+    "world_is": "The gate cannot see that the resource pre-exists. judge() computes new from whether the literal appears in the graded file's PRE-IMAGE, not from whether the name exists in AWS or at HEAD. An adoption declares an existing resource for the first time, so its literal is new to that file by construction -- here the file was the same bytes renamed .tf.proposed to .tf (git records R100), and the gate still read NEW and placed it as FIX owing smartx-lambda-role. The mitigation for exactly this shape EXISTS in the gate but is unreachable from this branch: _carried_at_head() (lines 978-999) is consulted only under verdict == RAISE (lines 1930-1942, whose own comment cites Rule 30 and says copying an existing pre-LGIC key into a new file mints nothing); the OUT-OF-PATTERN/placement branch that fires here has no such check. Renaming the live role is not available to this cell: an IAM role cannot be renamed in place, so it is a create-plus-delete WORLD act outside the cell's BOUNDS and outside the signed pair. Nor is the durable fix in this lane's write surface -- the registry row or the R20 register entry lives under infra/logic/registry/, which the order's <paths> does not name. LANDED UNDER THE AUDITED PLACEMENT OVERRIDE (id 2026-10-10T22:09:49Z-449882-20584) at c942b684bc, reason recorded in the commit message and in org/audit/naming-place-override-audit.jsonl. NOT CLAIMED: this seat did NOT exercise the EXISTING branch. The follow-up header commit b41c3a9e29 graded 0 literals (NAMING-GATE: PASS 0 graded) because the role name sits on lines that commit did not touch, so it is NOT a control for the EXISTING verdict and is not offered as one; the finding rests on the measured NEW-and-refused reading alone.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "safe-commit refusal, verbatim: '[naming-gate] NAMING REFUSE infra/aws/terraform/smartx-pipeline/zz_adopt_family_b.tf:41 opal-smartx-lambda-role -> smartx-lambda-role' / 'why: NEW name the canon places as FIX. Owed: use smartx-lambda-role. Build it with name() or edit the literal; nothing else is owed.' / 'NAMING-PLACE: REFUSE 2'",
+            "git diff --cached -M --name-status: R100 infra/aws/terraform/smartx-pipeline/zz_adopt_family_b.tf.proposed -> zz_adopt_family_b.tf, bytes cmp-identical to HEAD:zz_adopt_family_b.tf.proposed",
+            "aws iam get-role opal-smartx-lambda-role: CreateDate 2025-11-20T14:43:02Z, RoleLastUsed 2025-12-30T23:24:50Z -- pre-existing, not minted by this diff",
+            ".tools/naming-gate.py:1891 (new = pre_text is None or not _in_pre(...)); :1930-1942 (_carried_at_head consulted only on RAISE); :1946 (NEW and OUT-OF-PATTERN -> REFUSE, with no carried-at-head check)",
+            "org/audit/naming-place-override-audit.jsonl at c942b684bc; header commit b41c3a9e29 reading 'NAMING-GATE: PASS 0 graded'"
+        ]
+    },
+    "notes": "Routed to the issuer for a registry/R20 disposition BEFORE w-2 and w-3 cut their PHASE B, so those two do not each spend an override. Cites Z-S26 (the override's own lane blocker) and Z-S27 (the ordering hazard this refusal created). The channel's dispositions stay the CVO's at L9."
+}
+]
+```
+
+## Z-S26 -- the audited naming-place override cannot be used by any seat that is not on owned-paths lane GOVERNANCE_AUDIT -- which is every Tier-2 seat that writes infra
+
+```json
+[
+{
+    "id": "NFRA_IAMROLES202609-Z-S26",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-10T22:16:00Z",
+    "one_line": "safe-commit.sh implements the '# naming-place-override:' escape by writing a row to org/audit/naming-place-override-audit.jsonl and STAGING IT INTO THE SAME COMMIT, but that path is owned-paths lane GOVERNANCE_AUDIT whose permitted agents are MSTR and the execs -- so the override refuses the very commit it just authorised, for every seat not on that lane.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "naming-gate.py's header (THE PLACEMENT OVERRIDE, LGIC_BLANKFIX FWD-6 round 9 BF-x-4, row W1-S21) states the purpose plainly: while the switch is present a creator whose name the canon cannot yet place needs a way through. Round 10 BF-y-1 made the audit row ride the landed commit ON PURPOSE -- the landed commit carries its own audit row -- and the gate reads it from the INDEX (git show :<path>), so staging it is not optional. CLAUDE.md 14a: --force bypasses only contamination checks, never a lane refusal; the escape for a lane refusal is GIT_COMMIT_AUTHOR_OVERRIDE=<LANE>, AUDITED.",
+    "world_is": "The two mechanisms contradict each other for exactly the population the override exists to serve. A creator whose name the canon cannot yet place is by definition a seat writing infra -- a Tier-2 DT or AE lane -- and no such lane sits in GOVERNANCE_AUDIT's permitted agents, whose own stated rationale is that the file is tamper-sensitive and NOT world-writable, because a log anyone may rewrite is not a log. That rationale is sound for hand edits and is exactly wrong for this row, which no seat authors: safe-commit writes it, hashes it against the message it is about to commit, and stages it. Measured here: the naming limb PASSED (NAMING-GATE: WARN 2 graded, both rows printed NAMING OVERRIDDEN) and the SAME invocation then died on the lane violation. So the override is not merely awkward from this lane, it is unusable alone. This seat landed c942b684bc by stacking the second audited escape, GIT_COMMIT_AUTHOR_OVERRIDE=GOVERNANCE_AUDIT, on top of the first; the --author line stayed 0.7.0_AE_CloudOps~IR so authorship is not misattributed, and both overrides are in their audit logs. STATED AS A LIMIT rather than papered over: needing two stacked audited overrides to land one signed act is a WORSE control than one, because the second one's exit covers the ENTIRE staged set rather than the single path that needed it (CLAUDE.md 14a: its exit covers the entire staged set, so ONE LANE PER COMMIT is a discipline, not a mechanism) -- every other path in that commit rode an override it did not need. The clean fix is a path rule admitting this one override row from any seat, since no seat authors it.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "safe-commit run 1, verbatim: 'WARN: naming placement step OVERRIDDEN (audited, id 2026-10-10T22:07:56Z-444192-20062)' then 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: org/audit/naming-place-override-audit.jsonl -- lane=GOVERNANCE_AUDIT ... agent=0.7.0_AE_CloudOps~IR not in permitted_agents' and 'ERROR: safe-commit did NOT commit (rc=1)'",
+            "safe-commit run 2 with GIT_COMMIT_AUTHOR_OVERRIDE=GOVERNANCE_AUDIT: same naming override (id 2026-10-10T22:09:49Z-449882-20584), NAMING-GATE: WARN 2 graded, committed c942b684bc, 5 files changed, 'create mode 100644 org/audit/naming-place-override-audit.jsonl'",
+            ".tools/naming-gate.py header THE PLACEMENT OVERRIDE block: safe-commit.sh is the ONLY setter of NAMING_PLACE_OVERRIDE, and the row is read from the index, never from a file on disk only",
+            "the lane's own text as printed by the owned-paths hook: permitted agents are MSTR plus the execs, rationale 'NOT world-writable: this is tamper-sensitive evidence'"
+        ]
+    },
+    "notes": "Cites Z-S25, whose refusal forced the override. The ask is one path rule, not a lane widening: the row is machine-written by safe-commit and bound to its own commit's message hash, so admitting it from any seat does not make the file hand-writable. The channel's dispositions stay the CVO's at L9."
+}
+]
+```
+
+## Z-S27 -- an adoption whose IMPORT lands before its declaration can be committed stages the imported resource for DESTRUCTION in the shared tree -- measured at 1 to destroy on a live IAM role, and closed the same session
+
+```json
+[
+{
+    "id": "NFRA_IAMROLES202609-Z-S27",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-10T22:17:00Z",
+    "one_line": "Between the PHASE B apply and the drain of its declaration, the shared tree held the role in remote state with NO configuration, so terraform plan in smartx-pipeline read 'Plan: 0 to add, 3 to change, 1 to destroy' with 'aws_iam_role.opal_smartx_lambda_role will be destroyed (because it is not in configuration)' on a live role carrying three inline policies; w-2 and w-3 must prove their declaration COMMITS before they import, not after.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell's step order is 4 open the ledger, 5 rename and -target apply, 6 re-plan and record, then close -- which reads as though the only irreversible moment is the apply. NEVER-2: never leave a confirmed deploy half-landed; finish in-session or roll back and escalate loud.",
+    "world_is": "The apply writes the import to the SHARED remote state immediately, while the declaration that justifies it lives only in the actor's worktree until a commit and a drain. Terraform's rule is that a resource in state with no configuration is a planned DESTROY, so the gap between those two events is a window in which any peer running an unscoped apply in that module deletes the adopted role. The window was not theoretical: the naming gate (Z-S25) and then the owned-paths lane (Z-S26) both refused the commit AFTER the apply had landed, which is precisely the ordering that opens it. The module made it sharper than a quiet window -- smartx-pipeline already carries three pending Lambda code changes its owner may apply at any time (Z-S21, Z-S20), and that apply would have carried the destroy with it. MEASURED on both sides from the shared tree: with the declaration absent, 'Plan: 0 to add, 3 to change, 1 to destroy'; after the drain 9458756ca0 put zz_adopt_family_b.tf in the shared tree, 'Plan: 0 to add, 3 to change, 0 to destroy' -- byte-identical to PHASE A's negative-control baseline, so the window is CLOSED and the residue is only the pre-existing drift. THE INSTANCE IS CLOSED; THE CLASS IS NOT. The prescription for w-2 and w-3, which adopt three more pre-existing roles into bd-pipeline and Family E's module and will meet the same two refusals: prove the commit path end to end BEFORE touching AWS -- run the real safe-commit invocation on the renamed .tf and read whether it lands, then import -- because a declaration committed bare without its import plans a CREATE and is not a safe intermediate state either. This seat did it in the other order and paid for it.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "shared tree with the declaration absent, verbatim: '# aws_iam_role.opal_smartx_lambda_role will be destroyed' / '# (because aws_iam_role.opal_smartx_lambda_role is not in configuration)' / 'Plan: 0 to add, 3 to change, 1 to destroy.'",
+            "terraform -chdir=infra/aws/terraform/smartx-pipeline state list, grepped: aws_iam_role.opal_smartx_lambda_role present in SHARED remote state while the shared tree carried only the .tf.proposed",
+            "shared tree after the drain 9458756ca0: 'Plan: 0 to add, 3 to change, 0 to destroy.' with the three aws_lambda_function in-place updates as its whole content",
+            "PHASE A negative control for comparison, PLAN_SURVEY_family_b.md at 4dff2b348a section 3: 'Plan: 0 to add, 3 to change, 0 to destroy.'",
+            "the two refusals that opened the window: Z-S25 and Z-S26"
+        ]
+    },
+    "notes": "The w-1 instance is CLOSED by the drain and the post-drain plan read above; the row stays ARMED for w-2 and w-3, which have not cut PHASE B. Cites Z-S25, Z-S26, Z-S21. The channel's dispositions stay the CVO's at L9."
+}
+]
+```
+
+## Z-S28 -- the issuer rules Z-S25, Z-S26 and Z-S27 for w-2 and w-3 (amendment A4-r6): commit the declaration before the import, one override commit carrying only the .tf and its audit row; the gate defects go to the fabric CTO
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S28",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-10T22:40:00Z",
+    "one_line": "Issuer's ruling on Z-S25/Z-S26/Z-S27 (disarm_owner this seat): an adopted role keeps its live name; w-2 and w-3 PHASE B commit the renamed .tf on the worker branch BEFORE any import, in a commit carrying only that .tf plus the placement override's audit row, then -target apply and drain the same session; the two gate defects are not this project's to fix and are routed to 1.0.0_SA_CTO~Z.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S25, Z-S26 and Z-S27 are ARMED with disarm_owner 2.0.0_SA_COO~ZI and ask for a ruling before w-2 or w-3 cuts PHASE B.",
+    "world_is": "Z-S25: renaming a live role is a create-plus-delete WORLD act outside every round-6 cell and outside the signed pairs. CLAUDE.md Rule 30's NON-APPLICATION (existing pipelines reach conformance through their own migration project, never as a rider) covers an adopted pre-existing name. The R20 declared exception is Andrew's to acknowledge and is not taken here. So w-2 and w-3 use the gate's own sanctioned escape, the audited placement override, with a reason naming the role, its live CreateDate and this row. The durable fix is in the naming gate (naming-gate.py: _carried_at_head is consulted only on RAISE, never on the NEW+OUT-OF-PATTERN branch, and nothing asks whether the name already exists live). The gate is LGIC tooling outside this decomposition, so the fix is routed. Z-S26: until the audit row gets a path rule, the second override (GIT_COMMIT_AUTHOR_OVERRIDE=GOVERNANCE_AUDIT) is confined to a commit holding exactly the renamed .tf and the audit row, so its whole-staged-set exit covers nothing it does not need. The ledger, proof and POST_APPLY land under neither override. The path rule is routed with Z-S25. Z-S27: the order is commit, then import, then drain. A commit on the worker branch proves both gates before AWS is touched, and no peer applies from a worker branch. The apply and the drain fall in one session, and the shared-tree untargeted plan reading 0 to destroy is recorded after the drain. Amendment A4-r6 writes this into step 5 of both orders. All three rows are DISARMED for w-2 and w-3 by A4-r6; the w-1 instance of Z-S27 was already CLOSED by drain 9458756ca0.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S25, Z-S26, Z-S27 as filed by 0.7.0_AE_CloudOps~IR @b8ee7b889c (msg 33036)",
+        ".tools/naming-gate.py judge(): the RAISE branch consults _carried_at_head; the NEW and OUT-OF-PATTERN branch returns REFUSE without it",
+        "CLAUDE.md Rule 30 NON-APPLICATION line; the w-2 and w-3 step 5 text as amended in this commit"
+      ]
+    },
+    "notes": "Cites Z-S25, Z-S26, Z-S27, Z-S21. Gate limb: none graded A4-r6 (an edit; GATE viii not engaged). The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
+
+## Z-S29 -- bd-pipeline CANNOT PLAN at HEAD: a cross-project config edit broke the module's comprehension, so w-2 PHASE A's PLAN line has no value to record
+
+```json
+[
+{
+    "id": "NFRA_IAMROLES202609-Z-S29",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-10T22:45:00Z",
+    "one_line": "infra/aws/terraform/bd-pipeline CANNOT PLAN AT HEAD -- 4 x 'Error: Unsupported attribute' in bd-served-vintage-alarm.tf lines 30 and 32 -- because NFRA_MCPINDEX commit 3d7fb62105 (2026-10-01) added freshness_basis: trading-day-frontier to bd_silver_allocations and bd_silver_unrealized in data/black_diamond/scripts/gold/gold_freshness_config.yaml without the as_of_field and frontier_page_trading_days attributes the module's comprehension reads unguarded; w-2 PHASE A's PLAN: line is therefore BLOCKED and w-2's never-widen pair has no plan to be written against.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IAM-w-2 PHASE A step 2 requires running safe-apply's PLAN only and recording 'PLAN: <module>: <the plan summary line, verbatim>' in PLAN_SURVEY_family_a.md, and step 3 says the never-widen pair ledger/NEVER_WIDEN_ROUND6_W-2_{COO,CTO}_HALF.md is written against that survey. Both presuppose the module produces a plan.",
+    "world_is": "The module produces no plan at all, with or without this cell's adoption file. bd-served-vintage-alarm.tf builds a map by comprehension over every entry of data/black_diamond/scripts/gold/gold_freshness_config.yaml, filters on try(e.freshness_basis, \"\") == \"trading-day-frontier\", and then reads e.as_of_field (line 30) and e.frontier_page_trading_days (line 32) UNGUARDED -- the try() protects the filter key only. Commit 3d7fb62105 (2026-10-01, 0.9.0_WK_NFRA_MCPINDEX~25, cell MX-f-1, 'weekly trading-day-frontier basis for the two weekly BD silver tables') moved bd_silver_allocations and bd_silver_unrealized to cadence: weekly and added freshness_basis: trading-day-frontier to each, without either attribute the consumer reads. Those two entries now pass the filter carrying neither key. BEFORE/AFTER, counted by the FIELD and not by substring: at 3d7fb62105~1 there were 5 trading-day-frontier entries and 0 missing either attribute, so the module planned; at HEAD there are 7 and 2 are missing both. 2 entries x 2 attributes = 4, reconciling exactly with Terraform's 4 errors. THREE CONTROLS, because three different things could have produced this reading and only one of them is the world: (1) NEGATIVE CONTROL -- with zz_adopt_family_a.tf moved out of the module and nothing else changed, the same 4 errors appear, so this cell's file is not implicated; (2) CHECKOUT CONTROL -- an earlier attempt failed instead on 'no file exists at .../gold_freshness_config.yaml', which WAS an artifact of this seat's sparse cone, and the 4 Unsupported-attribute errors were then reproduced in the SHARED TREE's full checkout, so the finding is about the repository and not about a working copy; (3) COUNT RECONCILIATION -- a first YAML pass read 7 entries / 2 offending and a second read 8 / 3, so neither was quoted until the disagreement was resolved: the second matched the string 'trading-day-frontier' anywhere in an entry block and wrongly caught bd_gold_ticker_resolution, whose only match is inside a COMMENT. The field-anchored count is correct and is the one that reconciles with the error count. OWNERSHIP IS CROSS-PROJECT AND NOT THIS LANE'S: the consumer bd-served-vintage-alarm.tf belongs to the BD pipeline, the breaking edit belongs to NFRA_MCPINDEX cell MX-f-1 whose author 0.9.0_WK_NFRA_MCPINDEX~25 is a worker and cannot be messaged (its COO is 2.0.0_SA_COO~MI), and a cross-fabric call is not an AE's to adjudicate. This cell changed NOTHING in either file and proposes no fix here; the obvious candidates -- guard both reads with try(), or add the two attributes to the two weekly entries -- differ in meaning (a try() default silently drops the two tables from the alarm's served-key coverage, which is a freshness-coverage decision and not a syntax fix), so the choice belongs to the two owners and not to this seat. WHAT IT DOES NOT BLOCK, so the cell is not reported as more blocked than it is: the declaration, the two roles' live reads, the label-collision census, the STATE_KEY, the DEFAULT_TAGS and the whole tag-authorization read were all delivered and are in the survey.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "terraform -chdir=infra/aws/terraform/bd-pipeline plan, verbatim: 'Error: Unsupported attribute / on bd-served-vintage-alarm.tf line 30, in locals: / 30:       as_of_field    = e.as_of_field / This object does not have an attribute named \"as_of_field\".' and the same for line 32 / frontier_page_trading_days; 4 errors total",
+            "NEGATIVE CONTROL: the same plan with zz_adopt_family_a.tf moved out of the module -> grep -c '^Error: Unsupported attribute' = 4 (identical)",
+            "CHECKOUT CONTROL: the 4 errors reproduce in the SHARED tree's full checkout, not only in the sparse worktree; the earlier 'no file exists at .../gold_freshness_config.yaml' error was a sparse-cone artifact and was fixed by widening the cone",
+            "git show 3d7fb62105 -- data/black_diamond/scripts/gold/gold_freshness_config.yaml: two entries gain '+ cadence: weekly' and '+ freshness_basis: trading-day-frontier' and neither gains as_of_field or frontier_page_trading_days",
+            "field-anchored census at 3d7fb62105~1 vs HEAD: 5 trading-day-frontier entries / 0 offending, versus 7 / 2 (bd_silver_allocations line 107, bd_silver_unrealized line 131)",
+            "infra/aws/terraform/bd-pipeline/bd-served-vintage-alarm.tf lines 24-34 (the comprehension, with try() on the filter key only)"
+        ]
+    },
+    "notes": "Routed to 2.0.0_SA_COO~ZI for a cross-project disposition with 2.0.0_SA_COO~MI and the BD pipeline's owner named; the remedy is a choice between two options with different meanings, not a typo fix. It gates w-2 PHASE B's never-widen pair, which has no plan to be written against until the module plans. Cites Z-S28 (A4-r6's ruled order of acts, which still stands and is unaffected). The channel's dispositions stay the CVO's at L9."
+}
+]
+```
+
+## Z-S30 -- the issuer closes Z-S26 on its source fix and drops A4-r6's second override (amendment A5-r6); Z-S25 rides crossbox XB-dcb5
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S30",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-10T22:58:00Z",
+    "one_line": "Z-S26 is fixed at its source: org/audit/naming-place-override-audit.jsonl is owned-paths lane ANY @b7c27ef5b0 (0.0.0_AB_MSTR~Z, exercised REFUSE->PERMIT from 0.7.0_AE_CloudOps~IR), so A5-r6 removes GIT_COMMIT_AUTHOR_OVERRIDE=GOVERNANCE_AUDIT from w-2 and w-3 step 5; the placement override for Z-S25 stays until crossbox XB-20261010T225240Z-dcb5 lands the gate fix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A4-r6 (@7af7a24e9f, row Z-S28) told w-2 and w-3 to take GIT_COMMIT_AUTHOR_OVERRIDE=GOVERNANCE_AUDIT on the commit carrying the renamed .tf and the placement override's audit row.",
+    "world_is": "The lane refusal that override answered no longer exists. b7c27ef5b0 is in box/sitez HEAD (merge-base --is-ancestor read). An override kept after its reason is gone would only widen the commit's lane exit over its whole staged set, which is Z-S26's own stated cost. So A5-r6 replaces that clause with 'Take NO author override' in both orders. Z-S26 is DISARMED on the source fix. Z-S25 stays routed: the naming-gate _carried_at_head defect is with laptop 1.0.0_SA_CTO as XB-20261010T225240Z-dcb5 (not yet ACKed per msgs 33047 / 33049), and w-2 and w-3 keep the audited placement override until it lands.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show b7c27ef5b0: grant(.owned-paths, 0.0.0_AB_MSTR~Z): naming-place-override-audit.jsonl to lane ANY; ancestor of box/sitez HEAD",
+        "msg 33047 (0.0.0_AB_MSTR~Z) and msg 33049 (1.0.0_SA_CTO~Z), both acked",
+        "w-2 and w-3 step 5 as amended in this commit"
+      ]
+    },
+    "notes": "Cites Z-S25, Z-S26, Z-S28. Gate limb: none graded A5-r6 (an edit; GATE viii not engaged). The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
+
+## Z-S31 -- the issuer routes Z-S29 to the breaking edit's owner (2.0.0_SA_COO~MI, cell MX-f-1); w-2 PHASE B and its pair wait on bd-pipeline planning, w-3 PHASE A proceeds
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S31",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-10T23:05:00Z",
+    "one_line": "Issuer's disposition of Z-S29 (disarm_owner this seat): the bd-pipeline plan break is NFRA_MCPINDEX cell MX-f-1's edit (3d7fb62105), outside this decomposition. Routed to its issuer 2.0.0_SA_COO~MI to choose the remedy. w-2's never-widen pair and PHASE B wait on a clean module plan, and w-3 PHASE A proceeds because DECOMP_R6 section 4 needs only w-2's PHASE A commit (68af906ee9).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S29 asks the issuer to dispose the bd-pipeline plan failure before w-2's never-widen pair is written.",
+    "world_is": "The remedy carries meaning: add as_of_field and frontier_page_trading_days to bd_silver_allocations and bd_silver_unrealized, or guard the two reads with try() and drop both tables from the alarm's served-key coverage. That is a freshness-coverage decision owned by the cell that set those entries' basis, not by an IAM custody round. So this seat writes no fix and signs no pair against a module that cannot plan. Z-S29 stays ARMED until bd-pipeline plans clean at HEAD; at that moment ~IR re-runs step 2's PLAN line and this seat writes the COO half. w-3 PHASE A depends only on w-2's PHASE A commit, which landed @68af906ee9, so it is not held.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S29 as filed @599afccf3a (msg 33050, acked)",
+        "DECOMP_R6 section 4: IAM-w-3 PHASE A may run once w-2's PHASE A is committed",
+        "drain 68af906ee9 in box/sitez HEAD"
+      ]
+    },
+    "notes": "Cites Z-S29, Z-S28. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
+
+## Z-S32 -- row 3 (codebuild-semantic-clustering-role) grants on a bucket that does not exist; same class as Z-S23; module owner unresolved, carried to the round-6 L10 slug
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S32",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-10T23:48:00Z",
+    "one_line": "1.0.0_SA_CTO~Z, signing the w-3 CTO half @8453026444 (msg 33089), observed that row 3's inline grant (CodeBuildSemanticClusteringPolicy) names a bucket that returns NoSuchBucket -- the Z-S23 class -- and asked that it be routed to the module owner; no instrument names news-pipeline's owner, so it rides round 6's L10 slug to the CTO beside Z-S23.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IAM-w-3 adopts codebuild-semantic-clustering-role as it stands (policies omitted by rule), and the CTO half asks that the dead grant be routed to news-pipeline's owner.",
+    "world_is": "The act does not touch the grant: the declaration omits inline_policy, and both halves sign tags only, so the w-3 apply is unaffected. Unlike Z-S23's orphan, this role IS in use (RoleLastUsed 2026-09-11), so the dead grant is a live role's dead permission rather than an orphan's, and the remedy (repoint or drop the statement) is the module owner's. comp-which has no curated rule for 'who owns news-pipeline'; it returned only fuzzy candidates. The owner is unresolved, not absent. So the route is the round-6 L10 slug to 1.0.0_SA_CTO~Z, the fabric's call holder, carried with Z-S23 as one 'grants that point at nothing live' item.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "msg 33089 (1.0.0_SA_CTO~Z), acked; ledger/NEVER_WIDEN_ROUND6_W-3_CTO_HALF.md @8453026444",
+        "PLAN_SURVEY_family_e.md @8361e51c56 section 3: row 3 RoleLastUsed 2026-09-11, inline policy CodeBuildSemanticClusteringPolicy",
+        "comp-which 'who owns the news-pipeline terraform module' -> NO CURATED RULE MATCHED"
+      ]
+    },
+    "notes": "Cites Z-S23, Z-S24. Not verified by this seat which bucket the grant names; the CTO's read is the source. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
+
+## Z-S33 -- the issuer disarms Z-S29: bd-pipeline plans clean at HEAD after A6-r6's step 1a guard, both of 2.0.0_SA_COO~MI's checks PASS in the shared tree
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S33",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-10T23:55:00Z",
+    "one_line": "Z-S29 DISARMED: the can() guard ruled by NFRA_MCPINDEX-Z-S96 landed alone @a18b96fd5d under A6-r6 step 1a, and this seat re-ran f1r.AC1.sh and f1r.AC2.sh in the SHARED tree: both read RESULT: PASS (plan 'No changes', 0 Unsupported attribute; keys == the 5 daily platinum keys); w-2's PLAN line is real and its COO half is signed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S29 (BLOCKING, ARMED, disarm_owner 2.0.0_SA_COO~ZI) holds w-2's never-widen pair until bd-pipeline plans at HEAD.",
+    "world_is": "Both checks FAILED before the edit (survey section 4, per 0.7.0_AE_CloudOps~IR), so they discriminate. Re-run by this seat at ~23:5xZ in the shared tree at HEAD (drain df0248d4f6 an ancestor): f1r.AC1 'init rc=0; plan rc=0; Unsupported attribute=0; Error lines=0; plan lines=248 / No changes. ... RESULT: PASS'; f1r.AC2 'keys == want, the 5 bd_platinum_* keys, RESULT: PASS'. The YAML is untouched; the two weekly silver entries leave the alarm's served-key map, which is the coverage choice NFRA_MCPINDEX ruled.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round8/checks/f1r.AC1.sh and f1r.AC2.sh, shared tree, both RESULT: PASS",
+        "a18b96fd5d (step 1a, 1 insertion / 1 deletion), survey a1667d4af4, drain df0248d4f6",
+        "NFRA_MCPINDEX-Z-S96 @c5e22ccb72 (the ruled remedy)"
+      ]
+    },
+    "notes": "Cites Z-S29, Z-S31, A6-r6. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
+
+## Z-S34 -- w-2 PHASE B is refused at the COMMIT by a DIFFERENT naming limb than w-1 was -- the 'bd' firm-carrier clause, which the audited placement override does not reach
+
+```json
+[
+{
+    "id": "NFRA_IAMROLES202609-Z-S34",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-11T00:10:00Z",
+    "one_line": "The step-5 rename of zz_adopt_family_a.tf is refused 4 times as 'NEW and OUT-OF-PATTERN as IAM_ROLE: REFUSE; hand-kept carrier of 'bd' outside every permitted context: read it through lookup('49financial')' -- the gate's OLDER limb, which prints no NAMING-PLACE line and which the '# naming-place-override:' escape does NOT convert; w-2 PHASE B therefore cannot commit its declaration, and by A4-r6's ruled order nothing was applied, so there is NO destroy window this time.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S25 and the issuer's ruling in A4-r6/A5-r6 treat the naming refusal on an adopted pre-existing role as a PLACEMENT refusal, liftable by '# naming-place-override:' with no author override (A5-r6 @f37fb5892d, after Z-S26 was fixed at source @b7c27ef5b0). w-1's PHASE B landed exactly that way. The w-2 never-widen pair (COO @1ad6f36ca2, CTO @dadc1ec69a) signs a 2-import / 0-add / 2-change / 0-destroy targeted apply and the GO (msg 33097) names the A4-r6/A5-r6 order of acts.",
+    "world_is": "The assumption that one override covers the whole adoption program is FALSE, and w-2 is where it breaks. The gate has TWO refusal limbs and they are reached by different names. For w-1's opal-smartx-lambda-role and for BOTH of w-3's roles the verdict is a PLACEMENT row -- 'NEW name the canon places as FIX. Owed: use <form>' -- counted as NAMING-PLACE and converted to 'NAMING OVERRIDDEN' by the audited override. For w-2's two roles the verdict is the OLDER limb instead, because judge() finds a non-None CARRIER: 'bd' is a firm token mapping to 49financial, and the carrier branch fires ABOVE the placement path and counts as plain REFUSE. MEASURED RATHER THAN READ OFF THE SOURCE: the commit was run twice with a valid, non-empty '# naming-place-override:' line in the message file, and the gate printed 'NAMING-GATE: REFUSE 4 graded' with NO NAMING-PLACE line and NO 'OVERRIDDEN' or 'IGNORED' line at all -- the override is not refused, it is not applicable. The canonical forms the gate asks for ({system}-49f-merge-daily-lambda-role, {system}-49f-pipeline-task-role) are unreachable anyway: an IAM role cannot be renamed in place, so adopting under a different name is a create-plus-delete WORLD act outside this cell's BOUNDS and outside the signed pair. The remedy the canon itself names is the R20 DECLARED EXCEPTION, which judge() consumes ABOVE every NEW branch and which therefore would lift this: it requires a HEAD-committed register entry whose pinned record carries its id (authority_ok) and whose count holds (r20_exception_ok), under infra/logic/registry/ -- NOT in this order's <paths> -- and CLAUDE.md Rule 30 says a deliberate departure is an R20 register entry ANDREW ACKNOWLEDGES, so it is a sovereign call and not an AE's. THE COST THIS TIME WAS ZERO, AND THAT IS THE POINT: A4-r6's rewritten step 5 put the commit BEFORE the import, so the refusal landed with nothing in AWS and nothing in shared state. The identical refusal class in w-1 arrived AFTER the apply and left a live IAM role planned for destruction (Z-S27). The ordering fix is doing exactly what it was written to do, on its first real exercise. The ledger entry iamroles-r6-family-a (opened @ae27a5f5f8, per NEVER-2) is HELD-PRE-APPLY on this named gate rather than left open or closed on a lie; nothing is half-landed and the two roles are exactly as found.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "safe-commit, verbatim, 4 rows: '[naming-gate] NAMING REFUSE infra/aws/terraform/bd-pipeline/zz_adopt_family_a.tf:64 bd-merge-daily-lambda-role -> {system}-49f-merge-daily-lambda-role' / \"why: NEW and OUT-OF-PATTERN as IAM_ROLE: REFUSE; hand-kept carrier of 'bd' outside every permitted context: read it through lookup('49financial')\"; same at :116, :152, :157 for both roles",
+            "'[naming-gate] NAMING-GATE: REFUSE 4 graded' with NO 'NAMING-PLACE:' line and no OVERRIDDEN/IGNORED line, on two separate runs both carrying a valid '# naming-place-override:' line -- the override is inapplicable, not denied",
+            "CONTRAST, same session, same override text, w-3's two declarations: 4 rows of 'NAMING OVERRIDDEN ... [placement refusal overridden, audited]' and 'NAMING-GATE: WARN 4 graded'. So the override works where the verdict is a placement row and not where a carrier is found",
+            ".tools/naming-gate.py judge(): carr = nm.carrier(lit.value) is non-None for 'bd'; the carrier branches return counts-as REFUSE, while apply_override() converts only rows whose counts-as is PLACE-REFUSE; the module header states 'The older limb's REFUSE is not affected by the override'",
+            "nothing applied: no terraform apply ran, bd-pipeline state holds neither role, and both roles read Tags [] with one inline policy each after the refusal",
+            "ledger iamroles-r6-family-a -> HELD-PRE-APPLY on this gate; opened @ae27a5f5f8"
+        ]
+    },
+    "notes": "The ask is a sovereign one and is NOT in this lane's write surface: an R20 declared exception (or a registry row) for the two pre-existing 'bd' role names, owner 1.0.0_SA_CTO~Z, acknowledged by Andrew per Rule 30. Until it lands, w-2 PHASE B cannot commit its declaration and must not import. IMPORTANT FOR SEQUENCING: w-3 PHASE B is NOT blocked by this -- its two names take the placement path and the existing override lifts them, measured this session -- so the issuer may choose to land w-3 first, which would invert the w-2-before-w-3 order its own halves assert. That ordering is the issuer's call, not this seat's. Cites Z-S25, Z-S26, Z-S27, Z-S35. The channel's dispositions stay the CVO's at L9."
+}
+]
+```
+
+## Z-S35 -- my own error: a gate PROBE that used the real safe-commit invocation committed two live .tf files; reverted, and the general lesson is that a dry run must differ from the act in MECHANISM, not in intent
+
+```json
+[
+{
+    "id": "NFRA_IAMROLES202609-Z-S35",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-11T00:12:00Z",
+    "one_line": "Wanting to know whether w-3 would hit w-2's carrier refusal, I ran the REAL safe-commit invocation on w-3's two renamed .tf files as a 'probe'; the gate passed them, so safe-commit committed them (6f484247ee) -- two live PHASE B declarations with no GO, no ledger entry and under w-2's commit message. Reverted @3011a6dad2; local only, never drained, never on origin, nothing applied to AWS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "My own row Z-S27 prescribes, for exactly this situation, 'prove the commit path end to end BEFORE touching AWS -- run the real safe-commit invocation on the renamed .tf and read whether it lands'. The order's step 5 authorises committing a renamed .tf only for the cell under a GO, after its pair is signed, with its ledger entry open.",
+    "world_is": "The prescription I wrote is ambiguous in a way I did not notice until it misfired on me: 'run the real safe-commit invocation and read whether it lands' describes an act whose success condition IS the landing, so there is no probe-shaped version of it. A probe whose only difference from the act is the operator's intention is not a probe. w-3's names passed the gate (placement rows, override applies), so safe-commit correctly did what it is built to do and committed, adding infra/aws/terraform/portfolio-management/zz_adopt_family_e.tf and news-pipeline/zz_adopt_row3.tf as LIVE files -- w-3 PHASE B's act, which had no GO at that moment, no ledger entry, and a commit message describing w-2. WHAT IT DID NOT DO, measured rather than assumed: no apply, no import and no AWS call of any kind; git merge-base --is-ancestor reads NO against box/sitez, so the files never reached the shared branch, no peer's plan ever saw them, and the Z-S27 destroy window never opened -- the very window being guarded against. REMEDY TAKEN: git revert, not git reset, so the mistake stays on the record and no commit is lost; and the override's audit ROW IS DELIBERATELY KEPT rather than reverted with it, because the override really was taken and an append-only audit log that loses the record of a mistaken act is worse than one that carries it. The two .tf files alone are reverted. THE SAFE PROBE, for a successor: stage the rename and let the gate grade the staged index WITHOUT the commit limb, or run it on a throwaway branch that is then deleted -- the difference has to be in the mechanism. The useful finding the probe did produce is in Z-S34 and stands on its own evidence: w-3's names take the placement path and the existing override lifts them, where w-2's do not.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "6f484247ee: '3 files changed, 230 insertions(+)' -- news-pipeline/zz_adopt_row3.tf, portfolio-management/zz_adopt_family_e.tf, org/audit/naming-place-override-audit.jsonl",
+            "git merge-base --is-ancestor 6f484247ee box/sitez -> NO (local only; never drained, never pushed)",
+            "3011a6dad2: '2 files changed, 229 deletions(-)', deleting both .tf files and KEEPING the audit row",
+            "git ls-tree -r HEAD | grep 'zz_adopt.*\\.tf$' after the revert -> only smartx-pipeline/zz_adopt_family_b.tf, which is w-1's applied declaration; the other three remain .tf.proposed",
+            "no terraform apply was invoked at any point in w-2 PHASE B or in the probe; bd-pipeline state holds neither Family A role"
+        ]
+    },
+    "notes": "Filed against myself rather than left in a commit message, because the ambiguity is in row Z-S27's PRESCRIPTION, which other cells are meant to follow -- w-3 PHASE B will read it next. Suggested re-wording for the issuer, who owns Z-S27: 'stage the renamed .tf and let the gate grade the staged index without committing, or probe on a throwaway branch'. Cites Z-S27, Z-S34. The channel's dispositions stay the CVO's at L9."
+}
+]
+```
+
+## Z-S36 -- the issuer rules Z-S34 RESERVED (an R20 declared exception is Andrew's to acknowledge) and releases w-3 PHASE B ahead of w-2 (amendment A7-r6)
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S36",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-11T00:40:00Z",
+    "one_line": "Z-S34 (w-2's two 'bd' role names refused by the naming gate's carrier limb, which the placement override cannot reach) is RESERVED: CLAUDE.md Rule 30 names 'a deliberate departure is an R20 register entry Andrew acknowledges', so the card goes to 0.0.0_AB_MSTR~Z for Andrew; meanwhile A7-r6 releases w-3 PHASE B from waiting on w-2's, because the two modules share no state and plan order protects nothing here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S34 (BLOCKING, disarm_owner 2.0.0_SA_COO~ZI) asks for an R20 declared exception for bd-merge-daily-lambda-role and bd-pipeline-task-role; DECOMP_R6 section 4 and both w-3 halves held w-3 PHASE B behind w-2 PHASE B by plan order.",
+    "world_is": "The carrier limb (a NEW 'bd' firm token outside every permitted context) fires above the placement path, and the canonical names it asks for need a create-plus-delete rename of live roles, a WORLD act outside every signed pair. The only canon remedy that lifts it is the R20 declared exception, and Rule 30 reserves its acknowledgement to Andrew, quoted verbatim: 'a deliberate departure is an R20 register entry Andrew acknowledges'. So this seat neither writes the entry nor works around the gate. The card, with the recommendation, goes to 0.0.0_AB_MSTR~Z and onto the box's open-call queue. Nothing landed: bd-pipeline state holds 0 of the 2 roles, both read Tags [], and ledger iamroles-r6-family-a is HELD-PRE-APPLY @47955fd728 with a 6h window. If the call is not answered inside that window, ~IR closes the entry NOT-APPLIED rather than leaving it open. ORDER: w-2 and w-3 adopt into different modules (bd-pipeline vs portfolio-management / news-pipeline) with different state keys and zero pre-existing drift each. Plan order was this seat's sequencing choice, not a dependency, and the CTO half echoes it 'per the w-3 halves'. A7-r6 edits DECOMP_R6 section 4 and the COO w-3 half's GO condition. The signed blast radii are unchanged.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S34 and Z-S35 as filed by 0.7.0_AE_CloudOps~IR (msg 33099, acked)",
+        "org/critical_paths/.open_deploys/iamroles-r6-family-a.json status HELD-PRE-APPLY, window_hours 6.0, opened 2026-10-11T00:03:49Z",
+        "CLAUDE.md Rule 30, the R20 sentence quoted above",
+        "PLAN_SURVEY_family_a.md / PLAN_SURVEY_family_e.md STATE_KEY lines: bd-pipeline/tfstate vs portfolio-management/tfstate and news-pipeline/tfstate"
+      ]
+    },
+    "notes": "Cites Z-S34, Z-S35, Z-S25, Z-S28. Gate limb: none graded A7-r6 (an edit to a decomposition and a ledger half; GATE viii not engaged). The channel's dispositions stay the CVO's at L9."
+  }
+]
+```

@@ -10,12 +10,16 @@
  "subject": "GO AMGT_RESAPP.TO-AMGT-kk-1: guard first (AC3), then republish crosswalk/v1 with research folders",
  "body_path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round86_prep/XB_KK1_ORDER_TO_AMG.md",
  "opened_at": "2026-10-09T15:05:54Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T15:08:45Z",
   "bus_message_id": "fd502fec-43f8-43f5-bfcf-ad3224c82d37"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-09T17:00:14Z",
+  "by": "0.7.0_AE_CloudOps~AMG",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

@@ -479,6 +479,16 @@ rm -rf "$DRIVE_MODE_DIR"; export DRIVE_MODE_DIR="${DRIVE_MODE_DIR}.absent"
 check_as '2.0.0_SA_COO~D' "neg: no lease directory at all DENIED (fail-closed)"  'git -C portal push origin DEV'  DENY
 unset DRIVE_MODE_DIR
 
+# WORKSPACE-TRUNK RULE (1.0.0_SA_CTO~DELL1 msg 3173, 2026-10-09). Negative control: the push that minted a
+# "DEV" branch on the workspace remote. PROVEN-RED: the DEV arm renders PASS against the pre-rule hook.
+echo ""
+echo "WORKSPACE-TRUNK RULE -- no DEV/PROD/main pushes from the workspace repo, any caller:"
+check_as '0.0.0_AB_MSTR~DELL1' "integrator pushing workspace HEAD:DEV DENIED"     'git push origin HEAD:DEV'      DENY
+check_as '0.0.0_AB_MSTR~DELL1' "integrator pushing workspace PROD DENIED"         'git push origin PROD'          DENY
+check_as '0.0.0_AB_MSTR~DELL1' "integrator pushing workspace main DENIED"         'git push origin HEAD:main'     DENY
+check_as '0.0.0_AB_MSTR~DELL1' "integrator box/dell1 push still PASS"             'git push origin box/dell1'     PASS
+check_as '0.0.0_AB_MSTR~DELL1' "integrator portal DEV push still PASS"            'git -C portal push origin DEV' PASS
+
 rm -f "$NEVER_GATE_AUDIT" 2>/dev/null || true
 
 echo ""

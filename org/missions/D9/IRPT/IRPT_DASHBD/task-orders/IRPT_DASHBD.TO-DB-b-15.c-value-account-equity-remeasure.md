@@ -52,7 +52,7 @@ Diamond's value = `net_mv_plus_cash + margin_balance` + its own accrual.
      `{"tolerance": 0.0035, "vendor_calls": 0, "method_version": <new>, "pairs": [{"account","start","end","abs_diff_r4","abs_diff_now","bd_accrual","within","reason"}], "s22": {"account","start","residual","disposition","reason"}}`
    - `bd_accrual` is Black Diamond's accrual over the window. `within` is `abs_diff_now <= 0.0035`. A pair beyond it carries a
      measured reason. Add a short `.md` beside the record.
-   - **S22 re-read:** pair 0027265115 2026-06-25 is DISARMED if its residual is within 0.35 pp. Otherwise it is RESTATED, with the
+   - **S22 re-read:** pair acct#89d0916a 2026-06-25 is DISARMED if its residual is within 0.35 pp. Otherwise it is RESTATED, with the
      residual and its measured reason. Round 6 found a 4,429.53 `INTRA/FC/IN` "MARGIN INT ADJ" credit (row W1-S20). CTO batch 195
      (@8dcb24b212) ruled it RETURN: margin interest is internal, and its adjustment takes the same side. Do NOT re-class it. If the
      pair's residual is that credit, state it as the non-defect reason: "Black Diamond books MARGIN INT ADJ as a net addition; Opal

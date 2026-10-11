@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-09T04:38:09Z",
+ "written_at": "2026-10-11T01:27:54Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -615,7 +615,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_230xZ_SITEZ_OPEN_CALLS_ANSWERED_RELAY.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-08T23:17:57Z",
    "kind": "act",
    "scope": {
@@ -650,7 +650,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-10T21:11:36Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261010_133xZ_FIFTEEN_OPEN_ITEMS_ANSWERED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "sitez-20261009T011758Z-107a",
@@ -828,6 +835,618 @@
     "by": "1.0.0_SA_CTO~Z",
     "reason": "Shared-branch push (org/XXX.md SHARED-BRANCH LAW: DEV/PROD pushed only by 0.0.0_AB_MSTR~Z on Andrew's word); REC yes: one-line fast-forward de5ce25fa3->8cdc7b9735, AC4 PASS on r2-dev, the Analyst launcher pulls PROD"
    }
+  },
+  {
+   "id": "sitez-20261009T074557Z-6830",
+   "project": "NFRA_REPORT",
+   "subject": "NFRA_REPORT round 4 answer: retire FWD-13/FWD-15, re-specify them against the served format_report, or close the project on its current served body?",
+   "asked_by": "2.0.0_SA_COO~ZZ",
+   "source": "org/missions/D12/NFRA/NFRA_REPORT/surprise-channel/remediations/REMEDIATION_v4.Z.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T07:45:57Z",
+   "kind": "fork",
+   "context": "Round 4 is terminal (round-close-check MAY-CLOSE; CVO slug 95d711f592 READ by 1.0.0_SA_CTO~Z 07:33Z). FWD-13/15 were bars on the edition Andrew replaced 2026-09-17 with format_report. The L10 answer (addendum or round-5 analysis) gates every further cut; the COO has no cell to cut until it lands.",
+   "rec": "Close on the served body unless Andrew wants the edition back: he chose format_report himself on 2026-09-17, so re-specifying FWD-13/15 against it re-litigates his word; retiring them is an ENDPOINT change the CTO routes to Andrew.",
+   "scope": {
+    "measured_at": "2026-10-09T07:45:57Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T07:52:59Z",
+    "by": "2.0.0_SA_COO~ZZ",
+    "ruling": "org/missions/D12/NFRA/NFRA_REPORT/prd/NFRA_REPORT_PRD.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "sitez-20261009T081243Z-6017",
+   "project": "NFRA_IAMROLES202609",
+   "subject": "FWD-4: seat an accepting owner for the 12 unowned IAM roles (rows 8 and 10 need only an acceptance of INERT adopting Terraform)",
+   "asked_by": "2.0.0_SA_COO~ZI",
+   "source": "org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round3.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T08:12:43Z",
+   "kind": "fork",
+   "context": "ROUND_ANALYSIS.round3 s.3 ruled FWD-4 NOT MET at 4 of 16: 12 roles name NO-ACCEPTING-SEAT. A named owner is the bar and authorship is not acceptance, so no worker can close it. It has been queued at 0.0.0_AB_MSTR~Z since 2026-09-10 with no answer. It gates FWD-4, the project's last unmet outcome apart from FWD-5.",
+   "rec": "Split it. (a) Rows 8 and 10, production serving-path roles whose adopting Terraform is already INERT with round 2's plan measured non-destructive: have the CloudOps lane (0.7.0_AE_CloudOps) accept them now. (b) The other ten: name one AE lane as owner of record so a round-5 cell can carry the adoption work. Without an owner, FWD-4 cannot move by working.",
+   "scope": {
+    "measured_at": "2026-10-09T08:12:43Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T08:18:00Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/CTO_RULING_FWD4_OWNER_OF_RECORD_20261009.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "sitez-20261009T083926Z-84ef",
+   "project": "NFRA_MCPORTAL",
+   "subject": "Remove two drained NFRA_MCPORTAL worktrees C:/tmp/mp-r4-5 and C:/tmp/mp-r4-6 (forced: each holds only an untracked .scratch/)",
+   "asked_by": "2.0.0_SA_COO~MP",
+   "source": "org/tier1_exec/2.0.0_SA_COO~MP/logs/2026-10-09/session_close_2100-0610Z.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T08:39:26Z",
+   "kind": "fork",
+   "context": "Round-4 worker worktrees, both branches drained into box/sitez (@1cf3a1dce5 and the MP-x-2 drain); git worktree remove refuses on the untracked .scratch/, so removal is --force, a recursive delete that CLAUDE.md reserves to a human. Gates nothing.",
+   "rec": "yes: git worktree remove --force on both, then branch -d; or run /cleanup",
+   "scope": {
+    "measured_at": "2026-10-09T08:39:26Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_STRATID placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T09:00:21Z",
+    "by": "0.0.0_AB_MSTR~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_230xZ_SITEZ_OPEN_CALLS_ANSWERED_RELAY.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-09T08:47:31Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "reason": "ACT only Andrew can confirm: worktree remove --force deletes untracked .scratch/ recursively (CLAUDE.md Agent Autonomy: recursive deletion needs human confirmation). Measured: both branch heads contained in box/sitez; .scratch 20M + 25K; mp-r4-6 also shows a deleted mcportal gitlink. Asked of Andrew in-session 08:4xZ."
+   }
+  },
+  {
+   "id": "sitez-20261009T092534Z-b865",
+   "project": "NFRA_OPLGTW",
+   "subject": "Should Tax SMA master 08403355 feed any gold build (like 08335338's 49F accelerator), or stay bronze/silver/served only?",
+   "asked_by": "2.0.0_SA_COO~O",
+   "source": "org/tier1_exec/2.0.0_SA_COO~O/deliverables/ANDREW_DIRECT_20261009_063xZ_08403355_BACKFILL_SAME_SHAPE.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T09:25:34Z",
+   "kind": "fork",
+   "context": "Andrew ordered 08403355 'EXACT SAME' as 0824/0833. Only 08335338 feeds a gold build (the 49F accelerator); 08242234 feeds none. OG-tm-1/OG-bh-1 wired none. Gates no in-flight cell; a yes needs a new cell naming the gold build.",
+   "rec": "No gold wiring: 'EXACT SAME' as 08242234 means none, and 49F gold is 49 Financial's chain, not Tax SMA. Andrew names a gold build if he wants one.",
+   "scope": {
+    "measured_at": "2026-10-09T09:25:34Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway",
+     "infra/aws/terraform/canonical-schwab-ec2",
+     "infra/aws/terraform/opal-assets"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of AMGT_RESAPP placed on dell1 (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of IRPT_ANLREQ placed on dell2 (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/lambda/ci)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of IRPT_DASHBD placed on dell2 (infra/aws/lambda/ci/lambda-source-map.json)",
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/halt-gate-check.sh is on the shared branch (.tools)",
+      ".tools/halt-gate-worker-order-test.sh is on the shared branch (.tools)",
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T09:58:09Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/1.0.0_SA_CTO~Z/CTO_RULING_08403355_NO_GOLD_WIRING_20261009.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261009T093754Z-26ac"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261009T093754Z-26ac",
+    "at": "2026-10-09T09:37:54Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "reason": null
+   }
+  },
+  {
+   "id": "sitez-20261009T100314Z-9c9d",
+   "project": "NFRA_MCPINDEX",
+   "subject": "Issue round 9 (FWD-19 readers) now, before round 8's MX-r-9 PHASE B lands, instead of after the round-8 drain?",
+   "asked_by": "2.0.0_SA_COO~MI",
+   "source": "org/missions/D9/NFRA/NFRA_MCPINDEX/decompositions/NFRA_MCPINDEX_DECOMP.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T10:03:14Z",
+   "kind": "fork",
+   "context": "PRD v0.8 addendum Order reads 'Round 9, after round 8 drains'. Round 8 is 3/4 drained; MX-r-9 PHASE B waits on the r29 slot (11:00Z-23:00Z) and J1 on Alyssa. Round 9 cells MX-o-1/o-2 write new reader folders only (disjoint from round 8). Gates: issuing round 9 today; dell2's 2026-10-12 drain target.",
+   "rec": "YES: issue now; the write surfaces are disjoint, MX-r-10 already waits on MX-r-9's release, and the ONE-issuer rule holds (same seat).",
+   "scope": {
+    "measured_at": "2026-10-09T10:03:14Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway",
+     "infra/aws/terraform/bd-pipeline"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_BILLING placed on dell2 (org/critical_paths/change_management/advi-billing-crossfirm-probe-r3-20261009.md)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_DEMQUE placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/opal-gateway declares ${local.schwab_catalog_role_name}-policy, ${local.schwab_data_role_name}-policy, ${var.name}-access-admin-policy (+45), also declared by root infra/aws/terraform/opal-gateway named by ADVI_BILLING on dell2",
+      "root infra/aws/terraform/bd-pipeline declares cloudwatch-metrics, also declared by root infra/aws/terraform/shared-infra named by LGIC_ENFORCE on laptop"
+     ],
+     "shared": [
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T10:27:06Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/missions/D9/NFRA/NFRA_MCPINDEX/ledger/CTO_RULING_ROUND9_AFTER_ROUND8_DRAIN_20261009.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261009T101408Z-e415"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261009T101408Z-e415",
+    "at": "2026-10-09T10:14:08Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "reason": null
+   }
+  },
+  {
+   "id": "sitez-20261009T150500Z-4d5a",
+   "project": "NFRA_OPALAI",
+   "subject": "May a seat ask Alyssa today, on Teams, to send one portal-figure question to the Opal Bloomberg account? Yes/no.",
+   "asked_by": "2.0.0_SA_COO~AI",
+   "source": "org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/CLOSE_RUN_ARMS_20261009.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-09T15:05:00Z",
+   "kind": "fork",
+   "context": "The item-0 close run's last input: arm (a) fires only on Alyssa's own asker question (CVO ruling), behind Andrew's 2026-10-06 hold on call 1. Any one Teams message from Andrew fires arm (b). Gates OA-t-1 r2 / OA-t-3 r2 cutover merges and OA-e-8.",
+   "rec": "Yes: one read-only message on her own grant (OA-g-3); it closes the close run.",
+   "scope": {
+    "measured_at": "2026-10-09T15:05:00Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".claude/skills/bbg-teams-assist/SKILL.md is on the shared branch (.claude)",
+      ".tools/hooks/bg-concierge-gate.sh is on the shared branch (.tools)",
+      ".tools/hooks/tests/test_bg_concierge_gate.sh is on the shared branch (.tools)"
+     ]
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-09T15:16:05Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "reason": "Lifts Andrew's own named hold (2026-10-06 'nothing we can do on the call 1 at this time'); put to him at the 1.0.0_SA_CTO~Z terminal 15:2xZ; REC yes."
+   }
+  },
+  {
+   "id": "sitez-20261009T160945Z-cf36",
+   "project": "MDPF_DEMQUE",
+   "subject": "May the BG seat execute Bloomberg history/intraday draws that the MDPF_DEMQUE queue has booked, under the queue's budget and ledger? Lifts your 2026-08-07 'cant download' for queue bookings only; Teams-asked draws stay denied.",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_RULING_BG_CONCIERGE_GATE_WIRE_AND_G3_TO_ANDREW_20261009_Z.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T16:09:45Z",
+   "kind": "fork",
+   "context": "BG's concierge gate is not wired; its G3 denies Bloomberg history outright per Andrew's 08-07 fence, but dell1 already books tier-1 draws through BG (one at 15:05Z, a 16-cell draw queued). Until answered, G3 is wired HELD: only a DEMQUE-ledger-confirmed booking id passes.",
+   "rec": "YES: the queue already prices and caps every draw (his 10-09 word routes BBG through the queue); the HELD form keeps Teams-asked draws denied.",
+   "scope": {
+    "measured_at": "2026-10-09T16:09:45Z",
+    "paths": "hit",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_STRATID placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)"
+     ],
+     "placement": [
+      "project MDPF_DEMQUE is placed on dell1, this box is sitez"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-10T21:12:08Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261010_133xZ_FIFTEEN_OPEN_ITEMS_ANSWERED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-09T16:11:46Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "reason": "Lifts Andrew's own named fence (2026-08-07 'it cant download from Bloomberg ... it can only view') for DEMQUE queue bookings only; CVO ruling @2b1fa1d47b; put to him at the 1.0.0_SA_CTO~Z terminal; REC yes."
+   }
+  },
+  {
+   "id": "sitez-20261009T170635Z-a519",
+   "project": "NFRA_OPALAI",
+   "subject": "Send one Teams message, any question, from your account to the Opal Bloomberg account (fires the NFRA_OPALAI close run's arm b)",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_SITEZ_CF36_BG_QUEUE_DRAWS_AND_4D5A_ALYSSA_ASK_20261009.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-09T17:06:35Z",
+   "kind": "act",
+   "context": "Re-filed from sitez-20261009T150500Z-4d5a by laptop 1.0.0_SA_CTO ruling @441f2f547d: no seat messages Alyssa. A Teams send goes out as you, and Alyssa's arm (a) sits behind your 2026-10-06 hold on call 1. Your own message fires arm (b) instead. Gates NFRA_OPALAI FWD close.",
+   "rec": "",
+   "scope": {
+    "measured_at": "2026-10-09T17:06:35Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".claude/skills/bbg-teams-assist/SKILL.md is on the shared branch (.claude)",
+      ".tools/hooks/bg-concierge-gate.sh is on the shared branch (.tools)",
+      ".tools/hooks/tests/test_bg_concierge_gate.sh is on the shared branch (.tools)"
+     ]
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-10T21:11:39Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "reason": "Andrew answered 'later' (record ANDREW_DIRECT_20261010_133xZ row 5): his own Teams send, stays open"
+   }
+  },
+  {
+   "id": "sitez-20261009T173038Z-21c5",
+   "project": "NFRA_MCPORTAL",
+   "subject": "Open https://mcp.opalinvest.dev/control-plane once and name one box's projects for this afternoon (FWD-14 close run, G-SEE)",
+   "asked_by": "2.0.0_SA_COO~MP",
+   "source": "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-x-5.control-plane-close-run.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-09T17:30:38Z",
+   "kind": "act",
+   "context": "The Control Plane page has been LIVE since ~16:12Z on gateway 1e32562729 (MP-x-4 drained @a933da0d8a). It lists every box's seats, projects and last commit, with each figure's age, re-fetching every 60 s. Your one look plus one sentence, e.g. 'dell1 is on X and Y', is the human half of A14; the MP-x-5 worker then matches it against the activity store. It gates only MP-x-5.",
+   "rec": "Open it once, say one box and its projects; ~1 minute",
+   "scope": {
+    "measured_at": "2026-10-09T17:30:38Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_DEMQUE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_STRATID placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-09T18:33:08Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "reason": "ACT only a person can do: A14's human half is one human look at https://mcp.opalinvest.dev/control-plane plus one sentence naming one box's projects (TO-MP-x-5); no seat can stand in for the human read."
+   }
+  },
+  {
+   "id": "sitez-20261009T173040Z-f0d2",
+   "project": "NFRA_MCPORTAL",
+   "subject": "Sign in once as Opal Bloomberg in the MP-v-2 worker's headed Edge window (FWD-2 live arms, G-2ND)",
+   "asked_by": "2.0.0_SA_COO~MP",
+   "source": "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-v-2.fwd2-live-arms.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-09T17:30:40Z",
+   "kind": "act",
+   "context": "MP-x-4 is drained, so G-2ND's first limb holds. The second limb is a person signing in as the second (non-owner) account so the worker can show the owner gate refusing it. When you are ready, the issuer spawns the MP-v-2 worker with a headed Edge window; it gates only MP-v-2.",
+   "rec": "Say when; ~2 minutes of sign-in",
+   "scope": {
+    "measured_at": "2026-10-09T17:30:40Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_DEMQUE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_STRATID placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-09T18:33:10Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "reason": "ACT only Andrew can do: his login as the Opal Bloomberg (non-owner) account in the MP-v-2 worker's headed Edge window (TO-MP-v-2 G-2ND limb 2); a login is his."
+   }
+  },
+  {
+   "id": "sitez-20261011T000025Z-8ed7",
+   "project": "NFRA_MCPORTAL",
+   "subject": "Open https://mcp.opalinvest.dev/control-plane and /open-calls once: read one overlap, one box's git state, and close one real OPEN call with your ruling (CP2 close run, G-SEE2)",
+   "asked_by": "2.0.0_SA_COO~MP",
+   "source": "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-q-1.cp2-close-run.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-11T00:00:25Z",
+   "kind": "act",
+   "context": "CP2 (Overlap, Git state, Open Calls) is LIVE since 23:04Z on gateway 2a5966dfbd (MP-r-2 complete @937a9e38a4). Your one pass, plus closing one real OPEN call on the page, is the human half of FWD-15 to FWD-17. The MP-q-1 worker then checks the close request reached its result. It gates only MP-q-1.",
+   "rec": "Close one call you already have a ruling for, e.g. this queue's own G-2ND or a stale row; ~3 minutes",
+   "scope": {
+    "measured_at": "2026-10-11T00:00:25Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_DEMQUE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_STRATID placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261011T003538Z-5bdf",
+   "project": "NFRA_IAMROLES202609",
+   "subject": "Acknowledge an R20 declared exception for the two legacy Black Diamond IAM role names (bd-merge-daily-lambda-role, bd-pipeline-task-role) so IAM-w-2 can adopt them into Terraform under their live names",
+   "asked_by": "2.0.0_SA_COO~ZI",
+   "source": "org/missions/D12/NFRA/NFRA_IAMROLES202609/surprise-channel/investigations/INVESTIGATION_v1.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-11T00:35:38Z",
+   "kind": "fork",
+   "context": "Naming gate carrier limb refuses NEW 'bd' token (rows Z-S34, Z-S36); renaming live roles is create+delete; Rule 30 reserves R20 acknowledgement to Andrew; gates IAM-w-2 PHASE B only (ledger HELD-PRE-APPLY, nothing applied)",
+   "rec": "Yes: R20 entry for exactly these two names, owner 1.0.0_SA_CTO~Z -- they are pre-existing live roles (2026-01), adoption moves custody only, and the canonical names need a destructive rename",
+   "scope": {
+    "measured_at": "2026-10-11T00:35:38Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/bd-pipeline",
+     "infra/aws/terraform/portfolio-management",
+     "infra/aws/terraform/news-pipeline"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_DEMQUE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_STRATID placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/bd-pipeline declares cloudwatch-metrics, also declared by root infra/aws/terraform/shared-infra named by MDPF_SECCLASS on dell1",
+      "root infra/aws/terraform/news-pipeline declares SecretsManagerAccess, cross-firm-secret-deny, also declared by root infra/aws/terraform/shared-infra named by MDPF_SECCLASS on dell1",
+      "root infra/aws/terraform/news-pipeline declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2"
+     ],
+     "shared": [
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261011T012754Z-c719",
+   "project": "COMM_ASSIST",
+   "subject": "May FWD-4's CLIENT branch (a client-firm mail naming Andrew is texted to him) stand as a qualified essential wait, read when the first real client mail arrives?",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/missions/D9/COMM/COMM_ASSIST/ledger/ROUND_ANALYSIS.round13.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-11T01:27:54Z",
+   "kind": "fork",
+   "context": "FWD-4 is APPLIED. Its internal branch is driven by a seat-sent mail, but no seat can send as a client firm, so the client branch can only be exercised by a real client mail. The L2 rule (NO FWD IS A WAIT) lets a wait stand only when qualified with its reason and Andrew's word.",
+   "rec": "Yes: no seat can send as a client firm, so the alternative is a planted mail from outside Opal, which is worse. The organic client mail is the proof, and the COO reads it the day it lands.",
+   "scope": {
+    "measured_at": "2026-10-11T01:27:54Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
   }
  ]
 }

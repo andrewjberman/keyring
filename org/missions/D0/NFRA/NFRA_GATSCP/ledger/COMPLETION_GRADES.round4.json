@@ -1,0 +1,67 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "NFRA_GATSCP",
+ "round": 4,
+ "graded_by": "1.0.0_SA_CTO~DELL1",
+ "graded_utc": "2026-10-09T18:02Z",
+ "report_ref": "org/missions/D0/NFRA/NFRA_GATSCP/ledger/COMPLETION_REPORT.round4.json@91db536c84",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~2/NFRA_GATSCP.TO-GS-t-3.merge-graded-by-scoped-tree-check.proof_of_spec.json@3d465ade72",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED: round 1, the real drain on QA (ROUND_ANALYSIS.round1.md). Close read: ledger/ROUND_ANALYSIS.round4.md @cf0a14adf2."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~8/NFRA_GATSCP.TO-GS-f-1.pointer-is-not-an-order.proof_of_spec.json@02c260744e",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED: six real QA safe-commit acts read by the CVO (ADJUDICATION_v3, rounds 2-3). Close read: ledger/ROUND_ANALYSIS.round4.md @cf0a14adf2."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~2/NFRA_GATSCP.TO-GS-t-2.tree-check-staged-and-scoped.proof_of_spec.json@4495e6ead3",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED: six real QA safe-commit acts read by the CVO (ADJUDICATION_v3, rounds 2-3). Close read: ledger/ROUND_ANALYSIS.round4.md @cf0a14adf2."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~6/NFRA_GATSCP.TO-GS-e-5.commit-regenerates-index-entry.proof_of_spec.json@07cec17481",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED: six real QA safe-commit acts read by the CVO (ADJUDICATION_v3, rounds 2-3). Close read: ledger/ROUND_ANALYSIS.round4.md @cf0a14adf2."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~3/NFRA_GATSCP.TO-GS-e-1.sync-shows-standing.proof_of_spec.json@07cec17481",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED: the driven 13:21Z box-sync pass printed standing defects as information, refused nothing (round-2 ADDENDUM 1). Close read: ledger/ROUND_ANALYSIS.round4.md @cf0a14adf2."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~17/NFRA_GATSCP.TO-GS-x-1.close-gate-grades-the-round-being-closed.proof_of_spec.json@7d6c43c991",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED: six real QA safe-commit acts read by the CVO (ADJUDICATION_v3, rounds 2-3). Close read: ledger/ROUND_ANALYSIS.round4.md @cf0a14adf2."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~11/NFRA_GATSCP.TO-GS-f-4.crossbox-record-custody.proof_of_spec.json@59d0bfc9f8",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED: one real order executed by site Z's Codex lane ~ZG with no seat-home copy (ADJUDICATION_v3). Close read: ledger/ROUND_ANALYSIS.round4.md @cf0a14adf2."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.9.0_WK_NFRA_GATSCP~15/NFRA_GATSCP.TO-GS-h-2.block-and-override-carry-the-act.proof_of_spec.json@ade077ddb3",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED: the attributed replay of the 26 recorded refusals, every attributed one on its own commit's path; a planted out-of-paths commit still blocks (ADJUDICATION_v5 @30ad32d338). Close read: ledger/ROUND_ANALYSIS.round4.md @cf0a14adf2."
+  }
+ ]
+}

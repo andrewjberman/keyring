@@ -6,6 +6,17 @@ lives outside the law lock because it changes as arms start and stop (Andrew-dir
 `1.0.0_SA_CTO` lands and strikes rows, naming the chooser and the record. A seat never writes its own row. On DONE the
 lane deletes its cron and the row is struck; a struck row's record stays in git. A row absent here arms nothing.
 
+## PACING -- governs every row below (Andrew-direct 2026-10-10 ~23:3xZ)
+
+Every live `/canonical-drive`, `/self-drive` and `/govern` arm runs at **60m**, whatever cadence its row names. Every
+re-arm also takes 60m. `/keep-driving` is **OFF** on all four boxes (cloud switch set 23:33:52Z by 1.0.0_SA_CTO, read back
+scan=off empty_tick=off). VERBATIM: "yeah we need slower pacing, i think canonical drive and self drive loops can be on 60m
+interval and /keep-driving OFF for now, no need to be so aggressive. This is to avoid the usage limit and try to scale
+productivity correctly." then "in govern loop too". Record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261010_23xxZ_SLOWER_PACING_LOOPS_60M_KEEP_DRIVING_OFF.md`.
+Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. `/govern` fires on each box's first slot only: laptop `:00`, `~Z`
+`:06`, `~DELL1` `:12`, `~DELL2` `:18`.
+
 ## Holds
 
 - `2.0.0_SA_COO` (base): D2 off until Andrew lifts it.
@@ -59,6 +70,20 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
     `2.0.0_SA_COO~P2`, `2.0.0_SA_COO~Y2`, `2.0.0_SA_COO~M2` IRPT_BCKEND (workstreams P, Y, M); `2.0.0_SA_COO~G2` IRPT_YCDGEN;
     `2.0.0_SA_COO~D2` IRPT_DASHBD. Cadence is each seat's to state in its own first tick; stop when its project reads complete, at
     HELD-AT-STOP, or on his stand-down.
+  - RELAUNCH 2026-10-11 after the dell2 crash and hold lift (record
+    `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261011_0xxxZ_LIFT_DELL1_DELL2_HOLD_ON_60M_PACING_KEEP_DRIVING_OFF.md` @cbcfdc0c1c).
+    THESE TERMS ARE CURRENT. Landed by 1.0.0_SA_CTO~DELL2.
+    - `1.0.0_SA_CTO~DELL2` `/self-drive 60m` over every dell2 project, DIRECTED, chooser Andrew. Arming record
+      `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261011_021xZ_SELF_DRIVE_60M_EVERY_DELL2_PROJECT_REARM_AFTER_HOLD_LIFT.md`
+      @86d65d0c3e. It carries the 10-09 row's scope and stop at the 60m cadence.
+    - `/canonical-drive <own project>` 60m, CHOSEN (the recommendation above; the cadence is his 2026-10-10 pacing word). Six seats, named
+      by 1.0.0_SA_CTO~DELL2 msg 3875 and seated by `0.0.0_AB_MSTR~DELL2` msg 3877: `2.0.0_SA_COO~C2` ADVI_COTBKF, `2.0.0_SA_COO~D2`
+      IRPT_DASHBD, `2.0.0_SA_COO~G2` IRPT_YCDGEN, `2.0.0_SA_COO~P2` IRPT_BCKEND, `2.0.0_SA_COO~T2` NFRA_TRNSPT, `2.0.0_SA_COO~V2` TCKT_VNEXT.
+      `~M2` was not relaunched. Stop: the seat's project reads complete, HELD-AT-STOP, or his stand-down.
+    - `2.0.0_SA_COO~Y2` `/canonical-drive` 60m over IRPT_BCKEND workstream Y, and IRPT_ANLREQ as its interim driver (CVO verdict msg 1889),
+      CHOSEN. Seating asked of `0.0.0_AB_MSTR~DELL2` by 1.0.0_SA_CTO~DELL2 at ~02:27Z on `2.0.0_SA_COO~G2` msg 3899 (IRPT_YCDGEN FWD-1 waits on
+      a workstream-Y re-cut). Same stop.
+    - Not seated: `2.0.0_SA_COO~B2` ADVI_BILLING and `2.0.0_SA_COO~O2` NFRA_OPSWKF (both WAITING in `sequence-check` on Andrew's inputs).
   - No row: the Microsoft Defender CPU sampling Monitor (record section 5). He asked that seat to "keep an eye"; it is a watch, not a loop.
 
 

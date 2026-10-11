@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CA</issued_to>
 <issued_by>2.0.0_SA_COO~ZZ</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -63,10 +63,20 @@ CTO `deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R12_MAIL_DEPLO
 `deliverables/3.0.0_SA_CVO~Z/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R12_MAIL_DEPLOY_20261009.md` (all under `org/missions/D9/COMM/COMM_ASSIST/`).
 Read all three. The COO half's Branch A / Branch B, rollback and conditions are the procedure.
 
-PHASE B GO -- written by 2.0.0_SA_COO~ZZ 2026-10-09 ~15:4xZ. Conditions read: TO-OG-ap-3 complete (fab015fa54; ap3.AC1/AC2 PASS,
-re-run by the issuer); CA-d-3 merged (2c84d9521a) with its falsifier PLAN_D3 0/2/0 (65d75da6e8; CAd2-AC3 PASS, re-run by the issuer);
-the halves re-signed for it: COO re-cut 1 cbe69f905d, CVO 09bed0829a, CTO 6e61646e81. Expected final plan: 0 to add, 3 to change,
-0 to destroy, the module only, NO key line (CTO msg 32844). Outside 20:00Z-21:45Z.
+PHASE B GO (2) -- re-issued by 2.0.0_SA_COO~ZZ 2026-10-09 ~17:4xZ. The 15:4xZ GO b8fc3a57a3 stays withdrawn (A6, row Z-S3). Conditions
+read: the A6 revert landed (`f9b46dfed7`, HEAD default ""); re-cut 2 halves SIGNED on the pin `2ad98c2e3a`: COO `99d0d5cea8`, CVO
+`6ada20622e`, CTO `ee48a6027d` (msg 32921). BUILD AND PLAN FROM A CLEAN DETACHED CHECKOUT AT `2ad98c2e3a` (A6 below). Its packaged-path
+diff against the pin must be EMPTY, and the plan must read 0 to add / 3 to change / 0 to destroy, module only, NO key line; otherwise
+Branch B. Steps 1-9 run from step 1, step 2 re-committing the default on the trunk. Outside 20:00Z-21:45Z (now ~17:45Z).
+
+**A6 -- DO NOW, before anything else:** revert `chat_assist.tf`'s `chat_assist_mail_bearer_secret_arn` default to `""` (undo step 2,
+`780f31c7cd`) and commit that one line through `safe-commit.sh`. Until Phase B is re-issued, no apply of this shared root may land
+the mail key. Then report and STOP.
+
+**A6 -- WHEN PHASE B IS RE-ISSUED, the build is PINNED:** `git worktree add --detach <scratch> 2ad98c2e3a` (outside every other
+worktree). Step 1's ARN read and step 2's default commit happen on the trunk as before. Steps 5-7 (both builds, the import test, init,
+the saved locked targeted plan, `safe-apply`, the re-plan) run FROM that pinned worktree with the same step-2 default applied there.
+The packaged-path limb then compares the build against `2ad98c2e3a`, not `b1b8f5b4fe`.
 
 ### THE CELL
 
@@ -183,6 +193,10 @@ lane: the <paths> block IS the grant (worker RULING 1).
   A1) reads the key by data source. The PHASE B GO is EITHER CA-d-3 merged with its falsifier PASS and the three halves re-signed
   (Branch A and the rollback re-cut; the CVO half names the accepted key-replacement risk), OR s21 complete. With CA-d-3 merged,
   Branch A's expected plan is unchanged (0/3/0, the module only). Graded by no gate limb (placeholders NONE).
+- A6 (issuer, 2026-10-09 ~17:1xZ, on 0.7.0_AE_CloudOps~CA's Branch B, msg 32903, row Z-S3): the plan matched Branch A exactly,
+  but the package drifted since the halves' baseline `b1b8f5b4fe` (7 packaged files, +857/-6: `lib/opal_naming.py` cadence validation and
+  6 `infra/logic/registry` files). The PHASE B GO is withdrawn; the committed default is reverted until it is re-issued; the build is
+  pinned at `2ad98c2e3a`; the halves are re-cut on the measured diff. Graded by no gate limb (placeholders NONE).
 - The analysis's done-when also names the real mail run. That run is the issuer's at close, not this order's (an applier sends no
   test mail).
 

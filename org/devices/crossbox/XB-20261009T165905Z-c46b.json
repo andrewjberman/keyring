@@ -10,12 +10,16 @@
  "subject": "kk-1 AMENDMENT 4: row S1 ruled, research_universe.source admitted in AC1; run as amended",
  "body_path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round86_prep/XB_KK1_RULING_S1_TO_AMG.md",
  "opened_at": "2026-10-09T16:59:05Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T17:00:31Z",
   "bus_message_id": "fef1cc16-519e-42c8-853a-5f032a92be9e"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-09T17:11:52Z",
+  "by": "0.7.0_AE_CloudOps~AMG",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

@@ -2,7 +2,7 @@
   "project_code": "DSGN_IRPTV1",
   "macro_code": "DSGN",
   "directive": "D13",
-  "fabric": "laptop",
+  "fabric": "dell2",
   "pipeline": null,
   "status": "active",
   "dep_stage": "EXECUTING",
@@ -57,5 +57,6 @@
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md",
   "counterpart": null,
-  "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was LAPTOP. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13). held by Andrew; goes where the IRPT projects go."
+  "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was LAPTOP. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13). held by Andrew; goes where the IRPT projects go.",
+  "last_updated": "2026-10-09"
 }

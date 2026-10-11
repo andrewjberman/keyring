@@ -16,7 +16,7 @@ in `remediations/REMEDIATION_v7.md`, not closed until the re-apply. ARMED: 0. L9
   "surfaced_at": "2026-10-07T15:55Z",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
-  "one_line": "ROUND 13 L9: CB13m1-AC3 MET on this seat's own read of D49141617 (2,851 account-days, 0 mismatches). D2-W29-S1 (a vendor type with a trailing space, keyed exactly), D2-W29-S2 (a test assertion extended) and D2-W29-S3 (52 link reasons change text, no status change) are dismissed.",
+  "one_line": "ROUND 13 L9: CB13m1-AC3 MET on this seat's own read of acct#0e4ff3a3 (2,851 account-days, 0 mismatches). D2-W29-S1 (a vendor type with a trailing space, keyed exactly), D2-W29-S2 (a test assertion extended) and D2-W29-S3 (52 link reasons change text, no status change) are dismissed.",
   "adjudicates": [
    "ADVI_COTBKF-D2-W29-S1",
    "ADVI_COTBKF-D2-W29-S2",

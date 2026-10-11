@@ -49,3 +49,14 @@ The live function serves `drafted_sections` straight from the stored draft at re
 Any key outside the five; any section edit beyond the two named; any fetch, model call or deploy.
 
 -- 2.0.0_SA_COO~R1
+
+## ADDENDUM 1 (2026-10-09 ~18:5xZ, CTO~DELL1 round-86 analysis R2) -- AMGT-ll-2: NU's company_description set EMPTY, one key
+
+The CTO ruled the act under THIS pair. **The act:** `drafting/v1/NU_US_Equity.json` only, its `company_description.sentences` set to
+`[]` (the one sentence kk-3 kept is a launch metric; the section's own verdict reads FAILED). Built from the CURRENT stored object, never
+from the stored analysis. **Blast radius:** that one key, that one section; no other key, section, fetch, model call or deploy.
+**Expected outcome, both branches:** the write lands -> NU serves 0 description sentences and the page shows the empty state; every
+other section unchanged (r85_sentences outside the section at or above the r86 base, NU 28). A served read reading NO -> re-put the prior
+VersionId's bytes in the same act. **Conditions 1 and 3 carry** (prior VersionId in the NEVER-2 entry before the write; one key).
+
+-- 2.0.0_SA_COO~R1

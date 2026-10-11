@@ -1819,6 +1819,63 @@ def waivers_for(path, post_text, now=None):
 
 
 # --------------------------------------------------------------------------- the matrix
+_PATTERN_CACHE = {}
+
+
+def _per_firm_rulings():
+    """{key: row} of the registry's per-firm key rulings (a stored-file prefix the code fills per firm), or the load error text."""
+    if "rows" not in _PATTERN_CACHE:
+        try:
+            rows = _rootcheck().load_key_rulings()
+            _PATTERN_CACHE["rows"] = dict((r["key"], r) for r in rows.values() if r.get("bucket_per") and r.get("canonical"))
+        except Exception as exc:
+            _PATTERN_CACHE["rows"] = "%s: %s" % (type(exc).__name__, exc)
+    return _PATTERN_CACHE["rows"]
+
+
+def _pattern_root(rcm, value):
+    """The root-map key that holds `value` (the longest map key equal to it or a path prefix of it), or None."""
+    try:
+        keys = list((rcm.opal_naming_rootmap.load_map(rcm.DEFAULT_MAP).get("roots") or {}))
+    except Exception:
+        return None
+    hit = [k for k in keys if value == k or value.startswith(k + "/")]
+    return max(hit, key=len) if hit else None
+
+
+def _pattern_row(lit, rulings=None, place_fn=None, path="?"):
+    """The judge() result (verdict, canonical, why, counts-as) of a literal the first-segment classifier left untyped but which IS the key of a per-firm key ruling, or
+    None. place() decides: PATTERN prints (counts PASS: a code pattern is never refused, never silent); any other kind WARNs with
+    place()'s own text. With no root to ask, or the diff not in this checkout, the ruling itself is the answer (a per-firm row
+    is a PATTERN in decide())."""
+    rows = _per_firm_rulings() if rulings is None else rulings
+    if isinstance(rows, str):
+        return ("RAISE", "(rule or registry defect)", "the key rulings could not be read: %s" % rows, "WARN")
+    row = rows.get(lit.value)
+    if row is None:
+        return None
+    canon = row["canonical"]
+    res, root = None, None
+    try:
+        if place_fn is not None:
+            root, res = "-", place_fn(lit.value, "S3Key", "-")
+        elif _diff_repo() == REPO:
+            rcm = _rootcheck()
+            root = _pattern_root(rcm, lit.value)
+            if root:
+                res = rcm.place(lit.value, "S3Key", root, where="%s:%d" % (path, lit.line))
+    except Exception as exc:
+        return ("RAISE", canon, "place() could not answer for the per-firm key: %s: %s" % (type(exc).__name__, exc), "WARN")
+    if res is None:
+        return ("PATTERN", canon,
+                "a per-firm stored-file prefix (key ruling, bucket_from %s); no root to ask place(), so the ruling answers: the code fills {scope} per firm"
+                % row.get("bucket_from"), "PASS")
+    if res["kind"] == "PATTERN":
+        return ("PATTERN", canon, "place() in root %s: %s" % (root, res["detail"]), "PASS")
+    return (res["kind"], res.get("form") or canon,
+            "place() in root %s says %s, not PATTERN: %s: WARN" % (root, res["kind"], res["detail"]), "WARN")
+
+
 def judge(nm, path, lit, pre_text, waivers=None):
     """(line verdict, canonical, why, counts-as) for one literal, or None when it is not graded."""
     if _resolves_to_tracked(lit.value):
@@ -1827,7 +1884,10 @@ def judge(nm, path, lit, pre_text, waivers=None):
     # a name BUILT by name() carries its firm as the builder's short form: the builder is the permitted route, not a hand-kept carrier
     carr = None if lit.built else nm.carrier(lit.value)
     if typ is None and carr is None:
-        return None
+        # Row LGIC_ENFORCE-D1-W2-S152: classify() types a "/" string only by its first segment (a bucket, a tier, a
+        # registered system), so a per-firm stored-file prefix such as a code default is typed None and fell out here
+        # ungraded; the gate then read PASS 0 graded. The registry's per-firm key rulings are the other way to know it is a key.
+        return None if lit.built or lit.hint else _pattern_row(lit, path=path)
     new = pre_text is None or not _in_pre(lit, pre_text)
     carr_txt = ""
     if carr:
@@ -2555,6 +2615,32 @@ def built_self_test(nm):
     return ok
 
 
+def pattern_self_test():
+    """The PATTERN arm (row LGIC_ENFORCE-D1-W2-S152): a literal that is the key of a per-firm key ruling prints a PATTERN row that
+    passes (never silent, never '0 graded'); place() saying something else WARNs; a literal that is no ruling's key is left alone."""
+    key = "zz-sample/prefix"
+    rulings = {key: {"key": key, "bucket_per": "firm", "bucket_from": "ZZ_SAMPLE_MAP", "canonical": "zz/{scope}/platinum/sample/"}}
+
+    def ask(name, typ, root):
+        return {"kind": "PATTERN", "detail": "a code pattern, not a name"}
+
+    def other(name, typ, root):
+        return {"kind": "FIX", "detail": "zz/x/", "form": "zz/x/"}
+
+    got = _pattern_row(Lit(key, key, 3), rulings, ask)
+    nope = _pattern_row(Lit("zz-sample/other", "zz-sample/other", 3), rulings, ask)
+    warn = _pattern_row(Lit(key, key, 3), rulings, other)
+    arms = (("pattern-line", got is not None and got[0] == "PATTERN" and got[3] == "PASS"),
+            ("not-a-ruling-key", nope is None),
+            ("other-kind-warns", warn is not None and warn[0] == "FIX" and warn[3] == "WARN"),
+            ("summary-counts-it", decide_exit([(got[0], "f", 3, key, got[1], got[2], got[3])], False)[0] == "PASS"))
+    ok = True
+    for label, arm in arms:
+        ok = ok and arm
+        print("SELF-TEST arm pattern %s: %s" % (label, "ok" if arm else "FAIL"))
+    return ok
+
+
 def self_test():
     """--self-test: judge() on a NEW group-A name takes the fourth verdict and passes, and (the difference control) a NEW
     group-B name is still refused. Reads no diff, writes no log. Returns 0 when both arms hold."""
@@ -2568,6 +2654,7 @@ def self_test():
         print("SELF-TEST arm %s %s -> %s %s: %s" % (name, typ, got[0] if got else None, got[3] if got else None,
                                                     "ok" if arm else "FAIL"))
     ok = built_self_test(nm) and ok
+    ok = pattern_self_test() and ok
     ok = place_self_test() and ok
     ok = override_self_test() and ok
     print("NAMING-GATE-SELF-TEST: %s" % ("PASS" if ok else "FAIL"))

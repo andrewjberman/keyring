@@ -24,7 +24,7 @@ THE FILE: org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_I
   Today each row reads `N. `role` -- ADOPT owner=0.7.0_AE_CloudOps~Z reason=...` (your round-5 acceptance).
 
 DO:
-  (a) Write deliverables/0.7.0_AE_CloudOps~Z/round6/DEFER_ROWS_5_16.md: per row, the CTO's ruling quoted, what would
+  (a) Write deliverables/0.7.0_AE_CloudOps~IR/round6/DEFER_ROWS_5_16.md: per row, the CTO's ruling quoted, what would
       reopen it. Commit it under your author line. The owner field stays 0.7.0_AE_CloudOps~Z, which
       accepted ownership of both rows in round 5 (ACCEPTANCE_ROWS_TEN.md @36fae05ea5); this records the CTO's DEFER.
   (b) PREPARE, uncommitted in the shared tree, the two row first-lines changed from `-- ADOPT owner=` to
@@ -45,7 +45,7 @@ GOVERNANCE ONLY. Rows 5 and 16 only. Nothing is adopted, retired, deleted or app
 ## PATHS -- your write surface IS this list, and nothing else
 
 <paths>
-org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~Z/round6/
+org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round6/
 org/missions/D12/NFRA/NFRA_IAMROLES202609/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-w-4.record-the-two-defer-rows.md
 </paths>
@@ -58,7 +58,7 @@ instance (`to_id` NFRA_IAMROLES202609.TO-IAM-w-4) once the issuer's carrier has 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="IAM-w-4"><invocation>bash -c "grep -E '^(5|16)\. \`' org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md | grep -c -- '-- DEFER owner=0.7.0_AE_CloudOps~Z reason='"</invocation><expect>exactly 2 -- both rows read DEFER with the named owner and a reason</expect></criterion>
   <criterion id="AC2" cell_refs="IAM-w-4"><invocation>bash -c "F=org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md; echo rows=\$(git show HEAD:\$F | grep -cE '^[0-9]+\. \`[A-Za-z0-9._-]+\`') unowned=\$(git show HEAD:\$F | grep -E '^[0-9]+\. \`[A-Za-z0-9._-]+\`' | grep -c -v -E 'DECLARED|owner=(0\.7\.0_AE_CloudOps~Z|1\.0\.0_SA_CTO~Z) reason=')"</invocation><expect>exactly `rows=16 unowned=0`, read on the COMMITTED blob (HEAD), never the working tree</expect></criterion>
-  <criterion id="AC3" cell_refs="IAM-w-4"><invocation>bash -c "git log --format=%an -- org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~Z/round6/DEFER_ROWS_5_16.md | sort -u"</invocation><expect>exactly one line, 0.7.0_AE_CloudOps~IR -- the record of the DEFER is the executing lane's own document</expect></criterion>
+  <criterion id="AC3" cell_refs="IAM-w-4"><invocation>bash -c "git log --format=%an -- org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round6/DEFER_ROWS_5_16.md | sort -u"</invocation><expect>exactly one line, 0.7.0_AE_CloudOps~IR -- the record of the DEFER is the executing lane's own document</expect></criterion>
   <criterion id="AC4" cell_refs="IAM-w-4" judgment="true"/>
 </proof_of_spec>
 
@@ -69,7 +69,7 @@ Every invocation runs under `timeout 120`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the assignee ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>0.7.0_AE_CloudOps~IR</slot>
 <fabric>site-z</fabric>

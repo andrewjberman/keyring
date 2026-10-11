@@ -54,7 +54,18 @@ import subprocess
 import sys
 import tempfile
 
-TOOLS = os.path.dirname(os.path.abspath(__file__))
+# The scan runs under pythonw from a 10-minute Scheduled Task: it has no console, so every console child (git, aws) it
+# or a module it loads spawns would open a new visible window. Give every child CREATE_NO_WINDOW, process-wide.
+if sys.platform.startswith("win"):
+    _popen_init = subprocess.Popen.__init__
+
+    def _popen_no_window(self, *args, **kwargs):
+        kwargs["creationflags"] = kwargs.get("creationflags", 0) | 0x08000000
+        _popen_init(self, *args, **kwargs)
+
+    subprocess.Popen.__init__ = _popen_no_window
+
+TOOLS =os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(TOOLS)
 SCHEMA = "open-calls-scan/1"
 RENUDGE_SEC = 1800
@@ -331,7 +342,7 @@ def unblock_pass(device: str, dry: bool, now, live: dict, cto, mstr, prev: dict,
 # 1.0.0_SA_CTO~O ruling msg 32404 (Q1 = a, Q3 = a), R6_DECOMP_DRAFT.md @54c2fd91b6; taken by 4.0.0_SA_CRO (msg 107760).
 # The gateway reads S3 only, so the box publishes what it alone can read and applies what the page asks.
 
-OD_SCHEMA = "open-deploys/1"
+OD_SCHEMA = "open-deploys/2"   # /2: entries are read at each worktree's HEAD; disk-only files go to `untracked`
 REQ_SCHEMA = "open-calls-close-request/1"
 RES_SCHEMA = "open-calls-close-result/1"
 _REQ_ID = re.compile(r"^[A-Za-z0-9._-]{1,80}$")
@@ -350,23 +361,49 @@ def worktree_paths() -> list:
     return paths or [ROOT]
 
 
+OD_DIR = "org/critical_paths/.open_deploys"
+
+
+def _git_out(wt, *args):
+    """(rc, stdout) of git in worktree wt; rc -1 when git cannot run."""
+    try:
+        r = subprocess.run(["git", "-C", wt] + list(args), capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", timeout=30)
+        return r.returncode, r.stdout
+    except (OSError, subprocess.SubprocessError):
+        return -1, ""
+
+
 def open_deploys_doc(device: str, now, trees=None) -> dict:
-    """FWD-15's record: every open-deploy sentinel on disk in every worktree of this box (tracked or not), one entry per
-    slug, with the worktrees that hold it. An empty `entries` with worktrees_read > 0 is a measured none, never ABSENT."""
+    """FWD-15's record: every open-deploy sentinel COMMITTED at HEAD of every worktree of this box (CLAUDE.md section 5:
+    `git -C <wt> ls-tree -r --name-only HEAD org/critical_paths/.open_deploys/`), one entry per slug, with the worktrees
+    that hold it. A sentinel file on disk that HEAD does not track is listed under `untracked` (worktree, file) and is not an
+    open deploy: counting disk files inflated each Dell's figure about 4x (brief gpt-feedback-autonomy-solutions, item 5).
+    An empty `entries` with worktrees_read > 0 is a measured none, never ABSENT."""
     trees = worktree_paths() if trees is None else trees
-    by_slug, unreadable, read = {}, [], 0
+    by_slug, unreadable, untracked, read = {}, [], [], 0
     for wt in trees:
-        d = os.path.join(wt, "org", "critical_paths", ".open_deploys")
-        if not os.path.isdir(d):
+        rc, out = _git_out(wt, "ls-tree", "--name-only", "HEAD", OD_DIR + "/")
+        if rc != 0:
+            unreadable.append({"worktree": wt, "file": OD_DIR, "error": "git ls-tree rc=%d" % rc})
             continue
         read += 1
-        for name in sorted(os.listdir(d)):
-            if not name.endswith(".json") or name.startswith("."):
+        names = sorted(p.rsplit("/", 1)[-1] for p in out.splitlines() if p.endswith(".json"))
+        d = os.path.join(wt, *OD_DIR.split("/"))
+        if os.path.isdir(d):
+            for name in sorted(os.listdir(d)):
+                if name.endswith(".json") and not name.startswith(".") and name not in names:
+                    untracked.append({"worktree": wt, "file": name})
+        for name in names:
+            if name.startswith("."):
                 continue
+            rc, blob = _git_out(wt, "show", "HEAD:%s/%s" % (OD_DIR, name))
             try:
-                s = json.load(open(os.path.join(d, name), encoding="utf-8"))
-            except (OSError, ValueError) as exc:
-                unreadable.append({"worktree": wt, "file": name, "error": type(exc).__name__})
+                if rc != 0:
+                    raise ValueError("git show rc=%d" % rc)
+                s = json.loads(blob)
+            except ValueError as exc:
+                unreadable.append({"worktree": wt, "file": name, "error": str(exc)[:80]})
                 continue
             slug = str(s.get("slug") or name[:-5])
             e = by_slug.get(slug)
@@ -379,7 +416,8 @@ def open_deploys_doc(device: str, now, trees=None) -> dict:
                 by_slug[slug] = e
             e["worktrees"].append(wt)
     return {"schema": OD_SCHEMA, "device": device, "published_at": stamp(now), "worktrees_total": len(trees),
-            "worktrees_read": read, "entries": [by_slug[k] for k in sorted(by_slug)], "unreadable": unreadable}
+            "worktrees_read": read, "entries": [by_slug[k] for k in sorted(by_slug)], "unreadable": unreadable,
+            "untracked": untracked}
 
 
 def od_key(device: str) -> str:
@@ -684,20 +722,33 @@ def selftest() -> int:
         rec("the-pass-delivers-the-cro-step-once-then-holds", "unblock=1/1" in line and "unblock=0/1" in line2, line + " || " + line2)
         # FWD-15: open_deploys.json -- every worktree, one entry per slug, a bad file named, an empty tree a measured none
         wt1, wt2, wt3 = (os.path.join(base, w) for w in ("wt1", "wt2", "wt3"))
-        for w in (wt1, wt2):
-            os.makedirs(os.path.join(w, "org", "critical_paths", ".open_deploys"))
-        os.makedirs(os.path.join(wt3, "org", "critical_paths", ".open_deploys"))
         sent_ = {"slug": "dep-a", "status": "OPEN", "author": "x", "legs": [{"id": "A1", "kind": "lambda", "target": "fn-a"}]}
-        for w in (wt1, wt2):
-            json.dump(sent_, open(os.path.join(w, "org", "critical_paths", ".open_deploys", "dep-a.json"), "w"))
-        json.dump(dict(sent_, slug="dep-b"), open(os.path.join(wt2, "org", "critical_paths", ".open_deploys", "dep-b.json"), "w"))
-        open(os.path.join(wt1, "org", "critical_paths", ".open_deploys", "bad.json"), "w").write("{not json")
+
+        def tree(w, files, extra_untracked=()):
+            d = os.path.join(w, "org", "critical_paths", ".open_deploys")
+            os.makedirs(d)
+            for name, body in files:
+                open(os.path.join(d, name), "w").write(body)
+            open(os.path.join(w, "README"), "w").write("x\n")
+            for args in (["init", "-q"], ["add", "-A"],
+                         ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "t"]):
+                subprocess.run(["git", "-C", w] + args, capture_output=True, timeout=30)
+            for name in extra_untracked:
+                open(os.path.join(d, name), "w").write(json.dumps(dict(sent_, slug=name[:-5])))
+        tree(wt1, [("dep-a.json", json.dumps(sent_)), ("bad.json", "{not json")], extra_untracked=("left-on-disk.json",))
+        tree(wt2, [("dep-a.json", json.dumps(sent_)), ("dep-b.json", json.dumps(dict(sent_, slug="dep-b")))])
+        tree(wt3, [])
         od = open_deploys_doc(dev, now, trees=[wt1, wt2])
-        rec("open-deploys-unions-worktrees-one-entry-per-slug",
+        rec("open-deploys-reads-head-unions-worktrees-one-entry-per-slug",
             [e["slug"] for e in od["entries"]] == ["dep-a", "dep-b"] and len(od["entries"][0]["worktrees"]) == 2
             and od["entries"][0]["legs"][0]["target"] == "fn-a" and len(od["unreadable"]) == 1, od)
+        rec("a-sentinel-on-disk-head-does-not-track-is-untracked-not-open",
+            [u["file"] for u in od["untracked"]] == ["left-on-disk.json"]
+            and "left-on-disk" not in [e["slug"] for e in od["entries"]], od["untracked"])
         od0 = open_deploys_doc(dev, now, trees=[wt3])
         rec("an-empty-sentinel-dir-is-a-measured-none", od0["entries"] == [] and od0["worktrees_read"] == 1, od0)
+        odx = open_deploys_doc(dev, now, trees=[os.path.join(base, "not-a-repo")])
+        rec("a-tree-git-cannot-read-is-named-not-read-as-none", odx["worktrees_read"] == 0 and len(odx["unreadable"]) == 1, odx)
         # FWD-17: close requests -- applied once through the writer; a refusal and a bad request recorded, never retried
         calls = []
 

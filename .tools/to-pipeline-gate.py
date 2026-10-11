@@ -1104,6 +1104,49 @@ def _self_test():
          lambda: _is_terminal_flip(None, "<status>pending</status>\n<status>complete</status>\n") == "complete"),
         ("last-tag: a re-edit that keeps the same tags is still graded (only a REMOVED duplicate is exempt)",
          lambda: _is_terminal_flip("<status>complete</status>\n", "<status>complete</status>\nmore\n") == "complete"),
+        ("redaction: an account number -> acct#<8hex> on a line is a pure redaction",
+         lambda: _is_pure_redaction("<status>complete</status>\nacct 12345678 bal 10\n",
+                                    "<status>complete</status>\nacct acct#0a1b2c3d bal 10\n")),
+        ("redaction: a removed figure and a deleted line are a pure redaction",
+         lambda: _is_pure_redaction("<status>complete</status>\nbalance 1,234.56 ok\nrow 998877 x\n",
+                                    "<status>complete</status>\nbalance ok\n")),
+        ("redaction: an id -> [redacted] is a pure redaction",
+         lambda: _is_pure_redaction("<status>complete</status>\nid 55554444\n", "<status>complete</status>\nid [redacted]\n")),
+        ("redaction: an id swap beside an untouched date and ratio is a pure redaction (dell2 msg 3813)",
+         lambda: _is_pure_redaction("<status>complete</status>\nacct 12345678 ratio 2.43x on 2026-04-07 row W10-S4\n",
+                                    "<status>complete</status>\nacct acct#0a1b2c3d ratio 2.43x on 2026-04-07 row W10-S4\n")),
+        ("redaction: an id inside markdown bold with a possessive is a pure redaction (dell2 msg 3813)",
+         lambda: _is_pure_redaction("<status>complete</status>\n**12345678**'s value 2.47x\n",
+                                    "<status>complete</status>\n**acct#0a1b2c3d**'s value 2.47x\n")),
+        ("redaction: a backtick-wrapped id -> backtick-wrapped token is a pure redaction (dell2 msg 3820)",
+         lambda: _is_pure_redaction("<status>complete</status>\nsee `12345678` here\n",
+                                    "<status>complete</status>\nsee `acct#0a1b2c3d` here\n")),
+        ("redaction: an id inside a path (FLOW_RESIDUAL_<id>_R2.json) -> token is a pure redaction (dell2 msg 3820)",
+         lambda: _is_pure_redaction("<status>complete</status>\nfile FLOW_RESIDUAL_12345678_R2.json on 2026-10-09\n",
+                                    "<status>complete</status>\nfile FLOW_RESIDUAL_acct#0a1b2c3d_R2.json on 2026-10-09\n")),
+        ("rename: an account-number filename -> acct#<8hex> filename is a redaction rename (dell2 msg 3850)",
+         lambda: _redaction_rename_ok("org/x/task-orders/IRPT_DASHBD.TO-DB-b-6.12345678-tieout.md",
+                                      "org/x/task-orders/IRPT_DASHBD.TO-DB-b-6.acct#0a1b2c3d-tieout.md")),
+        ("rename: a rename that changes other text is NOT a redaction rename",
+         lambda: not _redaction_rename_ok("org/x/task-orders/IRPT_DASHBD.TO-DB-b-6.12345678-tieout.md",
+                                          "org/x/task-orders/IRPT_DASHBD.TO-DB-b-7.acct#0a1b2c3d-tieout.md")),
+        ("rename: a rename with no acct# token is NOT a redaction rename",
+         lambda: not _redaction_rename_ok("org/x/task-orders/A.TO-1.12345678.md", "org/x/task-orders/A.TO-1.redacted.md")),
+        ("redaction: a marker standing where a NON-digit word stood is NOT a redaction",
+         lambda: not _is_pure_redaction("<status>complete</status>\nresult PASS\n",
+                                        "<status>complete</status>\nresult acct#0a1b2c3d\n")),
+        ("redaction: an ADDED line is NOT a redaction (graded as a flip)",
+         lambda: not _is_pure_redaction("<status>complete</status>\nacct 12345678\n",
+                                        "<status>complete</status>\nacct acct#0a1b2c3d\nnew claim\n")),
+        ("redaction: a changed word is NOT a redaction",
+         lambda: not _is_pure_redaction("<status>complete</status>\nresult PASS 12345678\n",
+                                        "<status>complete</status>\nresult FAIL acct#0a1b2c3d\n")),
+        ("redaction: a dropped word with no digit is NOT a redaction",
+         lambda: not _is_pure_redaction("<status>complete</status>\nnot met 12345678\n",
+                                        "<status>complete</status>\nmet acct#0a1b2c3d\n")),
+        ("redaction: pending -> complete with a redaction is NOT a pure redaction (the status line changed)",
+         lambda: not _is_pure_redaction("<status>pending</status>\nacct 12345678\n",
+                                        "<status>complete</status>\nacct acct#0a1b2c3d\n")),
         ("crlf: a CRLF order and its LF twin read the same (placeholders element matches)",
          lambda: _lf("<placeholders>NONE</placeholders>\r\n<status>pending</status>\r\n") == "<placeholders>NONE</placeholders>\n<status>pending</status>\n"
          and PLACEHOLDERS_TAG_RE.search(_lf("<placeholders>NONE</placeholders>\r\n")) is not None),
@@ -2190,9 +2233,45 @@ def _newly_added(root):
             continue
         code = parts[0].strip()
         path = parts[-1].strip()
+        if code.startswith("R") and len(parts) == 3 and _is_redaction_rename(root, code, parts[1].strip(), path):
+            print("NOTE: %s: a pure redaction RENAME of a terminal order (%s, account id -> acct#<8hex> in the name only); "
+                  "not an issuance." % (path, parts[1].strip()), file=sys.stderr)
+            continue
         if code.startswith("A") or code.startswith("R"):
             added.add(path)
     return added
+
+
+def _redaction_rename_ok(old_path, new_path):
+    """PURE: the new path differs from the old ONLY by digit-bearing tokens becoming acct#<8hex>, at least one of them."""
+    if old_path == new_path or not _REDACT_TOKEN_RE.search(new_path):
+        return False
+    parts = _REDACT_ANY_MARK_RE.split(new_path)
+    return bool(re.fullmatch(_REDACT_ID_PAT.join(re.escape(p) for p in parts), old_path))
+
+
+def _is_redaction_rename(root, code, old_path, new_path):
+    """dell2 1.0.0_SA_CTO~DELL2 msg 3850 via 0.0.0_AB_MSTR 108074 (containment ruling @0e8209c33c): a rename of a TERMINAL order whose
+    content is byte-identical (git similarity R100) and whose name changes only by an account id -> acct#<8hex> is not an issuance."""
+    if code != "R100" or not _redaction_rename_ok(old_path, new_path):
+        return False
+    head = _head_blob(root, old_path)
+    return head is not None and _last_status(head)[0] in DONE_WORDS
+
+
+def _staged_redaction_renames(root):
+    """{new path} of pure redaction renames in the index (empty on any read failure: the ordinary limbs then grade it)."""
+    try:
+        out = subprocess.run(["git", "diff", "--cached", "--name-status", "-M"], cwd=root, capture_output=True, text=True,
+                             encoding="utf-8", errors="replace", timeout=30)
+    except Exception:  # noqa: BLE001
+        return set()
+    found = set()
+    for line in (out.stdout or "").splitlines():
+        parts = line.split("\t")
+        if len(parts) == 3 and _is_redaction_rename(root, parts[0].strip(), parts[1].strip(), parts[2].strip()):
+            found.add(parts[2].strip())
+    return found
 
 
 def _check_preflight(body):
@@ -2969,6 +3048,72 @@ def _is_terminal_flip(head_text, staged_text):
     return word
 
 
+_REDACT_ID_RE = re.compile(r"(?<![A-Za-z0-9-])[A-Za-z0-9-]*\d[A-Za-z0-9-]*(?![A-Za-z0-9-])")
+_REDACT_TOKEN_RE = re.compile(r"acct#[0-9a-f]{8}")
+_REDACT_MARK_RE = re.compile(r"\[redacted\]", re.IGNORECASE)
+_REDACT_PH = "<<ID>>"
+
+
+_REDACT_STRIP = ",;:.()[]'\"*`"
+_REDACT_ANY_MARK_RE = re.compile(r"acct#[0-9a-f]{8}|\[redacted\]", re.IGNORECASE)
+_REDACT_ID_PAT = r"[A-Za-z0-9-]*\d[A-Za-z0-9-]*"
+
+
+def _redact_marker(tok):
+    """True when a staged token (punctuation, markdown and a trailing 's stripped) is a redaction marker."""
+    t = tok[:-2] if tok.endswith("'s") else tok
+    t = t.strip(_REDACT_STRIP)
+    return bool(_REDACT_TOKEN_RE.fullmatch(t)) or t.lower() == "redacted"
+
+
+def _redaction_line_ok(head_line, staged_line):
+    """True when staged_line is head_line with digit-bearing tokens replaced by acct#<8hex> or [redacted], or removed. PURE.
+
+    Marker-anchored (dell2 2.0.0_SA_COO~C2 msg 3813 via 0.0.0_AB_MSTR 108061): each marker in the staged line stands where ONE
+    digit-bearing token stood in HEAD, and every other character must match exactly -- so a date or a ratio left untouched beside a
+    swapped id still compares equal, and markdown or a possessive around the marker is literal text on both sides."""
+    if head_line == staged_line:
+        return True
+    parts = _REDACT_ANY_MARK_RE.split(staged_line)
+    if len(parts) > 1 and re.fullmatch(_REDACT_ID_PAT.join(re.escape(p) for p in parts), head_line):
+        return True
+    # Figures removed outright: every head token is kept, replaced by a marker, or (only if it carries a digit) dropped.
+    ht, sti = head_line.split(), staged_line.split()
+    j = 0
+    for tok in ht:
+        has_digit = any(c.isdigit() for c in tok)
+        if j < len(sti) and (sti[j] == tok or (has_digit and _redact_marker(sti[j]))):
+            j += 1
+        elif has_digit:
+            continue
+        else:
+            return False
+    return j == len(sti)
+
+
+def _is_pure_redaction(head_text, staged_text):
+    """True when staged differs from HEAD ONLY by redaction: id tokens -> acct#<8hex> or [redacted], digit figures removed, or whole
+    lines deleted. No line added, no other word changed. PURE. dell2 containment ruling @0e8209c33c; 1.0.0_SA_CTO path (b), 2026-10-09."""
+    import difflib
+    if head_text is None or staged_text is None or head_text == staged_text:
+        return False
+    a, b = head_text.split("\n"), staged_text.split("\n")
+    for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes():
+        if op in ("equal", "delete"):
+            continue
+        if op == "insert":
+            return False
+        # replace: each staged line must be a redaction of a DISTINCT head line, in order; unmatched head lines read as deleted.
+        i = i1
+        for j in range(j1, j2):
+            while i < i2 and not _redaction_line_ok(a[i], b[j]):
+                i += 1
+            if i >= i2:
+                return False
+            i += 1
+    return True
+
+
 def _lf(text):
     """Normalise line endings on read (CRLF and a lone CR -> LF); the element regexes end a tab-or-space star dollar and cannot match before a CR."""
     return text.replace("\r\n", "\n").replace("\r", "\n")
@@ -3061,9 +3206,21 @@ def check_complete_flip(root, rel):
     staged = _staged_blob(root, rel)
     if staged is None:
         return []  # not staged (or unreadable as a blob) -- other arms own that
-    flip_word = _is_terminal_flip(_head_blob(root, rel), staged)
+    if rel in _staged_redaction_renames(root):
+        print("NOTE: %s: a pure redaction RENAME of a terminal order (byte-identical content); not re-graded as a flip." % rel,
+              file=sys.stderr)
+        return []
+    head = _head_blob(root, rel)
+    flip_word = _is_terminal_flip(head, staged)
     if flip_word is None:
         return []  # not a flip to a terminal state (or only a stale earlier duplicate removed; ruling msg 107528)
+    # PATH (b), 1.0.0_SA_CTO 2026-10-09 (dell2 containment ruling @0e8209c33c; relay msg 108054): an order ALREADY terminal at HEAD
+    # whose change is ONLY a redaction of client account data is not a new flip. Its instance was graded at the original flip, and the
+    # containment moved its artifacts out of the repo, so re-grading it would refuse the very redaction that removes the data.
+    if head is not None and _last_status(head)[0] == flip_word and _is_pure_redaction(head, staged):
+        print("NOTE: %s: already '%s' at HEAD and the change is a pure redaction (id -> acct#<8hex>/[redacted], figures or lines "
+              "removed); not re-graded as a flip." % (rel, flip_word), file=sys.stderr)
+        return []
 
     import json
     code, rel_json, err = _project_row_rel(root, rel)

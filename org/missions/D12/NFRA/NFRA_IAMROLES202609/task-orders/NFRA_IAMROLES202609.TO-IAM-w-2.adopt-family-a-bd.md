@@ -31,8 +31,15 @@ PHASE A -- no apply:
   1. Read each role live (get-role, list-role-policies, list-attached-role-policies, list-role-tags) and write the
      declaration as `infra/aws/terraform/bd-pipeline/zz_adopt_family_a.tf.proposed`: one aws_iam_role + one import block per role, labels namespaced to the role name
      (round 2's candidate infra/aws/terraform/data-refresh/zz_adoption_candidate.tf.proposed is the shape).
+  1a. (amendment A6-r6, rows Z-S29 / NFRA_MCPINDEX-Z-S96 @c5e22ccb72) Before step 2, change the `if` clause of
+     `local.bd_served_vintage_keys` in infra/aws/terraform/bd-pipeline/bd-served-vintage-alarm.tf to exactly:
+       if try(e.freshness_basis, "") == "trading-day-frontier" && can(e.as_of_field) && can(e.frontier_page_trading_days)
+     Change nothing else in that file and nothing in the YAML. Commit it ALONE under your own author line, then run
+     org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round8/checks/f1r.AC1.sh and f1r.AC2.sh (both
+     FAIL at HEAD before the edit) and record both results in the survey. Then re-run step 2 and replace the BLOCKED
+     PLAN line with the real one.
   2. In YOUR OWN worktree, copy each file to a `.tf` name and run `safe-apply`'s PLAN only (no apply). Record in
-     org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~Z/round6/PLAN_SURVEY_family_a.md, one line each per module, exactly:
+     org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round6/PLAN_SURVEY_family_a.md, one line each per module, exactly:
        PLAN: <module>: <the plan summary line, verbatim>
        DEFAULT_TAGS: <module>: <the provider default_tags keys>
        AUTH_KEY_COLLISION: <module>: <safe-apply's KEY COLLISION line verbatim, or "none">
@@ -44,16 +51,28 @@ PHASE A -- no apply:
 PHASE B -- only on the issuer's GO, after both halves are SIGNED:
   4. Open a deploy-ledger entry named `iamroles-r6-family-a` (one per module) in org/critical_paths/change_management/
      with its .open_deploys/ marker.
-  5. Rename each `.tf.proposed` to `.tf` and `safe-apply`. Apply only a plan that equals the survey's (N to import,
-     0 to add, 0 to destroy, plus only the tag updates the pair names). Anything else: stop, file a row, do not apply.
-  6. Run the plan again after the apply and record in org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~Z/round6/POST_APPLY_family_a.md, one line per module, exactly:
+  5. Rename each `.tf.proposed` to `.tf` and COMMIT the rename on your worktree branch BEFORE any import (amendment
+     A4-r6, row Z-S27: an import that lands before its declaration is committed leaves a DESTROY planned in the shared
+     tree). That commit carries ONLY the renamed `.tf` and the placement override's audit row. Its message file carries
+     `# naming-place-override: <role name(s), live CreateDate, row Z-S25>` (row Z-S25). Take NO author override:
+     the audit row's path is lane ANY @b7c27ef5b0 (amendment A5-r6, row Z-S26 closed). An adopted role is
+     pre-existing and keeps its live name: CLAUDE.md Rule 30's existing-pipeline non-application. The ledger, proof
+     and POST_APPLY files land in separate commits without the placement override. Then `safe-apply` with `-target=` on the adopted aws_iam_role resource(s)
+     ONLY (amendment A2-r6, row Z-S21: the module carries pre-existing Lambda drift an unscoped apply would deploy),
+     and drain the branch into box/sitez in the same session as the apply. After the drain, run the untargeted module
+     plan in the shared tree and record that it reads 0 to destroy.
+     Apply only a targeted plan that equals the pair's: N to import, 0 to add, 0 to destroy, and only the role's
+     tags_all update the pair names. Anything else: stop, file a row, do not apply. AC2's POST-APPLY-PLAN line is
+     the TARGETED re-plan; record the untargeted module plan beside it, so the pre-existing drift is visible.
+  6. Run the plan again after the apply and record in org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round6/POST_APPLY_family_a.md, one line per module, exactly:
        POST-APPLY-PLAN: <module>: 0 to add, 0 to change, 0 to destroy
      (or the real line if it differs, which is a finding). Then close each ledger entry.
 ```
 
 ## DEPENDENCIES
 
-See DECOMP_R6 section 4. PHASE B waits on both never-widen halves.
+See DECOMP_R6 section 4 (amendment A3-r6): PHASE A runs now. PHASE B waits on IAM-w-1's PHASE B landing AND on this
+order's own two never-widen halves.
 
 ## BOUNDS
 
@@ -69,7 +88,8 @@ G-21: no alert, monitor or schedule.  G-25: no Access Analyzer.
 <paths>
 infra/aws/terraform/bd-pipeline/zz_adopt_family_a.tf.proposed
 infra/aws/terraform/bd-pipeline/zz_adopt_family_a.tf
-org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~Z/round6/
+infra/aws/terraform/bd-pipeline/bd-served-vintage-alarm.tf
+org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round6/
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
 org/missions/D12/NFRA/NFRA_IAMROLES202609/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -84,7 +104,7 @@ directory (`to_id` NFRA_IAMROLES202609.TO-IAM-w-2).
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="IAM-w-2"><invocation>grep -c -E '^[[:space:]]*(inline_policy|managed_policy_arns)' infra/aws/terraform/bd-pipeline/zz_adopt_family_a.tf</invocation><expect>exactly `0` -- the declaration exists under its .tf name and sets neither inline_policy nor managed_policy_arns; a "No such file" error means PHASE B has not landed</expect></criterion>
-  <criterion id="AC2" cell_refs="IAM-w-2"><invocation>grep -c -E '^POST-APPLY-PLAN: .+: 0 to add, 0 to change, 0 to destroy$' org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~Z/round6/POST_APPLY_family_a.md</invocation><expect>exactly 1 -- each module plans clean after its apply, so the declaration matches live; fewer is a finding recorded in that file</expect></criterion>
+  <criterion id="AC2" cell_refs="IAM-w-2"><invocation>grep -c -E '^POST-APPLY-PLAN: .+: 0 to add, 0 to change, 0 to destroy$' org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round6/POST_APPLY_family_a.md</invocation><expect>exactly 1 -- each module plans clean after its apply, so the declaration matches live; fewer is a finding recorded in that file</expect></criterion>
   <criterion id="AC3" cell_refs="IAM-w-2"><invocation>bash -c "echo open=\$(ls -a org/critical_paths/.open_deploys/ | grep -c 'iamroles-r6-family-a') closed=\$(ls org/critical_paths/change_management/ | grep -c 'iamroles-r6-family-a')"</invocation><expect>`open=0` and `closed=` 1 or greater -- each module's ledger entry opened and closed</expect></criterion>
   <criterion id="AC4" cell_refs="IAM-w-2" judgment="true"/>
 </proof_of_spec>
@@ -96,7 +116,7 @@ Every invocation runs under `timeout 120`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the assignee ===================== -->
 
-<status>staged</status>
+<status>pending</status>
 <round>6</round>
 <slot>0.7.0_AE_CloudOps~IR</slot>
 <fabric>site-z</fabric>

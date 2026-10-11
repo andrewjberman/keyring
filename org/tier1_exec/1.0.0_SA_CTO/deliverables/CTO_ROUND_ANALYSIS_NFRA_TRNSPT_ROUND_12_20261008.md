@@ -364,3 +364,53 @@ closed, **both conditions of ADDENDUM 8.1's reader gate now hold.**
   is never inferred. If no analyst principal is named today, the role is built with no trust and graded once Andrew names one.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13 (2026-10-09 ~17:3xZ) -- round 21 CLOSED (`~T2` msg 3792, `R21_CLOSE.md` @bbaa367ce5): FWD-1/2/3 graded
+
+**Evidence:**
+- The 16:00Z SCHEDULED fire, with no ad-hoc step, landed 1 `monday_meeting` from bronze to silver: 436 rows, 98 held out, residual re-wipe 0, planted control
+  discriminating (`R21_FIRST_SCHEDULED_LANDING.json` @7cdd125f18).
+- The gateway admits 3 of 4 meeting types. The research meeting answers 502, pending its organizer's grant.
+- The silver reader is live (proof @f8a19f80e4). The gateway's key-write is live (ka21, 16:44:04Z).
+
+**Grades (PRD `NFRA_TRNSPT_PRD.md`:27-40):**
+- **FWD-1: mechanism EXERCISED, ACCEPT owed, so NOT REALIZED yet.** A real meeting went from end to silver with nobody running a step. The ACCEPT is "Andrew reads the
+  Monday meeting in the database the same day". The natural instance is Monday 2026-10-12's meeting through the live silver reader. That read is the same act FWD-5
+  grades on, so **one read by Andrew closes both** (act list).
+- **FWD-2: NOT REALIZED.** 1 of 4 meeting types has arrived unaided. Two more are admitted and owed by their next occurrences; they are read at the round that sees
+  them land. **The research meeting is blocked on its organizer grant**, which is Andrew's act (act list). FWD-2 cannot realize without it, because the endpoint names
+  the Research Meeting explicitly.
+- **FWD-3: NOT REALIZED.** Two parts: Andrew names one past meeting still held by Microsoft and finds it (his act); and "no meeting fetchable on 29 September is
+  later found missing".
+  - For the second part, `~T2`'s next issuance carries ONE LOCAL cell: list every meeting the gateway reports as fetchable on 2026-09-29, printed with that
+    denominator, against the silver landings, with each missing one named and its reason.
+- **FWD-6:** PARKED on site Z's OG-ab-2. **FWD-9:** t1 applying. **FWD-8:** the admitted read is at site Z, and the refused half is measured on dell2.
+
+**Round 22 enrichment list:** (1) the FWD-3 fetchable-vs-landed census; (2) each new meeting type's first landing read as it occurs; (3) FWD-9's grade on t1's
+landing.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13.1 (~17:5xZ, `~T2` msg 3832, row D2-S15 BLOCKING): FWD-3 census -- 4 fetchable Monday meetings never landed
+
+**Measured** (`R22_CENSUS_0929.json` @ac982db915): 34 meetings fetchable at 2026-09-29, 29 landed. Missing:
+- the research meeting (organizer grant, Andrew's act);
+- 4 `monday_meeting` occurrences (04-10, 04-13, 05-04, 06-01): 0 in bronze or silver, and no date shift.
+
+**RULING: root cause FIRST, then recovery through the SAME pull path. Two cells in one issuance, in order.**
+1. **The root-cause cell (LOCAL, read-only):** why did the scheduled pull skip these 4? Candidates are the lookback window, the occurrence enumeration, the
+   recurring-series expansion, or a filter. The cell names the code line and shows the skip on a replay of those 4 ids.
+   - If the scheduled path would skip such a meeting again, its fix ships under its own pair BEFORE the recovery. Otherwise the recovery only papers over the next
+     miss.
+2. **The recovery landing:** the 4 named meeting ids exactly, through the scheduled pull's own code path, invoked once for those ids. That is a backfill of named
+   items, not a second pipeline and not a standing comparator.
+   - It runs under ONE pair.
+   - Before-read: each of the 4 is still held by Microsoft (one Graph metadata read each).
+   - The same wipe and hold-out rules as the scheduled landing apply, with the residual re-wipe at 0.
+   - Rollback: the landed objects are removed, which is an S3 delete and therefore Andrew's act.
+3. **A meeting no longer held by Microsoft is LOST, not recovered.** FWD-3's clause "no meeting fetchable on 29 September is later found missing" then reads FAILED for
+   it, stated with its date. The endpoint is not reworded to fit.
+
+D2-S15 stays BLOCKING until the root cause is ruled and the recovery read lands.
+
+-- 1.0.0_SA_CTO~DELL2

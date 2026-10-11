@@ -89,7 +89,7 @@ The split it reports:
 
 **Measured:**
 - `test_cotbkf_no_account_ids.py`:20-23 is three regexes, each needing a letter at a fixed offset.
-- `D49151054` (letter + 8 digits) and `00074413503` (11 digits) match none of them, and both are client accounts.
+- `acct#df101fce` (letter + 8 digits) and `acct#21a12aa6` (11 digits) match none of them, and both are client accounts.
 - Cleartext survived inside a file the sweep rewrote, so "442 files, 0 hits" was clean against three regexes, not against client accounts. This seat's own COTBKF
   analysis carried one such id and was redacted @c68f765ef8.
 

@@ -11,6 +11,7 @@
 
 Prints <TOKEN>-OK or <TOKEN>-FAIL <reason> and exits 0 / 1. Run from the repo root (or the worker's worktree root).
 """
+import json
 import re
 import subprocess
 import sys
@@ -61,12 +62,28 @@ def _build_only():
     return (r.returncode == 0 and bool(line) and missing == 0), (line or "rc=%d file-not-found=%d" % (r.returncode, missing))
 
 
-TOKENS = {"t13b": "AR1-T13B", "t13lg": "AR1-T13LG", "t11": "AR1-T11", "t12": "AR1-T12", "t13": "AR1-T13"}
+def _policy_pin():
+    """t13p: the draft store's staged reporting_policies.json is pinned at a commit where irpt-anlreq-x10-v1 is ACTIVE with
+    enforcement_ref 81c60ba22c..., and the member's sha256 equals that blob's (AMENDMENT 9)."""
+    import hashlib
+    e = json.loads(Path("infra/aws/lambda/ci/lambda-source-map.json").read_text(encoding="utf-8"))["functions"]["irpt-commentary-draft-store-lambda"]
+    m = [s for s in e.get("staged_from", []) if s.get("repo_path") == "infra/logic/registry/reporting_policies.json"]
+    if len(m) != 1:
+        return False, "staged_from members for reporting_policies.json: %d" % len(m)
+    blob = subprocess.run(["git", "show", "%s:%s" % (m[0]["pin"], m[0]["repo_path"])], capture_output=True).stdout
+    sha_ok = hashlib.sha256(blob).hexdigest() == m[0].get("sha256")
+    rows = json.loads(blob.decode("utf-8"))
+    flat = json.dumps(rows)
+    active = '"irpt-anlreq-x10-v1"' in flat and "81c60ba22cade51a05af42f15f44a98356b16ac1" in flat and "PENDING_ENFORCEMENT" not in flat.split("irpt-anlreq-x10-v1", 1)[1][:600]
+    return (sha_ok and active), "pin=%s sha_ok=%s row_active=%s" % (m[0]["pin"][:10], sha_ok, active)
+
+
+TOKENS = {"t13p": "AR1-T13P", "t13b": "AR1-T13B", "t13lg": "AR1-T13LG", "t11": "AR1-T11", "t12": "AR1-T12", "t13": "AR1-T13"}
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2 or (sys.argv[1] not in SPEC and sys.argv[1] != "t13b"):
-        print("usage: ar1_t2_checks.py {%s|t13b}" % "|".join(SPEC))
+    if len(sys.argv) != 2 or (sys.argv[1] not in SPEC and sys.argv[1] not in ("t13b", "t13p")):
+        print("usage: ar1_t2_checks.py {%s|t13b|t13p}" % "|".join(SPEC))
         sys.exit(2)
-    ok, why = _build_only() if sys.argv[1] == "t13b" else _run(sys.argv[1])
+    ok, why = {"t13b": _build_only, "t13p": _policy_pin}.get(sys.argv[1], lambda: _run(sys.argv[1]))()
     print("%s-%s %s" % (TOKENS[sys.argv[1]], "OK" if ok else "FAIL", why))
     sys.exit(0 if ok else 1)

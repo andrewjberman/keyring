@@ -1,0 +1,169 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "AMGT_CORPUS",
+ "round": 43,
+ "graded_by": "1.0.0_SA_CTO~DELL1",
+ "graded_utc": "2026-10-09T20:50Z",
+ "report_ref": "org/missions/D5/AMGT/AMGT_CORPUS/ledger/COMPLETION_REPORT.round43.json@40e68296e8",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/FWD_EVIDENCE_ROUND13.json@d1c92f63c1",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (ROUND_ANALYSIS.round5.md:116). Round-13 evidence: objects 356, files 356, match 356, mismatch 0. Not re-run at the current 97 folders; round 44 re-runs it as regression."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-3.typed-per-report-record-and-period.proof_of_spec.json@3522f1dacd",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (round5.md:116); round 6 resolved its residual (round6.md:107)."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-4.backlog-folder-census-and-resolution.proof_of_spec.json@b5b2c17763",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (round5.md:116), met again at round 13."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-r-1.schedule-induction-run.proof_of_spec.json@dba1e7f6bb",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 14 (ROUND_ANALYSIS.round14.md:52)."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-6.per-name-continuation-artifact.proof_of_spec.json@1930a67cff",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (round5.md:116), met again at round 13."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-e-3.sector-template-write-once.proof_of_spec.json@317db60775",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (round5.md:116)."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-c-9.generic-model-typecast.proof_of_spec.json@0f7cb16163",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (round5.md:116)."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-2.continuation-pdf-pillar-branch.proof_of_spec.json@c9a219f98c",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (round5.md:116)."
+  },
+  {
+   "fwd_id": "FWD-9",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-p-1.fwd9-inside-its-bound.proof_of_spec.json@5c2951a388",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED inside its bound at round 14 (round14.md:54). The Z-S90 census break was repaired at round 41: tristate library 0, unresolved 0 (ROUND41_DRAIN_END_PACKET.md:14)."
+  },
+  {
+   "fwd_id": "FWD-10",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk.proof_of_spec.json@005a5c7917",
+   "state_observed": "APPLIED",
+   "note": "Last outcome grade NOT REALIZED (round39.md:24). Since then only the cell criterion ap-2 AC2 is MET (round40.md:11), and the CVO did not see the render. PRD CORRECTION PRD:356-378 still holds the render half on AMGT_RESAPP FWD-23. The outcome-level read is owed at round 44."
+  },
+  {
+   "fwd_id": "FWD-11",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk.proof_of_spec.json@005a5c7917",
+   "state_observed": "APPLIED",
+   "note": "NOT REALIZED (ADJUDICATION_v45.md:50). Round-39 ruling 5 requires a name-by-name officer comparison against the filing roster. The SAP GY / BABA US walk record states it was not done (AP8_DEV_DRIVE_RECORD_20261008.md).",
+   "route": "DECOMP_INVALIDATING"
+  },
+  {
+   "fwd_id": "FWD-12",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/evidence/r40_ap9_row_compare_20261007.txt@f067ab0ee4",
+   "state_observed": "EXERCISED",
+   "note": "NOT REALIZED (round39.md:25), confirmed by measurement: about 13 of the page's 62 Model rows appear on each name's team sheet. The v0.9 DONE WHEN requires each name's own sheet's rows, order and labels. No build cell has been cut since round 39.",
+   "route": "DECOMP_INVALIDATING"
+  },
+  {
+   "fwd_id": "FWD-13",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/FWD_EVIDENCE_ROUND13.json@d1c92f63c1",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (round5.md:116). Round-13 census: fields 2375, neither 0, with a negative control. Not re-run on the /9 dossiers; round 44 re-runs it as regression."
+  },
+  {
+   "fwd_id": "FWD-14",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-h-4.coverage-fence14-triple.proof_of_spec.json@01f9c49f93",
+   "state_observed": "APPLIED",
+   "note": "NOT REALIZED one line short (ADJUDICATION_v45.md:49). The ap-1 fix is proved only on a 4-folder fixture. No live run over the library's folders since then, and the library is site-Z only.",
+   "route": "DECOMP_INVALIDATING"
+  },
+  {
+   "fwd_id": "FWD-15",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk.proof_of_spec.json@005a5c7917",
+   "state_observed": "APPLIED",
+   "note": "Last outcome grade NOT REALIZED (round39.md:24). Since then ap-3 AC2 is MET (round40.md:11), and the header line is cited and byte-equal (ADJUDICATION_v47). PRD CORRECTION PRD:505-518 still points the render half at AMGT_RESAPP FWD-26. The outcome-level read is owed at round 44."
+  },
+  {
+   "fwd_id": "FWD-16",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/evidence/r40_ap8_fwd16_census_20261008.txt@862dd0ce23",
+   "state_observed": "APPLIED",
+   "note": "Last grade NOT REALIZED, one read short (ADJUDICATION_v45.md:51). The issuer has since taken that read: 0 pillars and 0 cases lost, and 2 management values lost (the Z-S89 scorecard removals). It has not been graded by the CVO or this seat; it is graded at round 44."
+  },
+  {
+   "fwd_id": "FWD-17",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-p-3.fwd17-scratch-drive.proof_of_spec.json@986c886b9a",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 14 (round14.md:55)."
+  },
+  {
+   "fwd_id": "FWD-18",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk.proof_of_spec.json@005a5c7917",
+   "state_observed": "APPLIED",
+   "note": "Cell criteria MET: aq-3 AC3 (round41.md:8) and the pressed walk (round42.md:11). Only 2 of 95 names qualify for a filtered feed, under ruling F. No outcome-level grade yet; it is graded at round 44 with the CVO's L9 read. The proof pin 4051cbb215 does not exist in this repo and must be re-pinned."
+  },
+  {
+   "fwd_id": "FWD-19",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-r-1.schedule-induction-run.proof_of_spec.json@dba1e7f6bb",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED, unchanged (ADJUDICATION_v45.md:46; round39.md:21)."
+  },
+  {
+   "fwd_id": "FWD-20",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-ap-5.zero-dominated-in-plain-words.proof_of_spec.json@df6740cffc",
+   "state_observed": "APPLIED",
+   "note": "NOT REALIZED (ADJUDICATION_v45.md:47). The later census (5,890 cells, unmapped 0) is rebuilt from the payload, not read from the rendered page. No read checks that the 1,146 absent cells carry a PM's words. Its SharePoint-value clause depends on FWD-12.",
+   "route": "DECOMP_INVALIDATING"
+  },
+  {
+   "fwd_id": "FWD-21",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-ao-4.sheet-fits-fy3-at-1440.proof_of_spec.json@b5a51795e2",
+   "state_observed": "APPLIED",
+   "note": "Last grade NOT REALIZED, one read short (ADJUDICATION_v45.md:48). The UNVGY walk was taken, and the page states the reason; the served reason text was routed to AMGT_RESAPP (round40.md:31). Not graded since; it is graded at round 44."
+  },
+  {
+   "fwd_id": "FWD-22",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-aj-1.daily-refresh-producer.proof_of_spec.json@bb6e248f1f",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED (ADJUDICATION_v45.md:45; round39.md:9). The 2026-10-09 scheduled fire pulled 96 of 96 (ADJUDICATION_v47). The report's WAIT note is stale."
+  }
+ ]
+}

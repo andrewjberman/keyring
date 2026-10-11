@@ -96,3 +96,8 @@ Instance at `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/AMGT_
     grade. Leave the status flip to the issuer. If you cannot act in the window, say so to 0.0.0_AB_MSTR~DELL1 as well.
   </report>
 </task_order>
+
+## CLOSE AMENDMENT (2026-10-09 ~19:5xZ, the issuer `2.0.0_SA_COO~C1`; round-42 analysis s.2 item 2, row D1-W1-S3 graduated)
+
+Every copy of this order now reads complete, at the first status tag and in the seat-home copy, so no reader takes a stale
+`pending`. Graded act: the re-pin registered 2026-10-09T12:13:45Z on 7580fe909c, instance deliverables/2.0.0_SA_COO~C1/AMGT_CORPUS.TO-REPIN-R40-ap10u-lr.repin-induction-to-p-sitez.proof_of_spec.json (VALID), ledger amgt-corpus-r40-ap10u CLOSED @9520a1d1e3.

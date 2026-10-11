@@ -10114,59 +10114,6 @@ name the one known failure instead of silently inheriting it.
 
 ```json
 {
-  "id": "NFRA_OPLGTW-Z-W41-S1",
-  "project": "NFRA_OPLGTW",
-  "fabric": "site-z",
-  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
-  "surfaced_at": "2026-10-09T00:15:56Z",
-  "one_line": "The 49F dispatcher ignores the marker's date: each qualified record on schwab/08335338/meta/complete/ runs the gold chain for today's T-1, so 256 historical records would not start 256 runs for past dates but up to 256 dispatches of the same T-1 run.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "INFERRED",
-    "evidence": [
-      "FILE infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/lambda_function.py:229-265 (this worktree, equal to the deployed zip, CodeSha256 TjIWGFWkbUswLkA+mUac9NS+LRZ1q7o6lR1iQLb0kI4=, evidence_dispatcher_function.json): the accelerator branch grades only closure.status of the exact marker version; send_command passes only StartedByDispatcher, no Date.",
-      "FILE infra/aws/terraform/opal-assets/advi_49f_floor.tf:244-310: with Date empty the document runs 'chain_49f_entrypoint.py --production', which derives D from the trading calendar at run time; the same file's Date-parameter comment says --production 'would run the SAME date for every iteration of the backfill'.",
-      "RUN OG-c-2 precedent, deliverables/0.9.0_WK_NFRA_OPLGTW~4/producer-deploy-replay.result.md section 3: one record for 2026-09-15 produced one chain run for date=2026-09-15 (the T-1 of the write day), 30 of 31 keys re-PUT.",
-      "FILE advi_49f_floor.tf document tail: 'if StartedByDispatcher = true ... sudo shutdown -h +2' follows the entrypoint whatever its rc, so a REFUSED sibling that found the host stopped also schedules a halt; whether that can land inside a live 145 s run has never been exercised (INFERRED)."
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "Order OG-bf-1 'The hazard you must plan around': hundreds of historical records could start hundreds of gold runs for past dates.",
-  "world_is": "The dispatcher reads no date from the record. A qualified historical record on 08335338 dispatches the production chain for T-1 (a date that is already served), once per record; the chain's mutex refuses concurrent runs, so the count of completed runs is bounded by time, not by records. Nothing writes a historical record on that prefix today, so the hazard is standing but unfired; Phase B would fire it. NEVER_WIDEN_ASK_OG-bf-1.md section 3 and 5 state the branches and four ways to sign.",
-  "disarm_owner": "2.0.0_SA_COO~O",
-  "notes": "Not done here: any change to the dispatcher, the notification set or any write to S3. The 08242234 prefix has no consumer, so its half of the backfill does not touch this."
-}
-```
-
-```json
-{
-  "id": "NFRA_OPLGTW-Z-W41-S2",
-  "project": "NFRA_OPLGTW",
-  "fabric": "site-z",
-  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
-  "surfaced_at": "2026-10-09T00:57:58Z",
-  "one_line": "The dispatcher date gate ships a second module (trading_calendar.py), and the Lambda builder refuses a top-level .py that is not registered in infra/aws/lambda/ci/lambda-source-map.json files[], a file outside this order's paths.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "FILE infra/aws/lambda/ci/build-and-upload.sh:412-458 (ADHC_DRIFTD.002 parity check): a top-level *.py in source_dir not in the union of files[] fails the function's build with 'Files present in source_dir but NOT in lambda-source-map.json files[]'.",
-      "FILE infra/aws/lambda/ci/lambda-source-map.json functions['advi-49f-gold-dispatch'].files = ['lambda_function.py'] (HEAD); the A1 <paths> admit only infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/ and the two test files, not the ci directory.",
-      "RUN python -m pytest on tests/test_advi_49f_gold_dispatch_dategate.py + tests/test_advi_49f_gold_dispatch_remedy.py: 11 passed, so the code is built and tested; only the packaging registration is outstanding."
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "A1 Phase C: the calendar is 'a byte copy placed beside lambda_function.py' in the zip; the order lists no path for the source map that registers it.",
-  "world_is": "Without a files[] entry for trading_calendar.py the build is refused (or, with BAU_PARITY_SKIP=1, the member is not in the zip and the gate SKIPs every accelerator record because the calendar is not loadable). So the registration is part of the deploy leg; the Y ask section 3 and 4 name it. The built zip's CodeSha256 is therefore not computed in Phase C.",
-  "disarm_owner": "2.0.0_SA_COO~O",
-  "notes": "Not done here: any edit to lambda-source-map.json, any build, any deploy. An unregistered gate fails SAFE (SKIP), so a deploy that forgets the registration withholds the accelerator rather than over-dispatching."
-}
-```
-
-```json
-{
   "id": "NFRA_OPLGTW-Z-W38-S1",
   "project": "NFRA_OPLGTW",
   "fabric": "site-z",
@@ -10342,6 +10289,33 @@ name the one known failure instead of silently inheriting it.
 
 ```json
 {
+  "id": "NFRA_OPLGTW-Z-W41-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
+  "surfaced_at": "2026-10-09T00:15:56Z",
+  "one_line": "The 49F dispatcher ignores the marker's date: each qualified record on schwab/08335338/meta/complete/ runs the gold chain for today's T-1, so 256 historical records would not start 256 runs for past dates but up to 256 dispatches of the same T-1 run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "FILE infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/lambda_function.py:229-265 (this worktree, equal to the deployed zip, CodeSha256 TjIWGFWkbUswLkA+mUac9NS+LRZ1q7o6lR1iQLb0kI4=, evidence_dispatcher_function.json): the accelerator branch grades only closure.status of the exact marker version; send_command passes only StartedByDispatcher, no Date.",
+      "FILE infra/aws/terraform/opal-assets/advi_49f_floor.tf:244-310: with Date empty the document runs 'chain_49f_entrypoint.py --production', which derives D from the trading calendar at run time; the same file's Date-parameter comment says --production 'would run the SAME date for every iteration of the backfill'.",
+      "RUN OG-c-2 precedent, deliverables/0.9.0_WK_NFRA_OPLGTW~4/producer-deploy-replay.result.md section 3: one record for 2026-09-15 produced one chain run for date=2026-09-15 (the T-1 of the write day), 30 of 31 keys re-PUT.",
+      "FILE advi_49f_floor.tf document tail: 'if StartedByDispatcher = true ... sudo shutdown -h +2' follows the entrypoint whatever its rc, so a REFUSED sibling that found the host stopped also schedules a halt; whether that can land inside a live 145 s run has never been exercised (INFERRED)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-bf-1 'The hazard you must plan around': hundreds of historical records could start hundreds of gold runs for past dates.",
+  "world_is": "The dispatcher reads no date from the record. A qualified historical record on 08335338 dispatches the production chain for T-1 (a date that is already served), once per record; the chain's mutex refuses concurrent runs, so the count of completed runs is bounded by time, not by records. Nothing writes a historical record on that prefix today, so the hazard is standing but unfired; Phase B would fire it. NEVER_WIDEN_ASK_OG-bf-1.md section 3 and 5 state the branches and four ways to sign.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here: any change to the dispatcher, the notification set or any write to S3. The 08242234 prefix has no consumer, so its half of the backfill does not touch this."
+}
+```
+
+```json
+{
   "id": "NFRA_OPLGTW-Z-W39-S4",
   "project": "NFRA_OPLGTW",
   "fabric": "site-z",
@@ -10438,6 +10412,32 @@ name the one known failure instead of silently inheriting it.
   "world_is": "Done as A2 states: source commit 47c3c75f11 (the 4 files of data_assets_mirror.patch), silver_build_commit.schwab repinned at 7af0b6bc3d, artifact rebuilt from that pin. S4 itself is not edited; its disposition is the issuer's or the CVO's to write. The artifact is NOT uploaded and the Lambda is NOT changed; the plan shows the OPAL_BUILD_COMMIT env change as one in-place item for the applier.",
   "disarm_owner": "2.0.0_SA_COO~O",
   "notes": "S4 cited, not edited. A later source edit to either module, or a package edit, breaks the equality: the applier re-reads sha256 AzrzJS+91y57... from a build at the apply commit before uploading."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W41-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
+  "surfaced_at": "2026-10-09T00:57:58Z",
+  "one_line": "The dispatcher date gate ships a second module (trading_calendar.py), and the Lambda builder refuses a top-level .py that is not registered in infra/aws/lambda/ci/lambda-source-map.json files[], a file outside this order's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/lambda/ci/build-and-upload.sh:412-458 (ADHC_DRIFTD.002 parity check): a top-level *.py in source_dir not in the union of files[] fails the function's build with 'Files present in source_dir but NOT in lambda-source-map.json files[]'.",
+      "FILE infra/aws/lambda/ci/lambda-source-map.json functions['advi-49f-gold-dispatch'].files = ['lambda_function.py'] (HEAD); the A1 <paths> admit only infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/ and the two test files, not the ci directory.",
+      "RUN python -m pytest on tests/test_advi_49f_gold_dispatch_dategate.py + tests/test_advi_49f_gold_dispatch_remedy.py: 11 passed, so the code is built and tested; only the packaging registration is outstanding."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 Phase C: the calendar is 'a byte copy placed beside lambda_function.py' in the zip; the order lists no path for the source map that registers it.",
+  "world_is": "Without a files[] entry for trading_calendar.py the build is refused (or, with BAU_PARITY_SKIP=1, the member is not in the zip and the gate SKIPs every accelerator record because the calendar is not loadable). So the registration is part of the deploy leg; the Y ask section 3 and 4 name it. The built zip's CodeSha256 is therefore not computed in Phase C.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here: any edit to lambda-source-map.json, any build, any deploy. An unregistered gate fails SAFE (SKIP), so a deploy that forgets the registration withholds the accelerator rather than over-dispatching."
 }
 ```
 
@@ -11489,5 +11489,430 @@ name the one known failure instead of silently inheriting it.
   "world_is": "The issuer ruled the in-process run against the box/sitez schema as the validation of record. Branch copy of the schema stays corrupt at e7c10e5b4b; box/sitez was not merged and nothing under org/standards/ was edited. The worker's flip commit was REFUSED by .tools/to-pipeline-gate.py (flips to complete but its instance is NOT VALID rc=2, the branch schema); its offered escape is a pipeline-override line, which the worker did not use (no gate override). <status> stays pending on this branch; the issuer flips it after the drain or authorises the override. Row S5 is not edited; this row is its resolution.",
   "disarm_owner": "2.0.0_SA_COO~O",
   "notes": "Resolves NFRA_OPLGTW-Z-W49-S5. S1 and S4 go to the E2 release cell."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W50-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~50",
+  "surfaced_at": "2026-10-09T16:58:06Z",
+  "one_line": "The six held 08403355 RPS files carry no D1 positions section: their only table is the D2 balance table (equal to the RPS section-2 pin), mis-numbered section 1 by file order, so extending the section-1 pin cannot convert them; OG-pn-1 routes by data tag instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~50/pn1_measure.json -- 6 of 6 held files: sections [(1,'D2',34 cols)], extra set vs RPS s1 pin = 28 identical columns, columns == RPS s2 pin in order, D1 present False; 46 core s1 columns missing from the header even if the 28 were added.",
+      "RUN: S3 get_object of schwab/08403355/bronze/rps/{20251212,20251215..20251219}/ then crs_reader.scan_crs and schwab_schemas.SPECS, 2026-10-09 ~16:0xZ; old converter on the same bytes raises SchemaDriftError (28 columns, feed=RPS s1), new converter converts all six offline.",
+      "CODE: data/assets/scripts/silver/crs_reader.py scan_crs numbers sections by file order (index=si+1); schwab_conversion.py graded smeta.index against SPECS."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-pn-1 step 2 and the decomposition addendum R3-T.38: the six held files carry 28 section-1 columns the pin does not know, and extending the RPS section-1 pin explicitly with them lets the files convert.",
+  "world_is": "The 28 columns are the section-2 pin's own columns; the files hold a D2-only table. A literal section-1 extension would still raise on 46 missing core columns, and loosening that would write balances into fact_rps/dim_position. The worker built a table-tag routing (pin_section) plus a pinned 0-row section-1 landing instead, kept the guard, and put both choices to the never-widen halves in NEVER_WIDEN_ASK_OG-pn-1.md section 7.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Both halves decide section 7 before any deploy. Alternative without the 0-row landing is a one-line change."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W50-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~50",
+  "surfaced_at": "2026-10-09T16:58:06Z",
+  "one_line": "AC1's <expect> regex cannot match pn1.AC1.sh's literal output: the script lists the four regression suites with ls (alphabetical, test_conversion_manifest first) while the regex requires test_conversion_manifest last.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/pn1.AC1.sh at worktree HEAD+changes: 'pin tests: pytest rc=0; named tests passed 3 of 3' / 'test_conversion_manifest.py: pytest rc=0; 37 passed' / 'test_schwab_conversion.py: ... 36 passed' / 'test_schwab_projections.py: ... 10 passed' / 'test_schwab_schemas.py: ... 20 passed' / 'regression suites run: 4' / 'RESULT: PASS' / 'exit=0'.",
+      "REGEX: python re.search of the order's <expect> over that output returns False (the order required test_schwab_conversion, projections, schemas, then test_conversion_manifest in that sequence).",
+      "SCRIPT: pn1.AC1.sh line 'files=$(cd \"$T\" && ls test_schwab_conversion.py ... test_conversion_manifest.py ...)' -- ls sorts its arguments."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The criterion's invocation produces output matching its <expect> when every suite passes (issuer note: base suites 36/10/20/37).",
+  "world_is": "Every line the criterion asks for is present and passing (rc=0 x5, 3 of 3, 4 suites, RESULT: PASS, exit=0) but in a different order, so the mechanical regex grades FAIL. The script is outside this worker's paths and was not edited.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Fix is the issuer's: reorder the expect to the alphabetical order, or have the script iterate in the stated order. Worker output recorded verbatim in the report."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W51-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~51",
+  "surfaced_at": "2026-10-09T18:07:49Z",
+  "one_line": "The release branch name the order gives, rel-nfra-oplgtw-r16, already exists locally (an old OG-rl-5 release, tip e0b90e9945); the E2 release is on rel-nfra-oplgtw-r16b.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN git log --oneline -3 rel-nfra-oplgtw-r16 (wk-oplgtw-r33-51) -> e0b90e9945 'Deploy EC2 opal-gateway @ 4b6b823fae', 4b6b823fae 'release(NFRA_OPLGTW OG-rl-5 A3...)': an earlier, deployed release",
+      "RUN git branch --list 'rel-nfra-oplgtw-r1*' -> r14, r16, r17, r17b, r17c, r19, r19b exist; precedent for a suffixed name is r17b/r17c/r19b/r28b",
+      "RUN git worktree add --no-checkout -b rel-nfra-oplgtw-r16b C:/tmp/og-rel16 1e32562729 -> HEAD 1e32562729, then three release commits e698b10bdc, e581384925, a88661b145"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 2: release worktree C:/tmp/og-rel16, branch rel-nfra-oplgtw-r16, at the live base.",
+  "world_is": "A branch of that name already exists with unrelated history; reusing or force-resetting it would move a ref that carries an earlier release, so a new name was taken. The ANNOUNCE and rl16_release.json name the branch rel-nfra-oplgtw-r16b and the sha; the sha is what the halves sign.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "ARMED only in that an applier reading the order's branch name would find the OLD release at rel-nfra-oplgtw-r16 and could deploy it. Disarm: the issuer's apply order names rel-nfra-oplgtw-r16b / release sha a88661b145 / C:/tmp/og-rel16, never the bare r16 name."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W51-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~51",
+  "surfaced_at": "2026-10-09T18:07:49Z",
+  "one_line": "E2's second count-updated test, tests/test_data_entitlement_family.py (52 -> 53 non-data tools), does not exist on the live base, so that hunk is not carried; the other, test_entitlement_admin.py 61 -> 62, applies clean.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN git cherry-pick -n cf84fd9a4d in C:/tmp/og-rel16 -> CONFLICT (modify/delete): tests/test_data_entitlement_family.py deleted in HEAD (1e32562729)",
+      "RUN git log --oneline -3 -- infra/aws/ec2/opal-gateway/tests/test_data_entitlement_family.py -> OG-pf-1's b47fc56a98 and 27e1969db3 only (box/sitez); OG-pf-1 is not on the live host",
+      "RUN pytest tests/test_entitlement_admin.py in the release tree -> 9 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 2: the carry cf84fd9a4d includes the tests and the two count-updated tests.",
+  "world_is": "On the live base only one of the two count-updated tests exists; the family test (OG-pf-1) is a later, unreleased cell. The release carries test_entitlement_admin.py (61 -> 62) and leaves the family test absent; the AC1 allow-list names the family file but no change to it appears in the release diff. When OG-pf-1 is released, its release must carry the 52 -> 53 count edit then.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Disarm: the OG-pf-1 release cut carries E2's count edit (52 -> 53) on top of its own."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W51-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~51",
+  "surfaced_at": "2026-10-09T18:07:49Z",
+  "one_line": "Commits in a sparse release worktree print 'naming-gate NAMING ERROR ... org/missions/DIRECTIVES.yaml' (the limb cannot load the registry); the commit still lands (WARN window, enforce off).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN safe-commit.sh in C:/tmp/og-rel16 (commits e581384925, a88661b145) -> '[naming-gate] NAMING ERROR lib/opal_naming.py or the registry cannot be loaded: FileNotFoundError ... org/missions/DIRECTIVES.yaml' and '(WARN window: the limb's own error never blocks a commit; enforce is off)'",
+      "RUN git sparse-checkout list in C:/tmp/og-rel16 -> .tools, infra/aws/ec2, infra/aws/lambda/mcportal, infra/aws/terraform/opal-gateway, infra/logic, lib, org/modules, org/standards (no org/missions top file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order bounds: every .py edit passes bash .tools/commit-gate.sh.",
+  "world_is": "The commit gate ran; its naming limb could not load DIRECTIVES.yaml in the sparse tree and reported WARN-only. The release's .py/.sh files add no name, address or env key typed by hand (the env root is computed from address() in deploy-to-ec2.sh), so nothing the limb would grade was ungraded by a path the order cares about. No gate was overridden.",
+  "notes": "Inert while the naming limb is in its WARN window; a release tree that must pass an enforcing naming gate needs org/missions/DIRECTIVES.yaml in its sparse set."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W51-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~51",
+  "surfaced_at": "2026-10-09T18:07:49Z",
+  "one_line": "rl16_verify.py is not a pure rl16_ copy of r29_verify.py: the r29 expectations (66->66 tools, 51->52 names, 98 files, 11 files) were edited to E2's (66->67 adding copy_site_file_to_s3, 52->53 adding ADVI_FEE_STATEMENT_S3_ROOT, 102 files, 5 files).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN diff of rl16_verify.py against r29_verify.py (W vs ~43) -> the count/name expectations, list file names and the rollback hint changed; HOST_PROG's body is unchanged; the scratch file names og_r29_verify -> og_rl16_verify",
+      "RUN python -m py_compile rl16_verify.py -> compiles; NOT run against the host in Phase A"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order cell: reuse the ~43 r29 tooling by copying to rl16_ names.",
+  "world_is": "The r29 verifier hard-codes r29's release (66->66, MAIL_SENDER_DOMAIN_TABLE, 98 files); copied unchanged it would FAIL the E2 deploy on its own. The copy was edited to E2's numbers; it is written, compiled, and untested against a deploy. rl16_ssm_prog.py, rl16_md5_host.py (its list is the BASE list) and rl16_release_md5.py are otherwise copies.",
+  "notes": "Inert until the applier runs it; the applier should run `before` first, which exits 1 if the host differs from the base list."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S76",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-09T19:02:48Z",
+  "one_line": "Disarms NFRA_OPLGTW-Z-W49-S1 (the transcripts KMS key gave the gateway role no use): REMEDIATED in the world -- NFRA_TRNSPT.TO-APPLY-ka21 complete; key 44a2284f carries GatewayWritesTranscripts = kms:GenerateDataKey + kms:Encrypt for opal-gateway-role, no Decrypt (read live by 1.0.0_SA_CTO~Z).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/ledger/ROUND_ANALYSIS.round32.md @3566a85699 section 2, row W49-S1: REMEDIATED in the world; the key policy read by 1.0.0_SA_CTO~Z carries the named WRITE statement (6 statements)",
+      "MSG 1.0.0_SA_CTO~Z msg 32946: 'disarm W49-S1 with a citing row; I read the key grant live'"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard W49-S1 named is gone: the key policy now grants the gateway role the write use. The .pptx pair still waits on its registry row and PutObject grant (W49-S4, round-34 cell E1).",
+  "spec_asserts": "W49-S1: an IAM PutObject grant alone cannot make the .pptx pair write, because the transcripts KMS key policy gives opal-gateway-role no use of the key.",
+  "world_is": "The key policy grants kms:GenerateDataKey and kms:Encrypt to opal-gateway-role (no Decrypt). The KMS leg of the .pptx pair is done; the S3 grant and registry row are not (W49-S4).",
+  "notes": "Citing row; W49-S1's own text is untouched."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W46-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~46",
+  "surfaced_at": "2026-10-09T14:56:35Z",
+  "one_line": "STOP at batch 3 of OG-bh-1: for six 08403355 era-C dates (2025-12-12, 15, 16, 17, 18, 19) the RPS section-1 zip carries 28 columns the converter's pin does not know, so opal-assets-silver-schwab raises SchemaDriftError, writes no fact_rps / fact_rps_s2 / dim_position / dim_balance, and each date's completion record reads incomplete (MISSING_OUTPUT x4); 18 Lambda errors (6 files x 3 attempts), DLQ 0 -> 6.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/opal-assets-silver-schwab 2026-10-09T14:08Z..14:35Z: '[ERROR] RuntimeError: event run ... had 1 failure(s): schwab/08403355/bronze/rps/20251212/08403355.CRS20251212.RPS.zip: SchemaDriftError(\"partition carries column(s) the pin does not know: ['account_title_line_1', 'account_title_line_2', 'account_title_line_3', 'acct_regis', 'acct_type', 'net_credit_debit', 'margin_balance', 'available_to_pay', 'mrgn_buying_pwr', 'money_mkt_funds', 'mtd_margin_int', 'daily_margin_int', 'eqty_excl_option', 'eqty_percentage', 'mkt_value_long', 'mkt_value_short', 'eqty_incl_option', 'option_rqrmnts', 'mnth_end_div_pay', 'maintenance_call', 'mvl_cash_ex_optn', 'net_mv_positions', 'net_mv_plus_cash', 'cash_balance_settled_only', 'cash_margin_bal_settled', 'versmrkr_3', 'bank_sweep_ibf', 'bank_cash'] (feed=RPS s1) -- vendor drift is a finding: measure, extend the pin, never silently absorb\")'; the same message for 20251215, 16, 17, 18, 19 (six distinct dates, three attempts each).",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/bh1_backfill_record.json batches[2] (SSM 794ca37d-3118-457c-8ed6-021000ee307c): puller rc 0, enumerated 2314 downloaded 694 skipped 1620 failed 0, landing guard ok; converter Errors 18, Throttles 0, Invocations 706; dlq_baseline 0, dlq_after 6; not_qualified lists the six dates with closure status incomplete and findings MISSING_OUTPUT for dim_balance, dim_position, fact_rps, fact_rps_s2.",
+      "bh1_tool.py dlq at 2026-10-09T14:54Z: DLQ visible=6 in_flight=0. The same six dates hold fact_rps for 08335338 and 08242234 (list-objects-v2 on silver/fact_rps/date=2025-12-12/ returned 1 key each), so the drift is in this master's files for those dates only; neighbouring dates of 08403355 convert and qualify (batches 1-2: 147 of 147 dates; batch 3: 56 of 62).",
+      "schwab_runtime.py _sweep_lane (repo HEAD): a lane whose sweep results include a failed conversion composes NO sweep completion marker (`if not any(r.action == 'failed' ...)`), records the failure in the sweep manifest, and folds guard FAIL into schwab/08403355/meta/backfill-status.json; run_sweep drains the DLQ (cap 100, deleting the messages)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ask section 2: era B and C are 'the shapes the producer qualifies today for 08335338'; the COO half's stop rule: an era B or C date not qualified for a reason other than missing sibling files STOPS the run. DLQ at or below its start depth.",
+  "world_is": "Run stopped after batch 3 (landed: batches 1-3, 2314 of 6002 files, dates 2025-12-11..2026-10-08; AC2 today: 201 of 758 qualified, 557 open). Not run: batches 4-9 and the closing 2000-day run. No retry, no delete, no code or pin change by this worker. Standing effects until disarmed: (1) the 12:15Z sweep will try the six rps files again, fail, write no sweep completion markers for the whole 08403355 lane, drain and delete the six DLQ messages, and fold backfill-status guard FAIL for 08403355 (event-path records are unaffected); (2) ledger nfra-oplgtw-og-bh-1-taxsma-history stays OPEN (24 h window from 08:37Z). Options for the issuer, not taken here: extend the converter's RPS s1 pin for the 28 columns (a producer code leg for 0.7.0_AE_CloudOps~Z, then re-run the six events), or declare the six dates unavailable and roll their six rps zips back per the ask section 5 so the lane's sweep guard clears, or accept the standing sweep failure.",
+  "notes": "Batches 1-3 timings: puller 29.5 / 29.8 / 28.5 min, converter drain +8.2 / +8.0 / +8.0 min after the puller, one batch about 38 min; remaining 6 batches plus closing run estimated about 4 h (2.6 s per file, 3,688 files left plus a 2-3 min closing run). Batches 4-9 reach back into 2024-2025, so more dates may carry the same drift; unmeasured."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W46-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~46",
+  "surfaced_at": "2026-10-09T15:40:36Z",
+  "one_line": "Resolution of NFRA_OPLGTW-Z-W46-S3 (the S3 row itself is not edited): both halves carry AMENDMENT 1, so six era-C dates (2025-12-12, 15, 16, 17, 18, 19) are recorded 'held: vendor drift (RPS pin)' and OG-bh-1 resumes at batch 4 under the narrowed stop rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half AMENDMENT 1 @f77e32d7c3 (deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_OG-bh-1_20261009.md): a date failing ONLY with an RPS SchemaDriftError is recorded 'held: vendor drift' and does not stop the run; every other stop stands; the pin extension is a separate cell for 0.7.0_AE_CloudOps~Z.",
+      "COO half AMENDMENT 1 @eea4aebe10 (deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_HALF_COO_OG-bh-1_20261009.md): same ruling; DLQ may rise by the held RPS files' count and any rise above it stops; the 12:15Z sweep retries the held files and withholds the lane's sweep markers until the pin lands (accepted).",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/bh1_backfill_record.json: held = the six dates, amendment_1.resumed_utc 2026-10-09T15:38:36Z. bh1_drive.py edited before resuming: a not-qualified era B/C date is held only if the converter log shows a SchemaDriftError on its single rps key AND every closure finding is one of fact_rps, fact_rps_s2, dim_position, dim_balance; any other ERROR line, any converter Errors count above 3 x the drift files, or a DLQ rise above the newly held count stops the driver."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-W46-S3: a date not qualified for a reason other than missing siblings stops the run (COO half section 3).",
+  "world_is": "The stop rule is narrowed in one case by the two amendments; the held dates stay NOT qualified (the Gateway never serves an incomplete date) and are not re-run by this order. Held dates will read open under bh1.sh AC2.",
+  "notes": "Cites S3 as resolved by ruling, not by repair: the 28 columns are still unknown to the pin."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S77",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-09T19:40:15Z",
+  "one_line": "The six OG-bh-1 held-date RPS messages left the shared converter DLQ opal-assets-silver-dlq between 15:39Z and 16:17Z 2026-10-09 by an unknown actor -- not OG-bh-1 (its driver only reads depth) and not the 12:15Z sweep (outside that window); the held records were unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE deliverables/0.9.0_WK_NFRA_OPLGTW~46/bh1_backfill_record.json: batch 4 dlq_baseline 6 (15:3xZ), batch 5 dlq_baseline 0 (16:1xZ)",
+      "WORKER REPORT 0.9.0_WK_NFRA_OPLGTW~46 (OG-bh-1 Phase B close): 'The 6 DLQ messages left the queue between 15:39Z and 16:17Z ... not this order, and the 12:15Z sweep had not run in that window'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-bh-1 AMENDMENT 1 (both halves): the held RPS files' DLQ messages are the expected residue until OG-pn-1 re-runs the six dates.",
+  "world_is": "The queue was emptied by someone else in a 38-minute window. No record changed. Who receives or purges opal-assets-silver-dlq outside the 12:15Z sweep is unknown; a second DLQ consumer would also eat other masters' failures silently.",
+  "notes": "Next read: CloudTrail sqs:ReceiveMessage/DeleteMessage/PurgeQueue on opal-assets-silver-dlq 15:39Z-16:17Z. INERT because nothing incomplete was served and OG-pn-1 re-runs the six dates by its own path."
+}
+```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S78",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-10T21:26:19Z",
+  "one_line": "OG-ap-5 cannot meet CTO condition C2 as written: C2 requires silver_build_commit.schwab to name the commit whose data/assets/scripts/silver/ tree equals the package dir, but that value lives in infra/aws/terraform/opal-assets/silver.tf, which is NOT in the order's <paths>; and moving it adds an environment row to the plan, which step 3 calls a STOP.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half @d66a0fb956 (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_OPLGTW_OG_PN1_DTAG_ROUTING_20261009_Z.md), C2: 'The deploy runs by Terraform through safe-apply. The prior artifact VersionId and source_code_hash are recorded before the swap, and silver_build_commit.schwab names the commit whose data/assets/scripts/silver/ tree equals the package directory.'",
+      "ASK section 2 @6a27bceca1: 'local.silver_build_commit.schwab (silver.tf, outside this cell's paths) moves to the commit whose data/assets/scripts/silver/ tree equals the package dir (rollback pin 47c3c75f11).' The ask itself names the path as outside the cell.",
+      "ORDER <paths> (NFRA_OPLGTW.TO-OG-ap-5.converter-dtag-routing-apply.md): five entries, none of them infra/aws/terraform/opal-assets/silver.tf. Measured: grep -c 'silver.tf' over the order file = 0.",
+      "ORDER step 3: 'the plan reads 1 resource changed, code fields only; any other row is a STOP.' OPAL_BUILD_COMMIT is an environment variable, so moving the pin yields an environment row in addition to s3_object_version + source_code_hash.",
+      "MEASURED, both planes agree the pin has NOT moved: live get-function-configuration Environment.Variables.OPAL_BUILD_COMMIT = 47c3c75f11; silver.tf:84-86 local.silver_build_commit = { schwab = \"47c3c75f11\" }.",
+      "MEASURED, the value C2 wants is b3e481b261: git log b3e481b261..HEAD -- data/assets/scripts/silver/ = 0 commits, and -- infra/aws/lambda/opal-assets/opal-assets-silver-schwab/ = 0 commits, so the silver tree equals the package dir at that commit. Source and Lambda copy are the same blob f9b65e2e74 at HEAD, working tree clean."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-5 step 3 + CTO half C2: the apply moves silver_build_commit.schwab to the built commit AND the targeted plan carries code fields only.",
+  "world_is": "The two cannot both hold under this order's write surface. Three options, no recommendation acted on: (a) the issuer widens <paths> to include infra/aws/terraform/opal-assets/silver.tf and rules that the environment row is an expected code-provenance field rather than a STOP; (b) the pin move is cut to a seat that owns silver.tf and sequenced into the same apply; (c) the apply runs code-only (s3_object_version + source_code_hash), leaving OPAL_BUILD_COMMIT asserting 47c3c75f11 over the b3e481b261 bytes -- a FALSE provenance claim baked into the live function, and it also collapses the rollback pin onto the forward pin, so the CTO-half and ask rollback step 'silver_build_commit.schwab back to 47c3c75f11' becomes a no-op that cannot be distinguished from the rolled-forward state. This seat does not pick (c) on its own.",
+  "notes": "Nothing has been built, uploaded, applied or invoked. The apply is also time-gated: the COO half @d41a3068cd decision 3 and the order's preflight both bar the apply and the re-run inside [09:15,11:35), [12:00,12:50) and [21:15,23:35) UTC, and the EventBridge rules were read to confirm the windows bind on a Saturday (canonical-schwab-si2-08335338-daily-pull cron(45 9,21 * * ? *), schwab-canonical-si2-08403355-pull-daily cron(45 10,22 * * ? *), canonical-schwab-si2-08242234-daily-pull cron(15 10,22 * * ? *), opal-assets-silver-schwab-sweep-daily cron(15 12 * * ? *) -- all day-of-week '*', not weekday-only). So the ruling is not on the critical path until 23:35Z. ID FORM: the order prescribes NFRA_OPLGTW-Z-AE-S<k>, which SURPRISE_ID_RE (.tools/proof-of-spec-check.py:1206) and surprise-row-gate.py ID_RE (:108) cannot match -- the optional infix is ONE capital letter plus digits, so a two-letter 'AE' is unrepresentable. Continuing the Z-S series per this project's own settled precedent (rows Z-S68, Z-S69, Z-S70, each of which recorded the same finding). Max Z-S in channel read 77 over 77 distinct ids, not off a page."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S79",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-10T21:26:19Z",
+  "one_line": "lambda-source-map.json's opal-assets-silver-schwab entry asserts memory_size 10240 while BOTH Terraform and the live function read 3008, and the entry's own _note claims the opposite ('memory_size corrected 3008->10240 to match TF ... + live config -- the prior 3008 was map drift').",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json (entry opal-assets-silver-schwab): 'memory_size': 10240, and _note asserting the 3008->10240 correction.",
+      "infra/aws/terraform/opal-assets/silver.tf:599: schwab = { memory = 3008, timeout = 600, ... } with an inline comment recording the deliberate 10240 -> 3008 delta-6 resize under CTO GO 183008Z.",
+      "LIVE: aws lambda get-function --function-name opal-assets-silver-schwab -> MemorySize 3008, Timeout 600, State Active, LastUpdateStatus Successful, LastModified 2026-10-09T02:33:06Z."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Deployment rule 4: every Lambda carries an entry in lambda-source-map.json pairing it with its repo dir and its deploy fields.",
+  "world_is": "The map's memory_size is stale in the direction its own note denies, so a reader who trusts the note reads 10240 as the TF-and-live value. It is NOT a plan hazard: the plan reads TF, so the targeted plan carries no memory row. Named because OG-ap-5 step 5 already requires this seat to update this entry to the deployed build, and the memory field will be corrected to 3008 in that same commit with the correction named in the message rather than changed silently.",
+  "notes": "Related to row Z-S69, which named this same entry's artifact_sha256 and last_deployed_commit as owed by whoever updates it; this row adds the memory_size field and the self-contradicting _note. No deploy depends on it."
+}
+```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S80",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-10T21:36:13Z",
+  "one_line": "Resolves NFRA_OPLGTW-Z-S78 by issuer ruling, option (a): OG-ap-5 AMENDMENT 1 adds infra/aws/terraform/opal-assets/silver.tf to <paths>, moves silver_build_commit.schwab 47c3c75f11 -> b3e481b261 (CTO C2), and admits the one OPAL_BUILD_COMMIT environment row as the provenance field C2 requires; rollback restores 47c3c75f11.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_OPLGTW_OG_PN1_DTAG_ROUTING_20261009_Z.md @d66a0fb956, C2: silver_build_commit.schwab names the commit whose data/assets/scripts/silver/ tree equals the package directory",
+      "ROW NFRA_OPLGTW-Z-S78 @0ef74efddc: measured b3e481b261 as that commit (0 commits since on the silver tree and the package dir); live OPAL_BUILD_COMMIT and silver.tf both read 47c3c75f11",
+      "ORDER org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-5.converter-dtag-routing-apply.md AMENDMENT 1 (this commit); no other non-terminal order names silver.tf (3 orders name it, all complete)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The conflict between C2 and the order's write surface is removed by amending the order. The blast radius is unchanged: the same one function under the signed halves, whose ask section 2 already names the pin move. Code-only (option c) is refused because it would bake a false provenance claim into the live function and collapse the rollback pin onto the forward pin.",
+  "spec_asserts": "Z-S78: OG-ap-5 step 3 (code fields only) and CTO C2 (pin moves to the built commit) cannot both hold under the order's <paths>.",
+  "world_is": "After AMENDMENT 1 both hold: the plan carries the code fields plus exactly one environment value, OPAL_BUILD_COMMIT -> b3e481b261; any other row or environment key is still a STOP. The time gate [21:15,23:35)Z still binds.",
+  "notes": "Citing row; Z-S78's own text is untouched. Z-S79 (source-map memory_size) is corrected in the assignee's step-5 source-map commit, as that row states."
+}
+```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S81",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-11T00:55:14Z",
+  "one_line": "OG-ap-6 B1 step 4: the whole-root opal-gateway plan at the release base reads 'Plan: 1 to add, 5 to change, 3 to destroy' where CTO C3 expects exactly 1/0/0, and ALL THREE destroys are resources that are LIVE RIGHT NOW and absent only from the release base's configuration -- a B2 apply from this worktree would delete two live gateway IAM policies and the live ALB listener rule serving /ms/taxsma-workbook.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PLAN (rc=0, complete) at release_sha 6aadf7db37a8605389110e08bb64f6e15e1d3026 on base 2a5966dfbd, saved verbatim to deliverables/0.7.0_AE_CloudOps~Z/ap6_plan.txt. Verdict: 'Plan: 1 to add, 5 to change, 3 to destroy'.",
+      "THE ONE EXPECTED ADD: aws_iam_role_policy.advi_billing_gateway_put will be created.",
+      "FIVE CHANGES, none expected: aws_iam_role_policy.gw_gateway_read_secrets; aws_iam_role_policy.schwab_catalog_read_policy; aws_iam_role_policy.schwab_data_read_policy; aws_lambda_function.mcportal_grant_writer; aws_lb_listener_rule.hx_capability -- all 'will be updated in-place'.",
+      "THREE DESTROYS, each 'because <addr> is not in configuration': aws_iam_role_policy.gw_mcportal_close_request_write; aws_iam_role_policy.gw_mcportal_fabric_read; aws_lb_listener_rule.taxsma_capability.",
+      "THE DESTROYS ARE CONFIG ABSENCES AT THE BASE, NOT STATE JUNK -- measured with a positive control: git grep over infra/aws/terraform/opal-gateway/ finds each of the three resource names in 0 files at 2a5966dfbd and in 1 file each at box/sitez HEAD.",
+      "AND THE TARGETS ARE LIVE: aws iam list-role-policies --role-name opal-gateway-role returns gateway-mcportal-close-request-write-policy and gateway-mcportal-fabric-read-policy; aws elbv2 describe-rules on the opal-gateway 443 listener returns 10 rules, one carrying the path condition \"/ms/taxsma-workbook\".",
+      "ROOT CAUSE, measured: the release branch is cut at MP-r-2's deployed commit 2a5966dfbd, which sits on rel-nfra-mcportal-cp2-v2 and does NOT contain box/sitez's later opal-gateway Terraform. The gateway TF root on the release branch is therefore stale against both box/sitez and the live estate."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO half @5e258448d2 C3: the .tf lands under its own ledger with a whole-root terraform plan reading exactly '1 to add, 0 to change, 0 to destroy' for aws_iam_role_policy.advi_billing_gateway_put, and 'Any other line in the plan is a stop.' OG-ap-6 step 4 repeats it and classes extra rows a STOP for B2, not for B1.",
+  "world_is": "Eight rows beyond the one add, three of them destructive against live resources. B1 is complete and reports this verbatim, as step 4 directs; B2's policy act CANNOT run on this plan. Options, none acted on and none recommended as a ruling: (a) the issuer re-cuts the release onto a base that carries box/sitez's gateway TF, which changes release_sha and re-opens all three halves anyway under CTO C1; (b) B2's policy act runs -target'd to aws_iam_role_policy.advi_billing_gateway_put alone, which lands the grant but leaves C3's whole-root drift read unsatisfied and the 3 destroys latent for the next whole-root applier; (c) the drift is adjudicated row by row first. This seat does not choose among them.",
+  "notes": "ARMED rather than INERT because the hazard is live and standing: any whole-root apply of this root from this branch destroys the three named resources, and the next applier inherits that without this row. It is NOT armed against B1, which wrote nothing. SEPARATELY, the base also cannot be planned at all without help, because 2a5966dfbd predates df3e0e2c06 ('the opal-gateway root plans clean with no variable and no pre-built output'): the root still declares two required no-default variables (mcportal_owner_key_claim, mcportal_owner_key), supplied here from the secret gateway/principals/rosters through TF_VAR_ env vars -- never argv, never a tfvars file -- and both values redacted from the saved plan because the design is explicit that no literal for them goes in the repo; and three archive_file/filebase64sha256 inputs are build artifacts. Two of those (m365-ms-ingest-liveness, m365-otp-liveness lambda_function.py) are TRACKED sources and only needed a wider sparse cone. The layer zip was copied from the main tree and is PROVABLY the live-published artifact: its filebase64sha256 oO8BxcnG9EOvVz/pMpHlQCUGzkayANH3ryCKpNAaKfk= and 5016850 bytes equal live layer mcportal-grant-writer-deps-layer v1 Content.CodeSha256 and CodeSize exactly, so the layer row it authors is a true 0-diff. The mcportal-grant-writer .build/staged dir was also copied from the main tree and was NOT independently verified against the live function, so the single row aws_lambda_function.mcportal_grant_writer MAY be instrument-derived; it is also the already-recorded Z-W39-S5 drift class. The three destroys and the four IAM/ALB changes depend on NO archive input and are unaffected by any of this."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S82",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-11T00:55:14Z",
+  "one_line": "OG-ap-6 B1 step 1: the opal-gateway host carries FOUR orphaned mcportal dashboard assets, not the two row NFRA_MCPINDEX-Z-S94 names; the two extra are dashboard/assets/index-CrZMj-00.js and dashboard/assets/index-a6wjv_wv.css.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SHIPPED-FILE COMPARISON (the step-1 check proper) is CLEAN: the host's md5s against the shipped files of 2a5966dfbd read 'MD5 listed 104 identical 104 mismatch 0 []', with 0 extras under app/ and deploy/. Evidence deliverables/0.7.0_AE_CloudOps~Z/ap6_md5_host.out, ssm a6b89beb-9525-4bc5-9d40-71afd96ca617.",
+      "The expected list was REGENERATED at the moved base rather than reused: the Phase-A script embeds the 1e32562729 list (100 entries). Control: md5-of-blob reproduced that embedded list 100 of 100 at 1e32562729, so the method is sound; at 2a5966dfbd the shipped set is 104 entries (4 added, 0 removed, 4 content-changed by MX-r-9/MP-r-2), which is the shipped-list movement COO half condition 3 anticipated.",
+      "DASHBOARD CENSUS (deliverables/0.7.0_AE_CloudOps~Z/ap6_dash_census.out): 7 files under dashboard/ = index.html 1 + referenced-by-index.html 2 (index-BTe-mgyF.css, index-CKTlb93s.js) + orphans 4 (index-BP6X9XJd.js, index-BqfQgt7G.css, index-CrZMj-00.js, index-a6wjv_wv.css). Denominator printed by the instrument.",
+      "Row NFRA_MCPINDEX-Z-S94 names 2 of those 4 (index-BP6X9XJd.js, index-BqfQgt7G.css). The other 2 are unnamed anywhere this seat could find."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-6 step 1: the host is a superset of the artifact, row NFRA_MCPINDEX-Z-S94 names 2 orphaned mcportal dashboard assets, list every extra by name, and any extra not named in this step is a STOP.",
+  "world_is": "Four orphans, two of them unnamed. This is NOT read as a step-1 STOP, and the reason is named rather than assumed: dashboard/ is shipped from mcportal's dist by deploy-to-ec2.sh (tar -C $TMP/bundle $DASHBOARD_BUNDLE_DIR), not from the gateway's git tree, and the instrument the order names (rl16_md5_host.py) walks ONLY app/ and deploy/ -- so it reports 0 extras and has never been able to see a dashboard file at all. The 4 orphans surfaced only because this seat WIDENED the walk to dashboard/. The step-1 set the order actually measures is clean at 104 of 104. The surface is mcportal's, and Z-S94 is NFRA_MCPINDEX's row.",
+  "notes": "Useful to B2 rather than blocking it: B2's read-back condition is that the host's extras named in step 1 are UNCHANGED, so naming 4 instead of 2 makes that comparison strictly sharper. Surfaced, not adjudicated: whether the 2 unnamed orphans want a cleanup cell is the issuer's call with NFRA_MCPINDEX, and nothing here deletes a file on the host."
+}
+```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S83",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T01:03:29Z",
+  "one_line": "Disarms NFRA_OPLGTW-Z-S81 for OG-ap-6 and folds Z-S82 in: OG-ap-6 AMENDMENT 1 plans and applies the E2 policy ONLY from a detached box/sitez-HEAD worktree (C:/tmp/og-tf-e2, policy blob 49c420ac equal to the signed release's), never from the release worktree; the four dashboard orphans join step 8's unchanged-extras read-back.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: git rev-parse <ref>:infra/aws/terraform/opal-gateway/advi_billing_gateway_iam.tf = 49c420acbce7cfb99c8726f5439b3f2cc6ea9f5a at box/sitez HEAD, at release 6aadf7db37 and at the signed a88661b145",
+      "MEASURED: gw_mcportal_close_request_write, gw_mcportal_fabric_read and taxsma_capability each appear in 1 file of the opal-gateway root at box/sitez HEAD (0 at 2a5966dfbd, per Z-S81's own control)",
+      "ORDER org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-6.e2-xlsx-release-apply.md AMENDMENT 1 (this commit): new step 5b, step 6 FROM C:/tmp/og-tf-e2 and NEVER from C:/tmp/og-rel16c"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The destroy hazard came from applying a stale TF root. A1 takes the root from box/sitez HEAD, which carries all three live resources and the identical policy blob, so the apply this order makes cannot destroy them. Any remaining extra row in the HEAD plan (expected: the Z-W39-S5 grant-writer row) is the CTO's to rule under C3 before B2. The latent hazard stays true of the release branch as a TF source, which is why step 6 forbids it.",
+  "spec_asserts": "Z-S81: B2's policy act cannot run on a plan of 1 add, 5 change and 3 destroy (C3 expects 1/0/0). Z-S82: step 1 names 2 dashboard orphans; there are 4.",
+  "world_is": "The policy plan is re-read at box/sitez HEAD (step 5b), and B2 applies from there or not at all. The deploy still ships the release worktree's app code at 6aadf7db37. Four orphans are named in A1 and compared unchanged in step 8.",
+  "notes": "Citing row; Z-S81 and Z-S82 texts are untouched. Option (a) of Z-S81 (re-cut onto HEAD) is refused: it would carry box/sitez's unreleased gateway app changes into the deploy."
 }
 ```

@@ -1,4 +1,4 @@
-# TO IRPT_DASHBD.TO-DB-b-6 -- Name the leg behind the 1,498.38 USD flow residual on 0027265115 from the landed responses (read cell, direct act)
+# TO IRPT_DASHBD.TO-DB-b-6 -- Name the leg behind the [redacted] USD flow residual on acct#89d0916a from the landed responses (read cell, direct act)
 
 <to_id>IRPT_DASHBD.TO-DB-b-6</to_id>
 <project>IRPT_DASHBD</project>
@@ -20,18 +20,18 @@
 
 ## WORKER FACE
 
-**The cell.** A READ: on 49 Financial account `0027265115`, the external flow Opal's gold carries on a day the tie-out could not
-reconcile leaves a 1,498.38 USD residual after the fee leg, which matches to the cent (PRD v0.6 ruling 25). Name the leg that makes
+**The cell.** A READ: on 49 Financial account `acct#89d0916a`, the external flow Opal's gold carries on a day the tie-out could not
+reconcile leaves a [redacted] USD residual after the fee leg, which matches to the cent (PRD v0.6 ruling 25). Name the leg that makes
 the residual -- one of: an IN-KIND leg valued differently by the two sides (`IN_KIND_VALUED_DIFFERENTLY`), a leg Opal classes
 INTERNAL and Black Diamond classes EXTERNAL or the reverse (`INTERNAL_HERE_EXTERNAL_AT_VENDOR`), or `OTHER` with the reason -- from
 data ALREADY LANDED. **No vendor call of any kind** (Black Diamond, Schwab or any other API): reads of landed S3 objects only.
 
 **What is known, and how firmly.**
 - MEASURED (tie-out record `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.4.0_DS_ClientPlatform~S/tieout/TIEOUT_49F_BLACKDIAMOND_R1.json`,
-  `periods[]` for `0027265115`): `2026-07-07` carries a flow of `-2423.40`, withheld as `FLOW_UNRECONCILED / NOT_GRADED_OUTSIDE_DOMAIN`;
+  `periods[]` for `acct#89d0916a`): `2026-07-07` carries a flow of `[redacted]`, withheld as `FLOW_UNRECONCILED / NOT_GRADED_OUTSIDE_DOMAIN`;
   `2026-03-16` carries `133980.54` (`NOT_MEASURABLE / GUARD_NOT_REACHED`) and `2026-03-27` carries `462984.11`
   (`FLOW_UNRECONCILED / GRADED_DISAGREED`).
-- INFERRED by the issuer, NOT measured: the residual is on `2026-07-07` (2,423.40 - 1,498.38 = 925.02 would be the fee leg). Confirm
+- INFERRED by the issuer, NOT measured: the residual is on `2026-07-07` (2,423.40 - [redacted] = 925.02 would be the fee leg). Confirm
   or refute this FIRST from the landed rows; if the residual sits on another day, follow the data and say so in the record.
 
 **Where the landed data is (read only).**
@@ -44,20 +44,20 @@ data ALREADY LANDED. **No vendor call of any kind** (Black Diamond, Schwab or an
   + `/data.parquet` (columns per `org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json`: `external_flow`, `fee_amount`,
   `fee_amount_reason`, `day_quality`, ...).
 - Black Diamond landed responses: `s3://opal-data-assets/blackdiamond/49f/bronze/` (the tie-out read `reporting_performance/<pull
-  date>/reporting_performance_22596361_<period end>.json`, pull dates 2026-07-17, 08-30, 08-31, 09-01; Black Diamond relationship
-  `22596361` maps to `0027265115` in `blackdiamond/49f/_ops/taxsma_roster.json`). List the bronze prefix for any other landed family
+  date>/reporting_performance_acct#57de9fb9_<period end>.json`, pull dates 2026-07-17, 08-30, 08-31, 09-01; Black Diamond relationship
+  `acct#57de9fb9` maps to `acct#89d0916a` in `blackdiamond/49f/_ops/taxsma_roster.json`). List the bronze prefix for any other landed family
   that carries per-transaction or per-day flow detail for that relationship and window; use only what is there.
 
-**What you write.** ONE record, `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/FLOW_RESIDUAL_0027265115_R2.json`:
-`{"account": "0027265115", "flow_date": "<YYYY-MM-DD>", "opal_external_flow_usd": <n>, "fee_leg_usd": <n>, "residual_usd": <n>,
+**What you write.** ONE record, `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/FLOW_RESIDUAL_acct#89d0916a_R2.json`:
+`{"account": "acct#89d0916a", "flow_date": "<YYYY-MM-DD>", "opal_external_flow_usd": <n>, "fee_leg_usd": <n>, "residual_usd": <n>,
 "legs": [{"source": "schwab|blackdiamond|opal_gold", "key": "s3://<bucket>/<key>", "row_ref": "<row or field identity>",
 "amount_usd": <n>, "class_opal": "<class or null>", "class_vendor": "<class or null>", "is_residual": true|false}, ...],
 "leg_named": "IN_KIND_VALUED_DIFFERENTLY|INTERNAL_HERE_EXTERNAL_AT_VENDOR|OTHER", "leg_explanation": "<two or three sentences>",
 "vendor_calls": 0, "measured_at": "<UTC>"}`. Every leg cites the landed object it was read from. The legs flagged `is_residual` sum to
-the residual. Plus a one-page `FLOW_RESIDUAL_0027265115_R2.md` beside it in plain English for the CTO's next ruling.
+the residual. Plus a one-page `FLOW_RESIDUAL_acct#89d0916a_R2.md` beside it in plain English for the CTO's next ruling.
 
 <criterion id="DB-6-AC1" cell_refs="DB-b-6"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r2/p2_6_ac1_flow_residual_record.py" .</invocation><expect>DB-6-AC1 PASS</expect></criterion>
-`DB-6-AC1` -- the record exists for `0027265115` with `vendor_calls` 0; `residual_usd` is 1,498.38 within 0.01; `leg_named` is one of the
+`DB-6-AC1` -- the record exists for `acct#89d0916a` with `vendor_calls` 0; `residual_usd` is [redacted] within 0.01; `leg_named` is one of the
 closed set with an explanation; the `is_residual` legs sum to it; every cited `s3://` key exists. Base: FAIL (no record).
 
 <expected_criteria>DB-6-AC1</expected_criteria>
@@ -86,7 +86,7 @@ Read without a grant (never written): `lib/opal_naming.py` and `infra/logic/regi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: DB-6-AC1. Instance at `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/IRPT_DASHBD.TO-DB-b-6.flow-residual-0027265115.proof_of_spec.json`,
+Criterion ids: DB-6-AC1. Instance at `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/IRPT_DASHBD.TO-DB-b-6.flow-residual-acct#89d0916a.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> DB-6-AC1` BEFORE the flip.
 </proof_of_spec>
 

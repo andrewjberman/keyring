@@ -46,7 +46,9 @@ INBOX_BASE_DIR="$INBOX_BASE/$AGENT_DIR"
 mkdir -p "$INBOX_BASE_DIR/read"
 INBOX_DIRS=("$INBOX_BASE_DIR")
 if [ -n "$SUFFIX" ]; then
-    INBOX_INSTANCE_DIR="$INBOX_BASE/${AGENT_DIR}~${SUFFIX}"
+    # NESTED lane dir inbox/<base>/~<lane>/ (LD-0202). The flat inbox/<base>~<lane> form is written by nothing, so
+    # reading it made a lane's "No pending messages" blind to its own mail (1.0.0_SA_CTO msg 108123).
+    INBOX_INSTANCE_DIR="$INBOX_BASE_DIR/~${SUFFIX}"
     mkdir -p "$INBOX_INSTANCE_DIR/read"
     INBOX_DIRS=("$INBOX_INSTANCE_DIR" "$INBOX_BASE_DIR")
 fi

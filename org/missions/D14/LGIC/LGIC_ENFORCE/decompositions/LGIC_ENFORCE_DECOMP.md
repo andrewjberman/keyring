@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.20",
+ "decomp_version": "v3.22",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -2621,3 +2621,34 @@ criterion: `Z2R20-AC2`, whether each difference's explanation is right at the by
 
 The registry (only `4.0.0_SA_CRO` writes it; `EN-z-1` writes cards that name owners, never rows); the hand-side originals and the
 round-19 siblings; any AWS resource; the switch file `org/mcp/naming-place.enforce`.
+
+---
+
+## 0v. v3.21 -- THE ROUND-21 RECUT (2026-10-09, `2.0.0_SA_COO~B1`), on `1.0.0_SA_CTO~DELL1`'s round-20 analysis
+
+**Source:** `org/missions/D14/LGIC/LGIC_ENFORCE/ledger/ROUND_ANALYSIS.round20.md` (msg 2861): FWD-5 REALIZED, 7 of 7 FWDs REALIZED; the project stays open for two gate holes and one red
+test. Round 21 is ONE issuance over the analysis's three items; its analysis is the close read.
+
+| cell | item | row | slot | risk | write set |
+|---|---|---|---|---|---|
+| `EN-aa-1` | required registries fail closed: `MISSING INPUT <path>`, non-zero exit, no rows; a sparse worktree STOPS, the full checkout completes | Z-S1 | ~1 | LOCAL | `lib/opal_lgctfm.py`, `lib/tests/test_opal_lgctfm.py` |
+| `EN-aa-2` | the gate grades PATTERN names through `place()`; never `PASS 0 graded`; proof on the planted commit a09b284984 | D1-W2-S152 | ~2 | LOCAL | `.tools/naming-gate.py` |
+| `EN-aa-3` | the scope test derives the generated role's json line (it typed :11; the generator moved it to :13) | D1-S2 | ~3 | LOCAL | `lib/tests/test_opal_naming_scope.py` (direct act) |
+
+No edges: M = 3 chains, N = 3 workers; write sets disjoint. Checks: `deliverables/2.0.0_SA_COO~B1/fixed_inputs/r21/check_en_r21.py`
+(`failclosed`, `pattern`, `scope`), each FAILING at the base. Not touched: the registry, the hand-side carriers, any AWS resource,
+the switch file.
+
+---
+
+## 0w. v3.22 -- THE ROUND-22 FOLLOW-UP CELL (2026-10-09, `2.0.0_SA_COO~B1`), after the close, on the CTO's ruling for row D1-S1
+
+**Source:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_LGIC_NAME_RULINGS_READ_BY_CENSUS_NOT_GRADE_20261009.md`; seated by
+`0.0.0_AB_MSTR~DELL1` (msg 2948). No new outcome: it corrects a reading of FWD-5's census.
+
+| cell | item | row | slot | risk | write set |
+|---|---|---|---|---|---|
+| `EN-ab-1` | the census reads `name_rulings.json`: a ruled RAISE reads `RULED name_rulings.json#<i>`, `ruled=<n>` in the totals, STALE rows printed; an unruled RAISE still cards or stops; `grade()` untouched | D1-S1 | ~1 | LOCAL (direct act) | `lib/opal_naming.py`, `lib/tests/test_opal_naming.py` |
+
+The ruling names `lib/opal_lgctfm.py`; the census that judges and cards is `census_judge()` in `lib/opal_naming.py` -- the issuer's
+reading, stated on the order. Check: `deliverables/2.0.0_SA_COO~B1/fixed_inputs/r22/check_en_r22.py ruled` (FAILS at the base).

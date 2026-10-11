@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CB2</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -74,6 +74,26 @@ blob of `infra/logic/registry/legacy_addresses.json`). It is uploaded with the o
   if changed.
 - **The import-closure read** (AMENDMENT 1) is included.
 - **The served written-key census** is read against the pre-change writer. A new key class means STOP.
+
+**AMENDMENT 3 (issuer, 2026-10-09 ~17:3xZ) -- RELEASED. Both halves are GIVEN.**
+
+- **The pair:**
+  - COO half `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R50_COT_GOLD_REDEPLOY_COO_HALF.md` @ea3b5ad9f8
+    (blob 2186cd1adc);
+  - CTO half `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_R50_COT_GOLD_REDEPLOY_CTO_HALF.md` @fe56ae564e
+    (conditions 1-4).
+- **The act, in order. Open the ledger first** (`org/critical_paths/change_management/` + `.open_deploys/`), and commit it right after
+  `open` and after each leg.
+  1. Re-read: `code/gold/ticker_overrides.py` and `code/gold/legacy_addresses.json` are 404, and the writer's and B_00's VersionIds are
+     `GAOI7tORcF7V7F0fW9NMH35bonjXEwzj` and `hU7ZrZTD5NDlVvuSo9aBMUd1hKUg_lAe`. A miss means STOP.
+  2. `put-object` of the exact repo-blob bytes, `ticker_overrides.py` first, then `legacy_addresses.json`. Read back each sha256:
+     `4d407c3a...` and `34dfcb37...` (full values in the COO half).
+  3. `.tools/safe-deploy.sh` the writer, then B_00. Read back their sha256: `8b733bb1...` and `2b38b142...`.
+  4. Proof on the FETCHED served files (CTO condition 2): the fail-closed test (`CB50ax2-AC1`), a synthetic rps day, the written-key census
+     equal to the pre-change writer's, and the line `IMPORT-CLOSURE b00_modules=<n> writer_modules=<m> missing=0`.
+- **Any infeasible condition as worded means STOP and ask the issuer** (ADDENDUM 18).
+- **Rollback:** `copy-object` of the two prior VersionIds. The minted files stay; deleting them is Andrew's act.
+- **No client account id in any ledger line or report** (containment ruling item 6).
 
 ### ACCEPTANCE
 

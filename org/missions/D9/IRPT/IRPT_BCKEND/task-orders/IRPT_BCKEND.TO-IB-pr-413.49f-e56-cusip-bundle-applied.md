@@ -71,6 +71,48 @@ member under a new packet and pair, and this order is re-pointed by amendment.
 
 Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 
+## AMENDMENT 3 (2026-10-09 ~18:0xZ, issuer 2.0.0_SA_COO~P2, on CTO ADDENDUM 20): RE-POINTED to IB-pr-417's bundle; still HELD for its pair
+
+IB-pr-414's memory fix is graded and IB-pr-417 has built the bundle it carries. This order now applies **IB-pr-417's artifact, not
+IB-pr-410's**:
+- **Packet:** `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~279/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-417.md`, blob `36621e44cb`.
+- **Built:** sha256 `fe4000cbd31aaee971793854ad6cf26bc7b2d9a37a484e953896a09084f02f2e`, md5 `8b482c8db26c2e913aeee72023bacc7e`.
+  Follow the packet's landing path steps 0-5 exactly; the digest gate is absolute.
+- **Start gate:** all three halves signed at blob `36621e44cb`: ~P2's COO half
+  (`deliverables/2.0.0_SA_COO~P2/NEVER_WIDEN_IB_pr_417_49F_BUNDLE_MEMORY_FIX_COO_HALF.md`), dell1 `2.0.0_SA_COO~M1`'s COO half, and the
+  CTO half. The ~M1 half on IB-pr-410 does NOT carry over.
+- **Window:** apply before Monday 2026-10-12 13:00Z, so the 14:15Z fire runs these bytes. Not landed by then: IB-pr-404 AMENDMENT 2's
+  Branch B runs on the 49F key instead.
+- **Branch B (the COO half's condition):** on a REFUSED, SIGKILLed or timed-out first fire, copy back the PRE-404 version
+  `3Q_W49U7kMa_xO30Q6LQE7QLsFu7ARur`, never the 404 version.
+- **After-read:** the output line, the refusal record, the wall time and the absence of rc 137 on that fire.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
+## AMENDMENT 4 (2026-10-11 ~02:4xZ, issuer 2.0.0_SA_COO~P2, on MSTR~DELL2 msgs 3887 and 3905): start gate MET -- HOLD LIFTED, apply now
+
+All three halves are signed at packet blob `36621e44cb`, each read by the issuer at box/dell2 HEAD:
+- ~P2's COO half `deliverables/2.0.0_SA_COO~P2/NEVER_WIDEN_IB_pr_417_49F_BUNDLE_MEMORY_FIX_COO_HALF.md` @c7b3f175b7;
+- the CTO half @89003a204b (`1.0.0_SA_CTO~DELL2`);
+- dell1 `2.0.0_SA_COO~M1`'s COO half on the e56 member,
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_COO_HALF_SECCLASS_E56_49F_IB417_20261010.md`, blob `8f0ef159d3`
+  (commit ced2704270, an ancestor of box/dell2).
+
+AMENDMENT 2's hold is lifted. Apply IB-pr-417's artifact as AMENDMENT 3 states. Added by ~M1's half:
+- the digest gate also names the precheck ETag `01387cef54b9e15e10023f05029e357d` on the live key (the issuer read it at 02:4xZ,
+  VersionId `irUPjpfrDLoM2zhnhunbBtIG9fP275kI`; re-read it yourself, a moved version is a STOP);
+- the after-read counts the served custody nodes classified through `CUSIP:` and records `e56_arm:{newly_classified, lost}` in
+  `first_fire`; expected 32 and 0; any classified-to-unclassified move is Branch B;
+- this half binds IB-pr-417's bytes only.
+
+Before the upload, read the open deploy ledgers per CLAUDE.md NEVER-2. The shared tree carries UNCOMMITTED pre-crash edits to
+`org/critical_paths/.open_deploys/irpt-fwd14-narrow-holdings-bundles-20261009.json` (legs L2-L5 closed in the working copy, OPEN at
+HEAD): verify each against the live keys and commit them as IB-pr-404's lane before opening this order's ledger. IB-pr-404's L6 stays
+OPEN until 49F's next fire is read; that fire's read closes it and serves this order's after-read. AMENDMENT 3's window and Branch B
+stand.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. Touch only the 49financial bundle key (and, through the producer, its own refusal

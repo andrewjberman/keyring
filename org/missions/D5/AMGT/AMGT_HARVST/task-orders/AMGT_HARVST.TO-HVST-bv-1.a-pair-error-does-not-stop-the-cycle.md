@@ -111,9 +111,23 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   re-queue next cycle" (msg 2724). No criterion changes (AC1 covers the added test).
 - Slot ~133, worktree `C:/Dev/wk-harvst-133`, branch `wk-AMGT_HARVST-133-r78`.
 
+**COMPLETE 2026-10-09 ~17:4xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Built:** worker ~133, branch `wk-AMGT_HARVST-133-r78` @4b0475b646 (d68e68d25d build, a7a546b043 AMENDMENT 1, rows
+  7a95461ddd and 323f124878, proof 4b0475b646). Proof VALID rc 0 at box/dell1 HEAD.
+- **Merged:** b5a7a3a4b6 under the pair COO @8ccf65f68c and `1.0.0_SA_CTO~Z` @e3f030ba85. Ledger
+  `harvst-bv1-merge-20261009` CLOSED @fbf1b8c948.
+- **AC1 PASS** `10 passed`. **AC2 PASS** `53 passed`. The full `lib/opal_data_harvest` suite on the merged tree: 5 failed,
+  780 passed, 3 skipped, the same 5 failures as the dell1 base (the worktree measured 4, because `test_bn1` passes there).
+- **Rows:** D1-W133-S1, resolved by AMENDMENT 1 (row D1-W133-S2). D1-W133-S2's residual (re-queue reads only the newest cycle
+  record, so a pair owed across a STOPPED cycle is asked with the unmoved floor) is accepted by `1.0.0_SA_CTO~Z` for this
+  merge and goes to the round-78 analysis.
+- **Next (not this order):** `1.0.0_SA_CTO~Z`'s C-e (site Z's census before its box-sync, `0.0.0_AB_MSTR~Z`). Then the re-pin of
+  site Z's runner to b5a7a3a4b6 under its own pair, and the live read of bbg's next cycle.
+
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>78</round>
 <slot>~133</slot>
 <fabric>dell1</fabric>

@@ -6125,3 +6125,31 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED. All 15 hits were enumerated and resolved before leg D closed, and leg D's proof records each one. The gate's owner is the deploy tool's lane, not this seat; remediation is the CVO's to route. PARENT: [[MDPF_SECCLASS-D1-S23]], which this addendum does not replace -- it adds limbs (a), (b) and (c) and a second measured root. SIBLING: [[MDPF_SECCLASS-D1-S22]], the same tool's vanished-worktree race, which read vanished=0 at this exercise and is therefore intermittent."
 }
 ```
+
+## MDPF_SECCLASS-D1-S26 -- SC-e-79's lib branch is unreachable from BD's three served classify sites: the ship moved nothing and AC1 graded the function, not the served path
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S26",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-11T02:28Z",
+  "one_line": "SC-e-79's shipped lib branch (classify_with_identity: ticker-no-row -> NAME:: row) is UNREACHABLE from BD's three served classify sites, so the ship moved nothing: all three call classify_with_identity with an EMPTY ticker only. The 23 ticker-no-row securities ($966,285) still serve unclassified; e79 leg G reads NOT EFFECTIVE, and the cell's own AC1 graded the function, not the served path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Served lib is the shipped one: `python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R16_CHECKS/e79_shipped_lib_check.py` at 2026-10-11T02:2xZ -> `E79-SHIPPED ok=True repo=eb9bb852... served=eb9bb852... version=hnOzzH4QClDqa_qbd6Y5tqKu3Kag4vtM control=MATCH`.",
+      "The function does what AC1 asked: `python .../R16_CHECKS/sc_r16_ticker_no_row.py` -> `TICKER-NO-ROW ok=True with_ticker=36 ticker_no_row=23 resolved=23 first_miss=[]`. It calls ETFClassifier.classify_with_identity(ticker, name, cusip) directly with the TICKER.",
+      "The served path never does: data/black_diamond/scripts/gold/D_04.client_portal_summary.py:160-167 (`_classify_with_canonical`: `classifier.classify(t, n)`, then `if not t.strip():` -> classify_with_identity('', n, c); a non-blank ticker with no row falls to 'unclassified' at :174-175); C_06.client_mix_timeseries.py:233 `classify_with_identity('', name)`; D_03.composition_artifacts.py:140 `classify_with_identity('', asset_name, cusip)`. Three call sites, all with an empty ticker (read at box/dell1 HEAD 044ce5c831).",
+      "Served result, read by SC1 (E60_LEG_G_MEASUREMENT_20261010.md): top-level Unclassified 998,634.78 (ref) -> 998,762.85 (first post-ship) -> 972,621.40 (current); e79 predicted ~32,349.78. Equity and fixed_income class totals byte-identical to ref. No post-ship run moved the 23."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-79 shipped means BD's served firm mix places the 23 ticker-no-row securities by their NAME:: row (unclassified falls by ~$966K), because AC1 resolved all 23 and the lib is served.",
+  "world_is": "The lib branch is live but dead code on the served path: no BD gold script reaches classify_with_identity for a non-blank ticker, so AC1 (a function-level exercise with the ticker) passed while the served bytes did not move. The e79 acceptance was graded on the lib seam, not the D_04/C_06/D_03 call seam. Remedy needs a build: the three classify sites must pass the ticker (or fall to the identity chain after a classify() miss for a non-blank ticker), under the existing half. e79 leg G closes NOT MET with this row as its cause; e60b arm 2 loses its accounted e79 move.",
+  "notes": "SURFACED, NOT CHASED: found at the e60b arm-2 read (SC1 msg 3300), traced by the issuer. The issuer's own AC1 is the instrument that missed it (the seam it exercised was the function, not the caller), so the fix cell's acceptance must exercise D_04's served classify path with a ticker-no-row position. Round 19 holds no build cell; the L10 slug carries this row to the CTO for the round-N analysis. RELATED: [[MDPF_SECCLASS-D1-S11]] (the trace that named the 23), [[MDPF_SECCLASS-D1-W66-S3]]."
+}
+```

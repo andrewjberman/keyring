@@ -8406,6 +8406,126 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
-}
+},
+{
+  "id": "AMGT_HARVST-D1-W133-S1",
+  "project": "AMGT_HARVST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_HARVST~133",
+  "surfaced_at": "2026-10-09T16:15:00Z",
+  "one_line": "HVST-bv-1 makes a cycle with failed pairs completed:true, and the floor of the next cycle is the last completed cycle's started_at, so the window of a failed pair is skipped by the next cycle.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "HVST-bv-1 item 2: failed pairs stay in the checkpoint's retry set so the next cycle asks them again; item 3: a cycle that reached every pair is completed true even when failed > 0.",
+  "world_is": "cycle_runner.floor_for (lib/opal_data_harvest/cycle_runner.py) takes the next cycle's --floor from the UTC date of the last completed record's started_at, and each cycle writes a FRESH checkpoint (cycles/<P>/<cycle_id>.checkpoint.json), so the retry set of a finished cycle is never read by the next one. With bv-1 a cycle with failed > 0 now moves the floor; a failed pair is asked again only for articles newer than that floor, and the articles between the old and the new floor, which the failed pair never collected, are not asked for. Measured: code read only, no run. Not measured: how long a failed pair stays failed in practice, and the floor's granularity (a date, so a same-day failure is re-asked). Owner: 2.0.0_SA_COO~W1 (the round-78 analysis).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_data_harvest/cycle_runner.py floor_for and run_cycle @d68e68d25d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "AMGT_HARVST-D1-W133-S2",
+  "project": "AMGT_HARVST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_HARVST~133",
+  "surfaced_at": "2026-10-09T16:31:09Z",
+  "one_line": "Row AMGT_HARVST-D1-W133-S1 is resolved by AMENDMENT 1 step 7 at a7a546b043: a failed pair is asked again with the floor of the cycle it failed in.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 1 of AMGT_HARVST.TO-HVST-bv-1 step 7: the next cycle asks each pair that failed in the publisher's previous cycle with that cycle's floor and every other pair with the new floor, names them requeued: [keys], and a pair that fails again carries its older floor forward until it succeeds.",
+  "world_is": "S1 (floor moves past a failed pair's window) is resolved at a7a546b043. cycle_runner.requeue_floors reads the newest readable cycle record's failures, each now carrying the floor it was asked with; run_cycle writes <cycle_id>.pair_floors.json and passes --pair-floors to backfill_driver, whose Collector.run_job uses pair_floor() for that key. The new record's requeued lists the keys. Measured by test_bv1 (10 passed): cycle 1 fails 3 pairs; cycle 2 asks exactly those 3 with cycle 1's floor and the other 239 with cycle 2's; K091 and K092 fail again and keep cycle 1's floor; cycle 3 re-queues only those two; cycle 4 none; the mutant that drops the re-queue fails the scenario. Fake collector only: no publisher, S3 or site Z run. Not covered: the requeue reads only the previous cycle's record, so a pair owed from cycle N that cycle N+1 stopped before reaching is not in N+1's failures and is not re-queued in N+2 (a stopped cycle does not move the floor, so N+2 asks it with the unmoved floor, which may be newer than its failed window). Owner for that residual: 2.0.0_SA_COO~W1 (the round-78 analysis).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_data_harvest/cycle_runner.py requeue_floors and run_cycle @a7a546b043",
+      "lib/opal_data_harvest/test_bv1_cycle_continues_past_pair_errors.py test_vi and test_vii @a7a546b043"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+    {
+     "id": "AMGT_HARVST-D1-S5",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-09T20:19:06Z",
+     "one_line": "After bw-1's re-pin, site Z's reaper dry run lists TWO exempt python processes: PID 29192 (new pin b5a7a3a4b6) and PID 37816 (old pin c1be67f53c). Their parentage is not recorded, so whether a second runner shares the one state dir is unproven.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-bw-1 step 2 / C-c: no other runner or backfill_driver process is alive after the stop; one runner runs from the new pin with the carried state dir.",
+     "world_is": "bw-1 @abdcceb042 (box/sitez): bw1_ac3.out line 289 and bw1_gc_classifier_dryrun.out line 64 list EXEMPT PID 37816 python.exe WORKTREE .../wk-harvest-runner-pin-c1be67f53c (command line), beside EXEMPT PID 29192 (new pin). bw1_live.out shows 29192 as the cycle_runner with --state-dir under the old pin, as ordered. The old cycle 20261009T170903Z ended stopped_by_operator at 19:53:06Z. Likely reading, NOT measured: 37816 is the collector job subprocess the new runner spawns, whose command line carries the old pin's runtime-root path. bw-2 AMENDMENT 1 reads the process tree (pid, parent pid, command line).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round79/bw1_ac3.out @abdcceb042",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round79/bw1_live.out @abdcceb042"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+{
+  "id": "AMGT_HARVST-Z-S110",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+  "surfaced_at": "2026-10-09T19:59:19Z",
+  "one_line": "bw1 installer derives STOP from RepoRoot, not carried RuntimeRoot; initial comp-schedule read exhausted its budget.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 2 C-g requires deletion of the old STOP before restart; ordered installer invocation carries old StateDir and RuntimeRoot.",
+  "world_is": "Pinned installer defaults StopFile from RepoRoot. Ordered invocation will point at new-pin STOP. Old STOP deletion and absence of both STOP paths are checked before restart. Initial comp-schedule budget90 read was PARTIAL_OR_BLIND; retried budget360, not assumed green. No installer changes or widened publisher scope.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round79/bw1_preflight.out",
+      "lib/opal_data_harvest/install-cycle-schedule.ps1 @b5a7a3a4b6"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+    {
+     "id": "AMGT_HARVST-D1-S6",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-09T20:37:50Z",
+     "one_line": "Since bw-1's re-pin, site Z's runner has written 2 harvest run records (20:00:00Z and 20:05:20Z, bbg, 0 fetch attempts each) and none in the 32 minutes after, against about one every 2.5 minutes on the old pin.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "FWD-18: the runner cycles the publishers without end at the collector's existing pace. Under b5a7a3a4b6 a pair error counts as failed and the cycle runs on.",
+     "world_is": "Read at 20:37Z: the S3 run records under store.table_prefix('amgt','bronze','run_record') written since 2026-10-09T19:55Z number 2 of 1,523, both bbg, mode backfill, fetch_attempts 0. On the old pin, bbg wrote 190 runs from 08:57Z to 18:46Z. NOT measured: whether the runner (PID 29192) is alive, hung or waiting on one long pair, and what its new cycle_runner.log says. bw-2 AMENDMENT 1's process-tree read and the log tail answer it.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round77/run_record_census.py (run with SINCE 2026-10-09T19:55)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round79/bw1_live.out @abdcceb042"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-Z-S111",
+     "project": "AMGT_HARVST",
+     "fabric": "site-z",
+     "surfaced_by": "0.0.0_AB_MSTR~Z",
+     "surfaced_at": "2026-10-10T22:20:00Z",
+     "one_line": "The /govern worktree GC (worktree_gc.py --go) force-removed both harvest-runner pin worktrees while the scheduled runner was executing from them; the runner died at 22:01:29Z and was restored and restarted at 22:15:26Z.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "FWD-18: the runner cycles the publishers without end. The GC rule (govern Step 3a.6) removes MERGED worktrees idle >= 24 h and never touches a locked tree.",
+     "world_is": "wk-harvest-runner-pin-b5a7a3a4b6 (the task's WorkingDirectory, code) and wk-harvest-runner-pin-c1be67f53c (state) were both unlocked, merged into box/sitez and read idle 25.8 h and 36.8 h, so GC classed them MERGED and ran git worktree remove --force. GC idleness is git activity only; it cannot see that a live process or scheduled task runs from the tree. The checkouts were deleted except the cwd directory and .runtime. cycle_runner.log 22:01:29Z: 'No module named lib.opal_data_harvest', cycle 20261010T204810Z stopped, completed false. Remedy 22:1xZ by 0.0.0_AB_MSTR~Z: both worktrees re-added at their exact pins (.runtime state moved aside and back, intact), both locked with a reason, task restarted; new runner PID 21512, PLAN lines from 22:15:27Z. Also locked: opal-pinned/amgt-induction-daily/7580fe909cf3 (the amgt-induction-daily task's pin). Not fixed: worktree_gc.py still has no check for a tree that a process or scheduled task uses, and other boxes' pins are unchecked.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-c1be67f53c/.runtime/harvest-cycle/state/cycle_runner.log (lines at 22:01:29Z and 22:15:27Z)",
+       ".tools/worktree_gc.py --go output 2026-10-10 ~21:4x-22:0xZ: MERGED rows for both pins, WARN remove refused (Permission denied / Directory not empty)",
+       "Get-ScheduledTask 'Opal Data Harvest - Continuous Cycle' action: WorkingDirectory wk-harvest-runner-pin-b5a7a3a4b6"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```

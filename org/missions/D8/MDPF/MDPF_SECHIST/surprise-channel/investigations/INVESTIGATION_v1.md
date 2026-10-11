@@ -346,3 +346,85 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "The member list needs more than the silver module: lib/opal_naming.py and its registry and schema inputs too. Not live: no gold deploy has been taken. Disarm ruling (2.0.0_SA_COO~H1): the gold deploy order to 0.7.0_AE_CloudOps~DELL1 adds to PACKAGE etf_history_gap_record.py, lib/opal_naming.py and its registry/schema inputs, on the mdpf-gold-lambda pattern; the build's own import-closure check (infra/aws/lambda/ci/import-closure-check.py) passes on the zip before apply; a post-apply invoke reading 'gap record:' in the log (not ImportError) is the acceptance's first line."
 }
 ```
+
+## MDPF_SECHIST-Z-S2 -- The SH-t-8 "site-Z take" had already landed in site Z's live tree, through box-sync 574fe5ce6b at 17:09Z, before its site-Z producer half was signed.
+
+```json
+{
+  "id": "MDPF_SECHIST-Z-S2",
+  "project": "MDPF_SECHIST",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~Z",
+  "surfaced_at": "2026-10-09T17:52:00Z",
+  "one_line": "The SH-t-8 take of etf_daily_pull.py at blob 75342a6958 was already in site Z's shared tree, which the OPAL_BBGTML_daily_pull task runs, via box-sync 574fe5ce6b (17:09Z), before the site-Z producer half or its ledger existed; the integration path is not gated on the pair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~H1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse HEAD:integrations/bloomberg/pipeline/etf_daily_pull.py = 75342a695857 = origin/box/dell1's blob; git hash-object on disk = the same; git status clean",
+      "first-parent walk of box/sitez: 574fe5ce6b (box-sync, CLOUD @9fe42c43a5, 13:09:28 -0400) is the first commit carrying d2434ebc08",
+      "Get-ScheduledTask OPAL_BBGTML_daily_pull: cmd.exe /c ajb_workspace/integrations/bloomberg/pipeline/scheduled_daily_pull.cmd (shared tree); :242 ETF_PULL=%REPO%/integrations/bloomberg/pipeline/etf_daily_pull.py; next run 2026-10-10 07:00 local",
+      "python -m pytest integrations/bloomberg/pipeline/test_etf_daily_pull_history_plan.py on the live tree: 13 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "XB-20261009T172645Z-2ed2 and the staged TO-DEPLOY-SH-T8-SITEZ-TAKE: site Z's tree takes ONE file at blob 75342a6958 replacing 73735f44d6, under a ledger opened by site Z's owner, outside 10:30Z-12:00Z.",
+  "world_is": "There is nothing left to take: the replacement happened by integration. The site-Z half (1.0.0_SA_CTO~Z) is signed on that basis, and the executor's order becomes a VERIFY. Disarm: before the 2026-10-10 07:00 local run, a NEVER-2 ledger entry is opened that names the box-sync as the landing, records the blob read and the 13-pass test, and closes on the first scheduled run's acceptance (run_class scheduled, exit 0, both new manifest fields, exhausted list printed). Fixing the integration-path gap belongs to 0.0.0_AB_MSTR~Z and is a separate question from this disarm."
+}
+```
+
+## MDPF_SECHIST-D1-S3 -- The dell1 cloudops agent user cannot call iam:SimulatePrincipalPolicy, so an AE seat on this box cannot run the cloud-ops live-primitive check on any role it grants.
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-S3",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SH1",
+  "surfaced_at": "2026-10-09T20:12:35Z",
+  "one_line": "After the TO-DEPLOY-GOLD apply landed R1's one statement, the cloud-ops verification step for a new ARN (iam simulate-principal-policy on the live primitive) returned AccessDenied for cloudops-dell1-agent-user on iam:SimulatePrincipalPolicy, so this seat could prove the grant DESIRED and APPLIED but could not exercise it; the same gap applies to every role an AE seat on dell1 grants, not just this one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws iam simulate-principal-policy --policy-source-arn arn:aws:iam::313476888478:role/etf-positioning-producer-role --action-names s3:PutObject --resource-arns arn:aws:s3:::opal-data-etfs/bloomberg/etfs/silver/history_gaps/as_of=2026-10-12/gap_record.json -> AccessDenied: User arn:aws:iam::313476888478:user/cloudops-dell1-agent-user is not authorized to perform iam:SimulatePrincipalPolicy (2026-10-09, 3 invocations, target plus 2 negative controls, all 3 identical)",
+      "POSITIVE CONTROL that the credentials and the role both exist and are readable: aws iam get-role-policy --role-name etf-positioning-producer-role --policy-name s3-rw-etfs-gold-platinum rc=0 returning 9 statements, and aws s3api head-bucket --bucket opal-data-etfs rc=0 -- so the denial is the SimulatePrincipalPolicy permission, not a bad ARN, a bad role or absent credentials",
+      "The act did not depend on it: the statement is proven APPLIED by the live get-role-policy read (8 prior statements carried byte-identical, 1 added) and by terraform plan -detailed-exitcode = 0 after the apply"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": ".claude/skills/cloud-ops/SKILL.md names aws iam simulate-principal-policy as the live-primitive verification an AE seat runs for a NEW bucket/table/ARN -- one --resource-arns per call, the positive control as a separate invocation, the ARN at the grain the action is authorized on, and the simulation run AFTER the resource exists. It reads as a step every AE seat can take on demand.",
+  "world_is": "On dell1 that step is unreachable: the agent user holds no iam:SimulatePrincipalPolicy. The instrument the skill leans on for the EXERCISED rung is absent on this box, so an AE seat here can reach DESIRED and APPLIED and no further, and ABSENT is not EXERCISED-AGAINST. For THIS grant the EXERCISED rung arrives with L3, the first scheduled gold run, which writes the gap record as the role -- a real exercise rather than a simulation, and it is the issuer 2.0.0_SA_COO~H1's read. The open question is whose it is to decide whether the dell1 and dell2 agent users should carry iam:SimulatePrincipalPolicy (read-only, no mutation) so the skill's step is takeable, or whether the skill should state that on an agent box the live PutObject at L3 is the only exercise available. Not adjudicated here and it blocked nothing."
+}
+```
+
+## MDPF_SECHIST-D1-S4 -- proof-of-spec-check cannot see <proof_genre>DEPLOY</proof_genre> in a CRLF-committed order, so a correct order's complete flip is blocked.
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-S4",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SH1",
+  "surfaced_at": "2026-10-09T20:45:55Z",
+  "one_line": "proof-of-spec-check refuses the TO-DEPLOY-GOLD instance for lacking <proof_genre>DEPLOY</proof_genre> on its own line, but the marker IS on line 14 of the order: the order's blob is CRLF and PROOF_GENRE_ELEMENT_RE ends in [ \t]*$, which cannot cross the \r -- so the complete flip is blocked by an instrument that cannot read a correct order.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE .tools/proof-of-spec-check.py:2106 PROOF_GENRE_ELEMENT_RE = re.compile(r\"^[ \t]*<proof_genre>\\s*([A-Za-z]+)\\s*</proof_genre>[ \t]*$\", re.M); :2110 _committed_order_text reads the order with `git show HEAD:<rel>` capture_output (bytes), so CRLF survives into the match",
+      "CONTROL INSIDE THE SAME FILE: :2107 RISK_ELEMENT_RE = ^\\s*<risk>\\s*([A-Za-z]+)\\s*</risk> has NO trailing anchor and reads WORLD from the SAME bytes in the SAME run. One regex reads the order and the other does not; the only difference is the trailing [ \t]*$",
+      "MEASURED on the order's blob at HEAD: 7264 bytes, 98 CRLF, 0 bare LF; genre regex -> None, risk regex -> WORLD. The SAME text with \r\n replaced by \n: genre regex -> DEPLOY. The marker is present at line 14, between <risk>WORLD</risk> and <placeholders>NONE</placeholders>",
+      "SCOPE FALSIFIED rather than assumed -- this is NOT 'the gate is broken for everyone': the orders behind two working DEPLOY-genre instances read 0 CRLF / 116 LF (AMGT_RESAPP.TO-AMGT-ay-5) and 0 CRLF / 133 LF (AMGT_RESAPP.TO-AMGT-ax-5), both with the marker present. The defect bites an order COMMITTED WITH CRLF, which is what a Windows-box writer produces",
+      "The instance is otherwise clean at commit e8fb4ce260: proof-of-spec-check reports structural=jsonschema valid, 6 of 6 named controls DISCRIMINATE with 0 DID-NOT-DISCRIMINATE, rollback named, alignment 5/5 criteria carrying a cell_ref and 1/1 declared cell reachable, surprises 1 of 1 resolving to a channel row, invocation-alignment 1/1 matching. violations=1, and it is this one"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "org/standards/PROOF_OF_SPEC.schema.json and 3.0.0_SA_CVO verdict 29306 condition 1: genre DEPLOY is admitted when the governing order carries the issuer's line-anchored <proof_genre>DEPLOY</proof_genre> beside <risk>SERVED|WORLD</risk>. MDPF_SECHIST.TO-DEPLOY-GOLD carries both, so a DEPLOY instance for it should be admitted and the assignee should be able to flip <status> to complete once its work is proven.",
+  "world_is": "It is refused. The admission test is a line-anchored regex over bytes read straight from `git show`, and this order was committed CRLF, so the trailing [ \t]*$ never reaches the line end and the marker reads as absent. The work is unaffected -- L1 and L2 are closed with proof and the live state is verified -- but <status> stays `pending` and the order cannot be marked complete. NEITHER REMEDY IS THE ASSIGNEE'S: (a) normalise the order's line endings to LF, which is the ISSUER's file and the spec is frozen mid-round, or (b) widen the regex to tolerate a trailing \r (or normalise newlines in _committed_order_text), which is the GATE OWNER's instrument and fixes the whole class rather than this one order. (b) is recommended: (a) leaves the next CRLF-committed order to rediscover it. The audited `# pipeline-override:` escape was deliberately NOT taken -- its stated condition is that the TO stands outside the pipeline, which is false here, and a false reason in an audit log is worse than a blocked flip. Routed to 2.0.0_SA_COO~H1 with 1.0.0_SA_CTO~DELL1 copied as the decision."
+}
+```

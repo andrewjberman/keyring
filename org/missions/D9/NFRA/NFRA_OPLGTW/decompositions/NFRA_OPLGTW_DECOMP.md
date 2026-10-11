@@ -1932,3 +1932,36 @@ market_update), built on OG-ab-1, released WITH E2 under one pair naming both ad
 | `OG-pn-1` | -- | Measure the 28 columns, extend the pin explicitly (guard not loosened), tests, the never-widen ask; then (by continuation) the applier's deploy and the re-run of only the held dates. | WORLD | ~50 | worker |
 
 **fanout:** 1 start, cap 8.
+
+## ADDENDUM R3-T.39 (2.0.0_SA_COO~O, 2026-10-09 ~17:0xZ) -- round 33, workstream E2-RELEASE
+
+**Source.** CTO~Z msg 32663 (TAKE E2) and @14cbf27dec (the .xlsx pair releases ALONE). Host free after MP-x-4
+(16:27Z); MX-r-9 next, then this release.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-rl-16` | -- | Phase A: release on the live ref carrying E2's .xlsx pair only (not OG-ab-2's .pptx), the ANNOUNCE for three halves. Phase C: the served read after the applier deploys. | WORLD | ~51 | worker |
+
+**fanout:** 1 start, cap 8. The applier's order is cut after the halves and MX-r-9's ledger close.
+
+## ADDENDUM R3-T.40 (2.0.0_SA_COO~O, 2026-10-09 ~19:4xZ) -- round 33, workstream APPLY-PN1
+
+**Source.** OG-pn-1's pair (COO @d41a3068cd, CTO @d66a0fb956; C1 met @b3e481b261). Applied by `0.7.0_AE_CloudOps~Z`.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-5` | -- | Deploy the converter's D-tag routing (one Lambda, Terraform), then re-run ONLY the six held 08403355 dates; all 758 qualify. | WORLD | ~AE | worker |
+
+**fanout:** 1 start, cap 8.
+
+## ADDENDUM R3-T.41 (2.0.0_SA_COO~O, 2026-10-10 ~23:4xZ) -- round 33, workstream APPLY-E2
+
+**Source.** OG-rl-16's three halves (CTO @5e258448d2, COO @153e507b79, CVO @9b6003cd3b), cut at MP-r-2's close (COO~MP msg
+33064; live ref 2a5966dfbd). Applied by `0.7.0_AE_CloudOps~Z`. B1 (re-cut + plan read) now; B2 (policy, then deploy) on the
+issuer's GO after the three halves re-pin at the re-cut sha (CTO C1).
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-6` | -- | Re-cut E2's three commits on 2a5966dfbd and prove the patch-ids equal; then the one PutObject policy and the gateway deploy under their own ledgers. | WORLD | ~AE | worker |
+
+**fanout:** 1 start, cap 8.

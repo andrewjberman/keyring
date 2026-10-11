@@ -151,7 +151,7 @@ The COO packet is `deliverables/0.9.0_WK_ADVI_COTBKF~46/sweep_regrade.md` (@b9f3
 - CB29ac2-AC2 is MET, and **FWD-3 is SERVED** (the three silver tables minted).
 - The round-28 continuity grade stands: the re-count's "contradiction" measured the store's adjusted series.
 
-**D2-S45: the day values of B3S728504 and B3S728506 are about 2.45x round 26's on every day.** Returns still match, but the served `account_day_value`
+**D2-S45: the day values of acct#79d02c2c and acct#4a890dd1 are about 2.45x round 26's on every day.** Returns still match, but the served `account_day_value`
 levels differ by that factor.
 
 **RULING:**
@@ -332,7 +332,7 @@ D2-S50, W59-S1 and W53-S3 are closed. REMEDIATION_v26 carries 6 OPEN rows.
 **The gate condition is met (row D2-S59 @1dc34e3f03).**
 - 7 of 566 control months moved, across 5 accounts.
 - Every changed held price is a re-priced canonical-store point, and there is no other cause.
-- The largest move is RGY005018 2024-11, -0.83 pp (DIFF to MATCH).
+- The largest move is acct#65b3b3ea 2024-11, -0.83 pp (DIFF to MATCH).
 
 **The ADDENDUM 9 gate is therefore OPEN. Nothing is granted by this line.** Each reader, role, route or export is its own never-widen pair, naming both ADDENDUM 11
 exceptions. Every reader read stays inside this firm's tree (CLAUDE.md, the cross-firm NEVER).

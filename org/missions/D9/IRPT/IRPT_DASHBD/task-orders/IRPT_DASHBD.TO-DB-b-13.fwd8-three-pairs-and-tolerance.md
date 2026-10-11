@@ -29,9 +29,9 @@ pairs within 0.35 pp. Three are beyond it. FWD-8 is REALIZED only when all three
 
 | account | window | abs_diff (R4) | disposition owed |
 |---|---|---|---|
-| 0027265115 | 2026-06-25..07-06 | 1.2130 pp | row S22: Opal books income +0.4627% on 06-25 where Black Diamond nets -2,470.31 on an account about 47 pct short. An Opal DEFECT: fix it and re-measure |
-| 0084073310 | 2026-08-21..10-01 | 0.7078 pp | a stated, measured reason; if the reason is an Opal defect, fix it and re-measure |
-| 0027265115 | 2026-04-09..04-30 | 0.4555 pp | a stated, measured reason; same rule |
+| acct#89d0916a | 2026-06-25..07-06 | 1.2130 pp | row S22: Opal books income +0.4627% on 06-25 where Black Diamond nets -2,470.31 on an account about 47 pct short. An Opal DEFECT: fix it and re-measure |
+| acct#ffa615d2 | 2026-08-21..10-01 | 0.7078 pp | a stated, measured reason; if the reason is an Opal defect, fix it and re-measure |
+| acct#89d0916a | 2026-04-09..04-30 | 0.4555 pp | a stated, measured reason; same rule |
 
 **What you build.**
 1. **S22 fix.** In `data/assets/scripts/gold/irpt_reporting/account_return_daily.py`, income (`:662`, `INCOME_CATEGORY_RE` over

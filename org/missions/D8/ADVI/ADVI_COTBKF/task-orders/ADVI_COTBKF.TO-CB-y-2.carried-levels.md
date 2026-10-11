@@ -26,8 +26,8 @@ FWD-3 and the chain as in CB-y-1 (same worker, continued). After CB-y-1 the cash
 with their sourced treatments) layered on `method`. Round 24's cause table
 (`org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~46/sweep_regrade.md`) names 39 regressions `carried_level:*`:
 `pre_first_valued_day` 16 (the arms already differ on the account's first valued day: postings made while the account was unvalued),
-`ManAltF` 14 (e.g. a -105.20 level from a `ManAltF` debit on 2017-10-09, D49141625), `trade_cash` 3 (e.g. a -140,000 net sale credit
-with no offsetting purchase debit, RGY004222 2024-10), `csltfee` 2, and one each `cash_leg_difference`, `dv`, `fch`, `mixed_rows`.
+`ManAltF` 14 (e.g. a -105.20 level from a `ManAltF` debit on 2017-10-09, acct#08d09234), `trade_cash` 3 (e.g. a -140,000 net sale credit
+with no offsetting purchase debit, acct#6834d5a2 2024-10), `csltfee` 2, and one each `cash_leg_difference`, `dv`, `fch`, `mixed_rows`.
 
 **Your item (the CTO's round-24 analysis, E2).**
 1. Trace each of the 39 to its FIRST WRONG MONTH: the earliest month in which the method's carried cash level departs from what the

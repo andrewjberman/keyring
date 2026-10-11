@@ -143,6 +143,34 @@ No edge: each cell builds against the contracts above; ST-w-2's seam reads ST-w-
   reported after the fact by name and grant; a role another box's pipeline assumes goes to the laptop BEFORE the act. The drain's S3
   write of `etf_universe.json` and the runner wiring (W5) are issued with these lines on the order face.
 
+- **A10 (cell `ST-w-7`, cut 2026-10-09 ~17:2xZ; the issuer's own omission). The S08 list reaches every run.**
+  - **The gap.** W5 made "serving the S08 list" a drain act, but the DRAIN SEQUENCE above never carried it. A read at 17:1xZ found
+    no running path that calls `opal_unidentified` (comp-find over `data` and `infra`: 2 files, the module and its test). So
+    C-UNIDENTIFIED ("each run lists ... in a served or recorded file the reader can open") and FWD-7 ("one scheduled run read") have
+    no run to read.
+  - **Ruling, superseding W5's S08 half.** The list is a new key, `unidentified_strategies`, on the Cottonwood slice the scheduled
+    run already writes (`gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries.json`). It is built by
+    `build_cottonwood_mdpf_slice.unidentified_block(gold_by_date)` and set in `build_composed`. No new address and no new pipeline
+    (Rule 30 and C-LAYERS non-application).
+  - **Block shape.** `{as_of, firm_id: "cottonwood", names_scanned, config_source, rows: [{firm_id, name, dollars, reason}]}`, from
+    `unidentified_candidates` over the latest Cottonwood gold value date. The Opal-model set is A6's roster+definition union.
+  - **Moves:** the slice gains a key; no figure moves.
+  - **Serves:** FWD-7, and FWD-4's "listed by name" branch.
+  - **Risk and placement:** SERVED. The slice is deployed with round 2's pair; it is a per-firm artifact, outside C-GLOBAL-PAIR, so
+    no figure needs a signature.
+  - **Continued under `MDPF_STRATID.TO-W2-3` as amendment A10.**
+  - **Checks:** `W2_CHECKS/w2_7_tests.py`, `w2_7_seam.py`. Both read FAIL at the base 2026-10-09 ~17:2xZ (`W27-BAD no file ...`;
+    `W27-SEAM-BAD arm=build no unidentified_block ...`).
+  - **Blindness:** the list covers Cottonwood's Rebalancer names only. SmartX (49financial) and Eclipse (Inflection) names are not
+    listed by any run. The ST-t-4 census found no Opal-strategy names there on 2026-10-08, and that is stated, not assumed to hold.
+
+- **A11 (cell `ST-w-8`, cut 2026-10-09 ~20:5xZ; row D1-S7 follow-on).** ST-w-7's slice key reaches only the Cottonwood scope, and the L-1
+  key-set identity (`mdpf_gold_consolidator.py:1065`) aborts every run before any put (CloudOps~DELL1 msg 3151). The fix pads the key to
+  every scope as None in `apply_sma_sleeve_overlay`, the round-1 `sma_additive_aua` pattern. SERVED. Continued under TO-W2-3. Checks
+  `w2_8_tests`, `w2_8_keyset`.
+  - **Fallback** if not live by 2026-10-10 11:00Z: restore the runner slice to VersionId `Xki2TZ7vXhS6btiNeg3Hl5ASuf3Fq89i`
+    (pre-ST-w-7).
+
 ## DRAIN SEQUENCE (staged 2026-10-09 ~07:0xZ on the CRO's approach in UB-20261009T063738Z-0bc9; nothing below starts before step 0)
 
 0. **Gate:** the FWD-1 read of the 13:30Z `mdpf-scheduled-floor` fire is committed (`l4_read.py` verdict + ledger L4 closed or

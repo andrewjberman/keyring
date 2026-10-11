@@ -1,0 +1,21 @@
+{
+  "policy_id": "MP-20261010",
+  "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261010_23xxZ_MODEL_POLICY_BY_ROLE_AND_TEST_PLAN.md",
+  "why": "Workers execute a fully specified order and prove it, so they need little reasoning (Haiku). MSTR, COO and Tier-2/3 seats coordinate and handle issues (Sonnet). CTO, CVO and CRO do architecture, governance and validation (Opus).",
+  "treatment_devices": ["laptop", "dell1"],
+  "control_devices": ["sitez", "dell2"],
+  "control_behaviour": "unchanged pre-policy launcher defaults (ajb.ps1 per-serial table + tier rule, spawn-agent.ps1 tier default, worker frontmatter)",
+  "roles": [
+    {"role": "TIER1_OPUS", "serial_regex": "^(1|3|4)\\.0\\.0_", "model": "claude-opus-5-5", "effort": "high"},
+    {"role": "MSTR_COO_SONNET", "serial_regex": "^(0\\.0\\.0|2\\.0\\.0)_", "model": "claude-sonnet-5-5", "effort": "high"},
+    {"role": "TIER23_SONNET", "serial_regex": "^0\\.[1-9][0-9]*\\.[0-9]+_", "model": "claude-sonnet-5-5", "effort": "high"}
+  ],
+  "unmatched": "a serial matching no role (0.0.N utilities such as 0.0.3_BG_BBGTerminal, Codex seats) keeps its pre-policy launch defaults",
+  "worker": {
+    "agent_types": ["worker", "worker-light"],
+    "spawn_model_param": "haiku",
+    "spawn_effort_param": "high",
+    "expected_model": "claude-haiku-5-5"
+  },
+  "explicit_override": "an explicit -Model / -Effort on ajb or spawn-agent always wins; the census reports it as an override, not a mismatch"
+}

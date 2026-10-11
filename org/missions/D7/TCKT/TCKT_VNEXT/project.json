@@ -2,7 +2,7 @@
   "project_code": "TCKT_VNEXT",
   "macro_code": "TCKT",
   "directive": "D7",
-  "fabric": "laptop",
+  "fabric": "dell2",
   "pipeline": null,
   "status": "active",
   "dep_stage": "EXECUTING",
@@ -42,5 +42,6 @@
   },
   "coo_lane": "2.0.0_SA_COO~V2",
   "phase": "L4 PRD v0.1 DRAFT (1.0.0_SA_CTO~DELL2); L4-R halves owed: 3.0.0_SA_CVO ratified-text, brief half accepted (the CRO wrote the brief) or a live COO not holding the round.",
-  "placement_ruling": "Laptop 1.0.0_SA_CTO ruling 106359 (2026-10-07): D7 and its one member placed on DELL2 on Andrew's word at the laptop 4.0.0_SA_CRO terminal; placement commit 98fcdce272."
+  "placement_ruling": "Laptop 1.0.0_SA_CTO ruling 106359 (2026-10-07): D7 and its one member placed on DELL2 on Andrew's word at the laptop 4.0.0_SA_CRO terminal; placement commit 98fcdce272.",
+  "last_updated": "2026-10-09"
 }

@@ -1,12 +1,105 @@
 # Process report -- GitOps and the driving skills, 2026-10-09
 
-**For:** Andrew. **By:** 1.0.0_SA_CTO (laptop), ~15:25Z.
+**For:** Andrew. **By:** 1.0.0_SA_CTO (laptop), ~15:25Z, **updated ~19:00Z** (see the UPDATE section).
 
 **Window:** mainly 09:00Z-15:20Z, with the whole day from 00:00Z used where it shows a trend. Every number names its source.
 
 **Words used:**
 - **Box:** one of the four machines: the laptop, site Z, dell1 and dell2.
 - **COO / CTO / CVO / CRO:** the seats that run work, rule calls, verify, and research.
+
+---
+
+## UPDATE ~19:00Z -- what changed in the process since ~15:20Z
+
+**Verdict, updated:**
+- Git ran much more smoothly in the afternoon: **4 holds in 134 sync runs** (3%), against about 1 in 4 earlier in the day.
+- The big event was a **client-data leak into the repository** (below). It exposed a gap in the commit gates, and I closed it the same hour.
+
+### Git operations, 15:20Z-18:51Z
+
+Source: `org/git-author-override-audit.log`, 134 rows.
+
+| Kind of run | Clean | Failed | Skipped (another pass running) | Held |
+|---|---|---|---|---|
+| Integrate into `CLOUD` | 43 | 0 | 10 | 0 |
+| Box passes | 66 | 1 | 10 | 4 |
+
+**Durations:**
+- Integrate: median 69 s, longest 365 s.
+- Box pass: median 39 s, longest 322 s.
+
+The 10-14-minute integrates seen at 13:10Z and 13:34Z (row NFRA_CTLPLN-S9107) did not recur. The longest afternoon run was 6 minutes.
+
+**The holds:**
+- **Three were dirty-overlap**, a file with unsaved edits in the working folder.
+- **One was a conflict (15:18Z):** a cross-box record that both the laptop and dell2 closed at the same time.
+  - Cleared by taking `CLOUD`'s copy (3cb55f8042).
+  - Practice adopted: **each side records its own half of a cross-box record only on top of the other side's latest copy.**
+  - Since then, two records closed on both sides with no conflict: XB-4849 (5e75426816) and XB-cae7 (d30dd2088f).
+
+Integration was paused once, by the laptop manager, ~15:5xZ-16:20Z, for the client-data incident. Site Z paused its own syncs until 18:47Z to keep a merge base stable.
+
+### The client-data incident (16:00Z)
+
+**What happened:**
+- A dell2 worker committed an evidence file carrying data for 121 client accounts (`W73_S2_EVIDENCE.json`, commit 1ba8eafcda), and it reached `CLOUD`.
+- dell2's census then found **130 files under the Investor Reporting folders carrying account numbers** (evidence files, docs, code).
+- dell2's CTO ruled the containment (`CTO_RULING_CLIENT_ACCOUNT_DATA_IN_REPO_CONTAINMENT_20261009.md`):
+  - evidence files moved out of the repo;
+  - documents redacted to `acct#<8 hex>` tokens;
+  - code fixtures made synthetic;
+  - **a rule that the repo carries counts, sha256 hashes and reason codes only.**
+
+**Why no gate caught it:** the sensitive-data gate (`.tools/commit_gate_lib.sh`) matches FILE NAMES only, such as keys and `.env` files. Nothing read file contents for account numbers.
+
+**Fixed:**
+- **`client-data-check`** (8c1d8a1966) hashes every id-shaped token in a commit and refuses one that matches a served account id. The id list lives outside the repo.
+  - It is wired into the commit hook on **all four boxes** (dell1, dell2 and site Z confirmed it).
+  - **It is not yet protecting anything:** no box has the hashed id list yet. dell2's CTO owns building it. Until then every box prints a loud WARN at each commit instead of passing silently.
+- **Redaction support in the task-order gate:** the gate used to refuse any edit to a completed order, so the redactions themselves were refused.
+  - Fix: a pure redaction is no longer re-graded (9caacb0f35). Two follow-up fixes came from dell2's reports (24bdcd2690, b2d3d8e749).
+  - A completed order whose file NAME is an account number can now be renamed to its token (8fff05ca26).
+  - Self-tests: 132 of 132.
+  - At least 10 of the 12 waiting orders have landed; the rest retry on the fix.
+
+**Still yours:** **purging the files from git history.** They are gone from the current files but remain in history on `CLOUD` and every box, and on GitHub. A purge rewrites history, which `CLAUDE.md` reserves for your word. My recommendation is to purge, in a quiet window.
+
+### Errors since 15:20Z (mine and the fabric's)
+
+| # | What | Impact | Fix |
+|---|---|---|---|
+| 12 | Client data committed by a dell2 worker | in history on `CLOUD` | contained at HEAD; content gate built; purge is your call |
+| 13 | My first redaction check treated every number on a HEAD line as maskable | 2 of 7 COTBKF redactions wrongly refused | 24bdcd2690, marker-anchored check |
+| 14 | A scripted edit of mine wrote control characters into `to-pipeline-gate.py` | caught before commit; the file was restored from HEAD | edits redone as exact-text replacements |
+| 15 | I ruled a dell1 lane onto LGIC_ENFORCE after it had closed (7 of 7 outcomes, 18:00Z) | none; dell1's CTO caught it | dell1 seated MDPF_CANON and LGIC_CANON instead |
+| 16 | A dell2 seat read the portal's token-signing key five times today, one with its deploy ledger opened after the act ("RETROSPECTIVE") | a procedure gap (`CLAUDE.md` NEVER-2) | flagged to dell2's CTO |
+
+### Success stories since 15:20Z
+
+- **The leak was contained within about an hour**, by three boxes and the laptop working together:
+  - dell2 removed and redacted the files;
+  - the laptop built and wired the content gate;
+  - each manager wired it on its own box;
+  - syncs resumed at 16:20Z.
+- **The laptop is no longer running COO work for idle projects.** MDPF_CANON and LGIC_CANON moved to dell1 and were seated by 18:42Z:
+  - MDPF_CANON is driven by `~D1`;
+  - LGIC_CANON by `~B1`, the lane that just closed LGIC_BLANKFIX and LGIC_ENFORCE.
+- **Cross-box records are closing cleanly** with the one-side-at-a-time practice.
+
+### New improvement items
+
+11. **Build the hashed account-id list and place it on every box.**
+    - **Issue:** the content gate warns but cannot refuse until the list exists.
+    - **Owner:** dell2's CTO (the builder), then each box manager (placing it). This is now the most important open item.
+12. **Put "no account ids in tracked files" in every worker's prompt and in `CLAUDE.md`.**
+    - **Issue:** dell2's containment ruling made it a rule, but it lives only in that ruling file.
+    - **Change:** `CLAUDE.md` gains one line; worker faces carry it.
+    - **Owner:** a law edit, by any CTO, with the usual broadcast.
+13. **Accept an Andrew act as an act.**
+    - **Issue:** site Z filed two things only you can do (a look at the Control Plane page, and a sign-in) as forks. Forks sit unruled, because no seat can rule them.
+    - **Change:** `open-calls.py add` defaults `--kind act` when the subject names Andrew's own login, sign-in or look.
+    - **Owner:** CRO.
 
 ---
 

@@ -4,10 +4,10 @@
  "directive": "D0",
  "macro_code": "NFRA",
  "fabric": "dell1",
- "dep_stage": "ROUND_CLOSE",
- "status": "active",
+ "dep_stage": "CLOSED",
+ "status": "complete",
  "name": "GitOps gates scoped to the act",
  "generated_from": "org/missions/D0/NFRA/NFRA_GATSCP/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-09T16:47:42Z"
+ "generated_at": "2026-10-09T18:03:17Z"
 }

@@ -16,7 +16,7 @@ now fully classed (163 = 16 core + 72 sweep_balance + 75 sweep_trade_day) and st
   "fabric": "dell2",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
-  "mechanism": "A sweep buy debits cash in the after arm, but the non-sweep sale that funded it credits no cash, so the after-arm base shrinks (D49141714 2019-02: 4,061.90 -> 51.04, month 3.31% vs 0.04% reported).",
+  "mechanism": "A sweep buy debits cash in the after arm, but the non-sweep sale that funded it credits no cash, so the after-arm base shrinks (acct#c7081e97 2019-02: 4,061.90 -> 51.04, month 3.31% vs 0.04% reported).",
   "evidence": [
    "investigation row ADVI_COTBKF-D2-W42-S1",
    "deliverables/0.9.0_WK_ADVI_COTBKF~42/mover_causes.md trace 1"

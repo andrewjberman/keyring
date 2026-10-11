@@ -31,10 +31,10 @@ AGREEMENT only on like day sets. A pair counts only where Opal's linked days equ
 of five (`deliverables/0.4.0_DS_ClientPlatform~S/tieout/TIEOUT_49F_BLACKDIAMOND_R1.{md,json}`). This cell makes like pairs by
 construction: it asks BD for its return over windows where Opal withheld no day.
 
-**The five accounts:** 0027265115, 0035940058, 0076459710, 0084073310, 0091939812.
+**The five accounts:** acct#89d0916a, acct#f08ffd13, acct#6b914f88, acct#ffa615d2, acct#d0cf6c92.
 - The BD id comes from `s3://opal-data-assets/blackdiamond/49f/_ops/taxsma_roster.json` (bd_internal_id -> schwab_account), as
   TO-DB-b-3 did.
-- In round 1, 0035940058 and 0091939812 were `pending_resolution` with no BD id. An account with no BD id is recorded as unmapped,
+- In round 1, acct#f08ffd13 and acct#d0cf6c92 were `pending_resolution` with no BD id. An account with no BD id is recorded as unmapped,
   with the reason, and is never guessed.
 
 **Steps.**

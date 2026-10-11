@@ -58,7 +58,7 @@ GENERATED_RE = re.compile(r'^org/projects/[^/]+\.json$')
 CROSSBOX_RE = re.compile(r'^org/devices/crossbox/XB-[^/]+\.json$')
 XB_BLOCKS = ('sent', 'ack', 'closed')
 APPEND_ONLY = ('org/mcp/agent-spawn-audit.log', 'org/law-edit-audit.log', 'org/safe-deploy-bypass-audit.log',
-               'org/git-author-override-audit.log')
+               'org/git-author-override-audit.log', 'org/mcp/drive-mode.log')   # the five of CTO ruling 1 @ba20ac668b
 ROOT = subprocess.run(['git', 'rev-parse', '--show-toplevel'], capture_output=True, text=True).stdout.strip() or '.'
 
 

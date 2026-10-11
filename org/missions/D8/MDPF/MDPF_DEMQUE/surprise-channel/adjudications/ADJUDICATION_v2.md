@@ -7,7 +7,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T03:20:00Z. No L8 packet reached this se
 (their order superseded), D1-S1 graduated INERT to `remediations/REMEDIATION_v2.md`.
 
 **L9 -- FWD-1 agreement clause (judgment, CTO msgs 1373/1520): MET on AMLP** (row C-S3). **FWD-1: NOT REALIZED** -- hop 7, the values on
-0QF880237's served page, is still owed by dell2's ADVI_COTBKF. The no-hand-pull clause is EXERCISED (scheduled fire 2026-10-09T02:30:01Z).
+acct#8039e07b's served page, is still owed by dell2's ADVI_COTBKF. The no-hand-pull clause is EXERCISED (scheduled fire 2026-10-09T02:30:01Z).
 
 ```json
 [
@@ -17,11 +17,11 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T03:20:00Z. No L8 packet reached this se
     "fabric": "laptop",
     "surfaced_by": "3.0.0_SA_CVO",
     "surfaced_at": "2026-10-09T03:20:00Z",
-    "one_line": "FWD-1 'those prices agree with the prices the client actually traded at' is MET on AMLP: 3 of 4 of 0QF880237's fills within 2% (median 0.92%), and the 2020-03-12 miss (4.19%) is an intraday fill inside that day's move; across all accounts 100 of 108 trade dates agree (92.6%), which clears the CTO's 90 pct lock floor. FWD-1 stays NOT REALIZED until hop 7 (the served page).",
+    "one_line": "FWD-1 'those prices agree with the prices the client actually traded at' is MET on AMLP: 3 of 4 of acct#8039e07b's fills within 2% (median 0.92%), and the 2020-03-12 miss (4.19%) is an intraday fill inside that day's move; across all accounts 100 of 108 trade dates agree (92.6%), which clears the CTO's 90 pct lock floor. FWD-1 stays NOT REALIZED until hop 7 (the served page).",
     "class": "OBSERVATION",
     "hazard_standing": "INERT",
     "spec_asserts": "Spine L9/L10 (CLAUDE.md rule 27): every item is dispositioned on grounded evidence, and every BLOCKING or ARMED item before the slug.",
-    "world_is": "FWD-1 'those prices agree with the prices the client actually traded at' is MET on AMLP: 3 of 4 of 0QF880237's fills within 2% (median 0.92%), and the 2020-03-12 miss (4.19%) is an intraday fill inside that day's move; across all accounts 100 of 108 trade dates agree (92.6%), which clears the CTO's 90 pct lock floor. FWD-1 stays NOT REALIZED until hop 7 (the served page).",
+    "world_is": "FWD-1 'those prices agree with the prices the client actually traded at' is MET on AMLP: 3 of 4 of acct#8039e07b's fills within 2% (median 0.92%), and the 2020-03-12 miss (4.19%) is an intraday fill inside that day's move; across all accounts 100 of 108 trade dates agree (92.6%), which clears the CTO's 90 pct lock floor. FWD-1 stays NOT REALIZED until hop 7 (the served page).",
     "grounding": {
       "status": "GROUNDED",
       "evidence": [

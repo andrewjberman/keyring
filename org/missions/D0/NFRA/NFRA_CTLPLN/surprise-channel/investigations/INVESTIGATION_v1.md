@@ -6473,3 +6473,296 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Integrate now holds the slot for 10-14 minutes, so the next slots are skipped and a fix waits longer: the PROOF_OF_SPEC.schema.json repair 59a9442734 sat local while every proof check read rc=2. Where the time goes is not measured; the verify-merges explain about 150s of the 607s."
 }
 ```
+
+## NFRA_CTLPLN-S9108 -- crossbox-call.py has no way to withdraw or supersede an order the other side never acknowledged, so a moot ORDER is retried by send-pending forever
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9108",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-09T17:20:00Z",
+  "one_line": "XB-20261009T093642Z-9ec5 (laptop -> dell1 ~CT1, 'commit your rows') went moot when ~CT1 committed them itself at 09:42Z; it was never acked, `close` refuses an unacked file, STATES holds only OPEN/ACKED/CLOSED-BOTH, so it stays OPEN and the manager's send-pending fails on it every pass",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/crossbox-call.py:67 STATES = (\"OPEN\", \"ACKED\", \"CLOSED-BOTH\"); :178-179 refuse any other state value.",
+      "Run 2026-10-09 ~09:5xZ by 2.0.0_SA_COO~C: `crossbox-call.py close --id XB-20261009T093642Z-9ec5 --side from` -> 'REFUSED: ... is not acknowledged yet (no ack recorded in this copy); a call closes after the other side has read it'.",
+      "0.0.0_AB_MSTR msg 108055: send-pending fails on 9ec5 every pass with no recorded send."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A cross-box call or order travels as a file with an acknowledgement and closes on both sides (CT-s-6); every file reaches a terminal state.",
+  "world_is": "A file whose purpose evaporates before the other side reads it has no terminal path except a resend-and-ack round trip; the opener cannot withdraw it, and the only way to stop the manager's retries is to fake an ack (refused here) or resend.",
+  "notes": "Interim route taken: MSTR resends, ~CT1 acks as moot, both sides close. Candidate fix for the next round: a `withdraw --id --reason` verb for the opener while state is OPEN, recorded as a fourth terminal state."
+}
+```
+
+## NFRA_CTLPLN-S9109 -- crossbox-call.py send-pending runs bare 'bash' through subprocess, which Windows resolves to WSL bash in System32, so every send on a Windows box exits rc=1
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9109",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-09T18:20:00Z",
+  "one_line": "send_pending builds its default command as shlex.split('bash <agentbus-sqs.sh> send'); CreateProcess searches System32 before PATH, so 'bash' is WSL bash and fails 'execvpe(/bin/bash) failed' on every pass, although shutil.which('bash') reads Git bash -- the root cause of send-pending rc=1 beside a manual send rc=0",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/crossbox-call.py:388 cmd = shlex.split(os.environ.get(\"CROSSBOX_SEND_CMD\", \"\").strip() or \"bash %s send\" % ...) -- bare 'bash', no resolver.",
+      ".tools/git_bash_resolver.py:55 bash_argv(script, *args) exists for exactly this case (CLAUDE.md Git section).",
+      "0.0.0_AB_MSTR msg 108084, measured on the laptop: subprocess.run(['bash','-c','echo ok']) rc=1 with 'WSL (9 - Relay) ERROR: CreateProcessCommon:800: execvpe(/bin/bash) failed'; XB-9ec5 and XB-0655 failed this way."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The manager's send-pending delivers every OPEN cross-box file on any box (CT-s-6).",
+  "world_is": "On a Windows box the default send command never reaches Git bash; only a manager who sets CROSSBOX_SEND_CMD to the full Git bash path gets a send through.",
+  "notes": "Interim route: 0.0.0_AB_MSTR runs send-pending with CROSSBOX_SEND_CMD set to the full Git bash path. Fix for the next round, one line: build the default argv with git_bash_resolver.bash_argv(agentbus-sqs.sh, 'send'). Pairs with S9108."
+}
+```
+
+## NFRA_CTLPLN-D1-S6 -- seat-liveness reads HUNG for a seat whose pending orders wait only on the issuer's dated read
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T18:28Z",
+  "one_line": "seat-liveness.py classed 0.7.0_AE_CloudOps~RV1 HUNG (2 open orders, nothing for 81m) when both applies were done and the orders stay pending only for the issuer's dated L2 read on 2026-10-10; the HUNG limb cannot tell owed work from an issuer-side wait.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/seat-liveness.py at 18:24Z: 0.7.0_AE_CloudOps~RV1 HUNG orders=2 ETFS_RIVALS.TO-APPLY-WI1, TO-APPLY-WS2WS3, nothing for 81m",
+      "/unstick --peek 18:25Z: no approval prompt; last turn 'Re-armed. Holding quiet.'; inbox watcher running",
+      "2.0.0_SA_COO~V1 msg 2969: WS2WS3 live 14:48:39Z report @8ad8b51083 graded @b35333c714; WI1 live 15:22:10Z report @909e43668c graded @9301fbe5d0; pending only for AC2 + ledger L2 reads of the 2026-10-10 11:00Z and 13:00Z runs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "HUNG = alive by process, an open task order, nothing in 45 minutes: a seat that owes work and is not doing it (/govern Step 3a.2).",
+  "world_is": "An order whose remaining criteria are the issuer's dated reads leaves the executor idle by design; seat-liveness reads it HUNG and /govern would run /unstick on a healthy seat (the peek-first rule caught it here). Remedy for the owner: a carve-out for orders whose open criteria are issuer reads, or a dated-wait field the limb reads."
+}
+```
+
+## NFRA_CTLPLN-D1-S7 -- round-close-check counts only order-level judgment criteria; a graded never-widen pair condition reads judgment=0
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T18:38Z",
+  "one_line": "round-close-check.py (C-SEATS clause 7, cell CT-s-8) counts only order-level judgment criteria, so AMGT_RESAPP round 86's CVO grade of kk-3 condition 4 (a never-widen pair condition) is invisible and the round reads judgment=0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round86.md section 1 (cited by 1.0.0_SA_CTO~DELL1 msg 2989)",
+      ".tools/round-close-check.py header: NFRA_CTLPLN workstream SEATS, cell CT-s-8; contract C-SEATS clause 7",
+      "routed here because NFRA_GATSCP (which last built the tool) is CLOSED @45f5fc4fd9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A round may count finished only when every judgment it owes is graded by the CVO (C-SEATS clause 7).",
+  "world_is": "A pair-condition grade lives outside any order's criteria, so the tool neither requires nor sees it. Close (1.0.0_SA_CTO~DELL1): a pair-condition grade appears in the round's judgment count."
+}
+```
+
+## NFRA_CTLPLN-D1-S8 -- an integrate that lands a file on CLOUD before its pinned entry's box push silently closes the pre-push deploy window
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T21:36Z",
+  "one_line": "The pre-push deploy gate deploys only files in the box's diff against origin/CLOUD; once the laptop's integrate carried 88e974ca10 to CLOUD, data/mdpf/scripts/gold/mdpf_gold_consolidator.py (OPEN, pinned entry mdpf-stratid-r2-keyset-f3f4-dell1-20261009) was no longer in any box diff, so no push could deploy it and S3 kept the old bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps~DELL1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse at 21:35Z: HEAD, origin/box/dell1 and origin/CLOUD all hold blob 8582352ca7 for the consolidator",
+      "box/dell1 pushes 21:24Z and 21:31Z: 'deploy gate: refs/heads/box/dell1 -- no deploy-scope file in this box's diff against origin/CLOUD; nothing to deploy'",
+      "s3://opal-data-mdpf/code/scripts/gold/mdpf_gold_consolidator.py sha256 3d78e9550c1b50e8... vs the entry's pinned sha256 2cd88dc41ce6a0bb",
+      "0.7.0_AE_CloudOps~DELL1 msg 3221: entry OPEN with 4 legs proven, asking for a box push"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A deploy-scope script named by an OPEN, pinned change-management entry is deployed by the next push that carries it (CTO ruling msg 107341 B2).",
+  "world_is": "The gate's universe is the box's diff against origin/CLOUD at push time. The integrator merges box branches into CLOUD on its own clock, so a file can reach CLOUD (and every box) before any pinned-entry push, after which the push path can never deploy it. ARMED: F3 is not live until CloudOps deploys it directly under the OPEN entry. Remedy for the gate owner: deploy any OPEN-entry-named file whose S3 bytes differ from the pinned blob, regardless of the diff."
+}
+```
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-09T22:05:00Z",
+  "one_line": "RESOLVES the hazard of row NFRA_CTLPLN-D1-S8 (this seat is its disarm_owner): the consolidator that no push could deploy was deployed directly under the OPEN entry on the CTO's ruling, and the served object now carries the pinned bytes -- 178,035 B at VersionId cCzl5TtlLnlLKYLkwnpnFARlzSgyFzNI, sha256 2cd88dc41ce6a0bbfc4ca8495a20a868ad7e9a55117e22172d35ec602e45460f, cmp IDENTICAL to git show 88e974ca10 of its path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "D1-S8's own remedy line: 'ARMED: F3 is not live until CloudOps deploys it directly under the OPEN entry. Remedy for the gate owner: deploy any OPEN-entry-named file whose S3 bytes differ from the pinned blob, regardless of the diff.'",
+  "world_is": "THE FIRST HALF IS DONE AND MEASURED; THE SECOND HALF IS A GATE EDIT THIS SEAT DOES NOT OWN. Done: 1.0.0_SA_CTO~DELL1 msg 3224 ruled the direct upload covered by the same entry (same bytes, same key, same entry, so no new never-widen pair), relayed as 2.0.0_SA_COO~S1 msg 3226; .tools/safe-deploy.sh deployed data/mdpf/scripts/gold/mdpf_gold_consolidator.py at 21:36:52Z, printing DEPLOYED, 'VERIFY OK comp-pipescript deployed' and 'OK: safe-deploy gate PASS -- all 1 file(s) deployed and verified', rc=0. READ BACK FROM THE SERVED OBJECT rather than from the tool's PASS: before, 169,527 B at VersionId 6LPnagO7w_xEDQLXFlECCu1xUTlLKXy9 with sha256 3d78e9550c1b50e8 (the ff1a8867a6 bytes D1-S8 names); after, 178,035 B at cCzl5TtlLnlLKYLkwnpnFARlzSgyFzNI, sha256 2cd88dc41ce6a0bb, cmp IDENTICAL to git show 88e974ca10 of the path, and 0.0.0_AB_MSTR~DELL1 independently read the same sha at ~22:02Z (msg 3248) -- two instruments agreeing. The ST-w-8 padding appears 3 times in the served bytes against 0 in the version it replaced; the first pattern this seat typed matched NEITHER object and was corrected, because a regex that matches nothing reads exactly like a fix that is absent. Entry mdpf-stratid-r2-keyset-f3f4-dell1-20261009 is CLOSED 4 of 4 @b74d18ac70, verified three ways (slug absent from deploy_ledger.py check, sentinel unlinked, entry tail reads CLOSED). NOT DONE AND NOT THIS SEAT'S: the general remedy D1-S8 addresses to 'the gate owner' is an edit to the pre-push deploy's selection rule -- deploy an OPEN-entry-named file whose S3 bytes differ from the pinned blob regardless of the box diff -- and deploy-ledger-names.py's own header names 4.0.0_SA_CRO~A as owner under CTO ruling msg 107341. Until that lands, the class recurs for any pinned file the integrator carries to CLOUD first, and the only cure is a manual deploy like this one. ONE MEASURED ADDITION to D1-S8's account, worth the line because it narrows the remedy: safe-deploy's seat-gates printed a WARN-mode CROSSBOX-DEPLOY STOP on an OPEN-DEPLOY hit (entry mdpf-stratid-r1-global-pfde-fold, 2.0.0_SA_COO~S1's, HELD-SOVEREIGN-GATED, which names the same filename token), so under ENFORCE the manual cure would ALSO have been refused and this hazard would have had no path at all.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-deploy.sh data/mdpf/scripts/gold/mdpf_gold_consolidator.py (rc=0, DEPLOYED + VERIFY OK + gate PASS)",
+      ".tools/aws s3api head-object and get-object on opal-data-mdpf code/scripts/gold/mdpf_gold_consolidator.py before and after (169,527 B / 3d78e955 -> 178,035 B / 2cd88dc4), with cmp IDENTICAL against git show 88e974ca10 of the path",
+      "python .tools/deploy_ledger.py check (slug absent) + ls -a org/critical_paths/.open_deploys/ (sentinel unlinked) + the entry's own CLOSED tail",
+      "0.0.0_AB_MSTR~DELL1 msg 3248 relayed as 2.0.0_SA_COO~S1 msg 3249: an independent read of the same sha256 at ~22:02Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed as an APPENDED row, which is what 0.0.0_AB_MSTR~DELL1 asked for (msg 3248), rather than as an edit to D1-S8 or as a REMEDIATION row. Two reasons, both mechanical: an in-place change to another seat's investigation row reads as a MUTATION at .tools/surprise-row-gate.py and the monotone-advance path that would admit a forward clock move applies to a REMEDIATION row's disarm/remediation/closed fields, which investigation_item.schema.json does not carry (additionalProperties false); and CLAUDE.md section 2 keeps REMEDIATION rows with the CVO. So flipping D1-S8's own hazard_standing, or minting the remediation row that formally graduates it, stays with its author and the CVO; this row is the measurement they need to do it."
+}
+```
+
+## NFRA_CTLPLN-W56-S1 -- CTi14-AC2 cannot print AGENT-SUITE ok=True: two scripts outside this order's paths feed plain text to a drafting call, which the contract now refuses
+
+```json
+{
+  "id": "NFRA_CTLPLN-W56-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~56",
+  "surfaced_at": "2026-10-09T22:00Z",
+  "one_line": "CTi14-AC2 cannot print AGENT-SUITE ok=True: two scripts outside this order's paths feed plain text to a drafting call, which the contract now refuses",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C: amend the order's paths to add test_inbound_mail_reply.py (and test_inbound_cloud.py), or re-cut AC2; the edit is one fake model reply wrapped as {\"post\": ...}",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~R/checks/check_agent_suites.py at 7b256d4877: pytest 127 passed; mail_reply INBOUND-MAIL-REPLY-TEST ok=False cases=8/9; AGENT-SUITE ok=False pytest_rc=0 mail_reply_rc=1",
+      "data/transcripts/scripts/tests/test_inbound_mail_reply.py:86-87 (World._kimi returns plain 'Fixed the export, can you take a look?' for COMPLETION_SYSTEM) fails case difference_control_the_same_completion_on_a_chat_job_sends_once_after_his_1",
+      "data/transcripts/scripts/tests/test_inbound_cloud.py:86-88 (same plain-text COMPLETION_SYSTEM reply and 'On it, thanks.' for a chat draft) fails 4 of 9 cases: INBOUND-CLOUD-TEST ok=False cases=5/9; that script is not in the AC2 suite but is the same defect",
+      "neither file is in the order's <paths>; the order says read the check and do not edit it, and that a path the lane lacks is a BLOCKING row on that criterion"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTi14-AC2: the agent's seven pytest files and the mail-reply script still pass (127 and 9/9 at the base) after the contract lands.",
+  "world_is": "The contract is strict (the whole answer must be one JSON object), so a fake model that returns plain text for a drafting call is refused by design. Four scripts feed such a fake: the seven pytest files and test_inbound_silent_paths.py and test_inbound_voice.py (all in paths, changed), and test_inbound_mail_reply.py and test_inbound_cloud.py (not in paths, unchanged). Measured: pytest 127/127, mail_reply 8/9, cloud 5/9. Not repaired and not widened: no lenient parse was added."
+}
+```
+
+## NFRA_CTLPLN-W56-S2 -- The addresses_andrew phrase list refuses first-person words a reply written AS Andrew can legitimately carry, and check_post is shared with the laptop End of Day job
+
+```json
+{
+  "id": "NFRA_CTLPLN-W56-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~56",
+  "surfaced_at": "2026-10-09T22:00Z",
+  "one_line": "The addresses_andrew phrase list refuses first-person words a reply written AS Andrew can legitimately carry, and check_post is shared with the laptop End of Day job",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "daily_reports/eod/post_format.py addresses_andrew: the order's phrase list includes \"I've\", \"here is the\", \"as requested\" and \"previous draft\", matched on word boundaries, case-insensitive",
+      "data/transcripts/scripts/teams_chat/assist.py CHAT_SYSTEM: a chat draft is written AS Andrew in the first person, so 'I've sent it over' or 'Here is the link' is an ordinary reply that the backstop now refuses with '#<tag> draft refused: addresses Andrew, not the team'",
+      "daily_reports/eod/eod_update.py:163 calls pf.check_post(md): the same list now gates the laptop job's End of Day post, not only the cloud assistant's",
+      "0 of the 68 test files under data/transcripts/scripts/tests/ contain a listed phrase (regex census at 7b256d4877), so no existing test shows either effect"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The backstop refuses text spoken TO Andrew rather than to the team (CT-i-14 build step 3).",
+  "world_is": "A phrase list cannot tell a sentence to Andrew from a first-person sentence to the team. Built as written; the rate of false refusals in live drafts is unmeasured here (the draft_contract log line counts outcome=refused but not the cause)."
+}
+```
+
+## NFRA_CTLPLN-W56-S3 -- on_job_complete sets the job to verify before it drafts, so a refused or questioning completion draft leaves no draft open and no retry path
+
+```json
+{
+  "id": "NFRA_CTLPLN-W56-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~56",
+  "surfaced_at": "2026-10-09T22:00Z",
+  "one_line": "on_job_complete sets the job to verify before it drafts, so a refused or questioning completion draft leaves no draft open and no retry path",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py on_job_complete: st.update(status='verify', ...) runs before _completion_draft(st); on a Refusal or a Held the handler texts Andrew and returns 'draft-refused' / 'question' without setting st['pending'] and without ctx.send(job.verify)",
+      "the only text Andrew gets is '#<job> draft refused: <why>' (the order's exact form); his notes then find 'nothing waiting' because there is no pending item",
+      "no arm covers this path: test_draft_contract.py arm job_contract covers the success path only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A chat or job draft that is refused texts Andrew one line and keeps any open draft unchanged (CT-i-14 build step 2).",
+  "world_is": "For a FIRST job completion draft there is no open draft to keep, so the order's rule is satisfied but the job sits in verify with nothing for Andrew to send; only #close ends it. Not widened: the order names no retry limb for a first draft."
+}
+```
+
+## NFRA_CTLPLN-W56-S4 -- Resolves NFRA_CTLPLN-W56-S1: amendment 1 added the two test files to the paths and each fake model reply is now the JSON contract
+
+```json
+{
+  "id": "NFRA_CTLPLN-W56-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~56",
+  "surfaced_at": "2026-10-09T22:30Z",
+  "one_line": "Resolves NFRA_CTLPLN-W56-S1 (disarm): under CT-i-14 amendment 1 (003e1a1bf7) test_inbound_mail_reply.py and test_inbound_cloud.py join the paths, and each fake model reply for a Teams-bound drafting call is wrapped as {\"post\": <same text>}; the BLOCKING hazard no longer stands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_inbound_mail_reply.py World._kimi COMPLETION_SYSTEM reply wrapped; INBOUND-MAIL-REPLY-TEST ok=True cases=9/9 (was ok=False 8/9)",
+      "test_inbound_cloud.py World._kimi COMPLETION_SYSTEM reply and the chat-draft fallback reply wrapped; INBOUND-CLOUD-TEST ok=True cases=9/9 (was ok=False cases=5/9)",
+      "no assertion about what is posted or texted was changed in either file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTi14-AC2: the agent's seven pytest files and the mail-reply script still pass after the contract lands.",
+  "world_is": "Two scripts outside the original paths fed plain text to a drafting call; they are in paths now and use the contract. The strict parser was not loosened."
+}
+```
+
+## NFRA_CTLPLN-W56-S5 -- Resolves NFRA_CTLPLN-W56-S2 for the chat and job paths: they refuse five drafting-exchange phrases; check_post keeps the full list
+
+```json
+{
+  "id": "NFRA_CTLPLN-W56-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~56",
+  "surfaced_at": "2026-10-09T22:30Z",
+  "one_line": "Resolves NFRA_CTLPLN-W56-S2 for the chat and job paths (amendment 1): post_format.py exposes ANDREW_PHRASES_EOD (full list, check_post unchanged) and ANDREW_PHRASES_DRAFTING (five phrases) and assist.draft_chat_reply and tenant._completion_draft use the second; the End of Day side of S2 (check_post shared with the laptop job) stands as ruled.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "daily_reports/eod/post_format.py: addresses_andrew(text, phrases=ANDREW_PHRASES_EOD); check_post calls it with the default full list",
+      "assist.draft_chat_reply and tenant._completion_draft pass ANDREW_PHRASES_DRAFTING",
+      "test_draft_contract.py arm chat_refused: 'your notes' is refused; 'I've attached it, let me know if anything is missing.' is offered; DRAFT-CONTRACT ok=True arms=9/9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Chat and job drafts are refused only for phrases that describe the drafting exchange (amendment 1 item 2).",
+  "world_is": "The full list still gates the End of Day post; the false-refusal rate of the full list on live End of Day posts is unmeasured here."
+}
+```

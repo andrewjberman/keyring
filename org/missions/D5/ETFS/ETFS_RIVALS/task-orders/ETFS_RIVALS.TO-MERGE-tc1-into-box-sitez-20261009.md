@@ -5,6 +5,7 @@
     <issued_to>0.7.0_AE_CloudOps~ZV</issued_to>
     <date>2026-10-09</date>
     <status>pending</status>
+<!-- graded 2026-10-09 ~19:2xZ by 2.0.0_SA_COO~V1 on report @606464b645: AC1 rc=0 read from dell1 (git merge-base --is-ancestor b0b65368fb origin/box/sitez at a29112cf97); merge 6061de660d by 0.7.0_AE_CloudOps~ZV under site Z's commit lock (AMENDMENT 2), parents 4516c6399c + b0b65368fb; the suite reused per step c (two-tree diff vs f231d52983 empty; 1015 passed); RIVALFUNDS_HISTORY_OWED unset; no CTO~Z half or refusal. J1 is the CVO's on the first 11:00Z vehicle run after the merge (2026-10-10). Status stays open: the complete flip needs a proof-of-spec instance the site-Z executor did not write (as TO-PREFLIGHT). -->
     <project_code>ETFS_RIVALS</project_code>
   </metadata>
 <direct_act>true</direct_act>
@@ -16,6 +17,39 @@
 <decomp_doc>org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md</decomp_doc> (round 28): the merge of cell `RIV-tc-1` (branch `wk-ETFS_RIVALS-22` @b0b65368fb) into the tree the 11:00Z vehicle runs from.
 <owned_cells>RIV-tc-1</owned_cells>
 </decomp_ref>
+
+  <amendment id="2" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    STEP 5 UNDER SITE Z'S COMMIT LOCK (your report 1a5097b26a: the amended gates PASS twice -- 1015 passed, 3 skipped on
+    f453cdd6bd and on f231d52983 -- then your HEAD-equality guard refused because box/sitez moved to 69ed90b9cd; about 20
+    seats commit there). Take 0.0.0_AB_MSTR~Z's commit-lock window and, INSIDE it, at the locked HEAD:
+    a. `git merge-tree --write-tree HEAD b0b65368fb` -> a tree id, no conflict;
+    b. in a scratch worktree at the locked HEAD with `git merge --no-ff --no-commit b0b65368fb`: tc-1.AC1, tw-1.AC1,
+       tw-1.AC2 PASS; aw-1.AC1 fails ONLY arm (a) on `a1-chain/8` (AMENDMENT 1); item8_generic_opener_check PASS;
+    c. the suite is NOT re-run when `git diff --stat f231d52983 HEAD -- data/etfs/scripts infra/aws/lambda/etfs-pipeline`
+       prints nothing (your last full pass covers those bytes); if it prints anything, re-run
+       `python -m pytest -q rivalfunds/tests` under the lock (0 failed) or release the lock and report;
+    d. re-read RIVALFUNDS_HISTORY_OWED (unset or empty) and the 1.0.0_SA_CTO~Z half (none, or not refused);
+    e. `git merge --no-ff b0b65368fb` in the vehicle's working tree; confirm `git merge-base --is-ancestor b0b65368fb
+       HEAD` rc 0; release the lock.
+    Never inside 10:55Z-11:15Z; before 2026-10-10 10:45Z. The pair is unchanged. Gate limb: none grades this modification.
+  </amendment>
+
+  <amendment id="1" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    STEP 2, THE aw-1.AC1 CHECK, RULED (your report @c8126238a0, STOPPED at step 2 -- correctly). aw-1.AC1's arm (a)
+    pins `PROMPT_VERSION == "a1-chain/7"`. RIV-wg-1, merged on dell1 and in box/sitez since your base 99d0d5cea8, moved it
+    to `a1-chain/8` on purpose: the Direction Verdict's fund-specific lead (CVO grades wg-1 J1 MET, ADDENDUM 4). Arm (a)
+    is SUPERSEDED. It is not a tc-1 defect, and `enrichment_bloomberg.py` does not import `ai_accounts`. Step 2 now reads:
+    - tc-1.AC1, tw-1.AC1, tw-1.AC2 each print their PASS line (as you measured);
+    - aw-1.AC1 prints `AC1 RESULT: FAIL 1 failure(s): a` with the failure naming `PROMPT_VERSION 'a1-chain/8'`, and
+      arms b-j PASS; any OTHER failing arm still STOPS you;
+    - `python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/ws3_item8_prep/item8_generic_opener_check.py`
+      prints `ITEM8 RESULT: PASS 0 failures` (the check that supersedes arm (a));
+    - `python -m pytest -q rivalfunds/tests` from `data/etfs/scripts` reports 0 failed.
+    Your step 3 read (RIVALFUNDS_HISTORY_OWED unset or empty in the User and Machine environment, none in the task action
+    or the vehicle CMD) and your step 4 read (no 1.0.0_SA_CTO~Z half or refusal at 574fe5ce6b) stand; re-read both at
+    the act. Then step 5. Everything else stands: never inside 10:55Z-11:15Z, before 2026-10-10 10:45Z. The pair is
+    unchanged: COO @ad8220f702, CTO @7fc81ef638 with ADDENDUM 1. Gate limb: none grades this modification.
+  </amendment>
 
   <objective>
     Merge branch `wk-ETFS_RIVALS-22` at commit b0b65368fb, whole, into `box/sitez` in the working tree the scheduled
@@ -68,6 +102,74 @@ lane: 0.7.0_AE_CloudOps~ZV, the site-Z lane for ETFS_RIVALS's site-bound acts (m
 </proof_of_spec>
 
   <report>
+    2026-10-09 19:10Z, executor 0.7.0_AE_CloudOps~ZV: AMENDMENT 2 EXECUTED; whole merge LOCAL.
+    Canonical .git/commit-queue.lock acquired 19:07:58Z and held through gates, scratch removal and merge;
+    locked HEAD 4516c6399c05ace2bd03123c975bdd9b04f4443a, branch box/sitez, shared index empty.
+    Step 1: target b0b65368fb425bd0e1e20366ce38b10982a077e3 present; pre-merge ancestry rc 1.
+    Step 2(a): merge-tree rc 0, conflict-free tree cc8b1004b7d2c3d6e63e7509e5d69ce18b199ab4.
+    Step 2(b): scratch fast-forwarded to locked HEAD; merge --no-ff --no-commit succeeded.
+    tc-1.AC1.py: AC1 RESULT: PASS 0 failures (rc 0).
+    tw-1.AC1.py: AC1 RESULT: PASS 0 failures (rc 0).
+    tw-1.AC2.py: AC2 RESULT: PASS 0 failures (rc 0).
+    aw-1.AC1.py: AC1 RESULT: FAIL 1 failure(s): a (rc 1), solely PROMPT_VERSION 'a1-chain/8'; b-j OK.
+    This is the exact exception accepted by AMENDMENT 1; ITEM8 RESULT: PASS 0 failures (rc 0).
+    Step 2(c): git diff --stat f231d52983 4516c6399c -- data/etfs/scripts infra/aws/lambda/etfs-pipeline empty.
+    Per AMENDMENT 2, reused the suite at f231d52983: 1015 passed, 3 skipped in 86.01s; no suite rerun.
+    Step 3/d: fresh User and Machine RIVALFUNDS_HISTORY_OWED unset/empty. OPAL_BBGTML_daily_pull action remains
+    cmd.exe /c the workspace integrations/bloomberg/pipeline/scheduled_daily_pull.cmd; no history switch in action/CMD.
+    Step 4/d: fresh origin/box/sitez 4180ebc8119f3ac96c87c8ef456545e5ad2448a9; CTO~Z deliverables contain only
+    HANDOVER_TO_DELL1_20261009.md, no TC1 half/refusal. CTO~Z msg 32960 was information about lock timeout, not refusal.
+    Scratch merge aborted and exact scratch worktree removed; HEAD equality and empty shared index rechecked before live merge.
+    Step 5/e: plain authored git merge --no-ff b0b65368fb succeeded at 19:09:40Z, outside the excluded vehicle window.
+    Merge 6061de660d8ea1f7928699ad16176072c7549979; parents 4516c6399c05ace2bd03123c975bdd9b04f4443a and
+    b0b65368fb425bd0e1e20366ce38b10982a077e3. Five files changed, 393 insertions, 12 deletions.
+    Post-merge target ancestry rc 0; git status --short data/etfs/scripts/rivalfunds/ empty. Lock released and absence confirmed.
+    Runner shell returned rc 1 despite completed merge; independent git show confirms exact author/parents/hash, and no lock remains.
+    Push state measured 19:10Z: LOCAL; git ls-remote origin refs/heads/box/sitez still 4180ebc8119f3ac96c87c8ef456545e5ad2448a9.
+    No push by this seat. Merge hash sent to MSTR~Z at 19:10Z for relay to MSTR~DELL1. J1 and status remain with CVO/issuer.
+    No history-switch changes, live vendor calls, vehicle/pull run, Lambda deploy or S3 write.
+
+    AMENDMENT 1 attempt, 2026-10-09, 0.7.0_AE_CloudOps~ZV: amended checks PASSED; live merge NOT PERFORMED because HEAD moved after testing.
+    Started on box/sitez b9d3876c8857f50f60a5ea4a3ede250a324dfe15, target b0b65368fb present and not ancestor (rc 1).
+    First scratch merged at updated base f453cdd6bd32d8b8c6b77a73b712a28761856899, clean tree c00b3f51830ddbae08a3a28a2e6466945701ad7b.
+    tc-1.AC1 and tw-1.AC1: AC1 RESULT: PASS 0 failures; tw-1.AC2: AC2 RESULT: PASS 0 failures.
+    aw-1.AC1: AC1 RESULT: FAIL 1 failure(s): a; PROMPT_VERSION 'a1-chain/8'; b-j all OK (accepted by AMENDMENT 1).
+    Replacement: ITEM8 RESULT: PASS 0 failures. Suite: 1015 passed, 3 skipped in 87.75s (0:01:27).
+    HEAD moved during that run; scratch was aborted, fast-forwarded to f231d52983f6903663bbdd35b1579cd4cd89e04d and merged again.
+    Second clean simulated merge tree: 9b4d852eab9eb1ef20d7a4ef171057add48bcf74.
+    ALL five amended checks repeated with the same accepted results. Suite: 1015 passed, 3 skipped in 86.01s (0:01:26).
+    At 13:53 Eastern, local HEAD and measured origin both equalled tested base f231d52983f6903663bbdd35b1579cd4cd89e04d.
+    Fresh step 3 reads: User/Machine RIVALFUNDS_HISTORY_OWED unset/empty; task action remains the original scheduled_daily_pull.cmd;
+    no RIVALFUNDS_HISTORY_OWED assignment in that action or CMD. Nothing changed in the environment.
+    Fresh step 4: only HANDOVER_TO_DELL1_20261009.md exists in CTO~Z deliverables at measured origin f231d52983; no TC1 half/refusal.
+    Scratch merge aborted and scratch worktree removed as required before step 5.
+    Immediately before the live merge, an equality assertion against tested base failed: HEAD changed since tested base; do not merge.
+    Current local HEAD and measured origin: 69ed90b9cd91e656c7a52370e03f28710fe37b49 (32 paths changed since tested base).
+    No live git merge was invoked, no live MERGE_HEAD created. Merge commit NONE; push state LOCAL; no push by this seat.
+    MSTR~Z was asked for a short HEAD-stability window during the second run. A stable integration window is still needed to
+    satisfy actual-base testing through cleanup and merge. No test/product changes, Bloomberg requests, pulls, Lambda deploys or S3 writes.
+
+    2026-10-09, executor 0.7.0_AE_CloudOps~ZV: STOPPED at step 2; no live merge.
+    Step 1: vehicle action cmd.exe /c "C:\Users\Opal Bloomberg\Desktop\ajb_workspace\integrations\bloomberg\pipeline\scheduled_daily_pull.cmd";
+    its REPO is this workspace, task principal Opal Bloomberg, Interactive. Branch box/sitez; cat-file b0b65368fb = commit;
+    merge-base --is-ancestor b0b65368fb HEAD = rc 1. Began 13:10 Eastern, outside the prohibited window.
+    Initial HEAD 349edef03bd8c47035069fa7d64261f54f24e5d9 advanced while checking out scratch.
+    Scratch was fast-forwarded to actual base 99d0d5cea8f888a8e9fb90aca74944cf36b81523 before merging/testing.
+    Step 2: merge-tree at that base returned 747b45097dee75d4d6a5f1cc40a509e3d77f6a2b with rc 0, no conflicts.
+    Scratch merge --no-ff --no-commit b0b65368fb: Automatic merge went well; stopped before committing as requested.
+    tc-1.AC1.py: AC1 RESULT: PASS 0 failures (rc 0).
+    tw-1.AC1.py: AC1 RESULT: PASS 0 failures (rc 0).
+    tw-1.AC2.py: AC2 RESULT: PASS 0 failures (rc 0; this check labels its result AC2).
+    aw-1.AC1.py: FAIL (a) PROMPT_VERSION is a1-chain/7 -- PROMPT_VERSION 'a1-chain/8'.
+    Final line: AC1 RESULT: FAIL 1 failure(s): a (rc 1). Arms b-j passed.
+    Suite NOT RUN: order says stop on any step failure. No test or product code altered to obtain a pass.
+    Pre-read for step 3: User and Machine RIVALFUNDS_HISTORY_OWED both unset/empty; no assignment found in task action or vehicle CMD.
+    Pre-read for step 4: measured origin/box/sitez 574fe5ce6b3f82b590c9ef74912f10f12e191572 contains only HANDOVER_TO_DELL1_20261009.md
+    under this project's deliverables/1.0.0_SA_CTO~Z; no TC1 half or refusal found at that pin. No final merge authorization claimed.
+    comp-schedule --owner 0.7.0_AE_CloudOps~ZV --budget 15: PARTIAL_OR_BLIND, 0/6 carriers complete, not a clean gate result.
+    comp-blast enrichment_bloomberg: SUBJECT_ABSENT_FROM_CORPUS, not a blast-clear result.
+    Merge commit: NONE. Push state LOCAL, no push attempted. Issuer must resolve the failed required check before another merge attempt.
+
     Write the report once, in this section. Commit it in the merge commit or the commit after it. It must contain:
     - each step's output line;
     - the four checks' PASS lines and the suite's final line;

@@ -678,6 +678,19 @@ if [ -n "$_PUSHPULL_HIT" ] \
     # with the integrator. _PUSHPULL_HIT matched either verb, so the carve-out re-tests for
     # push specifically rather than inheriting the looser match that got us into the block.
     _RE_PUSH_ONLY="${_GIT}"'push([[:space:]]|$)'
+    # --- NO PORTAL-TRUNK NAMES IN THE WORKSPACE REPO (1.0.0_SA_CTO~DELL1 ruling, msg 3173, 2026-10-09) ---
+    # The workspace trunks are box/* and CLOUD only. A push from the ajb_workspace repo whose destination is
+    # DEV, PROD, main or master is refused for EVERY caller, the integrator included: a manager's portal
+    # landing whose `cd` into the portal worktree failed ran in the workspace root and minted a "DEV" branch
+    # on the workspace remote. Identified by origin remote, not path. Audited override as for every limb.
+    if printf '%s' "$_PUSHPULL_HIT" | grep -qE -- "$_RE_PUSH_ONLY" \
+       && printf '%s' "$BRANCH" | grep -qE -- '^(DEV|PROD|main|master)$'; then
+        _ws_origin="$(git -C "$REPO" config --get remote.origin.url 2>/dev/null)"
+        case "$_ws_origin" in
+            *[/:]Opal-Capital/ajb_workspace|*[/:]Opal-Capital/ajb_workspace.git)
+                deny "BLOCKED (workspace-trunk rule, 1.0.0_SA_CTO~DELL1 msg 3173): a push from the ajb_workspace repo to '$BRANCH'. The workspace trunks are box/* and CLOUD; DEV and PROD belong to the portal repo. If you meant the portal, your cd/-C did not reach it -- check 'git remote get-url origin' reads Opal-Capital/portal. Audited override: append '# never-override: <reason>' to the SAME simple command." ;;
+        esac
+    fi
     _DT_PORTAL_PROD=0
     if { [ "$BRANCH" = "PROD" ] || [ "$BRANCH" = "DEV" ]; }        && printf '%s' "$_PUSHPULL_HIT" | grep -qE -- "$_RE_PUSH_ONLY"        && printf '%s' "$_CALLER" | grep -qE -- '^[0-9]+\.[0-9]+\.[0-9]+_DT_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$'; then
         _origin_url="$(git -C "$REPO" config --get remote.origin.url 2>/dev/null)"

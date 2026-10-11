@@ -76,7 +76,7 @@ Rows: id `NFRA_OPLGTW-Z-W50-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-pn-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/pn1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)pin tests: pytest rc=0; named tests passed 3 of 3.*test_schwab_conversion\.py: pytest rc=0.*test_schwab_projections\.py: pytest rc=0.*test_schwab_schemas\.py: pytest rc=0.*test_conversion_manifest\.py: pytest rc=0.*regression suites run: 4.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-pn-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/pn1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)pin tests: pytest rc=0; named tests passed 3 of 3.*test_conversion_manifest\.py: pytest rc=0.*test_schwab_conversion\.py: pytest rc=0.*test_schwab_projections\.py: pytest rc=0.*test_schwab_schemas\.py: pytest rc=0.*regression suites run: 4.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: the 28 columns are named in the pin, a held file converts, an unchanged file converts as before, and the
@@ -94,7 +94,23 @@ ask's path, commits, rows.
 - From both halves' AMENDMENT 1 on OG-bh-1 (CTO @f77e32d7c3, COO @eea4aebe10); row Z-W46-S3.
 - Pre-cut: pn1.AC1 base FAIL as expected (test file absent); the four regression suites at base pass 36 / 10 / 20 / 37.
 
-<status>pending</status>
+- A1 (issuer, 2026-10-09 ~17:1xZ, on rows Z-W50-S1 and Z-W50-S2): (a) the premise is corrected -- the six held files carry
+  ONLY a D2 balance table (no D1 positions section), graded against the section-1 pin by file position; extending the
+  section-1 pin would have written balances into fact_rps/dim_position. The cell's change is the worker's: a scanned
+  table is graded by its own D-tag (else file position), and the absent section lands its pinned 0-row partition as
+  the existing shell branch does; pins, projections and the drift guard are unchanged. (b) AC1's <expect> listed the
+  suites in a different order than `ls` prints them; the expect now matches the printed order (issuer's defect, the
+  check unchanged). Graded by GATE (viii) on the modified order (<placeholders>NONE</placeholders>).
+
+- A2 (issuer, 2026-10-09 ~19:1xZ, CTO half C1 @d66a0fb956): BEFORE the package is built, a file whose scanned tables carry
+  the SAME routed section tag must RAISE (a duplicate routed section), never let the second writer silently replace the
+  first; add one test pinning it (`test_ogpn1_ac04_duplicate_tag_raises`, outside AC1's three named tests). None of the
+  six files has this shape. Halves: COO @d41a3068cd, CTO @d66a0fb956 (supersedes AMENDMENT 1's pin-extension wording).
+  Phase B (the applier's) follows: Terraform through safe-apply, prior VersionId and hash recorded (CTO C2); one ledger
+  opened before the apply (C3) -- the 12:15Z sweep converts the six dates after the deploy, so the apply IS the served
+  move. Graded by GATE (viii) on the modified order (placeholders NONE).
+
+<status>complete</status>
 <round>33</round>
 <workstream>RPS-PIN</workstream>
 <slot>~50</slot>

@@ -127,7 +127,8 @@ Rows: id `NFRA_OPLGTW-Z-W35-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
   branch is kept, undrained, as the record of the build.
 - Pre-cut 22:5xZ: `dr1.AC1` FAIL (the test file is absent); `bi4.AC1` PASS (file passed 8).
 
-<status>pending</status>
+<status>superseded</status>
+<superseded_by>1.0.0_SA_CTO~Z round-32 analysis @3566a85699 (row W35-S1): the branch was never drained, the gateway moved on to r29; the restart-free route in server.py becomes round-34 cell E3. Set by the issuer 2.0.0_SA_COO~O.</superseded_by>
 <round>30</round>
 <slot>~35</slot>
 <fabric>site-z</fabric>

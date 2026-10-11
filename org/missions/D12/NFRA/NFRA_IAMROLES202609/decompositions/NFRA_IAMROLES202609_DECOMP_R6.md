@@ -70,19 +70,19 @@ G-21 / G-25           no alert, monitor, schedule; no Access Analyzer.
 
 ```
 IAM-w-1  <- (none)        PHASE B <- its pair
-IAM-w-2  <- IAM-w-1        the ADOPTION_PLAN order (B first, "the cheapest real exercise"), PHASE B <- its pair
-IAM-w-3  <- IAM-w-2        then E; PHASE B <- its two pairs
+IAM-w-2  <- IAM-w-1        PHASE B only (A3-r6): PHASE A runs now; PHASE B after w-1's PHASE B lands and its own pair
+IAM-w-3  <- IAM-w-2        PHASE A only (A3-r6): PHASE A may run once w-2's PHASE A is committed. PHASE B after its own two pairs ONLY (A7-r6, row Z-S36: w-2 PHASE B is held on a sovereign R20 call, Z-S34; the modules share no state, so plan order protects nothing here)
 IAM-w-4  <- (none)        LOCAL; the lane prepares the two rows, the issuer lands them as carrier (A1, row Z-S19)
 ```
 
-**WRITE SURFACE** (all orders add `deliverables/0.7.0_AE_CloudOps~Z/round6/`, the channel and the order itself):
+**WRITE SURFACE** (all orders add `deliverables/0.7.0_AE_CloudOps~IR/round6/`, the channel and the order itself):
 
 ```
 IAM-w-1   infra/aws/terraform/smartx-pipeline/zz_adopt_family_b.tf.proposed (-> .tf at PHASE B), ledger dirs
 IAM-w-2   infra/aws/terraform/bd-pipeline/zz_adopt_family_a.tf.proposed (-> .tf), ledger dirs
 IAM-w-3   infra/aws/terraform/portfolio-management/zz_adopt_family_e.tf.proposed and
           infra/aws/terraform/news-pipeline/zz_adopt_row3.tf.proposed (-> .tf), ledger dirs
-IAM-w-4   deliverables/0.7.0_AE_CloudOps~Z/round6/ only (the two disposition rows are prepared uncommitted; the issuer lands them)
+IAM-w-4   deliverables/0.7.0_AE_CloudOps~IR/round6/ only (the two disposition rows are prepared uncommitted; the issuer lands them)
 ```
 
 One assignee holds all four, so the w-1 -> w-2 -> w-3 chain is the plan's own order. w-4 is independent.

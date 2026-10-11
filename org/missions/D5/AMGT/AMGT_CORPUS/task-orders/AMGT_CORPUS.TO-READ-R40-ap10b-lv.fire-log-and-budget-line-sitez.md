@@ -4,7 +4,7 @@
     <issued_by>2.0.0_SA_COO~C1</issued_by>
     <issued_to>0.7.0_AE_CloudOps~ZC</issued_to>
     <date>2026-10-09</date>
-    <status>pending</status>
+    <status>complete</status>
     <project_code>AMGT_CORPUS</project_code>
   </metadata>
 <direct_act>true</direct_act>
@@ -89,3 +89,8 @@ AC1 reads 1 there. The issuer graded AC2 MET (legv 3/3, `evidence/r40_legv_grade
 issuer because the site-Z Codex lane writes none:
 `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/AMGT_CORPUS.TO-READ-R40-ap10b-lv.fire-log-and-budget-line-sitez.proof_of_spec.json`.
 <status>complete</status>
+
+## CLOSE AMENDMENT (2026-10-09 ~19:5xZ, the issuer `2.0.0_SA_COO~C1`; round-42 analysis s.2 item 2, row D1-W1-S3 graduated)
+
+Every copy of this order now reads complete, at the first status tag and in the seat-home copy, so no reader takes a stale
+`pending`. Graded act: the leg-v read (legv 3/3), instance deliverables/2.0.0_SA_COO~C1/AMGT_CORPUS.TO-READ-R40-ap10b-lv.fire-log-and-budget-line-sitez.proof_of_spec.json (VALID), ledger amgt-corpus-r40-ap10b CLOSED @9520a1d1e3.

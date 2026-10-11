@@ -6193,3 +6193,27 @@ that exception is precisely what hid this, so it is stated rather than relied on
  "world_is": "The arm accepts no row id a worker may mint, so a gate that grades nothing for the planted name (the measured case) can never pass Z5R20-AC1. Left open for the issuer to amend the arm's regex or the order; the arm is not edited by this worker."
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-D1-W1-S2",
+ "project": "LGIC_ENFORCE",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+ "surfaced_at": "2026-10-09T18:15:00Z",
+ "one_line": "A bare `census --live --repo` stops on its first uncarded RAISE on each plane (live API_GW sentiment-query-api; repo S3Key config/mdpf/route_bindings.yaml), so a whole-estate RULED count is not reachable without a --not-judged card file this order does not name.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python lib/opal_naming.py census --live --repo at 4d6ca219e0 from the worktree root: rc=3, 'CENSUS: STOPPED on the first RAISE after 3 judged (0 carded, ruled=0): live API_GW sentiment-query-api' (R1.f: 'sentiment' is in no vocabulary); live is judged first, so ruled=0 and the repo plane was not judged; 'CENSUS STALE: 0 of 119 name_rulings.json row(s) name no item of this run' (STALE reads every item, not only those judged before the stop).",
+   "python lib/opal_naming.py census --repo at 4d6ca219e0: rc=3, 17 'CENSUS RULED' lines, then STOPPED after 703 judged (0 carded, ruled=17) on repo S3Key config/mdpf/route_bindings.yaml (K1: segment 1 'config' is neither a source nor a tier); 7 of 119 ruling rows STALE on the repo plane alone (#68, #91, #94, #95, #111, #112, #113).",
+   "No --not-judged card file for these two names was found among the paths the order names; none was searched for beyond the order's deliverables listing."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order step 5: one --live --repo census run's RULED and STALE counts are recorded in census-rulings.r22.result.md.",
+ "world_is": "The run records ruled=0 / stale=0 (live+repo) and ruled=17 / stale=7 (repo alone), each cut off by an uncarded RAISE that is in the estate today; the loud stop is the unchanged behaviour the order requires, so the whole-estate RULED count is the issuer's to obtain with the cards."
+}
+```

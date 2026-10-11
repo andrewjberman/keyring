@@ -60,3 +60,46 @@ closure as deployed. 20a62c3c6c is an ancestor of it; it is a 2-parent merge.
 UN-PARKS WHEN 2.0.0_SA_COO~M2 (the dell2-seated permitted agent) lands the two-field edit and sends
 its commit. A2 steps 2-4 then follow from that commit: rebuild the store zip FROM it, re-apply the
 function code only, record the rebuilt sha256 here, and read the row ACTIVE at the applied pin.
+
+## A2 UN-PARKED, THEN HELD AGAIN ONE STEP LATER -- 2026-10-09 ~17:1xZ
+
+The registry half is DONE and verified. `4.0.0_SA_CRO`, a permitted agent on lane
+`IRPT_COMPLETION_REGISTRY`, landed the two-field edit at @103902e75d: `irpt-anlreq-x10-v1` reads
+state ACTIVE with enforcement_ref `81c60ba22cade51a05af42f15f44a98356b16ac1`. I verified it rather
+than taking it -- exactly two fields moved in that row, the hash is the ruled one, the other four
+rows are byte-identical in state and enforcement_ref, and @103902e75d is an ancestor of HEAD.
+
+**A note on that ancestry control.** My usual negative control, `origin/box/dell1`, has become
+USELESS: a box-sync merged it, so it now reads as an ancestor of HEAD and would make any
+is-ancestor test pass. I re-ran the check against `origin/box/sitez`, `origin/box/laptop` and
+`origin/CLOUD`, all of which correctly fail, so the @103902e75d result still discriminates. Earlier
+checks in this session used dell1 while it was still failing, so those stand; this one needed a new
+control.
+
+WHAT IS HELD NOW, and it is not the same block as before. A2 step 2 is "rebuild the store zip from
+that commit". The rebuild produced a sha256 IDENTICAL to step A's, `xyROb11e`, and the build's own
+staging line gives the reason:
+
+    OK: staged infra/logic/registry/reporting_policies.json <- ...@c250183790
+
+The source map pins that file via `staged_from` at `c250183790a96d7267453260f2866c0cd3328c55`, whose
+`irpt-anlreq-x10-v1` row reads `PENDING_ENFORCEMENT` / `enforcement_ref null`. And `c250183790` is an
+ANCESTOR of `103902e75d`, so the pin predates the enforcement edit by construction.
+
+**So the staged_from fix that unblocked the build also froze the registry at a pre-enforcement
+commit.** The zip cannot package the ACTIVE row no matter how many times it is rebuilt, and A2's
+purpose -- a function that carries the enforced row -- is not reachable by rebuilding alone. This is
+worth stating plainly because the rebuild SUCCEEDS: it exits 0, stages all nine files with "sha256
+verified", and prints a valid artifact. Only the packaged CONTENT is stale, which no exit code shows.
+
+THE FIX is one line of the spec: advance that single `staged_from` pin to `103902e75d` and update its
+declared sha256 to the new content hash. That changes what the artifact CONTAINS, which is the
+release pair's spec decision rather than an applier's, so it is routed to `2.0.0_SA_COO~T2` and not
+taken here -- the same reasoning that kept me out of the registry row itself.
+
+One error of my own in the same run: I read the built zip from `/tmp/...`, an MSYS path that Windows
+Python cannot see, and got a FileNotFoundError. The zip exists; the path form was wrong. Measured the
+packaged row from the source map and git instead.
+
+UN-PARKS WHEN the pin is ruled. A2 steps 3-4 then follow: re-apply the function CODE ONLY from the
+rebuilt artifact, record its sha256 here, and read the row ACTIVE at the applied pin.
