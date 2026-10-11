@@ -78,7 +78,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-dq-1.dlq-drain-actor-read.proof
 - Round 34, E7. First on slot ~57.
 - Pre-cut: dq1.AC1 base FAIL as expected (DQ1_READ.json absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>34</round>
 <slot>~57</slot>
 <fabric>site-z</fabric>
