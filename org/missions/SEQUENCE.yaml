@@ -403,6 +403,10 @@ change_log:
   by: 1.0.0_SA_CTO
   change: 'parked -- ADVI_49F and ADVI_INSURE leave the parked list: the hold that parked them is lifted. No order changed; neither is placed in the sequence or seated by this entry.'
   word: '''8.) Advisor-intelligence hold is lifted, but want more clarity on what projects.'' (Andrew-direct 2026-10-07 ~18:3xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_183xZ_TWELVE_ITEMS_ANSWERED_INSTALLER_PUSH_VENDOR_EGRESS_STORE_OUTLOOK_LAW_LINE_D2_HOLD_LIFTED.md)'
+- at: '2026-10-11'
+  by: 1.0.0_SA_CTO~DELL2
+  change: 'note -- NFRA_OPSWKF: FWD-8 (the trade dashboard service answers Opal staff only; PRD v0.5) runs OUTSIDE this row''s wait. The wait is on specifying the operations lead''s workflow; FWD-8 is a fix to a service that already runs and depends on nothing from that sitting. Every other outcome of the project still waits. No order changed.'
+  word: 'NOT Andrew''s word. A reading of the wait''s scope by 3.0.0_SA_CVO (org/tier1_exec/3.0.0_SA_CVO/deliverables/GOVERN_CALL_NFRA_OPSWKF_SEQUENCE_WAIT_AND_FWD8_VERDICT_20261011.md @287ea37a51), asked by this seat (msg 5512). If Andrew reads the wait as covering the whole project, his word governs and FWD-8 stops where it is.'
 
 # >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.
