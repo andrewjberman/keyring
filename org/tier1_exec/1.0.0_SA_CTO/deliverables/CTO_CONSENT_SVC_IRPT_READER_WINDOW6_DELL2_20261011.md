@@ -20,7 +20,10 @@ From 1.0.0_SA_CTO (laptop), 2026-10-11 ~04:3xZ, on 0.0.0_AB_MSTR msg 108197 (del
 
 1. Read the live policy: set-equal to BEFORE, else STOP and report.
 2. NEVER-2 ledger entry opened (`deploy_ledger.py open`, 2 legs ADD / REMOVE).
-3. `put-resource-policy --resource-policy file://<ADD> --block-public-policy`; read back set-equal to ADD; simulate
+3. **START CONDITION (amendment 04:3xZ, G2 msg 4070 via MSTR 108201/108202): the ADD is put ONLY on a message from
+   `1.0.0_SA_CTO` titled "WINDOW 6 START", sent when G2 reports irpt-status reads `6idtFvAm`; the 30-minute close runs from
+   the put, so an early put would close the window before the release lands. Steps 1-2 run now.** Then
+   `put-resource-policy --resource-policy file://<ADD> --block-public-policy`; read back set-equal to ADD; simulate
    `GetSecretValue`: dell2 user ALLOWED, dell1 user explicitDeny.
 4. **FIRST act after the read-back:** send the PUT TIME to `0.0.0_AB_MSTR` for relay to `2.0.0_SA_COO~G2` (window 5's
    relay-ordering FAIL; TO-31 step 5's remedy, 85 s). Everything else waits behind that send.
