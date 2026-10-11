@@ -72,6 +72,12 @@ Every host command's script is recorded verbatim; its status is read with `get-c
 SSM accepted it). Raw journal extracts go beside the record as `.txt` files named in `output_files`. Also a one-page
 `IB129-1_CAPTURE_FAILURE_READ.md`: the cause, the last READY, what real requests met, what is not established.
 
+**AMENDMENT 1 (issuer, 2026-10-11 ~13:3xZ, on row IRPT_BCKEND-D2-IB2-S3).** AC3's forbidden pattern for running the session
+runner matched a command that only HASHED the two runner files: the alternative `sh` matched the tail of a file name. An
+issuer check defect; the applier neither edited the check nor hid the command. The pattern now requires the interpreter word to
+start a token (`(?<![\w./-])`). Nothing else in the check moves; the record is graded as it stands. Gate limb that graded this
+modification: GATE (viii) (placeholders).
+
 <criterion id="IB129-1-AC1" cell_refs="IB-pr-431"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r129/p129_cells.py" . IB129-1-AC1</invocation><expect>IB129-1-AC1 PASS</expect></criterion>
 <criterion id="IB129-1-AC2" cell_refs="IB-pr-431"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r129/p129_cells.py" . IB129-1-AC2</invocation><expect>IB129-1-AC2 PASS</expect></criterion>
 <criterion id="IB129-1-AC3" cell_refs="IB-pr-431"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r129/p129_cells.py" . IB129-1-AC3</invocation><expect>IB129-1-AC3 PASS</expect></criterion>
