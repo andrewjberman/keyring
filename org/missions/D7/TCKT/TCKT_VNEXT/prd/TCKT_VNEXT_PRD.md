@@ -5,7 +5,7 @@
  "project": "TCKT_VNEXT",
  "directive": "D7",
  "fabric": "dell2",
- "prd_version": "v0.3",
+ "prd_version": "v0.4",
  "step": 4,
  "brief_ref": "docs/briefs/d7-ticket-center-request-types-analysis-request-first-brief-20261007.md@750ec86588",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -220,5 +220,32 @@ own filing is the organic arm. Negative arms: the route refused for a non-analys
 brief half is the CRO's trace. Under Andrew's 2026-10-08 word the whole Analysis Request scope of this project moves into the one
 end-to-end project (proposed code `IRPT_ANLREQ`). C-PACKAGE and FWD-9 move with it, and this PRD stays the contract's home until that
 project's PRD cites it.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 3 (2026-10-11 ~23:3xZ, `1.0.0_SA_CTO~DELL2`): C-FENCE -- an internal caller the users table does not know is refused (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `2.0.0_SA_COO~V2`'s round-6 slug @956ad1d547, section 4 and section 7 item 3 (msg 6065): in the live proof of FWD-2 an
+  internal caller with a made-up address and NO users row was served the ticket; known since row TCKT_VNEXT-D2-S20, shown live again.
+  This seat printed the rule: `ticket_center/lambda_function.py` lines 368 to 390.
+- **What the code does today.** For an internal caller the firm scope is read from the caller's own PROFILE row. More than one row
+  refuses; a lookup that fails refuses ("it never means no scope", the code's own comment); a malformed list refuses. **No row at all
+  returns no scope, and no scope reads every firm.** So the one case in which the service knows nothing about the caller is the one
+  case it admits without a fence.
+- **THE CONTRACT. C-FENCE gains: an internal caller for whom the users table holds no PROFILE row is REFUSED, with the same answer
+  as a lookup that failed.** The service does not grant its widest reading to a caller it cannot find.
+- **Who this can touch.** A person signed in through the portal has a row, because sign-in reads it. A caller with no row is
+  a constructed event, a row deleted after its token was issued, or an address that does not match its row. The release's pair
+  reads, counts only, that every active internal user has exactly one PROFILE row found by the index the service uses; a staff
+  member that read would lock out is named to this seat before the apply, and the apply waits on that name being resolved.
+- **Not changed, and stated so it is not mistaken for covered:** a row with NO firm list, or an EMPTY one, still reads every firm
+  (lines 383 to 387). That is how staff who see all firms are represented today. Whether an empty list should mean all is its own
+  question and its own row; nothing is ruled on it here.
+- **The proof, by the instrument this project used for FWD-2:** a direct invoke of the deployed function with a constructed
+  internal context and no users row, served BEFORE the release and refused AFTER; and its twin, a constructed context whose address
+  HAS a row, served after. No row is written for it: the twin uses an address that already has one, named in the pair, status and
+  key names only.
+- **Row TCKT_VNEXT-D2-S46 stays ARMED beside this** (any holder of the invoke permission can be any caller): this addendum narrows
+  what a made-up internal caller gets; it does not narrow who may invoke. That census is a cross-box read and is carried.
 
 -- 1.0.0_SA_CTO~DELL2
