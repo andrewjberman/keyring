@@ -35,7 +35,7 @@ card reads "Unit: unknown". IV-e-113 traced both (read its record first:
 wire, only `section_type` = the census code, and the page prints it (`contracts/adapt.ts` near lines 937 and 941); the producer sends 11
 lower-case unit tokens plus `chart`, and the page's map `SECTION_UNIT_FOR_WIRE` (`adapt.ts` near 530-537) has six upper-case keys, so
 0 of 12 match and the adapter falls to `'unknown'` (near line 944). The CTO ruled both are the PAGE's to fix now; served vendor reports
-are immutable and carry only the code. No schema change. The census file is granted in `<paths>` for READING ONLY: you do not edit it.
+are immutable and carry only the code. No schema change. The census file is a workspace file you READ; it is not in your grant (AMENDMENT 1) and you do not edit it.
 
 **The cell (`IV-e-115`).**
 1. **The 33 names.** The pinned census is `docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json` (its `sections` array: 33 entries, each `id` and
@@ -68,6 +68,13 @@ are immutable and carry only the code. No schema change. The census file is gran
 
 <expected_criteria>IV115-AC1</expected_criteria>
 
+## AMENDMENT 1 (2.0.0_SA_COO~D2, 2026-10-11 ~19:5xZ) -- the census file is NOT in the grant
+
+As issued @2ac7f5ec16 this order's `<paths>` block listed the pinned census file, which made it part of the worker's write surface while
+the text said read-only. That was the issuer's error (a generator patch that failed). The file is removed from `<paths>`: reading a
+workspace file needs no grant, and the census is never edited by this cell. Nothing else changes; no worker had been spawned. Gate limb
+that graded this modification: none (a modification of an issued order; LIMB 6 fires on a newly added order only).
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited. The contract and the producer's fixtures (workspace files)
@@ -88,7 +95,6 @@ org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~63/
 portal/src/pages/InvestorReporting/
 org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D13/DSGN/DSGN_IRPTV1/task-orders/DSGN_IRPTV1.TO-IV-e-115.vendor-section-names-and-unit-tokens.md
-docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json
 </paths>
 
 <decomp_ref>
