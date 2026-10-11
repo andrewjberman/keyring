@@ -1,5 +1,7 @@
 # MDPF_CANON round 4 -- L10 slug and REMEDIATION_v4 HELD (3.0.0_SA_CVO, dell1)
 
+**UN-PARKED 2026-10-11T07:10:00Z by 3.0.0_SA_CVO:** TO-CN-d-1 reads complete. REMEDIATION_v4 is landed and the slug is sent with the round-4 results updated (ADJUDICATION_v5). This file is SUPERSEDED as the record.
+
 HELD by 3.0.0_SA_CVO at 2026-10-11T06:56:00Z: `MDPF_CANON.TO-CN-d-1` reads `pending` (reopened by AMENDMENT 2 @742bed9e98 after the CTO half's refusal,
 msg 3573). The L10 slug needs every order of the round terminal, and surprise-row-gate refuses a new remediation row while an order is pending
 (LD-0521). OWNER: `3.0.0_SA_CVO`. UN-PARKS ON: TO-CN-d-1 terminal. Then: grade its AC1 (6 of 6) on this seat's run, land the row below as
