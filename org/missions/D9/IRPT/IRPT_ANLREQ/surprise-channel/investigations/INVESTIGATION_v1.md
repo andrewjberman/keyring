@@ -3138,3 +3138,31 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S58",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-11T18:20:00Z",
+  "one_line": "Row IRPT_ANLREQ-D2-S51 (ARMED: the portal change that sends ticket_id must not reach DEV before the service carries its half) is DISARMED by its disarm owner: the candidate landed on portal DEV with a fallback, so the order of landing no longer matters.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S51"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal DEV 3ebc35ebf2 by 0.0.0_AB_MSTR~DELL2's receipt (msg 5506: fetch, is-ancestor, push rc 0, ls-remote, CI run success on that head); this seat's own ls-remote read of DEV at 17:52Z: 3ebc35eb.",
+      "this seat's read of the branch tip, src/pages/TicketCenter/analysisRequest.ts lines 402 to 451: readTicketReport sends ticket_id and, only on publicReasonCode INVALID_INPUT, reads once more without it; REPORT_TICKET_MISMATCH is never retried.",
+      "2.0.0_SA_COO~Y2 msg 5467 (its read of the LIVE irpt-status package, digest 6idtFvAm): the reasons map serves RequestReadRefused as INVALID_INPUT; the message UNEXPECTED_OWNED_READ_QUERY is never served.",
+      "this seat's read of _authz/served.py lines 874 to 887: the public reason is derived from the exception's class and clamped to UNEXPECTED outside the boundary set."
+    ]
+  },
+  "spec_asserts": "Row D2-S51: the service release carrying AR-y-71 is live and read first; or the portal landing is gated on the live function's answer, not on a message.",
+  "world_is": "The landing is gated on the live function's answer by construction: before the service's half is live the page's first read is refused as INVALID_INPUT and the second, without the id, answers as today. NOT measured: a live refused read arriving at the page as INVALID_INPUT (no live call was made); the first design of this fallback keyed on a message string that is never served, by this seat's own error, and was caught before landing. Debt carried: the fallback is a way around the binding once the service's half is live, and is removed in release 5's return (pair section 6).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
