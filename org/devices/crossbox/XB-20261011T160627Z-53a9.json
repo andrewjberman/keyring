@@ -10,7 +10,7 @@
  "subject": "IRPT_ANLREQ release 6: TO-READS-Y6, read-only, job-row state of 14 requests and one count; report the first line at once",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps~ANL/task_orders/IRPT_ANLREQ.TO-READS-Y6.job-rows-and-ticket-id-count-laptop.md",
  "opened_at": "2026-10-11T16:06:27Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T16:08:37Z",
   "bus_message_id": "b999f07d-610f-4c3a-a71f-5563cd48d892"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-11T16:30:42Z",
   "from_by": "2.0.0_SA_COO~Y2",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T16:41:33Z",
+  "to_by": "0.7.0_AE_CloudOps~ANL"
  }
 }

@@ -5645,3 +5645,49 @@
   "world_is": "The inconsistent numbers are the HARNESS's, not the fixture file's (holdings-face.no-pick.fixture.json is self-consistent: of_total = amount / 1,000,000 on every node) and not the page's (SecurityList.tsx:239 weight = n.pctOfTotal, adapt.ts:1165 pctOfTotal = node.percentages.of_total, one-account fold sums served weights only, no denominator of its own). Verdict recorded FIXTURE_DEFECT with product_files_changed []. Consequence for earlier records: the driver-client screenshots and any weight read from a two-account client taken with the ~53 driver (holdings-face.driver-client.png, re-run and read here) print the mutated weights; driver-back.png was not read here; the one-account picker view reads 70% / 10% per the order (its own body is recomputed per account). The ~53 folder is outside this order's grant and is not edited; the corrected driver sits in ~58 beside the row."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S18",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T16:37:09Z",
+  "one_line": "IV-e-103 follow-up (CTO msg 5359): the Holdings securities table's two rows sum to 750,000 against a total card of 1,000,000 because the synthetic fixture's two SMA SLEEVE nodes (150,000 and 100,000) are leaves with no SECURITY node beneath them, and the table lists SECURITY nodes only; the card and the table read the SAME total.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A reader of the Holdings tab expects the securities table's values to sum to the total the card shows, or the page to say what is not listed.",
+  "world_is": "Fixture holdings-face.no-pick.fixture.json (synthetic, the ~53 worker's): 16 nodes, 6 leaves, leaf sum 1,000,000 equal to custody_totals; 4 leaves are SECURITY (300,000 + 350,000 folded to one 650,000 row, 50,000 + 50,000 folded to one 100,000 row) and 2 are SLEEVE (150,000 + 100,000 = 250,000). The table's weights are the served of_total over the same 1,000,000 (65 and 10 percent). So the card and the table do not read two totals; the table omits a sleeve that has no security node, and prints nothing that says so. NOT ESTABLISHED: whether a served answer can carry an SMA sleeve with no SECURITY node beneath it (the producer's own fixture holds one account and was not read for this); if it can, a client's table would silently under-list, and that is a product question for the page (state the unlisted amount) or for the producer (always send the sleeve's securities).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~53/holdings-face.no-pick.fixture.json (node tree read by the issuer)",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~58/weight-130.fixed-driver-client.png (read by the issuer)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S19",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T16:41:38Z",
+  "one_line": "L8 round 22 and the slug for rounds 17 to 22, no judgment criterion: every DSGN_IRPTV1 order is terminal. The 130 percent weight was the test driver rewriting shared objects, not the page; the page prints the served figure. The regeneration test that was red passes after IRPT_BCKEND's schema repair (the issuer's run: 1,161 pass, 0 fail). Nothing built in these rounds has been rendered on a served answer, and FWD-1 has no rendered walk on any of it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msgs 5345 and 5351 (IV-e-104 drained @9cc17c490e, portal DEV c3a03c24; IV-e-103 drained @5a150bf718; round 22 MAY-CLOSE)",
+      "this seat's read 2026-10-11T16:41:38Z: portal origin/DEV is c3a03c24, the commit the packet names"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27). Evidence law: a fixture render is not the served page.",
+  "world_is": "Not run by this seat: the suite, eslint, the build hash, the driver. The fixed-driver screenshot was read by the issuer, not by this seat.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

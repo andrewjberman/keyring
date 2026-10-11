@@ -26654,3 +26654,51 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W297-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~297",
+  "surfaced_at": "2026-10-11T16:30:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The holdings source carries no instrument-type field (85 partitions, 1,411,352 rows, 26 distinct columns read), so under ADDENDUM v0.38 no security is admitted to the reader and the sizing equals the rule in force (58.157 percent, 382 of 999); the sibling transactions table beside it DOES carry a type-like column (SEC Asset Type) and a Share Class Type, keyed by CUSIP, which this cell did not use.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~297/IB137-1_witness_overlap_by_type.json instrument_type_field (columns_read, candidates_examined, values {}) and sizing_under_v038",
+      "one partition (date=2026-06-23) of blackdiamond/<scope>/silver/fact_transactions/, read by this worker: 2,825 rows; SEC Asset Type values include 'Exchange-Traded Equity Securities' 301, 'Securities Issued by Registered Investment Companies or Business Development Companies' 1,046, 'Cash and Cash Equivalents' 1,347; Share Class Type includes 'ETF' 9",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~297/ib439_fundtx.py reference_only_wider_basis in fund_transactions: a count only, not a type used in this cell"
+    ]
+  },
+  "spec_asserts": "ADDENDUM v0.38: a class is read from the source's own instrument-type field; if the source carries none, no security is admitted until a classing rule enters by addendum. Order item 1: do not invent a type from names or tickers.",
+  "world_is": "The holdings source states no kind; the transactions table beside it states SEC Asset Type and Share Class Type per CUSIP. Whether a join by CUSIP from the holdings to that table is an admissible 'source's own' type is not this cell's to rule; it was not made, no overlap table was drawn, and no Yahoo Finance call was made."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W297-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~297",
+  "surfaced_at": "2026-10-11T16:30:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two silver transaction tables exist for the firm and the order points at both ('beside the holdings table' and 'the source ADVI_COTBKF reads'); only the first carries a Price column, so the fund-transaction counts are from the table beside the holdings table (361 fund-dates, 9 funds, 346 inside the 85 days on the nine-fund basis); the second was examined by schema and not counted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_crosswalk.py lines 456-457 and 487: _silver_prefix('transactions') resolves to the commonwealth/<scope>/silver/transactions table; its TX_COLS hold Quantity and Amount, no Price; the 2026-06-23 partition schema (25 columns) has no Price column",
+      "blackdiamond/<scope>/silver/ listing (14 tables incl. fact_transactions, fact_transactions_s2) and the fact_transactions schema: Price, Trade Date, Transaction Type, Transaction Sub Type, CUSIP, Units; 121 date partitions with heavy overlap: 1,042,552 rows, 99,723 distinct TransactionIDs",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~297/ib439_fundtx.py output merged into IB137-1_witness_overlap_by_type.json fund_transactions"
+    ]
+  },
+  "spec_asserts": "Order item 4: find the transactions in the estate, list the silver tables beside the holdings table, and read commonwealth_daily_valuation.py for the transaction source ADVI_COTBKF reads.",
+  "world_is": "commonwealth_daily_valuation reads its transactions through commonwealth_crosswalk/daily_holdings (the older commonwealth table, as-of 2026-06-23 snapshots, Quantity and Amount only). The priced custodian trades are in the blackdiamond fact_transactions table. The counts are of the second; a Dividend Reinvestment (a priced purchase struck at NAV) is not counted (47 more fund-dates)."
+}
+```
