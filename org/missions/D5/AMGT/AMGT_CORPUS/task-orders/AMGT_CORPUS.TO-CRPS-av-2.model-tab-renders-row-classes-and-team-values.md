@@ -18,7 +18,7 @@ EGRESS CLASS, declared: NONE. Portal source only. NO push of any portal branch: 
 </preflight>
 
 **You are `0.9.0_WK_AMGT_CORPUS~2`**, slot `~2` of round 46.
-**Your portal.** The nested `portal/` directory in your worktree is a portal git worktree on branch `wk-AMGT_CORPUS-46-portal`, based on
+**Your portal.** The nested `portal/` directory in your worktree is a portal git worktree on branch `wk-AMGT_CORPUS-46-2-portal`, based on
 portal origin/DEV. Portal files commit INSIDE `portal/` on that branch; the outer commit holds only the outer files. Never commit the
 portal gitlink. NEVER run `bun install`. **Colour law** (`portal/CLAUDE.md`): navy ink on the light canvas; reuse the file's classes.
 
@@ -83,7 +83,7 @@ A cell is a number, a text such as `#VALUE!`, or null. A payload captured before
 4. Rows are `AMGT_CORPUS-D1-W2-S<k>` (next free k across every file under `surprise-channel/`), `disarm_owner 2.0.0_SA_COO~C1`, and
    `surfaced_at` = `date -u +%FT%TZ` at filing.
 5. Outer commits with `bash .tools/safe-commit.sh --author "0.9.0_WK_AMGT_CORPUS~2 <0.9.0_WK_AMGT_CORPUS~2@opal.agent>" -F <msgfile> -- <paths>`;
-   the portal commit with `git -C portal commit` on branch `wk-AMGT_CORPUS-46-portal` (identity `-c user.name=0.9.0_WK_AMGT_CORPUS~2 -c
+   the portal commit with `git -C portal commit` on branch `wk-AMGT_CORPUS-46-2-portal` (identity `-c user.name=0.9.0_WK_AMGT_CORPUS~2 -c
    user.email=0.9.0_WK_AMGT_CORPUS~2@opal.agent`). Your proof instance's `to_id` is this order's FULL id:
    `AMGT_CORPUS.TO-CRPS-av-2.model-tab-renders-row-classes-and-team-values`.
 
