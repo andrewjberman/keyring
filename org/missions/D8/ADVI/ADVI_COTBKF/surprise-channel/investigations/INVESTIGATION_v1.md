@@ -5764,3 +5764,29 @@ round.** Never edit an existing row.
  "world_is": "The bucket policy statements are applied and read no-op; the break-glass role they name does not exist in AWS. The issuer ran no terraform command: every plan, state and IAM read above is the applier's. Whether any byte was written under the restricted prefix before the role existed was NOT read."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S94",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T07:01:23Z",
+  "one_line": "L9 round 61: CB61bi1-AC2 MET. The new selector reads restricted_prefix_hosts and picks cottonwood, the row the old masters-based selector picked before 5f962296ae added masters to inflection. The record's cited lines say what it claims, the subtraction covers the 14 scope rows, and the attribute's name collides with nothing (this seat's census: 11 of 88,149 files, all this cell's own). The record's own caveat stands: no validator reads the field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_61_DRAIN_END_20261011.md @004f8ae2ce (msg 4329)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~88/CRM_SCOPE_ATTRIBUTE_RULE24.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_61_L9_GRADE_20261011.md",
+      "this seat's reads: git show 5f962296ae^:infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf line 197; the same file at HEAD line 198; git show 5f962296ae on scopes.json (masters added to inflection only); the 4 FIRM rows of scopes.json at HEAD (restricted_prefix_hosts on cottonwood only)",
+      "this seat's runs: python lib/opal_naming.py validate -> OK 54 system rows, 14 scope rows, 0 warnings; comp-find -i word-boundary census of restricted_prefix_hosts over corpus all: 16 hits in 11 of 88,149 files"
+    ]
+  },
+  "spec_asserts": "CB61bi1-AC2 (JUDGMENT, graded by 3.0.0_SA_CVO at L9): the row chosen is the row the selector chose before 5f962296ae; each postulate's evidence resolves at its cited line and the subtraction ran over every scope row; the token census carries denominators and the name collides with nothing.",
+  "world_is": "All three limbs hold. CB-bi-2 is stopped, so round 61 is not closed and its second judgment is not owed yet. No terraform command was run by this seat.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
