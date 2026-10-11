@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-10T21:12:08Z",
+ "written_at": "2026-10-11T01:27:54Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1325,6 +1325,128 @@
     "by": "1.0.0_SA_CTO~Z",
     "reason": "ACT only Andrew can do: his login as the Opal Bloomberg (non-owner) account in the MP-v-2 worker's headed Edge window (TO-MP-v-2 G-2ND limb 2); a login is his."
    }
+  },
+  {
+   "id": "sitez-20261011T000025Z-8ed7",
+   "project": "NFRA_MCPORTAL",
+   "subject": "Open https://mcp.opalinvest.dev/control-plane and /open-calls once: read one overlap, one box's git state, and close one real OPEN call with your ruling (CP2 close run, G-SEE2)",
+   "asked_by": "2.0.0_SA_COO~MP",
+   "source": "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-q-1.cp2-close-run.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-11T00:00:25Z",
+   "kind": "act",
+   "context": "CP2 (Overlap, Git state, Open Calls) is LIVE since 23:04Z on gateway 2a5966dfbd (MP-r-2 complete @937a9e38a4). Your one pass, plus closing one real OPEN call on the page, is the human half of FWD-15 to FWD-17. The MP-q-1 worker then checks the close request reached its result. It gates only MP-q-1.",
+   "rec": "Close one call you already have a ruling for, e.g. this queue's own G-2ND or a stale row; ~3 minutes",
+   "scope": {
+    "measured_at": "2026-10-11T00:00:25Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_DEMQUE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_STRATID placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261011T003538Z-5bdf",
+   "project": "NFRA_IAMROLES202609",
+   "subject": "Acknowledge an R20 declared exception for the two legacy Black Diamond IAM role names (bd-merge-daily-lambda-role, bd-pipeline-task-role) so IAM-w-2 can adopt them into Terraform under their live names",
+   "asked_by": "2.0.0_SA_COO~ZI",
+   "source": "org/missions/D12/NFRA/NFRA_IAMROLES202609/surprise-channel/investigations/INVESTIGATION_v1.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-11T00:35:38Z",
+   "kind": "fork",
+   "context": "Naming gate carrier limb refuses NEW 'bd' token (rows Z-S34, Z-S36); renaming live roles is create+delete; Rule 30 reserves R20 acknowledgement to Andrew; gates IAM-w-2 PHASE B only (ledger HELD-PRE-APPLY, nothing applied)",
+   "rec": "Yes: R20 entry for exactly these two names, owner 1.0.0_SA_CTO~Z -- they are pre-existing live roles (2026-01), adoption moves custody only, and the canonical names need a destructive rename",
+   "scope": {
+    "measured_at": "2026-10-11T00:35:38Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/bd-pipeline",
+     "infra/aws/terraform/portfolio-management",
+     "infra/aws/terraform/news-pipeline"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_DEMQUE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_STRATID placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/bd-pipeline declares cloudwatch-metrics, also declared by root infra/aws/terraform/shared-infra named by MDPF_SECCLASS on dell1",
+      "root infra/aws/terraform/news-pipeline declares SecretsManagerAccess, cross-firm-secret-deny, also declared by root infra/aws/terraform/shared-infra named by MDPF_SECCLASS on dell1",
+      "root infra/aws/terraform/news-pipeline declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2"
+     ],
+     "shared": [
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261011T012754Z-c719",
+   "project": "COMM_ASSIST",
+   "subject": "May FWD-4's CLIENT branch (a client-firm mail naming Andrew is texted to him) stand as a qualified essential wait, read when the first real client mail arrives?",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/missions/D9/COMM/COMM_ASSIST/ledger/ROUND_ANALYSIS.round13.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-11T01:27:54Z",
+   "kind": "fork",
+   "context": "FWD-4 is APPLIED. Its internal branch is driven by a seat-sent mail, but no seat can send as a client firm, so the client branch can only be exercised by a real client mail. The L2 rule (NO FWD IS A WAIT) lets a wait stand only when qualified with its reason and Andrew's word.",
+   "rec": "Yes: no seat can send as a client firm, so the alternative is a planted mail from outside Opal, which is worse. The organic client mail is the proof, and the COO reads it the day it lands.",
+   "scope": {
+    "measured_at": "2026-10-11T01:27:54Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
   }
  ]
 }
