@@ -350,3 +350,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+```json
+{
+  "id": "MDPF_CANON-D1-W9-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~9",
+  "surfaced_at": "2026-10-11T03:04:50Z",
+  "one_line": "CN-c-2 step 2 premise fails: the daily runner does not put lib/opal_naming.py on the Stage-0 pull's import path, so the builder import the cell requires cannot resolve there. Cell stopped at step 2; no file edited, no AWS call.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-c-2 step 2: the Stage-0 script imports from lib.opal_naming (as the sibling gold writer does). If lib/opal_naming.py is NOT on the runner's path for a Stage-0 script, file a BLOCKING row stating what the runner syncs, and stop on this cell.",
+  "world_is": "The runner syncs two trees only: s3://opal-data-mdpf/code/scripts/ to /opt/mdpf/scripts/ and s3://opal-data-mdpf/code/config/ to /opt/mdpf/config/ (dispatch :125, :130). The repo-root lib/ tree is in neither. Stage 0 runs as \"$PY\" \"$S0_SCRIPT\" --date \"$RUN_DATE\" --upload with S0_SCRIPT=/opt/mdpf/scripts/bronze/pull_orion_model_composition.py (dispatch :248, :251) and no PYTHONPATH is exported anywhere in the dispatch or the user-data bootstrap (pip installs only). sys.path[0] is therefore /opt/mdpf/scripts/bronze, and the script has no sys.path insert (its imports end at :49). lib is not a child of that directory, so the import raises ModuleNotFoundError on the runner. The Stage-0 failure is non-fatal to the chain (dispatch :251-262 WARN, chain continues). The sibling gold writer (mdpf_gold_parquet.py:52) resolves its repo-root insert four levels above /opt/mdpf/scripts/gold, which is /, so it has the same gap on the runner (not graded by this cell).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh@2280b72ff4:125,130 (s3 sync of code/scripts and code/config only)",
+      "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh@2280b72ff4:248,251 (S0_SCRIPT and its invocation, no PYTHONPATH)",
+      "data/mdpf/scripts/bronze/pull_orion_model_composition.py@2280b72ff4:37-49 (imports; no sys.path insert)",
+      "infra/aws/ec2/mdpf-daily-runner/user-data.sh@2280b72ff4 (bootstrap: pip installs only, no lib sync)",
+      "data/mdpf/scripts/gold/mdpf_gold_parquet.py@2280b72ff4:52 (sibling lib import)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The stop is at step 2 of CN-c-2. Steps 1 and 3 (the script and the IAM grant) were not edited. The fix is a runner-side decision (what the dispatch syncs or exports, and CloudOps' deploy), not a worker's path choice, so the cell does not type the prefix. AC1 at base: 0 of 3 arms, exit=1."
+}
+```
