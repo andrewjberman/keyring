@@ -81,6 +81,13 @@ _FEED_RE = re.compile(r"^[a-z0-9_]+$")
 # prefix supplies the partition and object. The view is a GENERATED whole-file Python module (a literal the gold module
 # imports): the deploy plane ships only .py files of scripts/gold[/lib]/ (safe_deploy_core.file_to_s3_target).
 PLATINUM_DEST_VIEW_PATH = "data/black_diamond/scripts/gold/lib/platinum_dest_view.py"
+# The Lambda copies of the same view (ADVI_FIRMBKTS FB-f-13, phase A): one byte-identical copy beside each Lambda's
+# served_seam.py. _blk_platinum_destinations names PLATINUM_DEST_VIEW_PATH in every copy's header, so the three files are
+# byte-identical and a regeneration of any of them yields the same bytes.
+PLATINUM_DEST_VIEW_LAMBDA_PATHS = (
+    "infra/aws/lambda/exec-summary-generator/platinum_dest_view.py",
+    "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/platinum_dest_view.py",
+)
 PLATINUM_FIELDS = ("legacy_bucket", "legacy_prefix", "source", "scope", "tier", "table", "partition", "reader", "evidence")
 PLATINUM_TAIL = "{tail}"
 _PROBE_P, _PROBE_O = "zzprobep", "zzprobeo"
@@ -100,6 +107,8 @@ VIEWS = (
     ("portal/src/pages/InvestorReporting/header/vendorDisplayNames.generated.ts", "mjs", ("VENDOR_DISPLAY_NAMES",)),
     (BRONZE_HOMES_PATH, "json", ("BRONZE_HOMES",)),
     (PLATINUM_DEST_VIEW_PATH, "py", ("PLATINUM_DESTINATIONS",)),
+    (PLATINUM_DEST_VIEW_LAMBDA_PATHS[0], "py", ("PLATINUM_DESTINATIONS",)),
+    (PLATINUM_DEST_VIEW_LAMBDA_PATHS[1], "py", ("PLATINUM_DESTINATIONS",)),
 )
 
 # Targets the generator owns WHOLE: the file is nothing but its generated block(s), so _render_view builds it
@@ -110,6 +119,8 @@ WHOLE_FILE_TARGETS = (
     "portal/src/pages/InvestorReporting/header/vendorDisplayNames.generated.ts",
     BRONZE_HOMES_PATH,
     PLATINUM_DEST_VIEW_PATH,
+    PLATINUM_DEST_VIEW_LAMBDA_PATHS[0],
+    PLATINUM_DEST_VIEW_LAMBDA_PATHS[1],
 )
 
 # Which registry file(s) each generated target's renderer reads (LGIC_ENFORCE EN-r-6; row W1-S14): one
@@ -160,6 +171,8 @@ TARGET_REGISTRY_KEYS = {
     # PLATINUM_DESTINATIONS (ADVI_FIRMBKTS FB-f-9, CTO ADDENDUM 3) -- _platinum_build() reads the row, key() reads
     # systems.json (the source) and scopes.json (the long form), and _home_bucket() reads tiers.json (the bucket).
     PLATINUM_DEST_VIEW_PATH: ("platinum_destinations", "scopes", "systems", "tiers"),
+    PLATINUM_DEST_VIEW_LAMBDA_PATHS[0]: ("platinum_destinations", "scopes", "systems", "tiers"),
+    PLATINUM_DEST_VIEW_LAMBDA_PATHS[1]: ("platinum_destinations", "scopes", "systems", "tiers"),
     VECTORS_PATH: ("scopes", "systems", "exemptions", "resources"),
     TFTEST_PATH: ("scopes", "systems", "exemptions", "resources"),
 }
@@ -1124,8 +1137,10 @@ def _blk_platinum_destinations(reg, h16, path):
         bucket, tmpl = _platinum_build(reg, row)
         rows.append((row["legacy_prefix"], bucket, tmpl))
     rows.sort()
+    # The header names the module's ONE canonical target, whichever copy is rendered (FB-f-13): the copies are the same
+    # module, and a per-copy target would make them differ in line 1 alone.
     lines = ["# %s -- do not edit by hand; regenerate with: python lib/opal_naming.py generate --out <dir> --target %s"
-             % (_view_mark(h16, path), path),
+             % (_view_mark(h16, PLATINUM_DEST_VIEW_PATH), PLATINUM_DEST_VIEW_PATH),
              '"""The platinum destination view (ADVI_FIRMBKTS FB-f-9): read by lib/platinum_dest.py. A literal the gold runner'
              ' imports; the key template carries {tail}, where the legacy key\'s remainder goes."""',
              "from __future__ import annotations",
