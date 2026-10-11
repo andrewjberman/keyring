@@ -1422,3 +1422,15 @@ the analysis's rule closes row D2-W114-S1; five of the 33 readers re-read by thi
 
 **fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~124` (DB-b-151), and the record-owning serials `~104` (DB-b-152) and
 `~113` (DB-b-153), each in a fresh worktree cut from box/dell2.
+
+## 82. ROUND 80, WORKSTREAM B (2026-10-11 ~21:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msgs 5878 and 5886)
+
+Rounds 78 and 79 are fully drained (round-close MAY-CLOSE on both). Two rulings came back on what they returned:
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-154` | msg 5878: the severity of row W122-S1 -- of the 34 moved medians, how many are the final served price, how many of those assets are held on a served account-day, the two over 1 percent by the same test, and whether the script path runs today. Read-only, counts only; the pipeline is dell1's (its row ADVI_FIRMBKTS-D1-S32, parked) and the read is sent to its CTO through 0.0.0_AB_MSTR~DELL2 | LOCAL | DB-b-149 | B80-1 |
+| `DB-b-155` | msg 5886: the proposal's first axis renamed for what it measures (a restatement closing, since END is served and closes in 0 of 51); two tokens with their census, none containing RECONCILES; by the serial that owns the record | LOCAL | DB-b-148 | B80-2 |
+
+**fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~125` (DB-b-154) and the record-owning serial `~121` (DB-b-155), each in a
+fresh worktree cut from box/dell2.
