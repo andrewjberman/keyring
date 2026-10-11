@@ -4190,3 +4190,29 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not changed by the worker: the check and the amendment commits are outside this order's paths. Issuer decision needed: the check should diff from the amendment (or exclude issuer commits), or the amendment should land on the primary checkout. The worker's AC3 result is recorded as FAIL, not re-measured against a different base."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S24",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T13:20:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Act 4's flip points the IRPT directory and holdings readers and writers at opal-data-49financial, which holds none of their keys: the F7 delta copy covers the served platinum classes only, and the mapped irpt/ home is read by no IRPT code.",
+  "spec_asserts": "Round-3 analysis section 3 item 1 (ADDENDUM 7): the IRPT consumers and the gold scripts are readers of the routed bucket; the window opens when each is dormant with its pair; act 4 is the value flip with every regenerated target deployed in the same act.",
+  "world_is": "The flip changes the bucket value in data/firm_registry.json, which the IRPT lambdas read through the generated bucket map (8 consumers of _authz/loaders.py), and in directory_runner.py and holdings_snapshot.py (the IRPT gold writers). Both sides address the key `investor-reporting/directory/latest.json` and its pointed objects (IRPT_DIRECTORY_PREFIX default in reporting-publish/handler.py:311 and holdings/handler.py:53; PROD_PREFIX in directory_runner.py:139 and holdings_snapshot.py:131). head-object, 2026-10-11 ~13:15Z: opal-data-bd investor-reporting/directory/latest.json exists (272 bytes, 2026-10-09T14:11:45Z); the same key in opal-data-49financial is 404, and so is the mapped address irpt/49financial/platinum/investor-reporting/directory/latest.json in both buckets. mapping_v4 homes these classes (census: directory 26, qa/directory 3, qa/holdings 2 objects) at irpt/{firm}/platinum/investor-reporting/... under rule RI1, and the project description assigns the IRPT slices to IRPT_BCKEND. The F7 delta tool's manifest is the served classes of opal-data-bd (r3_f7_delta.py docstring), which does not contain them. After act 4 the IRPT readers get 404s and the IRPT writers write the legacy key shape into the new bucket.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object on the four bucket/key pairs, 2026-10-11 ~13:15Z (the dell1 CloudOps identity)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v4.json rows opal-data-bd investor-reporting/ (RI1)",
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py:311; holdings/handler.py:53; data/assets/scripts/gold/investor_reporting/directory_runner.py:139 and holdings_snapshot.py:131",
+      "deliverables/2.0.0_SA_COO~B1/round4/checks/r4_flip.py (the five-to-four value-changing set includes the two gold runners and firm_registry.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "An endpoint question for 1.0.0_SA_CTO~DELL1 and, for the key shape, IRPT_BCKEND. Placements read from the evidence: (a) act 3 copies the 31 investor-reporting objects to the new bucket AT THE SAME KEYS (a pure copy; the RI1 re-shaping stays IRPT_BCKEND's), so writers and readers keep working after the flip; (b) the IRPT readers and writers read a transitional per-tier live bucket row (as the bronze pin does) until IRPT_BCKEND moves them. Act 4's un-park names this row."
+}
+```
