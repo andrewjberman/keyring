@@ -86,7 +86,7 @@ the deputization in LIVE_ARMS.md; Andrew is told to expect one text. A seat orde
 manager delivers it). SEV1_SMS_TEST is a third workstream of round 4; the outcome is not this project's (the rows live
 here). A failure is a row to Andrew (the Support case), an arrival is the SNS-routing cell the next round cuts.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>SEV1_SMS_TEST</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-9</to_id>

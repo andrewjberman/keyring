@@ -89,7 +89,15 @@ behavior (the task order's own AC1 is the provider, not a text read). Class WORL
 nothing, and if the cleared plan is a no-op the later `portal-auth` apply carries no ACL rider. The CVO's packet of
 round 3 recorded the rider as ruled in act 1's ADDENDUM 1; this cell retires it.
 
-<status>pending</status>
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-11 ~12:4xZ, WITHDRAWN):** `0.7.0_AE_CloudOps~FB1` (msg 3847, row D1-S22) read the
+provider's own plan for each form the ruling named: `ignore_changes` on the three `version` paths errors ("Cannot index a set
+value"), an explicit `null` has no effect, `version = ""` is refused by the schema; only `ignore_changes` on the whole `rule`
+array reads No changes, which this file's comments record as refused. The CTO ruled (msg 3854, round-3 ADDENDUM 5): keep the
+named rider; S12 closes "not reconcilable; standing rider"; it reopens only if the provider can ignore a set member. The order
+is withdrawn with nothing changed (the file is byte-identical to base; nothing was applied). Gate limb: a status change on an
+existing order is graded by no limb (GATE viii reads `<placeholders>` at HEAD: `NONE`).
+
+<status>withdrawn</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-6</to_id>
 <slot>~FB1</slot>
