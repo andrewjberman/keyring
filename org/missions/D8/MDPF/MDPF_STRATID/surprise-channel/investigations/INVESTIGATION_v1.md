@@ -555,6 +555,29 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "TO-APPLY-R2 leg L4 and ledger mdpf-stratid-w2-wiring-silver L3: the 2026-10-10 12:52Z dispatch and 13:30Z fire are the real runs; r2_run_read.py reads Global's run-date object.",
     "world_is": "INFERRED, not exercised against pre-round-2 bytes: the Saturday fire's run date is Friday 2026-10-09, Cottonwood measured it and the 49F value axis did not, so Global's frontier date carries counts with no values and the unchanged gate refuses. Global's prior emit stays authoritative; nothing broken was served. L4 re-points to the first fire that emits a Global object for a date on which all three scopes carry values (expected the 2026-10-12 13:30Z fire); L3 waits for the first dispatch that is not NOT-YET."
+  },
+  {
+    "id": "MDPF_STRATID-D1-S10",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-11T14:20:00Z",
+    "one_line": "The wait D1-S9 recorded for ledger mdpf-stratid-w2-wiring-silver L3 ('the first dispatch that is not NOT-YET') is not sufficient: the 2026-10-11 12:52Z backstop DISPATCHED and the runner's Stage 6 died at import in 1 s (ModuleNotFoundError lib.opal_naming) before step 6d, the known MDPF_TAXSMA-S5 break, so the runner-log half of L3 stays unexercised. Round-2 L4 is not affected by this and stays UNREAD on the 13:30Z Global refusal (same 5 models, same date).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "mdpf-feeder-trigger 2026-10-11: accelerator 12:47Z 'NOT-YET dispatched false'; backstop ~12:52Z 'OK: feeder chain dispatched ... run_stamp 20261011T125209Z source backstop wsc_input_present true wse_input_present false runner i-02448edb624a7a7cf ssm_command_id 0385c1be-d11f-4de2-a2cb-2144867d9129'",
+        "s3://opal-data-mdpf/telemetry/mdpf-daily-runner/logs/mdpf_daily_20261011_125228.log lines 241-250: build_mdpf_spine.py:51 -> dim_mdpf_aggregate_aua_timeseries.py:76 import taxsma_assets -> taxsma_assets.py:95 'from lib.opal_naming import address' -> 'ModuleNotFoundError: No module named lib.opal_naming' -> 'step STAGE6-REVAMP rc=1 dur=1s status=error' -> 'Stage 6 REVAMP failed (rc>0) -- NON-FATAL ... no marker written'; status.json status complete, steps_done ends at STAGE6-REVAMP error, last_output 'Stage 6 revamp parallel producer ran (rc=1, non-fatal)'",
+        "the same traceback in mdpf_daily_20261009_125228.log lines 239-247, and MDPF_TAXSMA-S5 (ARMED, disarm_owner 2.0.0_SA_COO~T, surfaced 2026-09-21T20:02Z) names this exact import chain; the runner log has no strategy-config error (grep strategy|matcher: only the S3 download line for opal_strategy_matcher.py)",
+        "mdpf-gold-lambda 2026/10/11/[$LATEST]2ed05a4113284fcb920623aacbb4612d 13:31:32Z: 'SCOPE FAILED (isolated): global -- CROSS-AXIS COHERENCE GATE FAILED (global)', (v) 5 across 1 date, 2026-10-09 the same five opal_ultra_short_term/short_term/intermediate/long_term_conservative/long_term_aggressive model_value=None; axis frontier 2026-10-09",
+        "served: Global newest key still portal/gold/mdpf/global/aggregate-aua-timeseries/2026-10-08.json (round-1 code, 2026-10-09T13:31:40Z); 49financial newest 2026-10-08.json; Cottonwood slice rewritten 2026-10-11T13:31:12Z, unidentified_strategies as_of 2026-10-09 names_scanned 18 listed 1; r2_run_read.py FAIL is on those pre-round-2 Global bytes and grades nothing about round 2"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Ledger mdpf-stratid-w2-wiring-silver L3 proof_required: 'runner log shows no strategy-config error; served Cottonwood by_model sma members equal the prior run's member set'. The runner-log half is read from a dispatch whose Stage 6 reached step 6d.",
+    "world_is": "MEASURED: the dispatch ran and Stage 6 never reached 6d, for an import break that predates round 2 (2026-09-21, MDPF_TAXSMA-S5, owner 2.0.0_SA_COO~T). INFERRED: while S5 stands, no dispatch can exercise 6d, so L3's runner-log half cannot close on any future run; the served-slice half is already read and equal (0 of 493 cells differ). Not chased: the runner tree and the TAXSMA import are not this project's write surface. L3 re-points to the first dispatch whose log carries '6d COTTONWOOD legs complete' or a 6d error line, which needs S5 disarmed first. L4 is unchanged: first Global emit with all three scopes valued."
   }
 ]
 ```
