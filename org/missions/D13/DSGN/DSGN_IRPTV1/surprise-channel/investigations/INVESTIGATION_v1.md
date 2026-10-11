@@ -5822,3 +5822,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-W60-S3 -- IV-e-110: a producer CASH node is a listed row on this page, so cash-only sleeves are not the unlisted ones; and TARGET rows count as listed
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W60-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~60",
+  "surfaced_at": "2026-10-11T17:59:00Z",
+  "one_line": "IV-e-110: the page folds a producer CASH node into kind 'security', so a cash-only sleeve (CASH child) IS listed in the table; the order's 'most cash only' unlisted sleeves are, on this page, listed as a Cash row, and what stays unlisted is a withheld drill (the 'DRILL WITHHELD' capability fact) or a zero-amount sleeve.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ portal/src/pages/InvestorReporting/contracts/index.ts:821 (cashNode: 'True when the wire node_kind is CASH (folded into security for the render)') and tabs/holdings/SecurityList.tsx securityRowsFrom (every kind security with amount !== 0 lists)",
+      "READ org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~298/IB138-1_SLEEVE_LEAF_READ.md section 2: the 1,229 are counted against strict SECURITY nodes; 1,216 of them have CASH children only, 8 'DRILL WITHHELD' with no child",
+      "READ tabs/holdings/slices.ts:270-304 and contracts/adapt.ts:1177: the 'DRILL WITHHELD' fact reaches classification.capabilityFacts on a sleeve; a cash-only sleeve carries no mark"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: 'most cash only, 8 labelled as a withheld drill'; the sentence names both reasons for the money the table does not itemise.",
+  "world_is": "The amount is computed as the order says (card total less the listed rows) and the sentence names both reasons without apportioning, because no served node says cash-only (only a withheld drill is marked). Two consequences left to the CTO: (1) on this page a cash-only sleeve's CASH child is a listed row, so the cash-only reason will seldom be the cause of a gap the sentence reports; (2) the listed rows include TARGET-basis securities under Models sleeves (producer record: 5,957 sleeves hold only TARGET securities), so a gap or a surplus can also come from target rows not summing to their sleeve; the sentence is not shown when the rows reach or exceed the total.",
+  "notes": "No act taken beyond the sentence as ordered."
+}
+```
