@@ -72,7 +72,15 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--hours", type=float, default=24.0)
     ap.add_argument("--since", default="")
+    ap.add_argument("--projects-dir", default="",
+                    help="the Claude Code projects dir to read (default ~/.claude/projects, or $CLAUDE_CONFIG_DIR/projects); "
+                         "a box whose seats run under another profile or config dir passes it here")
     a = ap.parse_args()
+    global PROJECTS
+    if a.projects_dir:
+        PROJECTS = Path(a.projects_dir)
+    elif os.environ.get("CLAUDE_CONFIG_DIR"):
+        PROJECTS = Path(os.environ["CLAUDE_CONFIG_DIR"]) / "projects"
     since = (datetime.strptime(a.since, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc) if a.since
              else datetime.now(timezone.utc) - timedelta(hours=a.hours))
     pol = json.loads(POLICY.read_text(encoding="utf-8"))
@@ -82,8 +90,13 @@ def main():
     print("MODEL-CENSUS policy=%s device=%s arm=%s since=%s" % (
         pol["policy_id"], dev or "UNSET", "TREATMENT" if treated else "CONTROL", since.strftime("%Y-%m-%dT%H:%M:%SZ")))
 
-    transcripts = [p for p in PROJECTS.glob("*/*.jsonl")
+    all_transcripts = list(PROJECTS.glob("*/*.jsonl"))
+    transcripts = [p for p in all_transcripts
                    if datetime.fromtimestamp(p.stat().st_mtime, timezone.utc) >= since]
+    newest = max((p.stat().st_mtime for p in all_transcripts), default=0)
+    print("PROJECTS-DIR %s exists=%s session transcripts total=%d newest=%s" % (
+        PROJECTS, PROJECTS.exists(), len(all_transcripts),
+        datetime.fromtimestamp(newest, timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ") if newest else "none"))
     rows, no_serial, sub_read, mism = [], 0, 0, 0
     for t in sorted(transcripts, key=lambda p: p.stat().st_mtime):
         sid = t.stem
