@@ -622,6 +622,32 @@ def cmd_close_leg(args) -> int:
 
 def cmd_close(args) -> int:
     state = _load(args.slug)
+    if getattr(args, "gate_refused", None):
+        # A FOURTH state (ADVI_COTBKF-D2-S99, ruled by 1.0.0_SA_CTO 2026-10-11): a mechanical gate refused the
+        # apply BEFORE terraform ran, so the world is untouched -- neither landed, half-landed nor unstarted.
+        # Admitted STRUCTURALLY: no apply/deploy leg (kind != 'verify') may carry proof; a proven apply leg
+        # means the act landed and this close is refused. The seat's evidence line (the gate's refusal and
+        # the nothing-created reads with their positive control) is written into the entry, never inferred.
+        proven_apply = [leg["id"] for leg in state["legs"] if leg.get("proof") and leg.get("kind") != "verify"]
+        if proven_apply:
+            print(f"REFUSED: ledger '{args.slug}' has proven apply/deploy leg(s) {proven_apply} -- an act that "
+                  "landed is not gate-refused; close every leg with proof, or roll back.")
+            return 2
+        ev = (args.gate_refused or "").strip()
+        if len(ev) < 40:
+            print("REFUSED: --gate-refused must carry the gate's refusal line AND the nothing-created reads "
+                  "(with a positive control), not a label.")
+            return 2
+        state["status"] = "CLOSED -- REFUSED BY GATE, nothing created"
+        state["closed_at"] = _ts()
+        state.setdefault("log", []).append(f"{_ts()} CLOSED -- REFUSED BY GATE before apply, world untouched: {ev[:400]}")
+        _write_entry(state)
+        _state_path(args.slug).unlink()
+        sentinel_rel = str(_state_path(args.slug).relative_to(WORKSPACE)).replace("\\", "/")
+        _unstage_added(sentinel_rel)
+        print(f"OK: CLOSED deploy ledger '{args.slug}' as REFUSED BY GATE (nothing created); sentinel removed; "
+              f"entry: {state['entry_path']}")
+        return 0
     unproven = [leg["id"] for leg in state["legs"] if not leg.get("proof")]
     if unproven:
         print(f"REFUSED: ledger '{args.slug}' has unproven leg(s): {unproven}")
@@ -1580,8 +1606,11 @@ def main() -> int:
     p.add_argument("--proof", required=True)
     p.set_defaults(fn=cmd_close_leg)
 
-    p = sub.add_parser("close", help="close the ledger (refuses if any leg unproven)")
+    p = sub.add_parser("close", help="close the ledger (refuses if any leg unproven); --gate-refused closes an "
+                                     "apply a mechanical gate refused before terraform ran (no apply leg may carry proof)")
     p.add_argument("--slug", required=True)
+    p.add_argument("--gate-refused", default="", metavar="EVIDENCE",
+                   help="the gate's refusal line plus the nothing-created reads with a positive control")
     p.set_defaults(fn=cmd_close)
 
     p = sub.add_parser("hold", help="mark a ledger HELD/SOVEREIGN-GATED (apply legs proven, only verify "

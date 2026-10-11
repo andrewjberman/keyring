@@ -10,12 +10,16 @@
  "subject": "ADVI_FIRMBKTS TO-FB-f-8 act 1: advTenant edge deploy as the laptop CloudOps identity; step 0b first",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-8.act1-deploy-advtenant.md",
  "opened_at": "2026-10-11T08:06:00Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-11T08:07:36Z",
   "bus_message_id": "784b8d37-a6ab-4ca8-8ec4-ef77156aa99c"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T08:14:25Z",
+  "by": "0.7.0_AE_CloudOps~FBL",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

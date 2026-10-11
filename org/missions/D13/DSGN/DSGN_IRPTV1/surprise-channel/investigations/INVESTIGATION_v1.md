@@ -4241,3 +4241,32 @@
   "notes": "Owner of the next act: 1.0.0_SA_CTO~DELL2 at the round analysis (which project's cell widens reporting-read to the Cottonwood firm: IRPT_DASHBD FWD-11 or IRPT_BCKEND). Related, not duplicated: DSGN_IRPTV1-D2-S7 (the walk's break) and the OBJECT_NOT_COVERED vendor gate placed by 2.0.0_SA_COO~P2."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S8",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T08:32:48Z",
+  "one_line": "L9 rounds 14-15: FWD-1 is NOT MET on the first run that can grade it (a rendered walk on DEV breaks at the Performance hop). This seat measured the cause the record inferred: the reporting-read function's live firm map holds one firm, 49financial, so a Cottonwood client's reads are refused FIRM_BINDING; the page binds correctly. Hop 7's PARTIAL is right: the account pick does not carry to the Holdings face, which opens on the client's accounts, not the picked account's Models / SMAs / Client split. The 43 failing ids are tabled 33 owned and 10 asked; 2 retirements are not yet ruled, so S7 and W21-S2 stay ARMED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4490 (round 15 drained @6d3bb93153; round 14 table @a5590e4734)",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~51/FIRM_BINDING_PLACED.json",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~50/FAILING_ID_TABLE.json",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/UI_WALK_DSGN_IRPTV1_FWD1_20261011T0730Z.md",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_ROUNDS_14_15_L9_GRADE_20261011.md",
+      "this seat's live read 2026-10-11T08:32:48Z: get-function-configuration irpt-49f-reporting-read-lambda, IRPT_DIRECTORY_BUCKET_MAP holds 1 key, 49financial -- the record's inferred live state, now measured",
+      "this seat's read of FAILING_ID_TABLE.json: 43 rows, equal to the 43 sampled ids; 33 REGRESSION_OWNED, each with an owner; 10 RETIREMENT_ASKED, 8 of them asking a ruling. 1.0.0_SA_CTO~DELL2 msg 4446 (read in the addressee's inbox): 5 retired, 1 retired with a duty, 2 NOT retired until the contract line for a null business_date is read",
+      "1.0.0_SA_CTO~DELL2 msg 4459 (read in the addressee's inbox): the one-firm map is by design; IRPT_DASHBD FWD-11 is unbuilt for the reporting read"
+    ]
+  },
+  "spec_asserts": "FWD-1: an Opal user picks Anna Thiessen's Cottonwood brokerage account and reads her identity card, her year-to-date return with its spread, her Models / SMAs / Client split and her security list, on the live product; DONE WHEN one live trace ending in the rendered page.",
+  "world_is": "Four hops pass, the Performance hop is refused, the category split is one layer in. This seat did not walk the page or read its screenshots.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
