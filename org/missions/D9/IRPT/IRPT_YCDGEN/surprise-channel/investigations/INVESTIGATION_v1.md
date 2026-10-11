@@ -3805,3 +3805,27 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "The file nevertheless carries a by-version leftover: line 6 assigns the literal string __ST30_SCRIPT_VERSION__ to VER and nothing reads it. 1 assignment, 0 reads, measured over the whole file. Effect on leg D2: NONE -- the install ran rc=0 and the host verified both sha256 values. Effect on the next derivation: a restored `--version-id \"$VER\"` would pass the literal placeholder to S3."
 }
 ```
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S48",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T10:53:44Z",
+  "one_line": "L8, the resident release st30 (installed 2026-10-11T10:32Z), no judgment criterion: this project's share (the reason fix and page sentence S1; the three-firm research policy row S4) is APPLIED, UNEXERCISED. No request has run through the new root, and only an Opal generation under the one listed sign-in can exercise either. FWD-1 stays NOT MET and was not run. The issuer's correction on S4 is right: a status read is served by the irpt-status function from its own package and does not touch the resident.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/st30_release/CVO_PACKET_ST30_IRPT_YCDGEN_20261011.md @856f5e92a3 (msg 4759)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/st30_release/ST30_CORRECTION_1_S4_AND_STATE_AFTER_INSTALL_20261011.md",
+      "this seat's reads 2026-10-11T10:53:44Z: the applier's host file org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_st30/D2_V1_INSTALL_20261011.txt (running root /opt/irpt-resident/37210c771a-st30, active, restarts 0, tracebacks 0; allow list one sign-in; research row firms 3; read-back release 390; both queue binding counts 0); at commit 37210c771a, an ancestor of HEAD, resident_worker.py:789 reads READ_BACK_RELEASE_VISIBILITY_S = 390 and :121 reads the one-entry allow list. The host itself was not read by this seat"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself. Evidence law: APPLIED is not EXERCISED.",
+  "world_is": "Applied, read from the applier's host file and the pinned commit. Not exercised by anyone. Rows D2-S45 (ARMED), D2-S46 and D2-S47 are open and not compiled here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

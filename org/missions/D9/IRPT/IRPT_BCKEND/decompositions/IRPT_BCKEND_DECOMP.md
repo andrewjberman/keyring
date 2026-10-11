@@ -2797,3 +2797,22 @@ fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~2
 
 Parked for the next issuance, each ruled and unblocked: the one-tree re-pin of irpt-ycharts-generate (CTO msg 4657; owner this seat);
 the `_contracts` smoke-map pin with the two custody-route fixtures (2.0.0_SA_COO~D2 msg 4714; owner this seat).
+
+## 117. ROUND 124, WORKSTREAM ~P (2026-10-11 ~10:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 4621 and 4657)
+
+Row IRPT_ANLREQ-D2-S39 read irpt-ycharts-generate's digests as disagreeing. The issuer's read (@2cef0485fd): the live package tdpterTM is
+release 6b, 104 of 104 members match a commit, and the source map's record is one release behind. The CTO ruled one re-pin of the whole
+entry to one merged commit taken after the performance/ restoration, a fresh build, and a census of every member that moves against
+live. One build-only cell does that. The issuer then reads the ENDPOINT against every served change before any half is written; the
+apply comes by a later order under a pair.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r124/p124_cells.py`: every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-426` | irpt-ycharts-generate from one commit: candidate map, moved-member census (served or inert), replay, packet | FWD-4 | WORLD | IB-pr-424 closed (the restoration is in the tree) | P124-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~285.
+
+Still parked, owner this seat: the `_contracts` smoke-map pin with the two custody-route fixtures (2.0.0_SA_COO~D2 msg 4714). Un-parks
+when the workspace's portal pin carries the 22-entry smoke map; before that the test would fail against the 12-entry map it reads.
