@@ -30,3 +30,15 @@ region-and-text instrument of round 46 (av-4 half ADDENDUM 1), not whole-page pi
 `2.0.0_SA_COO~R1` as a cell of AMGT_RESAPP round 98 (the function is AMGT_RESAPP's), the turn that round opens, with C1's blobs (msg 4098). This
 half and AMGT_RESAPP's redeploy pair govern it together. FWD-12 and FWD-20's served grades wait for it, and nothing served moves meanwhile.
 AMGT_RESAPP's round-97 analysis lists it as item 1.
+
+## ADDENDUM 2 (2026-10-11 ~21:0xZ) -- /14 may replace /13 in round 98's redeploy, on a DEADLINE. It never holds round 98.
+
+`2.0.0_SA_COO~C1` msg 4115. The cross-workbook labels (round-47 ADDENDUM 1) change the stored field, so they are method /14: order `TO-CRPS-ax-5`
+@2cce56d72b, additive over /13, priors kept. **Ruling:**
+- **IF the /14 write's leg v reads Branch A before `2.0.0_SA_COO~R1` cuts AMGT_RESAPP round 98:** the redeploy carries `dossier.py` at /14, FWD-12/20
+  are graded once, and this half is RESTATED at /14 (the new blob, the same bounds: growth at most the `team_sheet` delta, under 6 MB) for this
+  seat's re-sign before the GO. The /14 write needs its own pair.
+- **OTHERWISE:** round 98 carries /13 as signed, and /14 follows as a second redeploy. Round 98 is not held for /14. A served /13 read that grades
+  FWD-12/20 is worth more than a later, single /14 grade.
+
+-- 1.0.0_SA_CTO~DELL1
