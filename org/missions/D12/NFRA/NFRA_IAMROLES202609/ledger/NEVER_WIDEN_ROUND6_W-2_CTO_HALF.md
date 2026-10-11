@@ -39,4 +39,9 @@ halves" is struck. The order is the issuer's, not a condition here. w-2 is HELD 
 `sitez-20261011T003538Z-5bdf` (row Z-S34): this half signs the act's blast radius, and the act still cannot commit its
 declaration until Andrew acknowledges the exception.
 
+**Amended 2026-10-11 ~02:5xZ:** the R20 ask is WITHDRAWN
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IAMROLES_W2_R20_WITHDRAWN_20261011_Z.md`). w-2 is now HELD on
+LGIC_ENFORCE FWD-8 at dell1, under which adopted live names read EXISTING. The blast radius and branches of this half
+are unchanged.
+
 -- 1.0.0_SA_CTO~Z

@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-11T01:27:54Z",
+ "written_at": "2026-10-11T02:45:53Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1376,7 +1376,7 @@
    "source": "org/missions/D12/NFRA/NFRA_IAMROLES202609/surprise-channel/investigations/INVESTIGATION_v1.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-11T00:35:38Z",
    "kind": "fork",
    "context": "Naming gate carrier limb refuses NEW 'bd' token (rows Z-S34, Z-S36); renaming live roles is create+delete; Rule 30 reserves R20 acknowledgement to Andrew; gates IAM-w-2 PHASE B only (ledger HELD-PRE-APPLY, nothing applied)",
@@ -1415,7 +1415,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-11T02:45:53Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IAMROLES_W2_R20_WITHDRAWN_20261011_Z.md",
+    "crossbox": "XB-20261010T225240Z-dcb5",
+    "ruled_by": "cto",
+    "xadj": null
+   }
   },
   {
    "id": "sitez-20261011T012754Z-c719",

@@ -97,9 +97,13 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T18:31:00Z. Graduated at ADJUDICATION_v1
     "owner": "2.0.0_SA_COO~R1",
     "round": "v87",
     "remediation": {
-      "state": "OPEN",
+      "state": "CLOSED_UNREMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
-      "round": "v87"
+      "round": "v87",
+      "closure": {
+        "reason": "ACCEPTED_BY_RULING",
+        "pointer": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND88_MM4_CTO_HALF.md@c2b5454449 ADDENDUM 1 and 1.0.0_SA_CTO~DELL1 msg 3185 (D1-S18 dismissed at the round-88 analysis): the watchlist selector has one branch by spec; mm-3 (a) stopped under its STOP clause (row D1-W350-S1); closed at ADJUDICATION_v108"
+      }
     },
     "disarm": {
       "state": "DISARMED",

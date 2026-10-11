@@ -201,7 +201,7 @@ NFRA_IAMROLES202609 Z-S25 and Z-S34 (site Z).
   FWD-8  Bringing a resource that is already running into the code under its own name,
          or renaming a file that already holds a name, is not refused as a new name; a
          name that exists nowhere is still refused
-         DONE WHEN  EXERCISED -- three changes have been put deliberately through the real
+         DONE WHEN  EXERCISED -- four changes have been put deliberately through the real
                     save check on a practice copy, each with the expected answer
          ACCEPT     on a practice copy, through the real save check: (1) a file holding a
                     name is renamed with its contents unchanged, and it goes through with
@@ -210,10 +210,13 @@ NFRA_IAMROLES202609 Z-S25 and Z-S34 (site Z).
                     and it goes through with a warning that says where the name was found
                     running and when that list was read; (3) the same declaration with a
                     name running nowhere and written nowhere in the stored code is refused
-                    exactly as today -- where today taking over a running resource is
+                    exactly as today; (4) the declaration of (2) with the list of running
+                    resources made unreadable, or read with no date, is refused exactly as
+                    today, and the refusal says the running list could not be read --
+                    where today taking over a running resource is
                     refused as if it were new, and passes only under an audited override
                     that a firm-spelling refusal does not accept
-         SOURCE     L10 addendum v1.4 on XB-20261010T225240Z-dcb5 (rows Z-S25, Z-S34);
+         SOURCE     L10 addendum v1.4 on XB-20261010T225240Z-dcb5 (NFRA_IAMROLES202609 rows Z-S25, Z-S34);
                     CLAUDE.md rule 30 non-application
 ```
 
