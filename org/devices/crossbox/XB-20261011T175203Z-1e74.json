@@ -10,12 +10,16 @@
  "subject": "MDPF_DEMQUE.TO-DQ-t34 -- round 9 DQ-t-34: the standing drawer closes a request whose every security reached its end date",
  "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t34.sitez-drawer-closes-completed-requests.md",
  "opened_at": "2026-10-11T17:52:03Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-11T17:53:18Z",
   "bus_message_id": "5160c22a-f370-48af-9b05-b7d57b909708"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T18:07:38Z",
+  "by": "0.7.0_AE_CloudOps~ZQ",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

@@ -108,6 +108,14 @@ tag to `complete` only if both PASS. Report once per phase.
 - The never-widen pair is COO ~O + CTO~Z; the laptop ruling says no laptop half is owed.
 - B2's runbook edit is sequenced after OG-br-1's merge: both edit runbook 7.2. The B2 GO is given only after that merge.
 - On close, the issuer writes the pointer row in the NFRA_CTLPLN channel (ruling term 4).
+- A1 (issuer, 2026-10-11 ~17:5xZ): **B2 GO, effective now, inside the 11:00Z-23:00Z window.** The GO names:
+  - **both halves, signed at release `28ba9532b6`:** COO @bd6be1a027 and CTO @4f49f40bd0. Their conditions bind: a 403
+    or 409 at the served grade is a finding, not a rollback; the release cone carries `data/transcripts/scripts/teams/`,
+    `lib/`, `.tools/` and `org/modules/graph/`; the record clauses apply;
+  - **OG-br-1 merged @625b54f616**, so runbook 7.2 now names live c3af8687e4, and B2 moves it to the release.
+  Before step 4, confirm one release in flight: no other gateway ledger open in any worktree, with the per-tree
+  denominator printed. The CTO's observation (row Z-S92, the teams bearer's group holders) is known and is not a
+  trigger. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 - Pre-cut: ap7.AC1 and ap7.AC2 base FAIL as expected. Positive control: a synthetic re-cut on c3af8687e4 read AC1 PASS
   (patch-id 37fa4995232e, 3 files). Negative control: a trunk commit read FAIL. The control record was removed.
 
