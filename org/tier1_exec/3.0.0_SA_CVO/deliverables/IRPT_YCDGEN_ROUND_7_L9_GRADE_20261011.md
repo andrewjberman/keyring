@@ -37,5 +37,5 @@ One live sitting: Andrew signs in, submits a Cottonwood portfolio, and opens the
 
 ## The channel
 
-126 investigation rows against a watermark of 33. This compile dispositions 28 and graduates 7. 45 INERT rows of rounds 6 and 7
-that no resolving row names are NOT compiled here.
+126 investigation rows against a watermark of 33. This compile dismisses 29 and graduates 11 (ADJUDICATION_v6 and REMEDIATION_v6
+@0e5dbdaa91). About 41 INERT rows of rounds 6 and 7 that no resolving row names are NOT compiled here.
