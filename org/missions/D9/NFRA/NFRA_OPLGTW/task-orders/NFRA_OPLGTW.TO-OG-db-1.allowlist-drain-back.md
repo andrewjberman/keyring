@@ -33,7 +33,23 @@ release is branch `rel-nfra-oplgtw-tl1b` @765fcfb239 (base 4514246d65..; read it
 
    HEAD's printf already carries keys the live release lacks: E2's `ADVI_FEE_STATEMENT_S3_ROOT`, and the unreleased
    `.pptx` pair's market_update key. Keep every one of them; drop no key.
-2. Do not change anything else in the file. Make no deploy, run no script and touch no AWS resource.
+2. **(A1, E9: the wrapper fix, same file.)** Rows NFRA_MCPINDEX-Z-S92/S99, recurring on MX-r-10:
+   - The wrapper stamps the release label from the deploy tree's `git rev-parse HEAD` (`deploy-to-ec2.sh:200-201`),
+     so a DIRTY tree ships bytes the label does not name.
+   - `safe-ec2-deploy.sh`'s manifest auto-commit runs `safe-commit.sh`, whose `.tools/commit_gate_runner.py:96` imports
+     `comp_constants_cli` from `org/modules/graph/`. A sparse release tree without that folder therefore lands the
+     deploy and then FAILS its manifest commit.
+
+   Add a `--preflight-only` mode to `deploy-to-ec2.sh`. It runs ONLY these checks, makes no AWS call, and exits 0
+   printing `PREFLIGHT OK`. The same checks run first, before any build or upload, on a real deploy:
+   - (a) REFUSE (non-zero, print `REFUSED` and `dirty`) when `git status --porcelain` shows any tracked change under
+     `infra/aws/ec2/opal-gateway/`;
+   - (b) REFUSE (non-zero, print `REFUSED` and the missing path) when the deploy tree lacks the manifest-commit import
+     closure: `org/modules/graph/comp_constants_cli.py`, `org/modules/graph/compproof/manifest_check_cli.py`,
+     `lib/opal_naming.py`.
+
+   Do not change `commit_gate_runner.py`; a gate that skips its import would pass the commit it should check.
+3. Do not change anything else in the file. Make no deploy, run no real deploy, and touch no AWS resource.
 
 ## 2. BOUNDS
 
@@ -53,16 +69,19 @@ Rows: id `NFRA_OPLGTW-Z-W54-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
+  <criterion id="AC2" cell_refs="OG-db-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r34/checks/db1.AC2.sh; echo "exit=$?"</invocation><expect>(?s)clean sparse tree: rc=0 PREFLIGHT OK=yes.*dirty sparse tree: rc=[1-9]\d* refused naming dirty=yes.*without the import closure: rc=[1-9]\d* refused naming the closure=yes.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC1" cell_refs="OG-db-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r34/checks/db1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)meeting_allowlist\.json reads: HEAD [1-9]\d*, live [1-9]\d* .*bash -n: yes.*missing 0 \[\].*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: trunk reads the allowlist the way the live release does, the script parses, and no `.env` key is dropped.
+- `AC2` (A1, E9): the wrapper's preflight passes a clean sparse release tree, and refuses a dirty one and one missing
+  the import closure. It is exercised in real temporary sparse worktrees, which it removes.
 
 ## 5. WHEN YOU ARE DONE
 
 Write the proof instance at `W/NFRA_OPLGTW.TO-OG-db-1.allowlist-drain-back.proof_of_spec.json`, validate it with
-`python .tools/proof-of-spec-check.py <instance> AC1 --governing-order <this order>`, flip the ONE `<status>` tag to
-`complete` only if AC1 PASSES, and report once. Your next order follows on this same slot.
+`python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing-order <this order>`, flip the ONE `<status>` tag to
+`complete` only if AC1 and AC2 PASS, and report once. Your next order follows on this same slot.
 `W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~54/`.
 
 <!-- ===================== RECORD FACE ===================== -->
@@ -71,6 +90,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-db-1.allowlist-drain-back.proof
 - Round 34, cut on 1.0.0_SA_CTO~Z's round-33 analysis @2672b8d28a. This cell runs FIRST in the round; row Z-S85's
   disarm (releases cut on the live ref only) stands until it lands.
 - Pre-cut: db1.AC1 base FAIL as expected (HEAD 0, live 5; keys 54 of 54).
+- A1 (issuer, 2026-10-11 ~15:5xZ, 1.0.0_SA_CTO~Z msg 33316, addendum to the round-33 analysis): E9 joins this order,
+  because it lands with E6 in the same wrapper. Adds step 2 and AC2. db1.AC2 base FAIL as expected on all three arms;
+  the temporary worktrees were removed (0 left). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>34</round>
