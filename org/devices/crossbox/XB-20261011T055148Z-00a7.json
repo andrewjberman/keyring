@@ -10,12 +10,16 @@
  "subject": "NFRA_TRNSPT a18: ADMITTED read of the second-reader role as Opal_Terminal, status only (read-only)",
  "body_path": "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/XB_ORDER_A18_ADMITTED_READ_TO_SITEZ_20261011.md",
  "opened_at": "2026-10-11T05:51:48Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-11T05:53:42Z",
   "bus_message_id": "1a938b6d-aaba-499b-8fec-c774e1d94a73"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:16:59Z",
+  "by": "0.7.0_AE_CloudOps~ZC",
+  "bus_message_id": "386f5acc-9269-46c6-81ab-6f9600c851d2"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

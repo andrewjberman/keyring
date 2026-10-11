@@ -2073,6 +2073,10 @@ paths:
     lane: ANY
     note: "Append-only override audit log — hook writes, agents may read"
 
+  "org/git-author-override-audit.*.log":
+    lane: ANY
+    note: "Per-device override audit logs (org/git-author-override-audit.<AGENTBUS_DEVICE>.log), one writer per file: every gate on that box appends, its box manager commits it. Shape (a), MSTR consensus of all four boxes 2026-10-11 (CTO~Z msg 33171). Added by 0.0.0_AB_MSTR~Z."
+
   "org/law-edit-audit.log":
     lane: ANY
     note: "Append-only law-lock audit log (CLAUDE.md / org/XXX.md edits under Andrew's order) -- law-lock-check.sh writes, agents may read"

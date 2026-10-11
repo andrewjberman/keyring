@@ -85,7 +85,7 @@ evidence file is the record the CVO grades. `OWN` reads a 431-byte pointer objec
 prefix (its body is never printed). If the evidence reads a different `OWN` key's byte count, the sender was edited:
 refuse the instance.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-5</to_id>
 <slot>~15</slot>

@@ -10,16 +10,20 @@
  "subject": "AMGT_CORPUS r44 CRPS-at-4: READ fence14 + store-vs-drive + master template search (read-only)",
  "body_path": "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-READ-R44-at-4.fence14-and-store-match-sitez.md",
  "opened_at": "2026-10-09T20:57:24Z",
- "state": "OPEN",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T21:00:49Z",
   "bus_message_id": "4bcdbdcc-d55d-41a0-bfdf-7568d3d7e0f0"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:10:11Z",
+  "by": "0.7.0_AE_CloudOps~ZC",
+  "bus_message_id": "bfd07538-5a53-43f2-8a6c-c75a3cd224a3"
+ },
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-11T06:33:20Z",
+  "from_by": "2.0.0_SA_COO~C1",
+  "to_at": "2026-10-11T06:10:11Z",
+  "to_by": "0.7.0_AE_CloudOps~ZC"
  }
 }

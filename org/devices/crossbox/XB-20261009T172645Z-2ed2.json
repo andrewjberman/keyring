@@ -10,12 +10,16 @@
  "subject": "MDPF_SECHIST SH-t-8 site-Z take: producer half at blob 75342a6958",
  "body_path": "org/tier1_exec/2.0.0_SA_COO~H1/r5_staged/XB_CALL_SH_T8_PRODUCER_HALF.md",
  "opened_at": "2026-10-09T17:26:45Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T17:29:04Z",
   "bus_message_id": "864aec34-a2dd-437f-96be-86b08c47b2ac"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-09T18:11:09Z",
+  "by": "1.0.0_SA_CTO~Z",
+  "bus_message_id": "2035de4a-e941-4c22-9c14-043c36ef1059"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

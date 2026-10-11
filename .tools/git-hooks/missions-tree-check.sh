@@ -38,6 +38,7 @@
 set -e
 
 ROOT="${PRECOMP_REPO_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null)}"
+case "${AGENTBUS_DEVICE:-}" in ""|*[!a-z0-9-]*) GAO_REL="org/git-author-override-audit.log" ;; *) GAO_REL="org/git-author-override-audit.${AGENTBUS_DEVICE}.log" ;; esac  # one file per box (shape (a), MSTR consensus 2026-10-11); unset device -> legacy shared file
 [ -n "$ROOT" ] || exit 0
 
 STAGED="${OWNED_PATHS_STAGED_FILES:-}"
@@ -111,7 +112,7 @@ close_gate() {
                 if [ "$mode" = ENFORCE ]; then
                     if [ -n "${SEAT_GATES_OVERRIDE:-}" ]; then
                         printf '%s SEAT_GATES_OVERRIDE actor=%s missions-tree-check close-gate project=%s reason=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-                            "${OPAL_AGENT_SERIAL:-UNKNOWN}" "$code" "$SEAT_GATES_OVERRIDE" >> "$ROOT/org/git-author-override-audit.log"
+                            "${OPAL_AGENT_SERIAL:-UNKNOWN}" "$code" "$SEAT_GATES_OVERRIDE" >> "$ROOT/$GAO_REL"
                         echo "WARN: missions-tree-check close-gate OVERRIDDEN (audited): $SEAT_GATES_OVERRIDE -- $last" >&2
                     else
                         echo "BLOCKED: missions-tree-check close-gate -- $code dep_stage $old -> $new REFUSED (ENFORCE, org/mcp/seat-gates.round-close.missions-tree-check.enforce present): $last" >&2

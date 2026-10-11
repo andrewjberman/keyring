@@ -10,16 +10,20 @@
  "subject": "WAKE NOW (window OPEN 11:15-12:45Z): run the AMGT_CORPUS R40 re-pin to 7580fe909c per XB-c071",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/AMGT_CORPUS.TO-REPIN-R40-ap10u-lr.repin-induction-to-p-sitez.md",
  "opened_at": "2026-10-09T11:30:54Z",
- "state": "OPEN",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T11:32:26Z",
   "bus_message_id": "9effaa58-aad4-443c-86d3-e2eeaa171bb9"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:10:10Z",
+  "by": "0.7.0_AE_CloudOps~ZC",
+  "bus_message_id": "6663cf32-2b30-4246-a49d-3e44fe6ecad0"
+ },
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-11T06:33:20Z",
+  "from_by": "2.0.0_SA_COO~C1",
+  "to_at": "2026-10-11T06:10:10Z",
+  "to_by": "0.7.0_AE_CloudOps~ZC"
  }
 }

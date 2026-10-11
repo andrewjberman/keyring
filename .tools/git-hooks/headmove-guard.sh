@@ -120,7 +120,8 @@ __headmove_audit() {
     if [ -z "$ws" ] || [ ! -d "$ws/org" ] || [ ! -f "$ws/.tools/git-hooks/headmove-guard.sh" ]; then
         ws="$(cd "$(command git rev-parse --git-common-dir 2>/dev/null)/.." 2>/dev/null && pwd)" || ws=""
     fi
-    audit="${HEADMOVE_AUDIT_LOG:-$ws/org/git-author-override-audit.log}"
+    case "${AGENTBUS_DEVICE:-}" in ""|*[!a-z0-9-]*) GAO_REL="org/git-author-override-audit.log" ;; *) GAO_REL="org/git-author-override-audit.${AGENTBUS_DEVICE}.log" ;; esac  # one file per box (shape (a), MSTR consensus 2026-10-11); unset device -> legacy shared file
+    audit="${HEADMOVE_AUDIT_LOG:-$ws/$GAO_REL}"
     # The marker binds $ws to the tree THIS FILE lives in. Belt-and-braces: the installer wires an
     # ABSOLUTE source path into ~/.bashrc, so BASH_SOURCE is absolute and $ws is already cwd-independent --
     # but a hand-edited RELATIVE source line would resolve $ws against the cwd, and "does it have org/"
@@ -256,7 +257,7 @@ __headmove_guard() {
             echo "ABORTED: destructive ${verb} NOT performed -- FORCE_HEADMOVE was given but its audit record could not be written, and an unrecorded override is refused. Set HEADMOVE_WS to the ajb_workspace root and re-run." >&2
             return 1
         fi
-        echo "WARN: destructive ${verb} ALLOWED via FORCE_HEADMOVE -- ${n} commit(s) discarded/rewritten; logged to org/git-author-override-audit.log" >&2
+        echo "WARN: destructive ${verb} ALLOWED via FORCE_HEADMOVE -- ${n} commit(s) discarded/rewritten; logged to org/git-author-override-audit.<device>.log" >&2
         return 0
     fi
 
@@ -268,7 +269,7 @@ __headmove_guard() {
         echo "----------------------------------------------------------------"
         echo "If this is intentional, re-run with:"
         echo "    FORCE_HEADMOVE=1 git ${verb} ..."
-        echo "The forced move will be logged to org/git-author-override-audit.log"
+        echo "The forced move will be logged to org/git-author-override-audit.<device>.log"
         echo "================================================================"
     } >&2
     return 1
