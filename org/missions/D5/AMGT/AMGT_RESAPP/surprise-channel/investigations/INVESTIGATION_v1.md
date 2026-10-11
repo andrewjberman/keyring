@@ -24540,3 +24540,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not fixed (the round is frozen mid-round; a row is the only off-spec act). The repair is a cell for the CTO's round-93 analysis: the display-name chain must not take a classification name that disagrees with the registered name, and the held-name index must carry one company per key. Until then the dry-run table of AMGT-ss-6 names the Santander exclusion so it is not read as a self peer."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W388-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~388",
+  "surfaced_at": "2026-10-11T12:46:19Z",
+  "one_line": "The nested portal worktree has no committer identity, so safe-commit.sh refused the portal product commit (rc=128, 'Committer identity unknown'); the commit landed only with GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL set for that one call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Section 5 of the task order: commit in the worktree via .tools/safe-commit.sh --author \"<serial> <<serial>@opal.agent>\" -F <msgfile> -- <paths>, the product file being cscTable.ts in the nested portal worktree on branch wk-AMGT_RESAPP-388-portal.",
+  "world_is": "Measured 2026-10-11 in C:/dev/wk-resapp-388/portal: the safe-commit call with --author only refused, rc=128, 'fatal: unable to auto-detect email address (got Test@DESKTOP-HK1UU7N.(none))', nothing committed. The same call with GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL set to the serial committed f0229015 (1 file, 11 insertions, 7 deletions); git log reads committer 0.9.0_WK_AMGT_RESAPP~388.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh refusal output in the portal worktree, 2026-10-11 (this session): 'Committer identity unknown', rc=128",
+      "git -C C:/dev/wk-resapp-388/portal log -1 --format=%h~%an~%cn~%s reads f0229015~0.9.0_WK_AMGT_RESAPP~388~0.9.0_WK_AMGT_RESAPP~388~fix(AMGT_RESAPP TO-AMGT-ff-2 ..."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed by the worker: the git identity of the nested portal worktree is not configured and was not changed (no global or local config write). The one-call environment override is the only change, and it is not an audited override. Any later worker committing in the nested portal will meet the same refusal until the identity is set by its owner."
+}
+```
