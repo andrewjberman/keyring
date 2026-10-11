@@ -1364,3 +1364,16 @@ naive sum on 0 of 5 (`deliverables/2.0.0_SA_COO~D2/RERUN_FIVE_DAYS_ROW_W111_S1.m
 | `DB-b-142` | item 3: the ledger comparison re-read at the cent over all 51 contested segments with each id counted once; the one fee row classed by the method's own rule for a flow, cited from the code (row W113-S3) | LOCAL | DB-b-140 | B75-2 |
 
 **fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~114` (DB-b-141) and `~115` (DB-b-142), each cut from box/dell2.
+
+## 78. ROUND 76, WORKSTREAM B (2026-10-11 ~20:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ruling msg 5721)
+
+Round 75 is drained @fc42bbcab0 (round-close MAY-CLOSE). The CTO ruled one read-only cell on the ORIGINAL store and one re-derivation.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-143` | the ORIGINAL Black Diamond transactions store's shape on one day, counts only (once per id, or once per id and portfolio group); only if it repeats, every reader of it in the workspace, portal, opal_ai and mcportal, denominator per tree, each classed as keyed on the id or not with what it serves and its owner; nothing corrected (rows W113-S2, W114-S1) | LOCAL | DB-b-141 | B76-1 |
+| `DB-b-144` | "59 of 90 tie, 31 do not" re-derived with each transaction id counted once, beside the naive count, before that number is shown again (row W114-S1) | LOCAL | DB-b-142 | B76-2 |
+
+A reader that sums without the id and SERVES something goes to the CTO as one row naming its owner; correcting it is its owner's.
+
+**fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~116` (DB-b-143) and `~117` (DB-b-144), each cut from box/dell2.
