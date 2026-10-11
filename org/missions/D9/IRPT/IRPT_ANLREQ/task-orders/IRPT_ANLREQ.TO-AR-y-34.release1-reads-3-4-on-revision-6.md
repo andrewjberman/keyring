@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~ANL</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>pending</status>
+<status>complete -- flipped by issuer 2.0.0_SA_COO~Y2 2026-10-11 ~08:4xZ: AR34-y-AC1 printed Y34-READS-OK and the proof instance VALID rc 0, both run by the issuer on the laptop applier's files at commit 1ebd6f6e0e. Reads 3a, 3b, 4_record, 4_route TRUE on revision 6 (6idtFvAm, measured); 3c null (no custody-lane request in the tenant). The /original read wrote nothing ON WHAT WAS COUNTED: S3 object versions 3 before and 3 after under the request's three artifact directories; DynamoDB tables were NOT counted. Unreadable compositions 0 of 49 (0 unfetchable; 49financial 0/9, cottonwood 0/39, inflection 0/1).</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -142,3 +142,5 @@ L9); TO-APPLY-Y1 AMENDMENT 10. No never-widen pair: no served output moves, no r
 CROSS-BOX DELIVERY: this order is issued on dell2 to a laptop seat. It reaches the laptop by the box-sync of `box/dell2` into `CLOUD`.
 `0.0.0_AB_MSTR~DELL2` is asked to tell the laptop's manager the order's path once it is on origin. Until a laptop seat acks it, this order
 is PARKED: owner `2.0.0_SA_COO~Y2`; it un-parks on that ack.
+
+FLIP NOTE (issuer, 2026-10-11 ~08:5xZ): the flip gate looks for this order's proof instance under the project's tree `deliverables/<serial>/`. The issuer's cut had placed it in the applier's Tier-2 seat folder, so the gate found none (measured: two refused flip commits; a `# pipeline-override:` line does not lift that limb and was removed uncommitted). A BYTE-IDENTICAL COPY of the applier's instance (its commit 1ebd6f6e0e) is committed with this flip at `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/IRPT_ANLREQ.TO-AR-y-34.release1-reads-3-4-on-revision-6.proof_of_spec.json`. The proof is the applier's; the copy is a locator, and the cut defect is the issuer's.
