@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T073442Z-d39e",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~Q1",
+ "to_serial": "0.7.0_AE_CloudOps~ZQ",
+ "subject": "MDPF_DEMQUE.TO-DQ-t27 -- round 8 DQ-t-27: the STANDING non-trading-day history drawer at site Z",
+ "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t27.sitez-standing-nontrading-drawer.md",
+ "opened_at": "2026-10-11T07:34:42Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

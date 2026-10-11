@@ -5790,3 +5790,31 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D2-S95 -- ARMED: an untargeted shared-infra apply creates the break-glass role as a rider
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S95",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T07:19:51Z",
+ "one_line": "ARMED: an UNTARGETED terraform apply of the shared-infra root, from any box, creates aws_iam_role.restricted_breakglass and aws_iam_role_policy.restricted_breakglass -- an IAM role that trusts the console user and reads the restricted Commonwealth CRM prefix -- as a side effect, without its own never-widen pair. The two resources have planned as 2 adds on every box since cell CB-d-4 landed its code, before and after the selector fix @8c6fc7652a. Until the role is applied under its own pair, every apply of that root must target its own resources or exclude those two addresses.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~C2",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "1.0.0_SA_CTO~DELL2 msg 4370: site Z's own plan reads init rc=0, plan rc=0, firm bucket policies unchanged, so cross-box call XB-20261011T055236Z-0989 closes; the role has 0 state rows and plans as 2 adds on every box; an untargeted apply from any box creates it",
+   "0.7.0_AE_CloudOps~CB2 report deliverables/0.7.0_AE_CloudOps~CB2/shared_infra_plan_proof.md @6a87256d6e: the two addresses read create; terraform state 253 rows, 0 match breakglass; live get-role NoSuchEntity with a positive control",
+   "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf lines 180 to 205 at HEAD: readers are the console user and one break-glass role whose trust admits only the console user (read by the issuer in this session)",
+   "rows ADVI_COTBKF-D2-S91 and D2-S93 carry the plan read and the CTO's first ruling; this row is the hazard itself, filed on the CTO's instruction"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CLAUDE.md section 5: served output and IAM do not move without a never-widen sign-off that names the act's blast radius; an apply carries no rider.",
+ "world_is": "The code for the role has been on the trunk, unapplied, since cell CB-d-4; any seat that runs a plain apply of that root lands it. NOT disarmed by this row: the disarm is the role's own pair and a targeted apply, which this issuer cuts next after the CB-al-2 mint (CTO msg 4370). Meanwhile the standing control is procedural (target or exclude), carried to site Z by the CTO's ruling; no gate enforces it. The issuer has run no terraform command and has not read whether any seat applied the root since CB-d-4."
+}
+```
