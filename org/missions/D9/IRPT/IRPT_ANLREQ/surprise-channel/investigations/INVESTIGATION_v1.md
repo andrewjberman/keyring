@@ -3113,3 +3113,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S57",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T18:15:32Z",
+  "one_line": "L9 round 10: AR103-y-AC2 MET. Of the 5 members that change a served answer, one reader on portal PROD refuses the new answer (the history reader, by exact key sets at owned-requests.ts:61 and :80) and the other readers admit; a search of PROD found no reader the census did not name. The one inferred INERT row holds (neither caller of accept is packaged), and the live function's map leaves the ownership read on the same bucket and key. Limit: the census read DEV before the ticket page's reader landed there, and that reader sends the ticket id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND10_Y_L8_COMPILE_20261011.md @5b24152a97 (msg 5519)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r10/RETURN_CENSUS_IRPT_STATUS.json (blob 83fe9f0ab6)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUND_10_Y_L9_GRADE_20261011.md",
+      "this seat's reads 2026-10-11T18:15:32Z. Portal origin/PROD 37aa1247: owned-requests.ts:61 and :80 hold exact key sets that refuse the new history page and rows; envelope.ts:193 passes the report answer to adapt with no key-set check; public-status.ts:25 admits any upper-case reason; prospect-dates.ts:41-47 admits a null-dated row. A search of PROD src for the three routes and their readers returns files of the Investor Reporting page and the endpoint module only; the ticket page on PROD has no reader of them. Workspace @487f73663e: the two callers of accept are in files that are not among the entry's 49 members. Live irpt-status configuration: 5 variables, the directory map holds 3 firms, and the one firm the changed ownership read names maps to the same bucket and, by the default key, the same key"
+    ]
+  },
+  "spec_asserts": "AR103-y-AC2 (JUDGMENT, graded by the CVO at L9): every CHANGES_SERVED_ANSWER row names the portal reader that actually decides whether PROD admits the new answer, and no member read INERT changes what a caller is served.",
+  "world_is": "Not re-run by this seat: the worker's two-package calls behind 9 INERT rows. Not searched: readers outside the portal repository. Nothing is released; the pair is written and held.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
