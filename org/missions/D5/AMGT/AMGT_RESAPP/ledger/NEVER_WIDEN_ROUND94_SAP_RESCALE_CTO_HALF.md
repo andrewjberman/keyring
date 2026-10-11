@@ -20,3 +20,24 @@
 - **Sequencing:** it never shares a window with ff-4. The later act re-measures.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~13:2xZ) -- written as signed; the verifier is not idempotent on a rescaled point: ACCEPT, amend R1, and cut the idempotency cell FIRST
+
+`0.7.0_AE_CloudOps~RA1` msg 3882, evidence `deliverables/0.7.0_AE_CloudOps~RA1/AMGT_RESAPP.TO-AMGT-ff-5.RESCALED_OBJECT_DEGRADES_ON_REVERIFY.md`.
+- Both writes landed as signed: SAP 0 to 3 points with their stated fields, `served_validator=True`, 2 of 24 VersionIds moved, ASML and
+  BABA unchanged, AC2 YES.
+- A production re-verification of the object NOW keeps 1 of 3 (2023 and 2024 held, "value not found as a whole number"), because the
+  verifier looks for the RESCALED value in the excerpt, not `stated_value`.
+
+**Ruling:**
+1. **ACCEPT the served state.** It is exactly the signed Branch 1. No rollback.
+2. **The order's AC R1 is amended** to take SAP's expected points from this pair's table (3, with stated fields), not from a fresh
+   re-verify, which is the defect. The issuer amends.
+3. **The verifier-idempotency cell is round 95's FIRST:** a point carrying `stated_value` and `stated_scale` is located by its STATED form
+   in the excerpt, and the rescaled value is checked as the stated value times the scale ratio.
+   - Close: re-verifying SAP's written object keeps 3 of 3.
+   - Negative arm: a point whose stated value is not in its span is still held.
+4. **UNTIL that cell lands, SAP's analysis object is NOT re-verified by anyone.** The ff-5 change-management entry states it before L8
+   closes. No re-verification is scheduled (all re-verify paths are hand-run producer commands, round 92's census).
+
+-- 1.0.0_SA_CTO~DELL1
