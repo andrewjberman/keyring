@@ -4427,6 +4427,145 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "This worktree's branch does not contain d23e364503. Its order file was set to the amended text as instructed (commit 9cedc5724e); its decomposition still has no CRPS-aw-11, and the decomposition is outside this order's paths, so it was not set here. Merging or checking it out was not done (barred).",
   "notes": "The coordinator needs the decomposition amendment on wk-AMGT_CORPUS-47-2 before AC4 can validate. Until then the order stays open: no complete tag is appended. No gate is built here.",
   "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S9",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T16:22:29Z",
+  "one_line": "CRPS-aw-1 asked for the labels line 'after the class line' of the --census CLI; the round-46 test (outside this order's paths) pins the row-classes line as the line directly after the class line, so the labels line was placed after the row-classes line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/tests/test_team_sheet_round46.py:217-219 (base 92de80e612): class_line + 1 must equal 'team_sheet row classes FIGURE 10 HEADING 4 CONTROL 2 sum 16 rows 16'",
+      "lib/research/corpus/team_sheet.py _main (round-47 working tree): the 'team_sheet labels ...' print follows the 'team_sheet row classes ...' print; the class line and its neighbour are unchanged",
+      "AC2 runs test_team_sheet_round46.py; the order's paths do not include it, so its literal could not be edited"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-aw-1 section 1 item 5: the --census CLI keeps its lines and adds, after the class line, the team_sheet labels line.",
+  "world_is": "Adding the labels line directly after the class line breaks round-46 test line 219, which the order's AC2 also runs. The labels line is printed after the row-classes line instead: the class line is still followed by its row-classes neighbour, round 46 stays green, and the order's wording is met in the loose sense.",
+  "notes": "For the issuer to decide at the round-47 analysis: whether the round-46 test is re-pinned to the new line order, or the labels line is moved to sit directly after the class line.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S10",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T16:22:29Z",
+  "one_line": "The live team-sheet census at the round-47 build reads 3549 FIGURE rows over the same 32 own workbooks the cut measured at 3381 FIGURE rows; the denominators do not reconcile, so the cut's 1348 code-labelled count cannot be checked against the store by this order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m lib.research.corpus.team_sheet --census (live store, this worktree, 2026-10-11, rc=0): 'team_sheet classes own_new 21 own_model 11 master 0 master_absent 63 sum 95 served 95' and 'team_sheet row classes FIGURE 3549 HEADING 93 CONTROL 117 sum 3759 rows 3759'",
+      "the order's preflight (cut on HEAD cbd78d8653): 'Measured on the live served payloads (32 own workbooks): 1348 of the 3381 FIGURE rows carry a raw field code'",
+      "the round-47 change moves rows FIGURE to CONTROL only (by-name rule); it cannot add FIGURE rows, so a 3549 live count against a 3381 cut is a store or payload difference, not a rule effect"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Preflight of CRPS-aw-1: the cut measured 3381 FIGURE rows on the 32 own workbooks of the live served payloads, 1348 of them code-labelled.",
+  "world_is": "The live bronze census now reads 3549 FIGURE rows on the same 32 own workbooks (21 own_new, 11 own_model), and the labels census reads 1442 identifier-labelled rows (678 Bloomberg held, 724 FactSet line, 40 Bloomberg line) over 3759 rows. The served payloads and the bronze store are not the same measurement, and this order did not re-measure the served payloads.",
+  "notes": "The /13 write leg (CRPS-aw-3) re-derives the payloads; its counts, not this census, are the reconciling measurement.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S11",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T16:22:29Z",
+  "one_line": "CRPS-aw-1 specified the RAISE rule for the field map only; the reader also raises when the FactSet descriptions file is missing or unparsable, and a sheet without a period header carries row_formats None (no period columns to align with).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/team_sheet.py _factset_entries (round-47 working tree): a missing or unparsable factset_descriptions.json raises, as the field map does; the order's text names only the field map",
+      "lib/research/corpus/team_sheet.py _reading: row_formats is None unless the row is FIGURE and a period header exists, aligned with row_values, which are None in that case",
+      "lib/research/corpus/tests/test_team_sheet_round47.py: test_a_missing_field_map_raises and test_an_unparsable_field_map_raises cover the field map; no test pins the factset file or the headerless formats"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-aw-1 section 1 items 3 and 4: the field map RAISES when missing or unparsable; row_formats is None unless the row is FIGURE, then the period-column formats aligned with row_values.",
+  "world_is": "Two choices the order did not state were made: the FactSet file is held to the same raise rule, so an absent dictionary never reads as no description; and a headerless FIGURE row carries row_formats None, the same as its row_values.",
+  "notes": "Both are one-line reversals if the issuer rules otherwise; neither changes the served field for any name that has a period header and a present file.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S12",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T16:36:13Z",
+  "one_line": "The S10 drift is not store drift: the round-46 base module, run on the same live store, reads FIGURE 3381 HEADING 316 CONTROL 62, the cut's figures exactly; the earlier 3549/93/117 came from the no-header state of the first build on three names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "base module = git show 92de80e612:lib/research/corpus/team_sheet.py run --census on the live store (2026-10-11, rc 0): 'team_sheet row classes FIGURE 3381 HEADING 316 CONTROL 62 sum 3759 rows 3759'",
+      "amended reader (CRPS-aw-2 amendment 1) on the same store: 'team_sheet row classes FIGURE 3529 HEADING 107 CONTROL 123 sum 3759 rows 3759'",
+      "per-row diff base to amended (matched on sheet row and label, 95 served names): HEADING to FIGURE 177 (CLX 65, ML FP 65, BABA 47), HEADING to CONTROL 32, FIGURE to CONTROL 29; no other transition",
+      "on CLX, ML FP and BABA the base header is a later 2015..2030 year row (16 periods from column D); the amended header is Financial Summary at row 9 (15 periods, 2016..2030 from column E)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-aw-1 amendment 1 expectation: HEADING rises back toward 284 and FIGURE sits near 3352 plus the rows round 46 misclassed.",
+  "world_is": "FIGURE 3352 plus the 177 rows is 3529, which the amended reader reads. HEADING 284 is not reachable with that FIGURE count: the 177 rows leave HEADING, so HEADING is 316 - 177 - 32 = 107. The 177 rows hold numbers in the true period columns 2016..2030, so the rule the amendment states makes them FIGURE.",
+  "notes": "For the issuer to compare the expected 284 against the 107 measured here; the per-name reading is in the census lines recorded in the worker report.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S13",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T16:55:41Z",
+  "one_line": "AMENDMENT 2 defines the template line's t as FactSet-prefix codes two or more labels reference, and f as the other unmeasured codes; a two-labelled code without a FactSet prefix fits neither, so t counts every two-labelled unmeasured code and the identity c = n + t + f + b holds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-CRPS-aw-1 AMENDMENT 2 item B / the --labels line: 't FactSet-prefix codes that two or more distinct labels reference; f codes with no measured label that are not two-labelled; c = n + t + f + b'",
+      "lib/research/corpus/template.py label_census: counts two_label across all identifier codes; the aw9 check and its b4 line hold either way (its codes are all FactSet-prefixed)",
+      "b is computed as the codes the field map or the entries file describes, held; the entries file is empty at this commit, so b equals the field-map count"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-aw-1 AMENDMENT 2 item B: t counts FactSet-prefix codes that two or more distinct labels reference; the template line's codes equals n + t + f + b.",
+  "world_is": "A two-labelled code outside the FactSet prefixes (a Bloomberg-form code with no field-map description) is counted in t, so the identity holds. Whether any served name carries one was not measured: the census labels line does not print t, and the --labels line was run on the aw9 fixture only.",
+  "notes": "For the issuer to confirm or restate t as FactSet-prefix only, with the non-FactSet two-labelled codes in f; a one-line change in template.label_census.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S14",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T16:55:41Z",
+  "one_line": "The template --labels line counts distinct identifier codes (the first row that carries each code), while the team_sheet census labels line counts rows, so the two lines can differ on a sheet that repeats a code.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/template.py label_census: seen.setdefault(label['code'], kind) then one count per distinct code",
+      "lib/research/corpus/team_sheet.py _main: label_counts incremented per entry of row_labels (one per counted row)",
+      "the team sheet repeats EQY_FUND_YEAR above and below its header (CRPS-aw-1 AMENDMENT 1 fixture), so a repeated code is the normal case in the served sheets"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-aw-1 AMENDMENT 2 item A: the --labels line is over the identifier-form code rows, with codes = n + t + f + b; item B: the census labels line gains measured after factset_held.",
+  "world_is": "The spec says code rows and codes in the same breath. The template line therefore counts each code once, and the census line counts each row once; on a repeated code the two sums differ by the repeats.",
+  "notes": "For the issuer to choose per code or per row for the template line; the census line is per row by construction (its sum equals the rows).",
+  "disarm_owner": "2.0.0_SA_COO~C1"
 }
 ]
 ```
