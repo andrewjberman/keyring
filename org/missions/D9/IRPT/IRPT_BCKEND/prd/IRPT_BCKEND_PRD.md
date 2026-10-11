@@ -880,10 +880,10 @@ ENDPOINT is not edited.
 - **`date_basis_witnesses`** is a new member beside `date_basis_claim` on every account-day: the list of the witnesses used for that day's
   rows, drawn from the closed set of two. Empty on a `NOTHING_TO_GRADE` day.
 - **`OUTSIDE_ANCHOR` keeps its name and now means:** no admitted witness holds a close for that security on that date. A security the source
-  carries with no ticker (bonds and plan share classes, 375 of 737 in the read) has no `YAHOO_CLOSE` and stays `OUTSIDE_ANCHOR`. One fund,
+  carries with no ticker (375 of 737 in the read; by the issuer's classing of their names, inferred, mostly bonds and plan share classes) has no `YAHOO_CLOSE` and stays `OUTSIDE_ANCHOR`. One fund,
   FPNIX, returned no data and stays so. No witness is sought for either in this addendum.
 - **A ticker that is not the held instrument cannot pass a day.** That a ticker's bars are those of the held security was NOT checked by the
-  read. The rule needs no such check to be safe: a wrong instrument's close will not equal the source's mark within 1e-4, the row reads
+  read. The rule needs no such check to be safe: a wrong instrument's close equals the source's mark within 1e-4 only by chance; otherwise the row reads
   `NEITHER_CLOSE`, and the day is blank.
 - **In production the witness is fetched on a schedule, never on demand.** A day graded before its `YAHOO_CLOSE` is in hand carries
   `ANCHOR_NOT_LANDED`, as v0.35 already provides, and is graded again when it lands. The reader is unofficial; its failure blanks days and
