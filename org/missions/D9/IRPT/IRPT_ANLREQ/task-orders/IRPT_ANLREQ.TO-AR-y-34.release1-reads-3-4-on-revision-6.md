@@ -63,6 +63,34 @@ Do NOT run read 5 (a ticket-bound request reaching READY): it is owed by release
 "original_read_writes": {"versions_before": <int>, "versions_after": <int>, "keys_scope": "<what was counted>"}, "method": "<one line>"}`.
 Booleans, digests, counts and codes only. No URL, no name, no figure, no document content anywhere in the file or your report.
 
+---
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~08:3xZ; decomposition R3_Y AMENDMENT 2; 1.0.0_SA_CTO~DELL2 msg 4430): ONE more
+read, Step 4, and one more member in the result file.** Gate limb that graded this amendment: read from this commit's own output.
+
+**Why.** Cell `AR-y-32` makes each row of the owned-request history state the client its frozen selection names. The CTO ruled that a
+row whose retained composition cannot be read is listed with `client_claim` `"UNREADABLE"` instead of refusing the viewer's page, and
+set a condition before that cell merges: "count the accepted requests whose composition _selected_client cannot read, denominator
+printed: if it is zero the marker is still right, and the number goes in the pair." Only your box's principal can read `irpt-requests`.
+
+**Step 4 -- the unreadable-composition census (read-only).**
+- The rule being counted is `OwnedRequestReader._selected_client` at box HEAD
+  (`infra/aws/lambda/investor-reporting/ops/owned_requests.py`, :198-214): after the record's `composition_ref` is validated, the
+  retained composition is read; the request is UNREADABLE when its document's `schema_version` is not the `COMPOSITION_VERSION` that
+  module names, or the document has no `browser` member to take `client_id` from, or that `client_id` is neither null nor a string.
+- Denominator: EVERY accepted analysis request record in `irpt-requests`, every tenant (sort key `analysis#REQ-<24 hex>#1`), every page
+  read, counted client-side. Print it.
+- For each, apply that rule to its retained composition and count the UNREADABLE ones. Read the composition by the same retained path
+  the reader uses or by a direct object read of the ref the record names -- say which. A composition you could not fetch at all
+  (denied, absent) is counted SEPARATELY as `unfetchable`, never folded into either number.
+- Record in the result file: `"unreadable_compositions": {"count": <int>, "denominator": <int>, "unfetchable": <int>,
+  "by_tenant": {"<tenant>": {"count": <int>, "denominator": <int>}}, "rule": "<file:lines read, at which commit>",
+  "method": "<one line>", "claim": "measured"}`. Counts only: no request id, no client id, no document content.
+- This step writes nothing and moves nothing.
+
+Criterion `AR34-y-AC1` (`y34-reads`) now also requires `unreadable_compositions` with integer `count` and `denominator`
+(0 <= count <= denominator, denominator >= 1) and `claim` `measured`. Steps 0 to 3 stand as written.
+
 ### ACCEPTANCE
 
 <criterion id="AR34-y-AC1" cell_refs="AR-y-34"><invocation>python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py y34-reads</invocation><expect>Y34-READS-OK</expect></criterion>
