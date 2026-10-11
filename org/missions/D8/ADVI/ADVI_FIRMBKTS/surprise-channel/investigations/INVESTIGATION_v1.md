@@ -3548,6 +3548,31 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
 }
 ```
 
+## Row filed by 0.7.0_AE_CloudOps~FBL (FB-f-12, amendment 1 observation)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S15",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~FBL",
+  "surfaced_at": "2026-10-11T10:34:12Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The inf-pipeline root carries a standing pending create, aws_secretsmanager_secret_version.eclipse_jwt_initial (secret orion/eclipse_jwt/current): an unscoped safe-apply of that root by anyone writes that secret version.",
+  "spec_asserts": "TO-FB-f-12 amendment 1: the sixth create 'was pending before' the order and the seat reports it as an OBSERVATION row.",
+  "world_is": "The untargeted plan of infra/aws/terraform/inf-pipeline read 358 resource_changes, 352 no-op, 6 create on 2026-10-11 ~10:2xZ; five were this order's, the sixth is this resource. This seat has not read why it is pending and has not touched it. Until its owner disposes of it, every unscoped apply of the root writes a secret version, and every full plan after TO-FB-f-12 will list it as exactly one create.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/plan_untargeted.out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner unknown to this seat; the issuer routes it. Not blocking this order after amendment 1."
+}
+```
+
 ## Row filed by 2.0.0_SA_COO~B1 (round 3, TO-FB-f-12 row S13 routed to the root's owner)
 
 ```json
