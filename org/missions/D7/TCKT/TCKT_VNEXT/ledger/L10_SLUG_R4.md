@@ -16,16 +16,16 @@ build moves FWD-1 on that producer.**
 | item | value | instrument |
 |---|---|---|
 | round-4 task orders, project tree | TO-R4-pk1, TO-R4-la1, TO-R4-rn2: 3 of 3 complete | `<status>` of each face; merges @f239b06ad8, @bd97cf87e7, @066017d5fb |
-| applier orders (flat folder) | TO-APPLY-R4-pk2, TO-APPLY-R4-pk3 complete; TO-RUN-R4-tr1: SEE THE LAST LINE | `<status>` of each face |
-| `round-close-check --round 4` | orders=8, judgment=0, verdict=MAY-CLOSE at 19:12Z, read while the run order was still pending; in round 3 it counted the run's judgment criterion only after that order closed | the tool |
+| applier orders (flat folder) | TO-APPLY-R4-pk2, TO-APPLY-R4-pk3 and TO-RUN-R4-tr1: 3 of 3 complete (the run order closed by the applier at 19:2xZ, msg 5644) | `<status>` of each face |
+| `round-close-check --round 4` | orders=8, judgment=1, graded=1, ungraded=0, verdict=MAY-CLOSE at 19:2xZ, after the run order closed | the tool |
 | judgment criteria | TO-RUN-R4-tr1 AC2 NOT MET | CVO grade @0e82b1967c; packet `ledger/L8_PACKET.R4_TR1.md` @90eabe9475 (with ADDENDUM 1) |
 | `opal-ticket-api` live | CodeSha256 `d2w1YJ8A...` (handler `c4003667`), LastModified 18:06:52Z; 9 env keys; `PACKAGE_ALLOWED_FIRMS` = `49financial,cottonwood,inflection` | `get-function-configuration`, 18:45Z |
 | the firm clamp on 27 routes | `READ27 27/27` | `clamp_precheck.py`, live at 18:45Z |
 | `irpt-status` live | `6idtFvAm...` (11:26:53Z) at 16:45Z; not re-read at the slug | this seat's read at the run's GO |
 | portal DEV | `c3a03c246a` on origin at 16:45Z; not re-read at the slug | `git -C portal rev-parse origin/DEV` after a fetch |
 | the synthetic filer row | ABSENT at 19:12Z by ConsistentRead; the trace reads deleted 19:10:55Z, read back absent | this seat; the run-5 trace's cleanup block |
-| open TCKT deploy ledgers, shared tree | 1 at 19:12Z, the fifth run's, pending the applier's close | `ls -a` of `.open_deploys/` |
-| push state | this seat's commits are LOCAL on `box/dell2` until the box pass; not re-read at the slug | -- |
+| open TCKT deploy ledgers, shared tree | 0 at 19:2xZ; the fifth run's entry closed 4/4 by the applier (msg 5644) | `ls -a` of `.open_deploys/` |
+| push state | origin `box/dell2` read `cbb945d141` at 19:2xZ; this seat's commits since the last box pass are LOCAL | `ls-remote` |
 
 ## 3. What round 4 landed
 
@@ -108,4 +108,4 @@ No row this round is newly ARMED in this project.
 **Closer:** four rounds, thread n. You ruled no closer while every stopped hop has an owner (msg 4921); the one stop left on
 FWD-1 has an owner and it is Andrew. I do not re-pitch it.
 
-**State of TO-RUN-R4-tr1 at the send:** see the message that carries this slug.
+**Every round-4 order is terminal at the send.**
