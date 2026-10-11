@@ -3712,3 +3712,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-W44-S1 -- safe-commit.sh refuses inside the portal worktree: no git identity there
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W44-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~44",
+  "surfaced_at": "2026-10-11T05:33:00Z",
+  "one_line": "Run from the portal worktree, .tools/safe-commit.sh --author ... exits rc=128 'unable to auto-detect email address'; the portal repo carries no user.name/user.email. The test was committed with plain git -c user.name/-c user.email (the order's stated fallback).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output: fatal: unable to auto-detect email address (got 'Test@DESKTOP-N8RJV0A.(none)'); ERROR: safe-commit did NOT commit (rc=128); portal commit 6f70e36b then made with git -c identity commit -F, author 0.9.0_WK_DSGN_IRPTV1~44"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: portal files commit through the workspace safe-commit.sh with --author from the portal cwd.",
+  "world_is": "In the portal worktree the script's inner git commit does not receive the --author identity as committer, so it fails; the plain git fallback committed the test only.",
+  "notes": "Local branch wk-dsgn-irptv1-r11-44 only; nothing pushed."
+}
+```
