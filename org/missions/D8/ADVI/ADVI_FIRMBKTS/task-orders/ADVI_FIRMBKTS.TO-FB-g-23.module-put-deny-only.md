@@ -87,7 +87,7 @@ commit hash.
 narrow identity Allow at `advisors/*/exec_summary.json`, and its registry row) follows. Workstream `FENCEPUT`.
 Class WORLD by the path floor, dormant.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>FENCEPUT</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-23</to_id>

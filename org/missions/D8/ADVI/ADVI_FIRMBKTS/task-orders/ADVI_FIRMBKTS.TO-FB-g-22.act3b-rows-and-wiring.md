@@ -89,7 +89,7 @@ Read-only: the rest of the repository, the checks under `org/missions/D8/ADVI/AD
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~44/ADVI_FIRMBKTS.TO-FB-g-22.act3b-rows-and-wiring.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-g-22"><invocation>cd /c/dev/wk-firmbkts-44 &amp;&amp; timeout 118 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_policy.py --arms policy --root /c/dev/wk-firmbkts-44; echo "exit=$?"</invocation><expect>ROUND 4 POLICY: 6 of 6 arms</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-g-22"><invocation>cd /c/dev/wk-firmbkts-44 &amp;&amp; timeout 118 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_policy.py --arms policy --root /c/dev/wk-firmbkts-44 --base a5637f273f; echo "exit=$?"</invocation><expect>ROUND 4 POLICY: 6 of 6 arms</expect></criterion>
   <criterion id="AC2" cell_refs="FB-g-22"><invocation>cd /c/dev/wk-firmbkts-44 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root /c/dev/wk-firmbkts-44 --allow infra/logic/registry/exemptions.json --allow infra/aws/terraform/shared-infra/s3-49financial.tf --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~44/ --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md --require infra/logic/registry/exemptions.json --require infra/aws/terraform/shared-infra/s3-49financial.tf; echo "exit=$?"</invocation><expect>ROUND 4 SCOPE: OK</expect></criterion>
 </proof_of_spec>
 
@@ -113,7 +113,7 @@ commit hash.
 `FB-f-14`, staged under the act 3b pair; its executor is `0.7.0_AE_CloudOps~FBL` if `PutBucketPolicy` is refused to dell1.
 Workstream `FENCEREG`. Class WORLD by the path floor, inert until applied.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>FENCEREG</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-22</to_id>

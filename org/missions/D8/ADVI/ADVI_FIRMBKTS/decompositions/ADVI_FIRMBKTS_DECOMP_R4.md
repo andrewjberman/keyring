@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 22,
- "chains": 20,
+ "cells": 23,
+ "chains": 21,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -176,3 +176,9 @@ The act that applies the policy (`FB-f-14`, staged) runs under the act 3b pair. 
 The exec-summary generator's put moves with act 4b. The CTO ruled (ADDENDUM 11, msg 3927) that the fence's scoped actions gain
 `s3:PutObject` on the Deny side only, with the Allow identity-side in the writer's root. `FB-g-23` is the module and builder
 change; act 4b's rows follow. Cells 21 -> 22, chains 19 -> 20.
+
+## Amendment 11 (2.0.0_SA_COO~B1, 2026-10-11 ~15:3xZ): cell `FB-f-14` added (act 3b applied)
+
+The act 3b pair is SIGNED in both halves (CTO msg 3932) and its cells `FB-g-19` to `FB-g-23` are merged and graded. `FB-f-14` is the
+apply of the one bucket policy, issued to `0.7.0_AE_CloudOps~FB1`; the close simulation is the laptop lane's, cut by the issuer
+as a crossbox ORDER. Cells 22 -> 23, chains 20 -> 21.

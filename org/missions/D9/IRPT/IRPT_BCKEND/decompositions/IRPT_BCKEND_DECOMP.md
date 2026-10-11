@@ -2981,3 +2981,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r135/p135_cells.py`: AC1 FAIL at base
 | `IB-pr-437` | every member of the sections response schema is typed so the portal's generator renders it; the two closed forms keep their meaning; the generator's rewritten wire files listed for the portal's lane, not committed | FWD-4 / PRD ADDENDUM v0.28 item 29 (a contract its consumer can read) | WORLD | IB-pr-432 drained | P135-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell; portal_ref: b92696c1ed61. Assignee: 0.9.0_WK_IRPT_BCKEND~295.
+
+## 128. ROUND 136, WORKSTREAM ~P (2026-10-11 ~15:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5211)
+
+IB-pr-436's read (branch wk-IRPT_BCKEND-294 @d1adf5102e): on eight of nine funds the custodian's mark equals the day's NAV on
+every fund-day measured and the prior day's on none; FPNIX returned no data; 497 of 124,645 rows sit at the prior day's NAV.
+Nine funds free only 563 account-days, because an account-day is freed only when every security it holds is graded. The CTO
+ruled the unit is the account-day and the next cell sizes it over all 734 securities, one pass, read only. Whether an unofficial
+reader may be a production anchor is a PRD question ruled on that table.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r136/p136_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-438` | the same reader over all the outside-anchor securities, one pass; the account-days freed when every security a day holds is graded; the sizing under v0.36; the account-days the prior-day rows blank | FWD-3 (Cottonwood's figure on a basis somebody measured) | LOCAL | IB-pr-436 (its measure, read from its branch) | P136-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~296. DIRECT-ACT (one read-only cell, LOCAL).

@@ -4146,3 +4146,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "MEASURED 2026-10-11 ~15:0xZ by 2.0.0_SA_COO~G2 on box/dell2: `python -m pytest -q infra/aws/lambda/investor-reporting/ycharts/generate/tests` reads 2 failed, 505 passed (1 expected failure). The two are test_package_poll.py::test_e_both_bindings_carry_the_packager_and_ready_sends_to_the_bound_url and ::test_e_only_the_commentary_binding_adds_the_packager_and_leaves_i3_unset, both raising ResidentInstallRefused RESIDENT_PACKAGER_REQUIRED. Cause, by reading: reports/resident_installed.py line 105-106 (IRPT_ANLREQ AR-g-41, merged @fb4aaf8fa2) refuses a bindings document that carries commentary_ready_queue_url without a packager member; the two tests bind the commentary queue and give no packager member. The rule is the intended one; the two tests are stale. The folder read 507 passed, 0 failed at the st31 pin 19b02b2971, cut before that merge."
 }
 ```
+
+## IRPT_YCDGEN-D2-S58 -- The status route answers UNAVAILABLE / FIRM_BINDING to an owner-replay caller for a 49financial request owned by an opal-capital principal, whether the job reads RECEIVED or FAILED: that caller cannot observe job state
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S58",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T15:18:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "The status route answers UNAVAILABLE / FIRM_BINDING to an owner-replay caller for a 49financial request owned by an opal-capital principal, whether the job reads RECEIVED or FAILED: that caller cannot observe job state",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-11 ~15:0xZ by laptop 0.7.0_AE_CloudOps~ANL under crossbox ORDER XB-20261011T145549Z-0c52, return org/tier2_senior/0.7.0_AE_CloudOps~ANL/deliverables/XB_0c52_EIGHT_RECONCILING_WRITES_RETURN_STOPPED_AT_STATUS7_20261011.md @356367f583 (read by 2.0.0_SA_COO~G2 at that commit from origin box/laptop): irpt-status, route GET /api/scoped/investor-reporting/status/{jobId}, called for REQ-448d42480cadd873fa74c3cf (tenant 49financial) by the owner-replay caller (headers built from the request's owner record, selected_tenant 49financial), answered state UNAVAILABLE, public reason FIRM_BINDING, ok false, with the job row reading FAILED. CONTROL in the same sitting: after the rollback, the row reads RECEIVED and the same call answers the same UNAVAILABLE / FIRM_BINDING; without selected_tenant it answers UNAVAILABLE / UNEXPECTED. So the answer is the same whatever the job's state. The request's owner reads principal_class OPAL_GLOBAL, home_firm_id opal-capital, owner kind SERVICE:svc-irpt-analysis (laptop record @666b94c57d). The return cites an earlier laptop log recording the same FIRM_BINDING for every 49financial owner replay; this seat did not read that log."
+    ]
+  },
+  "notes": "Filed on 1.0.0_SA_CTO~DELL2's word (msg 5200) and the laptop CTO's (bus 74d4cb0b). It is why condition 4 of the reconciliation half was amended @e745864b6f to a proof on the row. THE ROW'S QUESTION, NOT ANSWERED: whether a real opal-capital owner, signed in to the portal with the firm 49financial selected, reads the status of its own 49financial request. The replay builds headers from the stored owner record and is not that sign-in; so this row does not establish that the route is wrong for a real owner. It bears on FWD-1: the journey's status hop is read by exactly such an owner (home opal-capital, acting in a client firm), and on the parked re-read of REQ-5e4149d2, refused FIRM_BINDING the same way. Not read: the route's firm-binding rule in code against this case. INERT: nothing was changed by the finding; the one row written was rolled back and all eight read RECEIVED.",
+  "spec_asserts": "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_R13_RECONCILIATION_OF_THE_EIGHT_CTO_HALF.md @1da2594674 condition 4: the executor reads request 7's status answer through the service as FAILED; and infra/aws/lambda/investor-reporting/ops/owned_status.py line 20: a FAILED job answers state FAILED, reason ANALYSIS_FAILED.",
+  "world_is": "MEASURED 2026-10-11 ~15:0xZ by laptop 0.7.0_AE_CloudOps~ANL under crossbox ORDER XB-20261011T145549Z-0c52, return org/tier2_senior/0.7.0_AE_CloudOps~ANL/deliverables/XB_0c52_EIGHT_RECONCILING_WRITES_RETURN_STOPPED_AT_STATUS7_20261011.md @356367f583 (read by 2.0.0_SA_COO~G2 at that commit from origin box/laptop): irpt-status, route GET /api/scoped/investor-reporting/status/{jobId}, called for REQ-448d42480cadd873fa74c3cf (tenant 49financial) by the owner-replay caller (headers built from the request's owner record, selected_tenant 49financial), answered state UNAVAILABLE, public reason FIRM_BINDING, ok false, with the job row reading FAILED. CONTROL in the same sitting: after the rollback, the row reads RECEIVED and the same call answers the same UNAVAILABLE / FIRM_BINDING; without selected_tenant it answers UNAVAILABLE / UNEXPECTED. So the answer is the same whatever the job's state. The request's owner reads principal_class OPAL_GLOBAL, home_firm_id opal-capital, owner kind SERVICE:svc-irpt-analysis (laptop record @666b94c57d). The return cites an earlier laptop log recording the same FIRM_BINDING for every 49financial owner replay; this seat did not read that log."
+}
+```

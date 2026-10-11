@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T152214Z-0162",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~G2",
+ "to_serial": "0.7.0_AE_CloudOps~ANL",
+ "subject": "IRPT_YCDGEN r13 RE-ISSUE 1: eight conditional writes to irpt-jobs, four row checks; CTO half 715dcd3b69 (XB-0c52)",
+ "body_path": "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r13/CROSSBOX_ORDER_ANL_EIGHT_RECONCILING_WRITES_REISSUE_1_20261011.md",
+ "opened_at": "2026-10-11T15:22:14Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-11T15:24:12Z",
+  "bus_message_id": "2f2f66bd-cae6-48b5-88bf-c091baa9bd6f"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

@@ -4290,6 +4290,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "spec_asserts": "A team cell is {mnemonic: null, fiscal_year, value, unit: null}; a team row's cite names the workbook, sheet, row label and period column (order Section 1, steps 2 and 4).",
   "world_is": "The four-key cell cannot say which period column a value was saved in, so each team cell carries a fifth key, column. The key is read only by the team cell's title; the value and the fiscal year are as specified.",
   "notes": "The CTO may strike the fifth key if the cite is carried another way. No gate or consumer outside ModelTab's title reads it."
+},
+{
+  "id": "AMGT_CORPUS-D1-S5",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-11T15:18:47Z",
+  "one_line": "On the DEV-built Model tab after the /12 redeploy, 1348 of 3381 FIGURE rows (40%) are labelled by raw field codes (BEST_EBIT, IS_ADJUSTED_OPERATING_INCOME) and 72% of float cells print more than 4 decimals; the ruling's rules were built as written and the page law reads worse than before for the 32 own-workbook names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/evidence/r46_av4_post_act_20261011.md: the DEV-built page (origin/DEV f00c7b8e, live function VNcX9ntm 14:57:44Z) for ROG SW, All figures fold: rows 'IS_ADJUSTED_OPERATING_INCOME', 'BEST_EBIT', 'EBITDA_ADJUSTED' with 'team model' under the label; cells '28.066938033222375', '0.05383976589686812'",
+      "census over the live /12 team_sheet fields (32 names): FIGURE rows 3381, of which 1348 carry a label matching ^[A-Z][A-Z0-9]*(_[A-Z0-9]+)+$; float cells 27915, of which 20119 print more than 4 decimals",
+      "round-45 ADDENDUM 1 (msg 3846): CONTROL is a field-code token with NO numeric value; a token with period values is FIGURE by the rule, and the value is stored verbatim"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-20 / PRD:593-606: every row the team's sheet carries shows a figure a PM reads; no row reads unsupported; and the page law bans a raw system code on the face (the walker's raw-code check, FWD-15 class). Round-45 ADDENDUM 1: the team's value stored verbatim, cited, labelled team model.",
+  "world_is": "The rule was followed: FIGURE rows with period values show the team's value, Bloomberg first, unmapped 0. But 40% of FIGURE rows are the sheet's own data-feed block, labelled by field code, and the team values print at full float precision (the page formats a Bloomberg figure by its row type; a team cell has none). DEV only: PROD is untouched and av-2 has not been promoted.",
+  "notes": "Not a defect of the ruling's text but of what it leaves open: a display label for a field-code row, and a number format for a team value (the workbook's own number_format is readable at read time). Both are outcome-level calls for 1.0.0_SA_CTO~DELL1; the issuer cuts nothing. Recommendation: hold av-2's PROD promote until they are ruled.",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1"
 }
 ]
 ```
