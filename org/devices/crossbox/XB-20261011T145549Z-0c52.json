@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T145549Z-0c52",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~G2",
+ "to_serial": "0.7.0_AE_CloudOps~ANL",
+ "subject": "IRPT_YCDGEN r13: eight conditional writes to irpt-jobs, request 7 first; pair + consent 111d835ee5 (XB-ca7a)",
+ "body_path": "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r13/CROSSBOX_ORDER_ANL_EIGHT_RECONCILING_WRITES_20261011.md",
+ "opened_at": "2026-10-11T14:55:49Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
