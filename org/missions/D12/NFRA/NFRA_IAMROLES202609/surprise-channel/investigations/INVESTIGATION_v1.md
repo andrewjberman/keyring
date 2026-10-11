@@ -2087,3 +2087,105 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+## Z-S45 -- fred-data-ingestion FAILS EVERY SCHEDULED RUN on NoSuchBucket: a live daily production break the dead grant was hiding
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S45",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-11T20:05:00Z",
+    "one_line": "Lambda fred-data-ingestion raises botocore.errorfactory.NoSuchBucket on PutObject every scheduled run -- measured on 2026-10-07, 10-08, 10-09 and 10-10, the four most recent days available. Its code reads s3_bucket = os.environ.get('S3_BUCKET', 'opal-market-update') and the function has ZERO environment variables, so the DEFAULT applies; opal-market-update reads NoSuchBucket and carries no tombstone. Its inline S3Access policy grants PutObject/GetObject/ListBucket on EXACTLY and ONLY that dead bucket, so the grant z-1 would remove is not protecting anything -- it is the fingerprint of a pipeline whose output has been going nowhere.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IAM-z-1 lists opal-market-update -> FredIngestionLambdaRole (write) as a dead grant to narrow, and instructs: 'A reference found is NOT a reason to keep the grant: it is a broken feature the grant hides. Narrow anyway, and file the reference as its own surprise row naming the function.' The round-8 sweep classified opal-market-update ABSENT with 1 principal, write=yes, and no tombstone.",
+    "world_is": "THE FEATURE IS NOT MERELY BROKEN, IT IS FAILING OUT LOUD AND HAS BEEN FOR DAYS. /aws/lambda/fred-data-ingestion carries, on the 2026-10-10 run (RequestId db4d9c08-fabc-47bd-8372-57d4ed183910), a full traceback ending 'botocore.errorfactory.NoSuchBucket: An error occurred (NoSuchBucket) when calling the PutObject operation: The specified bucket does not exist', through lambda_fred_ingestion.py:273 lambda_handler -> :215 process_frequency -> :130 upload_to_s3 -> put_object. The same signature appears on 2026-10-07 (2 events), 10-08 (4), 10-09 (2) and 10-10 (2) -- 10 matching events over the four days in the window, counted CLIENT-SIDE. THE CAUSE IS A DEFAULT WITH NOTHING TO OVERRIDE IT: lambda_fred_ingestion.py:257 reads s3_bucket = os.environ.get('S3_BUCKET', 'opal-market-update'), and get-function-configuration returns ZERO environment keys for this function, so the fallback is what runs. opal-market-update re-read live: rc=254 NoSuchBucket. THE ROLE IS ACTIVE: RoleLastUsed 2026-10-10T23:00:47Z, driven by EventBridge rules fred-ingestion-daily, -weekly, -monthly-early, -monthly-mid and -monthly-late. SO THE GRANT AND THE CODE AGREE WITH EACH OTHER AND BOTH DISAGREE WITH THE WORLD: inline S3Access grants s3:PutObject, s3:GetObject and s3:ListBucket on exactly two ARNs, arn:aws:s3:::opal-market-update and .../*, and NOTHING else -- so z-1 removing the dead ARNs empties that statement and the policy goes. The role's only other S3 grant is yield-curve-artifact-write, which allows PutObject/GetObject on ONE object key, arn:aws:s3:::opal-data-portal-v2/json/macro/yield_curve_fred.json, on a live bucket. That single-key grant is presumably why anything from this function still lands anywhere. NOTHING IN THE DEAD GRANT'S REMOVAL MAKES THIS WORSE -- the PutObject already fails at the bucket, not at the permission -- but removing it without fixing the destination leaves a scheduled job failing daily with one fewer clue as to what it was reaching for.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws logs get-log-events on /aws/lambda/fred-data-ingestion stream 2026/10/10/[$LATEST]15f493fd2bc34983bf964be9cc3df986 -- the traceback in full, ending botocore.errorfactory.NoSuchBucket, then END/REPORT for the same RequestId",
+        "the same stream read for 2026/10/09 -- 3 NoSuchBucket occurrences",
+        "filter-log-events 'NoSuchBucket' over 4 days, counted CLIENT-SIDE: 10 events across 2026-10-07 (2), 10-08 (4), 10-09 (2), 10-10 (2)",
+        "infra/aws/lambda/fred-data-ingestion/lambda_fred_ingestion.py:257 -- the os.environ.get default",
+        "aws lambda get-function-configuration --function-name fred-data-ingestion --query Environment.Variables -> 0 keys",
+        "aws s3api get-bucket-location --bucket opal-market-update -> rc=254 NoSuchBucket",
+        "aws iam get-role-policy FredIngestionLambdaRole/S3Access -> 1 statement, 3 actions, exactly 2 ARNs, both opal-market-update",
+        "aws iam get-role-policy FredIngestionLambdaRole/yield-curve-artifact-write -> 1 object key on opal-data-portal-v2",
+        "aws iam get-role --role-name FredIngestionLambdaRole -> RoleLastUsed 2026-10-10T23:00:47Z"
+      ]
+    },
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "notes": "ARMED because this is a LIVE daily failure rather than a latent exposure, and it is the sharpest vindication of the cell's own rule that a reference is not a reason to keep a grant. THE DESTINATION QUESTION IS NOT MINE AND I PROPOSE NOTHING: where FRED's CSVs are supposed to land -- a recreated bucket, opal-data-portal-v2 under a prefix, or somewhere else entirely -- is a product decision for the pipeline's owner, and the three candidates differ in MEANING. What this row establishes is that the decision is OWED and overdue, not which way it goes. Note also that opal-market-update carries NO tombstone, so unlike market_data_v2 (Z-S43) nobody recorded deciding this bucket should be gone: it is one of the six unexplained absences the round-8 sweep found, and this is what the first of them turned out to be when read. Cites Z-S39, Z-S43. Dispositions stay the CVO's at L9."
+  }
+]
+```
+
+## Z-S46 -- the whole smartx export-to-ingestion chain is pointed at a 404 bucket: 34 live references in the EC2 code, 19 in the Lambda, and one of its own comments already calls the data dead
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S46",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-11T20:05:00Z",
+    "one_line": "opal-data-smartx-v2 reads NoSuchBucket and carries no tombstone, yet it is the configured S3_BUCKET of BOTH ends of the smartx chain: 34 real code references in the smartx-exporter EC2 tree (production.env, run-all-portfolios.sh, config.ts and ~20 Python scripts) and 19 in the opal-smartx-ingestion-pipeline Lambda (including os.environ['SMARTX_S3_BUCKET'] = 'opal-data-smartx-v2' and its own module docstring naming it as Source Data). Three roles grant on it. One of the Lambda's own comments already describes the data as 'dead smartx-exporter parquet', so part of this was known and never closed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IAM-z-1 lists opal-data-smartx-v2 -> infrastructure-ops-lambda-role, smartx-exporter-role-20251218220948293500000001, smartx-ingestion-lambda-role (write) and instructs that a reference found is a broken feature the grant hides, to be narrowed anyway and filed as its own row naming the function. The round-8 sweep classified it ABSENT, 3 principals, write=yes, no tombstone.",
+    "world_is": "BOTH ENDS OF THE CHAIN ADDRESS A BUCKET THAT DOES NOT EXIST, and the census was classified rather than counted because x-5 established that a substring sweep lies three ways. EC2 smartx-exporter, 76 files read from the EC2_MANIFEST source_path: 34 REAL code references, among them config/production.env:9 'S3_BUCKET=opal-data-smartx-v2', run-all-portfolios.sh:18 'S3_BUCKET=\"opal-data-smartx-v2\"' plus live 'aws s3 ls s3://opal-data-smartx-v2/exports/' at :184 and 'aws s3 cp' at :204, src/config.ts:43, scripts/post-export.sh:84, and roughly twenty smartx-workspace scripts each assigning S3_BUCKET or SMARTX_BUCKET to that name. Lambda opal-smartx-ingestion-pipeline, 14 files from the source map: 19 REAL references, including lambda_function.py:32 \"os.environ['SMARTX_S3_BUCKET'] = 'opal-data-smartx-v2'\", :123 \"consolidate.S3_BUCKET = 'opal-data-smartx-v2'\", :314 \"'source_bucket': 'opal-data-smartx-v2'\", and the module docstring at :7 and :17 naming it as the trigger source and 'Source Data'. POSITIVE CONTROLS FOUND IN BOTH, so the census can see live buckets and these counts mean something: opal-data-portal-v2 15 times in the EC2 tree, 29 times plus opal-data-mdpf 6 times in the Lambda. AND THE SEPARATION FROM DYNAMODB MATTERS: opal-data-smartx -- no -v2 -- is a DYNAMODB TABLE NAME throughout both trees (DYNAMODB_TABLE = 'opal-data-smartx'), which my classifier separated; of its 12 raw EC2 hits only 4 are S3-shaped code and of 8 Lambda hits only 3. Counting them as bucket references would have inflated this row and is exactly the error x-5 caught. THE CHAIN IS IDLE, WHICH IS CONSISTENT WITH IT BEING BROKEN RATHER THAN EVIDENCE THAT IT IS FINE: smartx-exporter-role last used 2026-06-01, smartx-ingestion-lambda-role 2026-08-14, and infrastructure-ops-lambda-role NEVER (RoleLastUsed null, and the graph carries no LAMBDA node for it at all). AND IT WAS PARTLY KNOWN: compute_account_distribution.py:61 carries the comment '# dead smartx-exporter parquet (opal-data-smartx-v2/consolidated/s...' and :83 'Legacy output (deprecated...'. Someone established part of this and the configuration was never re-pointed. SEPARATELY, infra/aws/terraform/smartx-v2-bucket-lifecycle/main.tf:34 declares a lifecycle rule on this 404 bucket -- the cell names it as a row and not this act, and it is noted here so it is not lost.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the classified census: 76 EC2 files via EC2_MANIFEST source_path, 14 Lambda files via lambda-source-map.json declared file list, every hit printed with its file:line and classification",
+        "aws s3api get-bucket-location --bucket opal-data-smartx-v2 -> rc=254 NoSuchBucket",
+        "positive controls in the same run: opal-data-portal-v2 15 (EC2) and 29 (Lambda), opal-data-mdpf 6 (Lambda)",
+        "RoleLastUsed: smartx-exporter-role 2026-06-01T14:16:37Z, smartx-ingestion-lambda-role 2026-08-14T11:30:40Z, infrastructure-ops-lambda-role null",
+        "comp-find --corpus aws: no LAMBDA node for infrastructure-ops-lambda-role",
+        "infra/aws/lambda/smartx_ingestion_pipeline/compute_account_distribution.py:61 and :83 -- the existing dead-data comments",
+        "infra/aws/terraform/smartx-v2-bucket-lifecycle/main.tf:34 -- a lifecycle rule on the absent bucket"
+      ]
+    },
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "notes": "ARMED because three roles hold write on a claimable global name while two production components are configured to use it, so a claimant would receive whatever those components write. THE RE-POINT IS NOT MINE AND I PROPOSE NOTHING: whether the chain should read a recreated bucket, opal-data-portal-v2, or be retired outright is the module owner's decision, and no project owns smartx-pipeline (Z-S41). What this row establishes is that narrowing the grants does not fix the chain and must not be mistaken for fixing it. ONE THING THIS ROW IS CAREFUL NOT TO CLAIM: that the chain is CURRENTLY running and failing. Unlike Z-S45's fred case, I did not find failing invocations here -- the roles are months idle, so the components are not being exercised, and I did not read their logs because 'idle' is the honest state rather than 'failing'. Cites Z-S39, Z-S41, Z-S45. Dispositions stay the CVO's at L9."
+  }
+]
+```
+
+## Z-S47 -- `aws logs filter-log-events --query 'length(events)'` reports the FIRST PAGE, not the total: it under-reported 10 events as 2, and I cited that form as "0 errors" in three apply records
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S47",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-11T20:05:00Z",
+    "one_line": "The CLI applies --query PER PAGE, so `aws logs filter-log-events ... --query 'length(events)'` emits one count per page and a reader taking the first line gets the first page's count. Measured: a window holding 10 matching events printed '2' five times, and the same call with no matches printed '0' SIX times. So the form under-reports a POSITIVE count by any amount, and a zero taken from the first line only establishes that page one is clean -- a match living solely in a later page would read as a false clean. I used exactly this form to assert '0 error-pattern events' in the x-1 row 6, x-5 and x-6 apply records.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md Git section: 'paginated list-* auto-paginate then count client-side', and rule 22a RETRIEVAL: 'paginated list-* + --query length() returns the PAGE count'. My own row Z-S39 restates it for aws lambda list-functions. Three of my round-7 post-apply records nonetheless cite 'error-pattern events in the window: 0' obtained from `filter-log-events --filter-pattern '...' --query 'length(events)' --output text | head -1`.",
+    "world_is": "THE RULE I HAD BANKED FOR list-* APPLIES TO logs filter-log-events AND I DID NOT CARRY IT ACROSS. Measured on /aws/lambda/fred-data-ingestion over a four-day window: the client-side count of events matching 'NoSuchBucket' is 10, distributed 2026-10-07 (2), 10-08 (4), 10-09 (2), 10-10 (2), with no nextToken in the final response. The same call with --query 'length(events)' --output text printed '2' repeatedly -- once per page -- and a reader piping to head -1 reads 2. All three pattern spellings (bare NoSuchBucket, quoted \"NoSuchBucket\", and the ?-alternation form) gave the identical 2, which is what rules out a pattern-syntax explanation and isolates pagination as the cause. THE CONTROL IS WHAT BOUNDS THE DAMAGE, and it corrects my own first conclusion: a pattern matching NOTHING printed '0' SIX times, not once. I had initially written that a true zero reports 'as a single 0 (one page, empty)' -- that is wrong; it reports one zero per page and every page reads 0. The consequence is narrower than the headline but still real: head -1 on a zero is correct WHEN every page is zero, and nothing in the one-line reading establishes that. So a match present only in a later page would be invisible. ON MY THREE RECORDS: the zeros in x-1 row 6, x-5 and x-6 are probably sound, because in each case the relevant log window was small and the function's own success output was ALSO recorded -- row 6's monitor printed its instance table and conclusion, x-5's publisher printed 'OK: Published successfully! File size: 87.6 KB', and x-6's pull printed 'status: ok, models_ok 7, models_failed 0, errors []'. THOSE POSITIVE READINGS ARE WHAT ACTUALLY CARRY THOSE RECORDS; the zero was presented as corroboration and was weaker than I presented it. I am not re-opening the three applies -- each has independent positive evidence -- but the claim 'error-pattern events: 0' in them should be read as 'page one was clean'. THE SOUND FORM is to request the events and count them locally, checking nextToken: `filter-log-events ... --output json` then len(events) with nextToken asserted absent, or `--max-items` large enough with the count taken client-side.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "client-side: filter-log-events --filter-pattern NoSuchBucket --output json -> 10 events, nextToken absent, distributed 2/4/2/2 across 2026-10-07..10-10",
+        "the same call --query 'length(events)' --output text -> '2' printed once per page",
+        "three pattern spellings (bare, quoted, ?-alternation) all -> 2, ruling out pattern syntax",
+        "CONTROL, a pattern matching nothing -> '0' printed SIX times; client-side 0 events, nextToken absent",
+        "ground truth per stream via get-log-events: 3 NoSuchBucket occurrences in each of the 2026-10-09 and 2026-10-10 streams",
+        "the three records that cite the broken form: round7/POST_APPLY_family_c.md 7a.5, round7/portal_s3/POST_APPLY_portal_s3.md section 4, round7/smartx_deploy/POST_APPLY_smartx.md section 4"
+      ]
+    },
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "notes": "ARMED because the form is still what a seat would reach for, and because it is the SECOND instrument this session that fails in the direction of a clean reading -- Z-S42 was the first. The general shape is the one worth banking: a rule I had already banked for one API family (list-*) did not get carried across to another that paginates the same way (logs filter-log-events), and the tell was available for free, because printing the raw output instead of piping to head -1 shows the repeated counts immediately. The cheap habit is to never pipe a count through head, since a per-page count and a total are indistinguishable after the first line is taken. FILED AGAINST MYSELF: I wrote the form, cited it three times as corroboration, and found it only because a run I was investigating for a different reason had more failures than the count admitted. Cites Z-S39, Z-S42, Z-S45. Dispositions stay the CVO's at L9."
+  }
+]
+```
