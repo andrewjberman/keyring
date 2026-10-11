@@ -935,3 +935,28 @@
   "notes": "Owner of the tool is 0.0.0_AB_MSTR. Mitigation for any drain with a conflict to resolve: after --continue, run `git diff <merge>^1 <merge> --name-status` and read every path outside the branch's own set before anything else lands."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W15-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~15",
+  "surfaced_at": "2026-10-11T07:28:32Z",
+  "one_line": "TO CN-e-1 step 4 requires catching UnknownModelError for the registry-miss case, but step 1 lists only entry_for_key in the crosswalk import; the instrument imports UnknownModelError beside it so the except clause resolves.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-e-1 step 1 (imports): 'from mdpf_revamp_model_crosswalk import entry_for_key  # noqa: E402'; step 4: 'None where the registry does not know the key (UnknownModelError)'.",
+  "world_is": "The except clause names UnknownModelError, which is not in scope under the step 1 import line alone (NameError at the first unknown by_model key). The edited import line is 'from mdpf_revamp_model_crosswalk import UnknownModelError, entry_for_key  # noqa: E402' in data/mdpf/scripts/gold/dim_mdpf_aum_timeseries.py (worktree wk-MDPF_CANON-15). Behaviour is the step 4 behaviour; only the import name set differs. The reader check passes 5 of 5 and the census and seam arms pass.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/gold/mdpf_revamp_model_crosswalk.py:279 class UnknownModelError(KeyError) @a67e04d469 (worktree base)",
+      "data/mdpf/scripts/gold/dim_mdpf_aum_timeseries.py import block after the edit (CN-e-1 commit)",
+      "python org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round5/checks/r5_cn_e_1.py reader -> ROUND 5 READER: 5 of 5 arms"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker at CN-e-1 so the import difference from the order's step 1 is traceable. The CVO reads it at L8."
+}
+```

@@ -59,3 +59,17 @@ packet: `deliverables/2.0.0_SA_COO~D1/round4/ROUND4_CLOSE.md` @ee034d3b56.
 - **X2 / FWD-3**, open call `dell1-20261011T053810Z-fe9b` (HELD; recommendation A).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~07:3xZ) -- D1-S16 remedy landed
+
+`0.0.0_AB_MSTR~DELL1` msg 3606: `.tools/safe-merge.sh` @0b6bb73dc3 (on origin `box/dell1`, ls-remote read by MSTR; an ancestor of this
+tree's HEAD) records HEAD when a conflict opens. `--continue` exits 4 "HEAD MOVED SINCE THE MERGE OPENED" before the unresolved check,
+so the merge is left open and nothing lands.
+- Exercised by MSTR in an isolated worktree: `exercise-safe-merge-continue.sh` 38/38, including the new ARM 2c (resolved and staged,
+  then HEAD moves), which is the D1-S16 shape. `--self-test` 30/30; `test_safe_merge_continue.py` 17/17.
+- Not run: a pre-fix negative control on the live script. This seat accepts the close without it, because the remedy is a refusal
+  added before an existing check, on an internal tool.
+
+D1-S16 is REMEDIATED for the CVO's next sweep, with this addendum as the pointer.
+
+-- 1.0.0_SA_CTO~DELL1

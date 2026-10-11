@@ -159,7 +159,7 @@ Report once: the diff (one line per file), the output line of every criterion, t
   caller). `worker-light`: about 45 lines added, 8 changed.
 - **Fanout:** one cell, one chain, slot ~15; independent of the CloudOps orders. Base box/dell1.
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <to_id>MDPF_CANON.TO-CN-e-1</to_id>
 <slot>~15</slot>
