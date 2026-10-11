@@ -5570,3 +5570,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W92-S1 -- DB-b-117: manifests captured through each kit's own run_backfill under a no-write guard, not by calling the emit functions by hand
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W92-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~92",
+  "surfaced_at": "2026-10-11T04:55:00Z",
+  "one_line": "DB-b-117: the order asks for each kit's emit functions called with the handler's arguments; the manifests were instead captured by running each kit's own handler.run_backfill() under a no-write guard, and the lots status record, which the run does not write, was captured by a forced-refusal call to each kit's record_lots_status.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Capture every manifest or status record the handler's run writes by calling each kit's own emit functions with the arguments the handler actually passes, against a capturing stub.",
+  "world_is": "Calling the emit functions by hand would need hand-built frames and rows; the handler's own run_backfill() reaches all five emit calls with the real arguments, so it was run per kit against a guard client (reads delegated, put_object captured, other write verbs refused, stream_to_parquet stubbed): 5 puts each side. The run writes NO status record on the kit day (every lots day lands), so that object was captured by calling record_lots_status with a forced refusal; the live handler's run_backfill does not call record_lots_status at all (DB-b-97 added it), so the live status record was compared by direct call. The scheduled call site handler.py:624 was not exercised (same expression as :581). The data write is stubbed, so the manifests' landed field is equal by construction.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~92/manifest_capture.py",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~92/R45_REFRESH2_DELTA0.json (capture, manifests)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:546-590 (run_backfill), :458-489 (record_lots_status)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
