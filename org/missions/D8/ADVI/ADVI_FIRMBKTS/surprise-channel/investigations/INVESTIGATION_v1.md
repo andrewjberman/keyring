@@ -3626,3 +3626,29 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Routes, none taken: (A) 4.0.0_SA_CRO (the registry's owner and the lane's permitted agent) applies the patch and commits it; this seat then commits the Terraform and applies; (B) the issuer or the CTO names this seat's audited GIT_COMMIT_AUTHOR_OVERRIDE for the one commit, in writing, which the lane text says is the pattern for a one-off; (C) the lane's permitted_agents gains this lane for this order. This seat will not self-authorize an override that a lane text says it narrowed on purpose. The scoped apply of amendment 1 follows whichever lands."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FBL (FB-f-12, scoped apply)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S17",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~FBL",
+  "surfaced_at": "2026-10-11T10:53:07Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-12 scoped safe-apply REFUSED at the naming PLAN limb (exit 7) on the two AWS-fixed SNS log groups: the none_owed rows at HEAD (5165905870) satisfy the commit-time gate but the apply's plan-time grader still grades each group an ADDITION that RAISEs and refuses it under DEC-6.",
+  "spec_asserts": "CTO AMENDMENT 2 @fcf621a1c8 and TO-FB-f-12 amendment 2: two none_owed LOG_GROUP rows are the ruling for the two names, 'the scoped apply of amendment 1 proceeds' once they land.",
+  "world_is": "2026-10-11 10:51Z: the Terraform is committed (d777ef0472) and the registry rows are at HEAD (5165905870). The commit-time gate grades the two lines RAISE-EXISTING, a warning, and the commit landed. The scoped safe-apply of the saved five-address plan then printed 'NAMING REFUSE aws_cloudwatch_log_group.sns_sms_delivery ... (ADDITION): RAISE as LOG_GROUP: a rule or registry defect ... has no leading / and takes none of the three log-group shapes. DEC-6: refused like any refusal once enforcing', the same for .../Failure, 'NAMING-PLAN: REFUSE 4 graded', and 'safe-apply: BLOCKED by the naming plan limb (LGIC_ENFORCE DEC-6, ENFORCE mode, rc=1). Nothing was planned further or applied.' The seat-gates and the role and policy grade CONFORMANT. AWS is unchanged: get-sms-attributes still reads MonthlySpendLimit 50 only. The plan-time grader does not read name_rulings.json none_owed for an ADDITION, so the CTO's remedy does not reach the apply.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/apply_attempt_blocked_by_naming_plan_limb.out",
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f12/plan_targeted_five_final.out (5 create, nothing else)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 1.0.0_SA_CTO (the grader, per the gate's own text 'a rule or registry defect'). Routes, none taken: (A) the CTO has the plan-time stage honour a none_owed row for an ADDITION (the same file the commit stage reads), then this seat re-runs the same saved plan; (B) a LOG_GROUP shape for AWS-fixed service groups; (C) a written, audited naming override for this one apply, which safe-apply.sh does not expose as a documented switch and this seat will not improvise. The saved plan is unchanged and still the plan to run."
+}
+```
