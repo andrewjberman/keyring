@@ -24141,3 +24141,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recorded because the inherited fixture contradicted the amendment and the edit changes an inherited test. The ARMED row AMGT_RESAPP-D1-W371-S1 is not disarmed by this row: its disarm_owner 2.0.0_SA_COO~R1 owns that. The code now refuses the designated form, which is the mechanism S1 asked the issuer to rule on."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W383-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~383",
+  "surfaced_at": "2026-10-11T08:41:00Z",
+  "one_line": "A located period whose locate key is not a four-digit year (for example a 'Q4 2025' label) keeps its block unbounded by the year rule, because the order's bound names only a DIFFERENT four-digit year.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-qq-3 section 1: bound every block at the first token of a DIFFERENT four-digit year that follows its own label. The order does not say what bounds a located period whose key is not a four-digit year.",
+  "world_is": "At 918d472d4d lib/research/filings/analyze.py _block_end_at_other_year returns the block end unchanged when _locate_key(period) does not fullmatch a four-digit year, so such a block still runs to the next located label or the excerpt end, as before the change. The round-92 check and the 8 new tests cover four-digit periods only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/analyze.py@918d472d4d _block_end_at_other_year (a non-year locate key returns the block end)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-qq-3.a-located-periods-block-stops-at-another-years-label.md@cbd398d50e section 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed so the issuer can rule whether a non-year period is bounded by any four-digit year token. No hazard is armed, so no disarm_owner is set. The worker kept the four-digit rule as written and did not widen the cell."
+}
+```
