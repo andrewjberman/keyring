@@ -5798,3 +5798,86 @@
   "notes": "Not investigated."
 }
 ```
+
+## DSGN_IRPTV1-D2-W61-S1 -- IV-e-111: portal PROD's own Investor Reporting suite reads 42 failing, not 0, on the workspace contract of today's trunk; the candidate adds none and fixes none, so IV111-AC2's suite.fail 0 cannot be met as written
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W61-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~61",
+  "surfaced_at": "2026-10-11T18:26:00Z",
+  "one_line": "IV-e-111: portal PROD's own Investor Reporting suite reads 1088 pass, 27 skip, 42 fail on today's workspace contract; the candidate reads 1101 pass, 27 skip, 42 fail with the identical 42 ids, so IV111-AC2's suite.fail 0 cannot be met as written without bringing the rest of the range",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~61/base_suite_plain.txt: PROD 37aa1247ee, bun test src/pages/InvestorReporting: 1088 pass, 27 skip, 42 fail, 1157 tests, 370 files",
+      "cut_suite_plain.txt in the same folder: candidate fc876722: 1101 pass, 27 skip, 42 fail, 1170 tests, 373 files (13 new tests, all passing)",
+      "base_fail.txt and cut_fail.txt: the two sorted failing-id lists are identical (comm -13 and comm -23 both empty): new_failing_ids is empty and no base failure was fixed",
+      "the 42 fall in these groups by the test names: the operation table is routes.json (5), the request corpus (2), producer fixtures (3), the published map / fixture set (2), F14-AC13/15/16, F25-AC2/AC3, F40-AC5/AC7, F57-AC2, FE-s-47 AC6/AC7, FE-s-90 (4: ENOENT on C:/Users/AndrewBerman/.bun/bin/bun), IVE18/25/26/69/109/110/111/112/115/116/137, IVE20 (2, a running dev server), source bounds, retained selection. Each reads a file DEV changed in a range commit outside this cut (routes table rows, wire and fixture folders, the calendar, the harness)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: PROD's base may not be 0 failing; the job is to add no new failure; the criterion's suite.fail must be 0 at the end; a PROD test that fails on base only because the workspace contract moved is a base fact to report, not to repair.",
+  "world_is": "PROD's base is 42 failing. The carried work neither adds nor removes any of them. Making them pass means bringing the wire folder, the fixtures, the calendar, the route-table rows for the three routes.json rows, the harness fix and more: the 127-file range the CTO ruled is not this project's to push whole. IV111-AC2 therefore reads FAIL on suite.fail at this record, and the cut is otherwise measured.",
+  "notes": "The 13 new tests (IVE99-HR 6, IVE106 3, IVE111-SR 4) pass on the candidate."
+}
+```
+
+## DSGN_IRPTV1-D2-W61-S2 -- IV-e-111: four changed files are in the print route's import closure, so the cut waits on Andrew: the endpoint file, adapt.ts, envelope.ts, owned-requests.ts
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W61-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~61",
+  "surfaced_at": "2026-10-11T18:27:00Z",
+  "one_line": "IV-e-111: the print route's import closure (106 source files from src/pages/InvestorReporting/render/PrintEntry.tsx, from the build's module graph) holds four of the candidate's changed files; the verdict is WAITS_ON_ANDREW",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~61/print_closure.json and controls.txt: closure 106 source files, static and dynamic the same 106; the chunk graph (PrintEntry chunk plus 60 reachable chunks, 558 source modules) holds the same four changed files",
+      "import paths: PrintEntry.tsx line 81 imports src/api/endpoints/investor-reporting.ts; line 83 imports contracts/adapt.ts; the endpoint file imports contracts/envelope.ts and contracts/owned-requests.ts",
+      "positive control: AnalysisDocument.tsx, resolveBundle.ts and PrintEntry.tsx itself are found in the closure; negative control: tabs/holdings/HoldingsTab.tsx, tabs/analysis/OwnedRequestHistory.tsx and index.tsx are in the build graph and ABSENT from the closure",
+      "the other four changed files are three tests (not in the build graph) and contracts/wire/AnalysisReport.ts (a types-only file, erased from the build)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The CTO ruling msg 5494: none of the changed files in the print route's import closure; any file in that closure waits on Andrew.",
+  "world_is": "The history reader, the two status reads and retained_ref live in the one client file and the shared reader/adapter files the print entry itself imports (PrintEntry.tsx line 81 and 83). No small, clean separation moves them out: the endpoint file IS the print entry's own import. This worker did not measure whether the print view's run-time behaviour changes (it was not asked to); the files are in the closure, so by the ruling's own test the cut waits on Andrew.",
+  "notes": "Closure method is in PROD_CUT.json print_closure.method; the temporary config was removed and the portal tree is clean."
+}
+```
+
+## DSGN_IRPTV1-D2-W61-S3 -- IV-e-111: two things the cut did that the order did not name -- one assertion edited in a carried test, and a new test file written for the two status reads
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W61-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~61",
+  "surfaced_at": "2026-10-11T18:28:00Z",
+  "one_line": "IV-e-111: DEV's IVE106 test asserts the view's provider member (IV-e-101, not carried), so that one line is replaced by a requestId check; DEV's tests for the two status reads live in src/pages/TicketCenter (outside the grant), so a new test iv-e-111.status-reads.test.ts holds them",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal fc876722: __tests__/dsgn-irptv1/iv-e-106.sections-retained-ref.test.ts arm (b): DEV line expect(v.provider).toBe('OPAL_ENGINE') is replaced by expect(v.requestId).toBe(REQUEST_REF.request_id) with a comment; typecheck on the file failed with TS2339 before the edit",
+      "git grep at ca23f110: the pdf and original client methods are tested in src/pages/TicketCenter/__tests__/package-r2.test.tsx and package-open.test.tsx only",
+      "portal 418600b2 and fc876722: the cut is two commits because the first commit took only the staged paths; the second holds the rest; the diff over PROD is 8 files"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: their tests come with them; never weaken an assertion this order did not name.",
+  "world_is": "The provider assertion belongs to IV-e-101 (the Opal wording), which is deliberately left out; the same arm still asserts retainedRef as supplied and the request id. The status reads' tests were not in an allowed path, so one new test file in the allowed folder holds them (4 tests, a stubbed transport).",
+  "notes": "Two commits instead of one is a slip of mine (plain git commit without paths); no content is lost."
+}
+```
