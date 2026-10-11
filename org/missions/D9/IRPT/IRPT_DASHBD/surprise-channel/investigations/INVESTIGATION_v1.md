@@ -6412,3 +6412,49 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W108-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~108",
+  "surfaced_at": "2026-10-11T16:39:24Z",
+  "one_line": "DB-b-135: the reader ~35 reaches the custodian tables through the plan BD_POPULATION_PLAN_E3.json (the account-to-Black-Diamond-id map), and that file is no longer in the tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order: reuse reader ~35 (tieout_compound_v2.py -> tieout_e2.py, which loads org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~6/BD_POPULATION_PLAN_E3.json); take every address from that reader.",
+  "world_is": "At HEAD of this branch the plan file does not exist: commit df127f168c removed it (61 evidence files carrying real account numbers). The reader ~35 and every script that loads it (tieout_compound_v2.load) therefore cannot run from the tree as written. This worker recovered the plan with a git read of the parent of that commit into the private evidence folder (outside the repo), used only its account-to-Black-Diamond-id map, and kept it out of the repo.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show df127f168c^:org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~6/BD_POPULATION_PLAN_E3.json (read; 5252 request rows)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~12/tieout_e2.py:25"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W108-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~108",
+  "surfaced_at": "2026-10-11T16:39:24Z",
+  "one_line": "DB-b-135: of the 90, 51 hold the same dollars on both sides end to end and close under START or MID flow timing, which sits beside the DB-b-106 refutation of FLOW_TIMING on event-date sets; 31 more carry Black Diamond accrued income in their values and gains.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ruling 1 (round 68): FLOW_TIMING is refuted where DB-b-106's event-date sets agree; the 90 are the segments with equal dates, equal day counts and a gap above 0.35 pp that no record names a cause for.",
+  "world_is": "The two-sided dollar read shows: 51 of 90 tie on beginning value, ending value, net additions and net gains, and Black Diamond gross lies within 0.35 pp of Opal's link re-stated under START flow timing for 50 and MID for 48 (51 for either), using the daily-mean fee base; 31 of 90 have a dollar gap equal to Black Diamond's own accrual terms and close once Opal's link is scaled by the boundary accruals; 8 stay in the remainder (7 where the accrual identity holds but the boundary-only scaling does not close the return, 1 with an unmatched net-gains gap). A date-set equality does not exclude an in-day timing difference, so the date test and the timing test answer different questions; this worker states the 51 as a rule-based class (claim: measured for the dollars and the re-link, not for what Black Diamond does internally).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~108/UNCLASSED_90.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~104/UNEXPLAINED_244.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
