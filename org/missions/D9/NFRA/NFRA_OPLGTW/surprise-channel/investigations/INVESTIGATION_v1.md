@@ -12206,3 +12206,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "Next step is the CTO's call (data-event logging on the queue before 2026-10-12T16:00Z, or a read of 16:00Z schedulers naming it). This worker changed nothing; its 156 receive calls used visibility-timeout 0 and deleted nothing."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S91",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T17:28:49Z",
+  "one_line": "Names the actor of rows Z-S77 and Z-W57-S1: the shared DLQ opal-assets-silver-dlq is drained by the DECLARED silver sweeps. Eclipse, orion and smartx run at cron(0 16 * * ? *) (silver.tf:256-260), and each sweep's mirror_conversion.drain_dlq deletes EVERY message up to its cap, whichever family failed. A family's failure is therefore reported in the run of whichever sweep fires next, under the wrong family.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/terraform/opal-assets/silver.tf:254-261 silver_sweep_slots: orion, eclipse and smartx = cron(0 16 * * ? *); schwab = cron(15 12 * * ? *); blackdiamond 13:00Z; etf 23:30Z",
+      "FILE infra/aws/terraform/opal-assets/silver.tf:288-290 opal-assets-silver-dlq-access: 'Send (on-failure destination) + receive/delete/attrs (sweep drain, contract Section 5)'",
+      "FILE data/assets/scripts/silver/mirror_conversion.py:924-944 drain_dlq: receive_message then delete_message for each message up to cap, with no filter by family; run_sweep (:956) drains and reports in the SWEEPING family's run",
+      "ROW Z-W57-S1 / OG-dq-1 DQ1_READ.json: the deletes fall in the single 16:00Z minute on 10-09 (6), 10-10 (12) and 10-11 (12), each delete datapoint max 1, matching per-message deletes by a 16:00Z sweep"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S77: an unknown actor drained the DLQ; a second consumer would eat other masters' failures silently.",
+  "world_is": "The actor is the declared sweep, by design. A failure is not lost silently: the sweep's run report carries it. But it is reported under the sweeping family, not the failing one, so the failing family's owner may never read it. The six 08403355 RPS failures of 10-09 went to a 16:00Z non-schwab sweep's report.",
+  "notes": "Disarms Z-W57-S1's ARMED standing: the actor is named and nothing is deleted unreported, so CloudTrail SQS data-event logging is not needed. REMEDY, a code cell for the next round (round 34's spec is frozen): drain_dlq deletes only messages whose on-failure record names the sweeping family's own function, and resets the visibility of others to 0, so each family's sweep reports only its own failures. Also read whether a 16:00Z sweep's report for eclipse, orion or smartx is read by anyone."
+}
+```
