@@ -3,6 +3,7 @@
   c22   TR22-c22-AC1  teams/census.py: the fetchable-on-cutoff set with its denominator, each entry landed or missing with a completeness cause;
                       a --live CLI that only reads; counts only
   rc22  TR22-rc22-AC1 the monday-skip replay: three named tests pass
+  ra22  TR22-ra22-AC1 LIVE read-only: the Teams pull runs the rebuilt zip, the mail pull's sha is unmoved, the commentary function is absent
   rf22  TR22-rf22-AC1 the pull survives a refused content read: three named tests pass and the pull's suites stay green
 
 Prints <TOKEN>-OK or <TOKEN>-FAIL <reason> and exits 0 / 1. Run from the repo root (or the worker's worktree root).
@@ -70,10 +71,49 @@ def rf22():
     return (r.returncode == 0 and passed >= len(RF_NAMES)), tail
 
 
+PULL_FN = "teams-global-transcripts-pull-lambda"
+MAIL_FN = "outlook-global-transcripts-pull-lambda"
+COMMENTARY_FN = "outlook-global-commentary-draft-lambda"
+PRE_FIX_SHA = "taFbGTCUAOhM+97EVJi3AfqqeBCV+FIUSLZ8Z4Ge6HA="
+MAIL_SHA = "VGIq85Xxm5KVLCnv16BASS63RsPMHScMEwZJP5SuMNY="
+DIST_ZIP = Path("infra/aws/lambda/transcripts-pull/dist/transcripts-pull.zip")
+
+
+def ra22():
+    """Live read-only: the Teams pull runs the rebuilt zip, the mail pull did not move, the commentary function is absent."""
+    import base64
+    import hashlib
+
+    import boto3
+    from botocore.exceptions import ClientError
+
+    if not DIST_ZIP.exists():
+        return False, "absent: %s" % DIST_ZIP.as_posix()
+    local = base64.b64encode(hashlib.sha256(DIST_ZIP.read_bytes()).digest()).decode()
+    lam = boto3.client("lambda", region_name="us-east-1")
+    pull = lam.get_function_configuration(FunctionName=PULL_FN)["CodeSha256"]
+    mail = lam.get_function_configuration(FunctionName=MAIL_FN)["CodeSha256"]
+    try:
+        lam.get_function_configuration(FunctionName=COMMENTARY_FN)
+        commentary = "PRESENT"
+    except ClientError as exc:
+        commentary = "ABSENT" if exc.response["Error"]["Code"] == "ResourceNotFoundException" else "UNREAD"
+    facts = "pull=%s local_zip=%s mail=%s commentary=%s" % (pull[:8], local[:8], mail[:8], commentary)
+    if pull == PRE_FIX_SHA:
+        return False, "the pull still runs the pre-fix zip; " + facts
+    if pull != local:
+        return False, "the pull's sha is not the local zip's; " + facts
+    if mail != MAIL_SHA:
+        return False, "the mail pull MOVED; " + facts
+    if commentary != "ABSENT":
+        return False, "the commentary function is %s; %s" % (commentary, facts)
+    return True, facts
+
+
 if __name__ == "__main__":
-    fns = {"c22": c22, "rc22": rc22, "rf22": rf22}
+    fns = {"c22": c22, "rc22": rc22, "rf22": rf22, "ra22": ra22}
     if len(sys.argv) != 2 or sys.argv[1] not in fns:
-        print("usage: r22_checks.py {c22|rc22|rf22}")
+        print("usage: r22_checks.py {c22|rc22|rf22|ra22}")
         sys.exit(2)
     ok, why = fns[sys.argv[1]]()
     print("R22-%s-%s %s" % (sys.argv[1].upper(), "OK" if ok else "FAIL", why))
