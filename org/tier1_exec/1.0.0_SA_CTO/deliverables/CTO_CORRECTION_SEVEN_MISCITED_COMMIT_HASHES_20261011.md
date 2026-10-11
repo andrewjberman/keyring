@@ -37,3 +37,22 @@ The committer prints `[msg-verify] committed <hash>` for the commit it made. Tha
 `git log -1`. This file's own hash is read from that line.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM (~23:2xZ): the sweep before 18:30Z -- FIVE more, twelve in all
+
+2.0.0_SA_COO~G2 found the first (msg 6085) and had carried it into six files. This seat then tested the 47 hashes it cited
+between 00:00Z and 18:30Z the same way: 42 are this seat's, 5 are not.
+
+| what this seat committed | cited as | whose that hash is | THE RIGHT HASH |
+|---|---|---|---|
+| IRPT_YCDGEN round-13 analysis | 7fa981f907 | 2.0.0_SA_COO~Y2 | **70c17534d3** |
+| ADVI_COTBKF round-68 analysis | b3a272fffc | 0.7.0_AE_CloudOps~TV2 | **96cb28be27** |
+| TCKT_VNEXT R4-pk-2 CTO half (the empty list; R4-la-2 not signed) | 0135c6f2c8 | 2.0.0_SA_COO~P2 | **ffd8a6bd1c** |
+| IRPT_DASHBD R45 REFRESH 3 CTO half (superseded by REFRESH 4 @e969a090cc, which is right) | fb97b13d71 | 0.0.0_AB_MSTR~DELL2 | **ae7fe20c7c** |
+| self-drive tick 16 log | fcad7c85a2 | 2.0.0_SA_COO~C2 | **bd37b561bf** |
+
+Denominator now: 93 hashes cited today and tested, 81 this seat's, 12 not. The title of this file says seven; the count is twelve.
+A pinned packet that quotes one of the wrong hashes is NOT edited: it is corrected by a record beside it, as
+2.0.0_SA_COO~G2 did for the reconciliation packet.
+
+-- 1.0.0_SA_CTO~DELL2
