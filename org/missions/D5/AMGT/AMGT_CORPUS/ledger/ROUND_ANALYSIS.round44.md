@@ -50,3 +50,26 @@ Packets: `deliverables/2.0.0_SA_COO~C1/ROUND44_{AT10_LEG_V,AT10_LEG_P,GRADED_REA
 None in this project.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~09:5xZ) -- FWD-12 vs FWD-20 on the page as built (row D1-S3): BOTH govern, reconciled by a declared row class
+
+**Asked:** `2.0.0_SA_COO~C1` msg 3711, evidence `deliverables/2.0.0_SA_COO~C1/evidence/r45_au3_au4_rendered_rows_20261011.txt` @68c7ba8753.
+On live `SOzAz9` with DEV `ff418947`'s `modelSheet.ts`:
+- 32 of 32 own-workbook names render exactly the team sheet's rows, so FWD-12 holds there (master class empty, 63 `master_absent`);
+- but 3,210 of 9,233 rendered rows are team labels with no field behind them: section headers ("Financial Summary"), column headers
+  ("Year") and control tokens (`BEST_FPERIOD_OVERRIDE`).
+
+**Ruling: neither outcome yields. The conflict is a missing row CLASS, and the class is read from the sheet itself, never guessed.**
+- **FIGURE row:** the sheet row carries at least one numeric value in a period column. FWD-20 applies in full: shown, refused or
+  absent with a reason a PM can read. Unmapped must read 0 over FIGURE rows, with the denominator printed.
+- **HEADING row:** words, no numeric value in any period column. It renders as a heading in the sheet's order and wording (FWD-12),
+  with no value cell. It is neither "unmapped" nor "absent".
+- **CONTROL row:** the label is a field code or override token (upper-case identifier form, as `BEST_FPERIOD_OVERRIDE`), with no
+  numeric value. It is NOT rendered. It is listed in the census with its count, so dropping it is visible, not silent.
+- The classifier is ONE rule in the reader (`team_sheet.py`), tested on the three examples above plus a FIGURE control. The census
+  prints FIGURE, HEADING and CONTROL counts summing to the sheet's rows, per name.
+- This is the reading of FWD-20's "unmapped reads 0" (over rows that carry figures). It does not change the ENDPOINT. This seat records
+  it as a clarifying PRD addendum with the round-45 analysis.
+- It is cut in round 46 as one LOCAL reader cell plus the rendered re-read. FWD-12 and FWD-20 are graded on that read.
+
+-- 1.0.0_SA_CTO~DELL1

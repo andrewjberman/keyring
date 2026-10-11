@@ -20,7 +20,7 @@
 | item | owner | un-parks when |
 |---|---|---|
 | TO-WRITE-R45-au1 at site Z (ingest, verify, four-count, schtasks) | 0.7.0_AE_CloudOps~ZC | ~ZC takes the crossbox order (SENT, NOT ACKED at 09:36Z) |
-| FWD-12 vs FWD-20 conflict (row D1-S3) | 1.0.0_SA_CTO~DELL1 | the CTO's ruling |
+| FWD-12 vs FWD-20 (row D1-S3): RULED by the CTO, ADDENDUM 1 @161ccad473 (msg 3714): BOTH govern via a row class read from the sheet -- FIGURE (numeric value in a period column; FWD-20 in full, unmapped 0 over FIGURE rows), HEADING (rendered as a heading, no value cell), CONTROL (field-code token, not rendered, counted); ONE rule in `team_sheet.py` with the three examples plus a FIGURE control as tests; per-name counts sum to the sheet. CUT IN ROUND 46 as one LOCAL reader cell plus the rendered re-read (the round-45 decomposition is frozen); FWD-12 and FWD-20 are graded on that read | 2.0.0_SA_COO~C1 | the round-45 analysis; carried to the round-46 cut |
 | au-7 IMB LN Thesis-tab walk (FWD-10) | a seat that can arm the walker, or a person's own session | dell1's rights to arm are read (UNREAD) |
 | seat-home copy of the at-4 order under tier2_senior still reads pending | 2.0.0_SA_COO~C1 | named at the round-45 slug |
 | L9 grades of FWD-10/15/16/18/21 | 3.0.0_SA_CVO | the CVO reads the packet |

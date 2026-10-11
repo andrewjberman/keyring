@@ -1,133 +1,106 @@
-# ADVI_FIRMBKTS task order -- `FB-f-9` -- WINDOW ACT 2: THE PLATINUM PRODUCERS' PER-OUTPUT DESTINATION (PHASE A4: THE DISPATCHER'S GATE READ AND THE MODE EXPORT, DORMANT)
+# ADVI_FIRMBKTS task order -- `FB-f-9` -- WINDOW ACT 2, PHASE B: THE MODE MOVE OF THE PLATINUM PRODUCERS (THE ACT)
 
-<!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
+<!-- ===================== ACTOR FACE -- this is the WHOLE of the actor's context ===================== -->
 
 <decomp_ref>
 <decomp_doc>org/missions/D8/ADVI/ADVI_FIRMBKTS/decompositions/ADVI_FIRMBKTS_DECOMP_R3.md</decomp_doc>
 <owned_cells>FB-f-9</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_ADVI_FIRMBKTS~23</issued_to>
+<issued_to>0.7.0_AE_CloudOps~FB1</issued_to>
 <issued_by>2.0.0_SA_COO~B1</issued_by>
-<placeholders>NONE</placeholders>
+<placeholders>MOVE_TS</placeholders>
 <preflight>
-comp-schedule: DECLARED-NOT-APPLICABLE -- phase A4 edits one shell file in the repository; it adds or changes no cron, rule, schedule or cadence and deploys nothing (a `.sh` is never deployed by the push hook; the act deploys it by a deliberate leg).
-comp-iam: DECLARED-NOT-APPLICABLE -- repository file only: no AWS act and no grant.
-comp-adversary: RUN by the issuer -- `r3_dispatch.py --arm export` and `--arm gate` read FAIL at base (both blocks absent) and 8 of 8 and 3 of 3 on a reference file carrying the two blocks (the same blocks this face orders). Blindness: the arms run the two marked blocks in bash with stub variables; they do not run `gold_dispatch.sh`, so the block's PLACEMENT in the file (after argument parsing; inside the freshness function) is your reading, stated in your report with line numbers.
+comp-schedule: RUN by the actor at step 2 (the producers' next scheduled chain start and that no run straddles the move); the act itself adds no cron, rule or schedule.
+comp-iam: RUN by the issuer for the actor's identity only at the grain of the object: the actor reads `simulate-principal-policy` at step 2 for the producers' role and its own identity on the two prefixes below (resource-scoped, never `*`).
+comp-adversary: DECLARED-NOT-APPLICABLE at the cut -- AC1 reads 0 of 20 at base (live read 2026-10-11 09:5xZ: 20 objects differ or are absent), AC2 reads 0 of 11 classes written, AC3 reads 0 keys modified (a control that fails only if a served write lands at the legacy home after the move).
 EGRESS CLASS, declared: NONE.
 </preflight>
 
-## 1. THE CELL -- `FB-f-9` phase A4 (round 3, enrichment item 1, step 2; the CTO's ADDENDUM 4 carrier and the act-2 CTO half's ADDENDUM 1 row 1)
+## 1. THE ACT -- the mode moves to `canonical` for the scheduled production chain, by deploying the dormant build and the one switch
 
-The dispatcher `data/black_diamond/scripts/gold/gold_dispatch.sh` is the one switch for the platinum mode (ADDENDUM 4) and its freshness gate reads
-a served key from the legacy home. You edit that one file in two places, DORMANT: with the mode unset the file's behavior
-is byte-identical to today's. You run nothing and deploy nothing.
+You deploy the merged, dormant build to the gold runner's code prefix, then the dispatcher that carries the switch; the next
+SCHEDULED production chain then writes every served platinum key of the 14 producers to its `address()` home in
+`opal-data-49financial`, and reads, lists and deletes follow. READ FIRST, in this order: `org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND3_ACT2_PRODUCERS_COO_HALF.md`
+and its `_ADDENDUM_1.md`; `org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND3_ACT2_PRODUCERS_CTO_HALF.md` (verdict, ADDENDA 1 and 2);
+`org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/ROUND_ANALYSIS.round2.md` ADDENDA 2 to 5; `org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/R3_ACT2_OUTSIDE_READERS_CENSUS.md`. The pair's permitted set and both
+branches are the whole of what you may touch and when you stop. Procedure: `docs/deployment/EC2_CODE_DEPLOYMENT_STANDARD.md`
+and `.tools/safe-deploy.sh` (read its `--help`); load `/cloud-ops` before any AWS act.
 
-### 1a. The facts you start from
+### 1a. The steps, in order
 
-- `lib/platinum_dest.py` (merged): `source(legacy_key, mode=None) -> (bucket, key)`; the mode is read from the environment
-  variable `BD_PLATINUM_MODE` (unset = `legacy`, `legacy` returns `(S3_BUCKET, key)` where `S3_BUCKET` is `BD_S3_BUCKET`
-  defaulting to `opal-data-bd`).
-- `data/black_diamond/scripts/gold/gold_dispatch.sh` sets `SCRIPTS="/tmp/gold_layer_scripts"` near its top (the directory the runner syncs `code/gold/`
-  into, including `lib/`), parses its arguments into the shell variables `MODE` (`chain`, `single`, `group`, `from`) and
-  `DRY_RUN` (`0` or `1`), and at about line 249, inside the freshness check, reads the gate's date with
-  `gold_as_of=$(aws s3 cp "s3://${BD_S3_BUCKET}/gold/artifacts/summary/header_metrics.json" - ...)`.
-- That key is a served-class key: written at the new home under `canonical`, so the legacy read would return a frozen
-  `data_as_of`. The chain's QA runner is the same script with `GOLD_KEEP_ALIVE=1` (the runner script
-  `infra/aws/ec2/bd-gold-layer-runner/run-gold-layer.sh` reads it) and a marker file `/tmp/GOLD_QA_REBUILD`.
-
-### 1b. The steps
-
-0. Work in `/c/dev/wk-firmbkts-23`. Begin every shell call with `cd /c/dev/wk-firmbkts-23 &&`.
-1. **The mode export.** After the argument parsing (the point where `MODE` and `DRY_RUN` are final, and before any use of the
-   mode by a child), add exactly this marked block (the check reads it by its two marker lines):
-   ```
-   # >>> PLATINUM-MODE (ADVI_FIRMBKTS FB-f-9) >>>
-   if [ "${MODE:-}" = "chain" ] && [ "${DRY_RUN:-0}" = "0" ] && [ "${GOLD_KEEP_ALIVE:-0}" != "1" ] \
-      && [ ! -f "${GOLD_QA_MARKER:-/tmp/GOLD_QA_REBUILD}" ] && [ -z "${BD_PLATINUM_MODE+x}" ]; then
-       export BD_PLATINUM_MODE=canonical
-   fi
-   # <<< PLATINUM-MODE (ADVI_FIRMBKTS FB-f-9) <<<
-   ```
-   The block never overrides a value already set, and it fires only for a scheduled production chain. NOTE: while this
-   file is not deployed the block does nothing on the runner; it is the deployed file that moves the mode.
-2. **The gate read.** Replace the `gold_as_of=$(aws s3 cp "s3://${BD_S3_BUCKET}/gold/artifacts/summary/header_metrics.json" -
-   ...` read so that its location comes from this marked block, placed immediately before it inside the same function, and
-   the `aws s3 cp` reads `"$gold_hm_loc"`; keep the rest of the pipeline (`| python3 -c ...`, the redirections) byte-for-byte:
-   ```
-   # >>> GATE-READ-LOCATION (ADVI_FIRMBKTS FB-f-9) >>>
-   gold_hm_loc=""
-   for _gd in "$(dirname "$0")" "$SCRIPTS"; do
-       gold_hm_loc=$("${GOLD_PYTHON:-python3}" -c 'import sys; sys.path.insert(0, sys.argv[1]); from lib.platinum_dest import source; b, k = source("gold/artifacts/summary/header_metrics.json"); print("s3://%s/%s" % (b, k))' "$_gd" 2>/dev/null) && [ -n "$gold_hm_loc" ] && break
-       gold_hm_loc=""
-   done
-   [ -n "$gold_hm_loc" ] || gold_hm_loc="s3://${BD_S3_BUCKET}/gold/artifacts/summary/header_metrics.json"
-   # <<< GATE-READ-LOCATION (ADVI_FIRMBKTS FB-f-9) <<<
-   ```
-   Why two directories (established by the issuer, read this): on a runner `run-gold-layer.sh` syncs `code/gold/` into
-   `/home/ubuntu/gold-layer/scripts` at boot (lines 88-90) and runs `./run_gold_layer.sh` from there (line 115); that
-   wrapper sets `SCRIPT_DIR` to its own directory and runs `bash "$SCRIPT_DIR/gold_dispatch.sh"`, so `$(dirname "$0")`
-   inside the dispatcher is the boot-synced directory and holds `lib/` BEFORE the dispatcher's own later sync into
-   `$SCRIPTS` (`sync_scripts`, about line 664, called at about lines 473 and 532). On `--chain downstream` the gate runs
-   before any `sync_scripts`, which is why `$(dirname "$0")` comes first. If no directory holds the lib, the location
-   falls back to today's legacy URI (the check's third case). In your report state whether the loop's first directory
-   holds `lib/platinum_dest.py` in the layout above, by reading the two scripts' lines.
-2b. **ASCII.** The file already carries non-ASCII characters on 19 comment lines (lines 44, 49, 146, 154, 324, 369, 487,
-   517, 559, 921, 1074, 1125, 1132, 1389, 1410, 1443, 1482, 1484, 1500: dashes, a section sign and similar). CLAUDE.md
-   section 4: a file that already carries non-ASCII takes ALL of it out or every reader explicit, never a subset. Replace
-   each non-ASCII character on those lines with its plain ASCII equivalent (an em or en dash with `--`, a section sign
-   with `sect.`, a multiplication sign with `x`, an arrow with `->`, any other with the nearest ASCII word), and touch
-   nothing else on the line. They are comments, so the file's behavior is unchanged. If any is inside a string a command
-   prints or a pattern a command matches, STOP and file a BLOCKING row for that line.
-3. **Shell syntax.** `bash -n data/black_diamond/scripts/gold/gold_dispatch.sh` exits 0.
-4. **Find, do not fix, the same shape elsewhere in this file.** List every other `aws s3 ls`, `aws s3 cp`, `aws s3 sync` or
-   `aws s3api` in `gold_dispatch.sh` whose key is under one of the 11 served legacy prefixes
-   (`gold/artifacts/`, `gold/entities/{accounts,advisors,clients}/`, `gold/platinum/firm/`, `gold/views/`,
-   `platinum/{49financial,accounts,advisors,clients,firm}/`): file ONE row per site (OBSERVATION: line, what it reads,
-   what the mode does to it) and change nothing at that site.
+0. **Gate.** `git ls-tree HEAD` lists the pair's files; the CTO half's last verdict reads SIGNED (ADDENDUM 2 @3d24ccdbd2);
+   `FB-f-8` is `complete`; the files named by the first four phases are merged (`git merge-base --is-ancestor 2018982711 HEAD`
+   and `23133da0fb`). Any not so: STOP, a BLOCKING row, no write to AWS.
+1. **The entry.** Open the change-management entry BEFORE the first write (`python .tools/deploy_ledger.py open ...`, read
+   `--help`), naming the 20 objects, the prior version of each, the move, the pair and its addenda. The entry's text MUST
+   say: "a hand run of E_24 exports BD_PLATINUM_MODE=canonical or it writes the legacy home" (the CTO's condition). Commit
+   the entry and its `org/critical_paths/.open_deploys/` sentinel first.
+2. **Read before you write.** (a) `aws s3api get-bucket-versioning --bucket opal-data-bd` reads `Enabled`; record every
+   object's current `VersionId` (the 20 keys) in the entry. (b) `simulate-principal-policy` for the producers' role
+   (`bd-exporter-ec2-role`) on `arn:aws:s3:::opal-data-49financial/advi/49financial/platinum/*` for `s3:PutObject`,
+   `s3:GetObject` and `s3:ListBucket`: each `allowed`; any `implicitDeny` or `explicitDeny`: STOP (the grant is a separate
+   act, not drafted). (c) `comp-schedule`: read the producers' chain start times and the instant of the last legacy chain's
+   end; the move is timed so no producer run straddles it. (d) `python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_act2_reads.py deployed-equal` as a
+   before-read (expected 0 of 20 or the objects the push hook already shipped).
+3. **Ship the 19 `.py` objects first** (the dormant build) through the repository's deploy path (`.tools/safe-deploy.sh`;
+   the push hook's `file_to_s3_target` is the mapping); read each back. Do NOT ship `gold_dispatch.sh` in this step.
+   Stop condition: any object whose bytes differ from `git show HEAD:<path>` after the shipment.
+4. **HOLD, then ship `gold_dispatch.sh`** (the switch). Steps 0 to 3 may run as soon as this order is read: they change
+   no served byte. **Step 4 does not run until the issuer's amendment commit to this order records `GO` with its
+   window** (the first canonical chain must be followed the same day by acts 3, 4, 4b and 4c, each with its pair and
+   entry; until the router and the two Lambdas move, users read the last pre-move day). After the GO, ship it to
+   `s3://opal-data-bd/code/gold/gold_dispatch.sh`, a deliberate `aws s3 cp` (a
+   `.sh` is never shipped by the hook), `--sse AES256`; read it back with `cmp`; record `MOVE_TS` (UTC, `date -u +%FT%TZ`,
+   read AFTER the copy returned) in the entry. This is the act; nothing before it changes a served byte.
+5. **Wait for the next SCHEDULED production chain** (`--chain`, not an ad-hoc `--single`, not a QA run) and read it:
+   its exit; the run log shows no `ValueError` and no `NoSuchKey` on a served read; then AC1 to AC3. If no scheduled chain
+   runs within the schedule's own interval plus one hour, STOP and report (do NOT start a run to make one).
+6. **Branch B, if any condition of the pair's Branch B holds:** remove the export (re-upload the recorded prior
+   `gold_dispatch.sh` version), read it back, open a BLOCKING row, leave the order open. The objects the chain already
+   wrote at the new home stay (inert).
+7. **Close.** Close the entry with the three outputs and the chain's evidence; write the proof instance in your own
+   deliverables folder; flip `<status>` to `complete` in the SAME commit; report once to `2.0.0_SA_COO~B1`: the 20 prior
+   VersionIds' count, the schedule read, `MOVE_TS`, the chain's exit and log reading, the three outputs, the commit hash.
 
 ## 2. BOUNDS
 
-1. One file changes: `data/black_diamond/scripts/gold/gold_dispatch.sh`. The diff against base is the two marked blocks, the
-   one replaced `aws s3 cp` argument and the 19 comment lines of step 2b (ASCII characters in place of the non-ASCII ones),
-   nothing else.
-2. With the mode unset and a non-chain mode, a dry-run, `GOLD_KEEP_ALIVE=1` or the QA marker, the file does exactly what it
-   does today. Under a scheduled chain with the mode unset the only difference is the exported variable (the point of the
-   act). No new delete, copy, write or alert. No change to any other file, launch script or schedule.
-3. LF line endings; the file reads 0 bytes above 127 when you are done (AC3). If something cannot be met within your paths, file a surprise row and stop.
+1. The only writes are the 19 `.py` objects and the one `gold_dispatch.sh` object under `s3://opal-data-bd/code/gold/`, the
+   ledger entry and its sentinel, your instance and your rows. No delete of any kind, no copy of data, no write to either
+   data home by you, no schedule, no grant, no alert, no run of a gold script or of the dispatcher by you.
+2. If a read or a plan differs from the pair's permitted set or from the order of steps 3 and 4: STOP before the write and
+   file a BLOCKING row (`ADVI_FIRMBKTS-D1-S<k>`, next unused `k`, `surfaced_at` from `date -u +%FT%TZ`).
+3. Keys under entity classes carry client ids: your report names counts and class prefixes, never an id.
 
 ## 3. SURFACES
 
 <paths>
-data/black_diamond/scripts/gold/gold_dispatch.sh
-org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~23/
+org/critical_paths/change_management/
+org/critical_paths/.open_deploys/
+org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/
 org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
-
-Read-only: the rest of the repository, the checks under `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/`.
 
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~23/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-23 &amp;&amp; timeout 100 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_dispatch.py --arm export --root /c/dev/wk-firmbkts-23; echo "exit=$?"</invocation><expect>ROUND 3 DISPATCH EXPORT: ALL CASES PASS</expect></criterion>
-  <criterion id="AC2" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-23 &amp;&amp; timeout 100 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_dispatch.py --arm gate --root /c/dev/wk-firmbkts-23; echo "exit=$?"</invocation><expect>ROUND 3 DISPATCH GATE: ALL CASES PASS</expect></criterion>
-  <criterion id="AC3" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-23 &amp;&amp; python -c "import sys; b=open(sys.argv[1],'rb').read(); print('non-ascii-bytes=%d' % sum(1 for x in b if x &gt; 127))" data/black_diamond/scripts/gold/gold_dispatch.sh</invocation><expect>^non-ascii-bytes=0$</expect></criterion>
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.phaseB.proof_of_spec.json`.
+  <criterion id="AC1" cell_refs="FB-f-9"><invocation>python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_act2_reads.py deployed-equal</invocation><expect>^DEPLOY EQUAL: 20 of 20 objects equal the repository at HEAD$</expect></criterion>
+  <criterion id="AC2" cell_refs="FB-f-9"><invocation>python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_act2_reads.py new-home --since <MOVE_TS></invocation><expect>^NEW HOME: 11 of 11 served classes written since </expect></criterion>
+  <criterion id="AC3" cell_refs="FB-f-9"><invocation>python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_act2_reads.py old-home --since <MOVE_TS></invocation><expect>^OLD HOME QUIET: 0 keys of 11 classes modified since </expect></criterion>
 </proof_of_spec>
 
-AC1 runs the export block under eight environments (a scheduled chain reads `canonical`; `single`, `group`, a dry-run,
-the QA keep-alive and the QA marker read unset; a value already set is kept), FAIL at base. AC2 runs the gate block with the
-mode unset (today's URI, byte-identical), with `canonical` (the module's own answer for the key) and with the lib absent
-(today's URI), FAIL at base. AC3 counts the bytes above 127 in the file (19 lines at base, so FAIL at base): a third criterion, carried because CLAUDE.md
-section 4 makes it the only safe state of a file that already carries non-ASCII. Each invocation terminates
-inside its bound.
+AC1 is the 20 objects against `git show HEAD:<path>` (the build and the switch landed). AC2 is the new home written since
+the move by a scheduled run (a bounded listing of the 11 class prefixes; a class the day's chain does not write reads
+`NOT written since` by name and is the issuer's to rule, not yours to explain away). AC3 is the legacy home quiet since
+the move (a bounded listing; it FAILS if any served write lands there). All three are read-only. `MOVE_TS` is the instant
+step 4 recorded.
 
 ## 5. WHEN YOU ARE DONE
 
-Instance at `D/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.proof_of_spec.json`, `D` = `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~23`.
-Commit the file and your rows, then the instance second (its artifact rows pin to the commit that holds them). **Do not
-flip this order's `<status>`.** Row ids: `ADVI_FIRMBKTS-D1-W23-S<k>`, `k` from 1, `surfaced_at` from `date -u +%FT%TZ`.
-Report once: the AC1 and AC2 outputs in full, the line numbers of the two blocks and of the sync, the sites of step 4
-(count and line numbers), `bash -n`'s exit, and the commit hash.
+Close the change-management entry with the three outputs; flip `<status>` to `complete` in the SAME commit as the proof
+instance. A row id on this project carries the dell1 infix: as a seat you file `ADVI_FIRMBKTS-D1-S<k>`. Report once to
+`2.0.0_SA_COO~B1`: the pair's blob ids, the schedule read, `MOVE_TS`, the chain's exit, AC1 to AC3 in full, the entry's
+path and the commit hash. Act 3 (`FB-f-10`) waits on this order's `complete`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
@@ -231,6 +204,19 @@ the wrapper path): accepted and carried to the act-2 pair as a stated fact; the 
 (read), and a direct invocation of the dispatcher on a fresh instance falls to the legacy gate read, which is today's
 behavior. Gate limb: none graded (a ruling on a staged-open order's record face).
 
+**AMENDMENT 10 (2.0.0_SA_COO~B1, PHASE B ACTIVATED; the CTO's ADDENDUM 2 @3d24ccdbd2, msg 3713):** the un-park conditions
+read from files at HEAD: (1) phases A, A2, A3 and A4 merged (@b0eebb018d, @628d9f241b, @19fb066b50, @2018982711) and `FB-f-8`
+`complete` (@3a96b7d81f on CLOUD); (2) the pair SIGNED in both halves for the as-built 20-object set (COO half
+@12b22ef020 and ADDENDUM 1 @1d7f94ebb1; CTO half @03c1c6f001, ADDENDA 1 @6ac66a8950 and 2 @3d24ccdbd2); (3) the actor's entry is
+step 1 of the face (it cannot be open before its seat reads the order); (4) AC1 to AC3 are `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_act2_reads.py`, each
+dry-run at base live on 2026-10-11 09:5xZ: `deployed-equal` reads 0 of 20 (12 catalog writers STALE at S3, 5 libs and E_01,
+E_24 and the dispatcher differ or are absent), `new-home --since` a time at the cut reads 0 of 11, `old-home --since` reads
+0 keys (a control; 5.8 s). The first phase's placeholder names are replaced: the face carries `MOVE_TS` only, which step 4
+records. The executor is the dell1 CloudOps lane `0.7.0_AE_CloudOps~FB1` (its entry for act 1 closed SUPERSEDED @0af7af3fd9
+and it is free; the Dell identities may write `code/gold/` objects: none of the 20 is a protected function). Gate limb: the
+`<issued_to>`, `<paths>`, `<placeholders>` and criteria of a pending order are amended by its issuer; GATE viii reads
+`MOVE_TS` carried by AC2 and AC3's invocations.
+
 **PHASE B (STAGED; NOT A FACE).** Un-park conditions, all required, each read from a file at HEAD:
 1. Phase A merged with AC1 `4 of 4`, and `FB-f-8` (act 1, the advTenant deploy) is `complete`.
 2. The never-widen pair for the mode move reads SIGNED in both halves
@@ -256,7 +242,7 @@ disarm owner this seat) is closed by phase A's `D_00f` change and by AC1's D3.
 <status>pending</status>
 <round>3</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-9</to_id>
-<slot>~23</slot>
+<slot>~FB1</slot>
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
