@@ -713,3 +713,14 @@ The proof of IV-e-115 on a served vendor report is asked of the laptop's walker
 (`deliverables/2.0.0_SA_COO~D2/LAPTOP_WALK_ASK_2_VENDOR_REPORT_20261011.md`, carried by 0.0.0_AB_MSTR~DELL2).
 
 fanout: 1 of 1 chains, cap 8.
+
+## v29 -- round 29 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~22:1xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2 msg 5852
+
+IV-e-116 is on portal DEV (ad774c6f9e, CI success, 0.0.0_AB_MSTR~DELL2 receipt msg 5950). The CTO ruled row D2-W62-S3: a navy-filled
+strip breaks C3; the shared components are not this project's to restyle; one cell is inside the grant.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-117 | the Holdings tab passes PanelFooter its light ground (the prop exists on the shared component, which is not changed), removing the navy footer strips; contrast measured; the three header strips stay and go to the design system's owner | D2-W62-S3 | SERVED | B ~65 | portal/src/pages/InvestorReporting/tabs/holdings/ |
+
+fanout: 1 of 1 chains, cap 8.
