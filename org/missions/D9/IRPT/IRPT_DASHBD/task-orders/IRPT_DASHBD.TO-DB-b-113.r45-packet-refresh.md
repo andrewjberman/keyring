@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~88</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -71,6 +71,31 @@ Read in `C:/dev/wk-irpt-dashbd-88` first:
    - **## COO half** and **## CTO half**, each reading UNSIGNED.
 
 **Read-only on AWS** (S3 GETs for the kit day, one get-function-configuration, one head-object). No build, upload, source-map edit or apply.
+
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~03:4xZ): sources.json is the fourth member -- row IRPT_DASHBD-D2-W88-S1 ruled
+
+**Ruling on W88-S1.** You stopped correctly. The returns difference is one column: `method_version` reads 2 on all 6,901 rows live and null at HEAD,
+because DB-b-96 (`08194d1e33`) and DB-b-102 (`26a3f3a38b`) made `account_return_daily.py` read the method fields from the source entry, and
+`sources.json` stayed at its live pin, which names none. Those two orders changed the two files as one unit, so the release candidate carries both:
+`sources.json` at HEAD is the FOURTH member. Whether R45 ships four members is the halves' decision at signing; this cell supplies the evidence for it.
+
+Do this, in `C:/dev/wk-irpt-dashbd-88`:
+1. **Census.** Add `data/assets/scripts/gold/irpt_reporting/sources.json` to `members_changed`, with its pin, sha256, base_sha256 and EVERY commit since
+   its live pin. Two of those commits belong to ADVI_COTBKF (`d41d82a633`, `f043506a7c`: the `_commonwealth_delivery` entry). Say from the code, with
+   file and line, whether the reporting-gold handler's 49F run reads that entry at all.
+2. **DELTA=0, third run.** Run the kit day once more with all FOUR members at HEAD (the three plus `sources.json`), every other member as pinned. In
+   `R45_REFRESH_DELTA0.json` set `members_at_head` to the four paths and make `sha256_new` this run's hashes. Keep the three-member run you already
+   made under `three_member_run` (its hashes and the `method_version` finding), so the record shows both.
+3. **The manifest question you read from the code** (`handler.py:579` and `:620` call `ard.emit_day` without `src`): do not argue it, measure it. From
+   the live run and the four-member run, record the returns manifest's `method_version` and the three method fields as written by each, under
+   `manifest_method_fields: {live, new}`. If the four-member run writes the literal `absent` where live writes a value, that is a second row and it
+   goes in the packet as an open question; it does not stop you.
+4. **Packet.** Update every section to the four-member candidate, and replace the READ FIRST note with what the third run shows.
+5. If a table hash still differs in the four-member run: record it as it is, file a row, and STOP as before.
+
+Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; GATE (viii) does not apply, `<placeholders>` is NONE).
+The check `p57_round57.py` is amended in the same commit: DB57-1-AC1 wants exactly the four members; DB57-1-AC2 wants `members_at_head` naming the four.
+The `<paths>` grant is unchanged.
 
 <criterion id="DB57-1-AC1" cell_refs="DB-b-113"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r57/p57_round57.py" . DB57-1-AC1</invocation><expect>DB57-1-AC1 PASS</expect></criterion>
 `DB57-1-AC1` -- the census over live oNgy4rnr lists exactly the three members, each pinned to HEAD bytes with its commits since the live pin, with the rollback version. Base: FAIL.
