@@ -3829,3 +3829,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_YCDGEN-D2-S49 -- A generation job can fail every delivery and be dead-lettered while its record still reads RECEIVED and holds no reason: 8 of 8 dead letters, none with a ticket_id
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S49",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T11:04:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "A generation job can fail every delivery and be dead-lettered while its record still reads RECEIVED and holds no reason: 8 of 8 dead letters, none with a ticket_id",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-11T10:54Z-10:58Z by laptop 1.0.0_SA_CTO for cross-box call XB-20261011T104936Z-073c, record org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_YCDGEN_DEAD_LETTER_INVENTORY_irpt-generation-dlq_20261011.md @f2053cfdd8 (read by 2.0.0_SA_COO~G2 from that commit, fetched from origin box/laptop): irpt-generation-dlq holds 8 messages, all kind analysis_generate, 2 for cottonwood and 6 for 49financial, sent 2026-10-07T18:07Z to 2026-10-09T14:59Z, ApproximateReceiveCount 6 each (5 by the worker, 1 by this read). For all 8 of 8 request ids the irpt-jobs record reads state RECEIVED, outbox_state SENT; the record's attribute names are composition_sha256, fence_token, job, outbox_state, request_revision, state, tenant: NO reason field of any name. So 8 of 8 jobs failed every delivery and were dead-lettered while their records say RECEIVED and state no cause. No ticket_id key on any of the 8. TCKT_VNEXT run 3's request (accepted about 2026-10-11T08:14Z) is NOT among the 8: all are older. Queue 8 visible, 0 in flight before and after; nothing deleted, sent or redriven. One of the 8, REQ-448d42480cadd873fa74c3cf (sent 2026-10-09T10:37:05Z), is this project's own F1 re-run that st28 retained as RetentionRefused (st29 packet, section Why): its cause is known from the host journal of that day, not from its record."
+    ]
+  },
+  "notes": "This is the inventory row IRPT_YCDGEN-D2-S45 asked for, and S45 STAYS ARMED: the hazard there is a redrive, and it is sharper than S45 states. The 8 are old requests of 2026-10-07 to 2026-10-09. On the root installed today (37210c771a-st30) the Opal allow list is Andrew's sign-in only, so a redriven request owned by svc-irpt-analysis would be routed to the YCharts producer, which is vendor-facing; the owners of the 8 were NOT read (owner values did not leave the laptop). Nobody redrives any of the 8 without a pair naming each (CTO ruling @c7a257c031). What this row does not establish: why each of the 8 failed (the journal of those days was not re-read here), and where run 3's message went (the main queue read 0 and 0, so it was consumed; 2.0.0_SA_COO~V2 holds that finding). The CTO withdrew the ticket_id-schema guess on this read (msg 4781).",
+  "spec_asserts": "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py line 16: a job's STATES include FAILED and ATTENTION, the two states a caller reads to learn a job did not produce; org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_TCKT_VNEXT_R2_TR1_RUN3_GENERATION_HOP_AND_FOURTH_RUN_20261011.md @c7a257c031: one dead letter is read and its failure reason stated.",
+  "world_is": "MEASURED 2026-10-11T10:54Z-10:58Z by laptop 1.0.0_SA_CTO for cross-box call XB-20261011T104936Z-073c, record org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_YCDGEN_DEAD_LETTER_INVENTORY_irpt-generation-dlq_20261011.md @f2053cfdd8 (read by 2.0.0_SA_COO~G2 from that commit, fetched from origin box/laptop): irpt-generation-dlq holds 8 messages, all kind analysis_generate, 2 for cottonwood and 6 for 49financial, sent 2026-10-07T18:07Z to 2026-10-09T14:59Z, ApproximateReceiveCount 6 each (5 by the worker, 1 by this read). For all 8 of 8 request ids the irpt-jobs record reads state RECEIVED, outbox_state SENT; the record's attribute names are composition_sha256, fence_token, job, outbox_state, request_revision, state, tenant: NO reason field of any name. So 8 of 8 jobs failed every delivery and were dead-lettered while their records say RECEIVED and state no cause. No ticket_id key on any of the 8. TCKT_VNEXT run 3's request (accepted about 2026-10-11T08:14Z) is NOT among the 8: all are older. Queue 8 visible, 0 in flight before and after; nothing deleted, sent or redriven. One of the 8, REQ-448d42480cadd873fa74c3cf (sent 2026-10-09T10:37:05Z), is this project's own F1 re-run that st28 retained as RetentionRefused (st29 packet, section Why): its cause is known from the host journal of that day, not from its record."
+}
+```
