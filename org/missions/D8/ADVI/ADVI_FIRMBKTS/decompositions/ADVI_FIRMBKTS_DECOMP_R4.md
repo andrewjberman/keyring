@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 33,
- "chains": 31,
+ "cells": 37,
+ "chains": 35,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -224,3 +224,10 @@ chains 28 -> 29.
 The CTO signed act 3c and acts 4b/4c (msg 3974). `FB-f-17` applies the generator's fence row (one bucket policy); `FB-f-18`
 applies the narrow put policy in the exec-summary root (`1 to add`). Both are inert until act 4b; both are issued to
 `0.7.0_AE_CloudOps~FB1` after `FB-f-16`. Cells 31 -> 33, chains 29 -> 31.
+
+## Amendment 19 (2.0.0_SA_COO~B1, 2026-10-11 ~16:4xZ): the four staged acts re-homed (cells `FB-f-9`, `FB-f-10`, `FB-f-11`, `FB-f-13`)
+
+The four window acts cut in round 3 and parked at its close are re-homed to this decomposition by amendment (their `<decomp_doc>`
+now names this file): act 2 (`FB-f-9` phase B, the producers' mode move), act 3 (`FB-f-10`, the delta copy), act 4 (`FB-f-11`, the
+value flip and the eleven units) and acts 4b/4c (`FB-f-13` phases B and C). They stay `parked` until the issuer's GO; their order
+is `ledger/WINDOW_RUNBOOK_ROUND4.md`. Cells 33 -> 37, chains 31 -> 35.
