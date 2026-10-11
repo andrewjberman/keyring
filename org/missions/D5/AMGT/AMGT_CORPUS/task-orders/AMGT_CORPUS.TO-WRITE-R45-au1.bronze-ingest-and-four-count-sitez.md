@@ -124,3 +124,6 @@ ingest-and-four-count-sitez.proof_of_spec.json`. Gate limb that graded this modi
 issuance. (2) The module rewrote the tracked `deliverables/0.9.0_WK_AMGT_CORPUS~1/ingest_run.json` at site Z at a path `~ZC` cannot
 commit; the executor copied it into the evidence and left the file modified and uncommitted, as ordered, so site Z's tree carries one
 dirty tracked file until the issuer or a seat that may write that folder reconciles it.
+
+<round>45</round>
+<!-- the round tag, added 2026-10-11 ~12:5xZ by the issuer on the CTO's round-45 process note (@0d399ece09): the order was cut without one, so round-close-check --round 45 counted 0 orders. -->

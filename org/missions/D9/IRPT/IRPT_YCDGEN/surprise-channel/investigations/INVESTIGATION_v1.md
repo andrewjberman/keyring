@@ -3960,3 +3960,60 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "A request ran through the new root and was worked twice, 11:19:02 to 11:34:05, ending ATTENTION on a vendor-session refusal rather than on anything st30 changed. What remains unexercised is narrower than the rows state: the OPAL producer path, which only a listed sign-in reaches. FWD-1 is still NOT MET."
 }
 ```
+
+## IRPT_YCDGEN-D2-W14-S1 -- the report Andrew opens (OwnedRequestHistory's RetainedSections) renders an Opal report in the v1 vendor wording: it never passes the Opal flag and its slice has no provider
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W14-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~14",
+  "surfaced_at": "2026-10-11T12:15:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The page that opens Andrew's report (OwnedRequestHistory's RetainedSections) draws every section with SectionBlock without the Opal flag and reads a slice with no provider, so an Opal report prints 'Vendor attribution:' per section and 'Extraction validation' under Technical details.",
+  "spec_asserts": "PRD FWD-1 and C-REPORT: Andrew opens an Opal-branded report on the Analysis tab's own status and section view, with no YCharts wording (the Opal form of the contract, row W2-S14's remedy: the Analysis tab speaks the Opal form).",
+  "world_is": "Read at portal dbeb6764ea. The opened-request dialog reads sections through readOwnedSections and shows RetainedSections (OwnedRequestHistory.tsx:59-64, 407). RetainedSections prints 'Extraction validation:' and ExtractionCoverage under Technical details (:155-162) and calls SectionBlock with no opal prop (:164-165), whose default branch prints 'Vendor attribution: ...' per section and the v1 unsupported reason (NativeSections.tsx:105, 138-142, 186-190). adaptAnalysisReportSlice builds an AnalysisReportSliceView with no provider member (contracts/adapt.ts:1400-1419), so the page cannot tell an Opal report. The Opal-aware NativeSections (NativeSections.tsx:199-230) is rendered only by RequestList (RequestList.tsx:72), fed by a list the live client does not serve (investor-reporting.ts:264). Read from code; the page was not rendered.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/OwnedRequestHistory.tsx lines 59-64, 151-167, 407",
+      "portal/src/pages/InvestorReporting/tabs/analysis/NativeSections.tsx lines 105, 138-142, 186-190, 199-230",
+      "portal/src/pages/InvestorReporting/contracts/adapt.ts lines 1400-1419",
+      "portal dbeb6764eaa688230f44cfcc1763bd73db6e1142"
+    ]
+  },
+  "notes": "Found by the YCD-a-11 journey read at hop 12. Rows W2-S14 and W4-S8 state the NativeSections and adapter sides; neither names RetainedSections. A page change, so placed with DSGN_IRPTV1 if the issuer cuts it. Settled by rendering RetainedSections over an Opal slice (a portal test), or by Andrew's sitting."
+}
+```
+
+## IRPT_YCDGEN-D2-W14-S2 -- the Prospect composer mounts its job status with no selected_tenant, and 'Your analysis requests' is mounted only when the header holds a client
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W14-S2",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~14",
+  "surfaced_at": "2026-10-11T12:15:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "After a Prospect upload Generate, the composer's own status line is read with no selected_tenant, and the only surface that opens the report (Your analysis requests) is mounted only when the header holds a client.",
+  "spec_asserts": "PRD FWD-1 hop 8: the status reads ready and Andrew opens the report on the page, in the same sitting, after submitting a portfolio from the Analysis tab.",
+  "world_is": "Read at portal dbeb6764ea. ProspectComposer.tsx:584 mounts ProspectJobStatus with api and requestId only; ProspectJobStatus takes selectedTenant as an optional prop (ProspectJobStatus.tsx:66-68) and reads status with it (:87). The history file records that a tenant-less status read was measured refused (IdRefused, ~Y 102268) for an internal viewer (OwnedRequestHistory.tsx:401-403). AnalysisTab mounts OwnedRequestHistory, the only surface that shows the report sections, only inside {hasClient ? ... : null} (AnalysisTab.tsx:397-409), and the tab's own comment says that with no client chosen the upload leads (AnalysisTab.tsx:222-226). So a Prospect submission by an internal principal who has chosen no client in the header has an inline status that may be refused and no surface that lists or opens the report. INFERRED from code and the cited measurement; the served status read for this exact call was not made.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx line 584",
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectJobStatus.tsx lines 66-68, 87",
+      "portal/src/pages/InvestorReporting/tabs/analysis/OwnedRequestHistory.tsx lines 401-403",
+      "portal/src/pages/InvestorReporting/tabs/analysis/AnalysisTab.tsx lines 222-226, 397-409",
+      "portal dbeb6764eaa688230f44cfcc1763bd73db6e1142"
+    ]
+  },
+  "notes": "Found by the YCD-a-11 journey read at hop 12. Settled by one served read: an internal principal's GET /status/{jobId} with no selected_tenant (expect the refusal the history file names), and by whether Andrew has a client selected at the sitting. Not an existing row: S28 (IV-e-74) is cited only in a portal comment and is not in this channel."
+}
+```
