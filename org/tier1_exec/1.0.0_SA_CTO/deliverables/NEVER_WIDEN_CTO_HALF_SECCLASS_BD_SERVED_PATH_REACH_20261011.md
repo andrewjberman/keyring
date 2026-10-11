@@ -76,3 +76,10 @@ that variable set to `opal-data-bd` would become a second writer of this key. No
 here, not ruled.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~04:0xZ): the COT `BD_S3_BUCKET` override, read
+
+Both of COT's declared gold runs export `BD_S3_BUCKET=opal-data-cot` explicitly: `infra/aws/terraform/cot-pipeline/ssm.tf`
+:233 and :331, and the document description at :310. No declared config sets it to `opal-data-bd`. The writer count of
+`mix_summary.json` in `opal-data-bd` therefore stays N=1 (BD `D_04`). A hand run that exports `opal-data-bd` into a COT
+runner is outside this sign-off, and it is not a reachable state of any scheduled path.
