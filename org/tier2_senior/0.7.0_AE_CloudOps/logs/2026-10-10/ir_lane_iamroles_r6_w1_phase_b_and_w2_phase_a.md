@@ -578,3 +578,97 @@ the order's bytes rather than retyped -- which is why the later four passed firs
 
 **Push state: LOCAL.** `box/sitez` is integrator-only (`0.0.0_AB_MSTR~Z`); every commit above sits on the seam
 for the hourly integration window, and one box-sync already carried earlier round-7 work to `CLOUD`.
+---
+
+# ROUND 8 -- two orders, both closed: a defect of mine disarmed, and the account-wide sweep behind it
+
+**Appended 2026-10-11 ~17:5xZ.** GO: the round-8 issuance @`e27d52cb19` on `ROUND_ANALYSIS.round7.md`
+@`fef971046b`. Round 7 closed @`b536942234`.
+
+| order | what it did | status |
+|---|---|---|
+| `y-1` | disarm `Z-S42`: replace the pre-apply inbox check, record the form in `cloud-ops` | **complete** @`1ce115f687` |
+| `y-2` | READ-ONLY account-wide dead-bucket sweep | **complete** @`4aaba2fa6a` |
+
+Row filed: `Z-S43`. Both proofs VALID rc=0.
+
+## R8.1 y-1 -- THE DISARM, AND GRADING IT FOUND THE ROOT CAUSE THE ROW HAD MISSED
+
+`cloud-ops` now carries subsection **18a**, beside rule 18's HALT-gate caveat because that caveat is what
+creates the need: a `~lane` seat is unhaltable, so the direct inbox read is its only pre-apply mail guard.
+
+**The negative is a true mutant, not a description.** From a linked worktree the new form prints
+`ERROR: inbox path absent ... this is NOT an empty inbox` and exits 2; the OLD form, run on the same path in
+the same shell, printed **`0`**. **The positive is the control on the negative** -- a guard that ERRORed on
+everything would pass the negative and be useless -- so a message was planted and the broker limb counted
+**1** row not `READ` before the ack and **0** after. The `1 -> 0` transition is the proof, because it shows the
+limb tracks READERSHIP rather than file location. At that same instant the file plane read **0**, the live
+Monitor having already `mv`d the message into `read/`.
+
+**THE ROOT CAUSE `Z-S42` MISSED: `ls` IS ALIASED TO `ls -F` HERE.** The row blamed `ls -1` hiding dotfiles and
+the `read/` slash, but never asked why the slash was there. `-F` appends it. **So the defect defeats `ls -1`
+and `ls -A` identically** -- and the fallback form the CELL ITSELF specified (`ls -A`, counting files other
+than `read/`) inherits it, returning **3** against an inbox holding zero messages. That cannot read clean, so
+it meets the stated goal, but **a tripwire that is always tripped gets ignored: a different failure with the
+same ending.** The recorded form uses `find -maxdepth 1 -type f` with a message-name pattern and prints the
+state-marker count beside the message count. Departure from the cell's literal text, in the direction of its
+intent, reported rather than absorbed.
+
+## R8.2 y-2 -- THE RESULT IS NARROWER THAN FEARED; THE BY-PRODUCT IS SHARPER THAN THE RESULT
+
+**Narrower.** 41 distinct bucket names in live identity grants, over **393 principals / 651 documents / 1666
+statements** (whole account: `get-account-authorization-details`, `IsTruncated` checked). **7 ABSENT, 34 OURS,
+ZERO FOREIGN, ZERO UNRESOLVED.** The urgent case the cell was cut to catch -- a name already owned by another
+account with our grant reaching it -- **does not exist in this account today**.
+
+**Sharper.** Joining the 7 absences against the estate's own **tombstone list**: only **1** was a decision.
+
+| | count |
+|---|---|
+| absences that are a RULED deletion with debt tracked | **1 of 7** |
+| **absences nobody recorded deciding** | **6 of 7** |
+| of those six, carrying **WRITE** | **5** |
+
+**The reverse join is what makes that a finding rather than a panic:** 5 of the 6 tombstoned S3 buckets have
+had their grants cleaned up, so the cleanup pattern exists and was followed -- these six sit outside it.
+
+**Controls:** ABSENT anchored externally (`opal-data-smartx`, proved absent in round 7 by a different
+instrument on a different day); OURS cross-checked 34/34 against `list-buckets` **in both directions**;
+**FOREIGN has no control because the class is empty**, which I state rather than implying four-for-four.
+
+**`head-bucket` is the right tool HERE and the wrong one in x-2** -- a HEAD returns a STATUS, and this sweep
+needs 403-versus-404 where x-2 needed an error CODE. An instrument is not good or bad; it answers one question.
+
+## R8.3 AND IT CORRECTED A PREMISE I HAD ASSERTED TWICE (`Z-S43`)
+
+`market_data_v2` was **not** "deleted out of band". `tombstones.json`: `deleted 2026-07-30`,
+`verified_absent (HeadBucket 404)`, `declaration_removed: "NOT YET -- TF-debt A7, OPEN"`, and
+**`why: "Andrew ruled DELETE (semantic note 18)"`**. So `market-overview`'s `4 to add` is Terraform trying to
+**resurrect** a bucket Andrew ruled deleted. The IAM-y-2 cell text says "out of band" and **so does my own
+`PLAN_SURVEY_family_c.md`**.
+
+**AND THE RECREATE WAS ALREADY GATED BY SOMETHING I RAN THREE TIMES WITHOUT CITING.** `safe-apply`'s
+tombstone-gate checks every planned create against that list; my own x-6 apply printed
+`checked 0 create(s) in this plan against 7 tombstone(s)`. An untargeted `market-overview` apply would be
+**refused**. `-target` was still correct -- a gate you do not know you are relying on is not a control you can
+cite -- but three of my records describe that hazard as wide open.
+
+> **THE GENERAL LESSON IS NOT ABOUT THIS BUCKET.** "Deleted out of band" was an INFERENCE from a plan's shape
+> -- four resources to add, therefore something vanished -- never checked against the estate's own records,
+> which held the answer in a file the very gate I ran reads. **A plan tells you what Terraform intends; it
+> cannot tell you whether the world's state was intended.** The check costs one read.
+
+Its one consumer is unexercisable: `role/market-data-generator-lambda-role` reads `RoleLastUsed: null` and the
+served graph shows **no `LAMBDA` node** on it. 0 env refs, 0 deployed code.
+
+## R8.4 STATE
+
+Nothing of mine is open: 0 `iamroles` sentinels at HEAD, no ledger opened in round 8 (neither cell acts on the
+world). Eight orders complete across rounds 7 and 8, eight proofs VALID.
+
+**Owed, none of it this lane's:** round 9's narrowing of the six ABSENT-with-write names (and for the five
+untombstoned ones, whether the bucket or the grant is the mistake is not yet established); `TF-debt A7`, open
+by this seat's own July scope decision; the three wildcard grants (`opal-data-*`, `opal-*`, `opal*`), which no
+name-based sweep can classify; and `Z-S42`'s own disarm now sits in `cloud-ops` for the issuer to close.
+
+**Push state: LOCAL.** `box/sitez` is integrator-only.

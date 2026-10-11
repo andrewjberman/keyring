@@ -12234,3 +12234,81 @@ name the one known failure instead of silently inheriting it.
   "notes": "Disarms Z-W57-S1's ARMED standing: the actor is named and nothing is deleted unreported, so CloudTrail SQS data-event logging is not needed. REMEDY, a code cell for the next round (round 34's spec is frozen): drain_dlq deletes only messages whose on-failure record names the sweeping family's own function, and resets the visibility of others to 0, so each family's sweep reports only its own failures. Also read whether a 16:00Z sweep's report for eclipse, orion or smartx is read by anyone."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W55-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~55",
+  "surfaced_at": "2026-10-11T16:08:18Z",
+  "one_line": "OG-mu-1 AC1 cannot pass as written: the criterion requires tests/test_og_ab2_pairs.py rc=0, but its test_ogab2_ac02 asserts the OLD .pptx key (date=<arg>/<sanitized original name>.pptx) that row W49-S3's one content-addressed rule replaces, and that test file is outside this order's <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r34/checks/mu1.AC1.sh: 'pytest rc=0; named tests passed 3 of 3; failed/error lines 0' / 'tests/test_advi_site_to_s3.py: pytest rc=0; 27 passed' / 'tests/test_og_ab2_pairs.py: pytest rc=1; 1 failed, 2 passed' / RESULT: FAIL",
+      "FILE infra/aws/ec2/opal-gateway/tests/test_og_ab2_pairs.py:112-118 test_ogab2_ac02 wants key date=2026-07-27/Opal_Market_Update_7-27-2026__from_Manav_.pptx; the same call under OG-mu-1 must give date=<UTC put date>/deck_<sha256[:16]>.pptx. The two cannot both hold for one input."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC1: after OG-mu-1 the .pptx key is intake's form AND tests/test_og_ab2_pairs.py still passes (the order's <paths> grant covers tests/test_og_mu1.py only).",
+  "world_is": "test_ogab2_ac02 pins the superseded name-in-key form and fails (1 failed, 2 passed); it needs the old assertion updated to the new rule, an edit this worker has no path grant for.",
+  "notes": "Worker did NOT edit test_og_ab2_pairs.py. Fix is one amended assertion in test_ogab2_ac02 (want = deck_<sha16>.pptx under the UTC put date, original name in Metadata) by an order whose <paths> carries that file, or an amended AC1 that drops ab2 ac02. Phase A output is otherwise complete."
+}
+```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W55-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~55",
+  "surfaced_at": "2026-10-11T16:08:18Z",
+  "one_line": "OG-mu-1 says make the .pptx key with lib/opal_naming.address, but the gateway host carries no lib/ (site_to_s3.py docstring), so the module builds the key from the env root ADVI_MARKET_UPDATE_S3_ROOT (set from address() output by the deploy) plus date=<UTC date>/deck_<sha16>.pptx; tests assert equality with address() and intake.deck_address.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/ec2/opal-gateway/app/integrations/advi_billing/site_to_s3.py module docstring: 'The gateway host carries no lib/, and the naming gate refuses a hand-kept copy of the builder's scope segment'",
+      "RUN tests/test_og_mu1.py test_ogmu1_ac01/ac02: 3 passed; tool key == address(...,'date=2026-07-27','deck_<sha16>.pptx') == intake.deck_address(sha,'2026-07-27') == intake.place() key"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Criterion 1: the key is produced via lib/opal_naming.address, never a typed string.",
+  "world_is": "The builder cannot be imported on the host; the pre-existing root-from-env design (OG-ab-2) is kept, with equality to the builder proved offline. Also: the caller's date argument for a .pptx is still grammar-checked but no longer names the key (the placed date is the UTC date of the put), so the registered tool's 'quarter' argument is vestigial for .pptx; tools.py is outside this order's paths.",
+  "notes": "Residual from the order stands: one deck placed on two different dates lands under two keys."
+}
+```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W55-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~55",
+  "surfaced_at": "2026-10-11T17:08:54Z",
+  "one_line": "Resolves NFRA_OPLGTW-Z-W55-S1: under TO-OG-mu-1 Amendment 1 (@1ceb994ad3) test_ogab2_ac02 is re-pinned to the content-addressed .pptx key, and mu1.AC1 now reads PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r34/checks/mu1.AC1.sh: 'pytest rc=0; named tests passed 3 of 3; failed/error lines 0' / 'tests/test_advi_site_to_s3.py: pytest rc=0; 27 passed' / 'tests/test_og_ab2_pairs.py: pytest rc=0; 3 passed' / RESULT: PASS / exit=0",
+      "FILE infra/aws/ec2/opal-gateway/tests/test_og_ab2_pairs.py: the only changes are inside test_ogab2_ac02 (expected key date=<UTC put date>/deck_<sha16>.pptx via an injected now, Metadata original-name asserted, the existing-key probe given the same now); 9 insertions, 3 deletions; ac01 and ac03 untouched, 2 of 2 pass"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-W55-S1: test_ogab2_ac02 pins the superseded name-in-key form, so AC1 cannot pass inside the order's paths.",
+  "world_is": "After Amendment 1 added the file to <paths>, the assertion is re-pinned and AC1 passes (3 of 3 named, 27 of 27, 3 of 3).",
+  "notes": "Citing row; Z-W55-S1's text is untouched. The disposition of Z-W55-S1 is the issuer's. One edit beyond the literal assertion line, inside the same test: the existing-key refusal probe passes now=<same put date>, else it hits a different day's key and does not raise."
+}
+```

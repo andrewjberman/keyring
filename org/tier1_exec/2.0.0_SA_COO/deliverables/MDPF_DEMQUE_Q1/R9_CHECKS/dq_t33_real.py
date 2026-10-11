@@ -41,8 +41,21 @@ def main() -> int:
     want_cells = n_days * len(req["fields"]) * len(req["securities"])
     tmp = tempfile.mkdtemp(prefix="qr_real_")
     try:
+        # The real folder is already re-frozen a second time (the issuer's round-9 act). This check's input is the folder as it stood BEFORE
+        # that act: the quote held by the newest superseded copy (its superseded_* keys stripped) is the live quote, and that copy is not
+        # carried. Otherwise the transition this check exercises has already happened and refreeze answers ALREADY_REFROZEN.
+        live = json.load(open(os.path.join(req_dir, RID + ".quote.json"), encoding="utf-8"))
+        skip = set()
+        if live.get("supersedes") and live["supersedes"].endswith("-2.json"):
+            prev = json.load(open(os.path.join(req_dir, live["supersedes"]), encoding="utf-8"))
+            for k in ("superseded_reason", "superseded_on", "superseded_by"):
+                prev.pop(k, None)
+            with open(os.path.join(tmp, RID + ".quote.json"), "w", encoding="utf-8") as fh:
+                json.dump(prev, fh, indent=2, sort_keys=True)
+            skip = {RID + ".quote.json", live["supersedes"]}
         for f in glob.glob(os.path.join(req_dir, RID + "*.json")):
-            shutil.copy(f, os.path.join(tmp, os.path.basename(f)))
+            if os.path.basename(f) not in skip:
+                shutil.copy(f, os.path.join(tmp, os.path.basename(f)))
         actuals = os.path.join(tmp, "BBG_ACTUALS.upto-2026-10-11.jsonl")
         with open(os.path.join(MISSION, "ledger", "BBG_ACTUALS.jsonl"), encoding="utf-8", errors="replace") as src, \
                 open(actuals, "w", encoding="utf-8") as dst:
