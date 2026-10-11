@@ -7068,3 +7068,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S18",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T23:24:29Z",
+  "one_line": "CORRECTION of this seat's slug for rounds 78 to 82 (REMEDIATION_v34's head): it said the served flow-timing convention 'closes against the custodian's return in 0 of 51'. The 51 segments were scored against Black Diamond's stored return, not the custodian's; the custodian supplies Opal's side of the comparison. This seat repeated the word from the CTO's ruling without checking which system the comparison used. Worker row D2-W130-S1 found it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "investigation row IRPT_DASHBD-D2-W130-S1",
+      "msgs 6039 and 6093 (IRPT_DASHBD round 83 closed @6d8691758d, 4 of 4; orders DB-b-158 to DB-b-161)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/remediations/REMEDIATION_v34.md, item 2 of its head"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md rule 24 (i): an inherited claim has no denominator; ask which instrument produced it and what that instrument can see.",
+  "world_is": "The comparison is Opal's return, built from the custodian's feed, against Black Diamond's reported return. Matching Black Diamond is not matching the custodian, and neither is a proof of accuracy (the CTO's own sentence, msg 5982). This seat read no record for this row beyond the worker's.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
