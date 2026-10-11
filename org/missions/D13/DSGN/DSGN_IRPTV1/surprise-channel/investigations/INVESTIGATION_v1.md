@@ -6145,3 +6145,57 @@
   "notes": "Not repaired (a read cell). The served-answer read that would close the deployed-vs-tree gap is in SECTION_TITLE_UNIT.json served_answer_how for 2.0.0_SA_COO~P2."
 }
 ```
+
+## DSGN_IRPTV1-D2-W63-S1 -- IV-e-115: the producer's contract fixtures, and the page's copies and fixtures derived from them, send a vendor section with section_type annualized_return and units DECIMAL_FRACTION, which the producer's extractor cannot send
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W63-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~63",
+  "surfaced_at": "2026-10-11T20:04:00Z",
+  "one_line": "IV-e-115: the producer's contract fixtures, and the page's copies and fixtures derived from them, send a vendor section with section_type annualized_return and units DECIMAL_FRACTION, which the producer's extractor cannot send",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisReport.valid.json:26-41 and AnalysisReport.v2.ycharts.valid.json:27-42: section_type annualized_return, units DECIMAL_FRACTION (read, not edited)",
+      "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py:707 section_type = the census code, :709 units = the census unit token (count, date, enum, number, pct, price, ratio, score, text, usd_billions, years), :777 'chart'",
+      "portal fixtures/wire/AnalysisReport.valid.json, 9 fixtures/smoke JSONs, 5 fixtures/fe-s-15 job JSONs and several __tests__/*/fixtures JSONs carry section_type annualized_return (Grep of annualized_return over src/pages/InvestorReporting; the exact file count was not taken)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IV-e-115 item 4: the page's own vendor-report fixtures that send a token the producer never sends are changed to real tokens and codes; the producer's contract fixtures are read, never edited, and a producer fixture that sends a token its code cannot is a row for IRPT_BCKEND.",
+  "world_is": "The producer's contract fixtures do send DECIMAL_FRACTION and annualized_return for a vendor section. The page's fixtures/wire copy and the generated smoke and fe-s-15 fixtures carry the same section; they are written by gen-corpus.ts and gen-fixtures.ts from that copy, so a hand edit would be undone by the next regeneration and the copy is the consumer's mirror of the producer's file. This cell changed the hand-written vendor fixtures in three tests (iv-e-101, iv-e-105, iv-e-106) and a new fixture in this worker's folder; it did not change the copy or the generated files. Their vendor section still prints through the earlier upper-case map (percent) and the code prints itself, so nothing that passed fails.",
+  "notes": "For IRPT_BCKEND: whether the producer's contract fixtures should carry a real census code and token. After that, the portal's wire copy and its generators would follow in a later cell."
+}
+```
+
+## DSGN_IRPTV1-D2-W63-S2 -- IV-e-115: a vendor section is one card per field row and the wire carries no field name, so several cards of one section read the same census title and Label
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W63-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~63",
+  "surfaced_at": "2026-10-11T20:04:30Z",
+  "one_line": "IV-e-115: a vendor section is one card per field row and the wire carries no field name, so several cards of one section read the same census title and Label",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~63/vendor-report.png: two cards read '2. Key Stats' with Label 'Key Stats' (values 0.9 and 12) and four cards read '5. Fundamentals'",
+      "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py:705-707: each scalar row is one section with section_id '<code>.<field slug>.c<n>' and section_type = the code; the field name is only inside section_id",
+      "portal contracts/adapt.ts adaptAnalysisSections maps every wire row to one card; its title and Label are now the census name (vendorSectionTitle)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IV-e-115 item 2: the card's title and Label for a vendor section read the census name for its code.",
+  "world_is": "Done as written. Because the producer emits one section per census field row under the same code, an opened report shows the same census title and Label on several cards in a row, and the card does not say which field (for example Number of Holdings or Weighted Avg PE) its value is. The field name exists only inside section_id (the slug) and is not a wire member of its own. Not changed here: a field name is not a census section name and the order does not name one.",
+  "notes": "Not investigated. A later cell could decide whether the page may print the field from section_id; it is the CTO's to rule."
+}
+```
