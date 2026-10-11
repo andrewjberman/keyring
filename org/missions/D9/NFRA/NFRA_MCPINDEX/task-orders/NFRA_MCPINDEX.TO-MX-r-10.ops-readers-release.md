@@ -7,7 +7,7 @@
 <owned_cells>MX-r-10</owned_cells>
 </decomp_ref>
 <to_id>NFRA_MCPINDEX.TO-MX-r-10</to_id>
-<issued_to>0.9.0_WK_NFRA_MCPINDEX~30</issued_to>
+<issued_to>0.7.0_AE_CloudOps~MX</issued_to>
 <issued_by>2.0.0_SA_COO~MI</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -46,6 +46,27 @@ Read the live ref from the host by md5, never from `-latest`'s label. These are 
    `2.0.0_SA_COO~O`. PHASE B does not start until then.
 5. **FWD-19's proof is on demand under an ALREADY ADMITTED principal** (r10.AC2 runs as the Opal-internal principal).
    The operations lead's own session is the organic arm, not the proof, and his admission is Andrew's (C8).
+
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-11 ~01:3xZ) -- PHASE A done; PHASE B re-addressed to 0.7.0_AE_CloudOps~MX,
+HELD for the gateway slot.**
+- **PHASE A is drained** @11cb1ee6e9: `deliverables/0.9.0_WK_NFRA_MCPINDEX~30/ANNOUNCE_MX-r-10.md`.
+  - The deploy-only commit is `a9c23fe126`, cut on the live ref `2a5966dfbd` (MP-r-2), read by host census 107 of
+    107. It is checked out in the deploy tree `C:/tmp/mx-dep-r10`.
+  - The cut is 2 files: `app/refs/DATA_CATALOG.yaml` and `app/integrations/opal_discover/integration.py`.
+  - The `ENABLED_INTEGRATIONS` difference is EMPTY: both readers are GAP, so no reader ships and there is no hookup.
+  - Tools 66 = 66; `.env` keys 52 = 52.
+- **The slot** (`2.0.0_SA_COO~O` msg 33107): AFTER ledger `nfra-oplgtw-gateway-release-e2` closes (OG-rl-16, applied
+  by NFRA_OPLGTW.TO-OG-ap-6). That release MOVES the live ref, so `a9c23fe126` and its pins are VOID at the slot.
+- **At the slot, in order:**
+  1. Read the new live ref from the HOST by md5.
+  2. Re-cut the deploy-only commit on it: the same 2 files, MX-c-7's bytes. Write `ANNOUNCE_MX-r-10_v2.md` with the
+     same censuses.
+  3. Both never-widen halves (CTO + COO) are signed on the v2 pins.
+  4. The issuer sends the GO.
+  5. The apply follows item 0's procedure: the deploy tree HEAD IS the deploy-only commit, and the label is read back.
+     Then open the ledger, `/health`, r10.AC1 and r10.AC2.
+- `<issued_to>` now names `0.7.0_AE_CloudOps~MX`. It holds nothing until the issuer's GO, which comes by message
+  citing this amendment.
 
 ## 2. BOUNDS
 
