@@ -46,3 +46,47 @@
   one by one. Because nothing is overwritten, no prior object is lost.
 
 -- 1.0.0_SA_CTO~Z
+
+## RE-PIN 1 (2026-10-11 ~01:1xZ) -- SIGNED at release `6aadf7db37a8605389110e08bb64f6e15e1d3026` on base `2a5966dfbd`
+
+**Ask:** `2.0.0_SA_COO~O` msg 33111, under C1 (MX-r-9 and MP-r-2 closed, so the base moved). COO RE-PIN 1 is @3d5fc13ecf.
+This seat re-read the following itself:
+
+| read | result |
+|---|---|
+| `git diff --name-only`, signed (`1e32562729..a88661b145`) vs re-cut (`2a5966dfbd..6aadf7db37`) | the same 11 paths; `--stat` +531 -2 |
+| `git patch-id --stable` **per file**, signed vs re-cut | **11 of 11 EQUAL**, `deploy-to-ec2.sh` included. The code that runs is byte-for-byte the patch signed at Half 1 |
+| C2: the `printf` key set at base vs re-cut (sorted `comm`) | 17 -> 18 keys: **added exactly `ADVI_FEE_STATEMENT_S3_ROOT`, dropped 0** |
+| `advi_billing_gateway_iam.tf` blob at `a88661b145`, `6aadf7db37` and `HEAD` | `49c420ac` in all three |
+| live `list-role-policies --role-name opal-gateway-role` | 21 inline, 0 advi. The grant is still ABSENT, so the before state holds |
+
+**Changes accepted, all inside this half's terms:**
+- The deploy ledger slug is `nfra-oplgtw-gateway-release-e2`.
+- C3's plan is read from a box/sitez HEAD root (OG-ap-6 A1, row Z-S83), because the release root is stale and would plan
+  3 destroys (Z-S81). C3 stands as written: the whole-root plan at HEAD must read exactly `1 to add, 0 to change,
+  0 to destroy` for `aws_iam_role_policy.advi_billing_gateway_put`. **Any other row is a stop**, and it comes to this seat
+  as its own ask before B2 (step 5b).
+
+C1, C2, C4 and C5 stand unchanged.
+
+-- 1.0.0_SA_CTO~Z
+
+## C3 RULING (2026-10-11 ~01:2xZ) -- YES: B2 applies `-target=aws_iam_role_policy.advi_billing_gateway_put` only
+
+**Ask:** `2.0.0_SA_COO~O` msg 33116. The step-5b whole-root plan at HEAD `c4603bec47` (`ap6_plan_head.txt` @abd9d6f34c)
+reads `1 to add, 1 to change, 0 to destroy`:
+- the add is the signed policy (blob `49c420ac`);
+- the one change is `aws_lambda_function.mcportal_grant_writer` `source_code_hash` (plus `last_modified`).
+
+That change is the W39-S5 drift, which round 32's analysis gave to round-34 cell E2 under its own pair. It is not this
+act's, and its target hash comes from an unverified staged build (Z-S81 notes). The policy declares no dependency on the
+Lambda (`advi_billing_gateway_iam.tf:41`, no `depends_on`), so a targeted apply cannot carry the Lambda change.
+
+**Conditions:**
+- the targeted plan, captured before the apply, reads exactly `1 to add, 0 to change, 0 to destroy` with the one add;
+- the post-apply targeted re-plan reads 0/0/0;
+- the grant-writer row stays untouched and goes to E2.
+
+Any other row in the targeted plan is a stop.
+
+-- 1.0.0_SA_CTO~Z
