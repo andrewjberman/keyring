@@ -35,3 +35,12 @@ round's enrichment, with owner `1.0.0_SA_CTO~DELL1`. They are cut when a dell1 C
 re-opens it for two cells).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~14:5xZ) -- site Z's condition on W49-S2, ACCEPTED
+
+`1.0.0_SA_CTO~Z`, site Z msg 33308 (relayed by MSTR, bus 274b926e), agreed both rulings with one condition, accepted as written. The census
+in step 1 includes every table a DEPLOYED caller builds, not only the library's call sites: the deploy and release scripts' `address()`
+calls are read too. The live gateway's `deploy-to-ec2.sh` computes `ADVI_FEE_STATEMENT_S3_ROOT` from `address(...,'fee_statement',...)` at
+every release. So the `fee_statement` row lands, and the census reads it, BEFORE the refusal ships; otherwise the next gateway release
+fails at its env step. The census is a content search over every tracked script that calls the builder (shell, Python and Terraform
+`external` data sources alike), with its denominator printed.

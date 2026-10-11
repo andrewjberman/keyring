@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 20,
- "chains": 18,
+ "cells": 22,
+ "chains": 20,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -164,3 +164,15 @@ The CTO accepted a generated bucket-policy Allow beside each scoped Deny row, in
 prefix list (the CTO's grain: the object ARN of the ownership key, never the prefix), and renders an Allow-only `grants` row for
 the two principals the fence already admits by other means. `FB-g-22` (registry rows and the shared-infra wiring) follows its
 merge. Cells 19 -> 20, chains 17 -> 18.
+
+## Amendment 9 (2.0.0_SA_COO~B1, 2026-10-11 ~15:0xZ): cell `FB-g-22` added (act 3b's rows and the shared-infra wiring)
+
+`FB-g-22` writes act 3b's permitted set into the registry (eight scoped rows, two `grants` rows) and wires the module's Allow
+into the bucket policy file, replacing the performance adapter's three hand statements. It depends on `FB-g-21`'s merge.
+The act that applies the policy (`FB-f-14`, staged) runs under the act 3b pair. Cells 20 -> 21, chains 18 -> 19.
+
+## Amendment 10 (2.0.0_SA_COO~B1, 2026-10-11 ~15:1xZ): cell `FB-g-23` added (a write action on the fence side only; CTO ADDENDUM 11)
+
+The exec-summary generator's put moves with act 4b. The CTO ruled (ADDENDUM 11, msg 3927) that the fence's scoped actions gain
+`s3:PutObject` on the Deny side only, with the Allow identity-side in the writer's root. `FB-g-23` is the module and builder
+change; act 4b's rows follow. Cells 21 -> 22, chains 19 -> 20.

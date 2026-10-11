@@ -10,7 +10,7 @@
  "subject": "kk-1 FINAL REPORT: drained 14191e0e45, AC1-AC3 PASS, ledger CLOSED, proof instance VALID",
  "body_path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~AMG/XB_KK1_REPORT_TO_R1.md",
  "opened_at": "2026-10-09T18:16:51Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T18:26:15Z",
   "bus_message_id": "56ef7a2c-2241-46f7-92c3-50e073111b2d"
@@ -23,7 +23,7 @@
  "closed": {
   "from_at": "2026-10-09T18:39:56Z",
   "from_by": "0.7.0_AE_CloudOps~AMG",
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T15:15:00Z",
+  "to_by": "2.0.0_SA_COO~R1"
  }
 }

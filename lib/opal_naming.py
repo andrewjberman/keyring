@@ -650,10 +650,11 @@ def validate(reg_dir=None, systems_file=None):
     firm_buckets = set(_buckets_of_firms(reg))
     # A row's key set is CLOSED (NFRA_CTLPLN CT-d-2 AMENDMENT 4; CTO msg 106230): a reader meeting a key it does not know
     # REFUSES, never ignores, because the fence renders an ignored key as a FULL admission. `actions` and `prefix` are
-    # the optional pair that scopes an exemption to those S3 actions under that key prefix (read set only: no write
-    # action, no GetObjectVersion, no ListBucketVersions). The firm token a prefix must carry is read from scopes.json.
+    # the optional pair that scopes an exemption to those S3 actions under that key prefix (no GetObjectVersion, no
+    # ListBucketVersions, and no write action but s3:PutObject, FB-g-23: it renders on the Deny side only, never an Allow).
+    # The firm token a prefix must carry is read from scopes.json.
     row_keys = ("principal", "arn", "reason", "signoff_ref", "actions", "prefix")
-    scoped_actions = ("s3:GetObject", "s3:ListBucket", "s3:GetBucketLocation")
+    scoped_actions = ("s3:GetObject", "s3:ListBucket", "s3:GetBucketLocation", "s3:PutObject")
     bucket_firm = {}
     for s in scopes:
         if s.get("class") == "FIRM":
@@ -691,17 +692,55 @@ def validate(reg_dir=None, systems_file=None):
                 continue
             acts, pre = r["actions"], r["prefix"]
             if not (isinstance(acts, list) and acts and all(isinstance(a, str) and a in scoped_actions for a in acts)):
-                refuse(rwhere, "actions", "a non-empty list drawn from the closed read set %s" % ", ".join(scoped_actions))
+                refuse(rwhere, "actions", "a non-empty list drawn from the closed scoped set %s" % ", ".join(scoped_actions))
             # FB-g-19 (CTO round-3 ADDENDUM 9): prefix is one string or a non-empty list of strings; every member is held to
             # the rules of the string form, and the firm token is checked on every member
+            # FB-g-21 (CTO round-3 ADDENDUM 10): a member NOT ending in / is an exact OBJECT KEY, held to the same rules (non-empty,
+            # no leading /, no * or ?) and to the same firm-token check below
             pres = pre if isinstance(pre, list) else [pre]
             if not (isinstance(pre, (str, list)) and pres and all(
-                    isinstance(p, str) and p.endswith("/") and not p.startswith("/") and not re.search(r"[*?]", p) for p in pres)):
-                refuse(rwhere, "prefix", "a literal key prefix ending in /, no leading / and no * or ?, or a non-empty list of them")
+                    isinstance(p, str) and len(p) > 0 and not p.startswith("/") and not re.search(r"[*?]", p) for p in pres)):
+                refuse(rwhere, "prefix", "a literal key prefix ending in / or an exact object key, non-empty, no leading / and no * or ?, or a non-empty list of them")
             elif any(len(p.split("/")) < 3 or p.split("/")[1] != bucket_firm.get(bucket) for p in pres):
                 refuse(rwhere, "prefix", "its second path segment must be the firm token of this bucket (%r)" % bucket_firm.get(bucket))
             if not (isinstance(raw_who, str) and raw_who.startswith("arn:") and not re.search(r"[*?]", raw_who)):
                 refuse(rwhere, "arn", "a scoped row names exactly one principal by its exact ARN (no * or ?)")
+
+    # grants (ADVI_FIRMBKTS FB-g-21; CTO round-3 ADDENDUM 10): an Allow-only row admitting one principal to GetObject on exact object
+    # keys. A CLOSED key set, refused never ignored (the module renders the same closed set); no prefix, no Deny, no exemption.
+    grant_keys = ("principal", "arn", "reason", "signoff_ref", "actions", "keys")
+    grant_required = ("principal", "reason", "signoff_ref", "actions", "keys")
+    grant_actions = ("s3:GetObject",)
+    for bucket, rows in (reg["exemptions"].get("grants") or {}).items():
+        if bucket not in firm_buckets:
+            refuse("exemptions.json grants", bucket, "not a provisioned bucket of a FIRM scope in scopes.json")
+        for j, g in enumerate(rows if isinstance(rows, list) else [None]):
+            gwhere = "exemptions.json grants.%s[%d]" % (bucket, j)
+            if not isinstance(g, dict):
+                refuse(gwhere, "row", "an object")
+                continue
+            for k in sorted(g):
+                if k not in grant_keys:
+                    refuse(gwhere, k, "not a key a grants row carries (closed set: %s); an unknown key is refused, never ignored"
+                           % ", ".join(grant_keys))
+            for k in grant_required:
+                if k not in g:
+                    refuse(gwhere, k, "missing")
+            for f in ("principal", "reason", "signoff_ref"):
+                if f in g and not (isinstance(g[f], str) and g[f]):
+                    refuse(gwhere, f, "a non-empty string")
+            if isinstance(g.get("principal"), str) and (g["principal"] == "*" or re.search(r"[*?]", g["principal"])):
+                refuse(gwhere, "principal", "a principal ARN or role name, never * and no ? or *")
+            if "arn" in g and not (isinstance(g["arn"], str) and g["arn"].startswith("arn:") and not re.search(r"[*?]", g["arn"])):
+                refuse(gwhere, "arn", "an exact ARN starting arn: (no * or ?)")
+            acts = g.get("actions")
+            if not (isinstance(acts, list) and acts and all(isinstance(a, str) and a in grant_actions for a in acts)):
+                refuse(gwhere, "actions", "a non-empty list drawn from %s" % ", ".join(grant_actions))
+            keys_ = g.get("keys")
+            if not (isinstance(keys_, list) and keys_ and all(
+                    isinstance(k, str) and len(k) > 0 and not k.startswith("/") and not k.endswith("/") and not re.search(r"[*?]", k)
+                    for k in keys_)):
+                refuse(gwhere, "keys", "a non-empty list of exact object keys: non-empty, no leading /, no trailing /, no * or ?")
 
     # remediations.json
     known_buckets = firm_buckets | standing_shared | {s.get("bucket") for s in scopes}
