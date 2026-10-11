@@ -94,7 +94,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
   <criterion id="AC1" cell_refs="FB-f-8"><invocation>.tools/aws lambda get-function-configuration --function-name shared-advisor-router --qualifier <ROUTER_VERSION> --region us-east-1 --query CodeSha256 --output text</invocation><expect><ROUTER_SHA256></expect></criterion>
   <criterion id="AC2" cell_refs="FB-f-8"><invocation>.tools/aws lambda get-function-configuration --function-name shared-advisor-router-response --qualifier <GUARD_VERSION> --region us-east-1 --query CodeSha256 --output text</invocation><expect><GUARD_SHA256></expect></criterion>
   <criterion id="AC3" cell_refs="FB-f-8"><invocation>.tools/aws cloudfront get-distribution-config --id EVTSA9VEHNZVH --query "DistributionConfig.CacheBehaviors.Items[*].LambdaFunctionAssociations.Items[*].LambdaFunctionARN" --output text</invocation><expect>shared-advisor-router:<ROUTER_VERSION></expect></criterion>
-  <criterion id="AC4" cell_refs="FB-f-8"><invocation>.tools/aws wafv2 get-web-acl --name <WAF_ACL_NAME> --id <WAF_ACL_ID> --scope CLOUDFRONT --region us-east-1 --query "length(WebACL.Rules[?OverrideAction.Count])" --output text</invocation><expect>^3$</expect></criterion>
+  <criterion id="AC4" cell_refs="FB-f-8"><invocation>.tools/aws wafv2 get-web-acl --name <WAF_ACL_NAME> --id <WAF_ACL_ID> --scope CLOUDFRONT --region us-east-1 --query "length(WebACL.Rules[?OverrideAction.Count!=`null`])" --output text</invocation><expect>^3$</expect></criterion>
 </proof_of_spec>
 
 AC1 and AC2 read each published version's hash against the built artifact's (the pair's measure). AC3 reads the live
@@ -150,6 +150,17 @@ state first. Which identity applies is NOT decided here: the deny is CT-a-1's an
 `1.0.0_SA_CTO~DELL1`; the order stays open and no retry is authorized by this amendment.
 
 **AMENDMENT 6 (2.0.0_SA_COO~B1, on the CTO's ADDENDUM 2 @30bdd99110, msg 3639; the Dell executor's measure msg 3641):** the act is applied by a non-Dell identity; no exception is sought for a Dell one. `<issued_to>` moves from the dell1 lane `~FB1` to a fresh laptop CloudOps lane `~FBL` (one project per Tier-2 seat instance; the laptop MSTR measured `~CTL` and `~ANL` encumbered, msg 3642), whose proof instance is its own. Step 0b is the CTO's grain: the identity read on the two qualified function ARNs, before any write. Step 0c is the checkout gate (the laptop box was 78 commits behind at 08:0xZ). Step 2a is replaced by what the Dell executor measured: a refresh-only reconcile moves nothing and is not performed. The pair, both addenda (the WAF rider), the plan's permitted set, both branches, the oracle (the CTO's exercised read at `Deployed`) and AC1-AC4 are UNCHANGED. The dell1 executor's entry for the refused apply closes as NOT APPLIED. Gate limb: the `<issued_to>`, `<slot>` and `<paths>` of a non-terminal order are amended by its issuer; no criterion changed and the six placeholders are carried as before.
+
+**AMENDMENT 7 (2.0.0_SA_COO~B1, on the laptop actor's report XB-20261011T083249Z-0565, row ADVI_FIRMBKTS-S12):** the act
+applied at 08:21Z-08:23Z (router 27 x5, guard 6 x5, CodeSha256 equal to the built artifacts, the ACL's 6 rules identical,
+three groups Count, default Allow, LockToken unchanged); the issuer re-read each live (router 27 and guard 6 hashes,
+5 + 5 associations, ACL LockToken and default action). AC4's invocation was the issuer's defect: JMESPath reads an empty
+object `{}` as false, so `[?OverrideAction.Count]` returns 0 on a rule whose Count override is `{}`. The corrected query
+`[?OverrideAction.Count!=`null`]` returns 3 against the live ACL (and the defective form returns 0: both read by the
+issuer). The expect is unchanged (`^3$`). The post-apply plan's one ACL change is ruled in the COO half's ADDENDUM 2
+(`ledger/NEVER_WIDEN_ROUND3_ACT1_ADVTENANT_COO_HALF_ADDENDUM_2.md`); the CTO's condition 4 is the CTO's to rule. Gate
+limb: a criterion's invocation amended on a non-terminal order by its issuer; GATE viii read the six placeholders at HEAD
+and the corrected invocation still carries `<WAF_ACL_NAME>` and `<WAF_ACL_ID>`.
 
 **ISSUER NOTES:** class WORLD. Un-park conditions, all satisfied at this amendment: `FB-f-7` complete (@e6ec8ce6e4); phase A
 merged (@acf8a16706); the pair SIGNED in both halves (@d30c5fe203); the actor's entry is opened by the actor before any
