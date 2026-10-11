@@ -4248,6 +4248,48 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "The same reader rule, run live over the 95 served names (32 own workbooks, 11 own_model, 63 master_absent), prints FIGURE 3381, HEADING 316, CONTROL 62. By count, 28 rows move from HEADING (the cut) to FIGURE (live); the per-row diff is not computed. The reader follows the order's rules and the issuer's fixture check passes 4/4, so the gap sits in the cut's measurement or in the store since it was taken. Not diagnosed by this worker.",
   "notes": "The census was read once and not re-measured. The per-row diff is not computed here (out of this order's bounds).",
   "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W2-S1",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+  "surfaced_at": "2026-10-11T12:50:10Z",
+  "one_line": "The order names the portal branch wk-AMGT_CORPUS-46-portal; the round's portal worktree sits on wk-AMGT_CORPUS-46-2-portal, so the branch the order names is not the one checked out here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/tmp/wk-AMGT_CORPUS-46-2/portal rev-parse --abbrev-ref HEAD -> wk-AMGT_CORPUS-46-2-portal, read before the av-2 commit; the portal base is 00989b8b9df229e7b765b3a063102873abd9a89d, as the order's preflight states.",
+      "The spawn prompt for this slot names the portal branch wk-AMGT_CORPUS-46-2-portal; the order's Section 2 and Section 1 say wk-AMGT_CORPUS-46-portal."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The nested portal/ directory is a portal git worktree on branch wk-AMGT_CORPUS-46-portal, based on portal origin/DEV (order Section 0, 'Your portal').",
+  "world_is": "The nested portal worktree is on branch wk-AMGT_CORPUS-46-2-portal at the same base. No branch was created or renamed; the portal commit lands on the branch that exists.",
+  "notes": "Portal commit 599e51fbb47ab1cd50459dd3cbae3838ef4febe6 is on wk-AMGT_CORPUS-46-2-portal, LOCAL, not pushed. Recorded so the CTO's DEV review reads the candidate under the branch that exists. No gate is built here."
+},
+{
+  "id": "AMGT_CORPUS-D1-W2-S2",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+  "surfaced_at": "2026-10-11T12:50:10Z",
+  "one_line": "The order gives a team cell four keys (mnemonic, fiscal_year, value, unit) and its cite must name the period column, but no key carries the period column; the built team cell carries a fifth key, column, so the cite can name it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Order Section 1, step 2, names the team cell as {mnemonic: null, fiscal_year, value, unit: null} and the teamCite as {workbook, sheet, row, label}; step 4 names the period column in the cite.",
+      "portal/src/pages/SecurityAnalysis/modelSheet.ts at 599e51fbb47ab1cd50459dd3cbae3838ef4febe6: interface TeamCell carries column: string | null, set from the sheet's period header; ModelTab.tsx teamCellTitle reads it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A team cell is {mnemonic: null, fiscal_year, value, unit: null}; a team row's cite names the workbook, sheet, row label and period column (order Section 1, steps 2 and 4).",
+  "world_is": "The four-key cell cannot say which period column a value was saved in, so each team cell carries a fifth key, column. The key is read only by the team cell's title; the value and the fiscal year are as specified.",
+  "notes": "The CTO may strike the fifth key if the cite is carried another way. No gate or consumer outside ModelTab's title reads it."
 }
 ]
 ```
