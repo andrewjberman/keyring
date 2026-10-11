@@ -35,11 +35,11 @@ Graduated, round label v84: 2 rows, OPEN, INERT. This seat made no read of its o
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v84",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v84"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_DASHBD-D2-W130-S1",
