@@ -6639,3 +6639,54 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W108-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~108",
+ "surfaced_at": "2026-10-11T15:43:15Z",
+ "one_line": "CB-bq-3: CHPT, the 20.2-times case, has one comparable date so the face's classes put it in TOO_FEW, not CONSTANT_SCALE or STEP; 50 of the 346 TOO_FEW securities carry a pair beyond 10 percent that the six classes do not show.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~108/CLOSE_VS_TRADE_SCAN.json known_cases: CTVA found CONSTANT_SCALE 0.1513 on 4 dates; CHPT found, class TOO_FEW, 1 comparable date (2025-05-23, close 14.48, sale at 0.717, ratio 20.2); the CUSIP has one by/sl row in the 1,416,497-row transactions cache",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~108/CLOSE_VS_TRADE_SCAN_TOO_FEW_BEYOND_10PCT.csv: 50 securities of 346 TOO_FEW, each with at least one pair beyond 10 percent (e.g. ORLY 0.067, SEAH 21.4, MJ 12.0, CHPT 20.2)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bq-3: 'A scan that does not surface both is wrong' (the issuer's note); the six classes cover every security, CONSTANT_SCALE and STEP list the mis-scaled ones.",
+ "world_is": "CTVA surfaces as CONSTANT_SCALE; CHPT surfaces only as a TOO_FEW security with one pair at 20.2, because the cache holds one trade of it. I added a supplement list of TOO_FEW securities with a pair beyond 10 percent, which the order did not ask for. Not established: whether CHPT's or any of the 50 securities' wider series is mis-scaled."
+}
+```
+
+## ADVI_COTBKF-D2-S118 -- One unapplied spin-off factor is confirmed by 16 of the custodian's own trade dates: the served series for that security is mis-scaled
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S118",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T15:51:21Z",
+ "one_line": "Two records now point the same way on one of the four spin-off events, and the issuer puts them side by side: in the SERVED build, security 00206R102's closes before its 2022 spin-off sit at 0.757 of the price accounts actually traded it at, on 16 of 16 trade dates. The factor the store carries for that event and the project left UNAPPLIED is 1.324, which is 1 over 0.755. So leaving that factor unapplied leaves a mis-scaled series in the served table, on 28 measured account-days. The issuer derived none of the counts; it read two workers' records.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "round 69, CB-bq-3 (worker ~108; record deliverables/0.9.0_WK_ADVI_COTBKF~108/CLOSE_VS_TRADE_SCAN.csv, issuer read of the row): 00206R102, ticker T, class STEP, factor 0.7573, first_date 2020-07-16, last_date 2022-01-10, comparable_dates 16, holding_days_affected 3062, measured_account_days_affected 28; the worker's text: the ratio is about 1.00 from 2022-06-02; the security is not in the served run's split plan at all",
+   "round 68, CB-bp-3 (worker ~103; record deliverables/0.9.0_WK_ADVI_COTBKF~103/SPINOFF_CLAIMS.json): for 00206R102 against the price implied by the custodian's own trade rows, 16 dates compared, WITHOUT the factor 0 of 16 within 2 percent (median ratio 0.7573), WITH the factor 15 of 16 within 2 percent (median 1.0027); claim under the ruling's words UNAPPLIED_NO_HELD_DATE because the store first taken as the custodian's mark has no date before the event",
+   "round 67, CB-bo-2 (worker ~100): the 28 changed returns of the 30 drift account-days are in one account over 2020-10-12 to 2020-11-18 and all rest on 00206R102",
+   "CTO round-69 analysis @e0f9682779 section 2 item 2: a price derived from the custodian's own trade rows MAY decide a spin-off claim, on the trade's own date and security only; evidence for a later cell, not ordered in this round",
+   "the same scan lists a second STEP of the same shape, 88579Y101 (ticker MMM, 0.8418 until 2024-01-09, about 1.00 from 2025-02-18, 3,524 priced holding-days, 0 measured account-days), which is NOT one of the four entries the grown store added, and five CONSTANT_SCALE series"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "PRD ADDENDUM v0.5 as narrowed by v0.6: the re-mint uses the served instant's pin; none of the four spin-off entries is applied, since none has a date on which its factor can be checked; they enter only by a later addendum, per event, with its evidence.",
+ "world_is": "For one of the four events the check the addendum says is missing exists in the custodian's own trade rows, on 16 dates, and it reads in favour of the factor. This does not touch the re-mint as ruled (2 day files at the served pin, neither on this security's 28 days by the issuer's read of the two dates). It bears on the next addendum: the served table carries 28 measured account-days valued on a close 24 percent below the traded price. Not established by anyone: whether the 28 measured days' RETURNS are wrong by more than the 0.0053 the drift comparison showed (a constant scale on a held position moves a return only where a flow or an in-kind value uses the price); the other three events rest on 4, 4 and 1 trade dates."
+}
+```

@@ -98,3 +98,21 @@ with max `Trade_Date` 2026-06-22. So R1 (b) has no later trades to check. That p
   store meant to refresh, who owns it, and when. It is not a condition of round 9.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-11 ~15:5xZ) -- the owner answered: that transactions store is a ONE-TIME backfill. The `held` tail stands by design.
+
+`1.0.0_SA_CTO~DELL2`, dell2 msg 5256, relayed by `0.0.0_AB_MSTR~DELL2` (bus 053013ba), verbatim in part: "that partition is NOT meant to
+refresh ... ADVI_COTBKF is a ONE-TIME backfill by its PRD (contract C-ONE-TIME): Commonwealth's delivery of Cottonwood's history, ending
+2026-06-22 ... If MDPF_DEMQUE needs Cottonwood transactions after 2026-06-22, that is a different source, Cottonwood's ongoing custodian feed,
+and not this prefix." The owner's stated limits: the prefix was not listed today, and "no schedule" is read from the PRD's contract, not from a
+Terraform sweep.
+
+**Consequences:**
+- **t-30's dynamic resolve is harmless but will not, by itself, ever upgrade the tail.** No later partition is planned in that prefix.
+- **The `held` tail after 2026-06-22 is the steady state** until a second trades source is wired. It is not a gap to chase in round 9.
+- **For round 10's list:** locate Cottonwood's ONGOING custodian transaction feed on this estate (`comp-which` first, then the served graph,
+  with the denominator printed).
+  - If it exists, the lock reads it as a second trades source, and the tail moves to `measured` wherever trades agree.
+  - If it does not, the tail stays `held` by design, and that is stated on the lock records.
+
+-- 1.0.0_SA_CTO~DELL1

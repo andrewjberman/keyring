@@ -67,3 +67,37 @@ gap), so the read is the live policy document and the scoped plan, printed into 
 
 `ROUND_ANALYSIS.round3.md` section 3 item 1 and ADDENDUM 4; rows `D1-S18`, `D1-W25-S1`, `D1-W36-S1`; the live reads named
 above of 2026-10-11 ~13:5xZ. Push state: LOCAL.
+
+## ADDENDUM 1 (2.0.0_SA_COO~B1, 2026-10-11 ~15:5xZ) -- row D1-S29: one narrow `s3:DeleteObject` statement, applied before act 2
+
+**What the half above said and what was found.** The half called "no Delete" a virtue. Read at HEAD: `D_04`
+(`D_04.client_portal_summary.py:789-812`) and `D_02` (`D_02.advisor_client_detail.py:3245-3284`) delete a DEPARTED advisor's
+files with `delete_objects` and never read its `Errors`; a per-key AccessDenied returns HTTP 200, so after act 2 the orphans
+would stay at the new home (the scripts' own comments say they double-count AUA). The CTO ruled both (act-0 CTO half ADDENDUM 1,
+msg 3931): the narrow grant (this addendum) and fail-loud on `Errors` (`FB-g-26`, merged @b3a1f43daa, act 2 ADDENDUM 3).
+
+**What this addendum MAY touch (the whole permitted set).** ONE statement, `AdviPlatinumCanonicalDelete`, appended to the
+policy `advi-49f-platinum-canonical-rw-policy` on `bd-exporter-ec2-role` (the same resource; Terraform root
+`infra/aws/terraform/bd-pipeline`, `FB-g-25`): `Effect Allow`, `Action ["s3:DeleteObject"]`, `Resource` exactly two ARNs,
+generated through `module.opal_name_platinum_grant.class_prefix` (`FB-g-24`):
+`arn:aws:s3:::opal-data-49financial/advi/49financial/platinum/advisors/*` and
+`arn:aws:s3:::opal-data-49financial/advi/49financial/platinum/entities/advisors/*`. No `s3:DeleteObjectVersion`, no
+`s3:*`, no other prefix, no other role, no Condition. The QA runner shares this role and therefore receives the same Allow
+(stated, not hidden); `FB-g-15`'s dispatcher guard keeps a QA invocation off `canonical`, so the QA reach gains no LIVE delete.
+
+**Writers counted (N rules read).** The property is who may delete under the two directories. LIVE: 0 rules at the canonical
+home (nothing writes there until act 2); at the legacy home the same two call sites run today (their authority there is not re-read here).
+DECLARED: 1 role (`bd-exporter-ec2-role`), 2 scripts (`D_04`, `D_02`), 1 statement. N printed: 1 role, 2 call sites.
+
+**Both branches.**
+- **Branch A:** the scoped plan reads `Plan: 0 to add, 1 to change, 0 to destroy` on the ONE policy; `get-role-policy` after
+  prints three Sids; the policy count of the role is unchanged (17); a post-apply scoped plan reads `No changes`.
+- **Branch B:** the plan names a second resource; the policy gains any other action or resource; `iam:PutRolePolicy` is refused
+  (a ROUTE to `0.7.0_AE_CloudOps~FBL`, never a widening). Rollback: the prior two-statement document put back (the actor prints
+  it before the apply); per object, destination versioning `Enabled` makes each delete a delete marker, removable by deleting
+  the marker version.
+
+**What this addendum does not know.** Whether the first departed advisor appears soon (the delete path can stay unexercised
+for days); the class of any other object the scripts might delete under these directories (the census reads the two sites
+only; `_lib/atomic_write.py`'s `delete_object` has no importer under the gold scripts). The apply is `FB-f-16`, issued after
+`FB-g-25` merges; the CTO half's ADDENDUM 1 is the other half and reads SIGNED.

@@ -1,0 +1,13 @@
+{
+  "prd": "AMGT_CORPUS_PRD.md",
+  "prd_version": "v0.10",
+  "prd_pin": "9794728d6eec8dc5436684ab34b1fc5b6f97ea7c",
+  "half": "ratified-text",
+  "half_hash": "a9effe484daaf8dd219bd96182e96d46c3876e9f3112667e77d71b8056454a84",
+  "endpoint_hash": "7662246f2f395b2698a981b6512e0085be76d5af48d6623309b466da666fd6b8",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_AMGT_CORPUS_v0.10_RATIFIED_TEXT_20261011.md@b77ebc587b",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-10-11T15:49:45Z",
+  "substitute_for": "3.0.0_SA_CVO~Z"
+}
