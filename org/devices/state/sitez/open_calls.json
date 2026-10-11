@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-11T03:05:19Z",
+ "written_at": "2026-10-11T03:39:03Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1098,7 +1098,7 @@
    "source": "org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/CLOSE_RUN_ARMS_20261009.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T15:05:00Z",
    "kind": "fork",
    "context": "The item-0 close run's last input: arm (a) fires only on Alyssa's own asker question (CVO ruling), behind Andrew's 2026-10-06 hold on call 1. Any one Teams message from Andrew fires arm (b). Gates OA-t-1 r2 / OA-t-3 r2 cutover merges and OA-e-8.",
@@ -1123,7 +1123,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-11T03:39:03Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261011_032xZ_OPEN_CALLS_ANSWERED_ITEMS_1_TO_9.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
@@ -1432,7 +1439,7 @@
    "source": "org/missions/D9/COMM/COMM_ASSIST/ledger/ROUND_ANALYSIS.round13.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-11T01:27:54Z",
    "kind": "fork",
    "context": "FWD-4 is APPLIED. Its internal branch is driven by a seat-sent mail, but no seat can send as a client firm, so the client branch can only be exercised by a real client mail. The L2 rule (NO FWD IS A WAIT) lets a wait stand only when qualified with its reason and Andrew's word.",
@@ -1453,7 +1460,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-11T03:39:02Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261011_032xZ_OPEN_CALLS_ANSWERED_ITEMS_1_TO_9.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "sitez-20261011T030519Z-058e",
