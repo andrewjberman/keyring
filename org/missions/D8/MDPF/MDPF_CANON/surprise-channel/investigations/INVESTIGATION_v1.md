@@ -325,3 +325,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S10",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-11T02:55:00Z",
+  "one_line": "The value leg (smartx fact_model_aum_daily) lands one trading day behind the T-1 frontier on every Saturday and Sunday run, so a weekend gold fire cannot read both legs at the frontier; Friday's value first lands in Monday's partition.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Round-2 analysis @71e85b7191 section 2 and section 3 item 1: on the 2026-10-09 fire both legs agreed; whether the value feed delivers Friday's data only on the next trading day (a weekend clock mismatch that recurs every Saturday fire) or missed once is not measured.",
+  "world_is": "s3://opal-data-assets/smartx/platform/silver/fact_model_aum_daily/ holds 89 objects, one partition per calendar day written about 13:25Z. The run_date R partition ends its `day` axis at: Sat 09-19 and Sun 09-20 -> Thu 09-17; Mon 09-21 -> Fri 09-18; Sat 09-26 and Sun 09-27 -> Thu 09-24; Mon 09-28 -> Fri 09-25; Sat 10-03 and Sun 10-04 -> Thu 10-01; Mon 10-05 -> Fri 10-02; Tue-Fri 10-06..10-09 -> the prior trading day; Sat 10-10 -> Thu 10-08. 7 of 7 weekend partitions in four weekends end at Thursday; every Monday ends at Friday. Friday 2026-10-09's value rows have not landed as of 2026-10-11T02:5xZ. The count leg reaches Friday on the same weekend day, so global's cross-axis gate (v) refuses on the Saturday fire. The producer's gate is correct and is not loosened. Mechanism (SmartX publishes on business-day mornings) is INFERRED; bronze landing times were not read; the owner of the SmartX feed and the silver Lambda was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round3/VALUE_LEG_CLOCK_20261011.md",
+      "infra/aws/lambda/opal-assets/opal-assets-daily-emitter/channel_sources.py:58 (SMARTX_AUM prefix)",
+      "boto3 list_objects_v2 + parquet read of `day`, 2026-10-11T02:5xZ, denominator 89 objects, 18 run_dates read (09-19..09-21, 09-26..10-10)"
+    ]
+  },
+  "notes": "Falsifiers: the Sunday 2026-10-11 13:30Z fire should refuse global again; the Monday 2026-10-12 13:30Z fire should read both legs at Friday 2026-10-09. A refusal on Monday with both legs at Friday would put the defect in the producer. Per the round-2 analysis item 1, a structurally late value leg is filed against the value feed's owner; the issuer cuts no cell for it. Whether weekend fires are expected to be current is a spec question for the CTO: FWD-1's 16 of 16 read is a trading-day-fire read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

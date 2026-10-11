@@ -29,7 +29,7 @@ act 3 read are in. `round-close-check.py --project MDPF_HEALGAP --round 2` reads
 | 4 eleven missing marks (FWD-3 marked-missing arm) | `20261008T1627Z_healgap-r2-act4-missing-marks-20261008` | CLOSED 16:28Z, 2 of 2 legs; 11 `meta/<d>-missing.json` for model_detail 2026-08-31..09-10, nothing filled |
 | satellites same-day re-run (D1-S7 ruling a) | `20261008T1607Z_healgap-satellites-rerun-20261008` | CLOSED 16:08Z; registry/holdings as_of 2026-10-08 (D1-S8) |
 
-## Rows (the channel `surprise-channel/investigations/INVESTIGATION_v1.md`; rollup 2026-10-11 02:25Z by `comp-surprise --project MDPF_HEALGAP`: 30 items, 13 open, 3 ARMED, 7 graduated, 10 dismissed; 7 remediation rows all DISARMED. Act 3 then added **D1-S12** (below), so 31 items, 14 open, 3 ARMED)
+## Rows (the channel `surprise-channel/investigations/INVESTIGATION_v1.md`; rollup 2026-10-11 02:25Z by `comp-surprise --project MDPF_HEALGAP`: 30 items, 13 open, 3 ARMED, 7 graduated, 10 dismissed; 7 remediation rows all DISARMED. Act 3 then added **D1-S12** (below): the channel file holds 30 rows after it, 29 before (`surprise-row-gate`, 'of 30 total checked, 29 pre-existing'); the rollup's 30 items are a different count (it dedupes by id across planes), so the two are not summed)
 
 - ARMED, owner `1.0.0_SA_CTO~DELL1`: **D1-S7** (satellites producer at 07:00Z is coupled to the runner's fire time; ruling (a)
   executed -> D1-S8; ruling (b), the stamp chain, is the PRD addendum owed at L10).

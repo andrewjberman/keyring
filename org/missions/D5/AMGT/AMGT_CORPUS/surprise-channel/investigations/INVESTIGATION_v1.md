@@ -4088,6 +4088,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "disarm_owner": "2.0.0_SA_COO~C1"
 },
 {
+  "id": "AMGT_CORPUS-D1-W1-S6",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-09T21:35:00Z",
+  "one_line": "AMENDMENT 1 of CRPS-at-1 cannot be committed: the order is terminal at HEAD (its last <status> is complete, from my 1521276282 flip), so the lane gate admits no worker commit to any path it names.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C /c/dev/wk-corpus-44-1 show HEAD:org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-at-1.team-sheet-rows-served.md ends with <status>pending</status> ... <status>complete</status> (lines 129 and 133); amendment commit 1675c97a9d did not reopen it",
+      "bash .tools/safe-commit.sh --author 0.9.0_WK_AMGT_CORPUS~1 ... -- <the amendment paths>: 'VIOLATION: <path> -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block (ADHC_OWNPTH.005)', rc=1, nothing committed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 6: the worker commits dossier.py, scoped_amgt.py, the five pinning tests and the proof, then appends a status tag reading complete only if AC1-AC3 pass (so the order is expected to be non-terminal while the amendment runs).",
+  "world_is": "The order is terminal, so the lane gate (ADHC_OWNPTH.005: the order is the grant) refuses every path. The amendment work is DONE and verified in the worktree, UNCOMMITTED: AC1 'at1 build 2/2 control 1/1' rc 0, AC2 '14 passed', AC3 grep count 0, the five method-pinning tests plus the new ones 100 passed. The issuer must reopen the order (a trailing <status>pending</status> in a commit by the issuer) so the worker can commit; no override was used.",
+  "notes": "The merge of box/dell1 fast-forwarded (no mass-deletion gate fired, no Authorized-Deletion trailer needed).",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
   "id": "AMGT_CORPUS-D1-S2",
   "project": "AMGT_CORPUS",
   "fabric": "dell1",
