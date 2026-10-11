@@ -18,6 +18,20 @@
 <owned_cells>RIV-tw-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="8" date="2026-10-11" by="2.0.0_SA_COO~V1">
+    ONE MORE FILE FOR 20261010, AND FOR ANY DATE WHOSE ENRICHMENT EXIT CODE READS 97. The 20261010 transcription
+    (@4b8e5e530a at origin/box/sitez) is read: STEP at log line 176, `ENRICHMENT EXIT CODE: 97 -- nothing written` at line 178,
+    no HISTORY OWED line, no vendor-session-failure line. The cause of the 3 (which maps to 97) is the module's printed JSON
+    result (`enrichment_bloomberg.py:1269`), which is the log line BETWEEN the two and was not copied (the selector is
+    `STEP|EXIT CODE`). ACT: from the same untracked log, copy log lines 170 through 178 inclusive, unedited (the lines are the
+    STEP line, the module's output and the exit line, plus the leg-90 line above it), to
+    `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261010_1100Z.enrich.txt`, with a
+    one-line header naming the source path, the byte count and the line numbers copied. Commit that one file and tell
+    `0.0.0_AB_MSTR~Z` the hash. For a later date whose exit line reads 97, the same: the STEP line minus 6 through the exit line.
+    Read only; do not run the module; do not edit a line. Nothing else in this order changes.
+    Gate limb: GATE (viii) grades this modification (placeholders NONE declared at HEAD); LIMB 6 does not fire.
+  </amendment>
+
   <amendment id="7" date="2026-10-11" by="2.0.0_SA_COO~V1">
     DATES OWED, STANDING: the 20261009 transcription is done (AMENDMENT 6). Now owed, one file per date, until the CVO
     grades RIV-tc-1 J1 REACHED: `20261010` (Saturday), `20261011` (Sunday), then each later date on a request from the issuer.
