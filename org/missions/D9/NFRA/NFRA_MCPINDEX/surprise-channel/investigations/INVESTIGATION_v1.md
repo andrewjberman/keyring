@@ -6299,6 +6299,29 @@ carries none.
     "spec_asserts": "The round-close gate's own outer test suite passes, so a regression in round-close-check.py shows as a failing case.",
     "world_is": "5 of 24 cases fail on HEAD for reasons unrelated to any recent fix, so a new regression in this tool would be hidden among standing failures.",
     "notes": "Routed by 1.0.0_SA_CTO~Z (msg 33071) to the Z-C-S42 family owner. Disarms when the suite reads 24/24 (or each case is re-scoped with a reason)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W31-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~31",
+    "surfaced_at": "2026-10-11T00:10:47Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-o-2 census verdict is GAP, but ops_census.py forbids served=true on any candidate under GAP, so two producers whose objects ARE served today (BD silver fees, 2002 partitions; Schwab fact_trn, 569 partitions) are recorded served=false with the reason carried in the row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The order says served is true only for a producer whose objects are SERVED today (a scheduled producer writing a served prefix).",
+    "world_is": "ops_census.py (round9/checks) says 'verdict GAP but a candidate reads served=true' is a violation, so under GAP served means 'serves the billing fields', not 'is served'. BD silver fees and Schwab fact_trn are scheduled and served today yet lack AUM, billing period and paid status. They are recorded served=false and each reason says so; a reader of the census alone would read them as unserved.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "round9/checks/ops_census.py lines 'if any(k.get(\"served\") for k in cands): bad.append(\"verdict GAP but a candidate reads served=true\")'.",
+        "Live listing 2026-10-11: s3://opal-data-bd/silver/fees/ 2002 dated partitions newest 2026-10-08 (17344 rows); s3://opal-data-assets/schwab/08335338/silver/fact_trn/ 569 date partitions newest 2026-10-09.",
+        "census_billing.json in deliverables/0.9.0_WK_NFRA_MCPINDEX~31/ (verdict GAP, owner ADVI_BILLING, o2.AC1 violations 0)."
+      ]
+    },
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "notes": "The gap statement in the census names which fields each producer lacks, so the information is kept; only the boolean is overloaded. Worker ~30's MX-o-1 census may meet the same instrument line."
   }
 ]
 ```
