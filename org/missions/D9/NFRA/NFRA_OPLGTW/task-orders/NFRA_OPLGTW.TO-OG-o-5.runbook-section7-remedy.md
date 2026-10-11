@@ -94,7 +94,22 @@ Rows: id `NFRA_OPLGTW-Z-W21-S<k>` (next unused), fabric `site-z`, disarm_owner `
 
 1. Write the proof instance at `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~21/NFRA_OPLGTW.TO-OG-o-5.runbook-section7-remedy.proof_of_spec.json`.
 2. Validate it with `python .tools/proof-of-spec-check.py <instance>`.
-3. If AC1 PASSes, edit this order's ONE `<status>complete</status>
+3. If AC1 PASSes, edit this order's ONE `<status>` tag IN PLACE to `complete`, in the same commit. Never append a second
+   tag.
+4. Report once: the diff, the literal AC output, commits and rows.
+
+<!-- ===================== RECORD FACE ===================== -->
+
+**ISSUER NOTES:**
+- Round label 16 (addendum R3-T.8.1: the CTO's R7; the issuance gate refused it into round 15, which already had its one issuance). Alone in its chain.
+- Pre-cut: `o5.AC1` FAIL (no anchors).
+- REPAIR (issuer, 2026-10-11, row Z-S86, CTO~Z msg 33288): A1's fix commit bfe0028826 overwrote step 3 through the
+  status line, leaving no parseable tag. Step 3, step 4 and this record face are restored as written at 0da94bba7c, and
+  ONE tag is set to complete. Basis: the worker's instance at bfe0028826 records A1's AC1 PASS (rb 3 of 3). Today's
+  o5.AC1 reads rb 2 of 3 because rb.AC2 FAILs: runbook 7.2 does not name the live release 6aadf7db37, deployed
+  2026-10-11 by OG-ap-6. That is post-completion drift, filed as its own row for round 34, not a re-grade of this order.
+
+<status>complete</status>
 <round>16</round>
 <slot>~21</slot>
 <fabric>site-z</fabric>

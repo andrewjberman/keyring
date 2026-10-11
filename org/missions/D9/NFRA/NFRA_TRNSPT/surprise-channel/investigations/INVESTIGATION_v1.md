@@ -2012,3 +2012,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "notes": "For the gateway's owner (NFRA_OPLGTW, site Z), on the CTO's word (msg 4439). Any consumer that reads a search zero as 'no such file' is exposed: TR-om-23 and the Research Meeting folder read both met it. File names, counts and dates only; no file was opened."
 }
 ```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S30",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-11T13:56:33Z",
+  "hazard_standing": "INERT",
+  "one_line": "OG-tl-1 (NFRA_OPLGTW round 33): the re-probe of the 4 allowlisted meetings against the gateway -- 3 of 4 list 200 (monday 20, ocio 8, asset management 7 transcripts), research_meeting's listing answers 502 graph_error. Unchanged from the 03:07Z read.",
+  "class": "OBSERVATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GatewayTransport.list_meeting_transcripts for each of the 4 series in data/transcripts/scripts/teams/series.json, read at 2026-10-11T13:56:33Z against https://mcp.opalinvest.dev: monday_meeting 200 rows=20 (created 2026-04-10 to 2026-10-05); ocio_ic 200 rows=8 (2026-06-16 to 2026-10-06); asset_management_ic 200 rows=7 (2026-07-07 to 2026-09-29); research_meeting GatewayGraphError status=502, not a Refused",
+      "the same four reads at 2026-10-11T03:07Z (R22_TR_RA22_DEPLOY_PACKET_20261011.md ADDENDUM 1, A2): identical statuses and counts",
+      "ask: crossbox XB-20261011T134529Z-ad8b (1.0.0_SA_CTO~Z msg 33287), routed by 1.0.0_SA_CTO~DELL2 msg 5056"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_OPLGTW OG-tl-1: one NFRA_TRNSPT re-probe of the 4 allowlisted meetings against the released gateway, with its row filed in NFRA_TRNSPT's channel.",
+  "world_is": "The host admits 3 of the 4 allowlisted meetings (a 403 meeting_not_allowed is read for none of them). The fourth, research_meeting, is not refused by the allowlist: its listing fails upstream in Graph with 502, as it has since 2026-10-09. LISTING only: no transcript content was read in this probe. Content reads were measured at 02:44Z: every transcript created on or before 2026-06-08 answers 502, later ones 200.",
+  "notes": "NOT MEASURED: which gateway build answered. The probe has no read of the gateway's deployed commit, so 'released' is site Z's word, not this row's. The CTO asked for it as an amendment of an open order; this issuer has none open (round 23's three orders are terminal), so it is filed as an issuer read. Statuses, counts and dates only."
+}
+```

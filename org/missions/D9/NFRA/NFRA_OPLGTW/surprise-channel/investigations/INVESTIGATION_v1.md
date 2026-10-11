@@ -12047,3 +12047,56 @@ name the one known failure instead of silently inheriting it.
   "notes": "Remedy, the issuer's: restore step 3's sentence as written at 0da94bba7c line 97, and put ONE '<status>complete</status>' on its own line where the tag stood (after A1's AC1 re-run; o5.AC1.sh is the instrument). Re-run it first if A1's PASS is not on record. This seat's round-33 slug is held at org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPLGTW_REMEDIATION_v16_HELD_20261011.md and lands on the repair."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S87",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T13:51:02Z",
+  "one_line": "Disarms NFRA_OPLGTW-Z-S86: TO-OG-o-5 again carries ONE parseable '<status>complete</status>' on its own line, with step 3, step 4 and the record face restored as written at 0da94bba7c. The basis is the worker's instance at bfe0028826, which records A1's AC1 PASS (rb 3 of 3).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~21/NFRA_OPLGTW.TO-OG-o-5.runbook-section7-remedy.proof_of_spec.json at bfe0028826: AC1 PASS, 'rb.AC1-AC3 passing 3 of 3'",
+      "ORDER repair in this commit: one status tag counted by regex ^<status>[^<]*</status>$"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The unparseable tag is fixed; the order is terminal at HEAD again, so surprise-row-gate no longer counts it open.",
+  "spec_asserts": "Z-S86: every terminal order carries exactly one parseable <status> tag.",
+  "world_is": "OG-o-5 does again; the gate's non-terminal count for NFRA_OPLGTW drops to 0.",
+  "notes": "Citing row; Z-S86's text is untouched. The drift found while re-running o5.AC1 is the next row."
+}
+```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S88",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T13:51:02Z",
+  "one_line": "The runbook's section 7.2 rollback list does not name the live gateway release 6aadf7db37 (deployed 2026-10-11 by OG-ap-6), so rb.AC2 FAILs at HEAD and o5.AC1 reads rb 2 of 3. Every gateway release moves the live ref, and no release cell carries the runbook update.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/rb.AC2.sh at HEAD: 'manifest history: 193 commits, 48 distinct deployed_commit values; live 6aadf7db37' / '7.2 names live=no; targets named 3, without guard 0, not in manifest history 0' / RESULT: FAIL",
+      "RUN rb.AC1 PASS and rb.AC3 PASS at HEAD (positive controls)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The runbook's 7.2 names the live release as a rollback anchor (rb.AC2).",
+  "world_is": "It names 3 older targets, not the live 6aadf7db37.",
+  "notes": "INERT: no rollback is in flight. CARRY: round-34 E4 batch repair, plus a release-cell clause so that each gateway release updates 7.2 (the class recurs on MX-r-10 and CT-i-11)."
+}
+```
