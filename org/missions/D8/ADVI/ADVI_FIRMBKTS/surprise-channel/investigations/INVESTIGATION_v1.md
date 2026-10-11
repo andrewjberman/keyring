@@ -3214,3 +3214,32 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   }
 ]
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~22, third batch (TO-FB-f-13, after the issuer's amendment 1 ruling)
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W22-S6",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~22",
+    "surfaced_at": "2026-10-11T09:41:53Z",
+    "one_line": "Per the issuer's amendment-1 ruling on S4, the health probe's head_object line is kept byte-for-byte and routed by a _ServedS3 wrapper that s3_client is (marked '# seam: exempt' on the line above). The wrapper's list_objects_v2 applies the seam a second time to the holdings listing, which the site already routes; the census denominator moves from 7 to 9 sites (the wrapper's two calls, both ROUTED).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lambda_function.py probe line: 'git show b96c9e74a1' and the worktree carry the identical line (cmp of the grep output, PROBE-LINE-BYTE-IDENTICAL)",
+        "r3_reads.py --files (exec lambda_function.py, exec platinum_reader.py, partners lambda_function.py): S3 data call sites=9 ROUTED=8 NOT-SERVED=0 EXEMPT=1 UNROUTED=0; 'EXEMPT lambda_function.py:1011 head_object -- routed by the _ServedS3 wrapper that s3_client is'",
+        "_ServedS3.list_objects_v2 applies platinum_list_target(Bucket, Prefix); _find_latest_holdings_lots already passes the seam's (bucket, prefix) and its listed prefix gold/timeseries/holdings_lots/ is not a served class, so the second application is the identity"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer ruling (amendment 1 on S4): the probe line unchanged; route it in the client through a _ServedS3 wrapper; the comment marker on the line above; the other routed sites stay.",
+    "world_is": "The seam is applied to the probe on every call: under canonical the probe reads the class home, which test (e) shows through the wrapper with 0 legacy served-prefix calls. The second application on the holdings listing is the identity for a non-pipeline bucket and for a non-served prefix, so its keys are unchanged. Disposition of S4 is the issuer's to record; this row does not edit S4.",
+    "notes": "Test (e) drives handle_health_check() with the wrapper over the recording fake; the probe reports 'ok' in both modes and the canonical store holds only class-home keys."
+  }
+]
+```
