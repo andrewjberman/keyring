@@ -1192,3 +1192,28 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W11-S3",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~11",
+  "surfaced_at": "2026-10-11T04:51:54Z",
+  "one_line": "On origin/DEV 26f621d51c the report PACKAGE's 'Open Report' button (AnalysisRequestParts.tsx PackageFiles/openPackageFile) reads getOwnedAnalysisRequest and shows the request projection as 'Report for <ticket>' with the request id in visible words; the ticket's own 'Open report' (this cell) reads the finished report. Both are called the report; the order said keep DEV's opener untouched, so it is kept.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal origin/DEV 26f621d51c src/pages/TicketCenter/AnalysisRequestParts.tsx: openPackageFile kind 'report' calls ir.getOwnedAnalysisRequest(requestId, firm) and hands the result to showReport; PackageFiles renders it with the local OpenedReport (rows Request, Revision, Firm, request id in a visible dd)",
+      "origin/DEV __tests__/package-open.test.tsx pins the 'owned' reader call for the package Report file (calls toEqual [['owned', ['REQ-13','fir_test']], ...]) and package-r2.test.tsx uses openPackageFile; those tests pass unchanged on the merge 7bb81fa8 (pg-suite 31 pass 0 fail)",
+      "tree read and bun tests only; no live call (LOCAL)"
+    ]
+  },
+  "spec_asserts": "TO-R2-pg1 AMENDMENT 2 C3/C4: one 'Open report' behaviour (this cell's), DEV's package file openers untouched beside it, and DEV's use of OpenedReport kept; rule 4: the request record is never presented as the report.",
+  "world_is": "After the merge two surfaces on one ticket carry the word report: (a) the ticket row's 'Open report' button, which opens the finished report through getOwnedAnalysisReport and RetainedSections, and (b) DEV's package block 'Open Report' button, which still opens the request projection through the local OpenedReport, with the request id in visible words (the UIC-23 rule B2 states). The worker kept (b) exactly as DEV has it, per C3 and C4, and did not judge it a stop condition because the order names this case; the issuer decides whether the package Report opener should read getOwnedAnalysisReport as well (a change to DEV's file and to package-open.test.tsx, outside this order's grant to alter).",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Appended in binary mode with CRLF line endings after S2. INERT: no new behaviour; it is DEV's pre-existing opener."
+}
+```
