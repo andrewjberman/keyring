@@ -4347,3 +4347,30 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "An endpoint question for 1.0.0_SA_CTO~DELL1 (a never-widen class: stale authorization data). Placement read from the evidence: (c) the IRPT loader reads the ownership map from a generated pair (bucket: the routed bucket; key: legacy now, canonical at act 4, engaged by a canonical-bucket list as the validator's is), while its directory and holdings reads stay on the live row; one dormant IRPT cell before act 2, deployed with act 4. Alternatives: keep the ownership class carved out of the move (legacy in both modes, the round-2 ADDENDUM 6 form) until IRPT_BCKEND moves its readers; or dual-write (refused by the no-shadow-path rule). Act 2's un-park names this row."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-g-8, act 0 apply, the seat gate)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S26",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-11T13:50:40Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "safe-apply's cross-box seat gate read open_deploy=hit verdict=STOP for another seat's OPEN deploy that names the bd-pipeline root, and in WARN mode the apply proceeded; the actor sees that line only once the apply is running, unless it runs --dry-seat-gates first.",
+  "spec_asserts": "safe-apply.sh header: the seat gates (apply-who-check and crossbox-deploy-check) print and, in WARN mode, never change the exit code or the flow; --dry-seat-gates runs the two checks, prints, and exits with no halt gate, plan or terraform following. CLAUDE.md section 1: one issuer and one actor per scope, with an open deploy naming a root as the cross-box overlap signal.",
+  "world_is": "2026-10-11 13:43:23Z, .tools/safe-apply.sh -chdir=infra/aws/terraform/bd-pipeline apply <saved plan> for ADVI_FIRMBKTS TO-FB-g-8: 'CROSSBOX-DEPLOY device=dell1 root=bd-pipeline open_call=clear overlap=clear upset=clear open_deploy=hit verdict=STOP' with '[seat-gates] STOP: 2 hit(s) in OPEN-DEPLOY -- first: open deploy healgap-r3-act3-asset-dim-reattempt-20261011 (author 2.0.0_SA_COO~G1, status OPEN) names the root (token infra/aws/terraform/bd-pipeline)', then 'would stop under ENFORCE ( crossbox-deploy ); WARN mode proceeds.' The scoped plan of this act changed one resource (an IAM role policy) and none of that deploy's; the match is by the root's path token, not by resource. The actor did not run --dry-seat-gates before the apply, so the line was read after the write, not before it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act0/apply_safe-apply.out (the two seat-gate lines and the WARN line)",
+      ".tools/safe-apply.sh header lines on --dry-seat-gates and the WARN/ENFORCE switch files in org/mcp",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ADVI_FIRMBKTS.TO-FB-g-8.act0-grant.proof_of_spec.json, surprises[0]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only; no hazard is armed. Two things for the gate owner, neither this lane's: (1) the overlap is matched on the root path token, so a one-resource IAM policy and an unrelated deploy in the same root read as a STOP; the gate cannot tell a disjoint scope from an overlapping one. (2) Under ENFORCE this apply would have stopped, and the act's order says nothing about reading the gate first. This lane's own correction: read --dry-seat-gates before any apply on a root another seat names."
+}
+```
