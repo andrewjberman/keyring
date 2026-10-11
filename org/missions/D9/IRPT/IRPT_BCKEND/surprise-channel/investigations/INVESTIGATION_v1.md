@@ -27047,3 +27047,49 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Steps 2-7 of a seven-probe failure leave only status/state/reason/via; a body-only firewall interstitial, the probe URL path (YC_PROBE_PATH is honoured from the host env, :85) and the document-identity record leave no trace in the receipt."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W303-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~303",
+  "surfaced_at": "2026-10-11T18:53:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "An 'equal to the cent' reading of the guard is not the stricter one the face assumes: in the overlap table it un-grades 192 FEWER security-days than relative 1e-4 (943 against 1,135), in the seven types outside the first witness 80 more security-days but 200 fewer row-days.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~303/IB142-1_unmoved_bar_guard.json to_the_cent_variant (table1_security_days_ungraded_by_the_relative_reading_and_not_by_the_cent 222, ..._by_the_cent_reading_and_not_by_the_relative 30; seven_types_outside_the_first_witness net_security_days_cent_less_relative 80, net_row_days_cent_less_relative -200)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~303/ib445_measure.py cent(), same()"
+    ]
+  },
+  "spec_asserts": "The face asks 'how many more security-days an equal to the cent reading would un-grade', taking the cent reading to be at least as strict as relative 1e-4.",
+  "world_is": "Above a price of about 50 a cent lies inside a relative 1e-4, so the two readings overlap rather than nest: each flags days the other does not (overlap table 222 relative-only and 30 cent-only; seven types outside the first witness 22 relative-only and 102 cent-only security-days). The json states both directions and the net, not a single 'more'."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W303-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~303",
+  "surfaced_at": "2026-10-11T18:53:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Under the guard all 12 types of the overlap table have an empty one-day-off column with equal above 0, so the listed 'types with an empty one-day-off column' is every type, including one with zero days equal on which the close moved (Cash and Cash Equivalents / Not Available); the list does not discriminate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~303/IB142-1_unmoved_bar_guard.json types_with_an_empty_one_day_off_column_under_the_guard (12) and types_with_an_empty_one_day_off_column_under_the_guard_and_days_equal_on_which_the_close_moved (11)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r142/p142_cells.py (the empty rule: one_day_off == 0 and equal > 0)"
+    ]
+  },
+  "spec_asserts": "The face and the check define the empty-column list as the types with one_day_off 0 and equal above 0, as the test for naming a type whose date label is unchallenged.",
+  "world_is": "With the five earlier one-day-off days and the guard together, every type meets that rule (Inst and RIC/BDC Not Available included, which v0.39 left out on their one-day-off days); the v0.39 test also needs days equal on which the close moved, so the json adds a second list of 11 (Cash has 0 such days). No class is admitted by this cell."
+}
+```
