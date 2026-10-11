@@ -376,3 +376,32 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Filed by the applier because CA-f-1's whole purpose was to make this datum readable, and it is now read. Z-W7-S1 and Z-S6 are cited, not edited. D2's owner can start from the 404 rather than re-deriving it. Non-application: this row proposes no fix and no gate."
 }
 ```
+
+## COMM_ASSIST-Z-S11 -- cites Z-S10: the 404 is the DEPLOYED gateway lacking /hx/teams/teams; the client path is right; D2's cure is NFRA_OPLGTW's release
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S11",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZZ",
+  "surfaced_at": "2026-10-11T02:55Z",
+  "one_line": "Cites Z-S10: COMM's client calls GET /hx/teams/teams (assist.py:169 + :209), exactly the route the gateway SOURCE declares (teams_route.py:13/:55, added 2026-10-08 by NFRA_CTLPLN CT-i-11 @863e37d1f9). Chats on the same /hx/teams prefix are served live (ingress_poll chats_read=2). So the deployed gateway does not serve the teams/channels routes. The cure is a gateway release, which COMM cannot write: D2 is routed to NFRA_OPLGTW.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "d1_errorfield.py at 02:50Z: channel_poll=33, failed=33, with_error=33, ingress_step_failed[channels]=33 since the 02:17:01Z deploy; error values: 30 x 'route=teams status=404 error=None' in the last 30 min.",
+      "data/transcripts/scripts/teams_chat/assist.py:169 url = base + '/hx/teams' + path; :209 teams() calls GET '/teams'.",
+      "infra/aws/ec2/opal-gateway/app/teams_route.py:13 'GET /hx/teams/teams', :51 PREFIX = '/hx/teams', :55 TEAMS_ROUTE = PREFIX + '/teams'; git log -S: introduced by 863e37d1f9 (0.9.0_WK_NFRA_CTLPLN~39, 2026-10-08).",
+      "Z-S10: ingress_poll continues with chats_read=2, so /hx/teams/chats is served by the same gateway."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round-14 D2: fix the cause the error field names, or route it to the owner it names (gateway route, load balancer or token scope).",
+  "world_is": "The owner is the gateway's release: the teams/channels routes are in source and not served. Not established here: whether the gap is the deployed gateway build or the load balancer's path rules, since both are NFRA_OPLGTW's plane. COMM needs no code change; once the route serves, channel_poll should read failed=0 with no COMM deploy.",
+  "notes": "Routed as one ask to NFRA_OPLGTW's issuer. Resolves when one hour of ingress reads channel_poll failed=0 and one real channel @mention reaches Andrew (D2's done-when)."
+}
+```
