@@ -3879,3 +3879,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_YCDGEN-D2-W15-S1 -- e11suite check counts the word xfailed as a failure
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W15-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~15",
+  "surfaced_at": "2026-10-11T12:03:47Z",
+  "one_line": "BLOCKING on E11-AC2: r11_checks.py e11suite prints R11-E11SUITE-FAIL on a clean run of 506 passed, 0 failed, 0 errors, because its test for the word 'failed' also matches the pytest summary word 'xfailed'. The folder holds one standing strict xfail (test_producer_actor.py:41, row IRPT_YCDGEN-D2-W8-S1), so the check cannot print OK at base or after any change. The check was not weakened and the order is left open.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-YCD-e-11 E11-AC2: the e11suite invocation prints a line starting R11-E11SUITE-OK when the folder has 0 failed, 0 errors and at least 503 passed (497 at base).",
+  "world_is": "Run from the worktree root after the cell's code and tests were in place: pytest summary '506 passed, 30 skipped, 1 xfailed, 47 subtests passed in 131.80s'; the check then printed 'R11-E11SUITE-FAIL rc=0 passed=506 (need >= 503, 0 failed, 0 errors)' and exited 1. pytest_line returns the summary line and main tests `\"failed\" in line`, a substring test, so 'xfailed' trips it. 506 >= 503 and the pytest rc is 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r11/r11_checks.py lines 143-150 (e11suite branch) and lines 49-55 (pytest_line) @54683e95a4",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_producer_actor.py line 41: @pytest.mark.xfail(strict=True) pre-existing at base",
+      "the e11suite run output quoted in one_line, worktree wk-ycdgen-11-e, rc=1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

@@ -6414,3 +6414,29 @@ round.** Never edit an existing row.
  "world_is": "It does not: 30 differ. The split store is a live S3 input with no flag to pin or point to a local copy (load_store_splits takes the S3 client), so no run now can reproduce the round-34 served table and no r28-versus-r29 comparison can be tied to it. The r29 regrade was started once by mistake before the control was compared and was stopped about 83 seconds in; it wrote no finished table. Not established: whether the served S3 tables (not the local copy) equal the local copy (round 34's verify read hash_same=True for all three), and what the 109 added split-store CUSIPs change in the daily returns beyond the 30 days seen. Ways forward for the issuer: re-baseline on a re-minted r28 under today's store, then run r29 against it, or pin the split store."
 }
 ```
+
+## ADVI_COTBKF-D2-W100-S1 -- CB-bo-2: the price-moving 'splits' are spin-offs with non-integer ratios
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W100-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~100",
+ "surfaced_at": "2026-10-11T12:04:14Z",
+ "one_line": "CB-bo-2: the 4 CUSIPs that move prices (3,034 points) are spin-offs the store records as 'splits' with non-integer ratios (1.324, 1.061, 1.056, 1.054), not share splits; the custodian posts no quantity step, so the rows detector cannot confirm them and the build applies them as DISAGREE.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~100/ADDED_SPLITS.json price_moving_cusips: 00206R102 2022-04-11, 438516106 2025-10-30, 460146103 2021-10-01, 717081103 2020-11-17; custodian rows acca on the date and lica of a second CUSIP the same day (Warner Bros. Discovery, Solstice Advanced Materials, Sylvamo, Viatris); own quantity ratio 1.0000 across the date in every account holding on adjacent days",
+   "control plan C:/dev/wk-cotbkf-80/.scratch/w97/r28/after_out/repair_plan.md: those 4 store lines read 'APPLIED ... DISAGREE: the store has it, the account rows show no such split'; the 4 are exactly the 4 CUSIPs of the 3,034 changed price points",
+   "commonwealth_daily_valuation.py split_plan: the rows source (commonwealth_diff_trace.split_events) takes an integer k in 2..50 or 1/k, so a price-adjustment factor can never be shown by the rows"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bo-2: the splits the store added are share splits, confirmed or not by the custodian's split or stock-dividend rows and a quantity step of the ratio; classes are REAL_AND_BEFORE / REAL_BUT_MISAPPLIED / NOT_CONFIRMED / CONTRADICTED.",
+ "world_is": "The four price-moving events are spin-offs (custodian acca + lica of the spun-off security on the date, no quantity step). The store ratio is a price factor and the custodian evidence is a cost-adjustment plus a corporate-action contribution of another CUSIP, not a split row. I classed them REAL_AND_BEFORE on the independent close step in the cottonwood store and the same-day custodian corporate-action rows, and said so in not_established; whether a spin-off factor belongs in rule method_r28 is not mine to decide."
+}
+```
