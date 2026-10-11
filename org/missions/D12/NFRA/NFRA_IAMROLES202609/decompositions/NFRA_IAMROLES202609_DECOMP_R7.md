@@ -132,3 +132,21 @@ x-3's table, under its own pair.
 workstream with a disjoint write surface issues beside it). It writes only to
 `deliverables/0.7.0_AE_CloudOps~IR/round7/smartx_drift/`, which is disjoint from x-1 and x-2. The fanout is now `3 of 3 chains,
 cap 8`. Rule 24: E4 is a fourth analysis item in exactly one cell. It moves no state, because it is read-only.
+
+---
+
+## 8. ADDENDUM 2 (2026-10-11 ~05:1xZ) -- E3 cut: IAM-x-4, retire `lambda-test-role` (row 7)
+
+**Consumes:** `ROUND_ANALYSIS.round6.md` Addendum 2 and `1.0.0_SA_CTO~Z`'s ruling @`5af6d5e23e`. That ruling adopts the
+laptop CTO's YES @`106f60a7c8` and takes the card off Andrew's list (exit (b), msg 33195). E3 is no longer conditional.
+
+| cell | item | rows | module | issued to | risk |
+|---|---|---|---|---|---|
+| `IAM-x-4` | E3 retire | 7 `lambda-test-role` | none (IAM API: detach, delete) | `0.7.0_AE_CloudOps~IR` | WORLD |
+
+A third workstream of round 7, `RETIRE_ROW7`, with a disjoint write surface (`deliverables/0.7.0_AE_CloudOps~IR/round7/retire_row7/`
+plus its NEVER-2 entry). `IAM-x-4 <- (none)`. The fanout is now `4 of 4 chains, cap 8`.
+
+Step 0 is the issuer's addition to the ruling's terms. The laptop's recreation record is not in this clone, so the
+assignee writes a site-Z record from live reads before anything moves, and the rollback leg points at that record.
+Rule 24: E3 is one item in one cell. Its intent, a retirement, is kept apart from x-1's adoption and x-2's narrowing.
