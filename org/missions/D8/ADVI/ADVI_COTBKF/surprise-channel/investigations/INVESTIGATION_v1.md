@@ -6863,3 +6863,73 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W118-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~118",
+  "surfaced_at": "2026-10-11T17:40:38Z",
+  "one_line": "Re-mint failure output over-names: on a failed put the mode prints every key of the day (or the sidecar, or the method row's two keys) as WRITTEN although none, or only the first, landed, and a half pair (new data.parquet, old manifest.json) is not flagged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/tests/test_commonwealth_ard_remint.py @3a0eb0c756: test_failure_F1, F2, F5a, F5b, F6a, F7a, F7b, F10 (each asserts the printed lines, the bucket's version ids before and after, and a DEFECT (CB-bs-3) comment)",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py:1285-1330 (remint_days write section) and :1190-1196 (_remint_failure), read at the worktree base eb6423b898",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~118/REMINT_FAILURE_PATHS.json (described: false on those points)"
+    ]
+  },
+  "spec_asserts": "CB-bs-3 item 3: a test that shows the mode leaves the table in a state its own printed lines do not describe (a key written and not named, a half pair not flagged) is a DEFECT of the mode; do not fix it, record the point as DESCRIBED: false and file the row.",
+  "world_is": "remint_days appends a unit's keys to `written` BEFORE the put (data/assets/scripts/silver/commonwealth_account_return_daily.py:1288 days, :1309 sidecar, :1318 method row), and _remint_failure prints each as 'WRITTEN' (:1195); the second ERROR line says 'written or attempted' but no line says which landed. Shown on the faked bucket for 8 points (F1, F2, F5a, F5b, F6a, F7a, F7b, F10; F8, a kill, prints nothing and is row S2): F1 names 2 keys, 0 changed; F2 names 2, 1 changed (a half pair); F5b names 4, 3 changed (a half pair); F7b names 7, 6 changed (the method row a half pair); F10 (put lands, ETag unverified) names 2, 1 changed. The mode was not edited and not run against the bucket.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W118-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~118",
+  "surfaced_at": "2026-10-11T17:40:38Z",
+  "one_line": "Re-mint killed or interrupted between two puts prints nothing about the keys written: the handlers catch (Exception, SystemExit) only, so a BaseException leaves the bucket changed with no ERROR line and no WRITTEN list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/tests/test_commonwealth_ard_remint.py @3a0eb0c756: test_failure_F8_a_process_killed_before_the_nth_put_prints_nothing_about_the_keys_written (7 cases)",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py:1303-1304, :1314-1315, :1326-1327 (the except clauses), read at the worktree base eb6423b898"
+    ]
+  },
+  "spec_asserts": "CB-bs-3 item 3: a test that shows the mode leaves the table in a state its own printed lines do not describe (a key written and not named, a half pair not flagged) is a DEFECT of the mode; do not fix it, record the point as DESCRIBED: false and file the row.",
+  "world_is": "data/assets/scripts/silver/commonwealth_account_return_daily.py:1303, :1314 and :1326 catch (Exception, SystemExit); a KeyboardInterrupt or a kill propagates and `written` is lost. Shown as the put list at the moment an uncaught BaseException is raised by the nth put (n = 1..7): up to six keys changed (half a pair at n = 2, 4 and 7), and no ERROR, WRITTEN or success line is printed; only the REPLACED lines of completed units. A test cannot kill a process; this is what it shows, and a real kill during a put is not modelled.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W118-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~118",
+  "surfaced_at": "2026-10-11T17:40:38Z",
+  "one_line": "Re-mint does not read back the method row's manifest.json: a method-row manifest.json stored with the wrong content is reported as a success (exit 0 and the success line).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/tests/test_commonwealth_ard_remint.py @3a0eb0c756: test_failure_F7d_a_method_row_manifest_that_is_stored_wrong_is_never_seen",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py:1323-1325 read at the worktree base eb6423b898"
+    ]
+  },
+  "spec_asserts": "CB-bs-3 item 3: a test that shows the mode leaves the table in a state its own printed lines do not describe (a key written and not named, a half pair not flagged) is a DEFECT of the mode; do not fix it, record the point as DESCRIBED: false and file the row.",
+  "world_is": "data/assets/scripts/silver/commonwealth_account_return_daily.py:1320-1328 reads back the method row's data.parquet only (the days' manifests are checked at :1297-1302, the sidecar by sha256 at :1312); with the stored method-row manifest.json replaced by '{}' on the faked bucket the mode returned 0 and printed '...sidecar=replaced method_row=replaced'. The mode was not edited and not run against the bucket.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
