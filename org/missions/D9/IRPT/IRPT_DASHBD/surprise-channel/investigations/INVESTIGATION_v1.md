@@ -5435,3 +5435,191 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W88-S1 -- DB-b-113: the returns table is NOT hash-equal between the live-pinned members and HEAD's on the 2026-10-08 kit day -- one column, method_version, goes
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W88-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~88",
+  "surfaced_at": "2026-10-11T03:30:00Z",
+  "one_line": "DB-b-113: the returns table is NOT hash-equal between the live-pinned members and HEAD's on the 2026-10-08 kit day -- one column, method_version, goes from 2 to null on all 6,901 rows -- because HEAD's account_return_daily.py carries DB-b-96 and DB-b-102 (outside the release's expected commits) while the staged sources.json stays at its pin; four other tables are byte-equal.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Face step 1: any commit in a member's list outside DB-b-97, DB-b-104, DB-b-110 or the redaction that changes an executable statement means a row and a STOP on that member, named in the packet as an open question. Step 2: the five hashes are equal between the live-pinned run and the HEAD run, under the pinned thresholds. The old packet and the CTO ruling msg 3940 expected three members and DB-b-110's cut only.",
+  "world_is": "account_return_daily.py has 4 commits since its live pin ba544b6064: 08194d1e33 (DB-b-96, manifest reads valuation_source, fee_treatment, price_basis from the source entry) and 26a3f3a38b (DB-b-102, method_version from the source entry, absent when none; METHOD_ROWS) change executable statements, plus 19ba6fe341 (DB-b-110) and 354214c55f (docstring). The source map keeps sources.json at pin efeb21df71, which names no method_version, so method_version_of(src) is absent and the returns row column is null. Kit day 2026-10-08, pinned thresholds sha256 551920f0c364: live-pinned returns sha256 9e5d6e92... (equals DB-b-110's record), HEAD returns a5a3921b...; class, account_activity_daily, account_lot_realized and account_lot_unrealized_daily are equal. Read from the code, not run: handler.py :579 and :620 call ard.emit_day without src, so the returns manifest would also state method_version, valuation_source, fee_treatment and price_basis as the literal absent. Nothing edited; no producer or pin moved; the order's rule is record, row, STOP. The packet names the member as an open question for the halves; whether sources.json moves with it (and with it the dim_return_method row) is for the CTO and COO, not decided here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~88/R45_REFRESH_DELTA0.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~88/R45_REFRESH_CENSUS.json",
+      "git show 08194d1e33 and 26a3f3a38b on data/assets/scripts/gold/irpt_reporting/account_return_daily.py (method_fields, method_version_of, build_manifest, emit_day, compute_range)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:579,620",
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-49f-reporting-gold-lambda.staged_from (sources.json pin efeb21df71)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W88-S2 -- DB-b-113: five staged pins now differ from HEAD and stay at their pins -- sources.json, lib/opal_naming.py and reporting_policies.json as the old cens
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W88-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~88",
+  "surfaced_at": "2026-10-11T03:32:00Z",
+  "one_line": "DB-b-113: five staged pins now differ from HEAD and stay at their pins -- sources.json, lib/opal_naming.py and reporting_policies.json as the old census said, plus infra/logic/registry/scopes.json and MEASURED_THRESHOLDS_R1.json (no file at its repo path at HEAD) which the old census did not list; DB-b-110's private thresholds copy matches the pinned sha256.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 1: sources.json, lib/opal_naming.py and reporting_policies.json differ from HEAD while staying at their pins; any OTHER differing member is a row.",
+  "world_is": "Comparing all 18 staged pins to HEAD bytes: 11 equal; 7 differ -- the two members this release changes (account_return_daily.py, account_activity_lots.py) and 5 that stay at their pins: sources.json, lib/opal_naming.py, scopes.json (last touched by commits since the old census, newest a15fb36a4c), reporting_policies.json, and MEASURED_THRESHOLDS_R1.json whose repo path holds no file at HEAD (only its SUPERSEDED names; the pin 6be02af162 blob is the pinned file, sha256 551920f0c364). The two extras are not members of this release (the bundle is built from the pins); they are named in the census so the halves see them. DB-b-110's private copy of the thresholds (row D2-W85-S1) has the same sha256 as the pinned blob, read now.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~88/R45_REFRESH_CENSUS.json members_compared",
+      "git show 6be02af162eaeff01ca19d2e5b228ffce6091cc7:org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.4.0_DS_ClientPlatform~S/MEASURED_THRESHOLDS_R1.json (sha256 551920f0...)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W88-S3 -- DB-b-113: the four-member candidate's returns manifest writes the literal absent for method_version and the three method fields where the live code writes method_version 2
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W88-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~88",
+  "surfaced_at": "2026-10-11T04:05:00Z",
+  "one_line": "DB-b-113 AMENDMENT 1 item 3: measured on the kit, the returns manifest the four-member candidate writes states method_version, valuation_source, fee_treatment and price_basis as the literal absent, where the live code writes method_version 2 (and no key for the other three); the five table hashes are equal, so this is manifest content only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "AMENDMENT 1 item 3: record the returns manifest's method_version and the three method fields as each run wrote them; if the four-member run writes the literal absent where live writes a value, file a row and put it in the packet as an open question.",
+  "world_is": "manifest_probe.py (same folder) calls each kit's own emit_day with the arguments handler.py:579 and :620 pass (no src), against a capturing stub S3. LIVE kit: method_version 2; valuation_source, fee_treatment and price_basis are not keys of the manifest. THREE-member kit and FOUR-member kit (sources.json at HEAD): method_version, valuation_source, fee_treatment, price_basis all the string absent, and the method sentence states the formula with the three fields absent and no custodian claim. The four-member run's five table hashes equal the live run's, returns included (the column method_version is 2 on both); only the manifest differs. Cause: handler.py calls emit_day without src, and HEAD's build_manifest reads the fields from src (account_return_daily.py:1845-1857, method_version_of 1802-1823). Nothing was edited; the question is for the halves and the issuer (served manifest content at release), not decided here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~88/R45_REFRESH_DELTA0.json manifest_method_fields",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~88/manifest_probe.py",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:579,620",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1802-1860"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W89-S1 -- DB-b-114: Cottonwood adapter text says method_version NULL while its code stamps 3; row 3 text leaves as-traded and net-of-fees to the entry fields
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W89-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~89",
+  "surfaced_at": "2026-10-11T04:15:00Z",
+  "one_line": "DB-b-114: the Cottonwood adapter's docstring (lines 44 and 69) and its COLUMNS_NULL entry (line 136) still say method_version is NULL on purpose, but the code at line 326 reads the sources.json entry and stamps 3; and METHOD_ROWS row 3 (producer lines 115-127) does not itself state as-traded close or net of fees, and inherits income_basis and flow convention measured for the custodian channel only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py:44,69,136,326,380 @60f4b5b489",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:115-127 @60f4b5b489",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~89/COTTONWOOD_VALUE_RULE24.json"
+    ]
+  },
+  "spec_asserts": "ADVI_COTBKF-D2-W66-S1 and the adapter header assert the producer admits no value that states the method, so method_version stays NULL.",
+  "world_is": "Since DB-b-102 the producer admits row 3 and the entry names it, so the adapter code already stamps 3 and the docstring is stale; the row 3 dimension text leaves as-traded and net-of-fees to the entry fields. No served claim is false today (rows carry NULL; no mint has run).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W90-S1 -- DB-b-115: the criterion counts the lots emit_day call (handler.py:430), which takes no src, so DB59-1-AC1 cannot pass inside the grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W90-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~90",
+  "surfaced_at": "2026-10-11T04:20:00Z",
+  "one_line": "DB59-1-AC1's checker counts handler.py:430 (aal.emit_day, account_activity_lots) as a returns emit_day call that must pass src=, but aal.emit_day has no src parameter; the criterion cannot PASS without a producer edit outside the grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "The order says handler.py calls ard.emit_day three times (~430, ~579, ~620) without src=; DB59-1-AC1 fails any `emit_day` attribute call lacking a src keyword.",
+  "world_is": "Only two calls are ard.emit_day (579, 620) and both now pass src=. Line 430 is aal.emit_day(s3, table, rows, firm, day, *, upload) at account_activity_lots.py:1318, which takes no src; passing src= there raises TypeError, which emit_lots catches and records as a lots failure. The checker (p59_round59.py:35-40) matches on attr name only, so it reports FAIL at line 430.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:430",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py:1318",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r59/p59_round59.py:35-40"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T04:22:33Z",
+  "one_line": "L9 round 58 (DB-b-114): the rule-24 conclusion EXISTING_VALUES_SUFFICE is SOUND; stamping the measured Cottonwood rows return_basis TWR and method_version 3 is truthful. The record left open whether the rows used end-of-day or start-of-day flow timing, which are two different formulas; this seat read the run commit: end of day, the C-METHOD form. One condition rides the mint: the emitted dim row 3 and manifest are read for a sentence false for Cottonwood (row D2-W89-S1) before the first partition.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~89/COTTONWOOD_VALUE_RULE24.json",
+      "msg 4035 (rounds 57 and 58 drained @2a6ac2e4e0, @b01e44444e)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_ROUND_58_L9_GRADE_20261011.md",
+      "this seat's read at the run commit the served rows name (6f70d5cc01): commonwealth_daily_returns.py:65 FLOW_TIMING = \"end\", and commonwealth_fwd3_serve.py:480-481 calls daily_returns with no flow_timing argument, so the rows were computed as ret = (value_t - flow_t) / value_(t-1) - 1; the same two lines read the same at HEAD",
+      "this seat's calls on the sources.json entry _commonwealth_delivery at HEAD: method_version_of -> 3; method_text -> the C-METHOD formula plus valuation_source=positions_x_as_traded_close, fee_treatment=net_of_fees, price_basis=as_traded, with no custodian sentence; the order's check DB58-1-AC1 re-run PASS",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json:161 (return_basis: which arithmetic produced total_return_daily; TWR, the C-METHOD form), read at the cited line",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:9 and :112-125 (the formula; METHOD_ROWS row 3), read at the cited lines"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md rule 24: a value-enum proposal arrives with its four-postulate record and token census. The issuer names the conclusion a judgment for L9 (msg 4035).",
+  "world_is": "The four postulates hold and the one fact the record did not establish (flow timing) is established: end of day. Rounds 57 and 58 are terminal; rows D2-W88-S1 (ARMED) and D2-W88-S3 (ARMED) belong to the R45 release and stay with their disarm owners.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W91-S1 -- DB-b-116: the order's address recipe leaves the firm slot ambiguous; a registry key in it gave four not-found reads
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W91-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~91",
+  "surfaced_at": "2026-10-11T04:25:00Z",
+  "one_line": "DB-b-116: the face says opal_naming.address('irpt', <firm>, ...) for 'the firm scope the Cottonwood entry resolves to'; I first passed the registry key (z09 / 08335338) and the control read was not found too, so two list/head pairs read the wrong address before I rebuilt it with firm_scope() (cottonwood / 49financial).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:327-340,1894 @6bfea3096a",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~91/ROW3_VS_COTTONWOOD.json read_history"
+    ]
+  },
+  "spec_asserts": "The order permits exactly two S3 reads, the dim row 3 address and its positive control.",
+  "world_is": "Six read calls were made: an s3 ls pair and a head-object pair at the key-built (wrong) addresses, all not-found with no data read, then the head-object pair at the firm_scope-built addresses that the record uses. All reads, no object body, no write. The overrun is the worker's mis-build of the address, not a defect of the order's text, which says 'firm scope'.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

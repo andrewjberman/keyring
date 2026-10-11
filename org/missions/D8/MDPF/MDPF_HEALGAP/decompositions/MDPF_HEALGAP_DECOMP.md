@@ -189,3 +189,85 @@ Ruling R2-1 (row D1-W3-S1) first carried the grant to the round-2 drain-end read
 - **Carrier:** `to-pipeline-gate.py` refused a sixth round-2 order file (ONE ISSUER PER ROUND: the round-2 issuance is closed). The cell is
   carried as one CloudOps order (one-statement edit + targeted apply), under an audited `# pipeline-override`, as the partner_roster deploy was.
 - Gate limb that graded this modification: none (a decomposition amendment); the carrier order is graded at its cut.
+
+## ROUND 3 -- the enrichment (issuer 2.0.0_SA_COO~G1, 2026-10-11 ~03:2xZ; PRD v0.3 @4dd05f99ec; CTO L10 answer @1974b85f4e)
+
+Input: `ledger/ROUND_ANALYSIS.round2.md` section 3 (six items) and rulings 3411 (HG-t-11 guard in the SSM document), D, E, K.
+The CTO's item numbers map to cells: item 1 = `HG-t-9`, item 2 = `HG-t-5` apply (drain act), item 3 = `HG-t-11`,
+item 4 = `HG-t-10` (drain act), item 5 = `HG-t-12`, item 6 = `HG-t-13`.
+
+### Measured at the base, 2026-10-11 ~03:1xZ
+
+- **Satellites producer (FWD-5 prerequisite):** `satellites-registry-producer.tf` has one rule, `cot_satellites_registry_producer_daily`
+  `cron(0 7 * * ? *)`, one target, one permission. The handler (`infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py`)
+  passes no event field to `producer.main` and reads no stamp. The role's S3 policy (`cot_satellites_registry_producer_s3`) reads only
+  `bronze/rebalancer_models/*` and `bronze/rebalancer_model_detail/*`, and has **no `s3:ListBucket` anywhere, by design** (the file's own
+  comment). Consequence found at the cut: a stamp read without `ListBucket` returns 403 for an ABSENT key, indistinguishable from a
+  missing grant. The cell therefore adds one prefix-conditioned `ListBucket` so absent reads 404 and a grant fault stays loud.
+- **Asset-dim re-attempt (FWD-6):** `bd_asset_dim_pipeline` `cron(10 22 ? * MON-FRI *)`; the trigger Lambda has no guard; its role
+  `bd_daily_trigger` is shared by 7 triggers and holds no S3 or `ssm:ListCommands` read. The pull is now the REST path (no Playwright):
+  it mints from the 49F session secret and writes `bronze/assets_dim_rest/<UTC date>/assets_dim_rest.parquet` (key from the generated
+  pin `_asset_dim_rest_pin.py`), then rebuilds `silver/bd_assets_dim.parquet`. **Ruling 3411 named `silver/assets/<D>.parquet`, which is the
+  Playwright-era artifact; the guard keys on today's bronze partition instead** (issuer's ruling inside this decomposition, same intent:
+  today's pull has landed). Accepted residual: bronze present and the dim rebuild failed reads "complete" until the next day's run.
+- **FWD-6 population:** 164 scheduled pulls live (CVO read) against the census's 162 (row D1-C-S15).
+- **Row S1:** `infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:548-556` runs the builder, pair and slice only when
+  `build_cottonwood_mdpf_slice.py` is staged in the runner's `assets_gold`; whether it is staged is unread.
+
+## Rule 24
+
+Domain: the six items, one adapter per cell. Same grain: `HG-t-9` is one producer (rule + handler + its grant); `HG-t-11` is one
+re-attempt (rule + document guard). State coherence: t-9 does not move the 07:00Z fire or the runner's fire time; t-11 does not move
+the 22:10Z fire; t-12 and t-13 write only their documents. The two drain acts change a schedule or the world and are not cells.
+
+## The cells
+
+| cell | what | serves | placement | risk | chain / slot |
+|---|---|---|---|---|---|
+| `HG-t-9` | The producer's second scheduled fire `cron(15 13 * * ? *)` with target input `{"require_stamp": true}`; the handler, on that input only, heads `meta/<UTC date>-complete.json` and rebuilds only if present (404 -> one `STAMP-ABSENT` line, nothing served; any other error raises); the role gains `GetObject` on `meta/*-complete.json` and one prefix-conditioned `ListBucket`. The 07:00Z fire and its event are unchanged | FWD-5 (prerequisite), D1-S7 | dell1 code; applied at the drain under its own never-widen pair | WORLD | A, `0.9.0_WK_MDPF_HEALGAP~7` |
+| `HG-t-11` | The asset-dim re-attempt: a second rule on the same trigger at `cron(40 22 ? * MON-FRI *)` (after the 22:20Z mint), and a guard in `opal-bd-asset-dim-download`: exit 0 with the shutdown armed when today's bronze partition exists; a failed read is not "exists" | FWD-6 | dell1 code; Terraform and the document applied at the drain, document under `safe-apply` with its own pair; rollback = prior document version | WORLD | B, `0.9.0_WK_MDPF_HEALGAP~8` |
+| `HG-t-12` | READ-ONLY re-sweep of every scheduled pull against a fresh count (CVO read 164), answering `schwab-canonical-si2-08403355-pull-daily` and `teams-global-transcripts-pull-hourly`, and marking the SI2 and FT pulls with v0.3's third answer, each naming the person's act and where it is listed | FWD-6 | dell1, document only | LOCAL | C, `0.9.0_WK_MDPF_HEALGAP~9` |
+| `HG-t-13` | READ-ONLY: does `mdpf-daily-dispatch.sh` run the slice script on the staged runner, and is that run a no-op | row S1 | dell1, document only | LOCAL | D, `0.9.0_WK_MDPF_HEALGAP~10` |
+
+## Write sets (disjoint)
+
+- **HG-t-9:** `infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf`,
+  `infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py`, the channel.
+- **HG-t-11:** `infra/aws/terraform/bd-pipeline/eventbridge.tf`, `infra/aws/ssm/opal-bd-asset-dim-download.json`, the channel.
+  Neighbouring project: NFRA_MCPINDEX owns the BD pipeline's history; the order's drain act re-reads its open cells before the apply.
+- **HG-t-12:** `org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~9/FWD6_CENSUS_RESWEEP_R3.md`, the channel.
+- **HG-t-13:** `org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~10/MDAILY_RUNNER_SLICE_READ.md`, the channel.
+- Checks (issuer's, dry-run at the base 2026-10-11 ~03:2xZ, each BAD as expected with a GREEN control):
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_CHECKS/` -- `hg_r3_rules.py --t9 | --t9-iam | --t11`,
+  `hg_t9_stamp_gate.py`, `hg_t11_assetdim.py --ssm`, `hg_t12_census.py`, `hg_t13_read.py`.
+
+## Edges and fan-out
+
+No data edge between the four cells. `HG-t-5` apply (drain) depends on `HG-t-9` APPLIED and one 13:15Z fire read back (CTO item 2).
+`fanout: 4 of 4 chains, cap 8`.
+
+## Battery
+
+- `comp-schedule`: t-9 adds one fire at 13:15Z (after a 12:45Z landing and before the 13:30Z floor, ruling K); t-11 adds one at 22:40Z
+  after the 22:20Z mint; each carries its margin in the order. The runner's fire time does not move in this round until the HG-t-5 apply.
+- `comp-iam`: t-9 adds `GetObject` on one stamp pattern and one prefix-conditioned `ListBucket` to a firm-scoped role (a widening: the
+  never-widen half names both statements and the rollback); t-11 adds NO grant (ruling 3411).
+- `comp-adversary`: t-9's 403-vs-404 distinction is the whole difference between "stamp absent" and "grant missing"; the stub test pins
+  both. t-11's guard cannot read a vendor or write a firm bucket; its only new act is a HEAD on a key the instance already reads.
+- C-NAMES: t-9 adds a rule, target and permission; every name is `lib/opal_naming.py` output printed in the order. t-11 adds one rule
+  name likewise. A builder REFUSAL is a registry row to add, never a typed name (CLAUDE.md rule 30).
+- C-FIX-NOT-NOTIFY: no alarm, topic, send or monitor in any cell.
+
+## The issuer's acts at the drain (not cells)
+
+1. **Apply HG-t-9 (WORLD):** count the writers of `registry.json`/`holdings.json` first (N printed in the half); then plan, apply, read the
+   deployed code against the build input, read the second rule back. The 13:15Z fire is read on the next day's artifacts.
+2. **HG-t-5 apply (WORLD, own pair):** the fire time to `cron(45 12 * * ? *)`, only after act 1 and one 13:15Z fire read; every half
+   that bounds the 06:00Z step is re-read (round-1 rule D1-S1).
+3. **Apply HG-t-11 (WORLD, 49F leg):** the CloudOps msg-1814 conditions verbatim; the laptop told FIRST of a send that writes a firm
+   data bucket; the document change under `safe-apply` with its own pair; the first guarded fire read.
+4. **`HG-t-10` -- FWD-3's exercise (WORLD, own pair):** one induced same-day hole on FWD-1's pattern, repaired by
+   `repair.py --date <today>`, which prints its MANIFEST before `--execute`; read on served bronze that exactly the named feed lands.
+   Ruling 3410: the vendor call needs no per-use word. **Condition D1-S12:** the half names the restore actor on a DIFFERENT device
+   than the seat that sets the induce, the ledger path it reads and the deadline. Condition D1-S11: any IAM verification splits C5a/C5b.
+5. Every armed restore mechanism is named in the entry and read at its close (round-1 section 2.2).

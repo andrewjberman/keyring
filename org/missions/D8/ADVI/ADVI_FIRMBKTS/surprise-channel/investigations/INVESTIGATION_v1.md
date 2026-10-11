@@ -563,3 +563,179 @@ write: **1 row** (`S1`).
   "notes": "FB-e-6 builds the path gated on the registry's own map (FIRM_BUCKET_MAP[scope] === resolved bucket), so no request changes until the map does. The cutover is the CTO's, with F10 and the advTenant remedy."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S8",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "1.0.0_SA_CTO~DELL1",
+  "surfaced_at": "2026-10-11T03:55:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARM OF D1-S4 AND D1-S7 BY THEIR DISARM OWNER: F6'S FLIP, THE F10 PRODUCER REPOINT, A DELTA COPY AND THE advTenant REMEDY ARE ONE CUTOVER WINDOW, PLACED IN ROUND 3; UNTIL THEN THE COPY IS INERT AND THE F6 PATH IS GATED ON THE REGISTRY MAP",
+  "spec_asserts": "D1-S4: a router flip before the producers repoint serves a day-old copy. D1-S7: an ungated bucket-keyed rewrite would change the ?firm=49financial staff proxy with no registry edit, and firm-config.mjs forbids a shared-bucket value change before the advTenant remedy.",
+  "world_is": "Neither hazard can fire in round 2. F6 is built dormant and not deployed. FB-e-6 gates the canonical path on FIRM_BUCKET_MAP[scope] === the resolved bucket, so no request changes until the map does (D1-S7 notes: 193 of 193 identical on the gated build). F7's copy is NEW keys only and nothing reads them (CTO half, condition 2). Placement: round 3 carries ONE cutover family, and nothing of it is cut before F7 reads COPY-COMPLETE and F6 is built. The family, in order inside one window, each with its own never-widen pair: (1) the advTenant remedy lands first; (2) the F10 platinum producers repoint to address() keys in opal-data-49financial; (3) a delta copy against a fresh manifest reads COPY-COMPLETE; (4) the FIRM_CONFIG map value moves and F6 deploys. No window leaves both homes written or both read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND2_F7_COPY_CTO_HALF.md (conditions 1-3; the D1-S4 section)",
+      "ADVI_FIRMBKTS-D1-S4 notes: un-park on the CTO placing F10's repoint or a resync inside the flip window, plus the advTenant remedy if a map value changes",
+      "ADVI_FIRMBKTS-D1-S7 notes and evidence: FB-e-6 gated build 193 of 193 identical; the cutover named as the CTO's, with F10 and the advTenant remedy"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolves D1-S4 and D1-S7 as hazards (the D1-S8 shape used elsewhere for a disarm); GRADUATED stays the CVO's L9 field. The round-3 enrichment list carries the cutover family as one item."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S9",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T04:23:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "THE ISSUER CUT FB-e-6 WITHOUT RUNNING THE NAMING GATE ON ITS PATCH: THE GATE REFUSED THE FIRM-NAME TABLE AND THE SPEC'S KEY-SHAPED LITERALS AT THE WORKER'S COMMIT, AND THE ROUTER WAS RE-CUT WITH AN EMPTY CANONICAL-BUCKET LIST",
+  "spec_asserts": "The issuer's cut dry-ran every mechanical check at the base (DISPATCH Step 2) and, for FB-e-7, the naming gate on the diff. FB-e-6's patch @76bff7e7d4 was proved by its own harness and the router's gate, and its infra/ paths are graded by the commit-time naming gate (CLAUDE.md rule 30).",
+  "world_is": "Worker ~9's commit of the v1 patch was refused by naming-gate.py --enforce (35 graded): index.mjs:126 typed the three long-form firm names as a hand-kept scope table, and the new spec typed firm names and platinum-prefixed key strings. The issuer did not run naming-gate.py --diff on the patch before the cut; running it afterwards reproduced the refusal. The re-cut (patch @ F6_ROUTER_EDIT.patch, v3): the router carries an EMPTY CANONICAL_PLATINUM_BUCKETS list and derives a bucket's scope from its own name after the prefix; the spec types no firm name (it reads FIRM_CONFIG) and builds its keys from the router's exported class table; naming-gate.py --diff --enforce on the v3 diff reads PASS 0 graded; the router's gate reads 39 pass; r2_f6.mjs diff 193 of 193, seam 20 of 20 and 10 of 10 controls; a mutant with a non-empty list fails diff 183 of 193 and seam controls 9 of 10.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker ~9 report 2026-10-11 and its row ADVI_FIRMBKTS-D1-W9-S4 (the refusal text)",
+      "python .tools/naming-gate.py --diff <v1 patch> --enforce -> NAMING REFUSE index.mjs:126 and spec lines 40, 52, 55, 81, 83 (issuer's run)",
+      "python .tools/naming-gate.py --diff <v3 patch> --enforce -> NAMING-GATE: PASS 0 graded (issuer's run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The activation changed from the registry's map (rows D1-S4/S7's design) to an explicit list: a cutover now needs the map edit AND one list entry, and the list entry is a hand-kept firm carrier the naming gate will grade, so the cutover cell either registers it (infra/logic/registry/) or generates it from the registry. That is the CTO's round-3 cutover window. The dormant build is stronger than before: it cannot change a request until a list entry exists."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W7-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~7",
+  "surfaced_at": "2026-10-11T03:57:49Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "F4 negative arm N4 passes on the absence of the deny text alone: the cot role's cottonwood read is refused by an identity-side implicit deny, so the fence's admit leg for its own firm is not exercised by this run",
+  "spec_asserts": "Round-2 cell FB-e-4 / PRD F4 (r2_f4.py N4): the cot role's read of opal-data-cottonwood is NOT refused by the resource-based deny, so the difference control shows the fence refuses the other firm's role and admits its own.",
+  "world_is": "Evidence F4_NEGARM_EVIDENCE.json (command f95a10b3-ab60-40b0-a673-3fce3a6258d9, runner i-0167fd745ad906a66, caller assumed-role/irpt-cot-ycharts-research-role/fb-r2-4-negarm): the INF read is refused with 'explicit deny in a resource-based policy'; the COT read is ALSO refused, with 'because no identity-based policy allows the s3:ListBucket action'. The cottonwood refusal is an identity-side implicit deny, not a fence admit. N4 (r2_f4.py:98-100) tests only that the deny phrase is absent from the COT text, so it passes; the fence's admit of its own firm is shown only by policy text (P3), not by an exercised read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~7/F4_NEGARM_EVIDENCE.json @8a41501ebc (COT line: because no identity-based policy allows the s3:ListBucket action)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f4.py:98-100 @8a41501ebc (N4 tests DENY_PHRASE not in COT text only)",
+      "r2_f4.py --arms negative on the evidence file: 4 of 4 arms, rc 0, reproduced on two runs; mutant with the INF deny text removed gives N3 FAIL, 3 of 4, rc 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded, not graded. The cell's acceptance reads as written (AC2 4 of 4). Whether the difference control must exercise the cottonwood admit leg is for the issuer and the L9 adjudicator; the cot role's missing identity permission on opal-data-cottonwood is not ruled on here."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W7-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~7",
+  "surfaced_at": "2026-10-11T04:10:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AC1 and AC2 expect lines read 'ROUND 2 F4 ... ARMS -- and exit=0' on one line, but the invocation prints the arms line and 'exit=0' on two lines, so the expect string never occurs in the verbatim output",
+  "spec_asserts": "Round-2 TO-FB-e-4 AC1 expect: 'ROUND 2 F4 POSITIVE: 3 of 3 arms -- and exit=0'; AC2 expect: 'ROUND 2 F4 NEGATIVE: 4 of 4 arms -- and exit=0'. The invocation's output is the stated line followed by an echo of the exit code.",
+  "world_is": "Verbatim output of both invocations (run at 8a41501ebc in the worktree): 'ROUND 2 F4 POSITIVE: 3 of 3 arms' and 'exit=0' on separate lines; 'ROUND 2 F4 NEGATIVE: 4 of 4 arms' and 'exit=0' on separate lines. Substance matches (3 of 3 and 4 of 4, exit 0). proof-of-spec-check matches expect as a regex on output_evidence and reports both rows VIOLATION (status PASS not matched). Worker recorded the verbatim output and status FAIL; the expect text was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-e-4.f4-arms.md @8a41501ebc (section 4 AC1 and AC2 expect text)",
+      "proof-of-spec-check.py conditional_checks expect match (re.search over output_evidence) @732412e179 -> VIOLATION acceptance[AC1] and acceptance[AC2] on the first run",
+      "AC1 and AC2 invocations run in the worktree @8a41501ebc: 'ROUND 2 F4 POSITIVE: 3 of 3 arms' / 'exit=0'; 'ROUND 2 F4 NEGATIVE: 4 of 4 arms' / 'exit=0'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded, not graded. The format difference is for the issuer and the L9 adjudicator to rule on; the order stays open with AC1 and AC2 recorded FAIL on the mechanical expect match, and no flip is made."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W7-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~7",
+  "surfaced_at": "2026-10-11T04:12:47Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "THE LAYER-2 FLIP GATE CANNOT FIND THE PROOF INSTANCE OF A TREE ORDER WHOSE FILENAME CARRIES A SUFFIX, SO TO-FB-e-4's complete flip is REFUSED although its instance is VALID and both criteria PASS by output",
+  "spec_asserts": "to-pipeline-gate.py check_complete_flip (:3244-3255, :3176-3191): for a tree order the instance is searched as deliverables/*/<stem>.proof_of_spec.json, where <stem> is the ORDER FILENAME minus .md; the <proof_of_spec> block may also name the instance path. The order's own face (section 5) names the instance as ADVI_FIRMBKTS.TO-FB-e-4.proof_of_spec.json.",
+  "world_is": "The order is org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-e-4.f4-arms.md, so the gate's stem is ADVI_FIRMBKTS.TO-FB-e-4.f4-arms and it searches for ADVI_FIRMBKTS.TO-FB-e-4.f4-arms.proof_of_spec.json, which does not exist. The instance is at deliverables/0.9.0_WK_ADVI_FIRMBKTS~7/ADVI_FIRMBKTS.TO-FB-e-4.proof_of_spec.json. The <proof_of_spec> block (section 4) names no instance path, so the tag route finds none. The commit refused with 'flips to complete on PIPELINE-REGISTERED project ADVI_FIRMBKTS, and NO proof-of-spec instance was found beside it'. The instance itself passes proof-of-spec-check.py AC1,AC2 rc=0 VALID.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh of the order flip + instance (0.9.0_WK_ADVI_FIRMBKTS~7 worktree, branch wk-ADVI_FIRMBKTS-7, base 105ca3c82e), 2026-10-11T04:1xZ: 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). Commit aborted; files unstaged.' and the to-pipeline-gate REFUSED line quoted above",
+      "proof-of-spec-check.py ADVI_FIRMBKTS.TO-FB-e-4.proof_of_spec.json AC1,AC2 @worktree -> VALID (rc=0), violations=0",
+      ".tools/to-pipeline-gate.py:3176-3191 @worktree (_proof_instance_candidates: names = (stem + '.proof_of_spec.json', ...) with stem = basename(rel) minus '.md'; tree glob deliverables/*/<n>)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded, not worked around. Not renamed (the instance path is the one the order names), no <proof_of_spec> path added to the issuer's literal block, and no # pipeline-override line added, because the order is in pipeline. The order is left status pending on the worker branch; the criteria are PASS by output. Owner of the choice: the issuer 2.0.0_SA_COO~B1 (name the instance to the order stem, or add its path to the block) or the gate's owner (search by to_id as well as stem)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W8-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~8",
+  "surfaced_at": "2026-10-11T04:10:42Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "THE F7 PROOF INSTANCE IS NAMED BY THE ORDER AS D/ADVI_FIRMBKTS.TO-FB-e-5.proof_of_spec.json, BUT THE COMPLETE-FLIP GATE LOOKS FOR THE ORDER FILE STEM, ADVI_FIRMBKTS.TO-FB-e-5.f7-copy.proof_of_spec.json, SO THE STATUS FLIP IS REFUSED",
+  "spec_asserts": "ADVI_FIRMBKTS.TO-FB-e-5 section 5: the instance sits at D/ADVI_FIRMBKTS.TO-FB-e-5.proof_of_spec.json and the order's <status> flips to complete in the same commit once AC1-AC3 pass; section 1a step 6 commits the instance with the status flip together.",
+  "world_is": "proof-of-spec-check.py on the named instance returns rc=0 (3 of 3 rows, 0 violations). The complete-flip gate (.tools/to-pipeline-gate.py check_complete_flip, candidates from _proof_instance_candidates at lines 3176-3191) takes the order file stem ADVI_FIRMBKTS.TO-FB-e-5.f7-copy and globs deliverables/*/ADVI_FIRMBKTS.TO-FB-e-5.f7-copy.proof_of_spec.json. The order's <proof_of_spec> block (section 4) names no literal instance path, so the tag lookup adds no candidate. The gate refuses the flip with 'NO proof-of-spec instance was found beside it'. The worker did not rename the instance or edit the order's proof block; the order's <status> stays pending in the committed state.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-e-5.f7-copy.md @aca87f5ef8 (section 5 names D/ADVI_FIRMBKTS.TO-FB-e-5.proof_of_spec.json; section 4 proof block names no literal path)",
+      ".tools/to-pipeline-gate.py @aca87f5ef8 lines 3176-3191 (_proof_instance_candidates: stem = basename minus .md)",
+      "commit-attempt output of 0.9.0_WK_ADVI_FIRMBKTS~8 at 2026-10-11T04:10Z: REFUSED, 1 violation, instance not found beside the order"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Needs the COO or CTO ruling: either the instance takes the gate's stem name (ADVI_FIRMBKTS.TO-FB-e-5.f7-copy.proof_of_spec.json) or the order gains a literal <proof_of_spec> instance path. The copy itself is complete and verified (AC1-AC3 PASS); only the status flip waits on this."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W10-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~10",
+  "surfaced_at": "2026-10-11T04:06:27Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1",
+  "one_line": "THE TO-PIPELINE GATE CANNOT FIND A TREE PROOF INSTANCE NAMED AS THE ORDER NAMES IT, SO A VALID INSTANCE CANNOT FLIP ITS ORDER TO complete",
+  "spec_asserts": "ADVI_FIRMBKTS.TO-FB-e-7 section 5: the instance is at deliverables/0.9.0_WK_ADVI_FIRMBKTS~10/ADVI_FIRMBKTS.TO-FB-e-7.proof_of_spec.json, and the order's status flips to complete in the same commit as the instance.",
+  "world_is": "The instance at that path is VALID (proof-of-spec-check.py rc=0 on AC1,AC2,AC3, all PASS) and is committed at 7329f897dd. The flip commit is REFUSED by the TO issuance gate: 'NO proof-of-spec instance was found beside it'. to-pipeline-gate.py resolves a tree instance only by the TO file stem (ADVI_FIRMBKTS.TO-FB-e-7.s11-tolerant-load.proof_of_spec.json, lines 3176-3191) or by a backticked path inside the order's <proof_of_spec> block (lines 3156-3173), and this order's block names no instance path. The order therefore cannot reach complete under the gate as written. The flip is NOT committed; the order stays pending on the branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check.py ... ADVI_FIRMBKTS.TO-FB-e-7.proof_of_spec.json AC1,AC2,AC3 -> VALID (rc=0) @7329f897dd",
+      "safe-commit flip attempt, 2 attempts (before and after the instance commit): to-pipeline-gate REFUSED, 'NO proof-of-spec instance was found beside it'",
+      ".tools/to-pipeline-gate.py:3156-3191 @62f4b5441e (stem and tag lookup)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not worked around: the instance was NOT renamed to the stem name, the order's <proof_of_spec> block was NOT edited, and no pipeline-override line was added (the TO is pipeline-registered). Disarm candidates for the owner: a stem-named mirror, or the gate reading the instance path from the order's section 5 'Instance at' line. The gate's own FIX text asks for the two blocks in the TO face."
+}
+```

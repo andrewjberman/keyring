@@ -1687,5 +1687,79 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "world_is": "Each fire lands the new rows listed ahead of the first aged-out row, then dies: no run record, no listing snapshot, and ocio_ic, asset_management_ic and research_meeting are never reached. The round-21 PASS was read from S3 keys alone; the function's outcome was an error. The 4 unlanded meetings (2026-04-10, 04-13, 05-04, 06-01) are not recoverable through the gateway (content aged out; inferred from the 118-to-125-day boundary). 2026-06-08 has aged out since it landed.",
     "notes": "Fix cut as TR-rf-22 (build, LOCAL) and TR-ra-22 (deploy, WORLD, pair + applier). Next scheduled fire 2026-10-12T13:00Z. Supersedes the recoverable claim in row D2-S15. Dates, statuses and counts only."
   }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-S17",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.7.0_AE_CloudOps~TR2",
+    "surfaced_at": "2026-10-11T03:45:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "The transcripts Terraform root cannot be planned or applied at all without a -var: readers.tf:15 declares second_reader_trust_principal_arns with NO default and the root carries no tfvars file, so every applier on this root must supply a value, and the only sound source for it is applied state.",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan -target=aws_lambda_function.pull in infra/aws/terraform/transcripts, 2026-10-11T03:3xZ: 'Error: No value for required variable' on readers.tf line 15; rc=1, no plan produced",
+        "infra/aws/terraform/transcripts/readers.tf:15-18 declares the variable with type list(string) and no default; the file's own header says the defaultlessness is deliberate",
+        "ls -a infra/aws/terraform/transcripts/: no *.tfvars or *.auto.tfvars file in the root",
+        "readers.tf:20-25 local.named_reader_arns concatenates aws_iam_role.second_reader.arn into the key policy's named readers (main.tf NamedReadersUseTheKey), so the variable reaches the KMS key that pull.tf:96-121 depends on through aws_kms_grant.pull and aws_kms_alias.transcripts",
+        "aws iam get-role teams-global-transcripts-second-reader-role at 03:3xZ: the applied trust principal is exactly arn:aws:iam::313476888478:user/Opal_Terminal (one statement, one principal)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-APPLY-ra22 step 3 and the packet's section 0 state the act as `safe-apply` in infra/aws/terraform/transcripts targeted at aws_lambda_function.pull, with no variable input named; readers.tf's header states the root is plan-only for the reader resources and that a plan without the variable is refused.",
+    "world_is": "The reader resources are APPLIED, not plan-only: ledger nfra-trnspt-a18-second-reader-laptop-20261009 closed its APPLY leg at 2026-10-09T09:55Z with 3 added and 1 changed, so the role, policy, attachment and key exist and the trust principal lives in applied state. The defaultless variable therefore no longer gates an unapplied intent; it gates EVERY plan and apply of this root, including an act that targets only the Lambda. This lane supplied the value by READING the applied trust policy and passing it in a tfvars file OUTSIDE the repo, and the targeted plan then showed exactly one resource changing. The hazard is the next applier: a value typed from memory or left as a guess would not refuse, and on an UNTARGETED apply of this root it would rewrite the second reader's assume-role policy -- a widening of who may read the transcripts tier, which no half covers. The durable fix is a committed tfvars (or a default) carrying the value Andrew's routing already named, so the variable stops being a per-applier guess; that is a decision for the issuer's pair and 1.0.0_SA_CTO~DELL2, not this lane.",
+    "notes": "Found while executing TO-APPLY-ra22; the order completed and nothing was widened (mail pull unchanged, commentary function still absent, targeted 0-diff re-plan clean). Names, dates and statuses only. Id note: the middle segment is a DEVICE COORDINATE from the device register, not a lane name -- only D1, D2 and Z are registered, so an applier on dell2 writes into D2-S<n> like every other dell2 writer. S17 was the next free index across all 24 channel documents at 03:5xZ; 2.0.0_SA_COO~T2 writes the same sequence, and the row gate's uniqueness check is what keeps two writers from landing one index."
+  }
 ]
+```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S18",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T04:12:03Z",
+  "one_line": "L8 round 22: no judgment criterion. This seat's reads agree with the close record on the deploy and the one driven run: the live Teams pull carries the rebuilt zip's hash, the 21 failing invocations end at 2026-10-09T22:03Z, and the one invocation since logs no error. The run record's per-series counts are the issuer's read; this seat did not read run.json. The scheduled trigger has not fired on the new code.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/R22_CLOSE.md @733aec56af (msg 4030)",
+      "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/R22_CLOSE_READBACK_20261011.md",
+      "this seat's live reads 2026-10-11T04:12:03Z: teams-global-transcripts-pull-lambda CodeSha256 AI4UQD0M..., LastModified 2026-10-11T03:36:14Z, Active/Successful, equal to the sha256 of the local dist zip (AI4UQD0M...); MemorySize 128, Timeout 300; target of rule teams-global-transcripts-pull-hourly",
+      "this seat's filter-log-events on /aws/lambda/teams-global-transcripts-pull-lambda since 2026-10-09T12:00Z: 107 events, 25 invocations; 21 [ERROR] GatewayGraphError, first 2026-10-09T16:01:13Z, last 22:03:28Z; the one invocation since (2026-10-11T03:38:50Z to 03:40:09Z, 79.3 s) logs no error"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles the channel on the close packet and reads the served state itself, never the producer's report.",
+  "world_is": "TR-ra-22 is APPLIED and exercised once by a seat-driven invoke. The first scheduled fire on the new code is Monday 2026-10-12 13:00Z. Four Monday meetings are ABSENT by this route, and research_meeting's listing is refused.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S19",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T04:12:03Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "The Teams pull runs at its memory ceiling whenever it reads transcript content: Max Memory Used reads 128 of 128 MB on the driven run of 2026-10-11 and on 3 invocations of the 16:00Z fire on 2026-10-09. The driven run landed 1 transcript; a scheduled fire that lands more can be killed at the limit, and the close record does not state this.",
+  "disarm_owner": "2.0.0_SA_COO~T2 -- before the Monday 2026-10-12 13:00Z fire: raise memory_size under a pair, or state why 128 MB holds and read Monday's REPORT line and run.json together.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the same log's 25 REPORT lines: Max Memory Used equals Memory Size (128 of 128 MB) on 4 invocations -- 2026-10-09 16:01, 16:02, 16:04 and the driven run of 2026-10-11 03:40; the other 21 read 98 to 100 MB",
+      "this seat's live reads 2026-10-11T04:12:03Z: teams-global-transcripts-pull-lambda CodeSha256 AI4UQD0M..., LastModified 2026-10-11T03:36:14Z, Active/Successful, equal to the sha256 of the local dist zip (AI4UQD0M...); MemorySize 128, Timeout 300; target of rule teams-global-transcripts-pull-hourly"
+    ]
+  },
+  "spec_asserts": "R22_CLOSE.md: the deployed pull is 'fixed, deployed and driven clean'; its carried list names the scheduled trigger, research_meeting, the 4 ABSENT meetings, the totals line, D2-S17 and a test repair. Memory is not on it.",
+  "world_is": "MemorySize is 128 MB. Four of 25 invocations report the maximum equal to the size, each one a run that read content; none was killed. Whether a run that lands several transcripts exceeds the limit is not measured. grounding for the mechanism (content reads drive the peak): INFERRED from which 4 invocations read 128.",
+  "disposition": "UNDER_INVESTIGATION"
+}
 ```

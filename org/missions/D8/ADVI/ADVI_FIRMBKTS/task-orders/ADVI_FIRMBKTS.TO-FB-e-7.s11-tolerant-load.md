@@ -160,9 +160,10 @@ Read-only: the patch under `org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="FB-e-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 python -m pytest -q -p no:cacheprovider data/cot/scripts/gold/tests/test_s00_missing_tier2.py; echo "exit=$?"</invocation><expect>3 passed -- and exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="FB-e-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_s11.py"; echo "exit=$?"</invocation><expect>S11 NAMING GATE: PASS -- and exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="FB-e-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 115 python -m pytest -q -p no:cacheprovider data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py data/cot/scripts/gold/tests/test_canonical_prices_input_resolution.py; echo "exit=$?"</invocation><expect>12 passed -- and exit=0</expect></criterion>
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~10/ADVI_FIRMBKTS.TO-FB-e-7.proof_of_spec.json`.
+  <criterion id="AC1" cell_refs="FB-e-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 python -m pytest -q -p no:cacheprovider data/cot/scripts/gold/tests/test_s00_missing_tier2.py; echo "exit=$?"</invocation><expect>3 passed</expect></criterion>
+  <criterion id="AC2" cell_refs="FB-e-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_s11.py"; echo "exit=$?"</invocation><expect>S11 NAMING GATE: PASS</expect></criterion>
+  <criterion id="AC3" cell_refs="FB-e-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 115 python -m pytest -q -p no:cacheprovider data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py data/cot/scripts/gold/tests/test_canonical_prices_input_resolution.py; echo "exit=$?"</invocation><expect>12 passed</expect></criterion>
 </proof_of_spec>
 
 AC1 is the built behavior. AC3 is the difference control: the writer's two existing price tests still read 12 passed with
@@ -184,7 +185,7 @@ step would add an unconsumed production step to the cot daily chain). "The liter
 ADVI_COTBKF (CB-ap-1, CB-at-1, CB-ax-1 @19b3550e8a). Direct act: one cell, about 130 product lines, LOCAL.
 
 # pipeline-override: the one refusal is LIMB PRD_HEADER.fabric='laptop' vs the register's 'dell1'. The register row is the authority since 1.0.0_SA_CTO's L3 re-placement @8afcb0f851; the PRD header repair is the CTO's. Every other limb passed in the issuer's dry run.
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-e-7</to_id>
 <slot>~10</slot>

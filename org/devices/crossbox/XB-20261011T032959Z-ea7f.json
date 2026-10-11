@@ -10,12 +10,16 @@
  "subject": "AMGT_HARVST HVST-bs-3 AMENDMENT 2: AC2 and AC4 corrected on row Z-S112, file the proof",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round79/XB_ORDER_BS3_AMEND2_TO_ZW.md",
  "opened_at": "2026-10-11T03:29:59Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-11T03:32:07Z",
   "bus_message_id": "a16896b6-c4e8-4dad-beec-f15d93487bec"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T03:51:10Z",
+  "by": "0.7.0_AE_CloudOps~ZW",
+  "bus_message_id": "93f00002-8396-4ee3-9dd8-d9a13ebc8496"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

@@ -81,6 +81,19 @@ your own before-run.
 - **Refusal clause.** If a criterion cannot be met as written, stop. Write the reason in your report (counts only) and a NEW surprise row
   (id `ADVI_COTBKF-D2-W83-S<k>`, `"fabric": "dell2"`, carrying no account id). Do not weaken a test, and do not skip one.
 
+**AMENDMENT 1 (issuer, 2026-10-11 ~04:3xZ) -- row ADVI_COTBKF-D2-W83-S2 ruled: the one real-file arm is an integration test.**
+- The conflict was the issuer's: round 55 made `test_first_use_with_variable_succeeds` FAIL when the variable is unset, and this
+  order's CB56bd1-AC1 and CB56bd1-AC2 unset it. The sha pin refuses a synthetic file, so that arm can only run on a box that holds
+  the real config.
+- Ruling: mark that ONE test `@pytest.mark.integration` (the marker `tests/conftest.py` already registers) and, when
+  `COTBKF_SWEEPS_CONFIG` is unset, `pytest.skip` it with the reason `COTBKF_SWEEPS_CONFIG unset: the real-config arm did not run (a
+  gap, not a pass)`. When the variable is set it runs exactly as now and must pass. No other test changes.
+- CB56bd1-AC2's sentence "no test newly skipped" becomes: exactly ONE test is newly skipped with the variable unset (12, was 11),
+  and it is this one. Both invocations and both `<expect>` values are unchanged.
+- Also report the CB56bd1-AC1 file pair WITH the variable set: 8 passed, 0 skipped.
+- Row D2-W83-S3 is accepted: CB56bd1-AC3 was run with five path flags pointing at inputs moved out of the tree in round 51, the same
+  flags on both arms. The before and after lines are byte-identical; the issuer repeats the after-run at the drain.
+
 <paths>
 data/assets/scripts/silver/commonwealth_sweeps.py
 data/assets/scripts/silver/tests/

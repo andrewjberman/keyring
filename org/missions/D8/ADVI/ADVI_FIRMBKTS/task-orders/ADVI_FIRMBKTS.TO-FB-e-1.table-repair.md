@@ -40,7 +40,10 @@ owner. You write the repaired table as a NEW file; round 1's `mapping.json` and 
 ### 1b. What you keep
 
 Every round-1 row whose disposition is MOVE, HOME, RETIRE or DECISION is copied into `mapping_v2.json` UNCHANGED (all its
-fields). The check proves it (the difference control). Only the 226 FAULT classes are worked.
+fields). The check proves it (the difference control). Only the 226 FAULT classes are worked. THE ONE EXCEPTION is
+section 1e's: a round-1 MOVE or HOME class whose MEASURED destination-key overlap with another class is above 0
+becomes a FAULT row (its `dest`, `address` and `dest_pattern` are dropped), reason `destination-key overlap <n> of <m>
+keys with <the other class>`, owner `1.0.0_SA_CTO~DELL1`; the check admits that change only with that reason text.
 
 ### 1c. THE REPAIR RULES -- ordered; the FIRST rule a class matches decides it
 
@@ -124,6 +127,8 @@ with two or more classes is a collision. For each, list both classes' keys (read
   table is right: same product, same tier, disjoint keys, counts printed>","overlap_keys":0}` in `collisions`.
 - Overlap above 0: the classes cannot share the table. Make EVERY class of the group a FAULT row, `fault_owner`
   `1.0.0_SA_CTO~DELL1`, reason `destination-key overlap <n> of <m> keys with <the other class>`; they then leave the group.
+  This applies to a class round 1 placed as much as to a new one: round 1's cot `gold/positions_cube/` and
+  `gold/timeseries/positions_cube/` are the known case (342 of 342 keys shared), and both become FAULT rows.
 
 ## 2. FILE SHAPES
 
@@ -170,8 +175,9 @@ Read-only: `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/census.json` and `ma
 ## 5. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="FB-e-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_mapping.py" --arms structure; echo "exit=$?"</invocation><expect>ROUND 2 MAPPING STRUCTURE: 5 of 5 arms -- and exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="FB-e-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_mapping.py" --arms repair; echo "exit=$?"</invocation><expect>ROUND 2 MAPPING REPAIR: 4 of 4 arms -- and exit=0</expect></criterion>
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~4/ADVI_FIRMBKTS.TO-FB-e-1.proof_of_spec.json`.
+  <criterion id="AC1" cell_refs="FB-e-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_mapping.py" --arms structure; echo "exit=$?"</invocation><expect>ROUND 2 MAPPING STRUCTURE: 5 of 5 arms</expect></criterion>
+  <criterion id="AC2" cell_refs="FB-e-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_mapping.py" --arms repair; echo "exit=$?"</invocation><expect>ROUND 2 MAPPING REPAIR: 4 of 4 arms</expect></criterion>
 </proof_of_spec>
 
 AC1 is the seam against the real neighbour: it rebuilds every MOVE and HOME address through `address()` and refuses one

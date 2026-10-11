@@ -22485,6 +22485,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   },
   "notes": "Not cut mid-round (the decomposition is frozen). Carried to the round-80 drain-end packet for the CTO's round-80 analysis: the store half is a WORLD cell (SEC GET, silver write under a never-widen pair, model call, draft rebuild), then a FWD-18 walk on ASML NA. The RESERVED card sent to 0.0.0_AB_MSTR~DELL1 at the cut is withdrawn."
 }
+,
+  {
+    "id": "AMGT_RESAPP-D1-W352-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~352",
+    "surfaced_at": "2026-10-11T03:29:08Z",
+    "one_line": "The audit-root rule resolves a submodule commit's common dir to <superproject>/.git/modules, so the mass-deletion row for that commit lands under .git/modules, not in the superproject or submodule tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~R1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/git-hooks/mass-deletion-check.sh@d29944d19a (worktree edit, pre-commit): AUDIT_ROOT = dirname of `git rev-parse --path-format=absolute --git-common-dir`, used by _audit() for the row",
+        "throwaway repo under .scratch/subm_probe (super + submodule sub): `git rev-parse --path-format=absolute --git-common-dir` in super/sub -> C:/dev/wk-resapp-352/.scratch/subm_probe/super/.git/modules/sub; its parent super/.git/modules is a directory, so no fallback to ROOT; no org/ under it",
+        "r89_audit_root.sh AC1 YES after the edit (A1, A2, A3 PASS) builds a standalone repo only and does not exercise a submodule"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-nn-4 section 1: AUDIT_ROOT resolved from `git rev-parse --path-format=absolute --git-common-dir` (the common dir's parent) is the shared tree that holds the audit log; change nothing else.",
+    "world_is": "In a submodule the common dir is <superproject>/.git/modules/<name>, so the resolved AUDIT_ROOT is <superproject>/.git/modules and the row lands there, not in the superproject root (the spec's shared tree) nor the submodule root. Measured in the throwaway probe only; whether the hook fires inside a submodule commit was not measured.",
+    "notes": "Not fixed here: the order bounds the edit to the adoption of the common-dir parent and says change nothing else. safe-commit.sh:160-190 resolves the superproject separately for this case; whether the hook needs the same handling is the disarm owner's call."
+  }
 ]
 ```
 
@@ -23797,5 +23821,105 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "CLAIM CLASS: inferred, not measured. This is a source read of the add_security path; this seat did NOT run add_security, so no put was exercised through it. The guard as landed is CORRECT AS ORDERED -- msg 2572 scoped it to main, and AC3 grades exactly that -- so this is the ORDER'S SCOPE, not a defect in the delivered cell, and kk-1 is rightly terminal. Surfaced by this seat against its own work: the kk-1 report should have counted the writers of research_universe per NEVER-1 rather than only the callers of the disclosure helper, which is the census it actually ran (comp-find, one caller). Candidate remedy for the owner: lift the refusal from main into write_pool itself, where all N=3 doors converge and the served document is already in hand -- one rule instead of three. Not done here: add_security.py is in no order's <paths> for this seat and kk-1 is closed."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W351-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~351",
+  "surfaced_at": "2026-10-11T03:44:04Z",
+  "one_line": "AMGT-nn-3 specifies a stored-cap refresh for an unreadable or absent model block but names no arm for a derivation that raises; the decorator folds that case into UNREADABLE rather than let the route fail.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AMGT-nn-3 step 2: if the block is None, or the read raises, the stored cap fields are served unchanged with cap_refresh UNREADABLE (read raised or POOL_READ_FAILED) or ABSENT. The order does not say what happens when engine._subject_from_model_block itself raises on a block that was read.",
+  "world_is": "lib/research/api/scoped_amgt.py _with_subject_cap (new, after _with_subject_display_name) wraps the read AND the engine._subject_from_model_block derivation in one try. A derivation that raises is served as UNREADABLE with a plain reason naming the derivation, and the stored cap is served unchanged. Without this arm the exception would propagate to read_peer_set and fail the whole /peers route. No test in the order exercises a raising derivation; the added test test_a_read_that_raises_during_derivation_is_named_unreadable covers it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py _with_subject_cap (commit of this order; the try block spans _read_model_block_pool and engine._subject_from_model_block)",
+      "lib/research/peers/engine.py:337 _subject_from_model_block (no try inside)",
+      "lib/research/api/tests/test_peer_subject_cap.py test_a_read_that_raises_during_derivation_is_named_unreadable"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Judgment, not a defect: the order's UNREADABLE arm was read as covering any failure to obtain the subject's cap from its own block. The owner may prefer a propagating exception on a derivation fault (a route 500 is loud) to a named UNREADABLE (served, and says why). The choice is one line in _with_subject_cap and is the issuer's to rule."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W353-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~353",
+  "surfaced_at": "2026-10-11T03:33:13Z",
+  "one_line": "Step 4 retires add_security._research_folders_disclosure, but lib/research/identity/tests/test_writers_carry_issuer.py (not in this order's <paths>) patches that name at three sites. The identity folder reads 3 failed, 270 passed, so AC2 cannot pass without an edit outside <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Step 4: retire the twin _research_folders_disclosure; a test in lib/research/identity/tests that patches the retired name is repointed to the helper, never deleted. The order's <paths> lists test_write_pool_union.py and test_crosswalk_refuses_absent_library.py and does not list test_writers_carry_issuer.py.",
+  "world_is": "test_writers_carry_issuer.py lines 34, 47 and 53 patch add_security._research_folders_disclosure. With the twin retired, those three tests ERROR with AttributeError. The worker repointed the one patch inside <paths> (test_write_pool_union.py line 93) and did not touch the out-of-path file, because a path it lacks is a BLOCKING row, not an override.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/tests/test_writers_carry_issuer.py:34,47,53 at 3f97e49c5f (mock.patch.object on add_security._research_folders_disclosure)",
+      "python -m pytest lib/research/identity/tests -q in the worktree at the change: 3 failed, 270 passed, the three failures AttributeError on the retired patch target"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner's choice: widen <paths> by test_writers_carry_issuer.py, and the repoint is three lines (the patch target becomes crosswalk._research_folders_for_disclosure); or keep the name alive. The retirement is committed as ordered. AC2 is FAIL on this row."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W353-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~353",
+  "surfaced_at": "2026-10-11T03:33:13Z",
+  "one_line": "The check's door A reads the real opal-data-harvest bucket (GET only) through crosswalk.load_issuer_sources(), against the preflight's 'stubbed S3 client'. Only the put side is faked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Preflight: the check runs over a stubbed S3 client, and nothing is put anywhere real. Bounds: run nothing against the real opal-data-harvest bucket.",
+  "world_is": "add_security._build_document calls crosswalk.load_issuer_sources() with no client, which builds a real boto3 S3 client and GETs the SEC ticker partition. The base run printed 'SEC CACHE: partition date=2026-09-22 object=s3://opal-data-harvest/sec/...'. Only the write_pool put goes to the fake. The worker ran the check before and after the change; both runs were read-only GETs against the real bucket and no put reached it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/crosswalk.py:1148-1160 at 3f97e49c5f (load_issuer_sources builds boto3.client when client is None)",
+      "lib/research/identity/add_security.py _build_document at 3f97e49c5f calls crosswalk.load_issuer_sources() with no client",
+      "r89_write_pool_guard.py run output at 3f97e49c5f: 'SEC CACHE: partition date=2026-09-22 object=s3://opal-data-harvest/sec/...'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The AC1 invocation belongs to the issuer and this worker did not edit it. A stub on load_issuer_sources would be the owner's change to the check."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W353-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~353",
+  "surfaced_at": "2026-10-11T03:33:13Z",
+  "one_line": "The two guards disagree in one direction: main's pre-build refusal needs a LibraryAbsentError, while write_pool refuses any absent document over a served count. A non-absent library failure therefore reaches write_pool, which raises ValueError (traceback, no put) instead of main's exit 2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 3: main keeps its early refusal as it is. The two guards are the same rule at two depths and must not disagree: where main's guard fires, write_pool is never reached.",
+  "world_is": "Where main's guard fires (absent reason named and served folders present), main returns 2 before write_pool, so the stated constraint holds. The reverse case: research_folders None with _library_absent_reason None (for example a PermissionError) lets main build an absent document, and write_pool raises ValueError, which main does not catch. Strictly safer (no put), but the text and exit form differ from main's REFUSED exit 2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/crosswalk.py main() at 3f97e49c5f: the write_pool guard gate on research_folders None and _library_absent_reason non-None",
+      "lib/research/identity/crosswalk.py write_pool at the worktree: _refuse_absent_over_served runs whenever a served document exists and the document carries no folders"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left as ordered: main is unchanged. An owner may choose to make main's gate match write_pool's, or to catch the ValueError in main. This row carries no action for the worker."
 }
 ```

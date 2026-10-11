@@ -10,16 +10,20 @@
  "subject": "RESUME TO-DQ-t18: amended @5622357580 grants test_demque_bbg_ledger_upload.py (Z-W1-S3)",
  "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t18.sitez-bbgtml-meter.md",
  "opened_at": "2026-10-09T09:48:14Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T09:49:39Z",
   "bus_message_id": "dedd77ad-6d40-46c9-81fa-d74ba0a3452f"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T03:49:21Z",
+  "by": "0.7.0_AE_CloudOps~ZQ",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T03:51:09Z",
+  "to_by": "0.7.0_AE_CloudOps~ZQ"
  }
 }
