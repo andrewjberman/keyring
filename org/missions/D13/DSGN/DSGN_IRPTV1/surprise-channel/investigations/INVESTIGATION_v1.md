@@ -6405,3 +6405,26 @@
   "notes": "Changing it would be a one-word edit in the same folder if the issuer wants it."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W65-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~65",
+  "surfaced_at": "2026-10-11T22:47:00Z",
+  "one_line": "IV-e-117: AMENDMENT 1 changed the suite clause to no new failure over the measured base; IV117-AC1 now passes; resolves S1 for this order",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AMENDMENT 1 @497d8776e5 in the order file; p29_round29.py . IV117-AC1 prints 'IV117-AC1 PASS'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IV117-AC1 required suite_after.fail 0 (row DSGN_IRPTV1-D2-W65-S1 filed BLOCKING for it).",
+  "world_is": "AMENDMENT 1 @497d8776e5 changed the suite clause to no new failure over the measured base; IV117-AC1 now passes. The two base failures (iv-e-26 IVE26-AC3, iv-e-98 IVE98) remain and belong to whoever regenerates the portal wire file after IRPT_BCKEND IB-pr-455 added commentary_requested to the contract. This resolves S1 for this order.",
+  "notes": "No action by this order; the wire regeneration is outside its grant."
+}
+```
