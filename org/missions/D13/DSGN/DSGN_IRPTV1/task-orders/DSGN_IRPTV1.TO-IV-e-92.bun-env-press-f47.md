@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~49</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>issued</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -84,6 +84,24 @@ portal worktree for a real local install, and only then add the dependency. Reco
 
 The grant gains `portal/package.json`, `portal/bun.lock` and the bun test config file (`portal/bunfig.toml`, or the file the repository uses).
 `package.json` is a product-repo file: the commit is a CANDIDATE for the CTO.
+
+Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
+
+## AMENDMENT 3 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~08:3xZ): hold happy-dom at 20.14.5 with an override (CTO msg 4486)
+
+The CTO read the four commits and ruled: the age rule applies to what actually RUNS. The registrator asks for `^20.14.5` and the lock resolved
+`happy-dom@20.14.6`, which is 3 days old. So:
+1. Add an `"overrides"` entry in `portal/package.json` holding `happy-dom` at exactly `20.14.5`. One more line; no new dependency.
+2. Re-lock. The lock must read `happy-dom@20.14.5`, and NOTHING else may move: compare `bun.lock` at `1c615568` with the result and list every
+   line that differs; packages whose resolved version changed other than happy-dom: 0. If bun rewrites the lock beyond that, merge by hand as
+   before and confirm `bun install --frozen-lockfile` passes on the result.
+3. Re-install locally so 20.14.5 is what the tests execute (print the installed version from `node_modules/happy-dom/package.json`), then run
+   the press test and its two mutants again (each reverted, never committed), and the whole scope once.
+4. Rebuild the production bundle outside both repos and hash it as before: it must equal `08ee00df221e245a5c4e64848310346c85561551768f0e978396ffcdf047dad1`.
+5. One new portal commit on top of `1c615568`. Update `TEST_HYGIENE.json`: `dev_dependency` gains `override: {name, version}`,
+   `happy_dom_resolved`, `lock_line` (the lock's happy-dom line, verbatim), the build hashes again, `portal_commit` the new commit, `suite_after`.
+With that and the build hash equal, the CTO has approved the five commits for DEV without a further review; the issuer asks the push.
+Registering the DOM per test file stands ("right, and better"). Status back to `issued` until IV92-AC1 passes on the new commit.
 
 Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
 
