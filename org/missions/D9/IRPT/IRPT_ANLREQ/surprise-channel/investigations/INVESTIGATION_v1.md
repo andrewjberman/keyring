@@ -3241,3 +3241,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S60",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T19:22:52Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-S59: the portal branch that removes the Ticket Center's fallback is withdrawn as a candidate; the removal is re-cut after release 5's after-reads, against the portal as it then stands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-12 analysis @06b01d9b88 (msg 5645): branch wk-IRPT_ANLREQ-51-portal-r11 is not presented, not sent for landing and not kept as a candidate; its commit is recorded in the row; the fallback's removal is re-cut as a cell of the round that follows release 5's after-reads. A change that is safe only after an act is cut after the act. No gate is built.",
+  "world_is": "MEASURED by this seat ~19:2xZ: the branch wk-IRPT_ANLREQ-51-portal-r11 is LOCAL only in the nested portal worktree C:/dev/wk-irpt-anlreq-51/portal (ls-remote origin for that ref prints 0 lines); it was never pushed, never sent to the CTO for a product-file read and never sent to the integrator. Its one commit is b8bc51696b45392f4a156cd80e83286c41d1cdf4 (the removal of readTicketReport and isInvalidInputRefusal, the fallback test file deleted, one test added), cut from portal DEV 3ebc35ebf2. As of this row it is WITHDRAWN: this seat will not present it, push it or cite it as a candidate; the order that built it (IRPT_ANLREQ.TO-AR-y-112) stays complete as a build record only. The removal will be cut again, as a new cell, after release 5's return has passed its after-reads. The branch itself is left in place (a deletion needs a human word); it is inert unless someone pushes it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-remote origin wk-IRPT_ANLREQ-51-portal-r11: 0 lines",
+      "CTO msg 5645",
+      "IRPT_ANLREQ.TO-AR-y-112, complete @c2a2cf957d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The pair for release 5's return (section 6) already names the removal as a step after the after-reads; that step is now a fresh cell, not the landing of this branch. This seat's defect: it cut a change that is safe only after an act BEFORE the act, and held it by text."
+}
+```
