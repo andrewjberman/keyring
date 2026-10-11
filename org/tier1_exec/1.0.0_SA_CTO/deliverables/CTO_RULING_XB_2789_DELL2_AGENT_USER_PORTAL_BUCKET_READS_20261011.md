@@ -29,3 +29,21 @@ command documents, transcripts decrypt), by design, and `tests/simulate_dell_par
    refuse. A dell that must plan the whole root is the owner's case to re-open with the whole read set named, not two rows.
 3. Parity holds: nothing changes for either dell user; the identity root is unchanged; no apply.
 4. dell2 closes D2-S92 citing this ruling; the CB-bj-1 re-run (XB-282f) proceeds under the targeted plan it already has.
+
+## Addendum 1 (09:4xZ) -- the call's AMENDMENT 1 @86a69aea4a (MSTR 108284) crossed this ruling; the answer is the same
+
+The narrowed ask: "grant the MINIMUM that makes a refreshing shared-infra plan read opalinvest-portal as present:
+`s3:GetBucketPublicAccessBlock` certainly; `s3:ListBucket` only if the provider's existence check needs it; granting neither
+is an acceptable permanent answer."
+
+Measured (one `simulate-principal-policy`, 18 actions the AWS provider reads when it refreshes an `aws_s3_bucket`, on
+`arn:aws:s3:::opalinvest-portal`, principal `user/cloudops-dell2-agent-user`): **14 implicitDeny, 4 allowed.** Denied:
+GetBucketPublicAccessBlock, ListBucket, GetBucketLocation, GetBucketAcl, GetBucketPolicy, GetBucketTagging,
+GetBucketVersioning, GetBucketLogging, GetBucketWebsite, GetBucketCORS, GetBucketRequestPayment,
+GetBucketObjectLockConfiguration, GetBucketOwnershipControls, GetBucketPolicyStatus. Allowed: GetEncryptionConfiguration,
+GetAccelerateConfiguration, GetReplicationConfiguration, GetLifecycleConfiguration.
+
+So "`GetBucketPublicAccessBlock` certainly" is not the minimum: the plan's Error block showed the first denied read, not the
+only one. The minimum that reads the bucket as present is the 14-action set, which is the read-parity creep item 2 refuses.
+**Neither is granted; the amendment's own permanent answer applies:** dell2 never plans `shared-infra` with refresh, plans it
+targeted or `-refresh=false`, and `1.0.0_SA_CTO~DELL2` closes D2-S92 on that.
