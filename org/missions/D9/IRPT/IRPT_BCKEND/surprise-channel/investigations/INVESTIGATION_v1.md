@@ -27468,3 +27468,83 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "A page consumer of the accepted record is not ruled out by a search; it is bounded by the served response shape instead. Recorded in not_established of the read."
 }
 ```
+
+## IRPT_BCKEND-D2-W310-S1 -- PRD v0.43's sentence and IB-pr-452's script count a 'repeat' differently; the product form follows the sentence and the face, and the seven of IB-pr-452 are the same seven over the whole run
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W310-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~310",
+  "surfaced_at": "2026-10-11T21:26:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "PRD v0.43's sentence and IB-pr-452's script count a 'repeat' differently; the product form follows the sentence and the face, and the seven of IB-pr-452 are the same seven over the whole run",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md ADDENDUM v0.43: 'over the days ... on which it has a bar ... the bar repeats the prior trading day's on MORE THAN HALF of them'",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~308/ib452_measure.py:249-257: days_not_graded counts every day the guard gives no grade, including a day with a bar and no prior bar; the sentence counts only a bar equal to the prior day's",
+      "data/assets/scripts/gold/irpt_reporting/date_basis_grading.py repeated_share: a day is compared only when both it and its prior trading day have a bar inside the window; repeated when the two are equal within the tolerance",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~310/IB150-1_product_form_run.json window_proposed.candidates, window 85 at 2026-10-09: the securities repeating on more than half their compared days are ADLYX 49 of 84, BISOX 78 of 84, EIBLX 59 of 84, GPPIX 77 of 84, JSOSX 66 of 84, OLCYX 56 of 84, SGOV 52 of 84: IB-pr-452's seven"
+    ]
+  },
+  "spec_asserts": "PRD v0.43 and ib452_measure.py measure one thing: how often the reader's bar repeats its prior trading day's.",
+  "world_is": "They count differently: the script's 'not graded' includes a day with no prior bar (e.g. ADLYX 49 of 85), the sentence's 'repeats' does not (49 of 84 compared). The product form follows the sentence and the order's definition. Over the whole 85 days both pick the same seven. Not measured: any other run or window where the two readings would pick different securities."
+}
+```
+
+## IRPT_BCKEND-D2-W310-S2 -- The v0.37 kind NEITHER_CLOSE for a row the second witness places at neither close differs from the sizing script, which kept the row's kind OUTSIDE_ANCHOR; the claim is the same
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W310-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~310",
+  "surfaced_at": "2026-10-11T21:26:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The v0.37 kind NEITHER_CLOSE for a row the second witness places at neither close differs from the sizing script, which kept the row's kind OUTSIDE_ANCHOR; the claim is the same",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md ADDENDUM v0.37: 'a wrong instrument's close equals the source's mark within 1e-4 only by chance; otherwise the row reads NEITHER_CLOSE, and the day is blank'",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~308/ib442_measure.py:71-82 new_claim: a day not freed keeps the claim of the cash-rule counter, whose only kind for the row is OUTSIDE_ANCHOR",
+      "data/assets/scripts/gold/irpt_reporting/date_basis_grading.py account_day: kinds in the not-freed branch add NEITHER_CLOSE for a row at neither close and keep OUTSIDE_ANCHOR only when a row has no grade",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~310/IB150-1_product_form_run.json seam_rule_off_reproduces_ib_pr_452: the four claim counts, the serving counts and the freed count are IB-pr-452's member for member, so the difference lives in the kinds list only"
+    ]
+  },
+  "spec_asserts": "The sizing scripts and the product module give an account-day the same claim and the same freed count.",
+  "world_is": "They differ in the kinds listed for an UNGRADEABLE day that holds a security the second witness places at neither close: the script says OUTSIDE_ANCHOR, the module says NEITHER_CLOSE (the PRD's word). No count the checks or the sizing read depends on it. Whether a producer should list both is the CTO's."
+}
+```
+
+## IRPT_BCKEND-D2-W310-S3 -- Seven of the 878 tickers asked returned no bar, three of them class-share tickers written with a dot (BF.B, BRK.A, BRK.B); the dash spelling was not tried because nothing is re-asked
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W310-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~310",
+  "surfaced_at": "2026-10-11T21:26:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Seven of the 878 tickers asked returned no bar, three of them class-share tickers written with a dot (BF.B, BRK.A, BRK.B); the dash spelling was not tried because nothing is re-asked",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the reader's output during the pass (the log sat outside the repo and is deleted at the end): '$BF.B: possibly delisted; no timezone found', '$BRK.B' and '$BRK.A' likewise; FPNIX: 'possibly delisted; no price data found'",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~310/IB150-1_product_form_run.json fetch: 18 calls, 878 distinct tickers each asked once, 871 with bars, 7 with none, 0 rate-limited",
+      "read_yahoo_close over the 878 tickers: none-bar tickers are BF.B, BRK.A, BRK.B, FPNIX, JHG, MCR, UHALB; BRK.A, FPNIX, JHG, MCR, UHALB sit in the outside-the-first-witness list, BF.B, BRK.B, FPNIX, UHALB in the overlap list"
+    ]
+  },
+  "spec_asserts": "A ticker the source states is a ticker the reader can return bars for.",
+  "world_is": "Seven did not. A dotted class-share ticker returns nothing; whether the reader would return bars for the dash form (BRK-B) was not asked, so it is inferred only that the spelling is the cause. A security of the nine pairs with no bar stays ungraded by the second witness and its rows block their account-days (BRK.A is in the outside list). Not measured: the account-days that wait on these five outside-list tickers."
+}
+```
