@@ -4180,6 +4180,48 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "The 32 names with an own workbook render all of the team sheet's labels, and 3210 of those rows have no field behind them (read as the team-row sentence, in words, never a barred word). Many are not figure lines but the sheet's own header and override rows: Year, Financial Summary, FE_ESTIMATE, BEST_FPERIOD_OVERRIDE, EQY_FUND_YEAR, IMPLIED SHARES. The 63 other names have no team rows (master_absent; the master template is not in the library) and render the base rows. So FWD-12 'the team's rows' and FWD-20 'unmapped 0' conflict until the rows are mapped to fields or the row-label rule excludes non-line rows.",
   "notes": "This is a reading of the sheet builder the page calls on live served data, not a browser DOM walk. Which of the two outcomes yields, or whether the label rule (at-1's: a label with two or more numbers in columns A to D) is tightened, is the CTO's: an ENDPOINT-level call, so the issuer cuts nothing on it. Carried to the CTO in the round-45 reads packet.",
   "disarm_owner": "1.0.0_SA_CTO~DELL1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W2-S1",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+  "surfaced_at": "2026-10-11T12:50:10Z",
+  "one_line": "The order names the portal branch wk-AMGT_CORPUS-46-portal; the round's portal worktree sits on wk-AMGT_CORPUS-46-2-portal, so the branch the order names is not the one checked out here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/tmp/wk-AMGT_CORPUS-46-2/portal rev-parse --abbrev-ref HEAD -> wk-AMGT_CORPUS-46-2-portal, read before the av-2 commit; the portal base is 00989b8b9df229e7b765b3a063102873abd9a89d, as the order's preflight states.",
+      "The spawn prompt for this slot names the portal branch wk-AMGT_CORPUS-46-2-portal; the order's Section 2 and Section 1 say wk-AMGT_CORPUS-46-portal."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The nested portal/ directory is a portal git worktree on branch wk-AMGT_CORPUS-46-portal, based on portal origin/DEV (order Section 0, 'Your portal').",
+  "world_is": "The nested portal worktree is on branch wk-AMGT_CORPUS-46-2-portal at the same base. No branch was created or renamed; the portal commit lands on the branch that exists.",
+  "notes": "Portal commit 599e51fbb47ab1cd50459dd3cbae3838ef4febe6 is on wk-AMGT_CORPUS-46-2-portal, LOCAL, not pushed. Recorded so the CTO's DEV review reads the candidate under the branch that exists. No gate is built here."
+},
+{
+  "id": "AMGT_CORPUS-D1-W2-S2",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+  "surfaced_at": "2026-10-11T12:50:10Z",
+  "one_line": "The order gives a team cell four keys (mnemonic, fiscal_year, value, unit) and its cite must name the period column, but no key carries the period column; the built team cell carries a fifth key, column, so the cite can name it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Order Section 1, step 2, names the team cell as {mnemonic: null, fiscal_year, value, unit: null} and the teamCite as {workbook, sheet, row, label}; step 4 names the period column in the cite.",
+      "portal/src/pages/SecurityAnalysis/modelSheet.ts at 599e51fbb47ab1cd50459dd3cbae3838ef4febe6: interface TeamCell carries column: string | null, set from the sheet's period header; ModelTab.tsx teamCellTitle reads it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A team cell is {mnemonic: null, fiscal_year, value, unit: null}; a team row's cite names the workbook, sheet, row label and period column (order Section 1, steps 2 and 4).",
+  "world_is": "The four-key cell cannot say which period column a value was saved in, so each team cell carries a fifth key, column. The key is read only by the team cell's title; the value and the fiscal year are as specified.",
+  "notes": "The CTO may strike the fifth key if the cite is carried another way. No gate or consumer outside ModelTab's title reads it."
 }
 ]
 ```
