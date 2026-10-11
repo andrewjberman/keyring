@@ -3211,3 +3211,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r150/p150_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-454` | `date_basis_grading.py`: the ordered claim rule, the two witnesses, the nine pairs, the guard (imported) and the repeated-share rule over a fixed trailing window, as pure functions with tests; one read-only run returning the proposed window, the securities by share of repeated days in tenths, and the cost of the securities the rule takes | FWD-13 (a date label is measured, never assumed) | LOCAL | IB-pr-450, IB-pr-452 drained | P150-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~310. Not direct-act (above the size floor).
+
+## 143. ROUND 151, WORKSTREAM ~P (2026-10-11 ~21:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5863; IRPT_YCDGEN PRD v0.13 @e31454a778, signed @6f8aeb03b7)
+
+SERVICE FIRST: the worker's half is merged and dormant (@dddafd6832); the submission and acceptance half is IRPT_BCKEND's; the
+form's half follows only after this half's release is live and read. One build cell here; its release pair is a later act and
+names every reader of the accepted record with one read through each. Disjoint write set from IB-pr-454 (round 150, running).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r151/p151_cells.py`: AC1 FAIL, AC2 FAIL, AC3 PASS at base (AC3 is the control).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-455` | the submission's closed set admits the optional boolean `commentary_requested` and refuses any other type; acceptance copies it into the accepted record only when sent; the public contract declares it; a submission without it is accepted exactly as today | FWD-4 (the vendor-path job and what it signals) | WORLD (L6 floor: paths under infra/; nothing released) | the worker half merged @dddafd6832 | P151-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~311.
