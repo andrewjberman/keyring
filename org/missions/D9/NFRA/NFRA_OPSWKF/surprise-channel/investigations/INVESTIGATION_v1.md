@@ -428,3 +428,27 @@ adjudication rows live in `../adjudications/` as `NFRA_OPSWKF-C-S<k>`.
   "notes": "Found at the end of TO-APPLY-S2 while confirming this seat's OWN secret files were shredded -- the check that found it was hygiene on my own act, not a hunt. OBSERVATION because it blocks no outcome and no task order: FWD-8 and FWD-9 are released and proven either way. INERT because it fires nothing on its own and there is no same-turn disarm to take; it is a standing exposure, not an armed hazard. NOT REMEDIATED BY THIS SEAT, deliberately: the file is another seat's working artifact in a shared tree, deleting another seat's untracked file is not this seat's call, and the bounds of both orders this seat held forbid touching anything outside the one function's code. The remedy that would actually hold is mechanical rather than a one-off delete -- the operator recipe could shred the file at the end of the act the way this seat's two were shredded, so the artifact cannot outlive its use. Routed as an observation for 1.0.0_SA_CTO~DELL2 and the box's manager; owner of the recipe: the trade-pipeline root's README."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S13",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T22:48:30Z",
+  "one_line": "L9 workstream S, the four direct invokes: OW-sr2-AC2 MET and OW-sr1-AC2 MET. FWD-9 is REALIZED as PRD v0.9 defines it: the refusing twin read 403 first, then both comparisons of the check admitted (400 on the unstorable body), and no row was stored. FWD-8's tier arm read 200. The invokes ran against bytes this seat has read member by member. Still not shown: the context the portal's authorizer hands a real staff session; and, per row D2-S11, what a second live API's authorizer sets on the way to the same functions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/deliverables/S3_FINAL_REPORT_FOUR_DIRECT_INVOKES.md @891dfaf600 (msg 6007)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPSWKF_WORKSTREAM_S_L9_GRADE_20261011.md",
+      "this seat's live read 2026-10-11T22:48:30Z: the code hash of both functions, read from their configuration, is unchanged since this seat downloaded both packages and found 3 of 3 members byte-equal to the tree at each release pin, and equals the two digests the applier read before its first invoke. So the four invokes ran against the bytes this seat read. No invoke or call was made by this seat"
+    ]
+  },
+  "spec_asserts": "PRD v0.9 FWD-9 DONE WHEN: after the release, one direct invoke of the deployed handler with a context carrying the Opal firm id and an email, answered 400 on the unstorable body, and the same invoke with a context that fails both comparisons answered the new 403; no submission row and no mail from any read.",
+  "world_is": "Four invokes, each once, by the applier under the amended pair; no token, identity, grant or write. No invoke or call was made by this seat. The mail service's log was not read by anyone.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
