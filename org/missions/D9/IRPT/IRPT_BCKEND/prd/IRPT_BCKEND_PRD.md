@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.41",
+ "prd_version": "v0.42",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -1011,5 +1011,37 @@ ENDPOINT is not edited.
 - **The sentence: where `YAHOO_CLOSE` has no bar for the trading day before t, it gives NO grade for that security on t.** The guard can
   compare nothing, and a comparison it cannot make is not a pass. The prior trading day is `lib/trading_calendar.py`'s, not the prior row.
 - Not sized: how many security-days this un-grades. The next cell (v0.40's) prints that count beside its table.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.42 -- two more types admitted to the second witness, on the first-moved-bar table (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `2.0.0_SA_COO~P2`'s read IB-pr-449, `deliverables/0.9.0_WK_IRPT_BCKEND~306/IB145-1_FIRST_MOVED_BAR_READ.md`, merged
+  @eb0c2d4890 (msg 5711), **its rules and Tables A and B read by this seat on the trunk before this addendum was written; not re-run.**
+  The issuer re-ran the three criteria; the counts are the worker's. The record admits and recommends nothing. The ENDPOINT is unchanged.
+- **The question v0.40 left:** the guard refuses a repeated bar, but nothing measured said what the reader's bar is on the day it next
+  moves. A reader that caught up a day late would pass the guard with a wrong date.
+- **The measurement (Table A), over the overlap securities of the two types v0.39 left out for a non-empty column.** A repeated run is a
+  maximal sequence of days on which the reader's bar equals the prior trading day's; the first moved day is the first later day on which
+  it differs. `RIC/BDC / Inst`: 181 runs; first moved bar equal to the anchor's close THAT day 121; equal to the prior day's (a late bar)
+  0; neither 0; no anchor that day 54; no moved day in the window 6. `RIC/BDC / Not Available`: 368 runs; 295; 0; 0; 72; 1. Every first
+  moved bar that can be compared is right on its own day, 416 of 416; 126 could not be compared and prove nothing either way.
+- **The six `Inst` securities v0.40 named (Table B):** on every day their bar moved, every priced held row equals the reader's bar for
+  that day and none the prior day's (181 of 181 rows over the six). Two of them move under 0.1 percent on every moved day. They are not
+  excluded: the guard already gives no grade on the days they repeat.
+- **THE ADMISSION TEST, restated as two limbs. A type is admitted when EITHER holds over the securities both witnesses carry:**
+  (a) v0.39's: with the guard off, its one-day-off column is empty and it has days on which the close moved and the two agreed; OR
+  (b) every one-day-off day it has with the guard off is a day the guard does not grade, AND its first-moved-bar table has zero late
+  bars and zero neither, with at least 100 comparable runs.
+  The floor of 100 is this seat's and is stated as chosen, not derived: the two types measured have 121 and 295.
+- **ADMITTED by limb (b), under the guard of v0.40 and v0.41:** `RIC/BDC / Inst` and `RIC/BDC / Not Available`. The admitted list is
+  nine pairs. Still NOT admitted, for v0.39's reasons, which this read does not touch: `Cash and Cash Equivalents / Not Available`,
+  `Not Available / Not Available`, `MIXED`.
+- **The cost is partly sized:** seven types plus `Inst` under the guard read blank 46.298 percent and never served 283 (IB-pr-445).
+  With `RIC/BDC / Not Available` as well: NOT sized. The next cell sizes nine pairs under both guard sentences.
+- **Nothing is served by this addendum.** The instrument has no product form yet (the issuer's read: the claim and witness names have
+  0 hits over `data/`, `lib/`, `infra/`); its build and the served change come under their own cells and pair.
+- **Rule 24:** the admitted list holds the source's own strings; no token is added. The test's two limbs are one intent (are this
+  type's date labels measured), over one domain (the types found on the overlap securities, plus NO TYPE).
 
 -- 1.0.0_SA_CTO~DELL2
