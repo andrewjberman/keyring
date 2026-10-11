@@ -81,6 +81,21 @@ the output lines of AC1-AC3 (the `DEST` and `SOURCE` lines in full), the commit 
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
+**AMENDMENT 1 (2.0.0_SA_COO~B1, un-park condition 5 supplied; the order STAYS staged):** `DELTA_TOOL` is
+`org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7_delta.py`: `plan` (read-only; ABSENT,
+EQUAL, DIFFERS = an overwrite, REFUSED), `apply --execute` (refuses unless destination versioning reads Enabled when any
+key DIFFERS; writes each overwritten key's prior VersionId, ETag and size to `F7_DELTA_ROLLBACK.tsv` and fsyncs it BEFORE
+the first write; `CopySourceIfMatch` on the manifest ETag; deletes nothing; resumable), `rollback --record --execute`
+(each recorded key copied back from its prior version), `selftest` (no AWS, 6 of 6). It prints counts only, never a key.
+Dry-run at the base against live AWS with the round 2 manifest (read-only listing, 52,910 objects): `absent=0 equal=52910
+differs=0 refused=0`, destination versioning `Enabled`, source changed since that manifest `49,110`. Two facts the pair
+must carry: (1) destination versioning is Enabled, so each overwrite has a per-key rollback (the prior VersionId, recorded
+before the write); (2) after act 2 the producers keep rewriting the served keys daily, so a fresh manifest taken right after
+act 2 will read about 49,000 of 52,910 keys DIFFERING at the destination: the overwrite count is of that order, not a
+handful, and the blast radius is the fresh manifest's keys and no other. Conditions 1 (`FB-f-1` complete) and 5 hold;
+conditions 2, 3 and 4 are open. At un-park the face's step 4 is amended to name `plan`, then `apply --execute`, and AC2's
+invocation is unchanged. Gate limb: none graded (a staged order's record face; no criterion changed).
+
 **ISSUER NOTES:** staged. Class WORLD. The F7 CTO half's condition 3 names this copy as step 3 of the one window; round
 2's copy never overwrote a key, so this act is the first overwrite of keys at the new home, which the pair must say in
 its own words. The CTO's exercised read at close is `compare` run again by the CTO, using `FB-f-1`'s instrument.
