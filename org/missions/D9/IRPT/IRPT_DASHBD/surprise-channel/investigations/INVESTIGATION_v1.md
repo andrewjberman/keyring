@@ -5435,3 +5435,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W89-S1 -- DB-b-114: Cottonwood adapter text says method_version NULL while its code stamps 3; row 3 text leaves as-traded and net-of-fees to the entry fields
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W89-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~89",
+  "surfaced_at": "2026-10-11T04:15:00Z",
+  "one_line": "DB-b-114: the Cottonwood adapter's docstring (lines 44 and 69) and its COLUMNS_NULL entry (line 136) still say method_version is NULL on purpose, but the code at line 326 reads the sources.json entry and stamps 3; and METHOD_ROWS row 3 (producer lines 115-127) does not itself state as-traded close or net of fees, and inherits income_basis and flow convention measured for the custodian channel only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py:44,69,136,326,380 @60f4b5b489",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:115-127 @60f4b5b489",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~89/COTTONWOOD_VALUE_RULE24.json"
+    ]
+  },
+  "spec_asserts": "ADVI_COTBKF-D2-W66-S1 and the adapter header assert the producer admits no value that states the method, so method_version stays NULL.",
+  "world_is": "Since DB-b-102 the producer admits row 3 and the entry names it, so the adapter code already stamps 3 and the docstring is stale; the row 3 dimension text leaves as-traded and net-of-fees to the entry fields. No served claim is false today (rows carry NULL; no mint has run).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
