@@ -5169,3 +5169,31 @@ round.** Never edit an existing row.
  "world_is": "The detector of record reads 1 hit in the channel at HEAD; every other tracked file under the project reads 0. The token-substitution of that one line is an edit to an existing channel row, which is not this issuer's write."
 }
 ```
+
+## ADVI_COTBKF-D2-S80 -- The round-53 redaction rewrote sha256 digests in the mint manifest (431 hash values)
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S80",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T03:14:02Z",
+ "one_line": "The round-53 redaction @82049024b3 rewrote digit runs INSIDE sha256 digests in the tracked mint manifest deliverables/0.9.0_WK_ADVI_COTBKF~79/ard_cottonwood_manifest.json: 431 hash values on 431 lines (sha256 156, content_sha256 127, manifest_sha256 148), 440 tokens. The file no longer carries its hashes, and the issuer drained it to box/dell2 @2306e6d28a before reading this diff. Both id tests pass on it, so the tests cannot see the damage. The CB-al-2 pair is NOT re-cut on this file; round 54 (CB-bb-1) restores the round-52 bytes and fixes the detector.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git show -U0 82049024b3 on the manifest: 431 changed line pairs; every old value is 64 lower-case hex characters; new values carry 1 token (422) or 2 tokens (9)",
+   "issuer census over all of 82049024b3: 63 files, 1952 tokens on changed lines, 439 embedded in a hex run of 24 or more characters, all 439 in this one manifest",
+   "blob sha256 at 82049024b3~1 and at d78a646ac1: 924987f6369300d530ddc9fa5793befa4c4edc291c5e83a99c5288a36811c1cb (the manifest round 52 graded); working file at HEAD starts 02fe99cbb3d391c0",
+   "cause read in _cotbkf_acct_check.py and test_cotbkf_code_no_account_ids.py: the shape guards admit a digit run that follows a lower-case hex letter",
+   "guard 2 of the apply re-hashes every local file against the manifest sha256, so a mint on this file would refuse rather than write (read from section 4 of the COO half, not exercised)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB53ba1-AC2: every redaction diff is token substitutions of account ids only. The round-52 packet: the per-day hashes of the clean manifest equal round 47's, 3325/3325.",
+ "world_is": "440 of the round-53 substitutions replaced parts of sha256 digests, not account ids, in one file; the hashes of that file are gone at HEAD. The round-53 packet @e336d32f61 said the issuer did not re-read the 60-file diff; this row is what that unread diff held."
+}
+```
