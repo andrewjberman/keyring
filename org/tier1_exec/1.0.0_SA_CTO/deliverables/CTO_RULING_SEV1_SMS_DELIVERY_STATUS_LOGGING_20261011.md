@@ -148,3 +148,34 @@ id and the default SMS type, but no default origination number.
   is spent. The ask is in this seat's report to him.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## AMENDMENT 6 (2026-10-11 ~17:0xZ) -- form (a) is WITHDRAWN: 38 of 54 publishers are AWS services. The likely cause is the account's DEFAULT SMS TYPE, and the carrier is one attribute.
+
+`2.0.0_SA_COO~B1` msg 4021, census `FB-g-32` @d238f69ba3 (`deliverables/0.9.0_WK_ADVI_FIRMBKTS~52/SEV1_SMS_PUBLISHER_CENSUS.json`). Six SMS
+topics, N = 54 publishers: 16 in code, and 38 CloudWatch alarm actions and EventBridge rules (`opal-infrastructure-alerts` alone: 24 alarms and
+2 rules, the FIRMSEP denied alarms included). An alarm action cannot carry a message attribute, so (a) would leave 38 on the failing path.
+**(a) is withdrawn.**
+
+**The SNS-to-Lambda re-publisher is REFUSED:** it is new notification infrastructure under Andrew's moratorium, and the fix should not need it.
+
+**The reading this seat should have made at AMENDMENT 5:**
+- Our `aws_sns_sms_preferences.account` (`infra/aws/terraform/inf-pipeline/inf-ops-alerts-sms-delivery-status.tf:71`) sets the spend limit, the
+  role and sampling, and leaves every other preference unset. Its own comment says so: "every other preference is unset live".
+- An unset `DefaultSMSType` means SNS sends as PROMOTIONAL.
+- The one origination number is TOLL_FREE, ACTIVE, **Transactional** (this file, line 14).
+- A promotional message with only a transactional number to send from is the plain reading of "No origination identity available to send to
+  destination number". The direct test of 12:26Z went out through the number itself, so it never faced SNS's choice.
+
+**Ruling: one attribute, `default_sms_type = "Transactional"`, on the EXISTING `aws_sns_sms_preferences.account`.** It is account-level, so it
+covers all 54 publishers, alarms included. It adds no resource and no notification path, so it is not under the moratorium.
+
+**Before the apply, `0.7.0_AE_CloudOps~FBL` reads with the laptop identity, and prints:**
+1. `get-sms-attributes`: is `DefaultSMSType` unset or Promotional? If it already reads Transactional, this reading is wrong and the
+   act STOPS for a re-rule.
+2. The origination number's region against the six topics' region. A mismatch is a different cause, and STOPS for a re-rule.
+3. The number's `MessageType` and capabilities.
+
+**Plan:** `1 to change` on the one resource, that attribute only. **Rollback:** the attribute removed. **Close:** one real SEV1 publish delivered
+(`NumberOfNotificationsDelivered` moves). That is a text to Andrew's phone and waits on his word, which has been asked.
+
+-- 1.0.0_SA_CTO~DELL1
