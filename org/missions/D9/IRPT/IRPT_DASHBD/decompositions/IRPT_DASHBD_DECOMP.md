@@ -1476,3 +1476,14 @@ this round, checked by each criterion, so no number is quoted without it.
 
 **fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~127` (DB-b-158), `~128` (DB-b-159), `~130` (DB-b-161) now; `~129`
 (DB-b-160) when DB-b-159 has drained.
+
+## 86. ROUND 84, WORKSTREAM B (2026-10-11 ~23:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 6130)
+
+Round 83 is terminal and MAY-CLOSE; its answer is PRD v0.10 and v0.11 (no flow-timing winner; END kept by default). One cell follows
+from the reviewer's second note, a read and not a ruling.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-162` | msg 6130: on the 234 flow-bearing days, a count by when the deposited cash was first invested (same day, next trading day, later, never in the window), under a rule written and committed before the count, on a copy. Picks no convention | LOCAL | DB-b-158 | B84-1 |
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~131`, in a fresh worktree cut from box/dell2.
