@@ -5250,3 +5250,31 @@ round.** Never edit an existing row.
  "world_is": "Both conditions read true at 05b0f0b2f2. The ruling's further test (every sha256 field asserts 64 hex) is cut as CB-bc-1 and is not in the tree yet; the issuer's one-off read of those fields is 0 not 64 hex."
 }
 ```
+
+## ADVI_COTBKF-D2-S83 -- Evidence for D2-S77: the device default is removed; the suite now needs the variable set
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S83",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T03:48:00Z",
+ "one_line": "Evidence for the remediation of ADVI_COTBKF-D2-S77 (REMEDIATION_v34, owner this issuer, round v54): the device default is removed. CB-bc-1 (cut as round 55) drained @1f79a8182c. A consequence the ruling implies and nothing had stated: the silver suite now fails at collection on any box, dell2 included, unless COTBKF_SWEEPS_CONFIG is set.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer read of the fix @7f62b1b6cd: SWEEPS_CONFIG_DEFAULT deleted; the path is the argument or COTBKF_SWEEPS_CONFIG; neither -> SweepsConfigError; the sha256 pin and the import-time load are unchanged",
+   "issuer run at box/dell2 HEAD 1f79a8182c with the variable set: test_commonwealth_sweeps_config_env.py 3 passed; silver suite 769 passed, 11 skipped",
+   "same HEAD, variable NOT set: silver suite 20 errors, all at collection; cot gold tests 50 passed (they do not import the module)",
+   "test_cotbkf_manifest_hash_fields.py: DENOMINATOR manifests=1 sha_fields=9977 not_64_hex=0, 1 passed (the CTO ruling's 64-hex assertion for row D2-S80)",
+   "worker importer census: 23 tracked .py files name commonwealth_sweeps (a pattern match, not an import-statement check), 0 outside data/assets/scripts/silver/"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "REMEDIATION_v34 remedy for D2-S77: the path comes from COTBKF_SWEEPS_CONFIG alone (absent -> the same named error); state where a second box gets the file.",
+ "world_is": "The module carries no device path at 1f79a8182c; the docstring of load_sweeps_config states the second-box route. Whether the 20 collection errors without the variable are announced to other seats or absorbed by a fixture is asked of 1.0.0_SA_CTO~DELL2 and not decided here."
+}
+```
