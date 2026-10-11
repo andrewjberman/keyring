@@ -24711,3 +24711,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not fixed (the round is frozen mid-round; a row is the only off-spec act). The repair is a cell for the CTO's round-94 analysis: in `reverify_stored_thesis_driver` take `stated_value` when a stored point carries it (and `held_uncited` the same), with a control arm that a re-verification of an already-rescaled object keeps its 3 points byte-equal. Until then NO operator re-verifies SAP's object; AMGT-ff-5's AC1 is amended to read the served route against the pair's table (r94_sap_served.py). The idempotence arm was the issuer's omission from ff-3's checks."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W387-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~387",
+  "surfaced_at": "2026-10-11T13:31:00Z",
+  "one_line": "AC3 FAILS: an existing test outside this order's paths, test_lead_list_names_and_places_moved.py::test_name_from_ranked_source_keeps_its_label_and_crosswalk_fills_the_rest, pins the pre-rule ranked-row name (the classification name kept over a disagreeing registered name); the amendment's ranked-row step changes that row.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AC3 (worker face section 4): the new test file and the twelve existing names, classification and ranked-row tests pass (no failed, no error). Amendment 1, section 1b step 3: the ranked-row step changes only a row whose name came from the classifications table and disagrees with its registered name; every other row is byte-equal.",
+  "world_is": "At the amended tree (C:/dev/wk-resapp-387, uncommitted edits to names_read.py, scoped_amgt.py and the agreement test file), pytest over the thirteen named files reads 1 failed, 157 passed. The failure is AssertionError: ('Should Not ..., 'crosswalk') == ('Boeing Co', ...). The fixture registers BA_US_Equity as 'SHOULD NOT WIN' against the classification 'Boeing Co', and the assertion at test_lead_list_names_and_places_moved.py line 185 expects the classification name to be kept. Control: the same test with names_read.names_disagree patched to False (.scratch/control_no_disagree.py, product files not edited) passes, so the failure follows the amended rule and not an environment fault. The test file is not in this order's paths, so the worker did not edit the fixture or the assertion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest over the thirteen named files at the amended tree: '1 failed, 157 passed, 22 warnings in 5.27s'; FAILED lib/research/api/tests/test_lead_list_names_and_places_moved.py::test_name_from_ranked_source_keeps_its_label_and_crosswalk_fills_the_rest",
+      "test_lead_list_names_and_places_moved.py lines 179-188 read in C:/dev/wk-resapp-387: _install(... names={'BA_US_Equity': 'SHOULD NOT WIN', ...}) and assert (out[0]['name'], out[0]['name_source']) == ('Boeing Co', 'etf-classifications') at line 185",
+      "control: that test alone with names_read.names_disagree forced to False (.scratch/control_no_disagree.py): '1 passed'; the same file's other 13 tests pass at the amended tree",
+      "amended code: scoped_amgt.py _drop_disagreeing_table_names, called in _join_ranked_rows between _join_covered_identity and _with_display_name; the step is the only change on the ranked-row path"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The worker has not edited the test: the file is outside the order's <paths>, and a path the order lacks is a BLOCKING row, not an override. AC3 is recorded FAIL on the proof instance; the code is committed LOCAL on wk-AMGT_RESAPP-387 so the issuer can read it. The disarm is the issuer's: widen the grant to the test file with the fixture and assertion named, or amend the criterion's expected control list. Nothing was pushed or merged."
+}
+```
