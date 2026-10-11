@@ -27572,3 +27572,82 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Seven did not. A dotted class-share ticker returns nothing; whether the reader would return bars for the dash form (BRK-B) was not asked, so it is inferred only that the spelling is the cause. A security of the nine pairs with no bar stays ungraded by the second witness and its rows block their account-days (BRK.A is in the outside list). Not measured: the account-days that wait on these five outside-list tickers."
 }
 ```
+
+## IRPT_BCKEND-D2-W313-S1 -- A search of the repo by the gold's table name finds 34 files; the readers that reach the gold by the producer's table constant are 4 more, one of them a reader the name search missed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W313-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~313",
+  "surfaced_at": "2026-10-11T22:33:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A search of the repo by the gold's table name finds 34 files; the readers that reach the gold by the producer's table constant are 4 more, one of them a reader the name search missed",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_comparison.py:213 reads the gold through opal_naming.address(..., hp.TABLE_DAILY, ...) and :223 keeps status OK rows; the string holdings_performance_daily is not in that file",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~313/IB153-1_producer_design_read.json consumers.files_naming_the_member_or_the_gold: total 38 = 14 consumers + 8 writers + 16 neither; searched_for names both passes",
+      "PRD ADDENDUM v0.34: 'the release that first serves this gold names every reader of the holdings gold and of the performance route with its key policy'"
+    ]
+  },
+  "spec_asserts": "A name search of the repo for the gold's table string names every reader of the holdings gold.",
+  "world_is": "It named 34 files and missed one reader (a producer's comparison) that builds the address from the module's TABLE_DAILY; the second pass (module name and TABLE_DAILY) added it and 3 namesake files for a different table. A reader that builds the table name from a variable in a way neither pass matched would also be missed: the census is two name passes, not a proof. The portal pages that render the route's returns were not classified."
+}
+```
+
+## IRPT_BCKEND-D2-W313-S2 -- The existing 07:30 and 07:41 America/New_York fires are before the entry's partition usually lands (11:46Z) while daylight time holds; a producer for the entry that reused those times would grade a day before its partition exists
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W313-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~313",
+  "surfaced_at": "2026-10-11T22:33:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The existing 07:30 and 07:41 America/New_York fires are before the entry's partition usually lands (11:46Z) while daylight time holds; a producer for the entry that reused those times would grade a day before its partition exists",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf:92 cron(30 7 ? * MON-FRI *) America/New_York, described live (State ENABLED, input source names the first-witness entry): 11:30Z in daylight time, 12:30Z in standard time",
+      "infra/aws/terraform/investor-reporting/reporting-gold/schedule.tf:10-14 chosen_cron cron(41 7 ? * MON-FRI *): 11:41Z in daylight time",
+      "S3 LastModified of the entry's silver partitions since 2026-09-10: 19 of 22 at 11:46Z the next day, 3 at 3 to 5 days after the date; anchor partitions: 21 of 22 at 09:46Z the next day. Earlier partitions: 46 of 69 entry and 23 of 64 anchor partitions show a last write more than a day after their date",
+      "the times are the S3 LastModified of the objects, recorded in the _meta of each cached partition by ib433_fetch.py (deliverables/0.9.0_WK_IRPT_BCKEND~308); counts of partitions only"
+    ]
+  },
+  "spec_asserts": "PRD ADDENDUM v0.34: 'a scheduled producer runs after both' the anchor (about 09:46Z) and the entry's partition (about 11:46Z the next day).",
+  "world_is": "No schedule exists for the entry. The two schedules that would be copied are before 11:46Z while daylight time holds (to 2026-11-01), and 3 of 22 partitions landed days late. Not measured: whether the partition's S3 LastModified is its first landing (earlier partitions were rewritten)."
+}
+```
+
+## IRPT_BCKEND-D2-W313-S3 -- The performance route's holdings reader skips a non-OK day and chains the remaining days (a partial absence, not a refusal), so a blank account-day written as a non-OK status would be chained over
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W313-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~313",
+  "surfaced_at": "2026-10-11T22:33:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The performance route's holdings reader skips a non-OK day and chains the remaining days (a partial absence, not a refusal), so a blank account-day written as a non-OK status would be chained over",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/holdings_gold.py:246-247 keeps status OK rows and counts the rest as excluded; :314-317 adds the 'excluded_rows' absence with the PARTIAL marker and the figure is served; :259 raises only on a non-finite chain",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1016-1019 and data/assets/scripts/gold/irpt_holdings_performance/holdings_comparison.py:223 key on status OK and do not chain",
+      "PRD ADDENDUM v0.34: 'a return for an account-day only when that day and the prior trading day each read OWN_DATE or NOTHING_TO_GRADE. Any other account-day is blank ... Nothing is shifted, repaired or inferred'"
+    ]
+  },
+  "spec_asserts": "A blank account-day is not served as a return by any reader of the holdings gold.",
+  "world_is": "The route's reader serves a figure chained over the non-OK days with a partial absence named on it. Nothing is served for the date basis today, so nothing is wrong yet; how the producer writes a blank decides whether the route serves one. The read through the route that would show it is named in the design read, not run."
+}
+```
