@@ -41,3 +41,19 @@ ADMITTED read as Opal_Terminal (FWD-8, parked); his Monday read through the FWD-
 - `tt23`: `R23-TT23-FAIL missing test_totals_carry_read_refused, test_dry_line_prints_read_refused`
 - `tv23`: `R23-TV23-FAIL absent: infra/aws/terraform/transcripts/readers.auto.tfvars`
 - `mp23`: `R23-MP23-FAIL 2 distinct digests across 3 functions` (teams AI4UQD0M, mail VGIq85Xx, commentary AI4UQD0M)
+
+## AMENDMENT 1 (issuer, 2026-10-11 ~20:3xZ) -- the drafter's closed lists, on the CTO's ruling msg 5761
+
+The issuer's reads (`deliverables/2.0.0_SA_COO~T2/PART2_...20261011.md` @b29c8380cd and `PART2B_...20261011.md` @7b8cf70a8b) found
+three free-text members of the commentary drafter's outside-model prompt guarded only by a length cap. They are sent empty today
+because nothing produces them. The CTO ruled: "Cut your section 6 check now, before a producer exists ... Account type and category
+names are closed lists; a value off the list is dropped and counted, never sent. Themes, if they stay free text, are not sent at all
+until a rule for them is written and signed. It is a served change on the drafter: its own pair, to me."
+
+| cell | item | outcome | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|
+| `TR-cl-23` | the BUILD: `drafter.py` sends `account_type` only from the gold module's own account types, category names only from the classification snapshot's asset classes, and never themes; each withheld value is counted in the draft's provenance; five tests | FWD-10 | dell2 worker (workstream `closedlists`) | LOCAL | worker-light | -- |
+| `TR-ca-23` | the DEPLOY of TR-cl-23's merged commit to the commentary function, under ONE CTO + COO pair. Its packet states which functions of the root move with the rebuilt zip (the tree is ahead of the deployed zip by TR-tt-23 as well) | FWD-10 | ISSUER packet + pair, applier (respawned on the GO) | WORLD | -- | TR-cl-23, then the pair |
+| `TR-cn-23` | a code-only READ: can a firm free-name a model in the comparison catalogue, so that a comparison name sent to the provider could carry a client's name; and whether the composition's writer enforces its schema | FWD-10 | ISSUER (read-only) | LOCAL | -- | -- |
+
+Chain E = TR-cl-23 -> TR-ca-23. TR-cn-23 is the issuer's read, now. Battery: `r23_checks.py cl23` at base: FAIL (5 tests missing).

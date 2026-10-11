@@ -3,6 +3,7 @@
   tt23  TR23-tt23-AC1  read_refused is in pull.totals and the PULL-DRY line; test_eod_voice.py collects; the pull's suites stay green
   tv23  TR23-tv23-AC1  LIVE read-only: a TRACKED readers.auto.tfvars holds exactly the second-reader role's live trust principals;
                        the variable keeps no default; the header no longer says the readers are not applied
+  cl23  TR23-cl23-AC1  the drafter's prompt carries only closed-list values: five named tests pass with the commentary suites
   mp23  TR23-mp23-AC1  LIVE read-only: all three functions of the transcripts root read ONE CodeSha256, the Teams pull's
 
 Prints R23-<TOKEN>-OK or R23-<TOKEN>-FAIL <reason> and exits 0 / 1. Run from the repo root (or a worktree root).
@@ -82,6 +83,24 @@ def tv23():
     return True, facts + " equal; no default; header states the applied state"
 
 
+CL_FILE = TESTS / "test_commentary_drafter.py"
+CL_NAMES = ["test_account_type_off_list_is_not_sent", "test_account_type_on_list_is_sent",
+            "test_category_off_list_is_dropped_and_counted", "test_themes_are_never_sent",
+            "test_allowed_sets_come_from_the_estate"]
+CL_SUITE = [CL_FILE, TESTS / "test_commentary_seam.py", TESTS / "test_commentary_entry.py"]
+
+
+def cl23():
+    if not CL_FILE.exists():
+        return False, "absent: %s" % CL_FILE.as_posix()
+    text = CL_FILE.read_text(encoding="utf-8")
+    missing = [n for n in CL_NAMES if "def %s(" % n not in text]
+    if missing:
+        return False, "missing %s" % ", ".join(missing)
+    rc, passed, tail = _pytest(CL_SUITE)
+    return (rc == 0 and passed >= len(CL_NAMES)), tail
+
+
 def mp23():
     import boto3
 
@@ -94,9 +113,9 @@ def mp23():
 
 
 if __name__ == "__main__":
-    fns = {"tt23": tt23, "tv23": tv23, "mp23": mp23}
+    fns = {"tt23": tt23, "tv23": tv23, "mp23": mp23, "cl23": cl23}
     if len(sys.argv) != 2 or sys.argv[1] not in fns:
-        print("usage: r23_checks.py {tt23|tv23|mp23}")
+        print("usage: r23_checks.py {tt23|tv23|mp23|cl23}")
         sys.exit(2)
     ok, why = fns[sys.argv[1]]()
     print("R23-%s-%s %s" % (sys.argv[1].upper(), "OK" if ok else "FAIL", why))
