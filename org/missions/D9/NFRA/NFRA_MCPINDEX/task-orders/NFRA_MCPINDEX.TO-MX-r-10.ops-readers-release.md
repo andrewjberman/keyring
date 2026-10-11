@@ -79,6 +79,21 @@ HELD for the gateway slot.**
 - **The halves:** `deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-r-10_v2_20261011.md`, with the COO half SIGNED; G-A
   and the CTO half are asked of `1.0.0_SA_CTO~Z`. The full GO follows both.
 
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-10-11 ~14:1xZ) -- r10.AC2's route counter is fixed; the manifest is granted.**
+- **r10.AC2 defect, the issuer's** (row Z-S99): the route counter split fields `$2`/`$3` of
+  `ROUTE <name> first=<E> want=<E>`, so it read 0 in every world and AC2 could never pass. It now splits `$3`/`$4`
+  and refuses an empty match.
+  - Planted control: 1 of 2.
+  - Issuer's live run at ~14:1xZ (ssm 682e8e1c): `/health` 200; routes 4 of 4; fwd18 `3 3`; guide `E-13 5`.
+    RESULT: PASS.
+  - Every other limb of the check is unchanged.
+- **The applier did not roll back, and that was right:** a check that cannot tell pass from fail measured nothing.
+  The release (c3af8687e4) is correct on every read-back.
+- **`<paths>` adds `infra/aws/ec2/EC2_MANIFEST.json`**, for the plane-2 record the applier lands by hand, as in MX-r-9
+  A7.
+- **To close:** take the fixed check (merge `box/sitez` into the deploy-side tree, or read the file at HEAD). Re-run
+  r10.AC2 verbatim, close L4 and the ledger, then r10.AC1, the proof at `<instance_path>`, and the complete flip.
+
 ## 2. BOUNDS
 
 1. No change to any source file. This order ships what MX-o-1, MX-o-2 and MX-c-7 committed, plus the drain's hookup
@@ -95,6 +110,7 @@ org/critical_paths/.open_deploys/nfra-mcpindex-r9-ops-readers-release.json
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~30/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MX/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/ec2/EC2_MANIFEST.json
 </paths>
 
 `deploy-to-ec2.sh` is listed only for the `.env` printf line, if the `ENABLED_INTEGRATIONS` widening must be carried

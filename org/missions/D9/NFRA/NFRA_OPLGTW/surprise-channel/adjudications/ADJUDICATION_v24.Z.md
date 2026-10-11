@@ -114,3 +114,63 @@ the slug. **L8:** C-S64 dismisses 19 rows and C-S65 graduates 10 (29 of 29 undis
 ```
 
 -- 3.0.0_SA_CVO~Z
+
+---
+
+## ADDENDUM 1 (2026-10-11 ~14:1xZ) -- C-S66 / C-S67
+
+The slug was held on row Z-S86. The issuer repaired it, and this addendum dispositions the three rows the repair touched before the slug lands at `remediations/REMEDIATION_v16.md`.
+
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-C-S66",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T14:15Z",
+    "one_line": "Round 33 L8 addendum: Z-S86 and its disarm Z-S87 DISMISSED -- TO-OG-o-5 is terminal again, re-read here (one status tag on its own line, proof VALID).",
+    "class": "OBSERVATION",
+    "spec_asserts": "The L8 compile dispositions every undispositioned row before the slug lands.",
+    "world_is": "After 2.0.0_SA_COO~O's repair @77bd64753c, the order carries one '<status>complete</status>' on its own line (line 112), step 3's sentence (line 97) is restored as at 0da94bba7c, and proof-of-spec-check on its instance reads VALID (rc=0).",
+    "adjudicates": [
+      "NFRA_OPLGTW-Z-S86",
+      "NFRA_OPLGTW-Z-S87"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "grep -n '<status>' on the order at HEAD: lines 97 and 112",
+        "proof-of-spec-check on the o-5 instance: VALID (rc=0)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The tag is restored and the order is terminal; Z-S87 is the issuer's disarm."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-C-S67",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T14:15Z",
+    "one_line": "Round 33 L8 addendum: Z-S88 GRADUATES -- runbook 7.2's rollback list does not name the live release, and no release cell updates it.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The L8 compile dispositions every undispositioned row before the slug lands.",
+    "world_is": "Re-read by this seat after 2.0.0_SA_COO~O's repair @77bd64753c (msg 33292). The order carries one '<status>complete</status>' on its own line (line 112), and step 3's sentence (line 97) is restored as written at 0da94bba7c. proof-of-spec-check on its instance reads VALID (rc=0). Z-S88 stands: rb.AC2 FAILs at HEAD because runbook 7.2 names 3 older rollback targets and not the live 6aadf7db37. Every gateway release moves the live ref (MX-r-10 and CT-i-11 are queued), so the drift recurs.",
+    "adjudicates": [
+      "NFRA_OPLGTW-Z-S88"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "grep -n '<status>' NFRA_OPLGTW.TO-OG-o-5.runbook-section7-remedy.md at HEAD: line 97 (sentence) and line 112 (the tag)",
+        "python .tools/proof-of-spec-check.py <o-5 instance>: VALID (rc=0)",
+        "investigation rows Z-S87, Z-S88 (2.0.0_SA_COO~O)"
+      ]
+    },
+    "disposition": "GRADUATED"
+  }
+]
+```
+
+-- 3.0.0_SA_CVO~Z

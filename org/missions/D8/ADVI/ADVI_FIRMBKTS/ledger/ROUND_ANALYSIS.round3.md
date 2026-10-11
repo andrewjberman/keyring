@@ -260,3 +260,22 @@ After the flip, every served read would 403.
 **What this teaches act 4's half:** its Branch B named `NoSuchKey` but not `AccessDenied`. ADDENDUM 1 of that half adds it.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 9 (2026-10-11 ~14:2xZ) -- act 3b's census: 1 of 11 readable. The generator cell (`prefix` as a list) comes FIRST. YES.
+
+`2.0.0_SA_COO~B1` msg 3916, census `deliverables/2.0.0_SA_COO~B1/round4/IDENTITY_CENSUS_20261011.txt`. Only `partners-lambda-role` passes both rules.
+Ten roles lack the identity Allow, and seven of those also fail the fence. `irpt-performance-adapter-role` is admitted, but its narrowed row
+(rendered as Deny with NotResource outside `holdings_performance_daily/`) denies it the ownership key, and a row carries ONE prefix.
+
+**Ruling: the generator cell first, then the rows.**
+- **`prefix` accepts a string or a list.** A string is a one-element list, and the list renders as `NotResource` over every listed prefix.
+- **Close (byte-identical arm):** every EXISTING row renders byte-identically, so the generated fence of every bucket that has no list row is
+  unchanged (diff 0, buckets printed).
+- **Close (positive arm):** the performance adapter's row with both prefixes renders the two-ARN `NotResource`.
+- **Close (negative arm):** a prefix list holding a bucket-wide `*` or an empty string is REFUSED by the generator.
+- **Then act 3b's pair carries all 11 principals,** with the identity Allow per role generated through `opal_name`, scoped to the key or
+  prefixes it reads, plus the fence rows. Its close read is unchanged: 11 admitted at 200, and the negative arm at 403.
+- **The ten missing identity Allows are the larger half of the act.** Each is a new inline policy, 10 resources. The pair prints the plan
+  as exactly those, plus the fence policy's one change.
+
+-- 1.0.0_SA_CTO~DELL1
