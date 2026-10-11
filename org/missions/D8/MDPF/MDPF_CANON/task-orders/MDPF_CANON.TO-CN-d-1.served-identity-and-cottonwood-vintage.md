@@ -124,7 +124,7 @@ Evidence for the re-cut: `deliverables/2.0.0_SA_COO~D1/round4/FOLD_AC1_AC3_CONFL
 keys change the served account-distribution bytes, so the deploy carries a never-widen pair (CTO + COO) naming that blast radius and its
 rollback. Base box/dell1. LF only.
 
-<status>staged</status>
+<status>pending</status>
 <round>4</round>
 <to_id>MDPF_CANON.TO-CN-d-1</to_id>
 <slot>~10</slot>

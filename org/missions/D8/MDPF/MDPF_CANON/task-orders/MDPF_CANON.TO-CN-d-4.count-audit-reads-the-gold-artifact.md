@@ -147,7 +147,7 @@ filing. Report once: the diff (one line per file), the output line of every crit
 - **Not a never-widen pair:** no served output moves; the CTO's L10 read is the exercised read, the CVO grades AC3 on `/seams`.
 - Base box/dell1. LF only.
 
-<status>staged</status>
+<status>pending</status>
 <round>4</round>
 <to_id>MDPF_CANON.TO-CN-d-4</to_id>
 <slot>~13</slot>
