@@ -78,3 +78,21 @@ def test_importing_the_module_runs_no_build_and_a_refusal_ends_main_before_any_r
     assert str(raised.value) == "BINDING_PACKAGER_REQUIRED"
     assert not Path("unused-nowhere").exists()
     assert capsys.readouterr().out == ""
+
+
+LOGO = "infra/aws/lambda/investor-reporting/ycharts/research/brand/Opal-Capital-Logo-Full-Color.svg"
+
+
+def test_the_research_filter_selects_the_opal_logo():
+    """Rows IRPT_YCDGEN-D2-W7-S1 / D2-W10-S4: a --research build packages the logo without an explicit --member."""
+    assert builder.research_wanted(LOGO) is True
+    assert builder.research_wanted("infra/aws/lambda/investor-reporting/ycharts/research/brand/brand.json") is True
+
+
+@pytest.mark.parametrize("path", [
+    "infra/aws/lambda/investor-reporting/ycharts/research/tests/any.svg",
+    "infra/aws/lambda/investor-reporting/ycharts/research/fixtures/any.svg",
+    "infra/aws/lambda/investor-reporting/ycharts/research/brand/logo.png",
+])
+def test_the_research_filter_still_refuses_tests_fixtures_and_other_endings(path):
+    assert builder.research_wanted(path) is False
