@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_OPSWKF~8</issued_to>
 <issued_by>2.0.0_SA_COO~O2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -70,16 +70,42 @@ The route paths: `/api/general/trades/submissions`, `.../submissions/pending`, `
 `.../submissions/by-initiator`, `.../submissions/by-approver`, `.../submissions/TRADE-<id>`, `.../submissions/TRADE-<id>/excel`,
 `.../users`, and the branch `.../submissions/by-date`.
 
+### AMENDMENT 1 (2026-10-11 ~18:4xZ, the issuer) -- OPAL-INTERNAL is tier exactly `internal` OR firmId exactly `opal-capital`
+
+**This amendment overrides every "tier internal" sentence above.** PRD v0.6 @ca5f93a729 (ruled by `1.0.0_SA_CTO~DELL2`, msg 5574,
+on row NFRA_OPSWKF-D2-S6): 7 of the 9 real trade users carry tier `advisor` with firmId `opal-capital`, so a tier-only check
+locks Opal staff out of their own blotter. Your first build (commit c02c0aa8e7 on this branch) is inherited state: keep it and
+change only this.
+
+1. Rename nothing. `_require_internal(event)` now admits a caller when `str(tier or '').strip() == 'internal'` OR
+   `str(firmId or '').strip() == 'opal-capital'`. Both are EXACT string matches, never truthiness: the authorizer sends the
+   STRING `null` for an absent firmId, and `if firm_id` would be True for it. Anything else is refused with the same 403.
+   This is the estate's existing rule; read `infra/aws/lambda/data_refresh/lambda_function.py:142-165` (`is_opal_internal`)
+   and write the same two comparisons with two module constants (`OPAL_INTERNAL_TIER = 'internal'`,
+   `OPAL_INTERNAL_FIRM_ID = 'opal-capital'`). `userType` is NOT read: a `Dev` user of another firm is refused.
+2. Change the 403 message to `Forbidden: this route answers Opal staff only` (unchanged) and the helper's docstring to state
+   the two comparisons. Nothing else in the handler changes.
+3. Add two tests to `test_internal_only.py`, exact names:
+   - `test_opal_capital_firm_served_whatever_the_tier`: tier `advisor`, firmId `opal-capital` gets 200 or 404 on every route.
+   - `test_advisor_tier_of_another_firm_refused`: tier `advisor`, firmId `49financial` gets 403 on every route; so does the
+     same caller with `userType` `Dev`.
+   Give the callers in your existing refusal tests a `firmId` that is not `opal-capital` (the service caller: the string `null`).
+4. The check file `ow_s_checks.py` on this branch is already the amended one (the issuer placed it; do not edit it). Both
+   criteria below keep their ids and invocations. Re-run both, rewrite the proof-of-spec instance for the new outputs,
+   re-validate, flip `<status>` back to `complete`, and commit handler + tests + instance + flip together.
+
 ### ACCEPTANCE
 
 <criterion id="OW-s2-AC1" cell_refs="OW-s-2"><invocation>python org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/2.0.0_SA_COO~O2/S_CHECKS/ow_s_checks.py s2-tests</invocation><expect>OW-S2-TESTS-OK</expect></criterion>
-`OW-s2-AC1`: the six named tests exist and pass.
+`OW-s2-AC1`: the eight named tests exist and pass (six from the first cut, two from AMENDMENT 1).
 
 <criterion id="OW-s2-AC2" cell_refs="OW-s-2"><invocation>python org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/2.0.0_SA_COO~O2/S_CHECKS/ow_s_checks.py s2-probe</invocation><expect>OW-S2-PROBE-OK</expect></criterion>
-`OW-s2-AC2`: the issuer's own probe of `lambda_handler` -- five non-internal callers (client, service, empty tier, the string
-`null`, no context) on ten paths (the eight routes, `by-date`, an unknown path) are each answered 403 with no table or S3
-touched; an internal caller is answered 200 or 404 on all ten; `users/me` still answers a client-tier caller. The handler's
-own `print` of a traceback may appear above the check line when a path is wrong; the last line is the verdict.
+`OW-s2-AC2`: the issuer's own probe of `lambda_handler` -- eight outsiders (a client, a service token with firmId `null`, an
+advisor of another firm, a `Dev` of another firm, an empty tier, tier and firm both the string `null`, a near-miss spelling,
+no context) on ten paths (the eight routes, `by-date`, an unknown path) are each answered 403 with no table or S3 touched;
+three insiders (tier internal; tier internal with no firm; tier advisor with firmId `opal-capital`) are answered 200 or 404 on
+all ten; `users/me` still answers a client-tier caller. The handler's own `print` of a traceback may appear above the check
+line when a path is wrong; the last line is the verdict.
 
 <expected_criteria>OW-s2-AC1,OW-s2-AC2</expected_criteria>
 
