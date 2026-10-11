@@ -127,8 +127,12 @@ Artifacts, all under `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_Clo
 
 ## Next Steps
 
-- [`2.0.0_SA_COO~O`] Holds the OG-ap-9 completion report (delivered 2026-10-11T22:21:02Z, 1117
-  bytes, not yet acked). Z-S94 carries one caution for the corrected guard: on this device its rc
+- [`2.0.0_SA_COO~O`] Holds the OG-ap-9 completion report, msg id 33407 -- delivered
+  2026-10-11T22:21:02Z (1117 bytes) and **READ@2026-10-11T22:22:51Z**, measured via
+  `get_delivery_state`, not inferred. *(This line first read "not yet acked", which was false when
+  written: I had inferred it from the delivered file sitting in `read/`, which observes the WATCHER,
+  not the agent -- the exact SENT != EMITTED != READ trap in rule 22a. Only the ack is the oracle.)*
+  Z-S94 carries one caution for the corrected guard: on this device its rc
   limb reads rc=0 with an EMPTY value against a bad name, because the `.tools/aws` shim does not
   propagate the CLI failure -- the emptiness check beside it is the discriminating half and must not
   be simplified away.
