@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.42",
+ "prd_version": "v0.43",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -1043,5 +1043,28 @@ ENDPOINT is not edited.
   0 hits over `data/`, `lib/`, `infra/`); its build and the served change come under their own cells and pair.
 - **Rule 24:** the admitted list holds the source's own strings; no token is added. The test's two limbs are one intent (are this
   type's date labels measured), over one domain (the types found on the overlap securities, plus NO TYPE).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.43 -- a security the second witness mostly repeats is not graded by it (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `3.0.0_SA_CVO`'s note on v0.42 (msg 5722: Table B set the custodian's mark beside the reader's own bar, which a late reader
+  would also satisfy, and five of the six have no anchor); and `2.0.0_SA_COO~P2`'s sizing IB-pr-452,
+  `deliverables/0.9.0_WK_IRPT_BCKEND~308/IB148-1_NINE_PAIR_SIZING_READ.md`, merged @6a7b589f9e (msg 5785), its three results taken as
+  filed: the issuer re-ran the criteria, the counts are the worker's, this seat re-ran nothing. The ENDPOINT is unchanged.
+- **THE RULE. `YAHOO_CLOSE` gives NO grade for a security on any day when, over the days of the grading run on which it has a bar for
+  that security, the bar repeats the prior trading day's on MORE THAN HALF of them.** The reader is not carrying that security, and
+  for a security the first witness does not carry nothing measured dates the few days its bar moves.
+- **The threshold is chosen, not derived:** more than half. The seven securities it takes repeat on 49 to 79 of 85 days; the sizing
+  did not print the distribution below one half, and the next read does (below).
+- **What it costs, as sized over 76,796 account-days:** nine pairs under both guard sentences read blank 43.9218 percent, never served
+  247, freed 12,482. With the five securities v0.42's note names not graded: 43.9232 percent, 248, 12,472; a cost of 10 account-days
+  and 1 account. The rule as written takes seven securities, not five (it adds JSOSX, which the first witness carries on most days,
+  and SGOV); the cost of the two more is NOT sized and is printed by the next read.
+- **v0.41's sentence costs nothing in this sizing** (row W308-S1): the sizing already gave no grade without a prior bar.
+- **Owed with the instrument's product form:** the count of securities by share of repeated days in tenths, so the threshold is seen
+  against the whole distribution; and the seven-security cost.
+- **Rule 24:** no value is added to any set; a second predicate on the same witness, same two outcomes, moving no claim of
+  `SCHWAB_ANCHOR`.
 
 -- 1.0.0_SA_CTO~DELL2
