@@ -6305,3 +6305,55 @@
   "notes": "Not investigated. A later cell could decide whether the page may print the field from section_id; it is the CTO's to rule."
 }
 ```
+
+## DSGN_IRPTV1-D2-W64-S1 -- IV-e-116: the earlier iv-e-115 test asserted the vendor Label cell, which this cell removes, so its helper and four expectations were edited
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W64-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~64",
+  "surfaced_at": "2026-10-11T21:24:00Z",
+  "one_line": "IV-e-116: the earlier iv-e-115 test asserted the vendor Label cell, which this cell removes, so its helper and four expectations were edited",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-115.vendor-section-names-units.test.tsx: base run 1186 pass; after the product change arms (c) and (d) failed (Expected 'Key Stats', Received '1.5'; Expected 'percent', Received 'not stated') because the helper read cells[0] as the Label and cells[2] as the Unit",
+      "portal commit 762ba2b8: the helper reads the Label cell only when the Label header is present and the Unit from its own place; the four vendor Label expectations 'Key Stats', 'S99', 'Asset Allocation', 'source_chart_representation' become '' (the heading still asserts the same words)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IV-e-116 names the new test and the product change; it does not name the earlier IV-e-115 test.",
+  "world_is": "Done as written for the cell. The earlier test's vendor Label expectations were true of the page before this cell and are false after it by design, so they were updated to the new reading, in portal/src/pages/InvestorReporting/ (inside the grant). The title assertions of those arms were kept, and the Opal arm (e) was not touched and still passes.",
+  "notes": "None. The reviewer may read the iv-e-115 diff in 762ba2b8."
+}
+```
+
+## DSGN_IRPTV1-D2-W64-S2 -- IV-e-116: smoke-classification control test timed out once (19.9s against a 5s limit) in one of four whole-scope runs and passed in the others
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W64-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~64",
+  "surfaced_at": "2026-10-11T21:24:00Z",
+  "one_line": "IV-e-116: smoke-classification control test timed out once (19.9s against a 5s limit) in one of four whole-scope runs and passed in the others",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~64/after1_suite.txt: fe-s-66 smoke-classification 'THE CONTROL: a seeded unclassified fixture, in a temp copy of the directory' failed with 'this test timed out after 5000ms' (19878.85ms); the same test passed in the base run (base_suite.txt) and in after_suite.txt",
+      "the fe-s-66 folder alone, run with the iv-e-115/116 tests: 13 pass 0 fail"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A whole-scope run of src/pages/InvestorReporting has 0 failing tests (the order's base: 1186 pass, 27 skip, 0 fail).",
+  "world_is": "One of four whole-scope runs showed this failure; it copies a directory to a temp folder and timed out at 5000ms while the machine was busy. It does not touch NativeSections. The base run and the final run show 0 fail; the other run's two failures were the iv-e-115 arms (row W64-S1). Not investigated further.",
+  "notes": "A timing limit, not a product fact. suite_after in the record uses the run with 0 fail (after_suite.txt)."
+}
+```
