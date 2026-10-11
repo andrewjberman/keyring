@@ -1,12 +1,13 @@
 {
   "prd": "NFRA_OPSWKF_PRD.md",
-  "prd_version": "v0.6",
-  "prd_pin": "ca5f93a729b8bf9718fb6e6c42965779282884a2",
+  "prd_version": "v0.7",
+  "prd_pin": "3b1a06bffe8e6ae21d329be34379e55d3beee985",
   "half": "ratified-text",
-  "half_hash": "27834bea46018a408c7df55f536fbef305b2589699db9eb12c89dec006135286",
-  "endpoint_hash": "11765b177b0a4c89057343dc7109ccd1117df4cdef595273b5ad8da66c728365",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPSWKF_PRD_v0.6_RATIFIED_TEXT_REVIEW_20261011.md@09d1a90081208340da494694b2bca2b363cd357a",
+  "half_hash": "41e879a024214d3f21355efe2a503a5654bae5f58afad3e838946bf5f6e2a2e7",
+  "endpoint_hash": "0ec1109ca8fd305872468760feac496b1abd2a5948eb590a43a40bad131105c3",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPSWKF_PRD_v0.7_RATIFIED_TEXT_REVIEW_20261011.md@e3cb1980d72fc4cdbdd87426b6a6f57c5be09ce2",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-11T18:36:22Z"
+  "signed_at": "2026-10-11T19:46:39Z",
+  "reason": "FWD-9's refused arm reads 403 on today's bytes when the caller carries no email (handler line 188); the DONE WHEN must give the non-internal caller a verified email or identify the new check's own 403"
 }
