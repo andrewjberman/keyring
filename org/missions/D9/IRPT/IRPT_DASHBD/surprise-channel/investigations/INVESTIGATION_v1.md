@@ -6764,3 +6764,51 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W122-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~122",
+  "surfaced_at": "2026-10-11T21:20:57Z",
+  "one_line": "DB-b-149: on one day, 34 of the 160 per-asset medians the two price paths take over the original Black Diamond store change when each transaction id is counted once (26 under 0.1 percent, 6 between 0.1 and 1 percent, 2 over 1 percent); the Lambda path serves them, so the owner decides which weighting a price should carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-149 item 3: a path whose served price moves when ids are counted once is ONE ROW naming its owner; this cell corrects nothing. ORIGINAL_STORE_SHAPE.json (W116) said the effect of the un-deduplicated median on a served price was not measured.",
+  "world_is": "Day 2026-10-09 object silver/transactions/2026-10-09.parquet: 5216 rows, 1156 distinct ids, 1006 priced ids carry more than one row, every one of them with the same per-row price in all its copies; 160 per-asset medians; with each id counted once (drop_duplicates on transaction_id, either keep) 34 moved at 8-decimal precision and 126 did not, no asset appeared or vanished. The two paths share one function (bd_price_update.py 327-344; bd-price-update lambda_function.py 185-202), so this is one comparison for both. The Lambda path (event-chained, newest log event 2026-10-11T00:19Z) lets this median outrank Yahoo for every asset it prices; the script path lets overrides and Yahoo outrank it and its schedule is not established. INERT, not ARMED: the cell does not show the deduplicated price is the right one, nor that a moved median is the price that reached canonical_prices (the gold silver-prep S_00 rebuild may replace it). Owner: Black Diamond pipeline lambda (infra/aws/lambda/bd-pipeline) and Black Diamond silver pipeline (data/black_diamond/scripts/silver); no owned-paths row found. Counts only; no price value.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~122/PRICE_PATHS_MEDIAN.json (medians, paths)",
+      "data/black_diamond/scripts/silver/bd_price_update.py lines 263-271, 327-344, 778, 821",
+      "infra/aws/lambda/bd-pipeline/bd-price-update/lambda_function.py lines 141-149, 185-202, 301-304, 610, 653"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W122-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~122",
+  "surfaced_at": "2026-10-11T21:20:57Z",
+  "one_line": "DB-b-149: infra/aws/ec2/EC2_MANIFEST.json says the bd_price_update.py script is invoked at the end of the opal-bd-allocation-download SSM sequence, but the repo's SSM document has no price step, and the live Lambda it 'replaces' is the one that ran on 2026-10-11.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-149 item 1: each path's `scheduled` is read from the Terraform or scheduler definition (DESIRED) and said apart from what is APPLIED.",
+  "world_is": "EC2_MANIFEST.json lines 318-331 (service bd-price-runner) states a weekday trigger at the end of the opal-bd-allocation-download sequence and says it replaces the bd-price-update Lambda 'after EC2 migration verified'. infra/aws/ssm/opal-bd-allocation-download.json contains no occurrence of 'price' (0 hits). The Lambda is still Active (last modified 2026-04-06), has no resource-based policy, and logged at 2026-10-11T00:19Z. The script's schedule is therefore recorded `scheduled: false` as 'no schedule definition found', NOT_ESTABLISHED as to whether it runs; the SSM document as APPLIED was not read (outside the order's allowed reads). The deployed Lambda bytes were not compared with the repo file either. Owner of the manifest: the EC2 manifest's service owner (not named in the file).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/EC2_MANIFEST.json lines 318-331",
+      "infra/aws/ssm/opal-bd-allocation-download.json (Grep price, 0 hits)",
+      "live: lambda get-function-configuration / get-policy / logs describe-log-streams on bd-price-update, 2026-10-11 (read through .tools/aws)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
