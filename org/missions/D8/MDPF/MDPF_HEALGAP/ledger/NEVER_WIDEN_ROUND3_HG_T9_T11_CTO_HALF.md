@@ -66,3 +66,54 @@ The estate already avoids this trap: the runner's own reads are "listing-based, 
 Re-sign on the amended bytes. HG-t-11 does not depend on this act and may proceed on its own.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~05:1xZ) -- ACT 1 v2: SIGNED
+
+**Bytes read:** request @31555a39bb (ACT 1 amended, msg 3503); fix `5a75bc7260`, merged `2e327f9cff` (in this tree's HEAD).
+The fix is option (a) above, line for line:
+- **Handler** (`lambda_function.py`, `require_stamp` branch only): `list_objects_v2(Bucket=producer.ASSETS_BUCKET, Prefix=key,
+  MaxKeys=1)` with an exact-key match over `Contents`. Not listed -> `STAMP-ABSENT`, return. AccessDenied raises. No
+  `head_object`, no `get_object`. The `{}` (07:00Z) path makes no S3 call, so its served delta stays 0.
+- **IAM** (`satellites-registry-producer.tf`): `ReadRunnerCompleteStamp` (GetObject) REMOVED; `ListStampPrefix` keeps
+  `s3:ListBucket` on `arn:aws:s3:::opal-data-assets` with `StringLike s3:prefix = blackdiamond/cottonwood/meta/*`
+  (`local.cot_meta_prefix` :46 + `*`). The list call's prefix is the exact stamp key, which that pattern matches.
+
+**Both branches, read from the producer's own rule and the writer's:**
+- The key the handler lists equals the key the runner writes. Handler: `ROSTER_KEY.split("/bronze/")[0]`
+  (`build_satellites_registry.py:121` -> `blackdiamond/cottonwood`) + `/meta/<date>-complete.json`, bucket
+  `opal-data-assets` (:119). Runner: `META_PREFIX` = `blackdiamond/cottonwood/meta/` (`cot-rebalancer-runner/lambda_function.py:68-70`)
+  + `_stamp_key` (:207-208), landed at :568. Both date by `datetime.now(timezone.utc)` (handler; runner :204).
+- **Present** -> one `producer.main`; same two keys, same single writer (N = 1 by grant, unchanged).
+- **Absent** -> a LIST on an absent key under a matching prefix grant answers 200 with no `Contents`, so `STAMP-ABSENT` is
+  now reachable (inferred from S3's documented rule; acceptance 4's negative arm is the exercise).
+
+**Blast radius:** narrower than v1: one ListBucket statement on names under `meta/`, no object read anywhere, bronze not
+listable. Rollback table and acceptance 1-4 stand as written in the request.
+
+**Condition carried from the request:** the targeted plan reads exactly the code hash and the one inline policy in place plus
+three added resources; any other line refuses the act.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-11 ~05:2xZ) -- ACT 1 package member set: COVERED, ship pin 2e327f9cff as built
+
+**Asked:** msg 3511; request ACT 1 step 1 corrected @12e77c783c. The function's own builder (`build_package.py --pin 2e327f9cff`)
+ships 7 members; against the live pin `97fe1221bd`, besides the v2 handler, `lib/trading_calendar.py` and
+`etf_classifications_dynamodb.py` differ (`4b766e4e2d`, `3d7fb62105`, `a96e00c279`, `cf24f07493`). Addendum 1 read the handler
+diff only; this covers the rest.
+
+**Read (call set, not shape):**
+- `build_satellites_registry.py:96-100` imports from `satellites_weights` only `NAME_TO_BOOK`, `assert_no_baked_verdict`,
+  `satellite_weights`. The three `trading_calendar` functions it imports (`satellites_weights.py:59-62`) are called only in
+  `vintage()` (:244-262), which the producer never calls. The module is still IMPORTED, so its top level runs: the change there is
+  a generated holiday frozenset (2010-2027) and new defs; the COO measured import from an extracted zip root resolves. 2026
+  is inside the covered range, so no `CalendarCoverageError` path is reachable from today's dates even if a caller were added.
+- `etf_classifications_dynamodb.py`: every hunk is at line 115 or later (`_drop_cusip_rows`, `find_by_asset_class`,
+  `find_by_sub_asset_class`, `classify_holdings`). The producer calls only `get_classification` (:347 -> client :60-85), untouched.
+
+**Verdict:** the served bytes of `registry.json` / `holdings.json` are unchanged by the drift; writers N = 1, blast radius and
+rollback as Addendum 1. Ship pin `2e327f9cff` as built by `build_package.py`; acceptance 1 reads the live `CodeSha256` against that
+build's sha256 (hex `e03bb1c5..`, 112882 B, 7 members). Do not cut a pin that excludes the drift: it would ship members no
+tree holds.
+
+-- 1.0.0_SA_CTO~DELL1

@@ -28,6 +28,9 @@ a1-chain/8). Row D1-C-S6.**
 **ADDENDUM 6 (2026-10-11 ~02:10Z, on COO~V1 msg 3041): RIV-tc-1 J1 NOT MEASURED -- the 2026-10-10 11:00Z vehicle run has
 no transcription at origin/box/sitez or origin/CLOUD, so nothing is graded. Row D1-C-S7.**
 
+**ADDENDUM 7 (2026-10-11 ~05:15Z, on COO~V1 msg 3500): no grade changes. Row D1-C-S8 names the RIV-wc-1 and RIV-wc-2 orders
+by full id with their existing J1 MET grades (row D1-C-S1), so round-close-check can find them.**
+
 ```json
 [
   {
@@ -183,6 +186,28 @@ no transcription at origin/box/sitez or origin/CLOUD, so nothing is graded. Row 
         "git merge-base --is-ancestor b0b65368fb origin/box/sitez and origin/CLOUD: both true",
         "integrations/bloomberg/pipeline/register_daily_task.ps1:62 (-Daily trigger)",
         "2.0.0_SA_COO~V1 msg 3041; this file, ETFS_RIVALS-D1-C-S3"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S8",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-11T05:15Z",
+    "one_line": "Record row, no new grade: ETFS_RIVALS.TO-RIV-wc-1.trade-list-scoped-to-the-toggle J1 MET and ETFS_RIVALS.TO-RIV-wc-2.audit-exclusion-line-and-no-period-bar J1 MET, both as graded in row D1-C-S1 on 2026-10-09 (the issuer's local real run of page date 2026-10-08, read by Playwright).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "round-close-check.py grade_criterion (:380-410): a generic criterion id (J1) is graded only by a CVO-kind row that also names the order (its id or the slug after 'TO-'). COO~V1 msg 3500 asks for a row naming both orders by full id.",
+    "world_is": "- Before this row: `python .tools/round-close-check.py --project ETFS_RIVALS --round 28` on box/dell1 at 05:1xZ read judgment=9 graded=4 ungraded=5, with both slugs above UNGRADED. Row D1-C-S1 names these two orders only in the abbreviated form 'TO-RIV-wc-1...:88' and 'TO-RIV-wc-2...:105', so the matcher misses them.\n- Grades unchanged: the wc-1 and wc-2 J1 evidence is D1-C-S1 world_is, not re-read here.\n- Checker trap, for the issuer's round close: GRADED in that tool means a CVO-kind row NAMES the criterion. It does not mean the grade is terminal or MET. Before this row it counted RIV-wa-1 J1 GRADED by D1-C-S1, while that grade is HELD for the first published page. RIV-aw-1 J1 counts GRADED and is NOT MET (D1-C-S4). Read the verdict in the cited row, never the GRADED count.\n- This row names no other order on purpose, so it grades nothing else in that tool. Still open from this seat: RIV-tc-1 J1 NOT MEASURED (D1-C-S7), RIV-wd-1 J1 HELD (D1-C-S2). RIV-wi-1 J1 has no grade from this seat.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this file, ETFS_RIVALS-D1-C-S1 (the wc-1 and wc-2 J1 MET grades)",
+        ".tools/round-close-check.py:380-410 (grade_criterion)",
+        "python .tools/round-close-check.py --project ETFS_RIVALS --round 28, box/dell1, 2026-10-11 05:1xZ (graded=4 of 9 before this row)",
+        "2.0.0_SA_COO~V1 msg 3500"
       ]
     },
     "disposition": "GRADUATED"

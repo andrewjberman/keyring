@@ -508,6 +508,48 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/mdpf/scripts/demque/price_store.py write path"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W22-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~22",
+    "surfaced_at": "2026-10-11T05:17:53Z",
+    "one_line": "All 32 stale price files end on 2026-06-23, so a redraw request built from each file's own date window (the DQ-t-28 build) ends 2026-06-23, not at the current frontier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/redraw_stale.py --list on the worktree at base ba3ee9bd48 (S3 read, 2026-10-11 ~05Z): total 141, stale 32; every stale row end 2026-06-23; start 2013-04-08 for 31 rows and 2015-10-28 for 1",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t28.redraw-stale-price-files.md build steps 1 and 3: a stale row's start and end are the file's own date min and max; the request end is the latest of the rows' windows",
+        "data/mdpf/scripts/demque/daily_draw.py@ba3ee9bd48 _windows and on_result: the request start and end are passed to lock.check as the lock range"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "the 32 files are re-drawn so the price tables carry seven columns; the redraw request's window is each stale file's own date min and max (TO DQ-t-28 build steps 1 and 3).",
+    "world_is": "the 32 stale files end 2026-06-23 (their last draw's window), so the built request ends there and the draw's lock range would follow it. Whether the 32 then reach the current frontier is not settled. Not read: the end dates of the 109 seven-column files and the lock.json valid_to of the 32. The issuer should read this before running --apply."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W22-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~22",
+    "surfaced_at": "2026-10-11T05:17:53Z",
+    "one_line": "demand_queue.upload_ledger derives its repo root four dirname levels up from the file, which lands on data/, not the repo root, so its lib.opal_naming import holds only under the PYTHONPATH that run_daily_draw.sh exports.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/demand_queue.py@ba3ee9bd48 upload_ledger: root = four os.path.dirname calls on abspath(__file__), then sys.path insert and 'from lib.opal_naming import address'",
+        "python read on the worktree: four dirname calls on demand_queue.__file__ print C:\\dev\\wk-demque-22\\data; lib/opal_naming.py exists at C:\\dev\\wk-demque-22\\lib",
+        "data/mdpf/scripts/demque/run_daily_draw.sh@ba3ee9bd48 line 13: export PYTHONPATH=$ROOT"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "demand_queue.upload_ledger resolves the builder address through lib.opal_naming from the repo root found by its own path.",
+    "world_is": "the four-level path lands on data/, so the import holds only under the PYTHONPATH set by the daily draw script. redraw_stale.py takes the repo root four levels up from its own folder and inserts it itself. Not read: whether any scheduled task calls upload_ledger without that PYTHONPATH."
   }
 ]
 ```
