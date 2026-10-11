@@ -12,13 +12,13 @@
  "opened_at": "2026-10-11T16:49:30Z",
  "state": "ACKED",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-11T16:50:45Z",
+  "bus_message_id": "cf8e1276-8b40-4e8c-90a4-dc8050f0a115"
  },
  "ack": {
   "at": "2026-10-11T16:52:22Z",
   "by": "0.7.0_AE_CloudOps~FBL",
-  "bus_message_id": null
+  "bus_message_id": "261f69a7-c62e-41cd-aaff-be5c72a3dd36"
  },
  "closed": {
   "from_at": null,
