@@ -6180,3 +6180,27 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED: found while explaining the $128.07 split the CTO ruling (msg 3318, item 3) asked e60 to account for. It is the answer to that item: the split is C_06's total-vs-class gap, not an e60 move. The gap's owner is C_06's lane; whether a $128-magnitude position is counted in `total` on one day and in a class the next is for that lane to trace. RELATED: [[MDPF_SECCLASS-D1-S26]]."
 }
 ```
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W77-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~77",
+  "surfaced_at": "2026-10-11T03:36:54Z",
+  "one_line": "A literal ticker string NAN or NONE is not placed by the ticker-no-row path: the lib normalizes it to no ticker and runs the blank-ticker identity chain, so the hop is name-key, not ticker-no-row-name-key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py:170 `if not t or t in ('NONE', 'NAN'): return None` (_normalize_ticker); :218-219 classify_with_identity branches on `t is not None`, so a None ticker takes the identity chain, not the ticker-no-row branch",
+      "probe at worktree 2026-10-11 ~03:36Z, stub client holding only NAME::COLUMBIA DIVIDEND INCOME A, classify_with_identity(ticker, 'Columbia Dividend Income A', ''): LBSAX -> ('equity','Name Row','etf-classifications','ticker-no-row-name-key'); NAN -> ('equity','Name Row','etf-classifications','name-key'); NONE -> ('equity','Name Row','etf-classifications','name-key')",
+      "the order's premise (SC-e87 cell: 'for a non-blank ticker it already does the whole job') holds for every ticker that normalizes to a value; it does not hold for the literal strings NAN and NONE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A non-blank ticker that the canonical table has no row for is placed by its NAME:: row through the ticker-no-row branch of classify_with_identity (hop ticker-no-row-name-key), at each of the three served sites.",
+  "world_is": "A ticker string of NAN or NONE is treated as a blank ticker by the lib, so it goes through the identity chain (CUSIP, then exact name, then the name's one CUSIP) before the NAME:: row. With a CUSIP passed (D_03, D_04) that chain may resolve a different row than the NAME:: row. The class is the same for the probe above (no CUSIP, one NAME:: row); whether any served position carries the literal ticker NAN or NONE was NOT measured.",
+  "notes": "SURFACED, NOT CHASED. Scope of SC-e-87 is the three sites' non-blank branch; the lib is out of this cell's write grant (<paths> names no lib file). The hop label differs, and the CUSIP-chain resolution differs when a CUSIP is passed. For the lane that owns the lib to disposition; no change made in this cell."
+}
+```
