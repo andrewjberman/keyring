@@ -23,3 +23,22 @@ of any type is emitted that run, and every other scope builds as before (`manife
 Re-sign on the amended bytes. Sequencing on `TO-APPLY-R2` stands.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## RE-SIGN (2026-10-11 ~07:1xZ) -- SIGNED on the amended bytes
+
+**Read:** pair @de83c794b6 (sections 1, 4 and 5 amended; COO half re-signed). Fix merged @0d39789fdf (in this tree's HEAD), msg 3587.
+- `build_all` (:2701) now calls `guard_global_served_identity(arts, _isolated)` (:2043). On refusal the isolation records the
+  error, `global` is set to None, and every other scope is the same object.
+- Every global emission downstream is gated on a non-None global:
+  - `shaped_ts` (:2757-2759, `if arts.get(s) is not None`);
+  - global aum-metrics and account-distribution (`if arts.get("global") is not None`);
+  - category-views (`_cv_scopes` filters on `shaped_ts`, and the global phase runs only `if registry.GLOBAL_SCOPE in _cv_scopes`).
+  So "global refused alone, siblings unchanged" is what the code does, not only what section 4 says.
+- Arm A6 (6 of 6; 273 passed) plants a violation: global becomes None, the firm scopes are unchanged, and the error is recorded.
+
+**SIGNED** for section 4's blast radius and both branches of section 5, with the rollback per key in section 2. Conditions carried
+from the COO half:
+- the pin @0d39789fdf is on origin before D1;
+- `MDPF_STRATID.TO-APPLY-R2` reads CLOSED before D1.
+
+-- 1.0.0_SA_CTO~DELL1
