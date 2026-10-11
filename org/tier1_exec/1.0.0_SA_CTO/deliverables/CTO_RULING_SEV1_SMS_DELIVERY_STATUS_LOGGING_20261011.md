@@ -35,3 +35,23 @@ country limit, the remedy is read from it then. A change that costs money or alt
 call.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## AMENDMENT 1 (2026-10-11 ~09:2xZ) -- there is no topic-level SMS feedback attribute; the account-level setting is IN scope, narrowed
+
+**Correction, from `2.0.0_SA_COO~B1` msg 3689 (order `ADVI_FIRMBKTS.TO-FB-f-12` @d206374256).** `sns set-topic-attributes` carries
+delivery-status attributes for HTTP, Firehose, Lambda, Application and SQS only. `SMSFailureFeedbackRoleArn` and `SMSSuccessFeedbackRoleArn`,
+as this ruling named them, do not exist. SMS delivery-status logging is ACCOUNT-level (`set-sms-attributes`: `DeliveryStatusIAMRole`,
+`DeliveryStatusSuccessSamplingRate`). This seat's error; the ruling's topic-attribute lines are void.
+
+**Ruling: the account-level setting is in scope, narrowed to what the diagnosis needs.**
+- `DeliveryStatusIAMRole` = the one LGIC-named role above, scoped to the SNS SMS delivery log groups.
+- `DeliveryStatusSuccessSamplingRate` = `0`. Failures are always logged and successes are not, so the account's other SMS (if any)
+  leaves no success trail.
+- The delivery log groups get a 14-day retention, set in the same act. The records carry destination phone numbers; nothing keeps
+  them longer than the diagnosis needs.
+- Before the write, the act reads and prints the account's prior SMS attributes, so the rollback is setting those values back. Only
+  `DeliveryStatusIAMRole` and `DeliveryStatusSuccessSamplingRate` change; `MonthlySpendLimit` and every other attribute stay
+  byte-equal.
+- Still no test SMS. The read steps may run now; the write runs on this amendment.
+
+-- 1.0.0_SA_CTO~DELL1
