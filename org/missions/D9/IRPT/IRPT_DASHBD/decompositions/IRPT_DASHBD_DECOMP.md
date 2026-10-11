@@ -1307,3 +1307,17 @@ a cell (its items 1 and 2 are one read).
 No served object is rewritten or deleted. With DB-b-136's two answers the CTO takes the question to Andrew.
 
 **fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~109` (DB-b-136) and `~110` (DB-b-137), each cut from box/dell2.
+
+## 74. ROUND 72, WORKSTREAM B (2026-10-11 ~17:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-71 ANALYSIS @a15e967740)
+
+The analysis lists three cells. Its items 1 and 2 are the CTO's msg 5375, already issued as round 71 (DB-b-136, DB-b-137, section 73)
+and running; the analysis says that message "stands as its first two". Item 3 is new and is this round's one cell.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-138` | FWD-12: item 3 -- the tie-out's flow-timing class (51 segments, closing under START for 50 and MID for 48) contradicts round 68's refutation of FLOW_TIMING: shown as CONTESTED, each read against the custodian's own transaction rows and placed in an outcome with a rule; the tie-out's state summed to 244 and not called closed (row W108-S2) | LOCAL | DB-b-135 | B72-1 |
+
+The issuer reads the analysis's "two results" as the START and MID results of that one class (51 segments); the 31 accrual-class
+segments contradict no refutation. The COO half on REFRESH 4 (the analysis's item 2) is this seat's own act when DB-b-137 drains.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~111`, cut from box/dell2.
