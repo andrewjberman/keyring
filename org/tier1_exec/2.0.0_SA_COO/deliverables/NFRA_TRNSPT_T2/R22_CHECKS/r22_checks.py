@@ -3,6 +3,7 @@
   c22   TR22-c22-AC1  teams/census.py: the fetchable-on-cutoff set with its denominator, each entry landed or missing with a completeness cause;
                       a --live CLI that only reads; counts only
   rc22  TR22-rc22-AC1 the monday-skip replay: three named tests pass
+  rm22  TR22-rm22-AC1 LIVE read-only: the Teams pull runs at 1024 MB on the unchanged post-fix zip; nothing else moved
   ra22  TR22-ra22-AC1 LIVE read-only: the Teams pull runs the rebuilt zip, the mail pull's sha is unmoved, the commentary function is absent
   rl22  TR22-rl22-AC1 the pull survives a LISTING error of one series: two named tests pass and the pull's suites stay green
   rf22  TR22-rf22-AC1 the pull survives a refused content read: three named tests pass and the pull's suites stay green
@@ -128,10 +129,39 @@ def ra22():
     return True, facts
 
 
+POST_FIX_SHA = "AI4UQD0ME+ABza1X0BrBjGjpqjN7f2fc0Cdxb88aA/I="
+PULL_MEMORY_MB = 1024
+
+
+def rm22():
+    """Live read-only: the Teams pull runs at 1024 MB on the unchanged post-fix zip; the mail pull and the commentary function did not move."""
+    import boto3
+    from botocore.exceptions import ClientError
+
+    lam = boto3.client("lambda", region_name="us-east-1")
+    pull = lam.get_function_configuration(FunctionName=PULL_FN)
+    mail = lam.get_function_configuration(FunctionName=MAIL_FN)["CodeSha256"]
+    try:
+        lam.get_function_configuration(FunctionName=COMMENTARY_FN)
+        commentary = "PRESENT"
+    except ClientError as exc:
+        commentary = "ABSENT" if exc.response["Error"]["Code"] == "ResourceNotFoundException" else "UNREAD"
+    facts = "memory=%s pull=%s mail=%s commentary=%s" % (pull["MemorySize"], pull["CodeSha256"][:8], mail[:8], commentary)
+    if pull["MemorySize"] != PULL_MEMORY_MB:
+        return False, "the pull's MemorySize is not %d; %s" % (PULL_MEMORY_MB, facts)
+    if pull["CodeSha256"] != POST_FIX_SHA:
+        return False, "the pull's code MOVED; " + facts
+    if mail != MAIL_SHA:
+        return False, "the mail pull MOVED; " + facts
+    if commentary != "ABSENT":
+        return False, "the commentary function is %s; %s" % (commentary, facts)
+    return True, facts
+
+
 if __name__ == "__main__":
-    fns = {"c22": c22, "rc22": rc22, "rf22": rf22, "rl22": rl22, "ra22": ra22}
+    fns = {"c22": c22, "rc22": rc22, "rf22": rf22, "rl22": rl22, "ra22": ra22, "rm22": rm22}
     if len(sys.argv) != 2 or sys.argv[1] not in fns:
-        print("usage: r22_checks.py {c22|rc22|rf22|rl22|ra22}")
+        print("usage: r22_checks.py {c22|rc22|rf22|rl22|ra22|rm22}")
         sys.exit(2)
     ok, why = fns[sys.argv[1]]()
     print("R22-%s-%s %s" % (sys.argv[1].upper(), "OK" if ok else "FAIL", why))
