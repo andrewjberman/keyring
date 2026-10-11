@@ -3671,3 +3671,27 @@
   "notes": "This seat's defect: it merged a reader change without asking what re-reads a stored input; the release census found it, after the merge, not before. The checks of cells AR-y-142 and AR-y-143 no longer pass on the trunk, by design; their orders stay complete as build records. The re-land is its own cell and first settles what read_input compares (the reader's version stored with the input, or the holdings alone): a contract choice brought to the CTO with what each costs on inputs already stored. The portal form's re-post and closed details (on DEV 6eb13c5e875f) are NOT reverted: they work against the service of today."
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S64",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T23:37:38Z",
+  "one_line": "L9 rounds 14 and 15: AR142-y-AC3J NOT MET as written, AR144-y-AC2J MET for the form's half, AR145-y-AC2J MET. The account-word list is incomplete: it matches 'acct #' and not 'account #', and its subtraction ran over 13 fixture files none of which has an account column, so it proves nothing about the class. The repeated-header finding's words tell a person to split what may be one account into two files. The build is reverted, so both are fixed before the re-land. The census found the unsafe re-read of stored inputs, after the merges.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND14_Y_L8_COMPILE_20261011.md @73dd169157 (msg 6114)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUNDS_14_15_Y_L9_GRADE_20261011.md",
+      "this seat's reads 2026-10-11T23:37:38Z: the reverted build commit d95cf11106, template_reader.py lines 28 to 52 (the two lists and the four findings' words) and its closed-lists record; the form's re-post rule on portal origin/DEV cdd87181d5d4 (TicketCenter/analysisRequest.ts, re-post only on RESOLVING, a fixed number of tries 3 seconds apart, a still-checking sentence when every try answers RESOLVING); and uploads.py at HEAD lines 516 to 539, where a stored original is re-read and refused unless the result equals the template stored at acceptance"
+    ]
+  },
+  "spec_asserts": "AR142-y-AC3J: the two closed lists are the right ones, and each finding's words tell a person what to do. AR144-y-AC2J: a person who attaches a bad sheet learns what to fix without pressing twice and without reading a code. AR145-y-AC2J: no consumer of the door's answer is missing, and each deciding line is the line that decides. CLAUDE.md rule 24 (i): the subtraction's domain must be the claim's population.",
+  "world_is": "Nothing of the upload check is on the trunk or released. The form's re-post is on portal DEV. Not looked at: a rendered page; a real uploaded file. Not re-derived: the census's counts.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
