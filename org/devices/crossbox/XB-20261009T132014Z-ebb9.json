@@ -10,7 +10,7 @@
  "subject": "AMGT_HARVST HVST-bu-1 round 77: read the cycle runner records at site Z (read-only)",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round77/XB_ORDER_BU1_TO_ZW.md",
  "opened_at": "2026-10-09T13:20:14Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T13:21:14Z",
   "bus_message_id": "f8f7d6c3-2f28-4cc1-aee1-9995eed917db"
@@ -21,8 +21,8 @@
   "bus_message_id": null
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T06:33:14Z",
+  "from_by": "2.0.0_SA_COO~W1",
   "to_at": "2026-10-11T06:02:56Z",
   "to_by": "0.7.0_AE_CloudOps~ZW"
  }

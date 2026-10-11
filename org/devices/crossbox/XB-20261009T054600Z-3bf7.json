@@ -10,7 +10,7 @@
  "subject": "AMGT_HARVST HVST-bs-4: resume the r47 Seeking Alpha backfill from its checkpoint (133) as a declared detached job",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round75/XB_ORDER_BS4_TO_ZW.md",
  "opened_at": "2026-10-09T05:46:00Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T05:53:21Z",
   "bus_message_id": "45e27d6f-8d14-4850-9f9e-fce8340a6b70"
@@ -21,8 +21,8 @@
   "bus_message_id": null
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T06:33:14Z",
+  "from_by": "2.0.0_SA_COO~W1",
   "to_at": "2026-10-11T06:02:53Z",
   "to_by": "0.7.0_AE_CloudOps~ZW"
  }
