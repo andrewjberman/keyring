@@ -4574,3 +4574,198 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "No action taken; the commit was not blocked and the cited claim is not this cell's. Filed for the reflex's owner to judge whether the bare-basename match is intended."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S28",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T14:51:34Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The standing scoped-exemption instrument infra/aws/terraform/shared-infra/tests/check_fence_scoped_rows.py reads ok=False at HEAD: its scratch root before_strip fails init on one(list), and it raises a cp1252 UnicodeEncodeError unless PYTHONIOENCODING=utf-8 is set.",
+  "spec_asserts": "The file's own docstring (NFRA_CTLPLN.TO-CT-d-2 AMENDMENT 4) says it proves the scoped-exemption renderer and the fail-closed readers on scratch copies and ends on a FENCE-SCOPED line; its last line is the instrument a renderer change is graded by.",
+  "world_is": "cd infra/aws/terraform/shared-infra/tests && PYTHONIOENCODING=utf-8 python check_fence_scoped_rows.py (2026-10-11 ~15:2xZ, dell1) printed: 'ERROR: root before_strip: init rc=1 ... while calling one(list) | local.lgic_managed_firm_buckets is object with 2 attributes Invalid value for \"list\" parameter: must be a list, set, or tuple value with either zero or one elements.' and 'FENCE-SCOPED rows_today=32 unchanged_today=False scoped_rendered=0/0 sim_ok=0/0 refusals_ok=0/7 unknown_key_refused_by=none ok=False'. Without PYTHONIOENCODING it stops on UnicodeEncodeError (charmap, positions 36-41). The renderer this round changed (FB-g-19, -20, -21) is graded by the issuer's r4_modfence.py, r4_modallow.py and r4_policy.py instead.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the command above, run read-only in the working tree at HEAD, last two output lines quoted",
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf (the local named in the error)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a prerequisite of act 3b: nothing in the act depends on this instrument reading ok=True. It stands as a broken regression instrument for the fence module; an owner (the NFRA_CTLPLN lane that built it) repairs or retires it. Surfaced, not chased."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W43-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~43",
+  "surfaced_at": "2026-10-11T14:53:59Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The pre-commit risk reflex printed HOLD on infra/aws/terraform/modules/opal_name/main.tf citing deploy-completion notes about other roots' main.tf files (a basename match); the commit landed rc=0 on c64a667818.",
+  "spec_asserts": "The pre-commit risk reflex (comp-pulse diff) names a HOLD only for a touched node that a recorded claim is written about.",
+  "world_is": "The HOLD cites org/critical_paths/change_management/20260616T2001Z_nfra-infrpt-dr-snapshot-backup_deploy_completion.md:35, which is about main.tf of the portal_lambda_ec2_snapshot permissions, a different Terraform root. The reflex matched the bare name main.tf across six roots (9 claims each), not the touched opal_name/main.tf. The same match was filed as ADVI_FIRMBKTS-D1-W42-S1 on acb073608a.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit c64a667818: '[HOLD] infra/aws/terraform/modules/opal_name/main.tf -> file:infra/aws/terraform/aaii-v2-bucket-lifecycle/main.tf (9 recorded claim(s))' and five further roots",
+      "org/critical_paths/change_management/20260616T2001Z_nfra-infrpt-dr-snapshot-backup_deploy_completion.md:35 read at the worktree: '- **main.tf:** fix portal_lambda_ec2_snapshot (EC2SnapshotPermissions)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken; the commit was not blocked and the cited claim is not this cell's. Repeat of the W42-S1 observation for the reflex's owner."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W43-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~43",
+  "surfaced_at": "2026-10-11T14:53:59Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "safe-commit printed WARN that the client-data check could not run (hashed account-id list absent on this device); commit c64a667818 was not checked for client account ids.",
+  "spec_asserts": "The commit gate runs the client-data check (hashed account-id list) on every commit it admits.",
+  "world_is": "The hashed list is absent at C:\\Users\\Test\\.opal\\account_id_hashes.txt on dell1 and OPAL_ACCOUNT_ID_HASHES is unset, so the check printed WARN and skipped the list comparison. Absent is not empty. The committed diff carries no 12-digit number (git show c64a667818 added lines matching 12 digits: 0), so no client account id entered the commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit c64a667818: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids",
+      "git show c64a667818 with added lines matched against a 12-digit pattern: 0 at the worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken by this worker; the list is a per-device input, not this cell's. Filed for the owner of the client-data check to judge whether dell1 needs the list placed."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S29",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T15:05:05Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The act-0 grant on the producers' role allows PutObject, GetObject and ListBucket on the canonical prefix but NOT DeleteObject; D_02 and D_04 delete departed advisors' files with delete_objects and never read its Errors, so after act 2 their stale-cleanup silently removes nothing at the canonical home.",
+  "spec_asserts": "Round-3 act 2 pair and the act-0 grant (FB-g-2, applied by FB-g-8): the producers' role is allowed what the producers do at the canonical home once act 2 moves their mode. Code comments in both scripts say the stale-advisor cleanup exists because orphan files are double-counted in AUA.",
+  "world_is": "infra/aws/terraform/bd-pipeline/iam.tf:1300-1315 (policy advi-49f-platinum-canonical-rw-policy): AdviPlatinumCanonicalObjects Action [s3:PutObject, s3:GetObject], AdviPlatinumCanonicalList Action [s3:ListBucket]; no s3:DeleteObject. data/black_diamond/scripts/gold/D_04.client_portal_summary.py:789-812 and D_02.advisor_client_detail.py:3245-3280 compute stale advisor ids, list their keys, and call s3.delete_objects(Bucket=db, Delete={'Objects': objs}) with db and dk from platinum_destination(k) (the canonical bucket after act 2); the response is not read. boto3 delete_objects answers 200 with an Errors list for per-key AccessDenied, so no exception is raised. _lib/atomic_write.py (a delete_object of its staging key) has no caller under the gold scripts (0 files). Effect: after act 2 a departed advisor's served objects and entity files stay at the canonical home, which the scripts' own comments say double-counts AUA downstream.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/bd-pipeline/iam.tf lines 1300-1315 read at HEAD",
+      "D_04.client_portal_summary.py lines 770-812 and D_02.advisor_client_detail.py lines 3245-3284 read at HEAD",
+      "Grep over data/black_diamond/scripts/gold for delete_object(s): D_04, D_02, _lib/atomic_write.py (no importer) only",
+      "the boto3 S3 DeleteObjects contract: per-key failures return in Errors with HTTP 200 (documented behavior; not exercised here)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A never-widen class (it adds a delete grant on the canonical home). Placement read from the evidence: an addendum to the act-0 grant pair adding one statement, s3:DeleteObject on the same prefix ARN, before act 2; the departed-advisor path only runs when an advisor leaves, so the harm is latent, not daily. Alternative the CTO may prefer: the producers read Errors and fail loud, plus the grant. Not cut as a cell until ruled."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W45-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~45",
+  "surfaced_at": "2026-10-11T15:08:01Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The pre-commit risk reflex printed HOLD on infra/aws/terraform/modules/opal_name/main.tf by basename match, citing another root's deploy note; commit 8114bac9cf landed rc=0 (a repeat of ADVI_FIRMBKTS-D1-W43-S1 and W42-S1).",
+  "spec_asserts": "The pre-commit risk reflex names a node the commit touches only when the recorded claim concerns that file (the worker is to go read the citation before the commit proceeds).",
+  "world_is": "The reflex matched the bare name main.tf across six roots (each with 9 recorded claims) and cited org/critical_paths/change_management/20260616T2001Z_nfra-infrpt-dr-snapshot-backup_deploy_completion.md:35, which concerns portal_lambda_ec2_snapshot in a different Terraform root. The opal_name module's own main.tf was not the subject of that claim. The commit was not blocked.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 8114bac9cf: [HOLD] infra/aws/terraform/modules/opal_name/main.tf -> file:infra/aws/terraform/aaii-v2-bucket-lifecycle/main.tf (9 recorded claim(s)) and five further roots",
+      "org/critical_paths/change_management/20260616T2001Z_nfra-infrpt-dr-snapshot-backup_deploy_completion.md:35 read at the worktree: '- **main.tf:** fix `portal_lambda_ec2_snapshot` (EC2SnapshotPermissions)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken; the commit was not blocked and the cited claim is not this cell's. Repeat of ADVI_FIRMBKTS-D1-W42-S1 and ADVI_FIRMBKTS-D1-W43-S1 for the reflex's owner."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W45-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~45",
+  "surfaced_at": "2026-10-11T15:08:01Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "safe-commit printed WARN that the client-data check could not run (hashed account-id list absent on this device); commit 8114bac9cf was not checked for client account ids (a repeat of ADVI_FIRMBKTS-D1-W43-S2).",
+  "spec_asserts": "The commit gate runs the client-data check (hashed account-id list) on every commit it admits.",
+  "world_is": "The hashed list is absent at C:\\Users\\Test\\.opal\\account_id_hashes.txt on dell1 and OPAL_ACCOUNT_ID_HASHES is unset, so the check printed WARN and skipped the list comparison. Absent is not empty. The committed diff adds no 12-digit number as checked by this worker (git show 8114bac9cf -- the two code files, 11 insertions).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 8114bac9cf: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids",
+      "git show 8114bac9cf --stat: 2 files changed, 11 insertions(+), 7 deletions(-) at the worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken by this worker; the list is a per-device input, not this cell's. Repeat of ADVI_FIRMBKTS-D1-W43-S2, filed for the owner of the client-data check."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W44-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~44",
+  "surfaced_at": "2026-10-11T15:07:30Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Arm P3 of the round-4 policy check expects seven new fence exemption ARNs for opal-data-49financial; the real render yields eight, because the performance adapter is now a registry row. AC1 reads 5 of 6 arms.",
+  "spec_asserts": "Arm P3 (r4_policy.py:154, and its docstring at r4_policy.py:16-19) says fence_exemption_arns for the bucket equals the base list plus seven new principals (six readers and the OAI), with the performance adapter as a registry row now. Face section 1b.4 says the adapter is carried by module.opal_name.fence_exemption_arns.",
+  "world_is": "With the registry rows and wiring written as section 1a and 1b give them, the render's fence_exemption_arns for opal-data-49financial adds eight ARNs: the six readers, irpt-performance-adapter-role and the OAI. The module builds fence_exemption_arns from every row of the bucket (infra/aws/terraform/modules/opal_name/main.tf:111-115), so the adapter row enters it. The adapter's ARN has to stay in the blanket Deny exemption list, because its role name carries no firm token and fence_patterns does not match it. P3 printed 'new exemption arns=8' and FAILed; P1, P2, P4, P5 and P6 pass. The check was not edited (read-only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r4_policy.py --arms policy at the worktree under timeout 118: 'P3 allow principals=10, new exemption arns=8, other buckets same=True', 'FAIL P3 the render holds exactly the ten Allow principals at their granted resources and the new exemptions', 'ROUND 4 POLICY: 5 of 6 arms', exit=1",
+      "infra/aws/terraform/modules/opal_name/main.tf:111-115 read at the worktree: fence_exemption_arns maps every row of each exemptions bucket to its arn",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_policy.py:154 read at the worktree: want_new = READERS plus the OAI, with no ADAPTER"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a worker decision. The registry and the wiring follow section 1a and 1b literally; the mismatch sits between the check's expectation and the order's own 1b.4 and the module's semantics. AC1 stays FAIL and the order stays open until the issuer rules whether the check's expectation or the render is corrected."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W44-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~44",
+  "surfaced_at": "2026-10-11T15:07:30Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Removing the adapter's hand statements left its explanatory comments in s3-49financial.tf above code that no longer exists, so they now describe Denies and locals the file does not hold.",
+  "spec_asserts": "Face section 1b.4 removes the adapter's data block, its locals and the three hand statements, and keeps every other line.",
+  "world_is": "The comment blocks at s3-49financial.tf:103-112 (IRPT_BCKEND-S140 and TO-IB-pr-201) were kept as the bound says. They still say the adapter is served by three Denies scoped to that role and by the f49 locals, and the file now holds neither. The adapter's access comes from its registry row, so the comments are stale, not wrong about history.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/s3-49financial.tf:103-112 read at the worktree after the edit: the comment lines are present and no data, locals or DenyPerformanceAdapter statement follows them",
+      "grep at the worktree: no 'DenyPerformanceAdapter', 'irpt_performance_adapter' or 'f49_scope' remains in the file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken by this worker: the order's keep-every-other-line bound was followed literally. The wording of these comments belongs to the issuer."
+}
+```

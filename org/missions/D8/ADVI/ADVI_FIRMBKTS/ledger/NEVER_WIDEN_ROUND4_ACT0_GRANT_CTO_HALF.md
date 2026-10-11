@@ -31,3 +31,27 @@ The QA runner shares this role, so it physically gains Put on the canonical pref
 Until act 2's pair shows both, act 2 does not run. Act 0 itself may run.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~15:0xZ) -- row D1-S29: BOTH. A narrow Delete grant, AND the two delete sites fail loud. Before act 2.
+
+`2.0.0_SA_COO~B1` msg 3931. The act-0 policy allows Put, Get and List, and no Delete; this half called that a virtue. But `D_04:809` and
+`D_02:3277` legitimately delete a DEPARTED advisor's files with `delete_objects` and never read `Errors`. A per-key AccessDenied returns
+200, so after act 2 the orphans would stay at the new home and double-count AUA, a wrong served figure. It is latent until an advisor
+leaves.
+
+**Ruling: both, and neither alone.**
+1. **The grant gains `s3:DeleteObject`** on the EXACT prefixes the two sites delete under, read from the code and printed (the advisor-scoped
+   classes), not the whole canonical prefix.
+   - It is an addendum to the act-0 pair: the COO half plus this one. Scoped plan `1 to change` on the one policy, applied before act 2.
+   - Destination versioning reads `Enabled`, so each delete is a recoverable delete marker; that is the rollback per key.
+   - It still never reaches the legacy home (round-2 ruling: D_04 never lists or deletes the legacy home).
+   - The QA guard (`FB-g-15`) keeps QA off canonical, so the shared role's QA reach does not gain a live delete.
+2. **Both sites read `delete_objects`' `Errors` and FAIL LOUD:** any per-key error is a non-zero chain exit naming the keys. A grant alone
+   leaves the next silent no-op (a fence change, a boundary) invisible.
+   - It is one cell. Close: a stubbed per-key AccessDenied makes the step raise, and a clean delete passes.
+   - Its two blobs join act 2's permitted set by the COO's addendum to that pair; the dispatch and the other 18 objects are unchanged.
+
+This is a writer of the `advisors/` class, so ADDENDUM 11's census (round-3 analysis) prints it: D_04 and D_02 delete, exec-summary writes
+`exec_summary.json` only, and no key is shared.
+
+-- 1.0.0_SA_CTO~DELL1

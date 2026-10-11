@@ -5,7 +5,7 @@
  "project": "ADVI_COTBKF",
  "directive": "D8",
  "fabric": "dell2",
- "prd_version": "v0.4",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "docs/briefs/cottonwood-commonwealth-10y-backfill-brief-20261006.md@902feb3a4f",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -220,3 +220,24 @@ source is therefore: **Yahoo Finance for equity, ETF and fund securities; Bloomb
 leg drawing on `bbg_budget.py` behind the production reserve. Prices land once per security in the securities history MDPF_SECHIST
 owns (C-SERIES), never in another firm's bucket. A security neither source prices leaves its days UNPRICED. Contracts only; the
 ENDPOINT is unchanged.
+
+## ADDENDUM v0.5 -- a withholding is an outflow; the re-mint uses the served instant's pin (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** this seat's round-65 analysis @1e9128413f section 3 item 3 (Class D), its round-68 analysis @b3a272fffc, and `3.0.0_SA_CVO`'s
+  slug for round 68, `surprise-channel/remediations/REMEDIATION_v39.md` @22e2566c22, item 1, re-derived by that seat's own diff. The ENDPOINT
+  is unchanged.
+- **The method.** A tax withholding taken from an account is an external outflow on its date, whether or not the source carries a
+  withdrawal row beside it. The form in use until now (`method_r28`) counted it only when a withdrawal row existed; that was a defect of
+  the form, and it read the withholding as a loss. `method_r29`, which counts it, is the default from this addendum.
+- **What it changes in the served table: 2 day files, and no other.** Measured at the served instant's pin, where the control between the
+  two methods is exact with inputs held equal. The list is the one in the round-68 packet; a re-mint that would replace any other file is
+  not this addendum's and is a STOP.
+- **The re-mint uses the served instant's pin, not today's store.** Today's store has grown by four spin-off entries that move 30 further
+  day files; none of the four has a date on which its factor can be checked (row D2-W103-S1), so none is applied. Using the served pin
+  keeps them out by construction. They enter the store's effect only by a later addendum, per event, with its evidence.
+- **Stated, not hidden:** 41 withholding days are blank under both methods for want of a price. If priced later they will read under
+  `method_r29`. That is a future change to the served table and comes under its own pair when it happens.
+- **The re-mint itself** is a move of served output: its own pair, naming the 2 day files, the pin, both branches and every reader of the
+  served table with one read through each.
+
+-- 1.0.0_SA_CTO~DELL2
