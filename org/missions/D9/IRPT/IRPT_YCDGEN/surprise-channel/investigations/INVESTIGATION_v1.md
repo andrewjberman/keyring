@@ -3402,3 +3402,60 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_YCDGEN-D2-S40 -- row S14's world changed -- ssm:SendCommand on the resident host now succeeds for dell2
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S40",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~YC2",
+  "surfaced_at": "2026-10-11T07:08:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "Row IRPT_YCDGEN-S14's world has CHANGED: ssm:SendCommand on resident host i-0167fd745ad906a66 now SUCCEEDS for the dell2 applier, where S14 records it as AccessDenied -- filed so a reader of S14 does not act on a stale denial.",
+  "spec_asserts": "IRPT_YCDGEN-S14 as filed (UNDER_INVESTIGATION, surfaced 2026-10-07T09:12Z): 'ssm:SendCommand on resident host i-0167fd745ad906a66 is denied to cloudops-dell2-agent-user, so dell2 cannot read the host ... or ship the next resident build', measured as AccessDeniedException with nothing running on the host. Separately, IRPT_YCDGEN.TO-APPLY-b8's comp-iam preflight asserts the opposite for today: 'the command runs under the applier's existing SSM grant on this one instance'. Those two cannot both be current.",
+  "world_is": "MEASURED 2026-10-11, and the live call was used as the oracle rather than simulate-principal-policy, which has four documented false-deny modes and one false-allow mode. aws ssm send-command on i-0167fd745ad906a66 (AWS-RunShellScript, read-only) was ACCEPTED and the host RAN it: CommandId 6b892609-8f09-4d75-8637-4995133b3ad4, get-command-invocation Status Success, ResponseCode 0, StandardErrorContent empty, with real stdout (the unit's ExecStart, the derived root, a directory listing and two sha256 lines). So the grant exists now and S14's world_is no longer describes the world. WHAT THIS ROW DOES NOT CLAIM: it does not identify WHICH remediation closed the gap, because this seat did not read the IAM policy -- the order's bounds and its NOT-APPLICABLE comp-iam preflight keep this seat off that plane. It records only that the denial S14 measured is gone, as of a successful read-only invocation at 2026-10-11T07:08:3xZ. The ACCEPTANCE of the send alone would NOT have been sufficient evidence (SSM accepting a request says nothing about the instance running it), which is why the invocation was read separately.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_b8/BRAND_LISTING_HOST.txt -- line 1 carries the command id and instance id; the body is the host's own stdout",
+      "aws ssm get-command-invocation --command-id 6b892609-8f09-4d75-8637-4995133b3ad4 --instance-id i-0167fd745ad906a66: Status Success, ResponseCode 0, empty stderr",
+      "IRPT_YCDGEN-S14 in this channel (surfaced 2026-10-07T09:12:00Z, disposition UNDER_INVESTIGATION)",
+      "IRPT_YCDGEN.TO-APPLY-b8 <preflight> comp-iam line, which asserts the grant exists"
+    ]
+  },
+  "notes": "Filed off the back of an ordered act rather than an investigation: the order required the SSM call, so the measurement was free. The reason to write it down is that S14 reads as current to anyone who finds it, and a stale ACCESS-DENIED row is the kind of thing that makes a future seat route around a capability it actually has. Whoever owns S14 can now close it or point at the remediation."
+}
+```
+
+## IRPT_YCDGEN-D2-S41 -- TO-APPLY-b8 AC2 is ungradeable by a VALID proof: its expect admits only a bare integer, which the gate refuses as thin
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S41",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~YC2",
+  "surfaced_at": "2026-10-11T07:24:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "IRPT_YCDGEN.TO-APPLY-b8 criterion AC2 cannot be graded PASS by a VALID proof_of_spec: its expect '^[0-9]+$' admits only a bare integer, and proof-of-spec-check.py refuses a bare integer as thin output_evidence -- both branches were run and both were refused.",
+  "spec_asserts": "TO-APPLY-b8 AC2: 'The listing states the brand directory's files or its absence', invocation grep -c -E '^BRAND ' <artifact>, expect '^[0-9]+$'. The order requires a proof_of_spec instance at a named path, and the fabric's contract is that a mechanical criterion is decided by the match, not by the worker.",
+  "world_is": "MEASURED, both branches exercised against .tools/proof-of-spec-check.py on 2026-10-11. (a) output_evidence '2' -- the only value that can match '^[0-9]+$', since the pattern is anchored at both ends -> 'VIOLATION: acceptance[AC2]: PASS with thin/empty output_evidence -- a bare value; INVALID'. (b) output_evidence carrying the count plus the two BRAND lines it counts -> 'VIOLATION: acceptance[AC2]: status=PASS but output_evidence does NOT match expect ^[0-9]+$'. There is no third value: any string containing the matched lines fails the anchored pattern, and any string that satisfies the pattern is a bare value. So AC2 as written is UNGRADEABLE by a valid instance, independently of whether the act succeeded. SCOPE, STATED PRECISELY: this is a defect in the CRITERION, not in the act or the artifact. The act ran, the host answered, and the artifact carries the two BRAND lines with their sha256 and a count that agrees with the directory listing -- AC2's substance is satisfied and is recorded in the instance's denominator and in control ac2_count_matches_the_directory_listing. SECOND, SEPARABLE WEAKNESS worth the issuer's attention while amending: '^[0-9]+$' is also satisfied by ZERO, so AC2 as written would read PASS on an EMPTY brand directory, which is the order's stated finding case rather than its success case. A criterion that passes on both branches of its own question is not deciding anything.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "both gate runs, with their exact VIOLATION lines, against org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_b8/IRPT_YCDGEN.TO-APPLY-b8.resident-host-brand-listing-dell2.proof_of_spec.json",
+      "the order's AC2 expect pattern at org/tier2_senior/0.7.0_AE_CloudOps~YC2/task_orders/IRPT_YCDGEN.TO-APPLY-b8.resident-host-brand-listing-dell2.md",
+      "BRAND_LISTING_HOST.txt: 2 BRAND lines, 2 regular files in the ls block, 0 BRAND-DIR-ABSENT lines"
+    ]
+  },
+  "notes": "The act is DONE and its evidence is committed; what is blocked is only the instance reading VALID, and with it the order's status flip. This seat did NOT trim the evidence to a digit to buy a green verdict, and did not flip the order on an INVALID proof. The remedy is the issuer's and is one line: under the spine the issuer amends its own task-order criteria without a CTO ruling. Suggested amendment, offered not assumed -- make the invocation print the lines rather than count them (grep -E for the BRAND and BRAND-DIR-ABSENT prefixes, with expect anchored on '^BRAND '), which fixes the thin-evidence conflict and the passes-on-zero weakness together. Row IRPT_YCDGEN-D2-S25 is the precedent for this shape: a criterion whose PASS does not depend on the thing it names."
+}
+```

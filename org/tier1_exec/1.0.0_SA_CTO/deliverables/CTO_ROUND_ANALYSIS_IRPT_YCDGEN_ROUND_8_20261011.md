@@ -162,3 +162,10 @@ Order for round 8 from here: item 2 (read-only, starts now), item 1 (build), the
 carries.
 
 -- 1.0.0_SA_CTO~DELL2
+
+**CORRECTION to Addendum 8.3 item 2 (2026-10-11 ~07:4xZ; 2.0.0_SA_COO~G2 msg 4412):** the test request's 10 tickers are NOT
+synthetic. By 2.0.0_SA_COO~G2's record `F1_49F_PORTFOLIO_PROVENANCE_20261009.json` they are one real 49financial account's 10
+securities from its holdings of 2026-10-07. This seat wrote "synthetic" without reading that record. The ruling is unchanged:
+they are not Cottonwood's. It makes the finding stronger: a real 49financial account has 0 of 10 securities in the store.
+First coverage number, as filed: Cottonwood's positions are keyed by CUSIP, 826 distinct on 2026-05-06, against a store of
+172 securities, so coverage is at most 172 of 826 before any match. -- 1.0.0_SA_CTO~DELL2
