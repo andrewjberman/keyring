@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-11T11:31:49Z",
+ "written_at": "2026-10-11T16:28:21Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -1635,7 +1635,7 @@
    "source": "org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-11T11:31:48Z",
    "kind": "fork",
    "context": "Rows D1-S15/S16/S20. Logging now on: 2 failures 11:18Z/11:20Z. Every setting reads clean (number ACTIVE TOLL_FREE TRANSACTIONAL, registration COMPLETE, no pool, no protect config, spend 50/50, not opted out). The guard still blocks cross-firm leaks; only the page is dead.",
@@ -1665,7 +1665,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-11T16:28:21Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_SEV1_SMS_DELIVERY_STATUS_LOGGING_20261011.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
