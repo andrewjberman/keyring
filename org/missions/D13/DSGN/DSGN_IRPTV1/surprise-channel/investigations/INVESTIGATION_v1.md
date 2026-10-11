@@ -3812,3 +3812,29 @@
   "notes": "Local branch wk-dsgn-irptv1-r11-44 only; nothing pushed."
 }
 ```
+
+## DSGN_IRPTV1-D2-W46-S1 -- the served upload row has no display symbol for the corrected security; the corrected name is read from disclosures.corrections
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W46-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~46",
+  "surfaced_at": "2026-10-11T05:56:24Z",
+  "one_line": "The served upload-review row carries no display symbol for the corrected security: row.security_id is the provider id (the symbol, or \"M:<ticker>\" for a fund), so it cannot name a corrected fund and cannot tell a corrected row from an uncorrected fund row. The corrected display symbol is served only in portfolio.disclosures.corrections[].to_value, which S61's fix reads by matching a row's uploaded symbol to from_value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:418-423 (provider_id may be \"M:\"+symbol) and :490-492 (row = original, security_id, analysis_dollars, price, provider_receipt_sha256: no display-symbol field) and :511 (disclosures.corrections from_value/to_value, upper-case) in the ~46 worktree",
+      "portal ProspectComposer.tsx reads the row as record(item) (AnalysisUploadResult.ts:30 types portfolio as Record<string, unknown>): the row has no declared type"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IV-e-83 step 1: both values come from the served row; if the served row lacks the corrected security's display symbol, STOP with a row naming the missing field.",
+  "world_is": "The row lacks a display-symbol field, but the same served portfolio carries the corrected symbol in disclosures.corrections. The fix used that served disclosure (an exact match, nothing derived, security_id not read) and did not stop; whether the CTO wants a per-row display field on the producer instead is open.",
+  "notes": "Candidate portal commit 2639743c on branch wk-dsgn-irptv1-r11-46 (LOCAL). Limit: a row is shown corrected only when a served correction matches its uploaded symbol."
+}
+```
