@@ -25137,3 +25137,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The dynamic arm runs against empty in-memory stores, so the retained-record paths are not reached on rows; the narrative and adapter built routes stop at FIRM_BINDING for the synthetic principals before compute, so their Enforcer build is covered by the enforcer-build arm and the static limb. The static limb skips dunder methods and builtin-container method names, treats self.<port>(...) with no such method in the enclosing class as an injected callable, and counts starred calls as skipped. Whether this is the arm the CTO meant is for 2.0.0_SA_COO~P2 and 1.0.0_SA_CTO to say."
 }
 ```
+
+## IRPT_BCKEND-D2-S63 -- A heredoc COMMENT line became a redirect target: a 20-byte file sits in the repo root whose NAME says it carries client figures, and it does not
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S63",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T03:06:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "An untracked 20-byte file named `rite OUTSIDE the repo: the file carries client figures#` has sat in the workspace root since 2026-10-08 13:33; its content is `OUT = sys.argv[1]`, so the NAME is a mis-parsed prose comment and the file holds no client data at all.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la of the workspace root: -rw-r--r-- 20 bytes, mtime Oct 8 13:33, name read back byte by byte with od -c",
+      "the whole content is the single line `OUT = sys.argv[1]` (20 bytes including the trailing spaces and newline)",
+      "git ls-files --error-unmatch refuses it: the file is UNTRACKED, so it has never been committed and no commit references it",
+      "it is the `?? \\\"rite OUTSIDE the repo\\357\\200\\272 the file carries client figures#\\\"` entry in this session's opening git status"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md: replay and build scratch carrying client data stays OUTSIDE every worktree and is deleted file by file; and a commit message or shell input is an EXECUTION VECTOR, so content is authored by a non-shell writer rather than typed into a shell.",
+  "world_is": "Some seat wrote a python heredoc whose body carried the prose instruction `... write OUTSIDE the repo: the file carries client figures` on a line the shell read as code, not as text: the leading `w` was consumed, `>` opened a redirect, and the rest of the sentence became the filename, while `#` ended it. The two real effects are both small and neither is a data leak. (1) The FILE IS A FALSE ALARM: anyone reading the root listing, or this row's title alone, will believe a client-figures file was left in the repo; it is one line of python. That is the reason to record it rather than only delete it -- the next seat to see the name should not have to re-derive that it is empty of client data. (2) It pollutes `git status` for every seat on this box, which is the shared surface the drain reads. NOT ACTED ON HERE: the workspace root is outside this order's <paths> grant (surprise channel, this lane's deliverables, change_management, .open_deploys, the order itself), so IB-pr-413 deletes nothing. Owner for the removal: whoever holds repo-wide hygiene at the drain, as a one-line `rm` once this row has recorded the content. The instrument lesson generalises past this file: a prose line inside a shell heredoc is executable text, and `set -u`/`set -e` do not catch it because the redirect SUCCEEDS."
+}
+```

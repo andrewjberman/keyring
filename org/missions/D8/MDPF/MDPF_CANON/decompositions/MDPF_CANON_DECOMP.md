@@ -135,3 +135,11 @@ disclosure call is at Andrew (round-2 analysis section 4); `CN-c-1` is needed un
 
 **Checks:** `deliverables/2.0.0_SA_COO~D1/round3/checks/r3_checks.py`, one subcommand per cell. At base: basis 0/3, writer 0/3, reader 0/3;
 a reference tree reads 3/3, 3/3, 3/3.
+
+### v3 AMENDMENT 1 (issuer 2.0.0_SA_COO~D1, 2026-10-11 ~03:2xZ; row MDPF_CANON-D1-W9-S1, CTO ruling msg 3417 = B)
+
+The daily runner syncs only `code/scripts/` and `code/config/`, so neither bronze script can import `lib/opal_naming`. `CN-c-2` now also owns
+a generator (`.tools/gen_mdpf_bronze_homes.py`), its output (`data/mdpf/config/bronze_homes.json`, builder output with the generator's
+path, its commit and the registry hash) and the repo test that asserts each entry equals `address()` at HEAD, with an altered-entry
+negative arm. Both scripts read the JSON from `../../config/`. Cells and chains are unchanged. Checks: `r3_checks.py` gains `homes`; at
+base basis 0/3, writer 0/3, homes 0/3, reader 0/3; a reference tree reads 3/3 on all four.

@@ -31,17 +31,34 @@ address("mdpf", "inflection", "bronze", "orion_model_composition", "date=2026-10
 appended to the returned prefix.) The scope is `inflection`: Orion is Inflection's platform and the only reader is the Inflection
 feeder.
 
-1. In `data/mdpf/scripts/bronze/pull_orion_model_composition.py` add a module-level function
-   `bronze_destination(date_iso: str) -> tuple[str, str]` returning `(bucket, key_prefix)` for that date, computed from the builder's
-   `address(...)` call above (split `s3://<bucket>/<key>` at the first `/`; `key_prefix` has no trailing slash). Every put -- the nine
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D1, 2026-10-11 ~03:2xZ, row MDPF_CANON-D1-W9-S1, CTO ruling msg 3417 = B):** the daily runner syncs only
+`code/scripts/` and `code/config/` (dispatch :125, :130), so a Stage-0 script CANNOT import `lib.opal_naming`. The destination reaches the
+script as a GENERATED config file of builder output, never typed by hand. Steps 1 and 2 below are the amended steps.
+
+1. **The generator and the generated file.**
+   - Write `.tools/gen_mdpf_bronze_homes.py`: it calls `lib/opal_naming.py` `address("mdpf", "inflection", "bronze", "orion_model_composition",
+     "date=<D>")` and writes `data/mdpf/config/bronze_homes.json` (LF, sorted keys, indent 1). Shape, exactly:
+     `{"_provenance": {"generator": ".tools/gen_mdpf_bronze_homes.py", "generator_commit": "<git rev-parse HEAD at generation>",
+     "registry_sha256": "<sha256 over the bytes of the registry files lib/opal_naming.py reads, in sorted path order>"},
+     "feeds": {"orion_model_composition": {"bucket": "<bucket>", "key_prefix": "mdpf/inflection/bronze/orion_model_composition",
+     "partition": "date={date}"}}}`. The `bucket` and `key_prefix` are the builder's output split from `address(...)` (the parent of the
+     partition), never typed. Run the generator once and commit its output.
+   - Write the repo test `data/mdpf/scripts/gold/tests/test_mdpf_bronze_homes.py`. It exposes `mismatches(path) -> list[str]`: for each of
+     two sample dates it composes `bucket + "/" + key_prefix + "/" + partition.format(date=D)` from the JSON at `path`, compares it with the
+     builder's `address(...)` at HEAD, and returns one string per difference (an empty list is a match). Add pytest functions asserting
+     `mismatches(<the real file>) == []` and that a copy with one entry altered returns a non-empty list.
+   - The JSON's literals are the commit-time naming gate's to grade. If that gate REFUSES them, that is a refusal to REPORT (file a
+     BLOCKING row with the gate's text and stop), never a workaround.
+2. **The script.** In `data/mdpf/scripts/bronze/pull_orion_model_composition.py` add a module-level function
+   `bronze_destination(date_iso: str) -> tuple[str, str]` returning `(bucket, key_prefix)` for that date, read from the generated file
+   `../../config/bronze_homes.json` relative to the script's own directory (on the runner `/opt/mdpf/scripts/bronze/` resolves it to
+   `/opt/mdpf/config/`; in the repo, to `data/mdpf/config/`): `bucket`, and `key_prefix = <feeds.orion_model_composition.key_prefix> + "/" +
+   partition.format(date=date_iso)`. The script does NOT import `lib` or `opal_naming` (the runner has no `lib/`). Every put -- the nine
    `model_<orion_id>.json` files and `_meta/pull_complete.json` -- composes its key as `<key_prefix>/model_<id>.json` and
-   `<key_prefix>/_meta/pull_complete.json`. Delete the typed `S3_BUCKET` and `BRONZE_PREFIX` constants and their uses. Leave the
-   JWT fallback bucket/key constants alone (a different surface). The local `--out-dir` layout (`<date>/model_*.json`) is unchanged.
-2. Import the builder the way the sibling gold writer does: `data/mdpf/scripts/gold/mdpf_gold_parquet.py` line 52,
-   `from lib.opal_naming import address`. **Before you edit, read how `lib/` reaches the daily runner** (`infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh`,
-   the `aws s3 sync` of `code/` near line 149 and the PYTHONPATH handling near lines 535-560). If `lib/opal_naming.py` is NOT on the
-   runner's path for a Stage-0 script, do not type the prefix: file a BLOCKING row stating what the runner syncs, and stop on this cell.
-3. In `infra/aws/terraform/mdpf-pipeline/iam.tf`, `aws_iam_role_policy.mdpf_runner`, add statements granting the runner role:
+   `<key_prefix>/_meta/pull_complete.json`. Delete the typed `S3_BUCKET` and `BRONZE_PREFIX` constants and their uses. Leave the JWT
+   fallback bucket/key constants alone (a different surface). The local `--out-dir` layout (`<date>/model_*.json`) is unchanged. A missing
+   or unreadable config file raises; there is no fallback to the old home.
+3. **The grant.** In `infra/aws/terraform/mdpf-pipeline/iam.tf`, `aws_iam_role_policy.mdpf_runner`, add statements granting the runner role:
    - `s3:PutObject` and `s3:GetObject` on the bronze prefix `<bucket>/<prefix>/orion_model_composition/*`, where `<prefix>` is
      `mdpf/inflection/bronze` (the builder's, minus the partition);
    - `s3:ListBucket` on `arn:aws:s3:::<bucket>` with an `s3:prefix` condition naming that same prefix (the feeder lists it).
@@ -59,7 +76,7 @@ feeder.
    do not rescue.
 2. Only the files in section 3 change (plus your deliverables and the surprise channel).
 3. **Every NEW address and name comes from the builders** (`lib/opal_naming.py` `address()`/`key()`/`name()` and the `opal_name`
-   Terraform module). A builder REFUSAL is a row to file, never a hand-typed workaround.
+   Terraform module), or from a file the generator wrote by calling them. A builder REFUSAL is a row to file, never a hand-typed workaround.
 4. **Never** (PRD DEC-14): change the conformant compute chain's schedules or platinum's shape; add a second writer, a shadow prefix
    or a standing comparator (the OLD bronze is not dual-written: the script writes the new home only); delete or move any object.
 5. Do not edit `build_mdpf_wsc_inflection_feeder.py` (the reader is cell `CN-c-3`).
@@ -71,6 +88,9 @@ feeder.
 
 <paths>
 data/mdpf/scripts/bronze/pull_orion_model_composition.py
+data/mdpf/config/bronze_homes.json
+.tools/gen_mdpf_bronze_homes.py
+data/mdpf/scripts/gold/tests/test_mdpf_bronze_homes.py
 infra/aws/terraform/mdpf-pipeline/iam.tf
 infra/logic/registry/scopes.json
 infra/aws/terraform/modules/opal_name/generated_locals.tf
@@ -87,6 +107,7 @@ Read-only: the whole repository, in particular `lib/opal_naming.py`, `infra/aws/
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CN-c-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round3/checks/r3_checks.py" writer; echo "exit=$?"</invocation><expect>ROUND 3 WRITER: 3 of 3 arms -- and exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="CN-c-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round3/checks/r3_checks.py" homes; echo "exit=$?"</invocation><expect>ROUND 3 HOMES: 3 of 3 arms -- and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="CN-c-2" judgment="true"/>
 </proof_of_spec>
 
@@ -104,6 +125,8 @@ A row id on this project carries the dell1 infix: `MDPF_CANON-D1-W9-S<k>`, with 
 filing. Report once: the diff (one line per file), the output line of every criterion, the commit hash, and any row.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-11 ~03:2xZ, row MDPF_CANON-D1-W9-S1; CTO ruling msg 3417):** steps 1-2 re-cut to the generated-config shape (B), `<paths>` widened by three files, AC2 added (`homes`). Gate limb: only GATE (viii) grades a modification, and `<placeholders>` is NONE; the commit states the gate's output.
 
 **ISSUER NOTES:** round 3 = `org/missions/D8/MDPF/MDPF_CANON/ledger/ROUND_ANALYSIS.round2.md` @71e85b7191 section 3 item 4 (M8). The CTO's gate on
 M8, "only if `LGIC_ENFORCE` E3 reads applied", read at the cut: LGIC_ENFORCE is CLOSED 7 of 7 REALIZED (ROUND_ANALYSIS.round21 @55b3104426),

@@ -4,6 +4,7 @@
                       a --live CLI that only reads; counts only
   rc22  TR22-rc22-AC1 the monday-skip replay: three named tests pass
   ra22  TR22-ra22-AC1 LIVE read-only: the Teams pull runs the rebuilt zip, the mail pull's sha is unmoved, the commentary function is absent
+  rl22  TR22-rl22-AC1 the pull survives a LISTING error of one series: two named tests pass and the pull's suites stay green
   rf22  TR22-rf22-AC1 the pull survives a refused content read: three named tests pass and the pull's suites stay green
 
 Prints <TOKEN>-OK or <TOKEN>-FAIL <reason> and exits 0 / 1. Run from the repo root (or the worker's worktree root).
@@ -71,6 +72,23 @@ def rf22():
     return (r.returncode == 0 and passed >= len(RF_NAMES)), tail
 
 
+RL_NAMES = ["test_listing_error_is_recorded_and_the_run_continues", "test_run_wide_listing_refusal_still_raises"]
+
+
+def rl22():
+    if not RF_TEST.exists():
+        return False, "absent: %s" % RF_TEST.as_posix()
+    text = RF_TEST.read_text(encoding="utf-8")
+    missing = [n for n in RL_NAMES if "def %s(" % n not in text]
+    if missing:
+        return False, "missing %s" % ", ".join(missing)
+    r = subprocess.run([sys.executable, "-m", "pytest"] + [str(p) for p in RF_SUITE] + ["-q", "-p", "no:cacheprovider"],
+                       capture_output=True, text=True, timeout=300)
+    tail = re.sub(r"\x1b\[[0-9;]*m", "", ([ln for ln in (r.stdout + r.stderr).splitlines() if ln.strip()] or [""])[-1])
+    passed = int((re.search(r"(\d+) passed", tail) or [0, 0])[1])
+    return (r.returncode == 0 and passed >= len(RF_NAMES) + len(RL_NAMES)), tail
+
+
 PULL_FN = "teams-global-transcripts-pull-lambda"
 MAIL_FN = "outlook-global-transcripts-pull-lambda"
 COMMENTARY_FN = "outlook-global-commentary-draft-lambda"
@@ -111,9 +129,9 @@ def ra22():
 
 
 if __name__ == "__main__":
-    fns = {"c22": c22, "rc22": rc22, "rf22": rf22, "ra22": ra22}
+    fns = {"c22": c22, "rc22": rc22, "rf22": rf22, "rl22": rl22, "ra22": ra22}
     if len(sys.argv) != 2 or sys.argv[1] not in fns:
-        print("usage: r22_checks.py {c22|rc22|rf22|ra22}")
+        print("usage: r22_checks.py {c22|rc22|rf22|rl22|ra22}")
         sys.exit(2)
     ok, why = fns[sys.argv[1]]()
     print("R22-%s-%s %s" % (sys.argv[1].upper(), "OK" if ok else "FAIL", why))

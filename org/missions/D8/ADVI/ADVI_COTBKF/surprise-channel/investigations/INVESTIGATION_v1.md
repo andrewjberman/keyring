@@ -5117,3 +5117,55 @@ round.** Never edit an existing row.
  "world_is": "The docs test scopes every tracked file under the project minus surprise-channel/, so task-orders/ is in its scope but outside the write grant; the cleartext in those 12 orders stays tracked and the test stays red until a seat with a task-orders/ grant (and a TO-gate route for completed orders) substitutes the tokens. Nothing was weakened and no test was exempted."
 }
 ```
+
+## ADVI_COTBKF-D2-S78 -- Disarms W80-S2: the 12 completed orders read 0 hits at the drained HEAD
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S78",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T03:09:17Z",
+ "one_line": "DISARMS ADVI_COTBKF-D2-W80-S2 (its disarm_owner): the 12 completed task orders now read 0 hits. 7 were already redacted on box/dell2 @5cda488073 and @10f554dde2 after the worker's branch was cut; the other 5 (CB-a-2, CB-c-3, CB-c-4, CB-m-1, CB-v-1) were granted by CB-ba-1 AMENDMENT 1 @e6fb6db385 and redacted @5369f24291 (8 substitutions, 4 tokens). Round 53 drained @2306e6d28a.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer run at box/dell2 HEAD 2306e6d28a: python -m pytest test_cotbkf_no_account_ids.py test_cotbkf_code_no_account_ids.py -q -> 2 passed; docs test DENOMINATOR 457 tracked files, 7 shapes, 0 files with hits, 0 shape hits, 0 account-set hits, 1 named exception; code test files=72 hits=0",
+   "issuer read of 5369f24291: 5 files, 7 changed line pairs, 7 of 7 are token substitutions only, no <status> line touched",
+   "silver suite at the same HEAD: 760 passed, 11 skipped; cot gold tests 50 passed"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner; CB53ba1-AC1 expects 2 pass.",
+ "world_is": "W80-S2 was ARMED from 2026-10-10T22:30Z on this seat and is disarmed here, the tick after the continuation worker reported it; both tests pass at the drained HEAD."
+}
+```
+
+## ADVI_COTBKF-D2-S79 -- One account-set hit remains in the surprise channel (INVESTIGATION_v1 line 1361)
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S79",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T03:09:17Z",
+ "one_line": "One account-set hit remains in the surprise channel after round 53: INVESTIGATION_v1.md line 1361, an all-digit token in a world_is field that an earlier redaction pass did not replace. The docs test excludes surprise-channel/ by design and no CB-ba-1 path grants an edit to an existing row, so the round-53 sweep did not touch it. Routed to 3.0.0_SA_CVO (the channel's owner) in the round-53 packet and to 1.0.0_SA_CTO~DELL2 (the containment ruling's owner).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer count at box/dell2 HEAD 2306e6d28a with _cotbkf_acct_check.set_spans over 70 .md files under surprise-channel/: 1 account-set hit, 1 file, line 1361; no id is printed here",
+   "worker 0.9.0_WK_ADVI_COTBKF~80 final report: surprise-channel/ 0 shape hits, 1 account-set hit in 1 of 69 files, the same line",
+   "before the trunk merge the same folder read 17 shape hits and 18 account-set hits in 5 files (row W80-S2)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Containment ruling @0e8209c33c and AMENDMENT 3 @4b7dcc5929: no client account id stays in a tracked file; the account set is the detector of record.",
+ "world_is": "The detector of record reads 1 hit in the channel at HEAD; every other tracked file under the project reads 0. The token-substitution of that one line is an edit to an existing channel row, which is not this issuer's write."
+}
+```
