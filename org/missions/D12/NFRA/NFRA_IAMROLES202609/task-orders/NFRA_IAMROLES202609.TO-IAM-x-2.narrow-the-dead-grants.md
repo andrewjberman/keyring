@@ -24,6 +24,13 @@ TARGETS (as surfaced; re-read every one LIVE, never trust these lines):
   Z-S32  codebuild-semantic-clustering-role (module news-pipeline; IN USE, last used 2026-09-11):
          inline `CodeBuildSemanticClusteringPolicy` names a bucket read as NoSuchBucket (1.0.0_SA_CTO~Z, w-3 CTO half).
 
+  A2-r7 (issuer, 2026-10-11 ~05:5xZ, on 1.0.0_SA_CTO~Z's observation in msg 33206 at the x-1 CTO half @1e7ff2decd):
+         sentiment_query_api-role (row 14, module market-overview): inline `DynamoDBAccess` names a us-east-2 table
+         that does not exist. It is a THIRD target, under the same rule, read live in its own region. Its file is
+         `infra/aws/terraform/market-overview/zz_narrow_row14.tf(.proposed)`. In market-overview, this narrowing's
+         apply serializes behind IAM-x-1's row-14 adoption on `.open_deploys/` (adoption first), and it stays
+         -target only: the module would otherwise recreate the deleted bucket market_data_v2.
+
 RULE OF REMOVAL: a statement is removed only if EVERY resource it names is read live as non-existent. Every other
 statement stays byte-identical. Nothing is added; no trust and no tag changes. The aws_iam_role blocks keep the omission
 rule (they never set inline_policy or managed_policy_arns); an inline policy is managed ONLY as its own
@@ -83,6 +90,8 @@ infra/aws/terraform/smartx-pipeline/zz_narrow_z_s23.tf.proposed
 infra/aws/terraform/smartx-pipeline/zz_narrow_z_s23.tf
 infra/aws/terraform/news-pipeline/zz_narrow_z_s32.tf.proposed
 infra/aws/terraform/news-pipeline/zz_narrow_z_s32.tf
+infra/aws/terraform/market-overview/zz_narrow_row14.tf.proposed
+infra/aws/terraform/market-overview/zz_narrow_row14.tf
 org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round7/
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
@@ -98,8 +107,8 @@ directory (`to_id` NFRA_IAMROLES202609.TO-IAM-x-2).
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="IAM-x-2"><invocation>bash -c "f=org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round7/NARROW_SURVEY.md; test -f \$f || { echo MISSING:\$f; exit 2; }; echo removed=\$(grep -c '^REMOVED: ' \$f) dead=\$(grep -c -E '^REMOVED: .+ LIVE-READ: [A-Za-z]+\$' \$f) control=\$(grep -c -E '^CONTROL: .+ FOUND\$' \$f)"</invocation><expect>`removed=N dead=N control=M` with N at least 3 and equal in both places, and M at least 1 -- every removed ARN carries a live non-existence read, beside at least one positive control</expect></criterion>
-  <criterion id="AC2" cell_refs="IAM-x-2"><invocation>grep -c -E '^POST-APPLY-PLAN: .+: 0 to add, 0 to change, 0 to destroy$' org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round7/POST_APPLY_narrow.md</invocation><expect>exactly 2 -- each module plans clean after its narrowing; fewer is a finding recorded in that file</expect></criterion>
-  <criterion id="AC3" cell_refs="IAM-x-2"><invocation>bash -c "echo open=\$(ls -a org/critical_paths/.open_deploys/ | grep -c 'iamroles-r7-narrow') closed=\$(grep -l '^\*\*Status:\*\* CLOSED' org/critical_paths/change_management/*iamroles-r7-narrow* 2>&1 | grep -c '\.md\$')"</invocation><expect>`open=0` and `closed=2` -- two ledger entries whose own Status line reads CLOSED</expect></criterion>
+  <criterion id="AC2" cell_refs="IAM-x-2"><invocation>grep -c -E '^POST-APPLY-PLAN: .+: 0 to add, 0 to change, 0 to destroy$' org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round7/POST_APPLY_narrow.md</invocation><expect>exactly 3 -- each of the three modules (smartx-pipeline, news-pipeline, market-overview; A2-r7) plans clean after its narrowing; fewer is a finding recorded in that file</expect></criterion>
+  <criterion id="AC3" cell_refs="IAM-x-2"><invocation>bash -c "echo open=\$(ls -a org/critical_paths/.open_deploys/ | grep -c 'iamroles-r7-narrow') closed=\$(grep -l '^\*\*Status:\*\* CLOSED' org/critical_paths/change_management/*iamroles-r7-narrow* 2>&1 | grep -c '\.md\$')"</invocation><expect>`open=0` and `closed=3` -- three ledger entries (one per module, A2-r7) whose own Status line reads CLOSED</expect></criterion>
   <criterion id="AC4" cell_refs="IAM-x-2" judgment="true"/>
 </proof_of_spec>
 
