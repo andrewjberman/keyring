@@ -21,3 +21,26 @@ count of rows. That is a follow-on for the registry's owner (a validate limb: ev
 
 CB-bi-2 is stopped with its AC1 reading FAIL as written; its judgment criterion is not owed until the order is complete. This seat
 ran no terraform command and did not read the plan proof.
+
+---
+
+# Addendum: CB61bi2-AC2 (the plan proof), graded 2026-10-11T08:40:26Z
+
+**Input:** msg 4496 (CB-bi-2 complete @f7badf1aae), updating the round 61 packet @004f8ae2ce (msg 4329); report `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.7.0_AE_CloudOps~CB2/shared_infra_plan_proof.md`. Row ADVI_COTBKF-D2-S102.
+
+| limb of CB61bi2-AC2 | verdict | this seat's evidence |
+|---|---|---|
+| the watched pattern covers the CRM restricted-prefix statements, the break-glass role and the firm bucket policies, each named by address | **MET** | The report lists 12 watched addresses. This seat read the plan JSON itself: both break-glass addresses and both firm bucket policies are in it. The CRM statements are not a resource; they are 3 Deny statements inside the cottonwood firm bucket policy, whose text is equal before and after |
+| the control of step 2 is real | **MET** | At the branch base the old selector line fails `one()` at init with 2 managed firm rows. That is the same selection this seat derived for CB61bi1-AC2 (cottonwood and inflection, both carrying masters) |
+
+**Verdict: CB61bi2-AC2 MET.** The selector fix moves none of the resources it feeds: 10 of 10 firm-bucket rows read no-op.
+
+## What the plan also shows, which is not this criterion
+
+- **Two creates are the break-glass role and its policy.** They exist in code only (rows D2-S93 and D2-S95, ARMED). The third Deny
+  statement names that role as the one writer of the restricted prefix; with the role absent, no principal passes it. That fails
+  closed.
+- **The other two changes are this box's credentials, not the estate:** the plan wants to create the portal bucket and replace its
+  encryption configuration because two reads were denied (row D2-S92, ARMED). An apply of this root from dell2 would act on them.
+  The CTO has ruled that no seat applies it from dell2.
+- This seat ran no terraform command. The plan JSON is the applier's artifact, read here.

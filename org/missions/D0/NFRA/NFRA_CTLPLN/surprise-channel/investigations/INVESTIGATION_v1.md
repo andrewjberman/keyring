@@ -6766,3 +6766,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The full list still gates the End of Day post; the false-refusal rate of the full list on live End of Day posts is unmeasured here."
 }
 ```
+
+## NFRA_CTLPLN-D2-S2 -- kill-maint.ps1 -Unattended kills every live seat's agent-poller when liveness.json parses to zero live serials: the ORPHANED class fails open on an empty map
+
+```json
+{
+  "id": "NFRA_CTLPLN-D2-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell2",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL2",
+  "surfaced_at": "2026-10-11T08:31Z",
+  "one_line": "kill-maint.ps1 -Unattended kills every live seat's agent-poller when liveness.json parses to zero live serials: the ORPHANED class fails open on an empty map",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR (laptop integrator; route named by 1.0.0_SA_CTO~DELL2 msg 4494): make kill-maint.ps1 treat zero live serials parsed while sessions are up as UNREADABLE and fail closed, with a test that feeds an empty map beside a non-empty process list. Until then each box's manager skips the process-reaper step of /govern; dell2 skips it from cycle 9.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 /govern cycle 8, 08:31Z: kill-maint printed 'owners: 0 serial(s) live in C:\\dev\\ajb_workspace\\org\\mcp\\liveness.json' with '32 session(s)' up, listed 16 agent-pollers as ORPHANED and ended 'DONE: killed 16, failed 0, ~433MB reclaimed.'",
+      "the 07:31Z run on the same box printed 16 'KEEP PID ... agent-poller' lines and killed nothing",
+      ".tools/kill-maint.ps1 lines 311-327: $liveSerials stays $null (ORPHANED class disabled) only in the catch; a parse that matches no server.py pid leaves an EMPTY hashtable; line 531 then adds every owner-keyed poller as an ORPHANED target",
+      "after the kill: 0 agent-poller processes; liveness.json last_seen age 147-149 s on 15 of 16 serials",
+      "repair 08:35Z: 16 pollers restarted by this seat, 16 processes read back, max last_seen age 0 s",
+      "saved run output (device-local, outside the repo): C:/dev/_audit_interim_dell2/kill-maint_cycle8_20261011T0831Z.out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "kill-maint.ps1 header and line 311: an owner verdict that cannot be read disables the ORPHANED class for that run (fail closed); a live seat's poller is KEPT.",
+  "world_is": "An empty-but-parsed liveness read is treated as 'no serial is live' and every poller on the box is killed. Why the read came back empty at 08:31Z is NOT measured (a read during a rewrite of liveness.json, or no pid matching server.py at that instant). Whether the other three boxes hit it is unmeasured here; they were told on the bus."
+}
+```
