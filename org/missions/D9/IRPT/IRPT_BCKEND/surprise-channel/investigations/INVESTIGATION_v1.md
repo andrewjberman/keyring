@@ -25843,3 +25843,51 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W289-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~289",
+  "surfaced_at": "2026-10-11T12:20:11Z",
+  "one_line": "TO-IB-pr-430 step 2: no fixture under _contracts/fixtures holds a whole response envelope for the four routes; the custody-report-read and custody-report-persist 'response' fixtures (and AnalysisRequestPdf, ComparisonCatalogue) hold the route's `data` document only, so adding unprojected_grant to the four schemas made no fixture fail and none was edited for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/custody-report-read.response.valid.json and custody-report-persist.response.valid.json: top-level members are _fixture, _source, _expect, instance; instance holds report_kind/report_id/revision/(report|sha256) with no contract_version, operation, firm_id or data (read at the worktree HEAD of this cell's commit)",
+      "python -m pytest _contracts from infra/aws/lambda/investor-reporting: base 2 failed, 203 passed; after the four schema changes 2 failed, 203 passed, the same two analysis-request-original failures",
+      "the three-envelope check for the four routes (deliverables/0.9.0_WK_IRPT_BCKEND~289/ib128_validate.py) builds each valid envelope with served.response_envelope around the route's data fixture, since no stored envelope exists"
+    ]
+  },
+  "spec_asserts": "The face (step 2) expects fixtures under _contracts that hold a whole RESPONSE ENVELOPE for one of the four routes and names fixtures/custody-report-read.response.valid.json and its persist sibling as examples.",
+  "world_is": "Those named fixtures are wrapped data documents ({_fixture,_source,_expect,instance}) validated only against the data $def, so the new required member breaks none of them; the 'what this makes false' set for the fixtures is empty. The only fixtures edited are the two the face's step 6 names (DirectoryPage.valid.json, AnalysisUploadResult.valid.json).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W289-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~289",
+  "surfaced_at": "2026-10-11T12:25:32Z",
+  "one_line": "TO-IB-pr-430: the commit-time naming gate (LGIC_ENFORCE, ENFORCE mode) REFUSES the handler-made AnalysisUploadResult.valid.json because the NORMALIZED answer's portfolio.owner.firm_id is the registry spelling '49financial' (fixtures/AnalysisUploadResult.valid.json:58); the criteria all PASS but the commit is refused, so the order is left open and nothing is committed except this row.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh ... -- <the order's paths>: 'NAMING REFUSE infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisUploadResult.valid.json:58 49financial -> lookup(49financial); why: NEW hand-kept carrier (context rule)'; NAMING-GATE: REFUSE 1 graded; commit aborted, files unstaged (denominator: 12 paths in the diff, 2 in the declaration domain)",
+      "the value is the handler's own output: intake/uploads.py _normalized_response returns portfolio.owner.firm_id from the owner record built by the test's in-memory fake (intake/tests/test_deferred_resolution.py, run unaltered); DirectoryPage.valid.json _source states the same gate ('no registry firm spelling: a new JSON carrier of one is refused at commit')",
+      "IB128-1-AC1..AC4 print PASS and the proof-of-spec instance validates (rc=0) with the fixture as made; the worktree holds the unstaged work"
+    ]
+  },
+  "spec_asserts": "The face (step 6) says the fixture instance is the handler's own `data`, written as it comes and never by hand, with synthetic test values only; the order's grant is the fixtures folder.",
+  "world_is": "The handler's answer for a NORMALIZED upload carries the registry firm spelling in portfolio.owner.firm_id, and the naming gate refuses a new JSON carrier of that spelling. Making the commit pass needs either a hand edit of that one value in the fixture (the face forbids hand-editing to pass), a different test fake that issues an opaque firm id (a test edit outside the grant), or an R20 register entry / gate exemption (not a worker's call). No override was used and no value was edited.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
