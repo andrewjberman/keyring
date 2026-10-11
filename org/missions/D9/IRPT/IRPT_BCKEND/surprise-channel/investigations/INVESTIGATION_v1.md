@@ -25563,3 +25563,26 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "A module-level depends_on on one of the two policies makes the function's hash unknowable at plan time while that policy is a pending add."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S75",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T09:39:12Z",
+  "one_line": "L8 rounds 119-121 (~P), no judgment criterion: the vendor performance release is APPLIED and UNEXERCISED, as the packet says. Read live by this seat: the adapter runs the build the packet names, and each of the role's two session policies is one statement granting one secret read on one resource. No admitted vendor request has run on these bytes; the Performance hop is not graded until the DSGN_IRPTV1 walk reads a figure. Open behind it: an identical repeat of a vendor request is refused (row D2-W282-S2).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUNDS_119_121_P_DRAIN_END_20261011.md @a3cb79cdb6 (msg 4591)",
+      "this seat's live reads 2026-10-11T09:39:12Z: irpt-performance-adapter CodeSha256 OF+8j4uc...859RU=, LastModified 2026-10-11T09:19:10Z, equal to the build the packet names; irpt-performance-adapter-role holds 9 inline policies; each of its two session policies is 1 Allow statement with the single action secretsmanager:GetSecretValue on 1 resource"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the state itself. Evidence law: APPLIED is not EXERCISED.",
+  "world_is": "Applied bytes and grants are read live. Not read by this seat: the adapter's logs, the saved plans, the test runs. The outcome's one real run is absent by the pair's design.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
