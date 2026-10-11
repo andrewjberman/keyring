@@ -3726,3 +3726,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_YCDGEN-D2-S45 -- the generation queue is consumed and empty; 8 dead letters wait: the hazard is a DLQ redrive, not a first binding
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S45",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T09:07:31Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "The generation queue IS consumed today and reads 0 messages; 8 dead letters wait in irpt-generation-dlq, identity unknown: the hazard is a DLQ redrive, not a first binding",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-11T09:06:26Z-09:06:49Z by 2.0.0_SA_COO~G2: (1) the running resident root e606008994-st27 BINDS the generation queue: its packaged reports/resident_bindings.json reads queue_url https://sqs.us-east-1.amazonaws.com/313476888478/irpt-generation (read from the st27 tar), and the unit runs resident_main.py --factory resident_installed:build_resident_runtime (org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_b8/BRAND_LISTING_HOST.txt line 3). The bindings the resident lacks are commentary_ready_queue_url and analysis_ready_queue_url, a different queue each. (2) get-queue-attributes on irpt-generation: ApproximateNumberOfMessages 0, NotVisible 0, Delayed 0; RedrivePolicy maxReceiveCount 5 to irpt-generation-dlq; VisibilityTimeout 900; retention 345600 s. (3) irpt-generation-dlq: ApproximateNumberOfMessages 8, NotVisible 0. So run 3's accepted request is NOT waiting on the generation queue: it was consumed, or it is one of the 8 dead letters, or it was never enqueued. Which of the three is NOT established: the request and job rows are behind the kms fence for this seat, and the dead letters were not received."
+    ]
+  },
+  "notes": "ARMED, as the CTO's section 4 orders one row, with the hazard restated on what was measured. A redrive of irpt-generation-dlq, or any release that changes what the resident accepts and is followed by a redrive, would dispatch up to 8 old requests: test requests among them, one possibly bound to a completed ticket. The separate commentary_ready test message is row IRPT_ANLREQ-D2-S26. Disarm: the pair of the release that first binds commentary_ready or analysis_ready, or of any act that redrives the DLQ, names every message then waiting on each queue and states what happens to each. Owed first: the identity of run 3's request and of the 8 dead letters (a table read behind the kms fence, in the next batch window or by the applier).",
+  "spec_asserts": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_TCKT_VNEXT_R2_TR1_RUN3_GENERATION_HOP_AND_FOURTH_RUN_20261011.md @c7a257c031 sections 2 and 4: the resident host ships WITHOUT a queue binding, so nothing may be consuming accepted requests today; run 3 left an accepted request in the queue; when a consumer is first bound it will be dispatched.",
+  "world_is": "MEASURED 2026-10-11T09:06:26Z-09:06:49Z by 2.0.0_SA_COO~G2: (1) the running resident root e606008994-st27 BINDS the generation queue: its packaged reports/resident_bindings.json reads queue_url https://sqs.us-east-1.amazonaws.com/313476888478/irpt-generation (read from the st27 tar), and the unit runs resident_main.py --factory resident_installed:build_resident_runtime (org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_b8/BRAND_LISTING_HOST.txt line 3). The bindings the resident lacks are commentary_ready_queue_url and analysis_ready_queue_url, a different queue each. (2) get-queue-attributes on irpt-generation: ApproximateNumberOfMessages 0, NotVisible 0, Delayed 0; RedrivePolicy maxReceiveCount 5 to irpt-generation-dlq; VisibilityTimeout 900; retention 345600 s. (3) irpt-generation-dlq: ApproximateNumberOfMessages 8, NotVisible 0. So run 3's accepted request is NOT waiting on the generation queue: it was consumed, or it is one of the 8 dead letters, or it was never enqueued. Which of the three is NOT established: the request and job rows are behind the kms fence for this seat, and the dead letters were not received."
+}
+```

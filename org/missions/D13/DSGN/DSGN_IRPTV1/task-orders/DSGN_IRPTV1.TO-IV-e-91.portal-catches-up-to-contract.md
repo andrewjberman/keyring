@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~49</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -45,6 +45,35 @@ In `C:/dev/wk-dsgn-irptv1-49`:
    `wire_changes` [{what, before, after, source}]: the CTO reads that list before DEV.
 4. The suite run of the baseline note; `CONTRACT_CATCHUP.json` {causes: [{cause, ids, fix}], wire_changes, not_fixed, workspace_commit (the
    box/dell2 commit your contract files are read at), portal_commit, product_files_changed, suite_after}. The portal commit is a CANDIDATE.
+
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~07:2xZ): the portal base moved before the cut
+
+Your portal worktree is at DEV tip `ab697ba120a6452bdcb634038d8114b88f18e4a9`, not `1cd1cf25`: one Model Portfolios commit landed on DEV after the
+issuance (two files outside Investor Reporting). `1cd1cf25` is its ancestor. The suite baseline is unchanged in meaning; if your first full run at
+this base fails an id outside the 43 BEFORE any edit of yours, record it under `base_new_failing_ids` and do not count it against your change.
+
+Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
+
+## AMENDMENT 2 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~08:4xZ): first repair the one test this slot's own calendar commit broke; the table's two extra ids
+
+**Before the contract work.** `fe-s-46/timeouts.test.ts :: BOUNDS` fails since IV-e-89's commit `733986d7` (on DEV): it pins every hunk of
+`fe-s-40/window.test.ts` against an old DEV base, and IV-e-89 changed one test there (the out-of-range year now reads
+`TRADING_CALENDAR.firstYear - 1`). The CTO approved that diff (msg 4406). The BOUNDS test has its own mechanism for an approved hunk, the pinned
+`ALLOWED_HUNKS` list (`timeouts.test.ts` ~line 187): add exactly that hunk there, with a `reason` naming IV-e-89 and CTO msg 4406 (row
+`DSGN_IRPTV1-D2-W49-S6`). Add nothing wider; if the mechanism cannot express the hunk, stop with a row. This is its own portal commit, first.
+Record it under `bounds_repair` {test_id, hunk, portal_commit} and list the id in `suite_after.fixed_ids` only if it was failing at your base.
+
+**Two ids the table attached to this cell** (`org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~50/FAILING_ID_TABLE.json`, row
+`DSGN_IRPTV1-D2-W50-S1`): `iv-e-17` IVE17-AC3 (it spawns the content-pins test, so it should clear with the content-pins ids: confirm it), and the
+`fe-s-1` smoke map (12 keys against 22 declared routes: add the missing entries from the contract's route list, invent no response body: a route
+with no fixture you can source is listed under `not_fixed`). `IVE26-AC3` (the wire generator on empty-schema members) is NOT yours: it carries an
+open question for IRPT_BCKEND and stays for a later cell.
+
+**Base.** Your portal worktree is at `1c615568` (DEV tip `733986d7` plus IV-e-92's four candidate commits, not yet approved): do not touch them.
+The DOM for tests is registered per test file through `__tests__/dsgn-irptv1/dom-env.ts`; your `node_modules` is now a REAL local install (the
+junction is gone), with one read-only junction for `playwright-core`: do not run `bun install` again and do not add a package.
+
+Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
 
 <criterion id="IV91-AC1" cell_refs="IV-e-91"><invocation>python "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D2/checks/r14/p14_round14.py" . IV91-AC1</invocation><expect>IV91-AC1 PASS</expect></criterion>
 `IV91-AC1` -- every contract-family id is fixed or reasoned, with no new failing id, and the record names both commits and every wire change. Base: FAIL.

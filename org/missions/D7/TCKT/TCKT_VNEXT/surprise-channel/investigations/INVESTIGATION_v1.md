@@ -1522,3 +1522,28 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "notes": "No retry, no second submission, no widening -- the pair forbids all three and none was done. No act proposed and none available to this seat: reading why the submission is NOT_READY needs either the handler's source for that path or a reason on the log line, and neither is in this order's <paths>. There is no fourth run under this half (CTO AMENDMENT 3 part 1: 'If run 3 stops short of hop (g), the next act is the round's slug, not another GO'), so this row is input to the round's slug rather than to another attempt. Companions, both of which CLOSE on run 3: [[TCKT_VNEXT-D2-S29]] -- the zero-call read now reads ZERO_CALLS_PROVEN (NO_INVOCATION_IN_WINDOW) with the CTO's two conditions printed; [[TCKT_VNEXT-D2-S30]] -- condition 3 met on the agreed basis of the code read plus per-ticket WE_CLIENT_* counts, with no recipient inferred. [[TCKT_VNEXT-D2-S31]] closed when branch E was added."
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S33",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T09:15:51Z",
+  "one_line": "L9 round 2 R2-tr-1: TO-RUN-R2-tr1 AC2 NOT MET. No run read a finished report and no ticket holds an issued id: in run 3 hops (e), (f) and (g) are UNREACHABLE with request_id None. This seat's read of the generate function's log agrees that run 3's submission was not refused by the service (12 invocations, 2 refusals, neither NOT_READY; the last invocation ran 5.6 s with none), but acceptance is not measured: no line names the token or a request id and the answer's body was not kept. Three rounds have now stopped at hop (d), each time on the runner.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/ledger/L8_PACKET.R2_TR1.md @4387ede65a (msg 4548)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r2_tr1/r2_tr1_run3_trace.json @4e2e35ac32",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_R2_TR1_L9_GRADE_20261011.md",
+      "this seat's filter-log-events on /aws/lambda/irpt-ycharts-generate, 2026-10-11T08:12:32Z to 08:52:32Z (run 3's token window): 12 invocations, 2 refusals logged (analysis-input-upload NOT_AUTHORIZED at 08:12:47, analysis-requests MISSING_REQUEST_FIELD at 08:14:05), neither carrying NOT_READY; the last invocation (08:14:32, 5.6 s) logs no refusal; 0 lines name the run's token and 0 name a REQ- id. /aws/lambda/irpt-export-render in the same window: 15 invocations, all at 08:13, before the submission"
+    ]
+  },
+  "spec_asserts": "TO-RUN-R2-tr1 AC2 (judgment): FWD-1's ACCEPT, the report is made from the filed file and the finished report opens from the same ticket, shown by hops (e) and (g) reading the finished report for the id the service issued and the ticket holds; one firm only; the row removed after exp.",
+  "world_is": "FWD-1 is not realized. The one-firm, row-removal and zero-call limbs are the applier's measurements and were not re-run by this seat.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
