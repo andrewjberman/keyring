@@ -1596,3 +1596,30 @@
   "notes": "Enrichment CANDIDATE for a later IRPT_ANLREQ round, not a defect of the current release. No cell is cut for it; the CTO's next round analysis decides whether it enters the enrichment list."
 }
 ```
+
+## IRPT_ANLREQ-D2-S19 -- rev 6 R4: status-job of REQ-5e4149d2 answers ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE; the report itself is served
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S19",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T04:55:00Z",
+  "one_line": "On irpt-status rev 6 (6idtFvAm) the status-job read of REQ-5e4149d2 answers 200 with data.state UNAVAILABLE and public_reason_code ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE (source_dates empty), while the same request's analysis-report serves 257 sections.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-APPLY-Y1 AMENDMENT 8 R4: REQ-5e4149d2's owner read (status-job and analysis-report) answers with no RetentionRefused and no TypeError; release 1's deferred read 6 is that request SERVED.",
+  "world_is": "REPORTED by 2.0.0_SA_COO~G2 msg 4108 (window 6, reads done 04:52:49Z; its record R4_R5_OWNER_READ_REV6_20261011.json was not committed at that send and was not opened by this seat): status-job 200, typed envelope, state UNAVAILABLE, code ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE; analysis-report 200, provider OPAL_ENGINE, CERTIFIED, 257 sections (6 VALUE, 251 NOT_AVAILABLE). MEASURED by this seat at 04:54Z: live 6idtFvAm; /aws/lambda/irpt-status since the promote 04:44:47Z, paginated and counted client-side: START 6, TypeError 0, Traceback 0, RetentionRefused 0, timeouts 0. No baseline exists for this status-job read: rev 3 lacked the reader members and rev 5 raised TypeError on it, so whether the code is new with rev 6 is UNKNOWN.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~G2 msg 4108",
+      "CloudWatch /aws/lambda/irpt-status 2026-10-11T04:44:47Z-04:54:19Z, counts by this seat",
+      "pair release1/NEVER_WIDEN_PAIR_ANLREQ_RELEASE1_REV6_IRPT_STATUS.md section 6 (a typed refusal on R4 is recorded, no rollback)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not Branch B: no 5xx, no TypeError. R4 is met on its written terms and the report is served; the status-job state is not READY. CTO half A3: FWD-1 of IRPT_YCDGEN is not graded REALIZED on a typed refusal. Open question for the next round: is a date basis expected for an OPAL_ENGINE report with no prospect upload (prospect_dates.py), i.e. is this code the designed answer or a gap."
+}
+```
