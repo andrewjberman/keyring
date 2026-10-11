@@ -430,3 +430,30 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Filed by the CVO as a carrier: this seat cannot message the issuer. The issuer's D2 read (one hour, one mention) resolves Z-S10 and Z-S6 with a citing row."
 }
 ```
+
+## COMM_ASSIST-Z-S13 -- the released gateway's channel_messages route answers 502 about once every two hours
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S13",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZZ",
+  "surfaced_at": "2026-10-11T23:40Z",
+  "one_line": "Cites Z-S12: since the 18:49Z /hx/teams release, 2 of about 285 channel_poll runs failed, both 'route=channel_messages status=502 error=None' (21:27:39Z and 23:30:36Z). Each is a single call; the next poll re-reads that channel on its kept cursor, so no mention is lost, but each one fails D2's strict hour of failed=0 for an hour.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events /aws/lambda/teams-global-chat-assist-ingress-lambda, filter channel_poll, last 21600 s at ~23:38Z: 360 channel_poll lines; failures after 18:49:30Z: 2, both route=channel_messages status=502 error=None.",
+      "channel_mentions.poll(): a channel whose read raises keeps its old cursor and read_at, so it is read first next poll (channel_mentions.py _read_channel / poll)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "D2 done-when (round-14 analysis): one hour of ingress reads channel_poll failed=0, and one real channel @mention reaches Andrew.",
+  "world_is": "The released gateway's GET /hx/teams/channels/{team}/{channel}/messages returns HTTP 502 intermittently, about once per 140 polls. A 502 with no error body is the shape of an upstream (Graph) or proxy failure, not a missing route. Whose plane: the gateway's (NFRA_OPLGTW). Not established: whether Graph throttled or the gateway's upstream call timed out; this seat read only COMM's log.",
+  "notes": "Non-blocking for D2's mention arm. If the 502 rate holds, D2's hour arm can still pass in any clean hour; the issuer grades D2 on a clean hour plus the mention. A retry in channel_mentions would hide the gateway's 502s, not cure them, so none is proposed here. Pointed to NFRA_OPLGTW's issuer as one line."
+}
+```
