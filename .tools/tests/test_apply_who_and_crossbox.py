@@ -606,7 +606,7 @@ def _():
     fx = wrap_fixture()
     enforce(fx)
     rc, out, called = wrapper(fx, "safe-apply.sh", WORKER, APPLY_ARGS + [DRY], SEAT_GATES_OVERRIDE="fixture reason")
-    audit = fx / "org/git-author-override-audit.log"
+    audit = fx / "org/git-author-override-audit.laptop.log"  # env_for pins AGENTBUS_DEVICE=laptop
     text = audit.read_text("utf-8") if audit.exists() else ""
     return rc == 0 and "OVERRIDDEN" in out and "SEAT_GATES_OVERRIDE" in text and "fixture reason" in text, "rc=%s audit=%s" % (rc, text.strip()[-120:])
 
@@ -670,7 +670,7 @@ def _():
     enforce(fx)
     crash_tools(fx)
     rc, out, called = wrapper(fx, "safe-apply.sh", WORKER, APPLY_ARGS, SEAT_GATES_OVERRIDE="override no-verdict")
-    audit = fx / "org/git-author-override-audit.log"
+    audit = fx / "org/git-author-override-audit.laptop.log"  # env_for pins AGENTBUS_DEVICE=laptop
     text = audit.read_text("utf-8") if audit.exists() else ""
     return rc == 3 and "OVERRIDDEN" in out and "no-verdict" in text and "halt-gate-check.sh not found" in out, "rc=%s audit=%s" % (rc, text.strip()[-120:])
 
