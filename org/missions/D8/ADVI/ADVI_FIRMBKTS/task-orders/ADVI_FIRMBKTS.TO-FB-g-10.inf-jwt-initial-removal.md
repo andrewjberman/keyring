@@ -65,7 +65,7 @@ Read-only: the rest of the repository, the checks under `org/missions/D8/ADVI/AD
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~DELL1/ADVI_FIRMBKTS.TO-FB-g-10.inf-jwt-initial-removal.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-g-10"><invocation>cd /c/dev/wk-firmbkts-31/infra/aws/terraform/inf-pipeline &amp;&amp; timeout 118 terraform plan -input=false -lock=false -refresh=true -no-color 2&gt;&amp;1 | grep -c eclipse_jwt_initial</invocation><expect>^0$</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-g-10"><invocation>cd /c/dev/wk-firmbkts-31/infra/aws/terraform/inf-pipeline &amp;&amp; timeout 118 terraform plan -input=false -lock=false -refresh=true -no-color 2&gt;&amp;1 | grep -cE "^\s*# aws_secretsmanager_secret_version\.eclipse_jwt_initial (will|must)"</invocation><expect>^0$</expect></criterion>
   <criterion id="AC2" cell_refs="FB-g-10"><invocation>cd /c/dev/wk-firmbkts-31/infra/aws/terraform/inf-pipeline &amp;&amp; timeout 118 terraform plan -input=false -lock=false -refresh=true -no-color 2&gt;&amp;1 | grep -E "^(Plan:|No changes)"</invocation><expect>Plan: 0 to add|No changes</expect></criterion>
   <criterion id="AC3" cell_refs="FB-g-10"><invocation>cd /c/dev/wk-firmbkts-31 &amp;&amp; timeout 70 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_secretver.py --before org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~DELL1/evidence/secret_version_before.json; echo "exit=$?"</invocation><expect>SECRET VERSION: UNCHANGED</expect></criterion>
   <criterion id="AC4" cell_refs="FB-g-10"><invocation>cd /c/dev/wk-firmbkts-31 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root /c/dev/wk-firmbkts-31 --allow infra/aws/terraform/inf-pipeline/secrets.tf --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~DELL1/evidence/ --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~DELL1/ --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md --require infra/aws/terraform/inf-pipeline/secrets.tf; echo "exit=$?"</invocation><expect>ROUND 4 SCOPE: OK</expect></criterion>
@@ -90,6 +90,15 @@ commit hash.
 frozen decomposition by amendment 1 (cells 10, chains 9). The CTO calls it a LOCAL cell; a Terraform path carries the WORLD
 floor under the gate, so the order carries WORLD with nothing applied. Closes row D1-S19's hazard (ARMED to disarmed at
 merge).
+
+**AMENDMENT 1 (2.0.0_SA_COO~B1, after the seat's report msg 3855, row D1-S23):** the dell1 CloudOps identity is denied two
+reads the full plan needs (`sms-voice:DescribeSpendLimits`, `ssm:GetParameter` on the inf gold last-trigger-mode parameter), so
+the plan reads no Plan line on this box; the issuer will not widen the identity. AC1 and AC2 are therefore graded from the
+LAPTOP lane (`0.7.0_AE_CloudOps~FBL`, the identity that took the untargeted plan on 2026-10-11) at the seat's commit, by a
+crossbox ORDER; AC3 and AC4 stay the seat's own. AC1's invocation counted the plan's refresh lines as well as a change
+line (the laptop's `plan_untargeted.out` lists the name in a refresh line), so it now counts only a `# <address> will be`
+or `must be` change header. Gate limb: GATE viii reads `<placeholders>` at HEAD (`NONE`) and the amended invocation
+carries no token.
 
 <status>pending</status>
 <round>4</round>
