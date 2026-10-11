@@ -31,8 +31,8 @@ directory. You write NOTHING to S3: `--apply` is the issuer's act.
 (read-only, default profile; parquet, `trade_year=<YYYY>/`): 1,416,497 rows, 1,533 accounts; columns `Advisor_ID`, `Account_Number`,
 `Transaction_Type`, `Transaction_Description`, `Cusip`, `Symbol`, `Quantity`, `Amount`, `Trade_Date`, `source_line`, `source_record`, and more.
 - **459 accounts** have their last trade before 2018-01-01 (407 of them started before 2016): the OLD accounts. Every one of the 311
-  accounts trading in 2013 ends by 2017-12-29; the longest single-account history starts 2016-01. Old numbers are 11 digits (`01001355831`);
-  the 2016+ long-lived ones alphanumeric (`D49141617`).
+  accounts trading in 2013 ends by 2017-12-29; the longest single-account history starts 2016-01. Old numbers are 11 digits (`acct#c9405219`);
+  the 2016+ long-lived ones alphanumeric (`acct#0e4ff3a3`).
 - The move shows in the types: `li` "Contribution to Asset" rows 2015 1,736 -> 2016 14,216 -> 2017 2,939; `trfi` "Position Transfer In"
   (and `TRFIR`, `trci`, `TRCISU`) and `trfo` "Position Transfer Out" (and `trco`) first appear in 2016.
 

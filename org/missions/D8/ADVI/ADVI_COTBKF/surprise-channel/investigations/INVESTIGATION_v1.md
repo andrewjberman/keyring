@@ -5015,3 +5015,105 @@ round.** Never edit an existing row.
   "world_is": "0 hits proves absence of the three shapes only. The test bounds the shapes (no hit inside a longer capital/digit run) to drop the 14 document-id false positives; that is stated in its docstring. The tracked manifest was additionally checked by a different instrument: 0 of the private manifest's 1533 account keys occur in its text. Also: commonwealth_asf_source.py held no runtime literal (one docstring example), so it needed no private config; the runtime literal moved to config is a rejected-candidate security identifier in commonwealth_sweeps.py whose shape is account-like."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S76",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T02:55:30Z",
+  "one_line": "L9 rounds 50-52: CB50ax1-AC2 MET (served writer and B_00 equal the repo bytes, no opal_naming import, own firm and 4 keys resolve from the served sidecars, both loaders raise; 6 passed, gold suite 50 passed). CB51ay1-AC2 MET (80 of 80 moved files equal the parent blob and the outside copy, copies precede the commit; 75 of 77 redaction files are pure token swaps, the other 2 are the id test and a rename completed @9a57426ebe with 7 token swaps). CB52az1-AC2 MET (config hash equals the pin and both refusal arms raise; 3325 of 3325 manifest days equal round 47's; sweeps rule data identical on 42 of 42 names). The SWEEP-REGRADE line itself was not re-run by this seat.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_50_51_DRAIN_END_20261009.md @244e0507ff (msg 3843)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_52_DRAIN_END_20261009.md @c533298ac5 (msg 3822)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUNDS_50_52_L9_GRADE_20261010.md",
+      "this seat's reads: s3://opal-data-cot/code/gold/ 5 keys fetched and hashed; git show 63448cccd2, b4aafe78f4, 9a57426ebe, c1624bf45d, d78a646ac1; C:/dev/_cotbkf_private_evidence_20261009/ MOVED_20261009.json (80 entries), config/commonwealth_sweeps.json sha256 b1d93408...; pytest data/cot/scripts/gold/tests 50 passed"
+    ]
+  },
+  "spec_asserts": "CB50ax1-AC2, CB51ay1-AC2 and CB52az1-AC2 are JUDGMENT criteria graded by 3.0.0_SA_CVO at L9 and never self-graded (the three task orders' criteria blocks).",
+  "world_is": "All three hold on this seat's own reads. The account-set check this seat ran at HEAD still finds set members in 64 of 456 non-channel project files and 3 of 183 code files: the three-shape zeros of rounds 51 and 52 are not clean, which rows D2-S75, D2-W78-S2 and D2-W79-S2 already state and round 53 owns.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S77",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T02:55:30Z",
+  "one_line": "data/assets/scripts/silver/commonwealth_sweeps.py:729 sets the private config's default to a device path (C:/dev/_cotbkf_private_evidence_20261009/config/commonwealth_sweeps.json) and :750 loads it at import. On any box or runner without that path, and without COTBKF_SWEEPS_CONFIG set, the module raises at import, and so does every module that imports it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_sweeps.py:728-750 at HEAD (SWEEPS_CONFIG_DEFAULT, load_sweeps_config, the module-level call)",
+      "this seat's run: load_sweeps_config('C:/nonexistent_dir_xyz/none.json') raised SweepsConfigError",
+      "CLAUDE.md section 5: never write device-specific logic into the workspace; derive, do not hardcode"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 5: device-specific logic is not written into the workspace; a path is derived. The CTO containment ruling @0e8209c33c item 3 puts the rule data outside the repo and does not name where.",
+  "world_is": "The default path exists on dell2 only. The fail-closed load is correct; the default is the defect. No served pipeline was read to import this module (not checked), so the standing is INERT.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D2-W80-S1 -- The order's account set (the 'account' column of the served month_grades table plus local parquets' 'account' 
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W80-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~80",
+ "surfaced_at": "2026-10-10T22:30:00Z",
+ "one_line": "The order's account set (the 'account' column of the served month_grades table plus local parquets' 'account' column) is 2285 ids, but Cottonwood-side ids also live in account_id / Account_Number / AccountNumber / old_, new_, newest_, commonwealth_, normalized_, current_account columns; the pinned set is widened to 4710 ids.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "account-column-only set: 2285 distinct ids, sha256 28e015003d7723c297e94db50ef712cd61951c72974ae2036e16868b63b77bf5 (held outside the repo)",
+   "widened set: 4710 distinct ids, sha256 81aa5aff50140751577312fde08a195584c60105b6872ba271ae9309f1be7188, pinned in data/assets/scripts/silver/tests/_cotbkf_acct_check.py@693846835a"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-ba-1 step 1: the account set is the 'account' column of the served table and of the local parquets.",
+ "world_is": "The 'account' column alone misses 2425 account ids the tracked files can carry under other column names; the widened set is a superset, so every check the narrower set would make is still made."
+}
+```
+
+## ADVI_COTBKF-D2-W80-S2 -- CB53ba1-AC1 cannot be met as written: after the re-sweep of every in-scope file inside the write grant, the do
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W80-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~80",
+ "surfaced_at": "2026-10-10T22:30:00Z",
+ "one_line": "CB53ba1-AC1 cannot be met as written: after the re-sweep of every in-scope file inside the write grant, the docs test still reads 38 shape hits and 32 account-set hits in 12 completed task orders under task-orders/, which is outside the order's <paths>; 7 of them are the orders the face forbids touching (row D2-S74) and 5 more (a-2, c-3, c-4, m-1, v-1) were not named by anyone.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~C2",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python -m pytest test_cotbkf_no_account_ids.py test_cotbkf_code_no_account_ids.py -q at 82049024b3: 1 failed, 1 passed; the docs test prints 'DENOMINATOR ... 12 files with hits; 38 shape hits; 32 account-set hits'; the code test passes",
+   "hits by file (shape/set): CB-a-2 1/1, CB-ab-1 3/3, CB-ac-2 2/2, CB-ad-1 2/2, CB-c-3 3/3, CB-c-4 2/2, CB-d-3 3/3, CB-m-1 1/1, CB-n-1 6/5, CB-v-1 1/1, CB-w-1 11/7, CB-y-2 3/2; all 12 carry <status>complete</status>",
+   "redacted texts for the 7 parked orders are held outside the repo at C:/dev/_cotbkf_private_evidence_20261009/redacted_TOs/ (row D2-S74); the other 5 have none",
+   "after the widened shapes: surprise-channel/ (the CVO's, not edited) carries 17 shape hits and 18 account-set hits in 5 files: INVESTIGATION_v1 13/14, ADJUDICATION_v11 1/1, v13 1/1, v28 1/1, REMEDIATION_v14 1/1"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-ba-1 step 3: in-scope tracked files (both tests' scopes) are re-swept; the face forbids touching the 7 parked orders and grants no task-orders/ path.",
+ "world_is": "The docs test scopes every tracked file under the project minus surprise-channel/, so task-orders/ is in its scope but outside the write grant; the cleartext in those 12 orders stays tracked and the test stays red until a seat with a task-orders/ grant (and a TO-gate route for completed orders) substitutes the tokens. Nothing was weakened and no test was exempted."
+}
+```
