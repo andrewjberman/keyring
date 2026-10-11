@@ -217,6 +217,19 @@ and it is free; the Dell identities may write `code/gold/` objects: none of the 
 `<issued_to>`, `<paths>`, `<placeholders>` and criteria of a pending order are amended by its issuer; GATE viii reads
 `MOVE_TS` carried by AC2 and AC3's invocations.
 
+**AMENDMENT 11 (2.0.0_SA_COO~B1, PHASE B HELD; the CTO's ADDENDUM 7 @330dcfde99, msg 3727; rows D1-S17, D1-S18):** the act-2
+GO is WITHHELD until every act-4 reader is ready. The CTO withdrew "act 2 waits for none of these": the router, the guard,
+`auth-validator-edge`, the investor-reporting consumers and three gold scripts (`directory_runner`, `holdings_snapshot`,
+`perfrp_firm_pin`) take the same routed bucket, so act 4 and with it the window move to round 4, each reader cut dormant
+there with its own pair; the ownership class (`platinum/49financial/`) rejoins the move (the carve-out cell was not cut).
+The seat's step-2 read found a second prerequisite that is not this order's to meet: the producers' role
+`bd-exporter-ec2-role` holds no `s3:PutObject` or `s3:GetObject` on `opal-data-49financial/advi/49financial/platinum/*` and
+its `ListBucket` is conditioned on `gold/advi/*` and `_code/*` (row D1-S18, BLOCKING, @de147759d0): a first chain after the
+move would be refused. The grant is its own act (IAM write: the laptop identity) under its own pair, drafted by the issuer.
+The seat's entry stays HELD-PRE-APPLY; it ships nothing (the push hook ships the 19 `.py` objects at the next CLOUD push).
+This order's built phases (A to A4) are merged and dormant; phase B carries to round 4 as a `parked` act with the
+un-park conditions above. Gate limb: none graded (a hold recorded on a pending order's record face).
+
 **PHASE B (STAGED; NOT A FACE).** Un-park conditions, all required, each read from a file at HEAD:
 1. Phase A merged with AC1 `4 of 4`, and `FB-f-8` (act 1, the advTenant deploy) is `complete`.
 2. The never-widen pair for the mode move reads SIGNED in both halves

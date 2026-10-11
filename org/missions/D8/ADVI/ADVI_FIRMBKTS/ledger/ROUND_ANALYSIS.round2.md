@@ -202,3 +202,66 @@ and C_07 outputs. ADDENDUM 2 condition 2 ("only platinum WRITES move; every read
 - The pair's blast radius is amended to name the read, list and delete sites alongside the 62 writer lines.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 6 (2026-10-11 ~10:0xZ) -- the ownership map (authorization data): (A), carved out of this window, with the tripwire ARMED
+
+**Asked:** `2.0.0_SA_COO~B1` msg 3720. Both census instruments missed two served readers, one non-Python and one with template-literal
+keys:
+- `auth-validator-edge` (protected; 26 behaviors) reads `platinum/<firm>/ownership_map.json` from `FIRM_BUCKET_MAP[firmId]` (`index.mjs:173`);
+- the investor-reporting Lambdas read it through `IRPT_OWNERSHIP_KEY` (`_authz/loaders.py:33`, which is GENERATED; 8 consumers).
+It is the one key of class `platinum/49financial/`. D_00 writes it, and it decides who may see what.
+
+**Ruling: (A).** That class is carved out of this window:
+- its registry row is dropped from the move, so `platinum_dest` resolves it to the LEGACY home in BOTH modes, and D_00 keeps writing
+  the live map where its readers read it;
+- no protected function is redeployed for it;
+- a round-4 act moves the map and its readers together (validator by the laptop identity, IRPT by its own pair).
+(B) is refused for this window: moving authorization data beside a five-act cutover widens the window's blast radius onto access
+control.
+
+**The tripwire, measured by this seat at ~10:0xZ, and worse than "a missing map".** The F7 copy already placed
+`advi/49financial/platinum/49financial/ownership_map.json` in `opal-data-49financial` (04:01:18Z, 474,726 B). The legacy map was
+rewritten at 05:24:02Z (474,841 B). So the new-home copy is ALREADY STALE authorization data, and the regenerated views
+(`firm-config.mjs`, `_authz/loaders.py`) will carry the new bucket once the registry map value moves at act 4. Any ORDINARY later deploy
+of `auth-validator-edge` or of an IRPT consumer would then read a stale map silently. A stale map can deny a new client or keep a
+revoked one. Filed as row `ADVI_FIRMBKTS-D1-S17` (ARMED, disarm owner this seat). Until the round-4 ownership act lands:
+- every never-widen pair for `auth-validator-edge` or any IRPT consumer names `ADVI_FIRMBKTS-D1-S17` and reads, in its plan, which bucket the
+  ownership map resolves to; a resolution to the new home is a STOP;
+- the stale copy is NOT deleted (an S3 delete is Andrew's word), and the round-4 act re-copies the live map at its cutover;
+- act 4's registry change for 49 Financial must not regenerate the ownership readers' bucket, OR act 4 waits for the round-4
+  ownership act. The issuer reads which, from the generator's targets, before act 4's pair.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 7 (2026-10-11 ~10:0xZ) -- act 4 is ONE registry value, and every regenerated view moves with it: (b). The window waits and widens.
+
+**Asked:** `2.0.0_SA_COO~B1` msg 3724. The router's bucket is `lib/opal_naming.py _routed_bucket()` (:363), the scope's ROUTED alias. Flipping
+it regenerates EVERY view that calls it:
+- `firm-config.mjs` (router, guard, `auth-validator-edge`);
+- `data/firm_registry.json` (`local.firm_bucket_map`, so `IRPT_DIRECTORY_BUCKET_MAP` at its next apply);
+- `directory_runner.py`, `holdings_snapshot.py`, `perfrp_firm_pin.py`.
+
+**Ruling: (b). (a) is refused.** A separate "serving route" field, so that only the router moves, would put two values for one
+firm's location in the registry. That contradicts this project's own FWD-3: "changing one firm's row changes every place that serves,
+guards or directs its data, with no second edit".
+
+**Two corrections to this seat's earlier text:**
+1. **CTO half ADDENDUM 1 of act 2 said "Act 2 waits for none of these". Withdrawn.** Act 2 starts the producers writing the new home
+   while every reader still reads the old one, so users see a frozen day until act 4. The window is short only if act 4 is READY when
+   act 2 opens. So act 2 does NOT open until every act-4 reader is ready. COO~B1's hold on act 2's GO is right.
+2. **ADDENDUM 6's carve-out of the ownership map is narrowed to "not in a window whose act 4 leaves its readers behind".** Under (b)
+   those readers move in the same window, so the ownership class REJOINS the move: written, copied and read at the new home together.
+   Row D1-S17's tripwire disarms at that window's act 4, when the validator and IRPT read the live map at the new home and the stale
+   04:01Z copy is overwritten by the act-3 delta copy.
+
+**The instrument for "every reader of the flipped value" is the GENERATOR'S OWN TARGET LIST** (`opal_naming.py targets`), not a grep. Each
+target that consumes `_routed_bucket` for 49 Financial is one reader the window must carry:
+- the router and guard (act 4);
+- `auth-validator-edge` (protected: laptop identity, its own pair);
+- the IRPT consumers (their own pair, through `firm_bucket_map`);
+- the three gold scripts (shipped through `code/gold/`, with the dormant proof).
+Round 4 cuts each reader's build DORMANT (reading the new home only once the value moves) plus its pair. The window opens when all are
+merged and signed: act 2, act 3's delta copy (now including the ownership map), then act 4 as the value flip with every regenerated
+target deployed in the same act. 4b and 4c stand.
+
+-- 1.0.0_SA_CTO~DELL1
