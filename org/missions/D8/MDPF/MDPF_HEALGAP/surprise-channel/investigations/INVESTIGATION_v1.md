@@ -656,6 +656,75 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "The act 3 half and ledger assume that at least one of two dell1 actors (2.0.0_SA_COO~G1 at 06:05Z, 0.0.0_AB_MSTR~DELL1 by 12:00Z) is live to restore the daily target input, so an induce on a production target is bounded to hours.",
     "world_is": "Both actors depend on one box and one usage budget; when the box stopped, nothing on dell1 could restore, and the bound became whenever a seat on ANOTHER device read the ledger (14h23m past the first owner moment). The loss was nil here only because the daily rule has one fire per day and the next fire (06:00Z 2026-10-11) came after the laptop restore; a rule with a shorter period, or a restore that landed after the next fire, would have run a second induced day. REMEDY (one, owner 1.0.0_SA_CTO~DELL1 at the next induce): the half of any later induced act names a restore actor on a DIFFERENT device than the seat that sets the induce, with the ledger path it reads, and says so in the ledger's rollback line. Distinct from MDPF_HEALGAP-S12, which is a fail-safe that outlived its kill; this is a fail-safe chain with no member off the failing box.",
     "notes": "No build asked for: this is a wording rule for the half, not a monitor or alert (standing moratorium). UNDER_INVESTIGATION is deliberate, as in D1-S10/D1-S11: GRADUATED is the CVO's L9 field. Act 3's own outcome (PARTIAL read, heal, C5b) is in the R2 drain-end read."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W7-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~7",
+    "surfaced_at": "2026-10-11T04:05:10Z",
+    "one_line": "HG-t-9's premise says the Cottonwood runner lands bronze after 07:00Z on some days (preflight: after a 12:45Z landing), but the tree's own measured record says it lands 06:00:43-44Z every day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf @c8f7662637 :269 -- 'landing 06:00:43-44Z EVERY day, from cot-rebalancer-runner-daily cron(0 6 * * ? *)'",
+        "infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf @c8f7662637 :286 -- the existing rule description: 'Fires 1h after the measured 06:00:43Z upstream landing.'",
+        "infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf @c8f7662637 :34 -- 'cot-rebalancer-runner-daily cron(0 6 * * ? *) UTC, no timezone'",
+        "infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py @c8f7662637 :99 -- 'landing 06:00:43-44Z daily'",
+        "Not found in the worktree read for this order: any 12:45Z landing measurement (the TO RECORD FACE preflight cites one). The rule cron(0 6 * * ? *) was not read live (read-only AWS not run for this criterion set)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG-t-9 cell: 'On a day the Cottonwood runner lands bronze AFTER 07:00Z the registry serves the previous day'; RECORD FACE preflight: the 13:15Z fire is 'placed after a 12:45Z landing'.",
+    "world_is": "The in-tree measured record places the runner's landing at 06:00:43-44Z every day, before the existing 07:00Z fire. The stamp gate is correct as built (it rebuilds only when the stamp exists), but the stated reason for the 13:15Z slot is not supported by any measurement in this tree. The cell's conditional ('on a day ... after 07:00Z') is not contradicted; the 12:45Z figure is unsourced here.",
+    "notes": "No build asked for and none changed: the handler and the rule are built to the order's text. Disposition is for the CVO's L9 read of the premise, not this worker's."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W7-S2",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~7",
+    "surfaced_at": "2026-10-11T04:05:10Z",
+    "one_line": "The completion stamp this cell grants read on, blackdiamond/cottonwood/meta/<date>-complete.json, is the key the runner writes and the silver reader reads, but the key-rulings registry records meta/ as a non-canonical prefix whose canonical form is state/pull_complete/.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/key_rulings.json @c8f7662637 :172-174 -- key 'blackdiamond/cottonwood/meta/' (bucket opal-data-assets, shape prefix), canonical 'blackdiamond/cottonwood/state/pull_complete/', owner 'The opal-assets Cottonwood pull and silver functions (directive D8)'",
+        "infra/aws/lambda/cot-pipeline/cot-rebalancer-runner/lambda_function.py @c8f7662637 :70 META_PREFIX = SCOPE_PREFIX + 'meta/'; :207-208 _stamp_key -> META_PREFIX + date + '-complete.json' (the writer)",
+        "infra/aws/lambda/opal-assets/opal-assets-silver-blackdiamond/rebalancer_conversion.py @c8f7662637 :417 STAMP_PREFIX = 'blackdiamond/cottonwood/meta/' (the reader)",
+        "The HG-t-9 patch (uncommitted in this worktree) adds the grant Resource arn:aws:s3:::opal-data-assets/blackdiamond/cottonwood/meta/*-complete.json and the s3:prefix condition blackdiamond/cottonwood/meta/ in the producer role policy"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG-t-9 build: the stamp is read at 'meta/<today UTC>-complete.json' under the runner's meta prefix, and the handler derives its prefix from producer.ROSTER_KEY.",
+    "world_is": "The grant and the handler encode the live key, which matches writer and reader. The key-rulings registry nonetheless names a different canonical location for it. Any future move of the stamp key must move this grant and the handler's derivation in the same commit; the registry's disposition for the existing key was not read by this worker.",
+    "notes": "Observation only. No change to the key is made by this cell."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W7-S3",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~7",
+    "surfaced_at": "2026-10-11T04:05:10Z",
+    "one_line": "The HG3-t9-AC2 checker (hg_r3_rules.py --t9-iam) passes a ListBucket statement whose Resource is widened to opal-data-assets/*, so the check does not hold the 'nothing wider' clause on the ListBucket resource.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Control run, this worktree: copy of satellites-registry-producer.tf with the ListBucket Resource changed from arn:aws:s3:::opal-data-assets to arn:aws:s3:::opal-data-assets/* (scratch copy .scratch/mut/m4_tf_bare_bucket_star.tf, uncommitted) -> 'T9IAM-OK stamp GetObject + prefix-conditioned ListBucket, nothing wider' rc=0",
+        "Control run, same checker, a copy with the s3:prefix condition removed -> 'T9IAM-BAD s3:ListBucket carries no s3:prefix condition' rc=1 (the prefix arm does fire)",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_CHECKS/hg_r3_rules.py t9_iam(): the ListBucket arm tests presence of 'ListBucket' and of the prefix condition only; it does not read the statement's Resource"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG3-t9-AC2: 'the role gains GetObject on the stamp pattern and one prefix-conditioned ListBucket and nothing wider'.",
+    "world_is": "The checker does not bind the ListBucket statement to the bucket ARN. The applied patch carries the correct bucket ARN, so this worker's tree is right; the gap is in the checker, which is outside this worker's grant and was not edited.",
+    "notes": "Not fixed here: the checker belongs to the issuer's R3_CHECKS and the criterion text is unchanged. Recorded so the CVO's L9 read sees that AC2 PASS does not cover the ListBucket Resource."
   }
 ]
 ```
