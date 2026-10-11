@@ -1904,3 +1904,29 @@ general to every map-typed attribute. One object, two sightings, same attribute 
   "dismissal_reason": "CTO ruling msg 5737: the deployed data-refresh function equals its build input and refuses a caller with no userType unless Opal-internal; that is the estate's rule. This row records the closure of row TCKT_VNEXT-D2-W6-S2 and carries no hazard of its own."
 }
 ```
+
+### TCKT_VNEXT-D2-S44 -- the closure record of row D2-W6-S2, renumbered by citation: the JSON row above by 2.0.0_SA_COO~V2 took the id D2-S43, which the applier's row already held
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S44",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T20:18:57Z",
+  "one_line": "Two rows in this channel carry the id TCKT_VNEXT-D2-S43: the applier's heading-and-prose row on terraform's rendered null, and this seat's JSON row recording the closure of row D2-W6-S2 (commit 11e26d72b5). Cite the closure record as THIS row, D2-S44.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this file: the heading '### TCKT_VNEXT-D2-S43 -- terraform's RENDERED plan prints an empty env string as null' (0.7.0_AE_CloudOps~TV2, filed during R4-pk-3) and, directly after its prose, the JSON block whose id is TCKT_VNEXT-D2-S43 and whose surfaced_by is 2.0.0_SA_COO~V2",
+      "this seat's id scan read JSON id lines only (max 42, so it minted 43) and did not read headings; the applier's row has no JSON id line",
+      "surprise-row-gate refused a renumbering of the committed row ('The channel is append-only: retire it with a new row that cites it'), so this row is the retirement"
+    ]
+  },
+  "spec_asserts": "A row id names one row.",
+  "world_is": "D2-S43 names two. The applier's row keeps the id. The closure of row D2-W6-S2 (DISARMED and closed by CTO ruling msg 5737 on the applier's read of the deployed data-refresh bytes: MEMBERS 2 EQUAL 2; a caller with no userType refused unless Opal-internal) is to be cited as D2-S44; its evidence is in the JSON block above with this seat's name.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
