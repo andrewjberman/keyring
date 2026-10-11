@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 11,
- "chains": 10,
+ "cells": 13,
+ "chains": 11,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -111,3 +111,14 @@ byte-identical now, out of act 4. Cell `FB-g-11` (worker `~32`, workstream `BRON
 scopes.json`, `lib/opal_naming.py` and the 15 tracked generated targets that cover `scopes.json`; no edge to another
 cell). Act 4's pair prints the four remaining flipped targets by tier class. Cells 10 -> 11, chains 9 -> 10. Act 4's
 un-park no longer waits on the CTO for this row; it waits on this cell's merge.
+
+## Amendment 3 (2.0.0_SA_COO~B1, 2026-10-11 ~12:5xZ): cells `FB-g-12` and `FB-g-13` added by the CTO's round-3 ADDENDUM 4 (msg 3853)
+
+`FB-g-1` (the validator's key) and `FB-g-2` (the producers' grant) built and passed their checks and could not commit:
+the enforcing naming gate refuses new hand-kept carriers of `49financial` and of key strings (rows D1-W24-S3,
+D1-W25-S1). The CTO ruled (a): generate. `FB-g-12` renders the per-firm ownership-key block into
+`_shared/firm-config.mjs` (the validator reads it); `FB-g-13` makes the `opal_name` module expose a scope's bucket and
+canonical platinum prefix (the grant reads them and names its policy through `name`). Workstream `OWNKEYS`; both after
+`FB-g-11`; `FB-g-1` and `FB-g-2` are re-seated after them with amended faces. Cells 11 -> 13; chains 10 -> 11 (the two
+builder cells are one chain with the cells they unblock, `{FB-g-12, FB-g-1}` and `{FB-g-13, FB-g-2, FB-g-8}`, so the
+chain count rises by one over the nine independent builds above).
