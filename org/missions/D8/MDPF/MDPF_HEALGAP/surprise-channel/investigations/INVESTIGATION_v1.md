@@ -698,6 +698,97 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "TO HG-t-13 NOOP field: YES, NO, or UNKNOWN because a reason, read for whether the EC2 re-publish has the same bytes or keys as what is served.",
     "world_is": "The key is the same on every run, so the key level is a no-op. The bytes are unread: a same-day re-run matches the served object only if the dim partition, the staged axis and the trading-days value all match, and a later run can change the trading-days field. The read that answers it is a GET of the served key diffed against a rebuild with dt.date.today() held fixed, or the ETag of the served key across two consecutive days.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W7-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~7",
+    "surfaced_at": "2026-10-11T04:05:10Z",
+    "one_line": "HG-t-9's premise says the Cottonwood runner lands bronze after 07:00Z on some days (preflight: after a 12:45Z landing), but the tree's own measured record says it lands 06:00:43-44Z every day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf @c8f7662637 :269 -- 'landing 06:00:43-44Z EVERY day, from cot-rebalancer-runner-daily cron(0 6 * * ? *)'",
+        "infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf @c8f7662637 :286 -- the existing rule description: 'Fires 1h after the measured 06:00:43Z upstream landing.'",
+        "infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf @c8f7662637 :34 -- 'cot-rebalancer-runner-daily cron(0 6 * * ? *) UTC, no timezone'",
+        "infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py @c8f7662637 :99 -- 'landing 06:00:43-44Z daily'",
+        "Not found in the worktree read for this order: any 12:45Z landing measurement (the TO RECORD FACE preflight cites one). The rule cron(0 6 * * ? *) was not read live (read-only AWS not run for this criterion set)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG-t-9 cell: 'On a day the Cottonwood runner lands bronze AFTER 07:00Z the registry serves the previous day'; RECORD FACE preflight: the 13:15Z fire is 'placed after a 12:45Z landing'.",
+    "world_is": "The in-tree measured record places the runner's landing at 06:00:43-44Z every day, before the existing 07:00Z fire. The stamp gate is correct as built (it rebuilds only when the stamp exists), but the stated reason for the 13:15Z slot is not supported by any measurement in this tree. The cell's conditional ('on a day ... after 07:00Z') is not contradicted; the 12:45Z figure is unsourced here.",
+    "notes": "No build asked for and none changed: the handler and the rule are built to the order's text. Disposition is for the CVO's L9 read of the premise, not this worker's."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W7-S2",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~7",
+    "surfaced_at": "2026-10-11T04:05:10Z",
+    "one_line": "The completion stamp this cell grants read on, blackdiamond/cottonwood/meta/<date>-complete.json, is the key the runner writes and the silver reader reads, but the key-rulings registry records meta/ as a non-canonical prefix whose canonical form is state/pull_complete/.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/key_rulings.json @c8f7662637 :172-174 -- key 'blackdiamond/cottonwood/meta/' (bucket opal-data-assets, shape prefix), canonical 'blackdiamond/cottonwood/state/pull_complete/', owner 'The opal-assets Cottonwood pull and silver functions (directive D8)'",
+        "infra/aws/lambda/cot-pipeline/cot-rebalancer-runner/lambda_function.py @c8f7662637 :70 META_PREFIX = SCOPE_PREFIX + 'meta/'; :207-208 _stamp_key -> META_PREFIX + date + '-complete.json' (the writer)",
+        "infra/aws/lambda/opal-assets/opal-assets-silver-blackdiamond/rebalancer_conversion.py @c8f7662637 :417 STAMP_PREFIX = 'blackdiamond/cottonwood/meta/' (the reader)",
+        "The HG-t-9 patch (uncommitted in this worktree) adds the grant Resource arn:aws:s3:::opal-data-assets/blackdiamond/cottonwood/meta/*-complete.json and the s3:prefix condition blackdiamond/cottonwood/meta/ in the producer role policy"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG-t-9 build: the stamp is read at 'meta/<today UTC>-complete.json' under the runner's meta prefix, and the handler derives its prefix from producer.ROSTER_KEY.",
+    "world_is": "The grant and the handler encode the live key, which matches writer and reader. The key-rulings registry nonetheless names a different canonical location for it. Any future move of the stamp key must move this grant and the handler's derivation in the same commit; the registry's disposition for the existing key was not read by this worker.",
+    "notes": "Observation only. No change to the key is made by this cell."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W7-S3",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~7",
+    "surfaced_at": "2026-10-11T04:05:10Z",
+    "one_line": "The HG3-t9-AC2 checker (hg_r3_rules.py --t9-iam) passes a ListBucket statement whose Resource is widened to opal-data-assets/*, so the check does not hold the 'nothing wider' clause on the ListBucket resource.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Control run, this worktree: copy of satellites-registry-producer.tf with the ListBucket Resource changed from arn:aws:s3:::opal-data-assets to arn:aws:s3:::opal-data-assets/* (scratch copy .scratch/mut/m4_tf_bare_bucket_star.tf, uncommitted) -> 'T9IAM-OK stamp GetObject + prefix-conditioned ListBucket, nothing wider' rc=0",
+        "Control run, same checker, a copy with the s3:prefix condition removed -> 'T9IAM-BAD s3:ListBucket carries no s3:prefix condition' rc=1 (the prefix arm does fire)",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_CHECKS/hg_r3_rules.py t9_iam(): the ListBucket arm tests presence of 'ListBucket' and of the prefix condition only; it does not read the statement's Resource"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG3-t9-AC2: 'the role gains GetObject on the stamp pattern and one prefix-conditioned ListBucket and nothing wider'.",
+    "world_is": "The checker does not bind the ListBucket statement to the bucket ARN. The applied patch carries the correct bucket ARN, so this worker's tree is right; the gap is in the checker, which is outside this worker's grant and was not edited.",
+    "notes": "Not fixed here: the checker belongs to the issuer's R3_CHECKS and the criterion text is unchanged. Recorded so the CVO's L9 read sees that AC2 PASS does not cover the ListBucket Resource."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W7-S4",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~7",
+    "surfaced_at": "2026-10-11T04:12:00Z",
+    "one_line": "The TO says the naming gate refuses a new hand-kept cottonwood literal; at commit d90794efd4 the gate WARNs on the stamp prefix literal the patch types in satellites-registry-producer.tf:46 and does not refuse it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output at commit d90794efd4: '[naming-gate] NAMING RAISE-EXISTING infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf:46 blackdiamond/cottonwood/meta/ -> (pre-LGIC key; conformance via its migration project, Rule 30)' and '[naming-gate] NAMING-GATE: WARN 2 graded'",
+        "The same gate's stated reason: 'the same literal is already carried at HEAD in data/assets/scripts/silver/rebalancer_conversion.py, so this copy mints nothing: WARN; hand-kept carrier of cottonwood outside every permitted context: read it through lookup(cottonwood)'",
+        "infra/aws/terraform/modules/opal_name/generated_locals.tf @c8f7662637 :8 and :31 carry the scope registry as generated data; no generated local for the stamp prefix exists in the module"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG-t-9 build text: 'the naming gate refuses a new hand-kept cottonwood literal', so the handler derives the bucket and prefix from producer constants and the rule name is built by opal_name.",
+    "world_is": "The handler carries no typed key (it derives the prefix from producer.ROSTER_KEY). The Terraform does carry the literal in locals cot_meta_prefix, because HCL cannot import the Python constant. The gate grades that line as a WARN on a pre-LGIC key, not a refusal. The rule-name line is CONFORMANT as built by name().",
+    "notes": "Recorded only: the patch is the issuer's, the refusal clause is not triggered (no refusal), and no name was changed by this worker. Whether the literal should come from a generated local is for the CVO's L9 read."
   }
 ]
 ```
