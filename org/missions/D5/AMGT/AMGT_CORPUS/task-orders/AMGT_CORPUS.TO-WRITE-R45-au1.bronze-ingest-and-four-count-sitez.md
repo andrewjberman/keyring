@@ -12,6 +12,7 @@
 site Z only (lib/research/corpus/library.py resolves it under the site-Z user's OneDrive), so the bronze ingest and the four-count
 line run there. Same carrier as round 40's TO-REPIN-R40-ap10u-lr and round 44's TO-READ-R44-at-4: a crossbox ORDER to the site-Z
 Codex lane for AMGT_CORPUS. The crossbox file is opened only after BOTH never-widen halves are signed (STOP 0 below). -->
+<!-- AMENDMENT 1 (2026-10-11 ~09:4xZ, issuer 2.0.0_SA_COO~C1, before the order leaves the box): the evidence path moves under deliverables/<issued_to>/ (row AMGT_CORPUS-Z-S91: a lane cannot commit under another ~Z lane's folder), and ingest_run.json, which the module writes at a hard-coded worker-folder path, is copied into the evidence and left uncommitted. The gate's WARN named both. Gate limb that graded this modification: none (no new TO; the criteria's invocations and expectations are unchanged except the path). -->
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <placeholders>NONE</placeholders>
@@ -66,27 +67,28 @@ lane: 0.7.0_AE_CloudOps~ZC applies under the signed pair (COO half deliverables/
        `python -m lib.research.corpus.library --census`.
     7. Under `## accounting` copy whole:
        `python org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round45/au1_accounting.py <the evidence file>`.
-    8. Commit the evidence file AND `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/ingest_run.json` (the
-       module rewrites that record at every `--write`) under your own author line via `.tools/safe-commit.sh`.
+    8. Under `## ingest_run.json` copy whole `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/ingest_run.json`, which the
+       module rewrites at every `--write` at a hard-coded path your lane cannot commit. Leave that tracked file as the run left it,
+       uncommitted, and say so in the report; do not restore, stage or delete it.
+    9. Commit the evidence file ALONE under your own author line via `.tools/safe-commit.sh`.
   </steps>
 
   <rules>
     Run `--write` once. No fire, no schedule change, no Bloomberg call, no vendor call, no dossier write, no edit to the library or
-    to any source file. Write only the evidence file, `ingest_run.json`, and this order's report section. Do not delete a bronze
+    to any source file. Write only the evidence file and this order's report section (the module itself rewrites `ingest_run.json`; step 8). Do not delete a bronze
     object. The ledger close and the status flip are the issuer's.
   </rules>
 
 <paths>
-org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.7.0_AE_CloudOps~Z/evidence/r45_au1_bronze_ingest_and_four_count_sitez.txt
-org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/ingest_run.json
+org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.7.0_AE_CloudOps~ZC/evidence/r45_au1_bronze_ingest_and_four_count_sitez.txt
 org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
 <proof_of_spec>
 Instance at `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/AMGT_CORPUS.TO-WRITE-R45-au1.bronze-ingest-and-four-count-sitez.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="CRPS-au-1"><invocation>grep -cE "^resolved_folders [0-9]+ files_in_resolved ([0-9]+) stored \1 \(put_performed [0-9]+ existed [0-9]+\) read_failed 0$" org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.7.0_AE_CloudOps~Z/evidence/r45_au1_bronze_ingest_and_four_count_sitez.txt</invocation><expect>1</expect></criterion>
-  <criterion id="AC2" cell_refs="CRPS-au-1"><invocation>python org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round45/au1_accounting.py org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.7.0_AE_CloudOps~Z/evidence/r45_au1_bronze_ingest_and_four_count_sitez.txt</invocation><expect>identity OK</expect></criterion>
-  <criterion id="AC3" cell_refs="CRPS-au-2"><invocation>grep -cE "^fence14 resolved [0-9]+ ambiguous [0-9]+ empty-or-workbook-only [0-9]+ unresolved-with-reason [0-9]+ sum ([0-9]+) folders_read \1$" org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.7.0_AE_CloudOps~Z/evidence/r45_au1_bronze_ingest_and_four_count_sitez.txt</invocation><expect>2</expect></criterion>
+  <criterion id="AC1" cell_refs="CRPS-au-1"><invocation>grep -cE "^resolved_folders [0-9]+ files_in_resolved ([0-9]+) stored \1 \(put_performed [0-9]+ existed [0-9]+\) read_failed 0$" org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.7.0_AE_CloudOps~ZC/evidence/r45_au1_bronze_ingest_and_four_count_sitez.txt</invocation><expect>1</expect></criterion>
+  <criterion id="AC2" cell_refs="CRPS-au-1"><invocation>python org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round45/au1_accounting.py org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.7.0_AE_CloudOps~ZC/evidence/r45_au1_bronze_ingest_and_four_count_sitez.txt</invocation><expect>identity OK</expect></criterion>
+  <criterion id="AC3" cell_refs="CRPS-au-2"><invocation>grep -cE "^fence14 resolved [0-9]+ ambiguous [0-9]+ empty-or-workbook-only [0-9]+ unresolved-with-reason [0-9]+ sum ([0-9]+) folders_read \1$" org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.7.0_AE_CloudOps~ZC/evidence/r45_au1_bronze_ingest_and_four_count_sitez.txt</invocation><expect>2</expect></criterion>
   <criterion id="AC4" cell_refs="CRPS-au-1" judgment="true"/>
 </proof_of_spec>
 
