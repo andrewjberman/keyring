@@ -213,3 +213,37 @@ a control), `r4_cn_d_3.py reader` 1/4 and `page` 1/5 (controls), `r4_cn_d_4.py r
 **Not in round 4:** M3's full-history clause; M6 (HELD on `LGIC_NAMING-S7`); M9 and M10 (wait on `ADVI_FIRMBKTS`); M11-M17 follow the arc.
 FWD-3 stays NOT REALIZED at Andrew's X2 call (open call fe9b), whatever `CN-d-1` and `CN-d-2` read. The CTO's "align or refuse" ruling on
 the global account-distribution is withdrawn (ADDENDUM 1); the declared window and the in-band vintage replace it.
+
+
+## v5 -- ROUND 5 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-11 ~07:5xZ)
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round4.md` @c902dcb1b5 section 3 (the CTO's enrichment list, msg 3597). Round 4 closed 5 of 5 MET and the issuer's
+restated `code/` close was accepted ("every file the dispatch chain executes or reads is EQUAL; every other non-EQUAL name is listed with its reason").
+- Item 1 (the CN-d-1 deploy, acts D1 and D2, closing W8-S4) and item 2 (the `code/` sync, WORLD half, its own window, never beside D1) are CloudOps
+  orders, not worker cells. Item 1 is `ADHOC.canon-r4-code-deploy` @359072576e, already issued and WAITING on `MDPF_STRATID.TO-APPLY-R2`; its leg e
+  prints and classifies the `code/` tree and deploys nothing. Item 2's order is cut after that classification exists and after item 1's ledger
+  CLOSED, so the two never share a window.
+- Item 3 (the gold fire reads: Sunday 2026-10-11 13:30Z read-only, Monday 2026-10-12 13:30Z graded; FWD-1, CN-a-2 AC3, D1-S9, D1-S10) and item 4
+  (the first new-home bronze delivery, FWD-7) are the issuer's acts: `round4/checks/r4_daily.py` and `r4_daily_bronze.py`, pre-fire snapshot taken.
+- Item 5 (the next M4 reader) is the one cell, `CN-e-1`.
+
+| cell | serves (cell_refs) | candidate | owned files | depends on | actor |
+|---|---|---|---|---|---|
+| `CN-e-1` the aum-timeseries instrument reads the gold artifact (LOCAL) | FWD-5 | M4 third slice | `data/mdpf/scripts/gold/dim_mdpf_aum_timeseries.py`, `deliverables/0.9.0_WK_MDPF_CANON~4/READER_CENSUS.md` (two rows) | -- | ~15 (worker-light) |
+
+**Fan-out:** 1 of 1 chains, cap 8.
+
+**Why this reader, and why not the one the analysis expected:** `verify_mdpf_revamp_conditions.py` reads four cells that are not columns of the
+wide parquet at the builder's address (`cohort_provenance`, `meta.latest_cross_section.partner_custody_total`, `by_model.<sma>.count_as_of`,
+`meta.count_coverage_end`); a repoint needs a logic change or a change to the one gold writer, which is the CTO's ruling, not a cell
+(`deliverables/2.0.0_SA_COO~D1/round5/CN_E_1_CANDIDATE_READ.md`). Every other remaining reader feeds a served key and takes a never-widen pair.
+`dim_mdpf_aum_timeseries.py` is a read-only instrument whose staging write is retired; measured DELTA=0 on 2958 of 2958 cells.
+
+**Open fork carried to the CTO (not decided here):** repoint a never-canonical, uncalled instrument at all, or retire it (build ladder step 1);
+and whether the verifier's missing cells go into the gold writer.
+
+**Checks:** `deliverables/2.0.0_SA_COO~D1/round5/checks/`. At base: `r5_cn_e_1.py reader` 0/5 and `seam` 0/1, `r5_cn_e_1_census.py` 1/4 (C4 is a
+control). A reference implementation reads 5/5, 1/1 and 4/4.
+
+**Not in round 5:** M3's full-history clause; M6 (HELD on `LGIC_NAMING-S7`); M9 and M10 (`ADVI_FIRMBKTS`); M11-M17; FWD-3 at Andrew's X2 call
+(open call fe9b).

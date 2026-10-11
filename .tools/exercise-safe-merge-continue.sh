@@ -57,6 +57,35 @@ chk "rc is 4 and it names the unresolved path"                  "[ $rc2 -eq 4 ] 
 chk "MERGE_HEAD still exists (nothing was aborted)"             "[ -f \"\$(git rev-parse --git-path MERGE_HEAD)\" ]"
 
 echo
+echo "=== ARM 2b (RED, MDPF_CANON-D1-S16): HEAD moved while the merge sat open -> --continue must refuse ==="
+old_head="$(git rev-parse HEAD)"
+peer="$(git commit-tree "$(git rev-parse 'HEAD^{tree}')" -p HEAD -m 'peer commit while the merge is open')"
+git update-ref "refs/heads/$BR" "$peer"
+bash "$MAIN/.tools/safe-merge.sh" --continue > /tmp/sm2b.out 2>&1
+rc2b=$?
+echo "    rc=$rc2b"
+chk "rc is 4 and it names HEAD MOVED SINCE THE MERGE OPENED"    "[ $rc2b -eq 4 ] && grep -q 'HEAD MOVED SINCE THE MERGE OPENED' /tmp/sm2b.out"
+chk "MERGE_HEAD still exists (nothing landed, nothing aborted)" "[ -f \"\$(git rev-parse --git-path MERGE_HEAD)\" ]"
+chk "the peer's commit is still HEAD (not reverted or buried)"  "[ \"\$(git rev-parse HEAD)\" = '$peer' ]"
+git update-ref "refs/heads/$BR" "$old_head"
+chk "HEAD restored for the arms that follow"                    "[ \"\$(git rev-parse HEAD)\" = '$old_head' ]"
+
+echo
+echo "=== ARM 2c (RED, THE D1-S16 SHAPE): conflict RESOLVED and staged, THEN HEAD moves -> --continue must refuse ==="
+printf 'row-1\nrow-2\nrow-3\nBASE-row-B\nFEAT-row-A\n' > appendonly.txt
+git add appendonly.txt >/dev/null
+peer2="$(git commit-tree "$(git rev-parse 'HEAD^{tree}')" -p HEAD -m 'peer commit after the resolution was staged')"
+git update-ref "refs/heads/$BR" "$peer2"
+bash "$MAIN/.tools/safe-merge.sh" --continue -m "drain: must not land" > /tmp/sm2c.out 2>&1
+rc2c=$?
+echo "    rc=$rc2c"
+chk "rc is 4 and it names HEAD MOVED SINCE THE MERGE OPENED"    "[ $rc2c -eq 4 ] && grep -q 'HEAD MOVED SINCE THE MERGE OPENED' /tmp/sm2c.out"
+chk "no merge commit landed on top of the peer's commit"        "[ \"\$(git rev-parse HEAD)\" = '$peer2' ]"
+chk "MERGE_HEAD still exists (the merge is left open)"          "[ -f \"\$(git rev-parse --git-path MERGE_HEAD)\" ]"
+git update-ref "refs/heads/$BR" "$old_head"
+chk "HEAD restored for the arms that follow"                    "[ \"\$(git rev-parse HEAD)\" = '$old_head' ]"
+
+echo
 echo "=== ARM 3 (RED, THE POINT OF THE LIMB): a FOREIGN staged file must be refused ==="
 printf 'row-1\nrow-2\nrow-3\nBASE-row-B\nFEAT-row-A\n' > appendonly.txt
 git add appendonly.txt >/dev/null
