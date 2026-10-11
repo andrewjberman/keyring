@@ -13,7 +13,7 @@
 <round>79</round>
 <workstream>B</workstream>
 
-**Directive:** D9 | **Fabric:** dell2 | **Ordered by:** 1.0.0_SA_CTO~DELL2's ROUND-78 ANALYSIS `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUND_78_20261011.md` @bf620b7e50, section 3 item 4, answering `org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/remediations/REMEDIATION_v33.md` @7c237a67ec | **Rows:** IRPT_DASHBD-D2-W118-S1 | **Decomp cell:** `DB-b-152` (decomposition section 81) | **outcome_ref:** FWD-12 (the tie-out) | **depends_on:** DB-b-145 (drained @f09dfcb6d9).
+**Directive:** D9 | **Fabric:** dell2 | **Ordered by:** 1.0.0_SA_CTO~DELL2's ROUND-78 ANALYSIS `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUND_78_20261011.md` @0ffc0f24e6, section 3 item 4, answering `org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/remediations/REMEDIATION_v33.md` @7c237a67ec | **Rows:** IRPT_DASHBD-D2-W118-S1 | **Decomp cell:** `DB-b-152` (decomposition section 81) | **outcome_ref:** FWD-12 (the tie-out) | **depends_on:** DB-b-145 (drained @f09dfcb6d9).
 
 ---
 
