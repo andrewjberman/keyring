@@ -6055,3 +6055,54 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W101-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~101",
+  "surfaced_at": "2026-10-11T15:19:19Z",
+  "one_line": "DB-b-126: the order says the R45 release gives 49 Financial's method row 2 two new columns (income_basis_claim, income_basis_reason); the producer's dry run at the four pins gives NINE, and account_return_daily.py moved through four commits since REFRESH_2, not one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-126 item 5 and the CTO half on DB-b-122 condition 5: a release at these pins changes 49 Financial's method row 2 by two new columns, income_basis_claim and income_basis_reason, and the first cell found one member moved after REFRESH_2 (17304421c8, DB-b-122).",
+  "world_is": "Run today (emit_method_row, upload=False, the 49 Financial entry, staged thresholds file, no tieout) at three code states: the live-pinned producer ba544b6064 and REFRESH_2's pin 354214c55f give the SAME 22 columns; the pin 17304421c8 gives 31: 9 ADDED, 0 REMOVED, and among the 22 existing only measured_at differs (re-stamped by every emit). Two of the nine are DB-b-122's; seven (tolerance_claim, large_flow_share_claim, plausibility_band_low_claim, plausibility_band_high_claim, comparability_max_excluded_weight_claim, threshold_claims_source, tieout_tolerance_proposed_claim) came with 91e3ec5a47 and ac6a174677 (DB-b-118, DB-b-120, plus 3438a03703 AMENDMENT 1) and no 49 Financial pair has named them, because REFRESH_2 pinned before they landed. main() also gained a refusal at account_return_daily.py:2131-2133. The packet names all nine with their row-2 values. Five of the nine values depend on the thresholds file a later run is given (staged pin: all held, defaulted_no_claims; the tracked DB-b-125 file on box/dell2: measured, measured, held, held, inferred, stated).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~101/R45_REFRESH3_DELTA0.json (method_row_2_dry_run)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~101/NEVER_WIDEN_PACKET_R45_RELEASE_REFRESH_3.md (section NEW SECTION, tables 2 and 2b)",
+      "git log 354214c55f..HEAD -- data/assets/scripts/gold/irpt_reporting/account_return_daily.py (4 commits)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W101-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~101",
+  "surfaced_at": "2026-10-11T15:19:19Z",
+  "one_line": "DB-b-126: the reporting-gold Lambda this release replaces never writes dim_return_method (the handler omits emit_method_row and the role's Terraform omits the prefix), so the release alone gives method row 2 no new column; they reach a served object only through a later producer main() upload, which no order or pair covers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-126 item 5 and the CTO half on DB-b-122 condition 5: the release changes 49 Financial's served objects 'beyond R45's original scope' by the method row 2's new columns, with blast radius per key.",
+  "world_is": "handler.py:12-16 states it omits the emit_method_row call; reporting-gold iam.tf:88-95 and locals.tf:94-95 grant s3:PutObject on the five gold prefixes and 'not dim_return_method'; the kit capture put 5 objects, none a method row. emit_method_row has callers only in account_return_daily.py main() (:2159, :2213) and the Cottonwood mint (:879, its own scope). So the release moves 0 method-row keys; the two keys (data.parquet, manifest.json under method_version=2) change only on a later main() with --upload, which no trigger found in the files read runs and which no pair covers. Whether the row-2 object exists in the bucket, or whether the bucket is versioned, was NOT read (no S3 listing is granted to this order); p2_prewindow_versions.py:5 calls it versioned. The packet states the per-key radius and rollback for that later act and asks the halves (open question 3) whether the pair covers it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:12-16",
+      "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf:88-95",
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf:94-95",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:2159 and :2213",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~101/NEVER_WIDEN_PACKET_R45_RELEASE_REFRESH_3.md (section NEW SECTION, 1 and 4)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
