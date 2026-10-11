@@ -91,6 +91,24 @@ msg 4797).** Gate limb that graded this amendment: read from this commit's own o
   input; rows W51-S6 and W51-S7 move to that seat with it. "A generated folder holds generator output and nothing else."
 - Cell `AR-y-41` is done and merged @35c17fdd07 (`AR41-y-AC1`, `AR41-y-AC2` re-run by the issuer).
 
+**AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~11:2xZ): criterion `AR42-y-AC1` is RETIRED from this order, and the status returns
+to `in_progress` for one bookkeeping act.** Gate limb that graded this amendment: read from this commit's own output.
+`round-close-check --round 4` refuses an order that reads complete beside a FAIL row. The FAIL was honest and stays on the record in
+AMENDMENT 1 above, in rows W51-S6 and W51-S7, and in the proof instance's history at commit `7a8dedb65e`. The cell `AR-y-42` is no longer
+this order's to pass: the CTO ruled (msg 4797) that DSGN_IRPTV1 lands the regeneration. The issuer's first flip (@ce4c252845) was wrong
+to read `complete` with that row in the instance.
+**Do:** in the proof instance, keep rows `AR41-y-AC1` and `AR41-y-AC2` exactly as they are; REMOVE the acceptance row `AR42-y-AC1`; add,
+wherever the instance's schema admits free text outside the acceptance rows (read an existing field such as a notes or exclusions
+list; do not invent a field the checker refuses), one sentence: "AR42-y-AC1 printed Y42-WIRE-FAIL at 7a8dedb65e and was retired by the
+issuer's AMENDMENT 2 on CTO ruling msg 4797; cell AR-y-42 closed as a RESULT, branch wk-IRPT_ANLREQ-51-portal-r4 @890f1d0f3d handed to
+DSGN_IRPTV1." Re-run the two remaining checks and record what they print NOW. Commit, validate with the two ids, then flip to `complete`.
+The criterion line for `AR42-y-AC1` below is struck: it is no longer an acceptance criterion of this order.
+
+**AMENDMENT 3 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~11:2xZ):** `<owned_cells>` now names `AR-y-41` only. Cell `AR-y-42` left this
+order with its criterion (AMENDMENT 2; CTO ruling msg 4797 gives it to DSGN_IRPTV1); the proof checker refused an owned cell with no
+criterion. The decomposition still lists the cell, with its disposition in this order's AMENDMENT 1. Gate limb that graded this
+amendment: read from this commit's own output.
+
 ### ACCEPTANCE
 
 <criterion id="AR41-y-AC1" cell_refs="AR-y-41"><invocation>python C:/dev/wk-irpt-anlreq-51/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r4/ar4_checks.py y41-types --root C:/dev/wk-irpt-anlreq-51</invocation><expect>Y41-TYPES-OK</expect></criterion>
@@ -100,10 +118,9 @@ msg 4797).** Gate limb that graded this amendment: read from this commit's own o
 `AR41-y-AC2`: the difference control -- the `_contracts` folder still fails exactly the two ids it fails at the base (the two
 `analysis-request-original` ids), no more and no fewer. It passes at the base and must still pass.
 
-<criterion id="AR42-y-AC1" cell_refs="AR-y-42"><invocation>python C:/dev/wk-irpt-anlreq-51/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r4/ar4_checks.py y42-wire --root C:/dev/wk-irpt-anlreq-51 --portal C:/dev/wk-irpt-anlreq-51/portal</invocation><expect>Y42-WIRE-OK</expect></criterion>
-`AR42-y-AC1`: the portal's wire-regeneration test passes.
+(retired by AMENDMENT 2: the former criterion AR42-y-AC1 ran `ar4_checks.py y42-wire` and expected `Y42-WIRE-OK`; it printed `Y42-WIRE-FAIL`.)
 
-<expected_criteria>AR41-y-AC1 AR41-y-AC2 AR42-y-AC1</expected_criteria>
+<expected_criteria>AR41-y-AC1 AR41-y-AC2</expected_criteria>
 
 The issuer runs the portal typecheck, lint and the whole InvestorReporting test folder at the drain, and sends the portal candidate to
 the CTO before DEV (the wire folder is a product surface).
@@ -124,14 +141,14 @@ org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v
 
 <decomp_ref>
 <decomp_doc>org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R4_Y.md</decomp_doc>
-<owned_cells>AR-y-41 AR-y-42</owned_cells>
+<owned_cells>AR-y-41</owned_cells>
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: AR41-y-AC1 AR41-y-AC2 AR42-y-AC1. The instance is at
+Criterion ids: AR41-y-AC1 AR41-y-AC2 (AMENDMENT 2: AR42-y-AC1 is retired). The instance is at
 `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~51/IRPT_ANLREQ.TO-AR-y-41.report-index-typed-and-wire-regenerated.proof_of_spec.json`.
 Its `to_id` is exactly `IRPT_ANLREQ.TO-AR-y-41`. Validate it AFTER its commit with
-`python .tools/proof-of-spec-check.py <instance> AR41-y-AC1,AR41-y-AC2,AR42-y-AC1`; flip `<status>` to `complete` only when it prints VALID.
+`python .tools/proof-of-spec-check.py <instance> AR41-y-AC1,AR41-y-AC2`; flip `<status>` to `complete` only when it prints VALID.
 </proof_of_spec>
 
 <preflight>

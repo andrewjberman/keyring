@@ -531,3 +531,20 @@ prove byte-equal on a settled tree.
 cell, not a served enum.
 
 fanout: 1 of 1 chains, cap 8, reason: every portal-editing cell runs in series on one slot.
+
+## v19 -- round 19 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~11:3xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2's ruling msg 4806
+
+**Rectangle:** one cell, urgent. irpt-status release 5 is rolled back because the portal's history reader admits exactly two keys and the
+release's answer carries a third; the release returns only after the reader admits the contract's members, on PROD.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-99 | the history reader admits BOTH answers the service can serve (two keys; the contract's answer with unreadable_rows and the per-item client_id / client_claim) and refuses anything else; members carried, nothing new rendered | D2-W53-S4 (history) | SERVED | B ~55, its OWN portal worktree | portal/src/pages/InvestorReporting/contracts/owned-requests.ts |
+
+It runs BESIDE the portal slot's chain (IV-e-96 -> IV-e-95 part 2 -> IV-e-98 -> IV-e-97): it touches no file the Holdings change touches,
+and it lands on DEV first; the slot's next candidate merges DEV under it as every candidate has. The other four refused readers (row
+D2-W53-S4) are not cut: the CTO rules that cell after 2.0.0_SA_COO~P2 reads the live shapes.
+
+**Rule 24:** the record's words are booleans and lists local to this cell; no enum is minted. `client_claim`'s enum is the contract's.
+
+fanout: 2 of 2 chains, cap 8.
