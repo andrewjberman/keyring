@@ -5871,3 +5871,120 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D2-S98 -- CB-bj-1 refused by the naming plan limb before any apply; the owed name carries the wrong firm
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S98",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.7.0_AE_CloudOps~CB2",
+ "surfaced_at": "2026-10-11T08:06:42Z",
+ "one_line": "CB-bj-1 STOPS between Branch A and step 3: the targeted plan is exactly Branch A (2 to add, 0 to change, 0 to destroy, only the two targets), but safe-apply.sh is BLOCKED by the naming plan limb before terraform runs. The ROLE name grades CONFORMANT; the inline POLICY name restricted-prefix-get-put-list makes opal_naming.grade() RAISE 'R1.f: restricted is in no vocabulary; no registry row resolves it', and LGIC_ENFORCE DEC-6 converts that RAISE into a refusal. The gate's own text calls it a rule or registry defect, not a naming verdict. NOTHING was created: role NoSuchEntity with a passing positive control, state 253 rows with 0 breakglass against a 10-row lgic_firm control. Separately, the name the gate says is owed carries the WRONG FIRM.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "step 0, all three pins equal: COO half 31df1360...e3cde3f2, CTO half de8c29b8...9c27e4cb9, and the .tf blob 26aa1a2633a36213300708cbfa0f3ea8fae524e8 identical at 8c6fc7652a and at HEAD (git rev-parse of both); HEAD contains 9b8eb8c244",
+   "targeted plan rc=0, 0 Error blocks: 'Plan: 2 to add, 0 to change, 0 to destroy.' with exactly two addresses, aws_iam_role.restricted_breakglass and aws_iam_role_policy.restricted_breakglass -- Branch A as written",
+   "safe-apply.sh rc=7, final line verbatim: 'safe-apply: BLOCKED by the naming plan limb (LGIC_ENFORCE DEC-6, ENFORCE mode, rc=1). Nothing was planned further or applied.'",
+   "the refusal verbatim: [naming-plan-gate] NAMING REFUSE aws_iam_role_policy.restricted_breakglass restricted-prefix-get-put-list -> cloudops-49f-restricted-breakglass-policy / why: NEW name the canon places as FIX. Owed: use cloudops-49f-restricted-breakglass-policy. Build it with name() or edit the literal; nothing else is owed. [grade() said: aws_iam_role_policy.restricted_breakglass (ADDITION): RAISE as IAM_POLICY: a rule or registry defect, not a naming verdict: R1.f: restricted is in no vocabulary; no registry row resolves it. DEC-6: refused like any refusal once enforcing]",
+   "the seat gates PASSED, so the stop is the naming limb alone: 'APPLY-WHO serial=0.7.0_AE_CloudOps~CB2 kind=CLOUDOPS root=shared-infra verdict=ADMITTED' and 'CROSSBOX-DEPLOY device=dell2 root=shared-infra open_call=clear overlap=clear upset=clear open_deploy=clear verdict=CLEAR'",
+   "measured at the source rather than inferred from the gate: opal_naming.grade('cloudops-cot-restricted-breakglass-role','IAM_ROLE') returns ('CONFORMANT','cloudops-cot-restricted-breakglass-role'); opal_naming.grade('restricted-prefix-get-put-list','IAM_POLICY') RAISES RaiseDefect('R1.f: restricted is in no vocabulary; no registry row resolves it'). grade() reaches no verdict for the policy at all",
+   "POST-REFUSAL world reads: get-role cloudops-cot-restricted-breakglass-role -> NoSuchEntity, beside an ISOLATED positive control get-role demo-transform-runner-ec2-role -> its ARN; terraform state list 253 rows, 0 matching breakglass, 10 matching lgic_firm. Nothing landed, nothing half-landed",
+   "the wrong-firm reading, from the plan body this seat read: the policy grants only on arn:aws:s3:::opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/* plus ListBucket on opal-data-cottonwood under a StringLike s3:prefix condition for that prefix -- a COTTONWOOD-only grant, while the owed name says 49f and the same gate graded the sibling ROLE conformant as cloudops-cot-",
+   "ledger org/critical_paths/change_management/20261011T0758Z_advi-cotbkf-r62-bj1-breakglass-role-targeted-apply-20261011_deploy_completion.md opened BEFORE the plan per condition 1, after a 43-tree .open_deploys union (101 distinct paths, per-tree 17 to 29, 0 naming this act)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB-bj-1 step 3: 'Apply THE SAVED PLAN through .tools/safe-apply.sh (condition 2).' The face enumerates Branch A (apply), Branch B (anything else in the plan -> stop) and Branch C (role created, policy refused by a credentials permission -> re-run once, then a pre-authorised targeted destroy of the role alone). CLAUDE.md rule 30: a builder REFUSAL is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround.",
+ "world_is": "A FOURTH state the face does not enumerate: the plan is Branch A and the APPLY is refused by a mechanical naming gate before terraform is invoked, so nothing is created. It is not Branch B (the plan was correct) and not Branch C (Branch C presupposes the role CREATED and the policy refused by the APPLIER'S CREDENTIALS; here both are un-created and the refuser is an apply-time gate), so Branch C's pre-authorised targeted destroy has no subject and must not be invoked. Rule 30 names the remedy as a registry row rather than a literal edit, and both remedies are out of this seat's reach: infra/logic/registry/ is not in this order's <paths> grant, the registry is the LGIC canon's whose owner is the laptop 1.0.0_SA_CTO (CTO ruling @27ba4d3769 item 4), and editing the .tf literal would change the very blob both halves pinned at 8c6fc7652a. SEPARATE AND SHARPER: the owed name cloudops-49f-restricted-breakglass-policy carries the 49f firm token on a policy whose only grants are on opal-data-cottonwood's commonwealth/cottonwood/bronze/crm/ prefix, while the same gate graded the sibling role CONFORMANT as cloudops-cot-. Adopting the owed name as printed would label a Cottonwood-only break-glass grant after 49 Financial -- a cross-firm mislabel on an IAM object, which nobody should type in merely to clear the gate. NOT established by this seat: why the suggestion resolves to 49f (grade() raises before returning, so the suggestion is built on a path this seat did not trace), and whether the remedy is a vocabulary entry for 'restricted', a registry row, or a different policy name built by name()."
+}
+```
+
+## ADVI_COTBKF-D2-S99 -- the deploy ledger has no state for an apply refused by a gate; it calls it a half-landed deploy
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S99",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.7.0_AE_CloudOps~CB2",
+ "surfaced_at": "2026-10-11T08:12:00Z",
+ "one_line": "deploy_ledger.py has no state for an apply REFUSED BY A GATE with nothing created. hold --pre-apply is refused once any leg carries proof ('the act has started'), and a normal hold is refused while an apply leg is open, calling it 'a half-landed deploy ... stays RED'. Neither is true of a gate-refused act: the plan ran, the apply never did, and the world is untouched. The three available outcomes are all wrong -- leave it OPEN and it blares a half-landed deploy that does not exist, sending a reader to hunt stranded infrastructure; close the apply leg and the entry reads as deployed; or claim PRE-APPLY by never proving the plan leg, which would mean not recording the plan. Found while filing CB-bj-1 (row D2-S98); affects every gated apply in the fabric, not this project.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "hold --pre-apply refusal verbatim: 'REFUSED: cannot HELD-PRE-APPLY advi-cotbkf-r62-bj1-breakglass-role-targeted-apply-20261011 -- leg(s) [L1] already carry proof -- the act has started, so it is not PRE-APPLY; it stays OPEN until every apply leg is proven, then takes a normal hold.'",
+   "normal hold refusal verbatim: 'REFUSED: cannot HELD advi-cotbkf-r62-bj1-breakglass-role-targeted-apply-20261011 -- open APPLY/DEPLOY leg(s) [L2] -- a half-landed deploy cannot be HELD (stays RED). A HELD/SOVEREIGN-GATED state requires ALL apply/deploy legs closed-with-proof and ONLY verify legs open. A half-landed deploy stays RED -- close or roll back the open apply leg first. An act that has NOT STARTED (no leg proven) takes hold --pre-apply.'",
+   "the act those refusals describe: safe-apply.sh rc=7, terraform never invoked, 'Nothing was planned further or applied'; L1 (the PLAN, a verify leg) proven; L2 (the apply) never ran",
+   "the world, measured after the refusal: get-role -> NoSuchEntity with an isolated positive control returning a real ARN; terraform state list 253 rows, 0 breakglass, 10 lgic_firm. Nothing created, so nothing is half-landed and nothing could be rolled back",
+   "both refusals are well-reasoned for the cases they were written for -- the --reread-date/--reread-event refusal earlier in the same session ('a hold must say WHEN to look at it again ... neglect labelled HELD is indistinguishable from a deliberate one') is a genuinely good gate; this row is about a missing STATE, not a loose one",
+   "what this seat did instead: closed L2/L3/L4 with dispositions that say NOT APPLIED and UNREACHABLE BY CONSTRUCTION in their proof text, closed the entry, and wrote the hold (gate class, named dependency, re-read event) into a CLOSE DISPOSITION section of the entry so the state is at least legible to a human reader. check --red no longer lists it"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CLAUDE.md NEVER-2: 'NEVER leave a confirmed deploy half-landed -- finish in-session or roll back + escalate loud; ledger entry opened at start, closed at completion.' deploy_ledger.py's own contract: an entry left OPEN past its window BLARES RED to the COO, and HELD requires all apply legs closed-with-proof.",
+ "world_is": "The law and the tool both assume an apply either lands, half-lands, or has not started. A MECHANICAL GATE REFUSAL is a fourth case: the act started (a plan was run and recorded) and the world is provably untouched. The tool's own words for it, 'a half-landed deploy', are false here, and that phrase is what a responder would act on -- it points at stranded infrastructure that does not exist, which is the more expensive error than a missing label. The honest encoding this seat reached needs free-text proof fields to carry it, so a machine reading leg states alone still reads this entry as a completed deploy. SUGGESTED SHAPE, not a decision: a REFUSED-BEFORE-APPLY disposition for an apply leg, which would make the entry terminal, non-RED, and distinguishable from both a landed deploy and a half-landed one; the hold verbs could then admit it with its named dependency and re-read event. Owner is whoever owns .tools/deploy_ledger.py; this seat does not own it and filed rather than changed it. Not established: whether any other seat has hit this and encoded it differently, which would make the ledger's gate-refusal history inconsistent across entries -- worth a census before the shape is chosen."
+}
+```
+
+## ADVI_COTBKF-D2-S100 -- Three in four Cottonwood position rows are unpriced: the price source, not the date or the build
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S100",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T08:18:21Z",
+ "one_line": "Most Cottonwood position rows carry no value, and it is the PRICE SOURCE, not the date and not a build fault: 15,993,996 of 21,102,041 position rows (75.8%) in the FWD-3 account_day_value table have a null value because no close exists for the security in the price stores the build reads. On 2026-05-06 that is 6,122 of 10,090 rows and 459 of 826 securities (CTO msg 4464). The share is not special to that date: it is 92 to 95% on the first date of every year 2014 to 2020 and 58 to 72% on the first date of every year 2021 to 2026. The build leaves an unpriced position blank by design (never zero, never carried), which is why only 107,316 of 1,691,729 account-days in the minted account_return_daily are measured.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer read of .scratch/advi_cotbkf/fwd3_serve_r34/account_day_value.parquet (the local copy of the served silver table), columns date, cusip, value, close, price_source, blank_reason: 21,102,041 rows, 15,993,996 with a null value",
+   "2026-05-06: 10,090 rows, 6,122 null value, 6,122 null close; price_source null on exactly those 6,122, 'cottonwood-silver-canonical-prices' 3,358, 'cash-at-par' 608, 'etfs-bbg-testpull-ticker-history' 2; blank_reason null on all 10,090 rows of that date (the row-level column is not where the reason is carried)",
+   "first date of each year (rows, null share, unpriced securities of securities): 2014 4,159 94.1% 761 of 762; 2015 94.7% 773 of 774; 2016 93.8% 833 of 834; 2017 92.5% 914 of 915; 2018 91.9% 873 of 874; 2019 92.6% 938 of 939; 2020 92.8% 930 of 931; 2021 71.6% 614 of 825; 2022 64.6% 569 of 880; 2023 61.5% 608 of 936; 2024 58.1% 617 of 984; 2025 61.0% 540 of 890; 2026 60.9% 476 of 842",
+   "2026-05-06 by silver transactions Asset_Type (securities, unpriced): Equity 294, 68; Fixed Income 184, 184; ETF 134, 24; Mutual Fund 113, 89; Cash Equivalent 57, 55; Mutual Fund (Closed End) 28, 24; Annuity 12, 12; Alternative Investment 3, 3; Cash 1, 0",
+   "symbols, same date: 206 unpriced securities carry a ticker symbol in the transactions cache and 253 do not; all 367 priced securities carry one"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "FWD-3: Cottonwood's daily returns are measured where the value can be computed, and a day that cannot be valued is a blank with a reason, never a zero.",
+ "world_is": "The date is not the cause (every year shows it) and the build does what it states (an unpriced position is left blank). The cause is coverage of the price source: before 2021 at most ONE security is priced on the sampled dates, and since 2021 about 4 in 10 securities are; every Fixed Income security and most mutual funds, cash equivalents and annuities are unpriced. NOT established: why the price stores hold almost nothing before 2021 (a start date of the store, or a narrower join), and what share of account VALUE the unpriced positions are (a null value cannot be summed). 206 unpriced securities with a symbol are the ones a price request could cover; the 253 without a symbol need an identifier first."
+}
+```
+
+## ADVI_COTBKF-D2-S101 -- The 1,757 measured days with no holdings are emptied-account days; 24 of them could be wrong
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S101",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T08:25:41Z",
+ "one_line": "The 1,757 minted account-days that are MEASURED with no holdings row are EMPTY-AT-DAY-END days: every one has market_value_eod exactly 0, and 1,755 of them carry a non-zero external flow. They are the day an account is emptied: nothing is held at the end, so no position row exists, and the return is the form (V_t - F_t) / V_(t-1) - 1 with V_t = 0. That explains the class. It does not clear every row: 24 of them carry an absolute return above 1% and 3 above 100%, where the day's outflow did not equal the prior day's value. Those 24 are the cells of this table that could be WRONG rather than blank, and no plausibility band ran on them (thresholds are absent for Cottonwood).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer read of the 3,325 minted day files joined to the holdings table (account, date): 107,316 measured rows, 1,757 with no holdings row that day, over 916 accounts and 594 days from 2013-04-26 to 2026-06-22; all 916 accounts appear in the holdings table on other days",
+   "of the 1,757: market_value_eod == 0 on 1,757, > 0 on 0, null on 0; external_flow != 0 on 1,755 and == 0 on 2; total_return_daily == 0 on 187 and != 0 on 1,570; absolute return > 0.01 on 24; absolute return > 1 on 3",
+   "rows per account: median 2, maximum 36; 1 account has 20 or more such days",
+   "FWD-3 daily_returns for the same rows: cash_leg 'method_r28' on 1,757 of 1,757",
+   "the rule: data/assets/scripts/silver/commonwealth_daily_returns.py lines 10 to 16 (the return form; a fee is not a flow; a day that cannot be worked out is null with its reason)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "1.0.0_SA_CTO~DELL2 msg 4471: a return with no holdings behind it is the one cell of the table that could be wrong rather than blank; explain it or flag it before a reader binds.",
+ "world_is": "Explained as a class (an emptied account has value 0 and no position rows) and FLAGGED in part: 24 rows, 3 of them above 100%, where the outflow and the prior value disagree. NOT established: the cause in those 24 (a transfer valued on another basis, a flow dated a day off, or a prior value that was itself partial), and whether the 2 rows with a zero flow and a zero value are real. A reader that binds this table should treat a measured row with market_value_eod 0 as a close-out day; the producer's plausibility band would have caught the 3 if thresholds existed."
+}
+```

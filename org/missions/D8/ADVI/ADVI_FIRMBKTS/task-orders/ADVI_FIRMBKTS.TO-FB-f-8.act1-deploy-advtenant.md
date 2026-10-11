@@ -6,12 +6,12 @@
 <decomp_doc>org/missions/D8/ADVI/ADVI_FIRMBKTS/decompositions/ADVI_FIRMBKTS_DECOMP_R3.md</decomp_doc>
 <owned_cells>FB-f-8</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~FB1</issued_to>
+<issued_to>0.7.0_AE_CloudOps~FBL</issued_to>
 <issued_by>2.0.0_SA_COO~B1</issued_by>
-<placeholders>ROUTER_VERSION, GUARD_VERSION, ROUTER_SHA256, GUARD_SHA256</placeholders>
+<placeholders>ROUTER_VERSION, GUARD_VERSION, ROUTER_SHA256, GUARD_SHA256, WAF_ACL_NAME, WAF_ACL_ID</placeholders>
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- no cron, rule, schedule or cadence is added or changed.
-comp-iam: RUN by the issuer -- iam:SimulatePrincipalPolicy on user/cloudops-dell1-agent-user reads allowed for lambda:PublishVersion, lambda:UpdateFunctionCode, lambda:GetFunctionConfiguration, cloudfront:GetDistributionConfig and cloudfront:UpdateDistribution (5 of 5, resource *). The role the Terraform apply runs under is read by the actor at step 2 (this order's `safe-apply` is the path; a refusal there is a STOP).
+comp-iam: RUN by the issuer AT THE WRONG GRAIN and corrected: iam:SimulatePrincipalPolicy on user/cloudops-dell1-agent-user read allowed for lambda:PublishVersion, lambda:UpdateFunctionCode, lambda:GetFunctionConfiguration, cloudfront:GetDistributionConfig and cloudfront:UpdateDistribution at resource `*`. The deploy policy's `DenyProtectedFunctions` (CT-a-1; `infra/aws/terraform/nfra-ctlpln-identity/protected_functions.json`, rule b, lambda-at-edge) NAMES both functions and denies this identity `lambda:UpdateFunctionCode` and `lambda:PublishVersion` on them: the apply was refused 403 at 07:53Z (row D1-S13). The identity that applies act 1 is the laptop CloudOps identity (CTO ADDENDUM 2 @30bdd99110); its read is step 0b, at the qualified function ARNs, and is the actor's.
 comp-adversary: RUN by the issuer -- the build is `TO-FB-f-7` (merged @e6ec8ce6e4) with `TO-FB-f-8` phase A (merged @acf8a16706): router gate 51 pass, guard suite 46 pass, dormancy grid router 88 of 88 and guard 396 of 396 identical to base, both files 0 non-ASCII bytes. The three criteria below read FAIL at base by construction (no new version exists).
 EGRESS CLASS, declared: NONE.
 </preflight>
@@ -23,7 +23,8 @@ You deploy two Lambda@Edge functions as ONE act, through Terraform only: `shared
 `EVTSA9VEHNZVH`. The build is dormant: for the registry as it stands every decision is identical to today's, so no
 request changes. The act is signed by the never-widen pair
 `org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND3_ACT1_ADVTENANT_COO_HALF.md` and `..._CTO_HALF.md` (the CTO
-half SIGNED @d30c5fe203); the pair's permitted set and both branches are the whole of what you may touch and when you
+half SIGNED @d30c5fe203), and by their ADDENDUM 1, the WAF web ACL rider (`..._COO_HALF_ADDENDUM_1.md`, the CTO half's
+addendum SIGNED @d1fe697698); the pair's permitted set and both branches are the whole of what you may touch and when you
 stop. READ BOTH HALVES FIRST, and `org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-08-21/session_1531-1712Z_p4r3_route_act.md`
 (the last deploy of both functions: its three defects are the traps below). Procedure: `docs/deployment/
 LAMBDA_DEPLOYMENT_PROTOCOL.md`, `docs/deployment/TERRAFORM_PROTOCOL.md`, `docs/deployment/cloudfront_deployment_checklist.md`
@@ -37,26 +38,32 @@ and `cloudfront_rollback_plan.md`; load `/cloud-ops` before any AWS or Terraform
    `shared-advisor-router/tier_policy.mjs` carries 19 non-ASCII bytes in comments and is bundled; a minified bundle strips
    them (row D1-S11, measured by this seat), so the built artifact is the measure, not the source. If any gate is not so:
    STOP, a BLOCKING row, no write to AWS.
+0b. **Identity read (CTO ADDENDUM 2).** Name your identity (`.tools/aws sts get-caller-identity`). `iam:SimulatePrincipalPolicy` for it on the two qualified function ARNs `arn:aws:lambda:us-east-1:313476888478:function:shared-advisor-router` and `arn:aws:lambda:us-east-1:313476888478:function:shared-advisor-router-response`, and each with `:*`, for `lambda:UpdateFunctionCode` and `lambda:PublishVersion`, must read `allowed` on every one of the eight pairs: the grain is the function ARN, never `*`. Any `implicitDeny` or `explicitDeny`: STOP, a BLOCKING row, no write to AWS. The act is then Andrew's (his user runs `safe-apply` from the signed plan) and nothing is drafted to widen an identity.
+0c. **Checkout.** `git merge-base --is-ancestor <sha> HEAD` reads rc=0 for each of `acf8a16706` (phase A), `d1fe697698` (CTO ADDENDUM 1) and `30bdd99110` (CTO ADDENDUM 2), and this order's bytes at HEAD equal the crossbox ORDER's pinned commit (`git show <pin>:<this file>` against the file). A box behind its trunk syncs through its own scheduled sync first; no file is hand-copied.
 1. **The entry.** Open the change-management entry BEFORE the first act: `python .tools/deploy_ledger.py open ...` (read its
    `--help`), naming the two functions, the distribution, all 10 associations, the previous versions (26 and 5) as the
    rollback, and the pair. Commit the entry and its `org/critical_paths/.open_deploys/` sentinel first.
-2. **Read before you write.** Save the live `get-distribution-config` (ETag and the 10 associations) into the entry as the
-   rollback record. Confirm the live router is version 26 and the guard version 5 on 5 behaviors each. Build both
+2. **Read before you write.** Save the live `get-distribution-config` (ETag and the 10 associations) AND the ACL's
+   `get-web-acl` JSON (`WAF_ACL_NAME`, `WAF_ACL_ID`, its `LockToken`, the 6 rules) into the entry as the rollback record. Confirm the live router is version 26 and the guard version 5 on 5 behaviors each. Build both
    artifacts with the repository's `build-nodejs-lambda.sh` from the merged tree; record each artifact's SHA-256
    (`ROUTER_SHA256`, `GUARD_SHA256`: the `CodeSha256` the published version must read) and its count of bytes above 127
    (expected 0, printed beside the SHA in the entry).
+2a. **State reconciliation: MEASURED, NOT PERFORMED (amendment 6).** The Dell executor measured at `22cc1b1e75` that a refresh-only plan lists drift on the WAF ACL only: `s3_object_version` is configuration-side and the Lambda API does not return it, so a refresh-only apply would write state without moving it. The state's pre-act `s3_object_version` for the two functions (the Dell's pre-reconcile read, `fSTYD2_FNp1pEGyyGwiacP3Tz_QtztS9`) is recorded in that entry; yours is read at this step and kept in YOUR entry. Step 2's rebuild uploads a new S3 VersionId, so the plan at step 3 lists the two functions again. A plan at step 3 that reads either function NO-OP while its published version is older than the built artifact is the `qualified_arn` pin defect: STOP.
 3. **Plan.** Run the Terraform plan of `infra/aws/terraform/portal-auth/` through the repository's wrapper and read the
-   plan JSON. It must change EXACTLY the two functions (each a new published version) and the distribution's 10
-   associations, nothing else. A plan that publishes a version while `aws_cloudfront_distribution` reads NO-OP is the
+   plan JSON. It must change EXACTLY the two functions (each a new published version), the distribution's 10
+   associations, and the ADDENDUM 1 rider `aws_wafv2_web_acl.opal_cloudfront_protection` (three `version` attributes,
+   `""` to `null`, on the Count-mode managed groups `common-rule-set`, `ip-reputation`, `known-bad-inputs`), nothing else. A plan that publishes a version while `aws_cloudfront_distribution` reads NO-OP is the
    `qualified_arn` pin defect: STOP. A plan naming any other resource, or drift outside the act: STOP.
 4. **Apply** through `safe-apply` only (never a bare `terraform apply`, never `aws lambda update-function-code`). Wait for
    the distribution to read `Deployed`.
 5. **Read back.** Each of the 10 associations reads the new version; `CodeSha256` of each new version equals the artifact's;
-   a post-apply plan reads no changes. Record the two new version numbers (`ROUTER_VERSION`, `GUARD_VERSION`).
+   the ACL's `get-web-acl` equals the pre-act read rule by rule (name, priority, action or override action, statement,
+   visibility config) except the `version` representation and the `LockToken`, the three groups still read Count, and
+   the default action is unchanged (the CTO's conditions); a post-apply plan reads no changes. Record the two new version numbers (`ROUTER_VERSION`, `GUARD_VERSION`).
 6. **Oracle.** Send ONE message to `1.0.0_SA_CTO~DELL1` at `Deployed`, naming the entry and the two versions: the CTO
    invokes both new versions on the 5 event classes against base, makes one live no-session request (401 expected) and
    diffs the associations. Do not close the entry before the CTO's read.
-7. **Criteria and close.** Run AC1-AC3, write the proof instance in your own deliverables folder, close the entry with the
+7. **Criteria and close.** Run AC1-AC4, write the proof instance in your own deliverables folder, close the entry with the
    evidence, flip this order's `<status>` to `complete` in the same commit.
 
 ## 2. BOUNDS
@@ -73,7 +80,7 @@ and `cloudfront_rollback_plan.md`; load `/cloud-ops` before any AWS or Terraform
 <paths>
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
-org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/
+org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FBL/
 org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -83,10 +90,11 @@ the plan says a pin must drop, which is a STOP. The build artifacts are not comm
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ADVI_FIRMBKTS.TO-FB-f-8.act1-deploy-advtenant.proof_of_spec.json`.
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FBL/ADVI_FIRMBKTS.TO-FB-f-8.act1-deploy-advtenant.proof_of_spec.json`.
   <criterion id="AC1" cell_refs="FB-f-8"><invocation>.tools/aws lambda get-function-configuration --function-name shared-advisor-router --qualifier <ROUTER_VERSION> --region us-east-1 --query CodeSha256 --output text</invocation><expect><ROUTER_SHA256></expect></criterion>
   <criterion id="AC2" cell_refs="FB-f-8"><invocation>.tools/aws lambda get-function-configuration --function-name shared-advisor-router-response --qualifier <GUARD_VERSION> --region us-east-1 --query CodeSha256 --output text</invocation><expect><GUARD_SHA256></expect></criterion>
   <criterion id="AC3" cell_refs="FB-f-8"><invocation>.tools/aws cloudfront get-distribution-config --id EVTSA9VEHNZVH --query "DistributionConfig.CacheBehaviors.Items[*].LambdaFunctionAssociations.Items[*].LambdaFunctionARN" --output text</invocation><expect>shared-advisor-router:<ROUTER_VERSION></expect></criterion>
+  <criterion id="AC4" cell_refs="FB-f-8"><invocation>.tools/aws wafv2 get-web-acl --name <WAF_ACL_NAME> --id <WAF_ACL_ID> --scope CLOUDFRONT --region us-east-1 --query "length(WebACL.Rules[?OverrideAction.Count])" --output text</invocation><expect>^3$</expect></criterion>
 </proof_of_spec>
 
 AC1 and AC2 read each published version's hash against the built artifact's (the pair's measure). AC3 reads the live
@@ -97,8 +105,8 @@ pass, guard 46 pass, dormancy grid 0 and 0) are CLOSED at `acf8a16706` and are c
 ## 5. WHEN YOU ARE DONE
 
 Close the change-management entry with the three outputs and the CTO's read; flip `<status>` to `complete` in the SAME
-commit as the proof instance. A row id on this project carries the dell1 infix and your lane: `ADVI_FIRMBKTS-D1-W<slot>-S<k>`
-is a worker form; as a seat you file `ADVI_FIRMBKTS-D1-S<k>` with the next unused `k`, `surfaced_at` from `date -u
+commit as the proof instance. A row id on this project carries the box's coordinate, which is bare on the laptop: as a seat you
+file `ADVI_FIRMBKTS-S<k>` with the next unused `k` (read the channel for the highest bare `S`), `surfaced_at` from `date -u
 +%FT%TZ`. Report once to `2.0.0_SA_COO~B1`: the pair's two blob ids, the plan's resource summary, the live associations
 per behavior, the three outputs, the post-apply plan line, the CTO's read, the entry's path and the commit hash.
 
@@ -124,6 +132,25 @@ built artifact reads 0 (a minified bundle, measured by the seat), so the gate no
 comments are a follow-up for the CTO's round-3 analysis, not a precondition of this act: a third source file would
 re-open a signed act's bound. No other change to the act or its criteria.
 
+**AMENDMENT 4 (2.0.0_SA_COO~B1, on the seat's STOP at plan, row D1-S12, msg 3621; the CTO's ADDENDUM 1 @d1fe697698, msg
+3631):** the plan names a fourth change, `aws_wafv2_web_acl.opal_cloudfront_protection`, the distribution's dependency:
+three Count-mode managed groups' `version` `""` to `null` (measured by the seat from the plan JSON: 6 rules before and
+after, three identical, no non-rule attribute differs). Both halves of the pair addendum are files at HEAD and the CTO
+half reads SIGNED, so step 3's permitted set, step 2's rollback record and step 5's read-back carry the rider, and AC4 reads
+that the three Count groups stay Count (3 rules with an override action of Count). Two placeholders join
+(`WAF_ACL_NAME`, `WAF_ACL_ID`, read by the seat at step 2). The CTO's conditions are step 5's. Gate limb: GATE viii read
+`<placeholders>` at HEAD (four tokens) and the two new tokens are each carried by AC4's invocation.
+
+**AMENDMENT 5 (2.0.0_SA_COO~B1, on the executor's report, row D1-S13, msg 3635):** the signed apply ran at 07:53Z and
+both `lambda:UpdateFunctionCode` calls returned 403: `DenyProtectedFunctions` on the Dell group names the two functions
+(rule b of `protected_functions.json`, lambda-at-edge). Live is unchanged (ETag, 10 associations, versions 26 and 5, ACL
+byte-identical) but the Terraform state holds the new artifact versions, so a plan reads the functions clean over old
+live code. The order's comp-iam line is corrected (the wrong grain was the issuer's). Step 2a is added: reconcile the
+state first. Which identity applies is NOT decided here: the deny is CT-a-1's and Andrew's, and the question is with
+`1.0.0_SA_CTO~DELL1`; the order stays open and no retry is authorized by this amendment.
+
+**AMENDMENT 6 (2.0.0_SA_COO~B1, on the CTO's ADDENDUM 2 @30bdd99110, msg 3639; the Dell executor's measure msg 3641):** the act is applied by a non-Dell identity; no exception is sought for a Dell one. `<issued_to>` moves from the dell1 lane `~FB1` to a fresh laptop CloudOps lane `~FBL` (one project per Tier-2 seat instance; the laptop MSTR measured `~CTL` and `~ANL` encumbered, msg 3642), whose proof instance is its own. Step 0b is the CTO's grain: the identity read on the two qualified function ARNs, before any write. Step 0c is the checkout gate (the laptop box was 78 commits behind at 08:0xZ). Step 2a is replaced by what the Dell executor measured: a refresh-only reconcile moves nothing and is not performed. The pair, both addenda (the WAF rider), the plan's permitted set, both branches, the oracle (the CTO's exercised read at `Deployed`) and AC1-AC4 are UNCHANGED. The dell1 executor's entry for the refused apply closes as NOT APPLIED. Gate limb: the `<issued_to>`, `<slot>` and `<paths>` of a non-terminal order are amended by its issuer; no criterion changed and the six placeholders are carried as before.
+
 **ISSUER NOTES:** class WORLD. Un-park conditions, all satisfied at this amendment: `FB-f-7` complete (@e6ec8ce6e4); phase A
 merged (@acf8a16706); the pair SIGNED in both halves (@d30c5fe203); the actor's entry is opened by the actor before any
 write (step 1). Not in this act: the staged `FB-f-9` (producers' mode), `FB-f-10` (delta copy), `FB-f-11` (list entry, map
@@ -132,7 +159,7 @@ value, F6 deploy). The window's order puts this act first and it changes nothing
 <status>pending</status>
 <round>3</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-8</to_id>
-<slot>~FB1</slot>
+<slot>~FBL</slot>
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>

@@ -1,0 +1,5 @@
+# Drive log -- 2.0.0_SA_COO~P2, IRPT_BCKEND (workstream ~P), 2026-10-11 08Z (dell2)
+
+| tick | limb | round | TOs t/T | thread | act fired |
+|---|---|---|---|---|---|
+| ~08:3xZ | L7 drain (r119), DRIVE FORWARD | 119 | 1/1 built, apply not cut | n (breaks at Performance) | IB-pr-421 worker ~282 reported; drained @416ead492f; issuer re-run AC1/AC2/AC3 PASS, proof VALID; built OF+8j4uc from cd833e66cb, 5 changed members in performance/; performance/tests 1 failed, 268 passed (the failure is the calendar-fallback test, imports none of the changed modules, row D2-W282-S3). Row D2-W282-S1: the adapter role has no secretsmanager:GetSecretValue; retained.tf:177-214 count-gates both session policies on the unset plan variable (read by the issuer). The zip alone would not fix the walk. One ruling asked of the CTO: one pair covering zip plus the IAM ungating. COO half NOT signed. Also: ~D2 placed the walk's FIRM_BINDING at _authz/served.py:1214, the reporting-read firm map (IRPT_DASHBD's cell, msg 4458). |

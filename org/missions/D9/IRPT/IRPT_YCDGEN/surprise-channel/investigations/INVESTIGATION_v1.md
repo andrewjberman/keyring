@@ -3654,3 +3654,75 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "No repair here. The portal wire folder is its owner's to regenerate once the generator renders an empty-schema property or the schema names report_id and revision as types."
 }
 ```
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S42",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T08:03:36Z",
+  "one_line": "L8 round 8: no judgment criterion and no run of FWD-1; every cell was a read. This seat's reads: the resident host's brand files carry the hashes of the committed ones, which closes D2-S3; the builder's research filter still omits .svg, so D2-W7-S1 stays open as its re-cut D2-W10-S4 states it (harmless under the release recipe, which adds the logo by member). FWD-1 stands NOT MET as graded at round 7. The round's own findings go to the CTO's round 9 analysis: one reason word covers two causes, and the held store covers 72 of 826 Cottonwood securities by count.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r8/ROUND8_DRAIN_END_READ_20261011.md @a6bd47170b (msg 4448)",
+      "this seat's read of org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_b8/BRAND_LISTING_HOST.txt @12b13a7862 against the repo: the host's brand.json (25ee2179...) and logo (02477c76...) carry the sha256 of the files committed under infra/aws/lambda/investor-reporting/ycharts/research/brand/, hashed by this seat",
+      "this seat's read of org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py:58 -- RESEARCH_EXT holds .py, .json, .sh, .md, .cjs and no .svg"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27): the CVO compiles the channel on the drain-end packet and reads the state itself; every BLOCKING or ARMED row is dispositioned before the slug.",
+  "world_is": "Round 8 is terminal (4 of 4 orders complete). Cells a and b are carried by the CTO's ruling (msg 4441), with rows D2-S38 and S16 ARMED. The worker's five resolving rows were not re-run by this seat; the issuer re-ran both criteria of their order.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S43",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T08:27:50Z",
+  "one_line": "L8 round 9: no judgment criterion, no new channel row, no run of FWD-1, nothing deployed. This seat's reads agree with the packet: the stored reason now tells a figure with no rule from a security with no store row (the fold check passes at HEAD), and the page code does not: one sentence serves both causes and prints the stored string after it. FWD-1 stands NOT MET.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r9/ROUND9_DRAIN_END_READ_20261011.md @9982fb211e (msg 4481)",
+      "this seat's run of r8_checks.py f8fold at HEAD: no_rule -> NOT_IN_THIS_VERSION, no_row -> INPUT_MISSING:security_not_covered, R8-F8FOLD-OK",
+      "this seat's read of infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py _reason_line at HEAD: a reason that starts with the NOT_HELD prefix returns ONE sentence for every cause, ending 'Reason: %s' with the stored string"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27): the CVO compiles on the drain-end packet and reads the state itself. FWD-1 ACCEPT: a figure Opal cannot work out says so on the page, with the reason.",
+  "world_is": "Round 9 is terminal (2 of 2 orders complete); cells e and f are carried by the CTO's ruling (msg 4478). The reason fix is in the tree and not deployed. The coverage and per-account figures of the packet were not re-read by this seat.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S44",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T08:27:50Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The Opal Overview page states one sentence for two different causes of a missing figure and prints the stored reason string after it (for example a NOT_HELD code). The stored reason is fixed in the tree; the page text is not, so the page still cannot say which of the two it is in words a reader would use.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's read of infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py _reason_line at HEAD: a reason that starts with the NOT_HELD prefix returns ONE sentence for every cause, ending 'Reason: %s' with the stored string",
+      "this seat's run of r8_checks.py f8fold at HEAD: no_rule -> NOT_IN_THIS_VERSION, no_row -> INPUT_MISSING:security_not_covered, R8-F8FOLD-OK",
+      "1.0.0_SA_CTO~DELL2 msg 4478: two sentences, one per cause, no raw string, in the same resident release that carries the reason fix"
+    ]
+  },
+  "spec_asserts": "FWD-1 ACCEPT: a figure Opal cannot work out says so on the page, with the reason. The CTO's ruling (msg 4478): a raw code string is not page text.",
+  "world_is": "One sentence, both causes, a raw string appended. Nothing of round 9 is deployed, so no served page shows either the old or the new stored reason from this change.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
