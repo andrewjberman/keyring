@@ -162,3 +162,54 @@ its own `validate` run. S5: `data/mdpf/config/` and `data/mdpf/scripts/` are cla
 runner's real sync list (`mdpf-daily-dispatch.sh` :125, :130); where the hand sync differs from the plane the cell files a row and does
 not widen the plane. Cells and chains unchanged. `r3_checks.py libs` is now 5 arms (opal_naming's tests, `validate` rc 0, `targets` rc
 0, r6-declared-moves, r6-delta0-ordered); 5 of 5 at base, a guard that must stay green.
+
+
+## v4 -- ROUND 4 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-11 ~06:3xZ)
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round3.md` @ae094ea51d section 3 (the CTO's enrichment list, msg 3530) as re-cut by its ADDENDUM 1
+@187b53dbe6 (msg 3542, on the issuer's evidence `deliverables/2.0.0_SA_COO~D1/round4/FOLD_AC1_AC3_CONFLICT.md`).
+- Item 1 (the Monday 2026-10-12 13:30Z fire read: grades FWD-1, CN-a-2 AC3, rows D1-S9 and D1-S10) is the issuer's act, not a cell. The
+  gold fire is read by `r2_daily.py read --fire 2026-10-12T13:30:00Z` after a snapshot taken before it. The Inflection feed's first
+  new-home daily delivery is the runner dispatch's, not the fire's, and is read by `round4/checks/r4_daily_bronze.py` after the dispatch.
+- Item 2 (the fold) is two cells, because the addendum split it: `CN-d-1` the code half (AC2 the served identity, AC3 the cottonwood leg's
+  vintage in-band; AC1's fold change is withdrawn, the fold does not change) and `CN-d-2` the document half (AC1 the basis counts a
+  `count_as_of` entry as a carry and lists each with its age). They share no file.
+- Items 3, 5 and the repo half of 4 are `CN-d-3`, `CN-d-4`, `CN-d-5`. The WORLD half of item 4 is a CloudOps order cut at the drain.
+
+| cell | serves (cell_refs) | candidate | owned files | depends on | actor |
+|---|---|---|---|---|---|
+| `CN-d-1` served identity stated and asserted; cottonwood vintage in-band (WORLD: scripts shipped by a deploy) | FWD-3 | M7 / fold | `data/mdpf/scripts/gold/{mdpf_gold_consolidator,dim_mdpf_aggregate_aua_timeseries,dim_mdpf_account_distribution}.py`, `data/mdpf/tests/canon/` | -- | ~10 (worker-light) |
+| `CN-d-2` the X2 basis counts carries (WORLD: a ledger citation under infra/) | FWD-3 | M7 recut | `deliverables/0.9.0_WK_MDPF_CANON~11/X2_GLOBAL_BASIS.md`, `infra/logic/06_CONFORMANCE_LEDGER.md` (citation only) | -- | ~11 (worker-light) |
+| `CN-d-3` the Global stack meets the line (portal candidate, LOCAL) | FWD-3 | M7 / W8-S3 | `portal/src/lib/pairedProvenanceRead.ts`, `portal/src/pages/ModelPortfolios.tsx` | -- | ~12 (worker-light) |
+| `CN-d-4` the count-source audit reads the gold artifact (LOCAL) | FWD-5 | M4 second slice | `data/mdpf/scripts/gold/mdpf_revamp_count_source_audit.py` | -- | ~13 (worker-light) |
+| `CN-d-5` the runner `code/` equality step (LOCAL, repo half) | FWD-7 | W9-S7 | `.tools/mdpf-code-equality.py`, `docs/deployment/MDPF_RUNNER_CODE_SYNC.md` (both new) | -- | ~14 (worker-light) |
+
+**Fan-out:** 5 of 5 chains, cap 8. Every pair of cells has disjoint write sets and no data edge. The one shared file is the append-only
+surprise channel `INVESTIGATION_v1.md`, which is read-only to every cell except for a row.
+
+**Why this reader (M4, `CN-d-4`):** every other remaining producer reader sits behind a served key or on a tree whose writer moves with it
+(`READER_CENSUS.md` note 1), and each of those takes a never-widen sign-off with a before and after of every leaf. The audit writes nothing it
+serves, and the artifact it audits already exists at the builder's address (CN-a-2, CN-a-3).
+
+**Deploy at the drain** (CloudOps ~DELL1, a WORLD order the issuer cuts after the drain; never a worker):
+1. `CN-d-1`'s three scripts, AFTER `MDPF_STRATID.TO-APPLY-R2.global-fold-deploy` reads CLOSED (it names `mdpf_gold_consolidator.py` too; two
+   acts never copy one key in one window). The added `meta` keys change the served account-distribution bytes, so the order carries a
+   never-widen pair (CTO + COO) naming that blast radius and the per-key rollback (the prior object's VersionId).
+2. `CN-d-5`'s tool run whole, every non-EQUAL name classified, then ONLY the files the dispatch chain executes or reads, named, through the
+   step the document writes down; read back with `--files`.
+3. `CN-d-3` is a portal candidate: it goes to `1.0.0_SA_CTO~DELL1` for review before DEV, with the issuer's render beside it.
+4. `CN-d-2` and `CN-d-4` ship nothing.
+
+**The item-4 close, restated (carried to the CTO in the L10 message):** the analysis closes "`code/` reads equal to the repo for
+`data/mdpf/scripts` and `data/mdpf/config`". Measured 2026-10-11 ~05:3xZ (md5 against ETag, tests directories excluded locally): scripts gold
+35 local / 23 equal / 4 differ / 8 missing, backfill 11/6/2/3, feeders 5/3/1/1, bronze 2/2/0/0, config 4/2/0/2. Most non-equal names are not
+runner members (QA tools, a bundle-shipped file, a non-.py data file), so whole-tree equality is not a goal. The close this decomposition
+holds: every file the dispatch chain executes or reads is EQUAL, and every other non-EQUAL name is listed with its reason.
+
+**Checks:** `deliverables/2.0.0_SA_COO~D1/round4/checks/`. At base: `r4_cn_d_1.py` 0/5, `r4_cn_d_1_vintage.py` 0/3, `r4_cn_d_2.py` 1/4 (B2 is
+a control), `r4_cn_d_3.py reader` 1/4 and `page` 1/5 (controls), `r4_cn_d_4.py reader` 0/3 and `seam` 0/1, `r4_cn_d_5.py tool` 0/5 and
+`live` 0/2. A reference tree reads 5/5, 3/3, 4/4, 4/4, 5/5, 3/3, 2/2, 5/5 and 2/2.
+
+**Not in round 4:** M3's full-history clause; M6 (HELD on `LGIC_NAMING-S7`); M9 and M10 (wait on `ADVI_FIRMBKTS`); M11-M17 follow the arc.
+FWD-3 stays NOT REALIZED at Andrew's X2 call (open call fe9b), whatever `CN-d-1` and `CN-d-2` read. The CTO's "align or refuse" ruling on
+the global account-distribution is withdrawn (ADDENDUM 1); the declared window and the in-band vintage replace it.

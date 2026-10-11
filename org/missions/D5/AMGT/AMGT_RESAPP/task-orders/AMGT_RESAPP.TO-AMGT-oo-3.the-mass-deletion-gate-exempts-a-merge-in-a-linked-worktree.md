@@ -90,3 +90,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+<status>complete -- issuer close 2026-10-11T05:5xZ (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-361 @fc55fbc4a9 merged @69d5fea1a9, proof instance VALID (worker run and issuer re-run); issuer re-run in the worktree: AC1 R90 MERGE HEAD YES (B1-B3 PASS; base NO 2 of 3), AC2 bash -n rc 0 and R89 AUDIT ROOT YES (A1-A4). Rows: none. CHERRY_PICK_HEAD moved with MERGE_HEAD in the same expression.</status>
