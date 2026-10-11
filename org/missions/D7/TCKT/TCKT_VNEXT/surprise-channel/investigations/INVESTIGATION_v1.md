@@ -1819,3 +1819,27 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S42",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T17:53:41Z",
+  "one_line": "L9 round 4: TO-RUN-R4-tr1 AC2 NOT MET. Run 5 filed a ticket by the one-step sequence, was accepted, and the creator recorded the issued id on the ticket, each read live for the first time; but no read returned a finished report (40 polls, each NOT_FOUND) and nothing opened from the ticket. It is the wall run 4 met. The generation dead-letter queue still reads 8, so the job was not dead-lettered 43 minutes on. The host-side read of why is another seat's and is not in.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/ledger/L8_PACKET.R4_TR1.md @04a542b518 (msg 5497)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_R4_TR1_L9_GRADE_20261011.md",
+      "this seat's read 2026-10-11T17:53:41Z of org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r4_tr1/r4_tr1_run5_trace.json (the applier's file): mode ONE_STEP, 1 submission call; upload 200; ticket 201 with source ticketcenter:i1; the claim hop NOT RUN; the submission 200 with the service's own request id and the ticket's id; the finished-report read 40 polls, last code NOT_FOUND, outcome NOT_READY, last poll 2026-10-11T17:29:36Z; the open hop UNREACHABLE, report_opened false; result null. This seat's live read at 17:52Z: the generation dead-letter queue holds 8 messages, the count before the run"
+    ]
+  },
+  "spec_asserts": "TO-RUN-R4-tr1 AC2 (JUDGMENT, graded by the CVO at L9): FWD-1's ACCEPT -- the report is made from the filed file, and the finished report opens from the same ticket, shown by the finished report read for the id the service issued and the ticket holds; one firm only.",
+  "world_is": "No finished report was read and none opened from the ticket. The form's own code was not executed; the producer was the vendor path. The order is pending on its row-delete step.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
