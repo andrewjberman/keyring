@@ -3091,3 +3091,126 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   }
 ]
 ```
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~22 (TO-FB-f-13, phase A, round 3)
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W22-S1",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~22",
+    "surfaced_at": "2026-10-11T09:31:27Z",
+    "one_line": "The order's parity criterion (each Lambda view byte-identical to the gold view) and its 'same generated module, mark and registry hash as the gold one' cannot both hold under the builder as it stood: _blk_platinum_destinations named each rendered target's own path in the header's --target clause, so a Lambda copy generated under its own target differs from the gold view in line 1. Resolved by naming the module's one canonical target in every copy's header.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/opal_naming.py@b96c9e74a1 _blk_platinum_destinations: the header's '--target %s' took the rendered path, so each target's header differed",
+        "after the edit, generate --target data/black_diamond/scripts/gold/lib/platinum_dest_view.py into a scratch dir: cmp IDENTICAL to the committed gold view (sha256 0214e640e1290b4a2ddf2388e035aba85192cac760092d96d2de6660213c2ab1)",
+        "after the edit, generate --target for both Lambda paths into the worktree: THREE-IDENTICAL by cmp; sha256 0214e640... on all three files"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-13 1b step 2: the two Lambda views are the same generated module, mark and registry hash as the gold one; step 5(a): each view is byte-identical to data/black_diamond/scripts/gold/lib/platinum_dest_view.py.",
+    "world_is": "The builder's header carries the rendered target's path, so a per-copy --target breaks (a) by one line. The header now names PLATINUM_DEST_VIEW_PATH in every copy; the two Lambda targets are rows of VIEWS, WHOLE_FILE_TARGETS and TARGET_REGISTRY_KEYS with the gold view's registry key tuple. Gold bytes and the mark's h16 are unchanged on regeneration.",
+    "notes": "The builder edit sits inside this order's paths (lib/opal_naming.py). The issuer may prefer another identity for the copies; the gold view's bytes do not depend on that choice."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W22-S2",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~22",
+    "surfaced_at": "2026-10-11T09:31:27Z",
+    "one_line": "The read census grades boto3 call syntax only: opal-partners-data reads and lists through awswrangler at three sites (lambda_function.py:1100, :1160, :1224) whose s3:// paths the census does not see. Their keys (gold/timeseries/...) lie outside the 11 served classes, so no served read is unrouted, but the census's ALL SITES ROUTED line does not cover them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py@worktree wr.s3.read_parquet(path=f's3://{bucket}/gold/timeseries/account_performance.parquet') at 1100, client_performance.parquet at 1160, and f's3://{bucket}/{holdings_key}' at 1224",
+        "holdings_key comes from _find_latest_holdings_lots(), whose prefix is 'gold/timeseries/holdings_lots/' (not a served class)",
+        "lib/opal_naming.py view PLATINUM_CLASSES: the 11 legacy prefixes under gold/ are gold/artifacts/, gold/entities/{accounts,advisors,clients}/, gold/platinum/firm/, gold/views/; none is a prefix of gold/timeseries/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-13 AC1 and the round-3 read census: ALL SITES ROUTED, NOT-SERVED OR EXEMPT over the S3 data calls of the named files.",
+    "world_is": "Under canonical the three awswrangler reads keep reading the legacy bucket, which is the identity for keys outside the served classes. A later act that adds a served class over gold/timeseries/ would leave these reads on the legacy home unless the seam reaches the wrangler calls.",
+    "notes": "The lines were not edited: routing them changes nothing today, because the seam is the identity for every key they name."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W22-S3",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~22",
+    "surfaced_at": "2026-10-11T09:31:27Z",
+    "one_line": "targets classifies each Lambda copy of platinum_dest_view.py SHIP on the lambda plane only through the OTHER Lambda's served_seam.py import: lambda_plane_consumers skips the function that owns the file, so each copy's SHIP status rests on the other function's files list. If either function drops served_seam.py, its copy becomes UNCLASSIFIED and targets exits 1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python lib/opal_naming.py targets after the edit (rc=0): 'SHIP lambda infra/aws/lambda/exec-summary-generator/platinum_dest_view.py measured: lambda-source-map.json (1 consumer(s): opal-partners-data)' and the partners copy: '(1 consumer(s): exec-summary-generator)'; PLANE lambda: 4",
+        "lib/opal_naming.py lambda_plane_consumers: 'if own == target_abs: continue' skips the owning function, so the consumer is found through the other function's import of the stem"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-13 step 2: python lib/opal_naming.py targets must still exit 0, with the two new files classified SHIP on the lambda plane.",
+    "world_is": "Met: targets exits 0 and both copies are SHIP lambda. The classification is consumer-derived, and the owning function is never counted as its own consumer.",
+    "notes": "No edit made. The fragility is recorded so that a later change to either Lambda's files list is checked against the targets output."
+  }
+]
+```
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~22, second batch (TO-FB-f-13, phase A)
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W22-S4",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~22",
+    "surfaced_at": "2026-10-11T09:34:27Z",
+    "one_line": "The partners health probe head_object (lambda_function.py:986, the critical summary key) cannot be routed through the seam within this order: the naming gate (LGIC_ENFORCE) REFUSES an out-of-pattern S3Key literal on any added line of a remediation-assigned file, and the partners Lambda cannot derive the key from the builder. The site stays UNROUTED: AC1 reads UNROUTED=1, exit 1.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "r3_reads.py --root <worktree> --files (exec lambda_function.py, exec platinum_reader.py, partners lambda_function.py): S3 data call sites=7 ROUTED=6 NOT-SERVED=0 EXEMPT=0 UNROUTED=1; 'UNROUTED lambda_function.py:986 head_object'; exit=1",
+        "safe-commit.sh attempt 1, naming limb: 'NAMING REFUSE infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py:986 gold/artifacts/summary/header_metrics.json ... EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation ADVI_FIRMBKTS: REFUSE unless the diff removes it'",
+        "lambda-source-map.json functions.opal-partners-data.files lists lambda_function.py, etf_classification.py, etf_classifier.py, pseudonymizer.py, served_seam.py, platinum_dest_view.py: no lib/ module is packaged, so address() is not callable from this Lambda"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-13 step 4: each S3 data call in the three named files routes through the seam; AC1 = ROUND 3 READ CENSUS: ALL SITES ROUTED, NOT-SERVED OR EXEMPT.",
+    "world_is": "The health probe is the only unrouted site. With the mode unset it probes the legacy home, unchanged. Under canonical on opal-partners-data (a later act) the probe would still read the frozen legacy home for the summary key and report missing_data for each firm on the pipeline bucket, while the served reads are on the new home.",
+    "notes": "Not worked around: the literal is not split, moved or hidden to pass the gate. Closing it needs a builder-derived key reachable from the partners package, or a remediation decision on this literal; both lie outside this order's paths. The line is restored to its original bytes. Decision owner: the issuer, 2.0.0_SA_COO~B1."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W22-S5",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~22",
+    "surfaced_at": "2026-10-11T09:34:27Z",
+    "one_line": "The naming gate grades the pipeline bucket constant of the new served_seam.py ('opal-data-bd') as an ALIAS of S3_BUCKET: WARN (EXISTING, touched) with the remedy 'read it through lookup(...)'. The Lambda package cannot import lib/, so the constant stays as the order's bound 4 names it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh attempt 1, naming limb: 'NAMING ALIAS infra/aws/lambda/exec-summary-generator/served_seam.py:28 opal-data-bd -> opal-data-49financial ... EXISTING, touched, and ALIAS as S3_BUCKET: WARN' (the same for the partners copy)",
+        "infra/aws/lambda/exec-summary-generator/config.py carries S3_BUCKET: str = 'opal-data-bd' at the base commit b96c9e74a1, which is why the string is EXISTING and not NEW"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-13 bound 4: no bucket name typed in a new string literal except the single pipeline bucket constant 'opal-data-bd' inside served_seam.py.",
+    "world_is": "The gate warns and does not refuse this line; the constant equals the pipeline bucket that config.py already types. A rename of the pipeline bucket must change served_seam.py's constant with config.py.",
+    "notes": "No edit made. The gate's own remedy (lookup) is not callable from a Lambda package; recorded so the issuer can decide whether the constant should come from the generated view in a later round."
+  }
+]
+```
