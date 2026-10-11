@@ -112,6 +112,15 @@ fi
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
 [ -n "$ROOT" ] || exit 0
 
+# AUDIT path only. A LINKED worktree's --show-toplevel dies with the worktree, so the
+# verdict row goes to the common dir's parent (the main worktree). Falls back to ROOT.
+AUDIT_ROOT="$ROOT"
+_GCD="$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null || true)"
+if [ -n "$_GCD" ]; then
+  _GCD_PARENT="$(dirname "$_GCD")"
+  if [ -d "$_GCD_PARENT" ]; then AUDIT_ROOT="$(cd "$_GCD_PARENT" && pwd)"; fi
+fi
+
 # A merge commit's deletions come from the merged branch, not from this
 # committer. `git pull` (merge) after a legitimate cleanup lands would otherwise
 # false-positive on every lane. NEVER rebase (CLAUDE.md), so merges are the
@@ -158,10 +167,10 @@ AGENT="$(git config user.name 2>/dev/null || echo unknown)"
 MODE="$(_effective_mode)"
 
 _audit() {  # $1 = verdict
-  mkdir -p "$(dirname "$ROOT/$AUDIT_LOG")" 2>/dev/null || true
+  mkdir -p "$(dirname "$AUDIT_ROOT/$AUDIT_LOG")" 2>/dev/null || true
   printf '%s  %-9s  agent=%s  deletions=%s  threshold=%s  mode=%s  attribution=%s\n' \
     "$ISO" "$1" "$AGENT" "$N_DEL" "$THRESHOLD" "$MODE" \
-    "${ATTR_REASON:-<none>}" >> "$ROOT/$AUDIT_LOG" 2>/dev/null || true
+    "${ATTR_REASON:-<none>}" >> "$AUDIT_ROOT/$AUDIT_LOG" 2>/dev/null || true
 }
 
 _show() {
