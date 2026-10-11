@@ -4538,3 +4538,133 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-W52-S1 -- F25-AC2's ABSENT arm also failed behind the explicit-null arm
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W52-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~52",
+  "surfaced_at": "2026-10-11T09:42:12Z",
+  "one_line": "F25-AC2's ABSENT arm also failed behind the explicit-null arm: it expected the words 'No source age yet', which UIC-09 (row S29, PRD v0.18) removed from the panel; the order named only the null arm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 1dccb4a1 (fe-s-25/absent-vs-null.test.ts): commit message and diff",
+      "portal 7e8fa4fd state/status.ts sourceAgeWordsForPanel (UIC-09 comment at the function)",
+      "fe-s-21/source-age.test.ts:143 and fe-s-34/label.test.ts:281 state the same rule"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A failing id is a regression with an owner or an assertion retired by a cited ruling (CTO round-13 analysis section 2 item 2); item 3 of TO-IV-e-94 covers the explicit-null arm only.",
+  "world_is": "At 7e8fa4fd both F25-AC2 tests threw at the explicit-null arm (EnvelopeMismatch on 'status') before the absent arm ran. Once the null arm was decided, the absent arm failed too: the panel's source-age slot prints no words on a no-answer state with no source (state/status.ts sourceAgeWordsForPanel returns null for kind no-source-age-yet), and fe-s-21 and fe-s-34 already carry that rule. The ABSENT arm was re-pointed to the same property the panel now states: empty words, data-source-age-kind no-source-age-yet, availability fact ABSENT. The test names are unchanged."
+}
+```
+
+## DSGN_IRPTV1-D2-W52-S2 -- adapt.ts site 1360 (facts.frozen_as_of ?? null) is STOPPED
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W52-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~52",
+  "surfaced_at": "2026-10-11T09:42:12Z",
+  "one_line": "adapt.ts site 1360 (facts.frozen_as_of ?? null) is STOPPED: the contract types the member string, optional, never null, but iv-e-162 ARM(a) CONTROL pins a receipt without it as null on the view, and that assertion is not retired.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/ExportReceipt.schema.json:119-122 @worktree HEAD",
+      "portal 2819f289 contracts/adapt.ts:1367 (comment at the line names this row); __tests__/dsgn-irptv1/iv-e-162.export-frozen-as-of.test.ts:37-39",
+      "evidence log C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~52/ (suite_after.txt, the F25-AC3 HIT list)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IV-e-94 item 6: carry absent as absent, or cite the contract line that admits null; never weaken an assertion the order did not retire.",
+  "world_is": "ExportReceipt.schema.json:119-122 types frozen_as_of 'string' with the pattern and says 'Absent on a retained (PATH A) export'; it does not admit null. Carrying absent as absent (frozenAsOf: wire.facts.frozen_as_of) was tried on the worktree and run: iv-e-162.export-frozen-as-of.test.ts then fails with 'ARM(a) CONTROL: a receipt without it did not read null' (it printed undefined). The line was put back. F25-AC3 therefore keeps ONE hit and stays red; iv-e-162 stays green. The two tests contradict each other at this member; the CTO rules which stands (retire the iv-e-162 control arm and carry absent, or record that the view's null for a never-null member loses nothing and exempt the site)."
+}
+```
+
+## DSGN_IRPTV1-D2-W52-S3 -- iv-e-116 ARM(b) locates the press branch by a regex anchored on LF line ends
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W52-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~52",
+  "surfaced_at": "2026-10-11T09:42:12Z",
+  "one_line": "iv-e-116 ARM(b) locates the press branch by a regex anchored on LF line ends; this device checks GenerateComposer.tsx out CRLF (index LF), so the pin could not match here even when the literal was right.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files --eol src/pages/InvestorReporting/tabs/analysis/GenerateComposer.tsx -> i/lf w/crlf (read at 2026-10-11)",
+      "portal a3f4b6dc iv-e-116.generate-journey.test.tsx"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A source-text pin matches the same bytes on every device that checks the file out.",
+  "world_is": "git ls-files --eol reports i/lf w/crlf for GenerateComposer.tsx on this worktree. The regex's two '\\n {2}\\}' anchors were widened to '\\r?\\n'; on an LF checkout they behave as before. Other source-text pins that anchor on a newline in a file this device checks out CRLF would fail the same way; none was searched for (outside the order)."
+}
+```
+
+## DSGN_IRPTV1-D2-W52-S4 -- Two behavioural mutants (IVE109 and IVE111) had to be made on src/components/CategoryViewTree.tsx, outside the order's <paths>, because that
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W52-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~52",
+  "surfaced_at": "2026-10-11T09:42:12Z",
+  "one_line": "Two behavioural mutants (IVE109 and IVE111) had to be made on src/components/CategoryViewTree.tsx, outside the order's <paths>, because that component is the behavioural subject of both tests.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "evidence logs mut109.txt and mut111.txt under C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~52/",
+      "git -C portal log --stat 5cb56a80..HEAD names no CategoryViewTree.tsx"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Edit only inside the <paths> grant; the order asks for a temporary mutant per test, reverted and never committed.",
+  "world_is": "Each mutant was one line (109: the L0ColorContext.Provider value; 111: collapseSingle), applied in the working tree, run once, and reverted with git checkout; git status in the portal repo shows no change to the file after each, and no commit contains it. The other mutants (110, 112, 25, 116, 137) are inside portal/src/pages/InvestorReporting/ (DrillTree.tsx, GenerateComposer.tsx)."
+}
+```
+
+## DSGN_IRPTV1-D2-S11 -- the FWD-1 re-walk read Performance PARTIAL on a release ruled against the ENDPOINT and rolled back; the hop is UNAVAILABLE again
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S11",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T09:54:19Z",
+  "one_line": "The FWD-1 re-walk (laptop, portal DEV ff41894759, ~09:45Z) read the Performance hop PARTIAL, but the return it showed was served by a release 1.0.0_SA_CTO~DELL2 ruled against the ratified ENDPOINT and ordered rolled back minutes later; the hop is UNAVAILABLE again and that walk's hop 6 is not evidence for FWD-1. Follows row DSGN_IRPTV1-D2-S7.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "relay 0.0.0_AB_MSTR~DELL2 msg 4627 of laptop 4.0.0_SA_CRO msg 108287 (bus 4afb7ad6), verbatim there: hop 6 FAIL to PARTIAL; the manifest still refused FIRM_BINDING; performance/sel_* PARTIAL; the window answered is May 29 onward, not calendar YTD, and the page says so; spread and the Vs benchmark tile read not supplied; hop 7 unchanged; guard.tsv empty",
+      "the walk record org/tier1_exec/4.0.0_SA_CRO/deliverables/UI_WALK_DSGN_IRPTV1_FWD1_20261011T0945Z.md @36d7d697d2 on origin box/laptop; NOT on this box and NOT read by this seat",
+      "1.0.0_SA_CTO~DELL2 msg 4625: the live release serves the named firm a vendor return as its Performance answer, against PRD line 498 (a vendor figure is only a comparison point); rollback ordered to 2.0.0_SA_COO~P2; msgs 4416 and 4616 withdrawn; no further re-walk asked",
+      "2.0.0_SA_COO~P2 msg 4614: three fresh requests served at 09:45:40-42Z and a fourth refused as a repeat, read from the function's log; the caller inferred to be the walk"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD FWD-1: the user reads the client's year-to-date return with its spread to the benchmark; a vendor figure is only a comparison point, never the Performance answer.",
+  "world_is": "OBSERVED by the walk and useful as a page fact: when the reporting manifest is refused the tab does fall back to the performance route and renders a body, and it states the window it answered. NOT a pass: the figure came from the vendor path, the window was not the calendar year to date, and the spread was not supplied. After the rollback the hop refuses again. INFERRED by this seat, not measured: the hop can only be honestly served for this firm from Opal's own return, which is IRPT_DASHBD FWD-11 for the reporting read (parked: IRPT_DASHBD deliverables/2.0.0_SA_COO~D2/FWD11_REPORTING_READ_PARKED_20261011.md).",
+  "notes": "BLOCKING for FWD-1's grade; nothing is armed in this project (the rollback is IRPT_BCKEND's act, 2.0.0_SA_COO~P2 and 0.7.0_AE_CloudOps~IB2). The rollback's completion is NOT read by this seat. Owner of the next act: 1.0.0_SA_CTO~DELL2, on whether the reporting read becomes the thread."
+}
+```

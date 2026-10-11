@@ -6124,3 +6124,56 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S107",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-11T09:47:00Z",
+  "one_line": "Row ADVI_COTBKF-D2-S92 is dispositioned by its owner on the credential owner's ruling: dell2 is NOT granted the portal-bucket reads, and the row's rule becomes the permanent answer. The hazard is ruled, not removed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cross-box call XB-20261011T093632Z-2789, body org/tier0_exec/0.0.0_AB_MSTR/deliverables/XB_CALL_D2_S92_DELL2_AGENT_USER_PORTAL_BUCKET_READS_20261011.md with AMENDMENT 1 @86a69aea4a",
+      "0.0.0_AB_MSTR~DELL2 msg 4606, relaying laptop 1.0.0_SA_CTO msg 108285 verbatim: ruling CTO_RULING_XB_2789_DELL2_AGENT_USER_PORTAL_BUCKET_READS_20261011.md @161232802c on origin box/laptop (NOT read by this seat; it reaches this box at a box pass). Ruled NO: both dell users read implicitDeny; shared-infra is not a dell-applied root; a dell plans it targeted or with -refresh=false and never applies from a refreshing plan.",
+      "this seat's own half of FWD-7 @129d787f44 and 2.0.0_SA_COO~C2 msg 4569: one targeted apply of that root from dell2 ran clean on 2026-10-11 (2 added), its after-plan read for the two addresses only."
+    ]
+  },
+  "spec_asserts": "Row D2-S92: no seat applies shared-infra from dell2 until the two reads are granted or the root is planned from a box that has them.",
+  "world_is": "The reads will not be granted. The permanent rule on dell2: a plan of shared-infra is targeted or run with -refresh=false, and nothing is ever applied from a refreshing plan. A refreshing plan there still renders the portal bucket as deleted, and nothing mechanical refuses an untargeted apply: the rule binds by reading and by each pair's signing condition. No gate is built for it (no approval gate is implemented without Andrew's word).",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the reviewer: this seat treats D2-S92 as closed by ruling and asks that the standing be graded on these facts. If the reviewer holds that a hazard nothing refuses stays ARMED, that grade stands and this row is its record."
+}
+```
+
+## ADVI_COTBKF-D2-S108 -- The method row is another project's producer output and already states income_basis = cash_when_received for every version
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S108",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T09:53:41Z",
+ "one_line": "The method row the CTO named as the carrier for 'income is ABSENT by design' (msg 4615) is written by ANOTHER project's producer, and that producer writes income_basis = cash_when_received on every method row, version 3 included. So the row beside Cottonwood's table states an income basis for a table whose two income columns are null on every row. Found while preparing round 65; nothing was cut on it.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/gold/irpt_reporting/account_return_daily.py line 1969 (issuer read at HEAD): emit_method_row builds the row with the literal \"income_basis\": \"cash_when_received\"; it is not read from METHOD_ROWS (lines 115 to 125), whose version 3 entry carries valuation_source, value_basis, value_basis_ruling and fee_basis only; one hit for income_basis in the file",
+   "data/assets/scripts/silver/commonwealth_account_return_daily.py line 116: the mint adapter imports that producer ('THE producer; imported, never edited') and line 835 writes the method row through its emit_method_row(upload=True)",
+   "the producer's last three commits are IRPT_DASHBD workers' of 2026-10-11 (ac6a174677, 3438a03703, 91e3ec5a47): the file is in another project's write surface and is being changed today",
+   "adapter lines 154 to 159 (COLUMNS_NULL) and the tracked manifest's columns_null: income_received and income_return are NULL because FWD-3 does not separate income (it is inside the value through the cash leg)",
+   "issuer verify of the served mint at 2026-10-11T07:40:03Z ended method_row=match; which fields that match compares was not read for this row, and the served method row object was not opened for this row"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO msg 4615: the method row states, per income column, ABSENT by design and why, and the verify reads it back; round 65, its own pair.",
+ "world_is": "The carrier is not this project's file to edit, and it already carries a sentence about income that reads the other way. Two things are not established: whether 'cash_when_received' is a true description of version 3 (income arriving as cash inside the value) or only of version 2; and whether the served object carries that field today (code read only). No reader binds the income columns or the method row for Cottonwood (CTO msg 4615; 0 readers of the mint). The CTO is asked which project's cell changes the producer."
+}
+```
