@@ -128,6 +128,11 @@ dispositioned here.
     read `w/crlf`.
   - W39-S1: the caller map, still at HEAD.
   - S33 and S34: ARMED until the 2026-10-09 full-day read.
+- **Compile of the 35, 2026-10-09 ~00:1xZ** (1.0.0_SA_CTO msg 107476, no override). bd61456a84 lands the 27 DISMISSED
+  (C-S5 to C-S7 in `ADJUDICATION_v3.md`). The 10 rows here, with C-S4, C-S8 and their remediation rows in
+  `org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/remediations/REMEDIATION_v1.md`, land in one later commit. The row gate
+  refuses a new remediation row while an NFRA_CTLPLN task order reads non-terminal (row S37). They landed together
+  @59ec92f15d (msg 107650). This note was left uncommitted on the laptop; `3.0.0_SA_CVO~L` commits it 2026-10-11.
 
 ## What the CTO should have asked but did not
 
