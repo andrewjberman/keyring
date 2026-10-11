@@ -181,7 +181,8 @@ if [ -n "$_SUPERPROJECT" ]; then
     *) _AUDIT_ROOT="$(cd "$_AUDIT_ROOT/$_GCD/.." 2>/dev/null && pwd || echo "$_AUDIT_ROOT")" ;;
   esac
 fi
-AUDIT_LOG="${SAFE_COMMIT_AUDIT_LOG:-$_AUDIT_ROOT/org/git-author-override-audit.log}"
+case "${AGENTBUS_DEVICE:-}" in ""|*[!a-z0-9-]*) GAO_REL="org/git-author-override-audit.log" ;; *) GAO_REL="org/git-author-override-audit.${AGENTBUS_DEVICE}.log" ;; esac  # one file per box (shape (a), MSTR consensus 2026-10-11); unset device -> legacy shared file
+AUDIT_LOG="${SAFE_COMMIT_AUDIT_LOG:-$_AUDIT_ROOT/$GAO_REL}"
 ISO_TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
 
