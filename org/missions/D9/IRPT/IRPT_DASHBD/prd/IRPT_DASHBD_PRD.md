@@ -4,7 +4,7 @@
 {
  "project": "IRPT_DASHBD",
  "directive": "D9",
- "fabric": "laptop",
+ "fabric": "dell2",
  "prd_version": "v0.9",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",

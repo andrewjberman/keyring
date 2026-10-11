@@ -24984,3 +24984,156 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both usage lines fail on this device as written. The substitute keeps the isolation that matters for planted modules (-P); the packet's landing step 2 (`narrow_pack.py -I`) needs only the standard library and ran unchanged under -I."
 }
 ```
+
+## IRPT_BCKEND-D2-W278-S1 -- The one tree is commit 361c44fa9d: every investor-reporting staged row of the three functions is taken from it, so HEAD's served.py, repository.py and retention.py ride
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W278-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~278",
+  "surfaced_at": "2026-10-11T02:57:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AMENDMENT 2 builds each function from ONE commit, 361c44fa9d, whose investor-reporting tree is byte-equal to box/dell2's; no member stays at an older pin for a packet reason, and the commits in between ride with the lagging members.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff 361c44fa9d box/dell2 -- infra/aws/lambda/investor-reporting prints nothing (read at box/dell2 288dcfab42)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~278/candidate_source_map.json keys _repins_IB_pr_416 (narrative 16 rows, adapter 52, status 32) and _kept_IB_pr_416 (rows outside investor-reporting)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~278/IB117-1_signature_census.json changed_members with owner_commits per member"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-416 AMENDMENT 2: each build takes EVERY investor-reporting member from ONE commit; irpt-status carries 2.0.0_SA_COO~Y2's release-1 line.",
+  "world_is": "The census against live names the members that move with their owning commits. Beyond the three split callees (interactive_access.py, prospect.py, enforce.py) these include served.py (IB-pr-405: analysis-request-read added to svc-custody-statement's operations), irpt-status repository.py and retention.py (3fc99be70f, the commits IRPT_ANLREQ AMENDMENT 9 had dropped) and resident_installed.py. The two gold investor_reporting scripts of the adapter are pin-only moves (identical blobs). The CTO half signs the tree as one (release-1 half AMENDMENT 7)."
+}
+```
+
+## IRPT_BCKEND-D2-W278-S2 -- The real lambda-source-map.json is NOT edited; the rebuild reads a candidate map committed in the deliverables, so Branch A needs the map change landed with the apply
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W278-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~278",
+  "surfaced_at": "2026-10-11T02:57:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "lambda-source-map.json is outside this order's grant, so the three zips were built with BAU_SOURCE_MAP_OVERRIDE and release-census --map pointing at deliverables/0.9.0_WK_IRPT_BCKEND~278/candidate_source_map.json (read from the box/dell2 map at 288dcfab42); building from the real map reproduces the split.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~278/make_candidate_map.py and candidate_source_map.json",
+      "infra/aws/lambda/ci/build-and-upload.sh:53 BAU_SOURCE_MAP_OVERRIDE; infra/aws/lambda/ci/release-census.py --map"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-416: rebuild the three functions the way IB-pr-409 built irpt-narrative.",
+  "world_is": "IB-pr-409 needed no map edit (entry.py only); here the repair IS a re-pin of staged_from rows. An applier who builds from the real map gets a different sha256 and the packet's ABORT-if-different check fires. The apply amendment must land the candidate's three function entries into lambda-source-map.json first (writer: make_candidate_map.py <pin> <out> <map_ref>).",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W278-S3 -- Live irpt-status is rev 3 (t6OJTCcm) after rev 5 was rolled back, so it still carries the profile_reader split on the name limb, and release 1's last two reads are deferred to this build
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W278-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~278",
+  "surfaced_at": "2026-10-11T02:57:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The live irpt-status zip reads 1 name-limb mismatch (served:1006 InteractiveAccess profile_reader), 0 attribute and 0 method mismatches; rev 5's RetentionPolicy.reference split is a method call that only the new method-call limb reads.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~278/IB117-1_signature_census.json irpt-status live_last_line and live_method_last_line",
+      "git show box/dell2:org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_RELEASE1_IRPT_STATUS_CTO_HALF.md AMENDMENT 7"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-416 AMENDMENT 3: the packet's irpt-status section names two after-reads for the apply leg; the census records the untested import pairings.",
+  "world_is": "Until the irpt-status apply the internal-caller CREATE path raises TypeError live and fails closed; the live pairings read 21 untested, the built zip 0. The two after-reads (REQ-5e4149d2 owner read; one GET /original, count stays 1) are in the packet and are run by ~G2 at the apply leg; they are UNEXERCISED here."
+}
+```
+
+## IRPT_BCKEND-D2-W278-S4 -- The packaged irpt-narrative has no interactive_access.py although served.py lazily imports it for any internal caller on the prospect and owner-read paths
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W278-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~278",
+  "surfaced_at": "2026-10-11T02:57:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "narrative/entry.py declares no prospect_modes and no owner_read_modes, so served._handle_prospect and _handle_owner_read are unreachable on this host today, but the lazy `from interactive_access import InteractiveAccess` would raise ModuleNotFoundError for an Opal internal caller if either were ever configured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~278/IB117-1_replay.json arms irpt-narrative prospect_internal_no_row_CREATE_INPUT / OWNED_INPUT",
+      "infra/aws/lambda/investor-reporting/narrative/entry.py: no prospect_modes / owner_read_modes"
+    ]
+  },
+  "spec_asserts": "builder import-closure: every top-level import satisfied (nested lazy imports exempt by design).",
+  "world_is": "Both the live and the built irpt-narrative zip answer ModuleNotFoundError on the internal-caller prospect arm (identical). The files[] list of irpt-narrative has no interactive_access.py; it was not added (outside the order)."
+}
+```
+
+## IRPT_BCKEND-D2-W278-S5 -- The attribute limb also reads enforce.Request(path_ids=) as a mismatch on the live narrative zip, a split the order did not name; the ADDENDUM 18 red list now reads 2 failed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W278-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~278",
+  "surfaced_at": "2026-10-11T02:57:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "signature_closure_attr.py reports ATTR_MISMATCH served:1267 enforce.Request unknown keyword path_ids on the live irpt-narrative (it clears in the built zip), and pytest _contracts at the pin reads 2 failed against the 9 of IB-pr-409's packet.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~278/IB117-1_signature_census.json irpt-narrative live_last_line",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~278/IB117-1_red_list.json"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-416: the live narrative shows the guard_prospect split; the performance-adapter shows the Enforcer split.",
+  "world_is": "Live narrative: name limb 1 mismatch (guard_prospect), attribute limb 2 (Enforcer load_report_owner, Request path_ids). The red list is the current one; none of this cell's members touches its target surface (0 changed, 0 member, 0 naming)."
+}
+```
+
+## IRPT_BCKEND-D2-W278-S6 -- The method-call arm is an instrument this order specified in one sentence; the static limb and the dynamic route arm have limits the packet states
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W278-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~278",
+  "surfaced_at": "2026-10-11T02:57:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AMENDMENT 2 asks for 'an import-and-call replay of each route handler on the built zip'; method_call_limb_416.py (static, catches obj.method arity) and replay/method_call_runner_416.py (dynamic, in-memory fakes) are this worker's reading, with a negative control for each.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~278/method_call_limb_416.py: rev-5 pairing control (repository 2aa217ec58 + retention 80a79a7462) reads 2 mismatches; built zips read 0",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~278/replay/method_call_runner_416.py: live narrative reads 6 and live adapter 4 call-arity errors, built zips 0",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~278/IB117-1_replay.json method-call arms"
+    ]
+  },
+  "spec_asserts": "CTO release-1 half AMENDMENT 7: the closure checks gain a METHOD-call arm, an instrumented import-and-call replay of each route's handler with a synthetic event per route.",
+  "world_is": "The dynamic arm runs against empty in-memory stores, so the retained-record paths are not reached on rows; the narrative and adapter built routes stop at FIRM_BINDING for the synthetic principals before compute, so their Enforcer build is covered by the enforcer-build arm and the static limb. The static limb skips dunder methods and builtin-container method names, treats self.<port>(...) with no such method in the enclosing class as an injected callable, and counts starred calls as skipped. Whether this is the arm the CTO meant is for 2.0.0_SA_COO~P2 and 1.0.0_SA_CTO to say."
+}
+```
