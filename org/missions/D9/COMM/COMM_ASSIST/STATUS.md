@@ -2,7 +2,12 @@
 
 Seat `2.0.0_SA_COO~ZZ` (Claude, site Z; lane `c4dea02951`, taken over from `2.0.0_SA_COO~R` after the project moved to site Z at 06:1xZ).
 Contract: `prd/COMM_ASSIST_PRD.md` v0.3 (header fabric site-z, `c225bcc74e`), ADMITTED. Reviewer `3.0.0_SA_CVO~Z`. Overwritten by the
-seat; last 2026-10-11 ~00:2xZ.
+seat; last 2026-10-11 ~03:0xZ.
+
+**Round 14 (ROUND_CLOSE, MAY-CLOSE):** D1 APPLIED `c583d4f9e5`. Live `nIQW+3Xv...` carries round 13 (five parties pinned;
+channel_poll names and raises its failure), and the issuer's re-run of all 3 criteria passes. The error reads
+`route=teams status=404`: the deployed gateway does not serve `/hx/teams/teams`, so D2 is routed to NFRA_OPLGTW (row Z-S11,
+ask to `2.0.0_SA_COO~O`). E1 is HELD at Andrew (BBG seat NOT-ATTEMPTED-BY-POLICY). L8 packet `ROUND14_L8_PACKET_20261011.md`.
 
 **Round 12** (CA-d-2, the FWD-4 mail deploy) CLOSED: APPLIED `a3057a3ed1`; CTO analysis `82f10ddf63`.
 
