@@ -182,7 +182,9 @@ TARGET_REGISTRY_KEYS = {
     "portal/src/pages/InvestorReporting/header/vendorDisplayNames.generated.ts": ("systems",),
     # platinum_prefix (ADVI_FIRMBKTS FB-g-13) -- _platinum_prefixes() reads the platinum rows and key() (the source's
     # systems.json key, the scope's scopes.json long form), and _home_bucket() reads tiers.json (the bucket).
-    LOCALS_PATH: ("scopes", "exemptions", "tiers", "feeds", "platinum_destinations", "systems"),
+    # ownership_key (ADVI_FIRMBKTS FB-g-20, CTO ADDENDUM 8) -- _ownership_owners() reads the ownership legacy rows
+    # (legacy_addresses), and _ownership_canonical() the platinum rows, key() and _home_bucket() as above.
+    LOCALS_PATH: ("scopes", "exemptions", "tiers", "feeds", "platinum_destinations", "systems", "legacy_addresses"),
     BRONZE_HOMES_PATH: ("scopes", "tiers", "feeds"),
     # PLATINUM_DESTINATIONS (ADVI_FIRMBKTS FB-f-9, CTO ADDENDUM 3) -- _platinum_build() reads the row, key() reads
     # systems.json (the source) and scopes.json (the long form), and _home_bucket() reads tiers.json (the bucket).
@@ -1470,6 +1472,8 @@ def _gen_locals(reg, h16):
         "  bronze_homes = " + _hcl(_bronze_homes(reg), 2),
         "  # every scope the destination registry places: long form -> its bucket's canonical served-platinum prefix (_platinum_prefixes())",
         "  platinum_prefix = " + _hcl(_platinum_prefixes(reg), 2),
+        "  # every scope with a registered ownership-map address: long form -> the canonical key of that address (_ownership_canonical(), the _blk_ownership_keys derivation)",
+        "  ownership_key = " + _hcl({o: _ownership_canonical(reg, t) for o, t in sorted(_ownership_owners(reg).items())}, 2),
         "}",
     ]
     return "\n".join(parts) + "\n"
