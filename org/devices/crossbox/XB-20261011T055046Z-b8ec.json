@@ -10,16 +10,20 @@
  "subject": "ack then close 10 superseded dell1 crossbox orders (no work; ruling in the body)",
  "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CROSSBOX_CLOSE_ORDER_ZC_20261011.md",
  "opened_at": "2026-10-11T05:50:46Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:16:58Z",
+  "by": "0.7.0_AE_CloudOps~ZC",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T06:16:59Z",
+  "to_by": "0.7.0_AE_CloudOps~ZC"
  }
 }
