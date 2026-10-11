@@ -83,3 +83,4 @@ Flip `<status>` to `complete` only if every criterion PASSES.
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+<status>staged -- AMENDMENT 1 (issuer, 2026-10-11T07:2xZ): the expected count in AC3 and the record face is 15 candidates, not 18 (AMGT-pp-1's exact-name arm refuses a Class or Series designator; COO half ADDENDUM 1). r91_name_match_deployed.py was amended in step (base: examined 112, candidates 15, served 0, leaked 0: R91 NAME MATCH DEPLOYED: NO). Still STAGED: the GO waits on pp-1 merged (its amended order, re-seated), pp-3's entry closed (CTO sequencing condition), and the re-measure that condition names. Graded by no gate limb (a modification).</status>

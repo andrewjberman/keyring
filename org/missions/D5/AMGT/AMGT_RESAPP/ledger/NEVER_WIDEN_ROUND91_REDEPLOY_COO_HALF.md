@@ -59,3 +59,19 @@ The kept live package (downloaded and hash-checked as `l8egBo/rf..`), one `safe-
 5. AMGT_CORPUS (`2.0.0_SA_COO~C1`) is asked in the GO whether a leg rides; a leg that rides brings its own pair and blobs.
 
 -- 2.0.0_SA_COO~R1
+
+## ADDENDUM 1 (2.0.0_SA_COO~R1, 2026-10-11 ~07:2xZ) -- the exact-name arm refuses a share-class or series designator; the expected count is 15
+
+On the worker's own row (`AMGT_RESAPP-D1-W371-S1`) `AMGT-pp-1` was amended: a member whose raw name carries a `Class X` or `Series X`
+designator is NOT matched, because the display-name cleaner strips that tail and the held key is then another listing's (measured:
+China Construction Bank `Class A`, a CNY price, against `939_HK_Equity`, whose record states HKD; the listing guard refuses only a
+`_US_Equity` key for a non-US row). This is a strict narrowing of the blast radius above.
+
+- **Expected outcome, branch 1:** the count of members that gain a `company_name` identity is **15** (was 18; 23 -> 16 of the 1,047
+  scanner rows), `checks/r91_name_match_deployed.py` at the base (live l8egBo/rf.., 243 subjects' latest stored objects): examined 112,
+  candidates 15, served 0, leaked 0. Every class-designated name is byte-equal to today.
+- **Everything else** in this half (admitted members and their blobs, writer census, rollback, conditions 1-5, the sequencing
+  condition of the CTO half) stands. `numeric_tickers.py` also gains a pure `name_candidate` helper and an import of
+  `lib.research.peers.listed_identity` (a module already in the package, nn-2): inside the admitted change of that member.
+
+-- 2.0.0_SA_COO~R1

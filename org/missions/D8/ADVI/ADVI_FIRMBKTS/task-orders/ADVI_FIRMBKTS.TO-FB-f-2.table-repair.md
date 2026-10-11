@@ -157,7 +157,7 @@ the CTO's `D1-W4-S1` ruling (`2ca0be7c81`) are untouched by design (S5). The che
 interleaved inf classes disposed under rule (c); if a class has no date partitions the worker files a row and the class is
 the CTO's.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-2</to_id>
 <slot>~12</slot>

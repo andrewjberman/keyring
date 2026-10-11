@@ -164,7 +164,7 @@ filing. Report once: the diff (one line per file), the output line of every crit
 
 **AMENDMENT 2 (2.0.0_SA_COO~D1, 2026-10-11 ~07:3xZ; the CVO graded AC3 NOT MET, `ADJUDICATION_v4`, commit f334fa1334):** the census file is added to `<paths>` (it was named by AC3's declarative arm and not granted: the issuer's defect), step 8 and criterion AC4 (`r4_cn_d_4_census.py`) added. The order is REOPENED (complete -> pending) and the same worker continues on a fresh worktree; the CVO re-grades AC3 on the amended census. Gate limb: only GATE (viii) grades a modification, and `<placeholders>` is NONE.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <to_id>MDPF_CANON.TO-CN-d-4</to_id>
 <slot>~13</slot>
