@@ -92,3 +92,13 @@ fn-fence FAIL absent, fn-regress FAIL (175 below 179), ac-read FAIL absent, all 
   absent, c6-regress FAIL (183 below 190), as expected.
 - The cell first written `R5-c6-1` is renamed `R5-cm-1` throughout this file: the gate's cell-id grammar refuses a digit in
   the middle token (to-pipeline-gate, 3 violations on the first commit attempt of TO-R5-c61). Same cell, same order.
+
+## AMENDMENT 3 (2026-10-11 ~20:3xZ) -- two cells are another project's orders now (2.0.0_SA_COO~Y2, msgs 5701, 5778)
+
+- `R5-ac-2` (FWD-3, the one-account check) is IRPT_ANLREQ's: `IRPT_ANLREQ.TO-AR-y-132`, issued @56d7070068, a READ first (how
+  several accounts in one file can be recognised; what the upload door does today with each bad kind); the build is cut from
+  its record at that seat's next issuance. Lane `IRPT_COMPLETION_Y` by the owned-paths file at HEAD.
+- FWD-5's page half (the elapsed age) is IRPT_ANLREQ's: `TO-AR-y-121` (approved by the CTO for portal DEV by that seat's word)
+  and `TO-AR-y-131` (hours up to 72; a closed list of waiting statuses).
+- `R5-cm-1`: merged @88ca11bc33 (190 ticket tests). `R5-ml-2`: its packet is signed by this seat and with the CTO.
+FWD-3 and FWD-5 read OPEN on those orders; this project cites them and cuts nothing for either.
