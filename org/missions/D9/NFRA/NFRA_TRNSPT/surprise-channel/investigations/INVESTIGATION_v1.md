@@ -1714,3 +1714,52 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   }
 ]
 ```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S18",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T04:12:03Z",
+  "one_line": "L8 round 22: no judgment criterion. This seat's reads agree with the close record on the deploy and the one driven run: the live Teams pull carries the rebuilt zip's hash, the 21 failing invocations end at 2026-10-09T22:03Z, and the one invocation since logs no error. The run record's per-series counts are the issuer's read; this seat did not read run.json. The scheduled trigger has not fired on the new code.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/R22_CLOSE.md @733aec56af (msg 4030)",
+      "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/R22_CLOSE_READBACK_20261011.md",
+      "this seat's live reads 2026-10-11T04:12:03Z: teams-global-transcripts-pull-lambda CodeSha256 AI4UQD0M..., LastModified 2026-10-11T03:36:14Z, Active/Successful, equal to the sha256 of the local dist zip (AI4UQD0M...); MemorySize 128, Timeout 300; target of rule teams-global-transcripts-pull-hourly",
+      "this seat's filter-log-events on /aws/lambda/teams-global-transcripts-pull-lambda since 2026-10-09T12:00Z: 107 events, 25 invocations; 21 [ERROR] GatewayGraphError, first 2026-10-09T16:01:13Z, last 22:03:28Z; the one invocation since (2026-10-11T03:38:50Z to 03:40:09Z, 79.3 s) logs no error"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles the channel on the close packet and reads the served state itself, never the producer's report.",
+  "world_is": "TR-ra-22 is APPLIED and exercised once by a seat-driven invoke. The first scheduled fire on the new code is Monday 2026-10-12 13:00Z. Four Monday meetings are ABSENT by this route, and research_meeting's listing is refused.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S19",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T04:12:03Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "The Teams pull runs at its memory ceiling whenever it reads transcript content: Max Memory Used reads 128 of 128 MB on the driven run of 2026-10-11 and on 3 invocations of the 16:00Z fire on 2026-10-09. The driven run landed 1 transcript; a scheduled fire that lands more can be killed at the limit, and the close record does not state this.",
+  "disarm_owner": "2.0.0_SA_COO~T2 -- before the Monday 2026-10-12 13:00Z fire: raise memory_size under a pair, or state why 128 MB holds and read Monday's REPORT line and run.json together.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the same log's 25 REPORT lines: Max Memory Used equals Memory Size (128 of 128 MB) on 4 invocations -- 2026-10-09 16:01, 16:02, 16:04 and the driven run of 2026-10-11 03:40; the other 21 read 98 to 100 MB",
+      "this seat's live reads 2026-10-11T04:12:03Z: teams-global-transcripts-pull-lambda CodeSha256 AI4UQD0M..., LastModified 2026-10-11T03:36:14Z, Active/Successful, equal to the sha256 of the local dist zip (AI4UQD0M...); MemorySize 128, Timeout 300; target of rule teams-global-transcripts-pull-hourly"
+    ]
+  },
+  "spec_asserts": "R22_CLOSE.md: the deployed pull is 'fixed, deployed and driven clean'; its carried list names the scheduled trigger, research_meeting, the 4 ABSENT meetings, the totals line, D2-S17 and a test repair. Memory is not on it.",
+  "world_is": "MemorySize is 128 MB. Four of 25 invocations report the maximum equal to the size, each one a run that read content; none was killed. Whether a run that lands several transcripts exceeds the limit is not measured. grounding for the mechanism (content reads drive the peak): INFERRED from which 4 invocations read 128.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

@@ -1,0 +1,112 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "NFRA_IAMROLES202609",
+ "round": 6,
+ "written_by": "2.0.0_SA_COO~ZI",
+ "written_utc": "2026-10-11T04:1xZ",
+ "decomposition_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/decompositions/NFRA_IAMROLES202609_DECOMP_R6.md@7c213215bd",
+ "denominators": {
+  "fwd_in_prd_header": 8,
+  "cells_in_decomposition": 4,
+  "task_orders": 4,
+  "task_orders_terminal_with_valid_proof": 4
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a reviewer has actually answered the question with that evidence attached, rather than an opinion",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 6 per ROUND_ANALYSIS.round5.md: REALIZED at round 4."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "real roles have been read and their unused permissions named, over a stated lookback",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 6 per ROUND_ANALYSIS.round5.md: REALIZED at round 3."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "at least one real policy has been surfaced as perfectly scoped and yet requiring nothing of whoever calls it",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 6 per ROUND_ANALYSIS.round5.md: REALIZED at round 4."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "APPLIED",
+   "done_when_text": "each one is either in code or carries a named owner and a reason",
+   "cells": [
+    {
+     "cell_id": "IAM-w-1",
+     "task_orders": [
+      "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-w-1.adopt-family-b-smartx.md"
+     ]
+    },
+    {
+     "cell_id": "IAM-w-2",
+     "task_orders": [
+      "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-w-2.adopt-family-a-bd.md"
+     ]
+    },
+    {
+     "cell_id": "IAM-w-3",
+     "task_orders": [
+      "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-w-3.adopt-family-e-and-row-3.md"
+     ]
+    },
+    {
+     "cell_id": "IAM-w-4",
+     "task_orders": [
+      "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-w-4.record-the-two-defer-rows.md"
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "COVERED; MECHANICAL BARS MET, AC4 x4 UNGRADED (L9 at 3.0.0_SA_CVO~Z). Executed by 0.7.0_AE_CloudOps~IR (A1-r6); owner of record 0.7.0_AE_CloudOps~Z. Five pre-existing roles ADOPTED into Terraform by -target import, custody + provider default_tags only, each under a signed never-widen pair: w-1 opal-smartx-lambda-role -> smartx-pipeline (complete @af790901d5; pair COO @f2c325cac8 / CTO @f5444083a8); w-2 bd-merge-daily-lambda-role + bd-pipeline-task-role -> bd-pipeline (complete @beeb07f26c, drained @401e211747; pair COO @1ad6f36ca2 / CTO @dadc1ec69a; naming-gate carrier refusal on 'bd' (Z-S34) lifted by R20 entries NFRA-IAMROLES-R20-01/02 @bd2cacee69 on Andrew-direct ~03:2xZ 'for now', cutoff 2026-12-31; the cross-project plan break Z-S29 fixed by one ruled can() guard @a18b96fd5d under A6-r6); w-3 portfolio-management-lambda-role -> portfolio-management (3 keys, no System) and codebuild-semantic-clustering-role -> news-pipeline (complete @fc8da02312; pair COO @9586e0106b / CTO @8453026444); w-4 rows 5 and 16 recorded DEFER (complete @55d980ad2c; carrier @6c9703007c; coverage re-cut @4d6035380b). ISSUER REAL RUN at close, live 2026-10-11 04:03Z: smartx 4 tags / 3 inline / 0 attached / lambda trust; bd-merge-daily 4 / 1 / 0 / lambda; bd-pipeline-task 4 / 1 / 0 / ecs-tasks; portfolio-management 3 (Environment, ManagedBy, Project) / 1 / 1 (AWSLambdaBasicExecutionRole) / lambda; codebuild-semantic-clustering 4 / 1 / 0 / codebuild -- every permission and trust as before, tags exactly as each pair signed. In code at HEAD (Grep name= over infra/aws/terraform/*.tf): 6 of the 16 disposition-table roles (the 5 adopted + seeking-alpha-scraper-role, DECLARED earlier). Owner coverage remains rows=16 unowned=0; the two remaining ADOPT rows (6 lambda-ec2-runtime-monitor-role, 14 sentiment_query_api-role) were not in round 6's families. GOVERNANCE_DISPOSITION.md's tokens for the five adopted rows still read ADOPT: the round moved the world, not the record's tokens (an enrichment item)."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a real narrowing has been checked in advance and the check was believed",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 6 per ROUND_ANALYSIS.round5.md: REALIZED at round 5."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "each of the known past plans has been established as done or not done, on evidence",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 6 per ROUND_ANALYSIS.round5.md: REALIZED at round 3."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "done_when_state": "APPLIED",
+   "done_when_text": "the assessment reports the two differently, at permission grain",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 6 per ROUND_ANALYSIS.round5.md: REALIZED at round 3."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "it has actually been re-run and produced a comparable answer",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "Not re-cut in round 6 per ROUND_ANALYSIS.round5.md: REALIZED at round 4."
+  }
+ ],
+ "surprise_rows_for_l10": [
+  "Z-S23 and Z-S32: grants that point at nothing live (an orphan role; a live role's NoSuchBucket grant) -- enrichment candidates",
+  "Z-S25 / Z-S34: naming-gate adopted-name defects; class fix LGIC_ENFORCE FWD-8 at dell1 (XB-20261010T225240Z-dcb5); R20 entries are a 'for now' bridge to 2026-12-31",
+  "Z-S35: worker's own premature commit, reverted before any drain",
+  "Z-S21 / Z-S20: smartx-pipeline pre-existing Lambda drift, owned by the pipeline's owner"
+ ]
+}
