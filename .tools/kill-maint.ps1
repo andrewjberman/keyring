@@ -325,6 +325,13 @@ try {
 } catch {
   [Console]::Error.WriteLine(("WARN: liveness unreadable ({0}) -- ORPHANED class disabled this run" -f $LivenessPath))
 }
+# A PARSEABLE liveness.json that names ZERO live serials is not an owner verdict either: with an empty owner map every
+# owner-keyed poller/watcher reads ORPHANED and the run kills them all (dell2 lost 16 agent-pollers at 2026-10-11 08:31Z,
+# 0.0.0_AB_MSTR msg 108273). Fail closed exactly as for an unreadable file.
+if ($liveSerials -ne $null -and $liveSerials.Count -eq 0) {
+  [Console]::Error.WriteLine(("WARN: liveness ({0}) names 0 live serials -- no owner verdict, ORPHANED class disabled this run" -f $LivenessPath))
+  $liveSerials = $null
+}
 
 function Write-Audit([string]$line) {
   # one ASCII line to the audit log; an append failure never fails the run
