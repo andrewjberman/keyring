@@ -5675,3 +5675,65 @@ round.** Never edit an existing row.
  "world_is": "Both reads exist in the tool at f32b096b42. Shown so far: 3 of 3,325 days, built locally. Not established: that the show mode's two helper functions stay equal to the lines of apply_days they mirror (they are equal today by the issuer's read; apply_days does not call them)."
 }
 ```
+
+## ADVI_COTBKF-D2-S91 -- CB-bi-2 STOP: the one() defect is cleared and the CRM statements are DELTA=0, but the break-glass role plans to CREATE
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S91",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.7.0_AE_CloudOps~CB2",
+ "surfaced_at": "2026-10-11T06:35:09Z",
+ "one_line": "CB-bi-2 STOPS on step 4: the selector fix clears the one() defect, every CRM/firm-bucket resource reads no-op, but TWO watched resources plan to CREATE -- aws_iam_role.restricted_breakglass and aws_iam_role_policy.restricted_breakglass. They are absent from terraform state (0 of 253 rows) and absent from live IAM (NoSuchEntity, positive control passing), so the break-glass role has never been applied; the create is pre-existing undeployed code from cell CB-d-4, not a resource the selector change moved. AC1 reads watched_changed=2 against expect watched_changed=0, so the proof of CTO ruling item 5 does NOT hold as written, and item 5's own expected outcome names the break-glass role among the resources that must read 0 changes. No apply made; routed to 1.0.0_SA_CTO~DELL2 as a never-widen act.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "worktree C:/dev/wk-cotbkf-80 at 84457822bb on wk-ADVI_COTBKF-88 (git rev-parse --short=10 HEAD), confirmed before init",
+   "init at 84457822bb: rc=0, 'Installed hashicorp/aws v5.100.0 (unauthenticated)' -- a provider WAS downloaded",
+   "AC1 verbatim on C:/dev/_cotbkf_private_evidence_20261009/r61/shared_infra_plan.json: 'CRM-PLAN resources=242 watched=12 watched_changed=2 other_changed=2'",
+   "watched addresses, 12 of 12 with action: create aws_iam_role.restricted_breakglass; create aws_iam_role_policy.restricted_breakglass; no-op aws_s3_bucket / aws_s3_bucket_policy / aws_s3_bucket_public_access_block / aws_s3_bucket_server_side_encryption_configuration / aws_s3_bucket_versioning .lgic_firm[\"cottonwood\"] and [\"inflection\"] (10 of 10 no-op)",
+   "terraform state list: 253 rows, 0 match breakglass; positive control 10 rows match lgic_firm (same instrument, same state)",
+   "live IAM: get-role cloudops-cot-restricted-breakglass-role -> NoSuchEntity. Isolated positive control, same credentials: get-role demo-transform-runner-ec2-role -> arn:aws:iam::313476888478:role/demo-transform-runner-ec2-role",
+   "in-plan control: 15 aws_iam_role resources, 14 read no-op against live, only restricted_breakglass reads create",
+   "plan -refresh=false at the same commit: rc=0, 'Plan: 2 to add, 0 to change, 0 to destroy', the two break-glass resources and nothing else -- the config-vs-state delta is exactly these two",
+   "CONTROL (negative arm), measured on this box, not cited from site Z: at base 28fbb42d46 `terraform init` itself fails rc=1 -- 'Error: Invalid function argument ... on s3-lgic-firm-buckets.tf line 197, in locals ... while calling one(list) ... local.lgic_managed_firm_buckets is object with 2 attributes ... Invalid value for \"list\" parameter: must be a list, set, or tuple value with either zero or one elements.' Control worktree C:/dev/wk-cotbkf-bi2ctl, detached at 28fbb42d46"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB-bi-2 AC1 <expect>watched_changed=0</expect>, and CTO ruling item 5: 'init and plan of shared-infra succeed, and the plan shows 0 changes to the CRM restricted-prefix statements, the break-glass role and the firm bucket policy. Verified DELTA=0 needs no hold and no apply.' Step 4 of the face: any create, update, delete or replace on a watched address is a STOP routed to 1.0.0_SA_CTO~DELL2 as a never-widen act.",
+ "world_is": "init succeeds and plan evaluates the new selector -- the one() defect is cleared and the CRM statements themselves are DELTA=0 (both firm bucket policies no-op). But DELTA is not 0 over item 5's named set: the break-glass role and its inline policy plan to CREATE because they exist only in code. Whether that create is 'a resource this change moved' is not this seat's to adjudicate: the measurement says it is not (absent from state and from IAM at the base as well, since the base cannot plan at all), but the criterion is written as a flat watched_changed=0 and it reads 2. The order's own refusal clause and step 4 both route this to the CTO rather than to a judgment here."
+}
+```
+
+## ADVI_COTBKF-D2-S92 -- An under-permissioned refresh renders a LIVE bucket as deleted; a dell2 shared-infra plan is not an apply instrument
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S92",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.7.0_AE_CloudOps~CB2",
+ "surfaced_at": "2026-10-11T06:35:09Z",
+ "one_line": "INSTRUMENT HAZARD found off-task while planning shared-infra from dell2: the cloudops-dell2-agent-user lacks s3:GetBucketPublicAccessBlock and s3:ListBucket on opalinvest-portal, and the aws provider renders that refresh failure as 'aws_s3_bucket.opalinvest_portal has been deleted' -- so a refreshing plan from this box proposes to CREATE a bucket that is live and to REPLACE its server-side-encryption configuration. The bucket exists: head-bucket returns 403 Forbidden where a truly absent bucket returns 404 Not Found. An apply of that plan from this box would act on a false positive.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "1.0.0_SA_CTO~DELL2",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "plan at 84457822bb, refreshing, reproduced twice: rc=1, exactly 2 'Error:' blocks -- cur:ListTagsForResource on arn:aws:cur:us-east-1:313476888478:definition/opal-cur (400 AccessDeniedException) and s3:GetBucketPublicAccessBlock on arn:aws:s3:::opalinvest-portal (403 AccessDenied), both naming User: arn:aws:iam::313476888478:user/cloudops-dell2-agent-user",
+   "same run: 'Plan: 4 to add, 0 to change, 1 to destroy' with '# aws_s3_bucket.opalinvest_portal has been deleted', '# aws_s3_bucket.opalinvest_portal will be created' and '# aws_s3_bucket_server_side_encryption_configuration.opalinvest_portal must be replaced'",
+   "EXISTENCE read with a negative control: head-bucket opalinvest-portal -> 403 Forbidden; head-bucket opalinvest-portal-no-such-bucket-99999 -> 404 Not Found. 403 and 404 discriminate, so the bucket exists and the 'deleted' line is false",
+   "list-objects-v2 on opalinvest-portal -> AccessDenied on s3:ListBucket for the same user, the second missing grant",
+   "same commit, plan -refresh=false: rc=0, 'Plan: 2 to add, 0 to change, 0 to destroy' -- the portal bucket create and the SSE replacement VANISH, which is what identifies them as refresh artifacts rather than drift",
+   "full output: C:/dev/_cotbkf_private_evidence_20261009/r61/branch_plan_refresh.txt (35,385 bytes) and branch_plan_norefresh.txt (5,919 bytes)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Face step 5: 'Other planned changes on this root (drift unrelated to this change) are REPORTED by count and address, not acted on.' The face treats other planned changes as drift to be counted.",
+ "world_is": "The 2 other planned changes are not drift at all -- they are an artifact of this box's credentials, and counting them as drift would have mis-reported them. The class is the CLAUDE.md rule 22a RETRIEVAL shape: a failed retrieval returns a VALUE. Here an under-permissioned refresh returns 'absent' for a live resource, and terraform's plan is the consumer that converts it into a create. NOT DISARMED BY THIS SEAT: the disarm is either the two IAM grants on the dell2 agent user or a standing rule that shared-infra is not planned-for-apply from this box, and both are the CTO's; this order is plan-only and makes no AWS write. Until then the sound read of this root on dell2 is `plan -refresh=false`, and no shared-infra plan taken on this box is an apply instrument."
+}
+```
