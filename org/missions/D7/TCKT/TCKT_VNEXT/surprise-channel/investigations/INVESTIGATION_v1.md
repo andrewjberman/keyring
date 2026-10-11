@@ -1066,3 +1066,28 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "notes": "Also: bunx is absent on this box; tsc was run as 'bun x tsc -b'."
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W11-S2",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~11",
+  "surfaced_at": "2026-10-11T04:25:50Z",
+  "one_line": "Follow-up to TCKT_VNEXT-D2-W11-S1: the code a not-generated report answers is NOT_FOUND, raised at owned_report.py:119 as AnalysisUnavailable for a job that is not READY.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:119 (read at this worktree's HEAD): `raise AnalysisUnavailable(\"ANALYSIS_REPORT_NOT_READY\")`, guarded at :118 by `if state[\"state\"] != \"READY\":`",
+      "infra/aws/lambda/investor-reporting/ops/entry.py:254 maps \"AnalysisUnavailable\" to \"NOT_FOUND\" (read at this worktree's HEAD)",
+      "portal/src/pages/TicketCenter/analysisRequest.ts isReportNotReady already treats publicReasonCode NOT_FOUND (and NOT_READY, and http 404) as the waiting state, so the shipped mapping covers this code; tree read only, not exercised against the deployed route (LOCAL)."
+    ]
+  },
+  "spec_asserts": "TCKT_VNEXT-D2-W11-S1 asked which code the analysis-report read answers for a report not yet generated.",
+  "world_is": "Per the CTO's read and the worker's re-read of owned_report.py:119 and entry.py:254, a job that is not READY raises AnalysisUnavailable, which the boundary answers NOT_FOUND. S1's code question is answered by this line. S1 is not edited (rows are append-only).",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Appended in binary mode with CRLF line endings, after S1."
+}
+```
