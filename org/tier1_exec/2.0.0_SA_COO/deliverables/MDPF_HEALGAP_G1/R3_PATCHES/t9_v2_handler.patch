@@ -1,0 +1,31 @@
+diff --git a/infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py b/infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py
+--- a/infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py
++++ b/infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py
+@@ -71,7 +71,6 @@
+     sys.path.insert(0, str(_GOLD_DIR))
+ 
+ import boto3  # noqa: E402
+-from botocore.exceptions import ClientError  # noqa: E402
+ import build_satellites_registry as producer  # noqa: E402  path set immediately above
+ 
+ logger = logging.getLogger()
+@@ -118,13 +117,12 @@
+     if event.get("require_stamp"):
+         d = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+         key = "%s/meta/%s-complete.json" % (producer.ROSTER_KEY.split("/bronze/")[0], d)
+-        try:
+-            boto3.client("s3").head_object(Bucket=producer.ASSETS_BUCKET, Key=key)
+-        except ClientError as exc:
+-            if exc.response.get("Error", {}).get("Code") in ("404", "NoSuchKey", "NotFound"):
+-                logger.info("STAMP-ABSENT date=%s key=%s", d, key)
+-                return {"rc": 0, "skipped": "stamp-absent", "date": d}
+-            raise
++        # A LISTING, never a HEAD: the s3:prefix condition on the ListBucket grant applies to a list call, and an
++        # absent key under a HEAD reads 403 (CTO half refusal 3485). An AccessDenied here raises and is loud.
++        listing = boto3.client("s3").list_objects_v2(Bucket=producer.ASSETS_BUCKET, Prefix=key, MaxKeys=1)
++        if not any(o.get("Key") == key for o in listing.get("Contents", [])):
++            logger.info("STAMP-ABSENT date=%s key=%s", d, key)
++            return {"rc": 0, "skipped": "stamp-absent", "date": d}
+ 
+     # A QA invocation may ask for a dry run; a SCHEDULED fire never does. The producer
+     # honours --dry-run by deriving and validating without writing.
