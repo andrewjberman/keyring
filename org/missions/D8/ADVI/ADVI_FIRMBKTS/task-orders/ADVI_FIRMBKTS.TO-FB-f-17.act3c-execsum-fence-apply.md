@@ -84,7 +84,7 @@ issuer's act and is not yours.
 is Allowed identity-side by `FB-f-18` (the exec-summary root); the fence exemption alone grants no write. The close simulation
 (Get and List on a sample object allowed; Put allowed only after `FB-f-18`) is the laptop lane's, with the act 3b close.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>ACT3C</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-17</to_id>
