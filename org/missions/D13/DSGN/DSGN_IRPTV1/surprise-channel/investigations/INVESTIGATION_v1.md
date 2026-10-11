@@ -4185,3 +4185,122 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W49-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~49",
+  "surfaced_at": "2026-10-11T08:21:15Z",
+  "one_line": "IV-e-92 part 2: the DOM for the press test is registered per test file (./dom-env, released in afterAll), not by the bunfig.toml preload AMENDMENT 2 names, because the preload was built and measured: with it, six other Investor Reporting ids went red, and the package's types break the app's typecheck when imported statically.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "suite run with a bunfig.toml [test] preload of scripts/happydom-register.mjs (built, run, then removed): 43 failed, 10 ids outside the baseline's 43; six of them are caused by the preload: export-firm-chip R1, export-submit-refused V walk, iv-e-138 (e) picker, receipt-failure-words R1, fe-s-16 F16-AC2, fe-s-9 F9-AC2 positive control, each 'Portals are not currently supported by the server renderer' (suite_after_global_preload.txt, newfail_with.txt); the other four are not the preload's: iv-e-20 x2 (row S4), fe-s-46 BOUNDS (row S6), and an IVE17-AC3 line under fe-s-13/content-pins that is the baseline id echoed by the iv-e-17 child run (a header-attribution artifact of the parser)",
+      "bun run typecheck rc=2 with a static import of @happy-dom/global-registrator in a file under src: useAutoSave.ts(31,5) and useOptimizationAutoSave.ts(67,5) TS2322 'Timeout' not assignable to 'number' (typecheck_with_import.txt); rc=0 with the variable-specifier import (typecheck_dynamic.txt). tsconfig.app.json include is [src] and types is [vite/client], so the build script's tsc -b would fail the same way",
+      "about 15 test files under __tests__ still carry header comments saying no DOM implementation is installed (for example iv-e-37.search.test.tsx:6); they are comments, left as they are"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 2: the DOM is registered for tests only, by a preload in the test config, no production import reaches it.",
+  "world_is": "The registration is for tests only and no file outside __tests__ imports it (search over src: 0 import lines), but by a per-file module, not a preload. A preload variant is one bunfig.toml line plus a 3-line scripts file; it needs the six ids above fixed or the SSR portal tests changed first. Not decided here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W49-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~49",
+  "surfaced_at": "2026-10-11T08:21:16Z",
+  "one_line": "IV-e-92 part 2: a plain `bun add` of the one dev dependency rewrote bun.lock beyond that package: it re-resolved five packages (typescript-eslint plugin family 8.46.4 -> 8.60.1, ts-api-utils 2.1.0 -> 2.5.0) and pruned 57 entries, because the committed lock's plugin pins are stale against typescript-eslint@8.60.1. The committed lock was kept to additions only (8 packages) by a hand merge.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun add --dev --exact @happy-dom/global-registrator@20.14.5 and a plain `bun install` after a hand edit of package.json both produced bun.lock 23 insertions / 117 deletions (bun.lock.after_bunadd, bun.lock.after_bunadd2 in the evidence folder)",
+      "committed result: git diff 733986d7 193d573f -- bun.lock is 17 insertions, 0 deletions; `bun install --frozen-lockfile` rc=0 and the lock md5 unchanged after it",
+      "the original lock passes --frozen-lockfile with the stale pins, so only a lock WRITE exposes it"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 2: the lockfile diff shows that package and its own dependencies and NOTHING else moved (lockfile_other_packages_moved 0).",
+  "world_is": "The next `bun add` or non-frozen `bun install` in this portal will produce the same 5-version move and the 57-entry prune; it is the lock's state, not this dependency. Whether to regenerate the lock once, on its own commit, is not decided here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W49-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~49",
+  "surfaced_at": "2026-10-11T08:21:17Z",
+  "one_line": "IV-e-92 part 2: a lock-faithful install (the real local node_modules the junction removal requires) does not carry playwright-core, which the shared node_modules holds but package.json and bun.lock do not declare; iv-e-20.bands and iv-e-20.scrollbars fail on their driver import in such a tree and pass (skip path, no dev server) in the baseline's tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "shared node_modules: 308 top-level entries incl. playwright, playwright-core, puppeteer-core, @puppeteer; the local frozen install: 244 entries, none of those",
+      "run in the local install: 'Cannot find package playwright-core imported from .../iv-e-20-band-driver.mjs' for IVE20-AC3 and IVE20-AC2 (suite_after_run3_no_playwright.txt); after a junction of the single directory node_modules/playwright-core to the shared one (read only): both pass, 'BANDS-SKIPPED -- no server answering' (iv_e_20_with_playwright.txt)",
+      "the shared node_modules still lists 308 entries after every step (ls read)"
+    ]
+  },
+  "spec_asserts": "Baseline SUITE_SAMPLE.json: the 43 failing ids were measured in the shared install; the suite_after is compared by id against them.",
+  "world_is": "The final suite_after was run with that one junction in place so the two trees differ in no package a test reads. Without it, suite_after would list those two ids as new failing. Where playwright-core comes from (an undeclared global add-on of the shared install) is not decided here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W49-S5",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~49",
+  "surfaced_at": "2026-10-11T08:21:18Z",
+  "one_line": "IV-e-92 part 2: the dev dependency's own dependency happy-dom resolved to 20.14.6, published 2026-10-08 (3 days before this work), while the registrator itself is pinned to 20.14.5 (2026-09-12, 29 days old); its range ^20.14.5 takes the newest.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun pm view @happy-dom/global-registrator time: 20.14.5 2026-09-12T00:05:37Z, 20.14.6 2026-10-08T23:16:36Z (latest); dist-tags latest 20.14.6",
+      "bun.lock entry happy-dom@20.14.6 with the registrator's dependency range happy-dom ^20.14.5"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 2: pinned to an EXACT version that is not brand new.",
+  "world_is": "The pinned package is not new; its transitive happy-dom is 3 days old. The lock fixes it at 20.14.6; pinning it older needs an `overrides` entry or a second declared dev dependency, neither of which the amendment grants.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W49-S6",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~49",
+  "surfaced_at": "2026-10-11T08:21:19Z",
+  "one_line": "IV-e-92: fe-s-46/timeouts.test.ts 'BOUNDS -- the two files change only the third argument of test( calls' is red at this base because IV-e-89's commit 733986d7 changed a non-third-argument hunk in fe-s-40/window.test.ts (the F40-AC4 control now reads the year from TRADING_CALENDAR.firstYear).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 733986d7 src/pages/InvestorReporting/__tests__/fe-s-40/window.test.ts @@ -217,2 +217,4 @@: the two `const requested/answered` lines replaced by a comment, `const before = TRADING_CALENDAR.firstYear - 1` and two template-literal lines",
+      "fe-s-46/timeouts.test.ts:833 'every hunk is a third-argument insertion or the one pinned S7 exception' Received false; it diffs `git diff -U0 1f3ce9f0 HEAD` for window.test.ts and one-writer.test.ts (suite_after_plain.txt)",
+      "none of this order's commits touches either file (git diff 733986d7 193d573f --stat)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: an id outside the 43 that fails at this base is recorded under base_new_failing_ids, not counted against this change.",
+  "world_is": "Not fixed here: the pin lives in fe-s-46 and the cause is a commit this order must not touch. A pin update or a rework of the F40-AC4 hunk is the owner's decision.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
