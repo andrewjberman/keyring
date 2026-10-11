@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~DB2</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>superseded; by the issuer's AMENDMENT 5 (2026-10-11): BLOCKED since 2026-10-09 on a Cottonwood returns source 1.0.0_SA_CTO~DELL2 has since ruled a one-time backfill ending 2026-06-22 (msg 4705), its three un-block conditions cannot be met as written, and while it stayed open the reviewer's remediation rows and L10 slug for rounds 55 to 67 were held outside the channel; nothing was applied under it; the work is re-parked with owner and condition and is re-cut as a NEW order</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -118,6 +118,30 @@ Cottonwood masters, and the builder refuses its ownership-map address for the fi
 No cross-box hop3 order is sent to the laptop until 1 to 3 hold.
 
 **Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
+
+## AMENDMENT 5 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~13:2xZ): SUPERSEDED -- the order is closed without an apply; its work is re-parked and will be RE-CUT as a new order
+
+**Why.** This order has been open and BLOCKED since 2026-10-09 (AMENDMENT 3), and AMENDMENT 4 restated its un-block condition as three
+things: a never-widen pair for a reader of the Cottonwood `account_return_daily`, that reader obeying the `return_basis` condition, and a
+hop3 change that resolves Cottonwood masters. Since then 1.0.0_SA_CTO~DELL2 has ruled that table a ONE-TIME backfill ending 2026-06-22 that
+was never a current source (msg 4705), deferred IRPT_DASHBD FWD-11 for the reporting read (msgs 4514, 4674, 4705), and placed the current
+Cottonwood figure with IRPT_BCKEND FWD-3 (msg 4730). So the conditions as written cannot be met, and what "the first real retained
+Performance client statement" for a Cottonwood household should read FROM is no longer what this order says.
+
+**What an open, un-runnable order was costing.** The surprise-corpus gate refuses a new remediation row while a task order of the
+workstream is not terminal. 3.0.0_SA_CVO has therefore HELD its remediation rows and the L10 slug for rounds 55 and 56 outside the channel
+since 2026-10-10T03:04Z (`org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_REMEDIATION_ROUNDS_55_56_HELD_20261010.md`), and every round
+since (through 67) has compiled behind the same hold. One blocked order was holding thirteen rounds' adjudication.
+
+**What this does.** `<status>` is `superseded`. NOTHING was applied under this order: no submission was retained, no document persisted, no
+served object written (AMENDMENTS 1 to 4 record only reads and holds). The cell `DB-b-86` (enrichment item E4, FWD-12) is NOT dropped: it
+is re-parked, with owner and condition, in
+`org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/FWD11_REPORTING_READ_PARKED_20261011.md`, and is RE-CUT as a new order with a
+new id when 1.0.0_SA_CTO~DELL2 names what a Cottonwood statement reads from. The worker lane `0.7.0_AE_CloudOps~DB2` owes nothing.
+
+**Ruled by the issuer inside its own decomposition** (CLAUDE.md rule 27, L5/L6). It changes no ENDPOINT and no served thing; the CTO is
+told because the re-cut waits on its word. **Gate limb that graded this modification:** none. A modified order without `<placeholders>`
+is not graded.
 
 ## BOUNDS
 

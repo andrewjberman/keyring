@@ -5983,3 +5983,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S13",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T13:24:56Z",
+  "one_line": "The income reason now served on method row 3 names one channel ('FWD-3 does not separate income'), while row 3 is the positions-based method for any entry. A later positions-based channel that does separate income would inherit a served sentence that is false for it. Raised in this seat's round 66 read (row D2-S11) and served since round 67; filed here as its own row so it has a carrier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's served reads of 2026-10-11 (investigation row IRPT_DASHBD-D2-S12): Cottonwood's method row 3 states income absent with a reason that names FWD-3; the prior versions of both keys are retained and the overwrite was captured first",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:119-134 at commit 17304421c8, read by this seat",
+      "investigation rows IRPT_DASHBD-D2-S11, D2-S12"
+    ]
+  },
+  "spec_asserts": "Rule 24 postulate (ii), same grain: a method row's fact is a fact of the method_version, the grain the table has.",
+  "world_is": "One channel uses row 3 today, so the sentence is true of every row it describes now. Not established: whether a second positions-based channel is planned.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
