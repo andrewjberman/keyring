@@ -5887,3 +5887,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S10",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T09:10:50Z",
+  "one_line": "L8 round 65 (DB-b-121, read-only): no judgment criterion. This seat's reads bear out two of its rows: the reporting publisher refuses a null income value, and the minted Cottonwood table writes income_received null on every row, so no Cottonwood account can be published as the code stands (D2-W96-S2); and DB-b-86's un-block condition now asks a hop3 record that names the Cottonwood table (D2-W96-S1, disarmed by AMENDMENT 4). One item the record lists as not established is measured: the deployed firm map holds one firm, 49financial.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4541 (round 65 drained @1d9c2fb822)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~96/REPORTING_READ_PER_FIRM.json",
+      "this seat's read of infra/aws/lambda/investor-reporting/reporting-publish/publisher.py at HEAD: line 51 lists income_received among the series fields; lines 80-81 and 86-87 raise PublishRefused when a value is null (the SERIES contract says never null); the Cottonwood adapter writes income_received None on every row (commonwealth_account_return_daily.py, read by this seat at the mint grade)",
+      "this seat's read of TO-DB-b-86 AMENDMENT 4 (lines 103-115, @4b9db08e1a): condition 3 now asks a hop3 output whose record states it read irpt/cottonwood/gold/account_return_daily/ for Cottonwood masters; a 49 Financial file does not un-block the order",
+      "this seat's live read at the DSGN_IRPTV1 rounds 14-15 compile (2026-10-11 ~08:3xZ): irpt-49f-reporting-read-lambda IRPT_DIRECTORY_BUCKET_MAP holds 1 key, 49financial -- the first item of the record's not_established list, measured"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the drain-end packet and reads the state itself.",
+  "world_is": "Round 65 is terminal. The record's count (Cottonwood has 6 of the reporting read's 14 per-firm needs, lacks 7, 1 not established) is the worker's; this seat checked two of the 14. The CTO deferred FWD-11 for the reporting read (msg 4514, per the issuer).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
