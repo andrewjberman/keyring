@@ -24,9 +24,11 @@ The GO is the issuer's amendment commit that records the window's time, fills `B
    `DEST-VS-MANIFEST: EQUAL` (denominator printed).
 2. The flip commit (`FB-g-30`) and the eight re-pins (`FB-g-31`) are merged: `r4_flipcommit.py --verify --base BASEREF` reads
    4 of 4 and `r4_repin.py` reads 3 of 3.
-3. The pair for this act reads SIGNED in both halves: `org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND4_ACT4_CUTOVER_COO_HALF.md` (+ ADDENDA 1, 2) and
+3. Acts 4b and 4c are APPLIED and their Branch A read (the CTO's order, msg 4013: they run BEFORE this act). The pair for this act
+   reads SIGNED in both halves: `org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND4_ACT4_CUTOVER_COO_HALF.md` (+ ADDENDA 1, 2) and
    `..._CTO_HALF.md` (+ ADDENDA 1 to 5); acts 3b, 3c and 4b/4c's CTO half SIGNED; acts 3b and 3c APPLIED and closed.
-4. It is a trading day and the time is 13:45Z or later (the first hour's origin responses are the act's live read).
+4. No hand ownership-map change since the GO (act-2 CTO ADDENDUM 3 condition 3; it holds through the flip). It is a trading day
+   and the time is 13:45Z or later (the first hour's origin responses are the act's live read).
 5. The laptop leg `FB-f-19` is open on the crossbox and its executor `0.7.0_AE_CloudOps~FBL` has acked.
 
 ## 1. THE ACT -- the eight IRPT consumers deploy the flipped `loaders.py`; the sample reads before and after
@@ -57,8 +59,11 @@ ADDENDA 2 to 5. Load `/cloud-ops` before any AWS act.
    first and the last unit's apply times (CTO condition 2): the split with the edge leg lasts minutes.
 5. **The AFTER sample.** The same events, the same viewers, into `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/SAMPLE_AFTER.json`; then
    `python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_sample_eq.py --before org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/SAMPLE_BEFORE.json --after org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/SAMPLE_AFTER.json`: every case EQUAL and every
-   ownership read at the canonical key. A DIFFERENT line is Branch B (including a previously served request newly refused, and
-   any `AccessDenied`), with act 2's rollback.
+   ownership read at the canonical key. `irpt-ycharts-generate` reads the SAME answers before and after (its re-pin also gains
+   the `load_directory` pointer guard: a previously served request newly refused is Branch B, the CTO's ADDENDUM 5). The
+   performance adapter is invoked once, and the KEY of the evidence artifact its run writes is NAMED in the entry and must not
+   lie under a served class. A DIFFERENT line is Branch B (including a previously served request newly refused, and any
+   `AccessDenied`), with act 2's rollback.
 6. **The first hour.** Read the router behaviors' real origin responses over the first hour after the last unit (CloudFront
    metrics or logs, named in the entry); an origin 403 or 404 is Branch B. Print the denominator. Andrew's staff-session fetch is
    offered in the entry, not a gate.
