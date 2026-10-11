@@ -2086,3 +2086,52 @@ denominator.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+### TCKT_VNEXT-D2-S49 -- "refused today" by the firm-scope lookup is NOT a row count, and a live row proves it
+
+**owner:** `0.7.0_AE_CloudOps~TV2` (filer) | **disarm_owner:** n/a -- not a hazard: the affected caller is refused either
+way. The hazard would be a release built on the count alone.
+**class:** DENOMINATOR / MECE | **found:** 2026-10-11, cell R7-ct-1, step 2 of TO-READ-R7-ct1
+**for:** the pair of the release that refuses an internal caller with no PROFILE row
+
+**spec_asserts:** the order and the PRD's ADDENDUM 3 describe who the firm-scope lookup refuses TODAY as a ROW COUNT:
+"More than one such item is a refusal today; none will be a refusal after the release." On that model, reading
+`with_more_than_one_row = 0` says nobody is refused today, and the release's only new refusal is the no-row case.
+
+**world_is:** the count is indeed 0, and that is not the whole set. `_profile_scope`
+(`infra/aws/lambda/ticket_center/lambda_function.py`, read at HEAD) has THREE refusal paths, only one of which is a count:
+
+1. line 375 -- more than one PROFILE row: `403 firm scope lookup failed`. **Measured: 0 callers.**
+2. line 381 -- the lookup raised: `403 firm scope lookup failed`. Not reachable by a read of rows.
+3. **line 391 -- `allowedFirmIds` is present and is NOT a list: `403 firm scope malformed`.** The guard is
+   `if isinstance(val, list)`, and `_ddb` is `boto3.resource` (line 71), so a DynamoDB `S` arrives as a Python `str`,
+   fails that test, and falls through to the refusal. **Measured: ONE live row**, digest `35cb8f292b44`, `firmId
+   opal-capital`, `status active`, carrying `allowedFirmIds` as a STRING of length 10 which is not the literal `ALL`.
+   (A string `ALL` would fail the same way -- the code's own docstring says the literal belongs INSIDE a list, where it
+   "is just an id that matches nothing".)
+
+So the set of internal callers the lookup refuses today is `{count > 1} UNION {non-list value}`, and the second member
+is non-empty while the first is empty. A reader who checks only the count concludes "nobody is refused today" and is
+wrong by one.
+
+**a second path on the SAME row, which makes the first possibly unreachable:** that row also carries `userType
+"service"` with a local-part that is NOT one of the three service subjects the handler knows
+(`svc-ticket-form`, `svc-analyst-intake`, `svc-commentary`). If the authorizer mints `userType "service"` for it,
+`principal_class` returns UNRESOLVABLE at line 324 -- "an unknown service subject is nobody" -- and every action denies
+BEFORE the scope lookup is reached, so the malformed value never fires. **Which path fires depends on the userType the
+authorizer mints, which is NOT visible to a read of these two tables.** Either way the caller is refused; the point of
+this row is that neither path is a row count.
+
+**why it matters:** the release's pair is being built on a count. The count is a sound answer to "who has no row" and
+not to "who does the lookup refuse". If the pair's record says "0 refused today" on the strength of
+`with_more_than_one_row = 0`, it will be contradicted the first time this row is exercised, and the contradiction will
+look like a regression introduced by the release when it predates it.
+
+**what would close it (not mine, and not in this order's bounds):** the release's pair states its "refused today"
+population as the UNION of the three paths, with the non-list case measured; and someone who owns that identity decides
+whether the attribute should be a list, be absent, or whether the row should exist at all.
+
+**not established:** whether any row in a firm OTHER than `opal-capital` carries a non-list `allowedFirmIds`. My
+population was the internal one this order defines -- 30 addresses -- so the 33 PROFILE rows of other firms were not
+examined for this attribute's type. A sweep of all 56 PROFILE rows is a different read with a different denominator.
