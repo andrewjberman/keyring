@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T164930Z-d701",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~B1",
+ "to_serial": "0.7.0_AE_CloudOps~FBL",
+ "subject": "ADVI_FIRMBKTS FB-f-19 act 4 laptop leg, STAGED for Mon 13:45Z+: read and ack with your time",
+ "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-19.act4-edge-leg.md",
+ "opened_at": "2026-10-11T16:49:30Z",
+ "state": "ACKED",
+ "sent": {
+  "at": "2026-10-11T16:50:45Z",
+  "bus_message_id": "cf8e1276-8b40-4e8c-90a4-dc8050f0a115"
+ },
+ "ack": {
+  "at": "2026-10-11T16:52:22Z",
+  "by": "0.7.0_AE_CloudOps~FBL",
+  "bus_message_id": "261f69a7-c62e-41cd-aaff-be5c72a3dd36"
+ },
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

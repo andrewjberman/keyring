@@ -4,7 +4,7 @@
 
 <decomp_ref>
 <decomp_doc>org/missions/D5/AMGT/AMGT_CORPUS/decompositions/AMGT_CORPUS_DECOMP.md</decomp_doc>
-<owned_cells>CRPS-aw-2</owned_cells>
+<owned_cells>CRPS-aw-2, CRPS-aw-11</owned_cells>
 </decomp_ref>
 <issued_to>0.9.0_WK_AMGT_CORPUS~2</issued_to>
 <issued_by>2.0.0_SA_COO~C1</issued_by>
@@ -69,6 +69,17 @@ A payload captured before this cell carries neither key.
    be unique (use the sheet row `row.teamCite?.row` when present, else the index) in EVERY place the group's rows are keyed (heading rows too).
    Add no new summary line elsewhere.
 
+**AMENDMENT 1 (issuer, 2026-10-11 ~17:3xZ; cell `CRPS-aw-11` folded into this order; build it after your committed work and commit it
+separately).** The lib half now also serves a THIRD claim: a code row's label MEASURED from the team's own workbook:
+`row_labels[i] = {"text": <the team's own label>, "source": "factset"|"bloomberg", "claim": "measured", "cite": "<sheet>!<cell>", "code", "why": null}`
+(for example `{"text": "Revenue", "source": "factset", "claim": "measured", "cite": "Model NEW VERSION!D4", "code": "FF_SALES", "why": null}`).
+Render it: (1) `TeamRowLabel.claim` is `'held' | 'absent' | 'measured'`; (2) the row's `label` is its `text`; (3) its `labelTitle` is
+`` `${code}: measured from the team's sheet at ${cite}` `` (the code alone when `cite` is null); (4) a `factset` source keeps `sourceLabel`
+`FactSet, via team model`; (5) `TeamCensus.labels` gains `measured`: the rendered rows whose entry's claim is `measured`; those rows are NOT
+counted in `held`, `factset_line` or `bloomberg_line`, and `raw` is unchanged (0 on a complete payload); the key `measured` is present
+whenever `row_labels` is. Without `row_labels` nothing changes. The issuer's check gained a fifth arm: `aw2 build <b>/5 control <c>/2`; AC1's
+expectation below reads `5/5`. Your two rows W2-S3 (a null why) and W2-S4 stand as filed.
+
 ## 2. BOUNDS
 
 1. Only the files in `<paths>` change. Never edit the issuer's check or snapshot. No `__harness__/` edit.
@@ -98,12 +109,14 @@ Read-only: the whole repository, in particular `portal/CLAUDE.md` and the issuer
 ## 4. PROOF OF SPEC (literal; timeout 120)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="CRPS-aw-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round47/aw2_check.cjs" portal 2&gt;&amp;1 | tail -1</invocation><expect>(?m)^aw2 build 4/4 control 2/2$</expect></criterion>
+  <criterion id="AC1" cell_refs="CRPS-aw-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round47/aw2_check.cjs" portal 2&gt;&amp;1 | tail -1</invocation><expect>(?m)^aw2 build 5/5 control 2/2$</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-aw-2"><invocation>cd "$(git rev-parse --show-toplevel)/portal" &amp;&amp; node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs &gt; /dev/null 2&gt;&amp;1; echo "tabs rc=$?"</invocation><expect>(?m)^tabs rc=0$</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-aw-2"><invocation>cd "$(git rev-parse --show-toplevel)/portal" &amp;&amp; grep -c "formatTeamValue(" src/pages/SecurityAnalysis/tabs/ModelTab.tsx</invocation><expect>(?m)^[1-9]\d*$</expect></criterion>
+  <criterion id="AC4" cell_refs="CRPS-aw-11"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round47/aw2_check.cjs" portal 2&gt;&amp;1 | grep -c '^aw2 d5 .* ok true$'</invocation><expect>(?m)^1$</expect></criterion>
 </proof_of_spec>
 
-- AC1: the label in words and its title, the source label, `formatTeamValue`'s table, the cell's format, the label census with `raw` 0; and without
+- AC4: the measured claim renders (AMENDMENT 1); a fourth mechanical criterion because the folded cell `CRPS-aw-11` needs its own.
+- AC1: the label in words and its title, the source label, `formatTeamValue`'s table, the cell's format, the label census with `raw` 0, the measured claim (amendment 1); and without
   the new keys the output is byte-equal to the base.
 - AC2: the page's tab harness still exits 0.
 - AC3: the Model tab calls `formatTeamValue`.
@@ -125,4 +138,3 @@ Read-only: the whole repository, in particular `portal/CLAUDE.md` and the issuer
 <round>47</round>
 <slot>~2</slot>
 <fabric>dell1</fabric>
-<status>complete</status>

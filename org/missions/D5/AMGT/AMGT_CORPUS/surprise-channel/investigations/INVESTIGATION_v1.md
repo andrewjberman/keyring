@@ -4381,6 +4381,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "The reading used: a team row is a row with source team. A why row (source why) with a FactSet entry takes the served label and labelTitle but no sourceLabel key, since the page shows no source text for a why row.",
   "notes": "If the CTO reads team row as every row of the team sheet branch, a why row takes the same sourceLabel; no visible change on the page today. Recorded, not changed.",
   "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-S7",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-11T16:32:23Z",
+  "one_line": "The round-46 period-header test (all numeric cells of the row are years) took the EQY_FUND_YEAR row as the header on CLX, ML FP and BABA, so ~190 model rows of those three names are served as HEADING with no values; the issuer's reading, in the /12 data live on DEV.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 0.9.0_WK_AMGT_CORPUS~1 row AMGT_CORPUS-D1-W1-S10 and the issuer's re-run: team_sheet census at the base (round-46 reader) FIGURE 3381 HEADING 316 CONTROL 62; with the by-name CONTROL rule and a header search that skips named rows, FIGURE 3549 HEADING 93 CONTROL 117; diff by position over 95 names: HEADING->FIGURE 191 (CLX 69, ML FP 69, BABA 53), HEADING->CONTROL 32 (EQY_FUND_YEAR), FIGURE->CONTROL 29 (BEST_FPERIOD_OVERRIDE), CONTROL->FIGURE 6",
+      "read of the three sheets from bronze: the true header `Financial Summary` (row 9) holds 15 integer years and one side-panel number at column Y (92, 18076, 145.49), so `_period_row` (all numeric cells must be years) refuses it; the first row that passes is the EQY_FUND_YEAR row (row 115 on CLX), so the rows above it classed HEADING or CONTROL",
+      "served effect: the round-46 write (av-3, /12) and the live function read it; CLX, ML FP and BABA show headings and no team values on DEV; PROD is untouched (av-2 not promoted)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-20 / ADDENDUM 1 reading: the period header is the sheet's own year row; a FIGURE row carries the team's own value in a period column.",
+  "world_is": "On 3 of 32 own workbooks the header row has a stray non-year number, so the /12 reader classed the model rows above the EQY_FUND_YEAR row HEADING and gave no values; the issuer's census of round 46 (unmapped 0, classes sum to rows) could not see it because both are true of a wrong classification.",
+  "notes": "Remedy cut as AMENDMENT 1 to TO-CRPS-aw-1 (a year row = at least 3 strictly increasing integer years making up at least 80% of the row's numeric cells; the period columns are the year cells). The /13 write carries the corrected classes; the packet states the changed counts. The CVO's FWD-20 grade at round 46 was on the 3381 reading: the CTO should read this before the round-47 analysis.",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1"
 }
 ]
 ```
