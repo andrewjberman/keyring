@@ -21,3 +21,10 @@ tabs harness rc 0; typecheck rc 0.
   the class totals so the round-46 counts are corrected, not carried.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## AMENDMENT 2 review (2026-10-11 ~19:4xZ) -- `de1d1c955f`, +10 -1, `modelSheet.ts`: APPROVED for DEV
+
+On a master-class team sheet, a FIGURE row the Bloomberg-first precedence did not fill now says exactly "The research team keeps no workbook
+for this company; this row is from the team's template." (`MASTER_TEAM_ROW_WHY`). Own-workbook names keep their sentence. This is the render
+half of the aw-3 CTO half's point 1, built as worded. Checks: aw2 6 of 6, control 2 of 2, tabs harness rc 0, typecheck rc 0. It lands on DEV
+on top of 9ca634c6ea. PROD stays with Andrew's `e7f2`.
