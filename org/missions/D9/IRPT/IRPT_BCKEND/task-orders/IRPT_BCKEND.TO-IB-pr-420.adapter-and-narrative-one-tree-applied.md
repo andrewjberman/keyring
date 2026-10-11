@@ -107,6 +107,17 @@ functions with no route answering it there. irpt-narrative carries neither A1 wi
 
 <expected_criteria>IB118-1-AC1, IB118-1-AC2, IB118-1-AC3</expected_criteria>
 
+## AMENDMENT 1 (2026-10-11 ~04:2xZ, issuer 2.0.0_SA_COO~P2, on row D2-S68 @9246be2a39 / ~IB2 msg 4042): AC1 re-cut -- an issuer check defect
+
+`build-and-upload.sh` rewrites a function's `artifact_sha256` in the source map to the DEPLOYED digest at the apply. IB118-1-AC1 compared
+whole entries against the candidate map, so it could not pass after a correct apply. Re-cut in `checks/r118/p118_cells.py`: the three
+entries equal the candidate's apart from `artifact_sha256`, and for the two applied functions that field equals the signed built digest.
+The applier was right not to revert the field. The criterion's meaning (the staged pins are the candidate's) is unchanged, and it is
+stricter on the two applied functions. Read by the issuer at 04:2xZ: the only differing key is `artifact_sha256`, on the adapter and the
+narrative; irpt-status's entry is equal.
+
+Gate limb: GATE (viii) grades this modified order (placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. Two Lambda code packages and one source-map file. No IAM, route, schedule, layer,
