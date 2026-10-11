@@ -47,6 +47,16 @@ written its classification is withheld too, because its row disagrees. That is t
 Add `lib/research/api/tests/test_classification_withheld.py` (pure, no network; fixtures replace `_crosswalk_names`, `_classification_for_ticker` and
 `_covered_bloomberg_index` as `r94_display_name.py` does): one test per place and a control that an agreeing row keeps its classification byte-equal.
 
+### 1b. AMENDMENT 1 -- two existing assertions pin the round-94 reading "a withheld series keeps its classification" (the issuer's ruling on rows `AMGT_RESAPP-D1-W391-S1` and `S2`)
+
+Your reading of both rows is right and your production code stands. Round 94's arm D10 of `r94_display_name.py` and the test of the same arm in
+`lib/research/api/tests/test_names_read_agreement.py` (`test_d10_a_rank_series_whose_table_name_disagrees_serves_the_registered_name`, the line
+`assert got["SAN FP"]["classification"] == table["SAN FP"]["classification"]`) were written for the rule BEFORE this cell and assert that a series whose name is replaced keeps
+its table classification: this cell changes exactly that. The issuer has changed the check file (`r94_display_name.py` D10 now asserts `classification` None and a
+`classification_reason` containing "not available for this listing"; it is on your branch at the commit that carries this order). You change the test: in that one test
+replace the classification assertion by `assert got["SAN FP"]["classification"] is None` and `assert "not available for this listing" in got["SAN FP"]["classification_reason"]`, and
+change nothing else in that file (`status` stays asserted equal). The file joins `<paths>`. Re-run AC1-AC3 and rewrite the instance; the two rows are ruled by this amendment.
+
 Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: id form `AMGT_RESAPP-D1-W391-S<k>`, `disarm_owner` `2.0.0_SA_COO~R1`.
 
 ## 2. BOUNDS
@@ -63,6 +73,7 @@ Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: i
 lib/research/api/scoped_amgt.py
 lib/research/api/monthly_chatter.py
 lib/research/api/tests/test_classification_withheld.py
+lib/research/api/tests/test_names_read_agreement.py
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~391/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -80,7 +91,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 
 **ISSUER NOTES:** CTO~DELL1 round-94 analysis item 2: "D1-S26: no field of a disagreeing table row is served. When the registered name disagrees with the table row's name for the bare ticker, no field of that row is served for the security, and the page says why ('classification not available for this listing'). Close: CSL AU serves no Carlisle field on the overlay, the ranked join or the rank timeseries. SAN FP's classification row is read and shown to be Sanofi's, beside a control whose classification is unchanged. It is a served change: its redeploy is under its own pair, measured route by route as ff-4 was." READ: the rule withholds SAN FP's too (its row's name disagrees); the census prints SAN's row (a legacy 'Health Care' under a cleaned Santander name) and the control arm K5 is the 'unchanged' control. The CTO is asked to confirm that reading (message with the issuance); the pair's table lists SAN FP's change either way. The overlay arm K4 is a guard (the subject's own classification is not served there today). aa-4 follows on this slot's queue (same file).
 
-<status>pending</status>
+<status>pending -- REOPENED 2026-10-11T16:31Z by the issuer (2.0.0_SA_COO~R1): W391's cut @3c48901012 passes AC1 (5 of 5) and fails AC2 and AC3 on two assertions written for the round-94 reading (rows D1-W391-S1, S2); RULED by AMENDMENT 1 in section 1b: the issuer's check D10 is changed, the worker changes one test; the production code stands. aa-4 follows on this slot.</status>
 <round>95</round>
 <slot>0.9.0_WK_AMGT_RESAPP~391</slot>
 <fabric>dell1</fabric>
