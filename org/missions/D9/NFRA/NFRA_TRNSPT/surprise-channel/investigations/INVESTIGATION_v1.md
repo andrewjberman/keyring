@@ -1763,3 +1763,27 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S20",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-11T04:58:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "readers.tf still declares itself 'NOT APPLIED -- plan only' at HEAD, but the second named reader's role is LIVE and has been since 2026-10-09T09:55:13Z, trusting arn:aws:iam::313476888478:user/Opal_Terminal. A reader who takes the file's own header as the state of the world reads the opposite of the world.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/transcripts/readers.tf line 2 at HEAD: 'NOT APPLIED -- plan only. Held by its never-widen pair (the apply is the issuer's, under a CTO + COO sign-off).'",
+      "live read 2026-10-11T04:5xZ: iam get-role teams-global-transcripts-second-reader-role returns Arn arn:aws:iam::313476888478:role/teams-global-transcripts-second-reader-role, CreateDate 2026-10-09T09:55:13Z, trust Principal.AWS arn:aws:iam::313476888478:user/Opal_Terminal -- the role name read from data/transcripts/scripts/teams/NAMES.json second_reader, never typed",
+      "open-deploy entry nfra-trnspt-a18-second-reader-laptop-20261009.json: author 0.7.0_AE_CloudOps, device laptop, status HELD-SOVEREIGN-GATED, leg APPLY closed 20261009T100241Z against targets aws_iam_role.second_reader, aws_iam_policy.second_reader, aws_iam_role_policy_attachment.second_reader and aws_kms_key.transcripts; leg VERIFY still OPEN"
+    ]
+  },
+  "spec_asserts": "readers.tf's header: the second reader is DESIRED and NOT APPLIED, plan only, the apply held by its never-widen pair; and var.second_reader_trust_principal_arns has no default on purpose because the trust principal is the issuer's to name with Andrew's routing.",
+  "world_is": "The role exists and carries a concrete trust principal, so a value WAS supplied to that variable on the laptop at apply time and the applied trust is user/Opal_Terminal. The file's header was not updated. Whether the applied trust principal is the one Andrew routed is NOT MEASURED by this seat -- only that one is applied. The entry's VERIFY leg, which would have read the one-principal key-policy delta, is the leg still open. FOUND WHILE: IRPT_ANLREQ TO-APPLY-t1 step B cannot plan the transcripts root at all without a value for that variable (terraform refuses a required variable regardless of -target), so the applier has to learn the applied value to avoid moving another lane's resource; that is the only reason this was read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

@@ -66,7 +66,7 @@ Read-only: the issuer's checks under `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliver
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~7/ADVI_FIRMBKTS.TO-FB-e-4.proof_of_spec.json`.
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~7/ADVI_FIRMBKTS.TO-FB-e-4.f4-arms.proof_of_spec.json`.
   <criterion id="AC1" cell_refs="FB-e-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 100 python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f4.py" --arms positive; echo "exit=$?"</invocation><expect>ROUND 2 F4 POSITIVE: 3 of 3 arms</expect></criterion>
   <criterion id="AC2" cell_refs="FB-e-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f4.py" --arms negative --evidence "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~7/F4_NEGARM_EVIDENCE.json"; echo "exit=$?"</invocation><expect>ROUND 2 F4 NEGATIVE: 4 of 4 arms</expect></criterion>
 </proof_of_spec>
@@ -77,7 +77,7 @@ AWS call), so it terminates at once.
 
 ## 5. WHEN YOU ARE DONE
 
-Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~7/ADVI_FIRMBKTS.TO-FB-e-4.proof_of_spec.json`.
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~7/ADVI_FIRMBKTS.TO-FB-e-4.f4-arms.proof_of_spec.json`.
 **Flip this order's `<status>` to `complete` in the SAME commit as your proof instance and the evidence file**, only when
 AC1 and AC2 both pass. A row id on this project carries the dell1 infix and your slot: `ADVI_FIRMBKTS-D1-W7-S<k>`, with
 `surfaced_at` from `date -u +%FT%TZ`. Report once: the caller ARN printed by AC1, the command id, the `INF:` and `COT:`
