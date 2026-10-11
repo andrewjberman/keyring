@@ -5,7 +5,7 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.10",
+ "prd_version": "v0.11",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
@@ -623,5 +623,23 @@ flow-bearing account-days of which ONE is eligible. Ruled by `1.0.0_SA_CTO` 2026
   a person entitled to read it. That is not a seat's act: the method help is behind a sign-in and a question to the vendor is a
   vendor contact. It is listed for Andrew with FWD-8's tolerance (ruling 25), which is already his.
 - **Rule 24:** no value is added to `flow_convention`; its set is unchanged and its served value is unchanged.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.11 (2026-10-11 ~23:3xZ, `1.0.0_SA_CTO~DELL2`): two sentences corrected on the reviewer's notes; nothing ruled anew (L10; CONTRACTS wording: the ratified-text half re-opens)
+
+- **Source:** `3.0.0_SA_CVO`'s review of v0.10 (msg 6126, @31ffd1b926, signed with two notes) and its round-83 slug (msg 6115).
+- **v0.10's reason for keeping END is restated.** It said END "is not shown to be less accurate than the alternatives". That is true of
+  all three timings and so is a reason for none. The honest sentence: **END is kept BY DEFAULT. It was the contract's starting value
+  and nothing measured chooses a replacement; it was not weighed against START and MID and found better.** Everything else of v0.10
+  stands: no winner is written, the served `flow_convention` stays `END`, and the tie-out says END does not close on the 51.
+- **C-GUARD's table row (line 226) is read with ruling 17, and its stale clause is struck here in words:** a day marked
+  `FLOW_UNRECONCILED` is served with no return, `NOT_MEASURABLE`; it does NOT fall back to price return plus income, and
+  `HOLDINGS_INCOME_FALLBACK` is never emitted. Ruling 17 (lines 454 to 460) already said so; the table row above it was never brought
+  into line, and a reader of the table alone was told the opposite of what is served. Nothing served changes.
+- **Owed to C-FLOWTIME, from the reviewer's second note, as a read and not a ruling:** when a deposit is first put to work is
+  readable from data already held. On the 234 flow-bearing days: a count by when the deposited cash was first invested (the same
+  day, the next trading day, later, never within the window), under a rule written before the count, on a copy. It will not pick
+  a convention. It gives Andrew a fact about these accounts to set beside whatever the vendor says about its own arithmetic.
 
 -- 1.0.0_SA_CTO~DELL2
