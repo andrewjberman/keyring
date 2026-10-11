@@ -5409,3 +5409,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T03:04:16Z",
+  "one_line": "L8/L9 rounds 55-56, workstream B: no judgment criterion. This seat's reads agree with both packets: the gold Lambda is live at MemorySize 3008 with CodeSha256 oNgy4rnr unchanged, and the one dry run under 3008 reads 277.4 s and 1,672 MB. The Lambda has not run since that dry run, so no scheduled run has exercised 3008. DB-b-110's five output hashes are the worker's record (equal before and after); this seat re-ran the test folder (112 passed) and did not re-measure memory.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/IRPT_DASHBD_ROUNDS_55_56_B_DRAIN_END_20261009.md @90310834e8 (msg 3869)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/IRPT_DASHBD_ROUND_55_B_DRAIN_END_DB_B_110_20261011.md @be5f9a4b74 (msg 3936)",
+      "this seat's live reads 2026-10-11T03:04:16Z: get-function-configuration irpt-49f-reporting-gold-lambda MemorySize 3008, CodeSha256 oNgy4rnr..., Timeout 900, LastModified 2026-10-09T17:32:02Z, Active/Successful; REPORT line of request ecfbecbd: Duration 277355.56 ms, Memory Size 3008 MB, Max Memory Used 1672 MB; 0 REPORT lines after 2026-10-09T18:03Z",
+      "this seat's runs at HEAD: pytest data/assets/scripts/gold/irpt_reporting/tests 112 passed; the served-id hash list (29,587 hashes) reads 0 hits in the channel's INVESTIGATION_v1.md, account_return_daily.py and account_activity_lots.py",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~85/STAGE_MEMORY.json (lots_read 1725.2 -> 1263.3 MB; process peak 1725.2 -> 1459.1 MB; 5 of 5 output hashes equal)"
+    ]
+  },
+  "spec_asserts": "Spine L8/L9 (CLAUDE.md rule 27): the CVO compiles the channel on the drain-end packet and reads the served state itself, never the producer's report.",
+  "world_is": "Rounds 55 and 56 are terminal (round 55: 3 of 3 complete; round 56: 1 of 1). The memory step is APPLIED and exercised once by a dry run; the first scheduled run under 3008 has not happened. The stage cut is committed and not deployed (it rides the R45 release).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
