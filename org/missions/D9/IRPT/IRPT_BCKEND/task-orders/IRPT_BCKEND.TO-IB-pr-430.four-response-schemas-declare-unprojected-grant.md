@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~289</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -87,6 +87,32 @@ handler copies it into `portfolio.owner.firm_id`. The gate is right and is not o
   file a row saying exactly which line refuses; do not try another spelling and do not hand-edit.
 - Everything else you built stands as it is (the four schemas, `DirectoryPage.valid.json`, the validation script, the record).
   Re-run all four criteria and the proof checker after the re-capture, then commit and flip.
+Gate limb that graded this modification: GATE (viii) (placeholders). No criterion, check or path changes.
+
+**AMENDMENT 2 (issuer, 2026-10-11, on row IRPT_BCKEND-D2-W289-S3).** `_scope/prospect.py:34` refuses a firm that is not an
+enabled client firm of the registry `firm_ids()` reads, so AMENDMENT 1's capture cannot run against the real registry. Ruling:
+- The capture may point the handler's own configuration seam, the environment variable `IRPT_FIRM_REGISTRY`, at a SYNTHETIC
+  registry file kept in your deliverables folder, in which the one enabled client firm is `F-49F`. Build it as the smallest file
+  the code path accepts (read how `_ids/ids.py` loads it; copy the real file's STRUCTURE, never a real firm's row or name).
+  That is the second and last permitted difference from the source test. No source file, no test file and no real registry
+  file is edited.
+- The record's row adds `differs_from_source_test: "principal firm id; synthetic firm registry by IRPT_FIRM_REGISTRY"` and the
+  synthetic registry's path. `_source` in the fixture says the same.
+- STOP, with a row, if: a second module on the path reads firms from somewhere the variable does not reach; the answer does
+  not reach NORMALIZED; any real firm spelling still appears in the captured `data`; or the naming gate refuses any file of
+  the commit. Do not widen the method further.
+- Then AMENDMENT 1's remaining steps: checks on the instance, the four criteria, the proof, the commit, the flip.
+Gate limb that graded this modification: GATE (viii) (placeholders). No criterion, check or path changes.
+
+**AMENDMENT 3 (issuer, 2026-10-11, on row IRPT_BCKEND-D2-W289-S4).** The naming gate resolves `F-49F` to a real firm (it is a
+registered tenant-code alias), so AMENDMENT 1 named a spelling the gate refuses: the issuer's defect, it did not run the gate
+on the id before naming it. Ruling: the synthetic firm id is `fir_000000000000000000000001` (the issued opaque form, `fir_` and
+24 hex). MEASURED by the issuer before this cut: `python .tools/naming-gate.py --diff <one added line at the fixture's path>`
+reads `PASS 0 graded` for it and `REFUSE 1 graded` for `F-49F` (the control); `opal_naming.lookup` has no row for it.
+- Put that id in the synthetic registry in place of `F-49F`, re-run the capture and the remake, change nothing else.
+- NOT measured by the issuer: whether the handler path and the type schema accept that id's form. If either refuses, STOP with
+  a row naming the line; do not choose another id.
+- Then the checks on the instance, the four criteria, the proof, the commit, the flip, as AMENDMENTS 1 and 2 say.
 Gate limb that graded this modification: GATE (viii) (placeholders). No criterion, check or path changes.
 
 <criterion id="IB128-1-AC1" cell_refs="IB-pr-430"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r128/p128_cells.py" . IB128-1-AC1</invocation><expect>IB128-1-AC1 PASS</expect></criterion>

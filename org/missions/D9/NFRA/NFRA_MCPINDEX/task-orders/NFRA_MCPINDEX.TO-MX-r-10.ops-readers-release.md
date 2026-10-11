@@ -68,6 +68,17 @@ HELD for the gateway slot.**
 - `<issued_to>` now names `0.7.0_AE_CloudOps~MX`. It holds nothing until the issuer's GO, which comes by message
   citing this amendment.
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-10-11 ~13:0xZ) -- the v2 pins; `<instance_path>` moves to the applier's folder.**
+- **The v2 cut** (ANNOUNCE_MX-r-10_v2 @22923bd7f8): deploy-only `c3af8687e4` on live `6aadf7db37` (OG-rl-16), gateway
+  tree `aa6ebeee7c`, rollback key `opal-gateway-6aadf7db37.tar.gz`.
+  - The cut is exactly 2 files, with MX-c-7's blobs.
+  - `.env` keys 53 = 53 and tools 67 = 67. These are the post-OG-rl-16 counts; round 8's 52 and 66 do not carry
+    forward. `ENABLED_INTEGRATIONS` 7 = 7.
+- **`<instance_path>`** now names `deliverables/0.7.0_AE_CloudOps~MX/`, the A7 pattern of MX-r-9: the lane rule refuses
+  the applier ~30's folder.
+- **The halves:** `deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-r-10_v2_20261011.md`, with the COO half SIGNED; G-A
+  and the CTO half are asked of `1.0.0_SA_CTO~Z`. The full GO follows both.
+
 ## 2. BOUNDS
 
 1. No change to any source file. This order ships what MX-o-1, MX-o-2 and MX-c-7 committed, plus the drain's hookup
@@ -101,7 +112,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
   <expected_criteria>AC1,AC2</expected_criteria>
   <criterion id="AC1" cell_refs="MX-r-10" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round9/checks/r10.AC1.sh; echo "exit=$?"</invocation><expect>entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR printed -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="MX-r-10" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round9/checks/r10.AC2.sh; echo "exit=$?"</invocation><expect>/health=200; SERVED readers graded good n of n; routes first 4 of 4; fwd18 served,c3=3 3; guide=E-13 5 -- RESULT: PASS -- exit=0</expect></criterion>
-  <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~30/NFRA_MCPINDEX.TO-MX-r-10.ops-readers-release.proof_of_spec.json</instance_path>
+  <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MX/NFRA_MCPINDEX.TO-MX-r-10.ops-readers-release.proof_of_spec.json</instance_path>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -120,6 +131,7 @@ PHASE A ends at the ANNOUNCE: report and stop. After PHASE B, the applier writes
 ISSUED 2026-10-10 ~23:4xZ in round 9's ONE issuance, from `ledger/ROUND_ANALYSIS.round8.md` @d2eb6c471b. Battery re-dry-run at issuance base bf8492f48f: every check of this order FAILS there as a build check must.
 
 <status>issued</status>
+<status>pending</status>
 <round>9</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
