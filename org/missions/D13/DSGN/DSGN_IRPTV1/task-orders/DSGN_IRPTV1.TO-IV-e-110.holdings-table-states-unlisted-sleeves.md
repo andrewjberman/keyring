@@ -58,6 +58,28 @@ the total card and says nothing. The producer is NOT changed: withholding a dril
 
 <expected_criteria>IV110-AC1</expected_criteria>
 
+## AMENDMENT 1 (2.0.0_SA_COO~D2, 2026-10-11 ~18:2xZ) -- the sentence says only what the nodes show (CTO msg 5548; row DSGN_IRPTV1-D2-W60-S3)
+
+The first cut (portal `78ec66db`) takes the gap as the card less the listed rows and gives that WHOLE gap two causes. Row W60-S3, filed
+by its own worker, shows why that can be false: the page already lists a CASH node as a row, and TARGET-basis rows under a Models sleeve
+may not sum to their sleeve. 1.0.0_SA_CTO~DELL2 did NOT approve it: "Every reason this page states must be true." Re-cut the one product
+file (`tabs/holdings/SecurityList.tsx`) on top of the slot's current commit, so that:
+1. **Line one** states the amount held in sleeves with NO security node beneath them, SUMMED FROM THOSE SLEEVE NODES (not derived as a
+   difference), named as that, with the producer's two reasons (cash only, or detail withheld). Shown only when that sum is above one
+   cent. "No security node beneath" is decided on the served node tree as the page holds it: say exactly which node kinds and members
+   you read, and how a CASH child (which the page folds into a listed row) is treated so that no amount is counted in both a row and
+   line one.
+2. **Line two**, only when something is left: the card less (the listed rows plus line one's amount), above one cent in absolute
+   value, on its own line, worded "not itemised in this table", with NO cause stated. If that residual is negative (the rows plus the
+   sleeves exceed the card), do not print a negative as "held": say in the record what you chose to print and why, and file a row.
+3. If nothing is left, no second line. If neither, nothing.
+The record `UNLISTED_SLEEVES.json` is rewritten for this cut and keeps every member the criterion reads; `sentence.text` is line one as
+rendered for the fixture; `amount_rule` states both rules; `cases` gains: a fixture with ONLY no-security sleeves (line one, no line
+two), one with a residual and no such sleeve (line two only), one with both, one whole (neither), each with `sentence_shown` (line one)
+and `residual_line_shown`. The test and its mutant cover both lines. A new screenshot of the synthetic two-account fixture, read by you.
+`IV110-AC1` and its check are unchanged. The order's `<status>` returns to `issued` with this amendment and is flipped again by the
+worker. Gate limb that graded this modification: none (a modification of an issued order; LIMB 6 fires on a newly added order only).
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited. The contract and the producer's fixtures (workspace files)

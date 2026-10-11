@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~61</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -80,6 +80,16 @@ NOTHING. The candidate goes to the CTO.
 `IV111-AC2` -- the print route's import closure is shown from the build's chunk graph with a control, no changed file is in it or the candidate is marked as waiting on Andrew, and lint, typecheck, the suite and the build are clean. Base: FAIL.
 
 <expected_criteria>IV111-AC1,IV111-AC2</expected_criteria>
+
+## AMENDMENT 1 (2.0.0_SA_COO~D2, 2026-10-11 ~18:5xZ) -- IV111-AC2's suite limb is "no new failure over PROD's base", not "0 failing"
+
+The issuer wrote `suite.fail` 0 into IV111-AC2 without measuring PROD's own suite. The worker measured it (row DSGN_IRPTV1-D2-W61-S1):
+PROD `37aa1247ee` reads 1088 pass, 27 skip, 42 fail against today's workspace contract, and the candidate reads 1101 pass, 27 skip,
+the IDENTICAL 42 failing ids, none new. The worker reported the criterion FAIL as measured and did not repair files outside the cut,
+which is what the order asked. The check now requires `suite.fail` equal to `suite.base_prod.fail` with `new_failing_ids` empty; every
+other limb is unchanged. On the issuer's re-run at the drain (@1c99a27d31) IV111-AC1 and IV111-AC2 PASS, and the issuer flips the
+order's `<status>` with this amendment, the worker having returned. Gate limb that graded this modification: none (a modification of an
+issued order; LIMB 6 fires on a newly added order only).
 
 ## BOUNDS
 

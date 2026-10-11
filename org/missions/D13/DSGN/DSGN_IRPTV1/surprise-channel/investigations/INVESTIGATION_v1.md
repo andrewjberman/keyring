@@ -5849,3 +5849,270 @@
   "notes": "No act taken beyond the sentence as ordered."
 }
 ```
+
+## DSGN_IRPTV1-D2-W59-S3 -- IV-e-109: running gen-corpus.ts rewrites 19 tracked fixture files in the working tree (18 request records and fe-s-14-print-v1.json) with LF endings while git's normalised view shows no change; the rewrite is line endings only
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W59-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~59",
+  "surfaced_at": "2026-10-11T18:03:00Z",
+  "one_line": "IV-e-109: running gen-corpus.ts rewrites 19 tracked fixture files in the working tree (18 request records and fe-s-14-print-v1.json) with LF endings while git's normalised view shows no change; the rewrite is line endings only",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this session, after the _captured fix (portal 70bb186d), two runs of gen-corpus.ts from a clean tree: git status --short listed 19 files as M (18 under fixtures/wire/requests, plus fixtures/smoke/fe-s-14-print-v1.json) and git diff --quiet returned rc 0 (no content difference); git hash-object --path of comparison-catalogue.request.json equals HEAD:src/pages/InvestorReporting/fixtures/wire/requests/comparison-catalogue.request.json (64002f1df749dbb8384379606f8c943552684a21)",
+      "git ls-files --eol: i/lf w/lf for the written file; core.autocrlf is true, so a checked-out tracked text file is CRLF and the generator writes LF (writeFileSync with a literal \\n)",
+      "the three other files the generator writes (smoke/default.json, fe-s-13-wire.json, the published map) also gave the LF-over-CRLF warning but did not list as M in the first run",
+      "log: C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~59/gen_corpus_run.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: if the generator also rewrites other tracked files to different bytes with no source change, say which and why and file a row; do not commit a churned file.",
+  "world_is": "It rewrites those 19 working-tree files to different BYTES (LF where the checkout holds CRLF) and the same content: git shows them M by stat but diff-clean. Nothing was committed from the run; every file was put back with git checkout -- (none held work of mine). The generator was not changed to write CRLF, because the writer is shared by the checked-in LF index and a CRLF write would be the platform-specific logic the portal rules refuse.",
+  "notes": "The status noise is the observed effect; whether a blanket git add of those files would commit nothing was not tested."
+}
+```
+
+## DSGN_IRPTV1-D2-W59-S4 -- IV-e-109: the order asks that a fixtures file answer a POST by more than its URL where the script already matches bodies; ui-smoke.mjs matches no request body anywhere, so I did not add it
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W59-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~59",
+  "surfaced_at": "2026-10-11T18:03:30Z",
+  "one_line": "IV-e-109: the order asks that a fixtures file answer a POST by more than its URL where the script already matches bodies; ui-smoke.mjs matches no request body anywhere, so I did not add it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep of portal/scripts/ui-smoke.mjs @d4d20e108e for postData|postDataJSON|method(): only the --netlog lines (req.method() printed) and the OPTIONS preflight check read the method; no line reads a body",
+      "scripts/ui-smoke.mjs matchFixture(url) picks the longest fixture key contained in the URL; the method and body are never consulted",
+      "the picked-client screenshot: FIXTURES-MATCH matched 5 of 5 with the one static POST /selections body (ui-smoke.client-picked.run.txt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order, item 3: let a fixtures file answer a POST by more than its URL where the script already matches bodies, or say exactly why not.",
+  "world_is": "The script does not match bodies today, so the condition 'where the script already matches bodies' does not hold; adding a body-aware fixture key is a new feature. It is not needed to pick a client: the single static answer to POST /selections serves the client pick (both accounts shown). It is needed to pick an ACCOUNT, because a one-account read must differ from the client read; that is why the ~58 driver models the server itself.",
+  "notes": "Not added; a later order that must walk an account pick through ui-smoke would add it."
+}
+```
+
+## DSGN_IRPTV1-D2-S21 -- an opened vendor report on a SERVED answer shows section codes for titles, 'Unit: unknown' on every card, and 
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S21",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T18:21:13Z",
+  "one_line": "Laptop walk XB-c5ce: an opened vendor report on a SERVED answer shows section codes for titles, 'Unit: unknown' on every card, and no validation or source line on its face",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A reader who opens a finished analysis report sees each section by a name, each figure with its unit, and the report's validation and source stated on the face (IRPT_YCDGEN FWD-1's bar: every reason the page states is true and readable by a principal).",
+  "world_is": "Walk face 7, the first Ready request, vendor-kind: 104 section cards; every card's title and Label read as a section code of the form S03; 'Unit: unknown' on all 104; the token source_chart_representation appears twice; the word 'validation' occurs once, inside a closed Technical details; 'Source:' occurs 0 times in the dialog. 'undefined' and 'null' occur 0 times. Every synthetic fixture this project rendered carried titles, units and a validation value, so no screenshot of rounds 17 to 22 showed this. NOT established: whether the served answer carries no title and no unit (a producer or contract matter) or the page drops them (a page defect); whether an Opal report reads the same (face 8 NOT REACHED). Dates on the same report mix two formats.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/XB_C5CE_IRPT_DEV_WALK_RESULT_20261011.md (laptop 4.0.0_SA_CRO; a localhost build of portal DEV 9ca634c6 against the served backend, staff sign-in, one two-account client, 0 writes)",
+      "read by this seat in the result file's table; the walker's screenshots are on the laptop and were not seen by this seat"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-S22 -- three served answers came back UNAVAILABLE with FIRM_BINDING during the walk and nothing on any face says so
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S22",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T18:21:13Z",
+  "one_line": "Laptop walk XB-c5ce: three served answers came back UNAVAILABLE with FIRM_BINDING during the walk and nothing on any face says so",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "When a read the page makes is refused, the face that depends on it says so in words (the Performance refusal does).",
+  "world_is": "Walk face 9: all /api/ answers were HTTP 200 (121 of 121, 136 of 136), and inside them reporting/<account>/manifest and reporting/client/<client>/summary answered UNAVAILABLE with FIRM_BINDING, 3 times in walk 1. Nothing on any face stated it. Which face those reads feed was NOT SEEN by the walker. performance/<selection> answered OBJECT_NOT_COVERED and IS shown as a worded refusal (face 3; the Performance hop is IRPT_BCKEND's, row S252).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/XB_C5CE_IRPT_DEV_WALK_RESULT_20261011.md (laptop 4.0.0_SA_CRO; a localhost build of portal DEV 9ca634c6 against the served backend, staff sign-in, one two-account client, 0 writes)",
+      "read by this seat in the result file's table; the walker's screenshots are on the laptop and were not seen by this seat"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-S23 -- design and console findings on the Holdings tab from a rendered walk: five full-width navy bands where the des
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S23",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T18:21:13Z",
+  "one_line": "Laptop walk XB-c5ce: design and console findings on the Holdings tab from a rendered walk: five full-width navy bands where the design law allows one, 32 to 36 text elements under 3:1 contrast, and one React hydration-class warning",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "portal/DESIGN.md C3: at most one full-bleed band per page; text meets contrast on the light canvas; the console is clean on a normal load.",
+  "world_is": "Walk, 'other things a reader sees': the Holdings tab draws 5 full-width navy bands (the panel headers and footers this project's screenshots also show; this seat read those screenshots today and did not count them against C3); 32 to 36 text elements under 3:1 contrast (the lavender eyebrow text such as ALL CATEGORIES on the light canvas); one React warning on the Holdings tab, 'whitespace text nodes cannot be a child of colgroup'. Also: with no account picked the tab shows an 'Opening <account>...' line and a 'Back to all accounts' link; the Performance refusal says 'for this client' and 'for this account' in one sentence. Whether the panel header bands count as C3 bands is a design ruling this seat does not make.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/XB_C5CE_IRPT_DEV_WALK_RESULT_20261011.md (laptop 4.0.0_SA_CRO; a localhost build of portal DEV 9ca634c6 against the served backend, staff sign-in, one two-account client, 0 writes)",
+      "read by this seat in the result file's table; the walker's screenshots are on the laptop and were not seen by this seat"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-W61-S1 -- IV-e-111: portal PROD's own Investor Reporting suite reads 42 failing, not 0, on the workspace contract of today's trunk; the candidate adds none and fixes none, so IV111-AC2's suite.fail 0 cannot be met as written
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W61-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~61",
+  "surfaced_at": "2026-10-11T18:26:00Z",
+  "one_line": "IV-e-111: portal PROD's own Investor Reporting suite reads 1088 pass, 27 skip, 42 fail on today's workspace contract; the candidate reads 1101 pass, 27 skip, 42 fail with the identical 42 ids, so IV111-AC2's suite.fail 0 cannot be met as written without bringing the rest of the range",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~61/base_suite_plain.txt: PROD 37aa1247ee, bun test src/pages/InvestorReporting: 1088 pass, 27 skip, 42 fail, 1157 tests, 370 files",
+      "cut_suite_plain.txt in the same folder: candidate fc876722: 1101 pass, 27 skip, 42 fail, 1170 tests, 373 files (13 new tests, all passing)",
+      "base_fail.txt and cut_fail.txt: the two sorted failing-id lists are identical (comm -13 and comm -23 both empty): new_failing_ids is empty and no base failure was fixed",
+      "the 42 fall in these groups by the test names: the operation table is routes.json (5), the request corpus (2), producer fixtures (3), the published map / fixture set (2), F14-AC13/15/16, F25-AC2/AC3, F40-AC5/AC7, F57-AC2, FE-s-47 AC6/AC7, FE-s-90 (4: ENOENT on C:/Users/AndrewBerman/.bun/bin/bun), IVE18/25/26/69/109/110/111/112/115/116/137, IVE20 (2, a running dev server), source bounds, retained selection. Each reads a file DEV changed in a range commit outside this cut (routes table rows, wire and fixture folders, the calendar, the harness)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: PROD's base may not be 0 failing; the job is to add no new failure; the criterion's suite.fail must be 0 at the end; a PROD test that fails on base only because the workspace contract moved is a base fact to report, not to repair.",
+  "world_is": "PROD's base is 42 failing. The carried work neither adds nor removes any of them. Making them pass means bringing the wire folder, the fixtures, the calendar, the route-table rows for the three routes.json rows, the harness fix and more: the 127-file range the CTO ruled is not this project's to push whole. IV111-AC2 therefore reads FAIL on suite.fail at this record, and the cut is otherwise measured.",
+  "notes": "The 13 new tests (IVE99-HR 6, IVE106 3, IVE111-SR 4) pass on the candidate."
+}
+```
+
+## DSGN_IRPTV1-D2-W61-S2 -- IV-e-111: four changed files are in the print route's import closure, so the cut waits on Andrew: the endpoint file, adapt.ts, envelope.ts, owned-requests.ts
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W61-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~61",
+  "surfaced_at": "2026-10-11T18:27:00Z",
+  "one_line": "IV-e-111: the print route's import closure (106 source files from src/pages/InvestorReporting/render/PrintEntry.tsx, from the build's module graph) holds four of the candidate's changed files; the verdict is WAITS_ON_ANDREW",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~61/print_closure.json and controls.txt: closure 106 source files, static and dynamic the same 106; the chunk graph (PrintEntry chunk plus 60 reachable chunks, 558 source modules) holds the same four changed files",
+      "import paths: PrintEntry.tsx line 81 imports src/api/endpoints/investor-reporting.ts; line 83 imports contracts/adapt.ts; the endpoint file imports contracts/envelope.ts and contracts/owned-requests.ts",
+      "positive control: AnalysisDocument.tsx, resolveBundle.ts and PrintEntry.tsx itself are found in the closure; negative control: tabs/holdings/HoldingsTab.tsx, tabs/analysis/OwnedRequestHistory.tsx and index.tsx are in the build graph and ABSENT from the closure",
+      "the other four changed files are three tests (not in the build graph) and contracts/wire/AnalysisReport.ts (a types-only file, erased from the build)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The CTO ruling msg 5494: none of the changed files in the print route's import closure; any file in that closure waits on Andrew.",
+  "world_is": "The history reader, the two status reads and retained_ref live in the one client file and the shared reader/adapter files the print entry itself imports (PrintEntry.tsx line 81 and 83). No small, clean separation moves them out: the endpoint file IS the print entry's own import. This worker did not measure whether the print view's run-time behaviour changes (it was not asked to); the files are in the closure, so by the ruling's own test the cut waits on Andrew.",
+  "notes": "Closure method is in PROD_CUT.json print_closure.method; the temporary config was removed and the portal tree is clean."
+}
+```
+
+## DSGN_IRPTV1-D2-W61-S3 -- IV-e-111: two things the cut did that the order did not name -- one assertion edited in a carried test, and a new test file written for the two status reads
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W61-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~61",
+  "surfaced_at": "2026-10-11T18:28:00Z",
+  "one_line": "IV-e-111: DEV's IVE106 test asserts the view's provider member (IV-e-101, not carried), so that one line is replaced by a requestId check; DEV's tests for the two status reads live in src/pages/TicketCenter (outside the grant), so a new test iv-e-111.status-reads.test.ts holds them",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal fc876722: __tests__/dsgn-irptv1/iv-e-106.sections-retained-ref.test.ts arm (b): DEV line expect(v.provider).toBe('OPAL_ENGINE') is replaced by expect(v.requestId).toBe(REQUEST_REF.request_id) with a comment; typecheck on the file failed with TS2339 before the edit",
+      "git grep at ca23f110: the pdf and original client methods are tested in src/pages/TicketCenter/__tests__/package-r2.test.tsx and package-open.test.tsx only",
+      "portal 418600b2 and fc876722: the cut is two commits because the first commit took only the staged paths; the second holds the rest; the diff over PROD is 8 files"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: their tests come with them; never weaken an assertion this order did not name.",
+  "world_is": "The provider assertion belongs to IV-e-101 (the Opal wording), which is deliberately left out; the same arm still asserts retainedRef as supplied and the request id. The status reads' tests were not in an allowed path, so one new test file in the allowed folder holds them (4 tests, a stubbed transport).",
+  "notes": "Two commits instead of one is a slip of mine (plain git commit without paths); no content is lost."
+}
+```
+
+## DSGN_IRPTV1-D2-W60-S4 -- IV-e-110 AMENDMENT 1: when the listed rows plus the sleeves with no security exceed the card, the residual is negative; the page prints no line two and no negative, and the overrun is carried in the view only
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W60-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~60",
+  "surfaced_at": "2026-10-11T18:48:00Z",
+  "one_line": "IV-e-110 AMENDMENT 1: when the listed rows plus the sleeves with no security exceed the card, the residual is negative; the page prints no line two and no negative, and the overrun is carried in the view only",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 1ba3ae5b tabs/holdings/SecurityList.tsx unlistedViewFrom(): left < -0.01 sets `overrun` and leaves `residual` null; the printed lines are noSecuritySleevesWords and notItemisedWords only",
+      "rendered test arm (g) in __tests__/dsgn-irptv1/iv-e-110.holdings-table-states-unlisted-sleeves.test.tsx: TARGET rows 330,000 on a 300,000 Models sleeve, a 60,000 withheld sleeve, card 600,000: line one 60,000 prints, line two absent, no '-$30,000' in the markup; the overrun is -30,000",
+      "producer read org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~298/IB138-1_SLEEVE_LEAF_READ.md section 2: 5,957 sleeves hold only TARGET-basis securities, which the aggregates exclude, so rows above the card are reachable"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 item 2: if the residual is negative do not print a negative as 'held'; say in the record what was chosen and why, and file a row.",
+  "world_is": "Chosen: print NOTHING for a negative residual (line one still prints if it is above one cent). Why: any sentence that explains why the rows and sleeves exceed the card would state a cause the nodes do not show (TARGET-basis rows listed beside held rows is one reachable cause, not the only one), and a negative amount under 'not itemised' would be false. The consequence: a table whose rows exceed the card says nothing about it, as before this order. The overrun is exposed as UnlistedView.overrun for a later cell if the CTO wants a statement; this cut prints none.",
+  "notes": "The CTO may wish to rule whether an overrun deserves its own sentence (it is measurable: card less rows less line one, below minus one cent)."
+}
+```
+
+## DSGN_IRPTV1-D2-W60-S5 -- IV-e-110 AMENDMENT 1: the first whole-scope run after my commit read 1 fail (F45-AC2, fe-s-45/residuals.test.ts, a dev-server probe); that file passes alone and the whole scope passed on a second run
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W60-S5",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~60",
+  "surfaced_at": "2026-10-11T18:48:00Z",
+  "one_line": "IV-e-110 AMENDMENT 1: the first whole-scope run after my commit read 1 fail (F45-AC2, fe-s-45/residuals.test.ts, a dev-server probe); that file passes alone and the whole scope passed on a second run",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~60/after_suite_amend1.txt: 1177 pass, 27 skip, 1 fail of 1205; the failure is F45-AC2 'the new script answers, serves this worktree and writes nothing to node_modules/.vite-temp': 'NOT shown to serve this worktree'",
+      "fe45_rerun.txt (same folder): that file alone, 6 pass 0 fail; after_suite_amend1_run2.txt: whole scope 1178 pass, 27 skip, 0 fail of 1205",
+      "the failing test starts a dev server in its own process and does not read SecurityList.tsx; the same file read 1 fail (a different id, F45-AC9) once in this slot before, row DSGN_IRPTV1-D2-W60-S2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The spawn facts: the base reads 1174 pass, 27 skip, 0 fail; new_failing_ids is empty.",
+  "world_is": "One of two whole-scope runs after the commit failed an fe-s-45 dev-server probe; the other passed; the probe alone passed. Not separated further (a build had just run in this tree). The record's suite_after is the passing run, and this row names the failing one.",
+  "notes": "Not investigated."
+}
+```

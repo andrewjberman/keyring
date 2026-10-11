@@ -3062,3 +3062,50 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r140/p140_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-443` | the five one-day-off security-days of IB-pr-441, each with both witnesses over three days and a third dated value; one verdict each (which witness is off, or cannot be told); the last-day question | FWD-3 (a basis somebody measured) | LOCAL | IB-pr-441 drained | P140-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~301. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 133. ROUND 141, WORKSTREAM ~P (2026-10-11 ~18:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5524)
+
+The fifth run was made on the CTO's word with IB-pr-434's build on the host (release st32). 2.0.0_SA_COO~G2's host-side read
+@77f135f74f: one submission; the posted credentials match the secret; the vendor answered the post 302; then seven steps and both
+arms of the closing probe read 202 and NOT_LIVE; the reason is the old NO_AUTHENTICATED_PROBE and the new after-submit reason did
+not fire. The CTO's inference: accepted, then a web firewall's challenge. One read-only diagnosis cell: which receipt leaves
+confirm or kill that, and why the new reason did not fire. No request and no sign-in; the vendor path stays stopped.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r141/p141_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-444` | the deciding leaves of the capture receipt with their confirming and killing values; why the after-submit reason did not fire, by line; the verdict from what is already read; the reads to ask of the host reader | FWD-4 (a session is usable only when verified; never an endless login contest) | LOCAL | IB-pr-434 drained | P141-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~302. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 134. ROUND 142, WORKSTREAM ~P (2026-10-11 ~18:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5549)
+
+IB-pr-443's read (merged; 3 of 3 PASS on the issuer run): on both institutional-class one-day-off days the READER repeats the
+prior day's bar while the first witness moves (verdicts inferred from the series; no priced trade within three trading days); the
+three exchange-traded days are half-cent rounding. The CTO ruled the institutional class stays out on that finding, since a
+repeated bar is the dangerous direction, and named a guard that would close it for every class: the second witness does not
+grade a security-day on which its own bar equals its bar for the prior trading day. One read-only cell measures the guard.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r142/p142_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-445` | the overlap table again under the unmoved-bar guard, per type; three sizings (seven types with no guard, under the guard, and with the institutional class under the guard); what the guard un-grades in the seven admitted types | FWD-3 (a basis somebody measured) | LOCAL | IB-pr-441, IB-pr-442, IB-pr-443 drained | P142-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~303. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 135. ROUND 143, WORKSTREAM ~P (2026-10-11 ~18:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5579)
+
+2.0.0_SA_COO~G2's read-out of the eight leaves IB-pr-444 named (@07f11659ea): the firewall action class is `challenge` on both
+probe arms while the page reads CH-AUTHENTICATED on seven steps and the session cookie's name is present; every probe went via
+node-port. The CTO ruled the challenge CONFIRMED on the probe: the credentials are right, the browser is signed in, the account is
+not locked. No cell that changes HOW the vendor is reached is cut; that question is put to Andrew. One read-only, code-only cell.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r143/p143_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-446` | what node-port is and why the probe uses it and not the page; whether the vendor calls a job makes after a capture go the same way; what changed on our side since the bundle of 2026-10-05, or that nothing did | FWD-4 (a session is usable only when verified from the transport that will use it) | LOCAL | IB-pr-444 drained | P143-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~304. DIRECT-ACT (one read-only cell, LOCAL).

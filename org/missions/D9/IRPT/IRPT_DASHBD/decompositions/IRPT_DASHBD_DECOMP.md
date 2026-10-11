@@ -1335,3 +1335,17 @@ Also from the CTO's half, not a cell: one after-read is added to REFRESH 4's app
 for six key names and no long digit run); it rides the apply order when that is cut, after Monday's fire.
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~112`, cut from box/dell2.
+
+## 76. ROUND 74, WORKSTREAM B (2026-10-11 ~18:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-74 ANALYSIS @d8b69fa413)
+
+The analysis answers REMEDIATION_v30 @dbf7c2e292 for rounds 71 to 73 and lists ONE cell.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-140` | FWD-12: the 18 segments (a subset of the 51 contested) where the custodian's flow rows do not reproduce the served flow day by day, on 50 flow days: each read day by day and placed under a cause with a rule, or under no cause with why; the tie-out's state restated and not called closed (row W111-S1) | LOCAL | DB-b-138 | B74-1 |
+
+After it the project's next acts are two applies, in order: R45 REFRESH 4 (both halves signed; waits for Monday 2026-10-12 07:41 ET's
+fire and an AE applier, with the CTO's added after-read of the first manifest), then the thresholds-file swap (its pair is signed only
+after REFRESH 4's first fire is read, CTO msg 5589).
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~113`, cut from box/dell2.

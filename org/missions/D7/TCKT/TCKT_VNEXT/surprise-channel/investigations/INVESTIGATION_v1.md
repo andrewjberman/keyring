@@ -1843,3 +1843,38 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+### TCKT_VNEXT-D2-S43 -- terraform's RENDERED plan prints an empty env string as `null`, in BOTH directions
+
+**owner:** `0.7.0_AE_CloudOps~TV2` (filer) | **disarm_owner:** n/a -- not armed; this is an instrument trap, not a hazard
+**class:** INSTRUMENT | **found:** 2026-10-11, cells R4-pk-2 and R4-pk-3, both applies of `opal-ticket-api`
+
+**spec_asserts:** a reader of `terraform plan`'s rendered diff can tell what an env value will be after the apply, and can
+tell an ABSENT key from a key that is PRESENT AND EMPTY. Cell R4-pk-2's branches turned on exactly that distinction: branch A
+was "present-and-empty, the door admits nobody", and a key AWS had DROPPED would have been a different world.
+
+**world_is:** the rendered diff prints the empty string as `null`, in both directions, and twice in one day:
+- R4-pk-2 ADDED `PACKAGE_ALLOWED_FIRMS = ""`. The rendered plan read `+ "PACKAGE_ALLOWED_FIRMS" = null`.
+- R4-pk-3 CHANGED that same key from `""` to three firms. The rendered plan read
+  `~ "PACKAGE_ALLOWED_FIRMS" = null -> "49financial,cottonwood,inflection"`, calling the BEFORE value `null`.
+
+In R4-pk-3 the before value was independently known to be the empty string from two other instruments: the saved planfile
+read as JSON (`terraform show -json <planfile>`, which gives `before` as `''`), and a live
+`get-function-configuration` read taken minutes earlier showing the key PRESENT at length 0 with sha256 prefix
+`e3b0c44298fc1c14`, the hash of the empty string. So the rendered `null` is a rendering of `""`, not a reading of the world.
+
+**why it matters:** `null` and `""` are NOT the same thing to this consumer. AWS DROPS an env key whose value is null and
+KEEPS one whose value is empty, and the handler treats unset and empty alike only because someone wrote it that way -- which
+is a property of the handler, not of Terraform. A seat that verifies "the key is present and empty" by reading the rendered
+diff cannot distinguish the two states it is being asked to tell apart, and the failure is SILENT: the rendered output is
+well-formed and looks like an answer.
+
+**the sound instrument:** read the SAVED planfile as JSON (`terraform show -json <planfile>`) and compare `before` against
+`after` field by field; confirm after the apply with a live `get-function-configuration`, recording each value as a LENGTH
+and a sha256 rather than printing it. Both applies did this and both landed correctly; the row exists so the next seat does
+not have to rediscover it, and so that "the rendered plan said so" is never offered as the evidence.
+
+**not established:** whether this is specific to the `aws_lambda_function` environment block, to this provider version, or
+general to every map-typed attribute. One object, two sightings, same attribute -- the domain of the claim is
+`environment.variables` on this resource type and nothing wider is asserted here.
