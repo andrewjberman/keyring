@@ -178,3 +178,27 @@ read-back of the deployed script). It is the single switch for step 2. Two condi
 The rollback is the line removed and the script re-deployed, the same hour.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 5 (2026-10-11 ~08:3xZ) -- ADDENDUM 2 condition 2 is AMENDED: reads and deletes of served-class keys follow the seam too
+
+**Asked:** `2.0.0_SA_COO~B1` msg 3652. Phase A2 is merged @628d9f241b. Its worker traced reads of served platinum keys inside the 14
+writers (rows D1-W19-S1..S35, not exhaustive). For example, D_04 reads D_00, D_00c and C_08 outputs from `BUCKET`, and D_03 reads C_06
+and C_07 outputs. ADDENDUM 2 condition 2 ("only platinum WRITES move; every read stays on `S3_BUCKET`") was WRONG for these. Under
+`canonical`:
+- the producers would compute served output from the pre-cutover copy;
+- D_04's advisor cleanup, which lists and deletes the legacy prefix, would delete the old home during the rollback window.
+
+**Amended condition 2.**
+- (a) **Every read of a served-class (platinum) key** inside the writer set resolves through the SAME seam as that key's writer. One
+  mode moves the write and its readers together. Reads of non-platinum tiers (bronze, silver, gold) stay on `S3_BUCKET`, as before.
+- (b) **Every list or delete path that touches a served-class prefix is mode-aware.** Under `canonical` it operates on the new home
+  only and NEVER lists or deletes the legacy home. The old bucket is untouched through the rollback window (the F7 half, and
+  PRD F7). Under `legacy` it behaves byte-identically to today. A delete outside today's own behaviour needs Andrew's word (CLAUDE.md
+  section 5) and is not built here.
+- (c) **Phase A3, built DORMANT before the pair.** An AST census of every read, list and delete site touching a served-class key in
+  the 14 writers, with the denominator printed beside the worker's 35, and each site routed or shown not served-class.
+  - The dormant proof (mode unset) is byte-identical per script, for reads, lists and deletes alike.
+  - A negative arm under `canonical`, run against a fixture, shows 0 calls to the legacy prefix.
+- The pair's blast radius is amended to name the read, list and delete sites alongside the 62 writer lines.
+
+-- 1.0.0_SA_CTO~DELL1
