@@ -156,6 +156,48 @@ and report its line (it must print `PORTAL-TSC-OK`). Update the proof instance a
 **Not yours, noted for the CTO's review of the candidate:** the page shows two dark panels (New Ticket and Ticket Board) and the form's
 fields are the page's existing dark fields; both were there before this cell. Do not restyle anything.
 
+---
+
+**AMENDMENT 4 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~10:2xZ): REOPENED on the CTO's review of the candidate (msg 4528, NOT YET).
+An Opal staff caller must get the firms it may act for, never a dead form or its own claim firm alone.** Gate limb that graded this
+amendment: read from this commit's own output. This is the concern your row `IRPT_ANLREQ-D2-W51-S3` raised; it is now ruled.
+
+What the served code does with the request `loadAllowedFirms` sends today (no selected tenant), read by the issuer at the shared HEAD:
+- `infra/aws/lambda/investor-reporting/_authz/served.py:1195-1232`: with no `selected_tenant` the caller's own verified firm stands;
+  nothing widens it.
+- `infra/aws/lambda/investor-reporting/directory/entry.py:292-298`: the `resolve-scope` handler calls the resolver WITHOUT a
+  `firm_catalogue`, and `_scope/resolve.py:569` writes `permitted_firm_catalogue` only when one was passed. So the answer to that
+  request carries NO catalogue for any caller, internal included.
+- portal `contracts/adapt.ts:751`: with no catalogue, `permittedFirms` is the one verified firm. An internal caller is therefore
+  offered its own claim firm alone (or a refusal, hence the dead form), not the firms it may file for.
+- The served path that DOES answer an internal caller's firms is the Global context: `served.py:1198-1204` (`selected_tenant` equal
+  to `global`, internal callers only, `resolve-scope` only) and `directory/entry.py:414-456`, which resolves every registry tenant
+  through the real guarded boundary and marks each `READY` or `UNAVAILABLE`. A firm the caller's profile does not allow comes back
+  `UNAVAILABLE` (`served.py:1222-1230`). The Investor Reporting page already reads it this way:
+  `src/pages/InvestorReporting/index.tsx:106-115` (`selectedTenant: 'global'`, `isGlobalContext`, `.firms`).
+
+**Repair (portal, the two product files already in your grant, and the one test file):**
+1. `loadAllowedFirms` takes a second argument, `internal: boolean`.
+   - `internal` false: exactly today's request and today's reading (`permittedFirms`, selectable only).
+   - `internal` true: the SAME client method with `selectedTenant: 'global'` (the request `index.tsx:106-112` sends). The answer must be
+     a Global context (`isGlobalContext`); the allowed firms are its `firms` whose state is `READY`, in the order served, as
+     `{ id: tenant, label: <the display name, by the same expression index.tsx:99 uses> }`. An `UNAVAILABLE` firm is never offered.
+     A non-Global answer, or zero `READY` firms, throws (the page then shows the existing failure state).
+2. `TicketCenter.tsx` passes `internal` from the SAME source the Investor Reporting page uses to decide `internal` (read
+   `src/pages/InvestorReporting/index.tsx` for where its `internal` prop comes from, and use that source; do not invent a second
+   test of who is internal).
+3. `analysis-firm-choice.test.tsx` gains TWO tests, named exactly:
+   - `an internal caller is offered the READY firms of the Global context and never an UNAVAILABLE one`
+   - `an internal caller's request selects global and a firm caller's request selects nothing`
+   Existing tests keep their names; update only their call sites for the new argument.
+4. One more screenshot, `shots/firm-choice-internal-loaded.png`: the form for an internal caller whose Global context holds two
+   READY firms and one UNAVAILABLE firm, the Firm control showing exactly the two (drive it as you drove `firm-choice-loaded.png`;
+   read `scripts/ui-smoke.mjs` for how the stubbed session is made internal). Add it to `shots/MANIFEST.json` under the key
+   `firm-choice-internal-loaded` with the same members as the others, and set `portal_commit` to the new HEAD. If the stubbed
+   session cannot be made internal, say so in the manifest and the report and do not substitute another state.
+
+Criteria: AC1 (now seven tests), AC2, AC3 and `portal-tsc` must print their tokens. Update the proof instance; flip to `complete` only then.
+
 <criterion id="AR35-y-AC3" cell_refs="AR-y-35"><invocation>python C:/dev/wk-irpt-anlreq-51/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py y35-shots --root C:/dev/wk-irpt-anlreq-51</invocation><expect>Y35-SHOTS-OK</expect></criterion>
 `AR35-y-AC3`: the three PNGs exist, and the manifest records for each the Ticket Center route, the light canvas `rgb(244, 246, 250)`
 and the command. A third criterion, added because the round's one real look at these two changes had no instrument to run.

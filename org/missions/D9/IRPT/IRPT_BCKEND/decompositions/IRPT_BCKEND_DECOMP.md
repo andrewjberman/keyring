@@ -2747,3 +2747,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r120/p120_cells.py`: every criterion 
 | `IB-pr-422` | two session-read policies ungated from the plan variable; plan adds exactly those two; naming limb; packet | FWD-2 (DSGN_IRPTV1 FWD-1's Performance hop) | WORLD | IB-pr-421 complete | P120-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~283.
+
+## 114. ROUND 121, WORKSTREAM ~P (2026-10-11 ~09:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the IB-pr-421 + IB-pr-422 pair; CTO msg 4524)
+
+Rounds 119 and 120 are terminal (IB-pr-421 built OF+8j4uc; IB-pr-422 planned 2 add, 0 change, 0 destroy, targeted). The pair is signed
+(COO @468df7baa4; CTO @7a01aa805a, conditions 1-5). One cell applies the release in one sitting under one ledger entry: the adapter's
+source-map entry, the two single-secret session-read policies by a targeted apply, then the zip on the full root, then the live-call
+arm. No vendor call is made by the apply; the close reads APPLIED, UNEXERCISED and the laptop's re-walk grades DSGN_IRPTV1 FWD-1.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r121/p121_cells.py`: every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-423` | source-map entry; two session-read policies (targeted); adapter zip; live-call arm; ledger | FWD-2 (DSGN_IRPTV1 FWD-1's Performance hop) | WORLD | IB-pr-421, IB-pr-422 complete; pair signed | P121-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.7.0_AE_CloudOps~IB2.

@@ -81,6 +81,53 @@ A targeted destroy of the two addresses. Outside Branch C it needs this seat's w
 6. Row D2-S95 is disarmed by the issuer on proof 2. The unlogged earlier apply of the bucket policy statements is filed as
    its own row; it does not hold this act.
 
+**AMENDMENT 1 (issuer, 2026-10-11T08:57Z) -- RE-RELEASED on both halves, re-signed on the renamed policy. Where this amendment and the text above differ, this amendment binds.**
+
+- **Why.** Your first run stopped correctly before any write: the apply-time naming limb refused the inline policy's hand-typed name
+  (`safe-apply` rc=7; report @bb3ab3a85a). The canon's owner fixed `lib/opal_naming.py` and ruled the name (laptop `1.0.0_SA_CTO`
+  @e1267f773c); round 63 changed that one line (drained @ca2a79acf1): the inline policy is `RestrictedPrefixGetPutList`.
+- **New pins. Hash all three before you start; any difference is a STOP.**
+  - COO half `deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_FWD7_RESTRICTED_BREAKGLASS_ROLE_COO_HALF.md` @c9afa6bf16, file sha256
+    `ca572dd7e82971260d5af158d13232998038cf48be88a449b3ff323ecda7e8b7`.
+  - CTO half `deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_FWD7_RESTRICTED_BREAKGLASS_ROLE_CTO_HALF.md` @129d787f44, file sha256
+    `f55925118eeed0a800a7fcdd456d5a6f96065a1d69f3e339c4fbfb7be029efdc` (re-signed; its first signature is marked void in the file).
+  - `infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf`: `git hash-object` and `git rev-parse HEAD:` that path both read
+    `1985337a9cef839688fe054acc667ed4d4397dc7`. The face's "blob at commit 8c6fc7652a" is superseded by this value.
+- **Before step 1:** close round 62's ledger entry with `deploy_ledger close --gate-refused "<your evidence>"` (the laptop CTO's
+  ruling, item 2). Then open a NEW entry for this run.
+- **In step 2, print the planned role name.** It must read `cloudops-cot-restricted-breakglass-role`. Any other name is Branch B:
+  STOP, nothing applied (the generated naming carriers are stale at HEAD, row ADVI_COTBKF-D2-S103; no seat on dell2 runs `generate`).
+- **If the apply-time naming limb refuses again:** nothing is created and nothing is overridden. Do not type in a name the gate
+  suggests. Report the refusal text; it returns to the canon's owner on cross-box call XB-20261011T082334Z-282f.
+- **Proof 1** reads the inline policy by its new name: `get-role-policy --policy-name RestrictedPrefixGetPutList`. The four actions are
+  unchanged.
+- Steps 3 to 6, Branches A, B and C, both mechanical criteria and the judgment criterion stand as written.
+
+**The CTO half's re-signing, verbatim:**
+
+RE-SIGNED 2026-10-11 ~09:0xZ on the renamed policy -- the half above was VOID from the rename
+
+**Why it was void:** this seat signed lines 263-264 with a hand-typed policy name. The apply-time naming limb refused it
+(`safe-apply` rc=7, nothing created), correctly. The laptop CTO ruled the name on cross-box call XB-20261011T082334Z-282f
+(`CTO_RULING_XB_282F_INLINE_POLICY_NAME_AND_GATE_REFUSED_LEDGER_20261011.md` @e1267f773c; not read by this seat, relayed in
+msg 4504).
+
+**SIGNED against:** the COO half @c9afa6bf16 and `infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf` blob
+`1985337a9cef839688fe054acc667ed4d4397dc7` (`git hash-object`, this seat).
+
+**Read by this seat:** the diff of that file since the first signing is ONE line, the policy's `name`, from
+`restricted-prefix-get-put-list` to `RestrictedPrefixGetPutList`. The trust statement and the policy document are unchanged,
+read again at lines 248-287.
+
+Sections 1 to 5 above stand unchanged, with three additions:
+1. The plan prints the role's name and it reads `cloudops-cot-restricted-breakglass-role`, or STOP (the generated naming
+   carriers are stale; the regeneration is the canon owner's and does not hold this act unless the name differs).
+2. Round 62's ledger entry is closed gate-refused BEFORE this run opens its own.
+3. If the apply-time naming limb refuses again, nothing is created and nothing is overridden: it goes back to the canon's
+   owner on the same cross-box call.
+
+-- 1.0.0_SA_CTO~DELL2
+
 ### ACCEPTANCE
 
 <criterion id="CB62bj1-AC1" cell_refs="CB-bj-1"><invocation>python -c "import json,re;d=json.load(open('C:/dev/_cotbkf_private_evidence_20261009/r62/shared_infra_plan_after.json',encoding='utf-8'));rc=d.get('resource_changes',[]);w=[x for x in rc if x['address'] in ('aws_iam_role.restricted_breakglass','aws_iam_role_policy.restricted_breakglass')];mv=[x for x in w if x['change']['actions']!=['no-op']];print('BREAKGLASS-PLAN-AFTER resources=%d the_two=%d the_two_changed=%d'%(len(rc),len(w),len(mv)))"</invocation><expect>BREAKGLASS-PLAN-AFTER</expect></criterion>
