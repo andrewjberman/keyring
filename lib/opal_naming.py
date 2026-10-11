@@ -96,10 +96,11 @@ _PROBE_P, _PROBE_O = "zzprobep", "zzprobeo"
 # rewritten by key, so it names none.
 VIEWS = (
     ("data/firm_registry.json", "json", ()),
-    ("infra/aws/lambda-edge/_shared/firm-config.mjs", "mjs", ("FIRM_CONFIG", "OWNERSHIP_KEYS")),
+    ("infra/aws/lambda-edge/_shared/firm-config.mjs", "mjs", ("FIRM_CONFIG", "OWNERSHIP_KEYS", "CANONICAL_PLATINUM_BUCKETS")),
     ("data/assets/scripts/gold/investor_reporting/directory_runner.py", "py", ("firm_bucket_map",)),
     ("data/assets/scripts/gold/investor_reporting/holdings_snapshot.py", "py", ("firm_bucket_map",)),
-    ("infra/aws/lambda/investor-reporting/_authz/loaders.py", "py", ("bucket_for", "OWNERSHIP_READ")),
+    ("infra/aws/lambda/investor-reporting/_authz/loaders.py", "py", ("bucket_for", "OWNERSHIP_READ",
+                                                                     "CANONICAL_PLATINUM_BUCKETS")),
     ("data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py", "py", ("FIRM_TREES",)),
     (".tools/ds-precommit-check.py", "py", ("_CROSS_FIRM_FOREIGN_BUCKETS", "_CROSS_FIRM_FOREIGN_KEY_PREFIXES")),
     ("data/black_diamond/scripts/bronze/_asset_dim_rest_pin.py", "py", ("ASSET_DIM_REST_PIN",)),
@@ -113,7 +114,8 @@ VIEWS = (
 
 # A block that a hand-kept carrier does not hold yet lands right after its anchor block (the first generate only;
 # every later generate finds the block by its own marks). OWNERSHIP_KEYS follows FIRM_CONFIG (FB-g-12).
-AFTER_BLOCK = {"OWNERSHIP_KEYS": "FIRM_CONFIG", "OWNERSHIP_READ": "bucket_for"}
+AFTER_BLOCK = {"OWNERSHIP_KEYS": ("FIRM_CONFIG",), "OWNERSHIP_READ": ("bucket_for",),
+               "CANONICAL_PLATINUM_BUCKETS": ("OWNERSHIP_READ", "OWNERSHIP_KEYS")}
 
 # Targets the generator owns WHOLE: the file is nothing but its generated block(s), so _render_view builds it
 # from the blocks alone and never reads a base (the first generate creates it). Every other VIEWS carrier is a
@@ -1117,6 +1119,18 @@ def _blk_bucket_for(reg, h16, path):
     return _block("bucket_for", h16, "#", path, _BUCKET_FOR)
 
 
+def _blk_canonical_platinum_buckets(reg, h16, path):
+    """The canonical buckets an ownership read engages on (ADVI_FIRMBKTS FB-g-16; CTO ADDENDUM 7): the sorted unique
+    destination buckets of the platinum destination classes, each one _platinum_build()'s -- the derivation the seam view
+    uses -- so nothing is typed. A loader renders it as a Python list; an edge module as a frozen array."""
+    buckets = sorted({_platinum_build(reg, row)[0] for row in _platinum_rows(reg)})
+    if path.endswith(".mjs"):
+        lines = ["export const CANONICAL_PLATINUM_BUCKETS = Object.freeze(["] + ["  %s," % _js_str(b) for b in buckets] \
+            + ["]);"]
+        return _block("CANONICAL_PLATINUM_BUCKETS", h16, "//", path, "\n".join(lines))
+    return _block("CANONICAL_PLATINUM_BUCKETS", h16, "#", path, "CANONICAL_PLATINUM_BUCKETS = " + _py_lit(buckets))
+
+
 def _blk_ownership_read(reg, h16, path):
     """Registered owner -> {bucket, legacy, canonical} for the investor-reporting loader's ownership read (ADVI_FIRMBKTS
     FB-g-16; CTO ADDENDUM 7). The owners are _ownership_owners()'s, the set _blk_ownership_keys() lists, in FIRM_CONFIG
@@ -1304,6 +1318,7 @@ BLOCKS = {
     "firm_bucket_map": _blk_firm_bucket_map,
     "bucket_for": _blk_bucket_for,
     "OWNERSHIP_READ": _blk_ownership_read,
+    "CANONICAL_PLATINUM_BUCKETS": _blk_canonical_platinum_buckets,
     "FIRM_TREES": _blk_firm_trees,
     "_CROSS_FIRM_FOREIGN_BUCKETS": _blk_foreign_buckets,
     "_CROSS_FIRM_FOREIGN_KEY_PREFIXES": _blk_foreign_prefixes,
@@ -1367,10 +1382,15 @@ def _render_view(path, syntax, tags, reg, h16):
         lines = text.split("\n")
         found = _find_marked(lines, tag, comment)
         if found is None and tag in AFTER_BLOCK:
-            # first generation of a block that follows its anchor block: it lands right after the anchor's END line
-            anchor = _find_marked(lines, AFTER_BLOCK[tag], comment)
+            # first generation of a block that follows its anchor block: it lands right after the anchor's END line.
+            # The first candidate anchor this carrier holds wins (a carrier may hold only one of them).
+            anchor = None
+            for cand in AFTER_BLOCK[tag]:
+                anchor = _find_marked(lines, cand, comment)
+                if anchor is not None:
+                    break
             if anchor is None:
-                raise RegistryError("%s: no [%s] block to follow for [%s]" % (path, AFTER_BLOCK[tag], tag))
+                raise RegistryError("%s: no [%s] block to follow for [%s]" % (path, " or ".join(AFTER_BLOCK[tag]), tag))
             found = (anchor[1], anchor[1])
         found = found or span(text, tag)
         text = "\n".join(lines[:found[0]] + BLOCKS[tag](reg, h16, path) + lines[found[1]:])
