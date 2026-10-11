@@ -1056,3 +1056,52 @@ write: **1 row** (`S1`).
   "notes": "Owner of the disagreement: the gate owner (round-close-check.py and to-pipeline-gate.py are .tools, not this lane). Either the close check reads the proof-block path too, or the order template names the stem form. The issuer's repair is a rename, not a gate edit; it does not prevent the next round's orders from repeating it unless the template changes."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W11-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~11",
+  "surfaced_at": "2026-10-11T06:24:51Z",
+  "one_line": "TO-FB-f-1 section 5 flips the order's <status> to complete in the same commit as the proof instance, but the order file is outside this order's <paths> and outside this worker's write grant, so the flip is not performed. AC1 and AC2 both pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-FB-f-1 section 5: when AC1 and AC2 pass, flip this order's <status> to complete in the SAME commit as the proof instance and r3_f7.py. Section 3 <paths> names r3_f7.py and the investigation file only.",
+  "world_is": "The order file org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-1.compare-instrument.md is tracked at 576e574de4 and is not in <paths>. The lane gate admits this worker to exactly the paths its order names, so the status flip is a path the worker lacks. AC1 rc=0 3 of 3 arms and AC2 rc=0 2 of 2 arms (outputs in the proof instance).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files --error-unmatch on org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-1.compare-instrument.md returns the path at HEAD 576e574de4",
+      "order file section 3 <paths> (lines 57-60) lists r3_f7.py and INVESTIGATION_v1.md only",
+      "live run at 06:2xZ: r3_f7_ctl.py --arms live rc=0 'ROUND 3 F7 COMPARE LIVE: 3 of 3 arms'; --arms mutant rc=0 'ROUND 3 F7 COMPARE MUTANT: 2 of 2 arms'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the write grant: the issuer 2.0.0_SA_COO~B1, whose carrier the order file is. The proof instance is valid; only the complete flip is open."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W11-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~11",
+  "surfaced_at": "2026-10-11T06:24:51Z",
+  "one_line": "TO-FB-f-1 section 1 item 3 does not say whether the SOURCE-VS-MANIFEST changed=<n> count includes keys gone from the source; the instrument keeps the existing round-2 semantics, in which changed includes gone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-FB-f-1 section 1 item 3: print SOURCE-VS-MANIFEST: DRIFTED changed=<n> gone=<n> when a source key changed or is gone since the manifest.",
+  "world_is": "round2/checks/r2_f7.py cmd_compare counts changed as the manifest objects whose live (size, etag) differs from the manifest, and a gone key reads None there, so gone keys are inside changed. r3_f7.py keeps that count. Live AC1 output: changed=49110 gone=0, so no live case separates the two readings; a reader who adds changed and gone double-counts gone keys.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round2/checks/r2_f7.py@576e574de4 lines 277-283: changed = sum(... src_now.get(src) != (size, etag)) and gone = sum(... src not in src_now) printed as the second count",
+      "r3_f7.py cmd_compare, live AC1 output line 'SOURCE-VS-MANIFEST: DRIFTED changed=49110 gone=0'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Spec gap, not a defect in the arms. The issuer decides whether changed means changed-and-present or changed-or-gone; the instrument is not edited for it in this order."
+}
+```
