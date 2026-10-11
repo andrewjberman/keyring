@@ -87,3 +87,57 @@ EOL and write it back, which kept the diff at 24 insertions and 0 deletions.
 
 **Blockers:** none owned by this lane. bw-2's steps 1-6 wait on a cycle the order says to wait for, with
 a named condition and an armed waiter, which is a wait and not a block.
+
+---
+
+## Addendum, 04:0x-04:1xZ: the issuer answered both calls and both are now executed
+
+`2.0.0_SA_COO~W1` sent two more crossbox orders, both acked on the receiving box with their lines put on
+the bus to dell1.
+
+**HVST-bs-3 AMENDMENT 2** (XB-20261011T032959Z-ea7f) did not supersede bs-3; it corrected the two
+criteria row Z-S112 measured. AC2's expect is now
+`wk-harvest-runner-pin-(c1be67f53c|b5a7a3a4b6)` and AC4 reads `round75/bs3_gc_zero_age_dryrun.out`. The
+instance is filed at the path the order names and the bound checker reads **VALID (rc=0)**, coverage 4 of
+4, pin-drift 0, invocation-alignment 3 of 3. AC1 1 of 1, AC2 1 of 1 on the new alternative, AC4 10 EXEMPT
+PID lines of 80 with the pre-amendment file as a negative control in the same run at 0 of 74. AC3 is
+reported NOT SATISFIED and not claimed: 0 of 3 publishers have an acceptance record, `cycles/` holds only
+`bbg`, and its one ended record is `completed false` on the Z-S111 GC kill. Two corrections the checker
+forced, both mine: `controls/determinism/status` is a closed enum and `PASS` is not in it (STABLE is),
+and the first instance cited `bs3_register.out` at a pin 13 lines stale, which the pin-drift limb caught.
+
+**HVST-bs-4 AMENDMENT 1** (XB-20261011T033014Z-ae79) kept the order open -- a stop is not a completion --
+and ordered the reason read, then a branch. `r47/bs4_stop_reason.out` carries the checkpoint's `stopped`
+map, the run summary's stop and upload-failure fields and the retry/gave_up rows verbatim. The branch
+resolves **transport-class**, and step 2 asks which source says so: the DRIVER's own rule, not the
+checkpoint. The checkpoint records `{"sa": "error"}` and names no class; `r47_sa_run2.out` lines 117 and
+121 read "RESUME sa: error is a transport-class stop; resuming after the collector cooldown (1 of 2)" and
+"(2 of 2)", then line 125 "STOP sa: error" -- the leg died of an exhausted retry budget, not of a class
+it refuses. So steps 1-4 were repeated: 0 `backfill_driver` of 64 python processes with the positive
+control printed, declared job `dj-20261011T040137Z-1679536`, driver PID 13220, same argv plus
+`--clear-stop sa`. The flag takes a publisher argument (`backfill_driver.py:509`), so a bare
+`--clear-stop` would have eaten the next token -- checked before launching, not after.
+
+The resume is proved by subtraction because this driver prints a PLAN list, not a done count: UNIVERSE
+242, PLAN lines 107, so 135 pairs went unplanned, exactly the 134 done plus 1 gave_up, and the first
+three PLAN lines are the three retry keys in checkpoint order. A from-0 run prints 242.
+
+**Row AMGT_HARVST-Z-S113**, and it is the real finding of this half. The driver calls `error`
+transport-class, but every failing pair carried `rc 3221225794` -- 0xC0000142, STATUS_DLL_INIT_FAILED --
+with `run_id=None`: the collector never initialized, so there was no upstream conversation to fail, and
+both transient retries were spent on a class they cannot fix. I relaunched anyway, because the branch
+resolves on the producer's own rule and the condition looked cleared (the live bbg cycle's uploads read
+`rc=0`). That gamble is now measured and it paid: `r47_sa_run3.out` line 112 reads
+`JOB sa security-7f05ac6ae2894d23 status=no_acceptable_new_articles run_id=20261011T040140Z-run-4e5b4024`
+-- a real run_id on the very key that previously read `run_id=None`. The row stands; only its recurrence
+question is answered. Nothing in the classifier was changed: that is the project's call.
+
+**Not mine, surfaced not re-filed:** the commit-time `surprise-corpus` validator moved from 4 failures to
+10 while I worked. All 6 new ones are `ADVI_COTBKF-D2-S60/S80/W66-S1` in
+`org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/remediations/REMEDIATION_v34.md`, a different project
+landed concurrently; `AMGT_HARVST` appears in neither the NEW nor the KNOWN list. Remediation rows are the
+CVO's, so I did not write into that channel. The validator prints it to every committer on this box, which
+is a louder carrier than a message, and rule 31 sends an FYI to the record rather than an inbox.
+
+**Still open and owned here:** HVST-bw-2's steps 1-6 (waiter armed), HVST-bs-4 step 6 on the driver's own
+completion line, and step 5's re-declaration if the leg runs past the 48-hour marker.
