@@ -3062,3 +3062,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r140/p140_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-443` | the five one-day-off security-days of IB-pr-441, each with both witnesses over three days and a third dated value; one verdict each (which witness is off, or cannot be told); the last-day question | FWD-3 (a basis somebody measured) | LOCAL | IB-pr-441 drained | P140-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~301. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 133. ROUND 141, WORKSTREAM ~P (2026-10-11 ~18:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5524)
+
+The fifth run was made on the CTO's word with IB-pr-434's build on the host (release st32). 2.0.0_SA_COO~G2's host-side read
+@77f135f74f: one submission; the posted credentials match the secret; the vendor answered the post 302; then seven steps and both
+arms of the closing probe read 202 and NOT_LIVE; the reason is the old NO_AUTHENTICATED_PROBE and the new after-submit reason did
+not fire. The CTO's inference: accepted, then a web firewall's challenge. One read-only diagnosis cell: which receipt leaves
+confirm or kill that, and why the new reason did not fire. No request and no sign-in; the vendor path stays stopped.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r141/p141_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-444` | the deciding leaves of the capture receipt with their confirming and killing values; why the after-submit reason did not fire, by line; the verdict from what is already read; the reads to ask of the host reader | FWD-4 (a session is usable only when verified; never an endless login contest) | LOCAL | IB-pr-434 drained | P141-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~302. DIRECT-ACT (one read-only cell, LOCAL).
