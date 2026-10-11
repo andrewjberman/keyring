@@ -2817,3 +2817,53 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T13:40:56Z",
+  "one_line": "AR-y-71 amendment 1: the new public reason REPORT_TICKET_MISMATCH can only be declared where the boundary's closed set lives, _authz/served.py BOUNDARY_ADDITIONS, which is outside this order's <paths>; without that one line the boundary answers UNEXPECTED and three of the seven binding tests fail.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:332 status_envelope raises EntryError for a code outside BOUNDARY_REASONS and :887 public_reason_for clamps any such code to UNEXPECTED; BOUNDARY_REASONS = errors.PUBLIC_REASONS + BOUNDARY_ADDITIONS (:140-147). SELECTION_UNSUPPORTED was added the same way (BOUNDARY_ADDITIONS, a CONTRACT.md row, the entry's reasons table).",
+      ".owned-paths.yaml maps infra/aws/lambda/investor-reporting/_authz/** to lane IRPT_LIVE_SCOPE_P; this order's <paths> are ops/, _contracts/, docs/contracts/investor-reporting/v1/ and this file, so the edit is a lane refusal, not made.",
+      "Measured at ops/tests/test_report_ticket_binding.py in this worktree: without the edit 3 of 7 fail (the updated mismatch test, the admitted-caller test and the admitted half of the not-admitted test), each reading public_reason_code UNEXPECTED where REPORT_TICKET_MISMATCH is expected; with the one line applied (org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r7/served_py_boundary_addition.patch, applied for the run and reverted) 7 of 7 pass, _contracts fails 2 and _authz/tests fails 4, the same counts as the base.",
+      "Committed here: the exception class ReportTicketMismatch (ops/owned_report.py), its reasons-table entry (ops/entry.py), the CONTRACT.md row, the routes.json note, the tests and the census."
+    ]
+  },
+  "spec_asserts": "Amendment 1 step 1: add the new value everywhere the public-reason set is declared (the entry boundary's reason table, the status envelope's contract, any enum under docs/contracts or _contracts), each in its own style. The order's <paths> do not include _authz/.",
+  "world_is": "The set is declared in two places the order's paths do not reach for the boundary (served.py BOUNDARY_ADDITIONS, and errors.py PUBLIC_REASONS which this change does not use) and in the status schemas only as the pattern ^[A-Z0-9_]+$ (no enum, so nothing to add there). The one-line patch is saved beside the census. Until it is applied by a seat that holds the _authz lane, AC1 and AC2 of this order cannot print OK from the committed tree and the order stays in_progress.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T13:40:56Z",
+  "one_line": "Reader census for REPORT_TICKET_MISMATCH: no portal reader at PROD or DEV refuses it at runtime, but the portal test fe-s-40 F40-AC7 (reason-codes.test.ts) re-reads CONTRACT.md and fails once the new CONTRACT.md row sits beside the portal until render/Page.tsx's generated set is regenerated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (cut the regeneration of render/Page.tsx CONTRACT_NAMED_REASON_CODES with node src/pages/InvestorReporting/__tests__/fe-s-40/gen-named-codes.mjs into the portal work that lands with, or before, the merge of this CONTRACT.md row)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C wk-irpt-anlreq-51/portal show origin/PROD:src/pages/InvestorReporting/__tests__/fe-s-40/reason-codes.test.ts (37aa1247ee) and origin/DEV (f00c7b8ee8), lines 243 and 259: the renderer's CONTRACT_NAMED_REASON_CODES (20 codes) must equal the set read from docs/contracts/investor-reporting/v1/ by the rule 'a code-shaped token after public_reason_code, return(s) or refused with'.",
+      "docs/contracts/investor-reporting/v1/CONTRACT.md:79 (added by this change) is in that grammar, as the SELECTION_UNSUPPORTED row is; the test was not run (the portal is read-only for this worker), its failure is read from the code.",
+      "The full reader list is org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r7/PUBLIC_REASON_READERS.json: 17 SERVICE rows, 31 PORTAL rows at PROD and 32 at DEV; the one REFUSES row is this test."
+    ]
+  },
+  "spec_asserts": "Amendment 1 step 4: a portal reader that REFUSES the new value is a finding to state; it must be on PROD before the service change is released.",
+  "world_is": "At runtime every portal path that can receive the value (sanitizePublicReasonCode, requirePublicStatus, adaptStatusEnvelope, parseIrEnvelope, envelopeFromRefusal, StatusPanel) passes it through; Page.tsx would print it flagged 'code not defined by the v1 contract'. The only refusal is a test. The value is also not emitted to any current portal build, since neither PROD nor DEV sends ticket_id.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 16,
- "chains": 14,
+ "cells": 17,
+ "chains": 15,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -140,3 +140,10 @@ grant widens. `FB-g-16` (workstream `IRPTOWN`): the IRPT loaders read the owners
 bucket; legacy key now, canonical at act 4 through an environment list), the CTO's ADDENDUM 7 on row D1-S25; the directory
 and holdings reads stay on the transitional live row. Both are dormant builds ahead of act 2; act 4's pair names
 `FB-g-16`. Cells 14 -> 16, chains 12 -> 14.
+
+## Amendment 6 (2.0.0_SA_COO~B1, 2026-10-11 ~15:0xZ): cell `FB-g-17` added (the canonical-bucket list is the registry's, not three hand lists)
+
+The engagement of the canonical keys must be the registry's one value (the CTO's ADDENDA 4 and 7; the naming gate refuses a
+typed bucket). `FB-g-16` renders `CANONICAL_PLATINUM_BUCKETS` (the destination classes' unique canonical buckets) into
+`firm-config.mjs` and `loaders.py`; `FB-g-17` (worker `~40`, workstream `CANONLIST`) makes the router and the validator
+import it. After it the act-4 flip is the one alias marker. Edge: after `FB-g-16`. Cells 16 -> 17, chains 14 -> 15.
