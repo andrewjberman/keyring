@@ -183,7 +183,7 @@ the outcome arrived by a later L10 addendum, on cell `OW-s-5`'s record.
 
 | cell | builds | outcome | status | placement | risk | worker_class | depends on |
 |---|---|---|---|---|---|---|---|
-| `OW-sd-3` | ONE reversible setting on HTTP API `trade-submission-api` (`w8jnzvs21g`): `DisableExecuteApiEndpoint` false -> true, under its own pair (COO half @90f5a700f4, CTO half @114c77fb01). Read first: what else carries the API (domain mappings on both planes, CDN origins), each with its count. Proof: the setting read back from the API's own configuration, and two requests that touch no function, answers recorded in full. No request to the sign-in route, ever. Nothing deleted | FWD-10 | NOT-EVALUATED | ISSUER cuts the order; `0.7.0_AE_CloudOps~DELL2` makes the one write | WORLD | -- | OW-s-5 reported |
+| `OW-sd-3` | ONE reversible setting on HTTP API `trade-submission-api` (`w8jnzvs21g`): `DisableExecuteApiEndpoint` false -> true, under its own pair (COO half @90f5a700f4, CTO half @87957ba554). Read first: what else carries the API (domain mappings on both planes, CDN origins), each with its count. Proof: the setting read back from the API's own configuration, and two requests that touch no function, answers recorded in full. No request to the sign-in route, ever. Nothing deleted | FWD-10 | NOT-EVALUATED | ISSUER cuts the order; `0.7.0_AE_CloudOps~DELL2` makes the one write | WORLD | -- | OW-s-5 reported |
 
 **Chains.** S6 = OW-sd-3. Fan-out 1 of 1 chains, cap 8. State coherence: no cell moves a route, an integration, an authorizer, a
 function, a secret, a permission, a table or a Terraform file; the API's deletion is Andrew's act and is no cell.
