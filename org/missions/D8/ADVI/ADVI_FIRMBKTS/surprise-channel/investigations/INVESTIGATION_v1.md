@@ -5177,3 +5177,29 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Surfaced for the issuer. The coordinator's correction to 83995c26e6 was applied; no file of the check was edited. For the COO: the T3 arm reads 0 of 0 lines as a PASS when the base is empty, so an unresolved base can pass one arm vacuously. A guard that fails on an empty base would close that gap. The checker is the COO's file and is not edited here."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W56-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~56",
+  "surfaced_at": "2026-10-11T17:09:19Z",
+  "one_line": "FB-g-33 literal form (environment variables = merge(base map, cond)) fails r4_modeenv.py E3: its in-order match never skips a base line, so the rewrapped variables = { line stops the count at 83 of 183. The worker kept the variables = { line and wrapped the merge in a for-expression, which passes E3 and reads 4 of 4 arms.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FB-g-33 1a.2: the environment is the base's map UNCHANGED plus one conditional, merge(<the base map>, var.platinum_mode == \"\" ? {} : {...}); AC1 expects ROUND 4 MODE ENV: 4 of 4 arms. The check's own E3 comment allows a rewrap of the environment block.",
+  "world_is": "r4_modeenv.py E3 (lines 79-82) is an ordered greedy match with no skip branch: once a keep_o line is unmatched the pointer never advances. With the literal merge form the run printed 'E3 base lines kept 83 of 183' and ROUND 4 MODE ENV: 3 of 4 arms, exit=1. With the for-form the run printed 'E3 base lines kept 183 of 183', fmt rc=0, 4 of 4 arms, exit=0; mutant (base main.tf, new variables.tf) prints E2 FAIL, 3 of 4, exit=1. terraform validate and plan were NOT run (no plan in the root by the bound): the for-form's plan equality is INFERRED from HCL semantics.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_modeenv.py@c4d21f5ab8 lines 79-82: for ln in keep_n: if i < len(keep_o) and ln == keep_o[i]: i += 1 (no skip branch)",
+      "run in C:/dev/wk-firmbkts-56 at base 9c6d5ea3ba with the literal merge form of infra/aws/terraform/exec-summary/main.tf: 'E3 base lines kept 83 of 183 (env block lines aside)', 'FAIL E3', 'ROUND 4 MODE ENV: 3 of 4 arms', exit=1 (run before the form change; not committed)",
+      "run in C:/dev/wk-firmbkts-56 with the for-form main.tf, uncommitted on wk-ADVI_FIRMBKTS-56 over 1d4c0cbfd6: 'E3 base lines kept 183 of 183', 'E4 fmt rc=0', 'ROUND 4 MODE ENV: 4 of 4 arms', exit=0; repeated twice, output md5 3eb64472ad6acbdc13f88330158daab6 on both runs",
+      "infra/aws/terraform/exec-summary/main.tf@9c6d5ea3ba lines 124-132: the base environment block (variables = { five keys }) that the for-form keeps line for line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: E3 should skip a non-matching base line (subsequence match) so the literal merge form passes; the checker is the COO's file and is not edited here. The row records the form choice so the CTO can rule on it at the drain. The commit-time row gate has not run yet at this write."
+}
+```
