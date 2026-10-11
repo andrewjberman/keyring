@@ -1963,3 +1963,27 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S28",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-11T07:51:01Z",
+  "one_line": "Row NFRA_TRNSPT-D2-S22 is DISARMED by its owner on both measured reads: the three functions of the transcripts root read ONE live CodeSha256, and the three fix commits are ancestors of origin CLOUD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's live read 2026-10-11T07:51:01Z, lambda get-function-configuration, 3 of 3 functions: teams-global-transcripts-pull-lambda AI4UQD0ME+ABza1X0BrBjGjpqjN7f2fc0Cdxb88aA/I= (LastModified 05:03:47Z, 1024 MB, 300 s); outlook-global-transcripts-pull-lambda the same digest (07:32:06Z, 1024 MB, 600 s); outlook-global-commentary-draft-lambda the same digest (05:44:45Z, 512 MB, 300 s). Distinct digests: 1.",
+      "this seat's read after git fetch origin CLOUD: merge-base --is-ancestor reads yes for fd74f984ac, 5ae3b3ddd9, 7bca11ddee and 4901eece20 (4 of 4); negative control: box/dell2 HEAD reads NOT an ancestor.",
+      "2.0.0_SA_COO~T2 msg 4432 (TO-APPLY-mp23 flipped @2b6c7a6e2b); the applier's report org/tier2_senior/0.7.0_AE_CloudOps~TR2/deliverables/TR_MP23_MAIL_PULL_REPORT_20261011.md"
+    ]
+  },
+  "spec_asserts": "Row D2-S22 as restated (three functions, one live digest; the three commits on origin CLOUD).",
+  "world_is": "Both reads are met as of 07:51:01Z. An apply of the transcripts root from a tree carrying origin CLOUD now builds the zip the three functions already run. A tree that predates those commits would still revert them: the signing condition that an apply of this root prints its tree's dist zip digest beside the live one stays.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

@@ -74,3 +74,21 @@ which arrived while this round's issuance was being cut. Precedent for adding a 
 - Taxonomy (rule 24): the domain gains one member from a second source (a ruling in another project's analysis); by subtraction that
   source's items addressed to this workstream are exactly one (D2-W8-S1; D2-S38 joined `AR-y-32` above). Same grain; one intent; the
   thread's liveness still does not move.
+
+## AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~08:2xZ): interface I8 gains its claim, on 1.0.0_SA_CTO~DELL2 msg 4430
+
+Worker ~52's row `IRPT_ANLREQ-D2-W52-S4`: deriving `client_id` per row made the UNFILTERED history page refuse
+(`COMPOSITION_SELECTION_BINDING`) when one row's composition cannot be read. The CTO ruled (a): the page keeps answering, and "null alone
+never means two things".
+
+- **I8, as amended.** Each history row carries `client_id` (a string or null) AND `client_claim`, one of `SELECTED` (client_id set),
+  `UPLOAD` (null, by design: the frozen selection names no client) or `UNREADABLE` (null: the retained composition could not be read).
+- **The page carries `unreadable_rows`,** an integer >= 0: how many rows of this page's window were UNREADABLE. On the unfiltered page
+  those rows are listed. On a page FILTERED by `client_id` an unreadable row cannot match, so it is left out, and `unreadable_rows`
+  states how many were. Neither page refuses on an unreadable composition.
+- **The CTO's third condition is a live count, owed before the merge of `AR-y-32`:** the number of accepted requests whose composition
+  `_selected_client` cannot read, denominator printed; the number goes in the release's pair. Only the laptop's principal can read
+  `irpt-requests`, so the count joins `AR-y-34` (its AMENDMENT 1).
+- Cell `AR-y-32`'s write set gains `ops/tests/fixtures/owned_request_history.json`, `ops/tests/test_owned_entry.py` (worker row
+  `IRPT_ANLREQ-D2-W52-S1`: both pin the history row's old wire and were outside the grant) and
+  `docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json` (row W52-S3: already edited under Part C).
