@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-11T17:17:27.148747+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261011T172114Z
 **Deploy:** ADVI_FIRMBKTS TO-FB-f-20 (c290): set aws_sns_sms_preferences.account default_sms_type=Transactional via safe-apply, ONE resource, scope inf-pipeline -target; pre-read: DefaultSMSType unset, MonthlySpendLimit 50, DeliveryStatusIAMRole opal-sms-delivery-status-role, sampling 0, number ...7943 ACTIVE TRANSACTIONAL TOLL_FREE us-east-1; rollback = unset attribute (re-apply file at prior commit or aws sns set-sms-attributes without DefaultSMSType); NO text sent
 **Authored by:** 0.7.0_AE_CloudOps~FBL
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -12,10 +12,14 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | verify | scoped plan -target=aws_sns_sms_preferences.account in infra/aws/terraform/inf-pipeline | Plan: 0 to add, 1 to change, 0 to destroy; diff names default_sms_type alone |  | OPEN |
-| L2 | activation | safe-apply of the saved plan | apply summary rc=0 with start and end times |  | OPEN |
-| L3 | verify | post-apply get-sms-attributes and scoped plan | DefaultSMSType Transactional, spend limit 50, sampling 0, role unchanged, scoped plan No changes |  | OPEN |
+| L1 | verify | scoped plan -target=aws_sns_sms_preferences.account in infra/aws/terraform/inf-pipeline | Plan: 0 to add, 1 to change, 0 to destroy; diff names default_sms_type alone | terraform 1.15.8 scoped plan -target=aws_sns_sms_preferences.account 17:18:39Z: Plan: 0 to add, 1 to change, 0 to destroy; plan JSON 5 resource_changes (4 no-op target dependencies), aws_sns_sms_preferences.account update, diff default_sms_type alone ('' -> Transactional) | CLOSED 20261011T172113Z |
+| L2 | activation | safe-apply of the saved plan | apply summary rc=0 with start and end times | safe-apply of saved plan f20.tfplan 17:19:08Z-17:19:40Z rc=0: Apply complete! Resources: 0 added, 1 changed, 0 destroyed | CLOSED 20261011T172113Z |
+| L3 | verify | post-apply get-sms-attributes and scoped plan | DefaultSMSType Transactional, spend limit 50, sampling 0, role unchanged, scoped plan No changes | get-sms-attributes: DefaultSMSType Transactional (AC1), MonthlySpendLimit 50 and sampling 0 (AC2), DeliveryStatusIAMRole unchanged; scoped plan after apply: No changes. Your infrastructure matches the configuration (AC3). No text sent. | CLOSED 20261011T172114Z |
 
 ## Log
 
 - 20261011T171727Z OPENED by 0.7.0_AE_CloudOps~FBL with 3 leg(s)
+- 20261011T172113Z LEG L1 closed: terraform 1.15.8 scoped plan -target=aws_sns_sms_preferences.account 17:18:39Z: Plan: 0 to add, 1 to change, 0 to destro
+- 20261011T172113Z LEG L2 closed: safe-apply of saved plan f20.tfplan 17:19:08Z-17:19:40Z rc=0: Apply complete! Resources: 0 added, 1 changed, 0 destroyed
+- 20261011T172114Z LEG L3 closed: get-sms-attributes: DefaultSMSType Transactional (AC1), MonthlySpendLimit 50 and sampling 0 (AC2), DeliveryStatusIAMRole
+- 20261011T172114Z CLOSED -- all 3 legs proven
