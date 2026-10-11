@@ -5679,3 +5679,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W93-S3 -- DB-b-118: the contract lists method rows 1 and 2 while METHOD_ROWS holds row 3
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W93-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~93",
+  "surfaced_at": "2026-10-11T05:30:00Z",
+  "one_line": "DB-b-118 AMENDMENT 1: the dim_return_method contract's method_versions lists rows 1 and 2, while the producer's METHOD_ROWS holds rows 2 and 3 (row 3 from DB-b-102); the contract at 0.4.0 does not list row 3, as ordered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:115 METHOD_ROWS, read by importing the module: keys [2, 3]",
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json method_versions: method_version 1 (landed 2026-10-01) and 2; no 3",
+      "AMENDMENT 1 item 2 of IRPT_DASHBD.TO-DB-b-118 orders row 3 not added here and this one row filed"
+    ]
+  },
+  "spec_asserts": "The contract's method_versions enumerates the method versions the producer can write.",
+  "world_is": "The contract lists versions 1 and 2; the producer's METHOD_ROWS writes 2 and 3 (version 1 is the landed legacy row, no longer in METHOD_ROWS). A reader taking method_versions as the set of rows a producer can emit misses row 3. Inert: no row 3 is written by this order, and ADVI_COTBKF writes it under its own pair.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
