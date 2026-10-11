@@ -10,12 +10,16 @@
  "subject": "ADVI_FIRMBKTS FB-f-8 act 1 applied: oracle read on router v27 and guard v6, plus a ruling",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FBL/ACT1_DEPLOYED_ORACLE_AND_RULING_REQUEST.md",
  "opened_at": "2026-10-11T08:32:49Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-11T08:36:03Z",
   "bus_message_id": "46853151-fe26-4c4a-9db9-181c62aae9d4"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T08:46:12Z",
+  "by": "1.0.0_SA_CTO~DELL1",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
