@@ -5332,3 +5332,56 @@ round.** Never edit an existing row.
  "world_is": "The invocation also reads a gitignored per-checkout cache that a fresh worktree lacks. Any worker re-running AC3 in a new worktree needs the same copy."
 }
 ```
+
+## ADVI_COTBKF-D2-W83-S2 -- AC1 and AC2 cannot read passed with the variable unset while the round-55 with-variable arm stands
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W83-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~83",
+ "surfaced_at": "2026-10-11T04:27:44Z",
+ "one_line": "CB56bd1-AC1 and CB56bd1-AC2 cannot read 'passed' as written: test_first_use_with_variable_succeeds (round-55 arm, test_commonwealth_sweeps_config_env.py) asserts COTBKF_SWEEPS_CONFIG is set and loads the real file, so under the criteria's `env -u COTBKF_SWEEPS_CONFIG` it fails (AC1: 1 failed, 7 passed; AC2: 1 failed, 773 passed, 11 skipped). With the variable set the same runs are 8 passed and 774 passed, 11 skipped. The order says the other arms stand; the refusal clause bars weakening or skipping the arm.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "AC1 as written, variable unset, at 41b1094775: 1 failed, 7 passed, rc 1; the one failure is the with-variable arm (assertion: the variable is not set in the test environment)",
+   "AC2 as written, variable unset: 1 failed, 773 passed, 11 skipped, rc 1; skips 11 of 11 as before this order",
+   "variable set: AC1 8 passed rc 0; silver suite 774 passed, 11 skipped rc 0",
+   "the round-55 arm was written to FAIL, not skip, when the variable is absent (its own assertion message); the pin refuses any synthetic file, so no synthetic loader result or temp file can stand for the real one in that arm"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB56bd1-AC1/AC2 run with the variable unset and expect 'passed'; step 3: the round-55 test's other arms stand.",
+ "world_is": "One test needs the real private file by design, so no suite run with the variable unset can be fully green while it stands. The issuer decides: rewrite that arm so the variable is supplied by the test (needs the real path, a device path in a test), or run AC1/AC2 with the variable set for that arm, or drop the arm from the unset runs by a rule the issuer states."
+}
+```
+
+## ADVI_COTBKF-D2-W83-S3 -- AC3 as written needs five persisted inputs that round 51 moved out of the tree
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W83-S3",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~83",
+ "surfaced_at": "2026-10-11T04:27:44Z",
+ "one_line": "CB56bd1-AC3 as written cannot run in this tree: commonwealth_sweep_regrade.py defaults to five persisted parquet inputs under org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~41/~42/~43/~46/~50, all moved out of the repo by round 51 (CB-ay-1), so the invocation stops with FileNotFoundError on the ~46 grades file. The worker ran it with five extra path flags (--r24-grades, --round22, --traced, --causes, --movers) pointing at the moved copies in the private evidence mirror, identically in the before and the after run.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "before-run log last line with the invocation as written (after the Yahoo cache copy of row W83-S1): FileNotFoundError on the ~46 month_grades_before.parquet path in the worktree",
+   "git log: 63448cccd2 removed those files from the tree; the ~46 MOVED_ACCOUNT_DATA.md lists month_grades_after/before.parquet by sha256 and size only",
+   "run with the five flags: last line starts with the AC3 expected text, rc 0; no file copied into the tree"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB56bd1-AC3 names one invocation with --before-list, --after-list, --data-dir and --out only.",
+ "world_is": "The persisted inputs the regrade reads by default live only in the private evidence mirror, so any AC3 re-run needs the flags that point at them. The comparison is still like for like: both runs used the same flags."
+}
+```
