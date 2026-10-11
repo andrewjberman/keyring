@@ -385,7 +385,21 @@ class Box:
         if not re.fullmatch(r"0\.0\.0_AB_MSTR(~[A-Za-z0-9]+)?", actor):
             raise Refused("send-pending is a manager's act: the acting serial (OPAL_AGENT_SERIAL, else the session serial file) is %r, "
                           "not a 0.0.0_AB_MSTR serial or lane. Nothing was sent or recorded." % (actor or "unset"))
-        cmd = shlex.split(os.environ.get("CROSSBOX_SEND_CMD", "").strip() or "bash %s send" % (TOOL_ROOT / ".tools" / "agentbus-sqs.sh").as_posix())
+        override = os.environ.get("CROSSBOX_SEND_CMD", "").strip()
+        if override:
+            cmd = shlex.split(override)
+        else:
+            # Never a bare `bash`: on Windows subprocess resolves it to System32\bash.exe (WSL), which fails with
+            # "execvpe(/bin/bash) failed" and nothing goes out (LD-0643, 0.0.0_AB_MSTR 2026-10-11). The one resolver
+            # (CLAUDE.md: .tools/git_bash_resolver.py) names Git Bash; absent, the send REFUSES loud rather than guess.
+            if str(HERE) not in sys.path:
+                sys.path.insert(0, str(HERE))
+            import git_bash_resolver  # noqa: E402  (a .tools sibling; imported here so the tests' sandbox roots work)
+            gb = git_bash_resolver.git_bash()
+            if not gb:
+                raise Refused("no Git Bash found by .tools/git_bash_resolver.py; set CROSSBOX_SEND_CMD to '<git-bash> "
+                              "<repo>/.tools/agentbus-sqs.sh send'. Nothing was sent or recorded.")
+            cmd = [gb, (TOOL_ROOT / ".tools" / "agentbus-sqs.sh").as_posix(), "send"]
         lines, sent_n, held_n, failed_n, seen = [], 0, 0, 0, 0
         cdir = self.root / REL_DIR
         for path in sorted(cdir.glob("*.json")) if cdir.is_dir() else []:

@@ -100,6 +100,25 @@ present with its sha256.
 
 **Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
 
+## AMENDMENT 4 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~08:5xZ): the hop3 un-block condition is restated -- a 49 Financial hop3 file does NOT un-block this order (row IRPT_DASHBD-D2-W96-S1, disarmed here)
+
+DB-b-121 read `data/assets/scripts/gold/irpt_custody/hop3_real_run.py` (drained in the same turn as this amendment): as written it resolves two
+masters that both belong to 49 Financial and reads the 49 Financial returns gold. Run as AMENDMENT 3 words it, it would produce a 49 Financial file,
+and "the hop3 file present with its sha256" would read MET while nothing of Cottonwood had been read. That is a wrong oracle.
+
+**Condition 3 of AMENDMENT 3 now reads:** a hop3 output whose own record states that it read `irpt/cottonwood/gold/account_return_daily/` (the
+table minted by ADVI_COTBKF on 2026-10-11), for Cottonwood masters, with the keys it read listed. hop3 cannot produce that today: it has no
+Cottonwood masters, and the builder refuses its ownership-map address for the firm. So this order stays BLOCKED on three things, in order:
+1. the reader of that table has its own never-widen pair (ADVI_COTBKF ADDENDUM 11.1), naming exactly the `date=` listing, the window's parquet
+   files (columns `account_id`, `business_date`, `total_return_daily`, `market_value_eod`) and the as-of manifest;
+2. the reader obeys the CTO's condition (msg 4472): it reads `return_basis` first and shows nothing for a NOT_MEASURABLE day, never a zero and never
+   a carried value; and ADVI_COTBKF's row on the 1,757 account-days measured with no holdings row is answered first;
+3. hop3 is changed, in its own cell, to resolve Cottonwood masters; whether the gold's `account_id` form joins the directory's key is NOT
+   established (row IRPT_DASHBD-D2-W96-S3) and is measured by that cell.
+No cross-box hop3 order is sent to the laptop until 1 to 3 hold.
+
+**Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited.

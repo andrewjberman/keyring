@@ -5988,3 +5988,28 @@ round.** Never edit an existing row.
  "world_is": "Explained as a class (an emptied account has value 0 and no position rows) and FLAGGED in part: 24 rows, 3 of them above 100%, where the outflow and the prior value disagree. NOT established: the cause in those 24 (a transfer valued on another basis, a flow dated a day off, or a prior value that was itself partial), and whether the 2 rows with a zero flow and a zero value are real. A reader that binds this table should treat a measured row with market_value_eod 0 as a close-out day; the producer's plausibility band would have caught the 3 if thresholds existed."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S102",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T08:40:26Z",
+  "one_line": "L9 round 61: CB61bi2-AC2 MET. The watched set names the break-glass role and the firm bucket policies by address, and the CRM statements are 3 Deny statements inside the cottonwood firm bucket policy, whose text is equal before and after in the plan JSON this seat read. The control is real: the old selector fails one() with 2 managed rows. 10 of 10 firm-bucket rows read no-op. The plan's 4 other changes are the never-applied break-glass pair and 2 artifacts of this box's denied reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4496 (CB-bi-2 complete @f7badf1aae), updating the round 61 packet @004f8ae2ce (msg 4329)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.7.0_AE_CloudOps~CB2/shared_infra_plan_proof.md",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_61_L9_GRADE_20261011.md",
+      "this seat's read of the saved plan JSON (C:/dev/_cotbkf_private_evidence_20261009/r61/shared_infra_plan.json, 242 resource changes): 238 no-op, 3 create, 1 delete-then-create; the 10 lgic_firm rows change 0; the 2 breakglass rows are both creates; the cottonwood firm bucket policy holds 4 statements, 3 of them the CRM Deny statements, and its policy text is equal before and after; the other 2 changes are the portal bucket and its encryption configuration"
+    ]
+  },
+  "spec_asserts": "CB61bi2-AC2 (JUDGMENT, graded by 3.0.0_SA_CVO at L9): the watched pattern covers the CRM restricted-prefix statements, the break-glass role and the firm bucket policies, each named by address; the control of step 2 is real.",
+  "world_is": "Both limbs hold. No terraform command was run by this seat; the plan JSON is the applier's. Rows D2-S92 and D2-S95 stay ARMED with their owners.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
