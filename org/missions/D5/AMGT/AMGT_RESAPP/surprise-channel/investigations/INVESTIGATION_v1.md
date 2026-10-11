@@ -24291,3 +24291,77 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Disarmed in the same turn by AMENDMENT 1 of AMGT-qq-4: SAP_GY_Equity is HELD out of the write set (ASML and BABA only) and the order's check takes --hold. SAP's driver serves exactly what it serves today. The repair is a verifier rule (a point set whose unit renderings differ by a thousand, million or billion token in the sentence the figure sits in is held as a set), a cell for the round-92 analysis; this row does not cut it."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W385-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~385",
+  "surfaced_at": "2026-10-11T10:38:31Z",
+  "one_line": "AC3's R91 locator control asserts SAP 2023 = 13,745, SAP 2025 = 21.05 and SAP 2024 = 18,078 verify and are kept; the R93 scale rule holds that whole SAP set, so r91_locator.py reads NO (10 of 13) and AC3 cannot pass as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AMGT-ss-2 (decomposition s.101): a kept point set whose figures carry more than one stated scale word is HELD WHOLE; arm M1 and check T1 expect SAP_GY_Equity at 0 points. AC3 (the order's control chain) runs round91_prep/checks/r91_locator.py first and expects R91 LOCATOR: YES (13 of 13), with L3 SAP 2023 13,745 and L4 SAP 2025 21.05 verifying and K1 SAP 2024 18,078 keeping span [129709, 129715].",
+  "world_is": "Measured 2026-10-11 in the worktree, read-only: r91_locator.py gives PASS L1 BABA 2025, PASS L2 BABA 2026, FAIL L3 SAP 2023 (held: 'the figures are stated on different scales in the filing (million, billion) and the excerpt gives no conversion for the series'), FAIL L4 SAP 2025 (same held reason), FAIL K1 SAP 2024 (span None), PASS E1, PASS X1-X7; arms passed 10 of 13; R91 LOCATOR: NO, exit 1. The AC3 && chain stopped there, so r92_block_bound.py (R92 BLOCK BOUND: YES, 5 of 5) and the filings pytest suite (328 passed) were run separately. The R91 docstring records K1 as PASS at base; R91 was not re-run at base. The cell's arms M1 and T1 and the R91 arms L3, L4 and K1 require opposite states of the same three SAP points.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round91_prep/checks/r91_locator.py (arms L3, L4, K1 and the docstring verdict line)",
+      "lib/research/filings/analyze.py@e790da8e1f plus the uncommitted cell edit (_scale_set_reason and the scale hold in _apply_point_verification)",
+      "r91_locator.py output in C:/dev/wk-resapp-385 on 2026-10-11: FAIL L3, FAIL L4, FAIL K1, arms passed 10 of 13, R91 LOCATOR: NO"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not disarmed by the worker: r91_locator.py is outside the order's write paths, and AC3 is graded as written. The disarm is the issuer's: the R91 controls L3, L4 and K1 and the cell's M1 and T1 assert opposite states of the same SAP points."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W385-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~385",
+  "surfaced_at": "2026-10-11T10:38:31Z",
+  "one_line": "The order says the worktree was cut from the issuance commit cab1577aba; its branch HEAD e790da8e1f is 33 commits after it, none of which touch lib/research/filings/ or round93_prep/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's preflight: the worktree C:/dev/wk-resapp-385 is branch wk-AMGT_RESAPP-385, cut from the issuance commit cab1577aba.",
+  "world_is": "git rev-parse --abbrev-ref HEAD gives wk-AMGT_RESAPP-385; test -d org and test -d .tools give TREE-OK; cab1577aba is an ancestor of HEAD e790da8e1f; git rev-list --count cab1577aba..HEAD gives 33; git log cab1577aba..HEAD over lib/research/filings/ and round93_prep/ is empty. The work proceeded at HEAD e790da8e1f with every named path present.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-list --count cab1577aba..e790da8e1f in C:/dev/wk-resapp-385 on 2026-10-11 (33)",
+      "git log cab1577aba..HEAD -- lib/research/filings/ org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round93_prep/ (empty)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No effect on the cell: the 33 commits touch none of the code or checks the cell names, and the base measurement of M1 matched the cut."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W385-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~385",
+  "surfaced_at": "2026-10-11T10:38:31Z",
+  "one_line": "The cell's 'spaces allowed; stop at a digit' does not say whether non-space characters may sit between a figure and its scale word; the rule reads any non-digit characters inside the 12-character window and takes the first whole scale word.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-ss-2: the scale word is the first whole word, case-insensitive, of thousand, million, billion, trillion that begins within 12 characters after the end of the point's span (spaces allowed; stop at a digit).",
+  "world_is": "The implemented reading is _SCALE_AFTER_RE in lib/research/filings/analyze.py: [^\\d]{0,12}?, then a whole scale word. A stricter reading (spaces only) gives the same scale for the three SAP points, since each figure is followed by one space and its scale word. The live stored set moved only SAP (r93_scale_table.py T2: 11 equal), but the stricter reading was not run over the other objects.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/analyze.py (_SCALE_AFTER_RE and _scale_word_after, uncommitted cell edit on e790da8e1f)",
+      "r93_scale_table.py output in C:/dev/wk-resapp-385 on 2026-10-11: objects 12, changed 1 (SAP_GY_Equity), equal 11"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer to confirm the reading. The test_scale_window test pins the implemented reading: a digit stops the scan, the word must start within 12 characters, and a longer word such as millions is not read."
+}
+```
