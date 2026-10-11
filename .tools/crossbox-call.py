@@ -553,8 +553,38 @@ class Box:
         self.save(doc)
         return self.status(call_id)
 
+    def withdraw(self, call_id: str, by: str, ruling: str, at: str | None = None) -> list:
+        """The issuing box retires an ORDER its named seat never read (the seat is absent), on a committed ruling.
+        No new key and no new state: the withdrawing seat writes BOTH closed sides, so every crossbox/1 reader on every
+        box reads CLOSED-BOTH, and status prints WITHDRAWN because the two closers are one seat and no ack exists."""
+        doc = self.read(call_id)
+        self.need_box(doc, "from_device", "withdraw")
+        if doc["kind"] != "ORDER":
+            raise Refused("withdraw retires an ORDER; %s is a %s (a CALL is answered or closed, never withdrawn)" % (call_id, doc["kind"]))
+        if doc["ack"] and doc["ack"]["at"]:
+            raise Refused("%s was read by %s at %s; a read order closes with `close`, it is not withdrawn" % (call_id, doc["ack"]["by"], doc["ack"]["at"]))
+        if doc["closed"]["from_at"] or doc["closed"]["to_at"]:
+            raise Refused("%s already has a closed side" % call_id)
+        if not by or not SERIAL_RE.fullmatch(by):
+            raise Refused("--by %r is not a serial" % by)
+        if base_of(by) not in {base_of(doc["from_serial"]), "1.0.0_SA_CTO", "0.0.0_AB_MSTR"}:
+            raise Refused("--by %s is neither the issuer %s nor the issuing box's CTO or MSTR" % (by, doc["from_serial"]))
+        rel = str(ruling or "").replace("\\", "/")
+        if not rel or rel.startswith("/") or ".." in rel.split("/") or re.match(r"[A-Za-z]:", rel) or not (self.root / rel).is_file():
+            raise Refused("--ruling must be a file inside the repository, relative to its root")
+        ok, why = self.tracked_clean(rel)
+        if not ok:
+            raise Refused("--ruling %s %s; the other box reads the ruling by pulling it. Commit it first." % (rel, why))
+        when = at or stamp(now_dt())
+        doc["closed"] = {"from_at": when, "from_by": by, "to_at": when, "to_by": by}
+        self.save(doc)
+        return self.status(call_id) + ["WITHDRAWN %s by %s on ruling %s; the named seat %s never read it" % (call_id, by, rel, doc["to_serial"])]
+
     def status_of(self, doc: dict, now: datetime.datetime | None = None) -> str:
         cid, c = doc["id"], doc["closed"]
+        if c["from_at"] and c["to_at"] and c["from_by"] == c["to_by"] and not (doc["ack"] and doc["ack"]["at"]):
+            return "STATUS %s WITHDRAWN by %s at %s (ORDER never read by %s; reads CLOSED-BOTH to every crossbox/1 reader)" % (
+                cid, c["from_by"], c["from_at"], doc["to_serial"])
         if c["from_at"] and c["to_at"]:
             return "STATUS %s CLOSED-BOTH (from %s by %s, to %s by %s)" % (cid, c["from_at"], c["from_by"], c["to_at"], c["to_by"])
         if c["from_at"] or c["to_at"]:
@@ -813,6 +843,21 @@ def run_cases(tmp) -> list:
     st = a.status(cid)[0]
     rec("the-sending-box-reads-CLOSED-BOTH-after-the-merge", st.startswith("STATUS %s CLOSED-BOTH" % cid), st)
 
+    opened2 = a.open("ORDER", b.device, seat, "1.0.0_SA_CTO", "Order to an absent seat", BODY)
+    cid2 = opened2[0].split()[1]
+    h.commit(a, a.rel(cid2))
+    ok, why = raises(Refused, lambda: a.withdraw(cid, "1.0.0_SA_CTO", BODY), "is a CALL")
+    rec("withdraw-refuses-a-CALL", ok, why)
+    ok, why = raises(Refused, lambda: a.withdraw(cid2, "0.4.0_DS_ClientPlatform", BODY), "neither the issuer")
+    rec("withdraw-refuses-a-seat-that-is-not-the-issuer-or-its-box-lead", ok, why)
+    (a.root / "docs" / "loose2.md").write_text("not committed\n", encoding="utf-8")
+    ok, why = raises(Refused, lambda: a.withdraw(cid2, "1.0.0_SA_CTO", "docs/loose2.md"), "Commit it first")
+    rec("withdraw-refuses-an-uncommitted-ruling", ok, why)
+    wd = a.withdraw(cid2, "1.0.0_SA_CTO", BODY)
+    st = a.status(cid2)[0]
+    rec("withdraw-reads-WITHDRAWN-and-CLOSED-BOTH-with-no-new-key", st.startswith("STATUS %s WITHDRAWN by 1.0.0_SA_CTO" % cid2)
+        and a.read(cid2)["state"] == "CLOSED-BOTH" and a.read(cid2)["ack"] is None and wd[-1].startswith("WITHDRAWN"), st)
+
     bad = json.loads(a.path(cid).read_text(encoding="utf-8"))
     bad["surprise"] = 1
     a.path(cid).write_text(json.dumps(bad), encoding="utf-8")
@@ -874,6 +919,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--id", required=True)
     p.add_argument("--side", required=True)
     p.add_argument("--by", required=True)
+    p = sub.add_parser("withdraw", help="the issuing box retires an ORDER its named seat never read, on a committed ruling")
+    p.add_argument("--id", required=True)
+    p.add_argument("--by", required=True)
+    p.add_argument("--ruling", required=True, help="repo-relative path of the committed ruling that withdraws it")
     sub.add_parser("list").add_argument("--open", action="store_true")
     p = sub.add_parser("merge")
     p.add_argument("--id", required=True)
@@ -886,7 +935,7 @@ def main(argv: list) -> int:
     if args.selftest:
         return selftest()
     if not args.cmd:
-        print("usage: crossbox-call.py <open|line|issue|send-pending|sent|receive|ack|acked|close|status|list|merge> ... | --selftest", file=sys.stderr)
+        print("usage: crossbox-call.py <open|line|issue|send-pending|sent|receive|ack|acked|close|withdraw|status|list|merge> ... | --selftest", file=sys.stderr)
         return 2
     try:
         dev = devmod()
@@ -911,6 +960,8 @@ def main(argv: list) -> int:
             lines = box.acked(args.id, args.line, args.bus_message_id)
         elif args.cmd == "close":
             lines = box.close(args.id, args.side, args.by)
+        elif args.cmd == "withdraw":
+            lines = box.withdraw(args.id, args.by, args.ruling)
         elif args.cmd == "status":
             lines = box.status(args.id)
         elif args.cmd == "list":
