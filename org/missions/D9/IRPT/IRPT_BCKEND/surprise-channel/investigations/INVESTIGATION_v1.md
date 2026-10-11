@@ -27283,3 +27283,26 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Five of the six have no anchor close on any of the 87 axis days; JSOSX has one on 75 of them and is outside the first witness only on the days the anchor lacks it, so it is both in the overlap table and in the Inst set outside. Its moved-day rows (23) are all held rows priced from the holdings table, not only the 2 the IB-pr-445 sizing held as outside the first witness. The count is stated per ticker; nothing is re-graded."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W308-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~308",
+  "surfaced_at": "2026-10-11T20:19:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The second guard sentence (no grade where the reader has no bar for the calendar's prior trading day) frees exactly as many account-days as sentence (1) alone in the nine-pair sizing: its cost is 0, because the sizing's row grade already returned no_bar_for_the_day_or_prior whenever the prior-day bar was missing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~308/IB148-1_nine_pair_sizing.json second_sentence (freed 12482 under sentence (1) alone and 12482 under both; UNGRADEABLE 30661 and 30661)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~308/ib442_measure.py classify (returns no_bar_for_the_day_or_prior when nav_d or nav_p is None)"
+    ]
+  },
+  "spec_asserts": "The face asks for how many account-days the SECOND sentence alone costs, as the nine-pair sizing under sentence (1) alone less the same under both, implying a figure that can differ from zero.",
+  "world_is": "The figure is 0 on this population (the 85 graded days, 303 tickers asked). The instrument's row grade (IB-pr-442's classify, imported unchanged and used by every sizing in this chain) already treats a missing prior-day bar as no grade, so sentence (2) was in force in the earlier sizings and adds nothing to them; it differs from sentence (1) alone only in the repeat count and in the overlap table (IB-pr-449 Table C: 6 security-days). Reported as measured; no sentence of the guard is questioned."
+}
+```
