@@ -29,9 +29,16 @@ address("mdpf", "inflection", "bronze", "orion_model_composition", "date=2026-10
 
 Repoint the reader, and only the bronze read:
 
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D1, 2026-10-11 ~03:2xZ, row MDPF_CANON-D1-W9-S1, CTO ruling msg 3417 = B):** the daily runner has no `lib/`
+(it syncs only `code/scripts/` and `code/config/`), so the feeder cannot import `lib.opal_naming`. It reads the generated file
+`data/mdpf/config/bronze_homes.json` that cell `CN-c-2` writes before this order starts (same worktree). If that file is absent, read
+`CN-c-2`'s order section 1 step 1 for its shape and stop on a BLOCKING row: it is not this cell's file.
+
 1. Add a module-level function `bronze_partition_prefix(date_iso: str) -> tuple[str, str]` returning `(bucket, key_prefix)` for that
-   date from the builder's `address(...)` call (split `s3://<bucket>/<key>` at the first `/`; no trailing slash). Import the builder the
-   way `data/mdpf/scripts/gold/mdpf_gold_parquet.py` line 52 does: `from lib.opal_naming import address`.
+   date, read from `../../config/bronze_homes.json` relative to the script's own directory (on the runner `/opt/mdpf/scripts/gold/`
+   resolves it to `/opt/mdpf/config/`; in the repo, to `data/mdpf/config/`): `bucket`, and `key_prefix =
+   <feeds.orion_model_composition.key_prefix> + "/" + partition.format(date=date_iso)`. Do NOT import `lib` or `opal_naming`. A missing
+   or unreadable file raises; there is no fallback.
 2. Replace the typed `MDPF_BRONZE_PREFIX` and its two uses:
    - `resolve_bronze_date` (about lines 190-216) lists the PARENT of the builder's partition prefix (everything up to and excluding
      `date=<...>`) on the builder's bucket with `Delimiter="/"`, and parses partition tokens of the form `date=YYYY-MM-DD` (the old form
@@ -48,7 +55,7 @@ Repoint the reader, and only the bronze read:
 2. Only the file in section 3 changes (plus your deliverables and the surprise channel). Do not edit the writer (`CN-c-2`'s).
 3. **Never** add a fallback to the old bronze path, a dual read or a comparator (PRD DEC-14): the reader reads the new home only.
    Where the new home holds no partition on-or-before the date, `read_orion_bronze` raises as it does today.
-4. **Every NEW address comes from the builder**; a builder REFUSAL is a row, never a typed workaround.
+4. **Every NEW address comes from the builder, through the generated file**; a refusal is a row, never a typed workaround.
 5. **CLIENT DATA:** never print a client figure or account id.
 6. Keep the file's line endings as you find them (read them first). No non-ASCII. Use the Edit tool.
 7. If an item cannot be met within your paths, file a row and stop on that criterion.
@@ -87,6 +94,8 @@ A row id on this project carries the dell1 infix: `MDPF_CANON-D1-W9-S<k>`, with 
 filing. Report once: the diff (one line per file), the output line of every criterion, the commit hash, and any row.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-11 ~03:2xZ, row MDPF_CANON-D1-W9-S1; CTO ruling msg 3417):** step 1 re-cut to read the generated config (B) instead of importing the builder; criteria unchanged, the issuer's `reader` arms amended in step. Gate limb: only GATE (viii) grades a modification, and `<placeholders>` is NONE.
 
 **ISSUER NOTES:** round 3 = `org/missions/D8/MDPF/MDPF_CANON/ledger/ROUND_ANALYSIS.round2.md` @71e85b7191 section 3 item 3 (M4 first slice). The
 issuer picked this reader from the census's dependency order: it is the only reader of the only bronze writer (census note 3), so the
