@@ -78,9 +78,9 @@ FEED_FIELDS = ("feed", "source", "scope", "vendor")
 _FEED_RE = re.compile(r"^[a-z0-9_]+$")
 # The platinum producers' destinations (ADVI_FIRMBKTS FB-f-9, CTO ADDENDUM 3): one row of platinum_destinations.json per
 # served platinum class. partition is a fixed segment, or PLATINUM_TAIL, meaning the legacy key's own path after the
-# prefix supplies the partition and object. The view is a GENERATED whole file the gold module reads (no import of this
-# module on the gold runner).
-PLATINUM_DEST_VIEW_PATH = "data/black_diamond/scripts/gold/lib/platinum_dest_view.json"
+# prefix supplies the partition and object. The view is a GENERATED whole-file Python module (a literal the gold module
+# imports): the deploy plane ships only .py files of scripts/gold[/lib]/ (safe_deploy_core.file_to_s3_target).
+PLATINUM_DEST_VIEW_PATH = "data/black_diamond/scripts/gold/lib/platinum_dest_view.py"
 PLATINUM_FIELDS = ("legacy_bucket", "legacy_prefix", "source", "scope", "tier", "table", "partition", "reader", "evidence")
 PLATINUM_TAIL = "{tail}"
 _PROBE_P, _PROBE_O = "zzprobep", "zzprobeo"
@@ -99,7 +99,7 @@ VIEWS = (
     ("portal/src/pages/InvestorReporting/header/firmDisplayNames.generated.ts", "mjs", ("FIRM_DISPLAY_NAMES",)),
     ("portal/src/pages/InvestorReporting/header/vendorDisplayNames.generated.ts", "mjs", ("VENDOR_DISPLAY_NAMES",)),
     (BRONZE_HOMES_PATH, "json", ("BRONZE_HOMES",)),
-    (PLATINUM_DEST_VIEW_PATH, "json", ("PLATINUM_DESTINATIONS",)),
+    (PLATINUM_DEST_VIEW_PATH, "py", ("PLATINUM_DESTINATIONS",)),
 )
 
 # Targets the generator owns WHOLE: the file is nothing but its generated block(s), so _render_view builds it
@@ -1104,17 +1104,23 @@ def _platinum_build(reg, row):
 
 
 def _blk_platinum_destinations(reg, h16, path):
-    """The platinum destination view as ONE JSON document (a whole-file target): per served platinum class, the legacy
-    prefix, the destination bucket and the key template. Every value is _platinum_build()'s, from the registry rows."""
-    classes = []
+    """The platinum destination view as ONE Python module (a whole-file target): a GENERATED header comment, then
+    PLATINUM_CLASSES, a literal tuple of (legacy prefix, destination bucket, key template) per served platinum class.
+    Every value is _platinum_build()'s, from the registry rows; the module is ASCII and imports nothing."""
+    rows = []
     for row in _platinum_rows(reg):
         bucket, tmpl = _platinum_build(reg, row)
-        classes.append({"prefix": row["legacy_prefix"], "bucket": bucket, "key_template": tmpl})
-    classes.sort(key=lambda c: c["prefix"])
-    doc = {"_generated": "%s -- do not edit by hand; regenerate with: python lib/opal_naming.py generate"
-                         " --out <dir> --target %s" % (_view_mark(h16, path), path),
-           "classes": classes}
-    return json.dumps(doc, indent=2, ensure_ascii=True).split("\n")
+        rows.append((row["legacy_prefix"], bucket, tmpl))
+    rows.sort()
+    lines = ["# %s -- do not edit by hand; regenerate with: python lib/opal_naming.py generate --out <dir> --target %s"
+             % (_view_mark(h16, path), path),
+             '"""The platinum destination view (ADVI_FIRMBKTS FB-f-9): read by lib/platinum_dest.py. A literal the gold runner'
+             ' imports; the key template carries {tail}, where the legacy key\'s remainder goes."""',
+             "from __future__ import annotations",
+             "PLATINUM_CLASSES = ("]
+    lines += ["    (%r, %r, %r)," % r for r in rows]
+    lines.append(")")
+    return lines
 
 
 BLOCKS = {

@@ -1581,3 +1581,52 @@ write: **1 row** (`S1`).
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S15",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T07:45:46Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "THE FACE ORDERS THE INSTANCE COMMITTED WITH ITS ARTIFACTS IN ONE COMMIT, BUT THE PIN RULE REQUIRES EACH ARTIFACT ROW TO CARRY THE COMMIT THAT CARRIED THE FILE: THE ARTIFACTS ARE COMMITTED FIRST AND THE INSTANCE SECOND",
+    "spec_asserts": "FB-f-9 section 5: commit the registry file, the opal_naming.py change, the view, the module, the routed scripts, the test, the amended census, the instance and the rows together. The record face: pin each artifact row to the commit that carried the file; proof-of-spec-check refuses a PENDING row for a file already committed, and the instance is committed after its artifacts.",
+    "world_is": "The two instructions cannot both hold in one commit: the instance's artifact pins name a commit that does not yet exist while the instance is being written. proof-of-spec-check reads the pins and the committed files, so the pins must name the artifact commit. The worker commits the artifacts, the census and the rows first, then pins the instance to that commit and commits the instance in a second commit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task order face section 5 (ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.md lines 166-167 at 9074f7eda0): 'Commit ... the instance ... together'",
+        "task order face section 5 (same file, record face): 'Pin your instance's artifact rows to the commit that carried each file ... the instance is committed after its artifacts'",
+        ".tools/proof-of-spec-check.py on the instance: artifact-resolution PENDING rows refused for a file already committed (checker output)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Resolved in the worker's order of commits, not by widening the face. The issuer may restate the commit order in the face."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S16",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T07:47:25Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "THE FACE ORDERS THE JSON VIEW DELETED, BUT THE OWNED-PATHS LANE GATE REFUSES THE DELETION: data/black_diamond/scripts/gold/lib/platinum_dest_view.json IS CLAIMED BY LANE POD4 AND IS OUTSIDE THIS WORKER'S <paths>",
+    "spec_asserts": "FB-f-9 step 1 (the re-cut) and 3b: 'Delete the JSON view you committed.' Section 3 <paths>: the view surface is platinum_dest_view.py; the JSON path is not listed. Worker rule: a path needed that the lane lacks is a BLOCKING row on that criterion, never an override.",
+    "world_is": "safe-commit.sh refused the commit with 'owned-paths lane violation(s) detected (block mode): data/black_diamond/scripts/gold/lib/platinum_dest_view.json -- lane=POD4'. The file is still at HEAD (committed at b9557fdc67). The worktree copy is deleted and the deletion is NOT staged, so it is uncommitted. Nothing references the JSON: platinum_dest.py imports the .py module, and AC1, AC2, AC3, AC4 and AC5 pass without it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output (worktree .scratch/safe_commit_v4a.txt): 'ERROR: owned-paths lane violation(s) detected (block mode)' and 'VIOLATION: data/black_diamond/scripts/gold/lib/platinum_dest_view.json -- lane=POD4'",
+        "git show b9557fdc67 --stat: the JSON view was committed by this worker (platinum_dest_view.json, 2100 bytes)",
+        "task order section 3 <paths> (ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.md, lines 115-138 at 9074f7eda0): platinum_dest_view.py listed; the .json path not listed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not overridden: no lane override, no author override. The issuer grants the deletion path (or the lane owner deletes it). Until then the stale JSON stays at HEAD and is unreferenced."
+  }
+]
+```
