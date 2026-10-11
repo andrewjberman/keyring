@@ -24838,3 +24838,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not edited: test_names_read_agreement.py is outside this order's <paths>, and names_read.py is untouched per the cell. The line-136 assertion is the pre-round-95 expectation that the cell supersedes. Disarm owner 2.0.0_SA_COO~R1 restates that assertion under the withholding before the drain."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W391-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~391",
+  "surfaced_at": "2026-10-11T17:11:44Z",
+  "one_line": "The re-seated worktree C:/dev/wk-resapp-391c has an empty portal/ submodule, so two model-words tests skip; the AC3 suite reads 954 passed and 2 skipped, where the earlier worktree read 950 passed and no skip.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-aa-2 AC3 (amended order): every other test of lib/research/api/tests passes (no failed, no error; about 950 passed); the suite is run in the worker's worktree.",
+  "world_is": "Measured 2026-10-11 17:1xZ in C:/dev/wk-resapp-391c at f4748adede plus this order's edits: pytest over lib/research/api/tests reads 954 passed, 2 skipped, 0 failed, exit 0. The two skips are lib/research/api/tests/test_model_words.py:37, 'the page source is not in this tree' (portal/src/pages/SecurityAnalysis/modelSheet.ts and components/model/WhatChangedPanel.tsx). The directory portal/ in this worktree is empty (a submodule not populated); the earlier worktree C:/dev/wk-resapp-391 carried the page sources and read 950 passed with no skip.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest run in C:/dev/wk-resapp-391c: 954 passed, 2 skipped, 317 warnings, exit 0; pytest -rs names the two skips at test_model_words.py:37",
+      "ls of C:/dev/wk-resapp-391c/portal returns no entries; git submodule status lists mcportal only",
+      "pytest skip reason at test_model_words.py:37 in C:/dev/wk-resapp-391c: 'the page source is not in this tree: portal/src/pages/SecurityAnalysis/modelSheet.ts'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No failure and no error: AC3's expectation (no failed, no error) holds. Not acted on by the worker. The skip reflects an unpopulated submodule in the new worktree, not a change in this order's code. The issuer may choose to populate portal/ in the worktree or accept the skip."
+}
+```
