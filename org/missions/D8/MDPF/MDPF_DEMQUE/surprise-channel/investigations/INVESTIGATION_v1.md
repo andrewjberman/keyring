@@ -466,6 +466,48 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "1.0.0_SA_CTO~Z msg 32871 via 0.0.0_AB_MSTR~DELL1 msg 2857"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S7",
+    "one_line": "land_cot.py cannot read its consumer's key literals since ADVI_COTBKF moved them onto legacy_addresses, so test_demque_land.py raises SystemExit at collection and aborts the whole demque pytest run.",
+    "spec_asserts": "DQ-t-4 / land_cot.py header: the lander's three keys are read out of build_canonical_prices_v2.py's own source; an extraction that finds nothing is a loud error, never a default.",
+    "world_is": "build_canonical_prices_v2.py line 170 now reads {'bucket': S3_BUCKET, 'key': _legacy_key('silver-historical-prices')} (ADVI_COTBKF CB-av-1 @9cfa6f9584, CB-ax-1 @19b3550e8a, 2026-10-09), so land_cot.py's _consumer_literal(r\"Key='([^']*historical_prices[^']*)'\") matches nothing and raises at import. `pytest data/mdpf/scripts/demque` at origin/CLOUD dcb15f35bb ends in INTERNALERROR with no test run; with test_demque_land.py ignored, 89 passed, 1 failed (the D1-S6 uploader test). The lander fails closed (no write), so the hazard is inert; no served path imports it today.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-11T03:58:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/land_cot.py:25-36 (_consumer_literal, SystemExit)",
+        "data/cot/scripts/gold/build_canonical_prices_v2.py:170 (_legacy_key)",
+        "pytest data/mdpf/scripts/demque at origin/CLOUD dcb15f35bb, 2026-10-11T03:5xZ"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S8",
+    "one_line": "32 of 141 served price files still carry the original 3 columns after the first served total-return write; all 32 are the symbols whose last Yahoo attempt is 2026-10-09, before that write.",
+    "spec_asserts": "DQ-t-21 / C-PRICES: price_store.write serves the four new columns (cash, total_return, tr_source, flags) after the original three for every written name.",
+    "world_is": "served_tr_read.py at origin/CLOUD dcb15f35bb, index written 2026-10-11T02:34:22Z: 109 prices.parquet carry the 7 columns, 32 carry the original 3, 0 other. The 32 symbols equal, by set intersection, the 32 pacer.json entries with last_attempt 2026-10-09 (outcome OK, http 200); the 147 attempted on 2026-10-10 carry 7 columns. Not read: whether the pacer's incremental window ever re-draws those 32, so whether they stay 3-column is open.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-11T03:58:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R7_CHECKS/served_tr_read.py output: 109 / 32 / 0",
+        "~/.opal/demque/pacer.json symbols[*].last_attempt (device-local, dell1), join in the real-run record",
+        "data/mdpf/scripts/demque/price_store.py write path"
+      ]
+    }
   }
 ]
 ```

@@ -41,6 +41,28 @@ generator is therefore `lib/opal_naming.py`'s OWN whole-file target (the pattern
 `.tools/` script. Delete your uncommitted `.tools/gen_mdpf_bronze_homes.py` and the hand-written `data/mdpf/config/bronze_homes.json`.
 Do NOT touch `.tools/naming-gate.py`. Step 1 below replaces amendment 1's step 1, and the grant step (3) is amended.
 
+**AMENDMENT 3 (issuer 2.0.0_SA_COO~D1, 2026-10-11 ~04:0xZ, rows MDPF_CANON-D1-W9-S4 and W9-S5, CTO ruling msg 3457):** two rulings.
+- **S4 -- the feed is a registry row, no literal in lib.** The naming limb refused `"mdpf"`/`"inflection"` as literals in
+  `lib/opal_naming.py` (your `BRONZE_HOME_FEEDS`). Under rule 30 a refusal is a missing registry row. Declare the feed in the registry
+  and make the renderer READ it, on the `pipeline_trees` pattern (`_blk_asset_dim_rest_pin` reads a scope row's `pipeline_trees`): the row
+  names the feed (`orion_model_composition`), its source (`mdpf`), its firm scope (`inflection`) and its vendor (`orion`, a VENDOR row of
+  `systems.json`, which `validate()` already checks for `pipeline_trees[].vendor`). Where the row lives is your call under ONE
+  constraint: do NOT add anything to `pipeline_trees` itself (it feeds the cross-firm fence blocks `_CROSS_FIRM_FOREIGN_*`; a bronze feed
+  is not a fence) and prefer a NEW registry file (e.g. `infra/logic/registry/feeds.json`) over editing `scopes.json`, because every
+  generated view that reads `scopes.json` re-marks when it changes. A new file read only by this target re-marks nothing else. Add the
+  file to whatever `validate()` and `registry_hash` enumerate and have `validate()` refuse a malformed row (a feed naming an unknown
+  scope, source or vendor). The registry edit carries its own `python lib/opal_naming.py validate` run: print its exit code. Add the new
+  file to `TARGET_REGISTRY_KEYS` for this target (and for `LOCALS_PATH` if its local reads it). `lib/opal_naming.py` then carries no
+  firm or scope literal for this feed; the naming limb is the oracle.
+- **S5 -- a measured runner-code plane.** `targets` printed the carrier UNCLASSIFIED. Add a branch to `targets_report` that classifies
+  `data/mdpf/config/` and `data/mdpf/scripts/` as SHIP on a `runner-code` plane, MEASURED from the runner's real sync list:
+  `infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh` lines :125 and :130 (`aws s3 sync` of `code/scripts/` and `code/config/`).
+  The branch reads those two lines at report time (do not hard-code the paths it maps; derive the repo dir from the sync source, the
+  way `terraform_plane_consumers` derives roots from `git grep`). If the measured sync differs from the plane (for example, nothing
+  automated copies the repo dir to `code/`; the iam.tf comment says `code/` was synced by hand), FILE A ROW saying so: do not widen
+  the plane. The two lib tests that read `targets` (`test_targets_report_covers_every_known_target_exactly_once`,
+  `test_cmd_targets_exit_code_tracks_unclassified`) must pass after, and `python lib/opal_naming.py targets` must exit 0.
+
 1. **The generate target (in `lib/opal_naming.py`), its carrier and its Terraform local.** Read the existing pattern first: `VIEWS`,
    `WHOLE_FILE_TARGETS`, `TARGET_REGISTRY_KEYS`, `BLOCKS`, `_render_view`, `_home_bucket`, `_view_mark`, `_gen_locals` and the
    `VENDOR_DISPLAY_NAMES` block as the whole-file model. Then:
@@ -109,6 +131,7 @@ infra/aws/terraform/modules/opal_name/main.tf
 data/mdpf/scripts/gold/tests/test_mdpf_bronze_homes.py
 infra/aws/terraform/mdpf-pipeline/iam.tf
 infra/logic/registry/scopes.json
+infra/logic/registry/feeds.json
 infra/aws/terraform/modules/opal_name/generated_locals.tf
 org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~9/
 org/missions/D8/MDPF/MDPF_CANON/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -124,7 +147,7 @@ Read-only: the whole repository, in particular `lib/opal_naming.py`, `infra/aws/
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CN-c-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round3/checks/r3_checks.py" writer; echo "exit=$?"</invocation><expect>ROUND 3 WRITER: 3 of 3 arms -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="CN-c-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round3/checks/r3_checks.py" homes; echo "exit=$?"</invocation><expect>ROUND 3 HOMES: 3 of 3 arms -- and exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="CN-c-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round3/checks/r3_checks.py" libs; echo "exit=$?"</invocation><expect>ROUND 3 LIBS: 3 of 3 arms -- and exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="CN-c-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round3/checks/r3_checks.py" libs; echo "exit=$?"</invocation><expect>ROUND 3 LIBS: 5 of 5 arms -- and exit=0</expect></criterion>
   <criterion id="AC4" cell_refs="CN-c-2" judgment="true"/>
 </proof_of_spec>
 
@@ -144,6 +167,8 @@ filing. Report once: the diff (one line per file), the output line of every crit
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-11 ~03:2xZ, row MDPF_CANON-D1-W9-S1; CTO ruling msg 3417):** steps 1-2 re-cut to the generated-config shape (B), `<paths>` widened by three files, AC2 added (`homes`). Gate limb: only GATE (viii) grades a modification, and `<placeholders>` is NONE; the commit states the gate's output.
+
+**AMENDMENT 2 (2.0.0_SA_COO~D1, 2026-10-11 ~03:5xZ; CTO ruling msg 3431):** the generator is lib/opal_naming.py's own whole-file target; AC3 `libs` added, the judgment criterion is AC4. **AMENDMENT 3 (2.0.0_SA_COO~D1, 2026-10-11 ~04:0xZ; CTO ruling msg 3457):** the feed is a registry row the renderer reads (S4) and a measured runner-code plane classifies the carrier (S5); `<paths>` gains `infra/logic/registry/feeds.json`. No criterion changed: AC3 `libs` is the proof that the two lib tests pass. Gate limb: only GATE (viii) grades a modification, and `<placeholders>` is NONE.
 
 **ISSUER NOTES:** round 3 = `org/missions/D8/MDPF/MDPF_CANON/ledger/ROUND_ANALYSIS.round2.md` @71e85b7191 section 3 item 4 (M8). The CTO's gate on
 M8, "only if `LGIC_ENFORCE` E3 reads applied", read at the cut: LGIC_ENFORCE is CLOSED 7 of 7 REALIZED (ROUND_ANALYSIS.round21 @55b3104426),
