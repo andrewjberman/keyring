@@ -4404,6 +4404,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "On 3 of 32 own workbooks the header row has a stray non-year number, so the /12 reader classed the model rows above the EQY_FUND_YEAR row HEADING and gave no values; the issuer's census of round 46 (unmapped 0, classes sum to rows) could not see it because both are true of a wrong classification.",
   "notes": "Remedy cut as AMENDMENT 1 to TO-CRPS-aw-1 (a year row = at least 3 strictly increasing integer years making up at least 80% of the row's numeric cells; the period columns are the year cells). The /13 write carries the corrected classes; the packet states the changed counts. The CVO's FWD-20 grade at round 46 was on the 3381 reading: the CTO should read this before the round-47 analysis.",
   "disarm_owner": "1.0.0_SA_CTO~DELL1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W2-S5",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+  "surfaced_at": "2026-10-11T16:53:31Z",
+  "one_line": "The amendment's AC4 cites cell CRPS-aw-11, which the decomposition amendment d23e364503 declares; that commit is not an ancestor of this worktree's branch, so the decomposition here has no CRPS-aw-11 and the proof checker refuses the instance (alignment VIOLATION, rc 1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor d23e364503 HEAD (worktree HEAD 9cedc5724e): NOT ancestor; git merge-base --is-ancestor 857be75bd6 HEAD: NOT ancestor",
+      "git show d23e364503:org/missions/D5/AMGT/AMGT_CORPUS/decompositions/AMGT_CORPUS_DECOMP.md: grep -c CRPS-aw-11 gives 1; the same file in the worktree gives 0",
+      ".tools/proof-of-spec-check.py on the instance with AC1,AC2,AC3,AC4 (pre-commit): VIOLATION: alignment: cell_ref 'CRPS-aw-11' (cited by ['AC4']) does NOT exist in org/missions/D5/AMGT/AMGT_CORPUS/decompositions/AMGT_CORPUS_DECOMP.md; INVALID (rc=1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's owned_cells are CRPS-aw-2 and CRPS-aw-11, and the decomposition amendment (d23e364503) declares CRPS-aw-11 (order AMENDMENT 1, decomp_ref).",
+  "world_is": "This worktree's branch does not contain d23e364503. Its order file was set to the amended text as instructed (commit 9cedc5724e); its decomposition still has no CRPS-aw-11, and the decomposition is outside this order's paths, so it was not set here. Merging or checking it out was not done (barred).",
+  "notes": "The coordinator needs the decomposition amendment on wk-AMGT_CORPUS-47-2 before AC4 can validate. Until then the order stays open: no complete tag is appended. No gate is built here.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
 }
 ]
 ```
