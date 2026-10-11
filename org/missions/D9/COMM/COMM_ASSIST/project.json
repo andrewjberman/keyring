@@ -9,7 +9,7 @@
   "fabric_ruling": "laptop",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "ROUND_CLOSE",
   "created": "2026-10-08",
   "registered_under_tree": "2026-10-08",
   "pods": [],
@@ -38,5 +38,5 @@
   "workstreams": null,
   "phase": "2026-10-09 ~06:1xZ (1.0.0_SA_CTO, L3): PLACEMENT LAPTOP -> SITEZ (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_061xZ_COMM_ASSIST_MOVES_TO_SITEZ.md). 2.0.0_SA_COO~R taken offline by Andrew; rounds 6-11 drained on the laptop, deploy parked on OG-md-1 (round 9 drain end deliverables/2.0.0_SA_COO~R/ROUND9_DRAIN_END_20261009.md). A site Z COO lane picks it up. || EXECUTING -- registered 2026-10-08 from NFRA_CTLPLN workstream INBOUND rounds 1-7 (history stays in NFRA_CTLPLN's tree); rounds 6 and 7 APPLIED 21:48Z / 22:32Z, not yet EXERCISED; next: the 2026-10-09 ~22:00Z full-day read (FWD-3)",
   "blocking": null,
-  "last_updated": "2026-10-10T23:3xZ"
+  "last_updated": "2026-10-11T00:2xZ"
 }

@@ -2,18 +2,16 @@
 
 Seat `2.0.0_SA_COO~ZZ` (Claude, site Z; lane `c4dea02951`, taken over from `2.0.0_SA_COO~R` after the project moved to site Z at 06:1xZ).
 Contract: `prd/COMM_ASSIST_PRD.md` v0.3 (header fabric site-z, `c225bcc74e`), ADMITTED. Reviewer `3.0.0_SA_CVO~Z`. Overwritten by the
-seat; last 2026-10-10 ~21:1xZ.
+seat; last 2026-10-11 ~00:2xZ.
 
-**Round 11** (CA-d-1, the mail key's wiring) CLOSED: CAd1-AC3 PASS (Z-C-S1), `b1b8f5b4fe`; CTO analysis `4c14e95965`.
+**Round 12** (CA-d-2, the FWD-4 mail deploy) CLOSED: APPLIED `a3057a3ed1`; CTO analysis `82f10ddf63`.
 
-**Round 12 (ROUND_CLOSE, `bed79c9901`):** CA-d-2 (the FWD-4 mail deploy, with CA-d-3's KMS decoupling as Phase A2) APPLIED
-`a3057a3ed1` from a pinned build `2ad98c2e3a`. L8 packet `deliverables/2.0.0_SA_COO~ZZ/ROUND12_L8_PACKET_20261009.md`. The CVO's
-L8 compile and slug landed `852f1790dd` (Z-S1/Z-S3 dismissed, Z-S6 graduated). Waiting on the CTO's round-12 analysis; round 13
-is cut from it in one issuance. FWD-4 is APPLIED, not EXERCISED: row Z-S7 (the route lists; the one considered mail was refused as
-`body_no_andrew`).
-
-**Carried to round 13 (CTO ruling msg 32638 on the CVO's point):** pin `mail_requests.firm_domains()` to C-MAIL's five named parties.
-Today it considers every registry client firm with an `email_domain`, and only the gateway's domain table holds the line.
+**Round 13 (ROUND_CLOSE):** issued `e87fa72a49` on the round-12 analysis. CA-e-2 (`firm_domains()` pinned to the five) merged
+`bf8492f48f`; CA-e-3 (`channel_poll` names and raises its failure; ruling `deliverables/0.9.0_WK_COMM_ASSIST~7/CHANNEL_POLL_RULING.md`,
+row Z-W7-S1) merged `25d1247250`, CAe3-AC3 PASS by the CVO `92dec2368d`. L8 packet `ROUND13_L8_PACKET_20261010.md` `69f52a0546`.
+round-close-check MAY-CLOSE. **E1 (the driven FWD-4 mail) is HELD at Andrew:** no seat holds a non-Andrew Opal sending identity
+(row Z-S8); the ask is at the site Z MSTR terminal (msg 33074). Neither code change is deployed; ONE deploy carries E2 + E3 (+ an
+E1 fix if the read needs one) after E1's read. Waiting on the CVO's slug, then the CTO's round-13 analysis.
 
 Rows below dated before round 11's close were written on the laptop.
 
