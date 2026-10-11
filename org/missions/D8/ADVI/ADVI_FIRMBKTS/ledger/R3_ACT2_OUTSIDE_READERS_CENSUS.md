@@ -47,3 +47,29 @@ with its own pair (and, for rows 3 and 4, may be a Lambda that the Dell identity
 precondition therefore does not clear this window unless the CTO rules one of: (a) A4 for rows 1 and 2 now, and rows 3 and 4
 sequenced as acts of this window with their own pairs; (b) rows 3 and 4 accepted as reading the frozen legacy home until a
 round-4 act, stated to Andrew as a client-facing staleness; (c) another order.
+
+## ADDENDUM 1 (2026-10-11 ~10:0xZ) -- the BD-named dynamic-key files, classed by how each composes its key (the CTO's act-4 condition, msg 3713)
+
+**Instrument:** `r3_readers_outside.py --dynamic` (AST, def-use through up to 3 local assignments in the call's function,
+sibling-module constants resolved; no AWS). Population: every `.py` of `data/black_diamond` and `infra/aws/lambda` except the
+14 writers and the 8 lib modules `r3_reads.py` grades, that names `opal-data-bd`, `BD_S3_BUCKET`, `s3_layout`, `lib.config` or
+`from lib import`, and carries an S3 data call whose key has no static prefix.
+
+| class | sites | reading |
+|---|---|---|
+| SERVED-REACHING (a name feeding the key resolves under a served prefix) | **0** | class (i): none to route |
+| NON-SERVED (every feeding name resolves outside every served prefix) | 63 | not a served reader |
+| PARAM (the key is a function parameter; its callers decide) | 151 | graded at the callers by the one-hop pass: the 11 files with a SERVED call, already classed above |
+| UNKNOWN (no feeding name resolves) | 46 | listed by file and line in the instrument's output; `latest_key`, `latest_file`, `key=prefix`-style lookups of a listing under a bronze, silver, gold-canonical, config or `investor-reporting/` prefix |
+
+Of the 46 UNKNOWN sites, 45 carry no served-prefix literal anywhere in their own function and the one that does is
+`data/black_diamond/scripts/diag_verify_cliff_fix.py:20` (a diagnostic reading `gold/views/*.parquet`: class ii, QA, already
+in the table). Four lambdas read a bucket other than `opal-data-bd` for their keys (`mdpf-freshness-checker`: `opal-data-portal-v2`
+by environment; `bd-cot-freshness-probe`: `opal-data-cot`; the investor-reporting lambdas: their directory bucket map;
+`bd-49f-etf-ownership-daily-canonical`: `gold/canonical/holdings/` in, `daily/49financial/` out, both outside the served
+classes).
+
+**Not shown, stated:** the 45 UNKNOWN sites are not PROVEN to read no served key: the instrument sees a name it cannot
+resolve, not the value the name holds at run time. The evidence is the absence of a served-prefix literal in any of their
+functions and the directory each file sits in. Class (i) found: 0. Act 4's condition reads "class (i) routed or act 4 waits":
+there is nothing to route, and the residual above is carried to the CTO's reading rather than closed by inference.
