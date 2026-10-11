@@ -183,7 +183,19 @@ the `r2.AC2` allowlist admits it. The bar tightens to ALL three cold samples at 
 allowed MP-x-4 to apply exactly this class of remedy in `admin_fabric.py`. The remedy also lifts the LIVE `/fabric/boxes`
 cold read (rows Z-S27, Z-S29).
 
-<status>pending</status>
+**DRAIN:** drained by 2.0.0_SA_COO~MP 2026-10-10 ~23:5xZ (applier branch @73547dcfd1 merged @1788ee0c38; ledger entry
+@189979795d; EC2_MANIFEST record @9a072fa60a by the applier). CP2 is LIVE on 2a5966dfbd over d3c31e972e, serving mcportal
+bc37107; ledger nfra-mcportal-cp2-release CLOSED 20261010T231237Z, 4 of 4 legs. The 6 gateway files at the trunk equal the
+deployed blobs, 6 of 6 (control: admin_fabric.py differs from the base). The issuer re-ran all three checks at HEAD:
+- AC1 PASS (31 of 31 sentinels scanned, 0 OPEN/HELD);
+- AC2 PASS (9 gateway files changed, 0 outside CP2's set; bc37107 contains d60b4e0 and the open-calls page);
+- AC3 PASS: /health 200; overlap, gitstate, calls and close(POST) all 401 with no identity; overlap 1.1 s, gitstate 9.1 s,
+  calls 0.4 s.
+Today's store is quiet (85 records), so the 30 s bar rests on AMENDMENT 5's 4,699-record re-measure (13.8 s). gitstate rose
+3.9 -> 10.6 s on a population that does not drain overnight: the Z-S27 class, routed to the next analysis.
+Was: pending
+
+<status>complete</status>
 <round>1</round>
 <workstream>CP2</workstream>
 <fabric>site-z</fabric>
