@@ -24540,3 +24540,149 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not fixed (the round is frozen mid-round; a row is the only off-spec act). The repair is a cell for the CTO's round-93 analysis: the display-name chain must not take a classification name that disagrees with the registered name, and the held-name index must carry one company per key. Until then the dry-run table of AMGT-ss-6 names the Santander exclusion so it is not read as a self peer."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W388-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~388",
+  "surfaced_at": "2026-10-11T12:46:19Z",
+  "one_line": "The nested portal worktree has no committer identity, so safe-commit.sh refused the portal product commit (rc=128, 'Committer identity unknown'); the commit landed only with GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL set for that one call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Section 5 of the task order: commit in the worktree via .tools/safe-commit.sh --author \"<serial> <<serial>@opal.agent>\" -F <msgfile> -- <paths>, the product file being cscTable.ts in the nested portal worktree on branch wk-AMGT_RESAPP-388-portal.",
+  "world_is": "Measured 2026-10-11 in C:/dev/wk-resapp-388/portal: the safe-commit call with --author only refused, rc=128, 'fatal: unable to auto-detect email address (got Test@DESKTOP-HK1UU7N.(none))', nothing committed. The same call with GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL set to the serial committed f0229015 (1 file, 11 insertions, 7 deletions); git log reads committer 0.9.0_WK_AMGT_RESAPP~388.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh refusal output in the portal worktree, 2026-10-11 (this session): 'Committer identity unknown', rc=128",
+      "git -C C:/dev/wk-resapp-388/portal log -1 --format=%h~%an~%cn~%s reads f0229015~0.9.0_WK_AMGT_RESAPP~388~0.9.0_WK_AMGT_RESAPP~388~fix(AMGT_RESAPP TO-AMGT-ff-2 ..."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed by the worker: the git identity of the nested portal worktree is not configured and was not changed (no global or local config write). The one-call environment override is the only change, and it is not an audited override. Any later worker committing in the nested portal will meet the same refusal until the identity is set by its owner."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W389-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~389",
+  "surfaced_at": "2026-10-11T12:46:55Z",
+  "one_line": "The order says the worktree was cut from the issuance commit 61d50fc7fa; the branch HEAD at the first act was 47962a23eb, six commits past it (drain merges) and none behind.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker worktree C:/dev/wk-resapp-389 (branch wk-AMGT_RESAPP-389) was cut from the issuance commit 61d50fc7fa, so the tree the cell runs on is the issuance state.",
+  "world_is": "At the first act git rev-parse --abbrev-ref HEAD printed wk-AMGT_RESAPP-389 and TREE-OK. HEAD was 47962a23eb (drain: merge wk-ADVI_FIRMBKTS-31), 6 commits ahead of 61d50fc7fa and 0 behind. The order's paths were all present, so the cell ran on 47962a23eb; the edits are commits on top of it and the proof's vintage is 47962a23eb.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-resapp-389 rev-list --count 61d50fc7fa..HEAD = 6 and rev-list --count HEAD..61d50fc7fa = 0 (read in this session)",
+      "git worktree list at this session: C:/dev/wk-resapp-389 47962a23eb [wk-AMGT_RESAPP-389]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not acted on: the tree carries every path the order names and the cell is graded on the work. For the issuer to confirm the base the drain was cut against."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W389-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~389",
+  "surfaced_at": "2026-10-11T12:46:55Z",
+  "one_line": "The order says resolve_driver's verification call passes driver.get('unit'), but no driver object exists yet at that call; the cleaned local unit (unit or None) is passed instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Both callers of the verification path pass the series unit: the fresh two-pass run (resolve_driver's verification call) and reverify_stored_thesis_driver pass driver.get('unit'), the string, None when absent.",
+  "world_is": "In lib/research/filings/analyze.py resolve_driver, the driver dict is built after _apply_point_verification. The unit available at that call is the local unit from _clean_item_text(raw_driver.get('unit')), the same text the driver then carries as its unit field. The call passes unit_text=unit or None. reverify_stored_thesis_driver passes driver.get('unit') as written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "47962a23eb:lib/research/filings/analyze.py resolve_driver (unit cleaned from raw_driver.get('unit'), then _apply_point_verification, then the driver dict is built)",
+      "C:/dev/wk-resapp-389/lib/research/filings/analyze.py, the two call sites, uncommitted edit on 47962a23eb"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Equivalent in value: the cleaned unit is the string the driver stores. Not exercised by a fresh two-pass run, since this order makes no model or S3 write call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W389-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~389",
+  "surfaced_at": "2026-10-11T12:46:55Z",
+  "one_line": "The channel header says this file MUST stay one fenced JSON block; at 47962a23eb it holds 78 fenced blocks, each one bare row object, and this worker appended its rows as more blocks.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "INVESTIGATION_v1.md header: THIS FILE MUST STAY ONE FENCED JSON BLOCK, and an appender targets the FIRST block only and appends INSIDE the array.",
+  "world_is": "The file at 47962a23eb is 24542 LF lines with 0 CRLF and 156 fence lines, so 78 fenced blocks; the first block opens at line 25 and closes at line 54, and each block holds one row object, not an array. This worker appended its rows as new fenced blocks at the tail, the form every existing row uses, by a byte-level append and not the Edit tool.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "byte count and fence count of C:/dev/wk-resapp-389/org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md at 47962a23eb (python, this session): LF 24542, CRLF 0, fences 156",
+      "lines 25 to 54 of the same file: the first fenced block holds a single bare JSON object"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The header's one-block rule and the file's shape disagree. The row gate admits a row by its own schema, so the header is the stale carrier. For the channel owner to reconcile. Related: AMGT_RESAPP-D1-W385-S4 (the Edit tool normalizing line endings on this file)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W387-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~387",
+  "surfaced_at": "2026-10-11T12:46:04Z",
+  "one_line": "The round-94 display-name check's docstring states the name-agreement rule as one token of four or more letters; the order and the census state two or more characters, and the code follows the order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-ff-1 cell: 'Two names AGREE when the token sets ... share at least one token of two or more characters.' The census r94_name_census.py docstring (lines 7-8) states the same two-or-more rule.",
+  "world_is": "r94_display_name.py docstring (line 8, at 61d50fc7fa) states 'share at least one token of four or more letters'. The implemented rule (lib/research/api/names_read.py, commit fdc8659371) keeps tokens of two or more characters, per the order and the census. Two written versions of one rule sit in the round-94 prep; the check's arms were run with the implemented rule, not re-run under the docstring's four-letter reading.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round94_prep/checks/r94_display_name.py@61d50fc7fa line 8 (docstring: four or more letters), read in worktree C:/dev/wk-resapp-387",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round94_prep/checks/r94_name_census.py@61d50fc7fa lines 7-8 and 35 (len(t) >= 2)",
+      "lib/research/api/names_read.py@fdc8659371 (_name_tokens: len(token) >= 2 and not in AGREEMENT_GENERIC_WORDS)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Documentation drift in the round-94 prep check, not a change to the served rule. For the issuer to correct the docstring or confirm the two-character rule."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W387-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~387",
+  "surfaced_at": "2026-10-11T12:46:04Z",
+  "one_line": "The investigation file is not one fenced json array: it holds 78 fenced blocks, one row each, so 'append inside the fenced json array' cannot be followed literally; the row was appended as a new block in the file's existing shape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AMGT-ff-1 worker face, section 5 and the surprise rule: 'append ONE row ... inside the fenced json array'. The file's own header (lines 18-22): 'THIS FILE MUST STAY ONE FENCED JSON BLOCK ... an appender targets the FIRST block and appends INSIDE the array.'",
+  "world_is": "At 61d50fc7fa the file has 78 json fenced blocks (fence lines 156, 78 opening), each holding a single row object (e.g. AMGT_RESAPP-D1-S23 at lines 24518-24542 is its own block). No single array exists. The header's instruction, followed literally, appends into a block that holds one object, which would not be a valid array. The row was appended after the last block, as a new fenced block with LF endings (the base's line ending), written by a byte-level writer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python byte count at 61d50fc7fa of the json fence marker in org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md: 78 blocks; Grep of the fence line: 156 lines",
+      "INVESTIGATION_v1.md lines 18-22 (header rule) and lines 24518-24542 (one row, one block) read in worktree C:/dev/wk-resapp-387"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The header's rule and the file's shape disagree; the header's FIRST-block instruction would mis-append here. The disarm is the channel owner's: reconcile the header with the one-row-per-block shape."
+}
+```
