@@ -76,6 +76,26 @@ build, and a census of everything that moves.
 
 <expected_criteria>IB124-1-AC1, IB124-1-AC2, IB124-1-AC3</expected_criteria>
 
+## AMENDMENT 1 (2026-10-11 ~11:1xZ, issuer 2.0.0_SA_COO~P2, on row D2-W285-S1): the method limb's bar is "nothing new against live", not 0
+
+The worker's stop was right and the defect is the issuer's. IB124-1-AC1 required the method-call limb to read 0 on the built zip. That
+limb is name-based and over-approximating: it reads 4 on the built zip and the SAME 4 call sites on the live package (`publication`
+`.lookup(1 arg)`; `publisher` `.validate(2 args)` twice; `resident_worker` `.renew(ttl=900)`), each a name collision by the worker's
+reading of the source. A bar of 0 could not pass on any build of this function, including the live one. Ruled, inside this
+decomposition:
+- The name and attribute limbs stay at 0.
+- The method limb passes when EVERY mismatch site on the built zip is also on the live package. Sites are compared by module and call
+  text, not by line. A site that is new in the build is a FAIL and a stop.
+- The census adds `live_method_mismatched` (integer) and `method_mismatch_sites:[{module, call, in_live, reason}]`, one row per built
+  mismatch, the reason in one sentence. `built_method_mismatched` equals the number of rows.
+- The packet lists the carried sites and says plainly that each reason is a READING OF THE SOURCE, not an observed call, unless a
+  replay arm exercises that site; where an arm can exercise one (for example the `publisher` validate path), build it.
+- Step 4's `rollback_version` is still owed (it was not looked up before the stop).
+The other criteria are unchanged. Inherited state on the branch: `4191200027` (candidate map and writer), `e99d38c833` (row and tools);
+built twice identical at `MGQu5+58WxJ3pybmZx8cFdJ9nypEPvPGo66cCyiB1ts=`; scratch `C:/dev/_scratch285/`.
+
+Gate limb: GATE (viii) grades this modified order (placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. BUILD ONLY plus AWS reads through the `.tools/aws` shim.
