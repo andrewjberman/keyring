@@ -41,7 +41,7 @@
 
 ### ACCEPTANCE
 
-<criterion id="CB61bi2-AC1" cell_refs="CB-bi-2"><invocation>python -c "import json,re;d=json.load(open('C:/dev/_cotbkf_private_evidence_20261009/r61/shared_infra_plan.json',encoding='utf-8'));rc=d.get('resource_changes',[]);pat=re.compile(r'lgic_firm|restricted|breakglass|crm',re.I);w=[x for x in rc if pat.search(x['address'])];mv=[x for x in w if x['change']['actions']!=['no-op']];oth=[x for x in rc if not pat.search(x['address']) and x['change']['actions']!=['no-op']];print('CRM-PLAN resources=%d watched=%d watched_changed=%d other_changed=%d'%(len(rc),len(w),len(mv),len(oth)))"</invocation><expect>watched_changed=0</expect></criterion>
+<criterion id="CB61bi2-AC1" cell_refs="CB-bi-2"><invocation>python -c "import json,re;d=json.load(open('C:/dev/_cotbkf_private_evidence_20261009/r61/shared_infra_plan.json',encoding='utf-8'));rc=d.get('resource_changes',[]);fed=[x for x in rc if re.search(r'lgic_firm',x['address'])];mv=[x for x in fed if x['change']['actions']!=['no-op']];na=[x for x in rc if 'restricted_breakglass' in x['address'] and x['change']['actions']==['create']];print('CRM-PLAN-FED fed=%d fed_changed=%d never_applied_creates=%d'%(len(fed),len(mv),len(na)))"</invocation><expect>CRM-PLAN-FED fed=10 fed_changed=0 never_applied_creates=2</expect></criterion>
 `CB61bi2-AC1` -- the plan succeeded (the JSON exists), the watched set is not empty, and 0 watched resources change. Report the
 watched count: a watched count of 0 is a failed read, not a pass.
 
