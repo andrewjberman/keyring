@@ -38,3 +38,21 @@ fanout: 0 tree orders; 2 cells worked directly by the issuer, 1 done in this com
 - Anything that changes how the vendor is reached; any request down the YCharts path.
 - Any redrive of the eight (row D2-S45).
 - Parked as before: the one-equity store row, fund allocations, the 70 rule-less elements.
+
+## AMENDMENT 1 (2026-10-11, the issuer, on CTO msg 5727): cell `YCD-d-15`, cut BEFORE the binding's PART 2
+
+`1.0.0_SA_CTO~DELL2` ruled on the binding's packet PART 1 (@4fdc20b233): not bound as built; first a cell so that the chain
+stops for a request with no ticket BEFORE `analysis_ready` is sent, with tests asserting the drafter is not called.
+
+| cell | lane | what EXISTS at the end |
+|---|---|---|
+| `YCD-d-15` | ~G2, one build order `IRPT_YCDGEN.TO-YCD-d-15.analysis-ready-is-sent-only-for-a-request-filed-under-a-ticket` to `0.9.0_WK_IRPT_YCDGEN~17`, `<risk>WORLD</risk>` | The worker sends `analysis_ready` only for a request whose accepted record carries a ticket id; both send sites obey one rule; a skipped send marks nothing as sent and prints one line; five test groups. Dormant on the host until a release binds the queue |
+
+**What this cell does NOT do, and it is named for the CTO:** the ruling also says "a ticket whose type does not ask for
+commentary stops the same way". The worker cannot decide that: the accepted record carries the ticket's id and nothing of
+its type (`acceptance.py` lines 120-121), and the worker has no ticket read and is ordered not to gain one. That half is
+decidable where the ticket is read: at submission (the generate function validates the ticket id it is given) or in the
+drafter. It is put to the CTO as one question; it is not cut here.
+
+`YCD-a-15`'s PART 2 now depends on `YCD-d-15` merged, as well as on FWD-8. fanout: 1 of 1 chains, cap 8. Gate limb:
+`to-pipeline-gate.py` graded the new order at this commit.
