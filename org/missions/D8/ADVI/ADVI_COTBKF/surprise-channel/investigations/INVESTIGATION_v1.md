@@ -6639,3 +6639,53 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W107-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~107",
+ "surfaced_at": "2026-10-11T16:12:43Z",
+ "one_line": "Under method_r29 the served account_return_daily changes in 43 day files, not the 2 that PRD ADDENDUM v0.5/v0.6 and the round-68 packet name: 41 further dates hold a blank UNPRICED withholding account-day whose external_flow moves.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/silver/commonwealth_account_return_daily.py line 546: external_flow = daily_returns.flow for every row that is not an ABSENT or HELD exception, blank or not; so a flow that moves on a blank day moves a day-file cell",
+   "local rebuild of both rules at the served pin WITH the served --hold-cusips 05613L3H2,95000U2D4,651639AX4 (run_commit 685a6e205d64830c281beb1ae3c88bd6a2b52293): daily_returns flow differs on 44 account-days over 43 dates, return on 2 (2014-12-03, 2020-11-13); the other 42 are blank UNPRICED in both rules (return null in both)",
+   "control: the inline mapping of adapter lines 459-493 and 541-561 applied to the SERVED silver and to the method_r28 hold build reproduces all 1,691,729 served day-file rows with 0 differing (market_value_eod, external_flow, total_return_daily, measured flag); applied to the method_r29 build it differs on 44 rows over 43 dates (external_flow 44, total_return_daily 2); the sidecar derived under method_r29 equals the served sidecar (symmetric difference 0 of 1,584,413)",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~107/REMINT_FACTS.json (writes[] lists the 41 additional dates with their captured ETag, size, VersionId and LastModified; branches.measured_day_file_set)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bq-2 item 2 and PRD ADDENDUM v0.5/v0.6: the day files that differ 'must be exactly the 2 dates'; 'what it changes in the served table: 2 day files, and no other'; the 41 withholding days that are blank under both methods are a future change.",
+ "world_is": "The 2 dates are 2 of 43. The round-68 packet counted the return column; the day file also carries external_flow on blank rows, and method_r29 moves it on 42 blank UNPRICED account-days on 41 other dates (2024-12-02 holds two). Not decided here: whether those files are in or out of the sign-off. The 2 named rows themselves move in external_flow and total_return_daily, 1 row each."
+}
+```
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W107-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~107",
+ "surfaced_at": "2026-10-11T16:12:43Z",
+ "one_line": "The mint adapter's apply_days cannot re-mint: it is mint-only (refuses any non-empty target prefix), has no date argument, and refuses the tracked manifest, which carries no split_store.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/silver/commonwealth_account_return_daily.py apply_days lines 822-891: refuses when _prefix_used for any day (852-855), the sidecar (856-859) or the method row (860-862); loops over every manifest day (835, 852, 869); needs exactly two committed --pair files (825-829); calls require_pinned_split_store(man) (834, 429-433)",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~79/ard_cottonwood_manifest.json: top-level keys read by python json, 'split_store' in manifest is False; last commit touching it 84ef9e0972",
+   "data/assets/scripts/gold/irpt_reporting/account_return_daily.py emit_day lines 1871-1886: put_object of data and manifest with no overwrite refusal of its own; whether sp.stream_to_parquet refuses an existing key was not read",
+   "commonwealth_fwd3_serve.py apply lines 773-786: writes all three tables in one loop and refuses an existing object without --overwrite; no per-table flag"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bq-2 item 1: a re-mint is 'a move of served output' that the sign-off names, as if an existing code path performs it for 2 day files.",
+ "world_is": "No existing argument restricts apply_days to 2 dates, and its guards refuse every existing key; the serve --apply replaces all three silver tables or none. A 2-file re-mint needs a code change or a direct producer call, which this order neither makes nor tests. Read from the code, not exercised against the bucket."
+}
+```
