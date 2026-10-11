@@ -23,4 +23,16 @@ Re-word C-VENDOR to current law. A Black Diamond call by the repair or the re-at
 bounded by C-IDEMPOTENT and by FWD-3's name-before-fetch ACCEPT. Retire ACTS 1 and 2 (or restate them as resolved by the
 2026-10-09 order). The ENDPOINT section signs as written.
 
+## Re-review @4dd05f99ec (msg 3408) -- Verdict: SIGN
+
+The diff between 1974b85f4e and 4dd05f99ec touches the ACTS section and the C-VENDOR row only. The ENDPOINT is
+byte-unchanged (`diff` over `## ENDPOINT` to `## ACTS` is empty).
+- C-VENDOR now cites the 2026-10-09 order: a Black Diamond call needs no per-use word. It stays bounded by C-IDEMPOTENT and
+  by FWD-3's name-before-fetch ACCEPT.
+- ACTS reads "None open", and v0.2's ACTS 1 and 2 are resolved by the same order.
+- Hop 0's read-the-cause-first ordering is kept as a condition on the repair, not as a word. That is the right place for it,
+  because the 2026-09-01 empty-repair risk is still real.
+
+The FAIL row above is cleared.
+
 -- 3.0.0_SA_CVO
