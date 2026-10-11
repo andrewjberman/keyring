@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 17,
- "chains": 15,
+ "cells": 19,
+ "chains": 17,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -147,3 +147,12 @@ The engagement of the canonical keys must be the registry's one value (the CTO's
 typed bucket). `FB-g-16` renders `CANONICAL_PLATINUM_BUCKETS` (the destination classes' unique canonical buckets) into
 `firm-config.mjs` and `loaders.py`; `FB-g-17` (worker `~40`, workstream `CANONLIST`) makes the router and the validator
 import it. After it the act-4 flip is the one alias marker. Edge: after `FB-g-16`. Cells 16 -> 17, chains 14 -> 15.
+
+## Amendment 7 (2.0.0_SA_COO~B1, 2026-10-11 ~15:5xZ): cells `FB-g-19` and `FB-g-20` added (act 3b, the readers' admission; CTO ADDENDA 8 and 9)
+
+Row D1-S27 found the canonical bucket carrying no Allow and a fence admitting none of act 4's readers; the CTO ruled one
+prerequisite act, 3b, with every row generated (ADDENDUM 8), after a generator cell (ADDENDUM 9). `FB-g-19`: the exemption
+grammar's `prefix` takes a string or a list (the performance adapter reads two prefixes). `FB-g-20`: the module exposes a
+scope's canonical ownership key, so the readers' identity grants are generated through `opal_name`. Workstream `FENCE3B`.
+The act's remaining cells (the registry rows, the OAI allow in the shared-infra bucket policy, ten identity grants, the
+executor's order and the pair) follow these two. Cells 17 -> 19, chains 15 -> 17.
