@@ -21,7 +21,7 @@ All MDPF_SECCLASS ledgers are CLOSED except two (both HELD):
 
 | Ledger | State |
 |---|---|
-| e87b BD three-file ship (SC1) | SHIPPED 06:20Z (legs V, P, D CLOSED, `E87-SHIPPED ok=True`); HELD on MY leg G after the next scheduled BD fire (23:00Z fallback Mon-Sat, else 04:00Z). Served ETags re-read by me 06:3xZ: D_04 304573cf, C_06 1aa6e3b5, D_03 6238716b = the signed digests, lib eb9bb852 unmoved. Leg G should read about $6,335.94 left Unclassified, not zero |
+| e87b BD three-file ship (SC1) | SHIPPED 06:20Z (legs V, P, D CLOSED, `E87-SHIPPED ok=True`); HELD on MY leg G after the next scheduled BD fire (23:00Z fallback Mon-Sat, else 04:00Z). 2026-10-11 is a Sunday, so no 23:00Z fire tonight: the next is Mon 2026-10-12 04:00Z, chain end about 06:20Z, leg G read after that. (Measured 23:4xZ: the runner stopped, launched 12:45Z; mix_summary.json / mix_daily_summary.json / firm_composition.json unchanged since the 04:00Z fire, so the 12:45Z run, which wrote only A_00 / A_02 / S_00 telemetry, did not touch them.) Served ETags re-read by me 06:3xZ: D_04 304573cf, C_06 1aa6e3b5, D_03 6238716b = the signed digests, lib eb9bb852 unmoved. Leg G should read about $6,335.94 left Unclassified, not zero |
 | e57e61 FWD-10 apply (~S) | HELD on the first scheduled new-security run that plans US stocks |
 | e60 D_04 Unclassified line | CLOSED (SC1): AC1 ok, arm 2 closed as non-e60 drift by the CTO (ADDENDUM 1 @4cac828d3c) |
 | e79 BD lib ship | CLOSED, leg G NOT MET: the lib is inert on the served path (row D1-S26) |
