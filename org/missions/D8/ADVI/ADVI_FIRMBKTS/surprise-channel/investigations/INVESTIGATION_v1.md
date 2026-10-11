@@ -5151,3 +5151,29 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "The line check is not performed by this worker's census; the worker verified its 16 code lines by reading each one (each carries its publish call). For the issuer: a line test in S2 would close the gap. The checker is the COO's file and is not edited here."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W55-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~55",
+  "surfaced_at": "2026-10-11T17:02:40Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-g-35 AC1 invocation as handed to the worker carries --base 8f9c3f1d8c, a commit that does not exist in the repository; the check reads 3 of 4 arms there and passes T3 vacuously.",
+  "spec_asserts": "FB-g-35 AC1 (order file task-orders/ADVI_FIRMBKTS.TO-FB-g-35.sms-default-type.md line 54): --base 83995c26e6; the worker face carried --base 8f9c3f1d8c.",
+  "world_is": "git cat-file -t 8f9c3f1d8c returns 'fatal: Not a valid object name'. r4_smstype.py _git() swallows stderr, so the base file reads as empty: T2 FAILS (3 of 4 arms, exit 1) and T3 PASSES as '0 of 0 base lines kept', a vacuous pass. At the order file's base 83995c26e6 the same check reads 4 of 4 (exit 0). The worker ran AC1 at 83995c26e6 per the coordinator's correction.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C /c/dev/wk-firmbkts-55 cat-file -t 8f9c3f1d8c at HEAD c4d21f5ab8: fatal: Not a valid object name 8f9c3f1d8c",
+      "r4_smstype.py --arms pref --base 8f9c3f1d8c in the worktree: T2 other attributes equal base: False; T3 base lines kept 0 of 0; ROUND 4 SMS TYPE: 3 of 4 arms; exit=1",
+      "r4_smstype.py --arms pref --base 83995c26e6 in the worktree: T1 to T4 PASS; ROUND 4 SMS TYPE: 4 of 4 arms; exit=0",
+      "order file org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-g-35.sms-default-type.md line 54 carries --base 83995c26e6"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Surfaced for the issuer. The coordinator's correction to 83995c26e6 was applied; no file of the check was edited. For the COO: the T3 arm reads 0 of 0 lines as a PASS when the base is empty, so an unresolved base can pass one arm vacuously. A guard that fails on an empty base would close that gap. The checker is the COO's file and is not edited here."
+}
+```
