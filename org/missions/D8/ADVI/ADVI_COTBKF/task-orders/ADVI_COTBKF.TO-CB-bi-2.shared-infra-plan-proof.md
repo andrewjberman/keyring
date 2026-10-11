@@ -72,6 +72,16 @@ statements, the break-glass role and the firm bucket policies (each named by add
 - **Order of your two orders:** this plan proof first, then `ADVI_COTBKF.TO-CB-al-2` (released by its AMENDMENT 5 @a8748799a1). The
   two do not touch the same resources: this one writes nothing.
 
+**AMENDMENT 2 (issuer, 2026-10-11T07:51Z) -- the criterion is corrected to the proof the CTO ruled; nothing is re-run on AWS.**
+- `1.0.0_SA_CTO~DELL2` msg 4313: the proof asked 0 changes to the CRM statements and the firm bucket policies; both policies read
+  no-op and the control fails at `init`; MET. Msg 4370: "My ruling's '0 changes' listed the break-glass role beside the policies;
+  that was wrong as written." The issuer's `CB61bi2-AC1` copied that wording and so read FAIL on a correct run.
+- `CB61bi2-AC1` is read on the SAME saved plan JSON with this invocation, and its bar is the line below:
+  `python -c "import json,re;d=json.load(open('C:/dev/_cotbkf_private_evidence_20261009/r61/shared_infra_plan.json',encoding='utf-8'));rc=d.get('resource_changes',[]);fed=[x for x in rc if re.search(r'lgic_firm',x['address'])];mv=[x for x in fed if x['change']['actions']!=['no-op']];na=[x for x in rc if 'restricted_breakglass' in x['address'] and x['change']['actions']==['create']];print('CRM-PLAN-FED fed=%d fed_changed=%d never_applied_creates=%d'%(len(fed),len(mv),len(na)))"`
+  -> `CRM-PLAN-FED fed=10 fed_changed=0 never_applied_creates=2`.
+- Record that line in your proof instance as CB61bi2-AC1's evidence, keep your first reading (`watched_changed=2`) beside it, validate,
+  and flip `<status>` to complete. `CB61bi2-AC2` stays PENDING-ADJUDICATION. Do this AFTER `ADVI_COTBKF.TO-CB-bj-1`.
+
 <paths>
 org/missions/D8/ADVI/ADVI_COTBKF/deliverables/
 org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md
