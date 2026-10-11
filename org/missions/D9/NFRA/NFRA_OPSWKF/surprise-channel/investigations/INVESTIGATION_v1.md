@@ -371,3 +371,32 @@ adjudication rows live in `../adjudications/` as `NFRA_OPSWKF-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## NFRA_OPSWKF-D2-S11 -- a second live API (trade-submission-api) reaches the dashboard, submit and workflow functions under its own authorizer; FWD-8 and FWD-9 were proven on the portal door only
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S11",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~O2",
+  "surfaced_at": "2026-10-11T22:13:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A second HTTP API, trade-submission-api (w8jnzvs21g), is LIVE with its own public endpoint and 7 routes that reach trade-dashboard-api, trade-submission-handler and trade-workflow-handler under its own authorizer (function trade-authorizer), plus POST /auth with no authorization. FWD-8 and FWD-9 were specified, built and proven against the portal API only; what this door's callers get from the two changed functions depends on a context this seat has not read.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-policy on trade-submission-handler and on trade-dashboard-api (2026-10-11 ~22:1xZ, cloudops-dell2-agent-user): 3 of 3 statements each, all principal apigateway.amazonaws.com; one statement on each, Sid apigateway-w8jnzvs21g, admits source ARN arn:aws:execute-api:us-east-1:313476888478:w8jnzvs21g/*/*",
+      "aws apigatewayv2 get-api w8jnzvs21g: Name trade-submission-api, ProtocolType HTTP, ApiEndpoint https://w8jnzvs21g.execute-api.us-east-1.amazonaws.com, CreatedDate 2026-01-06; get-stages: prod, AutoDeploy true",
+      "aws apigatewayv2 get-routes w8jnzvs21g: 7 routes, no NextToken: GET /submissions, GET /submissions/{proxy+}, GET /submissions/{submission_id}/excel, GET /users, POST /submit, POST /workflow, each AuthorizationType CUSTOM authorizer nfa51m; POST /auth AuthorizationType NONE. get-integrations: the four GETs reach trade-dashboard-api, POST /submit reaches trade-submission-handler, POST /workflow trade-workflow-handler, POST /auth trade-auth-handler",
+      "aws apigatewayv2 get-authorizer nfa51m: Name trade-auth, REQUEST, function trade-authorizer, payload 2.0, simple responses, identity source the Authorization header",
+      "infra/aws/terraform/trade-pipeline/apigateway.tf:15-17 @HEAD: 'an older API GW w8jnzvs21g also has invoke permissions on 3 of 4 trade Lambdas. That GW is dormant; cleanup tracked separately in TRSB_PATHFIX.TO-3 ... Permissions remain console-only until then.'"
+    ]
+  },
+  "spec_asserts": "FWD-8 and FWD-9 (PRD v0.9): the trade blotter, the user list and the submit route answer Opal staff only; census and pairs name the portal's HTTP API as the door.",
+  "world_is": "There are two doors. Through the second, the two changed functions now decide on whatever context trade-authorizer supplies: if it carries neither tier internal nor firmId opal-capital they refuse every caller of that door (fail closed) where until today they served whoever that authorizer admitted; if it carries either, that door still serves. The workflow handler behind it was not changed by this project. NOT read: trade-authorizer's source (not found in the repository by this seat) and so its context keys; what POST /auth issues and to whom; whether anything calls this API (no log was read); the census's 115-route denominator did not include this API. No call was made to it.",
+  "notes": "Found while reading who may invoke each function directly, for the FWD-9 pair's AMENDMENT 1 (CTO msg 5949). BLOCKING because the two outcomes' DONE WHEN cannot be called EXERCISED for 'the service' while a second door is unread; INERT because nothing this project did opened it and the changed functions fail closed on an unknown context. Owner of the API: the trade pipeline (TRSB, inactive); routed to 1.0.0_SA_CTO~DELL2 in the amendment. Out of lane for this seat to call, change or remove."
+}
+```
