@@ -3078,3 +3078,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r141/p141_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-444` | the deciding leaves of the capture receipt with their confirming and killing values; why the after-submit reason did not fire, by line; the verdict from what is already read; the reads to ask of the host reader | FWD-4 (a session is usable only when verified; never an endless login contest) | LOCAL | IB-pr-434 drained | P141-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~302. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 134. ROUND 142, WORKSTREAM ~P (2026-10-11 ~18:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5549)
+
+IB-pr-443's read (merged; 3 of 3 PASS on the issuer run): on both institutional-class one-day-off days the READER repeats the
+prior day's bar while the first witness moves (verdicts inferred from the series; no priced trade within three trading days); the
+three exchange-traded days are half-cent rounding. The CTO ruled the institutional class stays out on that finding, since a
+repeated bar is the dangerous direction, and named a guard that would close it for every class: the second witness does not
+grade a security-day on which its own bar equals its bar for the prior trading day. One read-only cell measures the guard.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r142/p142_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-445` | the overlap table again under the unmoved-bar guard, per type; three sizings (seven types with no guard, under the guard, and with the institutional class under the guard); what the guard un-grades in the seven admitted types | FWD-3 (a basis somebody measured) | LOCAL | IB-pr-441, IB-pr-442, IB-pr-443 drained | P142-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~303. DIRECT-ACT (one read-only cell, LOCAL).
