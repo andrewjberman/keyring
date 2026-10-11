@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T171837Z-74e2",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "1.0.0_SA_CTO~DELL2",
+ "to_serial": "1.0.0_SA_CTO",
+ "subject": "SECURITY FINDING row IRPT_YCDGEN-D2-S60: trade-dashboard-api serves any verified caller; a cross-firm read by code",
+ "body_path": "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r14/ROUTE_CENSUS_WHAT_A_SERVICE_TOKEN_OPENS_20261011.md",
+ "opened_at": "2026-10-11T17:18:37Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

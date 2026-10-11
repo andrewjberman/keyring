@@ -26725,3 +26725,49 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W298-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~298",
+  "surfaced_at": "2026-10-11T17:08:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order asks about a SLEEVE node under an account, but the SmartX-overlay firm's served answer carries no node_kind SLEEVE (0 of 154,473); its account-level sleeve is node_kind CATEGORY, and the builder that makes it lives outside the folder the order names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_49f.py:389 builds the account-level sleeve with node_kind CATEGORY (docstring lines 22-24 still say SLEEVE); the HoldingsSnapshot schema node_kind description names CATEGORY as the L0 node per account per category (ruling msg 102475)",
+      "served publication for the latest day, 188 of 188 parts: nodes_by_kind ACCOUNT 7620, CATEGORY 7620, MODEL_LEAF 7553, CASH 9203, SECURITY 122477, SLEEVE 0 (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~298/IB138-1_sleeve_leaf_read.json)",
+      "infra/aws/lambda/investor-reporting/holdings/ has no lib/ and no node builder; the nodes are built in data/assets/scripts/gold/investor_reporting/holdings_snapshot.py and holdings_49f.py, read for the rule"
+    ]
+  },
+  "spec_asserts": "Order item 2: count the SLEEVE nodes (a separately managed account or model sleeve under an account) in the served answer, and the producer is in the holdings folder and its lib/.",
+  "world_is": "The strict node_kind SLEEVE count is 0 in the answer read. I counted as a sleeve the node_kind CATEGORY whose parent is an ACCOUNT node (or node_kind SLEEVE), stated in how_a_sleeve_node_is_recognised, and report the strict count beside it. Under the strict reading the sleeve split would be 0/0/0 and the rule line alone would decide the verdict; the portal fixture's node kind should be compared with the one the served answer carries."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W298-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~298",
+  "surfaced_at": "2026-10-11T17:08:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The control the order describes as four nodes (an account, a sleeve with two security nodes, a sleeve with none) is five nodes; five were planted and the control read as planted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~298/ib138_1_count.py plant(): 1 account + 2 sleeves + 2 securities = 5 nodes; control() planted equals read"
+    ]
+  },
+  "spec_asserts": "Order item 4: a small planted snapshot of four nodes (an account, a sleeve with two security nodes, a sleeve with none).",
+  "world_is": "The described parts cannot be four nodes: one account, two sleeves and two security nodes make five. The check only needs control.planted equal to control.read, which holds; no check reads the node count."
+}
+```
