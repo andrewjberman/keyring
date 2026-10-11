@@ -1822,3 +1822,31 @@ write: **1 row** (`S1`).
   }
 ]
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~17 (FB-f-8, phase A, the all-ASCII router and guard)
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W17-S7",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~17",
+    "surfaced_at": "2026-10-11T07:25:47Z",
+    "one_line": "The cell's spelling list for non-ASCII characters names no ASCII spelling for U+26D4 (NO ENTRY sign) on line 239 of the shared-advisor-router-response guard; the worker wrote [STOP] there, a comment-only edit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Section 1 step 3 of the FB-f-8 cell: replace each non-ASCII character by its plain ASCII spelling, with examples for an em dash or en dash, a typographic quote, an arrow, a multiplication sign and an ellipsis. No spelling is given for any other character.",
+    "world_is": "The guard at infra/aws/lambda-edge/shared-advisor-router-response/index.mjs carries U+26D4 inside a // comment at line 239; the 12 bytes above 127 in that file are three em dashes (3 bytes each) and this one sign (3 bytes). No listed spelling covers the sign. The worker wrote [STOP] (6 bytes), so the guard's byte count moves by +3 on that line and by -3 on the three dashes, a net delta of 0. AC1 reads 0 and 0 after the edit, AC2 51 pass, AC3 46 pass, AC4 DORMANCY 0 and 0. No decision moves: the change is comment text only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda-edge/shared-advisor-router-response/index.mjs@7718c70a30 line 239: a // comment beginning with U+26D4 (escaped in this JSON as \\u26d4) followed by THE SERVING LAYER CANNOT REPAIR THIS AND MUST NOT TRY",
+        "the same file in the FB-f-8 commit, line 239: a // comment beginning with [STOP] followed by the same words; no other character on that line changed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Form only. The spelling of a symbol outside the cell's listed examples is the issuer's to confirm; the commit uses [STOP] and the issuer may restate it. Owner of the spelling: the issuer 2.0.0_SA_COO~B1."
+  }
+]
+```
