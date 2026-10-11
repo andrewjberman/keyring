@@ -1490,3 +1490,94 @@ write: **1 row** (`S1`).
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S11",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T07:36:13Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "PRODUCER_CENSUS.json OMITS A SERVED ADVISOR-COMPOSITION WRITE IN D_03 (THE NON-ARCHITECT TUPLE, BASE LINE 870), WHICH THE RULED 62 DO NOT COVER",
+    "spec_asserts": "FB-f-9 step 3a and the ruling: the census names every served platinum writer line of the 14 writers (62 lines: the 58 of the census plus the four rows S5, S6).",
+    "world_is": "D_03.composition_artifacts.py @96f3212d22 main(): the non-architect step builds (adv_comp, advisor_composition_key(adv_id), legacy_advisor_composition_key(adv_id)) at line 870 and passes the list to _write_json_batch at line 883. advisor_composition_key() is gold/entities/advisors/{id}/composition.json (lib/s3_layout.py), a served class. The census has D_03 lines 507, 526, 549, 573, 583, 767, 799, 912 only. The write is routed in this cell through _write_json (the key put), so it is covered by the routing, but the census count stays 62 by the ruling. The amended census lists it NOT.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 96f3212d22:data/black_diamond/scripts/gold/D_03.composition_artifacts.py: grep of advisor_composition_key(adv_id) finds lines 799 and 870; _write_json_batch( calls at 811 and 883",
+        "lib/s3_layout.py: advisor_composition_key(advisor_id) returns gold/entities/advisors/{advisor_id}/composition.json",
+        "worktree AST scan (.scratch/route_scan.py): D_03 _write_json key put at line 204 is ROUTED and the batch path reaches it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Routed, so no legacy-mode change. The census count is the CTO's to re-cut (62 by ruling); this worker did not add a 63rd line."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S12",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T07:36:13Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "PRODUCER_CENSUS.json OMITS D_04's SPLIT-BRANCH WRITES (BASE LINES 395-408), INCLUDING THE SERVED platinum/firm/fee_efficiency.json KEY",
+    "spec_asserts": "FB-f-9 step 3a: the census names every served platinum writer line of the 14 writers.",
+    "world_is": "D_04.client_portal_summary.py @96f3212d22 lines 395-408: when the dashboard exceeds 200 KB the script builds items for platinum/firm/dashboard.json, platinum/firm/leaderboard.json and (if fee_eff) platinum/firm/fee_efficiency.json and writes them through _write_batch at line 408. The census lists the non-split call at 410 and the leaderboard at 2478, not the split items. platinum/firm/fee_efficiency.json is a served key (platinum/firm/ class). The writes go through _write_batch -> _write_json_to_s3, which is ROUTED in this cell.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 96f3212d22:data/black_diamond/scripts/gold/D_04.client_portal_summary.py | sed -n '395,408p': the split items and the _write_batch call",
+        "PRODUCER_CENSUS.json (worktree, amended): D_04 entries at 410 and 2478 only among the dashboard and leaderboard keys; no fee_efficiency entry"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Routed through the helper. The census is not amended for it; the CTO decides whether the census gains these lines."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S13",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T07:36:13Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "`python lib/opal_naming.py targets` EXITS 1: THE NEW GENERATED VIEW IS UNCLASSIFIED, BECAUSE THE BUILDER'S ONLY RUNNER PLANE READS THE MDPF DAILY DISPATCH, NOT THE BD GOLD RUNNER",
+    "spec_asserts": "FB-f-9 bounds 1 and the registry law: add one view and one validation rule; touch no other emitter. The builder's targets command classifies every generated target by a plane's own record.",
+    "world_is": "At base 96f3212d22 `targets` exits 0. With the view added it prints 'UNCLASSIFIED - data/black_diamond/scripts/gold/lib/platinum_dest_view.json measured: no plane claims it' and exits 1. runner_code_plane() (lib/opal_naming.py) reads only infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh; the BD gold runner syncs its code from data/black_diamond/scripts/gold via gold_dispatch.sh:665-666 (sync_scripts), which that plane does not read. The view is consumed only by the gold runner's code. AC1-AC4 do not call `targets`; the naming gate counts known targets and passes.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python lib/opal_naming.py targets: TARGETS output with 'UNCLASSIFIED - data/black_diamond/scripts/gold/lib/platinum_dest_view.json', exit 1 (worktree)",
+        "git show 96f3212d22:lib/opal_naming.py run as a copy: targets exit 0 (base)",
+        "lib/opal_naming.py runner_code_syncs() and runner_code_plane(): RUNNER_DISPATCH_PATH = infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not widened here: teaching the builder a BD gold runner plane would be a second emitter change outside this cell's bounds. Route for the CTO: a plane record for the gold runner, or accept the UNCLASSIFIED row."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S14",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T07:36:13Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "AC4 (r3_census.py) READS EACH CENSUS LINE IN THE WORKTREE, SO ROUTING THE WRITERS MOVED THE BASE LINE NUMBERS AND FORCED A RE-LOCATION OF THE CENSUS",
+    "spec_asserts": "FB-f-9 step 3a: amend the census to 62 writer lines so r3_census still reads 3 of 3; the census is the blast radius at base.",
+    "world_is": "r3_census.py C2 takes each writer's line number and quoted key text from the --root tree. Routing edits in 12 scripts shifted base lines (an import added at the top of D_00, D_03, D_04, C_06 and others) and rewrote 8 put lines, so 56 of 58 base entries failed C2 at the worktree. The census was re-located to the phase A worktree (50 exact text matches, 8 routed lines re-quoted, 4 added); its .md was regenerated from the JSON. The census therefore describes the worktree after routing, not the base; phase B's routing changes will move it again. C3's seam count moved 42 -> 45 because D_00f now imports the seam and lib/platinum_dest.py and its test import it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python r3_census.py --census <amended> --root worktree: 3 of 3 arms; before the re-location: C2 1 of 3 arms (56 LINE-MISMATCH), C3 recounted 45 vs 42",
+        ".scratch/relocate_census.py and .scratch/amend_census.py: 50 exact, 8 routed, 4 added (62 writer lines)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "A process note for the issuer: a check that reads the worktree binds the census to whatever the phase's edits do. Consider binding the census to the base commit and checking it there."
+  }
+]
+```

@@ -52,9 +52,11 @@ REGISTRY_DIR = os.path.join(REPO, *REGISTRY_REL.split("/"))
 SCHEMA_PATH = os.path.join(REPO, "org", "standards", "NAMING_SCHEMA.json")
 DIRECTIVES_PATH = os.path.join(REPO, "org", "missions", "DIRECTIVES.yaml")
 REGISTRY_FILES = ("systems.json", "scopes.json", "tiers.json", "exemptions.json", "remediations.json",
-                   "resources.json", "reporting_policies.json", "legacy_addresses.json", "feeds.json")
+                   "resources.json", "reporting_policies.json", "legacy_addresses.json", "feeds.json",
+                   "platinum_destinations.json")
 # Registry files an older deployed package may not carry; load_registry() reads an absent one as None.
-OPTIONAL_REGISTRY_FILES = ("reporting_policies.json", "legacy_addresses.json", "feeds.json")
+OPTIONAL_REGISTRY_FILES = ("reporting_policies.json", "legacy_addresses.json", "feeds.json",
+                           "platinum_destinations.json")
 # The legacy_addresses.json row's closed field set (1.0.0_SA_CTO ruling 2, ADVI_COTBKF r2-r3 analysis).
 LEGACY_FIELDS = ("key", "bucket", "template", "shape", "params", "reader", "evidence", "note")
 # The resources.json row's fields (LGIC_ENFORCE EN-r-4, PRD v1.2 DEC-1 candidate E13; 1.0.0_SA_CTO ruling 97177):
@@ -74,6 +76,14 @@ BRONZE_HOMES_PATH = "data/mdpf/config/bronze_homes.json"
 BRONZE_PARTITION = "date={date}"
 FEED_FIELDS = ("feed", "source", "scope", "vendor")
 _FEED_RE = re.compile(r"^[a-z0-9_]+$")
+# The platinum producers' destinations (ADVI_FIRMBKTS FB-f-9, CTO ADDENDUM 3): one row of platinum_destinations.json per
+# served platinum class. partition is a fixed segment, or PLATINUM_TAIL, meaning the legacy key's own path after the
+# prefix supplies the partition and object. The view is a GENERATED whole file the gold module reads (no import of this
+# module on the gold runner).
+PLATINUM_DEST_VIEW_PATH = "data/black_diamond/scripts/gold/lib/platinum_dest_view.json"
+PLATINUM_FIELDS = ("legacy_bucket", "legacy_prefix", "source", "scope", "tier", "table", "partition", "reader", "evidence")
+PLATINUM_TAIL = "{tail}"
+_PROBE_P, _PROBE_O = "zzprobep", "zzprobeo"
 
 # The DEC-5 carriers: (path, syntax, the definitions this module owns in the file). A JSON carrier is
 # rewritten by key, so it names none.
@@ -89,6 +99,7 @@ VIEWS = (
     ("portal/src/pages/InvestorReporting/header/firmDisplayNames.generated.ts", "mjs", ("FIRM_DISPLAY_NAMES",)),
     ("portal/src/pages/InvestorReporting/header/vendorDisplayNames.generated.ts", "mjs", ("VENDOR_DISPLAY_NAMES",)),
     (BRONZE_HOMES_PATH, "json", ("BRONZE_HOMES",)),
+    (PLATINUM_DEST_VIEW_PATH, "json", ("PLATINUM_DESTINATIONS",)),
 )
 
 # Targets the generator owns WHOLE: the file is nothing but its generated block(s), so _render_view builds it
@@ -98,6 +109,7 @@ WHOLE_FILE_TARGETS = (
     "portal/src/pages/InvestorReporting/header/firmDisplayNames.generated.ts",
     "portal/src/pages/InvestorReporting/header/vendorDisplayNames.generated.ts",
     BRONZE_HOMES_PATH,
+    PLATINUM_DEST_VIEW_PATH,
 )
 
 # Which registry file(s) each generated target's renderer reads (LGIC_ENFORCE EN-r-6; row W1-S14): one
@@ -145,6 +157,9 @@ TARGET_REGISTRY_KEYS = {
     "portal/src/pages/InvestorReporting/header/vendorDisplayNames.generated.ts": ("systems",),
     LOCALS_PATH: ("scopes", "exemptions", "tiers", "feeds"),
     BRONZE_HOMES_PATH: ("scopes", "tiers", "feeds"),
+    # PLATINUM_DESTINATIONS (ADVI_FIRMBKTS FB-f-9, CTO ADDENDUM 3) -- _platinum_build() reads the row, key() reads
+    # systems.json (the source) and scopes.json (the long form), and _home_bucket() reads tiers.json (the bucket).
+    PLATINUM_DEST_VIEW_PATH: ("platinum_destinations", "scopes", "systems", "tiers"),
     VECTORS_PATH: ("scopes", "systems", "exemptions", "resources"),
     TFTEST_PATH: ("scopes", "systems", "exemptions", "resources"),
 }
@@ -753,6 +768,48 @@ def validate(reg_dir=None, systems_file=None):
                         refuse(where, "name", "%r already resolves %r from its own tokens (type %r);"
                                " a row naming the same system is redundant" % (name, system, typ))
 
+    # platinum_destinations.json (ADVI_FIRMBKTS FB-f-9, CTO ADDENDUM 3): one row per served platinum class. A row is
+    # refused for a missing, extra or empty field, a bucket that is neither a scopes.json bucket nor a bucket alias,
+    # a legacy prefix that is not ASCII ending in / (or is repeated), a scope, source or tier that is not its key, a
+    # reader that is not a project, or a destination the builder refuses (_platinum_build).
+    pl_obj = reg.get("platinum_destinations")
+    pl_rows = pl_obj.get("platinum_destinations", []) if isinstance(pl_obj, dict) else []
+    seen_pl = set()
+    for i, r in enumerate(pl_rows if isinstance(pl_rows, list) else []):
+        where = "platinum_destinations.json[%d]" % i
+        if not isinstance(r, dict):
+            refuse(where, "row", "not an object")
+            continue
+        if set(r) != set(PLATINUM_FIELDS):
+            refuse(where, "row", "fields must be exactly %s" % ", ".join(PLATINUM_FIELDS))
+            continue
+        if any(not isinstance(r[f], str) or not r[f].strip() for f in PLATINUM_FIELDS):
+            for f in PLATINUM_FIELDS:
+                if not isinstance(r[f], str) or not r[f].strip():
+                    refuse(where, f, "missing or empty")
+            continue
+        if r["legacy_bucket"] not in known_buckets | alias_buckets:
+            refuse(where, "legacy_bucket", "%r is not a bucket scopes.json or its aliases know" % (r["legacy_bucket"],))
+        lp = r["legacy_prefix"]
+        if not lp.isascii() or lp.startswith("/") or not lp.endswith("/"):
+            refuse(where, "legacy_prefix", "ASCII, no leading /, and ending in /")
+        if lp in seen_pl:
+            refuse(where, "legacy_prefix", "%r is a repeated prefix" % (lp,))
+        seen_pl.add(lp)
+        if r["scope"] not in scope_keys:
+            refuse(where, "scope", "%r is not a scopes.json key (a bucket is never a scope here)" % (r["scope"],))
+        if r["source"] not in system_rows:
+            refuse(where, "source", "%r is not a systems.json key" % (r["source"],))
+        if r["tier"] not in tiers:
+            refuse(where, "tier", "%r is not one of NAMING_SCHEMA.json key.tier" % (r["tier"],))
+        if r["reader"] not in all_projects:
+            refuse(where, "reader", "%r is not a project in org/missions/DIRECTIVES.yaml" % (r["reader"],))
+        if r["scope"] in scope_keys and r["source"] in system_rows and r["tier"] in tiers:
+            try:
+                _platinum_build(reg, r)
+            except (KeyError, RegistryError, ValueError) as exc:
+                refuse(where, "table", "the builder refuses this destination: %s" % (exc,))
+
     return refusals, warnings
 
 
@@ -1026,8 +1083,43 @@ def _blk_bronze_homes(reg, h16, path):
     return json.dumps(doc, indent=2, ensure_ascii=True).split("\n")
 
 
+def _platinum_rows(reg):
+    doc = reg.get("platinum_destinations")
+    if not isinstance(doc, dict):
+        raise RegistryError("infra/logic/registry/platinum_destinations.json is absent from this package")
+    return doc.get("platinum_destinations", [])
+
+
+def _platinum_build(reg, row):
+    """(bucket, key_template) for one platinum_destinations.json row, built with key() and the tier home rule (the
+    functions address() is built from), never typed. The template carries {tail} where the legacy key's own path goes:
+    for a fixed partition the tail is the object; for PLATINUM_TAIL the tail's first segment is the partition."""
+    src, scope, tier, table, part = row["source"], row["scope"], row["tier"], row["table"], row["partition"]
+    bucket = _home_bucket(reg, lookup(scope, reg), tier, src)
+    if part == PLATINUM_TAIL:
+        full = key(src, scope, tier, table, _PROBE_P) + "/" + _PROBE_O
+        return bucket, full.replace(_PROBE_P + "/" + _PROBE_O, PLATINUM_TAIL)
+    full = key(src, scope, tier, table, part) + "/" + _PROBE_O
+    return bucket, full.replace(_PROBE_O, PLATINUM_TAIL)
+
+
+def _blk_platinum_destinations(reg, h16, path):
+    """The platinum destination view as ONE JSON document (a whole-file target): per served platinum class, the legacy
+    prefix, the destination bucket and the key template. Every value is _platinum_build()'s, from the registry rows."""
+    classes = []
+    for row in _platinum_rows(reg):
+        bucket, tmpl = _platinum_build(reg, row)
+        classes.append({"prefix": row["legacy_prefix"], "bucket": bucket, "key_template": tmpl})
+    classes.sort(key=lambda c: c["prefix"])
+    doc = {"_generated": "%s -- do not edit by hand; regenerate with: python lib/opal_naming.py generate"
+                         " --out <dir> --target %s" % (_view_mark(h16, path), path),
+           "classes": classes}
+    return json.dumps(doc, indent=2, ensure_ascii=True).split("\n")
+
+
 BLOCKS = {
     "BRONZE_HOMES": _blk_bronze_homes,
+    "PLATINUM_DESTINATIONS": _blk_platinum_destinations,
     "FIRM_CONFIG": _blk_firm_config,
     "firm_bucket_map": _blk_firm_bucket_map,
     "bucket_for": _blk_bucket_for,
