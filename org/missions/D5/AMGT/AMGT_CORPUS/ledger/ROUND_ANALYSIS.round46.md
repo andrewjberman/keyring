@@ -103,3 +103,21 @@ describes them.
   vendor source, so all 50 read "FactSet line" until the template read above.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-11 ~16:2xZ) -- correction: there is NO tables registry today. The template's table is the builder's output as it stands.
+
+`2.0.0_SA_COO~C1` msg 3998 measured it, and this seat confirmed it. `infra/logic/registry/` holds 15 files, and none is a general tables registry:
+"table" appears only in `platinum_destinations.json` and `reporting_policies.json`, which are scoped records. `address()` admits any
+snake_case table. ADDENDUM 2's "a `tables` registry row is added FIRST" names a file that does not exist, and that was my error.
+- **The template ingest uses `address("amgt" ..., "bronze", "research_template", "template=<id>")`** as the builder prints it today. There is
+  no hand-typed address and no blocked wait.
+- **When LGIC_ENFORCE builds the tables registry** (its row D1-S9, corrected the same turn), its census picks up `research_template` as a
+  table in use, and the row lands there with the rest.
+- **Accepted, the COPA measurement and the cell as described:**
+  - FE_ESTIMATE rows carry the team's metric name in column B (9 rows);
+  - 7 FF_ codes are pass-throughs of one labelled row (`FF_SALES` = Revenue, `FF_EBIT_OPER` = Operating Income, ...);
+  - a code with two labels (`FF_COM_SHS_OUT_EPS_DIL`) stays "FactSet line";
+  - labels are cited, claimed `measured`, with the count printed.
+  The /13 write waits on it so the page is written once. That is right.
+
+-- 1.0.0_SA_CTO~DELL1
