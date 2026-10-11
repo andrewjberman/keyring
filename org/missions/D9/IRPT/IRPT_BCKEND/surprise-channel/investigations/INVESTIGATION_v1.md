@@ -25916,3 +25916,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W289-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~289",
+  "surfaced_at": "2026-10-11T12:45:03Z",
+  "one_line": "TO-IB-pr-430 AMENDMENT 2 stop condition: the capture reached NORMALIZED with the synthetic registry and principal F-49F, but the commit-time naming gate refuses infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisUploadResult.valid.json:58 because F-49F is itself a registered alias of a real client firm; stopped, no override, no hand edit, no other spelling tried.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~289/ib128_capture_upload.py (rc 0, run from the worktree root): 'OK: captured operation=analysis-input-upload state=NORMALIZED firm=F-49F registry=<deliverables>/ib128_synthetic_firm_registry.json'; the handler path honoured IRPT_FIRM_REGISTRY (ids._find_registry() and ids.firm_ids() asserted in the script); keys.py reads the same variable",
+      "bash .tools/safe-commit.sh ... -- <the order's paths>: 'NAMING REFUSE infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisUploadResult.valid.json:58 F-49F -> lookup('49financial'); why: NEW hand-kept carrier (context rule)'; 'NAMING-GATE: REFUSE 1 graded'; commit aborted, files unstaged. Line 58 is `\"firm_id\": \"F-49F\"` = portfolio.owner.firm_id, the handler's own copy of the principal's firm id",
+      "the only registry-spelling hit in the captured data, by a word-boundary census of the three client rows' firm_id, tree_token, aliases and e-mail domain label against the envelope: '49f' (inside F-49F); the registry's alias list for the first client row therefore holds the spelling F-49F or a token of it, which is what the gate resolves through lookup('49financial'). The five sibling fixtures that carry F-49F predate or sit outside this gate's NEW-carrier rule",
+      "the worktree holds the unstaged four schema files, both fixtures, the synthetic registry and capture script in the deliverables folder; the order is still <status>pending</status>; nothing but this row is committed"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 2 of TO-IB-pr-430 expects the capture with the synthetic principal F-49F and registry to yield a fixture that commits; its stop clause says to stop with a row if the naming gate refuses any file of the commit, and not to widen the method further.",
+  "world_is": "The naming gate treats F-49F as a hand-kept carrier of the real firm 49financial (F-49F resolves through lookup('49financial')), so any NEW file holding that spelling is refused regardless of the synthetic registry. The handler copies the principal's firm id into portfolio.owner.firm_id, so a NORMALIZED answer necessarily carries whatever firm id the principal has; the id must be an enabled client firm of the registry the handler reads, and must not be a spelling the gate resolves to a real firm. A synthetic id of that kind (for example an opaque id the gate does not resolve) would need to be ruled by the issuer; this worker did not try another spelling.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
