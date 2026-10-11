@@ -1649,3 +1649,30 @@
   "notes": "A defect on an IRPT_ANLREQ surface (PackageFiles), not a candidate. The remedy the CTO names is the same reuse: getOwnedAnalysisReport + RetainedSections, with package-open.test.tsx re-pinned to the report reader. It is a portal product file, so its cell goes into the next IRPT_ANLREQ issuance; none is cut mid-round by this row. Nothing in TCKT_VNEXT waits on it."
 }
 ```
+
+## IRPT_ANLREQ-D2-S21 -- asked by DSGN_IRPTV1 (W39-S2): the request history row states its request's client
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S21",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T05:12:00Z",
+  "one_line": "A served cell is asked of IRPT_ANLREQ: each row of the viewer's request history states the client its frozen selection names (DSGN_IRPTV1 row W39-S2, CTO round analysis @10d7d46e49 section 3; 2.0.0_SA_COO~D2 msg 4135).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Each history row names its client (DSGN_IRPTV1 UIC-23); per the CTO ruling the served half is a field on the history row derived from the request's frozen selection, the history staying the viewer's own requests.",
+  "world_is": "READ by this seat in the built irpt-status rev 6 zip (6idtFvAm), not exercised: owned_requests.py:198-214 `_selected_client` derives the client by ONE full retained composition read (`artifacts.get`, a blob fetch) per request; the same file's comment at :244-245 says the history 'keeps the head and serves no names (no blob per row)'. So serving the client on every history row costs one blob read per row, or needs the client denormalized where the row is listed. INHERITED from DSGN_IRPTV1-W39-S2 (read at org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md:2801-2815): docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json is additionalProperties false with identity + accepted_at only, so the field is a served contract change. The CTO's ruling says its own claim that _selected_client can serve the history row is inferred, not exercised.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~D2 msg 4135",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_DSGN_IRPTV1_FROM_WATERMARK_20261002_20261011.md:51-52 (W39-S2's served half is sent to 2.0.0_SA_COO~Y2)",
+      "irpt-status zip 6idtFvAm, member owned_requests.py:198-214 and :244-245"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not cut mid-round: IRPT_ANLREQ's open orders are the release-1 apply (TO-APPLY-Y1, closing) and TO-APPLY-t1. The cell enters the next IRPT_ANLREQ issuance with its contract change (schema + generated wire) and the per-row cost question above put to the CTO at the cut; the field name is fixed there, with the contract. It ships as a further irpt-status release. The page half is DSGN_IRPTV1's and follows it."
+}
+```

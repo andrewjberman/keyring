@@ -3006,3 +3006,34 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "Not a 5xx and not every caller (R3 answered 200), so per CTO msg 3781 this is R4 failing alone: recorded, no rollback. Remedy is ~Y2's: co-stage reports/retention.py at the pin its callers expect in the next irpt-status revision. FWD-1 stays ungraded until that serves REQ-5e41."
 }
 ```
+
+## IRPT_YCDGEN-D2-S25 -- updatedAt on svc's PROFILE row has a second writer (/auth/login), so updatedAt continuity is not a no-third-party oracle
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S25",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~YC2",
+  "surfaced_at": "2026-10-11T04:52:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "updatedAt on an opal-users-v2 PROFILE row has a SECOND writer -- /auth/login stamps it -- so the served-read window's standing 'the before-updatedAt equals my own last write, therefore no third party touched this row' inference is not a sound no-third-party oracle; the tell is precision, 3-decimal ms from the login vs 6-decimal us from swap_svc_firm.py.",
+  "spec_asserts": "The never-widen packet and the CTO half for the served-read window declare the blast radius as 'ONE opal-users-v2 item: svc-irpt-analysis's allowedFirmIds, written by one writer, swap_svc_firm.py' (N = 1 writer). The window-1 ledger's W1 and W2 proofs then reason from updatedAt CONTINUITY: 'that before-updatedAt is exactly the st29 W2 write at 12:13:57Z, so this row moved from the state this seat last left it in -- no third party changed it in between', and 'the before-updatedAt is exactly W1's own write, so no third party touched the row inside the window'.",
+  "world_is": "MEASURED, window 6 on dell2. (1) This seat preflight-read the row at ~04:0xZ: updatedAt 2026-10-09T18:00:32.340064Z, the window-5 W2 value. (2) W1's before-read at 04:51:52Z: updatedAt 2026-10-11T04:48:28.516Z -- a write this seat did not make, landing in the gap about 28s after the laptop secret ADD at 04:48:00Z, and reading exactly like a third-party write on the continuity inference. (3) W2's before-read: updatedAt 2026-10-11T04:52:45.136Z, again not this seat's. 2.0.0_SA_COO~G2 msg 4105 identifies both: 'that is my R3 login at 04:48:28Z; /auth/login stamps updatedAt on the row', and the second is its R5 login at 04:52:4xZ. THE DISCRIMINATING TELL IS PRECISION, not the value: swap_svc_firm.py builds its stamp with datetime strftime %f and writes 6-decimal microseconds (04:51:52.420577Z, 04:53:41.258001Z); the login writes 3-decimal milliseconds (04:48:28.516Z, 04:52:45.136Z). SCOPE OF THE CLAIM, stated precisely: this does NOT falsify N = 1 for allowedFirmIds -- no login wrote that property, and both conditional UpdateItems fired on a correct read. What it falsifies is the ORACLE the ledger prose leans on: updatedAt has N >= 2 writers, so updatedAt continuity cannot carry 'no third party touched this row'. It fails in BOTH directions: here it manufactured a discontinuity that the order's STOP branch could have been read onto, and in a window where a login happens to be absent it would silently certify a continuity it did not establish.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_sr1/W1_SWAP_OUT_WINDOW6.txt -- before updatedAt 2026-10-11T04:48:28.516Z (3-decimal), after 04:51:52.420577Z (6-decimal)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_sr1/W2_SWAP_BACK_WINDOW6.txt -- before updatedAt 04:52:45.136Z (3-decimal), after 04:53:41.258001Z (6-decimal)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~YC2/deliverables/irpt_ycdgen_sr1/PREFLIGHT_WINDOW6.md -- the ~04:0xZ read showing 2026-10-09T18:00:32.340064Z, which is what made the gap visible",
+      "2.0.0_SA_COO~G2 msg 4105 (R done 04:52:49Z): '/auth/login stamps updatedAt on the row'",
+      "swap_svc_firm.py: now = datetime.datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%S.%fZ'), the 6-decimal form",
+      "window-1 ledger org/critical_paths/change_management/20261009T1304Z_irpt-ycdgen-served-read-20261009_deploy_completion.md, legs W1 and W2, which state the continuity inference in the form this row falsifies"
+    ]
+  },
+  "notes": "Surfaced off-task per CLAUDE.md section 2: filed as one row, the window kept running, and both acts completed inside their bounds. Nothing to disarm -- the state is restored and independently confirmed. The remedy is the packet author's and is a wording/instrument fix for the next window, not a code change: state the continuity claim on allowedFirmIds (the property the bounds actually name), or, if updatedAt continuity is wanted, say which writers can move it and use the decimal precision as the discriminator. Window 6's own ledger legs W1 and W2 already state it in the corrected form."
+}
+```
