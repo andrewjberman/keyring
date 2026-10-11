@@ -3466,3 +3466,31 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "disarm_owner": "1.0.0_SA_CTO~DELL1"
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-f-9, phase B, step 2b)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S18",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-11T09:58:07Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-9 step 2(b): the producers' role bd-exporter-ec2-role holds NO Allow for s3:PutObject or s3:GetObject on opal-data-49financial/advi/49financial/platinum/*, the new home of all 11 served classes, and its ListBucket allow is conditioned on other prefixes; the order's simulate instrument cannot run for this principal, so the read is a policy-document evaluation.",
+  "spec_asserts": "COO half Authorization: the role's policy read with simulate-principal-policy on the two bucket-prefix ARNs, s3:PutObject, s3:GetObject and s3:ListBucket each allowed at arn:aws:s3:::opal-data-49financial/advi/49financial/platinum/* BEFORE the move; any implicitDeny is a STOP and the grant is a separate act (not drafted). TO-FB-f-9 step 2(b) repeats it for bd-exporter-ec2-role.",
+  "world_is": "Gold runner i-01003b035d2988dfb (bd-gold-layer-runner) runs under instance profile bd-exporter-profile, role bd-exporter-ec2-role (live describe-instances and get-instance-profile; the QA runner shares it). iam:SimulatePrincipalPolicy on that role returns AccessDenied for user/cloudops-dell1-agent-user. A glob evaluation of the role's 18 policy documents (2 attached, 16 inline) against the exact ARNs: PutObject on opal-data-49financial/advi/49financial/platinum/* matches 0 Allow and 0 Deny; GetObject the same; ListBucket on opal-data-49financial with prefix advi/49financial/platinum/ matches AdviChain49fListScoped whose condition is s3:prefix StringLike gold/advi/* or _code/*, which that prefix does not meet. The positive control (PutObject on opal-data-49financial/gold/advi/*) matches AdviChainGoldRW, so the evaluator discriminates. The destination bucket policy has 4 statements, all Deny; DenyForeignFirmPrincipals lists bd-exporter-ec2-role among the principals it excludes, so nothing denies it there and nothing allows it. All 11 classes of lib/platinum_dest_view.py PLATINUM_CLASSES target opal-data-49financial under advi/49financial/platinum/. Consequence if the mode moved as signed: the first scheduled chain's served-class writes to the new home would be refused AccessDenied, and its reads and lists of the new home as well. Nothing has been moved: steps 3 and 4 are held by the issuer and this lane has written no object.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act2/step2_reads.txt (b2)",
+      "iam simulate-principal-policy on arn:aws:iam::313476888478:role/bd-exporter-ec2-role: AccessDenied, 'no identity-based policy allows the iam:SimulatePrincipalPolicy action', 2026-10-11 ~09:5xZ",
+      "get-bucket-policy opal-data-49financial: 4 statements, 0 Allow; list-attached-role-policies and list-role-policies of bd-exporter-ec2-role: 18 documents evaluated",
+      "ec2 describe-instances i-01003b035d2988dfb IamInstanceProfile bd-exporter-profile; iam get-instance-profile bd-exporter-profile -> bd-exporter-ec2-role"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the call: the issuer 2.0.0_SA_COO~B1 and the never-widen pair's two signers; the grant is 'a separate act, not drafted' by the pair's own words, and this seat will not create it (bounds: no grant, role or policy). What a grant would have to cover, read from the module: PutObject and GetObject on opal-data-49financial/advi/49financial/platinum/*, ListBucket on opal-data-49financial under the prefix advi/49financial/platinum/*, and DeleteObject only if some writer deletes at the new home (the pair says nothing is deleted there by the act; the CTO ADDENDUM 5 routes deletes). Two other facts for that act: the QA runner shares the role, and the role's existing statement for this bucket is gold/advi/*. A second instrument gap, for whoever drafts the pair's authorization line: the actor identity cannot simulate a role, so the read at step 2(b) stays a policy-document read unless the pair names another instrument."
+}
+```
