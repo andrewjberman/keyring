@@ -2189,3 +2189,33 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+## Z-S48 -- Z-S45 also freezes the portal FRED yield curve (last written 2026-08-05)
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S48",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-11T20:25:00Z",
+    "one_line": "Z-S45's daily NoSuchBucket failure also FREEZES A PORTAL-SERVED ARTIFACT: s3://opal-data-portal-v2/json/macro/yield_curve_fred.json was last written 2026-08-05T23:02:30Z, because lambda_handler raises at :257 (S3_BUCKET default 'opal-market-update') before the yield-curve fold at :276-291 runs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "infra/aws/terraform/fred-pipeline/iam.tf:13-22 (YALP_MDSRC.F2): the yield-curve code-fold writes json/macro/yield_curve_fred.json to opal-data-portal-v2 on the daily run.",
+    "world_is": "head-object opal-data-portal-v2 json/macro/yield_curve_fred.json -> LastModified 2026-08-05T23:02:30+00:00, 675314 bytes (read 20:2xZ 2026-10-11). The handler (infra/aws/lambda/fred-data-ingestion/lambda_fred_ingestion.py) reaches the fold only after the opal-market-update write; Z-S45 measured that write failing on every scheduled run 10-07..10-10. So the portal's FRED yield curve has been frozen for about two months.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api head-object opal-data-portal-v2 json/macro/yield_curve_fred.json",
+        "lambda_fred_ingestion.py:239, :257, :276-291",
+        "fred-pipeline/iam.tf:13-22",
+        "row NFRA_IAMROLES202609-Z-S45 @ad17fa128f"
+      ]
+    },
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "notes": "ARMED for served staleness, not for exposure: z-1's narrowing of the opal-market-update grant removes the claimable-write exposure but does not restore the run (AccessDenied replaces NoSuchBucket at the same line). Restoring it means choosing a live destination for the FRED series, or retiring that write, which is a product and SERVED call; routed to 1.0.0_SA_CTO~Z the same tick. Cites Z-S45, Z-S39."
+  }
+]
+```
