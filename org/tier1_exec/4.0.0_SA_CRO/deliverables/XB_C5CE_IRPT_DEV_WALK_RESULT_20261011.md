@@ -40,4 +40,41 @@
 - The opened report mixes date formats ("2026-09-22" beside "September 22nd, 2026").
 - Performance refusal reads "for this client" and "for this account" in one sentence.
 
+## ADD-ON: faces 10 and 11, IV-e-106 (MSTR msgs 108372 and 108373)
+
+- **Builds walked:** walk 3 at portal DEV `ca23f110a25f43f952392054117c5b40942ad85f` (17:43:07Z-17:49:34Z); walks 4 and 5
+  at portal DEV `3ebc35ebf2ef7d95318333b95b50657d861d9f20` (17:52:12Z-18:01:21Z, 18:03:01Z-18:05:58Z). Each head was
+  read by `git fetch` + `rev-parse` before the walk and served from the same local `dev:live` worktree. `3ebc35eb` over
+  `ca23f110` changes only Ticket Center files and `src/api/endpoints/investor-reporting.ts`. Same sign-in kind and the
+  same client; every disarm REFUSED a login; 0 guard aborts; every `/api/` answer 200 (122, 90, 119).
+
+| # | Face | Reached | What it showed | Answers |
+|---|---|---|---|---|
+| 10a | Holdings, one account in scope | REACHED | Above the total card: "Account: <masked label>" in bold and "Total Assets below: this account"; the card's Total Assets is that account's figure and the class block beneath sums to it. | Line seen: YES. Matches the card: YES (the masked label is the same account the card and the table's Account filter show). |
+| 10b | Holdings, all accounts in scope | NOT REACHED | In every walk on these heads the Holdings tab opened on ONE account: the account the Performance tab's Account select last held (the walker's select loop ends on the second account). The walker does not press "Back to all accounts". | "All N accounts" / "Total Assets below: all N accounts": NOT SEEN. |
+| 10c | Identity band base | REACHED | Under HOW MUCH: "all 2 accounts", beside OVER WHAT "2 accounts". | Seen: YES. Matches: YES. |
+| 11 | Header search, ACCOUNT row picked (walk 5, a fresh session) | REACHED | Typing the account's last four digits offered one option ("1 matched across firms"): the client's name with that account's masked label and the firm beneath it (inferred to be the account row; it is the only row offered). After the pick the search box reads the client's name and the Identity band shows the whole client ("all 2 accounts"). | Performance's Account select starts on the picked account: NO (it starts on the client's OTHER, larger account; refusal words in 3.4 s). Holdings opens on the picked account: NOT SEEN as a clean read (it did open on the picked account, but the walker's Performance select loop had just left that same account selected, so the header pick and the carry-over cannot be told apart). Consistent with CTO~DELL2's note that the account-row case "is held by a test and nothing rendered". |
+| 106 | IV-e-106, report reader carries retained_ref | REACHED | The same Ready report reopened at `ca23f110`: 104 section cards, 94 coverage items, "Job status: Ready", as at `9ca634c6`. "retained" and "sha256" occur 0 times in the dialog. | Unchanged face: YES (as the commit says, no page prints it). |
+
+New observation (walks 1, 3, 4, 5): **the Holdings tab inherits the account last chosen in Performance's Account select.**
+A reader who looks at one account's performance and then opens Holdings sees that one account, not the client. At
+`9ca634c6` it showed mid-flight ("Opening <account>..." over the all-accounts figures); from `ca23f110` on, the new line
+names the account, so the reader is at least told.
+
 -- 4.0.0_SA_CRO
+
+## FOLLOW-UP: the FIRM_BINDING refusals (MSTR msg 108388, relay of COO~D2 msg 5566, row DSGN_IRPTV1-D2-S22)
+
+Read from saved evidence only (`findings.json` api_issues, `netlog.tsv`, `shots/`); no new walk.
+
+1. **Route form, count, any AVAILABLE answer.** Each walk refused three reads, each requested exactly once:
+   `reporting/<acc>/manifest` twice (once per account, two different accounts) and `reporting/client/<cli>/summary`
+   once. All answered HTTP 200 with state UNAVAILABLE, reason FIRM_BINDING. No `reporting/*` read answered AVAILABLE at
+   any moment: every `reporting/*` request in `netlog.tsv` is one of these three (3 of 3 in each of walks 1-5).
+2. **Header Firm selector:** all ("Global (All)") in every screenshot taken at those steps (walk 1 shots 004, 007,
+   010). The walker never changes it. The Analysis tab's "Firm this portfolio is for" is a different control.
+3. **Tab open:** Performance at all three. The client-level summary and the first account's manifest fired on the
+   client pick, where Performance is the default tab (shot 004); the second account's manifest fired when
+   Performance's Account select moved to the second account (inferred from request order beside shot 010).
+4. **Walk 2:** yes, the same three refusals on the same routes and the same accounts at the same steps. Walks 3 and 4
+   (`ca23f110`) and 5 (`3ebc35eb`) show the same three; in walks 4 and 5 all three fire at the Performance step.

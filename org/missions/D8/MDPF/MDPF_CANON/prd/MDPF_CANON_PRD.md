@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.10",
+ "prd_version": "v2.11",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -47,7 +47,7 @@ stays at opal-data-assets/portal/gold/" word is superseded for firm-attributable
 - Registered @`003034456d` under D8/MDPF.
 - In `org/missions/SEQUENCE.yaml` it is in stage 2. Its hold (at REGISTERED until LGIC_ENFORCE's PRD is admitted) is
   MET, because LGIC_ENFORCE v1.1 is admitted.
-- Its FWD-2 and FWD-6 wait per firm on `ADVI_FIRMBKTS`'s cutover, and FWD-6 also waits on LGIC_ENFORCE's fence (its
+- Its FWD-2 and FWD-6 wait per firm on `ADVI_FIRMBKTS`'s router flip for that firm and its first-hour read (v2.11, R1), and FWD-6 also waits on LGIC_ENFORCE's fence (its
   cell E5). The other six outcomes do not wait on either.
 
 **Rulings this PRD executes, verbatim anchors:**
@@ -460,3 +460,28 @@ Surfaces this project writes, reads or executes.
 | `org/missions/D8/MDPF/MDPF_CANON/deliverables/<author serial>/` | documents | M1, M7, M11 | MDPF_CANON |
 | the two retiring trees, the old bronze prefix, and the stale served key | REMOVALS: each its own act, with a human's confirmation, and for the trees the FWD-8 proof | M8, M11, M12 | MDPF_CANON |
 | the conformant compute chain; platinum's shape; `platinum/mdpf/global/`; the frozen rollback objects; B2's JWT read; `opal-data-demo`'s slice beyond the demo-tenant ruling | excluded | -- | untouched |
+
+## L10 ADDENDUM, v2.11, 2026-10-11 -- sequencing against ADVI_FIRMBKTS (`1.0.0_SA_CTO~DELL1`, carrying cluster-lead rulings R1-R5)
+
+**Source:** Andrew-direct ~18:1xZ ("we need to make sure that sequencing/dependency order does not cause breaks"), and the cluster lead's
+ruling, `1.0.0_SA_CTO` (laptop) record `ANDREW_DIRECT_20261011_181xZ_FOUR_QUESTIONS_FIRMBKTS_CANON_SEQUENCING_CVO_ONLINE_COO_C_MODEL_POLICY_READ.md`
+s.5 (box/laptop @7a7e9b47c6). The `/legacy-transform` runs are `workflows/legacy_transform/mdpf/20261011T181700Z-98fc86e/` (573 rows, 484 tensions,
+contract ACCEPT) and `workflows/legacy_transform/blackdiamond-49financial/20261011T181009Z-27c2695/` (453 rows, 349 tensions, contract ACCEPT).
+
+- **R1, ONE wording of the wait.** This project's per-firm wait on ADVI_FIRMBKTS is the ROUTER FLIP: that firm's act-4 flip and its first-hour read.
+  It is not "the cutover" or "the bucket serves". Lines :50, :196 and :371 read in that sense from v2.11. M9 for Inflection waits on ADVI_FIRMBKTS
+  F8 (Andrew's FWD-7/8), not on F4.
+- **R2, shared files have ONE owner until the flip lands.** `shared-advisor-router`, the guard, the CloudFront behaviours,
+  `data/mdpf/config/bronze_homes.json`, `firm-config.mjs` and the portal-auth WAF rider are ADVI_FIRMBKTS's write surface through act 4 and
+  its read-back. This project touches none of them before that. Ownership passes per file by a line in ADVI_FIRMBKTS's flip receipt.
+- **R3:** the `mdpf/{firm}/platinum/*` serving grant is ADVI_FIRMBKTS's named cell, cut BEFORE M9. M9 does not infer it.
+- **R4:** the joint census of MDPF readers of `opal-data-bd`, `-inf` and `-cot` is a precondition of ADVI_FIRMBKTS F12's 45-day clock per bucket.
+  Measured at this addendum: the MDPF principals reaching `opal-data-bd` are N = 3 (`mdpf-daily-runner-ec2-role`, `mdpf-feeder-trigger` and its
+  role). Their grants there are five prefixes: `gold/aua_certification/`, `investor-reporting/directory/`, `schwab/silver/rps/`,
+  `silver/allocations/`, `silver/fees/`. NONE is among the 11 classes act 2 moves, so Monday's acts freeze nothing MDPF reads.
+  `investor-reporting/directory/` couples this project to IRPT_BCKEND's directory move (ADVI_FIRMBKTS D1-S24) and to F12's retirement of
+  `opal-data-bd`: it is named in the census.
+- **R5:** `ledger/ROUND_ANALYSIS.round4.md:31` ("round 3 holds the 49 Financial cutover") is wrong. The flip is ADVI_FIRMBKTS round 4 and has not
+  run; it is corrected in the round-5 analysis.
+
+**Not changed:** every ENDPOINT outcome. The CONTRACTS row at :196 is reworded, not narrowed (proportionate sign-off: no re-sign withheld).

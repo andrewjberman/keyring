@@ -144,8 +144,9 @@ ls -1 org/mcp/inbox/<base>/~<lane>/ 2>/dev/null | grep -vc '^read$'
 ROOT=$(git -C "$(git rev-parse --show-toplevel)" rev-parse --path-format=absolute --git-common-dir)/..
 INBOX="$ROOT/org/mcp/inbox/<base>/~<lane>"
 test -d "$INBOX" || { echo "ERROR: inbox path absent: $INBOX -- this is NOT an empty inbox"; exit 2; }
-# -type f excludes read/ regardless of how ls renders it; the name pattern excludes state dotfiles
-echo "unread=$(find "$INBOX" -maxdepth 1 -type f -name '2026*.md' | wc -l)       state_markers=$(find "$INBOX" -maxdepth 1 -type f ! -name '2026*.md' | wc -l)"
+# -type f excludes read/ regardless of how ls renders it; the name pattern (the message filename grammar YYYYMMDDT...,
+# never a pinned year) excludes state dotfiles. Control: a planted message named by that grammar counts 1.
+echo "unread=$(find "$INBOX" -maxdepth 1 -type f -name '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]T*.md' | wc -l)       state_markers=$(find "$INBOX" -maxdepth 1 -type f ! -name '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]T*.md' | wc -l)"
 ```
 
 > **DO NOT FILTER `read/` BY NAME WITH `ls`, IN ANY FORM. `ls` IS ALIASED TO `ls -F` HERE**
