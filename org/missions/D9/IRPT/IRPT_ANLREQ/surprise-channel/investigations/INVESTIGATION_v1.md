@@ -2189,3 +2189,57 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W54-S1 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-11T07:35:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The 34 custody tests are not order-dependent state: they make a LIVE DynamoDB profile read through the directory Entry, which passes only with working credentials and no netguard; test_receipt_ledger.py (import run_offline_suite -> netguard.install()) is the file that makes it fail in the full run, and invalid keys make it fail alone",
+  "spec_asserts": "TO-AR-y-36 cell text: the same two custody files run ALONE pass 42 of 42, so an earlier test file leaves state that the custody tests then trip on.",
+  "world_is": "MEASURED at base 1c40c646ed with AWS_ACCESS_KEY_ID=x AWS_SECRET_ACCESS_KEY=y: test_custody_retained.py ALONE gives 32 errors and test_custody_entry.py + test_custody_retained.py gives 2 failed, 32 errors (the face's own key setting reproduces the failure without any polluter). Cause by pdb: served.py:1225 _internal_allowed_firms, load_service_profile unset, builds boto3.client('dynamodb') and reads the caller's profile row live (served.py:1146-1151); with invalid keys the call raises ClientError UnrecognizedClientException, and after test_receipt_ledger.py:11 imports run_offline_suite (line 37 netguard.install(), never undone) it raises HTTPClientError 'NETGUARD: refused external connection to dynamodb.us-east-1.amazonaws.com:443'; served.py:1226-1227 turns either into FIRM_BINDING. So 'passes alone' held only where the box had working credentials and an open network, i.e. the custody tests made a live AWS read. Fixed in the tests (load_service_profile injected as lambda email: None in test_custody_entry.py harness and test_custody_retained.py); the reproducer [test_receipt_ledger.py, test_custody_retained.py] failed at base (2 passed, 32 errors) and now passes. Not established: a real-credential run of the pair alone, which would be a live call and was not made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1138-1151 and :1224-1229 (the live lookup and its FIRM_BINDING mapping)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/run_offline_suite.py:35-37 and tests/netguard.py:56-80 (install() patches socket at import)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_receipt_ledger.py:11 (module-level import of run_offline_suite)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~54/S31_REPRODUCER.json"
+    ]
+  },
+  "notes": "Other GT test files that build a served.Entry without load_service_profile would have the same live read; only the two custody files were changed, per the cell."
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S2 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-11T07:45:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The required acting_principal_id keyword on DynamoAcceptance.accept breaks one setup helper in ops/tests, which is outside this order's grant, and with it 199 tests in eleven ops/tests files and 36 in ycharts/generate/tests",
+  "spec_asserts": "TO-AR-y-37 build step 7: existing tests that call accept(...) directly get a synthetic principal id and nothing else changes; the grant lists ycharts/generate/tests/ only.",
+  "world_is": "MEASURED: infra/aws/lambda/investor-reporting/ops/tests/test_owned_requests.py:57-58 (setup) calls acceptance_module.DynamoAcceptance.accept(owner, dict(body, request_id=token), ref, ingestion_revision='v1', destination_revision='offline-v1') directly. With the new required keyword it raises TypeError 'missing 1 required keyword-only argument: acting_principal_id'. setup() is imported by other ops tests, so `pytest ops/tests` at this worktree gives 38 failed, 161 errors (all 199 carry that TypeError) in test_history_client_scope.py, test_history_pool.py, test_original_reader.py, test_owned_entry.py, test_owned_report.py, test_owned_requests.py, test_owned_status.py, test_pdf_link.py, test_persist_inputs.py, test_prospect_dates.py, test_read_memo.py. The same helper also fails 36 tests inside ycharts/generate/tests (test_publisher.py 25, test_publication_worker.py 11, all the same TypeError; the whole folder gives 36 failed, 461 passed, 30 skipped, 1 xfailed, 0 custody failures). Every other direct caller of accept (4 files under ycharts/generate/tests/) was updated. The fix is one added keyword in ops/tests/test_owned_requests.py:58: add acting_principal_id='synthetic-principal-one' to that call. Not made: the file is not in the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/tests/test_owned_requests.py:50-61 (setup)",
+      "pytest -q infra/aws/lambda/investor-reporting/ops/tests at the worktree after the acceptance.py change: 38 failed, 94 passed, 22 skipped, 161 errors, 199 of 199 carrying the TypeError"
+    ]
+  },
+  "notes": "The release that ships the acceptance.py writer must ship that one-line test edit in the same act; the issuer may re-cut it into a seat whose grant holds ops/tests. No production caller is affected: the only production call of accept is submission_service.py, updated."
+}
+```
