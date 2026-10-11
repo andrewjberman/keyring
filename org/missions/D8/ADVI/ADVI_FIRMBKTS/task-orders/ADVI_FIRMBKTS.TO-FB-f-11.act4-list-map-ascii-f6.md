@@ -27,7 +27,9 @@ Un-park conditions, all required, each read from a file at HEAD:
    after (row D1-S7), and the rollback (the previous router version re-associated; the old home untouched).
 3. The actor's change-management entry is OPEN and committed first.
 4. The amendment commit fills the placeholders' meaning (section 4), names the executor and the window time, and sets
-   `<status>pending</status>`.
+   `**PARKED (2.0.0_SA_COO~B1, round 3 close, 2026-10-11):** carried to round 4 as the act-4 router flip. The ASCII precondition is met (act 1, v27/v6). Un-park conditions: acts 2 and 3 complete; the act-4 pair; acts 4b and 4c routed; the registry's routed-bucket change reviewed against its generated readers (row D1-S17; ADDENDUM 7); the laptop identity for the protected router. Owner of the un-park: the round-4 analysis of `1.0.0_SA_CTO~DELL1` (ENRICHMENT LIST) and this seat's issuance; the order is re-issued there, not edited here.
+
+<status>parked</status>`.
 
 ## 1. THE CELL -- `FB-f-11` (round 3, enrichment item 1, step 4; PRD F6 and F7; rows D1-S4, D1-S7, D1-S9, D1-W9-S1)
 

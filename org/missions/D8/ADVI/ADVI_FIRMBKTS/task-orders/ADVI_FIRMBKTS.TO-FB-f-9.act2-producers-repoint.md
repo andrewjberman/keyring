@@ -252,7 +252,9 @@ so no producer run straddles it. After the mode moves and before act 4 the route
 read the last pre-move day: acts 2-4 close together (round-2 analysis, section 2 item 1). The census row D1-W16-S2 (ARMED,
 disarm owner this seat) is closed by phase A's `D_00f` change and by AC1's D3.
 
-<status>pending</status>
+**PARKED (2.0.0_SA_COO~B1, round 3 close, 2026-10-11):** carried to round 4 as the act-2 mode move (phase B). Phases A to A4 are merged and dormant (@b0eebb018d, @628d9f241b, @19fb066b50, @2018982711, @2482a8c7a8 on CLOUD as integrated). Un-park conditions: every act-4 reader ready (the CTO's ADDENDUM 7: router/guard, auth-validator-edge, the IRPT consumers, directory_runner, holdings_snapshot, perfrp_firm_pin, each dormant with its own pair); the producers' role grant (row D1-S18) applied under its own pair; the pair for the moved set re-read; then the issuer's GO amendment. Owner of the un-park: the round-4 analysis of `1.0.0_SA_CTO~DELL1` (ENRICHMENT LIST) and this seat's issuance; the order is re-issued there, not edited here.
+
+<status>parked</status>
 <round>3</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-9</to_id>
 <slot>~FB1</slot>
