@@ -1914,3 +1914,27 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "notes": "Filed on the CTO's word (msg 4290), which carries it to Andrew as the fact it is. Nobody deactivates or rotates the key without his word. The parked FWD-8 ADMITTED read depends on a machine holding this key. Identities and dates only; the key id is not recorded here."
 }
 ```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S26",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T06:38:23Z",
+  "one_line": "L8 round 22, second pass (TO-APPLY-a18 terminal): this seat's row D2-S19 is disarmed, read live: the Teams pull runs at 1024 MB with its code unchanged. Row D2-S22 stays ARMED on this seat's read: the two pull functions of the transcripts root read two different code hashes, where the CTO's word is one. The true peak of a content-reading run at 1024 MB is still not measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4289 (TO-APPLY-a18 terminal @18d031aaa7)",
+      "this seat's live reads 2026-10-11T06:38:23Z: teams-global-transcripts-pull-lambda MemorySize 1024, CodeSha256 AI4UQD0M... (equal to the local dist zip), LastModified 2026-10-11T05:03:47Z; one run since at 1024 MB used 101 MB; outlook-global-transcripts-pull-lambda CodeSha256 VGIq85Xx..., LastModified 2026-10-07T23:59:05Z",
+      "investigation rows NFRA_TRNSPT-D2-S21, D2-S22, D2-S23"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27): the CVO reads the served state itself, and every BLOCKING or ARMED row is dispositioned before the slug.",
+  "world_is": "D2-S19: disarmed. D2-S22: live, two hashes of two read. The commentary function was not read (the close record states it is absent). The scheduled trigger has still not fired on the new code; the next fire is Monday 2026-10-12 13:00Z.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
