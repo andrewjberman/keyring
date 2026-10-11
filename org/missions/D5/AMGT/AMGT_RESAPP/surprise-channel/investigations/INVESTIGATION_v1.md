@@ -24962,3 +24962,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not acted on. Recorded so that any serve from CSL AU's stored objects carries their vintage. Cause not investigated."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W393-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~393",
+  "surfaced_at": "2026-10-11T19:36:57Z",
+  "one_line": "The round-95 classification census (r95_classification_census.py K1) and the round-97 cell AMGT-bd-1 cannot both hold for a ranked row of SAN FP: K1 requires its sector null with the withheld reason, the cell serves its sector by key with sector_reason null.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bd-1 AC2 (order section 4): r95_classification_census.py --where local PASSes 6 of 6 ('R95 CLASSIFICATION CENSUS: YES (6 of 6)') against the candidate; and cell step 2: the ranked row of a withheld listing sets sector, sector_source and sector_as_of from its block and sector_reason to None.",
+  "world_is": "At HEAD c691f46640 (control, HEAD export under .scratch, same census, --where local): R95 CLASSIFICATION CENSUS: YES, K1 PASS (withheld 2). At the candidate: K1 FAIL (withheld 0, still served [('TRENDING/PRICE','SAN FP',None,None), ('BREAKOUT/PRICE','SAN FP',None,None)]); K2-K6 PASS; R95 CLASSIFICATION CENSUS: NO, rc=1. The census's K1 test (census line 127) requires row sector null whenever classification is null, and its no_table_field needs a withheld reason; the cell's served sector is non-null with sector_reason None. Both cannot hold on the ranked row. The census is not in this order's write paths and was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "HEAD export control: git archive HEAD lib infra org/standards into .scratch/headexp; PYTHONPATH=<that> python r95_classification_census.py --where local -> 'PASS K1 ... withheld 2, still served []' ... 'R95 CLASSIFICATION CENSUS: YES' rc=0",
+      "candidate run: python r95_classification_census.py --where local -> 'FAIL K1 every ranked row of a disagreeing subject withholds the classification and says why [withheld 0, still served [(TRENDING/PRICE, SAN FP, None, None), (BREAKOUT/PRICE, SAN FP, None, None)]]' 'R95 CLASSIFICATION CENSUS: NO' rc=1",
+      "round95 census line 127: no_table_field(...) and (classification is not None or sector is None) -- the sector-null clause the cell contradicts",
+      "r97_sector_serve_census.py K1 (the same cell) expects sector EXPECTED on every ranked row of a withheld listing with sector_reason null"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Not acted on beyond the candidate. The cell's rule is implemented as written (classification stays withheld; sector served by key). AC2 is recorded FAIL and the order stays open. Disposition of the r95 K1 sector clause (amend the census to the round-97 rule, or retire K1's sector-null arm) belongs to the issuer and the CTO. Hazard INERT: a red prep check, no served harm through normal operation."
+}
+```
