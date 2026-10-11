@@ -26771,3 +26771,139 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The described parts cannot be four nodes: one account, two sleeves and two security nodes make five. The check only needs control.planted equal to control.read, which holds; no check reads the node count."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W299-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~299",
+  "surfaced_at": "2026-10-11T17:08:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The face did not say what a security-day is when the anchor does not carry the security that day, nor which fund trades the reader window can grade; this cell counts a security-day only where the anchor carries the security (anchor_days_not_carried is kept per type) and grades only trades with a Trade Date inside the 85 days (6,149 of 6,280 priced fund trades; the 131 earlier trades are not compared), and the settle-date line leaves out 322 trades whose settle date is outside the window.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~299/IB138-2_type_overlap_and_fund_check.json overlap_by_type (anchor_days_not_carried), fund_trades.count_check, fund_trades.by_settle_date",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~299/ib441_measure.py classify_day / run()"
+    ]
+  },
+  "spec_asserts": "Order Table 1: for each security and each of the 85 trading days compare the reader's bar for day t with the anchor's close for day t; Table 2: every priced fund trade; the reader window is fixed at 2026-06-05 to 2026-10-13.",
+  "world_is": "A security the anchor carries on some days only has no anchor close on the others, so no comparison exists for them; trades dated before 2026-06-10 have no prior-day bar in the fixed window. Both were set aside and counted, not classed, so the sums in the json equal the compared population and the choice can be re-cut by the CTO."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W299-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~299",
+  "surfaced_at": "2026-10-11T17:08:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "All 54 securities the type join puts under MIXED pair the transactions table's value 'Not Available' with one stated value on other rows of the same CUSIP (38 with the exchange-traded value, 16 with the registered-investment-company value); under the order's rule they sit in MIXED, and none is one_day_off, so the type key depends on whether a stated value is taken over 'Not Available'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~299/IB138-2_type_overlap_and_fund_check.json type_join.mixed_combinations and overlap_by_type.MIXED (54 securities, 3,633 security-days, one_day_off 0)"
+    ]
+  },
+  "spec_asserts": "Order Table 1: say how the type of a security is taken when its transaction rows disagree; put the security under MIXED and list the combinations.",
+  "world_is": "The disagreement is a stated value against 'Not Available', not two stated kinds; no security was found with two different stated kinds. The alternative rule (stated value over 'Not Available') was not applied."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S94",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T17:32:52Z",
+  "one_line": "L8 round 138 (~P), no judgment criterion, two read-only orders. The record PRD v0.39 was signed against is now on the trunk and is byte-identical to the copy this seat reviewed, so that addendum's own guard is met. The sleeve read answers DSGN_IRPTV1 row D2-S18: a served holdings answer does carry sleeves with no security beneath (1,229 of 7,620 on one firm's one day, 333 with a nonzero amount), and the CTO ruled it the page's defect.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_138_P_DRAIN_END_20261011.md @3c88a755a0 (msg 5462)",
+      "this seat's read 2026-10-11T17:32:52Z: the record PRD v0.39 rests on (deliverables/0.9.0_WK_IRPT_BCKEND~299/IB138-2_TYPE_OVERLAP_AND_FUND_CHECK_READ.md) is the same blob on the trunk, dbe37d6091, as at the branch commit bfc0645151 this seat reviewed it at"
+    ]
+  },
+  "spec_asserts": "PRD ADDENDUM v0.39: nothing is cut before the record is on the trunk and its numbers are read there unchanged. Spine L8 (CLAUDE.md rule 27).",
+  "world_is": "Two orders terminal; nothing built or served; no class admitted by either. Not run by this seat: either read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W300-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~300",
+  "surfaced_at": "2026-10-11T17:43:01Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "All 38 securities of the class no_type_or_mixed pair the transactions table's value 'Not Available' with one stated value on other rows of the same CUSIP (22 are one share class under both 'Not Available' and the registered-investment-company asset type, 5 pair 'Not Available / Not Available' with the registered-investment-company 'Not Available' class, 11 pair the exchange-traded or cash value with 'Not Available / Not Available'); under the face's rule they have no type and wait, so the sizing depends on whether a stated value is taken over 'Not Available'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~300/IB139-1_sizing_under_v039.json no_type_or_mixed_combinations, securities_outside_the_first_witness.no_type_or_mixed (38), still_waiting.account_days_holding_any.no_type_or_mixed (497), account_days_waiting_only_on.no_type_or_mixed (96)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~300/ib442_prepare.py sec_class()"
+    ]
+  },
+  "spec_asserts": "Face step 1: a security with none or more than one pair over its transaction rows has NO type and falls in no_type_or_mixed.",
+  "world_is": "No security of the class has two different STATED kinds; each has a stated value against 'Not Available'. The alternative (stated value over 'Not Available') was not applied; the account-days it would move are not measured (at most 497 hold one, 96 wait only on that class)."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W300-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~300",
+  "surfaced_at": "2026-10-11T17:43:01Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The admitted pair 'RIC/BDC / Inv' grades nothing outside the first witness in this pass: its one outside security (FPNIX, 12,115 account-days) returned no bar, and in the fund-trade table the pair holds 285 trades of which 284 are that one fund with no bar and 1 is same-day.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~300/IB139-1_sizing_under_v039.json admitted_by_type (Inv 0), still_waiting.largest_no_bar_fund, reviewer_points.outcomes_by_fund_pair (Inv: funds 2, trades 285, same_day_only 1, no_bar 284)"
+    ]
+  },
+  "spec_asserts": "PRD ADDENDUM v0.39 admits 'RIC/BDC / Inv' on 2 overlap securities (83 equal days) and cites the fund table as support.",
+  "world_is": "In this pass the pair is admitted on paper and graded by nobody: its one outside security has no bar. The fund table's support for it is one trade. Not a condition of this cell; recorded for the CTO's read."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W300-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~300",
+  "surfaced_at": "2026-10-11T17:43:01Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two readings of the face were fixed by the worker: a row whose day bar exists but whose prior-day bar does not (3 rows) is counted as having no bar, as IB-pr-438 did; and account_days_waiting_only_on counts the account-days not freed today whose every row outside the one class already sits at the day's close (an upper bound, with a variant that also requires no other ungradeable kind).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~300/IB139-1_sizing_under_v039.json account_day_effect.rows_with_a_day_bar_but_no_prior_bar_counted_as_no_bar, still_waiting.waiting_only_on_is",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~300/ib442_measure.py classify(), main()"
+    ]
+  },
+  "spec_asserts": "Face step 2: 'a row on a date with no bar' holds a security no witness may grade; face step 4: waiting-only is the account-days that would be freed if that ONE class were admitted and graded at the day's close, everything else unchanged.",
+  "world_is": "The face does not say whether a missing PRIOR bar alone is 'a date with no bar' (3 rows, no effect on any count named here beyond those rows) nor whether 'freed' for waiting-only requires no other ungradeable kind (both counts are in the json; the checked key holds the one without that condition)."
+}
+```

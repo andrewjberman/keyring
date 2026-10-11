@@ -3045,6 +3045,54 @@
 
 ```json
 {
+  "id": "IRPT_ANLREQ-D2-W53-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-11T17:28:10Z",
+  "one_line": "AR-y-102 step 5 (negative control) cannot run as written: with a one-byte uncommitted edit to the tracked reports/repository.py the build REFUSES (staged_from destination is a tracked file with uncommitted edits) and prints no digest, so 'still DbvBUxTG...' cannot be read. The digest did not move; the pin binds is shown instead by the staging lines (member taken from git show <pin>, sha256 verified).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-y-102 step 5: change one byte of the working repository.py (uncommitted), build once, confirm the digest is STILL DbvBUxTG...",
+  "world_is": "infra/aws/lambda/ci/build-and-upload.sh refuse_dirty_tracked_destinations (about lines 306-325) exits the build with ERROR before staging when a staged_from destination is a tracked file with uncommitted edits; no BUILD_ONLY line is printed. Working file restored from git show HEAD bytes; git status --porcelain on it empty; sha256 d94dc2c7...ec88. The guard was not bypassed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "build output of the control run by this worker at 2026-10-11T17:2xZ in C:/dev/wk-irpt-anlreq-53 at HEAD 487f73663e",
+      "infra/aws/lambda/ci/build-and-upload.sh lines 306-325 and the staging script lines 196-245"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S56",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T17:47:44Z",
+  "one_line": "CORRECTION of this seat's row D2-S48 and of its round 4 read file and slug: the Investor Reporting page is NOT a page a firm login can open. On portal PROD and DEV its route requires an admin, an Opal-internal and a Dev user, by Andrew's word of 2026-09-22. This seat repeated 'client-facing' from the packets without reading the router. Two consequences: the refused history view of release 5 could only have been met by Opal staff; and the PROD push of the portal's history reader and reason set changes an Opal-internal page, which under the push law does not wait on Andrew's word.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's read 2026-10-11T17:47:44Z of portal src/App.tsx on origin/PROD 37aa1247 and origin/DEV ca23f110: line 462 routes /investor-reporting through ProtectedRoute requireAdmin requireInternal requireDev; line 107 gives the nav entry the same three; lines 460-461 cite Andrew-direct 2026-09-22 ('marked in tsx for admin and isDev only'); line 614 gives the print view the same three plus a render claim. Found first by worker row DSGN_IRPTV1-D2-W59-S2",
+      "CLAUDE.md, Agent Autonomy: a portal PROD push that changes a CLIENT-FACING page waits on Andrew's word; an Opal-internal page does not"
+    ]
+  },
+  "spec_asserts": "This seat's row D2-S48: 'The view is on portal PROD, a page a firm login can open.' The round 4 packet and CTO msgs 4805 and 4819: the PROD push is a client-facing push and waits on Andrew's word.",
+  "world_is": "The page is staff-only by its route on both trunks. Whether the release-5 re-release is held on Andrew's word for any other reason is the CTO's to say; the class of the page is not that reason. The print view's render-claim path was not read further.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S8 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
   "id": "IRPT_ANLREQ-D2-W52-S8",
   "project": "IRPT_ANLREQ",
   "fabric": "dell2",

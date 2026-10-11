@@ -10,16 +10,20 @@
  "subject": "SECURITY FINDING row IRPT_YCDGEN-D2-S60: trade-dashboard-api serves any verified caller; a cross-firm read by code",
  "body_path": "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r14/ROUTE_CENSUS_WHAT_A_SERVICE_TOKEN_OPENS_20261011.md",
  "opened_at": "2026-10-11T17:18:37Z",
- "state": "OPEN",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T17:19:34Z",
   "bus_message_id": "dbe3fc42-460d-4f12-9eb7-e502e8f6e2d3"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T17:31:12Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": "7ff8d84d-70b7-43c3-9581-e01a8924207b"
+ },
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-11T17:41:47Z",
+  "from_by": "1.0.0_SA_CTO~DELL2",
+  "to_at": "2026-10-11T17:34:57Z",
+  "to_by": "1.0.0_SA_CTO"
  }
 }
