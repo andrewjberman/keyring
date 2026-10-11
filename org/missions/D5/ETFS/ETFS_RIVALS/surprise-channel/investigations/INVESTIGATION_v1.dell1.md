@@ -580,6 +580,29 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       "spec_asserts": "CLAUDE.md rule 21 describes comp-find pathspecs without distinguishing positive from negative forms, and git pathspec semantics (which the rail's '--corpus' language borrows, including `git rc=128` for an out-of-worktree pathspec) admit ':!<path>' as an exclusion. An operator instruction of the form 'search may resume, except over <dir>' is therefore naturally executed as a negative pathspec.",
       "world_is": "The negative pathspec is accepted without error or warning and changes nothing: the directory is still scanned and its bytes still read. The exclusion fails OPEN and SILENTLY -- the most dangerous shape, because the denominator the tool prints looks authoritative and the operator has no signal. The only mechanism that limits the corpus is naming the directories to search positively.",
       "notes": "Owner to inform: the comp-rail / NFRA_COMPRAIL owner (docs/architecture/NFRA_COMPRAIL_PRD.md). Found while complying with a client-data prohibition relayed as 0.0.0_AB_MSTR~DELL1 msgs 2749 and 2768 via 2.0.0_SA_COO~V1 (msgs 2751, 2771), whose msg 2749 wording was exactly 'content search may resume, except over org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~76/'. This seat did NOT test the syntax against any restricted path -- the control was rehearsed on two harmless directories precisely because a fail-open exclusion would have performed the prohibited read. msg 2768's later wording, 'keep searches scoped to ETFS_RIVALS and infra paths', is already the SAFE positive form and needs no change. Suggested remedy for the owner: make comp-find either honour ':!' or REFUSE it loudly; a silently-dropped exclusion argument is the defect. No ETFS_RIVALS act depends on this row."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-S15",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-11T12:55Z",
+    "one_line": "FALSE MAY-CLOSE: since 1.0.0_SA_CTO's fix efb0b41626 (06:18Z), `round-close-check.py --project ETFS_RIVALS --round 28` reads judgment=9 graded=9 verdict=MAY-CLOSE. Three of those nine J1s have no terminal grade from this seat: RIV-tc-1 is NOT MEASURED, RIV-wd-1 is HELD, and RIV-wi-1 has never been graded. The tool now counts any CVO row that MENTIONS an order's short id next to 'J1' as a grade. Round 28 must not be closed on this verdict.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~V1",
+    "spec_asserts": "round-close-check.py docstring: every judgment criterion needs a row 'that names the criterion id' by a CVO-kind seat; GRADED is read as 'graded'. Spine L9: judgment criteria are graded at L9 by the CVO, never self-graded; L10 waits until every order of the round is terminal and every BLOCKING or ARMED row is dispositioned.",
+    "world_is": "- Subject, box/dell1 @47962a23eb plus this seat's uncommitted row D1-C-S11 (which names no order slug), 12:5xZ: ROUND-CLOSE orders=21 judgment=9 graded=9 ungraded=0 verdict=MAY-CLOSE. Detail: TO-RIV-tc-1 J1 -> GRADED by D1-C-S3; TO-RIV-wd-1 J1 -> GRADED by D1-C-S1; TO-RIV-wi-1 J1 -> GRADED by D1-C-S8.\n- What those rows say: D1-C-S3 grades tc-1 J1 NOT MEASURED, because tc-1 was unmerged at the 10-09 run; D1-C-S7, S9, S10 and S11 keep it NOT MEASURED. D1-C-S1 grades wd-1 J1 NOT MEASURED, and D1-C-S2 moves it to HELD for the first page rendered with wf-1. D1-C-S8 says, verbatim, 'RIV-wi-1 J1 has no grade from this seat.' The tool reads that sentence as a grade.\n- Control, before the change: at 05:1xZ and 07:5xZ the same command at round 28 read graded=6 ungraded=3, listing these same three as UNGRADED. At that point orders were keyed by slug, so the short mentions did not match.\n- Mechanism: efb0b41626 reads seat-folder orders, and order['id'] now comes from <to_id> ('ETFS_RIVALS.TO-RIV-tc-1...'). The short form after '.TO-' ('RIV-tc-1...') and 'TO-'+short then enter the name pattern at :420-423. Any CVO row with 'J1' and 'TO-RIV-tc-1' or 'RIV-tc-1' anywhere in its JSON now grades it, whatever verdict the row states. The trap D1-C-S8 recorded (GRADED means named, not MET) has widened: a row that says it is NOT a grade now counts as one.\n- Also counted GRADED and not MET: wa-1 J1 (HELD, D1-C-S1/S2) and aw-1 J1 (NOT MET, D1-C-S4). With tc-1, wd-1 and wi-1, five of the nine round-28 J1s are not MET.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/round-close-check.py --project ETFS_RIVALS --round 28, box/dell1, 2026-10-11 12:5xZ (graded=9 MAY-CLOSE) vs 05:1xZ and 07:5xZ (graded=6, 3 UNGRADED)",
+        ".tools/round-close-check.py :314 (id from to_id), :420-423 (name pattern); git log: efb0b41626 1.0.0_SA_CTO 2026-10-11 06:18",
+        "surprise-channel/adjudications/ADJUDICATION_v1.dell1.md rows ETFS_RIVALS-D1-C-S1, S2, S3, S4, S8, S10, S11"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarm (2.0.0_SA_COO~V1): do not count round 28 closed on this tool's GRADED count. Read the verdict in each cited row. The disarm is done when the round-28 close cites per-criterion verdicts, or when the tool is fixed. Tool owner: 1.0.0_SA_CTO, author of efb0b41626, to rule. Suggested remedy: grade only on a row that DECLARES the criterion it grades (an 'adjudicates' field, which the selftest at :575 already uses) with a verdict value, never on a free-text mention. This seat's rows will name an order's full id only beside a terminal verdict, but older rows cannot be edited (append-only), so the fix belongs in the tool."
   }
 ]
 ```
