@@ -38,6 +38,26 @@ index and every route follow from the chain.
 Add `lib/research/api/tests/test_names_read_agreement.py` (pure, no network; replace `scoped_amgt._crosswalk_names` and `scoped_amgt.resolve_identity` with
 fixtures as `r94_display_name.py` does): one test per arm D1-D6.
 
+### 1b. AMENDMENT 1 -- the same rule at the two other places the table's name is served (the issuer's miss: the first cut changed ONE of three paths)
+
+The chain above (`names_read.display_names`) serves the peers subject's name and the held-name index. The page HEADER prints the overlay's own name
+(`scoped_amgt._overlay_name`), and a ranked list prints each row's `name` (`scoped_amgt._join_ranked_rows`); both read the same table by the same bare ticker on their
+own paths. Measured on the merged first cut (live function against the merged handler, 243 subjects, overlay and peers routes): only `peers.subject.display_name`
+moved (2 subjects); the overlay's `display_name` still reads 'Banco Santander S.A.' for `SAN_FP_Equity`. Make the SAME rule apply there, with one shared helper:
+
+1. `names_read.py`: add `names_disagree(served_name, registered_name, bare_ticker)`: True when `registered_name` is non-empty, is not just the bare ticker
+   (case-insensitive), `served_name` is non-empty, and `names_agree(served_name, registered_name)` is False. `display_names` may use it (behaviour unchanged).
+2. `scoped_amgt._overlay_name(identity, security_key, ticker)`: where the classification branch would return the table's name, first read the crosswalk's registered
+   name for `security_key` (`_crosswalk_names()`); when `names_disagree(...)` is True skip that branch exactly as when the table holds no name (so the existing
+   crosswalk branch serves the registered name with `display_name_source` `crosswalk`). Otherwise unchanged.
+3. `scoped_amgt._join_ranked_rows(served, route)`: between `_join_covered_identity(rows)` and `_fill_names_from_crosswalk(...)`, add one small step: for every row
+   whose `name_source` is the classifications table, with a `security_key` and a registered name for it, when `names_disagree(row["name"], registered, ticker's bare
+   form)` is True, set that row's `name` to None, `name_source` to None and `name_state` to `ABSENT` (the existing crosswalk fill then serves the registered name,
+   `name_source` `crosswalk`). Every other row is byte-equal. One `_crosswalk_names()` read for the step.
+
+`r94_display_name.py` gains arms D7-D9 for exactly these two paths and `r94_name_census.py --where local` now reads the overlay's name path. Add tests for D7-D9
+to `lib/research/api/tests/test_names_read_agreement.py`. Edit `scoped_amgt.py` minimally: do not reformat it and touch nothing else in it.
+
 Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: id form `AMGT_RESAPP-D1-W387-S<k>`, `disarm_owner` `2.0.0_SA_COO~R1`.
 
 ## 2. BOUNDS
@@ -45,12 +65,13 @@ Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: i
 1. Write only the paths below. No deploy, no store write, no schedule, no SEC, vendor, model or Bloomberg call.
 2. No `bun`, `npm` or `pip install`. `r94_name_census.py`'s S3 GETs are permitted; nothing else is fetched.
 3. Standing: no S3 delete, no push of shared branches.
-4. Edit `names_read.py` minimally: do not reformat it and do not touch `monthly_chatter.py`, `scoped_amgt.py`, `numeric_tickers.py` or any served route.
+4. Edit `names_read.py` and `scoped_amgt.py` minimally: do not reformat them and do not touch `monthly_chatter.py`, `numeric_tickers.py` or any other function of `scoped_amgt.py`.
 
 ## 3. SURFACES
 
 <paths>
 lib/research/api/names_read.py
+lib/research/api/scoped_amgt.py
 lib/research/api/tests/test_names_read_agreement.py
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~387/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -59,9 +80,9 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; timeout 900)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-ff-1"><invocation>cd C:/dev/wk-resapp-387 &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round94_prep/checks/r94_display_name.py"; echo "exit=$?"</invocation><expect>PASS D1 (a classification name that disagrees with the registered name is not served), PASS D2, PASS D3, PASS D4, PASS D5, PASS D6; arms passed 6 of 6; R94 DISPLAY NAME: YES; and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-ff-1"><invocation>cd C:/dev/wk-resapp-387 &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round94_prep/checks/r94_display_name.py"; echo "exit=$?"</invocation><expect>PASS D1 (a classification name that disagrees with the registered name is not served), PASS D2, PASS D3, PASS D4, PASS D5, PASS D6, PASS D7 (the overlay), PASS D8, PASS D9 (a ranked row); arms passed 9 of 9; R94 DISPLAY NAME: YES; and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-ff-1"><invocation>cd C:/dev/wk-resapp-387 &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round94_prep/checks/r94_name_census.py" --where local; echo "exit=$?"</invocation><expect>judged 243 of 243 subjects, UNJUDGED 0, DIFFERENT company 0, the spelling variants listed; PASS C1; R94 NAME CENSUS: YES; and exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="AMGT-ff-1"><invocation>cd C:/dev/wk-resapp-387 &amp;&amp; PYTHONPATH="$(pwd)" python -m pytest lib/research/api/tests/test_names_read_agreement.py lib/research/api/tests/test_ay3_names_read.py lib/research/api/tests/test_display_name_case.py lib/research/api/tests/test_model_block_names.py lib/research/api/tests/test_feed_and_names_an3.py lib/research/api/tests/test_monthly_chatter.py lib/research/api/tests/test_price_identity_join.py lib/research/api/tests/test_am5_unknown_key_and_chatter_inputs.py lib/research/api/tests/test_az4_cold_cut.py lib/research/api/tests/test_lead_list_names_and_places_moved.py -q; echo "exit=$?"</invocation><expect>the control: the new test file and the nine existing names tests pass (no failed, no error); and exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-ff-1"><invocation>cd C:/dev/wk-resapp-387 &amp;&amp; PYTHONPATH="$(pwd)" python -m pytest lib/research/api/tests/test_names_read_agreement.py lib/research/api/tests/test_ay3_names_read.py lib/research/api/tests/test_display_name_case.py lib/research/api/tests/test_model_block_names.py lib/research/api/tests/test_feed_and_names_an3.py lib/research/api/tests/test_monthly_chatter.py lib/research/api/tests/test_price_identity_join.py lib/research/api/tests/test_am5_unknown_key_and_chatter_inputs.py lib/research/api/tests/test_az4_cold_cut.py lib/research/api/tests/test_lead_list_names_and_places_moved.py lib/research/api/tests/test_an6_repairs.py lib/research/api/tests/test_list_rows_classification.py lib/research/api/tests/test_av6_cold_start.py -q; echo "exit=$?"</invocation><expect>the control: the new test file and the twelve existing names, classification and ranked-row tests pass (no failed, no error); and exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -90,3 +111,4 @@ The `<status>` flip is the issuer's.
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>complete -- issuer close 2026-10-11T12:59Z (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-387 @05e912764e (code @fdc8659371) merged @dc40353618, proof instance VALID; issuer re-run in the worktree: AC1 R94 DISPLAY NAME YES (6 of 6), AC2 R94 NAME CENSUS YES (243 of 243 judged: registered name 68, legal_name 211, folder 96, model block 100; 0 unjudged; 0 different companies; 35 spelling variants listed), AC3 105 passed; drain checks py_compile rc 0, ruff clean, 540 passed over filings, peers and the names tests. names_read.py +26/-4: `names_agree` and the disagreement test inside `display_names`. The census flips exactly SAN_FP_Equity (Sanofi for Banco Santander) and CSL_AU_Equity (CSL Ltd for Carlisle Cos Inc) of 243. NOT SERVED until AMGT-ff-4. Worker rows ruled: S1 (the check's docstring said four letters, the order and census two characters: the code follows the order; docstring corrected) stands; S2 (ARMED: the channel header's one-fenced-block instruction would mis-append, the file holds one row per block; appended in the file's existing shape) stands, disarmed: no action is owed.</status>
+<status>pending -- REOPENED 2026-10-11T13:23Z by the issuer (2.0.0_SA_COO~R1): the first cut @dc40353618 changed the chain (the peers subject's name) and not the overlay's header name or a ranked row's name; the table of the redeploy pair read it. AMENDMENT 1 in section 1b of the face; the worker is re-seated on slot ~387 with its merged commits fdc8659371..05e912764e as inherited state.</status>
