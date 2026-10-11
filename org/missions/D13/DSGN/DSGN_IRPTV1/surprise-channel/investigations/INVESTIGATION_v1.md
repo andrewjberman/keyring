@@ -5668,3 +5668,26 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S19",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T16:41:38Z",
+  "one_line": "L8 round 22 and the slug for rounds 17 to 22, no judgment criterion: every DSGN_IRPTV1 order is terminal. The 130 percent weight was the test driver rewriting shared objects, not the page; the page prints the served figure. The regeneration test that was red passes after IRPT_BCKEND's schema repair (the issuer's run: 1,161 pass, 0 fail). Nothing built in these rounds has been rendered on a served answer, and FWD-1 has no rendered walk on any of it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msgs 5345 and 5351 (IV-e-104 drained @9cc17c490e, portal DEV c3a03c24; IV-e-103 drained @5a150bf718; round 22 MAY-CLOSE)",
+      "this seat's read 2026-10-11T16:41:38Z: portal origin/DEV is c3a03c24, the commit the packet names"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27). Evidence law: a fixture render is not the served page.",
+  "world_is": "Not run by this seat: the suite, eslint, the build hash, the driver. The fixed-driver screenshot was read by the issuer, not by this seat.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
