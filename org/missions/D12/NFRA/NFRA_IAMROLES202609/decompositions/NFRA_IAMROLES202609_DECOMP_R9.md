@@ -85,3 +85,28 @@ any wildcard grant, or the orphaned market-data-generator role itself (named in 
 - The live read is a snapshot. A name 200 today can be deleted tomorrow.
 - z-2(a) is another owner's act. Until it lands, z-2(b) stays at PHASE A, and the cell is not complete.
 - z-4 names wildcards; it narrows none. The replacement is round 10's.
+
+---
+
+## 7. ADDENDUM 1 (2026-10-11 ~20:4xZ) -- IAM-z-6, workstream FRED_RETIRE, on the CTO's ruling @3e091a9436
+
+**Consumes:** rows Z-S45 (@ad17fa128f) and Z-S48 (@5fae0d16af), and
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IAMROLES_FRED_DESTINATION_RETIRE_RAW_WRITE_20261011_Z.md`
+@`3e091a9436` (msg 33394).
+
+| cell | item | surface | issued to | risk |
+|---|---|---|---|---|
+| `IAM-z-6` | fred-data-ingestion retires its raw-series write to the 404 `opal-market-update`, so the daily yield-curve fold runs again and `opal-data-portal-v2/json/macro/yield_curve_fred.json` (frozen since 2026-08-05) resumes | `infra/aws/lambda/fred-data-ingestion/lambda_fred_ingestion.py`; artifact `s3://opal-313476888478-lambda-artifacts/fred-pipeline/fred-data-ingestion.zip`; `fred-pipeline/lambdas.tf` (Terraform deploy) | `0.7.0_AE_CloudOps~IR` | WORLD |
+
+**Battery at the cut:**
+- The handler raises in process_frequency() at `:130`/`:144`, behind `:257`, before the fold at `:276-291`.
+- The deploy reads an S3 artifact by version and content-sha256 (`lambdas.tf:15-32`); its build is
+  `infra/aws/lambda/ci/build-and-upload.sh fred-pipeline fred-data-ingestion`.
+- The daily schedule is `cron(0 23 * * ? *)` (`eventbridge.tf:17`).
+- `opal-data-portal-v2` versioning reads Enabled (19:4xZ read), so the served key's rollback is a prior version.
+
+**Edges:** `IAM-z-6 <- (none)`. It serializes with z-1, z-2 and z-3 on `.open_deploys/`; z-1's narrowing of the
+`opal-market-update` grant is independent of it. `fanout: 6 of 6 chains, cap 8`.
+
+**Rule 24:** a sixth item, at the same grain (one ruling, one cell). It moves one served key and the function's code. It does NOT move
+`fred-macro-ingestion`, the weekly and monthly schedules' targets, or any IAM document.
