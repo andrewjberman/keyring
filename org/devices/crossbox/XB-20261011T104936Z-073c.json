@@ -10,12 +10,16 @@
  "subject": "IRPT_YCDGEN: read-only dead letter inventory of irpt-generation-dlq for the laptop executor (CTO~DELL2 msg 4751)",
  "body_path": "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r10/CROSSBOX_ASK_DEAD_LETTER_INVENTORY_20261011.md",
  "opened_at": "2026-10-11T10:49:36Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-11T10:51:12Z",
+  "bus_message_id": "3680fba3-c0b8-479d-a5d3-7b451bb8b907"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T10:55:35Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": "091d9c64-c094-475b-826b-1219ca6b0035"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
