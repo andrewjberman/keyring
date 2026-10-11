@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.33",
+ "prd_version": "v0.34",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -766,5 +766,34 @@ ENDPOINT is not edited.
 - **The fix:** for a firm whose source carries no termination marking at all, account-lost is LISTED in the refusal record and never refuses by
   itself. The other five conditions still refuse, so a lost account that also loses value or classes is still caught.
 - **When this is re-read:** once Cottonwood's source carries real termination markings. Owner `2.0.0_SA_COO~P2`; no cell is ordered.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.34 -- Cottonwood's date basis is declared PER ACCOUNT-DAY, as a measured claim (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** row IRPT_BCKEND-S252; `2.0.0_SA_COO~P2`'s three reads of 2026-10-11, IB-pr-425 (every gradeable partition), IB-pr-427 (by account)
+  and IB-pr-429 (`deliverables/0.9.0_WK_IRPT_BCKEND~288/IB127-1_ACCOUNT_DAY_CLAIMS_READ.md` @aca436f40e). Not re-read by this seat.
+- **What was measured:** on Cottonwood's declared silver holdings source, 85 trading-day partitions, no single close is true of the source, of a
+  security or of an account. 553 of 614 accounts with moved rows are always on their own date; none is always a day behind; 61 mix, almost
+  always by whole day. Of 76,796 account-days: OWN_DATE 45,247; PRIOR_CLOSE 425; not gradeable 31,124.
+- **Ruling 20 is read for Cottonwood as follows. The ENDPOINT is unchanged.** `sources.json` declares the entry's basis `PER_ACCOUNT_DAY`, and the
+  holdings gold carries, on every account-day, a `date_basis_claim` the grading instrument measured:
+  - `OWN_DATE`: every gradeable moved security of the account that day sits at its own date's close;
+  - `PRIOR_CLOSE`: one or more sits at the prior close;
+  - `NOTHING_TO_GRADE`: the account-day holds nothing whose value depends on the date basis (cash, or rows with no price). Its value is the same on
+    either basis;
+  - `UNGRADEABLE`, with its kind: a priced security outside the anchor, a position with no CUSIP, a row at neither close, a negative position.
+- **What is served:** a return for an account-day only when that day and the prior trading day each read `OWN_DATE` or `NOTHING_TO_GRADE`. Any other
+  account-day is blank with its claim and kind as the reason. Nothing is shifted, repaired or inferred from a neighbouring account: FWD-3's "that
+  account's own end-of-day holdings" is not met by a basis nobody measured.
+- **The cost, stated:** 25.0 percent of 75,796 eligible account-days are blank under this rule, and 169 of 999 accounts are never served, on the
+  85 partitions read. The largest kind is a priced security outside the anchor (8,380 account-days). Widening the anchor is the way that number
+  falls; it is not ordered here.
+- **The no-CUSIP and negative-position kinds** were added by the worker (row D2-W288-S1). They are adopted: neither can be matched to the anchor as
+  the instrument stands. Each is re-read when the instrument can grade it.
+- **The daily order:** the anchor lands about 09:46Z and Cottonwood's partition about 11:46Z the next day, so the claim for day t can be graded
+  the day after, and a scheduled producer runs after both. A day graded before its anchor lands is `UNGRADEABLE`, never `OWN_DATE`.
+- **Consumers, named before any release (the lesson of 2026-10-11):** the release that first serves this gold names every reader of the holdings
+  gold and of the performance route with its key policy, and one read through each, in its pair.
 
 -- 1.0.0_SA_CTO~DELL2

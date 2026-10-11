@@ -4721,3 +4721,191 @@
   "notes": "Owner of the next act: 1.0.0_SA_CTO~DELL2 via 2.0.0_SA_COO~D2 -- rule (A) strict: required members, the two-key answer refused (then the rollback to two keys is still unreadable, so release 5's rollback state would stay unreadable until the service returns); or (B) the order's literal both-shapes: optional members in the reader only, each typed as the contract types it when present (client_id string|null with the pattern, client_claim enum, unreadable_rows integer >= 0), and absent stays absent in the carried type. On either rule the item level needs its own reader: readOwnedRequest is shared with the single-request read and must not gain client_id/client_claim there. Unmeasured: the live two-key answer's item shape; no live request made."
 }
 ```
+
+## DSGN_IRPTV1-D2-W53-S1 -- IV-e-95 part 2 (the smoke map at 22) STOPPED: the order's premise that custody-report-read and custody-report-persist have no producer fixture is fals
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T10:35:01Z",
+  "one_line": "IV-e-95 part 2 (the smoke map at 22) STOPPED: the order's premise that custody-report-read and custody-report-persist have no producer fixture is false at the base, and 22 keys with two routes excused is not reachable (22 DECLARED routes minus 2 excused = 20 entries).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json @63ab2ba116: _denominator.declared 22, routed_elsewhere 2, total 24; the three DECLARED routes with response_schema null are custody-report-read, custody-report-persist, analysis-request-original",
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/custody-report-read.response.valid.json and custody-report-persist.response.valid.json EXIST, committed 5020b450a7 (2026-10-09, IB-pr-412, 0.9.0_WK_IRPT_BCKEND~275), with docs/contracts/investor-reporting/v1/responses/custody-report-read.response.schema.json and custody-report-persist.response.schema.json; the order says they have none 'until IRPT_BCKEND publishes one'",
+      "the producer fixtures list at the base holds NO fixture and NO response schema file for analysis-request-original (routes.json response_schema_absent_reason: 'No response schema file is authored by AR-y-22'); its note says its data member is the analysis-request-pdf data shape",
+      "portal fixtures/smoke/default.json at 3bf0d731 holds 12 keys; fe-s-1/fixtures.test.ts:131-172 requires keys == _denominator.declared (22) and exactly one key per DECLARED route; p17_round17.py IV95-AC2 requires smoke_map.keys == 22 AND excused == exactly two",
+      "fe-s-14/published-map.test.ts:121 does JSON.parse(readV1(route.response_schema)) per key, so a key for a route whose routes.json response_schema is null cannot pass that test as written (routes.json row W167-S1 keeps it null)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IV-e-95 part 2: exactly TWO routes (custody-report-read, custody-report-persist) have no producer fixture and are excused by name; the map holds 22 keys; the test fails if a third route is missing or an excused route gains an entry.",
+  "world_is": "MEASURED: (1) the two named routes DO have producer fixtures and response schemas since 2026-10-09, so the reason 'no producer fixture until IRPT_BCKEND publishes one' is false for them; the one DECLARED route with no fixture and no response schema is analysis-request-original. (2) 22 DECLARED routes with two excused entries is 20 keys, not 22; with the custody entries built from their fixtures it is 22 keys and 0 excused (or 21 and 1 if analysis-request-original is excused). No reading of the order gives 22 keys and 2 excused. This worker built nothing for part 2 (no default.json edit, no fe-s-1 or published-map edit); it could not write a reason it measured to be false, nor invent a body for analysis-request-original. Parts 1, 3 and 4 are done and committed. IV95-AC2 cannot pass as written.",
+  "notes": "BLOCKING for IV95-AC2 only. The ten routes with no key today: selection-create, directory-browse, custody-report-read, custody-report-persist, analysis-input-upload, analysis-request-history, comparison-catalogue, analysis-request-read, analysis-request-pdf, analysis-request-original; producer fixtures exist for nine of them. Owner of the decision: 2.0.0_SA_COO~D2 (which routes are excused, and the key count the check wants). The producer pin CONSUMER_SMOKE_ENTRIES (test_seam_paired.py:116) stays 12 and is 2.0.0_SA_COO~P2's."
+}
+```
+
+## DSGN_IRPTV1-D2-W53-S2 -- iv-e-69.performance-finished.test.tsx carries one raw NUL byte (offset 16025, in the fallback of formatPageDate(...) ?? '<NUL>'), so ripgrep and Grep 
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T10:35:01Z",
+  "one_line": "iv-e-69.performance-finished.test.tsx carries one raw NUL byte (offset 16025, in the fallback of formatPageDate(...) ?? '<NUL>'), so ripgrep and Grep report the file as binary and skip it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the blob at portal 3bf0d731 (before this worker's edit) holds 1 NUL byte; byte count read with python rb; Grep on the file answered 'binary file matches (found NUL byte around offset 16025)'",
+      "this worker's re-gold of the file (portal 21011a47) was a bytes-level replace of one phrase; the NUL count is 1 before and after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A test source file is text a search tool reads.",
+  "world_is": "The test source holds a raw NUL where a '\\x00' escape was probably meant; the file still runs. A search over the scope with a text-only tool skips it silently. Not changed (outside the order)."
+}
+```
+
+## DSGN_IRPTV1-D2-W53-S3 -- IV-e-95 part 2 under AMENDMENT 1 STOPPED again: five of nine new smoke entries conflict with the fe-s-75 and fe-s-81 parse-through guards
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T10:55:00Z",
+  "one_line": "IV-e-95 part 2 under AMENDMENT 1 STOPPED again: 5 of the 9 new smoke entries (built from their producer fixtures) cannot coexist with fe-s-75 and fe-s-81, which require every default.json entry to parse through parseIrEnvelope -- the consumer refuses the producer's own fixture for 3 routes and has no adapter at all for the 2 custody routes.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED, one bun probe importing IR_DATA_ADAPTER (contracts/envelope.ts:181-212) and applying it to each producer fixture's `instance` (infra/aws/lambda/investor-reporting/_contracts/fixtures/<name>.valid.json): directory-browse (DirectoryPage), analysis-request-history (OwnedAnalysisRequestHistory) and analysis-input-upload (AnalysisUploadResult) are each REFUSED with EnvelopeMismatch('data'); the consumer's own copies under portal fixtures/wire/ of the same three are accepted (they differ from the producer files: DirectoryPage entries[0].revision.directory_revision, OwnedAnalysisRequestHistory items 0 vs 2 and unreadable_rows, AnalysisUploadResult state RESOLVING vs NORMALIZED and input_ref). selection-create, comparison-catalogue, analysis-request-read and analysis-request-pdf are accepted from the producer fixture.",
+      "MEASURED: IR_DATA_ADAPTER holds no entry for custody-report-read or custody-report-persist (the consumer reads the former through validateCustodyReport, envelope.ts:140, which takes the unwrapped data and is not parseIrEnvelope); parseIrEnvelope throws EnvelopeMismatch('operation') for both. fixtures/wire/ holds no copy of either custody fixture.",
+      "MEASURED with the candidate map in the tree (nine entries generated by extending fe-s-13/gen-corpus.ts DATA_FOR_OPERATION, 21 keys, the 12 old bodies byte-equal): 10 tests failed in the nine files that read default.json, log C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~53/explore1.txt. Four are the base set (fe-s-13 content-pins x3, producer-fixtures). Six are the map's: fe-s-1 smoke map (expected, the test is to follow), fe-s-14 published-map (readV1(null) ENOENT at published-map.test.ts:121 for a route whose routes.json response_schema is null; fixable in the test), fe-s-75 'every declared entry parses through parseIrEnvelope without throwing' and fe-s-81 'default.json: every entry carries unprojected_grant and parses clean through parseIrEnvelope' (5 entries fail: the 3 refused fixtures and the 2 custody routes), and the two CONTROL arms of fe-s-75 and fe-s-81, which take Object.keys(map)[0] (route-table order puts directory-browse first, so the control trips on 'data' before 'unprojected_grant').",
+      "the amendment's STOP clause: 'if another test in the scope pins the map's size or content and now fails ... if it guards something else, STOP with a row.' fe-s-75 and fe-s-81 guard parse-through, not size; making them exempt the 5 entries would weaken them (the 3 refusals are exactly what the guard exists to catch), and excusing the 5 routes would state a reason this worker measured to be false (each HAS a producer fixture).",
+      "RELATED, base state, not caused here: the response schemas for comparison-catalogue, analysis-request-pdf, custody-report-read and custody-report-persist list no `unprojected_grant` property under additionalProperties false, while parseIrEnvelope requires it on every non-refused envelope and the generator's envelope() always emits it; fe-s-13 content-pins and producer-fixtures already fail on the first two at base.",
+      "The candidate is kept, not committed: org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~53/SMOKE_MAP_CANDIDATE_NOT_COMMITTED.patch (git diff of gen-corpus.ts and default.json, whitespace at line end ignored). The portal tree was returned to c32d6764, status clean."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 part 2: one smoke entry per DECLARED route that has a producer fixture, each body taken from that fixture; the fe-s-1 and fe-s-14 tests follow; a test that guards something else and fails is a STOP.",
+  "world_is": "22 DECLARED routes, 21 with a producer fixture, 1 without (analysis-request-original, re-measured: no file or name in _contracts/ fixtures, docs/contracts responses or examples, or the lambda tree). Nine fixtures are missing from the map. Four of the nine fit the map and every test; five do not, because the consumer's reader refuses the producer's fixture (3) or has no reader (2). The consumer-side copies that parse are edited copies of the producer files, not the producer's bytes. The order cannot be met without a decision on the five.",
+  "notes": "BLOCKING for IV95-AC2 only; IV95-AC1 and IV95-AC3 stand. Owner of the decision: 2.0.0_SA_COO~D2 (with the CTO where it touches the consumer's readers). Options the worker did NOT take: (a) take the five bodies from fixtures/wire/ copies (three exist and parse; the two custody ones do not exist), (b) exempt the custody routes from the fe-s-75 and fe-s-81 parse arms by name (they are read by validateCustodyReport), (c) fix the three readers or the three producer fixtures (product files / another project's files). Not 'build the four that fit and excuse the five': the excuse would state a false reason."
+}
+```
+
+## DSGN_IRPTV1-D2-W53-S4 -- IV-e-95 part 2 under AMENDMENT 2 STOPPED: validateCustodyReport refuses both producer custody fixtures, so six routes are excused, over the limit of four
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T11:00:55Z",
+  "one_line": "IV-e-95 part 2 under AMENDMENT 2 STOPPED on its own clause: validateCustodyReport REFUSES both producer custody fixtures, so the excused set measures SIX (3 reader-refused envelope routes + 2 reader-refused custody routes + analysis-request-original), over the order's limit of four.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED, one bun probe (C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~53/amend2_reader_refusals.txt, rc 0) applying the consumer's reader to each producer fixture's `instance` (infra/aws/lambda/investor-reporting/_contracts/fixtures/<name>.valid.json): envelope routes through parseIrEnvelope(op, envelope{data: instance}): directory-browse (DirectoryPage.valid.json) REFUSED, text \"investor-reporting directory-browse: response envelope field 'data' does not satisfy the v1 contract\"; analysis-request-history (OwnedAnalysisRequestHistory.valid.json) REFUSED, \"investor-reporting analysis-request-history: response envelope field 'data' does not satisfy the v1 contract\"; analysis-input-upload (AnalysisUploadResult.valid.json) REFUSED, \"investor-reporting analysis-input-upload: response envelope field 'data' does not satisfy the v1 contract\"; selection-create, comparison-catalogue, analysis-request-read, analysis-request-pdf ACCEPTED.",
+      "MEASURED, same probe, validateCustodyReport(instance) (contracts/envelope.ts:140-155): custody-report-read (custody-report-read.response.valid.json) REFUSED, \"investor-reporting custody-report-read: response envelope field 'data' does not satisfy the v1 contract\"; custody-report-persist (custody-report-persist.response.valid.json) REFUSED, the same text. Cause by reading the guard: it requires report.accounts to be an array and the read fixture's report holds only composition_sha256; the persist fixture has no `report` member at all (it carries sha256), and the product has no reader for the persist answer (grep of portal/src: custody-report-persist appears only in investor-reporting.ts route table and the fe-s-14 and fe-s-57 tests).",
+      "MEASURED: analysis-request-original has no producer fixture: Grep for the name over infra/aws/lambda/investor-reporting/_contracts returns 0 matches in 0 files (re-read this session); the earlier search of docs/contracts (responses 21 files, examples 1 file) and the lambda tree is in row S3 and TEST_REPAIRS.json.",
+      "AMENDMENT 2 clauses: 'If validateCustodyReport REFUSES the producer's custody fixture, that route joins the excused set below instead' and 'More than four excuses is a STOP with a row.' Measured excused set: 3 + 2 + 1 = 6. Nothing of part 2 was committed; the portal tree stays at c32d6764, status clean; the kept patch is not deleted because its content is not committed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2: the two custody routes get entries because validateCustodyReport reads the producer's custody fixtures; by the issuer's expectation the map holds 18 entries with 4 excuses (3 reader-refused envelope routes plus analysis-request-original).",
+  "world_is": "validateCustodyReport refuses both producer custody fixtures. The map would hold 16 entries (22 declared minus 6 excused), and the order forbids more than four excuses. The same consumer-versus-producer disagreement now stands on five routes with a producer fixture (directory-browse, analysis-request-history, analysis-input-upload, custody-report-read, custody-report-persist), which the order's own text assigns to the CTO's ruling at the candidate. The excused count is the issuer's limit, not the worker's to raise.",
+  "notes": "BLOCKING for IV95-AC2 only; IV95-AC1 and IV95-AC3 stand. Owner of the decision: 2.0.0_SA_COO~D2 (the limit of four), with 1.0.0_SA_CTO~DELL2 for which side (consumer reader or producer fixture) moves. Not done: the CONTROL-arm pin to a named key, the fe-s-1/fe-s-14 follow and the mutants, which depend on the final excused list; no weaker variant was built to fit under four."
+}
+```
+
+## DSGN_IRPTV1-D2-W53-S5 -- IV-e-96: the account picker the walks used is the Performance tab's own, whose choice was tab-local and unseen by Holdings; the header's picker hands the tabs no account
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S5",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T11:53:00Z",
+  "one_line": "IV-e-96: the account picker the walks used is the Performance tab's own, whose choice was tab-local and unseen by Holdings; the header's picker hands the tabs no account",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ tabs/reporting/ReportingTab.tsx (focusedAccountId state, AccountFilter onFocusChange) and header/HeaderSelectionContext.ts at base 11f25102; walk 20261011T0730Z hops 4 and 6 name the same picker label format; rendered by the driver: choosing the second account in that select then opening Holdings shows that account's Models / SMAs / Client (holdings-face.driver-picker.png)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order and the CTO ruling say the Holdings face opens on the account picked in 'the header's account picker (hop 4)', which 'hands the picked account to the tabs'.",
+  "world_is": "Two things are called a picker. The header's Client search yields HeaderSelection.row and .selection (header/HeaderSelectionContext.ts); an ACCOUNT row narrows it, but the server may answer with the whole set. The Account select the walks used (hop 4 '****9237 / Brokerage'; hop 6 'picker label reads YTD unavailable') is AccountFilter in the Performance tab, wired at tabs/reporting/ReportingTab.tsx (focusedAccountId useState, onFocusChange={setFocusedAccountId}); that choice was tab-local and nothing handed it to Holdings. Before the change the Holdings default was decided at tabs/holdings/HoldingsTab.tsx line 248 (useState<string | null>(null) for focusedAccountId, base 11f25102). The candidate therefore also adds a one-way, request-free notice (HeaderSelection.pickedAccountId / onPickAccount, held in index.tsx, cleared on every new header selection, set only by an explicit choice in the Performance picker, not by its preselect). This touches index.tsx, HeaderSelectionContext.ts and ReportingTab.tsx beyond HoldingsTab.tsx, all inside the order's portal/src/pages/InvestorReporting/ grant.",
+  "notes": "The CTO should read whether carrying the Performance pick across tabs is what ruling D2-S7 meant; if only the header's account row was meant, the ReportingTab and index.tsx hunks are removable and the rest stands."
+}
+```
+
+## DSGN_IRPTV1-D2-W53-S6 -- IV-e-96: scripts/ui-smoke.mjs cannot pick a client, so the order's named screenshot instrument stops before any client or account is chosen; screenshots came from a supplementary driver
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S6",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T11:53:00Z",
+  "one_line": "IV-e-96: scripts/ui-smoke.mjs cannot pick a client, so the order's named screenshot instrument stops before any client or account is chosen; screenshots came from a supplementary driver",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: smoke_fill_probe.txt (copied to ui-smoke-stop.txt in the folder) reads FILL-FAIL: Client search=Sample -- locator.fill: Timeout 30000ms exceeded.",
+      "The driver's own stdout per mode is in driver_client.txt, driver_picker.txt, driver_back.txt (evidence folder): LOC /investor-reporting, CANVAS rgb(244, 246, 250), TILES read per state."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: screenshot the built page with node scripts/ui-smoke.mjs --dist ... --fixtures ... in at least a picked-account state and a no-picked-account state.",
+  "world_is": "ui-smoke stops at the header's role=combobox 'Client search': `--fill \"Client search=Sample\"` timed out (FILL-FAIL, control names listed: Client search, Performance, Holdings, Analysis; no Browse button on the page), `--clickrole combobox:Client search` opens no list, and ui-smoke has no typing step. It also serves one static body per URL, so POST /selections cannot answer a client read and a one-account read differently. Reached by ui-smoke: the Holdings tab with no client picked (the sample body), which is neither required state. Nothing was faked. The three PNGs in the folder come from holdings-face-driver.mjs (same recipe: auth stub, CORS echo, scripts/ui-dist.mjs, full-page screenshot, body background as CANVAS) plus typing, an Account select choice and request-aware fixtures; it is NOT the order's named instrument. IV96-AC2 is graded on those PNGs and is the issuer's to accept or refuse on that ground.",
+  "notes": "Owner of the decision: 2.0.0_SA_COO~D2 (accept the supplementary driver's PNGs, or extend ui-smoke with a typing step for a later order)."
+}
+```
+
+## DSGN_IRPTV1-D2-W53-S7 -- IV-e-96: the fixture-fed Holdings treemap and table print weights over 100 percent when the page carries two accounts' securities (130.0% on a synthetic fixture); not touched
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S7",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T11:53:00Z",
+  "one_line": "IV-e-96: the fixture-fed Holdings treemap and table print weights over 100 percent when the page carries two accounts' securities (130.0% on a synthetic fixture); not touched",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ holdings-face.driver-client.png and holdings-face.driver-back.png (identical in this region); fixture bodies are in holdings-face.no-pick.fixture.json (denominator.value 1000000 on every node)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The Securities map and table weights read against the total on screen.",
+  "world_is": "In holdings-face.driver-client.png (synthetic two-account fixture, each account 500,000 of 1,000,000) the map and table print SGM1 130.0% and Sample Client Fund 20.0%, i.e. each security's amount over a 500,000 base though the card total reads 1,000,000. Not investigated beyond the one render: it may be an artefact of the synthetic fixture's per-node denominators or a real denominator choice in SecurityList; HoldingsTab/SecurityList code was not changed by this order.",
+  "notes": "No act taken; a real-data read is needed before calling it a defect."
+}
+```
