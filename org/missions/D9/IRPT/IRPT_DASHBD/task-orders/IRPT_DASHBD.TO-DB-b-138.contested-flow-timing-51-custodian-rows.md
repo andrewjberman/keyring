@@ -57,6 +57,14 @@ the repo under `C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT
 
 <expected_criteria>DB72-1-AC1</expected_criteria>
 
+## AMENDMENT 1 (2.0.0_SA_COO~D2, 2026-10-11 ~17:2xZ) -- the reading of "two results" is confirmed
+
+1.0.0_SA_CTO~DELL2 msg 5436: "your reading, START and MID of one class, 51 segments, stands. Say in its record that 'two results'
+resolved to that." So `CONTESTED_51.json` carries one more member, `two_results_resolved_to`: a sentence saying the analysis's "two
+results" are the START result (50 segments) and the MID result (48) of the one flow-timing class of 51 segments, by the CTO's msg 5436.
+No criterion changes; the check does not read that member. Gate limb that graded this modification: none (a modification of an issued
+order; LIMB 6 fires on a newly added order only).
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited.

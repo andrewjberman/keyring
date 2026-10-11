@@ -1,4 +1,4 @@
-# ADVI_FIRMBKTS task order -- `FB-f-13` -- ACTS 4b AND 4c, PHASE A: THE SERVED-LAYOUT SEAM IN THE TWO LAMBDAS THAT READ THE LEGACY HOME (DORMANT)
+# ADVI_FIRMBKTS task order -- `FB-f-13` -- ACTS 4b AND 4c: THE TWO PARTNER LAMBDAS READ (AND, FOR THE EXEC-SUMMARY, WRITE) THE CANONICAL HOME
 
 <!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
 
@@ -6,142 +6,112 @@
 <decomp_doc>org/missions/D8/ADVI/ADVI_FIRMBKTS/decompositions/ADVI_FIRMBKTS_DECOMP_R4.md</decomp_doc>
 <owned_cells>FB-f-13</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_ADVI_FIRMBKTS~22</issued_to>
+<issued_to>0.7.0_AE_CloudOps~FB1</issued_to>
 <issued_by>2.0.0_SA_COO~B1</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
-comp-schedule: DECLARED-NOT-APPLICABLE -- phase A edits repository source only; no cron, rule, schedule or cadence is added or changed and nothing is deployed.
-comp-iam: DECLARED-NOT-APPLICABLE -- repository files only: no AWS act and no grant. Whether each Lambda's role may read and write the new bucket's prefix is read at the act, not here.
-comp-adversary: RUN by the issuer -- `r3_reads.py --files` over the two Lambdas' sources reads UNROUTED 3 (exec-summary-generator: one put, one paginate, one get_object helper) and UNROUTED 4 (opal-partners-data: two get_object, one list_objects_v2, one head_object) at base, so AC1 FAILS by construction; the parity test classes do not exist, so AC2 selects no test at base. Blindness: the census reads syntax: it does not run either Lambda; dormancy rests on the seam's identity in `legacy` mode (the unit tests) and on the census showing every call routed through it.
+comp-schedule: RUN by the actor at step 1 (the exec-summary rule `cron(30 4 * * ? *)` and the producers' next chain, read from the live rules); the act adds no cron, rule or schedule.
+comp-iam: RUN by the issuer -- the identity that applied `FB-f-17` and `FB-f-18` (`lambda:UpdateFunctionCode`, `lambda:UpdateFunctionConfiguration` are the deploy path of earlier acts on these two roots); the Put at the canonical home is Allowed by `FB-f-18`'s policy and the fence exemption of `FB-f-17`; the Get and List by the bucket policy of act 3c and 3b. No grant is created.
+comp-adversary: DECLARED-NOT-APPLICABLE at the cut -- every criterion names a value that exists only after the act (a deployed hash, an environment value); each reads FAIL by construction. The issuer's reads (`r4_execeq.py` on the built exec-summary artifact: DIFFER today, advisors 194 against 192, the correct control before act 3; `r4_sample_eq.py`) were dry-run at base.
 EGRESS CLASS, declared: NONE.
 </preflight>
 
-## 1. THE CELL -- `FB-f-13` phase A (round 3; the CTO's act-2 half ADDENDUM 1 rows 3 and 4, msg 3677: "exec-summary and opal-partners-data repoint as acts 4b/4c in this window")
+## 0. THIS ORDER IS STAGED. IT IS NOT A SPAWNABLE FACE UNTIL THE ISSUER'S GO COMMIT SAYS SO.
 
-Two deployed Lambdas read (and one WRITES) served-class keys of `opal-data-bd`, a legacy home that is frozen once the
-producers write the new home:
-- `infra/aws/lambda/exec-summary-generator`: reads `platinum/advisors/` (list and `summary.json`, `timeseries.json`, `nna_clients.json`, `positions.json` per
-  advisor) and `platinum/leaderboards/`, and WRITES `platinum/advisors/<advisor>/exec_summary.json`, all on the constant
-  `S3_BUCKET = "opal-data-bd"` of its `config.py`.
-- `infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data`: the partners API; its bucket is read per firm from DynamoDB (`s3Bucket`), and it serves
-  `gold/artifacts/...` keys through `serve_s3_json`, `serve_s3_json_nocache`, a `head_object` health probe and one
-  `list_objects_v2`.
+The GO is the issuer's commit of the window (`org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/WINDOW_RUNBOOK_ROUND4.md` step 3). At it ALL of these read true at HEAD:
+1. Act 3's `compare` reads `DEST-VS-MANIFEST: EQUAL` (the copy is final: the legacy home is frozen by act 2).
+2. Acts 3c and 3b are APPLIED and closed (3c before 4b, 3b before 4c): `FB-f-17`, `FB-f-14`; `FB-f-18` applied; `FB-g-33`,
+   `FB-g-34` merged and graded (`r4_modeenv.py` 4 of 4 each); `FB-g-36` (the partners event census) merged.
+3. The pair reads SIGNED in both halves: `org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND4_ACT4BC_LAMBDAS_COO_HALF.md` (amended for ADDENDA 10 and 11) and
+   `..._CTO_HALF.md` (CTO msg 3974).
+4. The change-management entry is the actor's first step.
 
-You give each a SEAM, DORMANT: with the mode unset every call names the bucket and key it names today. A later act (not
-yours) sets `BD_PLATINUM_MODE=canonical` on a Lambda's configuration; that single value then moves its served reads and the
-exec-summary's one write to the new home. You run nothing and deploy nothing.
+## 1. THE ACT -- one code version and ONE environment value per Lambda; the exec-summary first
 
-### 1a. The facts you start from
+READ FIRST: the pair above, `org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/WINDOW_RUNBOOK_ROUND4.md`, the CTO's ADDENDUM 11 (round-3 analysis), `r4_execeq.py`'s header. Load `/cloud-ops`
+before any AWS act.
 
-- The reference seam is `data/black_diamond/scripts/gold/lib/platinum_dest.py` (merged; read it) over the generated view
-  `data/black_diamond/scripts/gold/lib/platinum_dest_view.py` (`PLATINUM_CLASSES`: rows `(legacy_prefix, bucket, key_template)`, the template ending in
-  `{tail}`). A Lambda cannot import the gold `lib`; it is packaged from its own directory, whose file list is
-  `functions.<name>.files` in `infra/aws/lambda/ci/lambda-source-map.json`.
-- The mode is the environment variable `BD_PLATINUM_MODE`: unset or `legacy` = today; `canonical` = the new home; any other
-  value is a `ValueError`.
-- The seam applies ONLY to the pipeline bucket `opal-data-bd`: a call on any other bucket is returned unchanged (the partners
-  API serves other firms from their own buckets).
-- The issuer's census `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_reads.py`, in its `--files` mode, grades named files: a call is ROUTED when its Bucket is
-  bound from a call to `platinum_destination`, `platinum_source` or `platinum_list_target` (by those names). Run it first:
-  `python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_reads.py --list --files infra/aws/lambda/exec-summary-generator/lambda_function.py infra/aws/lambda/exec-summary-generator/platinum_reader.py infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py`.
+### 1a. Act 4b -- `exec-summary-generator`
 
-### 1b. The steps
+1. **The entry.** Open the change-management entry BEFORE the first write (slug
+   `advi-firmbkts-fb-f-13-acts4bc-<UTCdate>`), naming both functions, each one's current version, `CodeSha256`,
+   `LastModified` and environment KEYS (never values of secrets), the pair, and the rollback (below). Commit it and its
+   `.open_deploys/` sentinel first.
+2. **Build.** `bash infra/aws/lambda/ci/build-and-upload.sh exec-summary exec-summary-generator` (read its OK lines); print the
+   artifact sha256 and record it in `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ACT4BC_EXPECT.json`.
+3. **The read, BEFORE the value:** `python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_execeq.py --zip <the built zip>` reads
+   `EXEC READS: legacy and canonical EQUAL` (advisors, leaderboards and the first advisor's artifacts through the seam in both
+   modes; after act 3's copy, a difference is Branch B and a STOP). Print the line.
+4. **Plan, scoped:** in `infra/aws/terraform/exec-summary`, `.tools/safe-apply.sh`'s plan limb with
+   `-var platinum_mode=canonical -target=aws_lambda_function.exec_summary_generator`. The plan must change that one
+   function's code (the artifact version and hash) and its environment (ONE key added: `BD_PLATINUM_MODE=canonical`; the five
+   base keys unchanged), and nothing else. Anything else: STOP, a BLOCKING row.
+5. **Apply** through `.tools/safe-apply.sh` on that saved plan. Read back: the function's `CodeSha256` equals the artifact's;
+   `Environment.Variables` carries `BD_PLATINUM_MODE=canonical` and the five base keys unchanged.
+6. **The put** is not exercised until the next scheduled run (04:30Z the next day); do NOT invoke the function (its handler
+   runs every advisor and uploads). The entry names that read as the next day's step 9 of the runbook.
 
-0. Work in `/c/dev/wk-firmbkts-22`. Begin every shell call with `cd /c/dev/wk-firmbkts-22 &&`.
-1. **The seam module.** Create `served_seam.py` in EACH Lambda directory, byte-identical in both, standard library only,
-   Python 3.12, ASCII, with:
-   - `destination(bucket, key, mode=None) -> (bucket, key)`; `source(bucket, key, mode=None) -> (bucket, key)` (the same
-     resolution: reads follow writes);
-   - `list_target(bucket, prefix, mode=None) -> (bucket, prefix, to_legacy)`;
-   - the rules of `platinum_dest.py` `destination` and `list_target` exactly, applied only when `bucket == "opal-data-bd"`
-     (any other bucket: the identity, `to_legacy` the identity). A prefix that is a PROPER prefix of a served class prefix
-     is a `ValueError` in `canonical`.
-   It imports the view as `from platinum_dest_view import PLATINUM_CLASSES` (a flat module beside it).
-2. **The generated view in each Lambda directory.** `lib/opal_naming.py` emits the gold view with `generate --target`; read
-   how that target is wired (`WHOLE_FILE_TARGETS` and its siblings, the same wiring `platinum_dest_view.py` uses) and add
-   TWO more whole-file targets: `infra/aws/lambda/exec-summary-generator/platinum_dest_view.py` and `infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/platinum_dest_view.py`, each the same generated module
-   (mark and registry hash as the gold one). Generate both with the builder; never hand-type a table. Then
-   `python lib/opal_naming.py targets` must still exit 0, with the two new files classified SHIP on the lambda plane.
-3. **Package lists.** In `infra/aws/lambda/ci/lambda-source-map.json` add `served_seam.py` and `platinum_dest_view.py` to the
-   `files` list of `exec-summary-generator` and of `opal-partners-data`, so the build ships them.
-4. **Route every call.** In `infra/aws/lambda/exec-summary-generator/lambda_function.py`, `infra/aws/lambda/exec-summary-generator/platinum_reader.py` and `infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py`: each S3 data
-   call's bucket and key come from the seam (`b, k = platinum_source(bucket, key)` for a read or head;
-   `b, k = platinum_destination(bucket, key)` for the exec-summary's put; `b, p, to_legacy = platinum_list_target(bucket,
-   prefix)` for a list or paginate, with `to_legacy` applied to each returned key so the rest of the function sees
-   legacy-shaped keys exactly as today). Import them as `from served_seam import destination as platinum_destination,
-   source as platinum_source, list_target as platinum_list_target`. Route inside the shared helpers (`_read_json`,
-   `serve_s3_json`, `serve_s3_json_nocache`), not at their callers.
-5. **Parity tests**, in `data/black_diamond/scripts/gold/tests/test_lambda_seam_parity.py` (unittest, standard library; load each Lambda's
-   `served_seam.py` and `platinum_dest_view.py` by path with `importlib.util.spec_from_file_location`), in ONE class named
-   exactly `TestLambdaSeamParity`:
-   (a) the two `served_seam.py` files and the two generated views are byte-identical to each other, and each view is
-   byte-identical to `data/black_diamond/scripts/gold/lib/platinum_dest_view.py`;
-   (b) for one key of each of the 11 classes and each mode (`legacy`, `canonical`): the Lambda seam's `destination` and
-   `source` for bucket `opal-data-bd` equal `lib/platinum_dest.py` `destination` and `source` (bucket and key);
-   (c) `list_target` for a served prefix: `legacy` is the identity; `canonical` names the class bucket and a prefix that is
-   not the legacy one, and `to_legacy(dest_prefix + tail)` returns `legacy_prefix + tail`;
-   (d) any bucket other than `opal-data-bd` is the identity in both modes; a non-served key on `opal-data-bd` is the
-   identity in both modes;
-   (e) a recording fake S3 client driven through the exec-summary's `list_active_advisors()` and `_read_json()`, and the
-   partners Lambda's `serve_s3_json()`, under `canonical`, records 0 calls whose Bucket is `opal-data-bd` with a key under
-   a served prefix. Where a module needs a package not installed in your environment, stub it in `sys.modules` inside the
-   test and say so in your report.
+### 1b. Act 4c -- `opal-partners-data`
+
+7. **Build** `bash infra/aws/lambda/ci/build-and-upload.sh partners-api opal-partners-data`; print the artifact sha256 into
+   `ACT4BC_EXPECT.json`.
+8. **The partners API's cache TTL** (CloudFront or API Gateway in front of it) is READ and NAMED in the entry (CTO msg 3974); no
+   invalidation is added.
+9. **The BEFORE sample:** invoke the Lambda with each INVOKABLE event of `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~58/PARTNERS_EVENT_CENSUS.json`
+   (one per served class it reads), at the CURRENT version, writing one record per class into `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/PARTNERS_BEFORE.json`
+   (`{"function": "<class>", "case": "partner", "status": <int>, "body_sha256": "<hex>", "ownership_read": ""}`): status and the
+   body's sha256 only; never a body. A 5xx at baseline is a STOP.
+10. **Plan, scoped:** in `infra/aws/terraform/partners-api`, the plan limb with `-var platinum_mode=canonical
+    -target=module.opal_partners_data`: that function's code and its environment (ONE key added), nothing else. **Apply.** Read
+    back as step 5. Its DynamoDB `s3Bucket` item is NOT touched.
+11. **The AFTER sample:** the same events into `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/PARTNERS_AFTER.json`;
+    `python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_sample_eq.py --before org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/PARTNERS_BEFORE.json --after org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/PARTNERS_AFTER.json`: every case EQUAL, or a
+    difference only for a key whose canonical-home object's `LastModified` is after the mode move (named, counted).
+
+### 1c. Branch B and rollback (the pair's, restated)
+
+On any Branch B condition (a differing response not explained as above; a 5xx or an `AccessDenied` at the canonical home; the
+exec-summary writing the legacy key after the value is set): re-deploy each Lambda's recorded previous version and remove the
+environment value (a plan WITHOUT `-var platinum_mode`), the same hour; the legacy home is untouched; a BLOCKING row; the order
+stays open.
 
 ## 2. BOUNDS
 
-1. Repository files only: no AWS call, no deploy, no invocation of either Lambda, no `deploy.sh`, no `aws lambda ...`, no
-   Terraform apply (CLAUDE.md: Terraform only). Do NOT edit any `.tf` file or any Lambda environment: the mode is set by a
-   later act.
-2. With the mode unset every call you touch names the same bucket, prefix and key as today and the pages a listing returns
-   are the same; if an edit would change a `legacy` result, STOP and file a BLOCKING row.
-3. No new delete, copy, write or alert. The exec-summary's one put stays exactly one put, with the same body, content type
-   and encryption.
-4. Do not edit `data/black_diamond/scripts/gold/lib/platinum_dest.py`, `data/black_diamond/scripts/gold/lib/platinum_dest_view.py`, any registry row, or any check. No bucket name
-   typed in a new string literal except the single pipeline bucket constant `opal-data-bd` inside `served_seam.py` (the
-   guard); every destination bucket comes from the generated view. Client ids appear in keys: your report names counts and
-   paths, never a key. ASCII only; LF endings. If something cannot be met within your paths, file a surprise row and stop.
+1. The writes are: the two artifacts under `s3://opal-313476888478-lambda-artifacts/`, the two functions' code and ONE
+   environment key each, the source map's own `artifact_*` record, the ledger entry and its sentinel, your instance and rows. No
+   other function, role, grant, schedule, API route or bucket; no delete; no invocation of the exec-summary function.
+2. A scoped plan naming any resource beyond the function, or an attribute beyond its code and the one environment key: STOP.
+3. Names and keys of clients are never printed: counts, class prefixes, statuses and hashes only.
 
 ## 3. SURFACES
 
 <paths>
-infra/aws/lambda/exec-summary-generator/served_seam.py
-infra/aws/lambda/exec-summary-generator/platinum_dest_view.py
-infra/aws/lambda/exec-summary-generator/lambda_function.py
-infra/aws/lambda/exec-summary-generator/platinum_reader.py
-infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/served_seam.py
-infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/platinum_dest_view.py
-infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py
-lib/opal_naming.py
 infra/aws/lambda/ci/lambda-source-map.json
-data/black_diamond/scripts/gold/tests/test_lambda_seam_parity.py
-org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~22/
+org/critical_paths/change_management/
+org/critical_paths/.open_deploys/
+org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/
 org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
-
-Read-only: the rest of the repository, the checks under `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/`.
 
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~22/ADVI_FIRMBKTS.TO-FB-f-13.lambda-seams.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-f-13"><invocation>cd /c/dev/wk-firmbkts-22 &amp;&amp; timeout 100 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_reads.py --root /c/dev/wk-firmbkts-22 --files infra/aws/lambda/exec-summary-generator/lambda_function.py infra/aws/lambda/exec-summary-generator/platinum_reader.py infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py; echo "exit=$?"</invocation><expect>ROUND 3 READ CENSUS: ALL SITES ROUTED, NOT-SERVED OR EXEMPT</expect></criterion>
-  <criterion id="AC2" cell_refs="FB-f-13"><invocation>cd /c/dev/wk-firmbkts-22 &amp;&amp; timeout 110 env -u FORCE_COLOR python -m unittest discover -s data/black_diamond/scripts/gold/tests -p "test_lambda_seam_parity.py" -k TestLambdaSeamParity 2&gt;&amp;1 | tail -n 3</invocation><expect>^OK$</expect></criterion>
-  <criterion id="AC3" cell_refs="FB-f-13"><invocation>cd /c/dev/wk-firmbkts-22 &amp;&amp; timeout 100 python lib/opal_naming.py targets &gt; /dev/null 2&gt;&amp;1; echo "targets-exit=$?"</invocation><expect>targets-exit=0</expect></criterion>
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ADVI_FIRMBKTS.TO-FB-f-13.acts4bc.proof_of_spec.json`.
+  <criterion id="AC1" cell_refs="FB-f-13"><invocation>timeout 60 aws lambda get-function-configuration --function-name exec-summary-generator --region us-east-1 --query "[CodeSha256,Environment.Variables.BD_PLATINUM_MODE]" --output text</invocation><expect>^\S+\s+canonical$</expect></criterion>
+  <criterion id="AC2" cell_refs="FB-f-13"><invocation>timeout 60 aws lambda get-function-configuration --function-name opal-partners-data --region us-east-1 --query "[CodeSha256,Environment.Variables.BD_PLATINUM_MODE]" --output text</invocation><expect>^\S+\s+canonical$</expect></criterion>
+  <criterion id="AC3" cell_refs="FB-f-13"><invocation>cd /c/dev/ajb_workspace &amp;&amp; timeout 118 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_sample_eq.py --before org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/PARTNERS_BEFORE.json --after org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/PARTNERS_AFTER.json; echo "exit=$?"</invocation><expect>SAMPLE EQUAL: (\\d+) of \\1 cases</expect></criterion>
 </proof_of_spec>
 
-AC1 is the issuer's census over the two Lambdas' sources (UNROUTED 0), FAIL at base (7). AC2 runs the parity class (the
-seam equals the reference seam; the canonical negative arm), FAIL at base (it does not exist: no test selected). AC3 is the
-builder's own plane classification with the two new generated views (PASS at base as a control: it FAILS if a view lands as
-an unclassified file). Each invocation terminates inside its bound.
+A fourth read is the exec-summary's `r4_execeq.py` line printed in the entry (EQUAL before the value); it is graded by the
+issuer from the entry because its zip is the build's temporary file. AC1 and AC2 read each function's deployed code hash and
+its one environment value (the code hash is compared by the actor against `ACT4BC_EXPECT.json` and printed beside it). AC3
+reads the partners API's before and after, class by class. Each invocation terminates inside its bound.
 
 ## 5. WHEN YOU ARE DONE
 
-Instance at `D/ADVI_FIRMBKTS.TO-FB-f-13.lambda-seams.proof_of_spec.json`, `D` = `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~22`. Commit the
-seams, the views, the routed sources, the builder target edit, the source map, the test and your rows, then the instance
-second (its artifact rows pin to the commit that holds them). **Do not flip this order's `<status>`**: phases B and C (the
-two acts, each with its own pair) are the issuer's to amend. Row ids: `ADVI_FIRMBKTS-D1-W22-S<k>`, `k` from 1,
-`surfaced_at` from `date -u +%FT%TZ`. Report once: the AC1 output in full, the census counts before and after, the parity
-test count, the list of paths you could not drive in test (e), and the commit hash.
+Close the change-management entry; flip `<status>` to `complete` in the SAME commit as the proof instance only when AC1 to AC3
+pass. Report once to `2.0.0_SA_COO~B1`: the two artifact hashes, the `r4_execeq.py` line, the TTL named, the sample's last line,
+the two plans' summary lines, the entry's path and the commit hash. The exec-summary's put is read the next day.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
@@ -184,6 +154,14 @@ Each phase's act is: the Lambda's new code version (the seam, dormant until the 
 `BD_PLATINUM_MODE=canonical`, nothing else of its configuration. The partners API's cache TTL is read and named in 4c's entry
 (CTO msg 3974). Executor: `0.7.0_AE_CloudOps~FB1`. The order stays `parked` until `FB-f-17` and `FB-f-18` are applied and the GO.
 Gate limb: the `<decomp_doc>` and `<round>` of a parked order amended by its issuer; no criterion changed.
+
+**AMENDMENT 2 (2.0.0_SA_COO~B1, 2026-10-11 ~18:0xZ; THE FACE IS REPLACED, STILL PARKED UNTIL THE GO):** the round-3 face above
+(phase A, the dormant seams: merged, history in git) is replaced by the ACT: acts 4b and 4c for `0.7.0_AE_CloudOps~FB1`.
+The environment carrier is a Terraform variable absent by default (`FB-g-33`, `FB-g-34`: the trunk's plan is unchanged until the
+act passes `-var platinum_mode=canonical`); the exec-summary's read is `r4_execeq.py` (its handler cannot be invoked read-only:
+the put is read at the next 04:30Z run); the partners API's events are `FB-g-36`'s census. Order per the CTO's msg 4013: 4b and 4c
+run BEFORE act 4. Gate limb: the `<issued_to>`, `<paths>`, criteria and `<placeholders>` of a parked order amended by its
+issuer; GATE viii reads `<placeholders>NONE</placeholders>`.
 
 <status>parked</status>
 <round>4</round>

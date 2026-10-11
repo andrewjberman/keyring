@@ -77,7 +77,7 @@ timing. Carrying it as an absent-by-default variable keeps the trunk dormant: `p
 plan and apply; after the window the issuer asks for the default to be committed. Workstream `MODEEXEC`. Class WORLD by the path
 floor, dormant.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>MODEEXEC</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-33</to_id>
