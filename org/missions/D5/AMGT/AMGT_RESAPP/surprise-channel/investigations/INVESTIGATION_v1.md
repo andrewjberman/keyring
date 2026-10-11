@@ -22485,6 +22485,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   },
   "notes": "Not cut mid-round (the decomposition is frozen). Carried to the round-80 drain-end packet for the CTO's round-80 analysis: the store half is a WORLD cell (SEC GET, silver write under a never-widen pair, model call, draft rebuild), then a FWD-18 walk on ASML NA. The RESERVED card sent to 0.0.0_AB_MSTR~DELL1 at the cut is withdrawn."
 }
+,
+  {
+    "id": "AMGT_RESAPP-D1-W352-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~352",
+    "surfaced_at": "2026-10-11T03:29:08Z",
+    "one_line": "The audit-root rule resolves a submodule commit's common dir to <superproject>/.git/modules, so the mass-deletion row for that commit lands under .git/modules, not in the superproject or submodule tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~R1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/git-hooks/mass-deletion-check.sh@d29944d19a (worktree edit, pre-commit): AUDIT_ROOT = dirname of `git rev-parse --path-format=absolute --git-common-dir`, used by _audit() for the row",
+        "throwaway repo under .scratch/subm_probe (super + submodule sub): `git rev-parse --path-format=absolute --git-common-dir` in super/sub -> C:/dev/wk-resapp-352/.scratch/subm_probe/super/.git/modules/sub; its parent super/.git/modules is a directory, so no fallback to ROOT; no org/ under it",
+        "r89_audit_root.sh AC1 YES after the edit (A1, A2, A3 PASS) builds a standalone repo only and does not exercise a submodule"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-nn-4 section 1: AUDIT_ROOT resolved from `git rev-parse --path-format=absolute --git-common-dir` (the common dir's parent) is the shared tree that holds the audit log; change nothing else.",
+    "world_is": "In a submodule the common dir is <superproject>/.git/modules/<name>, so the resolved AUDIT_ROOT is <superproject>/.git/modules and the row lands there, not in the superproject root (the spec's shared tree) nor the submodule root. Measured in the throwaway probe only; whether the hook fires inside a submodule commit was not measured.",
+    "notes": "Not fixed here: the order bounds the edit to the adoption of the common-dir parent and says change nothing else. safe-commit.sh:160-190 resolves the superproject separately for this case; whether the hook needs the same handling is the disarm owner's call."
+  }
 ]
 ```
 
