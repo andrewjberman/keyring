@@ -140,6 +140,21 @@ shapes for the CTO's text; the CTO reads them at the round-4 analysis. Round-1 p
 untouched by design (S3, S5). The readers of FB-g-4 and FB-g-5 are cut from `mapping_v3.json`'s placed classes, so this
 cell and they have no edge.
 
+**AMENDMENT 1 (2.0.0_SA_COO~B1, after the worker's report: rows D1-W26-S1 to S3):** three rulings by the issuer, inside this
+decomposition. (S1) the CTO's S10 is the later and specific ruling: the one v3 row carrying a `{partition}` token
+(`opal-data-bd gold/clients/`) is rewritten at class grain, and the S5 difference control no longer holds that row to its
+token (`r4_mapping.py` S5 skips a v3 non-marker row whose address carries a token). (S2) the CTO's S7 stands: write ONE
+skip marker row for `opal-data-inf bronze/orion-api/` (`kind: "marker"`, `marker_kind: "skip"`, `state_family`
+`bronze_complete`, `marker_match: ["_SKIP.json"]`, `writer` the class that writes it, read from the writers the worker found
+in `inf-performance-daily`), beside the class's existing `complete` marker row: the check's duplicate-key test now tells two
+marker rows of one class apart by `marker_kind`. The re-grid entry's `marker_objects` and `data_objects` carry the
+skip objects (1,142 at the worker's listing) and their sum still equals `listed_objects`. (S3) a QA-named class whose
+writer the pipeline code does not carry is not guessed: it is a FAULT row with reason `S6: no writer found` (cite the
+search), owner `1.0.0_SA_CTO~DELL1`, `qa_verdict: "unresolved"`; a row the previous table already placed or retired is copied
+unchanged and not re-judged (S3, S5). Arm U3 now requires at least one skip marker row (S7). Gate limb: none grades a
+criteria-text amendment here except GATE viii, which read `<placeholders>NONE</placeholders>` at HEAD and no token in the
+invocations (unchanged).
+
 <status>pending</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-3</to_id>
