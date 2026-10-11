@@ -25,6 +25,9 @@ frame still repeats (6 of 13) -- a round-29 item. Row D1-C-S5.**
 **ADDENDUM 5 (~14:20Z, on COO~V1 msg 2526): RIV-wh-1 J1 MET (0 '$0.0 million', 0 bare identifiers over 26 items, real run
 a1-chain/8). Row D1-C-S6.**
 
+**ADDENDUM 6 (2026-10-11 ~02:10Z, on COO~V1 msg 3041): RIV-tc-1 J1 NOT MEASURED -- the 2026-10-10 11:00Z vehicle run has
+no transcription at origin/box/sitez or origin/CLOUD, so nothing is graded. Row D1-C-S7.**
+
 ```json
 [
   {
@@ -157,6 +160,29 @@ a1-chain/8). Row D1-C-S6.**
         "task-orders/ETFS_RIVALS.TO-RIV-wh-1.small-notional-and-unnamed-facts.md:43 (J1)",
         "2.0.0_SA_COO~V1 msg 2526",
         "this file, ETFS_RIVALS-D1-C-S1 (Valero dialog read) and ETFS_RIVALS-D1-C-S4"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S7",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-11T02:10Z",
+    "one_line": "RIV-tc-1 J1 NOT MEASURED on the 2026-10-10 11:00Z vehicle run (the run COO~V1 msg 3041 names): neither VEHICLE_LOG_20261010_1100Z transcription exists at origin/box/sitez 2395612d25 or origin/CLOUD 733875cf2c, so there is no log to grade. The issuer's reader on the 2026-10-09 file reads REACHED at both refs, so the empty read is an absent file, not a broken reader. J1 is read on the first transcribed REACHED run after the merge.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "tc-1 J1 (AMENDMENT 2): read on the first scheduled vehicle run after the merge that REACHED the enrichment leg; the leg's lines and exit code are unchanged with the switch unset. COO~V1 msg 3041: that read is on the 2026-10-10 11:00Z run, via round28/tw1_j1_read.py <ref> 20261010, on that day's transcription.",
+    "world_is": "- Merge: tc-1 tip b0b65368fb is an ancestor of origin/box/sitez 2395612d25 and origin/CLOUD 733875cf2c (merge-base --is-ancestor, read 02:08Z). enrichment_bloomberg.py :901 at origin/box/sitez reads HISTORY_OWED_CAP = 20000 (tc-1 item 6). This is the committed tree; the vehicle runs site Z's WORKING tree, which this seat cannot read.\n- Subject: `python tw1_j1_read.py origin/box/sitez 20261010` and `... origin/CLOUD 20261010` each print 'J1-READ: NO-FILE'. ls-tree of deliverables/0.0.3_BG_BBGTerminal/ at origin/box/sitez lists only VEHICLE_LOG_20261009_1100Z.txt, and deliverables/0.7.0_AE_CloudOps~ZV/ holds no 20261009 or 20261010 vehicle log.\n- Positive control: the same reader on 20261009 at both refs prints REACHED (50 lines, STEP 1, EXIT 94 'landed', 0 failure lines, 0 HISTORY OWED lines). That is ADDENDUM 2's run and pre-dates the merge.\n- Did the run fire? DESIRED yes: register_daily_task.ps1:62 sets a -Daily trigger, and on a Saturday the vehicle runs for Friday 2026-10-09, a trading day. APPLIED is not read: the task's run record and log live on the terminal machine, which is outside this seat's reach. Whether the run fired and was not transcribed, or did not fire, is not distinguished here.\n- Owed: a transcription of the 2026-10-10 log, or of the next REACHED run after it, by 0.0.3_BG_BBGTerminal (it wrote the 10-09 file on a relayed ask), asked for by the issuer 2.0.0_SA_COO~V1. This seat grades it when the file lands.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/tw1_j1_read.py, run at origin/box/sitez 2395612d25 and origin/CLOUD 733875cf2c for 20261010 (NO-FILE) and 20261009 (REACHED)",
+        "task-orders/ETFS_RIVALS.TO-RIV-tc-1...md:89 (J1 + AMENDMENT 2), :47 (item 6, cap 20000)",
+        "git merge-base --is-ancestor b0b65368fb origin/box/sitez and origin/CLOUD: both true",
+        "integrations/bloomberg/pipeline/register_daily_task.ps1:62 (-Daily trigger)",
+        "2.0.0_SA_COO~V1 msg 3041; this file, ETFS_RIVALS-D1-C-S3"
       ]
     },
     "disposition": "GRADUATED"
