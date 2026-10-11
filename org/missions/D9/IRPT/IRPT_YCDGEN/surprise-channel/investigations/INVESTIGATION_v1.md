@@ -3678,3 +3678,51 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S43",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T08:27:50Z",
+  "one_line": "L8 round 9: no judgment criterion, no new channel row, no run of FWD-1, nothing deployed. This seat's reads agree with the packet: the stored reason now tells a figure with no rule from a security with no store row (the fold check passes at HEAD), and the page code does not: one sentence serves both causes and prints the stored string after it. FWD-1 stands NOT MET.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r9/ROUND9_DRAIN_END_READ_20261011.md @9982fb211e (msg 4481)",
+      "this seat's run of r8_checks.py f8fold at HEAD: no_rule -> NOT_IN_THIS_VERSION, no_row -> INPUT_MISSING:security_not_covered, R8-F8FOLD-OK",
+      "this seat's read of infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py _reason_line at HEAD: a reason that starts with the NOT_HELD prefix returns ONE sentence for every cause, ending 'Reason: %s' with the stored string"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27): the CVO compiles on the drain-end packet and reads the state itself. FWD-1 ACCEPT: a figure Opal cannot work out says so on the page, with the reason.",
+  "world_is": "Round 9 is terminal (2 of 2 orders complete); cells e and f are carried by the CTO's ruling (msg 4478). The reason fix is in the tree and not deployed. The coverage and per-account figures of the packet were not re-read by this seat.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S44",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T08:27:50Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The Opal Overview page states one sentence for two different causes of a missing figure and prints the stored reason string after it (for example a NOT_HELD code). The stored reason is fixed in the tree; the page text is not, so the page still cannot say which of the two it is in words a reader would use.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's read of infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py _reason_line at HEAD: a reason that starts with the NOT_HELD prefix returns ONE sentence for every cause, ending 'Reason: %s' with the stored string",
+      "this seat's run of r8_checks.py f8fold at HEAD: no_rule -> NOT_IN_THIS_VERSION, no_row -> INPUT_MISSING:security_not_covered, R8-F8FOLD-OK",
+      "1.0.0_SA_CTO~DELL2 msg 4478: two sentences, one per cause, no raw string, in the same resident release that carries the reason fix"
+    ]
+  },
+  "spec_asserts": "FWD-1 ACCEPT: a figure Opal cannot work out says so on the page, with the reason. The CTO's ruling (msg 4478): a raw code string is not page text.",
+  "world_is": "One sentence, both causes, a raw string appended. Nothing of round 9 is deployed, so no served page shows either the old or the new stored reason from this change.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
