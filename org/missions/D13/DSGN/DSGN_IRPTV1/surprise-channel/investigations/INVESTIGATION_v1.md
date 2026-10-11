@@ -4909,3 +4909,178 @@
   "notes": "No act taken; a real-data read is needed before calling it a defect."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S13",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T12:29:17Z",
+  "one_line": "L8/L9 rounds 17 and 19, no judgment criterion; the issuer asked this seat's judgment on a reader made looser than the contract on purpose. Read on portal DEV: sound as a transitional reader -- each present member is checked as the contract types it and any other key is refused -- with one gap: it admits mixtures neither answer is (some rows with the new members, some without). It is on DEV and not on PROD. The tolerance's removal is a named later cell and needs an owner.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 4903 (round 19 IV-e-99 drained @d4fa29cbe1; round 17 IV-e-96 drained @e0253035f6)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_ROUNDS_17_19_L9_READ_20261011.md",
+      "this seat's read 2026-10-11T12:29:17Z of portal origin/DEV 00989b8b src/pages/InvestorReporting/contracts/owned-requests.ts:100-137: the page reader requires items and next_cursor, admits unreadable_rows when present (a non-negative integer) and refuses any other key; the row reader admits client_id (the contract's pattern, or null) and client_claim (one of three values) when present and passes the rest through the unchanged single-request reader; origin/PROD 37aa1247 still holds the exact two-key reader"
+    ]
+  },
+  "spec_asserts": "CTO ruling (B), msg 4818: the reader is transitional and admits both answers the service can serve. The ratified contract requires the three members.",
+  "world_is": "Read from the DEV source. Not run by this seat: the tests, typecheck or the suite (7 failing of 1,173 is the issuer's). No rendered walk exists.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S14",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T12:29:17Z",
+  "one_line": "The Holdings face, opened on a picked account, shows two totals with no label between them (the Identity band's household figure over 2 accounts, and Total Assets for one account at half of it), names the picked account nowhere, and lists securities that sum to 80 percent of the total with no row and no sentence for the SMA 20 percent. Seen on one driver screenshot of a synthetic fixture; the 130 percent weight of row D2-W53-S7 is the same family.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's read of deliverables/0.9.0_WK_DSGN_IRPTV1~53/holdings-face.driver-picker.png (a driver build on a synthetic fixture): the Identity band reads 1,000,000.00 over 2 accounts; the Holdings face below reads Total Assets 500,000.00 with Models 350,000.00, SMAs 100,000.00 and Client 50,000.00, a 'Back to all accounts' link and no name for the picked account; the securities map and table list two rows, 70.00% and 10.00%, 400,000.00 in all, with no row and no sentence for the SMA 20 percent",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_ROUNDS_17_19_L9_READ_20261011.md"
+    ]
+  },
+  "spec_asserts": "DSGN_IRPTV1 FWD-1: a person picks an account and reads its Models / SMAs / Client split. portal/DESIGN.md governs how a figure states its base.",
+  "world_is": "Fixture values on a driver build. Not established on real data or on the deployed page.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-W56-S1 -- IV-e-100: the order expects the sections reader to meet computation_validation where it expects extraction_validation; the portal's reader (PROD and DEV) already branches on provider and reads computation_validation, so that premise fails -- rows IRPT_YCDGEN-W2-S13 and -W6-S4 concern the response SCHEMA, which no portal reader consumes
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W56-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~56",
+  "surfaced_at": "2026-10-11T12:30:52Z",
+  "one_line": "IV-e-100: the order expects the sections reader to meet computation_validation where it expects extraction_validation; the portal's reader (PROD and DEV) already branches on provider and reads computation_validation, so that premise fails -- rows IRPT_YCDGEN-W2-S13 and -W6-S4 concern the response SCHEMA, which no portal reader consumes",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~56/READER_CENSUS.json (row analysis-report / the denominator)",
+      "probe_prod.json and probe_dev.json in the same folder (bun probe over git-archive exports of 37aa1247ee and 00989b8b9d)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face, item 5: the report SECTIONS reader 'will meet retained_ref and, for an OPAL_ENGINE report, computation_validation where it expects extraction_validation' (rows IRPT_YCDGEN-W2-S13, -W6-S4).",
+  "world_is": "adaptAnalysisReportSlice (src/pages/InvestorReporting/contracts/adapt.ts:1427 at DEV 00989b8b9d, :1420 at PROD 37aa1247ee) tests isOpalAnalysisWire (provider === 'OPAL_ENGINE') first and reads computation_validation for that form, extraction_validation otherwise. Run in a bun probe at both commits: an OPAL_ENGINE sections body (provider, request_ref, sections, computation_validation) PASSES with and without retained_ref; a YCHARTS body PASSES; removing the form's own validation member refuses. The two cited rows are about docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json (data requires extraction_validation, additionalProperties false), which the portal reader does not validate against.",
+  "notes": "The schema/producer disagreement the two rows record stands (not this cell's); only the consumer half of the premise is measured here. See READER_CENSUS.json row analysis-report."
+}
+```
+
+## DSGN_IRPTV1-D2-W56-S2 -- IV-e-100: the portal reads 7 of the 7 irpt-status routes at DEV but only 5 at PROD -- the PROD client has no method and no route-table row for analysis-request-pdf or -original, and PROD's parser has no adapter for -original
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W56-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~56",
+  "surfaced_at": "2026-10-11T12:30:52Z",
+  "one_line": "IV-e-100: the portal reads 7 of the 7 irpt-status routes at DEV but only 5 at PROD -- the PROD client has no method and no route-table row for analysis-request-pdf or -original, and PROD's parser has no adapter for -original",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~56/READER_CENSUS.json (row analysis-report / the denominator)",
+      "probe_prod.json and probe_dev.json in the same folder (bun probe over git-archive exports of 37aa1247ee and 00989b8b9d)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face, item 1: routes_read_by_portal is one set, 'the ones a portal client method calls'; item 4 asks for a result at PROD and at DEV for each.",
+  "world_is": "src/api/endpoints/investor-reporting.ts at 37aa1247ee has no getAnalysisRequestPdf/getAnalysisRequestOriginal and no IR_ROUTE_TABLE row for either (the DEV diff adds both, plus envelope.ts:198 'analysis-request-original'); a search of the exported PROD src finds no caller. Probe at PROD: parseIrEnvelope('analysis-request-original', ...) refuses on 'operation' for any body (no adapter), 'analysis-request-pdf' parses. Release 5 does not change either route. Recorded as NOT_ESTABLISHED at PROD with this reason, and the denominator carries both counts.",
+  "notes": "If a later PROD push carries the DEV client methods without the parser line, or the reverse, the original route would refuse at PROD; today nothing at PROD sends the request."
+}
+```
+
+## DSGN_IRPTV1-D2-W56-S3 -- IV-e-100: on the v1 plane the sections reader drops retained_ref (no member on AnalysisReportSliceView), and getAnalysisReport is typed AnalysisReport while the parser returns the slice view -- its adapter argument is unread
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W56-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~56",
+  "surfaced_at": "2026-10-11T12:30:52Z",
+  "one_line": "IV-e-100: on the v1 plane the sections reader drops retained_ref (no member on AnalysisReportSliceView), and getAnalysisReport is typed AnalysisReport while the parser returns the slice view -- its adapter argument is unread",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~56/READER_CENSUS.json (row analysis-report / the denominator)",
+      "probe_prod.json and probe_dev.json in the same folder (bun probe over git-archive exports of 37aa1247ee and 00989b8b9d)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face, item 5: the sections reader 'will meet retained_ref'; the response contract lists retained_ref (analysis-report.response.schema.json:71).",
+  "world_is": "adaptAnalysisReportSlice (adapt.ts:1427-1447) reads named members and returns {requestId, attemptRef, sections, extractionValidation, extractionCoverage?}; retained_ref is neither refused nor carried (TOLERANT by absence, run at both commits). LiveClient.send returns parsed.data, adapted by IR_DATA_ADAPTER['analysis-report'] (envelope.ts:193); the per-call adapt argument (adaptAnalysisReport for getAnalysisReport, investor-reporting.ts:1295-1302) is documented unread on the envelope path (:1105-1114). Whether AnalysisTab.tsx:196 and export/resolveBundle.ts:391, which call getAnalysisReport, use members only the full AnalysisReport view has was NOT traced.",
+  "notes": "No act taken. A consumer that expects retained_ref on the sections view (for example to open the retained report) would find no member to read it from."
+}
+```
+
+## DSGN_IRPTV1-D2-W53-S8 -- IV-e-95 part 2: regenerating the request corpus with fe-s-13/gen-corpus.ts DELETES a hand-added `_captured` member of comparison-catalogue.request.json; the generator is out of step with the committed corpus
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S8",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T12:26:00Z",
+  "one_line": "IV-e-95 part 2: running fe-s-13/gen-corpus.ts (the one documented way to regenerate default.json) rewrote fixtures/wire/requests/comparison-catalogue.request.json without its `_captured` member; the worker restored the file from git and committed only the generator and default.json",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff after `bun run src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts` at portal 00989b8b: comparison-catalogue.request.json lost the line `\"_captured\": \"DSGN_IRPTV1 row S40 (1.0.0_SA_CTO RULINGS batch 158): captured from the page's own catalogue read ...\"`; every other regenerated request file and fe-s-14-print-v1.json differed from the index in line endings only. Restored with git checkout; portal commit 73806e29 touches neither."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The documented regeneration invocation (gen-corpus.ts, as fe-s-81's header states) reproduces the committed fixture files.",
+  "world_is": "The generator writes every request record from its own template and has no `_captured` member, so a later regeneration by anyone silently drops the S40 capture note from the committed corpus. Not fixed here: the generator's request-record writer is not part of this order's cell.",
+  "notes": "No act taken beyond restoring the file; whether the generator should carry `_captured` for that operation, or the note belong elsewhere, is the owner's call."
+}
+```
+
+## DSGN_IRPTV1-D2-W53-S9 -- IV-e-95 part 2: the base at 00989b8b measured 8 failing, not 7; the eighth is fe-s-14/published-map.test.ts failing at its 5000 ms default timeout under whole-scope load, and it passes alone
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W53-S9",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~53",
+  "surfaced_at": "2026-10-11T12:26:00Z",
+  "one_line": "IV-e-95 part 2: the whole-scope base run at 00989b8b listed 8 failing ids, one more than the 7 the spawn named; the extra one is the fe-s-14 published-map test timing out at 5007.69 ms, and it passes in isolation",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~53/s2_base_00989b8b.txt: `F14-AC16 -- the published map is a v1 statement > PUBLISHED MAP ... [5007.69ms]` (Ran 1173 tests across 374 files, 1138 pass, 27 skip, 8 fail, 170.81s); the same test alone: 2 pass, 0 fail; the run after the map change (s2_after_73806e29.txt, 110.01s) did not fail it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The base failing set at 00989b8b is the 7 ids the spawn named.",
+  "world_is": "The test re-reads and parses a response schema per key from disk with the runner's 5 s default timeout, so a loaded machine (other workers share it) can fail it with no code cause. It is in the base set of this worker's id comparison; the worker's record does NOT list it under fixed_ids (nothing repaired it; the later run simply did not time out) and names it as `base_flake_not_counted_as_fixed`. With 17 keys instead of 12 the work per run is higher; no timeout was set or changed here.",
+  "notes": "No act taken."
+}
+```

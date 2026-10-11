@@ -10063,3 +10063,65 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order
 ```
+
+## 102. ROUND 94 -- NAMES THAT ARE THE COMPANY'S OWN, THE PEERS TABLE'S UNITS AND TICKER CELL, THE RESCALE RULE; THE NAME REDEPLOY AND SAP'S SHOWN SCALE STAGED. Three worker orders + two staged seat orders + one staged cell
+
+**Input:** the CTO~DELL1 round-93 analysis `ledger/ROUND_ANALYSIS.round93.md` @bfa6b04c8c (items 1-5; msg 3827; CVO ADJUDICATION_v113, REMEDIATION_v37; the CVO's browser
+walk C-S67 made FWD-38 REALIZED and named two display defects). Prep in `deliverables/2.0.0_SA_COO~R1/round94_prep/` (checks `r94_display_name.py`, `r94_name_census.py`,
+`r94_peers_units.cjs`, `r94_rescale.py`, `r94_rescale_table.py`, `r94_locator.py`; the fixture of live payloads). Every check was dry-run at the base on 2026-10-11 and each
+build arm FAILs while its controls PASS; each worker-order check was also run against a throwaway candidate held outside the tree (r94_display_name 6 of 6, r94_name_census YES,
+r94_peers_units 5 of 5, r94_rescale 7 of 7, r94_rescale_table YES, r94_locator 14 of 14). The cells are prefixed `ff` (`rr`, `ss` and the other pairs were used).
+
+### 102a. MEASURED AT THE CUT
+
+- **Item 1 (D1-S23):** the classifications table is looked up by the BARE Bloomberg ticker; `SAN` is Madrid's Santander and Paris's Sanofi, so `SAN_FP_Equity` serves
+  "Banco Santander S.A." and the held-name index carries Santander's name under Sanofi's key. A census of all 243 subjects against every reference name their record holds
+  (registered identity name 68, `legal_name` 211, research folder 96, model-block header 100; 0 unjudged) reads **2 different companies, not 1**: SAN_FP_Equity and
+  `CSL_AU_Equity` (served "Carlisle Cos Inc"); 35 are spelling variants. A rule that serves the registered name when a classification name shares no token with it flips
+  exactly those two of 243.
+- **Item 2:** `cscTable.columnHeading` prints `(local)` when a column's figures carry more than one code (ASML: subject EUR, peers USD) over cells that print their own codes.
+- **Item 3:** `cscTable.memberTicker` prints the company NAME in the Ticker column for a non-MEASURED member whose served ticker is empty, all digits or SEDOL-shaped: 68 of
+  243 subjects carry at least one (361 member rows; Tencent, SK hynix, Samsung and Novo Nordisk among them). The API serves the raw `ticker`; the name is the portal's fallback.
+- **Item 4:** the series unit text of SAP's driver reads "EUR billions and % growth at constant currencies"; its three points are stated 13,745 and 18,078 "million" and 21.05
+  "billion" in one passage; round 93's rule holds the set, and SAP's driver is empty.
+- **Item 5 (pp-4):** staged on the DEMQUE answer; no quote, no answer.
+
+### 102b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-ff-1` | a classification name never overrides a disagreeing registered name (item 1) | `~387` | worker | LOCAL until ff-4 | `lib/research/api/names_read.py`, one new test | D1-S23 |
+| `AMGT-ff-2` | the peers cap heading names the codes its figures carry; the Ticker cell says "no ticker held" (items 2, 3) | `~388` | worker (portal) | LOCAL until the DEV landing | `portal/.../cscTable.ts` | the CVO's two notes (C-S67) |
+| `AMGT-ff-3` | a mixed-scale point set is shown on the series unit's scale, stated values kept (item 4) | `~389` | worker | LOCAL | `lib/research/filings/analyze.py`, one new test | SAP's chart |
+| `AMGT-ff-4` | the ONE redeploy carrying the name rule (item 1) -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger | D1-S23 |
+| `AMGT-ff-5` | SAP's stored driver re-verified on the unit's scale and spliced (item 4) -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | `filings/v1` and `drafting/v1` (1 name, overwrites with VersionIds); ledger | SAP's chart |
+| `AMGT-ff-6` | the DEMQUE answer's reader and wiring (item 5) -- STAGED, no order | -- | worker | LOCAL until a redeploy | `lib/research/api/scoped_amgt.py` | D1-S14 |
+
+**Uncovered, with its owner:** `AMGT-nn-6`, FWD-16, the model API key -- Andrew (analysis section 4); `D1-W381-S1` (dell1's client-account hash list) -- `0.0.0_AB_MSTR~DELL1`.
+
+### 102c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: analysis items 1-5. 1 -> ff-1 then ff-4; 2 and 3 -> ff-2 (one module); 4 -> ff-3 then ff-5; 5 -> ff-6. Printed denominator 5 of 5 items placed
+  (3 worker orders, 2 staged seat orders, 1 staged cell). Items 2 and 3 share ONE module and so one cell (cut by write set).
+- **(ii) Same grain.** ff-1 one function of one module; ff-2 two functions of one portal module; ff-3 one function of the verifier; ff-4 one code leg; ff-5 one name's two writes.
+- **(iii) Intent coherence.** ff-1..ff-3 are code; ff-4 and ff-5 the two served acts, one on code and one on stores; ff-6 waits on an answer.
+- **(iv) What a cell does NOT move.** ff-1 changes only which name the chain serves when two names disagree (no route, source label or fallback order); ff-2 changes two
+  strings of a table (no value is converted: the page serves no rate); ff-3 changes a verified value only when the unit text names the one scale the points carry among
+  several and every point carries a scale word, and rewrites no stored object; ff-4 moves only the function's code, each member admitted by blob and its table measured
+  subject by subject first; ff-5 writes one name's driver and nothing else.
+
+### 102d. EDGES AND FAN-OUT
+```
+ff-1 --> ff-4              (the redeploy carries what is merged)
+ff-3 --> ff-5              (SAP's write runs only after the rescale rule is merged)
+ff-4 and ff-5 never share a window (the CTO's sequencing rule: the second re-measures against the state the first left)
+ff-2 independent (DEV landing under the push law, MSTR's act); ff-6 on the DEMQUE answer
+fanout:
+  cap: 8
+  orders_total: 5          (ff-1, ff-2, ff-3 spawned; ff-4, ff-5 staged seat orders)
+  chains_total: 3          (ff-1 -> ff-4 ; ff-2 ; ff-3 -> ff-5)
+  wave_0: [ff-1 ~387, ff-2 ~388, ff-3 ~389]
+  wave_1 staged: [ff-4 RA1 (ff-1 merged, the pair from the subject-by-subject measurement), ff-5 RA1 (ff-3 merged, the pair from the re-read)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```
