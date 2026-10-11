@@ -139,6 +139,25 @@ Report once per phase to `2.0.0_SA_COO~O`.
   - Z-S82: step 1's extras are FOUR dashboard orphans: `index-BP6X9XJd.js`, `index-BqfQgt7G.css`, `index-CrZMj-00.js`,
     `index-a6wjv_wv.css`. Step 8 compares all four as unchanged, and the dashboard/ walk is part of the read-back.
   - Gate limb: to-pipeline-gate grades this modification (placeholders NONE).
+- A2 (issuer, 2026-10-11 ~02:0xZ): **B2 GO, effective at or after 11:00Z 2026-10-11** (the window opens then; nothing
+  in B2 starts earlier). The GO names:
+  - **Three halves re-pinned at `6aadf7db37`:** CTO Half 1 RE-PIN 1 @b2bb4caabf; COO RE-PIN 1 @3d5fc13ecf; CVO RE-PIN 1
+    @b8b7ab0f11. The CVO half covers the ONE policy add only.
+  - **CTO C3 RULING @eb37eb2e29 (msg 33117), which binds step 6:**
+    - the policy act is `-target=aws_iam_role_policy.advi_billing_gateway_put` ONLY, from `C:/tmp/og-tf-e2` re-created at
+      the box/sitez HEAD of the act, with blob `49c420ac` checked again;
+    - the targeted plan, captured to `W/ap6_plan_target.txt` before the apply, reads exactly `1 to add, 0 to change, 0 to
+      destroy` with the one add, AND exits rc=0. A plan summary at rc!=0 is not a verdict, because a failed data source
+      drops rows;
+    - the targeted re-plan after the apply reads `0/0/0` at rc=0;
+    - any other row stops the act;
+    - the `mcportal_grant_writer` row stays with round-34 cell E2 and is never applied here.
+  - **MP-r-2 drained into box/sitez @189979795d:** its ledger is CLOSED at HEAD, its sentinel is gone, and the manifest
+    reads `2a5966dfbd`.
+  - **Before step 6, confirm one release in flight:** no gateway ledger is open in any worktree (`git worktree list
+    --porcelain`, then `ls-tree` of `org/critical_paths/.open_deploys/` per tree, with the per-tree denominator printed).
+    NFRA_MCPINDEX MX-r-10 is queued AFTER this order's deploy ledger closes, so tell `2.0.0_SA_COO~O` at that close.
+  - Gate limb: to-pipeline-gate grades this modification (placeholders NONE).
 - Slug change: the halves' `nfra-oplgtw-gateway-release-r16` is already taken by a 2026-10-04 release, whose CLOSED
   entry would satisfy a count check. The deploy ledger is `-e2`, and this change is named in the re-pin ask.
 - Carried from the record: row NFRA_MCPINDEX-Z-S94 (host superset); row Z-W39-S5 (the opal-gateway root's
