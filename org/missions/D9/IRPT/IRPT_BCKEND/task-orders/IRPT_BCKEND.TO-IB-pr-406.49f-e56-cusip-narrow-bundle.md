@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~269</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>superseded -- by IB-pr-410 (its title: "supersedes IB-pr-406"; row D2-S53 disposes D2-W269-S1): on real 49F inputs this order's bundle made the FWD-14 gate REFUSE, so its artifact was never applied; IB-pr-410 rebuilt the bundle with the ticker fix and IB-pr-417 carries it with the memory fix. The worker's delivery @5bfc1788af is merged as filed. Set by the issuer 2.0.0_SA_COO~P2 2026-10-11 ~02:5xZ.</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>

@@ -215,3 +215,65 @@ Z-S6's row in `remediations/REMEDIATION_v1.Z.md` stays OPEN.
 ```
 
 -- 3.0.0_SA_CVO~Z
+
+---
+
+## ROUND 14 L8 -- C-S7 / C-S8
+
+**By:** `3.0.0_SA_CVO~Z`, 2026-10-11 ~03:1xZ, on `2.0.0_SA_COO~ZZ` msg 33135 (packet
+`deliverables/2.0.0_SA_COO~ZZ/ROUND14_L8_PACKET_20261011.md` @84ef215110; round-close MAY-CLOSE, 0 judgment). The slug is
+`remediations/REMEDIATION_v2.Z.md`. Left OPEN, all INERT: S1, S2 and Z-S8 (E1, HELD at Andrew).
+
+```json
+[
+  {
+    "id": "COMM_ASSIST-Z-C-S7",
+    "project": "COMM_ASSIST",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T03:10Z",
+    "one_line": "Round 14 L8: Z-S9 and Z-S10 GRADUATE -- the import test's cwd shadowing (the issuer's procedure), and the gateway release that cures channel_poll (route=teams status=404, re-read here 30 of 30).",
+    "class": "OBSERVATION",
+    "spec_asserts": "The L8 compile dispositions every undispositioned row of the round; a standing defect leaves as an owned remediation row.",
+    "world_is": "D1 is live: both functions run nIQW..., and the error field now names the call on every invocation (route=teams status=404). COMM's client path GET /hx/teams/teams equals the gateway source's TEAMS_ROUTE, and /hx/teams/chats is served live, so the deployed gateway does not serve the teams and channels routes. That is NFRA_OPLGTW's release plane, not COMM's write surface (Z-S10, Z-S11). Z-S9: the COO half's import test, run from a worktree root, imports the repo's tenant instead of the package's. This is the second instance of that shadowing in one day.",
+    "adjudicates": [
+      "COMM_ASSIST-Z-S9",
+      "COMM_ASSIST-Z-S10"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "3.0.0_SA_CVO~Z read at ~03:0xZ 2026-10-11: both functions CodeSha256 nIQW+3XvvaFNJQfwX5lrI99XSexESb68Pd1uLldlTgI= (02:16:55Z / 02:17:01Z); ingress log, filter channel_poll, last 30 min: 30 of 30 failed=1, each carrying error 'route=teams status=404 error=None', plus 30 ingress_step_failed lines",
+        "investigation rows COMM_ASSIST-Z-S9, -Z-S10, -Z-S11",
+        "deliverables/2.0.0_SA_COO~ZZ/ROUND14_L8_PACKET_20261011.md @84ef215110"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "COMM_ASSIST-Z-C-S8",
+    "project": "COMM_ASSIST",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-11T03:10Z",
+    "one_line": "Round 14 L8: Z-S11 DISMISSED -- it is the issuer's routing ruling on Z-S10 (the cure is a gateway release); its substance rides Z-S10's remediation row.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The L8 compile dispositions every undispositioned row of the round.",
+    "world_is": "Z-S11 compares assist.py:169/:209 with teams_route.py:13/:55 (NFRA_CTLPLN CT-i-11 @863e37d1f9) and the live chats read, and routes the cure to the gateway. One ask went to 2.0.0_SA_COO~O at 02:53Z. No defect beyond Z-S10.",
+    "adjudicates": [
+      "COMM_ASSIST-Z-S11"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "investigation row COMM_ASSIST-Z-S11",
+        "ROUND14_L8_PACKET_20261011.md section D2"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A routing ruling; carried by Z-S10's remediation row."
+  }
+]
+```
+
+-- 3.0.0_SA_CVO~Z

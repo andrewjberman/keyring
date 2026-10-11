@@ -1836,3 +1836,32 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-S37 -- Z-S34's R20 ask is WITHDRAWN (1.0.0_SA_CTO~Z @9d98eeac1e); w-2 PHASE B waits on LGIC_ENFORCE FWD-8 at dell1
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S37",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-11T02:55:00Z",
+    "one_line": "The R20 declared-exception ask (open call sitez-20261011T003538Z-5bdf) is WITHDRAWN and closed by 1.0.0_SA_CTO~Z @9d98eeac1e: LGIC_ENFORCE is re-opened at dell1 with PRD v1.4 FWD-8, under which an adopted live name reads EXISTING on both naming limbs; w-2 PHASE B waits on FWD-8 served, its ledger closes NOT-APPLIED at its window, and both w-2 halves stand.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S36 ruled Z-S34 RESERVED and routed an R20 ask to Andrew.",
+    "world_is": "The asker and the box CTO reached the same reading independently: an adopted pre-existing name is not a departure from the canon (Rule 30's existing-pipeline non-application), so an R20 entry would record one that is not real. FWD-8 is the class fix and is owned by 1.0.0_SA_CTO~DELL1 (relay msgs 33129 / 33131, both acked). This seat could not read PRD v1.4 @eed4828f9d locally (not in this clone; it is on origin box/dell1), so FWD-8's text is taken from two relays, not read at its pin. w-2 is the one non-terminal order of round 6 and its dependency is now a cross-box served fix with no date.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IAMROLES_W2_R20_WITHDRAWN_20261011_Z.md @9d98eeac1e",
+        "org/devices/state/sitez/open_calls.json: sitez-20261011T003538Z-5bdf state CLOSED 2026-10-11T02:45:53Z by 1.0.0_SA_CTO~Z, crossbox XB-20261010T225240Z-dcb5",
+        "git cat-file -e eed4828f9d -> not a valid object here (positive control: this clone resolves 9d98eeac1e)"
+      ]
+    },
+    "notes": "Cites Z-S34, Z-S36, Z-S25. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
