@@ -15,7 +15,7 @@ mover scripts), and neither reads the other's output.
 1. Round 21's real run on the trunk (@0aefdc2e8e, after the arms were rebuilt): `MOVER-CAUSES movers=147 sweep_balance=72 offsetting=0
    other=75 sum_ok=True core_separate=16`; the arms `SWEEP-REGRADE ... months_before=1685/1931/78977 months_after=2057/1522/79014
    control_same=True`.
-2. The traces: D49141714 2019-02 (arm difference a constant -4,010.86 = the net sweep buys; value 4,061.90 -> 51.04) and acct#65b3b3ea
+2. The traces: acct#c7081e97 2019-02 (arm difference a constant -4,010.86 = the net sweep buys; value 4,061.90 -> 51.04) and acct#65b3b3ea
    2024-12 (steps of -199.98 and -188.14 on its two sweep-trade days), both re-derived by the CVO.
 3. The mover scripts read day values from the runner's default data folder; on the trunk they read round 20's v1 -> v2 arms and
    classed all 147 `other:unexplained` (D2-S31).
