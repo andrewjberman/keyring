@@ -22,3 +22,17 @@ Watcher armed (pid 21116); msg 3485 (CTO half: HG-t-11 SIGNED, HG-t-9 REFUSED) w
   v2 change. Accepted: AC2 and AC3 are the discriminating criteria and both FAIL at the v1 bytes.
 - Half request amended to v2 (ACT 1: listing, one ListBucket statement, no GetObject). CTO half asked again on the amended bytes; apply on
   signature (build, safe-apply of exactly the six targets, plan must read the function and one policy changed in place, three added).
+
+## event 2026-10-11T05:1xZ-05:2xZ ACT 1 (HG-t-9 v2) applied under the CTO half (msgs 3504, 3513)
+- The request's build step was wrong for this function: `build-and-upload.sh` `BUILD_ONLY` read 9292 B (lambda_function.py + build_package.py) against a live
+  105484 B / 7-member artifact; running it for real would have uploaded a package that import-fails. The function's own `build_package.py --pin`
+  is the builder. Caught at the BUILD_ONLY read; nothing wrong was uploaded.
+- The right build shipped two vendored members the CTO half had not read (`lib/trading_calendar.py`, `etf_classifications_dynamodb.py`, four commits
+  since live pin 97fe1221bd). Measured that the producer path calls none of the changed functions; asked, and the CTO covered the member set
+  (ADDENDUM 2 @e8145043c7) before anything was uploaded.
+- Ledger healgap-r3-act1-satellites-stamp-gated-v2-20261011: L1-L4 closed @5f01378805 (LOCAL). Lambda CodeSha256 == build sha256 (base64);
+  rules 07:00Z unchanged + 13:15Z ENABLED with require_stamp; policy one ListStampPrefix, no GetObject on meta. L5 = the first 13:15Z fire
+  (2026-10-11), read at the next tick after 13:15Z. No manual invoke: the signature covers the scheduled fire.
+- round-close-check R3: 4 orders, proofs 4/4, MAY-CLOSE. Round NOT counted closed until the world reads (13:15Z fire; Mon 22:10Z/22:40Z pair).
+- Instrument notes: first `terraform init` was needed on this box for bd-pipeline and cot-pipeline (no `.terraform`); `proof-of-spec-check.py` takes
+  criterion ids comma-separated (space-separated reads USAGE-ERROR rc=2).
