@@ -89,6 +89,21 @@ handler copies it into `portfolio.owner.firm_id`. The gate is right and is not o
   Re-run all four criteria and the proof checker after the re-capture, then commit and flip.
 Gate limb that graded this modification: GATE (viii) (placeholders). No criterion, check or path changes.
 
+**AMENDMENT 2 (issuer, 2026-10-11, on row IRPT_BCKEND-D2-W289-S3).** `_scope/prospect.py:34` refuses a firm that is not an
+enabled client firm of the registry `firm_ids()` reads, so AMENDMENT 1's capture cannot run against the real registry. Ruling:
+- The capture may point the handler's own configuration seam, the environment variable `IRPT_FIRM_REGISTRY`, at a SYNTHETIC
+  registry file kept in your deliverables folder, in which the one enabled client firm is `F-49F`. Build it as the smallest file
+  the code path accepts (read how `_ids/ids.py` loads it; copy the real file's STRUCTURE, never a real firm's row or name).
+  That is the second and last permitted difference from the source test. No source file, no test file and no real registry
+  file is edited.
+- The record's row adds `differs_from_source_test: "principal firm id; synthetic firm registry by IRPT_FIRM_REGISTRY"` and the
+  synthetic registry's path. `_source` in the fixture says the same.
+- STOP, with a row, if: a second module on the path reads firms from somewhere the variable does not reach; the answer does
+  not reach NORMALIZED; any real firm spelling still appears in the captured `data`; or the naming gate refuses any file of
+  the commit. Do not widen the method further.
+- Then AMENDMENT 1's remaining steps: checks on the instance, the four criteria, the proof, the commit, the flip.
+Gate limb that graded this modification: GATE (viii) (placeholders). No criterion, check or path changes.
+
 <criterion id="IB128-1-AC1" cell_refs="IB-pr-430"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r128/p128_cells.py" . IB128-1-AC1</invocation><expect>IB128-1-AC1 PASS</expect></criterion>
 <criterion id="IB128-1-AC2" cell_refs="IB-pr-430"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r128/p128_cells.py" . IB128-1-AC2</invocation><expect>IB128-1-AC2 PASS</expect></criterion>
 <criterion id="IB128-1-AC3" cell_refs="IB-pr-430"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r128/p128_cells.py" . IB128-1-AC3</invocation><expect>IB128-1-AC3 PASS</expect></criterion>
