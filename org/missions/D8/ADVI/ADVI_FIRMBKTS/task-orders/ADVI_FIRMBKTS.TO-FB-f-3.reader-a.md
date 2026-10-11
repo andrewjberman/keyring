@@ -100,7 +100,7 @@ the evidence; a worker agent can still read any path by absolute name, which is 
 states it. Nothing here is a commit, so the worker's lane gate has nothing to admit. The issuer writes the proof instance
 from the grader's output on ingest and flips the status in its own commit. Same grading as round 2, denominators printed.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-3</to_id>
 <slot>~13</slot>
