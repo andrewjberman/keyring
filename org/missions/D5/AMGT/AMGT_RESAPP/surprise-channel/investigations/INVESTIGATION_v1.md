@@ -24291,3 +24291,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Disarmed in the same turn by AMENDMENT 1 of AMGT-qq-4: SAP_GY_Equity is HELD out of the write set (ASML and BABA only) and the order's check takes --hold. SAP's driver serves exactly what it serves today. The repair is a verifier rule (a point set whose unit renderings differ by a thousand, million or billion token in the sentence the figure sits in is held as a set), a cell for the round-92 analysis; this row does not cut it."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W386-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~386",
+  "surfaced_at": "2026-10-11T10:38:18Z",
+  "one_line": "The order's in-function import of lib.research.api in run_batch and main trips the existing guard test_peers_does_not_import_api, so proof AC2 cannot pass as cut.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-ss-3 section 1.2 (TO worker face): run_batch and main's single-subject path build the held-name index with `from lib.research.api import scoped_amgt` inside the function, and pass it to peers(). Proof AC2: the peers tests and the route-level currency test pass with 0 failed.",
+  "world_is": "Measured 2026-10-11 in worktree C:/dev/wk-resapp-386 (base e790da8e1f plus the worker's engine.py edit): lib/research/peers/tests/test_peers_absent_reasons_plain.py::test_peers_does_not_import_api asserts that the literal 'lib.research.api' appears in no *.py under lib/research/peers/. With the order's import it FAILS: python -m pytest lib/research/peers/tests lib/research/api/tests/test_peer_price_currency.py -q gives 1 failed, 198 passed, exit=1. AC1 PASSES 7 of 7, exit=0. The guard file is outside the order's <paths>, so the worker kept the order's import, did not rename it around the guard, and records AC2 as FAIL.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-resapp-386/lib/research/peers/tests/test_peers_absent_reasons_plain.py:69-72 (the guard, bytes printed at the cut)",
+      "C:/dev/wk-resapp-386/lib/research/peers/engine.py (the in-function import in _held_identity_inputs)",
+      "pytest output of AC2 in this session on 2026-10-11: 'FAILED test_peers_does_not_import_api ... 1 failed, 198 passed, exit=1'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed. The worker did not choose among: (a) the index and cleaner passed in as arguments by a caller above the peers package (a route or script that already imports scoped_amgt), so run_batch and main take them without naming the api package; (b) amending the guard to allow a function-level import; (c) refusing this wiring. Rewording the import to dodge the textual guard was not done. The commit changes no served output, store or schedule."
+}
+```
