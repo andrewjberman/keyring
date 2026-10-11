@@ -3832,3 +3832,442 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "A later send for this diagnosis would need a configuration set with a CloudWatch Logs event destination created first (a write to the account's SMS configuration, outside this order's bounds and not started). Owner of that choice: the issuer and CTO."
 }
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~32 (FB-g-11, transitional bronze-live row)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W32-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~32",
+  "surfaced_at": "2026-10-11T12:37:31Z",
+  "one_line": "The FB-g-11 dormant arm D4 reads infra/aws/lambda-edge/_shared/firm-config.mjs and .tools/ds-precommit-check.py as value-changed on this dell1 worktree, though their non-mark bytes equal the base; the check decodes the git show base with the Windows locale codec (cp1252) and the worktree file as UTF-8, and both files carry non-ASCII bytes, so identical bytes compare unequal. AC1 reads 4 of 5 arms, exit 1.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_dormant.py@cd50c0374e lines 43-86: _git(root, 'show', base:t).stdout is text=True (locale codec) while cur is open(..., encoding='utf-8')",
+      "python -c locale.getpreferredencoding(False) on this device returns cp1252; git show cd50c0374e:infra/aws/lambda-edge/_shared/firm-config.mjs is 5791 bytes with 14 bytes above 127; the worktree copy is 5791 bytes (wc -c), and its UTF-8 text has 5782 characters",
+      "bytewise (rb) non-mark lines of both files equal the base bytes; utf-8 decoded non-mark lines equal; cp1252 decoded non-mark lines unequal (the codec, not the value, produces D4 FAIL)",
+      "git diff -U0 HEAD over the 15 regenerated targets: one changed line per file (the GENERATED mark), two mark lines in .tools/ds-precommit-check.py; no non-mark hunk"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-g-11 AC1 (r4_dormant.py --arms live, expect 'ROUND 4 BRONZE LIVE: 5 of 5 arms'): D4 DORMANT passes on a conforming build; its preflight names one base artifact (the primary checkout's uncommitted edits) and states that a clean worktree does not have it.",
+  "world_is": "On this dell1 Windows worktree (HEAD cd50c0374e, FB-g-11 edits uncommitted) D4 reports drift on two targets whose non-mark bytes equal the base. The check's git show decode uses the locale codec (cp1252), its file read uses UTF-8, and both targets carry non-ASCII bytes (14 and 9 above 127 in the base). The result is 4 of 5 arms and exit 1. No value moved in any target.",
+  "notes": "Not fixed by this worker: the check is outside this order's paths and no edit to it is granted. Issuer decision needed: the check reads the base as bytes or decodes both sides as UTF-8 (positive control: with both sides decoded as UTF-8 the drift vanishes). The builder change, the tier_live row and the 15 regenerated targets are on the worker branch; the nested-portal target firmDisplayNames.generated.ts was not regenerated and is named in the report."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~34 (FB-g-13, module platinum prefix)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W34-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~34",
+  "surfaced_at": "2026-10-11T12:54:43Z",
+  "one_line": "The FB-g-13 dormant arm M4 of r4_modgrant.py cannot pass on a conforming build: the spec requires the generated_locals.tf mark line (line 1, which names the registry list) to change, and the check's _kept() greedy matcher counts a base line as kept only when it appears verbatim, so a changed line 1 yields 0 of 100 kept.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r4_modgrant.py M4 at round4/checks: _kept(old, new) advances i only on verbatim equality with old_lines[i]",
+      "run at worktree HEAD 0b9b0b1c4e plus FB-g-13 edits: 'generated_locals.tf: base lines kept in order 0 of 100; added lines 104' and 'FAIL M4'",
+      "the same run, base lines of generated_locals.tf excluding line 1 kept in order 99 of 99 (added 4: the platinum_prefix comment, local and closing brace content); main.tf 216 of 216 kept, 10 added",
+      "the spec's own behavior 3 permits the mark line to change ('the generated file's mark line (the registry list it names)')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-g-13 AC1 (r4_modgrant.py --arms module, expect 'ROUND 4 MODULE GRANT: 5 of 5 arms'): M4 DORMANT passes when generated_locals.tf and main.tf keep every base line in order and only the new local, comment, outputs and mark line are added.",
+  "world_is": "M1, M2, M3 and M5 pass (M3 terraform test 48 passed; M5 generate in sync and validate rc 0). M4 fails on generated_locals.tf alone, 0 of 100 base lines kept, because TARGET_REGISTRY_KEYS for LOCALS_PATH had to gain platinum_destinations and systems, which changes the mark's over clause and therefore base line 1. Result 4 of 5 arms, exit 1. The check is outside this order's paths and was not edited.",
+  "notes": "Issuer decision needed: either the check's matcher skips the mark line (compare base lines 2 to N, as the spec's own allowance implies), or the mark line is exempted by rule. The build is otherwise complete and committed on the worker branch; AC1 is not met until this is ruled. No value of the module's outputs moved for any existing scope."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~34 (FB-g-13, module platinum prefix)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W34-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~34",
+  "surfaced_at": "2026-10-11T12:54:43Z",
+  "one_line": "The output expressions the spec gives, lookup(local.scope_bucket, var.scope, null) and lookup(local.platinum_prefix, var.scope, null), fail when var.scope is null, though the spec requires both outputs to be null in that case; terraform test fails 2 of 2 runs with 'Invalid value for key parameter: argument must not be null'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform test (module folder) with the literal spec expressions: 0 passed, 2 failed, 46 skipped; main.tf lines 92 and 97, 'var.scope is null'",
+      "after the fix var.scope == null ? null : lookup(...) on both outputs: terraform test 'Success! 48 passed, 0 failed.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-FB-g-13 behavior 2: bucket and platinum_prefix are lookup(...) with a null default, each null when var.scope is null.",
+  "world_is": "Terraform's lookup() refuses a null key, so the literal expression cannot meet the null case the same spec states. The worker added a null guard in front of each lookup inside the two output blocks (main.tf only); the lookup form and the default are unchanged.",
+  "notes": "Recorded for the issuer's read of the spec's expression against its own null case. No other module file changed."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W26-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~26",
+  "surfaced_at": "2026-10-11T12:36:08Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "S10 REWRITES A v3-PLACED ROW THAT THE S5 DIFFERENCE CONTROL FORBIDS TO MOVE: AC1 READS 4 OF 5",
+  "spec_asserts": "Ruling S10 (ROUND_ANALYSIS.round3.md section 2): the one class-grain row with a {partition} token is re-written at class grain. Check arm S5 (r4_mapping.py structure): every class the previous table placed keeps its disposition, address and pattern.",
+  "world_is": "opal-data-bd gold/clients/ is MOVE in mapping_v3.json with address s3://opal-data-49financial/advi/49financial/platinum/clients/{partition}. The S10 rewrite (partition null, address at class grain) changes that placed address, so S5 reads DISTURBED for this one class and AC1 reads 4 of 5. Keeping the v3 address instead leaves the token that S10 and arm U5 forbid. The two rulings conflict on this row; the repair applied S10 and did not rule between them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v3.json row opal-data-bd gold/clients/ (MOVE, dest.partition {partition}) @f30d22f82c",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_mapping.py structure arm S5 (compares v3 to v4): AC1 output line DISTURBED opal-data-bd gold/clients/",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v4.json row opal-data-bd gold/clients/ (MOVE, partition null, address at class grain)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner 1.0.0_SA_CTO~DELL1: rule which of S5 or S10 governs this row, or exempt S10-rewritten rows from the difference control. The table keeps the S10 rewrite until ruled."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W26-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~26",
+  "surfaced_at": "2026-10-11T12:36:08Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "S7 SKIP FILES CANNOT BE A MARKER ROW WITHOUT A SECOND ROW AT A CLASS KEY: 1,142 performance_dim_SKIP.json OBJECTS STAY IN THEIR DATE-PARTITION DATA CHILDREN",
+  "spec_asserts": "Ruling S7: *_SKIP.json is a marker by literal tail under ADDENDUM 1 marker_match, and goes to the <tier>_complete family as a skip kind. Check arm U3: a _SKIP.json tail carries marker_kind skip.",
+  "world_is": "bronze/orion-api/ date partitions hold 1,142 objects named performance_dim_SKIP.json (110 bytes each) at the live listing of this round. The class-grain marker row bronze/orion-api/ (mapping_v4 row, marker_match completion tails) already holds that key; a skip row at the same (bucket, prefix) is a duplicate key (arm S2 dup count), and a skip row per date child would be a second row at each child key. S7 is therefore applied as 0 rows, and the skip objects remain counted in their date-partition data children. Writers of the skip file: infra/aws/lambda/inf-pipeline/inf-performance-daily/lambda_function.py:92 and infra/aws/lambda/inf-pipeline/inf-performance-daily/pull_inflection_performance_dim.py:212.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_mapping.py arm U3 reads 0 skip markers; S2 dup count is 0 by construction",
+      "live listing of bronze/orion-api/ (LIST, 17,188 objects): performance_dim_SKIP.json count 1,142, sizes 110",
+      "infra/aws/lambda/inf-pipeline/inf-performance-daily/lambda_function.py@f30d22f82c:92"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner 1.0.0_SA_CTO~DELL1: rule the shape of the skip marker (a per-date skip child, or a split of the class-grain marker row) because the structure arm forbids a second row at a class key."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W26-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~26",
+  "surfaced_at": "2026-10-11T12:36:08Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "FIVE QA-NAMED ROWS HAVE NO WRITER IN THE PIPELINE CODE: S6 CANNOT SAY qa-tool OR production, AND ARM U4 READS FAIL",
+  "spec_asserts": "Ruling S6: a QA-named feed is QA only if its WRITER is a QA tool, read from the writer, not the name. Arm U4 needs qa_verdict qa-tool (RETIRE) or production (placed) on every QA-named row.",
+  "world_is": "opal-data-bd qa-scratch/ (4 rows: ds1_run5_log.txt, ds1_run6_log.txt, ds1_validate/, gate2_unit_delta_run7.parquet; RETIRE from round 1) and opal-data-inf bronze/orion-api/probe/ (1 row) have no writer in infra/, data/, workflows/, lib/ or .tools/: a grep for the prefix tokens and the object names returns no pipeline hit. Naming them qa-tool would be a guess from the name, which S6 forbids; naming them production would move round-1 RETIRE rows. The rows carry qa_verdict unresolved. Arm U4 reads FAIL and AC2 reads 4 of 5.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_mapping.py arm U4 output: QA-NAMED-WITHOUT-WRITER for the five rows",
+      "grep of infra/, data/, workflows/, lib/, .tools/ for qa-scratch, ds1_validate, gate2_unit_delta and orion-api/probe @f30d22f82c: 0 pipeline hits"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner 1.0.0_SA_CTO~DELL1: name the writer of these prefixes, or rule them not QA by writer. The order stays open until then."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W26-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~26",
+  "surfaced_at": "2026-10-11T12:36:08Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TWO ROUND-1 PLACED COT CLASSES SHARE ONE DESTINATION: S3 RETURNS BOTH TO PLACEMENT, AND THE SHARED KEYS ARE UNRULED",
+  "spec_asserts": "Ruling S3: a round-1 placed row stays as placed (the copied-unchanged rule wins). Round-2 collision rule 1e: a new class colliding with a placed class is FAULT until ruled.",
+  "world_is": "opal-data-cot gold/positions_cube/ and gold/timeseries/positions_cube/ are both MOVE in mapping.json (round 1) to advi/cottonwood/gold/positions_cube/date={D}/data.parquet, with 342 of 342 keys in common. mapping_v2.json and mapping_v3.json made both FAULT (1e). S3 returns both to their round-1 placement (rulings_applied S3 = 2), so two placed rows now name the same destination keys.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping.json rows opal-data-cot gold/positions_cube/ and gold/timeseries/positions_cube/ (MOVE) @f30d22f82c",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v3.json rows of the same prefixes (FAULT, reason overlap 342 of 342)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner 1.0.0_SA_CTO~DELL1: rule which of the two classes owns the shared destination, or split it. Not decided here."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W26-S5",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~26",
+  "surfaced_at": "2026-10-11T12:36:08Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TWO DATE PARTITIONS AND ONE FOLDER LIVE SINCE THE CENSUS HAVE NO ROW: ADDED UNDER RULE (c), CHILDREN RE-DERIVED FROM THE LIVE LISTING",
+  "spec_asserts": "Ruling S9: a re-grid's child objects sum to its LIVE listing, and both numbers are printed. Ruling (c): a re-grid is per date partition.",
+  "world_is": "The live listing holds a 2026-10-11 partition in bronze/eclipse_qa/ (884 objects live, 871 in v3) and in bronze/orion-api/ (17,188 live, 17,170 in v3). Neither partition is in the census or in the v3 children. Five parents moved since the v3 listing (cot forwardfill realized and transactions, cot silver, eclipse_qa, orion-api) and are flagged moving true with the two counts. mapping_v4 adds HOME child rows for bronze/eclipse_qa/2026-10-11/ and bronze/orion-api/2026-10-11/, a FAULT row for the non-date folder bronze/orion-api/2026-10-11/_markers/ (8 objects), and re-derives 12 child object counts and 1 excluded_markers count from the live listing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v4.json regrids entries with moving true and their moving_reason",
+      "live LIST of bronze/eclipse_qa/ and bronze/orion-api/ (LIST calls, listed_at per parent in the regrids entries)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: issuer 2.0.0_SA_COO~B1 to confirm the added child rows and the moving flags at the round-4 analysis."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W26-S6",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~26",
+  "surfaced_at": "2026-10-11T12:36:08Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FORWARDFILL _complete/ MARKERS USE THE TAIL .json: THE GROUP HAS NO NARROWER LITERAL NAME TAIL",
+  "spec_asserts": "Arm U3 and the ruling wording: marker_match is a non-empty list of literal key tails, with no *, ? or bracket.",
+  "world_is": "The ten forwardfill _complete/ groups (bd 4, cot 6) hold one object per date named <date>.json. Every live key in the ten groups ends .json, so marker_match is ['.json'] in each row. The tail is literal and passes the arms, but it is broad: any .json placed under a _complete/ prefix would be marked.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live LIST of the ten _complete/ prefixes (LIST calls, .scratch/live_parents.json): every key ends .json (asserted in the build)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v4.json rows with state_family bronze_complete and marker_match .json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: CTO to confirm the .json tail, or to name a finer rule for the forwardfill markers."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W26-S7",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~26",
+  "surfaced_at": "2026-10-11T12:53:38Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "THREE MORE 2026-10-11 DATE PARTITIONS APPEARED AT THE RE-LIST (bronze/eclipse/, gold/eclipse/, silver/eclipse/): ADDED UNDER RULE (c)",
+  "spec_asserts": "Ruling S9: each re-grid's child objects sum to its LIVE listing. Ruling (c): a re-grid is per date partition. Amendment 1 re-list instruction: re-list live where needed.",
+  "world_is": "A re-list of the 29 re-grid parents (LIST calls only) found a 2026-10-11 partition under bronze/eclipse/ (1,811 objects live at the re-list, 1,798 at the earlier listing), gold/eclipse/ (533) and silver/eclipse/ (665). None was in the census or the v3 children. mapping_v4 adds one HOME or MOVE child row for each, copied from the latest dated sibling under rule (c). Nine parents are flagged moving: true with both counts. This extends the row S5 finding, which named two partitions and one folder at an earlier listing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v4.json rows with prefixes bronze/eclipse/2026-10-11/, gold/eclipse/2026-10-11/, silver/eclipse/2026-10-11/ and regrids entries with moving true @03e93707a6",
+      "LIST of the 29 re-grid parents, .scratch/live_parents.json (re-listed at this round, keys not committed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: issuer 2.0.0_SA_COO~B1 to confirm the added child rows and the moving flags at the round-4 analysis."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~33 (FB-g-12, ownership-key block)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W33-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~33",
+  "surfaced_at": "2026-10-11T12:54:43Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-g-12 asked for a new OWNERSHIP_KEYS block after FIRM_CONFIG in the hand-kept carrier firm-config.mjs, but the renderer had no path to place a block that the file does not hold yet: the first generate would stop at the span lookup, which requires an existing export. The worker added a narrow anchor rule (AFTER_BLOCK) to _render_view in lib/opal_naming.py; the block is generated, not hand-typed.",
+  "spec_asserts": "TO-FB-g-12 1a.2: 'Regenerate with the builder ... never by hand', with the block added after FIRM_CONFIG and every base line kept in order; the order lists the builder file as the only builder change (block renderer, dispatcher, TARGET_REGISTRY_KEYS row).",
+  "world_is": "lib/opal_naming.py@0b9b0b1c4e _render_view takes a block's span from its own marks, else from an existing `export const <TAG>` line (_mjs_span), raising RegistryError when neither exists. A new block name in an mjs carrier therefore cannot be placed by the builder at base. The worker's edit adds AFTER_BLOCK = {'OWNERSHIP_KEYS': 'FIRM_CONFIG'} and an anchor branch in _render_view that places the new block at the anchor's END line on first generation only. All other lines are unchanged; AC1 O4 reads 108 of 108 base lines kept in order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@0b9b0b1c4e lines 1218-1226 (_mjs_span) and 1229-1252 (_render_view, before the edit): span raised RegistryError when no export line exists",
+      "lib/opal_naming.py in the worker's uncommitted diff: AFTER_BLOCK and the anchor branch in _render_view",
+      "r4_okeys.py --arms block at the worker tree: 5 of 5 arms, exit 0; O4 base lines kept in order 108 of 108, lines outside the block 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The mechanism is in the builder file this order owns; the spec did not name it. Issuer to confirm the anchor rule is the intended way to place a block into a hand-kept mjs carrier (the alternative is a whole-file target, which this carrier is not)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W33-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~33",
+  "surfaced_at": "2026-10-11T12:54:43Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The FB-g-12 flip rehearsal (r4_flip.py --arms flip) names perfrp_firm_pin.py as a value-changing reader that the CTO's list requires, yet the flip does not move it; the check's F3 still passes on the four-target set, so the printed mismatch is informational and not a failure of this cell.",
+  "spec_asserts": "TO-FB-g-12 AC2 (r4_flip.py, expect 'ROUND 4 FLIP FLIP: 4 of 4 arms'): the flip's value-changing set must stay the four served-tier targets.",
+  "world_is": "At the worker tree (base 0b9b0b1c4e plus the builder edit) the flip changes exactly four targets: firm_registry.json, firm-config.mjs, directory_runner.py, holdings_snapshot.py. The printed line 'not value-changing readers named by the CTO's list: [data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py]' says the CTO's list names perfrp_firm_pin.py as a reader that should change. perfrp_firm_pin.py is not among the four moved targets and its value did not change under the flip (its cause is not traced here). Result: 4 of 4 arms, exit 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r4_flip.py --arms flip --root /c/dev/wk-firmbkts-33 output, worker tree: 'generated targets=17; value changes under the flip (mark lines excluded)=4'",
+      "r4_flip.py output line: 'not value-changing readers named by the CTO's list: [data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py]'",
+      "F3 PASS and F4 PASS in the same run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Read-only observation for the issuer: the CTO list and the flip's printed expectation may disagree about perfrp_firm_pin.py. Not changed by this worker: the check and the CTO list are outside this order's paths."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W33-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~33",
+  "surfaced_at": "2026-10-11T12:54:43Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The commit of the FB-g-12 builder change was REFUSED by the naming gate (LGIC_ENFORCE DEC-6, ENFORCE): lib/opal_naming.py:1002 builds the legacy ownership key as the literal template platinum/%s/%s, which the gate reads as a NEW S3 key outside the registry. The worker did not override, force, or re-spell the template to slip past the detector. The worker tree holds the builder change and the regenerated firm-config.mjs, uncommitted.",
+  "spec_asserts": "TO-FB-g-12 1a.1: the legacy key is 'platinum/<tenant>/ownership_map.json', built from one builder constant for the object name and the tenant (never typed per firm); 2.2: a firm token is permitted in the builder only inside a key()/address()/name()/lookup() call or a registry file; 2.3: if the naming gate refuses the commit, do not override or force: file a BLOCKING row with the gate's lines and stop.",
+  "world_is": "The commit attempt printed: 'NAMING REFUSE lib/opal_naming.py:1002 platinum/%s/%s -> {source}/{scope}/platinum/%s/%s', 'why: NEW and OUT-OF-PATTERN as S3Key: REFUSE', 'NAMING-GATE: REFUSE 1 graded', and 'ERROR: BLOCKED -- the naming limb refused ... Commit aborted'. No builder call in the tree emits a legacy platinum/<tenant>/ key: key() emits canonical keys, and legacy_address() reads legacy_addresses.json rows, of which the only ownership row is the 49financial one (blackdiamond-platinum-49financial-ownership-map). A per-tenant legacy key therefore has no registered source; the registry is read-only under this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at the worker tree, 2026-10-11 ~12:5xZ: 'NAMING REFUSE lib/opal_naming.py:1002' and 'NAMING-GATE: REFUSE 1 graded' (exit 1, commit aborted)",
+      "git status after the refusal: lib/opal_naming.py and infra/aws/lambda-edge/_shared/firm-config.mjs modified and unstaged; the channel file staged; HEAD 0b9b0b1c4e",
+      "lib/opal_naming.py in the worker's uncommitted diff, lines ~995-1005: _ownership_legacy returns the literal template",
+      "infra/logic/registry/legacy_addresses.json@0b9b0b1c4e: the 49financial ownership row is the only legacy row with an ownership-map template (platinum/49financial/ownership_map.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer decision needed, one of: (a) a registered legacy row per tenant in legacy_addresses.json (the registry's owner is 4.0.0_SA_CRO; a READ address) that the block reads through legacy_address(); or (b) a CTO ruling on whether the gate admits the legacy platinum/<tenant>/ownership_map.json shape as an out-of-registry literal. Also observed: the safe-commit refusal printed 'files unstaged', but the channel file stayed staged in the worker index; the worker left that as it was."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~33 (FB-g-12, amendment 1 re-run)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W33-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~33",
+  "surfaced_at": "2026-10-11T13:03:15Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "AC3 (r4_scope.py) reads FAIL, 9 changed, 5 outside, because the scope check diffs the branch against the merge-base with the primary checkout (0b9b0b1c4e). The five OUTSIDE paths are the issuer's amendment commits caed07e6f0 and d5b9d4a803 on this branch (r4_grant.py, r4_modgrant.py, r4_okeys.py, r4_validator.py, the TO file). The worker's own writes since the amendment are the two code files.",
+  "spec_asserts": "TO-FB-g-12 AC3 (r4_scope.py, expect 'ROUND 4 SCOPE: OK'): the changed files are inside the order's paths, the required files are changed.",
+  "world_is": "At the worker tree: 'ROUND 4 SCOPE: FAIL 9 changed, 5 outside, 0 required missing', exit=1. The five outside paths equal the file list of git show --name-only caed07e6f0 d5b9d4a803. git diff --name-only d5b9d4a803 (the worker's writes since the amendment) lists lib/opal_naming.py and infra/aws/lambda-edge/_shared/firm-config.mjs only. The check takes no base argument, so it cannot exclude issuer commits on the branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r4_scope.py --root /c/dev/wk-firmbkts-33 output, 2026-10-11 ~13:02Z: 'ROUND 4 SCOPE: FAIL 9 changed, 5 outside, 0 required missing'",
+      "git show --name-only --format= caed07e6f0 d5b9d4a803: the five amended paths",
+      "git diff --name-only d5b9d4a803: lib/opal_naming.py, infra/aws/lambda-edge/_shared/firm-config.mjs (the worker's writes)",
+      "git merge-base HEAD <primary HEAD> = 0b9b0b1c4e, the base the check diffs against"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed by the worker: the check and the amendment commits are outside this order's paths. Issuer decision needed: the check should diff from the amendment (or exclude issuer commits), or the amendment should land on the primary checkout. The worker's AC3 result is recorded as FAIL, not re-measured against a different base."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S24",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T13:20:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Act 4's flip points the IRPT directory and holdings readers and writers at opal-data-49financial, which holds none of their keys: the F7 delta copy covers the served platinum classes only, and the mapped irpt/ home is read by no IRPT code.",
+  "spec_asserts": "Round-3 analysis section 3 item 1 (ADDENDUM 7): the IRPT consumers and the gold scripts are readers of the routed bucket; the window opens when each is dormant with its pair; act 4 is the value flip with every regenerated target deployed in the same act.",
+  "world_is": "The flip changes the bucket value in data/firm_registry.json, which the IRPT lambdas read through the generated bucket map (8 consumers of _authz/loaders.py), and in directory_runner.py and holdings_snapshot.py (the IRPT gold writers). Both sides address the key `investor-reporting/directory/latest.json` and its pointed objects (IRPT_DIRECTORY_PREFIX default in reporting-publish/handler.py:311 and holdings/handler.py:53; PROD_PREFIX in directory_runner.py:139 and holdings_snapshot.py:131). head-object, 2026-10-11 ~13:15Z: opal-data-bd investor-reporting/directory/latest.json exists (272 bytes, 2026-10-09T14:11:45Z); the same key in opal-data-49financial is 404, and so is the mapped address irpt/49financial/platinum/investor-reporting/directory/latest.json in both buckets. mapping_v4 homes these classes (census: directory 26, qa/directory 3, qa/holdings 2 objects) at irpt/{firm}/platinum/investor-reporting/... under rule RI1, and the project description assigns the IRPT slices to IRPT_BCKEND. The F7 delta tool's manifest is the served classes of opal-data-bd (r3_f7_delta.py docstring), which does not contain them. After act 4 the IRPT readers get 404s and the IRPT writers write the legacy key shape into the new bucket.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object on the four bucket/key pairs, 2026-10-11 ~13:15Z (the dell1 CloudOps identity)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/mapping_v4.json rows opal-data-bd investor-reporting/ (RI1)",
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py:311; holdings/handler.py:53; data/assets/scripts/gold/investor_reporting/directory_runner.py:139 and holdings_snapshot.py:131",
+      "deliverables/2.0.0_SA_COO~B1/round4/checks/r4_flip.py (the five-to-four value-changing set includes the two gold runners and firm_registry.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "An endpoint question for 1.0.0_SA_CTO~DELL1 and, for the key shape, IRPT_BCKEND. Placements read from the evidence: (a) act 3 copies the 31 investor-reporting objects to the new bucket AT THE SAME KEYS (a pure copy; the RI1 re-shaping stays IRPT_BCKEND's), so writers and readers keep working after the flip; (b) the IRPT readers and writers read a transitional per-tier live bucket row (as the bronze pin does) until IRPT_BCKEND moves them. Act 4's un-park names this row."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~36 (FB-g-2, producers' role grant draft)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W36-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~36",
+  "surfaced_at": "2026-10-11T13:09:12Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-g-2 bound 4 asks for ASCII-only LF content in infra/aws/terraform/bd-pipeline/iam.tf, but the file already carries 8 non-ASCII lines at its base commit (em-dash characters in comments). The appended block is ASCII-only and the existing lines are untouched (0 deleted), so the bound is met for the added text only.",
+  "spec_asserts": "TO-FB-g-2 section 2 bound 4: 'ASCII only; LF endings' for the file that the order changes (iam.tf), read as a property of the file.",
+  "world_is": "iam.tf at base be150697b7 has 8 lines with non-ASCII bytes (lines 2, 16, 631, 774, 775, 833, 893, 953, all comment text). At the worker tree after the draft the count is still 8; the 44 added lines contain 0 non-ASCII bytes. Terraform fmt check is clean (rc=0) and the numstat is 44 added, 0 deleted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LC_ALL=C grep -n -P '[^\\x00-\\x7F]' infra/aws/terraform/bd-pipeline/iam.tf at base be150697b7: 8 lines (2,16,631,774,775,833,893,953)",
+      "git diff -U0 -- infra/aws/terraform/bd-pipeline/iam.tf, added lines filtered for non-ASCII: 0 matches",
+      "git diff --numstat -- infra/aws/terraform/bd-pipeline/iam.tf: 44 added, 0 deleted"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed by the worker: the existing comment lines are outside this order's write grant to rewrite and deleting them would break the additive bound (G3). Issuer decision needed: whether bound 4 is read for the added text only (as this worker read it) or whether the non-ASCII comment lines are to be migrated under a separate order."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~35 (FB-g-1, commit 711d72b756)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W35-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~35",
+  "surfaced_at": "2026-10-11T13:10:37Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "one_line": "The client-data check of the commit gate did not run on this device: the hashed account-id list is absent at its default path, so safe-commit printed WARN and commit 711d72b756 landed unchecked for client account ids.",
+  "spec_asserts": "TO-FB-g-1 sections 2.3 and 5: commit the three files with .tools/safe-commit.sh under the worker serial; a refusal is reported and never overridden. The order names no client-account-id check and no step that supplies the list.",
+  "world_is": "safe-commit printed 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there)'. The commit then landed as 711d72b756 with the gate's naming line 'NAMING-GATE: PASS 0 graded' (the .mjs suffix is not graded by it). test -f on the default path reads ABSENT (rc=1) at 2026-10-11T13:10Z.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for commit 711d72b756 on branch wk-ADVI_FIRMBKTS-35, 2026-10-11T13:10Z: 'WARN: client-data-check: hashed account-id list ABSENT ... this commit was NOT checked'",
+      "test -f on the default path (C:/Users/Test/.opal/account_id_hashes.txt): ABSENT, rc=1, 2026-10-11T13:10Z",
+      "safe-commit.sh output for the same commit: '[commit-gate] WARN: commit-gate checked 0 of 3 file(s) -- NOTHING WAS CHECKED' (the commit gate reads .py, .sh, .tf and org/projects/*.json only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed by the worker: the gate and the device list are outside this order's paths. This row records that the gate did not run; it makes no finding about the committed content. disarm_owner 0.0.0_AB_MSTR is named by reading rule 32 (MSTR runs infrastructure); this order does not establish the owner of the list's placement on dell1, so the issuer should confirm or re-route it."
+}
+```

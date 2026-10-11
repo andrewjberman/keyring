@@ -4180,6 +4180,116 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "The 32 names with an own workbook render all of the team sheet's labels, and 3210 of those rows have no field behind them (read as the team-row sentence, in words, never a barred word). Many are not figure lines but the sheet's own header and override rows: Year, Financial Summary, FE_ESTIMATE, BEST_FPERIOD_OVERRIDE, EQY_FUND_YEAR, IMPLIED SHARES. The 63 other names have no team rows (master_absent; the master template is not in the library) and render the base rows. So FWD-12 'the team's rows' and FWD-20 'unmapped 0' conflict until the rows are mapped to fields or the row-label rule excludes non-line rows.",
   "notes": "This is a reading of the sheet builder the page calls on live served data, not a browser DOM walk. Which of the two outcomes yields, or whether the label rule (at-1's: a label with two or more numbers in columns A to D) is tightened, is the CTO's: an ENDPOINT-level call, so the issuer cuts nothing on it. Carried to the CTO in the round-45 reads packet.",
   "disarm_owner": "1.0.0_SA_CTO~DELL1"
+},
+{
+  "id": "AMGT_CORPUS-D1-S4",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-11T12:52:46Z",
+  "one_line": "FWD-15 reads 'the header posture line and the Posture tab', but the page as built carries no header posture line: DSGN_AMGTV1 AV-zzk-3 (29eb8ed4, 2026-10-09) removed it, and the round-40 harness arm that exercised it no longer loads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/evidence/r46_av7_av8_av9_page_reads_20261011.md: the first-screen header of IMB LN, UNVGY and ADBE read carries identity, figures, Chatter and Breakout and no posture line; the Posture tab (IMB LN shot 031) reads the cited fund of record and last stated position",
+      "portal origin/DEV 8ed372cb: PostureTab.tsx:585-586 is the only non-harness reader of fund_of_record / last_stated_position; DossierPositionLine is defined nowhere in src; components/LeadPanel.tsx:83 and :316 export PostureHeaderLine 'unused by this file's own render'",
+      "node deliverables/2.0.0_SA_COO~X/checks/round40/page_check.cjs ap3 portal: 'components/SecurityOverlay.tsx: DossierPositionLine is not a function in module scope'",
+      "git -C portal log -S DossierPositionLine -- components/SecurityOverlay.tsx: 29eb8ed4 AV-zzk-3 (0.9.0_WK_DSGN_AMGTV1~126)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD:485-487 FWD-15: both the fund of record and the last stated position render cited on the header posture line and the Posture tab, and the machine verdict is byte-unchanged by their presence.",
+  "world_is": "The Posture tab renders both, cited (40 of 95 names carry a cited fund of record, 47 a cited last stated position), and the served verdict equals the stored machine verdict on 33 of 33 names with a stored object. The header posture line is not on the page: a later design cell removed it, so the header half of the outcome names a surface that no longer exists and its harness arm no longer loads.",
+  "notes": "Whether FWD-15's wording is amended to the Posture tab alone or the header line is restored is an outcome-level call for 1.0.0_SA_CTO~DELL1 (and DSGN_AMGTV1's owner for the design). The issuer cuts nothing on it. Carried in the round-46 reads packet.",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S7",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T12:48:42Z",
+  "one_line": "The order says the stored team_sheet field carries the new keys 'with no change to build', but the raised-read fallback in dossier build stores the old six-key answer, so on that path the row classes and period values are absent rather than empty.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/dossier.py:1463-1473 at 61d50fc7fa: _team_sheet_field returns a literal six-key dict (class, workbook_key, sheet, rows, model_rows_beside, reason) when rows_for raises; the order (CRPS-av-1 section 1, the dossier.py paragraph) says the stored field is the whole rows_for answer so the new keys flow with no change to build",
+      "lib/research/corpus/tests/test_team_sheet_round44.py:270 at 61d50fc7fa pins set(got) to the six keys; left unchanged because the order's bounds allow only the METHOD_VERSION literal and its comment line to change in dossier.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-av-1 section 1 (dossier.py paragraph): the stored field is the whole rows_for answer, so the new keys flow with no change to build.",
+  "world_is": "On the success path the stored field carries the new keys. On the raised-read path _team_sheet_field stores the six-key fallback, so a consumer reading row_classes or row_values of a /12 dossier whose read raised finds the keys absent, not empty. The consumer (CRPS-av-2) must treat an absent key as absent. Fixing the fallback is a dossier.py and round44-test edit outside this order's grant.",
+  "notes": "Recorded as a premise that holds on one path only. No output of this order depends on the raised path.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S8",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T12:48:42Z",
+  "one_line": "The live census split of the team rows (FIGURE 3381, HEADING 316) differs from the order's stated base (FIGURE 3353, HEADING 344); the total 3759 and CONTROL 62 agree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 env PYTHONPATH=. python -m lib.research.corpus.team_sheet --census (worker worktree at 61d50fc7fa, 2026-10-11T12:4x Z), exit 0: 'team_sheet classes own_new 21 own_model 11 master 0 master_absent 63 sum 95 served 95' and 'team_sheet row classes FIGURE 3381 HEADING 316 CONTROL 62 sum 3759 rows 3759'",
+      "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-av-1.team-sheet-row-classes-and-values.md: the base at the cut states '3759 rows = FIGURE 3353, HEADING 344, CONTROL 62; period header in 32 of 32'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's base at the cut: 3759 counted rows split FIGURE 3353, HEADING 344, CONTROL 62 over the 32 own workbooks.",
+  "world_is": "The same reader rule, run live over the 95 served names (32 own workbooks, 11 own_model, 63 master_absent), prints FIGURE 3381, HEADING 316, CONTROL 62. By count, 28 rows move from HEADING (the cut) to FIGURE (live); the per-row diff is not computed. The reader follows the order's rules and the issuer's fixture check passes 4/4, so the gap sits in the cut's measurement or in the store since it was taken. Not diagnosed by this worker.",
+  "notes": "The census was read once and not re-measured. The per-row diff is not computed here (out of this order's bounds).",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W2-S1",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+  "surfaced_at": "2026-10-11T12:50:10Z",
+  "one_line": "The order names the portal branch wk-AMGT_CORPUS-46-portal; the round's portal worktree sits on wk-AMGT_CORPUS-46-2-portal, so the branch the order names is not the one checked out here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/tmp/wk-AMGT_CORPUS-46-2/portal rev-parse --abbrev-ref HEAD -> wk-AMGT_CORPUS-46-2-portal, read before the av-2 commit; the portal base is 00989b8b9df229e7b765b3a063102873abd9a89d, as the order's preflight states.",
+      "The spawn prompt for this slot names the portal branch wk-AMGT_CORPUS-46-2-portal; the order's Section 2 and Section 1 say wk-AMGT_CORPUS-46-portal."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The nested portal/ directory is a portal git worktree on branch wk-AMGT_CORPUS-46-portal, based on portal origin/DEV (order Section 0, 'Your portal').",
+  "world_is": "The nested portal worktree is on branch wk-AMGT_CORPUS-46-2-portal at the same base. No branch was created or renamed; the portal commit lands on the branch that exists.",
+  "notes": "Portal commit 599e51fbb47ab1cd50459dd3cbae3838ef4febe6 is on wk-AMGT_CORPUS-46-2-portal, LOCAL, not pushed. Recorded so the CTO's DEV review reads the candidate under the branch that exists. No gate is built here."
+},
+{
+  "id": "AMGT_CORPUS-D1-W2-S2",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+  "surfaced_at": "2026-10-11T12:50:10Z",
+  "one_line": "The order gives a team cell four keys (mnemonic, fiscal_year, value, unit) and its cite must name the period column, but no key carries the period column; the built team cell carries a fifth key, column, so the cite can name it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Order Section 1, step 2, names the team cell as {mnemonic: null, fiscal_year, value, unit: null} and the teamCite as {workbook, sheet, row, label}; step 4 names the period column in the cite.",
+      "portal/src/pages/SecurityAnalysis/modelSheet.ts at 599e51fbb47ab1cd50459dd3cbae3838ef4febe6: interface TeamCell carries column: string | null, set from the sheet's period header; ModelTab.tsx teamCellTitle reads it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A team cell is {mnemonic: null, fiscal_year, value, unit: null}; a team row's cite names the workbook, sheet, row label and period column (order Section 1, steps 2 and 4).",
+  "world_is": "The four-key cell cannot say which period column a value was saved in, so each team cell carries a fifth key, column. The key is read only by the team cell's title; the value and the fiscal year are as specified.",
+  "notes": "The CTO may strike the fifth key if the cite is carried another way. No gate or consumer outside ModelTab's title reads it."
 }
 ]
 ```

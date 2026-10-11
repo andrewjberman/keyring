@@ -10,7 +10,7 @@
  "subject": "IRPT_ANLREQ TO-READS-Y5: after-reads R2 to R7 of irpt-status release 5 (read-only), gated on live Iw3FADFr",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps~ANL/task_orders/IRPT_ANLREQ.TO-READS-Y5.release5-after-reads-laptop.md",
  "opened_at": "2026-10-11T09:57:49Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T09:59:12Z",
   "bus_message_id": "43d250a0-597f-4f88-879c-9a7bc4ae3e0c"
@@ -21,8 +21,8 @@
   "bus_message_id": "69e026e9-9859-467d-87ce-a90932b18fc5"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T13:15:15Z",
+  "from_by": "2.0.0_SA_COO~Y2",
   "to_at": "2026-10-11T12:11:12Z",
   "to_by": "0.7.0_AE_CloudOps~ANL"
  }
