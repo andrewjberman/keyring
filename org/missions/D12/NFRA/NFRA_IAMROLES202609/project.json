@@ -74,7 +74,7 @@
     {
       "path": "org/missions/D12/NFRA/NFRA_IAMROLES202609/decompositions/NFRA_IAMROLES202609_DECOMP_R7.md",
       "version": "v0.1",
-      "note": "L5 CUT 2026-10-11 by 2.0.0_SA_COO~ZI, consuming ROUND_ANALYSIS.round6.md @2f49aa235b (E1-E3). TWO orders to 0.7.0_AE_CloudOps~IR: IAM-x-1 (Family C rows 6 + 14, adopt) and IAM-x-2 (narrow Z-S23 / Z-S32 dead grants), each WORLD in two phases. E3 (retire lambda-test-role) HELD on Andrew's word. Batch repair (five tokens) DIRECT-ACT @f05553f5be. fanout 2 of 2 chains, cap 8."
+      "note": "L5 CUT 2026-10-11 by 2.0.0_SA_COO~ZI, consuming ROUND_ANALYSIS.round6.md @2f49aa235b (E1-E3). TWO orders to 0.7.0_AE_CloudOps~IR: IAM-x-1 (Family C rows 6 + 14, adopt) and IAM-x-2 (narrow Z-S23 / Z-S32 dead grants), each WORLD in two phases. E3 (retire lambda-test-role) HELD on Andrew's word. Batch repair (five tokens) DIRECT-ACT @f05553f5be. fanout 2 of 2 chains, cap 8. ADDENDUM 1 (~05:0xZ): IAM-x-3 E4 read-only smartx drift table (Z-S21), LOCAL, on ROUND_ANALYSIS.round6.md Addendum 1 @48153f21bc; fanout 3 of 3."
     }
   ],
   "leads": [

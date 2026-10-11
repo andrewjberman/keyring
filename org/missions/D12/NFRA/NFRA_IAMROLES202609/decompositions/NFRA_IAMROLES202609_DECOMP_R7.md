@@ -115,3 +115,20 @@ retires a role.
   stay INERT. FWD-4 already stands on owner-and-reason.
 - x-2 proves the removed statements named nothing AT THE READ. A bucket name is global, and nothing here stops someone
   from creating that name later. That is exactly why the dead Allow is removed rather than left.
+
+---
+
+## 7. ADDENDUM 1 (2026-10-11 ~05:0xZ) -- E4 cut: IAM-x-3, read-only diagnosis of smartx-pipeline's drift (Z-S21)
+
+**Consumes:** `ROUND_ANALYSIS.round6.md` Addendum 1 @`48153f21bc` (1.0.0_SA_CTO~Z, msg 33186). No seated owner holds
+`smartx-pipeline`, so this project carries the diagnosis. The deploy-or-revert act is NOT this round's: the CTO rules it on
+x-3's table, under its own pair.
+
+| cell | item | rows | module | issued to | risk |
+|---|---|---|---|---|---|
+| `IAM-x-3` | E4 READ-ONLY drift table | Z-S21: `assets_daily_pull`, `jwt_refresher`, `rest_pull`, + the three null outputs | `smartx-pipeline/` (plan only; nothing applied) | `0.7.0_AE_CloudOps~IR` | LOCAL |
+
+`IAM-x-3 <- (none)`. It is a SECOND WORKSTREAM of round 7, `SMARTX_DRIFT` (the gate keys one issuance per round; a
+workstream with a disjoint write surface issues beside it). It writes only to
+`deliverables/0.7.0_AE_CloudOps~IR/round7/smartx_drift/`, which is disjoint from x-1 and x-2. The fanout is now `3 of 3 chains,
+cap 8`. Rule 24: E4 is a fourth analysis item in exactly one cell. It moves no state, because it is read-only.
