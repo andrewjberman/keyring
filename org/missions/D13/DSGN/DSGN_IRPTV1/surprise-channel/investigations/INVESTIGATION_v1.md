@@ -5520,3 +5520,102 @@
   "world_is": "APPLIED as a portal candidate (commit 732b41c8, not pushed), EXERCISED only on synthetic data: bun static-markup test and the print route of a bun run build served from disk (print-document-driver.mjs, Edge headless). The export the backend renders (the render host opening the same print URL) was not run; no vendor call, no live request, no AWS call was made. The same holds as row DSGN_IRPTV1-D2-S16 states for IV-e-101."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S17",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T15:58:01Z",
+  "one_line": "L8 round 21 (four cells), no judgment criterion: all four are on portal DEV and none is exercised on a served Opal report. Read by this seat on DEV: the three places that print vendor wording now branch on the report's provider. The branch falls to the vendor words when a report carries NO provider, so the Opal wording depends on the provider reaching the view; no served Opal report has been opened to show that it does. This is the page half of IRPT_YCDGEN rows D2-W14-S1 and D2-W14-S2, built and unexercised.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 5262 (IV-e-97, IV-e-101, IV-e-102, IV-e-105 drained; portal DEV 00cbfdb3)",
+      "this seat's reads 2026-10-11T15:58:01Z of portal origin/DEV 00cbfdb3: tabs/analysis/OwnedRequestHistory.tsx:150-163, tabs/analysis/NativeSections.tsx:184-191 and render/analysis/AnalysisDocument.tsx:78-87 each branch on the report's provider: an OPAL_ENGINE report prints Opal's own source words and 'Computation validation'; a report with no provider, or a vendor one, prints 'Vendor attribution' and 'Extraction validation' as before"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27). Evidence law: APPLIED is not EXERCISED; a fixture render is not the served page.",
+  "world_is": "Read from source on DEV. Not run by this seat: the suite, the driver screenshots, the three-page print. FWD-1 has no rendered walk on these changes.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-W58-S5 -- IV-e-104 part 2: the three content-pins ids and IVE17-AC3 PASS at the base; producer-fixtures RESPONSE ENVELOPE failed on a stale literal 17, not on the schemas
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W58-S5",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~58",
+  "surfaced_at": "2026-10-11T15:48:02Z",
+  "one_line": "IV-e-104 part 2 premise: the order expected the three content-pins ids to fail; at trunk bec8b0ad9e with portal cb76f857 all 5 content-pins tests and IVE17-AC3 pass alone, and the producer-fixtures RESPONSE ENVELOPE id failed on expect(withContract).toHaveLength(17) where routes.json publishes 19 response schemas (the envelope-field check itself read 19 of 19).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~58/p2_contentpins.txt (rc=0, 5 pass 0 fail) and p2_ive17.txt (rc=0, 1 pass 0 fail)",
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~58/p2_producer.txt (RESPONSE ENVELOPES CARRYING EVERY CONSUMED FIELD: 19 of 19; Expected length: 17, Received length: 19) and p2_producer_after.txt (6 pass 0 fail at portal commit 223a698c)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IV-e-104 part 2: the three failing ids of fe-s-13/content-pins.test.ts and IVE17-AC3 are failing at the base on the response schemas' unprojected_grant, and the producer-fixtures RESPONSE ENVELOPE id waits on the same.",
+  "world_is": "Run alone at the base, content-pins (5 tests) and IVE17-AC3 pass: the unprojected_grant findings of rows IRPT_ANLREQ-D2-W51-S6 and DSGN_IRPTV1-D2-W54-S1 are gone with the producer's four schema changes. The producer-fixtures id failed for a different reason: a stale literal (17) in the test against a contract that publishes 19 response schemas (22 DECLARED, 3 without: the two custody routes and analysis-request-original); RESPONSE_OPERATIONS in the generated wire already names the same 19. Brought to the contract at portal 223a698c as an exact, derived pin (the consumed set equals, as a set, the operations routes.json gives a response_schema); a mutant adding or dropping one operation makes it fail. The id now passes in the whole-scope run."
+}
+```
+
+## DSGN_IRPTV1-D2-W58-S6 -- IV-e-104 part 3: IVE26-AC3 stays red; arm 1 throws in gen-wire.ts on analysis-report request_ref before arm 3 runs. Arm 3's count is derived and shown right by two temporary mutants
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W58-S6",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~58",
+  "surfaced_at": "2026-10-11T15:48:02Z",
+  "one_line": "IVE26-AC3 is NOT_FIXED: its arm 1 calls gen-wire generate(), which throws UnrenderableSchemaError at responses/analysis-report.response.schema.json#/properties/data/properties/request_ref (the cause the spawn named, IB-pr-432 / IB-pr-437), so the test never reaches the third arm whose hard-coded 17 (row D2-W54-S1) is now derived from consumed.ts (24).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~58/p3_run.txt (the throw at gen-wire.ts:423 under iv-e-26.wire-regen.test.ts:99)",
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~58/p3_mutA.txt (arms 1 and 2 stubbed for the experiment: CONSUMED OPERATIONS EXPECTED 24, OFFERED 24 of 24, VERDICT WIRE-REGEN-OK, 1 pass)",
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~58/p3_mutB.txt (plus a consumed operation the contract does not offer: OFFERED 24 of 25, expected 25 of 25, VERDICT WIRE-REGEN-FAILED, 1 fail)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IV-e-104 part 3: derive the count from consumed.ts or routes.json, exact and printed, never a literal; the arm must still fail if a consumed operation is dropped; ive26 FIXED or NOT_FIXED with a reason.",
+  "world_is": "Source chosen: contracts/wire/consumed.ts WIRE_CONSUMED_OPERATIONS.length (24), because gen-consumed.ts derives it from the client's own IR_ROUTE_TABLE and content-pins prints its denominator from the same list; the claim is that every operation the CLIENT consumes is still offered, a one-way subset claim, and routes.json counts what the contract offers, which can exceed it. Committed at portal e661cb44; the describe title keeps its historic wording so the id the records cite is unchanged. The arm cannot be seen to pass in the real test while generate() throws; the two temporary mutants of committed files (reverted with git checkout, portal tree clean after) show the count logic is right: green on the live 24 of 24, red on a consumed operation the contract does not offer. Limit, stated: an operation removed from consumed.ts by hand shrinks the expected count with it, so this arm does not catch that; the wire-folder drift test (IVE98) is the guard for it and is itself red on the same throw. Owner of the throw: the project repairing analysis-report.response.schema.json (cell IB-pr-437)."
+}
+```
+
+## DSGN_IRPTV1-D2-W58-S7 -- IV-e-104: F14-AC13 and F57-AC2 are red on the analysis-report map entry lacking the contract's inline slice property undated_sections, not on the generator throw
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W58-S7",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~58",
+  "surfaced_at": "2026-10-11T15:48:02Z",
+  "one_line": "Of the three ids the spawn said to leave red, IVE98 fails on the same gen-wire throw as IVE26-AC3, but F14-AC13 and F57-AC2 fail on 'slice property undated_sections is inline in the contract and absent from the published map for analysis-report' (the smoke map entry built by gen-corpus.ts from AnalysisReport.valid.json: request_ref, sections, extraction_validation).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~58/after_run.txt (the error line under F14-AC13 and under F57-AC2; the throw under IVE98)",
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~58/base_run.txt (the same three at the base)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Spawn fact 1: IVE98, F14-AC13 and F57-AC2 fail because the generator throws on untyped members of the analysis-report response schema.",
+  "world_is": "Measured text: IVE98 throws UnrenderableSchemaError at analysis-report.response.schema.json#/properties/data/properties/request_ref; F14-AC13 and F57-AC2 do not throw there, they fail on a missing slice property in the committed analysis-report entry of fixtures/smoke/default.json. Left red as instructed (not this cell's, and the contract is not edited). A later cell can read whether AnalysisReport.valid.json carries undated_sections and add it to the slice in gen-corpus.ts DATA_FOR_OPERATION['analysis-report'] once the schema is settled."
+}
+```

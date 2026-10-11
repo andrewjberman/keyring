@@ -2997,3 +2997,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r136/p136_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-438` | the same reader over all the outside-anchor securities, one pass; the account-days freed when every security a day holds is graded; the sizing under v0.36; the account-days the prior-day rows blank | FWD-3 (Cottonwood's figure on a basis somebody measured) | LOCAL | IB-pr-436 (its measure, read from its branch) | P136-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~296. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 129. ROUND 137, WORKSTREAM ~P (2026-10-11 ~16:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5298)
+
+PRD ADDENDUM v0.38 @83f1d66bd8 (ratified-text half signed @8ae7b1a563) repairs v0.37: a witness's DATE LABEL is measured before it
+grades; YAHOO_CLOSE grades only an admitted class, today EXCHANGE_TRADED, on thin evidence; mutual funds are NOT admitted; the
+37.0 percent sizing of round 136 is WITHDRAWN. The first cell under it is read only: state the source's instrument-type field,
+widen the evidence to every security both witnesses carry, re-size with funds outside, and count priced fund transactions.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r137/p137_cells.py`: AC1-AC3 FAIL at base (no file); both branches of the
+type-field question are graded.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-439` | the instrument-type field; both witnesses per type (equal, one day off, neither); the sizing under v0.38; a count of fund-dates with a priced custodian purchase or redemption | FWD-3 (Cottonwood's figure on a basis somebody measured) | LOCAL | IB-pr-438 drained | P137-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~297. DIRECT-ACT (one read-only cell, LOCAL).

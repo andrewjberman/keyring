@@ -94,7 +94,7 @@ invocation per admitted principal because a simulation cannot see an SCP). The a
 eight IRPT roots; the laptop lane for the validator) invokes each event once after the flip. Workstream `INVOKE`. Class LOCAL
 (a census; no paths outside the deliverables folder).
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>INVOKE</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-29</to_id>
