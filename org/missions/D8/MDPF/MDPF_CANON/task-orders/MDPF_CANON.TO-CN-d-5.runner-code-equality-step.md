@@ -161,7 +161,7 @@ CloudOps ADHOC order the issuer cuts at the drain (below). Written as option (a)
 - **Fanout:** independent of every other round-4 cell (disjoint write set; no edge); slot ~14, a chain of one.
 - Base box/dell1. LF only.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <to_id>MDPF_CANON.TO-CN-d-5</to_id>
 <slot>~14</slot>
