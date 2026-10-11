@@ -6790,3 +6790,26 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W114-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~114",
+  "surfaced_at": "2026-10-11T16:48:08Z",
+  "one_line": "The order and row ADVI_COTBKF-D2-S120 say the flow moves on 44 account-days under method_r29; an exact comparison of the flow column (NaN-aware, no tolerance) on the at-pin tables w104 r28 against r29 and on the hold-list tables w107 r28 against r29 gives 47 account-days over 46 dates, and 44 of the 47 change the outflow (negative-flow) term the late-receipt rule reads. Counts and dates only. The 3 others: 2 zero-to-inflow, 1 inflow-to-zero. Nothing blocked: the rule's results are the same on either count (1 outflow-changed account-day sits in a window).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-cotbkf-83/.scratch/w104/fwd3_method_r28 vs fwd3_method_r29 daily_returns.parquet, flow differs on 47 of 1,691,729 rows, identical set to the w107 hold pair after removing the 988 held rows (which differ from the served table only)",
+      "this seat's run 2026-10-11, signs of the 47: zero to negative 42, negative to larger negative 2, zero to positive 2, positive to zero 1; return differs on 2, value on 0"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-br-4 and investigation row ADVI_COTBKF-D2-S120: the flow differs on 44 account-days under method_r29.",
+  "world_is": "The flow value differs on 47 account-days over 46 dates; 44 of them change the outflow term. Whether the 44 in S120 counted the outflow term only was not checked by this seat.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

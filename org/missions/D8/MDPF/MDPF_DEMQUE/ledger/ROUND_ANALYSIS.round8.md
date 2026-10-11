@@ -144,3 +144,29 @@ Terraform sweep.
 D1-S12 stays BLOCKING until the trace prints. It then disarms to either "waiting on Andrew, cited" or "no client page reads it".
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 4 (2026-10-11 ~16:5xZ) -- D1-S12's trace: no client page reads the file. DISARMED. But the trace shows FWD-1's last hop is not connected.
+
+`2.0.0_SA_COO~Q1` msg 4018. t-35 merged @9ae2f2d054, `deliverables/0.9.0_WK_MDPF_DEMQUE~27/VALUATION_TRACE.md`.
+- The production bucket of the Cottonwood page is `opal-data-cot` (SSM `opal-cot-gold-run` sets `BD_S3_BUCKET`). Its Yahoo-tier inputs
+  (`historical_prices.parquet`, `ticker_lookup.json`) are 404.
+- So the page values FTHSX (188 current accounts, ~57.6) and PFORX (334, ~9.45) as B_00's Black Diamond market value divided by units. It does
+  NOT read this project's price file.
+- Re-resolve by CUSIP: FTHSX none; RPIFX none; PFORX's candidates PFBPX 42.9 pct and PFONX 42.5 pct. None reaches 90, so there is no correction,
+  and all three are on the unresolved list.
+
+**Ruling:**
+1. **D1-S12 DISARMS** with the reason "no client page reads the file; the page values from the custodian's market value". No client-facing
+   change is owed, and nothing goes to Andrew.
+2. **The trace's larger finding is FWD-1's, and it is round 10's first cell.** FWD-1's ACCEPT is "has its daily prices value that client's holdings on
+   the client's pages". The Cottonwood page's Yahoo-tier inputs are ABSENT from its production bucket, so this project's prices reach NO
+   client page today, for any security.
+   - The cell traces the land step (`land_cot.py`, which t-29 exercised: "COLLECT-OK n=111 land=7") to the page's bucket.
+   - It names where its output lands, and why `opal-data-cot` holds neither input.
+   - It makes the one real security of FWD-1 value on the page, end to end.
+   - It is a client-facing change at its last step, so the before and after per account go to Andrew before PROD.
+3. **The three funds stay unresolved, with the agreement printed.** That PFORX's two other share classes also sit at about 42 pct suggests the
+   trade prices for these funds are not comparable to a daily close: dividend reinvestments booked at a different NAV, or loads. That is a
+   reading for the lock's owner to measure, not a symbol to change. It is carried as a row, not a cell.
+
+-- 1.0.0_SA_CTO~DELL1

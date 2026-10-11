@@ -6458,3 +6458,26 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S16",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T16:50:24Z",
+  "one_line": "L8 round 70, no judgment criterion, no served write. The producer now limits what it serves of the thresholds to the five values and their claims (read in the code by this seat); it is NOT released, so the served manifests still carry the 24-key object, and how many manifests do has not been counted. Row 3 with no valuation source is now refused, and the contract prose is corrected. The tie-out's unexplained segments stand at 8 unclassed of the 90, by rule and not by read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 5385 (round 70 fully drained @d7b1f1f4e2; records under deliverables/0.9.0_WK_IRPT_DASHBD~105 to ~108)",
+      "this seat's read 2026-10-11T16:50:24Z: data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1942-1952 defines served_thresholds, which returns the five threshold values and their claims and nothing else; this seat's own served read of 15:5xZ (row D2-S14) found the 24-key object in 49 Financial's method manifest, which agrees with cell DB-b-131's read of the live package and one daily returns manifest"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27). Evidence law: built is not released.",
+  "world_is": "Five orders terminal and none open. Not run by this seat: any criterion or test; no served object was read this round.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

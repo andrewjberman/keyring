@@ -26702,3 +26702,26 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "commonwealth_daily_valuation reads its transactions through commonwealth_crosswalk/daily_holdings (the older commonwealth table, as-of 2026-06-23 snapshots, Quantity and Amount only). The priced custodian trades are in the blackdiamond fact_transactions table. The counts are of the second; a Dividend Reinvestment (a priced purchase struck at NAV) is not counted (47 more fund-dates)."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S93",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T16:53:48Z",
+  "one_line": "L8 round 137 (~P), no judgment criterion, read-only. PRD v0.38 failed closed as written: the holdings source states no instrument type, so no class is admitted to the second witness and the blank share in force stays 58.2 percent. The cell stopped there and fetched nothing. The issuer withdraws the 37.0 percent sizing of its earlier packet. The priced fund transactions it counted (346 fund-dates inside the window) are the kind of independent dated value v0.38 named for admitting funds; nothing is admitted on them yet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_137_P_DRAIN_END_20261011.md @f9669cf213 (msg 5389)",
+      "PRD ADDENDUM v0.38 @83f1d66bd8, signed by this seat (review @89bfe5f669): a security whose type the source does not state is in no admitted class"
+    ]
+  },
+  "spec_asserts": "PRD ADDENDUM v0.38: a class is read from the source's own instrument-type field; if it carries none, no security is admitted until a classing rule enters by addendum.",
+  "world_is": "One order terminal. Not run by this seat: the read. A classing rule on the transactions table's type fields would be a contract change and comes to this seat as an addendum.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
