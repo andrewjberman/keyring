@@ -4180,6 +4180,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "The 32 names with an own workbook render all of the team sheet's labels, and 3210 of those rows have no field behind them (read as the team-row sentence, in words, never a barred word). Many are not figure lines but the sheet's own header and override rows: Year, Financial Summary, FE_ESTIMATE, BEST_FPERIOD_OVERRIDE, EQY_FUND_YEAR, IMPLIED SHARES. The 63 other names have no team rows (master_absent; the master template is not in the library) and render the base rows. So FWD-12 'the team's rows' and FWD-20 'unmapped 0' conflict until the rows are mapped to fields or the row-label rule excludes non-line rows.",
   "notes": "This is a reading of the sheet builder the page calls on live served data, not a browser DOM walk. Which of the two outcomes yields, or whether the label rule (at-1's: a label with two or more numbers in columns A to D) is tightened, is the CTO's: an ENDPOINT-level call, so the issuer cuts nothing on it. Carried to the CTO in the round-45 reads packet.",
   "disarm_owner": "1.0.0_SA_CTO~DELL1"
+},
+{
+  "id": "AMGT_CORPUS-D1-S4",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-11T12:52:46Z",
+  "one_line": "FWD-15 reads 'the header posture line and the Posture tab', but the page as built carries no header posture line: DSGN_AMGTV1 AV-zzk-3 (29eb8ed4, 2026-10-09) removed it, and the round-40 harness arm that exercised it no longer loads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/evidence/r46_av7_av8_av9_page_reads_20261011.md: the first-screen header of IMB LN, UNVGY and ADBE read carries identity, figures, Chatter and Breakout and no posture line; the Posture tab (IMB LN shot 031) reads the cited fund of record and last stated position",
+      "portal origin/DEV 8ed372cb: PostureTab.tsx:585-586 is the only non-harness reader of fund_of_record / last_stated_position; DossierPositionLine is defined nowhere in src; components/LeadPanel.tsx:83 and :316 export PostureHeaderLine 'unused by this file's own render'",
+      "node deliverables/2.0.0_SA_COO~X/checks/round40/page_check.cjs ap3 portal: 'components/SecurityOverlay.tsx: DossierPositionLine is not a function in module scope'",
+      "git -C portal log -S DossierPositionLine -- components/SecurityOverlay.tsx: 29eb8ed4 AV-zzk-3 (0.9.0_WK_DSGN_AMGTV1~126)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD:485-487 FWD-15: both the fund of record and the last stated position render cited on the header posture line and the Posture tab, and the machine verdict is byte-unchanged by their presence.",
+  "world_is": "The Posture tab renders both, cited (40 of 95 names carry a cited fund of record, 47 a cited last stated position), and the served verdict equals the stored machine verdict on 33 of 33 names with a stored object. The header posture line is not on the page: a later design cell removed it, so the header half of the outcome names a surface that no longer exists and its harness arm no longer loads.",
+  "notes": "Whether FWD-15's wording is amended to the Posture tab alone or the header line is restored is an outcome-level call for 1.0.0_SA_CTO~DELL1 (and DSGN_AMGTV1's owner for the design). The issuer cuts nothing on it. Carried in the round-46 reads packet.",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1"
 }
 ]
 ```
