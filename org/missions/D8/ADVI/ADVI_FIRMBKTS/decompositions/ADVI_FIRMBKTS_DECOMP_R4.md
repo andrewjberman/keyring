@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 42,
- "chains": 40,
+ "cells": 44,
+ "chains": 42,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -256,3 +256,8 @@ window. Cells 40 -> 41, chains 38 -> 39.
 The census (`FB-g-32`) read 54 publishers, 38 of them AWS services that cannot set a message attribute. The CTO withdrew the
 per-publish form and ruled one attribute on the existing account preferences (AMENDMENT 6, msg 4021). `FB-g-35` writes it; its
 apply is the laptop lane's. Cells 41 -> 42, chains 39 -> 40.
+
+## Amendment 24 (2.0.0_SA_COO~B1, 2026-10-11 ~17:4xZ): cells `FB-g-33` and `FB-g-34` added (acts 4b and 4c's environment carrier)
+
+Neither Lambda's Terraform carries `BD_PLATINUM_MODE`. The value rides a variable that is absent by default so the trunk's plan is
+byte-identical until the act passes it (`partners-api` is applied by other work). Cells 42 -> 44, chains 40 -> 42.
