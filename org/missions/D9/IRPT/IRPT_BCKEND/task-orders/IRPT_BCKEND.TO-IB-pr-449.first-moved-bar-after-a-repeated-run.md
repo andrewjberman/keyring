@@ -86,6 +86,17 @@ distinct_tickers_asked, tickers_asked_more_than_once, tickers_with_no_bars, coun
 not_established:[...], claims_regraded_in_product:0, classes_admitted_by_this_cell:0, other_sources_asked:0}`; your scripts;
 and a one-page `IB145-1_FIRST_MOVED_BAR_READ.md` in plain sentences with the two tables.
 
+**AMENDMENT 1 (2026-10-11 ~19:2xZ, issuer, on CTO msg 5639 and PRD v0.41 @77c6b25973).** One more count, beside the table. PRD
+v0.41 adds one sentence to the guard: where the reader has NO bar for the trading day before t (the TRADING CALENDAR's prior day,
+not the prior row), it gives no grade for that security on t. State it as `no_prior_bar_sentence.in_words` and count how many
+security-days it un-grades that the guard of IB-pr-445 graded: per pair, `security_days_ungraded_by_the_no_prior_bar_sentence`
+(inside each pair's object), and over ALL twelve types of the overlap table,
+`no_prior_bar_sentence.overlap_all_types_security_days_ungraded` with `by_type` (type to count, summing to it) and, of those,
+how many were `equal` under the guard (`of_which_were_equal`). A security's FIRST day in the window with no earlier bar fetched
+counts only if the fetch window holds the prior trading day; say how you treated the window's first day
+(`first_day_of_window_treatment`). If the overlap table for all twelve types needs tickers beyond the two pairs, the 400-ticker
+stop becomes 1,100 for this count only (one pass still, each ticker once). IB145-1-AC1 grades the shape.
+
 <criterion id="IB145-1-AC1" cell_refs="IB-pr-449"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r145/p145_cells.py" . IB145-1-AC1</invocation><expect>IB145-1-AC1 PASS</expect></criterion>
 <criterion id="IB145-1-AC2" cell_refs="IB-pr-449"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r145/p145_cells.py" . IB145-1-AC2</invocation><expect>IB145-1-AC2 PASS</expect></criterion>
 <criterion id="IB145-1-AC3" cell_refs="IB-pr-449"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r145/p145_cells.py" . IB145-1-AC3</invocation><expect>IB145-1-AC3 PASS</expect></criterion>
