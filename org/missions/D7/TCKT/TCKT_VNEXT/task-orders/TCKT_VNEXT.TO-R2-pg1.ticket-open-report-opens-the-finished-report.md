@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_TCKT_VNEXT~11</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -76,7 +76,48 @@ The existing `__tests__/analysis-request.test.tsx` has an OPEN test built on the
 <criterion id="R2-pg1-AC2" cell_refs="R2-pg-1"><invocation>python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py pg-existing --portal C:/tmp/tckt-r2-11/portal</invocation><expect>PG-EXISTING-OK</expect></criterion>
 `R2-pg1-AC2`: the existing analysis-request test file still passes under bun.
 
-<expected_criteria>R2-pg1-AC1 R2-pg1-AC2</expected_criteria>
+### AMENDMENT 1 (2026-10-11, issuer `2.0.0_SA_COO~V2`; CTO msg 4041) -- REOPENED: the candidate was REFUSED for DEV on two points
+
+**Inherited state:** your portal commit `e4b9f8966c` is the base of your portal worktree (branch `wk-TCKT_VNEXT-11-portal`); the
+workspace side is merged (@d7bb53219a). The read you chose (`getOwnedAnalysisReport`) and the NOT_READY / NOT_FOUND / 404 waiting
+mapping are ACCEPTED as they are. Rule 4's sentence "the report's title or identity line and its section names are enough" was the
+issuer's error and is WITHDRAWN. Fix these two things in a NEW portal commit on top of `e4b9f8966c`:
+
+B1. **It must open the report, not list titles.** `OpenedReportPanel` printed the request id and the section TITLES. Show the
+    finished report by REUSING what Investor Reporting already has. Read
+    `src/pages/InvestorReporting/tabs/analysis/OwnedRequestHistory.tsx` (its `readOwnedSections` `:59-64` and what it renders the
+    sections with) and do ONE of these, in this order of preference:
+    (i) render the report's sections in the ticket panel with THAT page's own section renderer, imported, not copied;
+    (ii) if that renderer cannot be imported without editing Investor Reporting files, deep-link "Open report" to the Investor
+    Reporting page's opened-request view for this request id and firm, using the route that page already has.
+    NO second renderer: do not write new section markup of your own. Say in your report which you used and why. You may IMPORT from
+    `src/pages/InvestorReporting/`; you still may not EDIT anything there.
+B2. **The request id is never in the panel's words.** Follow the Investor Reporting page's standing rule (the UIC-23 comment in
+    `OwnedRequestHistory.tsx`): the id is carried on a `data-request-id` attribute and does not appear in visible text. Remove
+    "Report REQ-..." from the words.
+B3. Remove the now-unused `OpenedReport` from `src/pages/TicketCenter/AnalysisRequestParts.tsx` if nothing else uses it (that file is
+    added to your grant for this one removal).
+B4. **Row follow-up.** Your row D2-W11-S1 asked which code a not-generated report answers. The CTO read it:
+    `infra/aws/lambda/investor-reporting/ops/owned_report.py:119` raises `AnalysisUnavailable` for a job that is not READY, which the
+    boundary answers `NOT_FOUND`. File ONE new row `TCKT_VNEXT-D2-W11-S2` (OBSERVATION / INERT) that cites that line and says S1's
+    code question is answered by it (rows are append-only; do not edit S1). Read the line yourself first and quote it.
+
+Add to `open-report.test.tsx`, named EXACTLY:
+- `the opened report renders its sections with the investor reporting renderer` (for route (ii): assert the link target instead, and
+  keep this exact name);
+- `the request id is on data-request-id and never in the panel words`.
+The three earlier tests keep their names and must still pass; change their asserts only where B1 or B2 forces it.
+
+<criterion id="R2-pg1-AC3" cell_refs="R2-pg-1"><invocation>python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py pg-render --portal C:/tmp/tckt-r2-11/portal</invocation><expect>PG-RENDER-OK</expect></criterion>
+`R2-pg1-AC3`: the two new tests and the three earlier ones exist and pass under bun (5 of 5).
+
+Dry-run at base (`e4b9f8966c`): AC3 FAIL (missing tests) as expected; AC1 and AC2 PASS.
+
+Run `bun x tsc -b` again and report its tail. The issuer looks at the running page before the candidate goes back to the CTO; that
+look is not yours. Proof: add AC3 to your existing instance and re-validate with
+`python .tools/proof-of-spec-check.py <instance> R2-pg1-AC1,R2-pg1-AC2,R2-pg1-AC3`. Flip to `complete` only when all three pass.
+
+<expected_criteria>R2-pg1-AC1 R2-pg1-AC2 R2-pg1-AC3</expected_criteria>
 
 Dry-run at base: AC1 FAIL (absent) as expected; AC2 OK (pass=4) as expected.
 
@@ -98,6 +139,8 @@ portal/src/pages/TicketCenter/analysisRequest.ts
 portal/src/pages/TicketCenter/TicketCenter.tsx
 portal/src/pages/TicketCenter/__tests__/open-report.test.tsx
 portal/src/pages/TicketCenter/__tests__/analysis-request.test.tsx
+portal/src/pages/TicketCenter/AnalysisRequestParts.tsx
+infra/aws/lambda/investor-reporting/ops/owned_report.py
 org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py
 org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -108,7 +151,7 @@ org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: R2-pg1-AC1 R2-pg1-AC2. The instance is at
+Criterion ids: R2-pg1-AC1 R2-pg1-AC2 R2-pg1-AC3. The instance is at
 `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~11/TCKT_VNEXT.TO-R2-pg1.ticket-open-report-opens-the-finished-report.proof_of_spec.json`.
 Validate it with `python .tools/proof-of-spec-check.py <instance> R2-pg1-AC1,R2-pg1-AC2` (ids comma-separated) before the flip.
 </proof_of_spec>

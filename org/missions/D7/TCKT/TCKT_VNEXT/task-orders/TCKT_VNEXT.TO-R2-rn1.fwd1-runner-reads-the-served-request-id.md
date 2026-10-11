@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_TCKT_VNEXT~8</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -91,7 +91,54 @@ and stops the hop) exist and pass.
 `R2-rn1-AC3`: tests `test_records_req_id_on_ticket`, `test_opens_report_from_ticket_report_ref` (the id used for the pdf GET is the
 one the fake ticket returns, which the test makes differ from the id in memory), `test_never_records_a_non_req_id` exist and pass.
 
-<expected_criteria>R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3</expected_criteria>
+### AMENDMENT 1 (2026-10-11, issuer `2.0.0_SA_COO~V2`; CTO rulings msgs 4015 and 4026) -- REOPENED: hops (e) and (g) read the finished report
+
+**Inherited state:** AC1-AC3 are met and merged (@8fc1ddc316; your earlier commits 735a94ae88 and 21418d27cf are in your base).
+Keep everything they built. This amendment REPLACES rules 3 and 5's read of `stage` and of the pdf route, for one reason: the served
+request read (`GET .../analysis/requests/<id>`) carries no `stage` (your own row D2-W8-S2, confirmed by the issuer), and it answers
+as soon as a request is ACCEPTED, so it cannot show that a report was made. The CTO ruled that the oracle is the read the ticket's
+own link performs, and that link is being changed to open the finished report.
+
+**The finished-report read:** operation `analysis-report`, `GET /api/scoped/investor-reporting/analysis/<REQ id>/sections` with
+`selected_tenant=<FIRM>` (portal: `portal/src/api/endpoints/investor-reporting.ts:221` and `:1091-1097`; the handler is routed in
+`infra/aws/lambda/investor-reporting/ops/entry.py`, operation `OPERATION_REPORT`, record id parameter `jobId`).
+
+A1. **Hop (e).** After the request id is resolved (rules 2 and 4 unchanged), poll the finished-report read. It is MET when the answer
+    is a non-refusal 200 whose body carries the report for THAT request id (the id in the body equals the id asked for) with at
+    least one section. The runner no longer reads `stage` anywhere; remove `STAGE_ABSENT` and `STAGE_NOT_TERMINAL`.
+A2. **Not-ready codes.** A module constant `NOT_READY_CODES` (a frozenset of refusal reason codes) names the codes that mean "not
+    generated yet". ONLY those are polled, at most `MAX_POLLS` (40) times `POLL_SECONDS` (30) apart. The bound reached is recorded
+    as the named result `NOT_READY` on hop (e): never a pass, and hops (f) and (g) are then `UNREACHABLE`. Every other refusal code,
+    and any non-200, is TERMINAL at once: recorded with its code, not polled again.
+A3. **The code table.** Read the handler behind `OPERATION_REPORT` and write
+    `fwd1_runner/REPORT_READ_REFUSALS.md`: one row per refusal the read can raise (code, file:line, what it means in one line, and
+    your classification NOT-READY or TERMINAL with the reason). Print the denominator (how many raise sites you read, in which
+    files). Set `NOT_READY_CODES` to your NOT-READY rows and mark the table PROPOSED: the issuer's run pair confirms it. If no code
+    means not-ready, say so plainly, leave the set empty, and file a row.
+    A lead from the CTO (msg 4041), to verify by reading it yourself: `infra/aws/lambda/investor-reporting/ops/owned_report.py:119`
+    raises `AnalysisUnavailable` for a job that is not READY, and the boundary answers it `NOT_FOUND`. If your read agrees,
+    `NOT_FOUND` is a NOT-READY row; note that `NOT_FOUND` may also mean a request that does not exist, and say in the table
+    whether the two can be told apart from the answer.
+A4. **Hop (f)** is unchanged (it records only a `REQ-` id on the ticket).
+A5. **Hop (g).** GET the ticket, take `report_ref.request_id` FROM THE TICKET, and read the finished report for that id by the same
+    read as hop (e). Record status, the request id echoed in the body, the count of sections, the body's byte length and a sha256
+    prefix. No section text, no figures, in any file. The pdf route is no longer called.
+A6. Update or replace the existing tests that assert `stage` behaviour (`rn-stage`, and the pdf assert in `rn-ticket`) so they assert
+    the new behaviour; keep their names so `rn-submit-id`, `rn-stage` and `rn-ticket` still pass. Say in your report which asserts
+    changed.
+
+<criterion id="R2-rn1-AC4" cell_refs="R2-rn-1"><invocation>python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks.py rn-report</invocation><expect>RN-REPORT-OK</expect></criterion>
+`R2-rn1-AC4`: tests `test_hop_e_reads_the_report_route_never_stage`, `test_not_ready_code_is_polled_within_the_bound`,
+`test_bound_reached_is_not_ready_never_a_pass`, `test_other_refusal_code_is_terminal`,
+`test_hop_g_reads_the_report_for_the_ticket_request_id` exist and pass. A fourth criterion, because the amendment changes the
+oracle; AC1-AC3 must still pass after it.
+
+Dry-run at base: AC4 FAIL (missing tests) as expected; AC1-AC3 PASS.
+
+Proof: add AC4 to your existing instance and re-validate with ids comma-separated:
+`python .tools/proof-of-spec-check.py <instance> R2-rn1-AC1,R2-rn1-AC2,R2-rn1-AC3,R2-rn1-AC4`. Flip to `complete` only when all four pass.
+
+<expected_criteria>R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4</expected_criteria>
 
 Dry-run at base: all three FAIL (absent), as expected.
 
@@ -109,6 +156,8 @@ org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R2_CHECKS/r2_checks
 org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/sa_r1/sa_r1b_run.py
 docs/contracts/investor-reporting/v1/
 infra/aws/lambda/investor-reporting/ops/owned_requests.py
+infra/aws/lambda/investor-reporting/ops/
+portal/src/api/endpoints/investor-reporting.ts
 org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -118,7 +167,7 @@ org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3. The instance is at
+Criterion ids: R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3 R2-rn1-AC4. The instance is at
 `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~8/TCKT_VNEXT.TO-R2-rn1.fwd1-runner-reads-the-served-request-id.proof_of_spec.json`.
 Validate it with `python .tools/proof-of-spec-check.py <instance> R2-rn1-AC1 R2-rn1-AC2 R2-rn1-AC3` before the flip.
 </proof_of_spec>
