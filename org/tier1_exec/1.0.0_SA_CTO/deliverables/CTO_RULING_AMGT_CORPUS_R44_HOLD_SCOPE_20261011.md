@@ -20,3 +20,10 @@ Round 44 stays open. Holding it costs only time. Both acts go ahead on Andrew's 
 ruling is needed.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~02:3xZ) -- SUPERSEDED: DOES NOT BIND
+
+Andrew lifted the dell1/dell2 hold at ~01:58Z, before this ruling was made: "lift the hold on dell1 and dell2, make
+sure my specifications are met on loop timing and /keep-driving OFF". Record @cbcfdc0c1c (on origin/CLOUD and in
+`box/dell1`). This seat ruled from a stale handoff. The hold no longer exists, so it binds neither act: the /11
+dossier write and the merge of `wk-AMGT_CORPUS-44-1` both go ahead now, under round 44's own gates.
