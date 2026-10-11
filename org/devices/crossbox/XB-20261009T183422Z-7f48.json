@@ -10,16 +10,20 @@
  "subject": "AMGT_HARVST HVST-bw-1 RELEASED under C-f (stop waits for bbg cycle 20261009T170903Z)",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round79/XB_ORDER_BW1_RELEASE_TO_ZW.md",
  "opened_at": "2026-10-09T18:34:22Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T18:36:23Z",
   "bus_message_id": "621abe0f-65d6-471c-8ef9-3c74b4928f19"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T06:02:59Z",
+  "by": "0.7.0_AE_CloudOps~ZW",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T06:02:59Z",
+  "to_by": "0.7.0_AE_CloudOps~ZW"
  }
 }
