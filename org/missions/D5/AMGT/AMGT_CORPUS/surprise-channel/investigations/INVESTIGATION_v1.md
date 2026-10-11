@@ -4337,6 +4337,50 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "Close (a) is reachable for 646 FIGURE rows (56 Bloomberg mnemonics, descriptions as stored). It is not reachable for 702 FIGURE rows from anything the estate holds: FactSet data-item codes have no dictionary here, and the PM-facing page may not name another vendor. And (b): BEST_FPERIOD_OVERRIDE is a Bloomberg override name, not a field, so field_map.json does not carry it and cannot mark it.",
   "notes": "Options for 1.0.0_SA_CTO~DELL1, one decision: (1) the feed block (rows below the model, labelled by code only) is plumbing duplicating the team's own labelled rows: class it CONTROL by block, counted and never rendered; (2) a CTO-ratified hand map of the 50 codes to plain words, each carrying its claim as team-workbook code, inferred; (3) 0 raw codes as the fallback label 'Team model line' with the code in the title. The issuer cuts the 56-code lookup and the CONTROL rule for the override names as a literal list, and holds the rest.",
   "disarm_owner": "1.0.0_SA_CTO~DELL1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W2-S3",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+  "surfaced_at": "2026-10-11T16:23:09Z",
+  "one_line": "The served team row shape allows a why of null on an absent label entry, but the order's title rule (the code and its why, joined) names no case for a null why; the build titles that row by its code alone, so no null reaches the page.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-aw-2.model-tab-prints-labels-in-words-and-team-number-formats.md section 1 (served shape: why <words>|null) and section 1 step 2 (labelTitle = code when held, else code: why)",
+      "portal/src/pages/SecurityAnalysis/modelSheet.ts at portal ab55a2ea4414741be676d70c933caefd60fc6b7c: servedRowTitle returns the code alone when claim is held or why is empty"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "labelTitle = `${code}: ${why}` when the claim is absent (order section 1 step 2).",
+  "world_is": "An absent entry whose why is null gets labelTitle = code alone. The check aw2_check.cjs never serves a null why, so the branch is not exercised by the issuer's check.",
+  "notes": "Recorded so the CTO can strike the code-only reading or name the wording for the null case. No gate is built here.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W2-S4",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+  "surfaced_at": "2026-10-11T16:23:09Z",
+  "one_line": "The order's sourceLabel rule names a team row, but the build sets sourceLabel only on rows that take the team's own values (source team); a FactSet row shown as a why line carries no sourceLabel, and the page shows its source text only on team-valued rows, as before.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-aw-2.model-tab-prints-labels-in-words-and-team-number-formats.md section 1 step 2: sourceLabel = FactSet, via team model when source is factset and the row is a team row",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx at portal ab55a2ea4414741be676d70c933caefd60fc6b7c: the source span renders only when row.source is team (teamRow); modelSheet.ts sets sourceLabel in the team-valued row literal only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "sourceLabel = FactSet, via team model when source is factset and the row is a team row; every other team row keeps team model.",
+  "world_is": "The reading used: a team row is a row with source team. A why row (source why) with a FactSet entry takes the served label and labelTitle but no sourceLabel key, since the page shows no source text for a why row.",
+  "notes": "If the CTO reads team row as every row of the team sheet branch, a why row takes the same sourceLabel; no visible change on the page today. Recorded, not changed.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
 }
 ]
 ```
