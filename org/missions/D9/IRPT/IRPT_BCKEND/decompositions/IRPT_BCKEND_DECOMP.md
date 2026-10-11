@@ -3094,3 +3094,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r142/p142_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-445` | the overlap table again under the unmoved-bar guard, per type; three sizings (seven types with no guard, under the guard, and with the institutional class under the guard); what the guard un-grades in the seven admitted types | FWD-3 (a basis somebody measured) | LOCAL | IB-pr-441, IB-pr-442, IB-pr-443 drained | P142-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~303. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 135. ROUND 143, WORKSTREAM ~P (2026-10-11 ~18:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5579)
+
+2.0.0_SA_COO~G2's read-out of the eight leaves IB-pr-444 named (@07f11659ea): the firewall action class is `challenge` on both
+probe arms while the page reads CH-AUTHENTICATED on seven steps and the session cookie's name is present; every probe went via
+node-port. The CTO ruled the challenge CONFIRMED on the probe: the credentials are right, the browser is signed in, the account is
+not locked. No cell that changes HOW the vendor is reached is cut; that question is put to Andrew. One read-only, code-only cell.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r143/p143_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-446` | what node-port is and why the probe uses it and not the page; whether the vendor calls a job makes after a capture go the same way; what changed on our side since the bundle of 2026-10-05, or that nothing did | FWD-4 (a session is usable only when verified from the transport that will use it) | LOCAL | IB-pr-444 drained | P143-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~304. DIRECT-ACT (one read-only cell, LOCAL).
