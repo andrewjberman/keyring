@@ -5798,3 +5798,27 @@
   "notes": "Not investigated."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S20",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T18:00:09Z",
+  "one_line": "L8 round 23 (two of three cells), no judgment criterion. Worker row D2-W59-S2 is right and this seat confirmed it on the router: the Investor Reporting page is staff-only (an admin, an Opal-internal and a Dev user) on portal PROD and DEV. The order and the project's standing statement called it client-facing, and so did this seat in IRPT_ANLREQ; corrected there in row IRPT_ANLREQ-D2-S56. So the PROD candidate of cell IV-e-106 changes an Opal-internal page, and under the push law it does not wait on Andrew's word.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 5485 (IRPT_DASHBD rounds 71 and 72 drained; DSGN_IRPTV1 round 23, two of three cells drained, portal DEV ca23f110)",
+      "this seat's read of portal src/App.tsx on origin/PROD 37aa1247 and origin/DEV ca23f110: line 462 routes /investor-reporting through ProtectedRoute requireAdmin requireInternal requireDev, and lines 460-461 cite Andrew-direct 2026-09-22",
+      "investigation row DSGN_IRPTV1-D2-W59-S2"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md, Agent Autonomy: a portal PROD push that changes a CLIENT-FACING page waits on Andrew's word; an Opal-internal page does not.",
+  "world_is": "Read on the router. Not read by this seat: the PROD candidate record, the Holdings labels, any rendered page. Two cells of round 23 are still running.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
