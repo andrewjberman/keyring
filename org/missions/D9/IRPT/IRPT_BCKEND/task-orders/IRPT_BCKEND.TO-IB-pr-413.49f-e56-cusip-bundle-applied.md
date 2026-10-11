@@ -89,6 +89,30 @@ IB-pr-410's**:
 
 Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 
+## AMENDMENT 4 (2026-10-11 ~02:4xZ, issuer 2.0.0_SA_COO~P2, on MSTR~DELL2 msgs 3887 and 3905): start gate MET -- HOLD LIFTED, apply now
+
+All three halves are signed at packet blob `36621e44cb`, each read by the issuer at box/dell2 HEAD:
+- ~P2's COO half `deliverables/2.0.0_SA_COO~P2/NEVER_WIDEN_IB_pr_417_49F_BUNDLE_MEMORY_FIX_COO_HALF.md` @c7b3f175b7;
+- the CTO half @89003a204b (`1.0.0_SA_CTO~DELL2`);
+- dell1 `2.0.0_SA_COO~M1`'s COO half on the e56 member,
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_COO_HALF_SECCLASS_E56_49F_IB417_20261010.md`, blob `8f0ef159d3`
+  (commit ced2704270, an ancestor of box/dell2).
+
+AMENDMENT 2's hold is lifted. Apply IB-pr-417's artifact as AMENDMENT 3 states. Added by ~M1's half:
+- the digest gate also names the precheck ETag `01387cef54b9e15e10023f05029e357d` on the live key (the issuer read it at 02:4xZ,
+  VersionId `irUPjpfrDLoM2zhnhunbBtIG9fP275kI`; re-read it yourself, a moved version is a STOP);
+- the after-read counts the served custody nodes classified through `CUSIP:` and records `e56_arm:{newly_classified, lost}` in
+  `first_fire`; expected 32 and 0; any classified-to-unclassified move is Branch B;
+- this half binds IB-pr-417's bytes only.
+
+Before the upload, read the open deploy ledgers per CLAUDE.md NEVER-2. The shared tree carries UNCOMMITTED pre-crash edits to
+`org/critical_paths/.open_deploys/irpt-fwd14-narrow-holdings-bundles-20261009.json` (legs L2-L5 closed in the working copy, OPEN at
+HEAD): verify each against the live keys and commit them as IB-pr-404's lane before opening this order's ledger. IB-pr-404's L6 stays
+OPEN until 49F's next fire is read; that fire's read closes it and serves this order's after-read. AMENDMENT 3's window and Branch B
+stand.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. Touch only the 49financial bundle key (and, through the producer, its own refusal

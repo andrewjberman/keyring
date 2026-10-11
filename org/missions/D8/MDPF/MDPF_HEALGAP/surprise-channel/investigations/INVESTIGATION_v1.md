@@ -633,6 +633,29 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "D1-S10 asserted that C5 and C6 could not close from dell1 and that the order could not be flipped. Amendment A2 then re-scoped what this seat owes: 'C5a (closable now, by this seat): the two DENY arms from the LIVE policy document, not a simulation' and 'C6 then closes on C5a'.",
     "world_is": "R2-1 is complete: the grant is live (4 statements, ReadOwnRunResult, 49f Deny byte-identical, re-plan 0-diff), C5a is graded, the ledger is CLOSED and the order reads complete. D1-S10 is therefore RESOLVED as a blocker on this order. It is NOT resolved as a capability gap: the next WORLD-risk IAM order assigned to dell1 will meet the same wall at its VERIFY step, not its apply step, and will need the same split or the grant. TWO REMEDIES, either acceptable, owner 1.0.0_SA_CTO~DELL1 with the issuer: extend the dell1 agent principal with iam:SimulatePrincipalPolicy on the roles dell1 is given to deploy, or make the split standard practice and say so in the order template. Whoever takes the first route: the arms must be THREE SEPARATE invocations, because two or more --resource-arns in one call flip the held ones to implicitDeny.",
     "notes": "DISPOSITION ENUM: UNDER_INVESTIGATION, deliberately, not GRADUATED -- GRADUATED is the CVO's L9 adjudication field (surprise-row-gate.py:119-120, :522-524) and an AE seat setting it would self-grade a judgment that is not its to make; every other row in this channel sits at UNDER_INVESTIGATION for the same reason, including D1-S8 which reported D1-S7's served gap closed. The row text, not the enum, carries the disposition. Resolves D1-S10 rather than re-filing it, the same shape D1-S8 used for D1-S7. D1-S9 (the naming limb) was resolved earlier by CTO ruling H @1af255b7da and amendment A1 @83028dca8a. Both of this order's surprises are now dispositioned."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S12",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-11T02:40Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Act 3's restore chain named two actors and both lived on the box that went down: the induce sat on the production daily target 14h23m past the 06:05Z first-owner moment and 8h28m past the 12:00Z backup deadline, until the laptop CTO restored it at 20:28:38Z under NEVER-2.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Ledger healgap-r2-act3-induced-partial-repair-20261010 (opened 2026-10-09T20:14:25Z) names the rollback and the chain: 'MSTR~DELL1 told 20:14Z, owns restore by 12:00Z if this seat is down at 06:05Z'; leg L1 read-back 20:15:19Z shows Input {mode:pull, induce:drop-feed:rebalancer_accounts} on the single target of rule cot-rebalancer-runner-daily.",
+        "Ledger leg L3 and commit 5404f51097 (1.0.0_SA_CTO, laptop): live Input read BEFORE the restore still carried the induce; put-targets FailedEntryCount 0 at 2026-10-10T20:28:38Z; read-back Input {mode:pull}. The commit states dell1 seats and MSTR~DELL1 were down since ~23:02Z 2026-10-09 and the 12:00Z deadline was missed.",
+        "Andrew-direct record ANDREW_DIRECT_20261010_201xZ_RESTART_COMPILE_STATE_DEPLOYS_THEN_RESIDUE_THEN_INFORM.md quotes that the sitez, dell1 and dell2 boxes hit usage limits 12-24 hours before ~20:1xZ 2026-10-10.",
+        "Measured exposure, read 2026-10-11 ~02:2xZ: the daily rule is cron(0 6 * * ? *), so the window held ONE daily fire (06:00Z 2026-10-10); CloudWatch AWS/Lambda cot-rebalancer-runner read for 05Z-15Z only: 06Z 3 invocations 3 errors (induced first attempt + 2 async retries), 11Z 1 invocation 0 errors (the re-attempt target, which carries no induce). 15Z to 20:28Z was not read. The 2026-10-11 06:00Z fire had not yet occurred at the restore, so no second induced fire ran."
+      ]
+    },
+    "spec_asserts": "The act 3 half and ledger assume that at least one of two dell1 actors (2.0.0_SA_COO~G1 at 06:05Z, 0.0.0_AB_MSTR~DELL1 by 12:00Z) is live to restore the daily target input, so an induce on a production target is bounded to hours.",
+    "world_is": "Both actors depend on one box and one usage budget; when the box stopped, nothing on dell1 could restore, and the bound became whenever a seat on ANOTHER device read the ledger (14h23m past the first owner moment). The loss was nil here only because the daily rule has one fire per day and the next fire (06:00Z 2026-10-11) came after the laptop restore; a rule with a shorter period, or a restore that landed after the next fire, would have run a second induced day. REMEDY (one, owner 1.0.0_SA_CTO~DELL1 at the next induce): the half of any later induced act names a restore actor on a DIFFERENT device than the seat that sets the induce, with the ledger path it reads, and says so in the ledger's rollback line. Distinct from MDPF_HEALGAP-S12, which is a fail-safe that outlived its kill; this is a fail-safe chain with no member off the failing box.",
+    "notes": "No build asked for: this is a wording rule for the half, not a monitor or alert (standing moratorium). UNDER_INVESTIGATION is deliberate, as in D1-S10/D1-S11: GRADUATED is the CVO's L9 field. Act 3's own outcome (PARTIAL read, heal, C5b) is in the R2 drain-end read."
   }
 ]
 ```
