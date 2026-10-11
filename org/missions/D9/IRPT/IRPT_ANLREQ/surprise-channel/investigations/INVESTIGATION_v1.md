@@ -1733,3 +1733,86 @@
   "notes": "This seat's defect: a precondition on another seat's act was recorded on a carrier that seat does not read. The applier was told at 05:28Z to finish step B (never half-landed), run the read-only simulate, and HOLD before the test invoke. Nothing is rolled back by this row."
 }
 ```
+
+## IRPT_ANLREQ-D2-S24 -- ruled onto IRPT_ANLREQ: analysis-report returns retained_ref (Export on Analysis)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S24",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T06:09:00Z",
+  "one_line": "A served cell is ruled onto IRPT_ANLREQ: analysis-report returns the retained report's ref as `retained_ref` (the member name and shape Performance already serves), so the Analysis Export dialog can follow it (1.0.0_SA_CTO~DELL2 msg 4235; DSGN_IRPTV1 rows W46-S2 and W46-S3).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO msg 4235 item 1: analysis-report returns that ref as retained_ref, contract document updated, both arms tested; a served response gaining a member, under its own never-widen pair. Item 2: Export follows the owned-history dialog; the legacy request list gets nothing new. Item 3: the page half is DSGN_IRPTV1's, a later round, after item 1 is live.",
+  "world_is": "READ by this seat at box/dell2 HEAD, infra/aws/lambda/investor-reporting/ops/owned_report.py:122-132 (the lines printed beside this row at its commit): read() builds the ref for a READY request from the generation job's detail and checks the report row against it; the ref is not a member of the answer. INHERITED, not opened by this seat: DSGN_IRPTV1 rows W46-S2 and W46-S3 (2.0.0_SA_COO~D2 is to send their ids), and the member's shape on the Performance response.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 4235",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:122-132 at box/dell2 HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not cut mid-round. It enters the next IRPT_ANLREQ issuance beside IRPT_ANLREQ-D2-S21 (the history row's client): both change irpt-status's served contract and can ship as ONE further irpt-status release under one pair. Carries its contract document and both arms as criteria."
+}
+```
+
+## IRPT_ANLREQ-D2-S25 -- PARKED: release 1 read 5 re-homed to release 4's apply order (not yet cut)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S25",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T06:13:00Z",
+  "one_line": "Release 1 read 5 (one ticket-bound request reaches READY; analysis-request-pdf behaves as before on it) is re-homed from TO-APPLY-Y1 to release 4's apply order, which does not exist yet; the read is PARKED here until that order is cut.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2 (cuts release 4's apply order carrying criterion REL4-READ5)",
+  "spec_asserts": "1.0.0_SA_CTO~DELL2 msg 4240: read 5's criterion moves, text unchanged, into release 4's apply order, where it stays unmet until that release runs it; TO-APPLY-Y1 is then graded on the reads its act made.",
+  "world_is": "MEASURED by this seat 2026-10-11 ~06:12Z: `python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/apply1_cells.py . REL4-READ5` prints REL4-READ5 FAIL (read 5 is DEFERRED-RELEASE4); APPLY1-AC1, -AC2 and -AC3 print PASS on reads 0-4, 6, 7 with live irpt-status 6idtFvAm and the /original route count 1. A listing of every tracked IRPT_ANLREQ task order shows none for release 4 or AR-g-23, so the receiving order is not yet a file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 4240",
+      "TO-APPLY-Y1 AMENDMENT 11",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R2.md:84-87 (AMENDMENT 3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "PARKED ITEM. Owner: 2.0.0_SA_COO~G2. Un-parks when release 4's apply order is cut with the criterion `apply1_cells.py . REL4-READ5` expecting PASS. The read is not weakened: it must still pass, and it fails today. Reads 3 and 4 of release 1 were measured on revision 2 on 2026-10-09 and were not re-run on revision 6."
+}
+```
+
+## IRPT_ANLREQ-D2-S26 -- ARMED: one commentary_ready test message left on the queue until ~2026-10-15T06:10Z; binds release 4
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S26",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T06:17:00Z",
+  "one_line": "ONE commentary_ready message for the synthetic request REQ-4b5155ac2ea9467ab771b414 (tenant 49financial) sits on outlook-global-commentary-draft-commentary-ready-queue until about 2026-10-15T06:10Z; its only admitted consumer is the resident's role, and no seat on this box may receive or delete it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 reads the depth; it disarms on a MEASURED depth of 0 (1.0.0_SA_CTO~DELL2 msg 4257). 2.0.0_SA_COO~G2 is bound by it for AR-g-23.",
+  "spec_asserts": "1.0.0_SA_CTO~DELL2 msg 4226 item 2: after the one invoke, receive that one message, record its id and body sha256, and delete it; depth 0 before and after. Msg 4257 replaces it: item 2 is NOT DONE; the message is left to expire; release 4 (AR-g-23), the one thing that would poll the queue, either NAMES that message in its pair's radius and states, read from the consumer's code, what the resident does with a commentary_ready for a synthetic request -- making it the release's first driven exercise -- or its promote waits for depth 0.",
+  "world_is": "MEASURED by this seat 2026-10-11T06:14:28Z (get-queue-attributes): ApproximateNumberOfMessages 1, NotVisible 0, MessageRetentionPeriod 345600 s; the queue policy has ONE statement, Sid TheResidentConsumesCommentaryReady, Allow, principal arn:aws:iam::313476888478:role/irpt-ycharts-runner-role, actions sqs:ReceiveMessage, sqs:DeleteMessage, sqs:GetQueueAttributes; redrive maxReceiveCount 3 to outlook-global-commentary-draft-commentary-ready-dlq. REPORTED by 0.7.0_AE_CloudOps~DELL2 msg 4249 (not re-run by this seat): the message was sent by the ONE step-6b invoke at 06:09:56Z (stage draft_stored; test artifact ART-a46c4ab7a07d4cc785391666b1d430c066ca3fe2bd0bfe6c31d9dbb46e128f53, version_id YYbJqn7Ej7D1.WSepb.IADadwnyeqJOv, sha256 f3ef3b7400ceb89601a0e238bab3f339a0069faaf8acd81d4f62353e9916583a); before the invoke 0 event-source mappings, 0 of 11 subscriptions naming the queue, and 24h CloudWatch sums 0 for EmptyReceives, MessagesReceived and MessagesSent, over a queue created 05:25:59Z; its own receive was refused: 'not authorized to perform: sqs:receivemessage'. The message id and body sha256 are NOT RECORDED: nobody has received it. NOT MEASURED: whether the resident's running code polls this queue today (permitted, never observed), and what it does with such a message.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msgs 4226 and 4257",
+      "0.7.0_AE_CloudOps~DELL2 msg 4249",
+      "get-queue-attributes read by this seat, 2026-10-11T06:14:28Z",
+      "TO-APPLY-t1 AMENDMENT 6 @e8a0aaaa25"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not (b): a grant to drain one test message is a standing permission for a one-off. Not (c): no seat acts as the runner role. The retention end is computed from the applier's invoke time plus the queue's retention; it is not read from the message. The stored draft is a test artifact and stays (a delete of it is Andrew's word)."
+}
+```
