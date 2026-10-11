@@ -10193,3 +10193,53 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order
 ```
+
+## 104. ROUND 96 -- DOES THE STORED BLOOMBERG DATA FOR THE LISTING CARRY A SECTOR (A READ); THE SERVE IS CONDITIONAL AND STAGED. One worker order (read-only), two staged cells
+
+**Input:** the CTO~DELL1 round-95 analysis `ledger/ROUND_ANALYSIS.round95.md` section 3 (items 1-2; msg 4075; CVO ADJUDICATION_v115 and v116, MAY-CLOSE; C-S82 dismissed). Prep in
+`deliverables/2.0.0_SA_COO~R1/round96_prep/` (check `r96_sector_reading_check.py`, dry-run at the base NO and against a sample reading YES). The cells are prefixed `bc` (every doubled-letter
+pair was used; `bc` was free).
+
+### 104a. MEASURED AT THE CUT
+
+- **Item 1:** the classifications table rows are `SAN` -> 'Banco Santander S.A. ADR', equity, sub-asset class 'Health Care', `classified_by` legacy, `last_updated` 2026-09-29; `CSL` ->
+  'Carlisle Cos Inc', equity, 'US Large Cap', `classified_by` scheduled, 2026-09-30. After round 95 both listings serve no classification (K1-K6 of `r95_classification_census.py`). Whether
+  the stored Bloomberg-fed data for the exchange-qualified listing carries a sector is NOT measured: it is the cell. `comp-which` over the question returned the page-cluster router only
+  (no landing named), so the cell's first step is the estate census with its denominator.
+- **Item 2 (pp-4):** staged on the DEMQUE answer; no quote, no answer.
+- **Note carried (CTO round-95 note 2):** the next scoped-api redeploy from a merged pin carries AMGT_CORPUS round 47's corpus files and rides their /13 pair, never as a side effect of an
+  AMGT_RESAPP cell.
+
+### 104b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bc-1` | READ whether the stored Bloomberg data for the listing carries a sector or industry field (item 1) | `~392` | worker (read-only) | LOCAL | one reading file | D1-S26's close beyond the withheld state |
+| `AMGT-bc-2` | serve the listing's sector with its source named, IF bc-1 reads SECTOR-SERVED or PARTIAL -- STAGED, no order | -- | worker + seat order | WORLD (its redeploy) | `scoped_amgt.py`; the function's code | the same |
+| `AMGT-bc-3` | the DEMQUE answer's reader and wiring (item 2) -- STAGED, no order | -- | worker | LOCAL until a redeploy | `lib/research/api/scoped_amgt.py` | D1-S14 |
+
+**Uncovered, with its owner:** the portal PROD promote (call `dell1-20261011T033643Z-e7f2`; the breakdown is delivered, the answer is Andrew's), FWD-16, the model API key -- Andrew (analysis
+section 4).
+
+### 104c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: analysis items 1-2. 1 -> bc-1 then (conditionally) bc-2; 2 -> bc-3. Printed denominator 2 of 2 items placed (1 worker order, 2 staged cells). If bc-1 reads
+  SECTOR-ABSENT the cell closes on that read and bc-2 is struck; the withheld state with its reason is the outcome.
+- **(ii) Same grain.** bc-1 one reading of two listings and one control; bc-2 one serve rule.
+- **(iii) Intent coherence.** bc-1 is a measurement and changes nothing; bc-2 would be the one served act.
+- **(iv) What a cell does NOT move.** bc-1 writes nothing in any system and makes no Bloomberg call; bc-2, if cut, moves only the listing's classification, under its own pair,
+  measured route by route.
+
+### 104d. EDGES AND FAN-OUT
+```
+bc-1 --> bc-2              (the read decides whether the serve exists; bc-2 rides AMGT_CORPUS's /13 pair for any redeploy from a merged pin)
+bc-3 on the DEMQUE answer
+fanout:
+  cap: 8
+  orders_total: 1          (bc-1 a read-only worker order; bc-2, bc-3 staged, no order)
+  chains_total: 2          (bc-1 -> bc-2 ; bc-3)
+  wave_0: [bc-1 ~392]
+  wave_1 staged: [bc-2 (on bc-1's outcome and the pair), bc-3 (on the DEMQUE answer)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```
