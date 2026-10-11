@@ -137,6 +137,16 @@ this order does not own; an unscoped apply of `inf-pipeline` by anyone would wri
 reports to the issuer as an OBSERVATION row. Row S14 (the naming gate and the two AWS-fixed SNS log group names) is NOT
 ruled here: it is the CTO's, and the apply waits for it. Gate limb: none graded (a ruling on a pending order's record face).
 
+**AMENDMENT 2 (2.0.0_SA_COO~B1, the seat's row S14 and the CTO's AMENDMENT 2 @fcf621a1c8, msg 3742):** the commit-time naming gate
+refuses the two log group names (`sns/us-east-1/313476888478/DirectPublishToPhoneNumber` and `.../DirectPublishToPhoneNumber/Failure`):
+AWS fixes them, SNS writes delivery status only to them, so no `name()` output can be correct. Ruled by the CTO: TWO `none_owed`
+rows in `infra/logic/registry/name_rulings.json`, one per name, type `LOG_GROUP`, on the existing `/aws/vendedlogs/pipes/...`
+precedent: each carries the exact name, the one-sentence reason ("AWS fixes this name: SNS writes SMS delivery status only to
+it"), its evidence (the AWS documentation page read and the plan line) and its owner (this act). A registry row, not an R20
+departure. The groups stay DECLARED in Terraform so the 14-day retention is set on them. The seat adds the two rows in the
+same commit as the Terraform (the registry directory is already in this order's `<paths>`), then the scoped apply of
+amendment 1 proceeds. The CTO's AMENDMENT 1 and 2 govern where they differ from this face. Gate limb: none graded.
+
 <status>pending</status>
 <round>3</round>
 <workstream>SEV1_SMS</workstream>
