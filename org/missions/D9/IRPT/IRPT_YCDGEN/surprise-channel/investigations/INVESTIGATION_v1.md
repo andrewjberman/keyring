@@ -4195,3 +4195,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_YCDGEN-D2-S60 -- Five functions behind the portal authorizer serve any verified token without examining the caller, one of them creating a trade submission: a service token opens more than the one door its pair named
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S60",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T17:08:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "one_line": "Five functions behind the portal authorizer serve any verified token without examining the caller, one of them creating a trade submission: a service token opens more than the one door its pair named",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ IN CODE 2026-10-11 ~17:1xZ at box/dell2 HEAD by 2.0.0_SA_COO~G2 (a search agent's sweep, key lines then read by this seat; record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r14/ROUTE_CENSUS_WHAT_A_SERVICE_TOKEN_OPENS_20261011.md). Behind the portal custom authorizer, 115 Terraform-declared routes go to 20 functions; 19 were read. Five functions make no decision about the caller and serve any token the authorizer verified, about 22 routes: trade-submission-handler (1 route; submission_handler.py lines 184-190 require only a non-empty authorizer email and then CREATE a trade submission; lines 207-208 look up the submitter's groups to record them, not to decide), opal-research-pull-enqueue (1 route; lambda_function.py lines 77-92 write an S3 status object and send a queue message, reading no caller), trade-dashboard-api (9), opal-portal-data-proxy (9) and opal-portal-content-api GET (the last three by the agent's read, not line-verified by this seat). A service token with tier service and no firm reach is such a verified caller; so is every signed-in person of any firm. NOT read: console-made routes, deployed bytes, what a later trade step does with a submission from a caller with no groups."
+    ]
+  },
+  "notes": "Found off-task while answering the CTO's question on the packager mint (msgs 5408, 5419). It is a finding about the portal's routes, older than both service tokens, and not caused by the mint; the package door's firm list neither opens nor closes any of it. Marked INERT by this seat because nothing was changed and no call was made; whether it is a live hazard is for the owners of those five functions and the CTO, which is why the disarm owner is the CTO and not this seat. This seat owns none of the five functions and proposes no fix here.",
+  "spec_asserts": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_PACKAGER_MINT_CTO_HALF.md @65622fbcdc and this seat's r14/CAN_THE_TICKET_SERVICE_REFUSE_A_VALID_TOKEN_20261011.md section 3: the packager's token opens exactly one thing, the package door.",
+  "world_is": "READ IN CODE 2026-10-11 ~17:1xZ at box/dell2 HEAD by 2.0.0_SA_COO~G2 (a search agent's sweep, key lines then read by this seat; record org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r14/ROUTE_CENSUS_WHAT_A_SERVICE_TOKEN_OPENS_20261011.md). Behind the portal custom authorizer, 115 Terraform-declared routes go to 20 functions; 19 were read. Five functions make no decision about the caller and serve any token the authorizer verified, about 22 routes: trade-submission-handler (1 route; submission_handler.py lines 184-190 require only a non-empty authorizer email and then CREATE a trade submission; lines 207-208 look up the submitter's groups to record them, not to decide), opal-research-pull-enqueue (1 route; lambda_function.py lines 77-92 write an S3 status object and send a queue message, reading no caller), trade-dashboard-api (9), opal-portal-data-proxy (9) and opal-portal-content-api GET (the last three by the agent's read, not line-verified by this seat). A service token with tier service and no firm reach is such a verified caller; so is every signed-in person of any firm. NOT read: console-made routes, deployed bytes, what a later trade step does with a submission from a caller with no groups."
+}
+```
