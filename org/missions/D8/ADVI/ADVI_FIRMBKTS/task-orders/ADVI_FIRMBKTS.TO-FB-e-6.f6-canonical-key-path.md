@@ -24,21 +24,29 @@ to a LEGACY key (`/platinum/...`, `/gold/entities/...`, `/gold/views/...`, `/gol
 the served keys of 49 Financial at `advi/49financial/platinum/...` in `opal-data-49financial`. This cell BUILDS the router's
 ability to address those keys, DORMANT:
 - with the registry's map as it is TODAY, every request resolves byte for byte as before (the difference control);
-- only when the map names a firm's OWN bucket (`opal-data-49financial`, `opal-data-inflection`, `opal-data-cottonwood`)
-  for the bucket a request resolves to does the canonical path engage, through ONE table of served classes;
+- only when the bucket a request resolves to is NAMED in the router's canonical-bucket list does the canonical path
+  engage, through ONE table of served classes. The list ships EMPTY: nothing engages until a firm's cutover adds its
+  bucket (and the registry's map names it), so no request changes today by construction;
 - a served class the table does not place is refused with the router's own 404 (`unplaced_canonical_resource`).
 
 **You do not design this; the issuer built and proved the edit.** It is the patch
 `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/F6_ROUTER_EDIT.patch` (one edit of `index.mjs`: the firm
 map becomes a parameter of `handleWithMap(event, firmBucketMap)` and `handler` calls it with the registry's map; the
-canonical table and its branch; plus one new spec file `test/canonical-platinum.spec.mjs` of eight arms). You apply it,
+canonical table and its branch behind the empty list; plus one new spec file `test/canonical-platinum.spec.mjs` of
+eight arms, which types no firm name and reads the registry's generated view instead). You apply it,
 unchanged, and prove it three ways.
 
 ### 1a. The steps
 
-1. `git apply --check <the patch>` then `git apply <the patch>` from the repository root. If it does not apply, that is a
-   BLOCKING row with the error text; never hand-edit to make it apply.
-2. Run the three invocations of section 4, in order. Each must read as its `<expect>` says (the pattern is matched against the output; also read the `exit=` line: it must be 0). A different reading is your
+1. Start from a clean router: `git checkout -- infra/aws/lambda-edge/shared-advisor-router/index.mjs` and delete
+   `infra/aws/lambda-edge/shared-advisor-router/test/canonical-platinum.spec.mjs` if an earlier attempt left them. Then
+   `git apply --check <the patch>` and `git apply <the patch>` from your worktree's repository root. If it does not apply,
+   that is a BLOCKING row with the error text; never hand-edit to make it apply.
+   The naming gate runs at the commit and grades `infra/` files: the patch passes it (`NAMING-GATE: PASS`, issuer's run on
+   this exact patch), so a refusal there is a BLOCKING row with its text and never a reason to edit the patch.
+2. Run the three invocations of section 4, in order. Change directory into your worktree with one command FIRST, then run
+   each invocation EXACTLY as written in a later command, so the recorded invocation text equals the order's (the
+   checker compares them). Each must read as its `<expect>` says (the pattern is matched against the output; also read the `exit=` line: it must be 0). A different reading is your
    final report; you do not change the patch or the checks to move a number.
 3. Commit `index.mjs` and the new spec together with the proof instance and the status flip.
 
@@ -70,16 +78,18 @@ Read-only: the patch, the issuer's checks under `org/missions/D8/ADVI/ADVI_FIRMB
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~9/ADVI_FIRMBKTS.TO-FB-e-6.proof_of_spec.json`.
   <criterion id="AC1" cell_refs="FB-e-6"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 bash infra/aws/lambda-edge/shared-advisor-router/run-gate.sh; echo "exit=$?"</invocation><expect>\b39 pass</expect></criterion>
   <criterion id="AC2" cell_refs="FB-e-6"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 bun "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f6.mjs" diff; echo "exit=$?"</invocation><expect>F6 DIFF: identical 193 of 193 events through handleWithMap; 193 of 193 through handler</expect></criterion>
-  <criterion id="AC3" cell_refs="FB-e-6"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 bun "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f6.mjs" seam; echo "exit=$?"</invocation><expect>F6 SEAM CONTROLS: 9 of 9</expect></criterion>
+  <criterion id="AC3" cell_refs="FB-e-6"><invocation>export PATH="$PATH:$HOME/.bun/bin" &amp;&amp; cd "$(git rev-parse --show-toplevel)" &amp;&amp; timeout 110 bun "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round2/checks/r2_f6.mjs" seam; echo "exit=$?"</invocation><expect>F6 SEAM CONTROLS: 10 of 10</expect></criterion>
 </proof_of_spec>
 
 AC1 is the built behavior (the router's own deploy-chain gate, `31 pass` at base, with the eight new arms counted). AC2 is
 the difference control: the new router's `handleWithMap` and its `handler` equal the pre-change router (git blob at
 `fda1c4f0cc`) on a 193-event corpus covering every branch, every firm and the staff proxy. AC3 is the seam probe against
 the real neighbour, the round-1 table: every router-reachable served class rewrites to the key the table gives it
-(its first line, `F6 SEAM: 20 of 20 ...`, must read the same), and the controls hold.
+(its first line, `F6 SEAM: 20 of 20 ...`, must read the same), and the ten controls hold, the first of which is that
+the shipped EMPTY list changes nothing even under a map that names the firm's own bucket.
 
 ## 5. WHEN YOU ARE DONE
 
@@ -100,7 +110,7 @@ FB-e-1's repair does not move it; if the repair places more served classes, they
 cell. The CTO's exercised read at close is AC2 and AC3 run again.
 
 # pipeline-override: the one refusal is LIMB PRD_HEADER.fabric='laptop' vs the register's 'dell1'. The register row is the authority since 1.0.0_SA_CTO's L3 re-placement @8afcb0f851; the PRD header repair is the CTO's. Every other limb passed in the issuer's dry run.
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-e-6</to_id>
 <slot>~9</slot>
