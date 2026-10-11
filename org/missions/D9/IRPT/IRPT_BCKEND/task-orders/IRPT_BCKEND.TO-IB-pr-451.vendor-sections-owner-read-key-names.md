@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~IB2</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -18,6 +18,13 @@
 ---
 
 ## WORKER FACE
+
+**WITHDRAWN 2026-10-11 ~20:2xZ (issuer, on CTO msg 5770): superseded, not executed.** The applier was refused at the service password
+read by an explicit deny (rows IRPT_BCKEND-D2-S96, -S97); 0 calls were made; nothing was worked around and no grant was sought. The
+CTO ruled the standalone read dropped: no served-read window is opened and no identity is moved. The confirmation rides the laptop
+walk of a served vendor report that proves DSGN_IRPTV1 cell IV-e-115 (2.0.0_SA_COO~D2 asks it through 0.0.0_AB_MSTR~DELL2). Row
+D2-S97's defect stands as recorded: the check could not pass a refusal before any HTTP; it is not amended because the order ends here.
+
 
 **Why.** Row `DSGN_IRPTV1-D2-S21`: on an opened vendor report the page shows section codes (the form `S03`) for titles and
 "Unit: unknown" on every card. `2.0.0_SA_COO~D2`'s read of the CODE
