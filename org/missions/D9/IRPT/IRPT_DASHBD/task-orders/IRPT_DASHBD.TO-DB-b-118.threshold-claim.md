@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~93</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>issued</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -60,13 +60,40 @@ and every other reader of `thresholds` in the producer; `org/missions/D9/IRPT/IR
 
 **No S3 write, no AWS call, no deploy.** The Cottonwood row itself is written later by ADVI_COTBKF under its own pair.
 
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~05:1xZ): the contract follows the row, and an all-absent row is typed -- rows IRPT_DASHBD-D2-W93-S1 and S2 ruled
+
+**Ruling.** Both rows are real and both are this cell's to close before it drains: a producer whose row disagrees with its own contract does not land.
+The grant gains ONE path: `org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json` (the producer's comment names the contract edit as the issuer's
+act; the issuer orders it here).
+
+In `C:/dev/wk-irpt-dashbd-93`:
+1. **S2, typed nulls.** `emit_method_row` builds its table with an explicit arrow type for the five threshold value columns (the type the landed row
+   2 partition carries, as the contract names it) and string for the six claim columns, so an all-absent row lands typed nulls, never the null type.
+   The arrow types of the 22 existing columns on a row with values must be UNCHANGED: show it by a test that compares them to the contract's 0.3.0
+   `name:type` lines. With `upload=False` the function also returns `table_schema`: {column name: arrow type name} for the row it would write.
+2. **S1, the contract at 0.4.0.** Edit the contract file: `contract_version` 0.4.0; the six new columns with type, nullable and meaning; the five value
+   columns become nullable, with the rule "null only under the claim `absent`"; `enums` gains the claim set (the four) and the claims-source set;
+   `rule24_record` points at your `THRESHOLD_CLAIM_RULE24.json`; `schema_hash` recomputed by the file's own declared basis (sha256 over the sorted
+   `name:type` lines joined by a newline); `supersedes` names 0.3.0, its hash and why. `landed_row` is NOT touched: the served row 2 partition is
+   unchanged, and you say in the file that it predates the claim columns.
+   - `method_versions` lists rows 1 and 2 while the producer's `METHOD_ROWS` also holds row 3 (DB-b-102). Do not add row 3 here; file ONE row saying so.
+3. **The round-10 check** `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r10/p10_1_ac1_method_contract_matches_row.py` pins 0.3.0
+   and is another seat's historical check: do not edit it. Its job passes to `DB62-1-AC3` below.
+4. Re-run both test folders, update the record's `tests` counts and `readers`, re-run all three criteria, refresh and validate the proof_of_spec for
+   all three ids. Your status line goes back to `issued` until all three pass, then `complete`.
+
+Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
+
 <criterion id="DB62-1-AC1" cell_refs="DB-b-118"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r62/p62_round62.py" . DB62-1-AC1</invocation><expect>DB62-1-AC1 PASS</expect></criterion>
 `DB62-1-AC1` -- the rule-24 record answers the four postulates with file-and-line evidence, carries the token census, and states the field, where it is written and the no-claims rule. Base: FAIL.
 
 <criterion id="DB62-1-AC2" cell_refs="DB-b-118"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r62/p62_round62.py" . DB62-1-AC2</invocation><expect>DB62-1-AC2 PASS</expect></criterion>
 `DB62-1-AC2` -- the producer declares the four-member claim set and the new test file passes at HEAD. Base: FAIL.
 
-<expected_criteria>DB62-1-AC1,DB62-1-AC2</expected_criteria>
+<criterion id="DB62-1-AC3" cell_refs="DB-b-118"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r62/p62_round62.py" . DB62-1-AC3</invocation><expect>DB62-1-AC3 PASS</expect></criterion>
+`DB62-1-AC3` -- (AMENDMENT 1) the contract at 0.4.0 names exactly the row's columns with a self-consistent schema hash, and an all-absent row's five value columns are typed. Base: FAIL.
+
+<expected_criteria>DB62-1-AC1,DB62-1-AC2,DB62-1-AC3</expected_criteria>
 
 ## BOUNDS
 
@@ -82,6 +109,7 @@ org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~93/
 org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~93/
 data/assets/scripts/gold/irpt_reporting/account_return_daily.py
 data/assets/scripts/gold/irpt_reporting/tests/
+org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json
 org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-118.threshold-claim.md
 </paths>
@@ -92,9 +120,9 @@ org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-118.threshold-c
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: DB62-1-AC1, DB62-1-AC2. The instance goes at
+Criterion ids: DB62-1-AC1, DB62-1-AC2, DB62-1-AC3. The instance goes at
 `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~93/IRPT_DASHBD.TO-DB-b-118.threshold-claim.proof_of_spec.json`.
-Validate it with `python .tools/proof-of-spec-check.py <instance> DB62-1-AC1,DB62-1-AC2` BEFORE the flip.
+Validate it with `python .tools/proof-of-spec-check.py <instance> DB62-1-AC1,DB62-1-AC2,DB62-1-AC3` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** commit hashes, each criterion's last line, the decision (field, where written, the no-claims rule), each postulate's finding in one line, the census denominator, the all-absent row example's claim fields, the readers found, test counts and the new test's name, and any row ids.
