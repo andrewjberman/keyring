@@ -75,7 +75,7 @@ adapter also `allowed` on its gold sample, both negatives `explicitDeny`, the OA
 the order's AC1 needs the COMMITTED script's own run. Re-run from the commit the new crossbox ORDER names (the invocation is
 unchanged). Gate limb: GATE viii reads `<placeholders>NONE</placeholders>` at HEAD and no criterion changed.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>ACT3BCLOSE</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-15</to_id>
