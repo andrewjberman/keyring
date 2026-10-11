@@ -9701,3 +9701,79 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order
 ```
+
+## 97. ROUND 89 -- PEER IDENTITY, THE SUBJECT CAP VINTAGE, THE AUDIT ROOT, THE WRITE-POOL GUARD, THE STAGED REDEPLOY. Four orders + one staged seat order + three issuer acts
+
+**Input:** the CTO~DELL1 round-88 analysis `ledger/ROUND_ANALYSIS.round88.md` @6ad172c28d (items 1-9; msg 3403). Prep in
+`deliverables/2.0.0_SA_COO~R1/round89_prep/checks/` (r89_peer_identity, r89_subject_cap, r89_audit_root, r89_write_pool_guard).
+All four checks were dry-run at the base on 2026-10-11 (each FAILs its build arm, PASSes its control arm; 3-4 s each).
+
+### 97a. MEASURED AT THE CUT
+
+- **Item 3 (D1-S16):** live `/security/ASML_NA_Equity/peers` (KlosR/ap8O): 12 of 12 members UNRESOLVED. The producer resolves the BARE
+  scanner ticker (`engine.py:907`, "INTC"), which the crosswalk does not hold; the crosswalk holds the Bloomberg form (`INTC US` ->
+  INTC_US_Equity, MEASURED). 7 of the 10 United States members resolve under it (INTC, AMAT, LRCX, AMD, NFLX, MU, DELL); CSCO, ORCL,
+  PANW stay UNRESOLVED; BMMV2K (a SEDOL stem) and 645026 are not US-listed alphabetic tickers and stay as they are.
+- **Item 4 (D1-S15):** the stored object's subject cap is 541,931.78 at 2026-09-19T07:53:19Z (stored as_of 2026-09-24T2252Z); the
+  subject's own current model block (20261010T130156Z) reads CUR_MKT_CAP 621,657.44 at 2026-10-10T13:01:55Z. The portal's subject
+  row already prints the header tile's figure (AV-zzr-1); the API's `peers.subject` is what lags.
+- **Item 2 (D1-S14): NOT BUILDABLE FROM ANY STORE THIS ESTATE HOLDS.** The scanner's six universes carry NO currency field on a
+  security entry or on the document (keys: country, divzWeight, industryGroup, mktVal, name, price, sector, ticker, universeWeight,
+  values; document: asOf, securities, sourceUniverseColumn, universeId); the model-block pool answers ABSENT for INTC, CSCO, MU, DELL,
+  700 HK and 000660 KS and carries CRNCY only for the names we hold (AMD: SERVED). Resolving identity (item 3) does not supply a
+  currency, because a resolved key still has no model block. A currency could be INFERRED from the country, which AMGT-at-3's design
+  forbids; or PULLED (Bloomberg CRNCY over the scanner universes, through the queue, on Andrew's per-use word). Neither is the COO's to
+  choose. No build cell is cut; the plain reason each member already serves stays. The decision is one message to the CTO.
+- **Item 5 (S4):** `mass-deletion-check.sh:111` ROOT = `--show-toplevel`; `_audit()` :160-165 appends to `$ROOT/$AUDIT_LOG`. Measured
+  in a throwaway repo: a verdict written from a linked worktree is gone after `git worktree remove` (main tree rows 0); from the main
+  worktree it lands. `safe-commit.sh:177` already resolves its audit root through `--git-common-dir`.
+- **Item 6 (S5):** `crosswalk.write_pool` carries the union (AMGT-zz-1) and the schema check; the absent-library refusal sits in
+  `main` (1702-1722) only. Measured over the stubbed S3 harness of test_write_pool_union.py: a crosswalk document with
+  `research_universe: absent` over a served `folders: 97` is PUT through `write_pool` directly (door B) and through
+  `add_security._mint_pool` on a library-less device (door A).
+- **Item 7 (mm-2 to PROD):** portal `origin/DEV` is **46 commits ahead of `origin/PROD`** and they are not all AMGT: IRPT_ANLREQ
+  (analysis-request package reader, original-file row), ADVI_BILLING (flows/exclusions empty states), DSGN_AMGTV1 rounds 59-60,
+  CRPS-at-2 (Model tab team rows), AV-zzm..zzs. A `/prod-deploy` of DEV promotes all 46. The Opal-internal classification is the
+  CTO's for `e225e9e1` alone; whether ANY of the 46 is a client-facing page is unread. Unsure = client-facing (CLAUDE.md, Agent
+  Autonomy). The act waits on that classification, which is its own read (nn-6).
+
+### 97b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-nn-1` | condition 4 DRIVEN against a populated watchlist (item 1) -- ISSUER ACT, no served write | `2.0.0_SA_COO~R1` | issuer act | LOCAL (reads) | `round89_prep/NN1_POPULATED_RUN_*.txt` | round-88 condition 4 |
+| `AMGT-nn-2` | a peer the identity pool holds under `<TICKER> US` serves that identity (item 3) | `~351` (1 of 2) | worker | LOCAL | scoped_amgt.py, one new pure module, one test | D1-S16 |
+| `AMGT-nn-3` | the peer set's subject cap on the vintage of the subject's own record (item 4) | `~351` (2 of 2) | worker | LOCAL | scoped_amgt.py, one new pure module, one test | D1-S15 |
+| `AMGT-nn-4` | the mass-deletion gate's audit row lands in the shared tree (item 5) | `~352` | worker-light, direct act | LOCAL | `.tools/git-hooks/mass-deletion-check.sh` | S4 |
+| `AMGT-nn-5` | every crosswalk `write_pool` caller refuses ABSENT over a served count (item 6) | `~353` | worker | LOCAL | crosswalk.py, add_security.py, one test | S5 |
+| `AMGT-nn-6` | portal DEV `e225e9e1` to PROD by `/prod-deploy` (item 7) -- ISSUER ACT after the classification read | `2.0.0_SA_COO~R1` | issuer act | WORLD | portal PROD (receipt) | round-87 item 2 on PROD |
+| `AMGT-nn-7` | ONE redeploy of `opal-amgt-scoped-api` carrying nn-2 + nn-3 and AMGT_CORPUS dossier /11 (/12) (item 8) -- STAGED | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger | item 8, D1-S15, D1-S16 |
+| `AMGT-nn-8` | the drafted names' driver series: a numeric source or an honest absence (item 9) -- ISSUER READ | `2.0.0_SA_COO~R1` | issuer read | LOCAL (reads) | `round89_prep/ISSUER_READS.md` | Z-W266-S3 |
+
+**Uncovered, with its owner:** item 2 / D1-S14 (see 97a) -- CTO. FWD-16 and the model API key rotation -- Andrew (analysis section 4).
+
+### 97c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: analysis items 1-9. 1 -> nn-1; 2 -> UNCOVERED (97a, owner CTO); 3 -> nn-2; 4 -> nn-3; 5 -> nn-4; 6 -> nn-5;
+  7 -> nn-6; 8 -> nn-7; 9 -> nn-8. Printed denominator 9 of 9 items placed (8 cut, 1 uncovered with its owner).
+- **(ii) Same grain.** nn-2 and nn-3 are two serve-time decorators of one route; nn-4 and nn-5 are one-file or two-file repairs.
+- **(iii) Intent coherence.** nn-1 and nn-8 READ; nn-2..nn-5 are code; nn-6 and nn-7 are the two world acts.
+- **(iv) What a cell does NOT move.** nn-2 adds a key only where the pool holds one and never rewrites the stored object; nn-3 changes
+  only the subject's cap fields and never a member's; nn-4 leaves the gate's verdict and mode logic untouched; nn-5 fires only when a
+  crosswalk document is supplied and leaves the union write byte-identical; nn-7 moves only the function's code.
+
+### 97d. EDGES AND FAN-OUT
+```
+nn-2 --> nn-3              (one write set: lib/research/api/scoped_amgt.py -- one worker's queue)
+nn-2, nn-3, CORPUS legs w+v done, CRPS-at-4 master read in --> nn-7
+nn-4 independent; nn-5 independent
+nn-1, nn-6, nn-8 are issuer acts
+fanout:
+  cap: 8
+  orders_total: 5          (4 worker orders + the staged seat order)
+  chains_total: 3          (nn-2->nn-3->nn-7 ; nn-4 ; nn-5)
+  wave_0: [nn-2 ~351 then nn-3 ~351, nn-4 ~352, nn-5 ~353]
+  wave_1 staged: [nn-7 RA1 (nn-2 + nn-3 merged, AMGT_CORPUS legs w and v done, CRPS-at-4's master read in, the CTO half)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```

@@ -14,3 +14,21 @@ MDPF_CANON round 2, post-fire read.
 - FWD-1 is not REALIZED and CN-a-2 AC3 stays ungraded. Next: the CVO's L9 grades on this read, then the L10 slug and the CTO's
   round-2 analysis. Re-read at the next fires (2026-10-11 13:30Z if weekends run; 2026-10-12 trading-day fire) -- the same one
   invocation, with `--fire` set to that fire.
+
+## 03Z-04Z: round 3 issued and drained in part
+
+- Hold lifted (CTO msg 3378, record cbcfdc0c1c). Issuance @335258e392: CN-c-1 (~8), CN-c-2 then CN-c-3 (~9); fanout 2 of 2 chains, cap 8.
+- CN-c-1 drained @b3c9b5a55e: the X2 basis made true (AS-OF 2026-10-08), ledger X2 row cites it. Rows W8-S1..S5; ARMED S2, S3
+  (the global fold's figures; disarm owner this lane, routes to the fold's owner) and S5 (Andrew, X2 already GRANTED on the round-2
+  premise). These ride the drain-end message to the CTO.
+- CN-c-2: blocked twice. W9-S1 (runner has no lib/) ruled B by the CTO (msg 3417), amendment @96d6e08aea, slot re-seated. Then W9-S2
+  (no tier-bucket module output for the grant) and W9-S3 (naming limb refuses the generated JSON and its generator). One ask to the
+  CTO (inbox file 20261011T032125Z_2.0.0_SA_COO_D1_MDPF_CANON_CN-c-2__naming_gate_refuses_t.md). No workaround.
+
+## Parked (owner and un-park condition)
+
+| item | owner | un-parks when |
+|---|---|---|
+| CN-c-2 code commit and iam.tf grant (uncommitted in C:/Dev/wk-canon-9) | 2.0.0_SA_COO~D1 | the CTO rules the registry path (lib generate target or a permitted generated context, plus the tier-bucket output) |
+| CN-c-3 (the feeder repoint) | 2.0.0_SA_COO~D1 | CN-c-2 lands (it reads the same generated file) |
+| the Monday 2026-10-12 13:30Z fire read | 2.0.0_SA_COO~D1 | the fire has run; `r2_daily.py read --fire 2026-10-12T13:30:00Z` |
