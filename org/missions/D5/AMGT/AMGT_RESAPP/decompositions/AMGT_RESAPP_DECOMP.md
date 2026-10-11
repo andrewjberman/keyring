@@ -9862,3 +9862,75 @@ held outside the tree) and `round90_prep/DRAFT_ORDER_for_round91_*.md` (recut un
 
 - **Edge:** `AMGT-oo-6` (the DEMQUE answer's wiring) edits `scoped_amgt.py` too, so oo-6 is cut after oo-4 merges.
 - **fanout (round 90, unchanged):** `2 of 2 chains, cap 8`: oo-3 and oo-5, both merged (@69d5fea1a9, @a423f1d667).
+
+## 99. ROUND 91 -- THE NON-US EXACT-NAME ARM, THE VERIFIER'S LOCATOR, THE PEERS REBUILD, THE STAGED WIRING, THE STAGED REDEPLOY, THE DISPOSITION TABLE. Two worker orders + two staged seat orders + one staged cell + two issuer acts
+
+**Input:** the CTO~DELL1 round-90 analysis `ledger/ROUND_ANALYSIS.round90.md` @b462a02d8a (items 1-6; msg 3551). Prep in
+`deliverables/2.0.0_SA_COO~R1/round91_prep/` (checks `r91_locator.py`, `r91_peers_rebuilt.py`, `r91_name_match_deployed.py`, the
+dry-run `PEERS_REBUILD_DRYRUN_20261011.json`, `REMEDIATION_DISPOSITION_TABLE.md`) and `round90_prep/checks/r90_name_match.py`. Every
+check was dry-run at the base on 2026-10-11: r90_name_match FAILs N1-N5 and N7 (N6 PASS); r91_locator FAILs L1-L4 (K1, E1, X1-X7 PASS;
+a throwaway candidate reached 13 of 13); r91_peers_rebuilt FAILs P1-P5 (P6 PASS); r91_name_match_deployed FAILs D1 (18 candidates, 0
+served, 0 leaked).
+
+### 99a. MEASURED AT THE CUT
+
+- **Item 1 (non-US exact-name arm):** 23 of the 1,047 non-digit non-US scanner rows name exactly one held company and are not served;
+  18 such members sit in the 243 subjects' latest stored peers objects, 0 served today. The held list allows 52 of 1,816 at most.
+- **Item 2 (the verifier):** 4 of 5 held driver points are LOCATOR defects, from three structural forms the verifier does not read
+  (a `FY`-prefixed period label; a columnar run with trailing unit columns; an inline prior-period parenthetical) and one tokenising
+  defect (a decimal split at the point). A first candidate failed the refusal arm X1 by letting a column map run past its own table.
+- **Item 3 (the peers rebuild):** an in-memory run of the producer's own `engine.peers` over the freshly built universe (scanner asOf
+  2026-10-02) for 243 keyed names: DERIVED 156 -> 194, ABSENT 78 -> 49, 158 member sets change, 0 derived -> absent, 4 subjects end with
+  fewer members. **The scanner has published at 2026-02-26, 05-18, 05-19, 05-21, 08-06 and 10-02, so a member cap cannot reach one
+  trading day of the header (5 trading days at best): the analysis's close for this item is not reachable from this source.** The cell
+  is cut on what the producer delivers and the gap is put to the CTO.
+- **Item 4 (the DEMQUE answer):** request @b6e42f51a8 has no quote and no answer, and the PRD names no address or shape for a
+  reference request's answer. 138 of its 1,038 rows are held names (a question row filed on DEMQUE's channel, D1-S10).
+- **Item 5 (the disposition table):** 30 open remediation rows (the analysis's 29 plus D1-S20): CLOSED 3, CARRIED 11, RE-OWNED 16.
+  Two rows the analysis expected closed are not, on their own close conditions (D1-S14, D1-S16).
+- **Item 6 (the redeploy):** at the base, `price_currency.py` and `crosswalk.py` at HEAD differ from the live package; `numeric_tickers.py`
+  and `scoped_amgt.py` equal it until pp-1 merges. The analysis couples the redeploy to item 4's answer.
+
+### 99b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-pp-1` | a non-US peer a held company's exact name names serves that identity (item 1) | `~371` | worker | LOCAL until pp-6 | `lib/research/peers/numeric_tickers.py`, `lib/research/api/scoped_amgt.py`, one new test | D1-S14, D1-S20, FWD-8 |
+| `AMGT-pp-2` | the verifier locates a driver point the filing states and still refuses one it does not (item 2) | `~372` | worker | LOCAL | `lib/research/filings/analyze.py`, one new test | Z-W266-S3 |
+| `AMGT-pp-3` | the peers objects rebuilt against the current scanner (item 3) -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | `universe/v1/`, `peers/v1/` (new dated objects); ledger | FWD-38 |
+| `AMGT-pp-4` | the DEMQUE answer's reader and its wiring (item 4) -- STAGED, no order | `~372` re-seat or new | worker | LOCAL until pp-6 | `lib/research/api/scoped_amgt.py` | D1-S14 |
+| `AMGT-pp-5` | the remediation disposition table (item 5) -- ISSUER ACT, DONE at the cut | `2.0.0_SA_COO~R1` | issuer act | LOCAL (a record) | `round91_prep/REMEDIATION_DISPOSITION_TABLE.md` | the CVO's decision item |
+| `AMGT-pp-6` | the ONE redeploy of `opal-amgt-scoped-api` (item 6) -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger | pp-1, pp-4, oo-5, nn-5 |
+| `AMGT-pp-7` | the question row for the DEMQUE owner (item 4) -- ISSUER ACT, DONE at the cut | `2.0.0_SA_COO~R1` | issuer act | LOCAL (a row) | DEMQUE `surprise-channel/investigations/` | D1-S14 |
+
+**Uncovered, with its owner:** `AMGT-nn-6` (PROD promote), FWD-16 and the model API key -- Andrew (analysis section 4); the 1,764 non-US
+rows no held company names -- the CTO (identifier form), not a cell.
+
+### 99c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: analysis items 1-6. 1 -> pp-1; 2 -> pp-2; 3 -> pp-3; 4 -> pp-4 (+ pp-7); 5 -> pp-5; 6 -> pp-6. Printed denominator
+  6 of 6 items placed (2 worker orders cut, 2 seat orders staged with their pair's COO half, 1 staged cell with no order, 2 issuer acts
+  done).
+- **(ii) Same grain.** pp-1 and pp-4 are two decorators of one route; pp-2 is one function of the producer; pp-3 and pp-6 are the two
+  world acts, one on stores and one on code.
+- **(iii) Intent coherence.** pp-5 and pp-7 READ and RECORD; pp-1, pp-2 and pp-4 are code; pp-3 and pp-6 are the world acts.
+- **(iv) What a cell does NOT move.** pp-1 moves a member's identity only where one held name is named exactly and leaves currency,
+  digits and US alphabetic tickers alone; pp-2 moves what the verifier accepts and rewrites no stored object (that store write is a
+  separate act with its own pair, not cut here); pp-3 writes new dated objects and moves no function; pp-6 moves only the function's
+  code and admits each member by blob.
+
+### 99d. EDGES AND FAN-OUT
+```
+pp-1 --> pp-4              (one write surface: lib/research/api/scoped_amgt.py -- one worker's queue at the GO)
+pp-1, pp-4 --> pp-6        (the redeploy carries what is merged; pp-4 only if its answer has landed)
+pp-2 independent; pp-3 independent (the producer is unchanged by this round's code)
+pp-5, pp-7 are issuer acts
+fanout:
+  cap: 8
+  orders_total: 4          (pp-1, pp-2 spawned; pp-3, pp-6 staged seat orders)
+  chains_total: 3          (pp-1 -> pp-4 -> pp-6 ; pp-2 ; pp-3)
+  wave_0: [pp-1 ~371, pp-2 ~372]
+  wave_1 staged: [pp-3 RA1 (the CTO half, the same-day dry run), pp-6 RA1 (pp-1 merged, the CTO half, a riding-leg answer), pp-4 (the DEMQUE answer, pp-1 merged)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order (the queue's producer draws at site Z)
+```
