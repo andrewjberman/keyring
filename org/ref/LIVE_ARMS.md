@@ -70,6 +70,17 @@ Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. `/govern` fires on each 
     `2.0.0_SA_COO~P2`, `2.0.0_SA_COO~Y2`, `2.0.0_SA_COO~M2` IRPT_BCKEND (workstreams P, Y, M); `2.0.0_SA_COO~G2` IRPT_YCDGEN;
     `2.0.0_SA_COO~D2` IRPT_DASHBD. Cadence is each seat's to state in its own first tick; stop when its project reads complete, at
     HELD-AT-STOP, or on his stand-down.
+  - RELAUNCH 2026-10-11 after the dell2 crash and hold lift (record
+    `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261011_0xxxZ_LIFT_DELL1_DELL2_HOLD_ON_60M_PACING_KEEP_DRIVING_OFF.md` @cbcfdc0c1c).
+    THESE TERMS ARE CURRENT. Landed by 1.0.0_SA_CTO~DELL2.
+    - `1.0.0_SA_CTO~DELL2` `/self-drive 60m` over every dell2 project, DIRECTED, chooser Andrew. Arming record
+      `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261011_021xZ_SELF_DRIVE_60M_EVERY_DELL2_PROJECT_REARM_AFTER_HOLD_LIFT.md`
+      @86d65d0c3e. It carries the 10-09 row's scope and stop at the 60m cadence.
+    - `/canonical-drive <own project>` 60m, CHOSEN (the recommendation above; the cadence is his 2026-10-10 pacing word). Six seats, named
+      by 1.0.0_SA_CTO~DELL2 msg 3875 and seated by `0.0.0_AB_MSTR~DELL2` msg 3877: `2.0.0_SA_COO~C2` ADVI_COTBKF, `2.0.0_SA_COO~D2`
+      IRPT_DASHBD, `2.0.0_SA_COO~G2` IRPT_YCDGEN, `2.0.0_SA_COO~P2` IRPT_BCKEND, `2.0.0_SA_COO~T2` NFRA_TRNSPT, `2.0.0_SA_COO~V2` TCKT_VNEXT.
+      `~Y2` and `~M2` were not relaunched. Stop: the seat's project reads complete, HELD-AT-STOP, or his stand-down.
+    - Not seated: `2.0.0_SA_COO~B2` ADVI_BILLING and `2.0.0_SA_COO~O2` NFRA_OPSWKF (both WAITING in `sequence-check` on Andrew's inputs).
   - No row: the Microsoft Defender CPU sampling Monitor (record section 5). He asked that seat to "keep an eye"; it is a watch, not a loop.
 
 
