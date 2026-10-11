@@ -6365,3 +6365,26 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S15",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T16:30:07Z",
+  "one_line": "L8 round 69 (DB-b-130, a SERVED write), no judgment criterion. Read on the served objects by this seat: Cottonwood's method row 3 now states the income reason worded for the method, with no channel named; only the reason and the timestamp moved against the prior version; the manifest's body, which the issuer did not read, agrees; three versions of each key are retained. That meets this seat's row D2-S13, which closes in place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 5333 (DB-b-130 applied 16:07Z; record deliverables/0.7.0_AE_CloudOps~CB2/METHOD_ROW3_REASON_APPLY.json @b43e26c280)",
+      "this seat's served reads 2026-10-11T16:30:07Z under s3://opal-data-cottonwood/irpt/cottonwood/gold/dim_return_method/method_version=3/: data.parquet (LastModified 2026-10-11T16:07:40Z, 11,673 bytes) holds 1 row and 31 columns; against the 10:38Z version this seat fetched at round 67, 2 columns moved, income_basis_reason and measured_at; the reason is the sentence at account_return_daily.py:132-133, which names the positions-based method and no channel; income_basis is null and the claim is absent; manifest.json's body (2,046 bytes) carries the same reason; list-object-versions under the prefix reads 6 versions and 0 delete markers"
+    ]
+  },
+  "spec_asserts": "Spine L8 (CLAUDE.md rule 27): the CVO compiles on the round's packet and reads the served state itself.",
+  "world_is": "The served row is as the signed sentence. Undispositioned rows at this compile: none.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
