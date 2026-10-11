@@ -1031,3 +1031,28 @@ write: **1 row** (`S1`).
   "notes": "Recurrence of ADVI_FIRMBKTS-D1-W9-S2: the AC1 invocation's cd is resolved from the call-start cwd, which is the base. The order's step-4 cd-only call cannot pin the worktree because the cwd does not persist between Bash calls. Owner of the disarm: the issuer (2.0.0_SA_COO~B1), by stating AC1 with an absolute worktree path in the invocation (or a cd inside the same call), a re-cut that the checker accepts. The worker did not rewrite the invocation text, did not commit, did not flip the status, and wrote no proof instance, because step 4 stops on a non-matching AC1. Scratch files: .scratch/diag_canonical_spec.txt, .scratch/diag_gate_worktree.txt."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S10",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T05:15:22Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "THE ROUND-CLOSE CHECK AND THE COMPLETE-FLIP GATE FIND A TREE ORDER'S PROOF INSTANCE BY DIFFERENT RULES, SO SEVEN ORDERS FLIPPED COMPLETE AND THE CLOSE CHECK READ 0 OF 7 PROOFS",
+  "spec_asserts": "CLAUDE.md rule 27 and the canonical spine name one proof instance per order, and the close of a round counts each complete order's instance (round-close-check.py: 'every task order of the round whose status is complete has a proof instance that passes').",
+  "world_is": "to-pipeline-gate.py check_complete_flip resolves an instance by the order file stem OR a backticked path in the order's <proof_of_spec> block (rows D1-W7-S3, D1-W8-S1, D1-W10-S1 cite lines 3156-3191); round-close-check.py proof_state (line 314) resolves it only as deliverables/*/<order stem>.proof_of_spec.json. The round-2 orders named their instances by order id in a proof-block path, so all seven flipped and round-close-check read PROOF-BAD x7, verdict REFUSED. Second tell: 3 of the 7 instances carried artifact rows still reading PENDING-THIS-COMMIT for files committed earlier, which proof-of-spec-check refuses (CCX class) and which the flip gate only meets again when the order is next modified. Repaired by the issuer at e60140c2d2 (seven renames, six pins) and 6f71f434ac (order paths), merged baaa2bbc81; round-close-check --deep then read 7 of 7 VALID, MAY-CLOSE.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/round-close-check.py --project ADVI_FIRMBKTS --round 2 -> PROOFS mode=structural complete=7 proof_ok=0 proof_bad=7, verdict=REFUSED (2026-10-11 ~04:47Z, before the rename)",
+      "the same command with --deep at the merged tree -> proof_ok=7 proof_bad=0, verdict=MAY-CLOSE",
+      ".tools/round-close-check.py:314-316 (stem-only glob) against rows ADVI_FIRMBKTS-D1-W8-S1 and D1-W10-S1 (the flip gate's two lookups)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the disagreement: the gate owner (round-close-check.py and to-pipeline-gate.py are .tools, not this lane). Either the close check reads the proof-block path too, or the order template names the stem form. The issuer's repair is a rename, not a gate edit; it does not prevent the next round's orders from repeating it unless the template changes."
+}
+```
