@@ -6997,3 +6997,26 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "hazard_standing not assessed by this worker: it depends on whether the three file-day readers re-ran after the rewrites and what their fingerprint or incremental logic rebuilt, which was not read."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W130-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~130",
+  "surfaced_at": "2026-10-11T22:58:12Z",
+  "one_line": "DB-b-161: the order and the round-83 analysis speak of 'the custodian's' time-weighted return the 51 segments were scored against, but the project's records show the oracle is Black Diamond's reporting_performance pull; the custodian (Schwab) supplies Opal's side, so two parties were read and the 51 are recorded as scored against Black Diamond.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Order TO-DB-b-161 item 1: name the custodian whose reporting-performance pull the tie-out compares against, and Black Diamond; the round-83 analysis section 2 says the served return closes against 'the custodian's' in 0 of 51.",
+  "world_is": "PRD C-TIEOUT and C-FLOWTIME name Black Diamond's own time-weighted return as the oracle; INVESTIGATION_v1.md rows cite the stored Black Diamond reporting_performance bronze pull as the tie-out source; PRD C-ADAPTERS builds the 49 Financial adapter from Schwab silver. So the returns the 51 were scored against are Black Diamond's, and the custodian named in the record (Charles Schwab) is the source of Opal's own inputs. PUBLISHED_FLOW_TIMING.json records scored_against BLACK_DIAMOND with this note. The wording in the analysis is the CTO's to correct if it matters; it changes no count here.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md C-FLOWTIME, C-TIEOUT, C-ADAPTERS",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~130/PUBLISHED_FLOW_TIMING.json (scored_against_note)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
