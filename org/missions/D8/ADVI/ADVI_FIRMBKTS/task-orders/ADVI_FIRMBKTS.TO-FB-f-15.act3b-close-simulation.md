@@ -66,6 +66,15 @@ with its decision, and the commit hash.
 by the laptop lane, plus one unsigned GET (graded on dell1 by `r4_act3b.py` arm L3, already 403). Act 4's CTO half ADDENDUM 2
 widens its sample to one real invocation per admitted principal because a simulation cannot see an SCP.
 
+**AMENDMENT 1 (2.0.0_SA_COO~B1, after ~FBL's report msg 108347, row ADVI_FIRMBKTS-S20):** the laptop lane ran a scratch copy of
+`r4_sim.py` because the committed script had three defects, each the issuer's: (1) it called a bare `aws` the Windows subprocess
+could not resolve (it now resolves the CLI with PATHEXT, `AWS_CLI` overriding); (2) it read `Principal["AWS"]` from a statement
+whose Principal is the string `"*"` (it now handles both shapes); (3) it passed the 20 KB policy inline, over the Windows
+command-line limit (it now passes `file://<tmp>`). The decisions ~FBL reported (9 of 9 admitted `allowed`, the performance
+adapter also `allowed` on its gold sample, both negatives `explicitDeny`, the OAI statement ok) are its own and are recorded;
+the order's AC1 needs the COMMITTED script's own run. Re-run from the commit the new crossbox ORDER names (the invocation is
+unchanged). Gate limb: GATE viii reads `<placeholders>NONE</placeholders>` at HEAD and no criterion changed.
+
 <status>pending</status>
 <round>4</round>
 <workstream>ACT3BCLOSE</workstream>

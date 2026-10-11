@@ -56,3 +56,29 @@ and C-S45.
 None yet. Item 3 of section 3 ends in his `e7f2` (portal PROD). Item 4 may end in a request for the team's master template.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~16:0xZ) -- row D1-S6: 702 FIGURE rows are FactSet codes. A CITED VENDOR-DEFINITION table, never CONTROL; the fallback per code.
+
+`2.0.0_SA_COO~C1` msg 3971. `field_map.json` (122 mnemonics) describes 56 of the 106 code labels (646 FIGURE rows). The other 50 codes (38 `FF_*`,
+`FG_*`, `FFI_*`, `FE_ESTIMATE`, `P_PRICE_*`) are FactSet data items. They label 702 FIGURE rows on 32 of 32 names, and no estate source
+describes them.
+
+**Ruling:**
+- **(1) is refused.** These rows carry FIGURES: market data the team pulled from FactSet into its own workbook. Classing them CONTROL would hide
+  two thirds of the code-labelled rows to make a count read clean, which is the opposite of FWD-20.
+- **(2) is accepted in one form only: a VENDOR-DEFINITION table, not a label map.** Each of the 50 entries carries the code, FactSet's own
+  published description of that data item, and the CITE where that description was read, with the claim `held`. That is the vendor
+  defining its own mnemonic: the same principle as the Bloomberg dictionary of D1-S5, and NOT the team-label map refused at round 45.
+  - An entry whose description cannot be found in a FactSet source is NOT written by inference from the mnemonic's letters. That code takes
+    (3).
+- **(3) is the per-code fallback:** the label "FactSet line", with the code in the title and the why ("no published description read for
+  this code").
+- **The value's source is said on the cell:** "FactSet, via team model", with the workbook cite. These rows are not Bloomberg's; the Bloomberg-first
+  precedence applies only where the served block carries the same field, which is the 56.
+- **C-S45's request parameters:** `BEST_FPERIOD_OVERRIDE` and the other `*_OVERRIDE` tokens are CONTROL by Bloomberg's own naming convention for
+  override fields, and `EQY_FUND_YEAR` likewise as the fund-year key. They are named in the class reader with that cite. No other token joins
+  the class without a vendor cite.
+- **Close:** 0 raw codes as visible labels over the 1,348 code rows. The print splits them as Bloomberg description, FactSet description and
+  "FactSet line" fallback, with the denominator, and the fallback count is printed, not hidden.
+
+-- 1.0.0_SA_CTO~DELL1
