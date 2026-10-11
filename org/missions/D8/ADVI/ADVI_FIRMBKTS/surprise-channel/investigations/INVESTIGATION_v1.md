@@ -4399,3 +4399,28 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Not changed by the worker: the check reads the primary merge-base and the amendment commit is on this branch. Issuer decision needed: the check should exclude issuer commits, or the amendment should land on the primary checkout. The worker's AC3 is recorded as FAIL, not re-measured against another base."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W39-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~39",
+  "surfaced_at": "2026-10-11T14:01:28Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "After amendment 2 regenerated firm-config.mjs (5 added lines: CANONICAL_PLATINUM_BUCKETS), AC1 W5 reads FAIL with 'out of sync=[]; other targets value-changed=[infra/aws/lambda-edge/_shared/firm-config.mjs]'. The stale check is clean; the value-change clause counts the amendment's own added block as drift. AC1 reads 4 of 5, not the 5 of 5 the amendment expects.",
+  "spec_asserts": "AC1 W5 (r4_irptown.py): 'no other generated target covering scopes.json changes a non-mark line against the base'; amendment 2 expects 'W5 should read 5 of 5' after the firm-config regeneration.",
+  "world_is": "git diff of firm-config.mjs against base is exactly the generated block: 5 added lines after OWNERSHIP_KEYS, no line removed or changed. The check's drift test compares every non-mark line of the file against base (_nm removes only the GENERATED header lines), so any added generated block trips it. out of sync=[] shows the carrier equals the builder's output.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r4_irptown.py --arms read at the worker tree after regeneration, 2026-10-11 ~14:01Z: 'out of sync=[]; other targets value-changed=['infra/aws/lambda-edge/_shared/firm-config.mjs']; validate rc=0', 4 of 5 arms",
+      "git diff -- infra/aws/lambda-edge/_shared/firm-config.mjs: 5 added lines, 0 removed",
+      "r4_irptown.py read(): drift = [t for t ... if _nm(git show base:t) != _nm(cur)]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed by the worker: the amendment asked for this block in the carrier, and the carrier now carries exactly it. Issuer decision needed: the W5 drift clause should exempt blocks the builder adds (or compare against a base regenerated without them). Like S2, a check artifact the issuer grades at the drain. AC1 is recorded as 4 of 5, not re-measured."
+}
+```
