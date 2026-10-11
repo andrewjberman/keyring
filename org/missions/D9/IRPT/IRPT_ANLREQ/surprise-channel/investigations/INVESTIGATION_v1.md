@@ -2006,3 +2006,32 @@
   "notes": "Issuer's ruling needed: either the ticket service admits svc-irpt-packager to GET a ticket (a ticket_center change: a matrix or principal_class entry, firm-scoped like package_ticket), or the idempotence read moves to another reader. The packager side (live_ticket_ports) is delivered either way."
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W54-S1 -- the custody tests made a live DynamoDB profile read; netguard (installed by importing run_offline_suite) and invalid keys each refuse it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-11T07:35:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The 34 custody tests are not order-dependent state: they make a LIVE DynamoDB profile read through the directory Entry, which passes only with working credentials and no netguard; test_receipt_ledger.py (import run_offline_suite -> netguard.install()) is the file that makes it fail in the full run, and invalid keys make it fail alone",
+  "spec_asserts": "TO-AR-y-36 cell text: the same two custody files run ALONE pass 42 of 42, so an earlier test file leaves state that the custody tests then trip on.",
+  "world_is": "MEASURED at base 1c40c646ed with AWS_ACCESS_KEY_ID=x AWS_SECRET_ACCESS_KEY=y: test_custody_retained.py ALONE gives 32 errors and test_custody_entry.py + test_custody_retained.py gives 2 failed, 32 errors (the face's own key setting reproduces the failure without any polluter). Cause by pdb: served.py:1225 _internal_allowed_firms, load_service_profile unset, builds boto3.client('dynamodb') and reads the caller's profile row live (served.py:1146-1151); with invalid keys the call raises ClientError UnrecognizedClientException, and after test_receipt_ledger.py:11 imports run_offline_suite (line 37 netguard.install(), never undone) it raises HTTPClientError 'NETGUARD: refused external connection to dynamodb.us-east-1.amazonaws.com:443'; served.py:1226-1227 turns either into FIRM_BINDING. So 'passes alone' held only where the box had working credentials and an open network, i.e. the custody tests made a live AWS read. Fixed in the tests (load_service_profile injected as lambda email: None in test_custody_entry.py harness and test_custody_retained.py); the reproducer [test_receipt_ledger.py, test_custody_retained.py] failed at base (2 passed, 32 errors) and now passes. Not established: a real-credential run of the pair alone, which would be a live call and was not made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1138-1151 and :1224-1229 (the live lookup and its FIRM_BINDING mapping)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/run_offline_suite.py:35-37 and tests/netguard.py:56-80 (install() patches socket at import)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_receipt_ledger.py:11 (module-level import of run_offline_suite)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~54/S31_REPRODUCER.json"
+    ]
+  },
+  "notes": "Other GT test files that build a served.Entry without load_service_profile would have the same live read; only the two custody files were changed, per the cell."
+}
+```
