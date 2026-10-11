@@ -425,3 +425,9 @@ COO half of the t-31 never-widen pair is written on the bytes AFTER t-36 merges 
 direction of the same override: a `--today` AFTER the local date plans, applies and writes a lock `valid_to` that has not happened, after which
 DQ-t-36's own guard refuses every normal run until the calendar catches up. One more cell, `DQ-t-37` (`extend_frontier.py` refuses a `today` after
 `date.today()`; `0.9.0_WK_MDPF_DEMQUE~29`, worker-light, LOCAL, workstream EXTGUARD2, depends on DQ-t-36). The half is written after it merges.
+DQ-t-36 merged @df9aaa34cc, DQ-t-37 @8e63ec0a23, DQ-t-35 @9ae2f2d054 (the trace: no client page reads the Yahoo file for FTHSX/PFORX; the page
+value is B_00's BD market value / units; no re-resolve candidate reaches 90; D1-S12 with the CTO).
+
+**Round 9 amendment 3 (issuer, 2026-10-11 ~17:1xZ):** reading the CTO's ADDENDUM 1 against the merged bytes for the half: "the lock record states
+`trades_through`". The row carries only the claim. One more cell, `DQ-t-38` (`ROW_KEYS` gains `trades_through`; `0.9.0_WK_MDPF_DEMQUE~30`,
+worker-light, LOCAL, workstream LOCKTHRU, depends on DQ-t-30). The COO half of the t-31 pair is written on the bytes after it merges.
