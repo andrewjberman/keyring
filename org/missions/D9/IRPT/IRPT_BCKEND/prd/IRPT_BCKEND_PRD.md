@@ -984,8 +984,8 @@ ENDPOINT is not edited.
 - **Why, from the record:** the five one-day-off security-days of v0.39 (SHM 06-30, MEIIX 07-02, SHM 07-20, PZA 07-31, MISIX 10-09) are
   each a day on which the reader repeated its prior bar while the anchor moved. Under the guard all five are not graded and no one-day-off
   entry remains in 64,536 security-days. The mechanism of the known failure is a carried-forward bar, and the guard refuses exactly that.
-  Two of the five are on admitted types (SHM, PZA are not `Inst`): v0.39's admitted list passed its own test only per type, and the
-  guard is what protects those days.
+  By the record's Table 1 the five sit in the two types v0.39 left out (`Inst` 2, `RIC/BDC / Not Available` 3), none in an admitted
+  type; the guard is adopted for the admitted types because the mechanism is the reader's, not a type's.
 - **The cost, as sized:** seven admitted types under the guard, blank 51.753 percent (50.305 without it), never served 357, 552
   account-days no longer freed. 1,135 of 64,536 overlap security-days not graded, 1,071 of them days that had read `equal`.
 - **THE ADMISSION TEST IS READ WITH THE GUARD OFF, as v0.39 read it.** Under the guard every type's one-day-off column is empty by
