@@ -23949,3 +23949,101 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "The issuer's error, recorded in ISSUER_READS.md and decomposition s.98e. Ruled by the issuer: round 91, first cell of the ENRICHMENT LIST; no pipeline-override taken."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W372-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~372",
+  "surfaced_at": "2026-10-11T06:57:56Z",
+  "one_line": "The cell's premise that the BABA excerpt never labels FY2019 does not hold: the bare year 2019 occurs four times in prose.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Refusal arm X6: BABA FY2019 = 118,028 is a period the excerpt never labels, and must stay held.",
+  "world_is": "The silver excerpt of BABA_US_Equity 000119312526231755 carries the bare token 2019 at offsets 147328, 156926, 202082 and 202932 (repaid in 2017, 2019, 2021 and 2024; November 2019; In May 2019). No standalone 2019 line exists. The arm holds because the FY alias locates only by a standalone year line, not because the excerpt lacks the label.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver filing_source BABA_US_Equity 000119312526231755 excerpt.text (209035 chars): bare 2019 token at offsets 147328, 156926, 202082, 202932; zero standalone 2019 lines",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round91_prep/checks/r91_locator.py@8d2b99bfe4 arm X6 (FY2019 = 118,028)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~372 at AMGT-pp-2. The alias rule in analyze.py (standalone line only) carries the refusal; the arm is not weakened."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W372-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~372",
+  "surfaced_at": "2026-10-11T06:57:56Z",
+  "one_line": "The nearest-header locator cannot reach BABA FY2026 158,132: the standalone 2026 line nearest the anchor is a different table, so the value verifies only under another header.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Form 2 binds a period to the table its header introduces; the cell's L2 expects BABA FY2026 158,132 to verify in the same row, third column.",
+  "world_is": "_locate_period_labels_near_anchor picks ONE standalone header per period, the one nearest the anchor 189529 (P0446). For 2026 that is line 191145, whose column 1 holds 616,136, so the block and the nearest column both refuse 158,132. The value verifies under the 2025/2026 header at 182361 (span 183047-183054) and under the 2024/2025/2026 header at 151937. The verifier now tries every standalone header of the period, nearest first, taking the first whose own column carries the value.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver filing_source BABA_US_Equity 000119312526231755: standalone 2026 lines nearest anchor 189529 are 191145 (layout column 1 = 616,136)",
+      "dry-run reverify_stored_thesis_driver(dry_run=True) on BABA 000119312526231755: FY2026 158,132 kept at span [183047, 183054]",
+      "lib/research/filings/analyze.py@8d2b99bfe4 _locate_period_labels_near_anchor picks min distance to anchor, one header per period"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~372 at AMGT-pp-2. Every candidate is still a standalone header with its own column; no block rule is widened by this."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W372-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~372",
+  "surfaced_at": "2026-10-11T06:57:56Z",
+  "one_line": "The block rule runs a last-located period's block to the excerpt end, so a figure stated for a different period later in the excerpt verifies for this period.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Refusal arm X3: SAP 2025 = 18.08 (2024's figure, same sentence) is refused, with the block rule bounding the 2025 label.",
+  "world_is": "verify_points_against_excerpt sets a block from a label to the next located label or to len(excerpt). A synthetic excerpt '$21.05 billion in 2025 (2024: $18.08 billion).' with the single point 2025 = 18.08 verifies 18.08 for 2025 (kept span [51, 56]). The real SAP arm refuses only because its 2025 label sits in a table whose next located label bounds the block. Pre-existing; the cell does not widen it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/analyze.py@8d2b99bfe4 verify_points_against_excerpt: block end is the next located label or len(excerpt)",
+      "worktree probe 2026-10-11T06:57Z: _apply_point_verification([2025 = 18.08]) on the synthetic sentence kept 18.08 for 2025; with a 2024 companion point the 2025 point is held"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: a stored point of a last-located period can verify a figure stated for another period. Disarm owner: the COO, who may bound the block by the next period label in the excerpt or accept the looseness on the record."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W372-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~372",
+  "surfaced_at": "2026-10-11T06:57:56Z",
+  "one_line": "The cell names a row scan bounded by a long line but gives no length; the worker chose 80 characters without a measured basis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Form 2: the row scan stops at the next standalone year line or at prose (a long line). No length is stated.",
+  "world_is": "_PROSE_LINE_CHARS = 80 in the new _columnar_layout. The three cell excerpts pass with it; no measurement of the longest table row label was taken, so the threshold is a choice and not a finding.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "lib/research/filings/analyze.py@8d2b99bfe4 has no row-scan length bound; the cell's form 2 text names only the prose stop",
+      "worktree lib/research/filings/analyze.py _PROSE_LINE_CHARS = 80 (uncommitted at filing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~372 at AMGT-pp-2. A longer row label that wraps is held, not verified, which is the safe direction."
+}
+```
