@@ -697,6 +697,28 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "git log -1 data/mdpf/scripts/demque/refreeze.py -> 277294a59c 0.9.0_WK_MDPF_DEMQUE~21 DQ-t-26"
       ]
     }
+  },
+{
+    "id": "MDPF_DEMQUE-Z-S2",
+    "one_line": "A MID-DRAW re-quote of a partially drawn request reads a finish date ONE FIRE DAY LATER than the frozen quote (2026-10-18 vs 2026-10-17) because quote() always prices the FULL request from today's fire days and never subtracts the cells already drawn -- a reader comparing the two would see a slip that is not a slip.",
+    "spec_asserts": "CTO round-7 analysis R2 and the re-frozen quote: the TR request's finish_date is 2026-10-17 (Sat 10-10, Sun 10-11, Sat 10-17 at 5,858 a day), finish_date_claim measured, and quote_vs_actual grades the re-frozen quote.",
+    "world_is": "Measured with the mechanism printed, not inferred. bbg_quote.quote(TR request, allowance, 0, as_of) returns finish 2026-10-17 for as_of 2026-10-09 and 2026-10-10, and finish 2026-10-18 for as_of 2026-10-11. Cause: the request is 15,720 cells and the ceiling is 5,858 a day, so pricing the FULL request needs 3 fire days, counted FORWARD from as_of. From 10-09 the first three fire days are 10-10, 10-11, 10-17 (finish 10-17); from 10-11 they are 10-11, 10-17, 10-18 (finish 10-18). quote() does not subtract the 5,858 cells t24 already drew on 10-10, so each fire day that passes slides a live re-quote one fire day later while nothing is actually late. The frozen quote on disk still reads 2026-10-17 and remains the authority (that is what freezing is for), and quote_vs_actual grades the frozen value. NO EFFECT ON THE DRAWER OR ON t27's CRITERIA: standing_drawer reads only allowance_today (5,858) from the live quote, stores no finish_date in its receipt, and passes the FROZEN quote to record_actual so cells_quoted is 15,720; AC1, AC2 and AC3 never read a finish date. Filed because the two dates sitting side by side is a false-alarm generator for a later reader or a freshness check, not because anything is wrong today.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZQ",
+    "surfaced_at": "2026-10-11T09:50:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bbg_quote.quote(TR, allowance, 0, as_of) -> finish 2026-10-17 at as_of 2026-10-09 and 2026-10-10; 2026-10-18 at as_of 2026-10-11",
+        "drawer_schedule.fire_days from each as_of: ['2026-10-10','2026-10-11','2026-10-17',...] vs ['2026-10-11','2026-10-17','2026-10-18']",
+        "15720 cells / 5858 per day = 2.68 -> 3 fire days when pricing the full request",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/requests/DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.quote.json finish_date 2026-10-17 (frozen, the authority)"
+      ]
+    }
   }
 ]
 ```
