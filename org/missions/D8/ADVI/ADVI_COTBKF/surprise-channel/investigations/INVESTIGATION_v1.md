@@ -5737,3 +5737,56 @@ round.** Never edit an existing row.
  "world_is": "The 2 other planned changes are not drift at all -- they are an artifact of this box's credentials, and counting them as drift would have mis-reported them. The class is the CLAUDE.md rule 22a RETRIEVAL shape: a failed retrieval returns a VALUE. Here an under-permissioned refresh returns 'absent' for a live resource, and terraform's plan is the consumer that converts it into a create. NOT DISARMED BY THIS SEAT: the disarm is either the two IAM grants on the dell2 agent user or a standing rule that shared-infra is not planned-for-apply from this box, and both are the CTO's; this order is plan-only and makes no AWS write. Until then the sound read of this root on dell2 is `plan -refresh=false`, and no shared-infra plan taken on this box is an apply instrument."
 }
 ```
+
+## ADVI_COTBKF-D2-S93 -- FWD-7's break-glass role exists in code only; its create is its own act, not a rider
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S93",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T06:55:50Z",
+ "one_line": "FWD-7's break-glass role was never applied: aws_iam_role.restricted_breakglass and aws_iam_role_policy.restricted_breakglass (cell CB-d-4) exist in code only. Their create is FWD-7's own never-widen act with its own pair and is NOT a rider on any shared-infra apply (CTO msg 4313). The same plan carries 2 other changes that are not drift: aws_s3_bucket.opalinvest_portal (create) and aws_s3_bucket_server_side_encryption_configuration.opalinvest_portal (replace), both artifacts of dell2's credentials (row D2-S92). The selector fix itself is drained @8c6fc7652a.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "0.7.0_AE_CloudOps~CB2 report deliverables/0.7.0_AE_CloudOps~CB2/shared_infra_plan_proof.md @6a87256d6e: CRM-PLAN resources=242 watched=12 watched_changed=2 other_changed=2; the two watched creates are the break-glass role and its inline policy; terraform state 253 rows, 0 match breakglass (control: 10 match lgic_firm); live get-role NoSuchEntity (control role found); 14 of 15 aws_iam_role resources in the plan read no-op",
+   "the same report, section 6: the 2 other changes are the portal bucket create and its encryption-configuration replace; the plan carries 2 Error blocks for cloudops-dell2-agent-user (cur:ListTagsForResource, s3:GetBucketPublicAccessBlock); head-bucket on the portal bucket reads 403 and on a nonexistent name 404; with -refresh=false both changes drop out",
+   "issuer read at 8c6fc7652a: the two infra blobs equal the blobs planned at 84457822bb (git rev-parse compared); CRM-SCOPE-SELECT managed_firm_rows=2 rows_with_attribute=1 reads_attribute=True reads_masters=False; lib/opal_naming.py validate OK, 54 system rows, 14 scope rows, 0 warnings",
+   "1.0.0_SA_CTO~DELL2 msg 4313: the proof (0 changes to the CRM statements and the firm bucket policies; the control fails at init on the old commit) is MET; drain; the role create is FWD-7's own act; no seat applies shared-infra from dell2 while it reads the portal bucket as deleted"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "FWD-7 (cell CB-d-4): the restricted prefix of the CRM zip is readable by the console user and ONE break-glass role, policy first, no byte written before it is live.",
+ "world_is": "The bucket policy statements are applied and read no-op; the break-glass role they name does not exist in AWS. The issuer ran no terraform command: every plan, state and IAM read above is the applier's. Whether any byte was written under the restricted prefix before the role existed was NOT read."
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S94",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T07:01:23Z",
+  "one_line": "L9 round 61: CB61bi1-AC2 MET. The new selector reads restricted_prefix_hosts and picks cottonwood, the row the old masters-based selector picked before 5f962296ae added masters to inflection. The record's cited lines say what it claims, the subtraction covers the 14 scope rows, and the attribute's name collides with nothing (this seat's census: 11 of 88,149 files, all this cell's own). The record's own caveat stands: no validator reads the field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_61_DRAIN_END_20261011.md @004f8ae2ce (msg 4329)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~88/CRM_SCOPE_ATTRIBUTE_RULE24.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_61_L9_GRADE_20261011.md",
+      "this seat's reads: git show 5f962296ae^:infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf line 197; the same file at HEAD line 198; git show 5f962296ae on scopes.json (masters added to inflection only); the 4 FIRM rows of scopes.json at HEAD (restricted_prefix_hosts on cottonwood only)",
+      "this seat's runs: python lib/opal_naming.py validate -> OK 54 system rows, 14 scope rows, 0 warnings; comp-find -i word-boundary census of restricted_prefix_hosts over corpus all: 16 hits in 11 of 88,149 files"
+    ]
+  },
+  "spec_asserts": "CB61bi1-AC2 (JUDGMENT, graded by 3.0.0_SA_CVO at L9): the row chosen is the row the selector chose before 5f962296ae; each postulate's evidence resolves at its cited line and the subtraction ran over every scope row; the token census carries denominators and the name collides with nothing.",
+  "world_is": "All three limbs hold. CB-bi-2 is stopped, so round 61 is not closed and its second judgment is not owed yet. No terraform command was run by this seat.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
