@@ -46,13 +46,13 @@
     "cro": "4.0.0_SA_CRO~F",
     "workers": "0.9.0_WK_DSGN_IRPTV1~<n>, per the L6 issuance"
   },
-  "coo_lane": "2.0.0_SA_COO~D",
+  "coo_lane": "2.0.0_SA_COO~D2",
   "l4r_brief_signer": {
     "serial": "4.0.0_SA_CRO",
     "authority": "CLAUDE.md Rule 27 L4-R: the CRO signs the BRIEF half (4.0.0_SA_CRO~F stated it will sign when routed, msg 100235); 3.0.0_SA_CVO signs the RATIFIED-TEXT half"
   },
   "fabric_ruling": "laptop -- D13 Design placed LAPTOP by Andrew-direct 2026-09-11 ('it will be laptop fabric'); placement attaches to the directive (LD-0498, LD-0502).",
-  "blocking": "Round 6 L6 issuance cut 2026-09-26 by 2.0.0_SA_COO~D on PRD v0.11 @e13fed2413 (ADMITTED): IV-e-33 (R1 client context) then IV-e-34 (tab-local account focus), C25/FWD-19, one chain on slot ~22, portal_ref 1e02be40; round 5's IV-e-32 still on slot ~21. Drain act: the C25 live walk on portal DEV; the pinned candidate goes to 3.0.0_SA_CVO, whose PASS triggers the pre-authorized DEV->PROD promote (CTO 101383).",
+  "blocking": "All 84 orders terminal (75 complete, 9 superseded) as of 2026-10-11. Reviewer compile from watermark 2026-10-02T03:10Z: REMEDIATION_v6 @5ee302ea91. CTO analysis: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_DSGN_IRPTV1_FROM_WATERMARK_20261002_20261011.md. Next: 2.0.0_SA_COO~D2 cuts one issuance from its section 4 (five items), /canonical-drive FULL 60m, no FAST lease.",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md",
