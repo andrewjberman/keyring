@@ -73,6 +73,22 @@ reader breaks.
    `infra/aws/lambda/ci/lambda-source-map.json` for the four file names). Do NOT edit the source map. If a function packages one,
    name it and its pin: the deployed copy then moves only at that function's next release, and the record says so.
 
+**AMENDMENT 1 (issuer, 2026-10-11, on row IRPT_BCKEND-D2-W289-S2).** The commit-time naming gate refuses the re-made
+`AnalysisUploadResult.valid.json` because the source test's principal belongs to a firm whose id is a registry spelling, and the
+handler copies it into `portfolio.owner.firm_id`. The gate is right and is not overridden. Ruling, inside this cell:
+- Re-capture the upload answer by the SAME handler path (`served.Entry.handle` to `intake/uploads.py:_normalized_response`), driven
+  from a capture script in your deliverables folder that builds the same in-memory fakes the source test builds, with ONE
+  difference: the acting principal's firm id is the synthetic id `F-49F`, which five sibling fixtures in the same folder already
+  carry. Import the test module's helpers and fakes; do not edit any file under a `tests/` folder.
+- The fixture's `instance` is that run's `data`, written as captured. No value is edited after capture. `_source` says the path,
+  the script, and that the principal's firm id differs from the source test's.
+- The record's `fixtures_made_by_handler` row for this fixture adds `differs_from_source_test: "principal firm id"`.
+- If the handler path refuses a firm id that is not in the firm registry, or the answer cannot reach NORMALIZED with it, STOP and
+  file a row saying exactly which line refuses; do not try another spelling and do not hand-edit.
+- Everything else you built stands as it is (the four schemas, `DirectoryPage.valid.json`, the validation script, the record).
+  Re-run all four criteria and the proof checker after the re-capture, then commit and flip.
+Gate limb that graded this modification: GATE (viii) (placeholders). No criterion, check or path changes.
+
 <criterion id="IB128-1-AC1" cell_refs="IB-pr-430"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r128/p128_cells.py" . IB128-1-AC1</invocation><expect>IB128-1-AC1 PASS</expect></criterion>
 <criterion id="IB128-1-AC2" cell_refs="IB-pr-430"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r128/p128_cells.py" . IB128-1-AC2</invocation><expect>IB128-1-AC2 PASS</expect></criterion>
 <criterion id="IB128-1-AC3" cell_refs="IB-pr-430"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r128/p128_cells.py" . IB128-1-AC3</invocation><expect>IB128-1-AC3 PASS</expect></criterion>
