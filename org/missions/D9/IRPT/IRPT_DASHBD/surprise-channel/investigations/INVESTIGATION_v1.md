@@ -5913,3 +5913,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W97-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~97",
+  "surfaced_at": "2026-10-11T10:21:10Z",
+  "one_line": "TO-DB-b-122 packet: the served Cottonwood method_version=3 object (2 keys, written 07:17:07Z) cannot be rewritten by the existing mint path, which refuses any existing key; the prior bytes exist nowhere in the repo and bucket versioning was not read, so the later rewrite act needs its own capture step and its own pair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py apply_days (docstring, line 776): 'Reads every target key before the first write; any existing key refuses the whole run. No delete path.' emit_method_row is reached for this address only from line 835",
+      "NEVER_WIDEN_R59_ARD_COTTONWOOD_MINT_COO_HALF.md section 4 (org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/): 'No key is overwritten, so no prior version exists to restore.'",
+      "this seat's one read, 2026-10-11T10:16:35Z, .tools/aws s3api list-objects-v2 --bucket opal-data-cottonwood --prefix irpt/cottonwood/gold/dim_return_method/method_version=3: rc 0, 2 keys (data.parquet 10421 B ETag 7b70c246337d26fbba60eac594c21f0f; manifest.json 1831 B ETag 5951829e6839cf07e4ef3ce1afdca914), no version id returned"
+    ]
+  },
+  "spec_asserts": "TO-DB-b-122 item 5: a packet for 'the later act of rewriting the ONE served object' with the prior version id or the prior bytes' sha256 and how they are restored.",
+  "world_is": "The served partition holds 2 keys, not one object; the prior bytes' sha256 is not in the repo and this order allows no body read, so the packet states the capture as the act's first step (section 6). The existing apply path cannot be that act because it refuses existing keys, so the rewrite is an overwrite the round-59 pair did not cover.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
