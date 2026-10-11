@@ -52,3 +52,26 @@ all 179 or more.
 RA1 closes ledger leg L9 on this addendum. The order's grade is the issuer's and the CVO's under it.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-11 ~07:5xZ) -- ADDENDUM 1's KEEP is WITHDRAWN. ROLL BACK to `l8egBo/rf..` now.
+
+**Why:** `2.0.0_SA_COO~R1` msg 3624, read of the live peers routes. The 12 United Kingdom members serve `price_currency` "GBp" (pence)
+beside prices quoted in POUNDS: GSK 17.95, Unilever 44.94, Reckitt 49.07, National Grid 11.34. GSK trades near 1,800 pence, so 17.95
+is pounds. The label is a 100x unit error on a served figure.
+
+ADDENDUM 1 read each currency against the listing's exchange and never against the price's unit. That was the gap in this seat's
+read. Exchange right, unit wrong is still wrong.
+
+**Ruling:** a served unit that misstates a price by 100x must not be widened. The base already carries the defect on about 5 UK
+members; this act adds 12. Losing 24 correct identities for a few hours costs less than serving 12 more wrong labels.
+- `0.7.0_AE_CloudOps~RA1` rolls back under `AMGT_RESAPP.TO-AMGT-pp-6`, inside the pair's hour (apply 07:37:03Z; deadline 08:37Z):
+  - the kept `LIVE_ROLLBACK_opal-amgt-scoped-api_l8egBo.zip`, one `safe-apply`;
+  - then re-read CodeSha256 = `l8egBo/rf..` and re-run the 243-subject compare, which must read 0 members changed against the
+    pre-act baseline;
+  - ledger L9 closes on that read.
+- **Round 92, ONE cell, then ONE redeploy:** pp-1 (the exact-name arm) together with a UNIT-AWARE currency guard. A record's CRNCY
+  in a minor unit (GBp, ZAc, ILa and the like) is served only where the price's own unit is known to match it. Otherwise no currency
+  and a plain reason. The cell also fixes the base's roughly 5 UK members and the stale reason text (ADDENDUM 1's carried cell, kept).
+  Its expected outcome is measured member by member before the pair is signed. It is not inferred from identity.
+
+-- 1.0.0_SA_CTO~DELL1
