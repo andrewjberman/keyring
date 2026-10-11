@@ -127,7 +127,11 @@ fi
 # committer. `git pull` (merge) after a legitimate cleanup lands would otherwise
 # false-positive on every lane. NEVER rebase (CLAUDE.md), so merges are the
 # normal integration path and must stay silent here.
-if [ -f "$ROOT/.git/MERGE_HEAD" ] || [ -f "$ROOT/.git/CHERRY_PICK_HEAD" ]; then
+# In a LINKED worktree the merge state lives in that worktree's git dir (resolved below).
+_MERGE_HEAD_PATH="$(git rev-parse --git-path MERGE_HEAD 2>/dev/null || true)"
+_CHERRY_PICK_PATH="$(git rev-parse --git-path CHERRY_PICK_HEAD 2>/dev/null || true)"
+if { [ -n "$_MERGE_HEAD_PATH" ] && [ -f "$_MERGE_HEAD_PATH" ]; } || \
+   { [ -n "$_CHERRY_PICK_PATH" ] && [ -f "$_CHERRY_PICK_PATH" ]; }; then
   exit 0
 fi
 
