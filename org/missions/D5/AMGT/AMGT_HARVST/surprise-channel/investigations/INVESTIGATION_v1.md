@@ -8575,6 +8575,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S7",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-11T09:58:00Z",
+     "one_line": "In bbg's first completed cycle under the re-pinned runner (20261010T221526Z, 242 of 242 attempted), all 8 failure entries carry a detail field whose value is the single word 'error', identical to the entry's status, so the detail names no cause.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-bw-2 AC3 (judgment, CVO): 242 of 242 attempted, each failure carries its own detail, a stop only on the consecutive cap. The round-79 cell text for the re-pin: failures keep their detail.",
+     "world_is": "Read from ~ZW's filed proof at 625de3ec4f (origin/box/sitez, not yet in this checkout) and the relay msg 3718: cycle 20261010T221526Z ended completed=true, stopped=none at 09:39:22Z; asked 242, attempted 242, new 6, already_held 0, failed 8. The first two AC3 clauses measure satisfied; the third reads present-but-empty: 8 of 8 failure entries have a detail field, 0 of 8 have a detail that differs from the status. NOT measured here: why the collector reports only 'error' for a failed pair, and whether the cause is in the collector or in how the cycle record copies it. This seat did not open the cycle json; it read ~ZW's proof rows. The grade on AC3 is the CVO's.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "git show 625de3ec4f:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/AMGT_HARVST.TO-HVST-bw-2.the-bbg-live-cycle-read-to-its-end.proof_of_spec.json (acceptance row AC3)",
+       "git show 625de3ec4f:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round79/bw2_bbg_cycle.out (the FAILURE lines)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
