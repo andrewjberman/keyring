@@ -39,6 +39,10 @@ D1-C-S9.**
 closes with tc-1's code ruled out. The 97 is a SKIPPED on an empty G1 read for 2026-10-09, and that path pre-dates tc-1 and
 lies outside its diff. J1 is read on the next REACHED run. Row D1-C-S10.**
 
+**ADDENDUM 10 (2026-10-11 ~12:45Z, on the 2026-10-11 11:00Z run transcribed @4e3fbbc9f5): RIV-tc-1 J1 stays NOT MEASURED.
+The Terminal session failed to start, and the enrichment leg exited 95 ('Bloomberg unreachable'), so the run did not REACH
+the leg. Row D1-C-S11.**
+
 ```json
 [
   {
@@ -261,6 +265,27 @@ lies outside its diff. J1 is read on the next REACHED run. Row D1-C-S10.**
         "git log -S 'no non-cash securities' origin/box/sitez: 14118f0a7e (RIV-e-1), ffb53529cb (RIV-s-4)",
         "git show fcb3d76903 (RIV-tc-1) hunk headers: @@ -898, -913, -930, -973, -995",
         "this file, ETFS_RIVALS-D1-C-S9"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S11",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-11T12:45Z",
+    "one_line": "RIV-tc-1 J1 stays NOT MEASURED on the 2026-10-11 11:00Z vehicle run. Every blpapi session to 127.0.0.1:8194 failed to start, the rivalfunds Bloomberg leg exited 93 and the enrichment leg exited 95 ('Bloomberg unreachable. Nothing written.'). The issuer's reader prints NOT-REACHED. This is the second post-merge run in a row that is not J1-readable, for a different cause than 10-10's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "tc-1 J1 (AMENDMENT 2): read on the first scheduled vehicle run after the merge that REACHED the enrichment leg. tw1_j1_read.py: REACHED needs the STEP line, an enrichment exit other than 97, and no vendor-session-failure line.",
+    "world_is": "- Subject: `python tw1_j1_read.py origin/box/sitez 20261011` (9550773715) and `... origin/CLOUD 20261011` (b4d4b158b9) each print STEP 1, '106: RIVALFUNDS ENRICHMENT EXIT CODE: 95 -- Bloomberg unreachable. Nothing written.', 17 vendor-session-failure lines, 0 HISTORY OWED lines, 'J1-READ: NOT-REACHED'.\n- Transcription: deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261011_1100Z.txt (@4e3fbbc9f5; the commit subject says 'Terminal SIGNED OUT'). It copies line 55 'RIVALFUNDS BLOOMBERG LEG EXIT CODE: 93 -- nothing written.', and lines 34-84 show 'session pool state=Failed', 'stopped trying to reconnect' and 'Failed to start session ... connect event failed' from 07:02:59 local. Its own verdict: 'NO ... the leg never ran. J1 is UNVERIFIABLE on this day.' Here the transcription and the reader agree.\n- Counts differ but both are non-zero: the transcription counts 21 failure lines and the reader 17. The transcription's selector also matches 'stopped trying to reconnect', and the reader's FAIL_RE does not. The verdict is the same either way.\n- Not read: why the Terminal was signed out. The vendor sign-in belongs to the Terminal's owner (integrations/bloomberg/READ_HERE.md). This seat did not open the session.\n- Post-merge runs so far: 10-10 SKIPPED on an empty G1 read (exit 97, D1-C-S10); 10-11 vendor unreachable (exit 95). Neither reached the code tc-1 changed. J1 is read on the next REACHED run.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/tw1_j1_read.py, run at origin/box/sitez 9550773715 and origin/CLOUD b4d4b158b9 for 20261011 (NOT-REACHED)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261011_1100Z.txt at origin/box/sitez (commit 4e3fbbc9f5)",
+        "this file, ETFS_RIVALS-D1-C-S10"
       ]
     },
     "disposition": "GRADUATED"

@@ -28,6 +28,7 @@ count printed. G5 counts each added member as added against a running package th
 Then it writes `<out-dir>/<new-root-name>.tar.gz` (members in sorted order, mtime 0), its sha256, the census JSON,
 and the host install script with member pins read from THIS package. Exit 0 only when G1-G4 hold. ASCII only.
 """
+import gzip
 import hashlib
 import io
 import json
@@ -107,7 +108,9 @@ def main(argv):
     bindings_path = os.path.join(pkg, "reports/resident_bindings.json")
     bindings = json.load(open(bindings_path, encoding="utf-8")) if os.path.isfile(bindings_path) else {}
     provenance = bindings.get("provenance", {})
-    opal_source = provenance.get("opal_map_source") if base_pin else None
+    # Row IRPT_YCDGEN-D2-S46: the recorded map source applies in BOTH modes. In whole-tree mode the map member has no repo
+    # path of its own name; the builder took it from `provenance.opal_map_source` at the pin.
+    opal_source = provenance.get("opal_map_source")
     added_members = {row["packaged"]: row for row in provenance.get("members_added", [])}
     differ, checked, skipped, from_list, from_added = [], 0, [], 0, 0
     for member in sorted(sums):
@@ -119,10 +122,10 @@ def main(argv):
         if member in added_members:
             path = added_members[member]["repo_path"]
             from_added += 1
+        elif member == "ycharts/research/overview_map.json" and opal_source:
+            path, expect_pin = opal_source, pin
         elif base_pin:
-            if member == "ycharts/research/overview_map.json" and opal_source:
-                path, expect_pin = opal_source, pin
-            elif path in listed:
+            if path in listed:
                 from_list += 1
             else:
                 expect_pin = base_pin
@@ -188,12 +191,16 @@ def main(argv):
           % (len(added), len(removed), len(changed), len(sums) - len(added) - len(changed), len(old), len(sums)))
 
     tar_path = os.path.join(out_dir, new_root + ".tar.gz")
-    with tarfile.open(tar_path, "w:gz") as tar:
-        for member in ["SHA256SUMS"] + sorted(sums):
-            data = open(os.path.join(pkg, member), "rb").read()
-            info = tarfile.TarInfo(name="./" + member)
-            info.size, info.mode, info.mtime = len(data), 0o644, 0
-            tar.addfile(info, io.BytesIO(data))
+    # Row IRPT_YCDGEN-D2-S46: "w:gz" writes the current time into the gzip header, so two runs over one package gave two
+    # tar hashes. The header time is pinned to 0 and no file name is stored, so the bytes depend on the members only.
+    with open(tar_path, "wb") as raw:
+        with gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0) as zipped:
+            with tarfile.open(fileobj=zipped, mode="w") as tar:
+                for member in ["SHA256SUMS"] + sorted(sums):
+                    data = open(os.path.join(pkg, member), "rb").read()
+                    info = tarfile.TarInfo(name="./" + member)
+                    info.size, info.mode, info.mtime = len(data), 0o644, 0
+                    tar.addfile(info, io.BytesIO(data))
     tar_sha = sha(open(tar_path, "rb").read())
     pins = {m: sums[m] for m in PINNED}
     library = sums["ycharts-host/ycharts_session.js"]
