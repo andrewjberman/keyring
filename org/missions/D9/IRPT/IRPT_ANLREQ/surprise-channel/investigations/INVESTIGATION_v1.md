@@ -2543,3 +2543,56 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W51-S6 -- worker row, AR-y-42
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-11T11:06:58Z",
+  "one_line": "AR-y-42: after the regeneration, iv-e-26.wire-regen.test.ts ARM 1 and ARM 2 pass (0 of 27 files changed) but its ARM 3 (the fe-s-13 content-pins subprocess) fails on two findings that do not come from this order's contract change, so Y42-WIRE-FAIL.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-26.wire-regen.test.ts at portal 890f1d0f: printed 'REGENERATION DRIFT: 0 of 27 file(s) changed by a fresh run' and 'SubmitExportResponseWire.data optional: true'; then content-pins.test.ts failed with findings [\"comparison-catalogue: response envelope no longer declares 'unprojected_grant'\", \"analysis-request-pdf: response envelope no longer declares 'unprojected_grant'\"] (3 content-pins tests red: the pin reads the live contract, the additive-tolerance arm and the mutation-harness arm). ar4_checks.py y42-wire printed '0 pass / 1 fail' and Y42-WIRE-FAIL.",
+      "docs/contracts/investor-reporting/v1/responses/comparison-catalogue.response.schema.json and analysis-request-pdf.response.schema.json @f4176d55a2: properties are contract_version, operation, firm_id, data, status; neither declares unprojected_grant (the analysis-report response schema does). portal contracts/wire/consumed.ts (last changed a134adb1) pins that envelope field for both. This order changed only OwnedAnalysisRequest.schema.json, which neither finding reads.",
+      "Not re-measured at the base: git stash is blocked in this tree, so the red was not seen on an unregenerated portal; the reading above is by the files named."
+    ]
+  },
+  "spec_asserts": "AR42-y-AC1: the portal's wire-regeneration test passes once the wire folder is regenerated from the typed contract.",
+  "world_is": "The regeneration itself is done and idempotent (ARM 1, ARM 2 green), but the same test file also runs the content-pins battery, which is red on a consumed.ts pin (unprojected_grant on two envelopes) that the served response schemas do not offer. consumed.ts is produced by gen-consumed.ts, a different generator the face did not name; it was not run and not edited.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Cell AR-y-42 is committed (portal 890f1d0f) but its criterion is not met. A fix is either regenerating consumed.ts with gen-consumed.ts or the two response schemas declaring unprojected_grant; both are outside this order's grant."
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S7 -- worker row, AR-y-42
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-11T11:06:58Z",
+  "one_line": "AR-y-42: bun run typecheck in the portal reports 13 errors after the regeneration, in 8 files; none edited. They come from the regenerated OwnedAnalysisRequestHistory.ts (items slice, unreadable_rows) and from responses.ts losing the YCD-v-6 hand-added provider-slice block the generator does not emit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun run typecheck (tsc -b --noEmit) at portal 890f1d0f: __tests__/dsgn-irptv1/iv-e-106.request-list-order.test.tsx(87,49) TS2322; iv-e-116.generate-journey.test.tsx(195,61) and (195,93) TS2739; iv-e-62.request-history.test.tsx(67,11) and (67,43) TS2739; iv-e-66.owned-item-tenant.test.tsx(55,11) TS2739; iv-e-74.history-words.test.tsx(70,11) and (70,43) TS2739; iv-e-80.history-date.test.tsx(34,7) TS2741 (unreadable_rows missing); contracts/owned-requests.ts(86,12) TS2322 -- all 'OwnedAnalysisRequestWire is missing client_id, client_claim' (the history items are now a slice, not the full request type).",
+      "contracts/wire/responses.ts(164,56) TS2339 extraction_validation, (165,52) undated_sections, (166,55) extraction_coverage do not exist on AnalysisReportWire: the generator emits AnalysisReportResponseWire.data from AnalysisReportWire members, but AnalysisReportWire is a provider union since 1c306eb3 (YCD-v-6); the committed responses.ts had a hand-added provider-slice block (AnalysisReportResponseDataWire, AnalysisReportOpalResponseDataWire, with matching exports in index.ts) that gen-wire.ts at 6398c79eb4 does not emit, so it dropped out. The test demands the folder equal the generator's output.",
+      "The workspace contract text the generator read differs from what the committed folder was last generated from: AnalysisReport.v2 schema now has retained_ref, ExportBundle.schema has custody_report_ref/narrative_state/narrative_reason, OwnedAnalysisRequestHistory.schema has the items slice and unreadable_rows."
+    ]
+  },
+  "spec_asserts": "AR-y-42: a consumer the new types break is a FINDING, not something this worker fixes.",
+  "world_is": "13 type errors across 8 files, all consumers of regenerated types; the responses.ts ones are in a generated file itself (the generator cannot render AnalysisReportWire's union members as properties).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

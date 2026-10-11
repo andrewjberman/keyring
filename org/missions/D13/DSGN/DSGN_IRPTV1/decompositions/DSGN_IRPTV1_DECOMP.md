@@ -509,3 +509,25 @@ correction kind). The producer's smoke-map pin (`test_seam_paired.py`) is IRPT_B
 vocabularies local to these cells, not a served enum.
 
 fanout: 1 of 1 chains, cap 8, reason: every portal-editing cell runs in series on one slot.
+
+## v18 -- round 18 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~11:2xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2's ruling msg 4798
+
+**Rectangle:** one cell, handed to this project by ruling: the portal's generated wire folder is regenerated WITH its consumers. A sibling
+workstream (IRPT_ANLREQ AR-y-42) regenerated the folder and stopped on 13 type errors and dropped hand-added exports; its portal branch
+`wk-IRPT_ANLREQ-51-portal-r4` @890f1d0f3d is the input, and rows IRPT_ANLREQ-D2-W51-S6 (BLOCKING) and -S7 move here with it.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-98 | a generated folder holds generator output and nothing else: each hand-added export emitted by the generator or moved outside; one command runs gen-wire and gen-consumed; the drift test covers both; the consumers fixed at their cause; IVE26-AC3 | IRPT_ANLREQ-D2-W51-S6, S7; DSGN_IRPTV1-D2-W50-S1 (IVE26-AC3) | SERVED | A ~54, behind IV-e-96 | portal/src/pages/InvestorReporting/contracts/, portal/scripts/ |
+
+**Order on the one portal slot (the issuer's ruling):** IV-e-96 (running) -> IV-e-95 part 2 under AMENDMENT 3 (the map at 16) -> IV-e-98 ->
+IV-e-97. IV-e-98 goes before the tooling cell because the CTO placed it "behind the Holdings face" and IV-e-97's lock refresh is easier to
+prove byte-equal on a settled tree.
+
+**Also owned here now, not cut:** the portal readers that refuse five valid producer fixtures (row D2-W53-S4; record
+`deliverables/2.0.0_SA_COO~D2/FIVE_FIXTURES_VS_CONTRACT_20261011.md`): cut on the CTO's word.
+
+**Rule 24:** the record's outcome words (GENERATOR_EMITS / MOVED_OUTSIDE; FIXED / NOT_FIXED) are measurement vocabularies local to this
+cell, not a served enum.
+
+fanout: 1 of 1 chains, cap 8, reason: every portal-editing cell runs in series on one slot.
