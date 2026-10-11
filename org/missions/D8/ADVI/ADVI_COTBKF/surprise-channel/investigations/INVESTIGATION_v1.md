@@ -6516,3 +6516,27 @@ round.** Never edit an existing row.
  "world_is": "The price input's as_of is a second live read (the price store object's LastModified today), so the input's file hash is not reproducible either; the returns are. Not established: whether any consumer reads the as_of column or the input's sha256. Not changed here (the order pins the split store only)."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S116",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T13:18:17Z",
+  "one_line": "L9 round 67: CB67bo2-AC2 MET. Re-derived by this seat from the two price tables: 3,034 points differ on 4 securities, each scaled by one constant equal to the reciprocal of its factor, every moved date before the entry's date. Independence from the store rests on the custodian's corporate-action rows, which the worker read and this seat did not. One fact for the CTO's open question on spin-offs: the return on the event's own date moves by 0.00004; the differences are spread over the weeks before it in both directions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_67_DRAIN_END_20261011.md @2326dc3955 (msg 4966)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_67_L9_GRADE_20261011.md",
+      "this seat's own diff 2026-10-11T13:18:17Z of the served run's price table (.scratch/advi_cotbkf/r34/after/security_day_price.parquet) against today's (wk-cotbkf-80/.scratch/w97/r28/after), 2,124,908 rows each, 0 rows on one side only: 3,034 points differ, on 4 securities, 649 / 1,876 / 392 / 117; for each the last differing date is the day before the entry's date (2022-04-10, 2025-10-29, 2021-09-30, 2020-11-16) and the ratio of old to new price is one constant per security (0.7553, 0.9425, 0.9470, 0.9488), the reciprocal of the entry's factor. On the returns: the 28 differing values are in 1 account, both signs (11 up, 17 down), the largest on 2020-11-09, and the difference on the entry's own date 2020-11-17 is 0.00004. Printed: commonwealth_flows.py:73 and :80 (the two corporate-action row types are internal, no value crosses the boundary)"
+    ]
+  },
+  "spec_asserts": "CB67bo2-AC2 (JUDGMENT, graded by 3.0.0_SA_CVO at L9): each class rests on evidence independent of the store; 'dated before the days they move' is shown per CUSIP with its dates; an unconfirmed split is called unconfirmed.",
+  "world_is": "All three limbs hold. Not read by this seat: the custodian's rows; Proof A's run. Round 66's fourth limb is still open: the two rules have not been compared at the served instant's pin.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

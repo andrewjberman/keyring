@@ -918,6 +918,51 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "HG-t9 TO line 78: 'All three FAIL at the base (T9-BAD ..., T9IAM-BAD ..., GATE-BAD ...)'; HG3-t9-AC1 expects T9-OK on the rule's presence and schedule.",
     "world_is": "At the start tree the T9 rule check already passes without the v2 patch (the rule was merged at v1). AC1 therefore gives no signal on the v2 change; AC2 and AC3 do fail on the start tree as the order states.",
     "notes": "Recorded only: the order's sentence is quoted, not corrected. The AC1 PASS on the patched tree is correct for the rule but is not evidence that this cell's v2 patch changed the rule. For the CVO's L9 read."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W11-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~11",
+    "surfaced_at": "2026-10-11T13:25:59Z",
+    "one_line": "The top-of-file WHY block of satellites-characteristics-producer.tf (lines 34-35) names the registry producer's cron(0 7 * * ? *) rule as this trigger's anchor. The file's finality input, holdings.json, is final only at the stamp-gated cron(15 13 * * ? *) fire, which that block does not mention. Outside the three edits HG-t-14 names; not edited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf lines 34-35 at 60ee1f8f3d: the anchor is 'cot-satellites-registry-producer-daily   cron(0 7 * * ? *)   UTC'",
+        "infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf lines 304-307 (cot_satellites_registry_producer_daily, cron(0 7 * * ? *)) and lines 334-337 (cot_satellites_registry_producer_stamp_gated, cron(15 13 * * ? *)) at 60ee1f8f3d; hg_t14_schedule.py printed stamp_gated=cron(15 13 * * ? *)",
+        "Worktree edit for HG-t-14: schedule_expression changed to cron(25 13 * * ? *); the top-of-file block was left as found"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The file's top-of-file WHY block: this trigger's anchor is the registry producer's daily UTC cron at 07:00Z, so a constant UTC margin holds to a UTC-cron upstream.",
+    "world_is": "The registry producer still carries the 07:00Z daily rule, and holdings.json is final only at the stamp-gated 13:15Z fire. The block names only the 07:00Z rule, so it does not describe the input this trigger now clears. The UTC-cron reasoning itself still holds.",
+    "notes": "Recorded only; no edit made. The CVO or the issuer decides whether the top-of-file block is re-worded in a later cell."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S13",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-11T13:42Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "safe-apply's seat gates ran in WARN mode on this seat's round-3 applies and printed APPLY-WHO verdict=REFUSED ('a COO does not apply') and CROSSBOX-DEPLOY verdict=STOP; both would stop the act under ENFORCE, and the signed halves name this COO as the acting seat.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-apply output of the HG-t-14 apply (cot-pipeline, 2026-10-11 ~13:3xZ), lines 1-4: '[seat-gates] mode=WARN APPLY-WHO serial=2.0.0_SA_COO~G1 kind=COO root=cot-pipeline verdict=REFUSED reason=a COO does not apply; it cuts or spawns, a CLOUDOPS or TIER2 seat applies'; 'OPEN-DEPLOY: open deploy secclass-cot-repoint-m-20261002 (author 2.0.0_SA_COO~M, status OPEN, opened 2026-10-02T05:40:50Z) names the root (token cot-pipeline)'; 'would stop under ENFORCE ( apply-who crossbox-deploy ); WARN mode proceeds.'",
+        "safe-apply output of the HG-t-5 apply (opal-assets, 2026-10-11 13:41Z), lines 1-4: the same APPLY-WHO REFUSED line with root=opal-assets and 'OPEN-DEPLOY: open deploy adhoc-partner-roster-t1 (author 0.7.0_AE_CloudOps~DELL1, status OPEN, opened 2026-10-09T02:21:29Z) names the root'.",
+        "Each plan was a saved one-target plan reading only the rule named by the signed half (HG-t-14: 0 add 1 change; HG-t-5: 0 add 1 change); neither open deploy's resources were in either plan.",
+        "The two earlier applies of this round (bd-pipeline act 3, cot-pipeline act 1) went through the same wrapper; this seat's reading of their output was filtered and tailed, the seat-gate lines were not read, and the same gate is presumed to have printed the same WARN (NOT verified)."
+      ]
+    },
+    "spec_asserts": "The never-widen halves for round 3 name 2.0.0_SA_COO~G1 on dell1 as the acting seat for each apply (R2 act 1's pattern) and the CTO signed them; the apply step of each half reads 'the targeted plan reads exactly ...' as the only condition at apply time.",
+    "world_is": "The wrapper's APPLY-WHO gate holds a rule that a COO does not apply and a CloudOps or Tier-2 seat does; it is in WARN, so four applies landed. Under ENFORCE they would each stop at APPLY-WHO and at CROSSBOX-DEPLOY (an open deploy by another seat naming the same root). No harm is measured: every plan was one rule. What is open is which seat applies a signed half's act, and whether an open deploy by another seat that names the root should hold a targeted one-rule apply. REMEDY (owner 1.0.0_SA_CTO~DELL1): rule which seat applies in the halves that follow (the retirement pair for the 07:00Z rule and HG-t-10), and either seat a CloudOps lane for the apply or have the half name the COO as acting seat with the gate's mode ruled; this seat does not choose.",
+    "notes": "Recorded and disclosed, no edit to the gate. The gate lines were in the output of every apply; this seat should have read them at the first apply, not the fourth. UNDER_INVESTIGATION is deliberate: GRADUATED is the CVO's L9 field."
   }
 ]
 ```

@@ -96,7 +96,7 @@ _PROBE_P, _PROBE_O = "zzprobep", "zzprobeo"
 # rewritten by key, so it names none.
 VIEWS = (
     ("data/firm_registry.json", "json", ()),
-    ("infra/aws/lambda-edge/_shared/firm-config.mjs", "mjs", ("FIRM_CONFIG",)),
+    ("infra/aws/lambda-edge/_shared/firm-config.mjs", "mjs", ("FIRM_CONFIG", "OWNERSHIP_KEYS")),
     ("data/assets/scripts/gold/investor_reporting/directory_runner.py", "py", ("firm_bucket_map",)),
     ("data/assets/scripts/gold/investor_reporting/holdings_snapshot.py", "py", ("firm_bucket_map",)),
     ("infra/aws/lambda/investor-reporting/_authz/loaders.py", "py", ("bucket_for",)),
@@ -110,6 +110,10 @@ VIEWS = (
     (PLATINUM_DEST_VIEW_LAMBDA_PATHS[0], "py", ("PLATINUM_DESTINATIONS",)),
     (PLATINUM_DEST_VIEW_LAMBDA_PATHS[1], "py", ("PLATINUM_DESTINATIONS",)),
 )
+
+# A block that a hand-kept carrier does not hold yet lands right after its anchor block (the first generate only;
+# every later generate finds the block by its own marks). OWNERSHIP_KEYS follows FIRM_CONFIG (FB-g-12).
+AFTER_BLOCK = {"OWNERSHIP_KEYS": "FIRM_CONFIG"}
 
 # Targets the generator owns WHOLE: the file is nothing but its generated block(s), so _render_view builds it
 # from the blocks alone and never reads a base (the first generate creates it). Every other VIEWS carrier is a
@@ -147,15 +151,19 @@ WHOLE_FILE_TARGETS = (
 #     mechanically resolvable: the mark format requires at least one file, and the true read set is empty).
 TARGET_REGISTRY_KEYS = {
     "data/firm_registry.json": ("scopes",),
-    "infra/aws/lambda-edge/_shared/firm-config.mjs": ("scopes",),
+    # OWNERSHIP_KEYS (ADVI_FIRMBKTS FB-g-12, CTO ADDENDUM 4) -- _blk_ownership_keys() reads the ownership legacy
+    # address rows (legacy_addresses), the platinum class rows (platinum_destinations, through
+    # _platinum_build()), the tenants (scopes), and key()/_home_bucket() reads systems and tiers.
+    "infra/aws/lambda-edge/_shared/firm-config.mjs": ("legacy_addresses", "platinum_destinations", "scopes", "systems",
+                                                      "tiers"),
     "data/assets/scripts/gold/investor_reporting/directory_runner.py": ("scopes",),
     "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py": ("scopes",),
     "infra/aws/lambda/investor-reporting/_authz/loaders.py": ("scopes",),
     "data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py": ("scopes", "tiers"),
     ".tools/ds-precommit-check.py": ("scopes",),
     # ASSET_DIM_REST_PIN -- _blk_asset_dim_rest_pin() reads the scope row only (its key, short,
-    # pipeline_trees[].vendor and the routed bucket alias). It does NOT read tiers.json: this
-    # pipeline is pre-LGIC and its bronze sits in the firm's ROUTED bucket alias, not the tier
+    # pipeline_trees[].vendor and its tier_live bronze bucket, scopes.json). It does NOT read tiers.json: this
+    # pipeline is pre-LGIC and its bronze sits in the scope's transitional tier_live bucket, not the tier
     # home, so a tiers.json move must leave these bytes unchanged (r6-undeclared-inert). It does
     # not read systems.json either -- the key grammar is a format, and the source token comes
     # from the scope's own pipeline_trees row.
@@ -166,7 +174,9 @@ TARGET_REGISTRY_KEYS = {
     # VENDOR_DISPLAY_NAMES (DSGN_IRPTV1 W2-19 / UIC-14, IV-e-117; CTO 102443 "never a hand-typed map"; landed by
     # 1.0.0_SA_CTO 2026-09-30 on 2.0.0_SA_COO~D 103272) -- _blk_vendor_display_names() reads systems.json VENDOR rows only.
     "portal/src/pages/InvestorReporting/header/vendorDisplayNames.generated.ts": ("systems",),
-    LOCALS_PATH: ("scopes", "exemptions", "tiers", "feeds"),
+    # platinum_prefix (ADVI_FIRMBKTS FB-g-13) -- _platinum_prefixes() reads the platinum rows and key() (the source's
+    # systems.json key, the scope's scopes.json long form), and _home_bucket() reads tiers.json (the bucket).
+    LOCALS_PATH: ("scopes", "exemptions", "tiers", "feeds", "platinum_destinations", "systems"),
     BRONZE_HOMES_PATH: ("scopes", "tiers", "feeds"),
     # PLATINUM_DESTINATIONS (ADVI_FIRMBKTS FB-f-9, CTO ADDENDUM 3) -- _platinum_build() reads the row, key() reads
     # systems.json (the source) and scopes.json (the long form), and _home_bucket() reads tiers.json (the bucket).
@@ -368,6 +378,22 @@ def _routed_bucket(scope_row):
     return scope_row["bucket"]
 
 
+def _irpt_bucket(reg, scope_row):
+    """The bucket the IRPT readers and writers address: the transitional live row (scopes.json product_live, keyed by
+    the PRODUCT scope lookup() resolves for the IRPT product) while IRPT_BCKEND's move is pending, else the routed
+    bucket. A scope with no such row keeps its routed bucket."""
+    product = lookup("irpt", reg)["key"]
+    live = ((scope_row.get("product_live") or {}).get(product) or {}).get("bucket")
+    return live if live else _routed_bucket(scope_row)
+
+
+def _tier_live_bucket(scope_row, tier):
+    """The bucket a scope's data of one tier LIVES in today (scopes.json tier_live), or None.
+
+    A transitional record of where a tier sits now; it never moves the served (routed) bucket."""
+    return ((scope_row.get("tier_live") or {}).get(tier) or {}).get("bucket")
+
+
 def _buckets_of_firms(reg):
     """Every provisioned bucket of a FIRM scope: its bucket and its bucket aliases."""
     out = []
@@ -468,6 +494,48 @@ def validate(reg_dir=None, systems_file=None):
                 refuse(where, "vendor", "%r is not a VENDOR system row" % row.get("vendor"))
         if not isinstance(row.get("bucket_provisioned"), bool):
             refuse(where, "bucket_provisioned", "missing: true or false")
+        if "tier_live" in row:
+            tl = row["tier_live"]
+            if not isinstance(tl, dict):
+                refuse(where, "tier_live", "a dict of tier -> live record")
+            else:
+                for tier, live in tl.items():
+                    lw = "%s.tier_live.%s" % (where, tier)
+                    if tier not in tiers:
+                        refuse(lw, "tier", "%r is not a tier of tiers.json (NAMING_SCHEMA.json key.tier)" % tier)
+                    if not isinstance(live, dict):
+                        refuse(lw, "record", "a dict of bucket, transitional, owner and expiry")
+                        continue
+                    if not isinstance(live.get("bucket"), str) or not live.get("bucket"):
+                        refuse(lw, "bucket", "missing or empty")
+                    if not isinstance(live.get("transitional"), bool):
+                        refuse(lw, "transitional", "missing: true or false")
+                    for f in ("owner", "expiry"):
+                        if not isinstance(live.get(f), str) or not live.get(f).strip():
+                            refuse(lw, f, "missing or empty")
+        if "product_live" in row:
+            pl = row["product_live"]
+            if not isinstance(pl, dict):
+                refuse(where, "product_live", "a dict of PRODUCT scope key -> transitional live record")
+            else:
+                for pkey, live in pl.items():
+                    lw = "%s.product_live.%s" % (where, pkey)
+                    try:
+                        prow = lookup(pkey, reg)
+                    except KeyError:
+                        prow = {}
+                    if prow.get("key") != pkey or prow.get("class") != "PRODUCT":
+                        refuse(lw, "product", "%r is not a scope key of class PRODUCT in scopes.json" % pkey)
+                    if not isinstance(live, dict):
+                        refuse(lw, "record", "a dict of bucket, transitional, owner and expiry")
+                        continue
+                    if not isinstance(live.get("bucket"), str) or not live.get("bucket"):
+                        refuse(lw, "bucket", "missing or empty")
+                    if not isinstance(live.get("transitional"), bool):
+                        refuse(lw, "transitional", "missing: true or false")
+                    for f in ("owner", "expiry"):
+                        if not isinstance(live.get(f), str) or not live.get(f).strip():
+                            refuse(lw, f, "missing or empty")
         for sp in _spellings(row):
             if by_spelling.get(sp, key) != key:
                 refuse(where, "aliases", "%r already resolves to scope %r" % (sp, by_spelling[sp]))
@@ -871,7 +939,7 @@ def _firm_registry_rows(reg):
             "aliases": [sp for sp, pl in planes if "catalog" in pl],
             "kind": t["kind"],
             "enabled": t["enabled"],
-            "bucket": _routed_bucket(s),
+            "bucket": _irpt_bucket(reg, s),
             "email_domain": t.get("email_domain"),
             "scopes": dict(t["surfaces"]),
         }
@@ -960,8 +1028,65 @@ def _blk_firm_config(reg, h16, path):
     return _block("FIRM_CONFIG", h16, "//", path, "\n".join(lines))
 
 
+def _ownership_canonical(reg, legacy):
+    """The producers' seam's canonical key for a legacy key (lib/platinum_dest.py, canonical mode): the class whose
+    legacy prefix starts the key, its key template with the tail filled. A key no class owns is its own identity."""
+    for row in sorted(_platinum_rows(reg), key=lambda r: r["legacy_prefix"]):
+        if legacy.startswith(row["legacy_prefix"]):
+            _bucket, tmpl = _platinum_build(reg, row)
+            return tmpl.replace(PLATINUM_TAIL, legacy[len(row["legacy_prefix"]):])
+    return legacy
+
+
+def _ownership_owners(reg):
+    """{firm: legacy template} for every REGISTERED legacy ownership-map address: the legacy_addresses.json rows whose
+    key ends -ownership-map with shape object. A row's owner is the scope of the destination class (platinum_destinations
+    .json) whose legacy_prefix starts the row's template. A row no class owns, or an owner FIRM_CONFIG does not list, is a
+    RegistryError. Nothing is typed per firm and no key template is built here (ADVI_FIRMBKTS FB-g-12, amendment 1)."""
+    doc = reg.get("legacy_addresses")
+    if not isinstance(doc, dict):
+        raise RegistryError("infra/logic/registry/legacy_addresses.json is absent from this package")
+    tenants = [tid for tid, _s, _t, _own in _tenants(reg)]
+    classes = sorted(_platinum_rows(reg), key=lambda r: r["legacy_prefix"])
+    owners = {}
+    for row in doc.get("legacy_addresses", []):
+        if not (str(row.get("key", "")).endswith("-ownership-map") and row.get("shape") == "object"):
+            continue
+        tmpl = row["template"]
+        cls = next((c for c in classes if tmpl.startswith(c["legacy_prefix"])), None)
+        if cls is None:
+            raise RegistryError("legacy address %r (template %r) is owned by no platinum destination class"
+                                % (row["key"], tmpl))
+        owner = cls["scope"]
+        if owner not in tenants:
+            raise RegistryError("legacy address %r is owned by %r, which FIRM_CONFIG does not list"
+                                % (row["key"], owner))
+        if owner in owners:
+            raise RegistryError("firm %r owns two registered ownership-map addresses" % owner)
+        owners[owner] = tmpl
+    return owners
+
+
+def _blk_ownership_keys(reg, h16, path):
+    """Firm -> {legacy, canonical} ownership-map keys for the validator (ADVI_FIRMBKTS FB-g-12; CTO ADDENDUM 4; amendment
+    1): one entry per firm that owns a registered legacy ownership-map address, in FIRM_CONFIG order, and no other firm.
+    legacy is the registered row's template exactly; canonical is the producers' seam destination for it."""
+    owners = _ownership_owners(reg)
+    lines = ["export const OWNERSHIP_KEYS = Object.freeze({"]
+    for tid, _s, _t, _own in _tenants(reg):
+        if tid not in owners:
+            continue
+        legacy = owners[tid]
+        lines += ["  %s: Object.freeze({" % _js_str(tid),
+                  "    legacy:    %s," % _js_str(legacy),
+                  "    canonical: %s," % _js_str(_ownership_canonical(reg, legacy)),
+                  "  }),"]
+    lines.append("});")
+    return _block("OWNERSHIP_KEYS", h16, "//", path, "\n".join(lines))
+
+
 def _blk_firm_bucket_map(reg, h16, path):
-    m = {tid: _routed_bucket(s) for tid, s, _t, _own in _tenants(reg)}
+    m = {tid: _irpt_bucket(reg, s) for tid, s, _t, _own in _tenants(reg)}
     body = ('def firm_bucket_map() -> "dict[str, str]":\n'
             '    """Every tenant\'s bucket, generated from the identity registry (LGIC_ENFORCE DEC-5)."""\n'
             "    return " + _py_lit(m, 4))
@@ -1030,9 +1155,11 @@ def _blk_asset_dim_rest_pin(reg, h16, path):
     if not trees:
         raise RegistryError("scope 49financial registers no pipeline tree vendor")
     vendor = trees[0]["vendor"]
-    bucket = next((a["spelling"] for a in (scope.get("aliases") or [])
-                   if "bucket" in (a.get("planes") or []) and a.get("routed")), scope["bucket"])
     tier, table = "bronze", "assets_dim_rest"
+    bucket = _tier_live_bucket(scope, tier)
+    if bucket is None:
+        raise RegistryError("scope %s has no tier_live row for tier %s: add one to scopes.json"
+                            % (scope["key"], tier))
     pin = {
         "scope": scope["key"],
         "scope_short": scope["short"],
@@ -1154,6 +1281,7 @@ BLOCKS = {
     "BRONZE_HOMES": _blk_bronze_homes,
     "PLATINUM_DESTINATIONS": _blk_platinum_destinations,
     "FIRM_CONFIG": _blk_firm_config,
+    "OWNERSHIP_KEYS": _blk_ownership_keys,
     "firm_bucket_map": _blk_firm_bucket_map,
     "bucket_for": _blk_bucket_for,
     "FIRM_TREES": _blk_firm_trees,
@@ -1217,7 +1345,14 @@ def _render_view(path, syntax, tags, reg, h16):
     text = base
     for tag in tags:
         lines = text.split("\n")
-        found = _find_marked(lines, tag, comment) or span(text, tag)
+        found = _find_marked(lines, tag, comment)
+        if found is None and tag in AFTER_BLOCK:
+            # first generation of a block that follows its anchor block: it lands right after the anchor's END line
+            anchor = _find_marked(lines, AFTER_BLOCK[tag], comment)
+            if anchor is None:
+                raise RegistryError("%s: no [%s] block to follow for [%s]" % (path, AFTER_BLOCK[tag], tag))
+            found = (anchor[1], anchor[1])
+        found = found or span(text, tag)
         text = "\n".join(lines[:found[0]] + BLOCKS[tag](reg, h16, path) + lines[found[1]:])
     if syntax == "py":
         ast.parse(text)
@@ -1240,6 +1375,31 @@ def _hcl(obj, indent=0):
     if isinstance(obj, list):
         return "[%s]" % ", ".join(_hcl(x) for x in obj)
     return json.dumps(obj)
+
+
+def _platinum_prefixes(reg):
+    """scope long form -> the canonical served-platinum prefix of that scope's bucket (ADVI_FIRMBKTS FB-g-13): the
+    common directory path of every class template _platinum_build() places in the bucket the scope's rows land in,
+    which must end in /platinum/ (RegistryError when it does not). A scope with no platinum row has no entry."""
+    by_bucket = {}
+    for row in _platinum_rows(reg):
+        bucket, tmpl = _platinum_build(reg, row)
+        by_bucket.setdefault(bucket, []).append((lookup(row["scope"], reg)["long"], tmpl))
+    out = {}
+    for bucket in sorted(by_bucket):
+        items = by_bucket[bucket]
+        common = []
+        for segs in zip(*[t.split("/")[:-1] for _s, t in items]):
+            if len(set(segs)) != 1:
+                break
+            common.append(segs[0])
+        prefix = "/".join(common) + "/"
+        if not prefix.endswith("/platinum/"):
+            raise RegistryError("the platinum templates of bucket %s share %r, which does not end in /platinum/"
+                                % (bucket, prefix))
+        for scope in {s for s, _t in items}:
+            out[scope] = prefix
+    return out
 
 
 def _gen_locals(reg, h16):
@@ -1268,6 +1428,8 @@ def _gen_locals(reg, h16):
         "  account_id = " + json.dumps(reg["exemptions"]["account_id"]),
         "  # every bronze feed the MDPF pipeline writes by its builder address: feed -> {bucket, key_prefix} (_bronze_homes())",
         "  bronze_homes = " + _hcl(_bronze_homes(reg), 2),
+        "  # every scope the destination registry places: long form -> its bucket's canonical served-platinum prefix (_platinum_prefixes())",
+        "  platinum_prefix = " + _hcl(_platinum_prefixes(reg), 2),
         "}",
     ]
     return "\n".join(parts) + "\n"

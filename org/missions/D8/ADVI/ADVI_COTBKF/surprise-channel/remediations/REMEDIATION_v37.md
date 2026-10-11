@@ -52,11 +52,11 @@ Graduated, round label v65: 2 rows, OPEN, INERT.
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v65",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v65"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

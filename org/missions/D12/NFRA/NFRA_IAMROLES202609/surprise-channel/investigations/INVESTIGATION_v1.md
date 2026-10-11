@@ -1997,3 +1997,35 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+## Z-S42 -- my pre-apply inbox guard reads FALSE CLEAN from a worktree, because the inbox path does not exist there; and it over-counts by one from the shared tree
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S42",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~IR",
+    "surfaced_at": "2026-10-11T13:35:00Z",
+    "one_line": "The pre-apply inbox check this lane has cited in three apply records is unsound in three ways, and one of them fails toward CLEAN: run from a linked worktree, `ls -1 org/mcp/inbox/<base>/~<lane>/ | grep -vc '^read$'` prints 0 because THE INBOX PATH DOES NOT EXIST THERE, not because no mail is waiting -- and a worktree is exactly where a seat runs an apply under rule 14b. From the shared tree the same expression prints 1 against an empty inbox, because `ls -1` renders the read/ DIRECTORY with a trailing slash so `^read$` never matches it; and `ls -1` also hides the dotfiles that are the only real files in that directory. The substance was fine on every occasion (zero unread, verified by reading the directory), but the instrument established nothing, and a ~lane seat has no HALTGT either, so this check is the only pre-apply mail guard such a seat has.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "cloud-ops / ADHC_HALTGT: a `~lane` agent is structurally unhaltable, so HALTGT cannot be cited and the seat must read its inbox directly before an irreversible apply. This lane's x-5 and x-1-row-6 apply records both state 'inbox read directly immediately pre-apply' and quote a count from the expression above; the x-6 record quotes it printing 1.",
+    "world_is": "THREE DEFECTS, ALL MEASURED. (1) FAILS TOWARD CLEAN FROM A WORKTREE: in C:/tmp/iam-w1b, `test -d org/mcp/inbox/0.7.0_AE_CloudOps/~IR` returns FALSE -- the inbox is not checked out there -- so `ls -1 ... 2>/dev/null | grep -vc '^read$'` prints 0. That is indistinguishable from a genuinely empty inbox and it is the reading x-5's apply record cites. A worktree is where rule 14b sends a seat to commit, and this lane ran two of round 7's applies from one. (2) OVER-COUNTS BY ONE FROM THE SHARED TREE: `ls -1` renders the subdirectory as 'read/', which `^read$` does not match, so the directory itself is counted as an item; against an empty inbox the expression prints 1. In the x-6 apply I printed 1, read it as 'a message is waiting', and APPLIED ANYWAY -- the order of operations was wrong independently of the count being wrong. (3) HIDES THE ONLY REAL FILES: `ls -1` omits dotfiles, and the only regular files directly in that directory are `.unread-deliveries` (2310 B) and `.watcher.owner` (8 B), both state markers. So the expression's denominator is not what it appears to be -- the same class as the `.unindexed_red_state.json` lesson that made `ls -a` load-bearing in the NEVER-2 sentinel checks. THE SOUND FORM is to count message files by their own shape: `ls -a <lane inbox> | grep -c '^2026.*\\.md$'`, which returns 0 unread against 30 in read/, and to run it from a path where the inbox exists -- or better, to use `check_inbox`/`get_delivery_state`, whose answer does not depend on which checkout the shell is sitting in. WHAT WAS AND WAS NOT AT RISK: on all three occasions the inbox was genuinely empty of unread messages, confirmed afterwards by reading the directory with `ls -a`, so no apply in round 7 was taken over unread mail. The defect is in the evidence, not in the acts: three apply records cite a guard that could not have detected mail, and one of them (x-5) cites the failing-toward-clean form.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "shared tree: ls -1 org/mcp/inbox/0.7.0_AE_CloudOps/~IR -> a single line 'read/'; grep -vc '^read$' -> 1",
+        "shared tree: ls -la of the same directory -> .unread-deliveries (2310 B), .watcher.owner (8 B), read/ -- the two files invisible to ls -1",
+        "shared tree: ls -a | grep -c '^2026.*\\.md$' -> 0 unread; ls -1 read/ | grep -c '^2026.*\\.md$' -> 30",
+        "worktree C:/tmp/iam-w1b: test -d org/mcp/inbox/0.7.0_AE_CloudOps/~IR -> NO; the same expression -> 0",
+        "the x-6 apply record (POST_APPLY_smartx.md section 5) states the slip and the three defects",
+        "x-5's POST_APPLY_portal_s3.md and x-1's row-6 entry both cite the guard"
+      ]
+    },
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "notes": "ARMED rather than INERT because the failing-toward-clean form is still what a seat would write next time, and because a ~lane seat has no other pre-apply mail guard -- HALTGT cannot see it. The disarm is cheap and is not this seat's to land in a shared tool: either the one-line sound form above, or a note in cloud-ops that the direct-read guard must run where the inbox is checked out. FILED AGAINST MYSELF: I wrote the expression, cited it three times, and on the third occasion printed a number that contradicted my action and proceeded anyway. The acts were safe; the evidence was not. Cites the ls -1 / ls -a lesson that NEVER-2's own sentinel checks already encode, which is why `ls -a` appears in every AC3 invocation this round -- the same trap, caught there by the issuer and missed here by me. Dispositions stay the CVO's at L9."
+  }
+]
+```

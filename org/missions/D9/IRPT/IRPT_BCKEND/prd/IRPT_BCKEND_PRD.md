@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.34",
+ "prd_version": "v0.36",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -795,5 +795,70 @@ ENDPOINT is not edited.
   the day after, and a scheduled producer runs after both. A day graded before its anchor lands is `UNGRADEABLE`, never `OWN_DATE`.
 - **Consumers, named before any release (the lesson of 2026-10-11):** the release that first serves this gold names every reader of the holdings
   gold and of the performance route with its key policy, and one read through each, in its pair.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.35 -- ADDENDUM v0.34's date-basis claim, repaired on the reviewer's two defects (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `3.0.0_SA_CVO`'s refusal of the v0.34 ratified-text half,
+  `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_PRD_v0.34_RATIFIED_TEXT_REVIEW_20261011.md` @3f67123932. Both defects are accepted.
+  **This addendum REPLACES v0.34's four claim bullets, its "daily order" sentence on the ungraded day, and its cost figure. The ENDPOINT is
+  unchanged, and so is v0.34's serving rule in direction.**
+- **The claim, one per account-day, decided in THIS order; the first that applies is the claim:**
+  1. `UNGRADEABLE`: the account-day holds ONE OR MORE priced securities the instrument cannot place at a close, **whatever its other rows
+     read**. It carries `ungradeable_kinds`, the list of EVERY kind present, from a closed set of five: `ANCHOR_NOT_LANDED` (the anchor's close
+     for day t or for the prior trading day is not in hand when the day is graded), `OUTSIDE_ANCHOR`, `NO_CUSIP`, `NEITHER_CLOSE`,
+     `NEGATIVE_POSITION`. A list, so no kind hides another.
+  2. `PRIOR_DATE`: no row is ungradeable and one or more gradeable moved securities sit at the prior trading day's close.
+  3. `OWN_DATE`: no row is ungradeable and every gradeable moved security sits at its own date's close.
+  4. `NOTHING_TO_GRADE`: the account-day holds nothing whose value depends on the date basis (cash, or rows with no price).
+- **Defect 1, repaired by the reviewer's option (a).** Under v0.34 a day whose graded rows were on their own date and which also held an
+  ungradeable priced security read `OWN_DATE` and was served; part of its value sat on a basis nobody measured. It is now `UNGRADEABLE` and blank.
+- **Defect 2, repaired by a fifth kind.** `ANCHOR_NOT_LANDED` is the only kind a later grading can remove: a day that carries it is graded again
+  once the anchor is in hand, and the stamp is replaced. The other four kinds are properties of the positions and move only when the
+  instrument or the anchor's coverage changes.
+- **The value named `PRIOR_CLOSE` in v0.34 is renamed `PRIOR_DATE`.** The token `PRIOR_CLOSE` is already a value of another field
+  (`level_as_of_type`, a report setting: `intake/settings.json:48`, `ycharts/generate/recipe.py:87`, `recipe_snapshot.py:23`). No producer of
+  the claim is built, so the rename costs nothing.
+- **The cost is NOT known under this rule and v0.34's figure is withdrawn as a floor only:** at least 25.0 percent of 75,796 eligible
+  account-days are blank, and at least 169 of 999 accounts are never served. The repair can only blank more days. **The first cell under this
+  addendum re-counts the claims under the order above, on the same 85 partitions, and prints how many days moved from `OWN_DATE` to
+  `UNGRADEABLE`.** No gold producer is cut before that count is read by this seat.
+- **Rule 24, the four postulates, for `date_basis_claim` and for `ungradeable_kinds`:**
+  (i) MECE over a declared domain. Domain: every account-day of a source whose declared basis is `PER_ACCOUNT_DAY`. The ordered rule assigns
+  exactly one claim to each; the residue after 1 to 3 is 4 by construction. The kinds' domain is every reason a priced row cannot be placed at
+  a close; it was found by subtraction on the worker's fixture and 85 partitions (four kinds) plus the unanchored day (the fifth). A sixth
+  reason met in production is a REFUSAL of the stamp with the row named, never a silent fit to one of the five.
+  (ii) Same grain: each claim is a property of one account-day; each kind a property of one row, lifted to the day as a list.
+  (iii) One intent: the claim says on which close the day's value was measured, and nothing about whether the value is right.
+  (iv) State coherence: a later grading moves only `ANCHOR_NOT_LANDED`. Widening the anchor moves `OUTSIDE_ANCHOR`. Nothing in this project moves
+  `NO_CUSIP`, `NEITHER_CLOSE` or `NEGATIVE_POSITION` today.
+  **Token census (word-boundary, this seat, native search; scope `infra/aws/lambda/investor-reporting/` and `portal/src/`, tracked files):**
+  `OWN_DATE` 0, `PRIOR_DATE` 0, `NOTHING_TO_GRADE` 0, `UNGRADEABLE` 0, `date_basis_claim` 0, `PER_ACCOUNT_DAY` 0, `ANCHOR_NOT_LANDED` 0;
+  `PRIOR_CLOSE` 3 in 3 files, the collision above. Not swept: the rest of the repo, where the five kind names in upper case were not searched.
+- **The gate did not ask for this review.** `prd-signoff.py status` read the ratified-text half SIGNED at v0.34 on a v0.33 signature, because the
+  half's hash covers the ENDPOINT and CONTRACTS sections and an addendum is appended below them. Until that is changed by the gate's owner, this
+  seat sends every addendum that says "CONTRACTS changed" to `3.0.0_SA_CVO` by message, and no order is cut under it before the answer.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.36 -- two account-day claim values are renamed; nothing else of v0.35 moves (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `3.0.0_SA_CVO`'s point on signing v0.35 (review @a78b3232a3) and `2.0.0_SA_COO~P2`'s read of the two fields (msg 5013).
+- **Why.** `OWN_DATE` is already a SOURCE-grain value: `partition_close[].holds` in `sources.json`
+  (`data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py:145-148`), one per partition date, with `PRIOR_TRADING_DAY` and
+  `NO_SINGLE_CLOSE`; it reaches the manifest as `partitions_read.day_close.holds`. v0.35 gave the ACCOUNT-DAY claim a value of the same name.
+  Both would sit in one gold publication, and under a `PER_ACCOUNT_DAY` source the one word would mean two things. A reader could keep them
+  apart only by field name. That is rule 24's same-grain postulate failing on a name, and v0.35's census missed it because it did not sweep
+  the gold tree.
+- **The rename, values of `date_basis_claim` only:** `OWN_DATE` becomes `ACCT_OWN_DATE`; `PRIOR_DATE` becomes `ACCT_PRIOR_DATE`.
+  `NOTHING_TO_GRADE`, `UNGRADEABLE`, the five kinds, the order of decision, the serving rule and the re-count are as v0.35 states them, read
+  with the two new names. The source-grain field and its three values are not touched.
+- **Token census (word-boundary, this seat, native search, tracked files):** over `data/assets/scripts/gold/`,
+  `infra/aws/lambda/investor-reporting/` and `portal/src/`: `ACCT_OWN_DATE` 0, `ACCT_PRIOR_DATE` 0, `NOTHING_TO_GRADE` 0, `UNGRADEABLE` 0,
+  `date_basis_claim` 0, `ungradeable_kinds` 0, `ANCHOR_NOT_LANDED` 0, `OUTSIDE_ANCHOR` 0, `NO_CUSIP` 0, `NEITHER_CLOSE` 0,
+  `NEGATIVE_POSITION` 0, in each of the three trees. Not swept: the rest of the repo.
+- **No producer is built under either name yet,** so the rename costs nothing. The re-count in flight (IB-pr-429 AMENDMENT 2) prints its table
+  under the new names.
 
 -- 1.0.0_SA_CTO~DELL2
