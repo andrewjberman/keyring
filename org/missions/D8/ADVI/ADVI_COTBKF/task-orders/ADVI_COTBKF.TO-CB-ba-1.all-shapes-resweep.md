@@ -93,6 +93,15 @@ tests alone were committed first and failed at the base.
 - **Refusal clause.** If a criterion cannot be met as written, stop. Write the reason in your report (counts only) and a NEW surprise row
   (id `ADVI_COTBKF-D2-W80-S<k>`, `"fabric": "dell2"`, carrying no account id). Do not weaken a test.
 
+**AMENDMENT 1 (issuer, 2026-10-11 ~02:5xZ) -- row ADVI_COTBKF-D2-W80-S2 ruled: the grant widens to 5 completed orders; merge the trunk first.**
+- Your branch was cut before the 7 parked orders landed redacted on `box/dell2` (@5cda488073, @10f554dde2). Run `git merge box/dell2`
+  in your worktree FIRST, then re-run both tests and re-count. The "Do NOT touch" line on the 7 parked orders stands.
+- The 5 completed orders the widened account set flags and no one had named (CB-a-2, CB-c-3, CB-c-4, CB-m-1, CB-v-1) are added to the
+  `<paths>` block below. Redact them: each diff is token substitutions only, `acct#<sha8("cottonwood:"+id)>`, `<status>` untouched.
+  They land through `.tools/to-pipeline-gate.py` path (b) (pure redaction of a completed order, @24bdcd2690).
+- If a file outside the `<paths>` block still carries a hit after the merge, stop and report it by file and count; do not edit it.
+- `CB53ba1-AC1` is unchanged: 2 pass at your branch HEAD after the merge.
+
 <paths>
 org/missions/D8/ADVI/ADVI_COTBKF/deliverables/
 org/missions/D8/ADVI/ADVI_COTBKF/decompositions/
@@ -100,6 +109,11 @@ org/missions/D8/ADVI/ADVI_COTBKF/prd/
 data/assets/scripts/silver/
 data/cot/scripts/gold/tests/
 org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md
+org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-a-2.silver-transactions.md
+org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-c-3.crosswalk.md
+org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-c-4.account-links.md
+org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-m-1.one-signing-table.md
+org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-v-1.cash-leg-repair.md
 </paths>
 
 The block is your WRITE grant. Everything else named here you READ and never edit. The one channel write allowed is your own NEW row.
