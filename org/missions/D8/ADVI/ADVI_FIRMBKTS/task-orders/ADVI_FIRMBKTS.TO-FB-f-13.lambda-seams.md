@@ -60,7 +60,12 @@ before any AWS act.
 9. **The BEFORE sample:** invoke the Lambda with each INVOKABLE event of `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~58/PARTNERS_EVENT_CENSUS.json`
    (one per served class it reads), at the CURRENT version, writing one record per class into `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/PARTNERS_BEFORE.json`
    (`{"function": "<class>", "case": "partner", "status": <int>, "body_sha256": "<hex>", "ownership_read": ""}`): status and the
-   body's sha256 only; never a body. A 5xx at baseline is a STOP.
+   body's sha256 only; never a body. A 5xx at baseline is a STOP. **Print the denominator: how many of the 8 events read
+   status 200 at baseline.** The census's five entity-keyed events carry placeholder ids (row `ADVI_FIRMBKTS-D1-W58-S1`), which
+   read 404 in BOTH modes and prove nothing about the canonical home: for each entity event reading 404, replace the placeholder
+   with ONE real id taken from the first key of its served prefix (a `list-objects-v2` of that class's prefix, `MaxKeys 1`; the id
+   is never printed or written, only the status and the body hash), and use that same event before and after. The sample is
+   graded on the events that read 200; a class that reads 404 even with a real id is named.
 10. **Plan, scoped:** in `infra/aws/terraform/partners-api`, the plan limb with `-var platinum_mode=canonical
     -target=module.opal_partners_data`: that function's code and its environment (ONE key added), nothing else. **Apply.** Read
     back as step 5. Its DynamoDB `s3Bucket` item is NOT touched.
@@ -99,7 +104,7 @@ org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ADVI_FIRMBKTS.TO-FB-f-13.acts4bc.proof_of_spec.json`.
   <criterion id="AC1" cell_refs="FB-f-13"><invocation>timeout 60 aws lambda get-function-configuration --function-name exec-summary-generator --region us-east-1 --query "[CodeSha256,Environment.Variables.BD_PLATINUM_MODE]" --output text</invocation><expect>^\S+\s+canonical$</expect></criterion>
   <criterion id="AC2" cell_refs="FB-f-13"><invocation>timeout 60 aws lambda get-function-configuration --function-name opal-partners-data --region us-east-1 --query "[CodeSha256,Environment.Variables.BD_PLATINUM_MODE]" --output text</invocation><expect>^\S+\s+canonical$</expect></criterion>
-  <criterion id="AC3" cell_refs="FB-f-13"><invocation>cd /c/dev/ajb_workspace &amp;&amp; timeout 118 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_sample_eq.py --before org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/PARTNERS_BEFORE.json --after org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/PARTNERS_AFTER.json; echo "exit=$?"</invocation><expect>SAMPLE EQUAL: (\\d+) of \\1 cases</expect></criterion>
+  <criterion id="AC3" cell_refs="FB-f-13"><invocation>timeout 118 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_sample_eq.py --before org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/PARTNERS_BEFORE.json --after org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/PARTNERS_AFTER.json; echo "exit=$?"</invocation><expect>SAMPLE EQUAL: (\d+) of \1 cases</expect></criterion>
 </proof_of_spec>
 
 A fourth read is the exec-summary's `r4_execeq.py` line printed in the entry (EQUAL before the value); it is graded by the

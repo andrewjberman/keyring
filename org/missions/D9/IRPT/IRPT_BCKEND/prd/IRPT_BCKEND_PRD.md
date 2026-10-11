@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.38",
+ "prd_version": "v0.39",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -929,5 +929,46 @@ ENDPOINT is not edited.
 - **Rule 24, for the admitted-class list:** domain, every instrument type the source states; one member admitted; same grain (a type of
   security); one intent (whether the witness's date labels are measured for it); a class moves only by an addendum carrying its
   measurement. Token census (word-boundary, this seat, native search, tracked files, the same three trees): `EXCHANGE_TRADED` 0 in each.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.39 -- which types of security the second witness may grade, on two measured tables (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `2.0.0_SA_COO~P2`'s read IB-pr-441, `deliverables/0.9.0_WK_IRPT_BCKEND~299/IB138-2_TYPE_OVERLAP_AND_FUND_CHECK_READ.md` at
+  branch commit bfc0645151, **read whole by this seat with `git show` before this addendum was written; not re-run, and not yet merged.** The
+  worker reports its three criteria PASS; the issuer had not re-run them when this was written. Nothing is cut under this addendum before
+  that record is on the trunk and its numbers are read there unchanged. The ENDPOINT is unchanged.
+- **Where a security's type comes from.** The holdings source states none (IB-pr-439). The sibling transactions table does, by CUSIP: the
+  pair (SEC Asset Type, Share Class Type), in the source's own words. A security with exactly ONE such pair over all its transaction rows has
+  that type. A security with no transaction row, or with more than one pair (the record's `MIXED`), has NO type. **v0.38's class name
+  `EXCHANGE_TRADED` is withdrawn: the admitted list is written in the source's own pairs, and no token is invented for them.** `RIC/BDC`
+  below abbreviates the source's value `Securities Issued by Registered Investment Companies or Business Development Companies`.
+- **The test for admitting a type, the reviewer's:** over the securities BOTH witnesses carry, the type's one-day-off column is EMPTY, and
+  it has days on which the close moved and the two agreed (an unchanged close proves nothing about a date label).
+- **Admitted by that test (the record's Table 1; securities, then days equal on which the close moved):**
+  `Exchange-Traded Equity Securities / Not Available` (479; 35,933); `RIC/BDC / ETF` (28; 2,072); `RIC/BDC / A` (6; 407);
+  `RIC/BDC / No Load` (10; 379); `RIC/BDC / Other` (15; 834); `RIC/BDC / Retirement` (4; 107); `RIC/BDC / Inv` (2; 83).
+- **NOT admitted, each with its reason:**
+  - `RIC/BDC / Inst` (31 securities): 2 one-day-off security-days of 1,474, on two securities and two dates. `RIC/BDC / Not Available`
+    (123): 3 of 8,596, on two securities. Five days in 64,536, each one security alone on its date; the record says it cannot tell a
+    corporate action from a distribution day from a bad bar. A column that is not empty is not admitted on the smallness of the number.
+  - `Cash and Cash Equivalents / Not Available` (1): 0 days on which the close moved.
+  - `Not Available / Not Available` (141) and `MIXED` (54): their columns are empty, but the source does not state what they are, so
+    there is no class to carry the finding to a security outside the first witness.
+- **The fund check v0.38 named, read (the record's Table 2): 6,149 priced fund trades inside the 85 days, 103 funds, the trade's price
+  beside the reader's bar for the trade date and the days either side.** Same day only 4,490; NEXT day only 0; prior day only 28; more
+  than one (a bar that did not move) 1,102; none 245; no bar 284, all one fund. A reader that labelled funds a day late would put trades
+  in "next day only", and there are none. The 28 at the prior day are all dividend-reinvestment buys, 27 of them on a month's first
+  business day; that they are priced at the prior day's value by the fund's own rule is INFERRED, not tested. **This table supports the
+  five fund share classes admitted above by Table 1; it does not by itself admit `Inst`, which Table 1 leaves out, and this addendum does
+  not set one table against the other.**
+- **Per security, one exclusion:** a security whose ticker returns no bar is graded by nobody and stays `OUTSIDE_ANCHOR`.
+- **The cost is NOT known.** The next cell sizes it: the account-days freed when only securities of an admitted type are graded by the
+  second witness, with the blank share and never-served accounts; and, counts only, how many account-days still wait on `Inst`, on
+  `RIC/BDC / Not Available`, on securities with no type, and on the one fund with no bar.
+- **Rule 24, for the admitted list:** domain, the twelve pairs the record found over the 894 overlap securities, plus NO TYPE; grain, one
+  pair per security; one intent, whether the second witness's date labels are measured for that pair; a pair moves only by an addendum on
+  a new measurement. The list holds the source's own strings, so no token census applies; the two field names `SEC Asset Type` and
+  `Share Class Type` are the source's.
 
 -- 1.0.0_SA_CTO~DELL2
