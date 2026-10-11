@@ -4,7 +4,7 @@
 
 <decomp_ref>
 <decomp_doc>org/missions/D5/AMGT/AMGT_CORPUS/decompositions/AMGT_CORPUS_DECOMP.md</decomp_doc>
-<owned_cells>CRPS-aw-1</owned_cells>
+<owned_cells>CRPS-aw-1, CRPS-aw-9</owned_cells>
 </decomp_ref>
 <issued_to>0.9.0_WK_AMGT_CORPUS~1</issued_to>
 <issued_by>2.0.0_SA_COO~C1</issued_by>
@@ -71,6 +71,49 @@ dossier's `team_sheet` field; the serving API returns that stored field as store
    `team_sheet labels bloomberg_held <n> factset_held <n> factset_line <n> bloomberg_line <n> none <n> sum <s> rows <r>` over the served names
    (`s` equals `r`; `none` counts rows whose `row_labels` entry is None).
 
+**AMENDMENT 2 (issuer, 2026-10-11 ~17:3xZ; cell `CRPS-aw-9` folded into this order; build it AFTER AMENDMENT 1 and commit it separately).**
+The CTO ruled (round-46 ADDENDA 2 and 3): the template is its own bronze table `research_template` under the harvest root, partition
+`template=<SharePoint item id>`, addressed as the builder prints today; the master-arm reader reads that table; and the team's own labels of the
+code rows are MEASURED from the workbook, cited, claim measured, count printed. Build:
+
+A. New `lib/research/corpus/template.py` (standard library plus `lib.research.harvest.store` only): `TABLE = "research_template"`;
+   `put_template(body, item_id, client=None, source_mtime=None, file_name=None)` stores the bytes with `store.bronze_put("amgt", TABLE,
+   "template=<item_id>", store.form_b_object(<first 16 hex of the sha256>, <file_name, default team_sheet.MASTER_NAME>), body,
+   content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", metadata={...}, client=client)` and returns its result dict;
+   the metadata carries `source-item-id` and, when given, `source-mtime` (read `lib/research/harvest/store.py` `_validate_bronze_metadata` first;
+   mirror `lib/research/corpus/ingest.py`'s call). Write-once is `bronze_put`'s own (a second put of the same bytes: `existed` True,
+   `put_performed` False). CLI `main(argv=None)`, `python -m lib.research.corpus.template`:
+   - `--labels <xlsx path>` prints exactly one line
+     `template_labels measured <n> metric_name <m> pass_through <p> two_label_left <t> fallback <f> bloomberg_held <b> codes <c>` (rc 0) over the
+     identifier-form code rows of the file's team sheet: `m` rows labelled by a column-B metric name, `p` by a single-row pass-through,
+     `n = m + p`; `t` FactSet-prefix codes that two or more distinct labels reference; `f` codes with no measured label that are not
+     two-labelled; `b` codes the Bloomberg field map describes; `c = n + t + f + b`;
+   - `--put <xlsx path> --item-id <id> [--source-mtime <iso>] [--write] [--any-name]`: dry-run by default
+     (`template_put DRY-RUN key <key> sha256 <hex>`); `--write` performs `put_template` and prints
+     `template_put key <key> sha256 <hex> put_performed <True|False> existed <True|False>`; refuses (rc 2) a file whose base name is not
+     `team_sheet.MASTER_NAME` unless `--any-name`.
+B. In `team_sheet.py`: (i) the master arm (`_master_reading`, and the once-per-census master search) takes the newest object under
+   `store.table_prefix(SOURCE, "bronze", "research_template")` whose base name is `MASTER_NAME`, by the existing newest-reading rule; it no
+   longer scans the `research-report` prefix for the master; with none stored the answer is `master_absent` as today. (ii) MEASURED LABELS: for a
+   code row the Bloomberg field map does NOT describe and `factset_descriptions.json` has no entry for (precedence: field map, held; entries
+   file, held; MEASURED; the fallback line), read the workbook again with `data_only=False` (`read_only=True`, rows 1-400, columns 1-60) and
+   apply, in order: **column-B metric name**: the code row's column-B cell is a string that is not identifier-form: that string (whitespace
+   collapsed) is the label, `cite` = `"<sheet name>!B<row>"`; **single-row pass-through**: the distinct labels (the first non-identifier string in
+   the first four cells) of all OTHER rows with a cell in a PERIOD column (the year row's year cells' columns) that is exactly the formula
+   `=<col><code row>` (optional `$`, optional spaces, the SAME column letter as the cell itself): exactly ONE distinct label gives that text, `cite`
+   = `"<sheet name>!<the referencing cell, e.g. D4>"` (the first period column where found); two or more, or none: no measured label. A measured
+   label is `{"text", "source": "factset" for a code starting FF_ FFI_ FG_ FE_ or P_ else "bloomberg", "claim": "measured", "cite", "code", "why": None}`.
+   The `--census` CLI's labels line gains `measured <n>` after `factset_held`; update the test that pins the line.
+C. Tests `lib/research/corpus/tests/test_template_round47.py` with a fake S3 client (put_object with `IfNoneMatch`, head_object, get_object,
+   `get_paginator("list_objects_v2")`): the put and its no-op second put, the table prefix and key shape, the master arm reading the table and
+   nothing under `research-report`, a column-B metric name, a pass-through, a two-label code left as "FactSet line", a code with no reference
+   left as the fallback, a Bloomberg-described code keeping its held description, an entries-file entry winning over a measured label, and the
+   CLI count line.
+D. Criteria: the order now carries a FOURTH mechanical criterion, AC4 (reason: the template table and measured labels are a second outcome
+   folded into this order because the round's one-issuance gate adds no file). `<paths>` gains `template.py` and `test_template_round47.py`.
+   Do NOT edit `dossier.py` again (the method stays `/13`); no real S3 write, only the fake client. Row ids `AMGT_CORPUS-D1-W1-S<k>` as
+   before. The issuer's check is `.../checks/round47/aw9_check.py` (copied into your worktree, uncommitted).
+
 **Then, in `lib/research/corpus/dossier.py`:** the stored field is the whole `rows_for` answer, so the new keys flow with no change to `build`.
 Bump `METHOD_VERSION` from `amgt-corpus-dossier/12` to `amgt-corpus-dossier/13`, add the comment line `# /13 (CRPS-aw-1): team_sheet carries
 row labels in words, override and fund-year rows are CONTROL, and each team cell's number format.` above it, and update ONLY that literal in the
@@ -99,6 +142,8 @@ per period cell (`#,##0`, `0.0%`, `General`, an absent cell None), `rows` equal 
 lib/research/corpus/team_sheet.py
 lib/research/corpus/factset_descriptions.json
 lib/research/corpus/tests/test_team_sheet_round47.py
+lib/research/corpus/template.py
+lib/research/corpus/tests/test_template_round47.py
 lib/research/corpus/tests/test_team_sheet_round44.py
 lib/research/corpus/dossier.py
 lib/research/corpus/tests/test_dossier_method_bump.py
@@ -118,10 +163,12 @@ Read-only: the whole repository, in particular `integrations/bloomberg/research/
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CRPS-aw-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round47/aw1_check.py" 2&gt;&amp;1 | tail -1</invocation><expect>(?m)^aw1 build 4/4 control 2/2$</expect></criterion>
-  <criterion id="AC2" cell_refs="CRPS-aw-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python -m pytest -q -p no:cacheprovider lib/research/corpus/tests/test_team_sheet_round47.py lib/research/corpus/tests/test_team_sheet_round46.py lib/research/corpus/tests/test_team_sheet_round44.py lib/research/corpus/tests/test_dossier_method_bump.py lib/research/corpus/tests/test_dossier_case_body.py lib/research/corpus/tests/test_dossier_case_unit.py lib/research/corpus/tests/test_dossier_case_positional.py lib/research/corpus/tests/test_dossier_heading_only_round40.py 2&gt;&amp;1 | tail -1 | sed 's/\x1b\[[0-9;]*m//g'</invocation><expect>(?m)^\d+ passed in [\d.]+s$</expect></criterion>
+  <criterion id="AC2" cell_refs="CRPS-aw-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python -m pytest -q -p no:cacheprovider lib/research/corpus/tests/test_template_round47.py lib/research/corpus/tests/test_team_sheet_round47.py lib/research/corpus/tests/test_team_sheet_round46.py lib/research/corpus/tests/test_team_sheet_round44.py lib/research/corpus/tests/test_dossier_method_bump.py lib/research/corpus/tests/test_dossier_case_body.py lib/research/corpus/tests/test_dossier_case_unit.py lib/research/corpus/tests/test_dossier_case_positional.py lib/research/corpus/tests/test_dossier_heading_only_round40.py 2&gt;&amp;1 | tail -1 | sed 's/\x1b\[[0-9;]*m//g'</invocation><expect>(?m)^\d+ passed in [\d.]+s$</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-aw-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; grep -c '^METHOD_VERSION = "amgt-corpus-dossier/13"$' lib/research/corpus/dossier.py</invocation><expect>(?m)^1$</expect></criterion>
+  <criterion id="AC4" cell_refs="CRPS-aw-9"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round47/aw9_check.py" 2&gt;&amp;1 | tail -1</invocation><expect>(?m)^aw9 build 4/4 control 2/2$</expect></criterion>
 </proof_of_spec>
 
+- AC4: the template table and its no-op second put, the master arm reading the table, the measured labels, the CLI count line (AMENDMENT 2).
 - AC1: the by-name CONTROL rule and the header skip, the three label shapes cited or claim-absent, the formats aligned with the values, with `rows`
   and `sheet_labels` and the round-46 values unchanged.
 - AC2: your tests, round 46's and 44's, and the six method-pinning tests pass (every one of them reads `/13`).

@@ -1,4 +1,4 @@
-# AMGT_CORPUS -- L5 decomposition v47.0 -- ROUND 47 (the round-46 analysis's enrichment list: field-code rows read in words, the team's own number format, the portal render, and the master template)
+# AMGT_CORPUS -- L5 decomposition v47.1 -- ROUND 47 (the round-46 analysis's enrichment list: field-code rows read in words, the team's own number format, the portal render, and the master template)
 
 **Issuer:** `2.0.0_SA_COO~C1` (dell1), 2026-10-11 ~16:0xZ.
 
@@ -18,10 +18,16 @@ arm) and FWD-20 (labels and formats). PRD v0.10 (ADDENDUM E, FWD-15 to the Postu
 | 5 | the portal candidate reviewed by the CTO before DEV; DEV landing under the push law; the PROD release waits on Andrew's `e7f2` | `CRPS-aw-5` | the issuer's candidate after aw-2 drains | LOCAL (DEV only) |
 | 6 | FWD-20's served read on DEV: 0 raw codes visible over the FIGURE rows split by source with the fallback count printed; 0 team cells beyond their format's decimals; percents as percents; the class census | `CRPS-aw-6` | the issuer's read on the live payloads and the real `modelSheet.ts` | LOCAL (read) |
 | 7 | FWD-12's master arm: locate `FactSet Based ONE PAGER TEMPLATE 2026 03 09_v2.xlsx` across the research SharePoint (site-wide file search, denominator printed); found, ingest under the harvest path; nowhere, the team's file to supply (analysis s.4) | `CRPS-aw-7` | the issuer's read (the gateway's SharePoint tools; a worker holds none) | LOCAL (read) |
-| 8 | the graded-reads packet for L9: FWD-12 and FWD-20 | `CRPS-aw-8` | the issuer's packet to `3.0.0_SA_CVO` (depends on aw-6, aw-7) | -- |
+| 8 | the graded-reads packet for L9: FWD-12 and FWD-20 | `CRPS-aw-8` | the issuer's packet to `3.0.0_SA_CVO` (depends on aw-6, aw-10) | -- |
+| 9 | (AMENDMENT 1, after the CTO's ADDENDA 2 and 3, msgs 3994 and 4001) the master template is its own bronze table `research_template` (partition `template=<SharePoint item id>`, the address builder as it prints today); the master-arm reader reads that table; the team's own labels of the code rows are MEASURED from the workbook (column-B metric name, single-row pass-through), cited, claim measured, the count printed | `CRPS-aw-9` | worker `~1` (FOLDED INTO the `CRPS-aw-1` order as its AMENDMENT 2: GATE (x) refuses a second order into round 47, and the files are the same): `lib/research/corpus/` | LOCAL |
+| 10 | the template's one write-once put into `research_template` at site Z (the library is synced there only), under its own never-widen pair and a ledger entry opened before the act; the stored object re-opened and compared | `CRPS-aw-10` | the issuer's paired served act, executed by `0.7.0_AE_CloudOps~ZC` under its own order in workstream `TEMPLATE` of round 47 (a disjoint write surface and lane, Rule 27) | SERVED |
+| 11 | the render of `claim: measured` (the label text, the title naming the cite, the census `measured` count) | `CRPS-aw-11` | worker `~2` (FOLDED INTO the `CRPS-aw-2` order as its AMENDMENT 1): `portal/src/pages/SecurityAnalysis/` | LOCAL |
 
-**Chains:** `aw-1 -> aw-3 -> aw-4 -> aw-6`; `aw-2 -> aw-5 -> aw-6`; `aw-7`; `aw-6, aw-7 -> aw-8`.
-`fanout: 2 of 2 worker chains (aw-1, aw-2), cap 8`; the rest are issuer acts, the AMGT_RESAPP window, or the CVO.
+**Chains:** `aw-1 -> aw-9 -> aw-10 -> aw-3 -> aw-4 -> aw-6`; `aw-2 -> aw-11 -> aw-5 -> aw-6`; `aw-7` (DONE: found, evidence
+`r47_aw7_master_template_search_20261011.md`); `aw-6, aw-10 -> aw-8`.
+`fanout: 2 of 2 worker chains (aw-1, aw-2); aw-9 and aw-11 are amendments to those two orders (queue rule: same files, same chain; GATE (x)
+refuses a second issuance into the round and adds no file)`; the rest are issuer acts, the AMGT_RESAPP window, or the CVO. The /13 write
+(aw-3) waits for aw-9 and aw-10 so the page is written once.
 
 ## 1. The served shape (fixed here so aw-1 and aw-2 build in parallel)
 
@@ -55,6 +61,14 @@ the /13 objects.
 - **Measured at the cut (the live /12 team_sheet over the 32 own workbooks):** 1348 FIGURE rows carry a code label: 646 on 56 Bloomberg mnemonics
   the field map describes, 702 on 50 codes it does not (FactSet data items and 4 Bloomberg names). The by-name rule moves 29 FIGURE and 32 HEADING
   rows to CONTROL; the /13 write's census re-prints the classes.
+- **AMENDMENT 1 -- the period header (issuer, ~17:1xZ).** Round 46's header test (all numeric cells of the row are years) took the
+  `EQY_FUND_YEAR` row as the header on CLX, ML FP and BABA and classed ~190 of their model rows HEADING (row D1-S7). A YEAR ROW is now a counted
+  row with at least 3 strictly increasing integer-year cells that make up at least 80% of its numeric cells; the period columns are those
+  cells' columns; a named CONTROL row is never the header. The /13 write carries the corrected classes. Amends the aw-1 order face
+  (@93aceffa31).
+- **AMENDMENT 1 -- measured labels (CTO ADDENDA 2 and 3).** Precedence for a code row's label: the Bloomberg field map's description (held);
+  an entry of `factset_descriptions.json` (held); the team's own label MEASURED from the workbook (column-B metric name, else the one label of
+  the single labelled row that passes the code row through in a period column), cited `<sheet>!<cell>`; else the fallback line (claim absent).
 - **Searched for FactSet's published descriptions (2026-10-11, 2 web searches and 2 fetches of the vendor's developer pages): no source found.** The
   search was bounded, not exhaustive; `factset_descriptions.json` ships with no entries, so all 50 codes read "FactSet line" until an entry with its
   cite is added, and the mechanism needs no code change for that.
