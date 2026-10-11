@@ -666,3 +666,22 @@ control": one grain (the candidate), one intent (may it go without his word), an
 the candidate or from the closure.
 
 fanout: 1 of 1 chains, cap 8.
+
+## v26 -- round 26 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~18:4xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2's ruling msg 5562
+
+The laptop's rendered walk on a served answer (XB-c5ce) produced rows D2-S21, S22 and S23. The CTO ruled all three, S22 first.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-112 | the reads the walk saw refused with FIRM_BINDING: each traced to its reader and its face; every such face states the refusal in words | D2-S22 | SERVED | A ~62, first | portal/src/pages/InvestorReporting/dashboard/reportingRead.ts and the faces it feeds |
+| IV-e-113 | an opened vendor report reads section codes for titles and "Unit: unknown": page or producer, traced through the contract, the producer's fixture and code, and the adapter; a read | D2-S21 | LOCAL | A ~62, second | portal/src/pages/InvestorReporting/contracts/adapt.ts (read only) |
+| IV-e-114 | one hygiene cell on the Holdings tab: the React colgroup warning, the low-contrast eyebrow text, the navy bands counted against the design law's clause | D2-S23 | SERVED | A ~62, third | portal/src/pages/InvestorReporting/tabs/holdings/ |
+
+**Not a cell:** which three reads were refused, as what user type and with which firm selected, is asked of the walker from its saved
+evidence (carried by 0.0.0_AB_MSTR~DELL2, msg to it at ~18:3xZ); the CTO tells Andrew before he sits if an internal user with a firm
+selected is refused.
+
+**Rule 24:** `verdict` in IV-e-113 takes PAGE, PRODUCER, BOTH or NOT_ESTABLISHED over the declared domain "where a missing title or unit
+originates": one grain (the member), one intent (who fixes it); BOTH is a member, not an escape, and NOT_ESTABLISHED names the missing read.
+
+fanout: 1 of 1 chains on slot A, cap 8.
