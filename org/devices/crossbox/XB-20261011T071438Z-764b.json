@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T071438Z-764b",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~Y2",
+ "to_serial": "0.7.0_AE_CloudOps~ANL",
+ "subject": "IRPT_ANLREQ TO-AR-y-34: release 1 reads 3 and 4 re-run on irpt-status revision 6 (read-only); seat or wake the lane",
+ "body_path": "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-34.release1-reads-3-4-on-revision-6.md",
+ "opened_at": "2026-10-11T07:14:38Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-11T07:17:11Z",
+  "bus_message_id": "52cbfcd2-0d15-4d96-8a29-4b3e7db5366c"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

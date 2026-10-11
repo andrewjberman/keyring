@@ -13,7 +13,7 @@
 <round>3</round>
 <workstream>Y</workstream>
 
-**Directive:** D9 | **Fabric:** dell2 | **Risk:** WORLD (test files only) The class is WORLD because the L6 gate's floor for an `infra/` path is WORLD; the cell itself builds, uploads and applies nothing. | **Decomp cell:** `AR-y-36`
+**Directive:** D9 | **Fabric:** dell2 | **Risk:** WORLD (test files for `AR-y-36`; two product files and a test file for `AR-y-37`; nothing built, uploaded or applied) The class is WORLD because the L6 gate's floor for an `infra/` path is WORLD; the cell itself builds, uploads and applies nothing. | **Decomp cell:** `AR-y-36`
 (`decompositions/IRPT_ANLREQ_DECOMP_R3_Y.md`) | **outcome_ref:** FWD-1 | **depends_on:** none
 
 ---
@@ -61,10 +61,74 @@ ahead of the custody file until the smallest sequence that still fails is left.
 `AR36-y-AC1`: the reproducer you recorded (the polluter, then the custody file) exists, records that it failed at the base, and now runs
 green. The control is inside the criterion: the same sequence, at the base commit, failed.
 
-<expected_criteria>AR36-y-AC1</expected_criteria>
+<expected_criteria>AR36-y-AC1 AR37-y-AC1 AR37-y-AC2</expected_criteria>
 
 The issuer runs the WHOLE folder, unbounded, twice at the drain and compares the failing SET of the two runs with each other and with the
 base's 34. A suite that is green in your reproducer and still fails in the full run comes back to you.
+
+---
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-11 ~07:2xZ; decomposition R3_Y AMENDMENT 1): this order also owns cell `AR-y-37`.**
+The cell arrived on a CTO ruling in another project's analysis (CTO_ROUND_ANALYSIS_IRPT_YCDGEN_ROUND_8_20261011.md @fe73849335 section 2,
+row IRPT_YCDGEN-D2-W8-S1; `2.0.0_SA_COO~G2` msg 4331) while the round's issuance was being cut. A separate order for it was REFUSED by
+`to-pipeline-gate.py` (one issuance per round per workstream), whose stated remedy is a re-cut into the first issuance; this is that re-cut.
+Gate limb that graded this amendment: read from this commit's own output.
+
+**Do `AR-y-36` FIRST and commit it. Then `AR-y-37`, in the same worktree.** They are two separate pieces of work: the first changes
+tests only; the second changes two product files and adds one test file. Report both.
+
+`G` below is `infra/aws/lambda/investor-reporting/ycharts/generate`.
+
+### THE CELL (`AR-y-37`, inlined)
+
+*A NEW accepted ANALYSIS request records `acting_principal_id`, the verified submitter, passed by the submission service and never read
+from the body. A request accepted before stays as it is (no rewrite); a reader that finds no actor reads ABSENT.*
+
+**What is there today:**
+- `G/acceptance.py`, `DynamoAcceptance.accept(owner, browser, composition_ref, *, ingestion_revision, destination_revision)` (:90-118)
+  builds `record` with five top-level members -- `identity`, `owner`, `browser_sha256`, `composition_ref`, `accepted_at` -- plus `ticket_id`
+  when the browser request carries one. None is an actor.
+- `G/submission_service.py`, `SubmissionService.submit` (:103 on) holds `principal`, the VERIFIED submitter (`resolve_owner`, :109), and
+  calls `self.acceptance.accept(owner, browser, ref, ...)` (:143-145) without passing it.
+- The only server-recorded acting principal in the estate is on the on-behalf UPLOAD row:
+  `infra/aws/lambda/investor-reporting/intake/uploads.py:267`, `original["acting_principal_id"] = principal["principal_id"]`.
+- `accept` returns a PRIOR record unchanged when one exists (`prior = self.lookup(owner, browser)`, :102-104).
+
+**Build:**
+1. `accept` takes a new REQUIRED keyword argument `acting_principal_id`. It must be a non-empty string; anything else raises
+   `AcceptanceRefused("ACTING_PRINCIPAL_REQUIRED")`. It is written as the top-level member `record["acting_principal_id"]` of a NEW record.
+2. `submit` passes `acting_principal_id=principal["principal_id"]`: the verified principal it already holds. NOTHING in `browser` or in
+   `payload` is ever read for the actor; if the browser request carries a member of that name, it is not used (and `validate_public_request`
+   already decides whether such a member is admitted at all -- do not loosen it).
+3. A prior record is returned exactly as stored: no actor is added to it, nothing is rewritten.
+4. **Census the readers before you finish.** List every non-test reader of the accepted record under
+   `infra/aws/lambda/investor-reporting/` (start from `ops/owned_requests.py` `_validate`, `ops/owned_status.py`,
+   `reports/commentary_composition.py` `read_composition`, `ycharts/generate/resident_worker.py`, the packager) and, for each, whether it
+   would REFUSE a record carrying one more top-level member (an exact-key-set check on the record, not on `identity`). `ticket_id` is the
+   precedent: it is optional and tolerated. Write the census to your deliverables folder as `ACTOR_READER_CENSUS.json`
+   (`[{"file", "line", "reads", "closed_key_set": true|false}]`). **A reader with a closed key set is a BLOCKING row** naming it: the
+   release that ships this writer must ship that reader in the same act. Do not edit a reader: none is in your grant.
+5. Do NOT make any reader USE the actor (`resident_worker.producer_for` reading it is another project's cell).
+6. New test file `G/tests/test_acceptance_actor.py` with EXACTLY these names:
+   - `test_new_accepted_request_records_the_verified_actor`
+   - `test_actor_in_the_request_body_is_never_used`
+   - `test_a_prior_accepted_record_is_returned_unchanged_and_not_rewritten`
+   - `test_submit_passes_the_verified_principal_to_accept`
+   Build its world the way `G/tests/test_submission.py` does.
+7. Existing tests that call `accept(...)` directly need the new argument: pass a synthetic principal id, change nothing else in them, and
+   name each file you touched.
+
+### ACCEPTANCE (AR-y-37)
+
+<criterion id="AR37-y-AC1" cell_refs="AR-y-37"><invocation>python C:/dev/wk-irpt-anlreq-54/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py y37-actor --root C:/dev/wk-irpt-anlreq-54</invocation><expect>Y37-ACTOR-OK</expect></criterion>
+`AR37-y-AC1`: the four named tests exist and pass.
+
+<criterion id="AR37-y-AC2" cell_refs="AR-y-37"><invocation>python C:/dev/wk-irpt-anlreq-54/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r3/ar3_checks.py y37-keep --root C:/dev/wk-irpt-anlreq-54</invocation><expect>Y37-KEEP-OK</expect></criterion>
+`AR37-y-AC2`: `test_submission.py` and `test_prospect_submission.py` still pass (they pass at the base).
+
+**The grant gains two product files for `AR-y-37` only:** `infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py` and
+`infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py`. `AR-y-36` still may not touch a product file.
+The issuer reads your reader census (step 4) before any release is cut.
 
 ## BOUNDS
 
@@ -75,21 +139,23 @@ base's 34. A suite that is green in your reproducer and still fails in the full 
 
 <paths>
 infra/aws/lambda/investor-reporting/ycharts/generate/tests/
+infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py
+infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
 <decomp_ref>
-<decomp_doc>org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R3_Y.md</decomp_doc> (round 3, workstream Y), cell `AR-y-36`.
-<owned_cells>AR-y-36</owned_cells>
+<decomp_doc>org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R3_Y.md</decomp_doc> (round 3, workstream Y), cells `AR-y-36` and `AR-y-37` (AMENDMENT 1).
+<owned_cells>AR-y-36 AR-y-37</owned_cells>
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: AR36-y-AC1. The instance is at
+Criterion ids: AR36-y-AC1 AR37-y-AC1 AR37-y-AC2. The instance is at
 `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~54/IRPT_ANLREQ.TO-AR-y-36.generate-suite-order-independence.proof_of_spec.json`.
-Validate it AFTER its commit with `python .tools/proof-of-spec-check.py <instance> AR36-y-AC1`.
+Validate it AFTER its commit with `python .tools/proof-of-spec-check.py <instance> AR36-y-AC1,AR37-y-AC1,AR37-y-AC2`.
 </proof_of_spec>
 
-**REPORT (once):** the check line verbatim; the commit; the polluter, what leaks and where; every test file you changed and what the
+**REPORT (once), for BOTH cells:** each check line verbatim; for `AR-y-37` also the reader census (count of readers, count with a closed key set, each named) and every existing test file you touched; the commit; the polluter, what leaks and where; every test file you changed and what the
 change restores; any row ids.
 
 ---

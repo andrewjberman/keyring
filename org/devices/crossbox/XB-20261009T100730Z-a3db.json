@@ -10,16 +10,16 @@
  "subject": "CT-x-2 step 1: the wheel is C:/Users/Test/Downloads/click-8.3.1-py3-none-any.whl (sha match)",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps~CT1/task_orders/NFRA_CTLPLN.TO-CT-x-2.dell-click-route-receive-run-and-blocked-download.md",
  "opened_at": "2026-10-09T10:07:30Z",
- "state": "OPEN",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T10:17:32Z",
   "bus_message_id": "903a5b0a"
  },
  "ack": null,
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-11T06:55:38Z",
+  "from_by": "1.0.0_SA_CTO",
+  "to_at": "2026-10-11T06:55:38Z",
+  "to_by": "1.0.0_SA_CTO"
  }
 }

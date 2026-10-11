@@ -1979,6 +1979,63 @@
 }
 ```
 
+## IRPT_ANLREQ-D2-W66-S1 -- the ticket service refuses GET to svc-irpt-packager: the packager's idempotence read cannot succeed live
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W66-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~66",
+  "surfaced_at": "2026-10-11T07:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The ticket service refuses GET /api/scoped/tickets/{id} to svc-irpt-packager (403), so the packager's idempotence read (ticket_package) cannot succeed live even with the new live_ticket_ports; handle_commentary_ready calls it before any render or attach, so no package attaches until the ticket service lets the packager read a ticket",
+  "spec_asserts": "TO-AR-g-31 cell item 6 and opal_packager.py module docstring step 3: the ticket is the one idempotence reader, read as the package principal svc-irpt-packager (row IRPT_ANLREQ-D2-W62-S2).",
+  "world_is": "MEASURED by reading, no call made: infra/aws/lambda/ticket_center/lambda_function.py get_ticket (:1196-1207) calls authorize('GET', actor); MATRIX['GET'] = frozenset({INTERNAL}) (:160); principal_class (:300-318) returns UNRESOLVABLE for any userType 'service' email other than svc-ticket-form, svc-analyst-intake and svc-commentary (:305-312), and svc-irpt-packager is not among them, so authorize is False and get_ticket answers 403 via _deny. package_ticket (:1392-1400) does NOT use that path: it admits the package_principal by name, so attach can succeed while the read cannot. The ticket's package sits at answer['ticket']['package'] (get_ticket returns {'ticket': Item}; package_ticket writes it as attribute 'package' at :1447). live_ticket_ports maps the 403 to TICKET_READ_REFUSED:403. ticket_center is outside this order's paths and was not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:156-168 MATRIX (GET admits INTERNAL only; PACKAGE empty)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:300-324 principal_class and authorize",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1196-1207 get_ticket; :1392-1459 package_ticket",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:160 ticket_package is called before the render and the attach"
+    ]
+  },
+  "notes": "Issuer's ruling needed: either the ticket service admits svc-irpt-packager to GET a ticket (a ticket_center change: a matrix or principal_class entry, firm-scoped like package_ticket), or the idempotence read moves to another reader. The packager side (live_ticket_ports) is delivered either way."
+}
+```
+
+## IRPT_ANLREQ-D2-S33 -- the source map's irpt-status entry still records a 2026-10-05 deploy in five fields
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S33",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T07:40:00Z",
+  "one_line": "The source map's irpt-status entry carries FIVE applied-artifact fields that still describe a deploy of 2026-10-05 (deployed_code_sha256 jhGc2J4Q..., last_deployed_commit 44cc631396, last_deployed_at 2026-10-05T04:23:09Z, deploy_ledger d407e320da, recorded_by record-terraform-deploy.sh), and a note saying artifact_sha256 is deliberately not moved; the function has been applied five times since.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-3 analysis section 4 Y4: the source map records irpt-status's live digest (cell AR-y-33 Part B sets artifact_sha256). The entry's own fields claim to record what was last deployed.",
+  "world_is": "REPORTED by 0.9.0_WK_IRPT_ANLREQ~53 (its final report on TO-AR-y-33) and READ by this seat in its worktree at branch commit 30018206fc: artifact_sha256 now reads 6idtFvAm... (the live digest, set by the cell); deployed_code_sha256 reads jhGc2J4Q5EesJgnLq8EzdE5ErrZLbyqnJ8m00R7CgdE=, a digest that matches none of revisions 2-6 named in TO-APPLY-Y1; last_deployed_at reads 2026-10-05T04:23:09Z; the `note` member says 'artifact_sha256 is DELIBERATELY NOT MOVED: it equals the S3 object and the live CodeSha256' (true when written, under IB-rt-9). So the tool that writes those fields (record-terraform-deploy.sh) did not run for the applies of 2026-10-09 and 2026-10-11, or its write was not committed. NOT MEASURED: whether other functions' entries carry the same staleness, and what reads these five fields.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-status, read at worker branch 30018206fc",
+      "TO-AR-y-33 final report (0.9.0_WK_IRPT_ANLREQ~53)",
+      "TO-APPLY-Y1 AMENDMENTS 1-8 (the applies since 2026-10-05)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a defect of AR-y-33, which was told to change nothing else in the entry. The remedy is one of two, the CTO's to pick at the next analysis: the apply orders run the recorder (and its fields are trusted), or the fields are declared not maintained. Until then nobody should read deployed_code_sha256 as the deployed digest."
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S1 -- (heading added at the merge by 2.0.0_SA_COO~Y2; the row below is the worker's, byte for byte)
+
 ```json
 {
   "id": "IRPT_ANLREQ-D2-W51-S1",

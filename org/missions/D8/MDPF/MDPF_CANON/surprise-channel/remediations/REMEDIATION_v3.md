@@ -48,16 +48,20 @@ round-3 analysis (ARMED disarm owner as filed). The rows in REMEDIATION_v1 and v
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "CLOSED_UNREMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
-      "round": "v4"
+      "round": "v4",
+      "closure": {
+        "reason": "ACCEPTED_BY_RULING",
+        "pointer": "org/missions/D8/MDPF/MDPF_CANON/ledger/ROUND_ANALYSIS.round3.md@187b53dbe6 ADDENDUM 1: the fold keeps the carry and the basis states it; CN-d-2 AC2 MET (ADJUDICATION_v4 row MDPF_CANON-D1-C-S38); disarmed by row MDPF_CANON-D1-S13"
+      }
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~D1",
-      "at": null
+      "at": "2026-10-11T05:50:00Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "MDPF_CANON-D1-W8-S3",
@@ -74,16 +78,16 @@ round-3 analysis (ARMED disarm owner as filed). The rows in REMEDIATION_v1 and v
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v4"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~D1",
-      "at": null
+      "at": "2026-10-11T05:50:00Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "MDPF_CANON-D1-W8-S4",
@@ -131,9 +135,9 @@ round-3 analysis (ARMED disarm owner as filed). The rows in REMEDIATION_v1 and v
       "round": "v4"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~DELL1",
-      "at": null
+      "at": "2026-10-11T05:50:00Z"
     },
     "closed": false
   },
@@ -152,16 +156,20 @@ round-3 analysis (ARMED disarm owner as filed). The rows in REMEDIATION_v1 and v
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "CLOSED_UNREMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
-      "round": "v4"
+      "round": "v4",
+      "closure": {
+        "reason": "CARRIED_BY",
+        "pointer": "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md row LGIC_ENFORCE-D1-S3 (owner 2.0.0_SA_COO~L1); ROUND_ANALYSIS.round3.md section 2 @ae094ea51d retires check_en_r2.py as a fixed input"
+      }
     },
     "disarm": {
       "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "MDPF_CANON-D1-W9-S7",
