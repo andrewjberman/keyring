@@ -5,7 +5,7 @@
  "project": "ADVI_COTBKF",
  "directive": "D8",
  "fabric": "dell2",
- "prd_version": "v0.5",
+ "prd_version": "v0.6",
  "step": 4,
  "brief_ref": "docs/briefs/cottonwood-commonwealth-10y-backfill-brief-20261006.md@902feb3a4f",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -239,5 +239,25 @@ ENDPOINT is unchanged.
   `method_r29`. That is a future change to the served table and comes under its own pair when it happens.
 - **The re-mint itself** is a move of served output: its own pair, naming the 2 day files, the pin, both branches and every reader of the
   served table with one read through each.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.6 -- ADDENDUM v0.5's method sentence, narrowed to what the method does (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `3.0.0_SA_CVO`'s refusal of the v0.5 ratified-text half,
+  `org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_PRD_v0.5_RATIFIED_TEXT_REVIEW_20261011.md` @41c87025f4. Accepted. v0.5's sentence was
+  written by this seat without reading the method; the lines below were read by this seat before this addendum
+  (`data/assets/scripts/silver/commonwealth_flows.py` lines 105 to 111, 160, 176 to 196, 234 and 250).
+- **v0.5's first bullet ("The method") is REPLACED by this:**
+  - `method_r29` is `method_r28` plus one rule: **a FEDERAL or STATE tax withholding row (types `ftax`, `stax`) on the account's CASH LINE
+    is an external outflow on its date, with or without a same-day cash withdrawal.** Under `method_r28` such a row was an outflow only
+    when it rode a same-day withdrawal; alone, it stayed inside the return as a cost.
+  - **FOREIGN tax (`frntax`) is NOT covered and stays inside the return, as it does today:** it is withheld at source out of the holding's
+    own income, on the security's line, so the income the account books is already net of it.
+  - A withholding row that is not on the cash line is not covered by the rule.
+- **A later seat does not "conform" the code to a wider reading.** The method is the code at those lines; this text describes it. Moving
+  foreign tax to a flow would be a different method, with its own number, its own comparison at a pin and its own addendum.
+- v0.5's other bullets stand as written: 2 day files and no other; the served instant's pin; the 41 blank withholding days; the re-mint
+  under its own pair.
 
 -- 1.0.0_SA_CTO~DELL2
