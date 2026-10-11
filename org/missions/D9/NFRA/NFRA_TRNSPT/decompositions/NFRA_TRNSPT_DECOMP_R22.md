@@ -76,3 +76,16 @@ not a read; the applier was halted before any build (msg to 0.7.0_AE_CloudOps~TR
 | `TR-ra-22` | UNCHANGED in scope, RE-PINNED: the deploy now builds from TR-rl-22's merged commit; the packet gets an addendum and the CTO half is re-asked against the new pin | FWD-1, FWD-3 | ISSUER pair + applier `0.7.0_AE_CloudOps~TR2` | WORLD | -- | TR-rl-22 |
 
 Chain B = TR-rc-22 (done) -> TR-rf-22 (done) -> TR-rl-22 -> TR-ra-22 -> TR-rv-22. Battery: `r22_checks.py rl22` at base: FAIL (missing).
+
+## AMENDMENT 4 (issuer, 2026-10-11 ~04:5xZ) -- the disarm of the ARMED row D2-S19 (CVO compile @0b5b432e5b), after the round's close
+
+The CVO's L8 compile filed row NFRA_TRNSPT-D2-S19 ARMED with this seat as disarm owner: the Teams pull reports Max Memory Used 128 of
+128 MB on every invocation that read transcript content (4 of 26 REPORT lines, re-measured by the issuer), due before the Monday
+2026-10-12 13:00Z fire. An ARMED row is disarmed by its owner and does not wait for the round-22 analysis. This is a disarm cell, not
+enrichment: it serves no new FWD.
+
+| cell | item | outcome | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|
+| `TR-rm-22` | the Teams pull's `memory_size` 128 (default, undeclared) -> 1024 (the mail pull's value for the same zip): one Terraform line made by the applier in its own lane (the packet carries the exact diff), then a targeted apply with NO rebuild and one driven invoke, under ONE CTO + COO pair, applied by `0.7.0_AE_CloudOps~TR2` | FWD-1 | ISSUER pair + applier (workstream `pullmem`) | WORLD | -- | TR-ra-22 |
+
+Battery: `r22_checks.py rm22` at base: FAIL (MemorySize 128). The order is cut STAGED; its GO follows the CTO half.
