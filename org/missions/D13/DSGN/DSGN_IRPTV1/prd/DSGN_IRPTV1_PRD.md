@@ -4,7 +4,7 @@
 {
  "project": "DSGN_IRPTV1",
  "directive": "D13",
- "fabric": "laptop",
+ "fabric": "dell2",
  "prd_version": "v0.18",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ui-finish-design-brief-20260924.md@20f90739bd",

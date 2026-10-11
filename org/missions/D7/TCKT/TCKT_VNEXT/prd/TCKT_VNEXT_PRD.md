@@ -4,7 +4,7 @@
 {
  "project": "TCKT_VNEXT",
  "directive": "D7",
- "fabric": "laptop",
+ "fabric": "dell2",
  "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/d7-ticket-center-request-types-analysis-request-first-brief-20261007.md@750ec86588",

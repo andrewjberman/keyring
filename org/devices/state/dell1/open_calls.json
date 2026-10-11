@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-09T11:03:02Z",
+ "written_at": "2026-10-11T03:21:34Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -761,7 +761,7 @@
    "source": "org/tier1_exec/4.0.0_SA_CRO~DELL1/deliverables/MDPF_STRATID_MUNI_NAME_CENSUS_20261009.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T05:55:57Z",
    "kind": "act",
    "context": "CRO Muni name census @2bb6b38092: NONE FOUND across SmartX, Rebalancer and Eclipse; no vendor SMA flag on any Muni-named object. This sleeve is the only candidate. If no, FWD-3 has no Muni SMA dollars to show and re-enters at the CTO (STRATID v0.5).",
@@ -788,7 +788,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-11T03:21:27Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CLOSE_DELL1_OPEN_CALLS_ON_ANDREW_DIRECT_20261011_032xZ.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "dell1-20261009T063803Z-4f63",
@@ -973,7 +980,7 @@
    "source": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T08:46:28Z",
    "kind": "act",
    "context": "A worker printed the key in cleartext into its LOCAL dell1 session transcript (row AMGT_RESAPP-D1-W324-S3 @f00cb74f1d). Measured: 0 hits in any commit, the scratch log redacted, nothing sent to the vendor. Rotation needs vendor console access.",
@@ -1013,7 +1020,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-11T03:21:28Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CLOSE_DELL1_OPEN_CALLS_ON_ANDREW_DIRECT_20261011_032xZ.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "dell1-20261009T092027Z-2caa",
@@ -1023,7 +1037,7 @@
    "source": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round60.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T09:20:27Z",
    "kind": "act",
    "context": "Rounds 53-60 are live on PROD (CI 37905490625 success; Andrew's 23 walk findings of ~05:0xZ addressed in rounds 58-60). FWD-1's DONE WHEN is his own walk on PROD; no seat can sign in as him.",
@@ -1044,7 +1058,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-09T13:50:17Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_UNBLOCK_DSGN_1152_FWD1_IS_SEAT_PROVABLE_20261009.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
   },
   {
    "id": "dell1-20261009T110109Z-838c",
@@ -1054,7 +1075,7 @@
    "source": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~B1/ROUND12_DRAIN_END.md@913299e8fb",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T11:01:09Z",
    "kind": "act",
    "context": "LGIC_BLANKFIX retired this Terraform root in git at 26eb2403f8 with its state proven empty. An S3 delete is Andrew's word only. Nothing blocks on it.",
@@ -1088,7 +1109,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-11T03:21:31Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CLOSE_DELL1_OPEN_CALLS_ON_ANDREW_DIRECT_20261011_032xZ.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
@@ -1105,7 +1133,7 @@
    "source": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~B1/ROUND12_DRAIN_END.md@913299e8fb",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T11:01:10Z",
    "kind": "act",
    "context": "LGIC_BLANKFIX retired this Terraform root in git at 26eb2403f8 with its state proven empty. An S3 delete is Andrew's word only. Nothing blocks on it.",
@@ -1139,7 +1167,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-11T03:21:32Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CLOSE_DELL1_OPEN_CALLS_ON_ANDREW_DIRECT_20261011_032xZ.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
@@ -1156,7 +1191,7 @@
    "source": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~B1/ROUND12_DRAIN_END.md@913299e8fb",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T11:01:11Z",
    "kind": "act",
    "context": "The Lambda this log group served is gone; the group has 6 streams and no retention. Deleting log data is irreversible and Andrew's word only. Nothing blocks on it.",
@@ -1190,7 +1225,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-11T03:21:34Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CLOSE_DELL1_OPEN_CALLS_ON_ANDREW_DIRECT_20261011_032xZ.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
@@ -1207,7 +1249,7 @@
    "source": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~B1/ROUND12_DRAIN_END.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T11:01:20Z",
    "kind": "act",
    "context": "Both roots were retired in git (26eb2403f8) after terraform state list read empty; the state objects were left in place because an S3 delete is a human-confirm act.",
@@ -1241,7 +1283,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-11T03:21:30Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CLOSE_DELL1_OPEN_CALLS_ON_ANDREW_DIRECT_20261011_032xZ.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
@@ -1258,7 +1307,7 @@
    "source": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~B1/ROUND12_DRAIN_END.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T11:01:21Z",
    "kind": "act",
    "context": "Row D1-S3; the retired root's Lambda no longer exists. Deleting a log group is unrecoverable, so it is a human-confirm act.",
@@ -1292,13 +1341,65 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-11T03:21:33Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CLOSE_DELL1_OPEN_CALLS_ON_ANDREW_DIRECT_20261011_032xZ.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
     "at": "2026-10-09T11:03:02Z",
     "by": "1.0.0_SA_CTO~DELL1",
     "reason": "DUPLICATE of dell1 row 69ef (same delete); Andrew acting on 69ef settles this row too"
+   }
+  },
+  {
+   "id": "dell1-20261009T202914Z-113f",
+   "project": "MDPF_CANON",
+   "subject": "Delete 4 synthetic 1037-byte test parquet files at s3://opal-data-mdpf/mdpf/global/gold/{account_distribution,account_units,aggregate_aua_timeseries,aum_metrics}/date=2026-10-08/data.parquet?",
+   "asked_by": "2.0.0_SA_COO~D1",
+   "source": "org/missions/D8/MDPF/MDPF_CANON/surprise-channel/investigations/INVESTIGATION_v1.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T20:29:14Z",
+   "kind": "fork",
+   "context": "Row MDPF_CANON-D1-S4: a worker's test wrote them at 19:10Z before any apply; history is never rewritten, so they stand as the composite's 2026-10-08 until removed. An S3 delete is human-confirm class (CLAUDE.md Agent Autonomy; PRD DEC-14). Gates only the global 10-08 partition of round 1's backfill; everything else proceeds.",
+   "rec": "Yes -- CloudOps deletes the four keys, then one more run_class=backfill fills 10-08 with the composite's real figures.",
+   "scope": {
+    "measured_at": "2026-10-09T20:29:14Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T21:32:13Z",
+    "by": "2.0.0_SA_COO~D1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_210xZ_DELETE_SYNTHETIC_TEST_DATA_MDPF_GLOBAL_20261008.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-09T20:37:39Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "ACT ONLY ANDREW CAN DO: an S3 delete is human-confirm class (CLAUDE.md Agent Autonomy; MDPF_CANON PRD DEC-14). CTO REC yes: delete the 4 synthetic keys, then one backfill run fills 2026-10-08. Nothing else waits on it."
    }
   }
  ]

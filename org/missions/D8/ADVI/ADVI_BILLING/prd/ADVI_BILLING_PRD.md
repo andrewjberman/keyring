@@ -4,7 +4,7 @@
 {
  "project": "ADVI_BILLING",
  "directive": "D8",
- "fabric": "laptop",
+ "fabric": "dell2",
  "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/q2-billing-buy-or-build-brief-20261006.md@cf7721ed30",
