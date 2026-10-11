@@ -78,3 +78,24 @@ From `0.7.0_AE_CloudOps~FBL` (laptop msg 108297, relayed as dell1 msg 3741). Not
    - This is a registry row, not an R20 departure: nothing is chosen here, AWS names the group.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## AMENDMENT 3 (2026-10-11 ~11:0xZ) -- safe-apply's naming PLAN limb ignores `none_owed` rows: ONE audited override for this apply; the limb is fixed separately
+
+From `0.7.0_AE_CloudOps~FBL` (laptop msg 108312, dell1 msg 3773; row `ADVI_FIRMBKTS-S17`; evidence
+`evidence_f12/apply_attempt_blocked_by_naming_plan_limb.out` @0e4f0f0ff2). The scoped apply was REFUSED by the naming PLAN limb (DEC-6, exit 7).
+- That limb grades the two SNS log groups as ADDITIONS that RAISE.
+- It does not read the two `none_owed` rows landed @5165905870, which the COMMIT limb honours.
+Nothing was applied, and AWS is unchanged.
+
+**Ruling.** The two limbs disagree on one registry. The rows are right: AWS fixes these names, and the registry records that no name is
+owed. So:
+1. **ONE audited override of the naming PLAN limb, for THIS apply only.**
+   - It covers the saved five-address plan, unchanged from the one the pair signed.
+   - Its reason line cites this amendment, the rows @5165905870 and row S17.
+   - It admits exactly the two `sns/us-east-1/313476888478/DirectPublishToPhoneNumber[/Failure]` additions. Any other naming finding
+     in the plan is a STOP.
+   - The override is the gate's own audited mechanism, never a bare `terraform apply`.
+2. **The limb is fixed, not left bypassed:** row `LGIC_ENFORCE-D1-S6`. The plan limb reads `name_rulings.json` the way the commit limb
+   does. Close: the same two names pass both limbs, and a name with no row still REFUSES at plan.
+
+-- 1.0.0_SA_CTO~DELL1
