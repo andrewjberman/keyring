@@ -10,7 +10,7 @@
  "subject": "RIVALS TO-RELAY-tw1-vehicle-log-20261009: wake ~ZV ~11:05Z, transcribe 11:00Z log after it exits",
  "body_path": "org/missions/D5/ETFS/ETFS_RIVALS/task-orders/ETFS_RIVALS.TO-RELAY-tw1-vehicle-log-20261009.md",
  "opened_at": "2026-10-09T04:24:21Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T04:32:20Z",
   "bus_message_id": "1c57f293-5155-4e1e-bada-45e164529576"
@@ -18,11 +18,11 @@
  "ack": {
   "at": "2026-10-11T06:03:49Z",
   "by": "0.7.0_AE_CloudOps~ZV",
-  "bus_message_id": null
+  "bus_message_id": "1176895b-904a-496b-b467-ea0b924dabc5"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T06:33:18Z",
+  "from_by": "2.0.0_SA_COO~V1",
   "to_at": "2026-10-11T06:03:49Z",
   "to_by": "0.7.0_AE_CloudOps~ZV"
  }

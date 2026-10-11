@@ -10,7 +10,7 @@
  "subject": "SEAT-HOME @3101937431: AMGT_CORPUS R40 re-pin to 7580fe909c, 11:15Z-12:45Z (both CTO re-signs; STOP 0)",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/AMGT_CORPUS.TO-REPIN-R40-ap10u-lr.repin-induction-to-p-sitez.md",
  "opened_at": "2026-10-09T07:50:17Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T07:52:33Z",
   "bus_message_id": "f3b0de74-8eca-494c-a243-d19292fdc78d"
@@ -18,11 +18,11 @@
  "ack": {
   "at": "2026-10-11T06:10:07Z",
   "by": "0.7.0_AE_CloudOps~ZC",
-  "bus_message_id": null
+  "bus_message_id": "c427f6c8-858c-445d-8567-4347df1bded3"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T06:33:19Z",
+  "from_by": "2.0.0_SA_COO~C1",
   "to_at": "2026-10-11T06:10:08Z",
   "to_by": "0.7.0_AE_CloudOps~ZC"
  }

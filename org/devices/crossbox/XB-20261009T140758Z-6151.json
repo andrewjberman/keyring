@@ -10,7 +10,7 @@
  "subject": "AMGT_HARVST HVST-bu-1 round 77 (re-wake, pin addae4d821): read the cycle runner and r47 records at site Z",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round77/XB_ORDER_BU1_TO_ZW.md",
  "opened_at": "2026-10-09T14:07:58Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T14:23:46Z",
   "bus_message_id": "6a526d7d-92f9-49a0-bc1f-d94261b775e3"
@@ -21,8 +21,8 @@
   "bus_message_id": null
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T06:33:14Z",
+  "from_by": "2.0.0_SA_COO~W1",
   "to_at": "2026-10-11T06:02:56Z",
   "to_by": "0.7.0_AE_CloudOps~ZW"
  }

@@ -10,7 +10,7 @@
  "subject": "AMGT_HARVST HVST-bw-1 (re-pin, held for CTO~Z half) then HVST-bw-2 (bbg live cycle read), round 79",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round79/XB_ORDER_BW1_BW2_TO_ZW.md",
  "opened_at": "2026-10-09T18:00:40Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T18:01:48Z",
   "bus_message_id": "9859b58f-0ec5-4f6c-b444-0ffcc2780a97"
@@ -21,8 +21,8 @@
   "bus_message_id": null
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T06:33:15Z",
+  "from_by": "2.0.0_SA_COO~W1",
   "to_at": "2026-10-11T06:02:59Z",
   "to_by": "0.7.0_AE_CloudOps~ZW"
  }

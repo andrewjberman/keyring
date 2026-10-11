@@ -910,3 +910,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S16",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-11T06:29:14Z",
+  "one_line": "safe-merge.sh --continue committed a merge from a stale index snapshot after HEAD moved, and the merge commit reverted a peer's commit (7 paths); restored byte-exact in c190e6faf8.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "safe-merge.sh --continue: 'committing the merge as <author> (from the index snapshot taken right after the merge; a peer's later staging cannot enter it)' -- a peer's later STAGING cannot enter, and a peer's later COMMIT is expected to survive the merge.",
+  "world_is": "Drain of wk-MDPF_CANON-14: the merge was opened at HEAD 68e13832ab; peer commit b1bd62f384 (0.7.0_AE_CloudOps~SC1, 02:24:57 local) landed on box/dell1 while the conflict was being resolved; --continue then committed 0468b6c8ba (02:25:38) with parents (b1bd62f384, 912327aeab) and a tree built from the older snapshot. `git diff 0468b6c8ba^1 0468b6c8ba` showed 2 modified and 5 deleted paths of the peer's commit (E87_PREFIRE_VERSIONS 109,418 lines, its proof instance, a log, two outputs, and its ledger entry reverted). The four earlier merges of this round (24e8981f2f, 9ecb1d4a66, 54e1fc41d8, 68e13832ab) show no path outside their branch. Repair: `git restore --source=b1bd62f384` of the 7 paths and commit c190e6faf8 under the audited GIT_COMMIT_AUTHOR_OVERRIDE=SHARED_CLOUD_OPS, because the five tier2 paths are another lane's; `git diff b1bd62f384 HEAD` over the 7 paths reads 0 lines. Not measured: whether the tool re-reads HEAD after a conflicted resolve; the fix belongs to the tool's owner.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --stat 0468b6c8ba and git diff --name-status 0468b6c8ba^1 0468b6c8ba (7 peer paths reverted, read 2026-10-11 ~06:3xZ)",
+      "git diff b1bd62f384 HEAD over the 7 paths = 0 lines after c190e6faf8",
+      ".tools/safe-merge.sh --continue output line: committing the merge as 2.0.0_SA_COO~D1 (from the index snapshot taken right after the merge)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the tool is 0.0.0_AB_MSTR. Mitigation for any drain with a conflict to resolve: after --continue, run `git diff <merge>^1 <merge> --name-status` and read every path outside the branch's own set before anything else lands."
+}
+```

@@ -10,7 +10,7 @@
  "subject": "ETFS_RIVALS TO-MERGE-tc1 (seat-home carrier now present): merge b0b65368fb before 10-10 10:45Z",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009.md",
  "opened_at": "2026-10-09T16:56:41Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T17:00:27Z",
   "bus_message_id": "dcf23361-2a48-4340-9602-f923b5d98960"
@@ -18,11 +18,11 @@
  "ack": {
   "at": "2026-10-11T06:03:53Z",
   "by": "0.7.0_AE_CloudOps~ZV",
-  "bus_message_id": null
+  "bus_message_id": "c76353c6-ffd0-4c41-8fb0-4d1af39e69b7"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T06:33:19Z",
+  "from_by": "2.0.0_SA_COO~V1",
   "to_at": "2026-10-11T06:03:53Z",
   "to_by": "0.7.0_AE_CloudOps~ZV"
  }

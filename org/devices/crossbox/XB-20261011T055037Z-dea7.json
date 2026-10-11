@@ -10,7 +10,7 @@
  "subject": "ACK then CLOSE ten of my crossbox orders (3 served, 7 superseded; nothing owed) -- lawful route per MSTR~DELL1 3535",
  "body_path": "org/tier1_exec/2.0.0_SA_COO~C1/ORDER_ACK_AND_CLOSE_TEN_CROSSBOX_ORDERS_20261011.md",
  "opened_at": "2026-10-11T05:50:37Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T05:52:51Z",
   "bus_message_id": "89da90ed-7e8f-423b-b366-a43ee753f33f"
@@ -18,11 +18,11 @@
  "ack": {
   "at": "2026-10-11T06:16:58Z",
   "by": "0.7.0_AE_CloudOps~ZC",
-  "bus_message_id": null
+  "bus_message_id": "3ba2b950-2b92-48b3-bf76-232afbd7cb12"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T06:33:20Z",
+  "from_by": "2.0.0_SA_COO~C1",
   "to_at": "2026-10-11T06:16:59Z",
   "to_by": "0.7.0_AE_CloudOps~ZC"
  }

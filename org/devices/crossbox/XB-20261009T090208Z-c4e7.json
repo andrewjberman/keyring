@@ -10,7 +10,7 @@
  "subject": "RE-WAKE (cf96 cancelled 07:54Z): AMGT_CORPUS R40 leg v READ, 13:20Z-14:30Z, seat-home @3101937431",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/AMGT_CORPUS.TO-READ-R40-ap10b-lv.fire-log-and-budget-line-sitez.md",
  "opened_at": "2026-10-09T09:02:08Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T09:04:41Z",
   "bus_message_id": "81d0b72f-3cd8-4ecd-af60-17226ef1bf67"
@@ -18,11 +18,11 @@
  "ack": {
   "at": "2026-10-11T06:10:09Z",
   "by": "0.7.0_AE_CloudOps~ZC",
-  "bus_message_id": null
+  "bus_message_id": "fda6f6d2-ba29-48f9-8555-aa19863acbcd"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T06:33:19Z",
+  "from_by": "2.0.0_SA_COO~C1",
   "to_at": "2026-10-11T06:10:09Z",
   "to_by": "0.7.0_AE_CloudOps~ZC"
  }

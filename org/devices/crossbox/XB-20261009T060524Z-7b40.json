@@ -10,7 +10,7 @@
  "subject": "SUPERSEDES XB-f12c: AMGT_CORPUS R40 (u) leg r re-pin, STOP 0 fixed (AMENDMENT 2); both CTO halves signed",
  "body_path": "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-REPIN-R40-ap10u-lr.repin-induction-to-p-sitez.md",
  "opened_at": "2026-10-09T06:05:24Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T06:08:47Z",
   "bus_message_id": "e89a07a3-cf58-4339-9748-9df185f5e4a0"
@@ -18,11 +18,11 @@
  "ack": {
   "at": "2026-10-11T06:10:07Z",
   "by": "0.7.0_AE_CloudOps~ZC",
-  "bus_message_id": null
+  "bus_message_id": "e935a0fe-9aaa-4a49-975b-cdde0b8d6cec"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T06:33:19Z",
+  "from_by": "2.0.0_SA_COO~C1",
   "to_at": "2026-10-11T06:10:07Z",
   "to_by": "0.7.0_AE_CloudOps~ZC"
  }

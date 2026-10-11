@@ -10,7 +10,7 @@
  "subject": "RE-WAKE (68ae cancelled 07:54Z): AMGT_CORPUS R40 re-pin to 7580fe909c, 11:15Z-12:45Z, seat-home @3101937431",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/AMGT_CORPUS.TO-REPIN-R40-ap10u-lr.repin-induction-to-p-sitez.md",
  "opened_at": "2026-10-09T09:02:08Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T09:04:41Z",
   "bus_message_id": "1da88747-3390-4bdd-a0a2-aa5e0f06ddea"
@@ -18,11 +18,11 @@
  "ack": {
   "at": "2026-10-11T06:10:08Z",
   "by": "0.7.0_AE_CloudOps~ZC",
-  "bus_message_id": null
+  "bus_message_id": "21511c80-da8d-4775-98fe-0228b60eaf3e"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-11T06:33:19Z",
+  "from_by": "2.0.0_SA_COO~C1",
   "to_at": "2026-10-11T06:10:09Z",
   "to_by": "0.7.0_AE_CloudOps~ZC"
  }
