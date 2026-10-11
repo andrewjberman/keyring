@@ -1244,3 +1244,52 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "notes": "Appended in binary mode with CRLF line endings after S2. INERT: no new behaviour; it is DEV's pre-existing opener."
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S6",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T05:16:32Z",
+  "one_line": "R2-rn-1 AMENDMENT 2: the runner still writes its trace to round 1's two files (TRACE = 2.0.0_SA_COO~V2/R1_RUN/sa_r1b_trace.json and MY_TRACE = 0.7.0_AE_CloudOps~TV2/deliverables/sa_r1/sa_r1b_trace.json) and no D-item or argument names a trace path, so a round-2 run appends its record into round 1's trace files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~V2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fwd1_runner/fwd1_run.py constants TRACE and MY_TRACE (module top) are unchanged from the copy of sa_r1b_run.py:133-134",
+      "save() slots a run whose run_id differs from the file's into the next free run_N key, so it appends and does not overwrite; the round-1 record stays but the file now holds a round-2 section",
+      "D7 replaces the header fields only; D1-D8 and the argument list name no trace path; tree read and fake-layer tests only, nothing was run against AWS"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 2 D7: the trace header names this run (run label, pair, executor); the order expects a round-2 run's trace to be distinguishable from round 1's.",
+  "world_is": "The header now names the run, but the file it lands in is still round 1's R1_RUN trace plus a copy under the TV2 deliverables folder (outside any round-2 grant). Not widened by the worker: no trace-path argument was added because the order's argument list does not name one. The issuer decides before the run pair executes: add a --trace-dir style argument in a further amendment, or accept the append into run_N and read the trace by run_label.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W8-S7",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~8",
+  "surfaced_at": "2026-10-11T05:16:32Z",
+  "one_line": "R2-rn-1 AMENDMENT 2 D4: the zero-call read counts streams from filter_log_events' `searchedLogStreams`, which AWS documents as deprecated (to my recollection, returned empty since May 2023), and its positive control assumes opal-ticket-api logs the filer's email; either makes the read VOID live where the fake layer proves it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "D4 text: the read is VOID when the count of log streams searched is 0; the existing code counts len(r.get('searchedLogStreams', [])) per page (fwd1_run.py _scan_group)",
+      "the deprecation of searchedLogStreams is recalled from the CloudWatch Logs API reference, not read in this session (no network call allowed)",
+      "whether opal-ticket-api writes the filer's email into its log lines was not read; the pattern is the filer email in double quotes, the same filter as the data-refresh read"
+    ]
+  },
+  "spec_asserts": "D4: ZERO_CALLS_PROVEN is reachable when streams searched > 0 and the control over /aws/lambda/opal-ticket-api finds the filer at least once.",
+  "world_is": "If the live field is empty, streams searched is always 0 and the result is always ZERO_CALL_VOID, which fails SAFE (never a false zero) but means the proof cannot be produced; the fake tests cannot tell. The same holds if the ticket API does not log the email. INERT because the failure direction is VOID. For the issuer's run pair: read the control block and searched_log_streams in the trace; a VOID with control found 0 or streams 0 is this row, not a data-refresh call.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
