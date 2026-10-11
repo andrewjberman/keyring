@@ -20,3 +20,11 @@ per-box 10-minute scan.
 
 **Carriers:** this record; the row in `org/ref/LIVE_ARMS.md`; the session cron. Supersedes nothing: the laptop `/self-drive`
 row stays un-armed since the restart.
+
+## Addendum (same terminal, the next message), VERBATIM
+
+> What this means is that if you notice things that need to get fixed on other boxes, you have your MSTR agent convey the
+> message to the relevant box.
+
+So the route for a finding on another box is: this seat -> `0.0.0_AB_MSTR` (laptop) -> that box's manager -> the owning
+seat. The finding names the box, the seat, the artifact and the fix asked; the owning seat does the work.
