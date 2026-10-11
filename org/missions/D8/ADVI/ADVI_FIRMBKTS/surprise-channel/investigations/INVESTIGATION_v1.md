@@ -613,3 +613,28 @@ write: **1 row** (`S1`).
   "notes": "Recorded, not graded. The format difference is for the issuer and the L9 adjudicator to rule on; the order stays open with AC1 and AC2 recorded FAIL on the mechanical expect match, and no flip is made."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W7-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~7",
+  "surfaced_at": "2026-10-11T04:12:47Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "THE LAYER-2 FLIP GATE CANNOT FIND THE PROOF INSTANCE OF A TREE ORDER WHOSE FILENAME CARRIES A SUFFIX, SO TO-FB-e-4's complete flip is REFUSED although its instance is VALID and both criteria PASS by output",
+  "spec_asserts": "to-pipeline-gate.py check_complete_flip (:3244-3255, :3176-3191): for a tree order the instance is searched as deliverables/*/<stem>.proof_of_spec.json, where <stem> is the ORDER FILENAME minus .md; the <proof_of_spec> block may also name the instance path. The order's own face (section 5) names the instance as ADVI_FIRMBKTS.TO-FB-e-4.proof_of_spec.json.",
+  "world_is": "The order is org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-e-4.f4-arms.md, so the gate's stem is ADVI_FIRMBKTS.TO-FB-e-4.f4-arms and it searches for ADVI_FIRMBKTS.TO-FB-e-4.f4-arms.proof_of_spec.json, which does not exist. The instance is at deliverables/0.9.0_WK_ADVI_FIRMBKTS~7/ADVI_FIRMBKTS.TO-FB-e-4.proof_of_spec.json. The <proof_of_spec> block (section 4) names no instance path, so the tag route finds none. The commit refused with 'flips to complete on PIPELINE-REGISTERED project ADVI_FIRMBKTS, and NO proof-of-spec instance was found beside it'. The instance itself passes proof-of-spec-check.py AC1,AC2 rc=0 VALID.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh of the order flip + instance (0.9.0_WK_ADVI_FIRMBKTS~7 worktree, branch wk-ADVI_FIRMBKTS-7, base 105ca3c82e), 2026-10-11T04:1xZ: 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). Commit aborted; files unstaged.' and the to-pipeline-gate REFUSED line quoted above",
+      "proof-of-spec-check.py ADVI_FIRMBKTS.TO-FB-e-4.proof_of_spec.json AC1,AC2 @worktree -> VALID (rc=0), violations=0",
+      ".tools/to-pipeline-gate.py:3176-3191 @worktree (_proof_instance_candidates: names = (stem + '.proof_of_spec.json', ...) with stem = basename(rel) minus '.md'; tree glob deliverables/*/<n>)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded, not worked around. Not renamed (the instance path is the one the order names), no <proof_of_spec> path added to the issuer's literal block, and no # pipeline-override line added, because the order is in pipeline. The order is left status pending on the worker branch; the criteria are PASS by output. Owner of the choice: the issuer 2.0.0_SA_COO~B1 (name the instance to the order stem, or add its path to the block) or the gate's owner (search by to_id as well as stem)."
+}
+```
