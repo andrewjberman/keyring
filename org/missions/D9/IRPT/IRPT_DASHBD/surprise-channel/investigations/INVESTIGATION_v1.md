@@ -6694,3 +6694,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W118-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~118",
+  "surfaced_at": "2026-10-11T20:53:19Z",
+  "one_line": "DB-b-145: 3 of 42 figures the tie-out records quote have no producing line in any private script and are WITHDRAWN in FIGURE_PRODUCERS.json: ~104 (the 122/113/9 verdict split of the 244; 'none of the 244 among the 74 restated') and ~113 (the per-type tally of the 50 differing days).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-145 item 2: each figure a record quotes from a private script has that script tracked in the project's folder, or the figure is listed as withdrawn with why, and ONE row lists the withdrawn figures (the records are their owners' to amend).",
+  "world_is": "Of 42 figures listed from 6 tie-out records (and the issuer's re-run note, whose script the issuer tracks), 39 have their producing lines in 32 tracked, hashed copies. 3 do not: (1) UNEXPLAINED_244.json how-text, 'of the 244: 122 verdict UNEXPLAINED, 113 confirmed, 9 no DB-b-106 row' is a literal in class_244.py (line 96); the script tallies by class and not by verdict, and its only 9 is the ZERO_GAIN class; (2) the same record's 'none of the 244 is among the 74 restated': class_244.py counts restated segments only inside the 90 remainder (line 74), so the number 74 and the 'none of 244' are stated, not computed there; (3) UNREPRODUCED_18.json 'the 50 differing days by row type: 22 cash deposits, 13 cash withdrawals, 11 management fee rows, 4 single mixed or transfer days' came from a console command that was not saved as a file; no script in the ~113 private folder prints that tally (a2_show.py lists the first 20 days only). Counts only, no client figure. The records are not amended by this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~118/FIGURE_PRODUCERS.json (figures with state WITHDRAWN)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~118/producers/0.9.0_WK_IRPT_DASHBD~104/class_244.py lines 74, 96",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~104/UNEXPLAINED_244.json; org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~113/UNREPRODUCED_18.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
