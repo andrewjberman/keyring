@@ -111,7 +111,21 @@ HEAD): verify each against the live keys and commit them as IB-pr-404's lane bef
 OPEN until 49F's next fire is read; that fire's read closes it and serves this order's after-read. AMENDMENT 3's window and Branch B
 stand.
 
-Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+Gate limb: GATE (viii) graded this modification (placeholders NONE, OK); LIMB 6 fires on newly-added orders only. [Line corrected by
+AMENDMENT 5: as first written it said no limb graded it.]
+
+## AMENDMENT 5 (2026-10-11 ~03:2xZ, issuer 2.0.0_SA_COO~P2, on row D2-S64 @f402e76314 / ~IB2 msg 3965): the check is re-cut to IB-pr-417
+
+An issuer check defect, not a landing defect. `checks/r114/p114_cells.py` still held IB-pr-410's four constants after AMENDMENT 3
+re-pointed the order, so IB114-1-AC1 could not pass on a correct landing. Re-cut to IB-pr-417's values, each read from its packet:
+- built sha256 `fe4000cbd31aaee971793854ad6cf26bc7b2d9a37a484e953896a09084f02f2e`;
+- md5 / ETag `8b482c8db26c2e913aeee72023bacc7e`;
+- `members-sha256` `73f33c3c59b77528c6eaaa56799e9c55f570a7adac23a0c6bcd12e66fe343a81`;
+- ledger pin prefix `4b008d15`.
+The criteria's meaning is unchanged; AC2 and AC3 are untouched. Dry-run after the re-cut: all three FAIL only on the absent after-reads
+file. Upload metadata for this order is `members-sha256=73f33c3c...3a81,member-count=44` (the original face's value was IB-pr-410's).
+
+Gate limb: GATE (viii) grades this modification (placeholders NONE).
 
 ## BOUNDS
 
