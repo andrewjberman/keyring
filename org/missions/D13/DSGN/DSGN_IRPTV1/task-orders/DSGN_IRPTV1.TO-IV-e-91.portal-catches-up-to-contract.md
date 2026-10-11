@@ -46,6 +46,14 @@ In `C:/dev/wk-dsgn-irptv1-49`:
 4. The suite run of the baseline note; `CONTRACT_CATCHUP.json` {causes: [{cause, ids, fix}], wire_changes, not_fixed, workspace_commit (the
    box/dell2 commit your contract files are read at), portal_commit, product_files_changed, suite_after}. The portal commit is a CANDIDATE.
 
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~07:2xZ): the portal base moved before the cut
+
+Your portal worktree is at DEV tip `ab697ba120a6452bdcb634038d8114b88f18e4a9`, not `1cd1cf25`: one Model Portfolios commit landed on DEV after the
+issuance (two files outside Investor Reporting). `1cd1cf25` is its ancestor. The suite baseline is unchanged in meaning; if your first full run at
+this base fails an id outside the 43 BEFORE any edit of yours, record it under `base_new_failing_ids` and do not count it against your change.
+
+Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
+
 <criterion id="IV91-AC1" cell_refs="IV-e-91"><invocation>python "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D2/checks/r14/p14_round14.py" . IV91-AC1</invocation><expect>IV91-AC1 PASS</expect></criterion>
 `IV91-AC1` -- every contract-family id is fixed or reasoned, with no new failing id, and the record names both commits and every wire change. Base: FAIL.
 
