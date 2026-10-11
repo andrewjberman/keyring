@@ -2846,3 +2846,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r126/p126_cells.py`: every criterion 
 | `IB-pr-428` | five routes: where the answer is built, a run, the schema result, shape against the fixture; a control route | FWD-2 (DSGN_IRPTV1's readers) | LOCAL | none | P126-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~287. DIRECT-ACT (one cell, read only, LOCAL).
+
+## 120. ROUND 127, WORKSTREAM ~P (2026-10-11 ~11:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 4825)
+
+Round 125's read (IB-pr-427, drained @ea10544bdf): of 614 accounts with moved rows, 553 are always on their own date, 0 always behind,
+61 mixed by day; 386 of 1,000 accounts have no moved row on any day. The CTO ruled the basis per ACCOUNT-DAY as a measured claim
+(OWN_DATE, PRIOR_CLOSE, NOT_GRADED), a return served only when an account-day and its prior trading day both read OWN_DATE, the rest
+blank with the reason, nothing shifted. Before the PRD addendum the CTO asks what the instrument needs daily and the share of
+account-days the rule blanks. One read-only cell counts both.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r127/p127_cells.py`: every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-429` | one claim per account-day; NOT_GRADED by reason and what those accounts hold; served and blank under the rule; the instrument's daily needs; a constructed control | FWD-3 (Cottonwood) | LOCAL | IB-pr-427 drained | P127-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~288. DIRECT-ACT (one cell, read only, LOCAL).
