@@ -9843,3 +9843,22 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order (the queue's producer draws at site Z)
 ```
+
+### 98e. AMENDMENT 1 (issuer, 2026-10-11 ~06:0xZ) -- `AMGT-oo-4` is a BUILD cell, and it is ROUND 91's, not round 90's
+
+The issuer's own record, corrected; no ENDPOINT or SERVED/WORLD change. s.98a, s.98b and s.98c named `AMGT-oo-4` an issuer read "DONE at
+the cut, no build" on a count of 0 of 1,816 non-US rows resolved by the scanner's raw ticker. That count tested one form of the rule.
+The live `_with_numeric_tickers` serves 29 of 769 all-digit non-US rows (22 by name, 7 by Japan code), and 23 of the other 1,047 name
+exactly one held company and are not served (ISSUER_READS.md, CORRECTION; `reads/r90_measure_nonus3.py`). The CTO's item 2 therefore
+has one buildable cell: the numeric rule's exact-name arm extended to non-digit tickers (ceiling 52 of 1,816; 1,764 keep their plain
+reasons; no parser).
+
+**It is not cut in round 90.** The TO issuance gate refuses a second issuance into a round that already has one ("ONE ISSUER PER ROUND
+is keyed to the ROUND", Rule 27; measured 2026-10-11 ~06:0xZ on this very order), and mid-round the spec and the decomposition are
+frozen; the only off-spec act is a surprise ROW (`AMGT_RESAPP-D1-S20`). No `# pipeline-override` is taken: it would ship a round
+whose cells the gate did not cover. The cell goes FIRST into the round-90 analysis's ENRICHMENT LIST (round 91), with its check and
+its order drafted: `round90_prep/checks/r90_name_match.py` (base: FAIL N1-N5 and N7, N6 PASS; all seven arms PASS against a candidate
+held outside the tree) and `round90_prep/DRAFT_ORDER_for_round91_*.md` (recut under its round-91 id).
+
+- **Edge:** `AMGT-oo-6` (the DEMQUE answer's wiring) edits `scoped_amgt.py` too, so oo-6 is cut after oo-4 merges.
+- **fanout (round 90, unchanged):** `2 of 2 chains, cap 8`: oo-3 and oo-5, both merged (@69d5fea1a9, @a423f1d667).
