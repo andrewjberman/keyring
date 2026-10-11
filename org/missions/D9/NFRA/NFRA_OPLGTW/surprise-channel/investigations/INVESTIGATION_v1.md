@@ -12525,3 +12525,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "ONE THING WORTH CARRYING, measured on the corrected guard rather than assumed: running its own command form against the bad name on this device returns rc=0 with an EMPTY value, because the .tools/aws shim does not propagate the CLI's failure as a non-zero exit (the 'aws shim crash reads as EMPTY result' class). So the new `[ \"$lrc\" = 0 ]` check alone would NOT have caught the wrong name -- it is the `[ -n \"$live\" ]` conjunct beside it that discriminates. Both are present, so the guard holds; the note exists so that nobody later 'simplifies' it to the rc test, which on this device is the weaker half. Credit where due: declining to edit my own grader is what made the repair the issuer's, and the issuer made it at once."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S95",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T23:55:06Z",
+  "one_line": "The new GET /hx/teams/channels/{team}/{channel}/messages route (OG-ap-7, live 28ba9532b6) answered 502 on 2 of ~285 COMM_ASSIST polls since the release (2026-10-11 21:27:39Z and 23:30:36Z), per COMMS row COMM_ASSIST-Z-S13 @cf36d47e7c. The gateway-side cause is not yet read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ROW org/missions/D9/COMM/COMM_ASSIST/surprise-channel/investigations/INVESTIGATION_v1.md COMM_ASSIST-Z-S13 @cf36d47e7c (relayed by 2.0.0_SA_COO~ZZ msg 33416): route=channel_messages status=502 at 21:27:39Z and 23:30:36Z, 2 of ~285 polls"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-7: the channel-read routes answer 200, or a refusal the code names (401, 409, 503, PathRefused).",
+  "world_is": "About 0.7% of channel_messages polls answer 502, which none of the route's own refusals produce. A 502 most likely comes from an upstream Graph error passed through (the research_meeting transcript 502 class, row NFRA_TRNSPT-D2-S30), but this is not read.",
+  "notes": "Next read, cheap: the gateway's audit records and the journal around the two timestamps (status, Graph status, latency). If upstream Graph 502s are passed through, record it and leave it; if the gateway itself errors, it is a code cell. COMM retries on the next poll, so nothing is lost."
+}
+```
