@@ -233,11 +233,11 @@ some; this seat did not re-read each one's present state. An owner who finds one
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v68",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v68"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
