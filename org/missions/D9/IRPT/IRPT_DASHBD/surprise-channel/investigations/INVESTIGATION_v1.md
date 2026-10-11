@@ -5598,3 +5598,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W91-S1 -- DB-b-116: the order's address recipe leaves the firm slot ambiguous; a registry key in it gave four not-found reads
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W91-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~91",
+  "surfaced_at": "2026-10-11T04:25:00Z",
+  "one_line": "DB-b-116: the face says opal_naming.address('irpt', <firm>, ...) for 'the firm scope the Cottonwood entry resolves to'; I first passed the registry key (z09 / 08335338) and the control read was not found too, so two list/head pairs read the wrong address before I rebuilt it with firm_scope() (cottonwood / 49financial).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:327-340,1894 @6bfea3096a",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~91/ROW3_VS_COTTONWOOD.json read_history"
+    ]
+  },
+  "spec_asserts": "The order permits exactly two S3 reads, the dim row 3 address and its positive control.",
+  "world_is": "Six read calls were made: an s3 ls pair and a head-object pair at the key-built (wrong) addresses, all not-found with no data read, then the head-object pair at the firm_scope-built addresses that the record uses. All reads, no object body, no write. The overrun is the worker's mis-build of the address, not a defect of the order's text, which says 'firm scope'.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

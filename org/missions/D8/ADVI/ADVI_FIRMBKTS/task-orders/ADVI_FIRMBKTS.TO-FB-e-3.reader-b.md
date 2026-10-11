@@ -105,7 +105,7 @@ the independence is the reader's own OPENED line: the claim is `held`, not `meas
 never continued from another reader (reader A is slot ~5).
 
 # pipeline-override: the one refusal is LIMB PRD_HEADER.fabric='laptop' vs the register's 'dell1'. The register row is the authority since 1.0.0_SA_CTO's L3 re-placement @8afcb0f851; the PRD header repair is the CTO's. Every other limb passed in the issuer's dry run.
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-e-3</to_id>
 <slot>~6</slot>
