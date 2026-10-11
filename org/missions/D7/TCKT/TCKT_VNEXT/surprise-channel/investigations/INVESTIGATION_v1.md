@@ -1547,3 +1547,31 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S34",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-11T09:28:00Z",
+  "one_line": "R2-pk-2's STOP 3 cannot be satisfied because the route's ONE caller is not deployed at all: no live Lambda carries opal_packager.py, so there is no function to name, no CodeSha256 to record and no attach call site to compare -- both halves are written as though a deployed caller exists and only its BYTES were unmeasured.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DOMAIN FALSIFIED FIRST: one unscoped comp-find over the corpus returned 98 hits across 88800 files scanned; the SURFACED band (first-party source, 22 hits) places every code reference to opal_packager under infra/aws/lambda/investor-reporting/ -- exactly two files, reports/resident_installed.py (imports at :295, wires 'attach': opal_packager.live_attach at :303, handle_commentary_ready at :306) and ycharts/generate/resident_worker.py:864 (a comment). The rest of the band is org/ logs and check scripts, not lambda source",
+      "SWEPT BY CONTENT: all 17 investor-reporting functions the source map declares (printed denominator), each one's live package downloaded from its own Code.Location and its member list read -- 0 carry opal_packager.py, 17 do not, 0 unreadable",
+      "POSITIVE CONTROL on that member test, run separately: served.py IS found in irpt-status (49 members) and generate_installed.py IS found in irpt-ycharts-generate (104 members), so a miss is a miss and not a broken test",
+      "the served AWS graph, 235 LAMBDA nodes scanned, vintage 2026-10-11 08:36:08 UTC, holds no function whose name or properties mention a packager; the only commentary functions are irpt-commentary-composition-read-lambda and irpt-commentary-draft-store-lambda, both downloaded and neither carrying the member",
+      "the source map holds ZERO entries naming opal_packager or ycharts/research across 235 entries -- on its own not an absence proof, since Rule 4 records the map as covering 192 of about 198 live functions, which is why the content sweep was run",
+      "COHERENT, not mysterious: opal_packager.py was added 2026-10-09T01:25:59Z (7e66decdff, IRPT_ANLREQ TO-AR-g-12) and last changed 2026-10-11T02:59:05Z, while irpt-ycharts-generate's live build dates from 2026-10-09T09:32:22Z and does not contain it -- that build does not bundle research/. The deploy that would carry it is IRPT_ANLREQ's, whose ledger entry irpt-anlreq-t1-commentary-store-and-lambda-20261009 is still OPEN with legs B, SIM and INVOKE stranded, and whose leg B is the commentary.tf apply -- which is why no aws_lambda_function.commentary is live"
+    ]
+  },
+  "spec_asserts": "TO-APPLY-R2-pk2 @dbb7aa26cf step 3 and the packet's step 1b: 'name the Lambda function that runs opal_packager.py, record its live CodeSha256, download its live package, and show that its attach call to /package discards the answer as the tree's does'. The packet's blast-radius table names the gap it meant to close -- 'Not measured: that the deployed packager is the tree's bytes' -- and CTO condition 3 requires the read to 'state the function it read and its CodeSha256'.",
+  "world_is": "There is no deployed packager, so the gap is one category wider than either half described. The packet's unmeasured quantity was 'are the deployed caller's bytes the tree's bytes'; the measured answer is 'there is no deployed caller'. Both halves are consistent and careful about the caller COUNT in the tree -- 1 caller, 0 portal callers, read by the worker and re-read by the CTO at opal_packager.py:176-184 -- and that count is about the TREE. Nothing in either half asserts the caller is live, and nothing checks it; the gate was written to compare a live caller against the tree, and the case where none exists falls outside its two branches (reads ticket -> STOP; discards it -> proceed). It is arguable that an absent caller makes this apply SAFER, since no live consumer can break on the narrowed answers. That is not this seat's call: the CTO made step 1b a pre-plan gate with a named STOP, and deciding that an absent caller satisfies a gate written for a present one is an adjudication, not a reading. Second-order, for whoever does decide: the packager's own deploy is still ahead of it, so whether the FUTURE deployed packager reads ticket from the 200 or the changed-under-write 409 is a question about a build neither half examined, and it would be answerable at that deploy rather than this one.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Nothing was planned, built, uploaded or applied: the STOP precedes step 5's build and step 6's plan, and the artifact object plus the live function both still stand where TO-APPLY-R2-rr2 left them (version RI4EX8i.EL18LgmpA54Fixk.hmjLsH4h, CodeSha256 W03VREoM..., deployed file ca3be343...). STOPS 1 and 2 passed and AC1 reads PK-200-OK 2 of 2 with PK-CODES-OK 5 of 5, so the order is ready to run the moment the gate is resolved. ONE consequence for the issuer's precheck list ([[TCKT_VNEXT-D2-S28]]): the live ticket build is UNCHANGED, so reread_27.py already admits it and cf10e19e... must NOT be added until the apply actually lands -- adding it now would make the list admit a build that is not running. The remedy is the issuer's and the CTO's: either the gate is restated to cover the no-live-caller case, or this apply waits on IRPT_ANLREQ's stranded commentary deploy so that step 1b has something to read. ID NOTE: this row was first appended as S33 and immediately re-identified to TCKT_VNEXT-D2-S34 by its own author, because 3.0.0_SA_CVO appended a different S33 between my next-free-id read and my append -- the append-only channel has no id reservation, so a concurrent writer can take the id a reader just computed. Only my own trailing block was rewritten; the CVO's S33 is untouched."
+}
+```

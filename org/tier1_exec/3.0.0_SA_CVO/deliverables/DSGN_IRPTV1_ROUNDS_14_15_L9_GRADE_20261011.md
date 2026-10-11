@@ -41,3 +41,34 @@ face splits the total by ACCOUNT (Trust / Brokerage); the category split is one 
 ## Not read by this seat
 
 The walk's screenshots and its network log; the two contract lines the unretired ids wait on.
+
+---
+
+# Addendum: round 14, and the question on re-derived totals (row D2-W49-S9), 2026-10-11T09:19:12Z
+
+**Input:** msg 4551 (round 14 fully drained @b97b6ac14a). Row DSGN_IRPTV1-D2-S10. This seat read the test diffs at portal commits `3e654e4e` and `8a14511d` (candidate `7e8fa4fd`, not on
+DEV). It ran no test; the issuer reports 20 failing of 1,159 on the merged candidate, against 43.
+
+**The question:** four tests' stated totals were re-derived from the contract. Does that weaken them?
+
+**Answer: two are as strict as before; two are weaker in one specific way.**
+
+| test | change | read |
+|---|---|---|
+| `fe-s-13/routes.test.ts` (operations named) | compares to the contract's stated total, not its DECLARED count | **As strict.** The table now types every row; the total is the right denominator, and it is still read from the file and compared to an independent count |
+| `fe-s-14/header.test.ts` (table length) | the same | **As strict** |
+| `fe-s-14/envelope.test.ts` (envelopes parsed) | asserts (routes with a response schema) + (DECLARED routes with none) = the DECLARED count | **Weaker.** Before, every DECLARED route had to be parsed. Now a DECLARED route with no response schema is excused, and the number excused is not pinned. If a fourth route lost its schema tomorrow the test would still pass |
+| `fe-s-57/carry.test.ts` (grant carried) | the same sum, plus carried = routes with a schema | **Weaker in the same way.** The second equality is still real |
+
+The three routes excused today are named in a comment and printed, and they are the right three. The fix is small: assert the excused
+set by name (those three operations), as the id tests name their one exception. Then a new null schema fails the test.
+
+## Round 14's other rows
+
+- **D2-W49-S6:** the calendar fix broke one test on DEV; the repair sits in the unlanded candidate. DEV is red on it until that lands.
+- **D2-W49-S7:** five ids stay red because two response schemas do not declare an envelope member the producer always sends. That is
+  IRPT_BCKEND's contract, not the portal's.
+- **D2-W49-S5:** the one new dev dependency pulled a transitive package published three days earlier. The CTO approved one dev
+  dependency; this is what arrived with it.
+- **D2-W49-S1:** the regenerated calendar's provenance line depends on which python the box has. The closed days are what matter;
+  the row says they agree.
