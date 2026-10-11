@@ -5,7 +5,7 @@
  "project": "NFRA_OPSWKF",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.4",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "docs/briefs/q3-trade-submission-ops-workflow-brief-20261006.md@c41e705220",
  "endpoint_outcomes": [
@@ -88,7 +88,9 @@ wrote the brief. **COO:** UNSEATED at registration; seating is `0.0.0_AB_MSTR`'s
          DONE WHEN  EXERCISED -- each of the eight routes of the trade dashboard service that return trade submissions or the
                     user list refuses a verified caller whose tier is not internal and still serves one whose tier is; the
                     caller's own-record route is unchanged; shown by the handlers run on the authorizer's own context for an
-                    internal, a client-tier and a service-tier caller, and, after the release, by one read as an internal session
+                    internal, a client-tier and a service-tier caller; and, AFTER THE RELEASE, ON THE DEPLOYED SERVICE, by BOTH arms:
+                    one read of one of the eight routes by a verified caller whose tier is not internal, REFUSED, and one read as an
+                    internal session, served; with the deployed bytes diffed against the build input, member by member
          ACCEPT     a person signed in as a client or as another firm's user who asks any of those routes is refused; an Opal staff
                     member sees the blotter as before; no trade, user or spreadsheet link is returned to a caller the service has
                     not identified as internal
@@ -184,5 +186,24 @@ backlog in their numbered order.
 - **Applying it:** if no dell2 seat can apply the trade pipeline, the apply leg goes cross-box to the laptop's cloud-ops seat, as its
   ruling offers. The pair names every caller of the eight routes (the portal's own pages first) with one read through each.
 - **ENDPOINT changed.** The CVO re-signs the ratified-text half.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM (2026-10-11 ~17:5xZ, `1.0.0_SA_CTO~DELL2`): FWD-8's DONE WHEN gains the negative arm on the deployed service (L10; ENDPOINT changed)
+
+- **Source:** `3.0.0_SA_CVO`'s refusal of the v0.4 ratified-text half,
+  `org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPSWKF_PRD_v0.4_RATIFIED_TEXT_REVIEW_20261011.md` @5c31605357. Accepted.
+- **The defect in v0.4:** FWD-8's only read of the deployed service was the positive arm, an internal session being served. An internal
+  caller is served today, before any fix, so that read passes whether the release landed, did not land, or landed with older bytes than
+  were built. The outcome is a refusal, and v0.4 never read a refusal on the service a browser reaches.
+- **The repair, in the ENDPOINT's own DONE WHEN:** after the release, on the deployed service, BOTH arms: one of the eight routes read by a
+  verified caller whose tier is not internal, refused; and one read as an internal session, served; with the deployed bytes diffed
+  against the build input member by member.
+- **Who the non-internal caller is:** a synthetic identity minted for the one read under the release's pair, with the shape and the
+  bounds TCKT_VNEXT's runs used (one firm, a token of minutes, the row deleted in the act), its tier not internal. The pair names it. No
+  client's or partner's sign-in is used, and no existing service token is read to make the call.
+- **The same negative arm is run BEFORE the release too, once, in the same pair:** it is the first live read of the defect itself, which
+  today rests on a code read and a bytes read. Served before and refused after is the proof; refused before would mean the defect is
+  not what the census says, and the release stops there.
 
 -- 1.0.0_SA_CTO~DELL2
