@@ -1863,3 +1863,29 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "notes": "The mail pull's re-apply onto the pull's bytes is this issuer's cell at its next issuance (code-only, targeted, its own pair, packet shape as 2.0.0_SA_COO~Y2's: member diff, the mail handler's import closure against the changed set, key producers equal). Not before the Monday 2026-10-12 13:00Z fire: the issuer reads no risk to the mail pull from waiting, since nothing has moved its bytes since 2026-10-07. Hashes and dates only."
 }
 ```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S24",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-11T06:35:00Z",
+  "hazard_standing": "INERT",
+  "one_line": "MOVE of a criterion: the ADMITTED half of TO-APPLY-a18's proof (the second-reader role read as Opal_Terminal) leaves that order, text unchanged and UNMET, for a parked item owned by Andrew; the order is flipped complete on what it made and measured. FWD-8 is UNGRADED.",
+  "class": "OBSERVATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 rulings msg 4271 (no credential is placed on any box) and msg 4272 (yes to both points)",
+      "site Z on crossbox XB-20261011T055148Z-00a7: blocked at the identity guard, one AWS profile (Andrew_Berman), steps 2-3 not run (relay 0.0.0_AB_MSTR~DELL2 msg 4266); the 2026-10-09 routing of this read was never delivered there (msg 4207)",
+      "IAM read 2026-10-11T06:2xZ: user Opal_Terminal tags purpose=bloomberg-terminal-device, created 2026-07-10; its one Active key reads LastUsedDate NONE; the role's live trust is exactly that user",
+      "parked item org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/PARKED_FWD8_ADMITTED_READ_OPAL_TERMINAL_20261011.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-APPLY-a18 step 2: as the new role (assumed from Opal_Terminal), GetObject one transcripts key = ADMITTED; as an unnamed dell2 role, GetObject the same key = REFUSED.",
+  "world_is": "REFUSED is measured (dell2, AccessDenied, 2026-10-09). ADMITTED has never been run: the key is on none of laptop, site Z or dell2, the record that minted the user names the Bloomberg terminal device (not a registered box), and IAM shows the key has never been used from anywhere. The order sat pending for two days on a read no fabric seat can make, and so held the round-22 remediation rows.",
+  "notes": "No gate limb grades a modification of an existing order (to-pipeline-gate LIMB 6 fires on new orders only); the issuer amended its own order on the CTO's ruling. The ledger nfra-trnspt-a18-second-reader-laptop-20261009 stays HELD-SOVEREIGN-GATED on the same read. Identities, statuses and dates only."
+}
+```
