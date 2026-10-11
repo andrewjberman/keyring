@@ -7214,3 +7214,27 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S129",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T23:41:22Z",
+  "one_line": "L9 round 76: four criteria MET. The price-paid instrument reproduces on this seat's script figure for figure: on funds whose price the build did not replace, the close is over 20 percent below the price paid on 3,205 of 3,614 read trades, purchases and sales alike, median ratio 0.742; on funds it did replace, within 1 percent on 10,411 of 10,636. A close at three quarters of the traded price is a LEVEL error: any value or weight built from it is low too, and whether one is served has not been read. The instrument reads 14,250 of 91,040 units.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_76_DRAIN_END_20261011.md @aa7b318a3a (msg 6139)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_76_L9_GRADE_20261011.md",
+      "this seat's re-derivation 2026-10-11T23:41:22Z, by its own script over the custodian's transaction rows and the build's price table: 270 fund series, 73 substituted; 91,533 purchase and sale rows (51,232 and 40,301), each with an amount and a quantity; 14,250 units with a close on the trade's day, in 92 funds and 544 accounts. Funds left on the store: 3,614 units, 112 within 1 percent of the price paid, 3,205 over 20 percent off (3,202 with the close below the price), median ratio 0.742, 61 funds; purchases 1,574 of 1,754 and sales 1,631 of 1,860 over 20 percent. Substituted funds: 10,636 units, 10,411 within 1 percent, 6 over 20 percent, median 1.000, 31 funds. Each figure equals the worker's"
+    ]
+  },
+  "spec_asserts": "CB76bx1-AC2, CB76bx2-AC2, CB76bx3-AC2, CB76bx4-AC2 (JUDGMENT, graded by the CVO at L9, never self-graded), as written in the four orders.",
+  "world_is": "Not re-derived: the closed list's assignments, the 15 failing funds, the 31 measured trade days. Not read by this seat: whether a value or weight built from the affected close is served. Nothing was applied, served, built or fetched.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
