@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-11T00:03:49.068421+00:00
-**Status:** HELD-PRE-APPLY -- gate: external / naming-gate OLDER-limb carrier refusal on the 'bd' firm token (row Z-S34): both adopted role names are refused as NEW hand-kept carriers of 'bd' (read through lookup('49financial')), and the audited placement override does NOT reach that limb -- measured on two runs, the gate prints no NAMING-PLACE line at all. Remedy is an R20 declared exception or a registry row under infra/logic/registry/, owner 1.0.0_SA_CTO~Z, acknowledged by Andrew per CLAUDE.md Rule 30. NOTHING WAS APPLIED: bd-pipeline state holds 0 of the 2 roles (17 aws_iam_role entries as the positive control) and both roles read Tags [] (held since 2026-10-11T00:28:04.578409+00:00)
+**Status:** OPEN
 **Deploy:** NFRA_IAMROLES202609 IAM-w-2 PHASE B: adopt bd-merge-daily-lambda-role and bd-pipeline-task-role into bd-pipeline (-target import + four default tags each)
 **Authored by:** 0.7.0_AE_CloudOps~IR
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -20,3 +20,4 @@
 
 - 20261011T000349Z OPENED by 0.7.0_AE_CloudOps~IR with 3 leg(s)
 - 20261011T002804Z HELD-PRE-APPLY gate=external/naming-gate OLDER-limb carrier refusal on the 'bd' firm token (row Z-S34): both 
+- 20261011T033849Z HOLD RELEASED -> OPEN
