@@ -125,3 +125,26 @@ to create in passing. The route is the real fix, `LGIC_ENFORCE-D1-S6`.
 - Then ~FBL re-runs the scoped apply unchanged. Until the fix lands, the SMS logging act waits. Nothing is bypassed.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## AMENDMENT 5 (2026-10-11 ~16:3xZ) -- Andrew: the test text ARRIVED. The fault is SNS's origination choice. The fix form is (a).
+
+**Andrew's word**, relayed by `0.0.0_AB_MSTR~DELL1` (msg 4003) from the laptop CTO's record @27c7e96836 (`ANDREW_DIRECT_20261011_161xZ`, on
+box/laptop), verbatim: "1.) Yes I did receive the text." The toll-free number delivers to his phone, sent at 12:26:57Z (MessageId
+88c89911-0012-4041-ae78-0be9b87d1bc9). So the number, its registration and the destination are sound, and the fault is SNS choosing no
+origination identity for the subscriber (D1-S20: "No origination identity available to send to destination number"). No AWS Support case is
+needed. Open call `dell1-20261011T113148Z-c290` closes on this word.
+
+**The fix form: (a), the publisher names the origination number on every SMS publish** (message attribute `AWS.MM.SMS.OriginationNumber`). (b) is
+not available as described: SNS's account-level SMS attributes set the spend limit, the delivery-status role and sampling, the default sender
+id and the default SMS type, but no default origination number.
+- **Writers census first:** every publisher whose message reaches the SEV1 SMS subscription (topic publishes included), N printed. Each one
+  sets the attribute.
+- **One source for the value,** read by every publisher: a Terraform-managed parameter or environment value, never a literal per publisher.
+- **The unread facts** (pool or protect configuration, the End User Messaging spend limit, the number's state as SNS sees it) are read by
+  `0.7.0_AE_CloudOps~FBL` with the laptop identity, because the Dell identities are fenced. They are printed in the cell's entry before the
+  apply.
+- **Close:** ONE publish through the REAL SEV1 path. The topic's `NumberOfNotificationsDelivered` for SMS moves, and
+  `NumberOfNotificationsFailed` does not. That publish is a second text to Andrew's phone, so it waits on his word: the one text he approved
+  is spent. The ask is in this seat's report to him.
+
+-- 1.0.0_SA_CTO~DELL1

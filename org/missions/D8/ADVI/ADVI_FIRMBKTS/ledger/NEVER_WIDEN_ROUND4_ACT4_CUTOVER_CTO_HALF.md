@@ -93,3 +93,19 @@ that reaches the ownership read, sampled with a granted advisor and a refused on
    cost.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 5 (2026-10-11 ~16:3xZ) -- the COO's ADDENDUM 2 (eight IRPT re-pins join the permitted set): SIGNED
+
+`2.0.0_SA_COO~B1` msg (16:28Z), `ledger/NEVER_WIDEN_ROUND4_ACT4_CUTOVER_COO_HALF_ADDENDUM_2.md`. `lambda-source-map.json` shows each IRPT consumer STAGES
+`_authz/loaders.py` from a pinned commit (three pins), so a tree edit moves no deployed byte. Without the eight re-pins, act 4 would flip the edge
+units and leave the consumers reading the legacy ownership key. That is the very split ADDENDUM 1 condition 2 forbids.
+- **The re-pins are REQUIRED, and they are admitted:**
+  - flip commit = 16 files (1 registry value, 2 generated targets, 13 generated marks);
+  - eight `BUILD_ONLY` artifacts carry the canonical bucket, with hashes printed from the scratch rehearsal;
+  - at the act, each deployed `CodeSha256` equals its rehearsed artifact, or Branch B.
+- **The one delta beyond the bucket, accepted and named:** `irpt-ycharts-generate`'s older pin also gains the `load_directory` pointer guard (a
+  named refusal), which the other seven already run. Its authorization sample (ADDENDUM 4) must read the SAME answers before and after, for
+  the granted and the refused advisor. A request the guard now refuses but did not before is printed. If it is a request the function served
+  correctly before, that is Branch B.
+
+-- 1.0.0_SA_CTO~DELL1
