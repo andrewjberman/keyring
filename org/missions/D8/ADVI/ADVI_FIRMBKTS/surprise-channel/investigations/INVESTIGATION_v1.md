@@ -1254,3 +1254,98 @@ write: **1 row** (`S1`).
   "notes": "Owner: the CTO, to name the state family for bronze completion markers or to rule that they are not state. The worker did not pick a family: the table name is not in the ruling. Without it, T2 fails (AC2 3 of 5)."
 }
 ```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S1",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T06:40:25Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "comp-pipescript io UNDER-REPORTS D_04 WRITES (ONE PRINTED, 25 IN THE CODE) AND LISTS A READ AS A WRITE",
+    "spec_asserts": "FB-f-6 step 1: comp-pipescript io <script> --pipeline bd-gold --no-portal prints each script's WRITES; D_04 alone writes platinum/accounts/, platinum/advisors/, platinum/clients/ and platinum/firm/.",
+    "world_is": "`.tools/comp-pipescript io D_04 --pipeline bd-gold --no-portal --json` prints one write: partner_analytics_key -> gold/artifacts/partner_analytics/header_metrics_{*}.json. D_04.client_portal_summary.py:1974-1975 READS that key (_read_json(partner_analytics_key(gran))). The 25 D_04 platinum writes in the census go through _write_batch (line 277) and _write_json_to_s3 (lines 269-270), which the graph does not resolve. The premise that D_04 is the only writer of platinum/firm/ is also false (see ADVI_FIRMBKTS-D1-W16-S2).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-pipescript io D_04 --pipeline bd-gold --no-portal --json (LOCAL run at worktree HEAD 576e574de4) -> writes=[partner_analytics_key]",
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:1974-1975 (read of partner_analytics_key(gran) via _read_json)",
+        "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:269-270 and 277-292 (_write_json_to_s3 / _write_batch put_object Bucket=BUCKET)",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~16/PRODUCER_CENSUS.json (25 D_04 writer entries, each line re-read by r3_census.py C2)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The census (line reads, grader 3 of 3) is the blast-radius source for FB-f-6; the graph was not used for write attribution. The resolver is org/modules/graph/pipeline_cli.py behind the .tools shim."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S2",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T06:40:25Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B1",
+    "one_line": "D_00f WRITES A SERVED PLATINUM KEY TO A HARD-CODED opal-data-bd OUTSIDE THE BD_S3_BUCKET SEAM, SO A STEP-2 ENV REPOINT WOULD LEAVE ONE WRITER BEHIND",
+    "spec_asserts": "FB-f-6 spec: step 2 repoints the producers that write 49F's served platinum keys to opal-data-49financial; lib/config.py:14 is the one bucket every gold script reads and writes; D_04 alone writes platinum/firm/ among the served classes.",
+    "world_is": "D_00f.advisor_nna_canonical.py:87 sets S3_BUCKET = 'opal-data-bd' as a literal and does not import lib.config, so it is not one of the 42 seam importers. Lines 91-92 build OUTPUT_KEY = OUTPUT_PREFIX + 'firm/advisor_nna_canonical.json' (OUTPUT_PREFIX defaults to 'platinum/'); line 928 calls _write_json_s3(artifact, OUTPUT_KEY), which put_objects to S3_BUCKET at line 768. The script runs in gold_dispatch.sh PHASE_D5 (lines 622-623). Result: platinum/firm/ has a second writer outside the seam, and an env-var repoint of BD_S3_BUCKET does not move it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/D_00f.advisor_nna_canonical.py:87 (S3_BUCKET = 'opal-data-bd' literal)",
+        "data/black_diamond/scripts/gold/D_00f.advisor_nna_canonical.py:91-92 and 928 and 768 (OUTPUT_KEY, _write_json_s3 call, put_object Bucket=S3_BUCKET)",
+        "data/black_diamond/scripts/gold/gold_dispatch.sh:622-623 (PHASE_D5: run_background D_00f)",
+        "PRODUCER_CENSUS.json bucket_seam: 42 importers, D_00f not among them (grader C3 recount 42 = 42)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED because the step-2 act makes it live. Disarm before step 2 is signed: move D_00f onto the seam (a producer edit, owned by the lane that owns D_00f) or name it in the step-2 blast radius. The census proposes no repoint (FB-f-6 bounds)."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S3",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T06:40:25Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "comp-pipescript RESOLVES ONE OF THE 26 E-SERIES bd-gold IDS, AND E_01 AND E_24 WRITE SERVED KEYS WITH NO DISPATCH ENTRY",
+    "spec_asserts": "FB-f-6 step 1: comp-pipescript io <script> --pipeline bd-gold --no-portal prints each bd-gold script's WRITES, so every writer script can be read by its id.",
+    "world_is": "comp-pipescript io returns 'Script not found' (rc 1) for 25 ids E_00..E_17 and E_19..E_25 (E_01 suggests 'Did you mean: E_18, D_01, C_01?'); only E_18 resolves. E_01.account_quality_tiers.py:333-340 writes gold/artifacts/account_quality_tiers_{date}.json and E_24.rebuild_fee_scorecard.py:254 writes gold/artifacts/advisor_fee_efficiency.json, both to opal-data-bd. gold_dispatch.sh has no E_ id in its CATALOG or PHASE_* blocks, so the runner of E_01 and E_24 is not declared in the repository.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-pipescript io E_01 --pipeline bd-gold --no-portal (LOCAL run) -> 'Script not found: E_01. Did you mean: E_18, D_01, C_01?'; sweep rc=1 for 25 of 26 E-series ids",
+        "data/black_diamond/scripts/gold/E_01.account_quality_tiers.py:333-340 and E_24.rebuild_fee_scorecard.py:254 (put_object Bucket=S3_BUCKET)",
+        "data/black_diamond/scripts/gold/gold_dispatch.sh (no E_ entry in CATALOG or PHASE_* blocks; grep run)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Writes were read by line, not by the graph. Runner and schedule for these two writers are recorded as UNKNOWN in PRODUCER_CENSUS.md section 5."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W16-S4",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~16",
+    "surfaced_at": "2026-10-11T06:40:25Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "THE WORKER FACE ASKS FOR THE ORDER'S <status> TO BE FLIPPED, BUT THE FACE CARRIES NO <status> AND THE ORDER FILE IS OUTSIDE THIS WORKER'S <paths>",
+    "spec_asserts": "FB-f-6 section 5: flip this order's <status> to complete in the same commit as the proof instance and the two deliverables, only when AC1 passes.",
+    "world_is": "The worker face (lines 1-96 of ADVI_FIRMBKTS.TO-FB-f-6.producer-census.md, the only part this worker reads) contains no <status> element. The order file is not in this order's <paths> (the deliverables folder and the investigation file). The flip was not made; the order file was not edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-6.producer-census.md lines 1-96 (read at offset 1, limit 96): no <status> element",
+        "the same file's <paths> block (lines 71-74): deliverables folder and INVESTIGATION_v1.md only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "AC1 passes 3 of 3 on the committed census; the proof instance validates. The status flip, if it is still wanted, belongs to the issuer or to a grant that names the order file."
+  }
+]
+```
