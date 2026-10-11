@@ -4322,3 +4322,28 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Blocks the order's commit, not its content. Disarm is not needed: the file is not live, and the INERT surprise S1 is unaffected. The issuer decides the route: a permitted read of 'irpt' (for example through a registry argument to the helper, which the order's signature does not give) or a naming-gate ruling. The worker did not edit the gate, the helper, or the lane."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S25",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-11T14:10:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "With the IRPT bucket map on its transitional live row, the IRPT lambdas read the ownership map from the legacy bucket and key forever: after act 2 the producers write it only at the canonical home, so IRPT's authorization read goes stale (revocations lag) and never flips at act 4.",
+  "spec_asserts": "Round-3 analysis section 3 item 1 and ADDENDUM 6: the ownership class rejoins the move; D1-S17 (the stale ownership map at the new home) disarms at act 4; the IRPT readers and gold writers read a transitional live row, byte-identical now and out of act 4.",
+  "world_is": "infra/aws/lambda/investor-reporting/_authz/loaders.py load_ownership (lines 229-290, 8 consumers) reads bucket_for(tenant) and OWNERSHIP_KEY_TEMPLATE.format(firm=tenant) = platinum/{firm}/ownership_map.json (IRPT_OWNERSHIP_KEY env, default as shown); bucket_for is the generated IRPT_DIRECTORY_BUCKET_MAP, which FB-g-14 pointed at the transitional live row (opal-data-bd). An absent map is read as an EMPTY map (deny). D_00 writes the ownership map through the seam (platinum/49financial/ownership_map.json, legacy_prefix class platinum/49financial/); in canonical mode, from act 2, it writes only advi/49financial/platinum/49financial/ownership_map.json in opal-data-49financial. So after act 2 the IRPT read keeps returning the last legacy copy; after act 4 the registry flip does not move it (the live row holds), so the staleness is permanent. The directory and holdings reads of the same lambdas are correct on the live row (their keys live only there); the ownership map is the producers' served key and must follow the flip.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/loaders.py lines 33-34 and 229-290 (read in full at HEAD 2026-10-11 ~14:0xZ)",
+      "round4/checks/r4_irptlive.py I3: firm_registry rows and firm_bucket_map read the live row, FIRM_CONFIG the routed bucket (5 of 5 arms at merged head 661643f5be)",
+      "data/black_diamond/scripts/gold/lib/platinum_dest_view.py: the class platinum/49financial/ placed at the canonical template; ledger/R3_ACT2_OUTSIDE_READERS_CENSUS.md ADDENDUM 1 names IRPT_OWNERSHIP_KEY as a reader of the class"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "An endpoint question for 1.0.0_SA_CTO~DELL1 (a never-widen class: stale authorization data). Placement read from the evidence: (c) the IRPT loader reads the ownership map from a generated pair (bucket: the routed bucket; key: legacy now, canonical at act 4, engaged by a canonical-bucket list as the validator's is), while its directory and holdings reads stay on the live row; one dormant IRPT cell before act 2, deployed with act 4. Alternatives: keep the ownership class carved out of the move (legacy in both modes, the round-2 ADDENDUM 6 form) until IRPT_BCKEND moves its readers; or dual-write (refused by the no-shadow-path rule). Act 2's un-park names this row."
+}
+```
