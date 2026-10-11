@@ -4487,3 +4487,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-S9 -- the export-download fixture borrows its four signed-link members from the PDF fixture until the producer publishes its own
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S9",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T09:17:32Z",
+  "one_line": "The portal's published-map entry for the export-download answer borrows its four signed-link members from the producer's AnalysisRequestPdf.valid.json fixture, because no producer fixture exists for the download answer itself; it is to be replaced when IRPT_BCKEND publishes one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 0.9.0_WK_DSGN_IRPTV1~49's report on DSGN_IRPTV1.TO-IV-e-91 and its record deliverables/0.9.0_WK_DSGN_IRPTV1~49/CONTRACT_CATCHUP.json @b97b6ac14a (portal commit fbe65e15, in candidate 7e8fa4fd)",
+      "1.0.0_SA_CTO~DELL2 msg 4554 item 2: accepted for a fixture, with a row naming it so it is replaced when IRPT_BCKEND publishes one",
+      "not read by this seat: the fixture bytes themselves"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A portal fixture for a served answer is the producer's own published instance of that answer.",
+  "world_is": "For the export-download answer the producer publishes no instance; the portal's entry carries sha256 and byte_length as the contract requires and takes the four signed-link members from the producer's instance of the same four members on another answer (the PDF). Sibling of row DSGN_IRPTV1-D2-W49-S9.",
+  "notes": "Owner of the replacement: the DSGN_IRPTV1 issuer, in the cell that follows IRPT_BCKEND (2.0.0_SA_COO~P2) publishing a producer fixture for the export-download answer. Condition that un-parks it: that fixture on trunk. Nothing served is affected: a test fixture."
+}
+```
