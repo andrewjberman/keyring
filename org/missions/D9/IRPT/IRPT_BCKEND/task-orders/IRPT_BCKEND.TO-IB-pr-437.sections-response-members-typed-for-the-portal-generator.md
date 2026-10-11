@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~295</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -64,6 +64,19 @@ members typed). Nothing served is affected.
    "F57-AC2":{...}}, wire_files_rewritten_by_generator:[...], portal_files_committed_by_this_cell:0, other_untyped_members_found:[...]}`.
    `other_untyped_members_found`: run the generator's same rule over EVERY v1 response schema (the generator does this itself;
    report any other file it refuses) -- a census, so `2.0.0_SA_COO~D2` is not sent back a second time.
+
+**AMENDMENT 1 (issuer, 2026-10-11 ~15:5xZ, on row IRPT_BCKEND-D2-W295-S3).** AC3 is graded at the DRAIN's checkout, by the issuer,
+not in the worker's provisioned worktree. An issuer check defect: AC3's bound (2 failed, 235 passed) was measured at box HEAD,
+where `portal/` is at the workspace's older pin; in a worktree provisioned with the portal's DEV head, the contract test
+`portal_root()` reads that portal's newer smoke fixture (17 entries against a pinned 12) and two more tests fail, on the
+unchanged schema as well (the worker measured both). On the issuer's run at box HEAD c871ea8829 after the merge: AC1 PASS, AC2
+PASS, AC3 PASS (2 failed, both base failures; 235 passed), and IB-pr-432's three criteria PASS. The worker left the order
+pending and the criterion failing, as it should; the issuer records the re-run in the proof instance and flips the status.
+ALSO RECORDED, not ruled here (row IRPT_BCKEND-D2-W295-S2): the portal's generator cannot render a `$ref` into the v2 report
+schema, so each Opal-form member keeps its v2 `$ref` inside an always-true conditional beside a plain `type` or `const`. Every
+validator still enforces the v2 shape (IB-pr-432's four arms pass); the portal's wire types those four members loosely. Whether
+the generator learns v2 references or the contract keeps this encoding is put to `2.0.0_SA_COO~D2` and `1.0.0_SA_CTO~DELL2`.
+Gate limb that graded this modification: GATE (viii) (placeholders).
 
 <criterion id="IB135-1-AC1" cell_refs="IB-pr-437"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r135/p135_cells.py" . IB135-1-AC1</invocation><expect>IB135-1-AC1 PASS</expect></criterion>
 <criterion id="IB135-1-AC2" cell_refs="IB-pr-437"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r135/p135_cells.py" . IB135-1-AC2</invocation><expect>IB135-1-AC2 PASS</expect></criterion>
