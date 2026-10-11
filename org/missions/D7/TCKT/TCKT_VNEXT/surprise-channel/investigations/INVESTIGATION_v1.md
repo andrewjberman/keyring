@@ -2035,3 +2035,27 @@ denominator.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S47",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T23:10:27Z",
+  "one_line": "L9 round 6: TO-RUN-R6-fn1 AC2 MET for the ticket. By five direct invocations of the deployed ticket function, a client of another firm is refused the ticket, the list and a missing id, and an internal caller is served as the control. The refusal is by class: the ticket's own firm's client is refused the same way. FWD-2 is not yet realized, because its sentence also names the file and the file's second arm is owed. Not shown live: the firm fence between internal callers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/ledger/L8_PACKET.R6_FN1.md @31091d1eeb (msg 6047)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_R6_FN1_L9_GRADE_20261011.md",
+      "this seat's reads 2026-10-11T23:10:27Z: the applier's result file org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r6_fn1/RESULT.json, 5 arms, each with no function error: four answered 403 with the principal class client-human and naming no ticket, one answered 200 with 27 key names and a status only; and the ticket function's live code hash, which begins as the packet states it did at the act. No invocation was made by this seat"
+    ]
+  },
+  "spec_asserts": "TO-RUN-R6-fn1 AC2 (JUDGMENT, graded by the CVO at L9): FWD-2's ACCEPT for the TICKET, 'a person at another firm cannot open the request', shown by arms A2, A3 and A5 refused with A4 served as the control.",
+  "world_is": "No invocation was made by this seat. The file is served by another service and was not touched. Rows D2-S20 and D2-S46 stand.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
