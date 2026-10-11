@@ -1787,3 +1787,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "NFRA_TRNSPT-D2-S21",
+  "project": "NFRA_TRNSPT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-11T05:25:00Z",
+  "hazard_standing": "INERT",
+  "one_line": "Row D2-S19's hazard is DISARMED by its owner: the Teams pull's MemorySize is 1024 MB since 2026-10-11T05:0xZ (TO-APPLY-rm22, pair complete), code unchanged. The true peak of a content-reading run is still UNMEASURED.",
+  "class": "OBSERVATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer live read 05:1xZ: r22_checks.py rm22 -> R22-RM22-OK memory=1024 pull=AI4UQD0M mail=VGIq85Xx commentary=ABSENT",
+      "applier report org/tier2_senior/0.7.0_AE_CloudOps~TR2/deliverables/TR_RM22_MEMORY_REPORT_20261011.md (plan one resource, one attribute; ledger closed; proof VALID re-checked by the issuer)",
+      "pair: packet R22_TR_RM22_MEMORY_PACKET_20261011.md @f6f35a8841 + CTO half @16fa3b73b8; pull.tf edit @7bca11ddee equals the packet's three lines"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row D2-S19 (ARMED, disarm owner 2.0.0_SA_COO~T2): before the Monday 2026-10-12 13:00Z fire, raise memory_size under a pair or state why 128 MB holds.",
+  "world_is": "memory_size raised 128 -> 1024 under a pair and applied; the driven invoke at 05:05:57Z returned clean with 4 series and landed nothing, so its Max Memory Used (101 MB) is the idle path. The 768 MB threshold of the CTO half's condition 5 is untested, not passed. The first measured peak is owed from the first run that lands a transcript, read from its REPORT line beside its run.json (the Monday 13:00Z fire if a new meeting exists).",
+  "notes": "For the CVO's remediation row D2-S19: disarm state DISARMED at 2026-10-11T05:06Z by this act. Sizes, hashes, statuses and counts only."
+}
+```
