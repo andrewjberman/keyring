@@ -1712,6 +1712,31 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "world_is": "The reader resources are APPLIED, not plan-only: ledger nfra-trnspt-a18-second-reader-laptop-20261009 closed its APPLY leg at 2026-10-09T09:55Z with 3 added and 1 changed, so the role, policy, attachment and key exist and the trust principal lives in applied state. The defaultless variable therefore no longer gates an unapplied intent; it gates EVERY plan and apply of this root, including an act that targets only the Lambda. This lane supplied the value by READING the applied trust policy and passing it in a tfvars file OUTSIDE the repo, and the targeted plan then showed exactly one resource changing. The hazard is the next applier: a value typed from memory or left as a guess would not refuse, and on an UNTARGETED apply of this root it would rewrite the second reader's assume-role policy -- a widening of who may read the transcripts tier, which no half covers. The durable fix is a committed tfvars (or a default) carrying the value Andrew's routing already named, so the variable stops being a per-applier guess; that is a decision for the issuer's pair and 1.0.0_SA_CTO~DELL2, not this lane.",
     "notes": "Found while executing TO-APPLY-ra22; the order completed and nothing was widened (mail pull unchanged, commentary function still absent, targeted 0-diff re-plan clean). Names, dates and statuses only. Id note: the middle segment is a DEVICE COORDINATE from the device register, not a lane name -- only D1, D2 and Z are registered, so an applier on dell2 writes into D2-S<n> like every other dell2 writer. S17 was the next free index across all 24 channel documents at 03:5xZ; 2.0.0_SA_COO~T2 writes the same sequence, and the row gate's uniqueness check is what keeps two writers from landing one index."
   }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-S27",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.7.0_AE_CloudOps~TR2",
+    "surfaced_at": "2026-10-11T07:05:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "comp-iam is structurally blind to any IAM role whose Terraform `name` is COMPUTED rather than literal, and it fails SILENT: `comp-iam role <name>` answers 'No role matching' for both transcripts reader roles, which exist and are applied. LGIC rule 30 mandates the computed form, so the blind set grows with every canon-conformant resource.",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-iam role teams-global-transcripts-second-reader-role -> 'No role matching ...' (2026-10-11T07:0xZ); same answer for teams-global-transcripts-silver-reader-role",
+        "both roles EXIST and are applied: aws iam get-role returns teams-global-transcripts-silver-reader-role with CreateDate 2026-10-09T14:07:25Z and teams-global-transcripts-silver-reader-policy attached; the second reader's trust policy reads one principal (TO-APPLY-tv23 step 1)",
+        "comp-iam roles emitted 884 output lines of TF-derived roles; the only 'reader' match is etfs-avgcap-reader-role, whose name IS literal in its .tf -- no transcripts reader role appears",
+        "infra/aws/terraform/transcripts/readers.tf:32,45,97,111 set name = local.second_reader_role_name / local.second_reader_policy_name / local.silver_reader_role_name / local.silver_reader_policy_name, each resolved by jsondecode(file(.../NAMES.json)) at readers.tf:20-22 and :86-88",
+        "a 0-change plan over all six reader resources confirms they are in state and match config, so the absence is comp-iam's view, not the world's"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-APPLY-tv23's preflight declares `comp-iam: RUN -- the value written is who may assume the second-reader role`, which presumes comp-iam can report on that role. CLAUDE.md rule 30 and infra/logic/02_DOCTRINE.md require that every resource name be `lib/opal_naming.py name()` output recorded in a registry and read, never typed.",
+    "world_is": "The two requirements collide. comp-iam resolves a role only when its `name` is a literal string in the .tf; a name computed through a local and jsondecode is invisible to it, so the roles the canon mandates are exactly the roles comp-iam cannot see. The answer is not an error but 'No role matching', i.e. it fails SILENT and GREEN -- the shape cloud-ops warns about in its own words, 'an under-reporting IAM instrument does not cause AccessDenied -- it causes a future engineer doing least-privilege cleanup to delete a needed grant as unused. SILENCE IS THE DEFECT.' The blind set is not static: it grows with every LGIC-conformant resource added, and nothing in comp-iam's output tells a reader that a name was skipped because it was computed. tv23's own preflight intent was met another way -- by the live trust read, the check's declared-vs-live comparison, and a 0-change plan -- so this cost the order nothing; the gap is the instrument's. Owner: comp-iam's maintainer via 1.0.0_SA_CTO~DELL2. Not fixed here: this lane holds an apply order, not a tool order, and a fix would mean resolving locals/jsondecode in comp-iam's TF parser or cross-checking against the live IAM census it already has (`comp-iam live`, `refresh-census`).",
+    "notes": "Found while running tv23's declared comp-iam preflight; the order completed and nothing was applied. Names, ARNs, dates and counts only. S27 was the next free index across the channel at 07:0xZ."
+  }
 ]
 ```
 
