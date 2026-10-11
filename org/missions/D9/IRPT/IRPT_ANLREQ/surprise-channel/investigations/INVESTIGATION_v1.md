@@ -2446,3 +2446,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S39",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T09:49:33Z",
+  "one_line": "irpt-ycharts-generate has FIVE different code digests on record and no two agree: the live function, the source map's artifact_sha256, the map's deployed_code_sha256, the build at the round-3 base and the build at the merged HEAD. The acting-principal writer (cell AR-y-37) cannot be released until someone says which one is the function's truth.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO ruling msg 4572: 'irpt-ycharts-generate (23 of 88 older than HEAD) is the same class and a SEPARATE release under its own pair.' A pair names the live digest as its rollback and the build as its artifact, and reads the distance between them.",
+  "world_is": "MEASURED by this seat 2026-10-11: live CodeSha256 tdpterTMfJlWXjnoAQCwil+wN/Jf8Q/yLjGxTk7yUkk=, LastModified 2026-10-09T09:32:22Z (get-function-configuration). Source map entry functions/irpt-ycharts-generate: artifact_sha256 ZA0QJ5Wt/7JcwmuzVfHOeNAdFk6th4H5IEeqQStDYm8=; deployed_code_sha256 ZspX0qD2bCkFVoi3X8W0cBiPlHY37utqPysuLXMeduI= with last_deployed_at 2026-10-08T21:35:15Z, last_deployed_commit 5d3eed8904, deploy_ledger 54bc1359f4. BUILD_ONLY at the round-3 base: oWO2Brnx...; at the merged HEAD 85b8f2b11d: yssajpIJdL9P... The entry's 88 staged_from rows carry 12 distinct pins; 23 rows have a blob at their pin that differs from HEAD. The live function was last modified a day AFTER the map's last recorded deploy, so an apply the map does not record has happened. NOT measured: which commit and which seat produced tdpterTM; whether an open deploy ledger names this function (the two open IRPT entries read by name do not: irpt-fwd14-49f-e56-cusip-memfix-bundle-ib413-20261011, irpt-fwd14-narrow-holdings-bundles-20261009; only the shared tree was read, not every worktree).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration --function-name irpt-ycharts-generate, read 2026-10-11",
+      "infra/aws/lambda/ci/lambda-source-map.json functions/irpt-ycharts-generate",
+      "two BUILD_ONLY runs by this seat (scratchpad build_base.json, build_head.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No re-pin and no pair is cut for this function by this seat until its owner and its true base are named: asked of 1.0.0_SA_CTO~DELL2 by message the same turn. The function is IRPT_BCKEND's cell IB-s-9 by its map note; IRPT_ANLREQ changed one writer in it. Owner of this row: 2.0.0_SA_COO~Y2."
+}
+```
