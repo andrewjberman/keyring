@@ -4299,3 +4299,27 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "MEASURED 2026-10-11T16:41Z by 2.0.0_SA_COO~G2: the live function irpt-ycharts-generate reads CodeSha256 tdpterTMfJlWXjnoAQCwil+wN/Jf8Q/yLjGxTk7yUkk=, LastModified 2026-10-09T09:32:22Z (get-function-configuration), and its downloaded package hashes to that same value (104 members). infra/aws/lambda/ci/lambda-source-map.json records for the same function artifact_sha256 ZA0QJ5Wt/7JcwmuzVfHOeNAdFk6th4H5IEeqQStDYm8=, last_deployed_commit 5d3eed890439d8db172902b90571fe04854ad14d, last_deployed_at 2026-10-08T21:35:15Z. The recorded commit does NOT contain fix db8161f46e by ancestry (positive control: HEAD does), while the live package's served.py DOES carry that fix's lines. So the map's entry describes an earlier deploy than the one running: at least one deploy on 2026-10-09 did not update it. Record: org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r14/TWO_ARMED_ROWS_AND_THE_SITTING_20261011.md @cbbff7ab80."
 }
 ```
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S64",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T20:51:22Z",
+  "one_line": "The ticket id on a submission is the caller's unverified statement too: acceptance checks its FORMAT and copies it, and holds no ticket port, so it cannot tell the caller's own ticket from another firm's or from one that does not exist. PRD v0.13 says a false commentary_requested gains only a draft on the caller's OWN ticketed request; that 'own' is not established at acceptance. With the two members together a caller can start a draft at the outside model at will, and where that draft lands depends on a check further down that nobody has named.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's read 2026-10-11T20:51:22Z of infra/aws/lambda/investor-reporting/ycharts/generate: submission.py line 18 (the ticket id's pattern) and lines 78 to 80 (a ticket id is refused only when it is not a string of that pattern or comes without an input id); acceptance.py lines 120 to 121 (the id is copied into the accepted record as sent)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/prd/IRPT_YCDGEN_PRD.md ADDENDUM v0.13 @39c807e066",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_PRD_v0.13_RATIFIED_TEXT_REVIEW_20261011.md"
+    ]
+  },
+  "spec_asserts": "PRD ADDENDUM v0.13: what a caller gains by stating true falsely is a draft on their own ticketed request in their own firm; neither statement reaches another firm or a request with no ticket.",
+  "world_is": "INERT because nothing is bound: no release carries the send and the host has no queue to send to. It blocks the binding's pair, which must name the check that stops a draft landing on a ticket that is not the caller's. Not read by this seat: the drafter, the packager, or the ticket service's check on a landing draft.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
