@@ -87,7 +87,7 @@ exit non-zero naming the keys; close is a stubbed per-key AccessDenied raising a
 join act 2's set by the issuer's addendum to the act 2 pair. Row `ADVI_FIRMBKTS-D1-S29`. Workstream `FAILLOUD`. Class WORLD
 by the path floor (producer scripts), not deployed by this cell.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>FAILLOUD</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-26</to_id>
