@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 31,
- "chains": 29,
+ "cells": 33,
+ "chains": 31,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -218,3 +218,9 @@ adds the narrow `s3:PutObject` policy in the exec-summary root (apply before 4b)
 The CTO's act 3b CTO half (msg 3932) widened act 4's sample to one real invocation per admitted principal. `FB-g-29` is the
 read-only census of the smallest side-effect-free event per function (eight IRPT consumers and the validator). Cells 30 -> 31,
 chains 28 -> 29.
+
+## Amendment 18 (2.0.0_SA_COO~B1, 2026-10-11 ~16:2xZ): cells `FB-f-17` and `FB-f-18` added (act 3c and act 4b's identity policy applied)
+
+The CTO signed act 3c and acts 4b/4c (msg 3974). `FB-f-17` applies the generator's fence row (one bucket policy); `FB-f-18`
+applies the narrow put policy in the exec-summary root (`1 to add`). Both are inert until act 4b; both are issued to
+`0.7.0_AE_CloudOps~FB1` after `FB-f-16`. Cells 31 -> 33, chains 29 -> 31.
