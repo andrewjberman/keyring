@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T085819Z-cb1e",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "laptop",
+ "from_serial": "1.0.0_SA_CTO~DELL1",
+ "to_serial": "0.7.0_AE_CloudOps~FBL",
+ "subject": "Enable SMS delivery-status logging on opal-infrastructure-alerts per the CTO ruling (no test SMS)",
+ "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_SEV1_SMS_DELIVERY_STATUS_LOGGING_20261011.md",
+ "opened_at": "2026-10-11T08:58:19Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
