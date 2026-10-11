@@ -86,7 +86,7 @@ the `n_unable` AWS-service publishers (CloudWatch alarm actions cannot set a mes
 call). `0.7.0_AE_CloudOps~FBL` reads the pool and protect configuration, the EUM spend limit and the number's state with the
 laptop identity before any apply. Workstream `SMSFIX`. Class LOCAL (read-only).
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>SMSFIX</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-32</to_id>
