@@ -85,16 +85,15 @@ shipped as `data/mdpf/scripts/gold/mdpf_gold_catchup.py`). That cell stays. It i
 
 ## ACTS ONLY ANDREW CAN DO (each with its citation)
 
-1. **Standing vendor word for the same-day re-pull (FWD-1).** The mechanism calls Black Diamond's Rebalancer a second
-   time on a day the first call failed. Citation: CLAUDE.md, "NEVER call an external vendor API without Andrew's explicit
-   per-use word", and brief PART V.4. The exercise of FWD-1 is held until he words it, as a standing grant for this one
-   runner or per use.
-2. **Per-use vendor word for the repair of the eleven days (FWD-3).** Same citation. **Disclosed before he spends it (the
-   2026-09-01 lesson, `/endpoint` 9b):** the 2026-09-01 one-shot re-run filled two of the three feeds for 2026-08-31 and NOT
-   the model detail (brief PART VI.3). From 2026-09-01 the runner landed two feeds daily without the third (PART VI.4), and
-   that cause is unread. A repair fired before that cause is read may return the same empty result. Round 1 reads the
-   cause first, with no vendor call (section 2, hop 0), and the word is asked for only when the read predicts that the
-   repair will fill the days.
+None open. ACTS 1 and 2 of v0.2 (a standing word for the FWD-1 re-pull, a per-use word for the FWD-3 repair) are
+RESOLVED by Andrew's 2026-10-09 order: a Bloomberg pull goes only through its queue, and any other vendor API needs no
+per-use word (`org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261009_024xZ_LAW_EDIT_CLAUDE_MD_EGRESS_OPEN_EXCEPT_BBG.md`).
+Black Diamond is not Bloomberg.
+
+The ordering ACT 2 carried stays, as a condition on the repair rather than a word: the 2026-09-01 one-shot re-run filled
+two of the three feeds for 2026-08-31 and NOT the model detail (brief PART VI.3), and from 2026-09-01 the runner landed
+two feeds daily without the third (PART VI.4). The repair (S04) therefore fires only after hop 0 has read that cause with
+no vendor call, and only when that read predicts the repair will fill the days.
 
 ## CONTRACTS
 
@@ -106,7 +105,7 @@ shipped as `data/mdpf/scripts/gold/mdpf_gold_catchup.py`). That cell stays. It i
 | C-COMPLETE: what "landed" means | this project | A date is landed only when all three feeds are present for it (`rebalancer_models`, `rebalancer_accounts`, `rebalancer_model_detail`). The completeness read is per feed. |
 | C-IDEMPOTENT: a second attempt never doubles a day | this project | The runner's guard against re-landing a complete date is proven to work before any second attempt exists. It read as dead on 2026-08-31 (missing read on the complete stamp; 2026-08-31 brief section 6.1), and its state today is unread. |
 | C-SESSION: the login chain is relied on, not owned | `0.6.2_AE_PartnerETL` (`cot-bd-session-trigger`, `cot-pipeline/schedule-et.tf`) | This project reads the session chain's success and may hang a destination off it. It does not change the session's mint time. Any fire-time move (FWD-5) re-derives the 13:30Z floor margin first, because the mint time is an Andrew-direct placement. |
-| C-VENDOR | law (CLAUDE.md vendor rule) | Every vendor call a repair or re-attempt makes sits under Andrew's word (ACTS 1 and 2). No exercise runs on availability. |
+| C-VENDOR | law (CLAUDE.md Agent Autonomy, order of 2026-10-09) | A Black Diamond call by the repair or the re-attempt needs no per-use word. Every such call is bounded by C-IDEMPOTENT and by FWD-3's name-before-fetch ACCEPT, and the repair fires only after hop 0 (ACTS section). |
 | C-BOUNDARY-COTBKF | ruled here at L2 | ADVI_COTBKF is the Commonwealth custodian delivery of Cottonwood's 10-year history: a different source, store and consumer. MDPF_HEALGAP is the daily Black Diamond Rebalancer ingest. They share no write surface. A future join of the two is ADVI_COTBKF's. |
 | C-NAMES | law (rule 30) | Every new address and name is `lib/opal_naming.py` output, printed in the order that writes it. A builder refusal is a registry row, never a hand-typed name. |
 
