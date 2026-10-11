@@ -1183,3 +1183,12 @@ It drains after DB-b-117: it moves an R45 member, and R45 is built from its pinn
 The R45 apply is a later cell: both halves are signed; it waits on this census and on Monday's R44 acceptance (W78-S1).
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~94` (worker-light), cut from box/dell2.
+
+
+## 66. ROUND 64, WORKSTREAM B (2026-10-11 ~05:2xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ruling msg 4143, row IRPT_DASHBD-D2-W93-S3)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-120` | FWD-11: the dim_return_method contract lists method row 3; tieout_tolerance_proposed takes the same per-value claim as the five thresholds and lands typed; contract 0.5.0; rule-24 record first (one cell before ADVI_COTBKF's Cottonwood mint) | LOCAL | DB-b-118 | B64-1 |
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~95`, cut from box/dell2.

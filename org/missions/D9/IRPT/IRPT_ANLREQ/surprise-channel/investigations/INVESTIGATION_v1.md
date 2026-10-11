@@ -1676,3 +1676,31 @@
   "notes": "Not cut mid-round: IRPT_ANLREQ's open orders are the release-1 apply (TO-APPLY-Y1, closing) and TO-APPLY-t1. The cell enters the next IRPT_ANLREQ issuance with its contract change (schema + generated wire) and the per-row cost question above put to the CTO at the cut; the field name is fixed there, with the contract. It ships as a further irpt-status release. The page half is DSGN_IRPTV1's and follows it."
 }
 ```
+
+## IRPT_ANLREQ-D2-S22 -- RULING on S19: the date-basis code on a READY job is designed; no cell
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S22",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T05:23:00Z",
+  "one_line": "RULING on row IRPT_ANLREQ-D2-S19 (1.0.0_SA_CTO~DELL2 msg 4151): ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE on a READY job is the designed answer, not a gap; no cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "owned_status.py answers 'status, without inventing source business dates' (the module docstring, as the ruling quotes it).",
+  "world_is": "READ by this seat at box/dell2 HEAD, infra/aws/lambda/investor-reporting/ops/owned_status.py: PHASES maps READY to (UNAVAILABLE, ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE) at :23; the public state becomes READY / ANALYSIS_READY only when `dates is not None` (:57-58), which needs prospect_dates=True AND `evidence.input()` returning a retained input (:44-50). In the rev 6 zip entry.py:219-223 sets prospect_dates from the request header x-irpt-status-dates == prospect-v1, and prospect_dates.py:257-258 returns None when the composition's browser part carries no input_id. So the durable job state of REQ-5e4149d2 IS READY (the code reaches the READY branch to give this answer); what is unavailable is a date basis. NOT MEASURED: whether window 6's read sent the header, and whether this request has an input_id.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 4151",
+      "infra/aws/lambda/investor-reporting/ops/owned_status.py:23,:43-58 at box/dell2 HEAD",
+      "irpt-status zip 6idtFvAm, entry.py:219-223 and prospect_dates.py:257-258"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Designed behaviour: a READY job read without the date opt-in, or with no retained date basis, answers this code. The CTO ruled no cell. 2.0.0_SA_COO~G2 re-reads once WITH the opt-in; either outcome is recorded as the request's true state. FWD-1's report oracle is analysis-report serving 257 sections, graded by 3.0.0_SA_CVO.",
+  "notes": "Resolves IRPT_ANLREQ-D2-S19."
+}
+```

@@ -5731,3 +5731,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T05:21:36Z",
+  "one_line": "L9 round 62 (DB-b-118): the no-claims rule is SOUND. A thresholds input with no claims is written held (non-null) or absent (null) with threshold_claims_source defaulted_no_claims; it can never read measured, a consumer can tell a defaulted held from a stated one, and no fifth member was added to the law's set. This seat re-ran the three checks (PASS) and the new tests (32 passed). Consequence: the live 49F thresholds file carries no claims, so its next dim row understates two measured thresholds as held.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~93/THRESHOLD_CLAIM_RULE24.json",
+      "msg 4142 (rounds 59-62 drained @bbc9e11292, @2f0664fab0, @6d0b3ce3a8, @4d4e3ee317)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_ROUND_62_L9_GRADE_20261011.md",
+      "this seat's runs at HEAD (2026-10-11T05:21:36Z): p62_round62.py DB62-1-AC1, -AC2, -AC3 PASS; pytest test_threshold_claims.py 32 passed; p59 DB59-1-AC1 PASS; p60 DB60-1-AC1 PASS; p61 DB61-1-AC1 FAIL (its census compares to HEAD's bytes, which DB-b-118 moved after the R45 pin, as the issuer's message says)",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1886-1904 at HEAD: THRESHOLD_CLAIMS is the four members; an input with no threshold_claims key writes held for a non-null value and absent for a null one, with source defaulted_no_claims",
+      "docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md:19 (PROVENANCE: measured / inferred / held / absent) and CLAUDE.md section 4"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 4: a value carries its claim in a field a consumer can reject on (measured / inferred / held / absent); no such field means it may not be treated as measured. Rule 24's four postulates apply to the adopted set.",
+  "world_is": "The rule holds on all four questions this seat put to it. Rounds 59 to 62 are terminal. DB61-1-AC1 reads FAIL at HEAD by construction; the R45 packet's delta was not re-read by this seat.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
