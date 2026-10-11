@@ -3166,3 +3166,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W53-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-11T18:40:00Z",
+  "one_line": "AR-y-113 cannot be met by pins: the irpt-intake-poller entry's firm_registry.json member has no git blob anywhere in the object database (14 of 14 blobs of the served size 5229 bytes checked, none has sha256 cc3f2c63...), so the entry cannot build and no digest can equal YpE2MyUw.... The live digest equals the recorded one, so the entry is not stale; the map was left unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live read 2026-10-11T18:29:05Z: .tools/aws lambda get-function-configuration --function-name irpt-intake-poller -> CodeSha256 YpE2MyUwdGzMfLaUGXi8cClxoVHFFmOz5LT1BYmoTa8= (equals the entry's deployed_code_sha256), LastModified 2026-09-11T12:55:52.000+0000, CodeSize 52312",
+      "git cat-file -e 1545ec3442:infra/aws/lambda/investor-reporting/intake/firm_registry.json -> rc 128 'does not exist'; positive control poller.py at the same path and commit present; git log --all --diff-filter=AD on the path -> 0 commits; git check-ignore -> not ignored. So the file was never tracked at that path: it is not a moved file and not present at the deployed commit.",
+      "git cat-file --batch-all-objects: 14 blobs of size 5229, sha256 of each computed, none begins cc3f2c63; sha256 cc3f2c63bb2d8c14a3d65b2bb2215b4089e5e776718a307660a253eebfbd25e3 / 5229 bytes is the served content recorded by row IRPT_BCKEND-W4-S34 (read from the live package on 2026-09-18). data/firm_registry.json at HEAD is 5326 bytes, sha256 f0816a5a....",
+      "BUILD_ONLY=1 build with no skip at HEAD 78533deeb6: gate.py, keys.py, firm_destination_policy.json stage and verify; then 'ERROR: File not found: .../intake/firm_registry.json', 'PARTIAL -- 0 built, 1 failed'. The checker prints Y113-POLLER-FAIL.",
+      "The map's own _staged_from_note on the entry says the same (IRPT_BCKEND IB-rte-4 / W4-S34). No generator of the file was found: poller.py at HEAD has no reference to IRPT_FIRM_REGISTRY."
+    ]
+  },
+  "spec_asserts": "TO-AR-y-113 step 3: the entry takes each missing or differing member from a pinned commit by staged_from rows (pin, sha256 of git show <pin>:<path> bytes).",
+  "world_is": "For the member firm_registry.json no pin exists to name: no commit holds the served bytes. Not done, by the order's own stop: no pin invented, no file created in the source folder, no skip, no trial of other registry versions. Not measured: whether the other 27 members equal the served bytes (that needs the live package, a second live call the order forbids). The order stays pending; a decision on authoring the file (a new blob that would change the digest) or on re-deploying the function is not this worker's.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
