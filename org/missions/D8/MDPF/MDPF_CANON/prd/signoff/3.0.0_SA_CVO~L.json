@@ -1,0 +1,12 @@
+{
+  "prd": "MDPF_CANON_PRD.md",
+  "prd_version": "v2.11",
+  "prd_pin": "1e5dcef9cb7c1806359ce177c93988a9f782d52a",
+  "half": "ratified-text",
+  "half_hash": "9535c5fe77ef960fefff6f6a0c93206bd819a92cf7c078133099b415c89bb076",
+  "endpoint_hash": "1a31840f178365bde7a4c49b3927f01378edabba7bd0cdc75d04dcdbd63c63aa",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_CANON_PRD_V211_RATIFIED_TEXT_REVIEW_20261011.md@7ace7bd42e",
+  "signed_by": "3.0.0_SA_CVO~L",
+  "signed_at": "2026-10-11T18:44:42Z"
+}
