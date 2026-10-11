@@ -6690,3 +6690,103 @@ round.** Never edit an existing row.
  "world_is": "For one of the four events the check the addendum says is missing exists in the custodian's own trade rows, on 16 dates, and it reads in favour of the factor. This does not touch the re-mint as ruled (2 day files at the served pin, neither on this security's 28 days by the issuer's read of the two dates). It bears on the next addendum: the served table carries 28 measured account-days valued on a close 24 percent below the traded price. Not established by anyone: whether the 28 measured days' RETURNS are wrong by more than the 0.0053 the drift comparison showed (a constant scale on a held position moves a return only where a flow or an in-kind value uses the price); the other three events rest on 4, 4 and 1 trade dates."
 }
 ```
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W107-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~107",
+ "surfaced_at": "2026-10-11T16:12:43Z",
+ "one_line": "Under method_r29 the served account_return_daily changes in 43 day files, not the 2 that PRD ADDENDUM v0.5/v0.6 and the round-68 packet name: 41 further dates hold a blank UNPRICED withholding account-day whose external_flow moves.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/silver/commonwealth_account_return_daily.py line 546: external_flow = daily_returns.flow for every row that is not an ABSENT or HELD exception, blank or not; so a flow that moves on a blank day moves a day-file cell",
+   "local rebuild of both rules at the served pin WITH the served --hold-cusips 05613L3H2,95000U2D4,651639AX4 (run_commit 685a6e205d64830c281beb1ae3c88bd6a2b52293): daily_returns flow differs on 44 account-days over 43 dates, return on 2 (2014-12-03, 2020-11-13); the other 42 are blank UNPRICED in both rules (return null in both)",
+   "control: the inline mapping of adapter lines 459-493 and 541-561 applied to the SERVED silver and to the method_r28 hold build reproduces all 1,691,729 served day-file rows with 0 differing (market_value_eod, external_flow, total_return_daily, measured flag); applied to the method_r29 build it differs on 44 rows over 43 dates (external_flow 44, total_return_daily 2); the sidecar derived under method_r29 equals the served sidecar (symmetric difference 0 of 1,584,413)",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~107/REMINT_FACTS.json (writes[] lists the 41 additional dates with their captured ETag, size, VersionId and LastModified; branches.measured_day_file_set)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bq-2 item 2 and PRD ADDENDUM v0.5/v0.6: the day files that differ 'must be exactly the 2 dates'; 'what it changes in the served table: 2 day files, and no other'; the 41 withholding days that are blank under both methods are a future change.",
+ "world_is": "The 2 dates are 2 of 43. The round-68 packet counted the return column; the day file also carries external_flow on blank rows, and method_r29 moves it on 42 blank UNPRICED account-days on 41 other dates (2024-12-02 holds two). Not decided here: whether those files are in or out of the sign-off. The 2 named rows themselves move in external_flow and total_return_daily, 1 row each."
+}
+```
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W107-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~107",
+ "surfaced_at": "2026-10-11T16:12:43Z",
+ "one_line": "The mint adapter's apply_days cannot re-mint: it is mint-only (refuses any non-empty target prefix), has no date argument, and refuses the tracked manifest, which carries no split_store.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/silver/commonwealth_account_return_daily.py apply_days lines 822-891: refuses when _prefix_used for any day (852-855), the sidecar (856-859) or the method row (860-862); loops over every manifest day (835, 852, 869); needs exactly two committed --pair files (825-829); calls require_pinned_split_store(man) (834, 429-433)",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~79/ard_cottonwood_manifest.json: top-level keys read by python json, 'split_store' in manifest is False; last commit touching it 84ef9e0972",
+   "data/assets/scripts/gold/irpt_reporting/account_return_daily.py emit_day lines 1871-1886: put_object of data and manifest with no overwrite refusal of its own; whether sp.stream_to_parquet refuses an existing key was not read",
+   "commonwealth_fwd3_serve.py apply lines 773-786: writes all three tables in one loop and refuses an existing object without --overwrite; no per-table flag"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Order CB-bq-2 item 1: a re-mint is 'a move of served output' that the sign-off names, as if an existing code path performs it for 2 day files.",
+ "world_is": "No existing argument restricts apply_days to 2 dates, and its guards refuse every existing key; the serve --apply replaces all three silver tables or none. A 2-file re-mint needs a code change or a direct producer call, which this order neither makes nor tests. Read from the code, not exercised against the bucket."
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S119",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T16:23:55Z",
+  "one_line": "L9 round 69: CB69bq3-AC2 MET and CB69bq4-AC2 MET. The scan finds seven mis-scaled price series, a floor, since 346 of 720 securities have too few pairs. One of the seven is the 2022 spin-off security, mis-scaled by exactly the factor the CTO ruled is not applied; this seat's round 67 diff measured the same number from the other side. The late-receipt rule is hand-applicable, its constants are sourced, its misses are printed, and it is marked a recommendation; it was fitted and tested on the same days.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_69_DRAIN_END_20261011.md @f689ae32cc (msg 5319)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_69_L9_GRADE_20261011.md",
+      "this seat's read of the round's records: CLOSE_VS_TRADE_SCAN.json (classes 315, 5, 2, 15, 37, 346, sum 720; both known cases listed, one as TOO_FEW with its reason); RESIDUAL_RECEIPT_PREDICATE.md (a 'by hand' procedure with a worked example, a table of the two constants with the data each comes from, the 14 misses by kind, the 100 quiet days, a sensitivity section, and a recommendation marked as one)",
+      "investigation row ADVI_COTBKF-D2-S116 (this seat's round 67 diff: one constant ratio 0.7553 on that security)"
+    ]
+  },
+  "spec_asserts": "CB69bq3-AC2 and CB69bq4-AC2 (JUDGMENT, graded by 3.0.0_SA_CVO at L9), as each order states them.",
+  "world_is": "Every limb holds on the records. Not re-derived by this seat: the scan's ratios, the reach of 470, the predicate's counts.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S120",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T16:23:55Z",
+  "one_line": "CORRECTION of this seat's row D2-S117 and of its closing of row D2-S115: a re-mint under method_r29 at the served instant's pin changes 43 day files, not 2. This seat's round 68 diff compared the return and the blank reason and then claimed the file; the day files also carry the flow, which moves on 44 account-days over 43 dates (2 measured, 42 blank). Re-derived by this seat on four columns. It also let PRD v0.5 and v0.6's '2 day files, and no other' stand as measured. The PRD's STOP clause caught it; nothing was applied.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's own diff 2026-10-11T16:23:55Z of the two at-pin run tables (C:/dev/wk-cotbkf-83/.scratch/w104/fwd3_method_r28 and fwd3_method_r29) and the served local table (fwd3_serve_r34), this time on value, flow, return and blank reason, 1,691,729 rows each; counts and dates only: served against method_r28 at the pin, 0 differ on all four; served against method_r29 at the pin, the FLOW differs on 44 account-days over 43 dates, the return on 2, the value on 0, the blank reason on 0; of the 44, 2 are measured and 42 are blank with reason UNPRICED",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_69_L9_GRADE_20261011.md",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_68_L9_GRADE_20261011.md",
+      "investigation rows ADVI_COTBKF-D2-W107-S1, D2-S117, D2-S115"
+    ]
+  },
+  "spec_asserts": "PRD ADDENDUM v0.5 as narrowed by v0.6: 'What it changes in the served table: 2 day files, and no other ... a re-mint that would replace any other file is not this addendum's and is a STOP.' CLAUDE.md: a denominator's scope must be the scope of the sentence beside it.",
+  "world_is": "The return moves on 2 account-days; the served files move on 43 dates. The ratified sentence does not describe the act, and the act needs three silver objects re-served first by a path no code performs.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

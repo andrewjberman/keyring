@@ -26,3 +26,27 @@
 - FB-g-15, FB-g-16, FB-g-17 instances and flips at the next drain (override `TREE_COO`).
 - Andrew-only: FWD-7 and FWD-8 (DEC-13); the SEV1 text; the AWS Support case if it did not arrive.
 - Push state: LOCAL on `box/dell1`.
+
+## 14:30Z to 16:30Z (appended)
+
+| tick | limb | round | act fired |
+|---|---|---|---|
+| 15Z | L7 / pre-window | 4 | DRIVE FORWARD x many: act 3b built, applied and read; delete grant ruled, built, applied; act 3c and 4b policy applied |
+| 16Z | pre-window | 4 | the window runbook, the four staged acts re-homed, the act-4 addenda 1 and 2 (re-pins) |
+
+- **Act 3b:** `FB-g-19` to `FB-g-23` merged and graded; `FB-f-14` APPLIED (4 to 29 statements, FB1); `FB-f-15` close simulation:
+  ~FBL read 9 of 9 allowed and 2 of 2 negatives `explicitDeny` from a scratch copy of `r4_sim.py` (three defects of mine, fixed
+  @408768aae2; the committed-script re-run is crossbox b717).
+- **Row D1-S29** (act-0 grant lacks Delete; D_02 and D_04 never read `Errors`): the CTO ruled both; `FB-g-24`, `-25`, `-26`
+  merged; `FB-f-16` APPLIED (three Sids); act-2 ADDENDUM 3 and act-0 ADDENDUM 1 signed.
+- **Act 3c and 4b's policy:** `FB-g-27`, `-28` merged; `FB-f-17` (29 to 34 statements) and `FB-f-18` (1 policy) APPLIED by FB1.
+- **FB-g-29** census merged: 8 of 9 side-effect free; the performance adapter writes one evidence artifact; the validator needs
+  a signed JWT; the exec-summary has no event. The CTO accepted the three reads (ADDENDUM 4).
+- **Window:** the runbook (`ledger/WINDOW_RUNBOOK_ROUND4.md`) fixes the order; act 4 is timed inside US trading hours (CTO
+  ADDENDUM 3). `r4_oai.py` reads 3 of 3 on the simulated flip; `r4_flipcommit.py` reads 4 of 4 in a scratch worktree.
+- **Found, ahead of the window:** the eight IRPT artifacts stage `loaders.py` at a pin, so act 4 needs eight re-pins (COO
+  ADDENDUM 2, with eight rehearsal hashes). Asked of the CTO.
+- **Rows:** D1-S28 (the standing `check_fence_scoped_rows.py` reads ok=False), D1-S29, ~FBL's S20 (the sim script's defects, fixed).
+- **Open for the CTO:** act-4 ADDENDUM 2 of the COO half (re-pins); the c290 SNS routing fix's form (Andrew: the text arrived).
+- Push state: box/dell1 is on origin/CLOUD through 57802a7435 (MSTR measured); later commits LOCAL.
+

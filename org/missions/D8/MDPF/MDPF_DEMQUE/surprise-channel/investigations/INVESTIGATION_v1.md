@@ -906,6 +906,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/mdpf/scripts/demque/run_daily_draw.sh@e3739bada7 appends to $STATE/ledger.jsonl on every run (no per-day ledger key)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W28-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~28",
+    "surfaced_at": "2026-10-11T16:17:14Z",
+    "one_line": "DQ-t-36 AC2 cannot be met as written: the criterion asks --plan --today 2026-06-30 to be refused, but 2026-06-30 is AFTER the live store's latest valid_to 2026-06-23, so the guard the build specifies (refuse a frontier before latest valid_to) correctly plans it. Refusing it would block every normal daily extension. The worker did not weaken AC1 or AC2; the order stays open.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DQ-t-36 (TO-DQ-t36 build item 1 and AC2): plan() refuses a frontier before the store's latest valid_to, apply() writes nothing; AC2 on the REAL store: --plan --today 2026-06-30 exits non-zero with no JSON plan and names the latest valid_to (the arms early_refused and early_names_valid_to); --plan --today 2026-10-12 still plans 141 symbols. The order's premise: 2026-06-30 is a frontier 'before every file's end, 2026-06-22/23'.",
+    "world_is": "Live read only (ps.index over ps.s3_root(), 141 rows): max valid_to 2026-06-23; 96 rows at 2026-06-22, 45 at 2026-06-23. So 2026-06-30 is after every file's end and extends them, it does not shorten them. Base and built code: data/mdpf/scripts/demque/extend_frontier.py@92de80e612 plan() exits 0 for 2026-06-30 with the guard (frontier < latest_end is false). dq_t36_real.py output: 'early: rc=0 ... end 2026-06-30 symbols 141' and 'GUARD-REAL-BAD arms=early_refused,early_names_valid_to'. The shortening hazard is real only for a manual --today before 2026-06-23 (e.g. 2026-06-22); the scheduled daily --apply runs on the real date, after the store's end. Hazard INERT: nothing applied, no served, pacer or queue state touched.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/price_store.py index(): valid_to read from each lock.json (read-only S3 via ps.s3_root(), 2026-10-11)",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t36_real.py run in the worktree at 92de80e612: GUARD-REAL-BAD arms=early_refused,early_names_valid_to",
+        "python data/mdpf/scripts/demque/extend_frontier.py --plan --today 2026-06-30 (worktree, guard built): rc=0, end 2026-06-30, symbols 141"
+      ]
+    }
   }
 ]
 ```

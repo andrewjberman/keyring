@@ -5,7 +5,7 @@
  "project": "ADVI_COTBKF",
  "directive": "D8",
  "fabric": "dell2",
- "prd_version": "v0.6",
+ "prd_version": "v0.7",
  "step": 4,
  "brief_ref": "docs/briefs/cottonwood-commonwealth-10y-backfill-brief-20261006.md@902feb3a4f",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -259,5 +259,32 @@ ENDPOINT is unchanged.
   foreign tax to a flow would be a different method, with its own number, its own comparison at a pin and its own addendum.
 - v0.5's other bullets stand as written: 2 day files and no other; the served instant's pin; the 41 blank withholding days; the re-mint
   under its own pair.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.7 -- the re-mint's true extent, and that it is NOT made now (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `2.0.0_SA_COO~C2`'s drain-end record for round 69,
+  `deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_69_DRAIN_END_20261011.md` @f689ae32cc, section 1, read whole by this seat; not re-run. The
+  issuer met v0.5's own STOP and wrote no half. That was the addendum working. The ENDPOINT is unchanged.
+- **v0.5's sentence "What it changes in the served table: 2 day files, and no other" is WITHDRAWN. It was wrong.** It counted the days whose
+  RETURN moves. The served day file also carries `external_flow` on blank rows, and `method_r29` moves that cell too. As the record
+  measures it: the return moves on 2 account-days (2014-12-03 and 2020-11-13); `external_flow` moves on 44 day-file rows over 43 dates (the
+  worker's count; the issuer's own count on the silver table is 47 rows over 46 dates, and the 3-row difference is attributed, not
+  reconciled). So a re-mint under `method_r29` replaces **43 day files**, by the worker's count.
+- **And it is not only day files.** The adapter builds only from the SERVED silver tables, so three silver objects are re-served first,
+  which changes `run_commit` and `cash_leg` on every row of all three (1,691,729, 21,102,041 and 82,593 rows). No code path re-mints an
+  existing day file today. The served build also used a hold list of three CUSIPs that the round-68 comparison did not.
+- **Ruled: the re-mint is NOT made now.** It would re-serve some 23 million silver rows and build a new write path to correct 2 returns
+  and 42 cells of a blank row, in a table no released reader consumes: the readers found are the adapter's own verify and build and the
+  serve script's verify. Further corrections to this same table are already open (the 41 unpriced withholding days, the one close series
+  about 6.6 times low and the scan for others, the four spin-off entries, the rule for a receipt after an account's assets left). **One
+  re-serve carries all of them, once, when that list is closed.** Each time the table is re-served for one item, every row's `run_commit`
+  moves again.
+- **`method_r29` stays the default for the next build**, as v0.6 states it. Until that build the served table is `method_r28`'s, and it
+  carries a KNOWN, STATED defect: on 2 account-days a federal or state withholding sits inside the return. They are named above.
+- **What un-parks it, whichever comes first:** the correction list closes; or a reader of this table is to be released. No reader of the
+  Cottonwood return history is released on the `method_r28` table: the re-serve comes first, under its own pair, naming all three silver
+  objects, every day file it replaces, the hold list, the pin and every reader.
 
 -- 1.0.0_SA_CTO~DELL2
