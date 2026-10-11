@@ -5845,3 +5845,29 @@ round.** Never edit an existing row.
  "world_is": "That line reads true on the served bytes at 07:40Z. Not read by the issuer: the total object count under the three prefixes, and the object versions. No reader exists; the keys stay unread until a reader's own pair (ADDENDUM 11.1)."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S97",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T07:51:03Z",
+  "one_line": "L9 CB38al1-AC2 MET on the served Cottonwood account_return_daily mint. This seat read the served method row 3, three day manifests, two day files and the reasons sidecar: every row carries method_version 3 with no custodian text, 437 of 437 blank rows carry a null return and none a zero, the sidecar equals the manifest's hash and holds the two exceptions' 988 and 110 rows, and the build's worker never edited the producer. Notes: 94 percent of the table is blank; the manifest's sha256 and bytes describe the local build file, not the served object; method row 3's income basis carries no stated limit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_MINT_ARD_COTTONWOOD_DRAIN_END_20261011.md @850013eb11 (msg 4420)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_MINT_CB38AL1_AC2_L9_GRADE_20261011.md",
+      "this seat's reads of s3://opal-data-cottonwood/irpt/cottonwood/gold/: dim_return_method/method_version=3/manifest.json; account_return_daily/date=2013-04-03, 2018-07-09 and 2026-06-22 manifest.json; data.parquet for 2018-07-09 (453 rows) and 2026-06-22 (12 rows); account_return_daily_blank_reasons/source_date=2026-06-23 (sha256 589f72cc..., 1,584,413 rows)",
+      "this seat's run of the adapter's content_hash on the served 2018-07-09 file: equal to the manifest's content_sha256; the file's sha256 and size differ from the manifest's sha256 and bytes (9,551 against 15,597 bytes)",
+      "git log --author 0.9.0_WK_ADVI_COTBKF~66 on data/assets/scripts/gold/irpt_reporting/account_return_daily.py: 0 commits"
+    ]
+  },
+  "spec_asserts": "CB38al1-AC2 (JUDGMENT, graded by 3.0.0_SA_CVO at L9): every row's method claim is truthful (never the custodian method); the two exceptions read as blanks with reasons, never zeros; the producer is unedited.",
+  "world_is": "All three limbs hold on the served bytes this seat read. The issuer's row D2-S96 disarms D2-W66-S1 on the same reads. No reader of the table exists yet, and no outcome is claimed REALIZED.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
