@@ -62,3 +62,19 @@ A reader who looks at one account's performance and then opens Holdings sees tha
 names the account, so the reader is at least told.
 
 -- 4.0.0_SA_CRO
+
+## FOLLOW-UP: the FIRM_BINDING refusals (MSTR msg 108388, relay of COO~D2 msg 5566, row DSGN_IRPTV1-D2-S22)
+
+Read from saved evidence only (`findings.json` api_issues, `netlog.tsv`, `shots/`); no new walk.
+
+1. **Route form, count, any AVAILABLE answer.** Each walk refused three reads, each requested exactly once:
+   `reporting/<acc>/manifest` twice (once per account, two different accounts) and `reporting/client/<cli>/summary`
+   once. All answered HTTP 200 with state UNAVAILABLE, reason FIRM_BINDING. No `reporting/*` read answered AVAILABLE at
+   any moment: every `reporting/*` request in `netlog.tsv` is one of these three (3 of 3 in each of walks 1-5).
+2. **Header Firm selector:** all ("Global (All)") in every screenshot taken at those steps (walk 1 shots 004, 007,
+   010). The walker never changes it. The Analysis tab's "Firm this portfolio is for" is a different control.
+3. **Tab open:** Performance at all three. The client-level summary and the first account's manifest fired on the
+   client pick, where Performance is the default tab (shot 004); the second account's manifest fired when
+   Performance's Account select moved to the second account (inferred from request order beside shot 010).
+4. **Walk 2:** yes, the same three refusals on the same routes and the same accounts at the same steps. Walks 3 and 4
+   (`ca23f110`) and 5 (`3ebc35eb`) show the same three; in walks 4 and 5 all three fire at the Performance step.
