@@ -725,6 +725,28 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "HG3-t9-AC2: 'the role gains GetObject on the stamp pattern and one prefix-conditioned ListBucket and nothing wider'.",
     "world_is": "The checker does not bind the ListBucket statement to the bucket ARN. The applied patch carries the correct bucket ARN, so this worker's tree is right; the gap is in the checker, which is outside this worker's grant and was not edited.",
     "notes": "Not fixed here: the checker belongs to the issuer's R3_CHECKS and the criterion text is unchanged. Recorded so the CVO's L9 read sees that AC2 PASS does not cover the ListBucket Resource."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W7-S4",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~7",
+    "surfaced_at": "2026-10-11T04:12:00Z",
+    "one_line": "The TO says the naming gate refuses a new hand-kept cottonwood literal; at commit d90794efd4 the gate WARNs on the stamp prefix literal the patch types in satellites-registry-producer.tf:46 and does not refuse it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output at commit d90794efd4: '[naming-gate] NAMING RAISE-EXISTING infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf:46 blackdiamond/cottonwood/meta/ -> (pre-LGIC key; conformance via its migration project, Rule 30)' and '[naming-gate] NAMING-GATE: WARN 2 graded'",
+        "The same gate's stated reason: 'the same literal is already carried at HEAD in data/assets/scripts/silver/rebalancer_conversion.py, so this copy mints nothing: WARN; hand-kept carrier of cottonwood outside every permitted context: read it through lookup(cottonwood)'",
+        "infra/aws/terraform/modules/opal_name/generated_locals.tf @c8f7662637 :8 and :31 carry the scope registry as generated data; no generated local for the stamp prefix exists in the module"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG-t-9 build text: 'the naming gate refuses a new hand-kept cottonwood literal', so the handler derives the bucket and prefix from producer constants and the rule name is built by opal_name.",
+    "world_is": "The handler carries no typed key (it derives the prefix from producer.ROSTER_KEY). The Terraform does carry the literal in locals cot_meta_prefix, because HCL cannot import the Python constant. The gate grades that line as a WARN on a pre-LGIC key, not a refusal. The rule-name line is CONFORMANT as built by name().",
+    "notes": "Recorded only: the patch is the issuer's, the refusal clause is not triggered (no refusal), and no name was changed by this worker. Whether the literal should come from a generated local is for the CVO's L9 read."
   }
 ]
 ```
