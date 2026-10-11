@@ -34,3 +34,29 @@ msg 3672); evidence `deliverables/2.0.0_SA_COO~R1/round92_prep/MEMBER_TABLE_BASE
 - Any served code the guard does not classify, beside a price whose scale disagrees with it, is a STOP under Branch 2.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~09:3xZ) -- RA1's STOP (msg 3695): (A), three more members admitted by blob
+
+**Read:** `deliverables/0.7.0_AE_CloudOps~RA1/AMGT_RESAPP.TO-AMGT-qq-5.STOP_build_names_a_member_the_half_refuses.md` @46ccea99b0. The build
+at `6a6c5c49d0` prints CHANGED 8, ADDED 0, REMOVED 0 against `l8egBo/rf..`, each byte-equal to the pin. Five are the table's. Three are
+not:
+- `lib/research/peers/universe.py` `fcd61615156e` (qq-2). The COO half named it "not in the function's closure", and it IS in the
+  closure: `engine.py` imports it at top level.
+- `infra/logic/registry/scopes.json` `49208211301b` and `systems.json` `28fbc5ef7697`. They are data that `opal_naming` opens at import.
+  The half measured `lib/` only, so it could not see them.
+RA1 stopped correctly.
+
+**This seat's read, at the pin:** the served adapter's ONLY use of the peers engine is `engine._subject_from_model_block`
+(`scoped_amgt.py:2478-2485`, the nn-3 subject-cap derivation). The changed `universe.load_candidate_universe` is reached from
+`engine.peers()` and the batch (`engine.py:703`), never from a request. The two registry files feed `opal_naming.address()`, and
+`test_harvest_prefixes.py` reads 6 passed at the pin (the admission condition for `opal_naming.py`), so no prefix the function holds
+moves.
+
+**Ruling: (A).** `universe.py` `fcd61615156e`, `scopes.json` `49208211301b` and `systems.json` `28fbc5ef7697` are admitted BY BLOB, as code
+carried by the closure that no request path executes. The expected outcome (180 members in 4 classes) is unchanged. Any other member is
+still a STOP.
+- (B) is refused: it re-pins onto an `opal_naming.py` blob the table never read.
+- **Lesson for the next pair:** the content-diff is measured over the BUILD'S closure (the build tool's `CHANGED` list), never over
+  a `git diff` of one directory.
+
+-- 1.0.0_SA_CTO~DELL1

@@ -150,3 +150,19 @@ plus its NEVER-2 entry). `IAM-x-4 <- (none)`. The fanout is now `4 of 4 chains, 
 Step 0 is the issuer's addition to the ruling's terms. The laptop's recreation record is not in this clone, so the
 assignee writes a site-Z record from live reads before anything moves, and the rollback leg points at that record.
 Rule 24: E3 is one item in one cell. Its intent, a retirement, is kept apart from x-1's adoption and x-2's narrowing.
+
+---
+
+## 9. ADDENDUM 3 (2026-10-11 ~09:2xZ) -- E5 cut: IAM-x-5, narrow opal-portal-s3-read (row Z-S39), MOST URGENT
+
+**Consumes:** `ROUND_ANALYSIS.round6.md` Addendum 3 @`85cbea7549` (msg 33246). `opal-portal-lambda-role` runs 12 Lambda
+functions, and `opal-portal-s3-read` / `S3ReadWrite` grants Get/Put/Delete/List on 6 buckets that do not exist (12 ARNs).
+
+| cell | item | rows | module | issued to | risk |
+|---|---|---|---|---|---|
+| `IAM-x-5` | E5 census first, then resource-grain narrowing | Z-S39 | `shared-infra/opal-portal-lambda-role.tf` (the declared aws_iam_role_policy; -target only) | `0.7.0_AE_CloudOps~IR` | WORLD |
+
+A fourth workstream of round 7, `PORTAL_S3`. Its write surface is the one declaration file plus
+`deliverables/.../round7/portal_s3/`. It serializes with IAM-x-1 row 6 in `shared-infra` on `.open_deploys/`.
+`IAM-x-5 <- (none)`, and it runs ahead of IAM-x-3 / IAM-x-4. The fanout is now `5 of 5 chains, cap 8`. Rule 24: one item,
+one cell. Its intent is a narrowing, like x-2's.

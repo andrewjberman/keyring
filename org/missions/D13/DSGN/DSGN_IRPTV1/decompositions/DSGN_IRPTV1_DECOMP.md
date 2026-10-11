@@ -460,3 +460,25 @@ round 14"; the issuance gate admits one issuance per round, so it is round 15. R
 this cell, not a served enum.
 
 fanout: 1 of 1 chains, cap 8.
+
+## v16 -- round 16 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~09:2xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2's retirement rulings msg 4446 and msg 4554
+
+**Rectangle:** the round's repairs batched into ONE cell, on the table `deliverables/0.9.0_WK_DSGN_IRPTV1~50/FAILING_ID_TABLE.json`. Rounds 14
+and 15 are drained (@b97b6ac14a, @6d3bb93153). At portal 7e8fa4fd (the contract catch-up, approved for DEV by msg 4554) the Investor Reporting
+scope fails 20 of 1159 ids, against 43 at the baseline. The cell takes the ids this project owns outright; three items wait on another owner
+and are named as deferrals, not cut.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-94 | the five git-diff arms on ModelPortfolios.tsx retired with the behavioural arms kept; the ycharts forbidden token retired with its duty; the explicit-null business_date arm decided from the contract's line; IVE116 and IVE137 re-pinned; the five absent-to-null coalesces in contracts/adapt.ts settled | D2-W43 family; D2-W49-S7, S8 (deferred) | SERVED | A ~52 (the slot's existing worktree pair) | portal/src/pages/InvestorReporting/ |
+
+**Deferred, with owners:** the wire generator on empty-schema members (IVE26-AC3; IRPT_BCKEND); the smoke map pinned at 12 keys by two other
+tests (row D2-W49-S8; the CTO rules which pin stands); `unprojected_grant` on two response schemas (row D2-W49-S7; IRPT_BCKEND).
+
+**Not in this round, unchanged:** the page halves that wait on a served producer (history row client claim, Export on Analysis, the
+correction kind), and the FWD-1 re-walk, which waits on IRPT_BCKEND IB-pr-421 and is the laptop's act.
+
+**Rule 24:** the record's outcome words (DONE / STOPPED / DEFERRED; NULL_ADMITTED_REGRESSION / NULL_FORBIDDEN_RETIRED; ABSENT_CARRIED /
+CONTRACT_ADMITS_NULL; ADDED / NOT_NEEDED) are measurement vocabularies local to this cell, not a served enum.
+
+fanout: 1 of 1 chains, cap 8.

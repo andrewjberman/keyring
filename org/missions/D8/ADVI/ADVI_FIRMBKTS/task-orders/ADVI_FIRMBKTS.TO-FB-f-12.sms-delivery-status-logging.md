@@ -35,15 +35,16 @@ The ruling names the topic attributes `SMSFailureFeedbackRoleArn` and `SMSSucces
 `Application*` and `SQS*` FeedbackRoleArn / SampleRate; there is NO `SMS*` topic attribute. SMS delivery-status logging is an
 ACCOUNT-LEVEL setting (`aws sns set-sms-attributes`: `DeliveryStatusIAMRole`, `DeliveryStatusSuccessSamplingRate`), which
 applies to every SMS the account sends through SNS, not to this topic alone. It is diagnostic only (it writes logs; it does not
-change delivery) but it is wider than the ruling's scope and it writes CloudWatch logs.
+change delivery); the CTO ruled it in scope.
 
-THEREFORE: this order is STAGED. Steps 1 to 3 (the read) may run; **steps 4 onward do not run until the issuer's amendment
-records the CTO's word that the account-level setting is in scope**. If at step 2 you find a topic-level mechanism the issuer
-missed, report it and the order is unparked on that finding instead.
+THE CTO RULED (AMENDMENT 1 @6d046c34e3 of the ruling file, msg 3692): the account-level setting IS in scope, with
+`DeliveryStatusIAMRole` = the one scoped role, `DeliveryStatusSuccessSamplingRate` = **0** (failures only; NOT 100), a
+**14-day retention** on the SNS delivery log groups, the prior attributes printed first for the rollback and every other
+attribute byte-equal, and no test SMS. The ruling file's AMENDMENT 1 governs where it differs from this order.
 
 ### 1c. The steps, in order
 
-0. **Gate.** `git ls-tree HEAD` lists this order; this order's `<status>` reads `pending` (not `staged`) for steps 4 onward.
+0. **Gate.** `git ls-tree HEAD` lists this order and the ruling file with its AMENDMENT 1; `<status>` reads `pending`.
 1. **Read before you write.** With your identity: `aws sns get-sms-attributes` (record every attribute: `MonthlySpendLimit`,
    `DefaultSMSType`, `DeliveryStatusIAMRole`, `DeliveryStatusSuccessSamplingRate`, `UsageReportS3Bucket`, ...) and `aws sns
    get-topic-attributes` for the topic into the change-management entry. Open the entry BEFORE the first write
@@ -55,13 +56,16 @@ missed, report it and the order is unparked on that finding instead.
 3. **The Terraform.** The topic is declared outside any Terraform module (`infra/aws/terraform/inf-pipeline/inf-ops-alerts-sms.tf`
    header says so; the subscription is `aws_sns_topic_subscription.ops_alerts_sms`). Put the role and the account setting in
    the root that already holds that subscription, as `aws_iam_role` + `aws_iam_role_policy` and `aws_sns_sms_preferences`
-   (set ONLY `delivery_status_iam_role_arn` and `delivery_status_success_sampling_rate = 100`; read the provider's
+   (set ONLY `delivery_status_iam_role_arn` and `delivery_status_success_sampling_rate = 0`; read the provider's
    documentation for what the resource does to the preferences you do not set, and carry every value step 1 recorded so the
    plan shows no change to them). The role's trust is `sns.amazonaws.com`; its policy is `logs:CreateLogGroup`,
    `logs:CreateLogStream`, `logs:PutLogEvents`, `logs:PutMetricFilter` and `logs:PutRetentionPolicy` on the SNS SMS delivery log
    groups only (`arn:aws:logs:us-east-1:313476888478:log-group:sns/us-east-1/313476888478/DirectPublishToPhoneNumber*`),
-   nothing broader.
-4. **Plan, read the JSON.** It must change EXACTLY the role, its policy and the SMS preferences; any other resource, or any
+   nothing broader. Declare the two delivery log groups yourself so the retention exists before SNS writes:
+   `aws_cloudwatch_log_group` for `sns/us-east-1/313476888478/DirectPublishToPhoneNumber` and
+   `sns/us-east-1/313476888478/DirectPublishToPhoneNumber/Failure` with `retention_in_days = 14` (if a group already
+   exists, import it first: read `aws logs describe-log-groups --log-group-name-prefix sns/us-east-1/313476888478/`).
+4. **Plan, read the JSON.** It must change EXACTLY the role, its policy, the two log groups and the SMS preferences; any other resource, or any
    preference value other than the two named, is a STOP.
 5. **Apply** through `safe-apply` only. Read back: the role's trust and policy, `get-sms-attributes` (the two values set, every
    other value as step 1 recorded), a post-apply plan with no changes.
@@ -71,8 +75,8 @@ missed, report it and the order is unparked on that finding instead.
 
 ## 2. BOUNDS
 
-1. The only writes are the role, its policy, the SMS preferences' two delivery-status values and the Terraform files that
-   declare them, and the registry row a builder refusal may require. No topic attribute, subscription, endpoint, number,
+1. The only writes are the role, its policy, the two delivery log groups (retention 14 days), the SMS preferences' two
+   delivery-status values and the Terraform files that declare them, and the registry row a builder refusal may require. No topic attribute, subscription, endpoint, number,
    spend limit or sampling other than the two values; no alert; no delete.
 2. If a plan or a read differs from step 4's set, STOP before the apply and file a BLOCKING row (`ADVI_FIRMBKTS-S<k>`, the
    laptop's coordinate is bare).
@@ -96,11 +100,12 @@ org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FBL/ADVI_FIRMBKTS.TO-FB-f-12.sms-delivery-status-logging.proof_of_spec.json`.
   <criterion id="AC1" cell_refs="FB-f-12"><invocation>.tools/aws iam get-role --role-name <ROLE_NAME> --query "Role.AssumeRolePolicyDocument.Statement[0].Principal.Service" --output text</invocation><expect>^sns.amazonaws.com$</expect></criterion>
   <criterion id="AC2" cell_refs="FB-f-12"><invocation>.tools/aws sns get-sms-attributes --region us-east-1 --query "attributes.DeliveryStatusIAMRole" --output text</invocation><expect>^<ROLE_ARN>$</expect></criterion>
-  <criterion id="AC3" cell_refs="FB-f-12"><invocation>.tools/aws sns get-sms-attributes --region us-east-1 --query "attributes.DeliveryStatusSuccessSamplingRate" --output text</invocation><expect>^100$</expect></criterion>
+  <criterion id="AC3" cell_refs="FB-f-12"><invocation>.tools/aws sns get-sms-attributes --region us-east-1 --query "attributes.DeliveryStatusSuccessSamplingRate" --output text</invocation><expect>^0$</expect></criterion>
+  <criterion id="AC4" cell_refs="FB-f-12"><invocation>.tools/aws logs describe-log-groups --log-group-name-prefix sns/us-east-1/313476888478/DirectPublishToPhoneNumber --region us-east-1 --query "logGroups[0].retentionInDays" --output text</invocation><expect>^14$</expect></criterion>
 </proof_of_spec>
 
-AC1 is the role's trust, AC2 and AC3 the two delivery-status values at the account. All three read FAIL at base by
-construction (no role, no value). They read configuration, never a delivery: no SMS is sent.
+AC1 is the role's trust, AC2 and AC3 the two delivery-status values at the account, AC4 the CTO's 14-day retention (a
+fourth criterion: the ruling names it). All four read FAIL at base by construction (no role, no value, no group). They read configuration, never a delivery: no SMS is sent.
 
 ## 5. WHEN YOU ARE DONE
 
@@ -114,12 +119,12 @@ reason line after the next organic publish.
 **ISSUER NOTES:** class WORLD (IAM role create, account SMS preference). Cut on the CTO's order (msg 3682, ruling
 `CTO_RULING_SEV1_SMS_DELIVERY_STATUS_LOGGING_20261011.md`), rows `ADVI_FIRMBKTS-D1-S15` and `D1-S16`; a cell added to the frozen
 decomposition by that order (decomposition amendment, 9 chains); it issues as the SECOND WORKSTREAM `SEV1_SMS` of round 3
-(one issuer per round is keyed to the round: a separate scope, disjoint write surface, the laptop lane `~FBL`). STAGED at the issuer's finding that the ruling's
-mechanism (topic attributes `SMSFailureFeedbackRoleArn`) does not exist in the SNS API and the available mechanism is
-account-level; the one ask with the CTO is whether account-level is in scope. The Dell deploy identities do not write IAM
+(one issuer per round is keyed to the round: a separate scope, disjoint write surface, the laptop lane `~FBL`). Un-staged by the CTO's AMENDMENT 1 @6d046c34e3 (msg 3692) after the issuer's
+finding that the ruling's mechanism (topic attributes `SMSFailureFeedbackRoleArn`) does not exist in the SNS API: the
+account-level setting is in scope, success sampling 0, retention 14 days. The Dell deploy identities do not write IAM
 and cannot read the SMS preferences (`sms-voice:DescribeSpendLimits` denied): the executor is the laptop CloudOps lane.
 
-<status>staged</status>
+<status>pending</status>
 <round>3</round>
 <workstream>SEV1_SMS</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-12</to_id>
