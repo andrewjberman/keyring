@@ -6694,3 +6694,49 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W116-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~116",
+  "surfaced_at": "2026-10-11T20:32:30Z",
+  "one_line": "DB-b-143: the mcportal tree the order says to read read-only at the shared checkout is an empty directory, so it was not searched; portal and opal_ai were searched (zero readers of the original Black Diamond transactions store in either).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-143 item 2: portal, opal_ai and mcportal are readable read-only at C:/dev/ajb_workspace/<tree>, with a commit to state by git -C <path> rev-parse --short HEAD (the issuer gave mcportal at e8bbf97fb4).",
+  "world_is": "C:/dev/ajb_workspace/mcportal holds 0 entries (ls -A), as do the mcportal directories of the 20 sibling worktree copies listed; git -C on it resolves to the workspace repo, so the hash it prints is the workspace's, not a mcportal commit. portal reads dbeb6764 on DEV (its origin/DEV ref reads c2c6a8ae, so it is behind that ref) and opal_ai reads de5ce25. No reader of the store was found in portal (2069 tracked files) or opal_ai (36 tracked files); opal_ai's bucket allowlist DENIES opal-data-bd. Whether any mcportal tool reads silver/transactions is NOT_ESTABLISHED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~116/ORIGINAL_STORE_SHAPE.json (trees member)",
+      "C:/dev/ajb_workspace/opal_ai/opal/agent/refs/BUCKET_ALLOWLIST.yaml lines 66-67"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W116-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~116",
+  "surfaced_at": "2026-10-11T20:32:40Z",
+  "one_line": "DB-b-143: on the 3 days where both stores hold a day (3 days near the end of the copy's range sampled), the original silver transactions object and the silver_legacy copy differ in size and ETag, so the copy is not byte-identical to the original as it stands now; a rewrite of the originals since the copy is the likely reason (NOT_ESTABLISHED).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The ADVI_STITCH decomposition (STI-inv-2, DECOMP.md line 74) and DB-b-141's adjacent_store_not_counted say silver_legacy parquet is byte-identical to its source object, by table and date.",
+  "world_is": "head-object on the original (opal-data-bd silver/transactions/<day>.parquet) and on the copy (opal-data-assets blackdiamond/49financial/silver_legacy/transactions/date=<day>/<day>.parquet) for 2026-08-22, 2026-08-23, 2026-08-24: the original reads 35302, 35302 and 266067 bytes; the copy reads 1315934, 272971 and 34882 bytes; the three ETag pairs differ. The copy's range ends at 2026-08-25. So the copy is a snapshot of the objects as they stood at copy time, and the original objects were probably overwritten later (inferred; the 2026-08-22 original is now smaller than the copy by about 97 percent). NOT_ESTABLISHED: what rewrote them, and whether the repeat-per-group shape of the copy (DB-b-140) is the shape the original had on those days; only the shape of the original's 2026-10-06 object was counted (ORIGINAL_STORE_SHAPE.json). Sample of 3 days, metadata only, no rows read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~116/ORIGINAL_STORE_SHAPE.json (how_firm_was_told member)",
+      "workflows/atom_decomposition/runs/advi-stitch/ (the August run) DECOMP.md line 74"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
