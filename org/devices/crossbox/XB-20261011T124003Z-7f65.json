@@ -10,16 +10,20 @@
  "subject": "TO-FB-g-10 leg: AC1+AC2 at dell1 commit 47962a23eb, laptop identity, no apply",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-g-10.inf-jwt-initial-removal.md",
  "opened_at": "2026-10-11T12:40:03Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-11T12:41:47Z",
+  "bus_message_id": "86ee4904-5a2f-44ba-9969-fee656d9747a"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T12:43:07Z",
+  "by": "0.7.0_AE_CloudOps~FBL",
+  "bus_message_id": "ce6dd217-e262-422d-b97d-8305edee08e2"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-11T12:46:30Z",
+  "to_by": "0.7.0_AE_CloudOps~FBL"
  }
 }
