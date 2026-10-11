@@ -566,3 +566,26 @@ is cut from this cell's rows, not before. Row IRPT_YCDGEN-W3-S21 (the suite leav
 NOT_ESTABLISHED is one axis (what the reader does with one answer). Both are measurement vocabularies local to this cell.
 
 fanout: 2 of 2 chains, cap 8.
+
+## v21 -- round 21 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~13:1xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2's rulings msg 4924 and msg 4958
+
+**Rectangle:** two page cells handed to this project by ruling, from IRPT_YCDGEN's journey read (hop 12). IRPT_YCDGEN's FWD-1 waits on
+them; the CTO asks Andrew for the sitting when both are on DEV, and put them AHEAD of the wire-folder regeneration.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-101 | an Opal report opened on the page prints no vendor wording ("Vendor attribution", "Extraction validation"); a vendor report is unchanged | IRPT_YCDGEN-D2-W14-S1 (related W4-S8) | SERVED | B ~57, a second worktree pair, first | portal/src/pages/InvestorReporting/tabs/analysis/OwnedRequestHistory.tsx, NativeSections.tsx, contracts/adapt.ts |
+| IV-e-102 | the report can be opened after a Prospect upload: a rendered read first, a fix only if the read says so | IRPT_YCDGEN-D2-W14-S2 (inferred) | SERVED | B ~57, second | portal/src/pages/InvestorReporting/tabs/analysis/AnalysisTab.tsx |
+
+**"Ahead of" on a slot that is already running (the issuer's ruling):** IV-e-98 has been running on the one portal slot since ~12:40Z.
+Stopping it mid-regeneration loses its work, so these two run in a SECOND portal worktree and land on DEV first; IV-e-98's candidate then
+merges DEV under itself, as every candidate has. If the two touch a file the regeneration also touches, the merge is resolved in IV-e-98's
+candidate, not here.
+
+**Queued, not issued** (carrier: `deliverables/2.0.0_SA_COO~D2/SLOT_QUEUE_20261011.md`): the smoke map takes the two routes whose producer
+fixtures 2.0.0_SA_COO~P2 corrected @d8fb17b6d5 (msg 4959), and the five ids that waited on `unprojected_grant` in four response schemas are
+re-run (same commit); the 130% weight (row D2-W53-S7); the contract-exact history reader (after release 5 returns).
+
+**Rule 24:** the records' words (FIXED / NOT_A_DEFECT / STOPPED; RENDERED) are measurement vocabularies local to these cells.
+
+fanout: 2 of 2 chains, cap 8.
