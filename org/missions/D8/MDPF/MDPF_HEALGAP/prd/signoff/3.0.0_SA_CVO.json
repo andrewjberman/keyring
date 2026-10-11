@@ -1,12 +1,12 @@
 {
   "prd": "MDPF_HEALGAP_PRD.md",
-  "prd_version": "v0.2",
-  "prd_pin": "4d5c4ef70efe15db44031cedd9230fa01d78b5fc",
+  "prd_version": "v0.3",
+  "prd_pin": "4dd05f99ec4a1be1437812831ab6ddec59fc5864",
   "half": "ratified-text",
-  "half_hash": "a5a9e126c4680c3002f8a9cdb2060fd5146538ae86573f9f6e87ce1b1df91b2a",
-  "endpoint_hash": "4d38fefa7b3876752f1f45af5e12279fa6e1d6fd9dd3eb643c473fa1b570d461",
+  "half_hash": "8e7add14ec4178175fc358788f056d3364809e154401a40d98d6cdf28583d483",
+  "endpoint_hash": "4caa8a14b7d98e2985be80dab4692d1c3e1b9bd32d7b2a6392d514c44f0a658e",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_HEALGAP_PRD_V02_RATIFIED_TEXT_REVIEW_20261008.md@47830cb367",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_HEALGAP_PRD_V03_RATIFIED_TEXT_REVIEW_20261011.md@099ee97b59",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-08T14:47:02Z"
+  "signed_at": "2026-10-11T03:00:46Z"
 }

@@ -2652,3 +2652,48 @@ the switch file.
 
 The ruling names `lib/opal_lgctfm.py`; the census that judges and cards is `census_judge()` in `lib/opal_naming.py` -- the issuer's
 reading, stated on the order. Check: `deliverables/2.0.0_SA_COO~B1/fixed_inputs/r22/check_en_r22.py ruled` (FAILS at the base).
+
+## 0x. v3.23 -- THE ROUND-23 CUT (2026-10-11, `2.0.0_SA_COO~L1`), on PRD v1.4 FWD-8
+
+**Source:** PRD v1.4 @5cef7ba9ce (ratified-text SIGNED @a1e7e1cc38; brief auto-SIGNED), the L4 notification msg 3399, and cell
+candidate E14 in the PRD's v1.4 note. Cross-box call `XB-20261010T225240Z-dcb5` (rows `NFRA_IAMROLES202609` Z-S25, Z-S34). Seated by
+`0.0.0_AB_MSTR~DELL1` msg 3392. This is a NEW outcome (FWD-8), so the CTO grades it at L10; the cell itself takes the direct-act path.
+
+### 0x.1 THE CELL -- 1
+
+| cell | item | outcome | slot | risk | write set |
+|---|---|---|---|---|---|
+| `EN-ac-1` | the commit gate (a) grades a renamed file against its SOURCE's HEAD bytes and (b) reads a literal whose exact name the census LIVE plane holds as EXISTING, vintage and node type printed, failing closed to today's verdict when the read fails or prints no vintage; two `--self-test` arms (rename, adopt) | FWD-8 | ~1 | LOCAL (direct act) | `.tools/naming-gate.py` |
+
+Size: the PRD names the commit limb only (`.tools/naming-gate.py`); the apply limb (`naming-apply-gate.py`) and `lib/opal_naming.py`
+are not touched. Estimated under 300 product lines, so the direct-act path applies (spine L6; `/canonical-drive` obligation 1).
+
+### 0x.2 WHAT THE BASE SHOWED (the issuer's probes at HEAD a1e7e1cc38)
+
+- `judge()` sets `new` from the graded file's own pre-image alone (`new = pre_text is None or not _in_pre(lit, pre_text)`). A staged
+  rename is diffed on the new path alone (`safe-commit.sh` :1100), so it reads as an added file with no pre-image: NEW.
+- The live plane read exists (`lib/opal_naming.py` `census_live()`, `comp-find --corpus aws`, vintage printed, `CensusError` on a
+  partial or undated pull) and the live graph holds 2507 typed names at vintage 2026-10-11 02:14:17 UTC, of which 1367 grade
+  OUT-OF-PATTERN. `bd-49f-auto-login` (IAM_POLICY) is running and today is REFUSED as `NEW and OUT-OF-PATTERN`, plus the firm-carrier
+  clause for `bd`. The Z-S25 name `opal-smartx-lambda-role` is not in the graph at this vintage, so the check picks a running name
+  at run time and never types one.
+- All four arms of the fixed check FAIL at the base for the stated reason (section 0x.3).
+
+### 0x.3 CHECKS (files, dry-run at the base by the issuer)
+
+`deliverables/2.0.0_SA_COO~L1/fixed_inputs/r23/check_en_r23.py <rename|adopt|closed|selftest>`. Each arm builds a sparse practice copy of the
+committed HEAD, stages the change, makes the diff exactly as `safe-commit.sh` does and runs the practice copy's own gate with its
+enforce switches present. Base: rename FAIL (the renamed name REFUSED), adopt FAIL (the running name REFUSED), closed FAIL (REFUSED
+without `LIVE-READ-FAILED`), selftest FAIL (no rename or adopt arm).
+
+### 0x.4 BATTERY AND RULE 24
+
+- `comp-schedule`: DECLARED-NOT-APPLICABLE, no schedule. `comp-iam`: DECLARED-NOT-APPLICABLE, no grant, no IAM write.
+  `comp-adversary`: RUN, blind to the live plane's contents beyond one vintage; the cheapest passes (treat every NEW literal as
+  EXISTING; treat a failed read as EXISTING; match on a substring of the running name; admit a copy as a rename) are each a control arm.
+- MECE: the two limbs partition the shapes the call named (rename, adoption); a third shape (a literal NEW to both) stays refused, the
+  negative arm. SAME GRAIN: one literal, one verdict. INTENT: EXISTING never means CONFORMANT. STATE: a failed read moves nothing.
+
+### 0x.5 WHAT THIS ROUND DOES NOT TOUCH
+
+The apply limb, the registry, `grade()`, the placement override and R20 register, and Z-S34's R20 ask to Andrew (site Z's call).
