@@ -3136,6 +3136,136 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
     "spec_asserts": "TO-FB-f-9 step 2: the gate location comes from lib/platinum_dest.py source(); if the lib is absent the location falls back to today's legacy URI; if the freshness function runs before the sync, add the dispatcher's directory as a second search path.",
     "world_is": "The gate runs before the first sync on the downstream path, so SCRIPTS holds no lib/ on a fresh instance (an earlier run on the same instance may have synced it). Under mode canonical the fallback reads the legacy header_metrics.json, whose data_as_of is frozen. The dirname contingency reaches lib/ only if the dispatcher runs from a directory that holds lib/, which this worker did not establish.",
     "notes": "ARMED: if the step-2 and step-1 blocks land as written and the mode is exported in production, a fresh-instance downstream run reads the frozen legacy value. Not armed by this act: no edit made, and the contingency was not applied because the stop precedes the edit. Disarm: the issuer re-cuts the gate placement, or the sync precedes the gate on the downstream path."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W23-S1",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~23",
+    "surfaced_at": "2026-10-11T09:33:52Z",
+    "one_line": "gold_dispatch.sh base line 517 holds a non-ASCII em dash inside an echo string the chain prints (the FATAL phase message); step 2b STOPs on a printed string, so the line is left unedited and AC3 cannot read 0.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/gold_dispatch.sh@cf806cf81d L517 base: the braced && list echoes FATAL: $phase failed, then an em dash (bytes E2 80 94), then aborting chain",
+        "post-edit file line 525 carries the same string unchanged; the diff hunks list has no entry for base line 517"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 step 2b: replace each non-ASCII character on the 19 lines with its ASCII equivalent, touching nothing else; if any is inside a string a command prints or a pattern a command matches, STOP and file a BLOCKING row for that line.",
+    "world_is": "Base line 517 is a printed string. Replacing its dash would change a message the chain prints, not a comment. The line is unedited; AC3 reads 15 bytes above 127, all on the five printed-string lines.",
+    "notes": "Issuer disposition needed: ASCII substitution of printed text, or a bound re-cut for printed strings. Sibling rows S2 to S5 name the other four printed lines."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W23-S2",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~23",
+    "surfaced_at": "2026-10-11T09:33:52Z",
+    "one_line": "gold_dispatch.sh base line 921 holds a non-ASCII em dash inside the show_help heredoc that --help prints; step 2b STOPs on a printed string, so the line is left unedited and AC3 cannot read 0.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/gold_dispatch.sh@cf806cf81d L851 show_help() and L852 cat << 'HELP' open the heredoc; the HELP terminator is at L995 (base)",
+        "base line 921 is inside that heredoc: the text B_00 then an em dash then B_01 reads gold/canonical/holdings output from B_00"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 step 2b: replace each non-ASCII character on the 19 lines with its ASCII equivalent, touching nothing else; if any is inside a string a command prints, STOP and file a BLOCKING row for that line.",
+    "world_is": "Base line 921 is help text printed by --help. Replacing its dash changes printed output, not a comment. The line is unedited; it is one of the five printed-string lines behind AC3 FAIL.",
+    "notes": "Issuer disposition needed with sibling row S1 (same rule, same bound)."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W23-S3",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~23",
+    "surfaced_at": "2026-10-11T09:33:52Z",
+    "one_line": "gold_dispatch.sh base line 1132 holds a non-ASCII em dash inside an echo ERROR string printed by the --from guard; step 2b STOPs on a printed string, so the line is left unedited and AC3 cannot read 0.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/gold_dispatch.sh@cf806cf81d L1132 base: echo ERROR: --from not valid for silver-prep (S_*), an em dash, then only one script.",
+        "the post-edit line 1140 carries the same string unchanged; the diff hunks list has no entry for base line 1132"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 step 2b: replace each non-ASCII character on the 19 lines with its ASCII equivalent, touching nothing else; if any is inside a string a command prints, STOP and file a BLOCKING row for that line.",
+    "world_is": "Base line 1132 is an echo argument printed by the --from guard. Replacing its dash changes printed output. The line is unedited; it is one of the five printed-string lines behind AC3 FAIL.",
+    "notes": "Issuer disposition needed with sibling row S1 (same rule, same bound)."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W23-S4",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~23",
+    "surfaced_at": "2026-10-11T09:33:52Z",
+    "one_line": "gold_dispatch.sh base line 1482 holds a non-ASCII em dash inside an echo WARN string printed by the recon harness step; step 2b STOPs on a printed string, so the line is left unedited and AC3 cannot read 0.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/gold_dispatch.sh@cf806cf81d L1482 base: echo WARN: recon harness exit=$recon_exit, an em dash, then FAIL domains detected",
+        "the post-edit line 1497 carries the same string unchanged; the diff hunks list has no entry for base line 1482"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 step 2b: replace each non-ASCII character on the 19 lines with its ASCII equivalent, touching nothing else; if any is inside a string a command prints, STOP and file a BLOCKING row for that line.",
+    "world_is": "Base line 1482 is an echo WARN message printed by the chain. Replacing its dash changes printed output. The line is unedited; it is one of the five printed-string lines behind AC3 FAIL.",
+    "notes": "Issuer disposition needed with sibling row S1 (same rule, same bound)."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W23-S5",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~23",
+    "surfaced_at": "2026-10-11T09:33:52Z",
+    "one_line": "gold_dispatch.sh base line 1484 holds a non-ASCII em dash inside an echo line printed by the recon harness step; step 2b STOPs on a printed string, so the line is left unedited and AC3 cannot read 0.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/gold_dispatch.sh@cf806cf81d L1484 base: echo Recon harness OK/WARN, an em dash, then manifest at s3://opal-data-bd/diagnostics/",
+        "the post-edit line 1499 carries the same string unchanged; the diff hunks list has no entry for base line 1484"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 step 2b: replace each non-ASCII character on the 19 lines with its ASCII equivalent, touching nothing else; if any is inside a string a command prints, STOP and file a BLOCKING row for that line.",
+    "world_is": "Base line 1484 is an echo line printed by the chain. Replacing its dash changes printed output. The line is unedited; it is one of the five printed-string lines behind AC3 FAIL.",
+    "notes": "Issuer disposition needed with sibling row S1 (same rule, same bound)."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W23-S6",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~23",
+    "surfaced_at": "2026-10-11T09:33:52Z",
+    "one_line": "The step-2 gate search reaches lib/platinum_dest.py through the dispatcher's own directory only on the wrapper path; a direct invocation from another directory, and any --chain downstream caller not in this repo, fall to SCRIPTS and then to the legacy URI on a fresh instance.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/run_gold_layer.sh@cf806cf81d L12 SCRIPT_DIR=dirname of $0; L22 and L34 bash SCRIPT_DIR/gold_dispatch.sh with --chain full (and --force --full-rebuild); L15-41 accept incremental or full only",
+        "infra/aws/ec2/bd-gold-layer-runner/run-gold-layer.sh@cf806cf81d L17 SCRIPTS_DIR=/home/ubuntu/gold-layer/scripts; L90 aws s3 sync code/gold/ into SCRIPTS_DIR; L114-115 cd then ./run_gold_layer.sh",
+        "data/black_diamond/scripts/gold/_partial_chain_b01.sh@cf806cf81d L13 runs bash /tmp/gold_dispatch.sh --single: the dirname is /tmp, which holds no lib/",
+        "data/black_diamond/scripts/gold/gold_dispatch.sh@cf806cf81d L216 reads lib/ under SCRIPTS (GOLD_CALGUARD_LIB=SCRIPTS/lib), so the runner mirror is the lib/ carrier the contingency depends on",
+        "Grep of data/black_diamond/scripts/gold and infra/aws/ec2/bd-gold-layer-runner for the string --chain downstream, at cf806cf81d: no caller outside gold_dispatch.sh itself"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-FB-f-9 step 2: the gate location comes from lib/platinum_dest.py source(); the dispatcher's own directory is searched first because on the downstream path the gate runs before any sync, so the directory holds lib/ there.",
+    "world_is": "The wrapper path holds: the boot-synced directory is the dispatcher's own directory and holds lib/. The wrapper never passes --chain downstream, so the repo carries no downstream caller; a direct caller's $0 is not established, and _partial_chain_b01.sh runs /tmp/gold_dispatch.sh, whose directory holds no lib/.",
+    "notes": "ARMED: once the mode export and the gate land deployed, a directly invoked chain on a fresh instance reads the legacy header_metrics.json under canonical (frozen data_as_of). This row narrows ADVI_FIRMBKTS-D1-W21-S2 to the direct-invocation path; it does not close it and W21-S2 is not edited. Disarm: the issuer names every downstream caller and its $0, or re-cuts the gate search to a directory every caller holds."
   }
 ]
 ```
