@@ -39,3 +39,15 @@ matter, don't touch. 10-16 I will deal with later."
 Each call is closed with its ruling by the box that lists it. The deletes in 5 to 8 are executed there by the seat that opened
 the call. The laptop manager carries the verbatim answers to each box's manager over the agentbus and names this file to
 `1.0.0_SA_CTO`. Row 4 was not in the 03:13Z list, so it may already have been closed; site Z confirms.
+
+## Amendment 03:2xZ -- items 5, 6 and 7 were already done (1.0.0_SA_CTO msg 108185)
+
+The deletes for items 5, 6 and 7 were executed on the laptop on 2026-10-10 at 13:56Z by `0.7.0_AE_CloudOps~CTL`. Receipt:
+`org/tier2_senior/0.7.0_AE_CloudOps~CTL/deliverables/ADHOC_DELETES_20261010/RECEIPT.md` @46cca3496a, on origin CLOUD.
+
+- The two tfstate objects and the stray state.json have delete markers on versioned buckets, read 404, and their versions
+  survive.
+- The log group reads describe 0.
+
+dell1 was told (bus 4b201752) not to re-execute them, and to close rows bf6d, 838c, 5f4b, c20b, 69ef and f23d SUPERSEDED citing
+that receipt. 86a2 closes DECLINED and 203a closes NO.

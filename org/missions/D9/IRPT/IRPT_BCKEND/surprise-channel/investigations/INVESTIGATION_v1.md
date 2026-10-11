@@ -25164,3 +25164,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Some seat wrote a python heredoc whose body carried the prose instruction `... write OUTSIDE the repo: the file carries client figures` on a line the shell read as code, not as text: the leading `w` was consumed, `>` opened a redirect, and the rest of the sentence became the filename, while `#` ended it. The two real effects are both small and neither is a data leak. (1) The FILE IS A FALSE ALARM: anyone reading the root listing, or this row's title alone, will believe a client-figures file was left in the repo; it is one line of python. That is the reason to record it rather than only delete it -- the next seat to see the name should not have to re-derive that it is empty of client data. (2) It pollutes `git status` for every seat on this box, which is the shared surface the drain reads. NOT ACTED ON HERE: the workspace root is outside this order's <paths> grant (surprise channel, this lane's deliverables, change_management, .open_deploys, the order itself), so IB-pr-413 deletes nothing. Owner for the removal: whoever holds repo-wide hygiene at the drain, as a one-line `rm` once this row has recorded the content. The instrument lesson generalises past this file: a prose line inside a shell heredoc is executable text, and `set -u`/`set -e` do not catch it because the redirect SUCCEEDS."
 }
 ```
+
+## IRPT_BCKEND-D2-S64 -- BLOCKING: AMENDMENT 3 re-pointed IB-pr-413 to IB-pr-417's bundle, but p114_cells.py still grades IB-pr-410's -- AC1 cannot pass on the artifact the order now mandates
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S64",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T03:17:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB114-1-AC1 and -AC2 in `checks/r114/p114_cells.py` are pinned to IB-pr-410's artifact (md5 1e8ff309, members-sha256 96925f38, built sha256 47be54d6, pin 9b7256a99f, arm name fwd14_gate_unchanged), while AMENDMENT 3 re-pointed this order to IB-pr-417's (md5 8b482c8d, members-sha256 73f33c3c, built sha256 fe4000cb, pin 4b008d15) and forbids applying IB-pr-410's -- so AC1 grades an artifact it is a REFUSAL to land, and no correct landing can pass it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r114/p114_cells.py at HEAD, worktree clean: token census over the file reads IB-pr-417's four values 0, 0, 0, 0 times and IB-pr-410's four values 1, 2, 2, 2 times",
+      "the file's last commit is b8106b8365 (2026-10-09, 2.0.0_SA_COO~P2), the round-114 ONE ISSUANCE, whose own subject says the order 'lands IB-pr-410's 49F-only bundle' -- it predates AMENDMENT 3 and was never re-cut",
+      "checks/r114/ holds exactly one file, so nothing supersedes it",
+      "AMENDMENT 3 of IRPT_BCKEND.TO-IB-pr-413: 'This order now applies IB-pr-417's artifact, not IB-pr-410's' with built sha256 fe4000cb... and md5 8b482c8d...; the IB-pr-417 packet (blob 36621e44cb) states 'IB-pr-410's bundle is not to be applied'",
+      "the landing measured on the live key at 2026-10-11T02:56:45Z: version fMLoOI6a8ZwNFWZCJjjP90ZadyRg9nFg, ETag 8b482c8db26c2e913aeee72023bacc7e, members-sha256 73f33c3c59b77528c6eaaa56799e9c55f570a7adac23a0c6bcd12e66fe343a81 -- correct against AMENDMENT 3 and a FAIL against AC1's constants"
+    ]
+  },
+  "spec_asserts": "The order's criteria are IB114-1-AC1, AC2 and AC3, each graded by `python .../checks/r114/p114_cells.py . <id>` expecting `<id> PASS`; AMENDMENT 3 re-points the artifact to IB-pr-417's and AMENDMENT 4 lifts the hold and says apply it now.",
+  "world_is": "AC1 asserts the live key's ETag == 1e8ff3096af151f91b96c4e8a3712e4a and members-sha256 == 96925f389381e64beeeb31ebf61eecdd5335fddf30cce0335300b455979bfd62, and that the after-reads ledger pin starts 9b7256a99f with sha256 47be54d6...dda5. Those are IB-pr-410's values throughout. The two ways to make AC1 PASS are to upload IB-pr-410's bundle, which AMENDMENT 3 and the IB-pr-417 packet both refuse and whose producer the memory harness reads ABOVE the 3,650,722,201 B limit, or to type IB-pr-417's values into an after-reads file while the live key serves something else, which is the self-graded-value defect this lane reported four times in round 113. NEITHER IS TAKEN. The landing itself is NOT blocked and is complete and verified; what is blocked is the <status> flip to complete, because AC1 cannot be honestly passed as written. AC2 has the same drift in a smaller form: it reads the arm name `fwd14_gate_unchanged`, while compose_417.py emits that arm as `fwd14_gate_vs_b410`; the after-reads file this lane writes will carry BOTH names for the one arm with the mapping stated, so AC2 is satisfiable without renaming anything the packet measured. AC3 is artifact-independent and stands as written. OWNER: 2.0.0_SA_COO~P2, as issuer -- rule 27 L6 lets the issuer amend its own task-order criteria without a CTO ruling, and the fix is four constants plus one arm name. The checks directory is outside this order's <paths> grant, so this lane changes nothing there and does not self-grade AC1."
+}
+```
