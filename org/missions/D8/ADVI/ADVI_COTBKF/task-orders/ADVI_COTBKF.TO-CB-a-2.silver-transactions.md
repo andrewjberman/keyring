@@ -36,7 +36,7 @@ the transactions file:
 - 1,416,501 PHYSICAL lines (header + 1,416,500), against the brief's 1,416,497 rows. **The 3-line difference is unexplained: account for
   every physical line** (blank lines, a trailer, a line break inside a field, or real rows) and print the count of each kind. Never drop a
   line silently; a line you cannot parse is counted as `unexplained`;
-- `Account_Number` carries leading zeros (`01001355831`): a STRING, never a number; `Cusip` and `FundCode` likewise strings;
+- `Account_Number` carries leading zeros (`acct#c9405219`): a STRING, never a number; `Cusip` and `FundCode` likewise strings;
 - the brief measures trade dates 2013-04-03 to 2026-06-22 and 1,533 distinct accounts.
 
 **Build `data/assets/scripts/silver/commonwealth_transactions.py`:**
