@@ -1769,3 +1769,30 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S40",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T12:54:55Z",
+  "one_line": "The report read does NOT refuse an internal reader who does not own the request, so 'a foreign id opens nothing' does not hold for the readers of a ticket whose creator recorded the id (cell R3-rf-1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:175-184: the record's owner firm must equal the data firm, then authorize_current(principal, owner) must be True",
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py:115-116: for principal_class OPAL_GLOBAL authorize_current returns True for any owner; lines 117-119 hold an ordinary viewer to its own firm and its own principal_id",
+      "infra/aws/lambda/investor-reporting/_scope/tests/test_interactive_access.py:22-31 and 47-52: the tests assert both halves",
+      "infra/aws/lambda/ticket_center/lambda_function.py:164: the REPORT matrix row admits INTERNAL only, so every creator the new branch admits is an internal caller",
+      "scope: those files in the working tree at box/dell2 73eb85c914; code read only, nothing exercised; whether a profile's allowedFirmIds narrows the data firm on this read was not read"
+    ]
+  },
+  "spec_asserts": "CTO msg 4945, for the deploy pair of cell R3-rf-1: state what stops a ticket pointing at another person's request -- the report read is refused by IRPT unless the reader owns the request, so a foreign id opens nothing; if it does not hold for an internal reader, that is a finding before the apply.",
+  "world_is": "It holds for an ordinary (firm) viewer and does not hold for an internal Opal viewer, who may by design open another creator's request. So a creator-recorded foreign id gives an internal reader nothing that reader could not already open; what it can do is make a ticket show a report that is not that ticket's. Nothing binds the recorded id to the ticket: the ticket service does not check that the request's stored ticket_id equals this ticket.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

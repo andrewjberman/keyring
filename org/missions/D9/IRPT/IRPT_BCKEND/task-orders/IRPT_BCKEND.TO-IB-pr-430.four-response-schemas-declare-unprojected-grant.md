@@ -104,6 +104,17 @@ enabled client firm of the registry `firm_ids()` reads, so AMENDMENT 1's capture
 - Then AMENDMENT 1's remaining steps: checks on the instance, the four criteria, the proof, the commit, the flip.
 Gate limb that graded this modification: GATE (viii) (placeholders). No criterion, check or path changes.
 
+**AMENDMENT 3 (issuer, 2026-10-11, on row IRPT_BCKEND-D2-W289-S4).** The naming gate resolves `F-49F` to a real firm (it is a
+registered tenant-code alias), so AMENDMENT 1 named a spelling the gate refuses: the issuer's defect, it did not run the gate
+on the id before naming it. Ruling: the synthetic firm id is `fir_000000000000000000000001` (the issued opaque form, `fir_` and
+24 hex). MEASURED by the issuer before this cut: `python .tools/naming-gate.py --diff <one added line at the fixture's path>`
+reads `PASS 0 graded` for it and `REFUSE 1 graded` for `F-49F` (the control); `opal_naming.lookup` has no row for it.
+- Put that id in the synthetic registry in place of `F-49F`, re-run the capture and the remake, change nothing else.
+- NOT measured by the issuer: whether the handler path and the type schema accept that id's form. If either refuses, STOP with
+  a row naming the line; do not choose another id.
+- Then the checks on the instance, the four criteria, the proof, the commit, the flip, as AMENDMENTS 1 and 2 say.
+Gate limb that graded this modification: GATE (viii) (placeholders). No criterion, check or path changes.
+
 <criterion id="IB128-1-AC1" cell_refs="IB-pr-430"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r128/p128_cells.py" . IB128-1-AC1</invocation><expect>IB128-1-AC1 PASS</expect></criterion>
 <criterion id="IB128-1-AC2" cell_refs="IB-pr-430"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r128/p128_cells.py" . IB128-1-AC2</invocation><expect>IB128-1-AC2 PASS</expect></criterion>
 <criterion id="IB128-1-AC3" cell_refs="IB-pr-430"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r128/p128_cells.py" . IB128-1-AC3</invocation><expect>IB128-1-AC3 PASS</expect></criterion>
