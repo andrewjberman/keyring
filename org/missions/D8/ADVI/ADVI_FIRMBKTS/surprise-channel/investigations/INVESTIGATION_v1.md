@@ -4672,3 +4672,51 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "A never-widen class (it adds a delete grant on the canonical home). Placement read from the evidence: an addendum to the act-0 grant pair adding one statement, s3:DeleteObject on the same prefix ARN, before act 2; the departed-advisor path only runs when an advisor leaves, so the harm is latent, not daily. Alternative the CTO may prefer: the producers read Errors and fail loud, plus the grant. Not cut as a cell until ruled."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W45-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~45",
+  "surfaced_at": "2026-10-11T15:08:01Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The pre-commit risk reflex printed HOLD on infra/aws/terraform/modules/opal_name/main.tf by basename match, citing another root's deploy note; commit 8114bac9cf landed rc=0 (a repeat of ADVI_FIRMBKTS-D1-W43-S1 and W42-S1).",
+  "spec_asserts": "The pre-commit risk reflex names a node the commit touches only when the recorded claim concerns that file (the worker is to go read the citation before the commit proceeds).",
+  "world_is": "The reflex matched the bare name main.tf across six roots (each with 9 recorded claims) and cited org/critical_paths/change_management/20260616T2001Z_nfra-infrpt-dr-snapshot-backup_deploy_completion.md:35, which concerns portal_lambda_ec2_snapshot in a different Terraform root. The opal_name module's own main.tf was not the subject of that claim. The commit was not blocked.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 8114bac9cf: [HOLD] infra/aws/terraform/modules/opal_name/main.tf -> file:infra/aws/terraform/aaii-v2-bucket-lifecycle/main.tf (9 recorded claim(s)) and five further roots",
+      "org/critical_paths/change_management/20260616T2001Z_nfra-infrpt-dr-snapshot-backup_deploy_completion.md:35 read at the worktree: '- **main.tf:** fix `portal_lambda_ec2_snapshot` (EC2SnapshotPermissions)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken; the commit was not blocked and the cited claim is not this cell's. Repeat of ADVI_FIRMBKTS-D1-W42-S1 and ADVI_FIRMBKTS-D1-W43-S1 for the reflex's owner."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W45-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~45",
+  "surfaced_at": "2026-10-11T15:08:01Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "safe-commit printed WARN that the client-data check could not run (hashed account-id list absent on this device); commit 8114bac9cf was not checked for client account ids (a repeat of ADVI_FIRMBKTS-D1-W43-S2).",
+  "spec_asserts": "The commit gate runs the client-data check (hashed account-id list) on every commit it admits.",
+  "world_is": "The hashed list is absent at C:\\Users\\Test\\.opal\\account_id_hashes.txt on dell1 and OPAL_ACCOUNT_ID_HASHES is unset, so the check printed WARN and skipped the list comparison. Absent is not empty. The committed diff adds no 12-digit number as checked by this worker (git show 8114bac9cf -- the two code files, 11 insertions).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 8114bac9cf: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids",
+      "git show 8114bac9cf --stat: 2 files changed, 11 insertions(+), 7 deletions(-) at the worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken by this worker; the list is a per-device input, not this cell's. Repeat of ADVI_FIRMBKTS-D1-W43-S2, filed for the owner of the client-data check."
+}
+```
