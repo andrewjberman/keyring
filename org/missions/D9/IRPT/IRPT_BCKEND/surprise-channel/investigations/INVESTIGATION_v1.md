@@ -27339,3 +27339,85 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The claim is true for a REFUSED that happens at or after the login's HTTP call, which would log a call, and for one that happens at the sections read, which would also have history_reads. It is false for the earliest refusal of all -- the credential read -- which is the one that actually occurred. NOTHING WAS FABRICATED TO CLOSE IT: inventing a history_reads entry or a calls entry would be manufacturing evidence of reads that never happened, which is the precise defect the record exists to avoid, so AC1 and AC3 are reported FAILING and the order's status stays pending. The proof instance records both with a status_reason rather than claiming PASS. The narrow fix, offered rather than taken: let AC1's and AC3's emptiness checks stand only when the outcome is READ or NO_VENDOR_REPORT_FOUND, and for REFUSED require instead the public_reason_code and a stated stop -- which this record already carries. OWNER: 2.0.0_SA_COO~P2 as the check's author; rule 27 L6 lets the issuer amend its own criteria. Related but distinct from row IRPT_BCKEND-D2-S96, which is why the login was refused at all."
 }
 ```
+
+## IRPT_BCKEND-D2-W309-S1 -- The worker sends analysis_ready on EVERY READY job; it is not gated on a ticket id
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W309-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~309",
+  "surfaced_at": "2026-10-11T20:30:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's why-paragraph says the resident worker sends analysis_ready 'when the job is bound to a ticket id', but the code sends it on every READY job whatever the record carries, and the commentary receiver reads no ticket id either.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:319-329: mark_ready copies ticket_id into the receipt only when present, then calls signal_ready unconditionally",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:163-186: send_ready's only guard is a non-empty IRPT_ANALYSIS_READY_QUEUE_URL",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_ready_signal.py:91-97 test_b_no_ticket_receipt_is_byte_identical_and_still_signals_once; run offline in this worktree: 2 passed",
+      "data/transcripts/scripts/commentary/lambda_handler.py:285-327 and entry.py:264-268: the receiver builds its item from tenant and request_id only and never reads ticket_id"
+    ]
+  },
+  "spec_asserts": "The face (WORKER FACE, Why): 'Today the worker sends it when the job is bound to a ticket id.'",
+  "world_is": "Today a READY job with no ticket id signals analysis_ready exactly as one with a ticket id does, and the receiver drafts if a model is configured. The first place a missing ticket id has any effect on this chain is later and different: the packager refuses TICKET_ID_ABSENT (ycharts/research/opal_packager.py:150-152). Whether the live queue is bound and the model configured is unread. The read file states the code as it is; no judgment on significance is made here."
+}
+```
+
+## IRPT_BCKEND-D2-W309-S2 -- The packager reads commentary_ref from a record that the code says cannot carry it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W309-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~309",
+  "surfaced_at": "2026-10-11T20:30:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "commentary_ref is set as a sibling attribute of the request item, not inside the immutable record, yet the packager reads record.get('commentary_ref') from DynamoAcceptance.get, which returns only the record attribute.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/commentary_draft_store.py:21-24 and :213-219: commentary_ref is set once by conditional update on the item; 'the immutable record attribute is never rewritten'",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py:68-71: get returns json.loads(item['record']['S']) and nothing else",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:334 passes that same acceptance as the packager's acceptance port; ycharts/research/opal_packager.py:153 reads record.get('commentary_ref')",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_packager.py:58-64: the fake acceptance port returns commentary_ref INSIDE the record, so no test crosses the draft store's write and the packager's read",
+      "no live read was made (the order forbids it); INFERRED from code only"
+    ]
+  },
+  "spec_asserts": "The packager's docstring (opal_packager.py:7-8): 'the acceptance record of (tenant, request_id) carries ticket_id (AR-y-11) and commentary_ref (AR-t-12, set once)'.",
+  "world_is": "By the code, a live packager would raise COMMENTARY_REF_ABSENT on a record whose commentary_ref sits beside it. It matters to the addendum only in that a member written into the immutable record at acceptance is read by the same get, while a sibling attribute is not. Unmeasured live."
+}
+```
+
+## IRPT_BCKEND-D2-W309-S3 -- portal/ is an empty submodule directory in this worktree, so the page-consumer search could not be run
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W309-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~309",
+  "surfaced_at": "2026-10-11T20:30:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order asks for a search of portal/ for readers of the accepted record; the worktree's portal directory is empty (gitlink c96efe1714 not checked out), so no page could be searched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la portal in the worktree: an empty directory (0 entries)",
+      "git ls-files -s portal: mode 160000 gitlink c96efe1714784162c4134450da33ce6fd6226b60",
+      "native Grep of portal/ for browser_sha256|acting_principal_id|accepted_at|analysis#: 0 hits (an empty tree, so a zero that cannot say what it saw)",
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:243: the served read returns {identity, accepted_at} only, which bounds what a page can see of the record through that route"
+    ]
+  },
+  "spec_asserts": "The face (item 6): 'search portal/ too if the record reaches a response'.",
+  "world_is": "A page consumer of the accepted record is not ruled out by a search; it is bounded by the served response shape instead. Recorded in not_established of the read."
+}
+```
