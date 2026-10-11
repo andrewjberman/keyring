@@ -5278,3 +5278,31 @@ round.** Never edit an existing row.
  "world_is": "The module carries no device path at 1f79a8182c; the docstring of load_sweeps_config states the second-box route. Whether the 20 collection errors without the variable are announced to other seats or absorbed by a fixture is asked of 1.0.0_SA_CTO~DELL2 and not decided here."
 }
 ```
+
+## ADVI_COTBKF-D2-S84 -- No non-test importer of commonwealth_sweeps has a stated source for COTBKF_SWEEPS_CONFIG
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S84",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-11T03:51:00Z",
+ "one_line": "With the device default removed (CB-bc-1 @1f79a8182c), no non-test importer of commonwealth_sweeps has a source for COTBKF_SWEEPS_CONFIG other than the shell of whoever runs it: 11 scripts import the module directly, more reach it through them, and none sets or documents the variable. They fail closed at import (SweepsConfigError), so nothing runs wrongly; but none of these files may be deployed or scheduled anywhere until it has a stated source for the variable (CTO msg 4017).",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Grep for an import statement of commonwealth_sweeps over **/*.py in the workspace: 22 files, 11 non-test scripts and 11 tests, all under data/assets/scripts/silver/",
+   "the 11 scripts: commonwealth_fwd3_serve, commonwealth_flows, commonwealth_div_dating_trace, commonwealth_diff_trace, commonwealth_daily_valuation, commonwealth_daily_returns, commonwealth_price_need, commonwealth_nonmatch_census, commonwealth_mover_classes, commonwealth_sweep_regrade, commonwealth_mover_causes",
+   "transitive importers exist beyond those 11 (for example commonwealth_split_recount, commonwealth_scale_trace, commonwealth_non_positive_base, commonwealth_flow_timing, commonwealth_split_level_probe); the listing was read to its first 60 lines and is NOT a complete count",
+   "Grep for eight of the script names over **/*.{tf,yaml,yml,json,sh,ps1,toml,cfg}: 165 occurrences in 27 files, every one a proof instance, a manifest or a fixture under org/; 0 in a Terraform, schedule or shell file. So no Lambda or EC2 entry point was found by this read; a schedule defined in a file type outside that glob is not covered",
+   "issuer run at 1f79a8182c without the variable: the silver suite reads 20 errors at collection"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO msg 4017: list every non-test importer and where each gets the variable at run time; an importer with no source for it is a BLOCKING row before that file is deployed anywhere.",
+ "world_is": "Every importer is hand-run on dell2 today and takes the variable from the operator's shell or not at all. That includes commonwealth_fwd3_serve, which writes served keys when run with its apply flag by 0.7.0_AE_CloudOps~CB2. The apply for CB-al-2 is not run before this row is dispositioned."
+}
+```
