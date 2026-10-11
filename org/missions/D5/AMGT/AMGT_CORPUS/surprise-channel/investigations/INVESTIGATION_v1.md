@@ -4709,5 +4709,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "notes": "Differs from AMGT_CORPUS-D1-S8, the issuer's run in a detached portal tree at ad774c6f, which printed CHECKS-WRONG-WAY with the same three names. The cause of the difference is not diagnosed here (candidates: an input the detached tree lacks, or a different tree state). No harness edit was made. AC2 is recorded FAIL on its regex; the order stays open.",
   "disarm_owner": "2.0.0_SA_COO~C1"
 }
+,
+{
+  "id": "AMGT_CORPUS-D1-S9",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-11T23:38:30Z",
+  "one_line": "Row AMGT_CORPUS-D1-S8 is RETRACTED by its author: the tabs harness does not fail three checks at portal origin/DEV ad774c6f; the failure came from a standalone portal tree that lacks the outer repo the harness reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tabs.harness.cjs line 40-41: base = path.resolve(__dirname, '../../../..'); workspace = path.resolve(base, '..') -- the harness reads files of the directory above portal/.",
+      "Worker 0.9.0_WK_AMGT_CORPUS~2 (a full worktree with portal/ nested in the outer repo) and the issuer, 2026-10-11, in that tree at ad774c6f patched: CHECKS-OK 21 of 21; the worker's run with the patch reverted: CHECKS-OK 21 of 21.",
+      "The S8 run was in a detached portal worktree (C:/tmp/ay2-ref) with no outer repo above it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-ay-2 AC2 (as first written): the tabs harness fails exactly three checks at origin/DEV ad774c6f.",
+  "world_is": "In a full worktree the harness passes 21 of 21 at ad774c6f; row S8 and worker row AMGT_CORPUS-D1-W2-S6 (BLOCKING) both rest on the standalone-tree artifact. AC2 is amended to pin CHECKS-OK 21 of 21.",
+  "notes": "A harness that reads the outer repo gives a false failure in a standalone portal worktree and says nothing about why; surfaced, not fixed. For the CVO's disposition of S8 and W2-S6 with the round-49 packet.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+}
 ]
 ```

@@ -99,15 +99,14 @@ with `ay2_base_snapshot.json`, and the reference patch beside them.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CRPS-ay-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round49/ay2_check.cjs" portal 2&gt;&amp;1 | tail -1</invocation><expect>(?m)^ay2 build 8/8 control 2/2$</expect></criterion>
-  <criterion id="AC2" cell_refs="CRPS-ay-2"><invocation>cd "$(git rev-parse --show-toplevel)/portal" &amp;&amp; node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs 2&gt;&amp;1 | tail -1</invocation><expect>(?m)^CHECKS-WRONG-WAY short_read_refused,short_read_control_served,generation_captions_present$</expect></criterion>
+  <criterion id="AC2" cell_refs="CRPS-ay-2"><invocation>cd "$(git rev-parse --show-toplevel)/portal" &amp;&amp; node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs 2&gt;&amp;1 | tail -1</invocation><expect>(?m)^CHECKS-OK 21 of 21$</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-ay-2"><invocation>cd "$(git rev-parse --show-toplevel)/portal" &amp;&amp; grep -c "data-sheet-block" src/pages/SecurityAnalysis/tabs/ModelTab.tsx</invocation><expect>(?m)^[1-9]\d*$</expect></criterion>
 </proof_of_spec>
 
 - AC1: blocks (period, case, unread) with their own header cells and the display strings by the cell's own format; BLOCK rows in no period group; the three-way text cell and its census; a
   figure row holding `NA`, `#N/A` and a range stays a FIGURE row; without `blocks` the sheet is byte-equal to the base's (except the added `teamCensus.text`); an inconsistent payload does not throw;
   the unread block prints no value; a block headed by `1Q26..4Q26` is a period block; `ModelTab.tsx` carries the render strings.
-- AC2: the page's tab harness fails at portal `ad774c6f` on three CHECKS that are not this cell's (`short_read_refused`, `short_read_control_served`, `generation_captions_present`:
-  other teams' DEV merges). The criterion pins that the failing set is exactly those three: your change introduces no new failure and masks none. Do not touch them.
+- AC2: the page's tab harness still passes (`CHECKS-OK 21 of 21`, the control round 47's order carried). AMENDMENT 1 (issuer, 2026-10-11 ~23:4xZ): the first text pinned a failing set of three checks at `ad774c6f`; that came from a STANDALONE portal tree (the harness reads files of the outer repo beside `portal/`). In a full worktree the harness reads 21 of 21 at base and patched. Gate limb: none graded this amendment (the order declares no `<placeholders>`).
 - AC3: the Model tab renders a block.
 
 ## 5. WHEN YOU ARE DONE
@@ -123,10 +122,10 @@ with `ay2_base_snapshot.json`, and the reference patch beside them.
 **ISSUER NOTES:** CTO round-48 analysis (msg 4158) and ADDENDUM 1 (msg 4165): "Close: the 3,103 split three ways with the denominator, three walks (a second period block, a case block, a
 master template), and 0 values under a header that is not their block's own." The CTO reviews the candidate before portal DEV (a product file). The rendered read over every served name
 (CRPS-ay-5) follows once the /15 write (ay-3) and an API redeploy serve the fields and this is on DEV. Portal base: origin/DEV `ad774c6f` (fetched 2026-10-11; local `DEV` `cb76f857` lacks
-aw-2). The tabs harness at that base fails three checks that are other teams' (reported as a surprise row by the issuer). Base at the cut: AC1 FAIL (`build 0/8`), AC2 PASS (as a control
-must), AC3 FAIL (no `data-sheet-block`), typecheck not run at the cut.
+aw-2). AMENDMENT 1 (2026-10-11 ~23:4xZ): the tabs harness reads 21 of 21 at that base in a full worktree; the issuer's first read (row D1-S8) was an instrument artifact of a standalone tree, retracted in row D1-S9; worker row W2-S6 is resolved by the amendment. Base at the cut: AC1 FAIL (`build 0/8`), AC2 PASS (as a control must), AC3 FAIL (no `data-sheet-block`), typecheck not run at the cut.
 <risk>LOCAL</risk>
 <status>pending</status>
 <round>49</round>
 <slot>~2</slot>
 <fabric>dell1</fabric>
+<status>complete</status>
