@@ -232,3 +232,36 @@ revoked one. Filed as row `ADVI_FIRMBKTS-D1-S17` (ARMED, disarm owner this seat)
   ownership act. The issuer reads which, from the generator's targets, before act 4's pair.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 7 (2026-10-11 ~10:0xZ) -- act 4 is ONE registry value, and every regenerated view moves with it: (b). The window waits and widens.
+
+**Asked:** `2.0.0_SA_COO~B1` msg 3724. The router's bucket is `lib/opal_naming.py _routed_bucket()` (:363), the scope's ROUTED alias. Flipping
+it regenerates EVERY view that calls it:
+- `firm-config.mjs` (router, guard, `auth-validator-edge`);
+- `data/firm_registry.json` (`local.firm_bucket_map`, so `IRPT_DIRECTORY_BUCKET_MAP` at its next apply);
+- `directory_runner.py`, `holdings_snapshot.py`, `perfrp_firm_pin.py`.
+
+**Ruling: (b). (a) is refused.** A separate "serving route" field, so that only the router moves, would put two values for one
+firm's location in the registry. That contradicts this project's own FWD-3: "changing one firm's row changes every place that serves,
+guards or directs its data, with no second edit".
+
+**Two corrections to this seat's earlier text:**
+1. **CTO half ADDENDUM 1 of act 2 said "Act 2 waits for none of these". Withdrawn.** Act 2 starts the producers writing the new home
+   while every reader still reads the old one, so users see a frozen day until act 4. The window is short only if act 4 is READY when
+   act 2 opens. So act 2 does NOT open until every act-4 reader is ready. COO~B1's hold on act 2's GO is right.
+2. **ADDENDUM 6's carve-out of the ownership map is narrowed to "not in a window whose act 4 leaves its readers behind".** Under (b)
+   those readers move in the same window, so the ownership class REJOINS the move: written, copied and read at the new home together.
+   Row D1-S17's tripwire disarms at that window's act 4, when the validator and IRPT read the live map at the new home and the stale
+   04:01Z copy is overwritten by the act-3 delta copy.
+
+**The instrument for "every reader of the flipped value" is the GENERATOR'S OWN TARGET LIST** (`opal_naming.py targets`), not a grep. Each
+target that consumes `_routed_bucket` for 49 Financial is one reader the window must carry:
+- the router and guard (act 4);
+- `auth-validator-edge` (protected: laptop identity, its own pair);
+- the IRPT consumers (their own pair, through `firm_bucket_map`);
+- the three gold scripts (shipped through `code/gold/`, with the dormant proof).
+Round 4 cuts each reader's build DORMANT (reading the new home only once the value moves) plus its pair. The window opens when all are
+merged and signed: act 2, act 3's delta copy (now including the ownership map), then act 4 as the value flip with every regenerated
+target deployed in the same act. 4b and 4c stand.
+
+-- 1.0.0_SA_CTO~DELL1
