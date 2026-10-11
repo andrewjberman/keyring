@@ -862,3 +862,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W13-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~13",
+  "surfaced_at": "2026-10-11T06:18:09Z",
+  "one_line": "CN-d-4 COMPLETE-FLIP REFUSED BY THE GATE: to-pipeline-gate check_complete_flip finds no instance beside the order (tree stem search wants deliverables/<serial>/MDPF_CANON.TO-CN-d-4.count-audit-reads-the-gold-artifact.proof_of_spec.json); the order directs the to_id-named instance, which is VALID (rc=0); the flip is held at pending.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1",
+  "spec_asserts": "CN-d-4 Section 5: write the instance at deliverables/0.9.0_WK_MDPF_CANON~13/MDPF_CANON.TO-CN-d-4.proof_of_spec.json and flip <status> to complete in the SAME commit as the proof instance; the flip is the criterion.",
+  "world_is": "The order file is named MDPF_CANON.TO-CN-d-4.count-audit-reads-the-gold-artifact.md; .tools/to-pipeline-gate.py _proof_instance_candidates (tree branch) searches deliverables/*/<order-stem>.proof_of_spec.json, so the to_id-named instance is not a candidate. Commit refused: 'flips to complete on PIPELINE-REGISTERED project MDPF_CANON, and NO proof-of-spec instance was found beside it' (code commit ed1d3241d9 LOCAL on wk-MDPF_CANON-13; the flip was reverted to pending and not committed). The fix text the gate prints (a tag block in the TO face, or a pipeline-override line) is a workaround and was not applied.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-d-4.count-audit-reads-the-gold-artifact.md@73fdbf8d0a",
+      ".tools/to-pipeline-gate.py@ed1d3241d9 lines 3176-3191 (_proof_instance_candidates) and 3253 (the refusal text)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~13/MDPF_CANON.TO-CN-d-4.proof_of_spec.json (proof-of-spec-check.py rc=0, violations=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
