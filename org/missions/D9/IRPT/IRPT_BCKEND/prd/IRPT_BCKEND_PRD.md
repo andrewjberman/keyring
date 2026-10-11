@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.36",
+ "prd_version": "v0.38",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -860,5 +860,74 @@ ENDPOINT is not edited.
   `NEGATIVE_POSITION` 0, in each of the three trees. Not swept: the rest of the repo.
 - **No producer is built under either name yet,** so the rename costs nothing. The re-count in flight (IB-pr-429 AMENDMENT 2) prints its table
   under the new names.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.37 -- a second WITNESS of the date basis; a witness never supplies a served figure (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `2.0.0_SA_COO~P2`'s reads of 2026-10-11, IB-pr-436 (eight funds) and IB-pr-438
+  (`deliverables/0.9.0_WK_IRPT_BCKEND~296/IB136-1_ALL_SECURITIES_NAV_EFFECT_READ.md`, drained @34a6a32212). Read by this seat: that record's
+  method paragraph, fetch paragraph, sizing table and control (lines 3, 13, 22, 33, 38, 40). Not re-run by this seat. The ENDPOINT is unchanged.
+- **What v0.34 to v0.36 called "the anchor" is one witness, and a second is admitted.** A WITNESS is an independent close for one security on
+  one date. The closed set is two: `SCHWAB_ANCHOR`, the close the grading instrument has used until now; and `YAHOO_CLOSE`, the unadjusted
+  Close returned for the security's ticker by the reader the read used (`fetch_yahoo` / `read_yahoo_close`).
+- **How a row is graded against a witness, as the read did it:** the row's own price is its Market Value divided by its Units; it sits at a
+  close when it equals the witness's close within a relative tolerance of 1e-4. It is compared with the witness's close for day t and for the
+  prior trading day. The ordered claim rule of v0.35, with v0.36's names, is unchanged.
+- **A witness NEVER supplies a number that is served.** A return is computed from the source's own values, as before. A witness decides one
+  thing: whether a day is served or blank. So an error in a witness has one safe direction and one unlikely one: a wrong close blanks a day;
+  to pass a day wrongly it would have to equal the source's own mark within 1e-4 by chance.
+- **`date_basis_witnesses`** is a new member beside `date_basis_claim` on every account-day: the list of the witnesses used for that day's
+  rows, drawn from the closed set of two. Empty on a `NOTHING_TO_GRADE` day.
+- **`OUTSIDE_ANCHOR` keeps its name and now means:** no admitted witness holds a close for that security on that date. A security the source
+  carries with no ticker (375 of 737 in the read; by the issuer's classing of their names, inferred, mostly bonds and plan share classes) has no `YAHOO_CLOSE` and stays `OUTSIDE_ANCHOR`. One fund,
+  FPNIX, returned no data and stays so. No witness is sought for either in this addendum.
+- **A ticker that is not the held instrument cannot pass a day.** That a ticker's bars are those of the held security was NOT checked by the
+  read. The rule needs no such check to be safe: a wrong instrument's close equals the source's mark within 1e-4 only by chance; otherwise the row reads
+  `NEITHER_CLOSE`, and the day is blank.
+- **In production the witness is fetched on a schedule, never on demand.** A day graded before its `YAHOO_CLOSE` is in hand carries
+  `ANCHOR_NOT_LANDED`, as v0.35 already provides, and is graded again when it lands. The reader is unofficial; its failure blanks days and
+  breaks nothing else. A scheduled producer of it is cut under its own cell and is not ordered here.
+- **The cost, as a SIZING and not a stamp** (the read's table, the same 75,796 eligible account-days): blank 58.2 percent with one witness,
+  37.0 percent with two; accounts never served 382, then 181. Nothing has been stamped under this addendum.
+- **Rule 24, for `date_basis_witnesses`:** (i) domain: every source of an independent close this project grades against; two members, and a
+  third enters only by addendum; (ii) grain: one witness per security-date, lifted to the account-day as a list; (iii) one intent: who
+  witnessed, and nothing about the result; (iv) no remedy here moves a value. Token census (word-boundary, this seat, native search,
+  tracked files, over `data/assets/scripts/`, `infra/aws/lambda/investor-reporting/` and `portal/src/`): `date_basis_witnesses` 0,
+  `SCHWAB_ANCHOR` 0, `YAHOO_CLOSE` 0, in each. Not swept: the rest of the repo.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.38 -- ADDENDUM v0.37 repaired: a witness's DATE label is measured before it grades, and funds are not admitted yet (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `3.0.0_SA_CVO`'s refusal of the v0.37 ratified-text half,
+  `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_PRD_v0.37_RATIFIED_TEXT_REVIEW_20261011.md` @5810d49063. Both points are accepted.
+  The first is an error of substance in this seat's reasoning, not of wording.
+- **v0.37's safety sentence is STRUCK and replaced.** A witness can be wrong in two ways, and only one is chance:
+  - a wrong PRICE blanks a day, or passes one only by equalling the source's mark within 1e-4 by chance;
+  - **a wrong DATE LABEL passes days systematically.** If a witness labels a value one day late, a mark that truly sits at the prior
+    close equals the witness's bar for day t every time, and the day is stamped `ACCT_OWN_DATE` and served on the wrong basis. The date a
+    mark belongs to is the whole question a witness answers, so a witness whose date labels are unmeasured answers nothing.
+- **So `YAHOO_CLOSE` grades only a class of security whose date labels have been measured against an independent dated value.** The closed
+  list of admitted classes is, today, ONE: `EXCHANGE_TRADED`. The evidence it rests on is thin and is stated as it is: one security, VTI,
+  carried by both witnesses, equal on 85 of 85 days. **The first cell under this addendum widens that to every security both witnesses
+  carry and prints the count equal, one day off, and neither.** A class is read from the source's own instrument-type field; a security
+  whose type the source does not state is in no admitted class. Whether the source carries such a field was NOT read by this seat: the
+  first cell states it, and if it carries none, no security is admitted until a classing rule enters by addendum.
+- **Mutual funds are NOT admitted, and a fund stays `OUTSIDE_ANCHOR`.** IB-pr-436's finding (a fund's mark equals the reader's bar for the
+  day on every fund-day measured, the prior day's on none) does not separate "the mark is on its own date" from "the reader labels funds a
+  day late"; its own record calls the reader's date `inferred`. **The check that would admit the class, named and not ordered here:** a
+  sample of fund-dates on which the estate holds an independent dated value for that fund (a purchase or redemption the custodian
+  executed, which is struck at that trade date's net asset value), each set beside the reader's bar for the same date and for the days
+  either side. The class is admitted by a later addendum on that table, or it is not admitted.
+- **Which witness grades a security both carry:** `SCHWAB_ANCHOR` grades every security it carries; `YAHOO_CLOSE` grades only a security
+  the first does not carry. `date_basis_witnesses` lists the witnesses that graded a row of that day under this rule.
+- **v0.37's sizing is WITHDRAWN.** "Blank 58.2 to 37.0 percent, never served 382 to 181" counted funds as graded. Under this addendum the
+  blank share with two witnesses is NOT KNOWN; it lies between 37.0 and 58.2 percent. The cell that widens the overlap also re-sizes it.
+- Everything else of v0.37 stands: a witness never supplies a served figure; the set of witnesses is closed at two; `OUTSIDE_ANCHOR`'s
+  meaning; the scheduled fetch; the member `date_basis_witnesses`.
+- **Rule 24, for the admitted-class list:** domain, every instrument type the source states; one member admitted; same grain (a type of
+  security); one intent (whether the witness's date labels are measured for it); a class moves only by an addendum carrying its
+  measurement. Token census (word-boundary, this seat, native search, tracked files, the same three trees): `EXCHANGE_TRADED` 0 in each.
 
 -- 1.0.0_SA_CTO~DELL2

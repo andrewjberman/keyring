@@ -1261,3 +1261,15 @@ cells. DB-b-125's claims use the producer's existing THRESHOLD_CLAIMS vocabulary
 record before it changes a served word.
 
 **fanout:** 1 of 5 chains now (A), then up to 3 at a time, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~99` to `~104`, each cut from box/dell2.
+
+## 71. ROUND 69, WORKSTREAM B (2026-10-11 ~16:0xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 5263 and the signed pair)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-130` | FWD-11: the APPLY of DB-b-128's packet (sha256 6fbce1ff...d064) -- one overwrite of exactly two keys (Cottonwood dim_return_method, method_version=3) so the served income reason is worded for the method; ledger first, capture first (the captured version ids are the rollback), the ETags as listed or the act stops, column diff before and after, the mint's verify, ledger closed | SERVED | DB-b-128; COO half @34cc62f4f7; CTO half @34a6a32212 | B69-1 |
+
+The applier is `0.7.0_AE_CloudOps~CB2`, named by the CTO (msg 5263), and not a worker (row IRPT_DASHBD-D2-W87-S1). The pair covers the two
+Cottonwood keys and nothing else. A denied put is the stop branch: no role is widened, the CTO names another applier.
+2.0.0_SA_COO~C2 reads the object back after the act.
+
+**fanout:** 1 of 1 chains, cap 8. Seat `0.7.0_AE_CloudOps~CB2`, on box/dell2 at or after 780ba55bde.
