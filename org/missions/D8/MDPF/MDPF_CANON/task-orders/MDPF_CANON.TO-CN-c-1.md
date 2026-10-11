@@ -96,7 +96,7 @@ filing. Report once: the diff (one line per file), the output line of every crit
 lifted the dell1 hold (CTO msg 3378, record commit cbcfdc0c1c). Base box/dell1. LF only. Whether FWD-3 can be REALIZED on a true basis is
 Andrew's call at section 4 of that analysis; this cell is needed under either option.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <to_id>MDPF_CANON.TO-CN-c-1</to_id>
 <slot>~8</slot>
