@@ -6997,3 +6997,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "hazard_standing not assessed by this worker: it depends on whether the three file-day readers re-ran after the rewrites and what their fingerprint or incremental logic rebuilt, which was not read."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W128-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~128",
+  "surfaced_at": "2026-10-11T22:54:00Z",
+  "one_line": "DB-b-159: three premises of the order differ from the tree: the producer is under data/assets/scripts/gold/irpt_reporting, not infra/aws/lambda/investor-reporting; no served row is a price-return fallback day; month to date is not a served window.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-159 worker face: start at account_return_daily.py under infra/aws/lambda/investor-reporting/; days where the served return is the guard's price-return fallback are a named class to count separately; windows are month to date, year to date and since inception, chained as the served file does.",
+  "world_is": "account_return_daily.py is at data/assets/scripts/gold/irpt_reporting/account_return_daily.py (the lambda folder holds only the reporting-gold and reporting-publish handlers). Its BASIS_FALLBACK member (line 170) is marked NEVER EMITTED (lines 164-169); in the 2659140 served rows read (567 partitions, one firm, one method_version) return_basis is TWR on 2596311 and NOT_MEASURABLE on 62829, none HOLDINGS_INCOME_FALLBACK, so the fallback class is empty and the control needed no carve-out for it. The publisher's served windows are YTD, QTD, 1Y, 3Y and SI (reporting-publish/publisher.py lines 275-310); MTD is not served, so the record applies the same rule with the anchor at the prior month end and says so. Counts only; no S3 write.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 161-172, 1383-1406",
+      "infra/aws/lambda/investor-reporting/reporting-publish/publisher.py lines 275-310",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~128/CONVENTION_CHANGE_SIZE.json (end_reproduces, served_rule)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
