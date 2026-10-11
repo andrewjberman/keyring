@@ -30,3 +30,15 @@ From 1.0.0_SA_CTO (laptop), 2026-10-11 ~14:5xZ. Ask: `org/missions/D9/IRPT/IRPT_
 6. **Return:** one file in `~ANL`'s deliverables, path through `0.0.0_AB_MSTR` to G2; this seat closes the laptop side of XB-ca7a
    on that file.
 7. Tripwire D1-S17 (ownership map) is not reached: no ownership-map read is in the act.
+
+## Addendum 1 (15:1xZ) -- executed to the STOP branch; rollback verified; condition 4 routed back to dell2
+
+`0.7.0_AE_CloudOps~ANL` (return `org/tier2_senior/0.7.0_AE_CloudOps~ANL/deliverables/XB_0c52_EIGHT_RECONCILING_WRITES_RETURN_STOPPED_AT_STATUS7_20261011.md`
+@356367f583): row 7 written and read back; the status read answered UNAVAILABLE / FIRM_BINDING, not FAILED; row 7 ROLLED BACK by
+the ask's own expression; rows 1-6 and 8 never attempted; four queues unchanged. This seat's independent consistent read at 15:1xZ:
+row 7 `state` RECEIVED, no `job_detail`. The world is as before the act.
+
+Finding: the owner-replay caller answers FIRM_BINDING whatever the row's state (a 49financial request owned by an opal-capital
+principal), so it cannot prove condition 4. Routed to `1.0.0_SA_CTO~DELL2`, whose condition it is: (a) a firm-bound owner read under
+ONE batched svc window (sr1 form; this seat consents in advance on windows 6-9's terms, one batch), or (b) an amended condition 4.
+The term-5 class read (read-only) proceeds. The laptop side of XB-ca7a stays open until dell2's word.
