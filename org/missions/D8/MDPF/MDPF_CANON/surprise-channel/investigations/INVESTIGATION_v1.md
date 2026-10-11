@@ -773,3 +773,26 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W14-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~14",
+  "surfaced_at": "2026-10-11T06:17:08Z",
+  "one_line": "CN-d-5 LEFT THE --files SUMMARY DENOMINATOR AND THE NAMED OUTPUT UNDEFINED: the order names `files <N>`, `equal <E>`, `not_equal <K>` and the `| named <n> | named_not_equal <k>` suffix with no definition, and no line format for the named grading; the worker defined them and states the definition in the tool's docstring.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-d-5 section 1.1: the summary line is `MDPF-CODE-EQUALITY: trees <T> | files <N> | equal <E> | not_equal <K>`, with `| named <n> | named_not_equal <k>` appended under --files; N, E, K and the body printed under --files are not defined.",
+  "world_is": "The tool defines files as the count of distinct relative names across the local and S3 sides of the trees shown, so equal + not_equal = files; under --files it prints the trees that hold the named files, then one NAMED EQUAL or NAMED NOT_EQUAL line per name with its class; exit codes and REFUSED texts follow the order. The live whole-tree run reads files 77 | equal 48 | not_equal 29 over five trees.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/mdpf-code-equality.py (worktree wk-MDPF_CANON-14, uncommitted at filing; module docstring MODES paragraph)",
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-d-5.runner-code-equality-step.md@73fdbf8d0a section 1.1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
