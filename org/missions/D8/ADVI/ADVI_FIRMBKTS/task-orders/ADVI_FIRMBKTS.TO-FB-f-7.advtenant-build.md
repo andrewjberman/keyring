@@ -33,8 +33,10 @@ byte-identical to today's, and nothing is deployed.
 1. **The generated field.** `FIRM_CONFIG` gains, per firmId, `advTenant`: the frozen array of tenant directory names that
    firmId may read under `platinum/advi/{tenant}/`. It is generated, never typed: extend the registry generator
    `lib/opal_naming.py` (`_blk_firm_config`, line 871, using `_tenants(reg)`, which already yields each tenant with its
-   scope and whether it is the scope's own tenant) so that a scope's own tenant lists itself and an alias tenant lists ITSELF and
-   the scope's own tenant (so `mockadv` lists the `mockadv` and the `49financial` directories: AMENDED, see ISSUER NOTES). Regenerate `infra/aws/lambda-edge/_shared/
+   scope and whether it is the scope's own tenant) so that the set of a tenant is EVERY tenant of its scope: the scope's own tenant and each
+   alias tenant of that scope (so `49financial` and `mockadv` each list both directories, AMENDED twice, see ISSUER NOTES). One
+   scope is one equivalence class: the PRD's tenant-assertion contract says the path's firm segment resolves "aliases
+   included, to one firm", so the alias resolves to its firm on the path side as on the caller side. Regenerate `infra/aws/lambda-edge/_shared/
    firm-config.mjs` with the generator command its header prints; never hand-edit a generated block.
 2. **The router.** For a request on the `platinum/advi/{tenant}/` path class: the caller's entitlement set is
    `FIRM_CONFIG[firmId].advTenant`; for `opal-capital` staff with `?firm=<slug>` it is the union of the `advTenant` sets
@@ -54,9 +56,10 @@ byte-identical to today's, and nothing is deployed.
    fail is not a control, so state in the record which mutation of the build makes each one fail):
    - SHARED BUCKET: a test double of `FIRM_CONFIG` in which two distinct non-alias firmIds share one bucket. The base
      comparison admits a cross-tenant request there; the new rule REFUSES it.
-   - ALIAS: the declared alias is admitted on its own directory and on the tenant directory its declaration names, although
-     its bucket differs from that directory's bucket in the cutover state (build that state as a test double: the registry
-     carries no such difference today), and is refused on any directory outside its set.
+   - ALIAS: the declared alias is admitted on its own directory and on the tenant directory its declaration names, and the
+     scope's own tenant is admitted on the alias's directory (one equivalence class), although their buckets differ in the
+     cutover state (build that state as a test double: the registry carries no such difference today); both are refused on
+     any directory outside the class.
    - STAFF PROXY: `opal-capital` with `?firm=<slug>` is admitted on exactly the tenants of that bucket and refused on
      another bucket's tenant.
    - NO FIRM LITERALS: your tests and code type no firm name and no key-shaped string; they read names from
@@ -148,6 +151,14 @@ the scope's tenant (today's boundary, no wider and no narrower). (2) D1-W17-S2: 
 replaced by what the base does. (3) D1-W17-S3: accepted; the ALIAS arms run on a cutover double. (4) D1-W17-S4: the
 status flip is the issuer's. Gate limb: none grades an amendment to an order already complete-pending; `<placeholders>NONE`
 at HEAD, so GATE viii graded it and the invocation added carries no token.
+
+**AMENDMENT 2 (2.0.0_SA_COO~B1, after the second report, row D1-W17-S5):** the grid still read router differing 1 and
+guard differing 3: `49financial` reading `platinum/advi/mockadv/` is admitted at base. The first amendment made the alias's
+set directional. The PRD's CONTRACTS row ("tenant assertion") resolves the path's firm segment "through the registry,
+aliases included, to one firm", so both directions are one boundary: a scope's own tenant and its alias tenants form ONE
+equivalence class and every member lists every member. That is today's boundary exactly (no wider: no other firm's
+directory; no narrower: no decision moves) and needs no CTO ruling; the shared bucket stops being the accident that
+admits it and becomes a declaration. D1-W17-S5 closes on AC5 reading 0 and 0.
 
 **ISSUER NOTES:** class WORLD by the infra floor (the paths are `infra/`), built dormant exactly like `FB-e-6`, which was
 spawned the same turn it was cut. The deploy is `FB-f-8`, staged. The same log that records the 2026-08-21 deploy
