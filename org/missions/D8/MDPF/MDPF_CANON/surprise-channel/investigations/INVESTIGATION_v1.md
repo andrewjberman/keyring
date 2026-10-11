@@ -376,3 +376,55 @@
   "notes": "The stop is at step 2 of CN-c-2. Steps 1 and 3 (the script and the IAM grant) were not edited. The fix is a runner-side decision (what the dispatch syncs or exports, and CloudOps' deploy), not a worker's path choice, so the cell does not type the prefix. AC1 at base: 0 of 3 arms, exit=1."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W9-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~9",
+  "surfaced_at": "2026-10-11T03:17:13Z",
+  "one_line": "CN-c-2 section 1.3 GRANT cannot take its bronze bucket from an opal_name module output: the module exposes scope_bucket per scope and no tier-bucket output, and no scopes.json row maps to opal-data-assets. The grant is not written; the script and the generated homes file are.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-c-2 section 1.3: the runner role's grant on the builder's bronze bucket and prefix takes its bucket from an opal_name module output (module.<m>.scope_bucket[...] or the module's tier-bucket output), never a typed name. If the module cannot express the bronze tier's bucket, add the registry row and regenerate generated_locals.tf; if that needs a ruling, file a row and stop on the criterion.",
+  "world_is": "The FIRM bronze tier home is opal-data-assets (infra/logic/registry/tiers.json FIRM.bronze, home shared, rule R4). The opal_name module's outputs are name, scope_short, scope_long, scope_class, scope_bucket, fence_patterns, account_id, fence_exemption_arns and fence_scoped_statements (infra/aws/terraform/modules/opal_name/main.tf); scope_bucket is per scope and gives opal-data-inflection for inflection and opal-data-mdpf for mdpf, never opal-data-assets. No scopes.json row carries bucket opal-data-assets (the ten buckets listed are all firm, product or master buckets). The registry row the cell names would add a scope or re-home a firm row, a change to the closed scope enumeration; the worker judges that a ruling is needed and does not add it. The iam.tf statements are not written. Consequence to carry to the drain: the Stage-0 script now writes the new home only, so until the grant lands its puts are AccessDenied, and the feeder (CN-c-3) reads the new home only after its own cell lands.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/tiers.json@e4a8f39862 (FIRM.bronze shared opal-data-assets)",
+      "infra/aws/terraform/modules/opal_name/main.tf@e4a8f39862 (output blocks: no tier bucket)",
+      "infra/logic/registry/scopes.json@e4a8f39862 (bucket values; no opal-data-assets row)",
+      "infra/aws/terraform/modules/opal_name/generated_locals.tf@e4a8f39862 (scope_bucket map: inflection -> opal-data-inflection, mdpf -> opal-data-mdpf)",
+      "python lib/opal_naming.py address() on mdpf/inflection/bronze/orion_model_composition/date={date} -> s3://opal-data-assets/mdpf/inflection/bronze/orion_model_composition/date={date}"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker at step 3 (GRANT). Writer check at this commit: 2 of 3 arms (NO TYPED PASS, DEST PASS, GRANT FAIL). Steps 1 and 2 (generator, generated bronze_homes.json, repo test, script) are written and green; the homes check reads 3 of 3. Not deployed. The grant decision (a registry row and regenerate, or a module output for the tier bucket) is the CTO's ruling; the order stays open."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W9-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~9",
+  "surfaced_at": "2026-10-11T03:19:13Z",
+  "one_line": "The commit-time naming limb REFUSES the cell's generated home and its generator: the key_prefix literal in data/mdpf/config/bronze_homes.json (a NEW hand-kept carrier of 'inflection') and the 'mdpf' literal in .tools/gen_mdpf_bronze_homes.py:23 (a hand-kept carrier of 'mdpf'). The cell's code is not committed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-c-2 section 1.1 and bounds 3: the JSON's literals are the commit-time naming gate's to grade; if that gate REFUSES them, file a BLOCKING row with the gate's text and stop, never a workaround.",
+  "world_is": "safe-commit (naming limb, LGIC_ENFORCE DEC-6, ENFORCE mode) on the four paths of the code commit: REFUSE 3 graded. Printed refusals: '.tools/gen_mdpf_bronze_homes.py:23 mdpf -> lookup(mdpf): NEW hand-kept carrier (context rule); hand-kept carrier of mdpf outside every permitted context: read it through lookup(mdpf)'; 'data/mdpf/config/bronze_homes.json:10 mdpf/inflection/bronze/orion_model_composition -> same: CONFORMANT as S3Key, but a NEW hand-kept carrier of inflection outside every permitted context: read it through lookup(inflection)'. The bucket line (json:9, opal-data-assets) printed CONFORMANT as S3_BUCKET. The commit aborted and unstaged the files; no commit landed. The script and the repo test were not named in the refusal. The generator's output is a registry-derived JSON carrier, which the naming gate does not recognise as generated (lib/opal_naming.py's generated carriers carry a generated mark, and this file is written by .tools/, not by lib generate). Resolution is a CTO decision: a permitted generated context for the homes file, or a lib generate target for it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output, 2026-10-11T03:18Z, worktree C:/Dev/wk-canon-9 branch wk-MDPF_CANON-9 at e4a8f39862: [naming-gate] NAMING-GATE: REFUSE 3 graded; rc=1; files unstaged",
+      "lib/opal_naming.py generated-carrier mark (MARK = GENERATED by lib/opal_naming.py from infra/logic/registry@...) at e4a8f39862",
+      ".tools/gen_mdpf_bronze_homes.py@uncommitted (OUT path literal, line 23)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed at step 4 (commit). Stopped on the naming limb, per the order's rule for a refused JSON literal. Code files remain UNCOMMITTED in the worktree: .tools/gen_mdpf_bronze_homes.py, data/mdpf/config/bronze_homes.json, data/mdpf/scripts/gold/tests/test_mdpf_bronze_homes.py, and the modified data/mdpf/scripts/bronze/pull_orion_model_composition.py. Their checks pass in the worktree (homes 3 of 3; writer 2 of 3, GRANT open per S2)."
+}
+```
