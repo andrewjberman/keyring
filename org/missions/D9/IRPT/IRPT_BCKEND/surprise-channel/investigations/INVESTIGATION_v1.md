@@ -27651,3 +27651,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The route's reader serves a figure chained over the non-OK days with a partial absence named on it. Nothing is served for the date basis today, so nothing is wrong yet; how the producer writes a blank decides whether the route serves one. The read through the route that would show it is named in the design read, not run."
 }
 ```
+
+## IRPT_BCKEND-D2-W315-S1 -- IB155-1-AC1 requires landed_prices_store.rows as an integer and IB155-1-AC3 fails on any eight-digit token in the outputs; the store's true row count has eight digits, so both cannot pass
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W315-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~315",
+  "surfaced_at": "2026-10-11T23:29:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB155-1-AC1 requires landed_prices_store.rows as an integer and IB155-1-AC3 fails on any eight-digit token in the outputs; the store's true row count has eight digits, so both cannot pass",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p155_cells.py (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r155/): AC1 needs isinstance(rows, int); AC3 searches the json and the read file with the pattern (?<![0-9A-Za-z])[0-9]{8}(?![0-9A-Za-z]) and fails on any hit",
+      "the parquet footer of the store object reports 11.29 million rows (an eight-digit integer, read with pyarrow ParquetFile.metadata.num_rows); the driver writes it once, as the json integer; every other eight-digit value (the object's byte length) was rewritten as megabytes",
+      "run output: IB155-1-AC1 PASS, IB155-1-AC2 PASS, IB155-1-AC3 FAIL ('an eight-digit token is in the outputs'); the only token in the three output files is that integer (ib155_measure.py, IB155-1_two_measurements.json, IB155-1_TWO_MEASUREMENTS_READ.md scanned)"
+    ]
+  },
+  "spec_asserts": "The face asks rows (int) for the store and the check AC3 asks for no eight-digit token in the outputs, as if the two never meet.",
+  "world_is": "The true integer has eight digits, so no truthful rows value satisfies both; the check was not edited and no false or altered count was written. AC3 stays FAIL and the order stays open until the issuer rules which side moves (for example rows as a string, or the AC3 pattern bounded to account-id contexts). Everything else in AC3 (the six zeros, the fetch counts, not_established) holds."
+}
+```
+
+## IRPT_BCKEND-D2-W315-S2 -- The 878-ticker set and the grading window were rebuilt from S3 by the ~308 and ~310 scripts because the ~313 scratch cache no longer exists; the rebuild reproduces the earlier counts; and the route entry read is orion, not the 49 Financial entry
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W315-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~315",
+  "surfaced_at": "2026-10-11T23:29:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The 878-ticker set and the grading window were rebuilt from S3 by the ~308 and ~310 scripts because the ~313 scratch cache no longer exists; the rebuild reproduces the earlier counts; and the route entry read is orion, not the 49 Financial entry",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the face says reuse the ~313 driver for the 878 tickers; ib153_count.py reads pickles in C:/dev/_scratch313, which is absent on this box; the ~308 fetch/phase1/prepare/tickers scripts and the ~310 overlap-tickers script were run unchanged into C:/dev/_scratch315",
+      "output: graded 85, same_pre True, same_cash True; distinct_tickers_to_ask 878, calls_of_at_most_50 18, over_1500 False; the Yahoo pass was ~310's ib150_fetch_yahoo.py unchanged, 18 calls, no ticker asked twice",
+      "the route composes the 49 Financial and Inflection holdings golds (installed.py:68); the 49 Financial sources.json key carries an eight-digit master number, which the AC3 pattern refuses, so the Inflection entry orion (sources.json:66-68) was read; the 49 Financial entry was not read"
+    ]
+  },
+  "spec_asserts": "The ~313 driver and its cache are present to reuse; the entry to read is 'one of the entries the route composes today'.",
+  "world_is": "The cache had to be rebuilt (read-only S3 gets and lists, then the one Yahoo pass); the rebuilt set equals the earlier one in every count the scripts print. The entry was chosen so the output carries no eight-digit key; whether the 49 Financial entry's reader answer differs was not read."
+}
+```
+
+## IRPT_BCKEND-D2-W315-S3 -- The landed prices store was last written 2026-10-09 but its newest yahoo-labelled point is dated 2026-06-05 (newest of any label 2026-06-09), and no schedule for its writer was found
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W315-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~315",
+  "surfaced_at": "2026-10-11T23:29:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The landed prices store was last written 2026-10-09 but its newest yahoo-labelled point is dated 2026-06-05 (newest of any label 2026-06-09), and no schedule for its writer was found",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api head-object of the store key: LastModified 2026-10-09T13:41:04Z; one pass over its date, ticker, price, source columns: maximum date 2026-06-09, maximum yahoo_finance-labelled date 2026-06-05; list-object-versions of the one key: 2 versions, 2026-10-09T13:41:04Z and 2026-06-09T20:42:16Z",
+      "data/cot/scripts/gold/build_canonical_prices_v2.py:907 is the writer; infra/aws/terraform/cot-pipeline/ssm.tf run_gold list does not name it; no cot trigger of gold_dispatch.sh was found in infra/aws",
+      "ib155_measure.py output: 23,976 of 81,936 needed ticker-days covered, 0 tickers with every needed day"
+    ]
+  },
+  "spec_asserts": "The ~313 design read: 'A landed prices store with yahoo-labelled points exists', offered as a candidate source for the second witness's bars.",
+  "world_is": "A rewrite of the object does not move its data forward: the store's yahoo points end four months before the reader's newest bar. Why the 2026-10-09 run added no later day was not established (the writer's inputs for that run were not read)."
+}
+```
