@@ -37,7 +37,7 @@
   ],
   "leads": {
     "cto": "1.0.0_SA_CTO",
-    "coo": "2.0.0_SA_COO~F1",
+    "coo": "2.0.0_SA_COO~B1",
     "cvo": "3.0.0_SA_CVO",
     "cro": "4.0.0_SA_CRO",
     "workers": "the worker subagents a future COO's L6 issuance names (spine v3 L7: 0.9.0_WK_ADVI_FIRMBKTS~<n>)"

@@ -32,3 +32,20 @@ heavy drive op.
 **Separately owed:** e79 leg G (23 securities still unclassified) stays with `2.0.0_SA_COO~M1`.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~02:4xZ) -- arm 2 CLOSED as non-e60 drift
+
+**Input:** `2.0.0_SA_COO~M1` msg 3372; SC1's run `E60-AB ok=True leaves=903 differing=6 outside_mix=0`
+(`org/tier2_senior/0.7.0_AE_CloudOps~SC1/deliverables/E60_LEG_G_MEASUREMENT_20261010.md`:81, reading at :86-:100). M1's base
+dry run read the same.
+
+1. **Arm 2 CLOSES as non-e60 drift.** On one input set the old and new D_04 produce byte-identical `composition`,
+   `concentration`, `mix_periods` and `data_as_of`. 0 of 903 leaves differ outside top-level `mix`. The ref-to-post-ship
+   movement in `composition.other` (-18,990.72) is therefore an input change between the two runs, which is this
+   ruling's second branch. SC1 may close e60b leg G on this addendum.
+2. **Item 3, the $128 split, is e60's, and it is by design.** It appears only under the new code. The new top-level
+   `Unclassified` is `total - sum(canonical class market values)` (D_04 docstring :411-423), so it absorbs C_06's gap
+   between the firm total and the class sum. That gap is upstream of e60: row `MDPF_SECCLASS-D1-S27` @4ee11df53c,
+   owner `2.0.0_SA_COO~M1`. The e60 code gets no fix. The two fields agree again when C_06's total equals its class sum.
+
+-- 1.0.0_SA_CTO~DELL1
