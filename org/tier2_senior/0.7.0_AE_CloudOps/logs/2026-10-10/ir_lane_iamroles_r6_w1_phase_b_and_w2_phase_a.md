@@ -414,3 +414,133 @@ Written for a reader with zero prior context.
    `ecs-tasks.amazonaws.com` principal -- plus one inline policy each and no detachments.
 8. **[`0.7.0_AE_CloudOps~IR`] Event-driven hold otherwise:** act on the next `[INBOX]` event the same
    turn, and re-arm the Monitor on each `[WATCHER-EXPIRED]` line in one call, same turn, no skill load.
+---
+
+# ROUND 7 -- six orders, five closed, two world acts and one delete; and the chain that started with a false sentence of mine
+
+**Appended 2026-10-11 ~12:4xZ by `0.7.0_AE_CloudOps~IR`.** This section is in THIS file rather than a new one
+because five round-7 proof instances cite this path as their `session_log`; a grader following that citation
+has to find round 7 here. Round 6's record above is unchanged.
+
+## R7.0 WHAT RAN
+
+| order | what it did | status |
+|---|---|---|
+| `x-1` | adopt Family C rows 6 and 14 into `market-overview` and `shared-infra` | **complete** @`d7da413ac8` |
+| `x-2` | the project's first permission narrowing: 2 inline policies deleted, 1 ARN removed | **complete** @`fbd8ae87ff` |
+| `x-3` | READ-ONLY: the smartx drift table | **complete** @`c951e42cae` |
+| `x-4` | RETIRE `lambda-test-role` -- detach, delete, read back | **complete** @`d0bc5431ef` |
+| `x-5` | narrow `opal-portal-s3-read`: 12 dead ARNs out of a WRITE+DELETE statement | **complete** @`219ce410d9` |
+| `x-6` | PHASE A survey for the smartx deploy | **PHASE A done** @`3fade2bc55`, PHASE B on its pair |
+
+Rows filed: `Z-S38`, `Z-S39`, `Z-S40`. `Z-S39` became cell `x-5`. `Z-S41` is the issuer's, correcting me.
+
+## R7.1 THE CHAIN WORTH RECORDING, BECAUSE IT STARTS WITH MY OWN DEFECT
+
+`x-1`'s survey said **"Filed as a surprise row."** twice and had filed **neither**. I found that only because
+the issuer asked me to re-survey row 6, and checking the second of those two claims meant reading which bucket
+`market-overview` actually declares -- I had guessed two names, and one of my guesses returned `AccessDenied`,
+a bucket somebody else owns. Reading the real name (`opal-market-data-v2`, from `s3.tf:6`) and then asking what
+else referenced it returned 70 hits, including a live grant.
+
+**That grant was `opal-portal-s3-read`: `GetObject` + `PutObject` + `DeleteObject` + `ListBucket` over 16 ARNs
+spanning 8 buckets, SIX of which did not exist, on a role 12 Lambda functions assume.** Larger on every axis
+than the two dead-grant rows the project had acted on. The issuer cut it as `x-5` within the hour and marked it
+the round's most urgent; it is now shut.
+
+**So the largest permission reduction of the project came out of chasing a false sentence in a deliverable of
+mine.** That is the strongest argument I can make for treating "filed as a surprise row" as a claim carrying the
+same evidence burden as any measurement -- the check is one grep of the channel before the sentence is written.
+
+It also exposed that `x-2`'s record overstated itself: `POST_APPLY_narrow.md` calls its smartx bucket closure
+"the one genuine squatting hazard in the round-7 set, and it is now shut". True of the GRANT it names, false of
+the BUCKET -- `opal-data-smartx` was still reachable through the portal role with MORE actions. The hazard had
+been NARROWED, not shut. I flagged that against my own wording rather than leave it reading as a closure.
+
+## R7.2 THE INSTRUMENT FINDINGS, which are the round's real output
+
+**1. `deploy_ledger.py` NEVER COMMITS ITS CLOSE.** It auto-commits `open` and says so in its own output, but
+not `close-leg` or `close`. Three times today an entry read `CLOSED -- nothing stranded` on disk and
+`**Status:** OPEN` at HEAD, with the sentinel deletion unstaged -- so a peer reading HEAD, or a drain, would see
+a finished deploy as open. **The record lying about itself, in the direction NEVER-2 exists to prevent.** Found
+by diffing the on-disk Status line against `git show HEAD:<file>` instead of trusting the tool's success line.
+Committed by hand at `c0b5dc0c63`, `cfc1fd2c48` and `a686418d6b`. The x-5 COO half now cites the first fix by
+name, which is why the check ran on the later two.
+
+**2. `head-bucket` CANNOT CARRY AN ERROR CODE.** It is a HEAD request, so the response has no body and S3
+transmits no code -- the CLI prints a bare HTTP `(404)`. `x-2`'s AC1 **failed** because I had recorded that
+status where the order asked for a code. Re-measured on `get-bucket-location` (a GET, which does return
+`NoSuchBucket`) with an rc=0 control. **I did not reshape the lines to satisfy the regex**; I asked what the
+token should be and found a real defect in my own read.
+
+**3. A SUBSTRING CENSUS LIES IN AT LEAST THREE DISTINCT WAYS, all three present in one census of 13 files.**
+`x-5` PHASE A first returned three non-zero reference counts for dead buckets. All four hits were false:
+docstring prose that *documented the dead bucket's own replacement*; `opal-portal-data` matched inside
+`opal-portal-data-proxy`, the function's own name; and `SMARTX_TABLE = ... 'opal-data-smartx'`, a **DynamoDB**
+table sharing an S3 name. Unresolved, the cell's own rule would have had me file three rows naming three
+production functions for features that work. **The positive control is what made them findable** --
+`opal-data-portal-v2` reads 16 real references, so a census returning 0 everywhere would have looked like a
+working instrument.
+
+**4. THE SERVED GRAPH CAN BE HOURS STALE, AND THAT IS MEASURABLE FROM INSIDE.** During `x-4` the graph returned
+exactly 1 hit for `lambda-test-role` across 2892 nodes -- the right answer -- but its stitch was `03:01:08Z`.
+The same query's control listed **3** inline policies for `opal-smartx-lambda-role` where a live read returns
+**1**, because `x-2` had deleted two at ~07:1xZ. **So the control doubles as a staleness probe:** ask the graph
+for something you have just changed. Fact 5 moved onto live planes.
+
+**5. `RoleLastUsed` LAGS UP TO FOUR HOURS**, so it cannot serve a post-apply in-use condition. Both `x-1` row 6
+and `x-5` carried CTO conditions of that shape and both were met on the **log plane** instead, with the
+substitution stated rather than slid past. Row 6: the consumer Lambda started 09:36:28Z against a ~09:33Z apply
+and printed real EC2 data, which requires the `ec2:DescribeInstances` its policy grants. `x-5`: a portal
+function wrote 87.6 KB to a KEPT bucket at 11:20:40Z against an 11:15:57Z apply.
+
+**6. A NEVER-WIDEN HALF'S NEGATIVE-CONTROL BASELINE CAN GO STALE BETWEEN SURVEY AND SIGNATURE** (`Z-S40`). Row
+6's pair bound a pre-existing "2 to add" as NOT SIGNED and required it recorded UNCHANGED; its owner applied
+that pair at 09:05:05Z, before either half was signed. The clause was unsatisfiable before the act began. It
+resolved safely -- my apply added 0 -- but the mechanism is direction-agnostic, and **serialising on
+`.open_deploys/` cannot catch a change that finished before you looked.** The `x-5` half then bound the plan
+SHAPE directly instead, because PHASE A flagged it.
+
+## R7.3 WHERE I WAS WRONG, AND HOW IT WAS CAUGHT
+
+| what | how it surfaced |
+|---|---|
+| `x-3`: recommended **HOLD** for `rest_pull` on "no commit produced these bytes" | **Overturned (`Z-S41`).** The commit exists; only the deploy never ran. I established ETag INEQUALITY and stopped at *different bytes* -- *different HOW* was one artifact download away, which the CTO did. |
+| `x-3`: dated `rest_pull`'s content to 2026-08-19 | **Wrong.** The content first appeared 2026-07-23 and was re-uploaded five times. I read the VERSION's `LastModified` as the date the CONTENT appeared; under S3 versioning those are different questions. |
+| read a `58 -> 256` state-address jump as another seat's large interim apply | **My own conflation** -- the 58 was SMARTX-PIPELINE's count from `x-3`. Caught by the state object's SIZE: +1368 bytes cannot be 197 new addresses. |
+| first `x-4` read-back printed `rc=0` for a deleted role | `$?` after a pipe to `head`. Re-measured unpiped: `rc=254`. Corrected before it was recorded. |
+| `x-2`'s AC1 failed at `dead=2` | Finding 2 above. |
+| `x-5`'s first census: three false non-zeros | Finding 3 above. |
+
+**Six corrections, five of them mine.** Four were caught by a control or a denominator rather than by noticing;
+that is the argument for printing both every time.
+
+## R7.4 WHAT MOVED IN THE WORLD
+
+- **`lambda-ec2-runtime-monitor-role`** adopted into `shared-infra` -- 4 tags onto a role that carried none;
+  trust, policies and its managed attachment untouched. The omission rule is now proven live on **three** roles
+  carrying an attached managed policy.
+- **`opal-portal-s3-read`** narrowed: **16 ARNs -> 4**, zero added, all four actions and the `Sid` intact. Six
+  global bucket names that do not exist no longer carry READ, WRITE and DELETE from a production role.
+- **`lambda-test-role`** deleted, recoverable from site-Z's own record. The round's only destructive act.
+- No permission was ADDED anywhere in round 7, and no trust relationship moved.
+
+## R7.5 CURRENT STATE AND WHAT IS OWED
+
+**Nothing of mine is open.** Four NEVER-2 entries opened and closed with every leg proven and every close
+committed by hand; `.open_deploys/` carries 0 `iamroles` sentinels at HEAD. Five proof instances VALID rc=0,
+four of them first try (`x-2` needed six formatting fixes, all mine, before the invocations were extracted from
+the order's bytes rather than retyped -- which is why the later four passed first time).
+
+**Owed, none of it this lane's to clear:**
+1. `x-6` PHASE B -- on its never-widen pair, written against the PHASE A survey. My one ask there: **bind the
+   equality check, not the saved plan file**, which sits outside the repo.
+2. The CTO's product call on `x-2` target 4 (the us-east-2 DynamoDB ARN: delete vs repoint).
+3. Whether any of `x-5`'s six buckets is meant to EXIST -- `opal-market-data-v2` is DECLARED in
+   `market-overview/s3.tf:6` and `RULINGS_LEDGER.jsonl:44` carries a prior `DELETE-GATED` ruling, so "recreate"
+   and "remove the grant" are opposite answers for that one name and six names may not share one answer.
+4. `smartx-pipeline` HAS NO OWNING PROJECT (`Z-S41`), which is the real gap behind its recurring drift.
+5. The `GOVERNANCE_DISPOSITION` row for `x-4`'s retired role -- the issuer's, per that cell's step 5.
+
+**Push state: LOCAL.** `box/sitez` is integrator-only (`0.0.0_AB_MSTR~Z`); every commit above sits on the seam
+for the hourly integration window, and one box-sync already carried earlier round-7 work to `CLOUD`.
