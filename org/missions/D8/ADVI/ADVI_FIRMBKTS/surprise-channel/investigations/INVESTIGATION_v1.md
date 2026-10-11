@@ -588,3 +588,28 @@ write: **1 row** (`S1`).
   "notes": "Resolves D1-S4 and D1-S7 as hazards (the D1-S8 shape used elsewhere for a disarm); GRADUATED stays the CVO's L9 field. The round-3 enrichment list carries the cutover family as one item."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W8-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~8",
+  "surfaced_at": "2026-10-11T04:10:42Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "THE F7 PROOF INSTANCE IS NAMED BY THE ORDER AS D/ADVI_FIRMBKTS.TO-FB-e-5.proof_of_spec.json, BUT THE COMPLETE-FLIP GATE LOOKS FOR THE ORDER FILE STEM, ADVI_FIRMBKTS.TO-FB-e-5.f7-copy.proof_of_spec.json, SO THE STATUS FLIP IS REFUSED",
+  "spec_asserts": "ADVI_FIRMBKTS.TO-FB-e-5 section 5: the instance sits at D/ADVI_FIRMBKTS.TO-FB-e-5.proof_of_spec.json and the order's <status> flips to complete in the same commit once AC1-AC3 pass; section 1a step 6 commits the instance with the status flip together.",
+  "world_is": "proof-of-spec-check.py on the named instance returns rc=0 (3 of 3 rows, 0 violations). The complete-flip gate (.tools/to-pipeline-gate.py check_complete_flip, candidates from _proof_instance_candidates at lines 3176-3191) takes the order file stem ADVI_FIRMBKTS.TO-FB-e-5.f7-copy and globs deliverables/*/ADVI_FIRMBKTS.TO-FB-e-5.f7-copy.proof_of_spec.json. The order's <proof_of_spec> block (section 4) names no literal instance path, so the tag lookup adds no candidate. The gate refuses the flip with 'NO proof-of-spec instance was found beside it'. The worker did not rename the instance or edit the order's proof block; the order's <status> stays pending in the committed state.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-e-5.f7-copy.md @aca87f5ef8 (section 5 names D/ADVI_FIRMBKTS.TO-FB-e-5.proof_of_spec.json; section 4 proof block names no literal path)",
+      ".tools/to-pipeline-gate.py @aca87f5ef8 lines 3176-3191 (_proof_instance_candidates: stem = basename minus .md)",
+      "commit-attempt output of 0.9.0_WK_ADVI_FIRMBKTS~8 at 2026-10-11T04:10Z: REFUSED, 1 violation, instance not found beside the order"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Needs the COO or CTO ruling: either the instance takes the gate's stem name (ADVI_FIRMBKTS.TO-FB-e-5.f7-copy.proof_of_spec.json) or the order gains a literal <proof_of_spec> instance path. The copy itself is complete and verified (AC1-AC3 PASS); only the status flip waits on this."
+}
+```
