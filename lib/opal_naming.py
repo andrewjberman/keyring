@@ -99,7 +99,7 @@ VIEWS = (
     ("infra/aws/lambda-edge/_shared/firm-config.mjs", "mjs", ("FIRM_CONFIG", "OWNERSHIP_KEYS")),
     ("data/assets/scripts/gold/investor_reporting/directory_runner.py", "py", ("firm_bucket_map",)),
     ("data/assets/scripts/gold/investor_reporting/holdings_snapshot.py", "py", ("firm_bucket_map",)),
-    ("infra/aws/lambda/investor-reporting/_authz/loaders.py", "py", ("bucket_for",)),
+    ("infra/aws/lambda/investor-reporting/_authz/loaders.py", "py", ("bucket_for", "OWNERSHIP_READ")),
     ("data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py", "py", ("FIRM_TREES",)),
     (".tools/ds-precommit-check.py", "py", ("_CROSS_FIRM_FOREIGN_BUCKETS", "_CROSS_FIRM_FOREIGN_KEY_PREFIXES")),
     ("data/black_diamond/scripts/bronze/_asset_dim_rest_pin.py", "py", ("ASSET_DIM_REST_PIN",)),
@@ -113,7 +113,7 @@ VIEWS = (
 
 # A block that a hand-kept carrier does not hold yet lands right after its anchor block (the first generate only;
 # every later generate finds the block by its own marks). OWNERSHIP_KEYS follows FIRM_CONFIG (FB-g-12).
-AFTER_BLOCK = {"OWNERSHIP_KEYS": "FIRM_CONFIG"}
+AFTER_BLOCK = {"OWNERSHIP_KEYS": "FIRM_CONFIG", "OWNERSHIP_READ": "bucket_for"}
 
 # Targets the generator owns WHOLE: the file is nothing but its generated block(s), so _render_view builds it
 # from the blocks alone and never reads a base (the first generate creates it). Every other VIEWS carrier is a
@@ -158,7 +158,11 @@ TARGET_REGISTRY_KEYS = {
                                                       "tiers"),
     "data/assets/scripts/gold/investor_reporting/directory_runner.py": ("scopes",),
     "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py": ("scopes",),
-    "infra/aws/lambda/investor-reporting/_authz/loaders.py": ("scopes",),
+    # OWNERSHIP_READ (ADVI_FIRMBKTS FB-g-16, CTO ADDENDUM 7) -- _blk_ownership_read() reads the same rows as OWNERSHIP_KEYS
+    # (legacy_addresses, platinum_destinations, the tenants in scopes, key()/_home_bucket() in systems and tiers) and the
+    # routed bucket (_routed_bucket, scopes). bucket_for's own block still reads no row; its mark moves with the file's.
+    "infra/aws/lambda/investor-reporting/_authz/loaders.py": ("legacy_addresses", "platinum_destinations", "scopes",
+                                                              "systems", "tiers"),
     "data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py": ("scopes", "tiers"),
     ".tools/ds-precommit-check.py": ("scopes",),
     # ASSET_DIM_REST_PIN -- _blk_asset_dim_rest_pin() reads the scope row only (its key, short,
@@ -1113,6 +1117,21 @@ def _blk_bucket_for(reg, h16, path):
     return _block("bucket_for", h16, "#", path, _BUCKET_FOR)
 
 
+def _blk_ownership_read(reg, h16, path):
+    """Registered owner -> {bucket, legacy, canonical} for the investor-reporting loader's ownership read (ADVI_FIRMBKTS
+    FB-g-16; CTO ADDENDUM 7). The owners are _ownership_owners()'s, the set _blk_ownership_keys() lists, in FIRM_CONFIG
+    order and no other firm: bucket is the owner scope's routed bucket (where the producers write the map), legacy is the
+    registered row's template, canonical is the producers' seam destination for it. Nothing is typed per firm."""
+    owners = _ownership_owners(reg)
+    entries = {}
+    for tid, s, _t, _own in _tenants(reg):
+        if tid not in owners:
+            continue
+        legacy = owners[tid]
+        entries[tid] = {"bucket": _routed_bucket(s), "legacy": legacy, "canonical": _ownership_canonical(reg, legacy)}
+    return _block("OWNERSHIP_READ", h16, "#", path, "OWNERSHIP_READ = " + _py_lit(entries))
+
+
 def _blk_firm_trees(reg, h16, path):
     trees = {}
     for s in _scopes(reg):
@@ -1284,6 +1303,7 @@ BLOCKS = {
     "OWNERSHIP_KEYS": _blk_ownership_keys,
     "firm_bucket_map": _blk_firm_bucket_map,
     "bucket_for": _blk_bucket_for,
+    "OWNERSHIP_READ": _blk_ownership_read,
     "FIRM_TREES": _blk_firm_trees,
     "_CROSS_FIRM_FOREIGN_BUCKETS": _blk_foreign_buckets,
     "_CROSS_FIRM_FOREIGN_KEY_PREFIXES": _blk_foreign_prefixes,
