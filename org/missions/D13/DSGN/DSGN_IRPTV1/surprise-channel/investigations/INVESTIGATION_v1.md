@@ -4304,3 +4304,77 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W49-S7",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~49",
+  "surfaced_at": "2026-10-11T09:02:59Z",
+  "one_line": "TO-IV-e-91: two v1 response schemas (comparison-catalogue, analysis-request-pdf) do not declare the envelope member unprojected_grant that the producer's one envelope always sends and the portal's one parser requires; fe-s-13 content-pins x3, producer-fixtures 'RESPONSE ENVELOPE' and IVE17-AC3 stay red, and the portal is the side that is right.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/responses/comparison-catalogue.response.schema.json and analysis-request-pdf.response.schema.json @4554aedfb0: additionalProperties false, properties {contract_version, operation, firm_id, data, status}, required without unprojected_grant; 19 of 19 response schemas read, 17 declare it and require it, these 2 do not (git log -S unprojected_grant over both files returns no commit)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:403-423 @4554aedfb0: response_envelope() 'IS A TOP-LEVEL, NON-OPTIONAL FIELD OF EVERY SERVED RESPONSE' (CTO ruling @61627f39f9), present at zero when nothing is unprojected",
+      "portal contracts/envelope.ts:421-437 (FE-s-57): a non-refused response without unprojected_grant throws EnvelopeMismatch on every operation; fe-s-57 F57-AC4 asserts it",
+      "portal fe-s-13/content-pins.test.ts:151-159 and producer-fixtures.test.ts:240-260: findings 'comparison-catalogue: response envelope no longer declares unprojected_grant' and the same for analysis-request-pdf; baseline run catchup/baseline.txt (35 failing ids)"
+    ]
+  },
+  "spec_asserts": "TO-IV-e-91 / CTO round-13 analysis section 3: the portal moves, the contract is the ratified side; a cause where the portal is right and the contract is what moved wrongly goes under not_fixed with its reason.",
+  "world_is": "Following the contract here would mean the portal parser stops requiring unprojected_grant on two operations, against the FE-s-57 ruling and against what the producer sends. Not done. The two schemas need the member (property and required) from IRPT_BCKEND; the 5 ids (content-pins x3, producer-fixtures envelope, IVE17-AC3 which spawns content-pins) clear with no portal change once they do.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W49-S8",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~49",
+  "surfaced_at": "2026-10-11T09:02:59Z",
+  "one_line": "TO-IV-e-91: fe-s-1 'the smoke map covers every scoped route' needs fixtures/smoke/default.json at 22 keys, but fe-s-14 published-map pins the same file at 12 keys and the producer's seam test pins it at 12 (CONSUMER_SMOKE_ENTRIES), and two of the ten missing routes (custody-report-read, custody-report-persist) have no producer fixture to source a body from: not fixed, no entry added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal fe-s-1/fixtures.test.ts:131-167: owned must equal declared (22) and keys must be _denominator.declared (22); run: 12 of 22, 10 routes with 0 keys",
+      "portal fe-s-14/published-map.test.ts:147-152 (expect keys toHaveLength(12), satisfied 12) reads the same default.json; it passes at 12 and would fail at 22",
+      "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py:116 'CONSUMER_SMOKE_ENTRIES = 12', :307 and :312-320 (operation set of 12, one key per operation) @4554aedfb0 read the portal's default.json out of the primary checkout",
+      "custody-report-read and custody-report-persist: no .valid.json in the producer fixtures or the portal's fixtures/wire, no document schema for the custody report (response schema D2-W275-S1), no request schema for the persist body; routes.json analysis-request-original's note states its data is the analysis-request-pdf data shape"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 2: add the missing entries from the contract's route list, invent no response body; a route with no fixture you can source is listed under not_fixed.",
+  "world_is": "Three tests (fe-s-1, fe-s-14 published-map, the producer seam) state three different sizes of one file, so no portal edit satisfies all of them; eight of the ten bodies could be sourced from producer fixtures, two cannot. Left at 12 keys. The owner of the file's size (IRPT_FNTEND with IRPT_BCKEND's seam pin) decides whether the map is the 22-route statement or the 12-operation one.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W49-S9",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~49",
+  "surfaced_at": "2026-10-11T09:02:59Z",
+  "one_line": "TO-IV-e-91: five fe-s-13/14/57 tests stated denominators that cannot hold against the contract as it now stands (table length == DECLARED, operations named == DECLARED, response-schema routes == DECLARED); the claims were re-derived from routes.json (_denominator.total, DECLARED with and without response_schema) rather than the tests being left red.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "routes.json @4554aedfb0: 24 rows = 22 DECLARED + 2 ROUTED_ELSEWHERE; 5 rows with response_schema null (3 DECLARED: custody-report-read, custody-report-persist, analysis-request-original; 2 ROUTED_ELSEWHERE); IRPT_BCKEND IB-pr-408 (63ab2ba116) names the three",
+      "fe-s-13/routes.test.ts: 'named' toBe declared while the loop above requires an entry for every row; fe-s-14/header.test.ts: table length toBe declared while fe-s-13/routes.test.ts and mvp-selection/selection.test.ts require the table to hold all 24; fe-s-14/envelope.test.ts and fe-s-57/carry.test.ts: schema-bearing routes toBe declared",
+      "portal commits 3e654e4e (routes, header), 8a14511d (envelope, carry) on branch wk-dsgn-irptv1-r14-49"
+    ]
+  },
+  "spec_asserts": "TO-IV-e-91: never weaken a test to pass; test-only changes are listed separately.",
+  "world_is": "Each re-derived equality is as strict as the one it replaces (derived from the file, printed, exact); listed under test_only_changes for the CTO to read. The test names (the ids) are unchanged.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
