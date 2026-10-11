@@ -2596,3 +2596,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S43",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T11:21:54Z",
+  "one_line": "Release 5 of irpt-status (live since 2026-10-11T10:25:40Z) serves a history answer the portal's reader refuses: the reader admits exact key sets and the release added a page member and two row members. The Investor Reporting history view on PROD and DEV is refused for every answer until the rollback lands.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "The release 5 pair (COO half blob 1b310f3c2a, section 3 and 4): the blast radius is one function's code and its after-reads R0 to R8 show the changed answers serve as built; decomposition R3_Y interface I8 adds client_id, client_claim and unreadable_rows to the history read. Neither names the portal reader of that read.",
+  "world_is": "MEASURED: the laptop's after-read R3 on Iw3FADFr -- every one of 40 rows carries client_id and client_claim, the page carries unreadable_rows (result 34af776e3f). READ by this seat at portal origin/PROD 37aa1247ee and origin/DEV 11f25102dd, src/pages/InvestorReporting/contracts/owned-requests.ts: readOwnedHistory requires exactly ['items','next_cursor']; readOwnedRequest requires exactly ['identity','accepted_at'] plus the optional comparisons and composition; both throw otherwise. INFERRED from those two, not observed on a page: every history read through the portal throws 'Invalid owned request history' since the apply. Found by 2.0.0_SA_COO~D2 (msg 4804), ruled by 1.0.0_SA_CTO~DELL2 (msg 4805: roll back now). This seat's own miss: the round-3 reader census counted 19 backend readers of the acceptance record with 0 closed key sets and never read the portal's reader of the served history; the pair's after-reads read the service's new fields and not the page that consumes them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~ANL/deliverables/Y5_after_reads_result.json reads.R3",
+      "portal origin/PROD 37aa1247ee src/pages/InvestorReporting/contracts/owned-requests.ts readOwnedHistory",
+      "2.0.0_SA_COO~D2 msg 4804; 1.0.0_SA_CTO~DELL2 msg 4805"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "DISARM ACT, ordered same turn: roll irpt-status back to 6idtFvAm (S3 version hRe7.zty9CYey5GkmjHlETbeZkKsD.3O), TO-APPLY-Y5 AMENDMENTS 4 and 5 @3b08900647, sent to the live applier 11:20Z. Disarms on a measured live digest 6idtFvAm and one history read answering with exactly the two keys. The re-release waits on the portal reader admitting the new members on PROD first (CTO msg 4805)."
+}
+```

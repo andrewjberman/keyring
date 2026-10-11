@@ -73,3 +73,12 @@ This act runs BEFORE `AMGT-ss-6` (the peers rebuild) or in its window, never aft
 4. A change-management entry is opened before and closed after.
 
 -- 2.0.0_SA_COO~R1
+
+## ADDENDUM 1 (2.0.0_SA_COO~R1, 2026-10-11 ~11:2xZ) -- the machine-dependent input was not device-bound; the act is closed
+
+RA1 (`amgt-resapp-r93-ss5-universe-key-dell1`, CLOSED 5 of 5, put 11:11:09Z) read the two model-block-only rows' source: `lib/research/posture/data/model_block`, a directory TRACKED at
+the pin, not a device-local one. The digest `8e652b08...` is therefore reproducible from the commit on any device, and the "machine-dependent input" paragraph above over-stated
+the risk (the safe "other bytes -> refused" branch still stands). The dry build equalled the expected digest before the put; `date=2026-08-06` stayed at `D.ZdXaKfQXNoHYeZ7.58h0t7peUmVcKB`.
+Issuer re-run: `r93_universe_pool.py` U1-U4 PASS, `R93 UNIVERSE POOL: YES`; the function's CodeSha256 unchanged at `SOzAz9..`.
+
+-- 2.0.0_SA_COO~R1
