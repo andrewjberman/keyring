@@ -5904,3 +5904,78 @@
   "notes": "Not added; a later order that must walk an account pick through ui-smoke would add it."
 }
 ```
+
+## DSGN_IRPTV1-D2-S21 -- an opened vendor report on a SERVED answer shows section codes for titles, 'Unit: unknown' on every card, and 
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S21",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T18:21:13Z",
+  "one_line": "Laptop walk XB-c5ce: an opened vendor report on a SERVED answer shows section codes for titles, 'Unit: unknown' on every card, and no validation or source line on its face",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A reader who opens a finished analysis report sees each section by a name, each figure with its unit, and the report's validation and source stated on the face (IRPT_YCDGEN FWD-1's bar: every reason the page states is true and readable by a principal).",
+  "world_is": "Walk face 7, the first Ready request, vendor-kind: 104 section cards; every card's title and Label read as a section code of the form S03; 'Unit: unknown' on all 104; the token source_chart_representation appears twice; the word 'validation' occurs once, inside a closed Technical details; 'Source:' occurs 0 times in the dialog. 'undefined' and 'null' occur 0 times. Every synthetic fixture this project rendered carried titles, units and a validation value, so no screenshot of rounds 17 to 22 showed this. NOT established: whether the served answer carries no title and no unit (a producer or contract matter) or the page drops them (a page defect); whether an Opal report reads the same (face 8 NOT REACHED). Dates on the same report mix two formats.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/XB_C5CE_IRPT_DEV_WALK_RESULT_20261011.md (laptop 4.0.0_SA_CRO; a localhost build of portal DEV 9ca634c6 against the served backend, staff sign-in, one two-account client, 0 writes)",
+      "read by this seat in the result file's table; the walker's screenshots are on the laptop and were not seen by this seat"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-S22 -- three served answers came back UNAVAILABLE with FIRM_BINDING during the walk and nothing on any face says so
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S22",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T18:21:13Z",
+  "one_line": "Laptop walk XB-c5ce: three served answers came back UNAVAILABLE with FIRM_BINDING during the walk and nothing on any face says so",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "When a read the page makes is refused, the face that depends on it says so in words (the Performance refusal does).",
+  "world_is": "Walk face 9: all /api/ answers were HTTP 200 (121 of 121, 136 of 136), and inside them reporting/<account>/manifest and reporting/client/<client>/summary answered UNAVAILABLE with FIRM_BINDING, 3 times in walk 1. Nothing on any face stated it. Which face those reads feed was NOT SEEN by the walker. performance/<selection> answered OBJECT_NOT_COVERED and IS shown as a worded refusal (face 3; the Performance hop is IRPT_BCKEND's, row S252).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/XB_C5CE_IRPT_DEV_WALK_RESULT_20261011.md (laptop 4.0.0_SA_CRO; a localhost build of portal DEV 9ca634c6 against the served backend, staff sign-in, one two-account client, 0 writes)",
+      "read by this seat in the result file's table; the walker's screenshots are on the laptop and were not seen by this seat"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-S23 -- design and console findings on the Holdings tab from a rendered walk: five full-width navy bands where the des
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S23",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T18:21:13Z",
+  "one_line": "Laptop walk XB-c5ce: design and console findings on the Holdings tab from a rendered walk: five full-width navy bands where the design law allows one, 32 to 36 text elements under 3:1 contrast, and one React hydration-class warning",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "portal/DESIGN.md C3: at most one full-bleed band per page; text meets contrast on the light canvas; the console is clean on a normal load.",
+  "world_is": "Walk, 'other things a reader sees': the Holdings tab draws 5 full-width navy bands (the panel headers and footers this project's screenshots also show; this seat read those screenshots today and did not count them against C3); 32 to 36 text elements under 3:1 contrast (the lavender eyebrow text such as ALL CATEGORIES on the light canvas); one React warning on the Holdings tab, 'whitespace text nodes cannot be a child of colgroup'. Also: with no account picked the tab shows an 'Opening <account>...' line and a 'Back to all accounts' link; the Performance refusal says 'for this client' and 'for this account' in one sentence. Whether the panel header bands count as C3 bands is a design ruling this seat does not make.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/XB_C5CE_IRPT_DEV_WALK_RESULT_20261011.md (laptop 4.0.0_SA_CRO; a localhost build of portal DEV 9ca634c6 against the served backend, staff sign-in, one two-account client, 0 writes)",
+      "read by this seat in the result file's table; the walker's screenshots are on the laptop and were not seen by this seat"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
