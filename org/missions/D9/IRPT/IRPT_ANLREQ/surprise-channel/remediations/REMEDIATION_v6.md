@@ -30,15 +30,15 @@ Graduated, round label v12: 2 rows, OPEN; 1 ARMED. This seat made no read of its
   "owner": "2.0.0_SA_COO~Y2",
   "round": "v12",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~Y2",
    "round": "v12"
   },
-  "closed": false,
+  "closed": true,
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~Y2",
-   "at": null
+   "at": "2026-10-11T19:22:52Z"
   }
  },
  {
