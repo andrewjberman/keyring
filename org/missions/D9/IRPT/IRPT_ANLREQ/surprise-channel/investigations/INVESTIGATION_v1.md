@@ -1953,3 +1953,28 @@
   "world_is": "MEASURED on dell2, 2026-10-11 06:37Z-06:45Z, Python 3.14.7, PyMuPDF 1.27.1: `python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests -q` ends 2 failed, 32 errors on box/dell2 @fe28500304 (461 passed) and on the release 4 pin eb72753aad (462 passed). All 34 are in test_custody_entry.py (2) and test_custody_retained.py (32, KeyError: 'data'). The same two files run ALONE pass 42 of 42 (2 skipped) on both trees. Evidence: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/release4/FITZ_LEGS_PIN_eb72753aad_20261011.md."
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S32",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T06:44:04Z",
+  "one_line": "L9 round 2 ADDENDUM 1: release 1 (irpt-status revision 6) stands closed as applied and read -- live on 6idtFvAm, 30 invocations with 0 TypeError; release 3 (the commentary function) stands closed as applied and exercised once on a synthetic request. Open on release 1: reads 3 and 4 were measured on revision 2 and are owed on revision 6; three widenings unexercised; 'the original read does not write' unmeasured; the source map's digest for irpt-status is stale. Open on release 3: the deny side of its permissions is inferred. The thread is not live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND2_L8_COMPILE_ADDENDUM_1_RELEASES_20261011.md @f411f4a76c (msg 4286)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUND_2_RELEASES_L9_GRADE_20261011.md",
+      "this seat's live reads 2026-10-11T06:44:04Z: irpt-status CodeSha256 6idtFvAm..., LastModified 2026-10-11T04:44:47Z; its log from the promote to 06:22Z: 30 invocations, 0 TypeError, 0 Traceback, 0 RetentionRefused; outlook-global-commentary-draft-lambda Active on AI4UQD0M..., LastModified 05:44:45Z, equal to teams-global-transcripts-pull-lambda; outlook-global-transcripts-pull-lambda on VGIq85Xx... since 2026-10-07",
+      "infra/aws/lambda/ci/lambda-source-map.json at HEAD: irpt-status artifact_sha256 reads E7VKvhg3..., not the live 6idtFvAm..."
+    ]
+  },
+  "spec_asserts": "The packet's section 6 asks the CVO to judge whether releases 1 and 3 stand as closed on their not-established lists. CLAUDE.md rule 22a: evidence measured on older running bytes does not carry to new bytes.",
+  "world_is": "Both releases are live and read as the packet says. Every IRPT_ANLREQ order is terminal. FWD-1's journey has not run end to end.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
