@@ -10,12 +10,16 @@
  "subject": "TO-FB-g-9: ONE SEV1 test text per the cluster-lead ruling on call c290 (no retry, SMS send API not SNS)",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-g-9.sev1-test-sms.md",
  "opened_at": "2026-10-11T12:21:44Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-11T12:23:38Z",
+  "bus_message_id": "0348d77b-4def-43de-81f4-e9ea0d7990ff"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-11T12:25:04Z",
+  "by": "0.7.0_AE_CloudOps~FBL",
+  "bus_message_id": "a5fd06e6-d3de-4f4b-9217-87fbb639776e"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
