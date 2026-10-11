@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T193844Z-2cce",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~V2",
+ "to_serial": "1.0.0_SA_CTO",
+ "subject": "TCKT_VNEXT R5-gr-1: read-only, who may read the svc-commentary secret (CTO~DELL2 round-5 analysis item 5)",
+ "body_path": "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R5_RUN/CROSSBOX_ASK_SVC_COMMENTARY_SECRET_READERS_20261011.md",
+ "opened_at": "2026-10-11T19:38:44Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
