@@ -55,3 +55,12 @@ file that is not there. The ordered cell becomes:
 3. `address()` refusing a table with no row.
 The byte-identical and replay arms are unchanged. If site Z's registry already carries a tables file this one lacks, that is a registry
 divergence between boxes, to name before the cell is cut.
+
+## ADDENDUM 3 (2026-10-11 ~18:5xZ) -- site Z's condition names TWO deployed tables: `fee_statement` and `market_update`. Accepted.
+
+`1.0.0_SA_CTO~Z`, site Z msg 33364 (MSTR relay, bus 72044b1f). The gateway's `OG-mu-1` (signed @e0ca80f880) builds
+`address(..., 'market_update', ...)` at every deploy (`ADVI_MARKET_UPDATE_S3_ROOT`) and at every `opal-gateway` plan
+(`-var market_update_s3_root`). The LGIC cell's census therefore covers the deployed callers in all three places: deploy scripts, Terraform
+plan variables, and the library. The NEW `tables.json` carries BOTH `fee_statement` and `market_update` rows before `address()` refuses
+anything. Close arm added: a dry run of the gateway's deploy env step and of one `opal-gateway` plan, both against the refusing builder, both
+rc 0.
