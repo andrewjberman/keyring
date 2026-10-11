@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~46</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>complete</status>
+<status>issued</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -64,6 +64,29 @@ new colour, tabular numerals in the dollars column).
   one full run of `bun test src/pages/InvestorReporting` fails a set of ids that is a SUBSET of those 43 (plus nothing new). Record the run's failing
   ids and the set difference in your record under `suite_after` {failed, new_failing_ids, fixed_ids}. A new failing id is yours to fix or to report.
 - Six of the 43 fail only because a test spawns bun at another user's path (row DSGN_IRPTV1-D2-W43-S1); they are not yours to fix here.
+
+Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
+
+## AMENDMENT 2 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~06:1xZ): the candidate 2639743c is REFUSED by the CTO; the wording is ruled (msg 4223)
+
+**Why refused.** `disclosures.corrections` carries PROXY substitutions as well as typo corrections: the page renders the same list at
+`ProspectComposer.tsx` ~lines 541-545 as "<from> is analysed as <to>, a proxy you named". With "uploaded as", a holding the advisor proxied would
+read "<proxy> uploaded as <holding>", which says they uploaded a mistake when they named a stand-in.
+
+**The ruled wording (one wording, true for both kinds, no kind field):** the cell keeps the UPLOADED symbol first and states what it is analysed
+as: `<uploaded>, analysed as <to_value>`. It matches the page's own disclosure sentence. This replaces step 1's "names the CORRECTED security first
+... uploaded as". Point 1 of the first pass stands: the join of `original.symbol` to `corrections[].from_value` is accepted (row D2-W46-S1).
+
+Do this, as ONE new portal commit on top of 2639743c (do not rewrite that commit):
+1. The Holding cell: `<uploaded>, analysed as <to_value>` on a row whose uploaded symbol matches a served correction; unchanged otherwise. Same
+   classes as the first pass; no new colour.
+2. The test gains a PROXY arm beside the typo arm and the uncorrected arm: a holding with a served correction that is a proxy substitution reads
+   `<holding>, analysed as <proxy>`, and no arm contains the words "uploaded as". Show the amended test FAILS on 2639743c's product file (record
+   the failing line) and passes on yours.
+3. One full suite run after the change; record `suite_after` against the 43-id baseline again.
+4. Update `S61_FIX.json` (`portal_commit` is the new commit; add `refused_candidate: "2639743c"` and `wording`), re-render the static HTML with the
+   three arms and read it, refresh and validate the proof_of_spec. Status goes back to `issued` until IV83-AC1 passes on the new commit.
+The live screenshot the CTO asked for is taken by the issuer after your commit; you do not start a dev server.
 
 Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires on a newly added order only; `<placeholders>` is NONE).
 
