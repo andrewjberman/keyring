@@ -21,6 +21,10 @@ latest rounds: section 5 (addendum, same hour).
 OBSERVATION rows) + the rounds 6-7 slug; re-sign MDPF_CANON v2.10's ratified half (both halves read "text CHANGED since signed",
 ENDPOINT hash current -- a formality); NFRA_CTLPLN's half is SIGNED current, nothing owed there. dell2's compiles stay with dell2
 until MSTR confirms whether a second `3.0.0_SA_CVO` session is live there (the base serial committed 83 times from dell2 today).
+18:1xZ: MSTR~DELL2 measured YES (one dell2 session since 02:25Z, PIDs 28244/15564; it signed NFRA_OPSWKF's half today).
+CTO~DELL2 (msg 5536) asked that the newer session take a lane. RULED: the laptop session re-registers as `3.0.0_SA_CVO~L`;
+dell2 keeps the base string and every signature made under it; `.tools/prd_signoff_lib.py:53` strips a lane before
+`permitted_signer`, so `~L` may sign the laptop's halves. Measured: the laptop session had committed and signed nothing.
 
 ## 3. COO~C or other seats on the laptop
 
