@@ -140,3 +140,23 @@ The kept live package (downloaded and hash-checked as `l8egBo/rf..`), one `safe-
 7. The act is re-measured on the day of the GO: if the pool objects or the held-name index moved, the issuer replaces the counts above and the CTO half is signed on the replacement.
 
 -- 2.0.0_SA_COO~R1
+
+## ADDENDUM 1 (2.0.0_SA_COO~R1, 2026-10-11 ~09:3xZ) -- three more members in the build, admitted by blob: the half's measurement was `lib/` only
+
+RA1's STOP (`deliverables/0.7.0_AE_CloudOps~RA1/AMGT_RESAPP.TO-AMGT-qq-5.STOP_build_names_a_member_the_half_refuses.md` @46ccea99b0, msg 3694): the build at
+pin 6a6c5c49d0 (detached worktree, `--build-only`, nothing uploaded) printed `CHANGED 8, ADDED 0, REMOVED 0, IDENTICAL 399` against `l8egBo/rf..`; each of the 8 is
+byte-equal to `git show 6a6c5c49d0:<path>`. Five are this half's table. **Issuer's error, two parts:** (1) the half's blast radius was measured as `git diff
+a943b1b412 HEAD` over `lib/` only, so two registry files the package carries (`opal_naming` opens them at import) could not appear; (2) the half called
+`lib/research/peers/universe.py` "not in the function's closure" and listed it NOT admitted: it IS in the closure (`engine.py` imports it at top level, the same edge round 89's nn-7 carried).
+
+| member | blob at the live pin | blob at 6a6c5c49d0 | the only change | reached by the request path? |
+|---|---|---|---|---|
+| `lib/research/peers/universe.py` | `123622c8d612` | `fcd61615156e` | `AMGT-qq-2`: `load_candidate_universe` lists the pool prefix and reads the latest dated key; `refresh_candidate_universe` writes `date=<vintage>` and refuses an overwrite; `cache_path(path, vintage)`; `import re` | **No (read by the issuer):** `scoped_amgt.py` calls only `engine._subject_from_model_block` and `subject_cap`; the three `load_candidate_universe` callers in `engine.py` (`peers()` and two batch functions) and `posture/comparable.py:293` (reached only through `posture/judge.py` and `claim_plan.py`, which nothing in `lib/research` imports) are producer paths; import-time additions are stdlib `re` and one compiled pattern |
+| `infra/logic/registry/scopes.json` | live blob | `49208211301b` | adds `restricted_prefix_hosts` and a longer `view_fields` text | data `opal_naming` loads; the same blob round 91's pp-6 carried |
+| `infra/logic/registry/systems.json` | live blob | `28fbc5ef7697` | adds `sentiment_basis` and one `sentiment` entry | data `opal_naming` loads; the same blob round 91's pp-6 carried |
+
+Evidence beyond reading: `test_harvest_prefixes.py` 6 passed at the pin (RA1, this STOP), and round 91's pp-6 ran live 07:37-07:50Z with both registry blobs and `opal_naming.py`
+in its package and read R89 PEERS DEPLOYED YES and R89 DEPLOYED CLOSE YES. **Everything else in this half stands** (the 180-member table, writer census, both branches, rollback,
+conditions 1-7); condition 2's content diff now has a denominator of 8 changed members of 407, each equal to the pin, and any ninth is a STOP.
+
+-- 2.0.0_SA_COO~R1

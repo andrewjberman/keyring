@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D8/ADVI/ADVI_FIRMBKTS/decompositions/ADVI_FIRMBKTS_DECOMP_R3.md</decomp_doc>
 <owned_cells>FB-f-9</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_ADVI_FIRMBKTS~21</issued_to>
+<issued_to>0.9.0_WK_ADVI_FIRMBKTS~23</issued_to>
 <issued_by>2.0.0_SA_COO~B1</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -37,7 +37,7 @@ is byte-identical to today's. You run nothing and deploy nothing.
 
 ### 1b. The steps
 
-0. Work in `/c/dev/wk-firmbkts-21`. Begin every shell call with `cd /c/dev/wk-firmbkts-21 &&`.
+0. Work in `/c/dev/wk-firmbkts-23`. Begin every shell call with `cd /c/dev/wk-firmbkts-23 &&`.
 1. **The mode export.** After the argument parsing (the point where `MODE` and `DRY_RUN` are final, and before any use of the
    mode by a child), add exactly this marked block (the check reads it by its two marker lines):
    ```
@@ -55,16 +55,29 @@ is byte-identical to today's. You run nothing and deploy nothing.
    the `aws s3 cp` reads `"$gold_hm_loc"`; keep the rest of the pipeline (`| python3 -c ...`, the redirections) byte-for-byte:
    ```
    # >>> GATE-READ-LOCATION (ADVI_FIRMBKTS FB-f-9) >>>
-   gold_hm_loc=$("${GOLD_PYTHON:-python3}" -c 'import sys; sys.path.insert(0, sys.argv[1]); from lib.platinum_dest import source; b, k = source("gold/artifacts/summary/header_metrics.json"); print("s3://%s/%s" % (b, k))' "$SCRIPTS" 2>/dev/null)
+   gold_hm_loc=""
+   for _gd in "$(dirname "$0")" "$SCRIPTS"; do
+       gold_hm_loc=$("${GOLD_PYTHON:-python3}" -c 'import sys; sys.path.insert(0, sys.argv[1]); from lib.platinum_dest import source; b, k = source("gold/artifacts/summary/header_metrics.json"); print("s3://%s/%s" % (b, k))' "$_gd" 2>/dev/null) && [ -n "$gold_hm_loc" ] && break
+       gold_hm_loc=""
+   done
    [ -n "$gold_hm_loc" ] || gold_hm_loc="s3://${BD_S3_BUCKET}/gold/artifacts/summary/header_metrics.json"
    # <<< GATE-READ-LOCATION (ADVI_FIRMBKTS FB-f-9) <<<
    ```
-   If the lib is absent the location falls back to today's legacy URI (the check's third case). Find, by reading the file,
-   whether the freshness function runs AFTER the `aws s3 sync` of `code/gold/` into `$SCRIPTS` on a runner (the sync is
-   at about line 665) or before it; if before, the lib is not there on the first gate read and the fallback would
-   silently read the legacy home under `canonical`: say so in a row (class OBSERVATION) with the two line numbers, and in
-   that case ALSO add the dispatcher's own directory as a second search path in the block (`$(dirname "$0")`), keeping
-   `$SCRIPTS` first so the check still passes.
+   Why two directories (established by the issuer, read this): on a runner `run-gold-layer.sh` syncs `code/gold/` into
+   `/home/ubuntu/gold-layer/scripts` at boot (lines 88-90) and runs `./run_gold_layer.sh` from there (line 115); that
+   wrapper sets `SCRIPT_DIR` to its own directory and runs `bash "$SCRIPT_DIR/gold_dispatch.sh"`, so `$(dirname "$0")`
+   inside the dispatcher is the boot-synced directory and holds `lib/` BEFORE the dispatcher's own later sync into
+   `$SCRIPTS` (`sync_scripts`, about line 664, called at about lines 473 and 532). On `--chain downstream` the gate runs
+   before any `sync_scripts`, which is why `$(dirname "$0")` comes first. If no directory holds the lib, the location
+   falls back to today's legacy URI (the check's third case). In your report state whether the loop's first directory
+   holds `lib/platinum_dest.py` in the layout above, by reading the two scripts' lines.
+2b. **ASCII.** The file already carries non-ASCII characters on 19 comment lines (lines 44, 49, 146, 154, 324, 369, 487,
+   517, 559, 921, 1074, 1125, 1132, 1389, 1410, 1443, 1482, 1484, 1500: dashes, a section sign and similar). CLAUDE.md
+   section 4: a file that already carries non-ASCII takes ALL of it out or every reader explicit, never a subset. Replace
+   each non-ASCII character on those lines with its plain ASCII equivalent (an em or en dash with `--`, a section sign
+   with `sect.`, a multiplication sign with `x`, an arrow with `->`, any other with the nearest ASCII word), and touch
+   nothing else on the line. They are comments, so the file's behavior is unchanged. If any is inside a string a command
+   prints or a pattern a command matches, STOP and file a BLOCKING row for that line.
 3. **Shell syntax.** `bash -n data/black_diamond/scripts/gold/gold_dispatch.sh` exits 0.
 4. **Find, do not fix, the same shape elsewhere in this file.** List every other `aws s3 ls`, `aws s3 cp`, `aws s3 sync` or
    `aws s3api` in `gold_dispatch.sh` whose key is under one of the 11 served legacy prefixes
@@ -74,18 +87,19 @@ is byte-identical to today's. You run nothing and deploy nothing.
 
 ## 2. BOUNDS
 
-1. One file changes: `data/black_diamond/scripts/gold/gold_dispatch.sh`. The diff against base is the two marked blocks and the one replaced `aws s3
-   cp` argument, nothing else (`git diff --unified=0` shows 3 hunks at most, plus the lines of your step-2 contingency).
+1. One file changes: `data/black_diamond/scripts/gold/gold_dispatch.sh`. The diff against base is the two marked blocks, the
+   one replaced `aws s3 cp` argument and the 19 comment lines of step 2b (ASCII characters in place of the non-ASCII ones),
+   nothing else.
 2. With the mode unset and a non-chain mode, a dry-run, `GOLD_KEEP_ALIVE=1` or the QA marker, the file does exactly what it
    does today. Under a scheduled chain with the mode unset the only difference is the exported variable (the point of the
    act). No new delete, copy, write or alert. No change to any other file, launch script or schedule.
-3. LF line endings; no non-ASCII in the file. If something cannot be met within your paths, file a surprise row and stop.
+3. LF line endings; the file reads 0 bytes above 127 when you are done (AC3). If something cannot be met within your paths, file a surprise row and stop.
 
 ## 3. SURFACES
 
 <paths>
 data/black_diamond/scripts/gold/gold_dispatch.sh
-org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~21/
+org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~23/
 org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -94,22 +108,24 @@ Read-only: the rest of the repository, the checks under `org/missions/D8/ADVI/AD
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~21/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-21 &amp;&amp; timeout 100 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_dispatch.py --arm export --root /c/dev/wk-firmbkts-21; echo "exit=$?"</invocation><expect>ROUND 3 DISPATCH EXPORT: ALL CASES PASS</expect></criterion>
-  <criterion id="AC2" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-21 &amp;&amp; timeout 100 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_dispatch.py --arm gate --root /c/dev/wk-firmbkts-21; echo "exit=$?"</invocation><expect>ROUND 3 DISPATCH GATE: ALL CASES PASS</expect></criterion>
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~23/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.proof_of_spec.json`.
+  <criterion id="AC1" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-23 &amp;&amp; timeout 100 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_dispatch.py --arm export --root /c/dev/wk-firmbkts-23; echo "exit=$?"</invocation><expect>ROUND 3 DISPATCH EXPORT: ALL CASES PASS</expect></criterion>
+  <criterion id="AC2" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-23 &amp;&amp; timeout 100 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_dispatch.py --arm gate --root /c/dev/wk-firmbkts-23; echo "exit=$?"</invocation><expect>ROUND 3 DISPATCH GATE: ALL CASES PASS</expect></criterion>
+  <criterion id="AC3" cell_refs="FB-f-9"><invocation>cd /c/dev/wk-firmbkts-23 &amp;&amp; python -c "import sys; b=open(sys.argv[1],'rb').read(); print('non-ascii-bytes=%d' % sum(1 for x in b if x &gt; 127))" data/black_diamond/scripts/gold/gold_dispatch.sh</invocation><expect>^non-ascii-bytes=0$</expect></criterion>
 </proof_of_spec>
 
 AC1 runs the export block under eight environments (a scheduled chain reads `canonical`; `single`, `group`, a dry-run,
 the QA keep-alive and the QA marker read unset; a value already set is kept), FAIL at base. AC2 runs the gate block with the
 mode unset (today's URI, byte-identical), with `canonical` (the module's own answer for the key) and with the lib absent
-(today's URI), FAIL at base. Two criteria: nothing else on this order is a mechanical claim. Each invocation terminates
+(today's URI), FAIL at base. AC3 counts the bytes above 127 in the file (19 lines at base, so FAIL at base): a third criterion, carried because CLAUDE.md
+section 4 makes it the only safe state of a file that already carries non-ASCII. Each invocation terminates
 inside its bound.
 
 ## 5. WHEN YOU ARE DONE
 
-Instance at `D/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.proof_of_spec.json`, `D` = `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~21`.
+Instance at `D/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.proof_of_spec.json`, `D` = `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~23`.
 Commit the file and your rows, then the instance second (its artifact rows pin to the commit that holds them). **Do not
-flip this order's `<status>`.** Row ids: `ADVI_FIRMBKTS-D1-W21-S<k>`, `k` from 1, `surfaced_at` from `date -u +%FT%TZ`.
+flip this order's `<status>`.** Row ids: `ADVI_FIRMBKTS-D1-W23-S<k>`, `k` from 1, `surfaced_at` from `date -u +%FT%TZ`.
 Report once: the AC1 and AC2 outputs in full, the line numbers of the two blocks and of the sync, the sites of step 4
 (count and line numbers), `bash -n`'s exit, and the commit hash.
 
@@ -194,6 +210,17 @@ deployed file are one reading. The face above replaces phase A3's (closed, in hi
 base (FAIL as expected) and on a reference file (8 of 8 and 3 of 3). Gate limb: the `<issued_to>`, `<paths>` and
 criteria of a staged-open order are amended by its issuer; GATE viii read `<placeholders>` at HEAD (`NONE`).
 
+**AMENDMENT 8 (2.0.0_SA_COO~B1, phase A4 re-seated ~21 -> ~23; rows D1-W21-S1, S2):** the first seat stopped, correctly, on a
+conflict in the issuer's own bounds: bound 3 said "no non-ASCII in the file" while the file already carries 19 non-ASCII
+comment lines and bound 1 forbade touching them (row S1, BLOCKING). Ruled: CLAUDE.md section 4 says a file that already
+carries non-ASCII takes all of it out, so step 2b clears the 19 comment lines (bound 1 widened to name exactly them) and AC3
+counts the bytes. Row S2 (ARMED, the gate reads before any sync on `--chain downstream`): the issuer read both wrappers: the
+runner's boot-synced scripts directory, which is `$(dirname "$0")` inside the dispatcher, already holds `lib/`, so the block
+tries it first and `$SCRIPTS` second; the fallback to the legacy URI remains for a layout with neither. Disarmed by this
+amendment for the block as cut, read again at the drain. The first seat's rows and its failing instance are merged
+(`fcb9f8b36b`). Gate limb: criteria and `<paths>` of a staged-open order amended by its issuer; GATE viii read
+`<placeholders>` at HEAD (`NONE`).
+
 **PHASE B (STAGED; NOT A FACE).** Un-park conditions, all required, each read from a file at HEAD:
 1. Phase A merged with AC1 `4 of 4`, and `FB-f-8` (act 1, the advTenant deploy) is `complete`.
 2. The never-widen pair for the mode move reads SIGNED in both halves
@@ -219,7 +246,7 @@ disarm owner this seat) is closed by phase A's `D_00f` change and by AC1's D3.
 <status>pending</status>
 <round>3</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-9</to_id>
-<slot>~21</slot>
+<slot>~23</slot>
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
