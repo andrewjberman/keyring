@@ -4001,3 +4001,29 @@
   "notes": "A served-page wording defect on a client-facing page. Whether the remedy is a kind on the served disclosure (IRPT_ANLREQ's) or a kind-neutral sentence is the CTO's call at the next analysis."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T06:41:10Z",
+  "one_line": "L9 round 11, four judgments. IV83-AC2 MET on the candidate's render (the corrected row reads 'APPL, analysed as AAPL'; navy on white, no new colour, tabular numerals page-wide). IV85-AC2 MET (NEEDS_SERVED_ROUTE follows from the cited code). The press test is ACCEPTED with a condition (it stays the only test on React's private dispatcher until the CTO decides how the portal presses things). Of the 43 suite rulings, 29 REGRESSION are accepted and 14 KNOWN-LEGACY are not accepted as labelled: none cites a ruling that retires the assertion. The three runs' failing sets are the same 43 ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msgs 4273 and 4276 (round 11 fully drained @8f6e2524d5)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_ROUND_11_L9_GRADE_20261011.md",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~43/SUITE_SAMPLE.json",
+      "this seat's reads: the two screenshots review_region_crop_1cd1cf25.png and review_table_full_1cd1cf25.png; git -C portal diff 6f70e36b 1cd1cf25 (14 lines in ProspectComposer.tsx, one cell); portal origin DEV 6f70e36b index.tsx:311, contracts/wire/PerformanceReport.ts:64, package.json (react and react-dom only), the press test's source",
+      "this seat's comparison of SUITE_SAMPLE.json runs[0..2].failing_ids: three sets of 43, all equal, covered exactly by the 43 rulings; 0 of 14 KNOWN-LEGACY bases name a ruling or a retirement"
+    ]
+  },
+  "spec_asserts": "IV83-AC2 and IV85-AC2 (judgment criteria of TO-IV-e-83 and TO-IV-e-85); the issuer's two further asks for L9 (msg 4273): the suite rulings and the press test's mechanism. Row S7's remedy: each failure is a regression to fix or a legacy assertion retired by the CTO's ruling.",
+  "world_is": "No portal test was run by this seat. Candidate 1cd1cf25 is not on DEV; its render is a local build with three stubbed requests. The 14 KNOWN-LEGACY ids are known and unruled.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

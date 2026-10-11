@@ -40,11 +40,11 @@ closes W23-S1, W29-S10 and W34-S1; that set, ruled test by test, closes S7 and W
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v6",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v6"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "DSGN_IRPTV1-S61",
