@@ -1,13 +1,12 @@
 {
   "prd": "IRPT_BCKEND_PRD.md",
-  "prd_version": "v0.34",
-  "prd_pin": "e7c6ab606f8dbda98edb36ba8498034180112604",
+  "prd_version": "v0.35",
+  "prd_pin": "289d8ddd27bcca0bd61fa6d69e86ef4fc59e5011",
   "half": "ratified-text",
   "half_hash": "74a6900e44fe6ffae00787180463c95c4514b53c4b3c840ae094983899f004c5",
   "endpoint_hash": "49fba5e1559c5b9a5fe672bfd7eefacb190bb90690e6c152df5ea2480aaabe23",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_PRD_v0.34_RATIFIED_TEXT_REVIEW_20261011.md@3f67123932d023494f6760f9d21ec743b8bf8ba6",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_PRD_v0.35_RATIFIED_TEXT_REVIEW_20261011.md@a78b3232a32c16a9a107d473e3eb0ac36db146ac",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-11T13:08:39Z",
-  "reason": "ADDENDUM v0.34: OWN_DATE admits an account-day holding an ungradeable priced security; the four UNGRADEABLE kinds do not hold the anchor-not-landed day"
+  "signed_at": "2026-10-11T13:22:08Z"
 }
