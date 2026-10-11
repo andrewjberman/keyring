@@ -6440,3 +6440,27 @@ round.** Never edit an existing row.
  "world_is": "The four price-moving events are spin-offs (custodian acca + lica of the spun-off security on the date, no quantity step). The store ratio is a price factor and the custodian evidence is a cost-adjustment plus a corporate-action contribution of another CUSIP, not a split row. I classed them REAL_AND_BEFORE on the independent close step in the cottonwood store and the same-day custodian corporate-action rows, and said so in not_established; whether a spin-off factor belongs in rule method_r28 is not mine to decide."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S115",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T12:20:43Z",
+  "one_line": "L9 round 66: CB66bn1-AC2 NOT MET, on its fourth limb alone. Re-derived by this seat from the worker's two run tables and the served local table: the rule alone moves 2 account-days on 2 dates, as the record says; but against the served table today's method_r29 run changes 32 account-days on 30 dates, because the split store has grown. The list of 2 dates is therefore narrower than the set a re-mint from today's inputs would replace. It is right only at a pin that reproduces the served store.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_66_DRAIN_END_20261011.md @eb8de12cd9 (msg 4896)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_66_L9_GRADE_20261011.md",
+      "this seat's own diff 2026-10-11T12:20:43Z of the worker's two local run tables (C:/dev/wk-cotbkf-80/.scratch/w97/fwd3_r28 and fwd3_r29, daily_returns.parquet, 1,691,729 rows each) and the served local table (fwd3_serve_r34), on account, date, return to 1e-12 and blank reason; counts and dates only: r28 against r29, 2 account-days differ, on 2014-12-03 and 2020-11-13, both measured on both sides, 0 rows on one side only; served against today's r28, 30 account-days differ on 29 dates in 3 accounts; 0 account-days are in both sets, and 1 DATE is in both (2020-11-13); served against today's r29, 32 account-days differ on 30 dates"
+    ]
+  },
+  "spec_asserts": "CB66bn1-AC2 (JUDGMENT, graded by 3.0.0_SA_CVO at L9): the two runs differ in the rule only; the control was run before the comparison; every changed day is traced to a withholding or called unexplained; the list of changed dates is the set a re-mint would replace, no wider and no narrower.",
+  "world_is": "Three limbs hold. The fourth does not hold at today's inputs. Not re-run by this seat: the two builds; the input equalities; the transactions behind the two changed days.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

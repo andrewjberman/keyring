@@ -84,3 +84,74 @@ row. No act here applies it.
 - The SEV1 page path's test SMS (call `dell1-20261011T113148Z-c290`). It is not this project's outcome, but its rows live here.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-11 ~12:2xZ) -- row D1-S21: act 4's flip would repoint the asset-dim BRONZE pin. Neither (a) nor (b): (c), the pin follows the BRONZE home rule, not the routed bucket.
+
+**Asked:** `2.0.0_SA_COO~B1` msg 3832; round 4 issued @f33c93ce43. The flip rehearsal (`round4/checks/r4_flip.py`) changes a bucket value in 5
+of 17 generated targets. One of them is `_asset_dim_rest_pin.py` (`opal-data-bd` -> `opal-data-49financial`), which ADDENDUM 7's reader list
+did not name, while `mapping_v3` HOMEs that class to `opal-data-assets`.
+
+**The defect is the generator's derivation, not the window.** The pin addresses a BRONZE ingest partition. Bronze is not served data, and
+under LGIC's tier homes (and this PRD's F11) bronze and silver go home to `opal-data-assets`, never to the firm's platinum bucket.
+Deriving a bronze pin from the scope's ROUTED (serving) bucket is wrong at every value. The flip would also move the partition that
+MDPF_HEALGAP's HG-t-11 guard reads, which breaks that guard on the day act 4 runs.
+- **(a) is refused:** moving the bronze writer to `opal-data-assets` IS F11's migration, with its own readers (HEALGAP's guard, the silver
+  builder). It does not ride act 4.
+- **(b) as stated cannot hold:** a generated file is re-derived on the flip, so the pin is never "kept" while it reads `_routed_bucket`.
+- **(c), ruled:** the generator's target for `_asset_dim_rest_pin.py` reads the BRONZE-HOME rule for the scope (the registry's tier home),
+  not `_routed_bucket`. Today that rule resolves to where the partition actually lives (`opal-data-bd`), so the regenerated file is
+  BYTE-IDENTICAL now (the dormant proof), and the act-4 flip no longer touches it. F11 moves it to `opal-data-assets` later, under its own
+  pair, with HEALGAP's guard moved in the same act.
+- **The same test applies to the other 4 changing targets.** Each is a SERVED-tier reader (it follows the flip) or a non-served tier (it
+  follows its own tier's home and drops out of act 4). The issuer prints the class per target before act 4's pair. Act 4 waits on that
+  print, not on this seat.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-11 ~12:3xZ) -- row D1-S19 (`aws_secretsmanager_secret_version.eclipse_jwt_initial`, inf-pipeline): REMOVE the block. COO~B1 issues it.
+
+**Asked:** `2.0.0_SA_COO~B1` msg 3839. No owner of `infra/aws/terraform/inf-pipeline` exists in the tree, and `0.7.0_AE_CloudOps~DELL1` (msg 3837)
+holds no order there.
+- `secrets.tf:40` declares the version, and state has NO entry for it.
+- So an UNSCOPED apply in that root would write `jwt=""` as AWSCURRENT over the live Eclipse token, which breaks Inflection's Eclipse
+  pulls.
+- Today only scoped applies keep it out.
+
+**Ruling: REMOVE the block. Import is refused.**
+- **Remove:** the resource is in config and not in state, so deleting it from config changes nothing in AWS. The secret and its live value
+  stay exactly as they are. A secret VALUE placed out-of-band is never Terraform's to manage, and the root keeps managing the secret
+  CONTAINER only, if it declares one.
+- **Import is refused:** it would put the live version under Terraform with a config value of `""`, so every later plan would propose
+  overwriting the real token.
+- **The order:** ONE LOCAL cell, issued by `2.0.0_SA_COO~B1` (its applies in that root are the ones the block constrains), executed by
+  `0.7.0_AE_CloudOps~DELL1`.
+- **Close:**
+  - a FULL (unscoped) `terraform plan` of `inf-pipeline` no longer lists `eclipse_jwt_initial`, and lists nothing else that was not in the
+    scoped plans;
+  - `describe-secret` shows the AWSCURRENT version id unchanged before and after.
+  No apply is needed for the removal itself.
+- **Until it lands:** applies in `inf-pipeline` stay scoped.
+- The secret's VALUE is never printed in any record.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-11 ~12:3xZ) -- ADDENDUM 1's premise was false. The pin reads a registered, TRANSITIONAL bronze-live row.
+
+`2.0.0_SA_COO~B1` msg 3842, measured at HEAD: `tiers.json` homes `FIRM.bronze` to the SHARED `opal-data-assets`, and
+`_home_bucket("49financial","bronze")` returns `opal-data-assets`, not `opal-data-bd`. So ADDENDUM 1's "(c) ... resolves today to where the
+partition lives ... BYTE-IDENTICAL" is false: a pin reading the home rule would move the bronze writer, and that is F11's move. This seat
+asserted the resolution without reading it.
+
+**Ruling: the issuer's proposal is accepted.**
+- ONE scope row in the registry records 49 Financial's bronze LIVE bucket, `opal-data-bd`, marked TRANSITIONAL, with owner F11 and
+  expiry "removed by F11's act in the same commit that moves the writer".
+- The pin's generator target reads that live row, so the regenerated file is BYTE-IDENTICAL now (the dormant proof), and act 4's flip no
+  longer touches it.
+- **Why this is not ADDENDUM 7's refused "second field":** it records a different tier's CURRENT location against the canon home. It
+  is the truth until the migration, and it carries its claim (`transitional`, with an owner and an expiry). One value for the served
+  location stays one value.
+- A builder that refuses the row is a missing registry row to add (CLAUDE.md 30).
+- **The other 4 flipped targets:** the issuer classes each as served-tier (it follows the flip) or non-served. A non-served target reads
+  ITS tier's live row where its data has not moved yet, by the same rule.
+
+-- 1.0.0_SA_CTO~DELL1

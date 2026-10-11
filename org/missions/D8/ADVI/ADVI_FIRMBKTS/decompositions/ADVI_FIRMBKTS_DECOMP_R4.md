@@ -1,0 +1,94 @@
+# ADVI_FIRMBKTS -- DECOMPOSITION (L5) -- ROUND 4, THE WINDOW'S READERS BUILT DORMANT AND THE ENRICHMENT (PRD v1.3)
+
+```json
+{
+ "project": "ADVI_FIRMBKTS",
+ "directive": "D8",
+ "macro": "ADVI",
+ "fabric": "dell1",
+ "decomp_version": "v4",
+ "step": 5,
+ "prd_ref": "org/missions/D8/ADVI/ADVI_FIRMBKTS/prd/ADVI_FIRMBKTS_PRD.md (v1.3)",
+ "order_ref": "1.0.0_SA_CTO~DELL1 msg 3813: org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/ROUND_ANALYSIS.round3.md @4c2785565d (section 3, the ENRICHMENT LIST); msg 3822 (the cluster-lead ruling on call c290)",
+ "author": "2.0.0_SA_COO~B1",
+ "round": 4,
+ "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
+ "cells": 9,
+ "chains": 8,
+ "join_cells": 0,
+ "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
+ "frozen": true
+}
+```
+
+**Author:** `2.0.0_SA_COO~B1` (dell1), seated by `1.0.0_SA_CTO~DELL1` (round-3 analysis msg 3813; the c290 ruling relayed
+at msg 3822). **Inputs:** the CTO's round-3 analysis sections 2 and 3 and `ROUND_ANALYSIS.round2.md` ADDENDA 1-7; the
+round-3 packet `deliverables/2.0.0_SA_COO~B1/round3/R3_CLOSE.md`; the four staged act orders `TO-FB-f-9` (phase B),
+`-10`, `-11`, `-13` and their pair halves in `ledger/`; `deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md`.
+
+## Round 4 -- the cells
+
+| cell | item | serves | candidate | owned files | depends on | slot, class | risk |
+|---|---|---|---|---|---|---|---|
+| `FB-g-1` auth-validator-edge reads the ownership map through a canonical-key helper, DORMANT | 1 | FWD-3, FWD-4 | F6 | `infra/aws/lambda-edge/auth-validator-edge/{index.mjs,ownership_key.mjs,test/ownership_key.spec.mjs}` | -- | ~24 worker | WORLD (path floor), built dormant |
+| `FB-g-2` the producers' role grant, drafted (D1-S18) | 1 | FWD-4, FWD-5 | F10 | `infra/aws/terraform/bd-pipeline/iam.tf` (one appended resource, not applied) | -- | ~25 worker | WORLD (path floor), drafted |
+| `FB-g-3` table repair under S2-S11 (mapping_v4) | 2 | FWD-2 | F2 | `deliverables/mapping_v4.json`, `MAPPING_TABLE_v4.md` | -- | ~26 worker | LOCAL |
+| `FB-g-4` blind reader A, a one-file worktree | 3 | FWD-1 | F3 | its worktree (the issuer ingests the answers) | -- | ~27 worker-light | LOCAL |
+| `FB-g-5` blind reader B, a one-file worktree | 3 | FWD-1 | F3 | its worktree (the issuer ingests the answers) | -- | ~28 worker-light | LOCAL |
+| `FB-g-6` the WAF ACL reconcile (S12): a plan that reads no ACL change | 4 | FWD-3 | F6 | `infra/aws/terraform/portal-auth/waf-cloudfront.tf` | -- | `0.7.0_AE_CloudOps~FB1` seat order | WORLD (path floor), nothing applied |
+| `FB-g-7` E_24's explicit-mode refusal | 5 | FWD-5 | F10 | `data/black_diamond/scripts/gold/E_24.rebuild_fee_scorecard.py`, its test | -- | ~29 worker-light | LOCAL |
+| `FB-g-8` act 0: the producers' role grant applied (STAGED, parked) | 1 | FWD-5, FWD-4 | F10 | the one policy resource in `bd-pipeline` | `FB-g-2`, its pair signed | `0.7.0_AE_CloudOps~FB1` | WORLD, STAGED |
+| `FB-g-9` the ONE SEV1 test text (the cluster-lead CTO's ruling on call c290) | -- | (rows D1-S15, S16, S20) | -- | `deliverables/0.7.0_AE_CloudOps~FBL/evidence/` | -- | `0.7.0_AE_CloudOps~FBL` seat order, workstream `SEV1_SMS_TEST` | WORLD |
+
+No two cells write one file. Shared reads only: `mapping_v3.json`, `census.json`, the F7 manifest, the producers' census
+and the merged dormant builds.
+
+**Chains** (cells joined by a real data dependency are one chain): `{FB-g-2, FB-g-8}`, `{FB-g-1}`, `{FB-g-3}`,
+`{FB-g-4}`, `{FB-g-5}`, `{FB-g-6}`, `{FB-g-7}`, `{FB-g-9}`. M = 8.
+
+## Carried, not cells of this round (the window's acts, staged since round 3)
+
+`TO-FB-f-9` (phase B: the producers' mode move, act 2), `TO-FB-f-10` (the delta copy, act 3), `TO-FB-f-11` (the value flip,
+act 4), `TO-FB-f-13` (acts 4b and 4c) stay `parked` as cut. Each is re-homed to this round by amendment at its un-park
+(`<round>` 3 to 4, `<status>` to `pending`, its `<issued_to>` and criteria rewritten), in this order: `FB-g-8`, act 2,
+act 3, act 4, acts 4b and 4c. **The window opens only when every dormant reader is merged and signed** (the CTO's
+ADDENDUM 7): `FB-g-1` merged; the generated readers need no cell (the flip regenerates them; the issuer's
+`r4_flip.py` is the act's enumeration, 5 value-changing targets of 17 generated); `FB-g-2` merged and its act 0
+applied. **Act 4 also waits on row `D1-S21`** (the asset-dim pin, below). The round does not close until these are
+terminal or re-parked with a reason.
+
+## The finding the rehearsal added (row D1-S21; not a cell until the CTO rules)
+
+The CTO's list of the flip's readers is `opal_naming.py targets`' consumers. The issuer's scratch-registry rehearsal of the
+value flip (`round4/checks/r4_flip.py`: the 49financial routed alias loses its marker; all 17 generated targets
+regenerate and diff) changes a bucket VALUE in exactly five targets: `data/firm_registry.json`, `firm-config.mjs`,
+`directory_runner.py`, `holdings_snapshot.py` and `data/black_diamond/scripts/bronze/_asset_dim_rest_pin.py`.
+`perfrp_firm_pin.py`, which the list names, does not change; the bronze pin, which it does not name, does. The pin repoints
+the BD asset-dim bronze pull to `opal-data-49financial`, while `mapping_v3.json` HOMEs that class to `opal-data-assets`.
+Which placement is right is an endpoint question: row `ADVI_FIRMBKTS-D1-S21`, BLOCKING on act 4.
+
+## Not in round 4 (ruled, each with its owner and its un-park condition)
+
+| item | owner | un-park |
+|---|---|---|
+| FWD-7 and FWD-8 (the prohibited key, B2; DEC-13) | Andrew | his word |
+| the SNS routing fix for the SEV1 page path | this project, next round | `FB-g-9`'s text arrives (the ruling's first branch) |
+| the AWS Support case for the number | Andrew | `FB-g-9`'s text fails (the ruling's second branch) |
+| `D1-S19`, the pending `eclipse_jwt_initial` secret version | inf-pipeline's owner | routed as a row; no act here applies it |
+| the 97 dynamic-key files | -- | classed in round 3's census (SERVED-REACHING 0); no cell |
+| a serving-route field in the builder | -- | REFUSED (ADDENDUM 7, FWD-3): every generated reader moves in one window |
+| the bronze pin's placement | 1.0.0_SA_CTO~DELL1 | row `D1-S21` |
+
+## Fan-out
+
+`fanout: 8 of 8 chains, cap 8, reason: six worker subagents (FB-g-1 to -5 and -7) and two seat orders (FB-g-6 to
+0.7.0_AE_CloudOps~FB1, FB-g-9 to 0.7.0_AE_CloudOps~FBL) are disjoint in write set; FB-g-8 is staged on FB-g-2 and
+spawns nothing.` Seven orders are `pending` at the cut (six workers and two seat orders), one is `parked`.
+
+## Lenses read at L5 (each order's preflight carries its disposition)
+
+| lens | disposition |
+|---|---|
+| `comp-schedule` | every build cell DECLARED-NOT-APPLICABLE (no cron, rule or cadence changes); the staged acts read it at the act |
+| `comp-iam` | `FB-g-8` and `FB-g-9`: the actor's own identity read at the act, resource-scoped, never `*`; `FB-g-2` drafts the grant, makes no AWS call; the rest DECLARED-NOT-APPLICABLE |
+| `comp-adversary` | each build cell's criteria are dry-run at base (FAIL as expected) and, where a bound or control, PASS; fixtures prove the checks pass on a conforming build |
