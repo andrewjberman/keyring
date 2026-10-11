@@ -44,3 +44,14 @@ calls are read too. The live gateway's `deploy-to-ec2.sh` computes `ADVI_FEE_STA
 every release. So the `fee_statement` row lands, and the census reads it, BEFORE the refusal ships; otherwise the next gateway release
 fails at its env step. The census is a content search over every tracked script that calls the builder (shell, Python and Terraform
 `external` data sources alike), with its denominator printed.
+
+## ADDENDUM 2 (2026-10-11 ~16:2xZ) -- correction to W49-S2: the tables registry does not exist yet. The cell CREATES it.
+
+Measured on dell1 (AMGT_CORPUS `2.0.0_SA_COO~C1` msg 3998, confirmed by this seat): `infra/logic/registry/` holds 15 files, and no general
+tables registry; "table" appears only in `platinum_destinations.json` and `reporting_policies.json`. "A missing `tables` row" therefore names a
+file that is not there. The ordered cell becomes:
+1. the census of every table in use, deployed callers included (ADDENDUM 1);
+2. a NEW `infra/logic/registry/tables.json`, generated from that census, one row per table with its source and tier;
+3. `address()` refusing a table with no row.
+The byte-identical and replay arms are unchanged. If site Z's registry already carries a tables file this one lacks, that is a registry
+divergence between boxes, to name before the cell is cut.

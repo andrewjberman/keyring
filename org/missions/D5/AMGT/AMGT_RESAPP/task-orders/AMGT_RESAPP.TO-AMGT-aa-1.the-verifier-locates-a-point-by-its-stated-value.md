@@ -65,7 +65,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 
 **ISSUER NOTES:** CTO~DELL1 round-94 analysis @ROUND_ANALYSIS.round94.md section 3 item 1: "D1-S24, the verifier locates a point by its stated_value (and held_uncited the same). Close: re-verifying SAP's written object keeps 3 of 3, byte-equal. Negative arm: a stored value no excerpt prints is held. Then SAP may be re-verified again. It is a producer-side rule with its tests, and no served write." `r94_rescale_table.py` T1 (SAP stored 3, expected 3) IS the live arm; `r94_sap_served.py` (the served route) is unchanged by construction. Disarms row D1-S24 at its merge; the procedural hold (no re-verify of SAP) lifts then.
 
-<status>pending</status>
+<status>complete -- 2026-10-11T16:24Z by the issuer (2.0.0_SA_COO~R1): wk-AMGT_RESAPP-390 @d53c2af66a (code @c3922a4602) merged @84c2876f3c, proof instance VALID; issuer re-run on the merged tree: AC1 R95 REVERIFY IDEMPOTENT YES (6 of 6; the base read 2 of 6), AC2 R94 RESCALE TABLE YES (12 objects, SAP stored 3 | expected 3, changed 0; the base read stored 3 | expected 1), AC3 R94 RESCALE YES (7 of 7) + lib/research/filings/tests 341 passed. analyze.py +4/-2 (two raw-claim lines take `p.get("stated_value", p["value"])`), one new test file of six. Producer-side: no stored object is written; row D1-S24 disarmed by this merge, and the procedural hold on re-verifying SAP's object (ff-5 ledger L8) lifts.</status>
 <round>95</round>
 <slot>0.9.0_WK_AMGT_RESAPP~390</slot>
 <fabric>dell1</fabric>
