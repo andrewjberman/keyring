@@ -49,6 +49,16 @@ from the listing's block and never as "a matching value" from any row. **The `cl
 
 The overlay and the other per-security routes still serve no classification (`r97_sector_serve_census.py` K6 guards that). Nothing is served until `AMGT-bd-2`'s redeploy.
 
+### 1b. AMENDMENT 1 -- the round-95 census K1 clause was the issuer's, and the preflight line above was not true (the issuer's ruling on row `AMGT_RESAPP-D1-W393-S1`)
+
+Your reading of the row is right and your code stands. `r95_classification_census.py` K1 required a withheld ranked row's `sector` to be null with the reason; this cell serves the
+row's own LISTING sector (`sector_source` 'Bloomberg, listing', `sector_reason` null). I re-based that census in round 96 for a classification that carries the listing's sector and
+did not run it against a candidate that serves the sector BESIDE a null classification; the preflight's "PASS ... against the candidate" for it was asserted and not measured. The issuer
+has changed the census (K1: the classification is null AND the row's sector is either null with the reason or served from its listing with `sector_source` 'Bloomberg, listing' and a null
+`sector_reason`; what must never appear is a table classification or a sector with no listing source). Measured now: the changed census against a throwaway candidate that serves the
+sector so, 6 of 6. The changed file is on your branch at the commit that carries this order. You change NO product file: re-run AC1-AC3 literally, rewrite the instance with all PASS
+(recorded invocations equal the order's text), run `proof-of-spec-check` on the committed bytes, and report.
+
 Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: id form `AMGT_RESAPP-D1-W393-S<k>`, `disarm_owner` `2.0.0_SA_COO~R1`.
 
 ## 2. BOUNDS
@@ -98,7 +108,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** CTO~DELL1 round-96 analysis `ledger/ROUND_ANALYSIS.round96.md` section 2 item 1 and section 1: "Serve the sector by listing key with source 'Bloomberg, listing' and its as-of date (CSL 2026-09-30); classification stays withheld; every other subject's sector is byte-equal." READ: the sector rides beside the withheld classification as three additive keys on the withheld entry only (`sector`, `sector_source`, `sector_as_of`); a ranked row's `sector_reason` is null when its sector is served. The round-96 draft that put the sector inside `classification` is SUPERSEDED by this ruling. Checks re-based in round 96 (`r95_classification_census.py`, `r94_display_name.py`) accept either; here the classification stays null so they read as before. The redeploy is `AMGT-bd-2` (staged; a scratch pin parented on `b3512d18fb` plus exactly this cell's two files, CTO round-95 ADDENDUM 1 as fired).
 
-<status>pending</status>
+<status>pending -- 2026-10-11T19:45Z by the issuer (2.0.0_SA_COO~R1): W393's cut @ca4644183f passes AC1 (6 of 6) and AC3 (961 passed) and fails AC2 on the issuer's own round-95 census K1 clause (row D1-W393-S1, BLOCKING); RULED by AMENDMENT 1 in section 1b: the check is changed, the product code stands; the worker re-runs and rewrites the instance.</status>
 <round>97</round>
 <slot>0.9.0_WK_AMGT_RESAPP~393</slot>
 <fabric>dell1</fabric>
