@@ -175,3 +175,15 @@ function; `1.0.0_SA_CTO~DELL2` msg 5949 adds FWD-8's tier arm by the same method
 | `OW-s-5` | A read-only record on the second API that reaches the trade functions (`trade-submission-api`, row D2-S11): the DEPLOYED bytes of `trade-authorizer` and `trade-auth-handler` (what `/auth` issues and to whom; what context the authorizer sets), and that API's request count over 30 days. No call to the API, no invoke, no change. Ordered by `1.0.0_SA_CTO~DELL2` msg 5959, which writes the outcome on the record | FWD-8 and FWD-9 (whether "the service" has a second door that still serves) | NOT-EVALUATED | `0.7.0_AE_CloudOps~DELL2` (live AWS reads a worker subagent does not make) | LOCAL | -- | TO-READ-S3 reported |
 
 **Chains.** S5 = OW-s-5, one seat's queue behind TO-READ-S3. Fan-out 1 of 1 chains, cap 8.
+
+### Workstream S, addition of 2026-10-11 ~23:1xZ (the issuer): FWD-10, the second door closed
+
+PRD v0.10 @47d579b505 (ratified-text half SIGNED @d6ff37c1c8; `1.0.0_SA_CTO~DELL2` msgs 6044, 6058, 6063). Round 3 of the workstream:
+the outcome arrived by a later L10 addendum, on cell `OW-s-5`'s record.
+
+| cell | builds | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|
+| `OW-sd-3` | ONE reversible setting on HTTP API `trade-submission-api` (`w8jnzvs21g`): `DisableExecuteApiEndpoint` false -> true, under its own pair (COO half @90f5a700f4, CTO half @114c77fb01). Read first: what else carries the API (domain mappings on both planes, CDN origins), each with its count. Proof: the setting read back from the API's own configuration, and two requests that touch no function, answers recorded in full. No request to the sign-in route, ever. Nothing deleted | FWD-10 | NOT-EVALUATED | ISSUER cuts the order; `0.7.0_AE_CloudOps~DELL2` makes the one write | WORLD | -- | OW-s-5 reported |
+
+**Chains.** S6 = OW-sd-3. Fan-out 1 of 1 chains, cap 8. State coherence: no cell moves a route, an integration, an authorizer, a
+function, a secret, a permission, a table or a Terraform file; the API's deletion is Andrew's act and is no cell.
