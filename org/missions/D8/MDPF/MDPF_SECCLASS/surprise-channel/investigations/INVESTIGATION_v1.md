@@ -6257,3 +6257,30 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED. The instrument shape is for the L9 adjudicator to weigh; this row only records the identity."
 }
 ```
+
+## MDPF_SECCLASS-D1-S28 -- the real run of the amended cross-box check STOPs on closed-at-trunk sentinels in lagging worktrees and on a prunable registration
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S28",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-11T04:02Z",
+  "one_line": "The ONE REAL RUN of SC-e-89's amended cross-box check on the three-file BD ship reads STOP (4 OPEN-DEPLOY hits) although none contends: two limbs the cell's criteria did not reach. (d) a ledger entry CLOSED at trunk (sentinel deleted) is still read as HELD in a lagging worktree's HEAD and counts as a live deploy; (e) a registered worktree whose directory is gone (prunable) reads 'ls-tree rc=128 (not readable, not clear)', the vanished-worktree classification only covering a worktree absent from the list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Real run 2026-10-11T04:01Z on box/dell1 after SC-e-89 drained (cc3c69590e): `python .tools/crossbox-deploy-check.py --root data/black_diamond --files D_04 C_06 D_03` -> OPEN-CALL clear, OVERLAP clear, UPSET clear, OPEN-DEPLOY hit (4); denominator 38 worktrees, 665 sentinel reads, 68 distinct (path, blob), 53 distinct slugs, vanished=0. Saved at org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R20_CHECKS/E89_REAL_RUN_20261011.txt.",
+      "Three hits are slugs closed at trunk: secclass-e60-d04-unclassified-sc1-20261009 (ledger CLOSED by SC1 this session, status HELD-SOVEREIGN-GATED at an older worktree HEAD), secclass-e84-cot-name-port-sc1-20261009 (CLOSED @a95bddaefd on box/dell1, sentinel deleted there) and cot-cash-admission-m-20260925 (author 2.0.0_SA_COO~M, 16 days old, status HELD-SOVEREIGN-GATED in a stale worktree). Each names a carried file only inside its own proof text.",
+      "The fourth hit is `worktree C:/dev/wt-q1-r7: ls-tree rc=128 (not readable, not clear)`: the directory does not exist (`ls /c/dev/wt-q1-r7` fails) and `git worktree list` no longer shows it a minute later, so the registration was prunable at the read; measure_open_deploy's vanished branch requires the tree to be absent from the re-read list."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A one-file-family ship with no real contention reads CLEAR from the cross-box check once the actor's own entry and slug duplicates are handled (SC-e-89's three limbs).",
+  "world_is": "It reads STOP on stale or unreadable worktree state: a closed entry survives as HELD in any worktree HEAD that has not taken the closing commit, and a prunable registration is a hit. Under WARN mode (the current switch) the ship prints these and proceeds, so SC-e-87b is not blocked; under ENFORCE every ship from a box with lagging worktrees STOPs.",
+  "notes": "SURFACED, NOT CHASED: found by the round's one real run, which is what the drain's real-run step is for; the cell's three fixture criteria passed and could not see it. Candidate fix for a round-21 cell: read each sentinel's status from the trunk (box branch HEAD) first and count a slug present only in a lagging worktree as stale when trunk deleted it; classify a registered-but-missing directory as vanished. RELATED: [[MDPF_SECCLASS-D1-S23]], [[MDPF_SECCLASS-D1-S25]], [[MDPF_SECCLASS-D1-S22]]."
+}
+```
