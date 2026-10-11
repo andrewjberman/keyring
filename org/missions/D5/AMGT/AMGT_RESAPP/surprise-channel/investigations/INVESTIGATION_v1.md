@@ -24540,3 +24540,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not fixed (the round is frozen mid-round; a row is the only off-spec act). The repair is a cell for the CTO's round-93 analysis: the display-name chain must not take a classification name that disagrees with the registered name, and the held-name index must carry one company per key. Until then the dry-run table of AMGT-ss-6 names the Santander exclusion so it is not read as a self peer."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W387-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~387",
+  "surfaced_at": "2026-10-11T12:46:04Z",
+  "one_line": "The round-94 display-name check's docstring states the name-agreement rule as one token of four or more letters; the order and the census state two or more characters, and the code follows the order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-ff-1 cell: 'Two names AGREE when the token sets ... share at least one token of two or more characters.' The census r94_name_census.py docstring (lines 7-8) states the same two-or-more rule.",
+  "world_is": "r94_display_name.py docstring (line 8, at 61d50fc7fa) states 'share at least one token of four or more letters'. The implemented rule (lib/research/api/names_read.py, commit fdc8659371) keeps tokens of two or more characters, per the order and the census. Two written versions of one rule sit in the round-94 prep; the check's arms were run with the implemented rule, not re-run under the docstring's four-letter reading.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round94_prep/checks/r94_display_name.py@61d50fc7fa line 8 (docstring: four or more letters), read in worktree C:/dev/wk-resapp-387",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round94_prep/checks/r94_name_census.py@61d50fc7fa lines 7-8 and 35 (len(t) >= 2)",
+      "lib/research/api/names_read.py@fdc8659371 (_name_tokens: len(token) >= 2 and not in AGREEMENT_GENERIC_WORDS)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Documentation drift in the round-94 prep check, not a change to the served rule. For the issuer to correct the docstring or confirm the two-character rule."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W387-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~387",
+  "surfaced_at": "2026-10-11T12:46:04Z",
+  "one_line": "The investigation file is not one fenced json array: it holds 78 fenced blocks, one row each, so 'append inside the fenced json array' cannot be followed literally; the row was appended as a new block in the file's existing shape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AMGT-ff-1 worker face, section 5 and the surprise rule: 'append ONE row ... inside the fenced json array'. The file's own header (lines 18-22): 'THIS FILE MUST STAY ONE FENCED JSON BLOCK ... an appender targets the FIRST block and appends INSIDE the array.'",
+  "world_is": "At 61d50fc7fa the file has 78 json fenced blocks (fence lines 156, 78 opening), each holding a single row object (e.g. AMGT_RESAPP-D1-S23 at lines 24518-24542 is its own block). No single array exists. The header's instruction, followed literally, appends into a block that holds one object, which would not be a valid array. The row was appended after the last block, as a new fenced block with LF endings (the base's line ending), written by a byte-level writer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python byte count at 61d50fc7fa of the json fence marker in org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md: 78 blocks; Grep of the fence line: 156 lines",
+      "INVESTIGATION_v1.md lines 18-22 (header rule) and lines 24518-24542 (one row, one block) read in worktree C:/dev/wk-resapp-387"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The header's rule and the file's shape disagree; the header's FIRST-block instruction would mis-append here. The disarm is the channel owner's: reconcile the header with the one-row-per-block shape."
+}
+```
