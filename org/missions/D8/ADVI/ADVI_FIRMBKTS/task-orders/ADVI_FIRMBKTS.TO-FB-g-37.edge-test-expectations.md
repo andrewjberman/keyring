@@ -110,7 +110,7 @@ partner 49financial routes to the canonical bucket and key; staff `?firm=49finan
 `platinum/advi/49financial/` and reads the frozen legacy bucket for other classes (the portal's `ROUTER_FIRM_SUFFIX` still maps
 `49financial` to `bd`: a portal follow-up, not this order). Workstream `EDGETESTS`. Class WORLD by the path floor (an infrastructure path), though the cell writes test files only.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>EDGETESTS</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-37</to_id>

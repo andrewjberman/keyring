@@ -74,3 +74,9 @@
 ## 2026-10-12 10:35Z tick (B1)
 - Pre-flip reads run early (issuer, read-only): r4_oai.py 3 of 3 (nine oracle pairs in the canonical bucket under the OAI prefixes, HEAD 9 of 9, OAI statement equal to the legacy one); CloudFront behaviors use cache policies opal-scoped-advisor-by-firm (min 1, default 60, max 31536000) and Managed-CachingDisabled; shared-advisor-router-response injects Cache-Control public, max-age=60, must-revalidate, so the served TTL is 60 s (under one session).
 - 13:30Z MDPF fire and g-30 bronze_homes print still to read; act 4 after 13:45Z.
+
+## 2026-10-12 14:45Z tick (B1)
+- Act 4: dell1 IRPT leg applied 14:03:43Z-14:13:46Z (FB1, before my hold; artifacts equal rehearsal, sample 14/14 EQUAL); CTO accepted the split (ADDENDA 6, 7): hourly map reads to 21Z, edge must BEGIN by 21:00Z else roll back IRPT units and act 2 before 23:00Z (read-back before 02:00Z). FB1 named rollback actor (d2cba16ee1).
+- Edge leg held by FBL on S21 (router 42/9, guard 43/3 at the flip): 12 stale expectations, handlers probed correct; FB-g-37 merged @d0a1f93043 (52/0, 47/0), edge diff since flip = four test files. Laptop dark until ~19-20Z (Andrew travelling): orders 5a5a, 843a queued; ae20 acked 13:42Z.
+- MDPF 13:30Z fire: five gold classes written 13:31:46-51Z (PRD v1.4 check a met; CTO confirms via MDPF_CANON read @6c49fa41d0). bronze_homes.json mark-line only (check d).
+- Armed rows to disposition at L8: W60-S3 (naming gate exempts tests/ not test/), W54-S2. Portal ROUTER_FIRM_SUFFIX (49financial -> bd) follow-up needs Andrew for PROD.

@@ -107,3 +107,19 @@ org/critical_paths/change_management/
 <workstream>DEVADMIT</workstream>
 <slot>dell1</slot>
 <fabric>dell1</fabric>
+
+**COMPLETE 2026-10-12 ~14:5xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** `0.7.0_AE_CloudOps~HV1` @33189f2667 (on box/dell1 HEAD), under the pair COO @af69f5e1d4 and `1.0.0_SA_CTO~DELL1` @0e8a1d59cc
+  (msg 4424). Plan `0 to add, 1 to change, 0 to destroy`, one apply; the code hash `cWiraC3E...` -> `Q342L4Vn...` (LastModified
+  2026-10-12T14:40:46Z, Active, Successful). Ledger `harvst-by5-enqueue-dev-admit-20261012` CLOSED. Proof VALID rc 0 at box/dell1
+  HEAD (re-run by this seat with `--governing-order`).
+- **AC1 PASS** the four deployed arms read 400 (Dev with an advisor tier: admitted past the fence, never a 202), 403 (advisor,
+  non-Dev), 403 (no context), 400 (internal: unchanged). **AC2 PASS. AC3 PASS.**
+- **Row D1-S11 (INERT), a defect of THIS order's face, ruled:** the CTO's half calls the body-carried `userType` arm REQUIRED
+  (`Dev` only in the request body, an advisor tier in the context: 403), and this order's four arms omitted it. The seat ran it as an
+  extra arm on the deployed function and it read 403 (`by5_arms.out` / the instance). Accepted as the required arm's evidence.
+- **Step 8 (the post-act read of a real Dev enqueue) is UNMEASURED, not passed:** 0 `OK:` lines at 14:42Z.
+- **Round 81's fence work is complete on both build and deploy.** The live function admits `tier == internal` OR `userType == Dev`,
+  refuses every other caller and a caller with no context, and writes `DENIED: tier=<tier>` for a refusal.
+
+<status>complete</status>
