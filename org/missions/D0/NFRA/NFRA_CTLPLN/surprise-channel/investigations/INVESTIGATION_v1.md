@@ -7297,3 +7297,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The handler does not gate the two class-(i) routes, so a request whose authorizer context is missing, empty or 'null' reaches them, as it did before the fence. Their only login check is the API Gateway authorizer, which is outside this order. The fail-closed rule therefore holds for class (ii) and not for these two routes, by the ruling's own design. The CTO should confirm that reading before CT-u-7 applies, because the test pins it."
 }
 ```
+
+## NFRA_CTLPLN-W64-S1 -- the registry's served-tenant set is wider than the portal's firm admission set
+
+```json
+{
+  "id": "NFRA_CTLPLN-W64-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~64",
+  "surfaced_at": "2026-10-12T07:20:01Z",
+  "one_line": "The registry's served-tenant set (_tenants) holds five ids and the portal's firm matrix admits four; a firm set derived from _tenants() would admit a test-kind tenant that the portal refuses today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@b0670f7e29 lines 966-979: _tenants() yields a scope's own tenant and each alias that carries a tenant block; infra/logic/registry/scopes.json@b0670f7e29 scope row index 0 carries one such alias (planes tenant-id, tenant kind test), so the served set has five members, four scope-level plus one alias.",
+      "portal/src/lib/firmAccess.ts (the portal checkout on disk): FIRM_ALLOWED_PATHS at lines 44-126 has four keys, and isPathAllowedForFirm at lines 134-142 denies a firm with no key.",
+      "infra/logic/registry/scopes.json@b0670f7e29 test-kind alias row, and portal/src/pages/InvestorReporting/header/firmDisplayNames.generated.ts@b0670f7e29 line 6, which already lists that tenant, so the generated display carrier reads five members."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CT-v-2 (ruled registry row): the firm set the data proxy admits for a page must be the set the portal admits for that page, stated as explicit registry rows and never derived from the tenant registry.",
+  "world_is": "A derivation from _tenants() would give five members. The proposal states four explicit rows, so the test-kind tenant is refused exactly as the portal refuses it today. The CTO should rule whether that tenant is ever to reach a partner page, because the answer decides whether an explicit row or a derived set is correct."
+}
+```
