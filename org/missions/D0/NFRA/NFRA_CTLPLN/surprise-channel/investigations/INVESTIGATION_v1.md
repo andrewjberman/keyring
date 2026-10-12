@@ -7035,3 +7035,132 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Handled in the build, so the hazard is INERT in the artifact. Recorded because the order did not name the placement or the backup."
 }
 ```
+
+## NFRA_CTLPLN-W62-S2 -- the order's census premise says 11 routes; the handler matches 41
+
+```json
+{
+  "id": "NFRA_CTLPLN-W62-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~62",
+  "surfaced_at": "2026-10-12T03:40:00Z",
+  "one_line": "The order's AMENDMENT 1 step 1 gives the CTO's figure of 11 data-proxy routes; the handler matches 41 (40 GET, 1 POST) at HEAD 49af906f74 and at the issuance base edef413890.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/portal_data_proxy/lambda_function.py@49af906f74: 41 route matches of the form 'if http_method == VERB and path == or startswith', lines 2161-2399; enumerated by regex, listed in DATA_PROXY_ROUTE_CLASS_CENSUS.md section 1",
+      "infra/aws/lambda/portal_data_proxy/lambda_function.py@edef413890: the same 41 matches (the route block did not change between the issuance base and HEAD)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 step 1: enumerate every route the data-proxy handler matches; print ROUTES total=<n>; the CTO's figure is 11; report the true count and any difference.",
+  "world_is": "The handler matches 41 routes, a difference of 30. The census classes all 41 (2 class i, 39 class ii) and the generated ROUTE_RULES carries 41 keys. The CTO's figure of 11 does not match the handler's route block; its cause is not established here."
+}
+```
+
+## NFRA_CTLPLN-W62-S3 -- four portal call sites request data-proxy routes without the /v1 prefix
+
+```json
+{
+  "id": "NFRA_CTLPLN-W62-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~62",
+  "surfaced_at": "2026-10-12T03:40:00Z",
+  "one_line": "Four portal call sites request data-proxy routes without the /v1 prefix that CloudFront routes to the data proxy; in production those requests reach the default S3 origin.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/api/portal-proxy.ts:565 apiRequest('/news/articles/${date}'); :962 apiRequest('/returns/etf-periods'); :2518 apiRequest('/aum/summary'); portal/src/contexts/DataSourceContext.tsx:104 apiRequest('/aum/metrics') (portal source at pin c96efe1714, identical)",
+      "portal/.env.production sets VITE_PORTAL_API_URL empty; portal/vite.config.ts:57-66 states that the /v1/* routes need the CloudFront /v1/* behaviour",
+      "infra/aws/terraform/portal-auth/cloudfront-distribution.tf:776-777 routes /v1/* to APIGateway-portal; :273 is the default behaviour to S3-opalinvest-portal; no un-prefixed behaviour exists for these four paths"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "vite.config.ts:57-66 and cloudfront-distribution.tf:776-777: the data proxy is reached through the /v1/* behaviour. FWD-28 classes each data-proxy route by the portal page that calls it.",
+  "world_is": "Of the four calls, three have no importer in portal/src and the fourth (DataSourceContext.tsx:104) sits in a query with enabled: false (line 110). No live page request is affected in this tree. The census classes the routes by call site and does not depend on the URL."
+}
+```
+
+## NFRA_CTLPLN-W62-S4 -- row W62-S1 names data-proxy reads that are S3 reads in the portal source
+
+```json
+{
+  "id": "NFRA_CTLPLN-W62-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~62",
+  "surfaced_at": "2026-10-12T03:40:00Z",
+  "one_line": "Row NFRA_CTLPLN-W62-S1 lists data-proxy reads on the partner pages; the functions it names read /api/general S3 paths, which the fence never touched. The only partner-reachable data-proxy call is POST /v1/sentiment/keyword-intelligence on /market.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/api/portal-proxy.ts:2096 getMacroData, :1879 getRiskPremiumData, :834 getModelPortfolioBenchmarks, :897 getETFBenchmarkReturns, :942 getPeerPerformance, :1178 getPositioningData each call apiRequest on a /api/general/ path (pin c96efe1714, identical)",
+      "infra/aws/terraform/portal-auth/cloudfront-distribution.tf:709-711: /api/general/* routes to the S3 JSON origin, not to the data proxy",
+      "DATA_PROXY_ROUTE_CLASS_CENSUS.md rows 1-41: two partner-reachable data-proxy calls, keyword-intelligence on /market (class i, all four firm sets) and the enabled-false /aum/metrics query (class i, app root)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN-W62-S1 world_is: partner-openable pages call the fenced data-proxy reads on /market, /portfolios, /positioning, /valuations, /macro and /philosophy; its disarm owner is the issuer, who relays to the CTO before CT-u-7 applies.",
+  "world_is": "The functions S1 names read S3 paths, so the fence did not touch those reads. The content GET (usePortalContent at App.tsx:246 at the pin) is unfenced again by CT-u-6 step 4, so S1's content-read hazard is addressed in code. Whether S1 is disarmed is the issuer's ruling (its disarm_owner)."
+}
+```
+
+## NFRA_CTLPLN-W62-S5 -- the generator's input is a submodule checkout the parent repo does not track
+
+```json
+{
+  "id": "NFRA_CTLPLN-W62-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~62",
+  "surfaced_at": "2026-10-12T03:40:00Z",
+  "one_line": "The generator reads portal/src/lib/firmAccess.ts, which sits in the portal submodule checkout; the parent repo pins the portal gitlink at c96efe1714 and does not track the source file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree HEAD portal (worktree HEAD 49af906f74): 160000 commit c96efe1714784162c4134450da33ce6fd6226b60 portal; git ls-files portal/src returns 0 entries in the parent",
+      "git -C portal rev-parse HEAD on the worktree checkout: 2ed4373d523a278d2064967b5bd9fc24cfc35b3e (ahead of the pin)",
+      "sha256 of the LF-normalised firmAccess.ts on disk = 895ee78226100d1f5fa95fcbf69393b60c80c2476ea6ad68b711478c0dd92e56, equal to the pinned file's sha256 (git show c96efe1714:src/lib/firmAccess.ts)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 step 2: the firm sets are read from portal/src/lib/firmAccess.ts (one source, never typed a second time).",
+  "world_is": "The generator's input is a file in a submodule checkout that the parent does not pin by content. The generated header carries the sha256 of the file it read, so a different portal checkout makes --check print FIRM-SETS-DRIFT, and a device with no portal checkout makes the generator exit 2. Nothing in the parent repo fixes which portal commit the firm sets come from."
+}
+```
+
+## NFRA_CTLPLN-W62-S6 -- the naming limb refuses the generated firm-sets module (firm tokens in a new generated file)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W62-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~62",
+  "surfaced_at": "2026-10-12T04:00:00Z",
+  "one_line": "The commit-time naming limb (LGIC_ENFORCE) refuses the generated firm-sets module: firm tokens on lines 61 and 177 of a NEW file that lib/opal_naming.py does not produce, so the data-proxy fence cannot land from this order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh refused the code commit (paths: infra/aws/lambda/portal_data_proxy, portal_content, .tools/portal-proxy-firm-sets-gen.py): naming-gate REFUSE 'NEW hand-kept carrier (context rule)' at infra/aws/lambda/portal_data_proxy/firm_access_generated.py:61 and :177, tokens 49financial, cottonwood, demo, inflection; 'Commit aborted; files unstaged'",
+      ".tools/naming-gate.py:1-40 (context rule: a firm token is permitted in registry files, in a generated block or file produced by lib/opal_naming.py generate, or inside key()/address()/name()/lookup() arguments; tests are not graded)",
+      ".tools/naming-gate.py:747-748: the generated targets are the opal_naming VIEWS, LOCALS_PATH and VECTORS_PATH; lib/opal_naming.py:123 WHOLE_FILE_TARGETS is the whole-file list; the portal-proxy generator is in neither"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 step 2: .tools/portal-proxy-firm-sets-gen.py writes infra/aws/lambda/portal_data_proxy/firm_access_generated.py, whose ROUTE_RULES carries the firm ids read from portal/src/lib/firmAccess.ts; CLAUDE.md section 4 (LGIC): a builder refusal is a missing registry row to add, never a hand-typed workaround.",
+  "world_is": "The generated module is a new hand-kept carrier of four firm tokens, which the naming limb refuses. Registering the generator as a generated target is an edit to lib/opal_naming.py and infra/logic/registry/, outside this order's paths; a deliberate departure is an R20 register entry that Andrew acknowledges. The tokens were not encoded or wrapped to pass the gate. Nothing from the data-proxy set is committed; the code sits uncommitted in the worktree. The content-api revert (step 4) is committed separately because it adds no firm token."
+}
+```
