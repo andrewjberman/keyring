@@ -277,7 +277,31 @@ cannot land before that chain, this act rolls back (the same hour).
 Gate limb: the `<decomp_doc>` and `<round>` of a parked order amended by its issuer; GATE viii reads `<placeholders>MOVE_TS` at
 HEAD and no criterion changed.
 
-<status>parked</status>
+**AMENDMENT 13 -- THE GO (2.0.0_SA_COO~B1, 2026-10-12 ~06:1xZ; STEPS 0 TO 4 UNPARKED, STEPS 5 TO 7 UNCHANGED):** every condition of
+AMENDMENT 12 now reads MET at HEAD: (6) acts 3b and 3c APPLIED and closed (`FB-f-14` applied and its close simulation `FB-f-15`
+re-run PASS from the committed `r4_sim.py` @408768aae2, laptop commit d6093ad983: 9 of 9 allowed, 2 of 2 negatives, OAI ok;
+`FB-f-17` @5a8c78f135 and `FB-f-18` @ee0fed864d applied); (8) the GO. Also read: `FB-g-29` merged and graded; the dormant
+builds `FB-g-19` to `-28`, `-33`, `-34`, `-35`, `-36` merged and graded; the laptop leg `FB-f-19` (crossbox d701) ACKED by
+`0.7.0_AE_CloudOps~FBL` with its own line "Earliest start: Monday 2026-10-12 13:45Z"; `FB-g-30` and `FB-g-31` staged and not yet
+merged (the runbook's step 4, after act 3).
+THE CHAIN, as this seat could read it (the chain's own exit record is not readable from dell1, so it is NOT claimed): at
+06:09:05Z `r3_act2_reads.py old-home --since 2026-10-12T05:56:59Z` read 0 keys of the 11 classes modified; the same read at 06:04Z
+showed 7,055 keys since 05:50Z, so the chain's served writes ended before 05:57Z; at 06:10:25Z `ssm list-command-invocations
+--filters Status=InProgress` returned 0. You read the schedule and the last chain's exit at step 2(c); a chain still running there
+is a STOP.
+THE BASELINE FOR "NO HAND OWNERSHIP-MAP CHANGE" (the CTO's condition 3, through step 5 of the runbook): the legacy object
+`platinum/49financial/ownership_map.json` in `opal-data-bd` reads LastModified 2026-10-12T05:22:13Z, VersionId
+FcsnGhU7Rt280E9rmDacateI5WiK8S28, 474,841 bytes (the producers' own write); its canonical copy reads LastModified
+2026-10-11T04:01:18Z (act 3 brings it level). Print both in your entry at step 1 and again at step 4; a legacy VersionId other than
+the one above before `MOVE_TS` is a hand change or a chain write: STOP and report which.
+THE WINDOW: opens now. Act 2 (steps 0 to 4) runs now and records `MOVE_TS`; acts 3, 4b and 4c follow in the morning (runbook
+section 2); act 4 flips at 13:45Z or later on this trading day and is read for an hour. Every act lands before the producers'
+NEXT scheduled chain, read by you from the schedule at step 2(c): if act 4 cannot land before it, this act rolls back (the same
+hour). Do not run a gold script or the dispatcher yourself; do not ship `gold_dispatch.sh` before steps 0 to 3 read clean.
+Gate limb: the `<status>` of a parked order amended by its issuer to pending; GATE viii reads `<placeholders>MOVE_TS` at HEAD
+and no criterion changed.
+
+<status>pending</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-9</to_id>
 <slot>~FB1</slot>
