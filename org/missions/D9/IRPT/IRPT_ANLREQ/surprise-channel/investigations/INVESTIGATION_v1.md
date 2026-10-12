@@ -3773,3 +3773,28 @@
   }
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-12T22:58:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The _authz internal arms built with no load_service_profile read the default profile reader (a DynamoDB query), not an offline fake; the amended four arms now inject one, but the six test_final_release_refuses_changed_actor_owner_or_service_identity arms still take that reader and now pass by refusal at the fence, not by their identity check",
+  "spec_asserts": "The order's preflight and bounds say the _authz tests run offline (no AWS, no network). AMENDMENT 1 says the four test_interactive_entry arms take status active on the row they read; the six test_final_release arms are not in the amendment and were meant to stay without a row.",
+  "world_is": "Read at base a13729590f: canonical_profile_reads.py:70-73 get_user issues self._ddb.query(TableName='opal-users-v2', IndexName='email-index') and served.py:1151-1156 builds boto3.client('dynamodb') when no loader is injected; test_interactive_entry.py and test_final_release arms build Entry without load_service_profile. In this worktree the amended arms now use a monkeypatched get_user (active_internal_row fixture) and make no query. Not measured: whether the baseline run reached AWS (no live call was made by this worker for this row). By code reading only, not run: a test_final_release arm's caller now gets None from the default reader, served.py:1157-1160 raises, the caller's except at served.py:1235-1237 refuses FIRM_BINDING before compute runs, and the test's assertion (ok False and no data) passes on that refusal, not on the changed actor, owner or renderer it names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py:70-73 @a13729590f (get_user query)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1151-1160 @a13729590f (_internal_allowed_firms default reader and status rule)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1233-1237 @a13729590f (internal branch try/except refuse)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_interactive_entry.py:24-95 @a13729590f (active_internal_row fixture and the test_final_release arms)"
+    ]
+  }
+}
+```
