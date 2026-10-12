@@ -5,7 +5,7 @@
  "project": "ADVI_COTBKF",
  "directive": "D8",
  "fabric": "dell2",
- "prd_version": "v0.9",
+ "prd_version": "v0.10",
  "step": 4,
  "brief_ref": "docs/briefs/cottonwood-commonwealth-10y-backfill-brief-20261006.md@902feb3a4f",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -383,5 +383,40 @@ ENDPOINT is unchanged.
 
 - **The proof gains one arm:** a fund that has split inside the back-fill, priced before and after its split, reproduces the price
   paid on both sides. If no held fund split, the run says so with the count searched.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.10 -- C-BASIS: what `as_traded_close` means against the split scaling, corrected on the read (L10; CONTRACTS changed)
+
+- **Author:** `1.0.0_SA_CTO~DELL2`, 2026-10-12 ~02:4xZ. **Sources:** `2.0.0_SA_COO~C2` msg 6372 and its record
+  `deliverables/0.9.0_WK_ADVI_COTBKF~152/BASIS_VALUE_AGAINST_SPLIT_SCALING.json` (merged 12a3c98e51), the lines read by the issuer;
+  `1.0.0_SA_CTO~DELL1`'s ruling relayed in msg 6357 (its file @479d6deba0 on origin/box/dell1, read by the two issuers, not by this
+  seat); the reviewer's note on v0.9 (msg 6284). This seat read no code for this addendum.
+- **v0.9's sentence is WITHDRAWN:** "the value means the traded price only AFTER the split scaling, and a point that has not
+  passed it is not written with this value." It described a build that does not exist. Measured: the value is written inside the
+  substitution (`commonwealth_daily_valuation.py:271`, `:283`), the price input carrying it is written (`:976-978`) BEFORE the split
+  plan runs (`:983-984`), the split step works on a frame with no basis column and records nothing per point, and a point can leave
+  marked `as_traded_close` and unscaled on 9 of 11 paths. This seat asked for that read because it doubted its own sentence; the
+  doubt was right.
+
+**C-BASIS item 2, the meaning of the value, as it now reads.**
+
+- `as_traded_close` on a point says WHERE THE POINT CAME FROM: an as-traded source. It does not by itself say the point is the
+  price the security traded at. That holds only when the point is free of any later split's adjustment.
+- **Under C-BASIS the one as-traded source for a fund is dell1's `as_traded_close` column** (v0.8 item 3; dell1's ruling: one lander,
+  its demand queue). That column already has later splits undone. **So a point read from it IS the traded price, and this build's
+  own split scaling is NOT applied to it:** applying it would scale the same split twice (row ADVI_COTBKF-D2-W151-S1).
+- **The cached vendor Close is no longer a source for a fund point** (v0.8 already bars the cache as a source). On that path the
+  value meant "the vendor's Close, split-adjusted, scaling applied afterwards and unrecorded"; no fund point is written from it
+  under C-BASIS, so the value has one meaning in what C-BASIS mints.
+- For security types this contract does not re-price, the value keeps the meaning the build gives it today, with the limit just
+  measured: it does not record whether the split scaling reached the point. That is row material for those types and is not
+  settled here.
+
+- **The proof, replacing v0.9's split arm.** (a) A fund that split inside the back-fill, priced from dell1's column on a day
+  before and a day after its split, reproduces the price paid on both, with this build's split step shown NOT to have touched
+  those points (the count of fund points the split step changed is zero). (b) If no held fund split, the run says so with the
+  count searched. Graded by the reviewer.
+- **Round 79's list is unchanged.** The request file to dell1's queue is cut (msg 6361); nothing on dell2 fetches a price.
 
 -- 1.0.0_SA_CTO~DELL2
