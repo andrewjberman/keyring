@@ -28,6 +28,8 @@ module, same build script. It changes nothing else.
 - The issuer's AMENDMENT 1 to this file names the merge commit `<M>` that carries by-4. Do not start before it exists.
 - `git cat-file -e <M>`, `git merge-base --is-ancestor <M> HEAD`, and `git show <M>:infra/aws/lambda/research/pull_enqueue/lambda_function.py`
   matches the working file byte for byte (print both sha256).
+
+**AMENDMENT 1:** `<M>` is `f94560218c`; by-2 is complete; both pair halves are signed.
 - Both never-widen halves are signed.
 
 ## 1. THE ACT (this box, once, under the pair named in the issuer notes)
@@ -94,7 +96,9 @@ org/critical_paths/change_management/
   have a tier other than internal, all opal-capital admins). Its own pair: COO half
   `deliverables/2.0.0_SA_COO_W1/round81/NEVER_WIDEN_HALF_COO_DEV_ADMIT_DEPLOY.md` (signed in the issuance commit), the CTO's half owed.
 - It was cut as its own build and deploy because HVST-by-1 was merged and `HVST-by-2`'s deploy had begun before the ruling arrived.
-- AMENDMENT 1 (the merge commit `<M>`) is written by the issuer when by-4's branch is merged.
+- **AMENDMENT 1 (2026-10-12 ~14:5xZ, issuer; no criterion changes):** `<M>` = **f94560218c**, the merge of HVST-by-4 on box/dell1
+  (`safe-merge.sh`, proof VALID rc 0, by-4 flipped complete). `HVST-by-2` is complete (ledger CLOSED, flipped @d3fd887c8f). Both pair
+  halves are SIGNED (COO, and the CTO @0e8a1d59cc, msg 4424): every start condition is met.
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>

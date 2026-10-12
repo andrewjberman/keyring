@@ -94,3 +94,19 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <workstream>DEVADMIT</workstream>
 <slot>dell1</slot>
 <fabric>dell1</fabric>
+
+**COMPLETE 2026-10-12 ~14:4xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Built:** worker ~137, branch `wk-AMGT_HARVST-137` @a994911d98 (build 2f08f9eb4e, rows and proof a994911d98). Proof VALID rc 0
+  (re-run by this seat in the worktree with `--governing-order`). **Merged:** f94560218c on box/dell1 by `safe-merge.sh`
+  (4 files, 0 dropped).
+- **AC1 PASS** `22 passed in 0.25s` (re-run). **AC2 PASS** `22 passed in 0.26s` (re-run; the 15 bx-1 and 7 by-1 tests, unchanged).
+- **The diff, read by the issuer:** `_caller_user_type` has `_caller_tier`'s exact shape (the `lambda` level when present, else the
+  authorizer level, `None` for any other shape, never the body, a header or the event's top level); the fence's refusal test is
+  `not (tier == "internal" or user_type == "Dev")`. The refusal branch, its tier-only `DENIED` line, the 202, the 400 and the `OK:` line
+  are untouched.
+- **Rows:** D1-W137-S1 INERT (the module docstring said internal only; reworded, no behaviour change). D1-W137-S2 INERT (the order's
+  numstat check read 20 and 0, not 1 deletion, because git aligns the closing brace; the file parses as one JSON array: this
+  seat's face was imprecise, the bytes were right).
+- **Not done here (by-5):** nothing is deployed; the live function still refuses a Dev login with a non-internal tier.
+
+<status>complete</status>
