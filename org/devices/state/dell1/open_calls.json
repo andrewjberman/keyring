@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-11T16:28:21Z",
+ "written_at": "2026-10-12T02:29:03Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -1679,6 +1679,152 @@
     "at": "2026-10-11T11:31:49Z",
     "by": "1.0.0_SA_CTO~DELL1",
     "reason": "sends a text to Andrew's own phone; an outward act on his device needs his word"
+   }
+  },
+  {
+   "id": "dell1-20261011T200531Z-40f5",
+   "project": "MDPF_SECCLASS",
+   "subject": "Remove CVO worktree C:/dev/cvo_secclass_r9 and branch cvo-secclass-r9-compile?",
+   "asked_by": "3.0.0_SA_CVO",
+   "source": "org/tier1_exec/3.0.0_SA_CVO/logs/2026-10-11/session_dell1_0200Z-0305Z.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-11T20:05:31Z",
+   "kind": "act",
+   "context": "WORKTREE-GC flags it idle 73h+ with 9 unmerged commits and 9 uncommitted files. The commits are superseded by content on box/dell1 (e10bb32db9); the uncommitted files differ only in line endings. Removal is a recursive delete, so it waits on Andrew's word.",
+   "rec": "YES: nothing in it is unlanded content; removal frees the GC flag.",
+   "scope": {
+    "measured_at": "2026-10-11T20:05:31Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/shared-infra"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/terraform/shared-infra/main.tf overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/terraform/shared-infra)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_cusip_fallback.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      ".tools/safe_deploy_core.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/safe_deploy_core.py)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_IAMROLES202609 on sitez",
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/market-overview named by NFRA_IAMROLES202609 on sitez",
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+110), also declared by root infra/aws/terraform/shared-infra named by NFRA_IAMROLES202609 on sitez",
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2"
+     ],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-11T20:06:59Z",
+    "by": "3.0.0_SA_CVO",
+    "reason": "a recursive delete of a worktree with uncommitted files needs a human word (CLAUDE.md Agent Autonomy)"
+   }
+  },
+  {
+   "id": "dell1-20261011T200658Z-36c6",
+   "project": "NONE",
+   "subject": "Estate report days 2026-10-07..10-10: rule each NO-SEMANTIC-CHANGES (and REJECT the 3 new proposals)?",
+   "asked_by": "3.0.0_SA_CVO",
+   "source": "org/tier1_exec/3.0.0_SA_CVO/logs/2026-10-11/session_dell1_0200Z-0305Z.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-11T20:06:58Z",
+   "kind": "fork",
+   "context": "4 estate days PENDING since 10-11 ~03Z (census 68 days, 0 missing, 0 failed). 29 proposals: 26 repeat pairs already ruled in ESTATE_SITTING_PACKET_20261006.md; 3 new. Semantic edits are naming acts Andrew ratifies (/estate-pull ruling 3); the CVO lands and flips manifests after his word.",
+   "rec": "YES to all four days NO-SEMANTIC-CHANGES; REJECT the 3 new pairs: two yang-* classification_reason are a one-pin label-shape reading (ground of B22-B25); smartx-model-monthly-benchmarks churn is the line-ending-only commit 6ed2876a27.",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-11T20:06:58Z"
+   },
+   "closed": {
+    "at": "2026-10-12T02:00:18Z",
+    "by": "3.0.0_SA_CVO",
+    "ruling": "org/tier1_exec/3.0.0_SA_CVO/deliverables/CTO_TICK21_CALLS_36C6_40F5_EXECUTION_20261012.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-11T20:07:07Z",
+    "by": "3.0.0_SA_CVO",
+    "reason": "estate semantic edits are naming acts Andrew ratifies by name (/estate-pull ruling 3); no CTO may rule them"
+   }
+  },
+  {
+   "id": "dell1-20261012T020020Z-4d96",
+   "project": "MDPF_SECCLASS",
+   "subject": "Worktree cvo_secclass_r9 remove STOPPED: 2 commits (bcd60149e4, ad06fb5487) carry rows absent from the trunk -- re-file them under fresh ids, then remove?",
+   "asked_by": "3.0.0_SA_CVO",
+   "source": "org/tier1_exec/3.0.0_SA_CVO/deliverables/CTO_TICK21_CALLS_36C6_40F5_EXECUTION_20261012.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-12T02:00:20Z",
+   "kind": "fork",
+   "context": "Per CTO tick-21 s.1, the cherry proof found 5 of 7 commits superseded and 2 not: row S60 (advisor Book view 403) and its dismissal C-S78 lost to an id collision (trunk reuses both ids). 0 of 236 project files carry the 403 text (control 5). Gates only the worktree removal.",
+   "rec": "Yes: the CVO re-files both as fresh-id rows citing the old hashes (an INERT observation and its dismissal), re-runs the cherry proof clean, then removes the worktree and branch.",
+   "scope": {
+    "measured_at": "2026-10-12T02:00:20Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/shared-infra"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/terraform/shared-infra/main.tf overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/terraform/shared-infra)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_cusip_fallback.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      ".tools/safe_deploy_core.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/safe_deploy_core.py)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_IAMROLES202609 on sitez",
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/market-overview named by NFRA_IAMROLES202609 on sitez",
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+110), also declared by root infra/aws/terraform/shared-infra named by NFRA_IAMROLES202609 on sitez",
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2"
+     ],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261012T022902Z-e28e",
+    "at": "2026-10-12T02:29:02Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
    }
   }
  ]
