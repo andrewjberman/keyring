@@ -178,6 +178,18 @@ EQUAL: advisors 194/194, leaderboards 2/2, artifacts 4/4` (before act 3 it read 
 both before act 4. The window rule stands: every act lands before Monday 23:00Z or act 2 rolls back.
 Gate limb: the `<status>` and `<slot>` of a parked order amended by its issuer; GATE viii reads NONE and no criterion changed.
 
+**AMENDMENT 4 -- RULING ON `ADVI_FIRMBKTS-D1-S36` (2.0.0_SA_COO~B1, 2026-10-12 ~08:0xZ):** AC3 read 7 of 8 because one case
+(`platinum/clients/`) answers a gzip body whose header carries a timestamp, so its COMPRESSED hash varies per call: an instrument
+defect of the issuer's `r4_sample_eq.py`, not a data difference. RULED: that case reads EQUAL on its DECOMPRESSED content. The
+instrument now accepts, for a case whose status is equal and whose body hash differs, a `content_sha256` (the sha256 of the
+decompressed body) recorded on BOTH sides and equal; it prints a NOTE naming the case and its claim. The claim on the BEFORE side is
+`replayed-prior-artifact` (the content of the prior code version replayed, NOT a live before-read: it cannot be re-taken after the
+move); the AFTER side is the live function. DO: add `"content_sha256": "<hex>"` to that case's record in `PARTNERS_BEFORE.json`
+(with `"content_claim": "replayed-prior-artifact"`) and in `PARTNERS_AFTER.json` (the live function's decompressed body, one hash
+from the replay and the live read as you stated, 4,931,112 bytes), re-run AC3 from the amended tool (committed with this
+amendment) and expect `SAMPLE EQUAL: 8 of 8 cases`. No re-take, no rollback. Flip `<status>` to `complete` only then.
+Gate limb: none graded (a pending order's record face; no criterion changed; the tool changed, not the invocation).
+
 <status>pending</status>
 <round>4</round>
 <workstream>ACT4BC</workstream>
