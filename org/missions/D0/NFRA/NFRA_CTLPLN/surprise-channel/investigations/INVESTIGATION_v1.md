@@ -7510,3 +7510,58 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The receiving tool's install verb cannot honour either bound: it targets the interpreter that runs it, in the user site, and installs every wheel in the pack. Run with the venv's python it fails (--user is refused in a venv); run with the box's python it shadows click 8.5.0 for the user and installs rpds_py. The route's last step therefore needs a --target or --venv argument and a per-wheel selector before a Dell can use the tool's own install verb. The CTO or the tool's owner should rule which."
 }
 ```
+
+## NFRA_CTLPLN-W67-S1 -- a real install is refused by the receipt gate unless a prove receipt exists, so the order's install cases must prove first
+
+```json
+{
+  "id": "NFRA_CTLPLN-W67-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~67",
+  "surfaced_at": "2026-10-12T08:29:47Z",
+  "one_line": "install --python and install --target refuse every wheel with 'no receipt for device' unless prove wrote a receipt for that device first; the order's cases (b) and (d) named no prove step.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_receive.py@2fbb74e87d receipt_gate (about lines 477-512): a wheel clears only on a receipt from this device whose received_sha256 and check_record_sha256 match; install_pack calls it before any pip command",
+      "first run of the new cases at the worker branch, 2026-10-12 ~08:1xZ: INTAKE-INSTALL device=testbox python=3.12.10 wheels=1 installed=0 refused=1 target_form=python dry_run=False ok=False, with 'REFUSED: venvpkg-1.0-py3-none-any.whl: no receipt for device testbox (run prove first)'",
+      "the same run for the --target case: wheels=2 installed=0 refused=2 target_form=target, both wheels 'no receipt for device testbox'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO NFRA_CTLPLN.TO-CT-w-5 BUILD items 4(b) and 4(d): '--python <a real venv python> installs the synthetic wheel into that venv' and '--target into a new folder installs there', with no prove step named.",
+  "world_is": "A real install of any form is gated on a good prove receipt for the same device; the gate is the same for every target form. The worker ran prove into a scratch folder before each real-install case; the gate was not changed.",
+  "notes": "The gate is correct and was left as it was (the order says every receipt gate stays exactly as it is). Only the order's test wording was short by one step. The next dell1 exercise should expect prove before install."
+}
+```
+
+## NFRA_CTLPLN-W67-S2 -- install wrote no per-wheel record of its target form, so the form of a real install was not recorded anywhere before this order
+
+```json
+{
+  "id": "NFRA_CTLPLN-W67-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~67",
+  "surfaced_at": "2026-10-12T08:29:47Z",
+  "one_line": "At the base commit, install wrote no receipt and no per-wheel record; the only per-wheel receipt (from prove) records the scratch --target form, so a real install's form was not recorded. The order names 'the receipt written for each wheel' but names no file for a receipt that install writes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_receive.py@2fbb74e87d install_pack (about lines 515-550): the loop built build_pip_command(path, user=True) and printed FAILED or counted installed; no write to receipts/ on any path",
+      "org/devices/intake/intake_receive.py@2fbb74e87d prove_pack (about lines 428-464): write_receipt(...) per wheel with install.command built with --target <scratch>; the receipt records the scratch install, not a box or venv install",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-w-5.intake-install-target-interpreter.md BUILD item 2: 'the receipt written for each wheel records which target form was used (install.target_form ...)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO NFRA_CTLPLN.TO-CT-w-5 BUILD item 2: the receipt written for each wheel records which form was used (install.target_form = python, target or user) and, for --python, the interpreter path.",
+  "world_is": "The worker added (1) install.target_form and install.interpreter to the prove receipt, value target and the scratch interpreter, and (2) a separate record receipts/<wheel>.install.<device>.json (schema intake-install/1) written by each real install. The receipt gate reads only the prove receipt. The file name for (2) was chosen by the worker; the order names none.",
+  "notes": "If the owner wants install's form in the prove receipt instead, or a different file name, that is a rename of one function call and one path string. The gate does not read either field, so the choice is not a gate change."
+}
+```
+
