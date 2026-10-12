@@ -48,6 +48,57 @@ if absent, that is the refusal clause): the readers classed, and for each servin
    "owner", "figure", "accounts", "account_days", "account_days_holding_a_failing_fund", "share_of_value", "level_by_fund"}`),
    `unsized` (a list, with why), `headline`, `not_established`.
 
+### AMENDMENT 1 (issuer `2.0.0_SA_COO~C2`, 2026-10-12T00:24Z) -- a second item in this cell, on a CTO ruling
+
+**Why.** The census found ONE reader of the price store that serves a value: the cot holdings builder
+`data/cot/scripts/gold/B_00.canonical_holdings.py`. With a holdings snapshot present it prices at the custodian's market value over
+units and returns BEFORE the price store is loaded; the store's close is used only on the branch below that return. Whether
+partitions built on that branch, for dates before the snapshots began, still exist and are served was not established. This seat
+asked (msg 6195); `1.0.0_SA_CTO~DELL2` RULED (msg 6196), in full: "Read it this round. One cell, read-only, counts and dates only:
+1. The first date a holdings snapshot exists for this firm; how many partitions were built on the no-snapshot branch before it, and
+whether they still exist. 2. Whether the Cottonwood advisor-intelligence page can be asked for a date before that first snapshot:
+read from the route's code; one request for one such date only if the code says it is served. 3. Of the 15 failing funds, how many
+are held on any such date. A served figure built from an affected close comes to me the same hour with its date range. And the
+three readers not established: name each and what would establish it."
+
+**The added item (this is where a served reader could be, so it belongs to this cell). It is done FIRST, before the item above.**
+
+A1. **The two branches, from the code, with file and line:** what the snapshot branch writes and for which dates; what the
+    no-snapshot branch builds, with which price, for which dates, and where it writes; whether either branch overwrites, deletes
+    or leaves partitions of earlier dates; how a row records which branch built it (its `source` value).
+A2. **The first snapshot date for this firm, and the partitions before it.** The first date a holdings snapshot exists (from the
+    snapshot store the builder reads). In the served holdings, the partitions dated BEFORE it: how many exist today, their date
+    range, and which branch built them (the `source` values of ONE such partition's rows, as a count per source; the layout for the
+    rest). Ask the served graph first; make a live read only for what the graph does not hold, and print the denominator of every
+    listing (keys seen; whether the listing was complete or a page).
+A3. **Can the page be asked for such a date?** Read from the route's code in the portal and from the steps that feed it (file and
+    line): which dates the page and its data accept or default to. ONLY IF the code says a date before the first snapshot is
+    served: ONE request, or one read of the one served object behind it, for ONE such date, recording that it answers and the
+    `source` of what it returns. No account value is recorded.
+A4. **Of the 15 failing funds, how many are held on any such date** in served holdings built on the no-snapshot branch: funds as a
+    count and by ticker; partitions; and for ONE fund on ONE such date the price in the served holdings beside the store's close and
+    the fund's unadjusted close that day: three prices and two ratios.
+A5. **A served figure built from an affected close is filed THE SAME HOUR as a surprise row,** with its date range and the page,
+    naming the reader's owner, and committed at once in its own commit; your report names it first. If none is found, say so first.
+A6. **The three readers the census left `not_established`:** name each and say what ONE read would establish it (which file,
+    object or setting). You do not make those reads.
+A7. Write a SECOND record, `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~145/NO_SNAPSHOT_BRANCH.json`, beside the first. Top-level keys, exactly: `branches` (`{"snapshot", "no_snapshot"}`, each
+    with `file_line`, `price`, `writes`), `first_snapshot_date`, `partitions_before_it` (`{"count", "first", "last", "built_by",
+    "still_exist", "listing_denominator"}`), `page` (`{"accepts_a_date_before_the_first_snapshot", "file_line", "request_made",
+    "answered"}`), `failing_funds_held_before` (`{"funds", "tickers", "partitions"}`), `one_price_read`,
+    `served_from_an_affected_close` (true, false or `not_established`), `date_range_served`, `readers_not_established` (a list of
+    three `{"reader", "what_would_establish_it"}`), `rows_filed`, `headline`, `not_established`.
+
+**How the two items meet.** If A finds a served figure built from an affected close, that reader IS a served reader for the item
+above: size it there (account-days and the share of value on the dates it is served, for this firm, as counts and proportions) and
+set the first record's `served_readers_from_cell_1` to the census's count PLUS it, saying so. If A finds none, the first record
+stands as the census leaves it.
+
+**Bounds added by this amendment (they widen the grant only as far as these reads):** AWS READS ONLY, for THIS project's firm: the
+served graph first; a live listing of the holdings partitions only where the graph does not hold them; one partition's rows for the
+`source` counts; one more read for the one price of A4; and at most ONE request or object read for A3, only if the code says it is
+served. No write, no delete, no serve. Another firm's data is never opened.
+
 ### ACCEPTANCE
 
 <criterion id="CB77by3-AC1" cell_refs="CB-by-3"><invocation>python -c "import json;d=json.load(open('org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~145/LEVEL_ERROR.json',encoding='utf-8'));c=json.load(open('org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~143/CLOSE_READERS.json',encoding='utf-8'));print('LEVEL-ERROR census_serving_from_an_affected_close=%d served_readers_from_cell_1=%d sized=%d unsized=%d sum=%d account_days_holding_a_failing_fund=%d'%(c['serving_from_an_affected_close'],d['served_readers_from_cell_1'],len(d['sized']),len(d['unsized']),len(d['sized'])+len(d['unsized']),sum(x['account_days_holding_a_failing_fund'] for x in d['sized'])))"</invocation><expect>LEVEL-ERROR census_serving_from_an_affected_close=</expect></criterion>
@@ -57,9 +108,17 @@ if absent, that is the refusal clause): the readers classed, and for each servin
 <criterion id="CB77by3-AC2" cell_refs="CB-by-3" judgment="true"/>
 `CB77by3-AC2` -- JUDGMENT, graded by 3.0.0_SA_CVO at L9 and never self-graded: only readers the census found serving from an
 affected close are sized, and an empty result is reported as one; the size is in account-days and proportions, never money; reads
-only, of this firm's artifact; no account id or value appears.
+only, of this firm's artifact; no account id or value appears. AMENDMENT 1 adds to this judgment: the branch that
+built a partition is read from the partition's own rows and not inferred from its date; a listing prints its denominator; a request
+is made only where the code says the date is served, and at most one; a served figure from an affected close is filed as a row the
+same hour with its date range.
 
-<expected_criteria>CB77by3-AC1,CB77by3-AC2</expected_criteria>
+<criterion id="CB77by3-AC3" cell_refs="CB-by-3"><invocation>python -c "import json;d=json.load(open('org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~145/NO_SNAPSHOT_BRANCH.json',encoding='utf-8'));p=d['partitions_before_it'];g=d['page'];f=d['failing_funds_held_before'];print('NO-SNAPSHOT-BRANCH first_snapshot_date=%s partitions_before_it=%d still_exist=%s built_by=%s listing_denominator=%s page_accepts_an_earlier_date=%s request_made=%s failing_funds_held_before=%d served_from_an_affected_close=%s readers_not_established=%d rows_filed=%d'%(d['first_snapshot_date'],p['count'],p['still_exist'],p['built_by'],p['listing_denominator'],g['accepts_a_date_before_the_first_snapshot'],g['request_made'],f['funds'],d['served_from_an_affected_close'],len(d['readers_not_established']),len(d['rows_filed'])))"</invocation><expect>NO-SNAPSHOT-BRANCH first_snapshot_date=20</expect></criterion>
+`CB77by3-AC3` (AMENDMENT 1) -- the first snapshot date is read; the partitions before it are counted with the denominator of the
+listing; the page's acceptance of an earlier date is read from code; the failing funds held before are counted; the three readers
+not established are named. The issuer reads whether a served figure from an affected close was found and whether a row was filed.
+
+<expected_criteria>CB77by3-AC1,CB77by3-AC2,CB77by3-AC3</expected_criteria>
 
 ## BOUNDS
 
@@ -94,7 +153,7 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: CB77by3-AC1, CB77by3-AC2. Instance at
+Criterion ids: CB77by3-AC1, CB77by3-AC2, CB77by3-AC3 (AMENDMENT 1: validate with all three). Instance at
 `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~145/ADVI_COTBKF.TO-CB-by-3.level-error.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> CB77by3-AC1,CB77by3-AC2` BEFORE the flip. Mechanical: CB77by3-AC1. A judgment criterion is recorded as PENDING-ADJUDICATION, never PASS. An artifact already committed and not changed
 in the flip commit is pinned to the commit that carried it, never left `PENDING-THIS-COMMIT`.

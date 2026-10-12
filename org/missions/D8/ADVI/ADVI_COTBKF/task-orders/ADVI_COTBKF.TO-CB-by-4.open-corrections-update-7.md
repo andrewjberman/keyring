@@ -46,6 +46,11 @@ absent, that is the refusal clause.**
    `0.9.0_WK_ADVI_COTBKF~144/FAILING_FUNDS.json` (the 15: how many have an unadjusted close held, where; how many of those reproduce
    the price paid) under `failing_funds`; `0.9.0_WK_ADVI_COTBKF~145/LEVEL_ERROR.json` (the level error where it is served: readers
    sized, account-days, the share of value; or that none is served by a reader the census reached) under `level_error_where_served`.
+   **AMENDMENT 1 (issuer, on CTO msg 6196):** and that cell's second record, `0.9.0_WK_ADVI_COTBKF~145/NO_SNAPSHOT_BRANCH.json` (the
+   first snapshot date; the partitions before it, which branch built them and whether they still exist; whether the page can be
+   asked for such a date; the failing funds held before; whether a served figure from an affected close was found, with its date
+   range and the row id; the three readers not established and what would establish each) under a key `no_snapshot_branch`. This
+   record too is in the tree when you start.
 3. **`closes_when`** quotes section 4: the fund-basis addendum "is written after cell 1, because what must be corrected first
    depends on what is served", marked NOT YET WRITTEN.
 4. **The 2022-factor entry:** check the PRD for an addendum past v0.7 (`org/missions/D8/ADVI/ADVI_COTBKF/prd/ADVI_COTBKF_PRD.md`, the

@@ -43,3 +43,21 @@ served); `CB-by-4` (the list) on the other three.
 
 **Fan-out:** `2 of 4 chains, cap 8` now; `CB-by-3` starts when `CB-by-1` drains; `CB-by-4` when the other three have. `CB-by-2` and
 `CB-by-4` are DIRECT-ACT cells (LOCAL, mechanical only); the other two carry a judgment criterion and take L8 to L10.
+
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~C2, 2026-10-12T00:24Z) -- a re-cut into the first issuance: cell CB-by-3 carries a second item
+
+**Why.** The census (CB-by-1, drained) found one reader of the price store that serves a value, the cot holdings builder; with a
+holdings snapshot present it prices at the custodian's market value over units and returns before the store is loaded. The store's
+close is used only on the branch below that return, and whether partitions built there are still served was not established. This
+seat asked (msg 6195); `1.0.0_SA_CTO~DELL2` RULED (msg 6196): "yes, the no-snapshot branch is read THIS round -- it is the one place
+a served value could carry an affected close".
+
+**How.** A first attempt to add a fifth cell and order was REFUSED by `to-pipeline-gate` ("ONE ISSUER PER ROUND is keyed to the
+ROUND ... A re-cut into the first issuance MODIFIES its orders and adds no file ... this limb reads no override"). Not overridden.
+The read is folded into `CB-by-3`, whose item is the level error where a served reader exists: the no-snapshot branch is where one
+could be. Its first worker was stopped by the issuer eight minutes in, before any commit, and the cell is re-run on the amended
+face. `CB-by-4` (the list) carries the cell's second record. No cell id is added; the table above stands.
+
+**Reads.** Read-only, for this project's firm: the graph first, then a listing of holdings partitions, one partition's rows, one
+price, and at most one request to the page if the code says the date is served. A served figure from an affected close goes to the
+CTO the same hour.
