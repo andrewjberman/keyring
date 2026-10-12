@@ -6862,3 +6862,29 @@ by dell1 or by this seat.
   "world_is": "Writer: B_00 is the only writer of the canonical holdings prefix (three put_object sites). Nightly catalog: B_00 --upload --force-recent-days 14 re-includes sealed dates within 14 calendar days of the newest cube date, so each nightly fire rewrites about 11 partitions (10 history plus the new one). Content changes: the 04:14-04:16Z nightly fires changed 10 partitions each on 2026-09-27, 09-30, 10-01, 10-02, 10-03, 10-04, 10-07, 10-08, 10-09, 10-10 and 10-11; the 04:xx fires of 09-28, 09-29, 10-05 and 10-06 wrote identical bytes. The 23:15Z fires re-put the same partitions with identical ETags (the W78 finding holds). Off-cycle content changes of 1-2 partitions at 09-30 16:51, 10-02 14:53, 10-03 10:17, 10-07 23:14 and 10-09 23:15, and an 11-partition change at 2026-10-12 00:33Z (B_00 run 44f5204c24e3). Mover, 2026-10-02..10-09 (versions / content changes / last content change): 16/7, 11/6, 11/6, 11/6, 9/4, 7/4, 5/2, 3/1; every last content change is at 2026-10-12T00:33:47-49Z. Reach: the oldest content change is on 2026-09-11, 20 trading days before the watermark 2026-10-09; under the 14-calendar-day window the current reach is 10 trading days (from 2026-09-25)."
 }
 ```
+
+## MDPF_SECCLASS-D1-W85-S6 -- C_06's firm class dollars do not sum to the firm total field (up to 128.58 on the served snapshot); the record takes totals as class sums
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W85-S6",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~85",
+  "surfaced_at": "2026-10-12T10:50:52Z",
+  "one_line": "The firm snapshot's eight class dollars and its total field disagree by up to 128.58 on served, first-build and rebuilt snapshots alike; the amended checker needs class sums to equal totals to the cent, so the record takes each total as the class sum and carries the total field beside it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py:686 @4d2c87a73b: mix[ac] = round(mix_agg / total_mv, 6) per relationship; the firm total accumulates total_mv (:901-907 incremental path), so class dollars (mix times total_mv) do not sum to total_mv exactly.",
+      "gold/views/mix_daily_summary.json firm entries read 2026-10-12 (served): class sum minus total field = 4.71 (2026-10-06), -128.07 (10-07), 128.58 (10-08), 66.73 (10-09); control 2026-09-04 13.52.",
+      "Worker snapshot reads .scratch/out/v2_snap.json (uncommitted): first-build class sum minus total = -43.76, 55.72, 36.96, 69.72; rebuilt = 42.15, -63.14, 25.92, 69.72."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The amended checker rule (Amendment 1 item 5, r22_residual_read_check.py _entry_ok) expects the by-class dollars of a snapshot to sum to its total to the cent.",
+  "world_is": "C_06 rounds each relationship's class share to six places before multiplying by total_mv, so the class dollars of every firm snapshot differ from its total field by tens to a hundred-odd dollars (largest 128.58 on the served 2026-10-08 snapshot). The same gap appears on the first-build and rebuilt snapshots, so it is arithmetic, not drift. The record states each total as the class sum and keeps the snapshot's own total field beside it."
+}
+```
