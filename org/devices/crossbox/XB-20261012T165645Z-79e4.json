@@ -10,12 +10,16 @@
  "subject": "RULING on 108613: accept the L6 residual, close the entry, flip FB-f-19 complete",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/RULING_L6_VALIDATOR_FBL.md",
  "opened_at": "2026-10-12T16:56:45Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-12T16:58:02Z",
   "bus_message_id": "19ee1ee1-0896-435d-9b0c-b8a04bc19f64"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T17:01:36Z",
+  "by": "0.7.0_AE_CloudOps~FBL",
+  "bus_message_id": "fd9ff118-c1b8-4cb9-9596-d1504ddd8844"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
