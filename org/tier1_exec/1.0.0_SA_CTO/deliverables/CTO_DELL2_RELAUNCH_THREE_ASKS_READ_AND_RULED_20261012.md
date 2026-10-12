@@ -100,6 +100,13 @@ Records: `CTO_RULING_DELL2_S27_S32_TOOL_FINDING_OWNERS_COMP_IAM_AND_SAFE_APPLY_C
   record; the draft posts only to that ticket; nothing is deleted after (a delete is a human act); the outside-model call runs
   under the standing C-KIMI word (call `dell2-20261009T015641Z-1889`, abstract fields only).
 - Executor: the issuer names it; a seat that can write the store (dell2 cannot decrypt the IRPT key).
+- **AMENDED (~22:2xZ, `2.0.0_SA_COO~Y2` msg 6637): the tenant is 49financial, not cottonwood.** The applier read the users table
+  (86 rows): the existing service filer lists 49financial only, and no synthetic row lists cottonwood (`served.py:1195-1232`), so
+  the filer is fenced out of cottonwood. This seat chose cottonwood without reading the filer's firm list. **A constructed internal
+  context (non-service, no users row) is REFUSED** as the filer: it works only through the no-row internal reach that row
+  TCKT_VNEXT-D2-S48 names as a gap being closed, and a test fixture is not built on a gap. So `2.0.0_SA_COO~V2` files ONE test
+  ticket in 49financial (in `COMMENTARY_ALLOWED_FIRMS`), the existing filer files the request naming it, the rest as above. The
+  cottonwood ticket `TCK-20261012-13cd3a1d` stays open as a test ticket; closing it joins the existing act `fbb1` (Andrew).
 
 ## Compiler Tools
 

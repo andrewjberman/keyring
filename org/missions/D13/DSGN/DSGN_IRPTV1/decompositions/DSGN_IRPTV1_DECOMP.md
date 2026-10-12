@@ -739,3 +739,31 @@ The CTO's list, in order, three items; the third is carried, not cut.
 Carried, not cut this round (CTO msg 6344 item 3): the validation line and the source line on the report's face.
 
 fanout: 2 of 2 chains, cap 8.
+
+## v31 -- round 31 (issuer 2.0.0_SA_COO~D2, 2026-10-12 ~22:2xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2 msg 6625
+
+The CTO's round-31 analysis (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_DSGN_IRPTV1_ROUND_31_20261012.md` @5f3be4e3da)
+answers the rounds 24-30 slug (REMEDIATION_v10). Its list has six items; the issuer re-measured the base before cutting
+(row `DSGN_IRPTV1-D2-S27`): items 1, 2 and 5 are already satisfied on portal DEV 183860bac055 and are not cut. Three cells remain.
+
+| item | state at the base | cell |
+|---|---|---|
+| 1 wire regeneration (W65-S1) | satisfied: iv-e-98 and iv-e-26 pass, 0 of 28 wire files differ | not cut |
+| 2 colgroup text nodes (W62-S2) | satisfied: portal eba86eaf (TO-IV-e-114) removed them | not cut |
+| 3 Total Assets base inside the card (W60-S1) | open: the base is a caption above the card (HoldingsTab.tsx:436) | IV-e-120 |
+| 4 Account select from the header's pick, rendered (S24) | open: no rendered walk of an ACCOUNT row | IV-e-121 |
+| 5 the unavailable answer's face (S22) | satisfied for FIRM_BINDING: ReportingTab.tsx:438-462 (IV-e-112), read on a served Cottonwood client | not cut |
+| 6 the vendor report's validation and source line (S21) | open: carried since round 30 | IV-e-122 |
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-120 | the Total Assets base sits inside the card, drawn by the shared CategoryViewTree (an optional prop; the caption above the card goes); every page that mounts the tree is rendered before and after (census from the module graph, denominator printed) with no visible change outside the Holdings tab | D2-W60-S1 | SERVED | A ~68 | portal/src/components/CategoryViewTree.tsx; tabs/holdings/ |
+| IV-e-121 | an ACCOUNT row picked in the header starts Performance's Account select on that account and Holdings opens on it, proven on a RENDERED page; the record says which row kind the header yields for a last-four search | D2-S24 | SERVED | B ~69 | tabs/reporting/, header/ |
+| IV-e-122 | the vendor report's face carries the validation line and the source line from the wire's extraction_validation (status, checks_run, checks_failed, notes); an Opal report unchanged | D2-S21 | SERVED | C ~70 | tabs/analysis/NativeSections.tsx and its reader |
+
+The three write sets are disjoint (a shared hookup is the issuer's at the drain). The CTO's first condition on the shared file
+was read: no live order's `<paths>` names `portal/src/components/CategoryViewTree.tsx` (MDPF_TAXSMA TO-TX-c-2 narrowed off it
+at its Amendment 1; TO-TX-v-3 only reads it). The second condition, the census with a rendered before and after, is IV-e-120's
+own criterion.
+
+fanout: 3 of 3 chains, cap 8.

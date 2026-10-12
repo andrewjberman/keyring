@@ -77,3 +77,9 @@ D2-W67-S1 (W65-S1 BLOCKING), D2-S25, D2-S26.
 | DSGN_IRPTV1 rounds 24-30 | ADJUDICATION_v19 + REMEDIATION_v10: 20 dismissed, 8 OPEN (2 BLOCKING), ARMED 0; the round-23 held file removed. My read: IV-e-118 on portal DEV, not PROD. Slug sent | 1c481315bb |
 
 Checked and not a finding: portal origin/DEV at 183860ba (IB-pr-483) was landed by 0.0.0_AB_MSTR~DELL2 on the CTO's approval (receipt in the CTO inbox, 21:15Z).
+
+## Addendum, 22:13Z to 22:25Z (msg 6633)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_ANLREQ round 16 (Y) | L9: AR161-y-AC2J PASS, AR162-y-AC3J FAIL (clause 1: the account-header rule misses Account-Number and Account/Number and turns back Account Value), AR164-y-AC2J PASS; ADJUDICATION_v17 + REMEDIATION_v9: 7 dismissed, 3 OPEN. Slug sent. YS rows left for YS's close | 54382c3f9d |
