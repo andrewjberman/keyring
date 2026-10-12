@@ -7363,3 +7363,28 @@ by dell1 or by this seat.
   "world_is": "The committed reach bound for 2026-10-09 is below the request's would-be fall on the same remainder. The request measures the rolling re-derive, not the SC-e-91 fire alone, so whether leg G's fall on that date fits the bound is not decided by the committed records."
 }
 ```
+
+## MDPF_SECCLASS-D1-W88-S7 -- the $50 w86 negative control cannot fail the amended $250 tolerance; the negative is set at tolerance plus $1
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W88-S7",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~88",
+  "surfaced_at": "2026-10-12T21:10:35Z",
+  "one_line": "TO SC-e-99's selftest names a W86-S5 negative control with a $50 key gap. AMENDMENT 1 sets criterion 2's tolerance at $250, so a $50 gap passes and cannot be the negative. The instrument's negative is a gap of the tolerance plus $1 ($251) on 2026-10-04, the same boundary construction as the e91 in_range negative.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e99.legg-read-instruments.md lines 86-94 @6ccde25a34: the selftest paragraph names 'a W86-S5 gap of $50 (w86_s5)' as a negative",
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e99.legg-read-instruments.md lines 120-122 @6ccde25a34: AMENDMENT 1 item 2, the tolerance is $250, 'criterion is |stored unclassified key - D_04 remainder| < 250'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-99 selftest paragraph: each negative control must grade ok=False on exactly its own criterion, and one of them is a W86-S5 gap of $50. AMENDMENT 1 item 2 sets the w86_s5 tolerance at $250.",
+  "world_is": "A $50 gap is inside the amended tolerance, so the named negative cannot fail criterion 2 and the strict check cannot pass for it. The amendment does not state a magnitude for this negative; the instrument uses tolerance plus $1 and prints it in the selftest as 'key gap = tolerance $250 + $1 on 10-04'."
+}
+```

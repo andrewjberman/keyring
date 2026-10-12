@@ -38,6 +38,8 @@ K_MIXSUM = "platinum/firm/mix_summary.json"
 K_CP = "gold/timeseries/client_performance.parquet"
 K_FMV = "gold/artifacts/firm_mix_views.json"
 ENT_PREFIX = "gold/entities/clients/"
+C06_PREFIXES = ["gold/entities/clients/", "gold/client_timeseries/"]   # the two prefixes C_06 writes under
+C06_EXCLUDE_SUFFIX = "_composition.json"                                  # not a C_06 key (AMENDMENT 1, item 3)
 
 E91_FALL_DATES = ["2026-10-08", "2026-10-09"]
 E91_CENSUS_DATES = ["2026-10-06", "2026-10-07", "2026-10-08", "2026-10-09"]
@@ -46,8 +48,11 @@ E97_RESTATED = "2026-09-25"                        # criterion 5: the window cut
 E97_UNCLASS_RANGE = ("2026-09-30", "2026-10-06")   # criterion 1 dates
 E97_W86_DATES = ["2026-10-03", "2026-10-04", "2026-10-05"]   # criterion 2 dates
 E97_NAMES = ["unclassified_window", "w86_s5", "totals_aua", "bars", "restated", "advisors", "added_dropped"]
+TOL_UNCLASS_LOWER = -250.0     # criterion 1 (AMENDMENT 1, item 1): "-250 <= remainder"
 TOL_UNCLASS_MARGIN = 250.0     # criterion 1: "plus $250"
-TOL_AUA = 1.00                 # criterion 2 ("under $1.00") and criterion 3 ("within $1.00")
+TOL_W86 = 250.0                # criterion 2 (AMENDMENT 1, item 2): "< 250"
+TOL_AUA = 1.00                 # criterion 3 ("within $1.00")
+PERIOD_BARS_SECTION = "## Period bars"   # the request's section that carries the per-class after figures (S4)
 TOL_BAR_CLASS = 250.0          # criterion 4 ("within $250")
 TOL_ADVISOR = 250.0            # criterion 6 ("within $250")
 TOL_HELD = 0.005               # "equals" to the cent
@@ -76,7 +81,7 @@ def after_table(text):
     """Per-class 'after' dollars of the request's Period bars table, keyed by bars.json label."""
     out, bar, in_sec = {}, None, False
     for line in text.splitlines():
-        if line.startswith("## Period bars"):
+        if line.startswith(PERIOD_BARS_SECTION):
             in_sec = True
             continue
         if in_sec and line.startswith("## "):
@@ -171,7 +176,7 @@ def grade_e91(firm, advisors_count, base, six, bounds):
 
 
 def crit_unclassified(firm, six, c):
-    lo, hi = 0.0, c["bound_max"] + TOL_UNCLASS_MARGIN
+    lo, hi = TOL_UNCLASS_LOWER, c["bound_max"] + TOL_UNCLASS_MARGIN
     rows = [(d, cents(d04_remainder(firm[d], six))) for d in c["unclass_dates"]]
     ok = all(lo <= rem <= hi for _, rem in rows)
     return ok, rows, hi
@@ -182,7 +187,7 @@ def crit_w86(firm, six):
     for d in E97_W86_DATES:
         gap = abs(float(firm[d]["unclassified"]) - d04_remainder(firm[d], six))
         rows.append((d, gap))
-    return all(g < TOL_AUA for _, g in rows), rows
+    return all(g < TOL_W86 for _, g in rows), rows
 
 
 def crit_totals(firm, aua, dates):
@@ -355,6 +360,26 @@ def fmt_usd(x):
     return "NONE" if x is None else "%.2f" % float(x)
 
 
+def c06_eligible(entries, prefix):
+    """C_06's keys under a prefix: no further '/' after the prefix, ending .json, not _composition.json.
+    Subdirectory keys ({rid}/detail.json, written by D_02) are not C_06's and do not count (AMENDMENT 1, item 3)."""
+    out = []
+    for key, lm in entries:
+        if not key.startswith(prefix):
+            continue
+        rest = key[len(prefix):]
+        if "/" in rest or not rest.endswith(".json") or rest.endswith(C06_EXCLUDE_SUFFIX):
+            continue
+        out.append((key, lm))
+    return out
+
+
+def since_count(entries, prefix, t):
+    """(keys modified at or after t, C_06 keys in the denominator) for one prefix's listing."""
+    elig = c06_eligible(entries, prefix)
+    return sum(1 for _, lm in elig if parse_iso(lm) >= t), len(elig)
+
+
 # ---------------------------------------------------------------- subcommands
 
 def cmd_e91(since):
@@ -387,10 +412,16 @@ def cmd_e91(since):
         rc_final = 0 if g["ok"] else 1
     if since:
         t = parse_iso(since)
-        keys, pages = list_prefix(ENT_PREFIX)
-        n_mod = sum(1 for _, lm in keys if parse_iso(lm) >= t)
-        print("E91-LEGG-B keys_modified_since=%d of %d pages=%d mds_unchanged_since=%s" % (
-            n_mod, len(keys), pages, parse_iso(served[K_MDS]["LastModified"]) < t))
+        tot_mod, tot_n = 0, 0
+        for prefix in C06_PREFIXES:
+            keys, pages = list_prefix(prefix)
+            n_mod, n_elig = since_count(keys, prefix, t)
+            tot_mod += n_mod
+            tot_n += n_elig
+            print("E91-LEGG-B prefix=%s c06_keys_modified_since=%d of %d c06_keys listed_total=%d pages=%d" % (
+                prefix, n_mod, n_elig, len(keys), pages))
+        print("E91-LEGG-B keys_modified_since=%d of %d (C_06 keys, both prefixes) mds_unchanged_since=%s" % (
+            tot_mod, tot_n, parse_iso(served[K_MDS]["LastModified"]) < t))
     return rc_final
 
 
@@ -490,6 +521,15 @@ def cmd_selftest():
     e91_pos = grade_e91(firm, advc, base, c["six"], bounds)["failing"]
     rows = []   # (label, kind, own, failing set, base failing set of its family)
     rows.append(("e91 positive (fall = half the bound on 10-08 and 10-09)", "POS", None, e91_pos, set()))
+    t_fix = parse_iso("2026-10-12T05:00:00Z")
+    fix_entries = [("gold/entities/clients/z1.json", "2026-10-12T06:00:00+00:00"),
+                   ("gold/entities/clients/z1_views.json", "2026-10-12T06:00:00+00:00"),
+                   ("gold/entities/clients/z1/detail.json", "2026-10-12T06:00:00+00:00"),
+                   ("gold/entities/clients/z1_composition.json", "2026-10-12T06:00:00+00:00"),
+                   ("gold/entities/clients/z2.json", "2026-10-11T06:00:00+00:00")]
+    got = since_count(fix_entries, "gold/entities/clients/", t_fix)
+    rows.append(("e91 --since counting fixture (2 modified of 3 C_06 keys; subdir and _composition excluded)",
+                 "POS", None, set() if got == (2, 3) else {"listing"}, set()))
 
     def e91_neg(label, own, mutate):
         f2, a2 = copy.deepcopy(firm), advc
@@ -521,8 +561,8 @@ def cmd_selftest():
     e97_neg("e97 neg totals_equal_aua (total off AUA by $5 on 10-02)", "totals_aua", m_totals)
 
     def m_w86(m, x, f, a, r):
-        m["firm"]["2026-10-04"]["unclassified"] += 50.0
-    e97_neg("e97 neg w86_s5 (key gap $50 on 10-04)", "w86_s5", m_w86)
+        m["firm"]["2026-10-04"]["unclassified"] += TOL_W86 + 1.0
+    e97_neg("e97 neg w86_s5 (key gap = tolerance $250 + $1 on 10-04)", "w86_s5", m_w86)
 
     def m_bars(m, x, f, a, r):
         f["views"]["quarterly"][0]["structured"]["value"] += 1000.0
