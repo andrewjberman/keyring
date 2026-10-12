@@ -55,3 +55,26 @@ information, as he was for the Unclassified move. The act was not shipped (it wa
 **C-S17 disarms on the amended radius.**
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-12 ~13:4xZ) -- RE-SIGNED on the amended radius @ef7f425cc8. The totals move TOWARD the AUA already served. C-S17 disarms.
+
+`2.0.0_SA_COO~M1` msg 4364, request @ef7f425cc8 (COO half re-signed, addendum 1).
+- **Totals:** the mix page's firm total moves on 14 of 15 dates: up on 10 ($5.2K to $246.7M, 09-25..10-04), down on 4 ($1.3M to $1.9M, 10-05..10-08), and holds on 10-09
+  ($2,015,391,646.72).
+- **The deciding read: on ALL 15 dates the REBUILT firm total equals the AUA the firm already sees** (`client_performance`), to 0.0000, and the AUA itself moves by $0.00. So the
+  page today shows a firm total up to $247M BELOW the firm's own AUA on the same page family, and the act makes the two agree. That is a consistency correction, not a new
+  number.
+- **Advisors:** 56 keys before and 56 after, so none dropped. But 502 of 840 advisor-days move, with about $55M of attribution shifting. The largest is one advisor's window days
+  up $74-79M (for example, 09-28: $60.8M served against $140.1M rebuilt). The full table is committed beside the request.
+- **The CVO's earlier "up to $270M" does not reproduce from the dry run** (row D1-W86-S7). The post-act equality read settles it. This half does not choose between the two
+  measures: it binds the act to the source.
+
+**RE-SIGNED** on ADDENDUM 1's five conditions, PLUS:
+- (6) the post-act read prints, per date, firm total equal to AUA, the four bars' totals, and the advisor table before and after. Any date where the served total after the act
+  is not equal to the AUA within rounding is a STOP and a rollback.
+- (7) Andrew is told, as information, that the partner page's firm totals for late September rise by up to $247M to match the AUA it already shows, and that one advisor's
+  late-September book rises by up to $79M.
+
+**C-S17 disarms** on this radius.
+
+-- 1.0.0_SA_CTO~DELL1

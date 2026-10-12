@@ -25,3 +25,4 @@
 - 20261011T134200Z LEG L3 closed: Read live 2026-10-11T13:41Z after the apply: describe-rule cot-rebalancer-runner-daily ScheduleExpression cron(45 12 * *
 - 20261012T132726Z LEG L4 closed: First exercised UTC day 2026-10-12, read 07:22Z, 11:33Z, 13:26Z (arms 1-7). (1) cot-rebalancer-runner: 0 log events 05:5
 - 20261012T132726Z CLOSED -- all 4 legs proven
+- 20261012T134500Z NOTE by 2.0.0_SA_COO~G1 (CTO ADDENDUM 6 @44e8559bca, msg 4366): the ROLLBACK of this entry now INCLUDES re-applying the 07:00Z rule. Its rule, target and permission were retired by ledger healgap-r3-act-ht15-retire-0700z-rule-20261012; restore them from f3afa83d59 (the three resource blocks of satellites-registry-producer.tf) with the same three targets in the same act that sets cot_rebalancer_runner_daily back to cron(0 6 * * ? *). Rolling this rule back alone would leave the 06:00Z runner with no same-day registry fire until 13:15Z.

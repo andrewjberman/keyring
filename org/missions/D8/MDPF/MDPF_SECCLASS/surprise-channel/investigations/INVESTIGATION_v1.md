@@ -7181,3 +7181,30 @@ by dell1 or by this seat.
   "notes": "Cause inferred, not measured: the six-place rounding of per-relationship class shares. The half request states both figures and does not choose one."
 }
 ```
+
+## MDPF_SECCLASS-D1-S32 -- C-S17 disarms on the amended radius: the SC-e-97 half request names the firm-total, AUA, added/dropped and advisor move per window date
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S32",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-12T13:37Z",
+  "one_line": "D1-C-S17 (ARMED, disarm owner this seat): the SC-e-97 half request now names the firm-total and AUA move per window date, measured from the build's own dry run; the radius is amended @2e8d5c96ef and the COO half re-signed (addendum 1); the hazard disarms on the amended radius, and its close-when (each window day's served total equals the stated rebuilt total) is leg G condition 9.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_C06_ROLLING_REDERIVE_20261012.md @2e8d5c96ef: sections Totals and AUA, Added and dropped relationships, Advisors the map drops, Period bars; r23_checks.py half reads ok=True sections=11 of 11 totals=True added_dropped=True bars=True",
+      "Issuer recompute from the worker's raw dry-run capture (capture.pkl: the would-be summary and every relationship payload): the would-be firm total equals the sum of the would-be relationship totals to the cent on all 15 window dates; added + dropped + changed reconcile to the move with a residual of 0.00 on every date; 876 added rows, 151 dropped rows, 0 new to the store; advisor keys 56 and 56",
+      "Firm total served -> rebuilt: up on 2026-09-25..10-04 ($32.08M, $224.04M, $223.81M, $246.65M, $156.38M, $149.47M, $150.33M, $28.22M, $5,203.59, $48,507.12), down on 10-05..10-08 ($1.83M, $1.35M, $1.49M, $1.93M), holds on 10-09; the rebuilt total equals client_performance AUA on all 15 dates; the AUA does not move",
+      "CVO ADJUDICATION_v21 / REMEDIATION_v13 row D1-C-S17 and CTO half ADDENDUM 1 (msgs 4348, 4349); round-23 worker rows D1-W86-S7..S10"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The sign-off names the act's blast radius and covers BOTH branches; a served restatement of daily firm totals and AUA is in that radius (CLAUDE.md section 5).",
+  "world_is": "The first radius said the AUA and cube totals were not measured. The amended radius measures them: the firm total moves on 14 of 15 window dates (up 10, down 4), the AUA holds on all 15, and the rebuilt total equals it; the window-day advisor totals also move (502 of 840 advisor-days, about $55M of attribution between two advisors on 09-29) because the build reads the current rel_architect lookup. The CTO half re-signs or refuses on this radius; the ship waits on both halves and on SC-e-91's leg G."
+}
+```

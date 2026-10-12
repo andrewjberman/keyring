@@ -61,6 +61,12 @@ exists. Verify at the start: `git cat-file -e <M>` and `git merge-base --is-ance
    Without the fence, all three read 400, so 403 against 400 discriminates. Do NOT invoke with a real ticker, and do NOT run
    `check_e2e.py` (it launches a real Bloomberg draw).
 8. **Close the ledger** only when all four legs carry proof (`python .tools/deploy_ledger.py close-leg ...` then `close`).
+9. **(AMENDMENT 2) Post-act read, owed by this seat after the ledger closes:** the first real internal enqueue through the portal
+   after the deploy is read in the function's CloudWatch log (`/aws/lambda/opal-research-pull-enqueue`) and must answer 2xx. Record
+   it in `bx2_first_internal.out` with the log stream, the timestamp and the status. **A 403 to an INTERNAL session within the first
+   trading day's log is Branch B: rebuild the prior version from its pin the same hour (the rollback in section 2) and file a row.**
+   A partner session's 403, if one occurs, is the fence working: print it, do not roll back. If no real enqueue occurs in the first
+   trading day, say so; the post-act read is then UNMEASURED, not passed. This read is not one of the three criteria.
 
 ## 2. BOUNDS AND ROLLBACK
 
@@ -111,6 +117,9 @@ org/critical_paths/change_management/
   separate act through the Bloomberg queue and is not in this round. The CTO is told this in the round-80 drain-end message.
 - Executes on dell1 (`dell1 runs its own deploys`, Andrew-direct via `0.0.0_AB_MSTR~DELL1` msg 1590). The Lambda lives in AWS and
   is not a site Z asset.
+- **AMENDMENT 2 (2026-10-12 ~13:4xZ, issuer; no criterion changes):** the CTO half is SIGNED
+  (`ledger/NEVER_WIDEN_ROUND80_ENQUEUE_FENCE_DEPLOY_CTO_HALF.md`, msg 4362). It makes C-d a PRECONDITION of the apply (step 4a), accepts
+  the narrow fourth arm, and adds step 9 (the post-act read) and Branch B.
 - **AMENDMENT 1 (2026-10-12 ~14:3xZ, issuer; no criterion changes):** `<M>` = **824bdb355b**, the merge of HVST-bx-1 on box/dell1
   (`safe-merge.sh`, proof VALID rc 0, bx-1 flipped complete). The START CONDITION is met except the seat itself: lane
   `0.7.0_AE_CloudOps~HV1` is spawned by the issuer, and `1.0.0_SA_CTO~DELL1`'s half of the pair is owed.

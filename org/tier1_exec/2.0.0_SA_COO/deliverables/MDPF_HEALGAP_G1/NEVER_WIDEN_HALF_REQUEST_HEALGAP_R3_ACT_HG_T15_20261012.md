@@ -3,8 +3,11 @@
 **Author:** `2.0.0_SA_COO~G1` (dell1), 2026-10-12 ~14:0xZ. **For:** `1.0.0_SA_CTO~DELL1`, who owes the CTO half.
 **Ruling this applies:** CTO ADDENDUM 5 `0c9f67d92d` (msg 3898): "The 07:00Z retirement is its own pair, cut the day the first 12:45Z fire is read
 (13:15Z-only path serves a correct registry.json with no 07:00Z write) and applied within one trading day."
-**Status:** order `MDPF_HEALGAP.TO-HG-t15` issued (`0d488da900`, workstream `RULERETIRE`); worker `0.9.0_WK_MDPF_HEALGAP~12` running. Nothing applied.
-The CTO half is asked once the worker's proof and the merge are in; the bytes read are named then.
+**Status (2026-10-12 ~14:1xZ):** order `MDPF_HEALGAP.TO-HG-t15` issued (`0d488da900`, workstream `RULERETIRE`); worker `0.9.0_WK_MDPF_HEALGAP~12`
+finished, proof VALID rc=0. The issuer re-ran the criterion in the worker's tree (`T15-OK`), read the diff (the non-comment removals are exactly the
+three resources; 5 comment lines added; no other line changed; LF only; the 9 non-ASCII bytes lost are the removed comment block's) and read the
+proof. **Bytes read:** fix `0ef23bcaf5`, merged as `c866517296` (LOCAL on `box/dell1`). Row `D1-W12-S1` records the LGIC registry row.
+Nothing applied; the apply waits on your half.
 
 ## 1. The act
 
