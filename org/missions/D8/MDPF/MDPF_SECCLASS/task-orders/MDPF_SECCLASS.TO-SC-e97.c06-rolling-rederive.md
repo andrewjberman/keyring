@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~86</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -99,7 +99,7 @@ the boundary, replace a re-derived date, leave an outside date byte-identical, r
 `SC23-e97-AC2` -- `build()` computes the window before the early return, `restated_through` is written by C_06 and passed through by D_04, and no integer window is typed in C_06.
 
 <criterion id="SC23-e97-AC3" cell_refs="SC-e-97"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R23_CHECKS/r23_checks.py half org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_C06_ROLLING_REDERIVE_20261012.md</invocation><expect>HALF-REQUEST ok=True</expect></criterion>
-`SC23-e97-AC3` -- the half request exists with its seven sections, names both writers with N printed, and both halves unsigned.
+`SC23-e97-AC3` -- the half request exists with its eleven sections (amendment 3 adds Totals and AUA, Added and dropped relationships, Advisors the map drops, Period bars; every window date in the first two), names both writers with N printed, and both halves unsigned.
 
 <expected_criteria>SC23-e97-AC1, SC23-e97-AC2, SC23-e97-AC3</expected_criteria>
 
@@ -157,6 +157,54 @@ record established that `sync_scripts` places `gold_dispatch.sh` flat BESIDE C_0
    sibling tests that failed on a changed call text stay unedited: restore the call you changed, as you did.
 5. **Gate limb.** The issuer amends its own criteria without a CTO ruling; no gate limb grades an amendment to an existing order's criteria and
    `<status>` (this order declares `<placeholders>NONE`). The three criteria are unchanged.
+
+### AMENDMENT 3 -- the radius carries the firm total, the AUA, the added and dropped relationships and the advisors the map drops (issuer 2.0.0_SA_COO~M1, 2026-10-12 ~13:1xZ; answers the CVO's ARMED row MDPF_SECCLASS-D1-C-S17 and the CTO's suspension, msgs 4348 and 4349)
+
+Your build and your half request stand as built. The order is reopened for ONE addition, because a sign-off that does not name a move the act makes is not a
+sign-off. The CVO measured that the current partitions' market-value sums sit $5,203.59 to $270,086,670.20 ABOVE the served firm total on 14 of the 15
+window days (equal only on 2026-10-09) and that the half request says the AUA and cube totals "are not measured". You are a NEW session on slot ~86:
+the earlier branch and worktree were removed at the drain, this one is cut from trunk HEAD. Read first: the half request as it stands, the SC-e-96 record
+`WINDOW_READ_C06_ROLLING_20261012.json`, `lib/mix_views.py` and D_03's `_publish_mix_views`
+(`data/black_diamond/scripts/gold/D_03.composition_artifacts.py` :470-), and `D_04.client_portal_summary.py` :440-575.
+Measure with the BUILD'S OWN dry run, not a proxy: run `build(upload=False, incremental=True, dry_run=True, verbose=False)` of the C_06 at HEAD
+with `_write_mix_summary` and `_write_relationship_json` wrapped so that they CAPTURE their arguments and write nothing (the dry run's own flag
+already skips S3 writes; the wrappers only record), as the worker before you did for the relationship counts. About 13 minutes from this
+seat: run it in the background and keep the captured objects on disk under `.scratch/`.
+1. **Totals and AUA, per window date (15 dates).** From the captured would-be `mix_daily_summary.json`: `firm[date].total` REBUILT, against the
+   SERVED stored `firm[date].total` (read the live object now and print its VersionId and LastModified). Then the AUA the partner page SERVES for
+   that date: find the field in `lib/mix_views.py` and D_03 `_publish_mix_views` (`total_aua`, or what it is named at HEAD), name its SOURCE
+   (cube total, `cp_daily_total`, or the C_06 firm total; say which, with file:line), read the SERVED value from the live served object, and compute
+   the value the SAME function would write after the act by calling the module's own function on the would-be summary (stub the S3 write). If that
+   function cannot be driven in memory, say what it reads and compute from its rule, marking the figure inferred. One table row per date:
+   `date | served firm total | rebuilt firm total | move | served AUA | AUA after the act | move`. A day whose total HOLDS is stated as holding.
+2. **Added and dropped relationships, per window date.** From the capture against the stored JSONs: the relationships the rebuild ADDS on that date
+   (in the partition, not stored for that date) and DROPS (stored for that date, not in the partition), as counts and dollars (rebuilt `total_mv`
+   for an added one, the stored `total_mv` for a dropped one), and the TEN largest of each per date by dollars, each by its RELATIONSHIP ID (opaque
+   id) and dollars, with: was the relationship already stored on other dates (it exists, it is missing this date) or is it new to the whole store (no
+   JSON at all). No client name and no account id appears; the relationship id is the identifier the stored keys already carry. The sums
+   `added`, `dropped`, `added minus dropped` and the firm-total move must reconcile to within $1.00 per date, or you say what is missing.
+3. **The advisors the map would drop.** The advisor keys of the SERVED `mix_daily_summary.json` against the advisor keys of the captured would-be
+   summary: name each advisor in one but not the other (the key as served), how many days it carries and its last date and dollars. Then the
+   measure-first read of row MDPF_SECCLASS-D1-W80-S3 (remediation v12): the advisor key sets of the LAST FIVE served versions of
+   `gold/views/mix_daily_summary.json` (`list_object_versions`, then get each), so the half request can say whether a drop already happens on the
+   base code (not a defect of this act) or is new.
+4. **The four period bars' totals as well as their classes.** Run D_03's own period-bar function (`lib/mix_views.py`) over the SERVED daily map and
+   over the would-be daily map: the Q3 2026, Q4 2026, September 2026 and October 2026 bars (and the 2026 annual bar), each with its class dollars and
+   its TOTAL before and after.
+5. **Four new sections in the half request** (the file's other seven sections stay; update the figures in them that these reads change, stating
+   what changed): `## Totals and AUA` (the item 1 table, every one of the 15 dates, with the words "firm total" and "AUA"), `## Added and dropped
+   relationships` (the item 2 table, every date, with the words "added" and "dropped", and BOTH branches read from the producer's rule: a day whose
+   total moves and a day whose total holds), `## Advisors the map drops`, and `## Period bars` (item 4, naming the Q3, Q4, September and October 2026
+   bars). Put a one-paragraph plain reading at the top of `Totals and AUA`: what a partner would see move on the firm total and AUA, in dollars.
+   Both halves stay `UNSIGNED`; the issuer's COO half and the CTO's are re-read on this radius. A change to the build is NOT asked for: if a
+   measurement shows the build does something the request would not want (a total moving by an amount that has no source), say so in your report
+   and file a row, and keep the measurement.
+6. **Criterion AC3 is amended: the half request now carries eleven `## ` sections** (the issuer's `r23_checks.py half` was extended, already on
+   trunk; do not edit it). AC1 and AC2 are unchanged. Validate your proof instance, re-run all three, flip `complete` only when all pass.
+7. **Grant.** The `<paths>` block is unchanged (the half request and the surprise channel; scaffolding goes under `.scratch/`, uncommitted). Rows
+   `MDPF_SECCLASS-D1-W86-S<k>`, continue at S7. Client data stays out.
+8. **Gate limb.** The issuer amends its own criteria without a CTO ruling; no gate limb grades an amendment to an existing order's criteria and
+   `<status>` (this order declares `<placeholders>NONE`). AC3's check was extended by the issuer in the same commit.
 
 ## BOUNDS
 
