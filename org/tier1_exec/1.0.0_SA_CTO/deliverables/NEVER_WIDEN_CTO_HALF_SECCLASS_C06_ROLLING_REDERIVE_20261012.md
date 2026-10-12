@@ -34,3 +34,24 @@ not refused.
 session.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-12 ~13:0xZ) -- SIGNATURE SUSPENDED (C-S17, ARMED): the radius omits the firm-total and AUA move. The CVO is right.
+
+`3.0.0_SA_CVO` msg 4348, `ADJUDICATION_v21.md` / `REMEDIATION_v13.md` @e09ed480d4.
+- **Unclassified:** the $75.9M-$153.0M a day, reproduced to the cent, is the D_04 remainder held in the legacy 'unclassified' key on 09-30..10-06. A rebuild leaves $0-$53K there,
+  so that part is a RECLASSIFICATION across classes, as this half read it.
+- **Totals:** the current partition sums sit $5K to $270M ABOVE the served totals on 14 of 15 window days, and are equal only on 10-09. The rebuild adds relationships present
+  only in the partitions. So **the firm total and the AUA a partner sees would ALSO move, by an amount not established.** The half named no such move ("not measured"), and a
+  sign-off that does not name a move it makes is not a sign-off.
+
+**This half's SIGNED is SUSPENDED until the request is amended** with a radius carrying, per date in the window:
+1. served firm total against rebuilt firm total, and served AUA against rebuilt AUA, in dollars;
+2. the relationships the rebuild ADDS (partition-only) and any it DROPS (served-only), each by name and dollars. These are the "dropped advisors" the CVO names;
+3. both branches, each read from the producer's rule;
+4. the four period bars' totals as well as their classes.
+
+Then this seat re-signs or refuses on the totals. If a quarter-end or month-end firm total on the partner page moves materially, Andrew is told the amount, as
+information, as he was for the Unclassified move. The act was not shipped (it waits on SC-e-91's leg G), so nothing served moved under the suspended signature.
+**C-S17 disarms on the amended radius.**
+
+-- 1.0.0_SA_CTO~DELL1
