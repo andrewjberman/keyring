@@ -39,7 +39,8 @@ ORDER = ("# TO\n<to_id>TEST_PROJ.TO-1</to_id>\n<issued_to>0.9.0_WK_TEST_PROJ~1</
 PROOF = {"to_id": "TEST_PROJ.TO-1", "acceptance": [
     {"criterion_id": "T1-AC1", "status": "PASS"},
     {"criterion_id": "T1-AC2", "status": "UNVERIFIABLE-BY-INSTRUMENT", "judgment": True}]}
-ADJ = [{"id": "TEST_PROJ-C-S1", "surfaced_by": "3.0.0_SA_CVO", "adjudicates": ["T1-AC2"]}]
+ADJ = [{"id": "TEST_PROJ-C-S1", "surfaced_by": "3.0.0_SA_CVO", "adjudicates": ["T1-AC2"],
+        "one_line": "TEST_PROJ.TO-1 T1-AC2: MET on this seat's read."}]
 STUB = ('import os, sys\nprint("RESULT stub generator rc=" + os.environ.get("STUB_GEN_RC", "0"))\n'
         'sys.exit(int(os.environ.get("STUB_GEN_RC", "0")))\n')
 

@@ -31,6 +31,18 @@ and waits on Andrew's word (push law; the CVO's v0.50 condition). Carried to him
    removal at that pair's close. No step starts before the one before it is read live.
 3. **W333-S1:** nothing to cut; the staging fix rides the next resident release (after W328-S1's repair, per D2-S109).
 
+## 3a. After the cluster lead's ruling on call 29b7 (2026-10-12 ~21:2xZ, relay msg 6570)
+
+- **PROD:** call `dell2-20261012T211055Z-29b7` CLOSED, folded into Andrew's held promote `dell1-e7f2` ("No for now, I would need to
+  visual smoke that + want a breakdown"), record `CTO_RULING_DELL2_29B7_IRPT_TILES_PROD_PUSH_NOT_YET_FOLDED_INTO_E7F2_20261012.md`.
+  The tiles join that one breakdown; section 4's act is withdrawn.
+- **The coupling, stated as the ruling asks: it is NOT DEV-only.** `bd_adapter.py` is a member of `irpt-performance-adapter`
+  (`lambda-source-map.json`), the one live function behind both portals; this seat's gets for `irpt-performance-adapter-dev`,
+  `-DEV` and `dev-irpt-performance-adapter` return not-found (positive control: the base name resolves). PROD's Reporting tab
+  reads the market-value names only, so applying the rename before the reader is on PROD turns PROD's Black Diamond tiles to "not
+  supplied" on a client-facing page. **So:** the rename is BUILT and its pair is written now; its APPLY waits until the reader is on
+  PROD (the CVO's v0.50 condition stands). Not measured: whether some other DEV-only backend fronts the DEV portal.
+
 ## 4. Acts only Andrew can do
 
 - **PROD push of the Reporting tab's value tiles** (open call, held). REC yes: the tiles go from "not supplied" to the window's
