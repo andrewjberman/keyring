@@ -7381,3 +7381,27 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W153-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~153",
+  "surfaced_at": "2026-10-12T02:19:59Z",
+  "one_line": "The live price store object is the 2026-06-09 version minus 1,623 rows; its scoped_override rows and missing source_firm are the June shape, and no file in the cot tree can assign scoped_override.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row D2-W149-S1 and the order read the live object as a shape the HEAD writer would not produce, to be matched to an earlier version of the writer; deliverables/0.9.0_WK_ADVI_COTBKF~63/bd_txn_provenance.md section 4 grades the earlier version class shared_builder_run (a cot builder run with the injector).",
+  "world_is": "The object has two versions. The live one (2026-10-09T13:41:04Z) differs from the earlier one (2026-06-09T20:42:16Z) by 1,623 bd_txn_price rows only (sha256 equals the CB-aj-1 manifest, put by 0.7.0_AE_CloudOps~CB2, ledger 20261009T1320Z leg W1). The earlier version carries scoped_override (12,042 rows) and bd_txn_price, which only data/black_diamond/scripts/silver/inject_scoped_overrides.py assigns; the cot tree holds no injector at 6b0be4337e or HEAD, and commit 319a716cb4 (2026-06-12) says a cot S_00 dispatch would hard-crash for lack of one. The earlier version and 37 daily files share a two-second window, and the cot builder writes no daily files. So the class shared_builder_run is not supported by the tree; a copy from another firm's store is also not shown. Not read: the deployed code/gold and code/silver mirrors; CloudTrail; any other firm's object.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~153/STORE_WRITER.json (versions, changed_between_versions, writers_in_the_tree, code_that_matches_the_live_shape)",
+      "this worker's reads at 2026-10-12T02:19:59Z: s3api list-object-versions (2 entries, exact key) and one get-object --version-id on opal-data-cot; sha256 of the live local copy 51a1f1f7e19a0ce3d8332484dd53aec431f061d51b1279c9dc020990a17087fa",
+      "git show 319a716cb4 (message: cot has NO inject_scoped_overrides.py) and git ls-tree -r 6b0be4337e data/cot/scripts/silver (0 files named inject)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
