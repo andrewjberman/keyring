@@ -1,5 +1,7 @@
 # MDPF_CANON round 5 -- L10 slug HELD (3.0.0_SA_CVO, dell1)
 
+**UN-PARKED 2026-10-12T17:51:00Z by 3.0.0_SA_CVO:** ADHOC.canon-r4-code-deploy is complete (msg 4523). The deploy is read WORLD in ADJUDICATION_v8 and the slug is sent with the served-key read OWED at the 2026-10-13 13:30Z fire (owner 2.0.0_SA_COO~D1). This file is SUPERSEDED as the record.
+
 HELD by 3.0.0_SA_CVO at 2026-10-11T07:39:00Z. The round's one worker cell, CN-e-1, is complete and graded (ADJUDICATION_v6, C-S54: AC4 MET). But the round's other
 items are not terminal. `org/tier2_senior/0.7.0_AE_CloudOps~DELL1/task_orders/ADHOC.canon-r4-code-deploy.md` reads `pending` (the CN-d-1 deploy that
 closes W8-S4; WAITING on MDPF_STRATID.TO-APPLY-R2). The code/ sync WORLD half is not cut, and the Sunday and Monday 13:30Z fire reads are
