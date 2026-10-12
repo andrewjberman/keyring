@@ -1,12 +1,12 @@
 {
   "prd": "NFRA_OPSWKF_PRD.md",
-  "prd_version": "v0.10",
-  "prd_pin": "47d579b50577b3a8bab05284d07a0d70280e5280",
+  "prd_version": "v0.11",
+  "prd_pin": "17edabd1df5a3a3bb1c9513bd43c95e97eade165",
   "half": "ratified-text",
-  "half_hash": "4fa71dcb151945217a943b0a248c94c8ea858176442a1bd2aa4c495c994b9bfb",
-  "endpoint_hash": "93174fc002a7472c57776e542246fdafbeb0e3f73cf8139517ac64be0e373f6b",
+  "half_hash": "e8ecfecc9ddb7b743964252bcca7a26b41052dd61543529a7eee76ab7efae30e",
+  "endpoint_hash": "820cff5fee4a3da0b9935abdafc322f51cb68eed220c6da09ec9ce7e831d0658",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPSWKF_PRD_v0.10_RATIFIED_TEXT_REVIEW_20261011.md@a53b0aaca53fcfa5661b5c8b6406b8c43379ca20",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPSWKF_PRD_v0.11_RATIFIED_TEXT_REVIEW_20261012.md@e7f3be024995616523f16a1635032480c727038d",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-11T23:31:35Z"
+  "signed_at": "2026-10-12T00:10:56Z"
 }
