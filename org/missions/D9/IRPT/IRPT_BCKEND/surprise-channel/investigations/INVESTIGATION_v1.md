@@ -27997,3 +27997,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The marker is the build's census and the unmarked class (220 tickers, 214 not in the store) holds funds as well as non-funds. The store has no yahoo-labelled point on any graded day, so the per-class equality (replaced 18,537 of 18,870; not_replaced 5,059 of 5,106) is read on the store's newest weeks, where an adjusted close and the unadjusted one differ least; it neither confirms nor refutes the round-76 finding about older points. A comparison over the store's older dates was not made (the Yahoo cache holds bars from 2026-01-30 only)."
 }
 ```
+
+## IRPT_BCKEND-D2-W318-S1 -- The live authorizer package is a 4-line bun bundle, so the face's content comparison of its index.mjs to a git blob of the source cannot match any revision; the match was made by string-literal and property-name features instead
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W318-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~318",
+  "surfaced_at": "2026-10-12T01:23:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The live authorizer package is a 4-line bun bundle, so the face's content comparison of its index.mjs to a git blob of the source cannot match any revision; the match was made by string-literal and property-name features instead",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "zipfile read of the downloaded package under python -I: one member index.mjs, 65,333 bytes, 4 lines (4823, 27, 60480 characters and a final empty line); base64 sha256 of the package bytes equals CodeSha256",
+      "git show of the file at 26ffa22b79, 4bca50737e, 18971693ad, 972976ebca, ee822c425f (263, 367, 427, 435, 451 lines) against the live member after line-ending normalisation: equal for none; raw differing-line counts 265, 369, 429, 437, 453",
+      "feature test: ee822c425f has 63 string literals of 3 or more characters, 60 are in the live member, the 3 absent are inlined import specifiers; infra/aws/lambda/ci/build-nodejs-lambda.sh header: the build is a bun --format=esm single-file bundle",
+      "deliverable org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~318/IB159-1_authorizer_render_token_gap.json, live_source_matches"
+    ]
+  },
+  "spec_asserts": "The face of IRPT_BCKEND.TO-IB-pr-463 item 2 reads the live index.mjs compared by content to the file's blob at each commit, matched at one commit or at none with the nearest by line diff.",
+  "world_is": "The deployed member is a minified bundle of the source plus its libraries, so a raw comparison is false for every revision and the line-diff nearness is meaningless (the smallest count, 265, belongs to the oldest revision). matched is recorded false with the feature-test result beside it (nearest ee822c425f, claim inferred). A byte comparison needs a build of the tree, which the order bars."
+}
+```
+
+## IRPT_BCKEND-D2-W318-S2 -- The four authorizer commits after the source map's last_deployed_commit 26ffa22b79 are not unreleased: two CLOSED deploy ledgers record them applied (2026-09-25 and 2026-10-03), and the live package carries them; the map's commit and date fields were not advanced
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W318-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~318",
+  "surfaced_at": "2026-10-12T01:23:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The four authorizer commits after the source map's last_deployed_commit 26ffa22b79 are not unreleased: two CLOSED deploy ledgers record them applied (2026-09-25 and 2026-10-03), and the live package carries them; the map's commit and date fields were not advanced",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/critical_paths/change_management/20260925T1546Z_irpt-render-v2-a2-20260925_deploy_completion.md: CLOSED, authorizer CodeSha256 sgQWoygZ... == artifact, bun bundle of CLOUD @972976ebca",
+      "org/critical_paths/change_management/20261003T1946Z_irpt-authorizer-series-render-20261003_deploy_completion.md: CLOSED, authorizer CodeSha256 gQp2IooA... == artifact, built from CLOUD @ca49283ff1; live CodeSha256 read 2026-10-12 is the same value",
+      "git log -S on infra/aws/lambda/ci/lambda-source-map.json: 80ba60328c (2026-10-03) moved artifact_sha256 only; the entry still reads last_deployed_commit 26ffa22b79 and last_deployed_at 2026-09-09T18:50:07Z at base ffbb53b4a4",
+      "inferred, not measured: the live bundle was matched to ee822c425f by string-literal features (row IRPT_BCKEND-D2-W318-S1), not byte-for-byte"
+    ]
+  },
+  "spec_asserts": "Row TCKT_VNEXT-D2-S52 and the face of IRPT_BCKEND.TO-IB-pr-463 describe the tree's authorizer source as ahead of its recorded build input, with four commits not yet released.",
+  "world_is": "Both ledgers are CLOSED and the live bytes carry the render path; what is behind is the map's last_deployed_commit and last_deployed_at, which record-terraform-deploy.sh writes and which still name the 2026-09-09 release. Why that recorder left the row was not established. The read proposes no act on it."
+}
+```
