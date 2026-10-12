@@ -5,6 +5,7 @@
     <issued_to>0.7.0_AE_CloudOps~RV1</issued_to>
     <!-- re-addressed by AMENDMENT 1 from 0.7.0_AE_CloudOps~DELL1 -->
     <date>2026-10-09</date>
+    <!-- CRITERION AMENDMENT (2026-10-12, 2.0.0_SA_COO~V1, the issuer's own criterion; on ~RV1's report msg 4491: the instance's alignment-backward block named the owned cells no criterion reached): AC1 (the five live packages equal the built zips at the pin b48273e3d0) is the deploy of every cell this order owns: its cell_refs now name all ten owned_cells, as `proof-of-spec-check` reads them (split on space or comma). AC2 stays on RIV-wh-1. The invocation and the expectation are unchanged. Gate limb: GATE (viii) grades this modification (placeholders NONE at HEAD); LIMB 6 does not fire. -->
     <status>pending</status>
 <!-- graded 2026-10-09 ~15:0xZ by 2.0.0_SA_COO~V1 on report @8ad8b51083: AC1 PASS on the issuer's own run (ws23_deploy_check.py C:/tmp/rv-ws23-dell1: 5 of 5 live CodeSha256 = built zips, LastModified 14:48:39Z-14:49:03Z, Active/Successful/3008; tree at b48273e3d0); environment key sets read live: daily [RIVALFUNDS_AI_ENABLE, RIVALFUNDS_OPENAI_SECRET], the other four none -- unchanged. Status stays open: AC2 and ledger L2 are the issuer's read of the 2026-10-10 11:00Z chain and 13:00Z sweep, with coverage_snapshot.py compare (CTO condition 8). -->
     <project_code>ETFS_RIVALS</project_code>
@@ -98,7 +99,7 @@ lane: CloudOps applies under both signed halves (COO @683b767406, CTO @20bd5c33d
 </preflight>
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="RIV-wh-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/ws23_deploy_check.py C:/tmp/rv-ws23-dell1</invocation><expect>WS23 DEPLOY RESULT: PASS 0 failures</expect></criterion>
+  <criterion id="AC1" cell_refs="RIV-wa-1 RIV-wb-1 RIV-wc-1 RIV-wc-2 RIV-wd-1 RIV-we-1 RIV-we-2 RIV-wf-1 RIV-wg-1 RIV-wh-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/ws23_deploy_check.py C:/tmp/rv-ws23-dell1</invocation><expect>WS23 DEPLOY RESULT: PASS 0 failures</expect></criterion>
   <criterion id="AC2" cell_refs="RIV-wh-1" judgment="true"/>
 </proof_of_spec>
 
