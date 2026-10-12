@@ -5558,3 +5558,31 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "ARMED because the warning's content is unread here and the estate wrote it against this node. Disarm owner is the issuer, who can read the citation and rule on the hold before the deploy order under the act 4 pair."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FBL (FB-f-19, act 4 laptop leg, the router and guard gate after the flip)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S21",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~FBL",
+  "surfaced_at": "2026-10-12T14:05:00Z",
+  "one_line": "TO-FB-f-19 step 2: the router's own gate reads 42 pass / 9 fail (order: 51 pass, 0 fail) and the guard's reads 43 pass / 3 fail on HEAD after the flip commit; at the commit before the flip both read all-pass. The act is HELD before any plan or apply; nothing in AWS has moved.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-FB-f-19 step 2: the router and the guard build through build-nodejs-lambda.sh with their own gates running, and the router's `bun run test` reads 51 pass and 0 fail; the order's section 0 says a reading that differs from it is a STOP and a BLOCKING row.",
+  "world_is": "Built 13:53Z-13:55Z from HEAD 20215ccd98 (flip 69679b90e3 and re-pins e274a0e60c both ancestors). shared-advisor-router: `bun test test/` 42 pass, 9 fail, Ran 51 tests across 4 files; the nine are canonical-platinum.spec.mjs (2: the fixture finds a legacy firm, its alias and another firm in the registry; a listed bucket platinum passes), ADVI_FIRMSEP.04 firm-routing (5: X-Firm-Id 49financial routes to opal-data-bd; mockadv routes to opal-data-bd; PATH-CLASS SCOPING; TRAILING-SLASH CONTROL; opal-capital staff ?firm=bd platinum/advi/49financial) and POSN_TENANCY.TO-4-AE (2). shared-advisor-router-response: 43 pass, 3 fail, Ran 46 tests across 3 files (ADVI_FIRMSEP firm-isolation guard: '49financial served from opal-data-bd passes through', 'P4R-3: opal-capital staff with ?firm=bd reading advi/49financial from portal-v2 passes', 'does NOT publish an alert when firm/bucket match'). auth-validator-edge: no unit-test gate in the build output. CONTROL: the same two commands in a detached worktree at 69679b90e3~1 (1a8d882931) read router 51 pass 0 fail and guard 46 pass 0 fail, so the flip commit (it changed firm-config.mjs bucket lines and the registry routed value and no test file) is what moves the readings; the failing assertions name opal-data-bd for 49financial, which the flipped tree now maps to opal-data-49financial. The build script prints 'Tests: PASS' on a run with failures, so its own line is not evidence. Built artifacts (uploaded to s3://opal-313476888478-lambda-artifacts/portal-auth/): router sha256 +gJJpRe/HkZTEfKwBKfy7YJ2f9uSFV7iSh4lhHMlxCY=, guard 3ewTlF5dMkcQXUfdA/Vhgo7fbeVVzH+zbXpfF9pogrU=, validator sCxEV3p6ucK1iewCWQeqJaf0SHVURqOlj52dnE58WHo=. No plan, no apply, no association moved: the distribution EVTSA9VEHNZVH still reads router 27 x5, guard 6 x5, validator 22 x26 (read 13:49Z). lambda-source-map.json carries the three artifact records from the builds, uncommitted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f19/build_router.out, build_shared-advisor-router-response.out, build_auth-validator-edge.out (the full gate output, ANSI included)",
+      "bun test test/ at 1a8d882931 (flip~1): router 51 pass 0 fail, guard 46 pass 0 fail; the same at HEAD: 42/9 and 43/3",
+      "git show 69679b90e3 --stat: 16 files, none under infra/aws/lambda-edge/*/test",
+      "deliverables/0.7.0_AE_CloudOps~FBL/evidence_f19/step0b_simulate.txt and pre_get_distribution_config.json (the gate passed and the live state is unmoved)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here whether the nine and three assertions are stale expectations of the legacy route (the likely reading) or a regression in the flipped routing; that call is the issuer's and the CTO's. Either way the order's gate reads differently from its text, so the act waits. Options for the issuer, one ask: (a) amend the order to accept the named failures as stale and have the tests updated in a commit before the build, or (b) rule the failures a STOP and fix the tests or the routing first, or (c) name another reading. Act 4 must land before Monday 23:00Z or act 2 rolls back. This seat resumes at step 3 on the issuer's word."
+}
+```
