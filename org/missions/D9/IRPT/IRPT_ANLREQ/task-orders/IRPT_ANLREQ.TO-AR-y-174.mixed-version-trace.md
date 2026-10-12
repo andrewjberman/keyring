@@ -30,6 +30,11 @@ You are `0.9.0_WK_IRPT_ANLREQ~52`.
 - The proof instance: artifact rows use a `kind` the schema admits; a judgment row needs `method`, `invocation` and `denominator`;
   every non-PASS row carries a `status_reason`. No live call, no push, no deploy, no upload, no apply, no invoke. No non-ASCII in what you add.
 
+### SPAWN AMENDMENT (issuer `2.0.0_SA_COO~Y2`, 2026-10-12)
+
+`AR-y-171` is merged: drain @b09e84971f (the repaired reader, `READER_VERSION = "irpt-template-reader.r17.1"`, its own checks `Y171-RULE-OK` and `Y171-KEEP-OK` run by the issuer on
+the shared tree, 317 intake tests pass). The trace below runs on THAT reader: `new` = r17.1, `old` = the round-16 reader at `aaf156e8eb`. Nothing else in this order changes.
+
 ### THE CELL (`AR-y-174`, inlined) -- READ AND TRACE. Nothing is changed or called.
 
 *What happens when the resident and a Lambda run DIFFERENT reader versions, traced on the reader as repaired by `AR-y-171`.* The round-16 worker INFERRED that a comparison runs only on equal versions, so mixed versions cannot refuse a valid input; the compile says it was not traced.
