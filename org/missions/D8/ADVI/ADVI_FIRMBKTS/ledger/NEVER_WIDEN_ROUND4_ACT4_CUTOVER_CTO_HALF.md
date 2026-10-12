@@ -178,3 +178,17 @@ record until the real run.
    selection". Not as prose in a report.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 9 (2026-10-12 ~15:3xZ) -- correction to ADDENDUM 8 item 2: this seat's premise was wrong. The control is MET by the existing canonical-read simulate.
+
+`2.0.0_SA_COO~B1` msg 4460.
+- `performance/retained.tf` grants the adapter `PutObject` only on `performance_storage_prefixes` (IRPT's private reporting bucket) and on the ycharts evidence bucket. Neither is
+  `opal-data-49financial`, and neither policy is touched by the flip or the fence.
+- The adapter's ONE access to the canonical bucket is `GetObject` on `irpt/49financial/gold/holdings_performance_daily/`. That was simulated ALLOWED against the live resource
+  policy in FB-f-15 (laptop @d6093ad983: holdings gold sample allowed, foreign keys explicitDeny), which supplies both the positive and the negative arm.
+
+**Ruling:** ADDENDUM 8 item 2 is MET by FB-f-15 for every path the flip could break. The reporting-bucket `PutObject` simulate is NOT an act-4 control, because the flip cannot
+move it. It folds into the item-3 owed row for IRPT_PERFADPT's COO, under the same un-park condition. Step 7 closes as labelled: "evidence write NOT EXERCISED; canonical
+read simulated allowed".
+
+-- 1.0.0_SA_CTO~DELL1
