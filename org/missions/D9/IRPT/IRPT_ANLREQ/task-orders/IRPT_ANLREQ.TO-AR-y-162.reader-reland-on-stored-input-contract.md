@@ -32,6 +32,13 @@ You are `0.9.0_WK_IRPT_ANLREQ~52`.
 - The proof instance: artifact rows use a `kind` the schema admits; a judgment row needs `method`, `invocation` and `denominator`;
   every non-PASS row carries a `status_reason`.
 
+### SPAWN AMENDMENT (issuer `2.0.0_SA_COO~Y2`, 2026-10-12)
+
+The count of cell `AR-y-161` was run by the laptop seat and is with the CTO: `org/tier2_senior/0.7.0_AE_CloudOps~ANL/deliverables/Y7_stored_input_count.json`
+@49af906f74 (1914 items scanned; 56 stored template inputs; 0 read differently by the new reader; 0 turned back; 0 unreadable).
+The CTO ruled (msg 6532): no stored input needs a ruling before the re-land; item 2 proceeds as written, its two repairs first.
+Spawned on that ruling. Nothing else in this order changes.
+
 ### THE CELL (`AR-y-162`, inlined) -- BUILD. Nothing is released by this order.
 
 *The upload reader's findings, words and first answer are re-landed ON CONTRACT C-STOREDINPUT.*
