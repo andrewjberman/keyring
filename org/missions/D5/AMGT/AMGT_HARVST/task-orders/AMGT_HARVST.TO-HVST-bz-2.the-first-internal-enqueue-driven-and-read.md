@@ -43,6 +43,10 @@ it** (so no Bloomberg draw is made by this act). The message stays in the queue.
    invent a ticker; file a row naming the three reads.
 2. **T0:** `date -u +%FT%TZ` into `bz2_before.out` with the function's `CODESHA256`, the queue's `ApproximateNumberOfMessages`
    (`aws sqs get-queue-attributes` for `opal-research-pull-requests`), and the chosen status object's `LastModified` and `state`.
+3a. **A 403 is a STOP (the CTO's half, msg 4489):** if the invoke answers 403, do NOT retry and do NOT vary the payload. Read the log for the
+   `DENIED` line at T0, write it verbatim to `bz2_invoke.out` with `ENQUEUE statusCode 403`, file a row, and report. A 403 to an INTERNAL
+   context means the fence refused the staff path (the lockout this read exists to find). No delete of the object or the message is
+   authorized in either case.
 3. **The one enqueue:** `aws lambda invoke --function-name opal-research-pull-enqueue` with the payload file
    `{"requestContext": {"authorizer": {"tier": "internal"}}, "ticker": "<TICKER>"}` and `--cli-binary-format raw-in-base64-out`. Once.
    Never retry it. Write the response file's content verbatim to `bz2_invoke.out` with a line `ENQUEUE statusCode <n>`.
@@ -91,6 +95,9 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Authority: `1.0.0_SA_CTO~DELL1` msg 4486 and `ledger/ROUND_ANALYSIS.round81.md` section 2 item 1: "one internal-context enqueue of ONE
   ticker already in the pull universe, by `~HV1`. Read the 202, its queue row, and the absence of a `DENIED` line at that T0. The organic
   first enqueue is the negative arm, read when it occurs."
+- **AMENDMENT 1 (2026-10-12 ~16:3xZ, issuer; no criterion changes):** the CTO half is SIGNED @d662b1be2f
+  (`ledger/NEVER_WIDEN_ROUND82_BZ2_CTO_HALF.md`, msg 4489): on a 2xx read the 202, the status object, the queue message and the absence
+  of a `DENIED` line at T0; a 403 is a STOP (step 3a); no delete is authorized. Both halves are signed: the act may start.
 - The pair: COO half `deliverables/2.0.0_SA_COO_W1/round82/NEVER_WIDEN_HALF_COO_DRIVEN_ENQUEUE_READ.md` (signed in the issuance commit) and
   `1.0.0_SA_CTO~DELL1`'s half (owed). The act does not start without both.
 - **Read narrowly, as the fence's own arms were:** the CTO's text says "its queue row". The consumer is a person-started poller
