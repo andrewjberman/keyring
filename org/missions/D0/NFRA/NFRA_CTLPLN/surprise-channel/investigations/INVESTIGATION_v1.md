@@ -6823,3 +6823,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Done: this row points at the CLOSED entry above."
 }
 ```
+
+## NFRA_CTLPLN-W62-S1 -- portal partner reads hit the CT-u-6 tier fence
+
+```json
+{
+  "id": "NFRA_CTLPLN-W62-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~62",
+  "surfaced_at": "2026-10-12T02:45Z",
+  "one_line": "Portal pages a partner-firm login can open read the content-api GET and data-proxy routes; the CT-u-6 tier fence answers those reads 403 for a partner, so the partner pages lose those reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C (issuer) relays this row to 1.0.0_SA_CTO before CT-u-7 applies the fence; the CTO rules whether the partner read path keeps the content GET or the fence scope narrows",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/App.tsx:239-243 at worktree base edef413890 (portal gitlink c96efe1714): usePortalContent() runs on every page for every logged-in user; the comment says the GET is 'readable by every portal user'",
+      "portal/src/api/portal-proxy.ts:2472 apiRequest('/api/scoped/portal-content') is the content GET; portal/src/hooks/usePortalContent.ts:26-35 (retry 1) and :47-49 (a failed query is an answer: the surface falls back to the repo baseline)",
+      "portal/src/lib/firmAccess.ts:45-67 FIRM_ALLOWED_PATHS: 49financial, inflection and cottonwood may open /market, /portfolios, /positioning, /valuations, /macro, /philosophy and /advisor-intelligence; App.tsx:341-344 filters the nav by it and ProtectedRoute.tsx:111 gates the route",
+      "data-proxy callers on those pages (imports only, routes not traced in this cell): portal/src/pages/Macroeconomics/tabs/YieldCurveTab.tsx:28 getMacroData; portal/src/pages/Valuation/tabs/RiskPremiumTab.tsx:19 getRiskPremiumData; portal/src/pages/ModelPortfolios.tsx:41 getModelPortfolioBenchmarks, getETFBenchmarkReturns, getPeerPerformance; portal/src/pages/Positioning/Positioning.tsx:46 getPositioningData",
+      "lambda_function.py:2088-2146 (worktree, after this cell's edit): the one tier gate sits before every route, so each of those reads answers 403 for a non-internal tier"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CT-u-6 BUILD: the two functions 'examine no caller today, so a verified partner-firm login can read what they serve'; the fence answers 403 to any tier other than internal. RECORD FACE: 'if a portal page ... a PARTNER-firm login can open, name the page and the route in a row: the fence will break it and the issuer must tell the CTO.'",
+  "world_is": "Partner-openable pages call the fenced reads: the content GET on every page (App.tsx:243), and the data-proxy reads on /market, /portfolios, /positioning, /valuations, /macro and /philosophy. After the fence the content read falls back to the repo baseline with no error surfaced, so a partner loses the Opal-edited prose override. The data-proxy reads have no fallback measured here. Partner access is read from FIRM_ALLOWED_PATHS, not from a live partner login; no page was rendered in this cell."
+}
+```
