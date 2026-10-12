@@ -2,7 +2,7 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-y-184</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~53</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~55</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-12</issued_date>
 <status>pending</status>
@@ -20,11 +20,11 @@
 
 ## WORKER FACE
 
-You are `0.9.0_WK_IRPT_ANLREQ~53`.
-- **Worktree:** `C:/dev/wk-irpt-anlreq-53` (branch `wk-IRPT_ANLREQ-53`). Commit there with
-  `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~53 <0.9.0_WK_IRPT_ANLREQ~53@opal.agent>" -F <msgfile> -- <paths>`.
+You are `0.9.0_WK_IRPT_ANLREQ~55`.
+- **Worktree:** `C:/dev/wk-irpt-anlreq-55` (branch `wk-IRPT_ANLREQ-55`). Commit there with
+  `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~55 <0.9.0_WK_IRPT_ANLREQ~55@opal.agent>" -F <msgfile> -- <paths>`.
 - Write every message file with the Write tool. `surfaced_at` of any row = `date -u +%FT%TZ` at filing; a row id has the form
-  `IRPT_ANLREQ-D2-W53-S<k>` (take the next free `<k>`). The worktree shows ` M portal` (and may show a modified `.parquet`
+  `IRPT_ANLREQ-D2-W55-S<k>` (take the next free `<k>`). The worktree shows ` M portal` (and may show a modified `.parquet`
   fixture): never commit either. Every `.py` you add or change passes `bash .tools/commit-gate.sh <file>` before its commit.
 - The proof instance: artifact rows use a `kind` the schema admits; a judgment row needs `method`, `invocation` and `denominator`;
   every non-PASS row carries a `status_reason`; a `controls.mutant` MUST be a mutant that FIRES (a mutant that leaves your criterion passing makes the instance INVALID).
@@ -48,10 +48,10 @@ You are `0.9.0_WK_IRPT_ANLREQ~53`.
 
 ### ACCEPTANCE
 
-<criterion id="AR184-y-AC1" cell_refs="AR-y-184"><invocation>python C:/dev/wk-irpt-anlreq-53/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r18/ar18_checks.py y184-log --root C:/dev/wk-irpt-anlreq-53</invocation><expect>Y184-LOG-OK</expect></criterion>
+<criterion id="AR184-y-AC1" cell_refs="AR-y-184"><invocation>python C:/dev/wk-irpt-anlreq-55/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r18/ar18_checks.py y184-log --root C:/dev/wk-irpt-anlreq-55</invocation><expect>Y184-LOG-OK</expect></criterion>
 `AR184-y-AC1`: the four named log tests exist and pass.
 
-<criterion id="AR184-y-AC2" cell_refs="AR-y-184"><invocation>python C:/dev/wk-irpt-anlreq-53/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r18/ar18_checks.py y184-keep --root C:/dev/wk-irpt-anlreq-53</invocation><expect>Y184-KEEP-OK</expect></criterion>
+<criterion id="AR184-y-AC2" cell_refs="AR-y-184"><invocation>python C:/dev/wk-irpt-anlreq-55/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r18/ar18_checks.py y184-keep --root C:/dev/wk-irpt-anlreq-55</invocation><expect>Y184-KEEP-OK</expect></criterion>
 `AR184-y-AC2`: the difference control -- the whole `_authz` test folder passes (337 at the base).
 
 <criterion id="AR184-y-AC3J" cell_refs="AR-y-184" judgment="true"/>
@@ -61,7 +61,7 @@ You are `0.9.0_WK_IRPT_ANLREQ~53`.
 
 ## BOUNDS
 
-- **Grant:** exactly the `<paths>` below, plus `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/` and this order's file (status flip only). If a test OUTSIDE the grant fails because of your change, STOP: file a BLOCKING row naming it; the issuer amends the grant.
+- **Grant:** exactly the `<paths>` below, plus `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/` and this order's file (status flip only). If a test OUTSIDE the grant fails because of your change, STOP: file a BLOCKING row naming it; the issuer amends the grant.
 - READ only: everything else.
 
 <paths>
@@ -77,7 +77,7 @@ org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
 Criterion ids: see ACCEPTANCE. The instance is at
-`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/IRPT_ANLREQ.TO-AR-y-184.caller-class-log-line.proof_of_spec.json`.
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/IRPT_ANLREQ.TO-AR-y-184.caller-class-log-line.proof_of_spec.json`.
 Its `to_id` is exactly `IRPT_ANLREQ.TO-AR-y-184`. The judgment criterion is recorded under `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming `3.0.0_SA_CVO` (never PASS or FAIL). Validate it AFTER its commit with
 `python .tools/proof-of-spec-check.py <instance> <the criterion ids>`; flip `<status>` to `complete` only when it prints VALID.
 </proof_of_spec>
