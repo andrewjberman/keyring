@@ -9,8 +9,8 @@ Graduated, round label v80: 2 rows, OPEN, INERT.
 1. **All three criteria MET.** Grade file: `org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_79_L9_GRADE_20261012.md`.
 2. **The property PRD v0.10 rests on is now read:** this seat printed the other box's code; its as-traded close undoes every later
    split. It is code, not a landed value: that box reports 0 objects in the series store and its writer off.
-3. **Three equities are off by split-sized ratios and nobody knows why** (row D2-W152-S1): a half, a seventh, a tenth. This is the
-   split question meeting data for the first time, and it is outside the funds. Whether they sit on a measured day is the first
+3. **Three equities are off by split-sized ratios and nobody knows why** (row D2-W152-S1): a half, a seventh, a tenth. It MAY be the
+   split question meeting data: the cause is not established. It is outside the funds. Whether they sit on a measured day is the first
    thing to read.
 4. **The corrected fund basis has no data behind it yet:** the request for 15 funds' as-traded closes is cut and carried to the other
    box's queue; every held fund day is UNPRICED under C-BASIS until it lands.

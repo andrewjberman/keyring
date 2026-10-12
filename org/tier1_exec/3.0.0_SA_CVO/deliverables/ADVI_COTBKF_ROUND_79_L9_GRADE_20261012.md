@@ -43,8 +43,8 @@ This answers row D2-W149-S1 in part: the live object is this project's own, and 
 
 - **D2-W152-S1 matters most and is not explained:** for three equities the build's price on the last store day is one half, about
   one seventh and one tenth of the store's own row. Ratios like those are the size of a split. The round's own finding is that a
-  point can leave the build marked and unscaled, or be scaled when it should not be. This is the first place that reading meets
-  data, and it is outside the funds C-BASIS re-prices. Whether any of the three is held on a measured day was not read.
+  point can leave the build marked and unscaled, or be scaled when it should not be. It MAY be the first place that reading meets
+  data: the cause is not established. It is outside the funds C-BASIS re-prices. Whether any of the three is held on a measured day was not read.
 - **D2-W151-S1** (the build's split step on top of an already split-undone close would scale twice): a reading of two code paths,
   not measured. PRD v0.10 rules the step is not applied to fund points; the row stays open until that is built and shown.
 - **D2-W153-S1** corrects an earlier round's class for the store's earlier version. A correction of the record.
