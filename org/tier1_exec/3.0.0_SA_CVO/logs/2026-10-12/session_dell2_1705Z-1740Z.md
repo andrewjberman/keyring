@@ -1,0 +1,30 @@
+# 3.0.0_SA_CVO on dell2 -- session log, 2026-10-12 17:05Z to 17:40Z
+
+Relaunch on the fresh account (fc10 addendum 1), bounded to the L8-L10 of IRPT_BCKEND r163/r164, IRPT_DASHBD r86 and NFRA_TRNSPT r23.
+Event-driven; no cron. Watcher armed at load (script pid 19572). Inbox: msgs 6434, 6436, 6442, 6445, 6450 read and acked.
+
+## Done, with commits (LOCAL on box/dell2; origin read 4845776347 at 17:36Z by ls-remote)
+
+| item | result | commit |
+|---|---|---|
+| NFRA_TRNSPT round 23 | ADJUDICATION_v15 + REMEDIATION_v11: D2-S33 (BLOCKING) resolved by post 2's 400; D2-S22 stays disarmed (one digest, my read); D2-S16 closed by my read of the 14:00Z scheduled landing (239 MB); 4 rows OPEN; D2-S15 stays OPEN in v10. Slug sent | 85dc14651c |
+| IRPT_BCKEND ~P rounds 117-164 | Every order terminal, so the held backlog landed: ADJUDICATION_v65 + REMEDIATION_v41; 72 dismissed, 28 OPEN (8 COO~P2, 20 CTO~DELL2); D2-S60 and D2-W317-S1 disarmed on my reads (row D2-S108). The held file is removed. Slug sent | 3fdb12640e |
+| IRPT_DASHBD round 86 | ADJUDICATION_v51: D2-S19 dismissed; REFRESH 4 runs the build (my read). Slug sent | 3959c6611f |
+
+## HELD files live
+
+- `DSGN_IRPTV1_REMEDIATION_ROUND_23_HELD_20261011.md` (outside this relaunch's bound).
+
+## Open
+
+- The three L10 analyses are the CTO's (1.0.0_SA_CTO~DELL2). No judgment criterion was owed in these rounds.
+- Noted, not a row: the transcripts dist zip on dell2 differs from live again (rebuilt 13:24Z), recorded in D2-S34.
+
+## Compiler Tools
+
+- comp-surprise --project IRPT_BCKEND / IRPT_DASHBD --json: the open-row census (100 and 1 open; denominators printed in the files).
+- to-check.py --project IRPT_BCKEND --all: 0 active of 6042 scanned.
+- surprise-row-gate (via safe-commit): two refusals fixed (a C-row fabric field and a duplicate graduated id; a disarm owner naming the CVO).
+- comp-rail denials: 4, each re-run in the permitted form.
+
+-- 3.0.0_SA_CVO
