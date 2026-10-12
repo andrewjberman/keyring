@@ -8257,3 +8257,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Not fixed in this order: filing the seat order and the tier2 deliverables path are outside this order's <paths> grant (the tool file and this channel only). CTz1-AC2 recorded FAIL on substance; its expect string is absent from the output (orders=NONE, not orders=TO-CT-y-2)."
 }
 ```
+
+## NFRA_CTLPLN-W73-S2 -- thread-trace finds a round's orders in the checkout, not in git, so an order the checkout lacks drops out of the round silently
+
+```json
+{
+  "id": "NFRA_CTLPLN-W73-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~73",
+  "surfaced_at": "2026-10-12T13:00:56Z",
+  "one_line": "thread-trace.py finds the round's orders by globbing the reading checkout's working tree (find_orders, glob at line 236), not by git refs, while its docstring says the round is read from git; an order that CLOUD holds but the reading checkout lacks is dropped silently from the round.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree wk-NFRA_CTLPLN-73 .tools/thread-trace.py line 236: for path in sorted(glob.glob(pattern)) where pattern is os.path.join(root, 'org', 'missions', 'D*', '*', code, 'task-orders', '*.md'); the same glob is used for the seat orders at org/tier2_senior/*/task_orders/ (Amendment 1)",
+      "worktree .tools/thread-trace.py lines 14-17 (docstring): 'Every hop leaves commits, so every hop can be read from git ... The round's orders are the files org/missions/D*/*/<CODE>/task-orders/*.md' -- the order set is not read from a ref, and HOP 1 reads the first add of an order from origin/box/* and origin/CLOUD only after the glob has named it",
+      "the round-9 AC2 read (orders=TO-CT-y-2, HOP 2 by 0.7.0_AE_CloudOps~CT1) succeeded only because box/laptop, the reading checkout's branch, already held the seat order file from the box-sync of CLOUD; no check compares the checkout with origin/CLOUD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-z-1 cell: 'each hop's start and end are read from git by .tools/thread-trace.py'; the module docstring: 'Every hop leaves commits, so every hop can be read from git with no live seat asked. The round's orders are the files org/missions/D*/*/<CODE>/task-orders/*.md'.",
+  "world_is": "The order set (the input to every hop) comes from a glob of the reading checkout's working tree, not from origin/CLOUD or origin/box/*. A round's order that CLOUD holds but this checkout lacks is not read, and the trace prints no sign of the omission (the orders= field lists only what was found). The seat-order read added by Amendment 1 uses the same glob, so it inherits the same dependency.",
+  "notes": "Not changed in this order: the cell's <paths> grant is the tool and this channel; reading the order set from git refs is a design change for the issuer. Found while implementing Amendment 1; the first run of CTz1-AC2 depends on the checkout holding the seat order file."
+}
+```

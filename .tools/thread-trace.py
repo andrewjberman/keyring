@@ -5,16 +5,22 @@
     python .tools/thread-trace.py --project <CODE> --round <n> [--order <id>]... [--fetch]
     python .tools/thread-trace.py --selftest
 
---order <id> (repeatable; NFRA_CTLPLN round 10 CT-z-1, PRD FWD-1) reads only the named orders of the round. <id> is the
-order's <to_id> or its file stem, with or without the <CODE>. prefix (TO-CT-y-2 and NFRA_CTLPLN.TO-CT-y-2 both name one
-order). Every hop then uses only those orders: HOP 1 their issuance, HOP 2 their issued_to serial's commits on their
-paths, order file and proof instance, and HOP 4 and HOP 5 the rest as above. An <id> that names no order of the round
-makes the read a zero-hops read (orders=NONE, 0/5, exit 1); it never falls back to the whole round.
+--order <id> (repeatable; NFRA_CTLPLN round 10 CT-z-1, PRD FWD-1) reads only the named orders of the round. <id> is one of:
+the order's <to_id> or its file stem, each with or without the <CODE>. prefix; or the slug-less id, the first dot-separated
+segment after that prefix. So TO-CT-y-2 names NFRA_CTLPLN.TO-CT-y-2.dell1-fresh-process-blocked-download, and TO-CT-y-1 does
+NOT name TO-CT-y-10 (the match is exact, never a prefix). Every hop then uses only those orders: HOP 1 their issuance, HOP 2
+their issued_to serial's commits on their paths, order file and proof instance, and HOP 4 and HOP 5 the rest as above. An
+<id> that names no order of the round makes the read a zero-hops read (orders=NONE, 0/5, exit 1); it never falls back to the
+whole round.
 
 A round is planned on one box, worked and pushed on a box branch, merged into CLOUD by the integrator, and graded. Every hop
 leaves commits, so every hop can be read from git with no live seat asked. The round's orders are the files
-org/missions/D*/*/<CODE>/task-orders/*.md whose <round> tag is <n> (the LAST line-anchored <status> tag is the order's status;
-superseded / cancelled / withdrawn / retired orders are not part of the thread). The refs read are origin/box/* and origin/CLOUD.
+org/missions/D*/*/<CODE>/task-orders/*.md AND the seat orders org/tier2_senior/*/task_orders/<CODE>.*.md (NFRA_CTLPLN round 10
+Amendment 1: a seat order is an order of the round too), whose <round> tag is <n> (the LAST line-anchored <status> tag is the
+order's status; superseded / cancelled / withdrawn / retired orders are not part of the thread). A seat order's mission
+directory is found by its <CODE> (org/missions/D*/*/<CODE>). DELIBERATE CHANGE: the unfiltered whole-round read (no --order)
+now also includes the seat orders of the round; the tree orders are read exactly as before. The refs read are origin/box/*
+and origin/CLOUD.
 
   HOP 1 PLAN       the commit that first ADDED each order (earliest = start, latest = end); its author; the box branch it is
                    first-parent history of (fewest commits behind that tip), else any ref that holds it.
@@ -216,23 +222,33 @@ def _last_status(text: str) -> str:
     return got
 
 
+def _mission_dir(root: str, code: str) -> str:
+    """The project's mission directory (org/missions/D*/*/<CODE>), for an order that lives outside it (a seat order)."""
+    hits = sorted(h for h in glob.glob(os.path.join(root, "org", "missions", "D*", "*", code)) if os.path.isdir(h))
+    return os.path.relpath(hits[0], root).replace(os.sep, "/") if hits else "(no mission directory)"
+
+
 def find_orders(root: str, code: str, rnd: str) -> list:
     out = []
-    pattern = os.path.join(root, "org", "missions", "D*", "*", code, "task-orders", "*.md")
-    for path in sorted(glob.glob(pattern)):
-        text = open(path, encoding="utf-8", errors="replace").read()
-        if str(_tag(text, "round")) != str(rnd):
-            continue
-        status = _last_status(text)
-        if status.startswith(DEAD):
-            continue
-        block = re.search(r"^<paths>\s*\n(.*?)^</paths>", text, re.M | re.S)
-        paths = [ln.split()[0] for ln in (block.group(1).splitlines() if block else []) if ln.strip()]
-        crits = [dict(ATTR.findall(m.group(1))).get("id") for m in CRIT_TAG.finditer(text)]
-        rel = os.path.relpath(path, root).replace(os.sep, "/")
-        out.append({"rel": rel, "stem": os.path.basename(path)[:-3], "id": _tag(text, "to_id") or os.path.basename(path)[:-3],
-                    "issued_to": _tag(text, "issued_to") or "", "paths": paths, "status": status,
-                    "criteria": [c for c in crits if c], "projdir": rel.rsplit("/task-orders/", 1)[0]})
+    tree = os.path.join(root, "org", "missions", "D*", "*", code, "task-orders", "*.md")
+    seat = os.path.join(root, "org", "tier2_senior", "*", "task_orders", code + ".*.md")
+    for pattern, is_seat in ((tree, False), (seat, True)):
+        for path in sorted(glob.glob(pattern)):
+            text = open(path, encoding="utf-8", errors="replace").read()
+            if str(_tag(text, "round")) != str(rnd):
+                continue
+            status = _last_status(text)
+            if status.startswith(DEAD):
+                continue
+            block = re.search(r"^<paths>\s*\n(.*?)^</paths>", text, re.M | re.S)
+            paths = [ln.split()[0] for ln in (block.group(1).splitlines() if block else []) if ln.strip()]
+            crits = [dict(ATTR.findall(m.group(1))).get("id") for m in CRIT_TAG.finditer(text)]
+            rel = os.path.relpath(path, root).replace(os.sep, "/")
+            projdir = _mission_dir(root, code) if is_seat else rel.rsplit("/task-orders/", 1)[0]
+            out.append({"rel": rel, "stem": os.path.basename(path)[:-3],
+                        "id": _tag(text, "to_id") or os.path.basename(path)[:-3],
+                        "issued_to": _tag(text, "issued_to") or "", "paths": paths, "status": status,
+                        "criteria": [c for c in crits if c], "projdir": projdir})
     return out
 
 
@@ -240,11 +256,18 @@ def _unprefixed(name: str, code: str) -> str:
     return name[len(code) + 1:] if name.startswith(code + ".") else name
 
 
+def _slugless(name: str, code: str) -> str:
+    """The order id with its slug dropped: the first dot-separated segment after the CODE. prefix (TO-CT-y-2)."""
+    return _unprefixed(name, code).split(".")[0]
+
+
 def order_names(order: dict, code: str) -> set:
-    """The spellings an --order value may take: the to_id and the file stem, each with and without the CODE. prefix."""
+    """The spellings an --order value may take, as an EXACT set (no prefix matching): for the to_id and the file stem, the
+    spelling itself, the spelling without the CODE. prefix, and the slug-less id with and without that prefix."""
     names = set()
     for raw in (order["id"], order["stem"]):
-        names.update({raw, _unprefixed(raw, code)})
+        head = _slugless(raw, code)
+        names.update({raw, _unprefixed(raw, code), head, code + "." + head})
     return names
 
 
@@ -267,7 +290,7 @@ def trace(root: str, code: str, rnd: str, only=None):
         orders = [o for o in every if order_names(o, code) & wanted]
         if not orders or wanted - known:
             return 1, absent + [summary % (code, rnd, "NONE", 0, "-", "-")]
-        shown = ",".join(_unprefixed(o["id"], code) for o in orders)
+        shown = ",".join(dict.fromkeys(_slugless(o["id"], code) for o in orders))
     if not orders:
         return 1, absent + [summary % (code, rnd, "ALL", 0, "-", "-")]
     refs = repo.refs()
@@ -510,6 +533,42 @@ def build_pair(root: str):
         lab.run("x", T0, "update-ref", "refs/remotes/%s/%s" % (REMOTE, name), "refs/heads/" + ref)
 
 
+SEAT_ORDER = "org/tier2_senior/0.7.0_AE_OPS~2/task_orders/PRJ.TO-3.dell1-slug.md"
+SEAT_PROOF = MAC + "/deliverables/0.7.0_AE_OPS~2/PRJ.TO-3.dell1-slug.proof_of_spec.json"
+SEAT_SERIAL = "0.7.0_AE_OPS~2"
+
+
+def build_seat(root: str):
+    """One SEAT order (under org/tier2_senior/<seat>/task_orders/, not the mission folder) in round 1, issued on box/seat, worked
+    by the seat serial on its own branch at T0+200..T0+400, drained at T0+450 and integrated into CLOUD at T0+700. No grade."""
+    lab = Lab(root)
+    lab.run("init", T0, "init", "-q", "-b", "CLOUD")
+    lab.commit("0.0.0_AB_MSTR", T0, "base", {"README.md": "base\n"})
+    lab.run("x", T0, "checkout", "-q", "-b", "box/seat")
+    lab.commit("2.0.0_SA_COO~A", T0 + 100, "issue(PRJ round 1): TO-3", {SEAT_ORDER: _order_text(
+        "pending", "TO-3.dell1-slug", SEAT_SERIAL, "T3-AC1", "src/c.txt")})
+    lab.run("x", T0, "checkout", "-q", "-b", "seat-PRJ-3")
+    lab.commit(SEAT_SERIAL, T0 + 200, "seat work 1", {"src/c.txt": "1\n"})
+    lab.commit(SEAT_SERIAL, T0 + 400, "seat work 2 and close", {"src/c.txt": "2\n", SEAT_ORDER: _order_text(
+        "complete", "TO-3.dell1-slug", SEAT_SERIAL, "T3-AC1", "src/c.txt"), SEAT_PROOF: "{}\n"})
+    lab.run("x", T0, "checkout", "-q", "box/seat")
+    lab.merge("2.0.0_SA_COO~A", T0 + 450, "drain seat-PRJ-3", "seat-PRJ-3")
+    lab.run("x", T0, "checkout", "-q", "CLOUD")
+    lab.merge("0.0.0_AB_MSTR", T0 + 700, "integrate(0.0.0_AB_MSTR): box/seat @x into CLOUD (box-sync)", "box/seat")
+    for name, ref in (("CLOUD", "CLOUD"), ("box/seat", "box/seat")):
+        lab.run("x", T0, "update-ref", "refs/remotes/%s/%s" % (REMOTE, name), "refs/heads/" + ref)
+
+
+def build_ten(root: str):
+    """One tree order with the id PRJ.TO-10.slug, issued in round 1 and integrated into CLOUD. No work, no grade."""
+    lab = Lab(root)
+    lab.run("init", T0, "init", "-q", "-b", "CLOUD")
+    lab.commit("0.0.0_AB_MSTR", T0, "base", {"README.md": "base\n"})
+    lab.commit("2.0.0_SA_COO~A", T0 + 100, "issue(PRJ round 1): TO-10", {MAC + "/task-orders/PRJ.TO-10.slug.md": _order_text(
+        "pending", "TO-10.slug", "0.9.0_WK_PRJ~1", "T10-AC1", "src/d.txt")})
+    lab.run("x", T0, "update-ref", "refs/remotes/%s/CLOUD" % REMOTE, "refs/heads/CLOUD")
+
+
 def selftest() -> int:
     results = []
 
@@ -591,6 +650,23 @@ def selftest() -> int:
         ok = rc == 1 and all(ln.endswith("ABSENT") for ln in lines[:5])
         return ok and lines[-1] == "THREAD project=PRJ round=1 orders=NONE hops=0/5 pushed_by_working_box=- elapsed=-", lines[-1]
 
+    def seat_order(tmp):
+        build_seat(tmp)
+        rc, lines = trace(tmp, "PRJ", "1", ["TO-3"])
+        ok = rc == 0 and lines[0].startswith("HOP 1 PLAN start=%s end=%s" % (utc(T0 + 100), utc(T0 + 100)))
+        ok = ok and lines[1].startswith("HOP 2 WORK start=%s end=%s" % (utc(T0 + 200), utc(T0 + 400)))
+        ok = ok and "by=%s where=%s/box/seat" % (SEAT_SERIAL, REMOTE) in lines[1]
+        ok = ok and lines[-1].startswith("THREAD project=PRJ round=1 orders=TO-3 hops=4/5 ")
+        return ok, lines[1] + " || " + lines[-1]
+
+    def prefix_no_collision(tmp):
+        build_ten(tmp)
+        rc1, lines1 = trace(tmp, "PRJ", "1", ["TO-1"])
+        rc10, lines10 = trace(tmp, "PRJ", "1", ["TO-10"])
+        ok = rc1 == 1 and lines1[-1] == "THREAD project=PRJ round=1 orders=NONE hops=0/5 pushed_by_working_box=- elapsed=-"
+        ok = ok and rc10 == 0 and lines10[-1].startswith("THREAD project=PRJ round=1 orders=TO-10 hops=1/5 ")
+        return ok, "TO-1: rc=%d %s || TO-10: rc=%d %s" % (rc1, lines1[-1], rc10, lines10[-1])
+
     case("full thread reads 5/5", full)
     case("no grade reads 4/5", nograde)
     case("working box pushed CLOUD itself", pushed)
@@ -599,6 +675,8 @@ def selftest() -> int:
     case("--order second reads the second order's hops only", only_second)
     case("no --order reads the whole round, orders=ALL", whole_round)
     case("--order matching no order reads 0/5, non-zero", unknown_order)
+    case("seat order found; --order by its slug-less id reads its hops", seat_order)
+    case("--order TO-1 does not match TO-10 (exact id, no prefix match)", prefix_no_collision)
     ok = all(results)
     print("THREAD-TRACE-SELFTEST cases=%d/%d ok=%s" % (sum(results), len(results), ok))
     return 0 if ok else 1
