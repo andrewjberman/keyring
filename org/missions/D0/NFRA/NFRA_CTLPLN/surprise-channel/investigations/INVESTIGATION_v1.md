@@ -8418,3 +8418,59 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Carry for any later apply of the data proxy: the PRE-1 invariant. The matrix note for the packet: acked=11 at ~15:2xZ because the dell1->sitez pair's newest file (XB-20261012T141128Z-5f49, another project's) opened after the 12 of 12 read."
 }
 ```
+
+## NFRA_CTLPLN-S9117 -- kill-agent.ps1 tree kill crosses seat boundaries: killing CTO~DELL2 ended five parked dell2 COOs
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9117",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-12T17:08:18Z",
+  "one_line": "kill-agent.ps1's recursive tree kill crosses seat boundaries: killing 1.0.0_SA_CTO~DELL2 on dell2 (MSTR msg 108626, bus 47b3ea16) also ended five parked COOs (~C2, ~G2, ~V2, ~Y2, ~O2; 12 pids) that were descendants of the CTO's claude.exe; their conversation context is gone, files untouched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR msg 108626 (relay of ~DELL2 bus 47b3ea16): 'kill-agent.ps1 on 1.0.0_SA_CTO~DELL2 stopped its whole process tree. Five parked COOs were children of it'",
+      ".tools/kill-agent.ps1:158-167 Stop-ProcessTree walks Win32_Process ParentProcessId recursively with no serial check; :178 applies it to the target claude.exe",
+      ".tools/ajb.ps1:213-232 spawns via wt.exe new-tab when wt.exe is on PATH (the new tab is not the caller's child) and falls through to an in-tab path otherwise; dell2's five COOs were measured as descendants of the CTO's process, so a spawn path there parents the seat under the caller"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR (interim, same turn: before any kill-agent.ps1 run a manager lists the target tree's claude.exe command lines and leaves any descendant carrying another serial, killing the seat's own pid and marker children only); 2.0.0_SA_COO~C (permanent: a cell at the round-12 recut)",
+  "spec_asserts": "NFRA_CTLPLN C-SEATS: a seat is killed by its serial and the kill ends that seat; a parked seat keeps its context until Oct 17 or Andrew's word (fc10).",
+  "world_is": "A seat spawned from inside another seat's session is a descendant of that session's claude.exe; Stop-ProcessTree has no seat boundary, so one kill by serial ends every seat beneath it. Measured once, on dell2, 5 of the 8 fc10-parked seats lost.",
+  "notes": "Fix shape for the cell: (1) Stop-ProcessTree stops at a descendant claude.exe whose command line carries a different serial, prints it and the kill log names it; (2) the launcher's non-wt path spawns detached so a seat is never another seat's child. The five ended COOs respawn from files on Oct 17 or Andrew's word (fc10 unchanged); nothing of theirs waits on a file edit. Not a cell this round: the round-11 decomp is frozen."
+}
+```
+
+## NFRA_CTLPLN-S9118 -- S9117 widens: kill-maint.ps1 (the /govern reaper) kills whole trees with taskkill /T, the same seat-boundary gap
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9118",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-12T17:20:28Z",
+  "one_line": "S9117 widens: .tools/kill-maint.ps1 (the /govern reaper every manager runs -Unattended each cycle) stops each target's WHOLE TREE with taskkill /T /F (:722, by design for wrappers), the same seat-boundary gap as kill-agent.ps1; interim rule adopted on dell1, dell2 and the laptop, site Z pending (MSTR msg 108628).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR msg 108628: dell1's reaper ran 113 times (108 with 0 targets, 5 with 1 target and 1 kill); every laptop run today read 0 targets; dell1's kill-agent ran once (10-11 02:23Z, before the rule)",
+      ".tools/kill-maint.ps1:696-697 (whole-tree by design: Stop-Process on one PID orphaned typeperf + awk on the laptop 2026-10-08) and :722 `taskkill.exe /T /F /PID`",
+      "S9117 @9ffd2daac5: the same tree walk in kill-agent.ps1 ended five parked dell2 COOs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR (interim, in force: kill-maint runs dry first each cycle; -Execute/-Unattended only when no target's tree holds a claude.exe carrying another serial); 2.0.0_SA_COO~C (permanent: the S9117 round-12 cell covers both tools)",
+  "spec_asserts": "NFRA_CTLPLN C-SEATS: a reaper or kill ends the seat or wrapper it targets and nothing seated under another serial.",
+  "world_is": "Two tools kill whole trees with no seat boundary: kill-agent.ps1 (Stop-ProcessTree) and kill-maint.ps1 (taskkill /T). A seat spawned under another seat's tree is reachable by either. Zero kill-maint losses measured so far; one kill-agent loss (S9117).",
+  "notes": "Fix shape for the one cell: a shared seat-boundary check (walk the tree, refuse the kill and print the serial found when a descendant claude.exe carries a serial other than the target's) used by both tools; the wrapper rationale of :696 stands for native children, which carry no serial. The laptop-dark window saw no reaper target, so nothing here aged."
+}
+```
