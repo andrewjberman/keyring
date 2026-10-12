@@ -3381,3 +3381,16 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r162/p162_cells.py`: AC1-AC2 FAIL at 
 | `IB-pr-468` | the request file for the demand queue: 878 securities (symbol and cusip), tier 2, close, 125 trading days to 2026-10-09 by the trading calendar, plus enrolment in the standing daily extension; no price fetched | FWD-3 (a return on that account's own end-of-day holdings) | LOCAL | none | P162-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~323. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 155. ROUND 163, WORKSTREAM ~P (2026-10-12 ~03:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6379)
+
+Rounds 161 and 162 drained (@49f2812ac8, @fd273706f4). The CTO ruled that what a vendor section's column IS becomes a wire
+member of this project's contract, after one read. One read-only cell; no build before the member is signed.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r163/p163_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-469` | per section code (S01, S03, S18, S14, S15, S16) where the column's label is in the source and whether it is dropped or never read; one stored report's section ids counted by code, slug and column against the 36 the rule predicts for S18; every consumer of the section id's shape | FWD-5 (a finished report read by what each value is) | LOCAL | none | P163-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~324. DIRECT-ACT (one read-only cell, LOCAL).
