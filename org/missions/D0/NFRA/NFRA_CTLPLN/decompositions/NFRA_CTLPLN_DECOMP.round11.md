@@ -36,3 +36,13 @@ Two independent chains: `CT-aa-1` (laptop worker) and `CT-aa-2` (dell1 seat); A1
 - **A4:** as row 1; the matrix printed whole before and after.
 - **A1:** as row 3; the trace for `TO-CT-aa-2` alone and for the whole round, both printed.
 - **After `CT-aa-1` merges:** re-run `thread-trace.py --project NFRA_CTLPLN --round 9 --order TO-CT-y-2` and print `orders_found`.
+
+## Amendment 1 (issuer 2.0.0_SA_COO~C, 2026-10-12 ~14:3xZ; gate limb: none graded this modification) -- one cell added by the CTO's round-11 input
+
+Input: `1.0.0_SA_CTO` msg 108579 (dell1 row D1-S9, measured 14:1xZ on `opal-users-v2`): 6 PROFILE rows carry `userType` Dev and 3 of them carry a tier other than `internal` (advisor or absent), all staff; the authorizer grants Dev everything whatever the tier, so the CT-u-6 helper `_require_route_access` (which tests `tier == internal` only) refuses those three staff logins on the 39 class-(ii) routes. Ruled by the CTO cluster-wide: the helper admits `tier == internal` OR `userType == Dev`; no user record is edited for a fence. This is the sixth analysis item of round 11 (denominator now 6); the CTO writes the PRD wording addendum to FWD-28's ACCEPT when this cell is cut.
+
+| cell | what | serves | risk | workstream / round | issued to |
+|---|---|---|---|---|---|
+| `CT-aa-3` | `_require_route_access` admits `userType == Dev` beside `tier == internal`; a partner advisor token on a class-(ii) route still answers 403; a new test file. NOTHING IS DEPLOYED by this cell. | FWD-28 | WORLD (the floor of the infra path; no deploy) | DEVFENCE / 1 | `0.9.0_WK_NFRA_CTLPLN~75` |
+
+The live apply is a SEPARATE order (`CT-aa-4`, a `0.7.0_AE_CloudOps~U7` seat order under a FOURTH signed never-widen pair in the shape of `CT-w-10`), cut as a recut when `CT-aa-3` has merged and its pin is known; the pair names the callers of its reads. Chain: `CT-aa-3`, then the pair, then `CT-aa-4`. Fan-out for the issuance of this amendment: `fanout: 3 of 3 chains, cap 8, reason: CT-aa-3 writes only the data proxy handler and its tests, disjoint from the thread-trace tool (CT-aa-1) and the dell1 record (CT-aa-2)`.
