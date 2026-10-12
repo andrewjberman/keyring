@@ -3446,3 +3446,21 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r166/p166_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-480` | every reader of the landed prices store under `investor-reporting/` and whether a served figure depends on it (row W315-S3) | FWD-13 | LOCAL | none | P166-e |
 
 fanout: 5 of 5 chains, cap 8, reason: five cells with disjoint write sets and no edge. Assignees: 0.9.0_WK_IRPT_BCKEND~331 to ~335 (one each).
+
+## 159. ROUND 167, WORKSTREAM ~P (2026-10-12 ~20:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6517 = PRD ADDENDUM v0.51 section 2 and ROUND-166 ANALYSIS section 3a)
+
+PRD v0.51 withdrew v0.50's schema order (the frozen v1 contract does not move) and gave four items; the ratified-text half reads SIGNED current at v0.51 (prd-signoff, ADMITTED). Item 2 is the release of round 166's reader change, cut here as its build and never-widen PACKET only: the apply is a later order to `0.7.0_AE_CloudOps~IB2` once the pair is signed.
+Item 3 is the C-VALUEFACTS pair in the CTO's order, reader first: the portal adapter candidate (step 1, `IB-pr-483`) and the `bd_adapter` rename (step 2, `IB-pr-484`); step 3 (the fallback removed at the pair's close) and the pair's packet are cut after both merge. Item 4 is two cells: the resident package change (`IB-pr-485`, a worker) and the CTO's "read first" of the live host's bindings (`IB-pr-486`, an order to the cloud-ops seat).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r167/p167_cells.py`: 14 of 18 criteria FAIL at base; IB167-1-AC2, IB167-3-AC2, IB167-4-AC2 and IB167-5-AC2 PASS at base BY DESIGN (regression guards).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-481` | both `PerformanceReport.schema.json` copies restored to their bytes at c16bf9d7bb^ (the frozen v1 contract; v0.50's schema bullet withdrawn) (row W334-S2) | FWD-3 | WORLD (floor: infra path; nothing deployed) | none | P167-a |
+| `IB-pr-482` | `irpt-performance-adapter` rebuilt from one pin carrying the reader's claim change, and the never-widen packet printing the MOVES (49F 23/19/2/20; orion 750/76/7/106) with the REACH beside them (rows W331-S2) | FWD-3 | WORLD (declared; the later apply's reach) | none | P167-b |
+| `IB-pr-483` | C-VALUEFACTS step 1, a PORTAL candidate: the adapter reads `start_value`/`end_value`, the market-value names kept for the Black Diamond path only | FWD-3 | LOCAL | none | P167-c |
+| `IB-pr-484` | C-VALUEFACTS step 2: `bd_adapter.py` writes `start_value`/`end_value` | FWD-3 | WORLD (floor) | none (its apply waits on 483's landing) | P167-d |
+| `IB-pr-485` | `ycharts/research` in the resident package's DIRS; a test resolves every import on both binding branches (row W333-S1) | FWD-8 | WORLD (floor) | none | P167-e |
+| `IB-pr-486` | READ ONLY on the live host: whether the installed `resident_bindings.json` carries `commentary_ready_queue_url` (the CTO's read first) | FWD-8 | WORLD (a host read) | none | P167-f |
+
+fanout: 6 of 6 chains, cap 8, reason: six cells with disjoint write sets and no edge. Assignees: 0.9.0_WK_IRPT_BCKEND~336 to ~340 (workers; ~338 is a portal cell) and 0.7.0_AE_CloudOps~IB2 (IB-pr-486).
