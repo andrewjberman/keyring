@@ -101,3 +101,9 @@ Checked and not a finding: portal origin/DEV at 183860ba (IB-pr-483) was landed 
 | item | result | commit |
 |---|---|---|
 | DSGN_IRPTV1 round 31 | ADJUDICATION_v20 + REMEDIATION_v11: D2-W69-S1 disarm recorded on its owner's ruling; W65-S1, W62-S2, S22 read met on portal DEV 183860ba; 14 dismissed, 4 OPEN; ARMED 0. Slug sent. A second open-merge refusal, retried after it cleared | 9ac0c902f4 |
+
+## Addendum, 23:33Z to 23:46Z (msg 6673)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_ANLREQ round 17 (Y) | L9 4 PASS (AR171-y-AC3J with a condition: the reader's release waits on the CTO's D2-W52-S24 ruling; I probed the rule on 31 forms; `No. of Accounts` matches as a count); ADJUDICATION_v18 + REMEDIATION_v10: 6 dismissed, 5 OPEN, 2 ARMED. Slug sent | 5cf791e25f |
