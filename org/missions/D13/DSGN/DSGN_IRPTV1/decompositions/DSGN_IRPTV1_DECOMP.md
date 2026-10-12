@@ -724,3 +724,18 @@ strip breaks C3; the shared components are not this project's to restyle; one ce
 | IV-e-117 | the Holdings tab passes PanelFooter its light ground (the prop exists on the shared component, which is not changed), removing the navy footer strips; contrast measured; the three header strips stay and go to the design system's owner | D2-W62-S3 | SERVED | B ~65 | portal/src/pages/InvestorReporting/tabs/holdings/ |
 
 fanout: 1 of 1 chains, cap 8.
+
+## v30 -- round 30 (issuer 2.0.0_SA_COO~D2, 2026-10-12 ~02:3xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2 msg 6344
+
+The proof walk of a served vendor report came back (laptop 4.0.0_SA_CRO, portal DEV 0a06280a; the issuer's read
+`deliverables/2.0.0_SA_COO~D2/WALK_2_RESULT_READ_20261012.md` @7db8985b06). IV-e-115's names and units are proven on served data.
+The CTO's list, in order, three items; the third is carried, not cut.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-118 | a page never prints an unmapped code as a title: where the census names nothing the card takes its section's name; the word for the chart row is proposed and lands in the census | none | SERVED | B ~66 | portal/src/pages/InvestorReporting/contracts/vendorSectionNames.ts; the census file |
+| IV-e-119 | a READ, no build: for the 46 cards sharing one title, does section_id through the census give distinct names, and how many stay shared (all separate: the build is the page's; else the remainder is a wire member for 2.0.0_SA_COO~P2) | none | LOCAL | A ~67 | none edited |
+
+Carried, not cut this round (CTO msg 6344 item 3): the validation line and the source line on the report's face.
+
+fanout: 2 of 2 chains, cap 8.
