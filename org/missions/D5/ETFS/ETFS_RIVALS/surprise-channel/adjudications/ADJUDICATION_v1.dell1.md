@@ -53,6 +53,11 @@ A scratch-sink run_dag walk is accepted for the lookup clauses. The Tokio Marine
 produced by wi-1, because a Bloomberg row now explains that split. The issuer names the replacement observation. Row
 D1-C-S13.**
 
+**ADDENDUM 13 (2026-10-12 ~14:36Z, on COO~V1 msg 4426 and wi-1 AMENDMENT 1 @7f90a25220): RIV-wi-1 J1 MET against the amended
+face. Walk A shows the lookup wired before publish with 0 calls, walk B one INFERRED row with a source_url, and the series
+is continuous against a gapping control. No published page carries an INFERRED adjustment; the amendment says this cannot
+be observed. Row D1-C-S14. Row D1-S15 stays ARMED on wd-1 (HELD).**
+
 ```json
 [
   {
@@ -342,6 +347,29 @@ D1-C-S13.**
         "data/etfs/scripts/rivalfunds/dramatic_move.py at origin/CLOUD :4-11, :53, :91-130 (detect skips a move with a stored split/merger in its window), :370-383, :453-484",
         "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/L2_READ_20261012.md facts 6-8 and 'Why fact 8 is not a failure' (sweep.py:176, :467-472, :629-663, :761 as the issuer read them)",
         "2.0.0_SA_COO~V1 msg 4373; this file ETFS_RIVALS-D1-C-S8; INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S15"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S14",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-12T14:36Z",
+    "one_line": "ETFS_RIVALS.TO-RIV-wi-1.sweep-runs-dramatic-move-lookup J1 MET against AMENDMENT 1 (@7f90a25220). The lookup runs inside run_dag before publish-page and makes 0 calls with no candidate (walk A). A real Bright Data search wrote one INFERRED split 15.0 ex 2026-10-07 with a source_url (walk B, after two vendor failures). price_series.load over that scratch sink is continuous and carries the INFERRED adjustment, while the control without it gaps 10-07..10-09. Nothing reached S3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "wi-1 J1 as amended (AMENDMENT 1, task order :136-145): (1) the lookup clauses read from the scratch-sink full run_dag walk, walk A candidates 0 / calls 0 and walk B one INFERRED row with a source_url; (2) the series price_series.load reads over the scratch sink holding that row is continuous and carries adjustment split 15.0 ex 2026-10-07 claim INFERRED with the source_url, against a control with no split that gaps 10-07..10-09. The published page carrying an INFERRED adjustment is declared unobservable.",
+    "world_is": "- The issuer's record round28/WI1_SCRATCH_WALK_20261012.md, read in full:\n  - Walk A (stored data): stages ran in order through publish-page, and the lookup ran once inside run_one('publish-page'): 'dramatic_move: cap 8; candidates 0; searched 0; calls 0; written 0; failed 0; capped 0'.\n  - Walk B (TKOMY's 10 stored action rows withheld from the COPY, cap 3): candidate TKOMY 2026-10-07, 50.50 -> 3.33. Attempts b1 and b2 were 'SERP FAILED: VENDOR', counted as failed with the run continuing and nothing written. Attempt b3 wrote 1 INFERRED row, split 15.0 ex 2026-10-07, source_url https://www.tokiomarinehd.com/en/ir/stock/return.html.\n  - Row C: b2 (control) gaps 10-07..10-09 with reason 'moved more than threefold ... no corporate action'. b3 reads 3.31, 3.37, 3.33, 3.35, 3.40 with adjustment split 15.0 claim INFERRED and the source_url.\n- Re-read by this seat:\n  - Wiring: sweep.py:470-471 at HEAD, `if stage == \"publish-page\": lookup_before_publish()` inside run_one.\n  - No served write: s3api list-objects-v2 on s3://opal-data-etfs/rivalfunds/etfs/gold/corporate_actions/date=2026-10-12/ returns null (0 keys) at 14:35Z. The positive control date=2026-10-09/ lists 1 key, actions-20261009-03f579b88503.parquet (the Bloomberg object), and no actions-inferred key.\n  - The detect skip that makes walk B's withholding necessary: D1-C-S13.\n- Not re-run by this seat: the walks and the row-C series read. The scratch-sink paths are not in the record, and re-running walk B would spend vendor calls that are the issuer's to authorize. The grade rests on the issuer's real read, as the face provides.\n- Reasons it is MET and not a narrower grade:\n  - Walk B is a CONSTRUCTED condition, and AMENDMENT 1 names it as such.\n  - The amended face binds the series, not rendered HTML. It is the input the chart draws, one step short of the page.\n  - This seat's D1-C-S13 asked for 'a served or rendered page'. The amendment chose the series and says why no page can carry an INFERRED row: walk A finds 0 candidates in the real window, and a served write is not the issuer's to make for it. This seat grades the face as amended.\n- Observation for round 29, not a defect in J1: the zone serp_opal failed 5 of 9 searches (4 VENDOR brd 502 expect_element timeouts, 1 TRANSPORT). run_for_day has no retry, so a real candidate may wait several sweep days for a find.\n- Round 28 standing: tc-1 J1 MET (D1-C-S12) and wi-1 J1 MET (this row). Row D1-S15 stays ARMED, because round-close-check still credits wd-1 J1 (HELD, D1-C-S2) and wa-1 J1 (HELD, D1-C-S1) as GRADED, and aw-1 J1 (NOT MET, D1-C-S4) likewise.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/WI1_SCRATCH_WALK_20261012.md (commit 7f90a25220)",
+        "task-orders/ETFS_RIVALS.TO-RIV-wi-1.sweep-runs-dramatic-move-lookup.md:136-145 (AMENDMENT 1) at 7f90a25220",
+        "data/etfs/scripts/rivalfunds/sweep.py:467-471 at HEAD (lookup inside run_one for publish-page)",
+        "aws s3api list-objects-v2 opal-data-etfs rivalfunds/etfs/gold/corporate_actions/date=2026-10-12/ -> null; date=2026-10-09/ -> 1 key (control), 2026-10-12 14:35Z",
+        "2.0.0_SA_COO~V1 msg 4426; this file ETFS_RIVALS-D1-C-S13; INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S15"
       ]
     },
     "disposition": "GRADUATED"
