@@ -35,10 +35,14 @@ wiring  (cell SC-e-97)  reads C_06 `build()` and D_04 `build_firm_mix_summary` (
     integer is assigned to a name containing RECENT or WINDOW in C_06 (the window is the producer's, never typed again).
   Prints  ROLLING-WIRING ok=<bool> calls=<bool> before_early_return=<bool> c06_restated=<bool> d04_passthrough=<bool> no_typed_window=<bool>
 
-half <file>  (cell SC-e-97)  the never-widen half request: seven `## ` sections (The act, Blast radius, Writers, Both branches,
-    Rollback, Expected outcome, Window and gap) and BOTH halves left unsigned (`COO half: UNSIGNED`, `CTO half: UNSIGNED`).
+half <file>  (cell SC-e-97)  the never-widen half request: eleven `## ` sections (The act, Blast radius, Writers, Both branches,
+    Rollback, Expected outcome, Window and gap, then, from amendment 3 (row D1-C-S17): Totals and AUA, Added and dropped relationships,
+    Advisors the map drops, Period bars) and BOTH halves left unsigned (`COO half: UNSIGNED`, `CTO half: UNSIGNED`).
     `Writers` must name D_04 as the writer of platinum/firm/mix_summary.json and C_06 of gold/views/mix_daily_summary.json, with N printed.
-  Prints  HALF-REQUEST ok=<bool> sections=<n of 7> unsigned=<bool> writers=<bool>
+    `Totals and AUA` must carry one table row per window date (all 15 dates of 2026-09-25 .. 2026-10-09 appear in that section) and the words
+    `firm total` and `AUA`; `Added and dropped relationships` must carry all 15 dates and the words `added` and `dropped`; `Period bars` must
+    name the Q3, Q4, September and October 2026 bars.
+  Prints  HALF-REQUEST ok=<bool> sections=<n of 11> unsigned=<bool> writers=<bool> totals=<bool> added_dropped=<bool> bars=<bool>
 
 unlisted <record>  (cell SC-e-98)  the rebuilt Unclassified at 2026-10-09 BY SECURITY with a reason. Keys, all required:
     claim, read_only (true), date ("2026-10-09"), total_unclassified_usd (>0), tolerance_usd (0 < t <= 250)
@@ -282,7 +286,20 @@ def wiring() -> int:
 
 
 # --------------------------------------------------------------------------- half
-SECTIONS = ["the act", "blast radius", "writers", "both branches", "rollback", "expected outcome", "window and gap"]
+SECTIONS = ["the act", "blast radius", "writers", "both branches", "rollback", "expected outcome", "window and gap",
+            "totals and aua", "added and dropped relationships", "advisors the map drops", "period bars"]
+WINDOW_DATES = ["2026-09-25", "2026-09-26", "2026-09-27", "2026-09-28", "2026-09-29", "2026-09-30", "2026-10-01", "2026-10-02",
+                "2026-10-03", "2026-10-04", "2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08", "2026-10-09"]
+
+
+def _section(text: str, name: str) -> str:
+    """The body of the `## <name>...` section (case-insensitive prefix), up to the next `## ` heading."""
+    m = re.search(r"^##\s+" + re.escape(name) + r".*$", text, re.M | re.I)
+    if not m:
+        return ""
+    rest = text[m.end():]
+    n = re.search(r"^##\s+", rest, re.M)
+    return rest[:n.start()] if n else rest
 
 
 def half() -> int:
@@ -302,8 +319,15 @@ def half() -> int:
     sect = body[wi:wi + 4000] if wi >= 0 else ""
     writers = bool("platinum/firm/mix_summary.json" in sect and "d_04" in sect and "gold/views/mix_daily_summary.json" in sect
                    and "c_06" in sect and re.search(r"\bn\s*=\s*\d+", sect))
-    ok = len(found) == len(SECTIONS) and unsigned and writers
-    print(f"HALF-REQUEST ok={ok} sections={len(found)} of {len(SECTIONS)} unsigned={unsigned} writers={bool(writers)}")
+    tot = _section(t, "totals and aua")
+    totals = bool(all(d in tot for d in WINDOW_DATES) and re.search(r"firm total", tot, re.I) and re.search(r"\bAUA\b", tot))
+    ad = _section(t, "added and dropped relationships")
+    added_dropped = bool(all(d in ad for d in WINDOW_DATES) and re.search(r"\badded\b", ad, re.I) and re.search(r"\bdropped\b", ad, re.I))
+    pb = _section(t, "period bars").lower()
+    bars = bool(all(w in pb for w in ("q3", "q4", "september", "october")))
+    ok = len(found) == len(SECTIONS) and unsigned and bool(writers) and totals and added_dropped and bars
+    print(f"HALF-REQUEST ok={ok} sections={len(found)} of {len(SECTIONS)} unsigned={unsigned} writers={bool(writers)} "
+          f"totals={totals} added_dropped={added_dropped} bars={bars}")
     return 0 if ok else 1
 
 
