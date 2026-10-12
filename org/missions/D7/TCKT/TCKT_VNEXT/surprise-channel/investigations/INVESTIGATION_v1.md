@@ -2135,3 +2135,31 @@ whether the attribute should be a list, be absent, or whether the row should exi
 **not established:** whether any row in a firm OTHER than `opal-capital` carries a non-list `allowedFirmIds`. My
 population was the internal one this order defines -- 30 addresses -- so the 33 PROFILE rows of other firms were not
 examined for this attribute's type. A sweep of all 56 PROFILE rows is a different read with a different denominator.
+
+### TCKT_VNEXT-D2-S50 -- a DISABLED users row still admits its address: the no-row rule reads existence, not status
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S50",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-12T00:08:14Z",
+  "one_line": "The no-row refusal reads whether a users row EXISTS, not its status: a DISABLED row still admits a caller presenting its address by direct invoke.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (its own word, msg 6180: 'File it as one row of this project, owner me, beside D2-S46. This release does not fix it.')",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py at 09488abbb1, _profile_scope: the lookup keeps items whose SK is PROFILE and reads allowedFirmIds; no line reads the row's status",
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r7_ct1/INTERNAL_CALLERS_AND_PROFILE_ROWS_20261011.json @8d900213a1: 23 internal addresses with one row, 21 active and 2 disabled; both disabled rows have no firm list (this seat's read of the file)",
+      "PRD v0.4 ADDENDUM 3 line 239 says 'every active internal user'; its CONTRACT sentence (line 235) says 'holds no PROFILE row'. The CTO's msg 6180 names the first as its own error",
+      "scope: code and one count file read; NOT read: whether the portal authorizer refuses a disabled user at sign-in (it is not in this checkout), so the admission is shown only for a caller that goes around the authorizer (row TCKT_VNEXT-D2-S46)"
+    ]
+  },
+  "spec_asserts": "PRD v0.4 ADDENDUM 3: an internal caller the users table does not know is refused; its count speaks of ACTIVE internal users.",
+  "world_is": "After the round-7 release a caller presenting a disabled user's address by direct invoke is admitted with no firm fence, exactly as before it. The round-7 proof's twin arm N3 uses one such row deliberately (a non-human Dev identity). The release does not fix this and does not claim to.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

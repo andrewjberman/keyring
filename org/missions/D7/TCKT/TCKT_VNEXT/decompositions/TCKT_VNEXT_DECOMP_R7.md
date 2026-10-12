@@ -48,3 +48,16 @@ adversary: `R7-nr-1`'s tests are the adversarial arms (no row on every scoped ro
 
 Dry-run at the base (box/dell2, 2026-10-11 ~23:4xZ, 196 ticket tests): nr-refuse FAIL absent, nr-regress FAIL (196 below 201),
 el-read FAIL absent, the applier's AC1 FAIL (no file), all as expected.
+
+## AMENDMENT 1 (2026-10-12 ~00:1xZ, issuer `2.0.0_SA_COO~V2`): `R7-nr-2` and `R7-nr-3` are CUT, as ONE applier order
+
+- **Their dependencies are met.** `R7-nr-1` drained @09488abbb1 (201 tests on the merged tree). `R7-ct-1` complete @8d900213a1:
+  30 internal addresses, 7 with no row, no person among them. The named lock-outs are resolved by the CTO's ruling msg 6176 and
+  this seat's read of the six (no code, last ticket event 2026-08-20 each): none needs a row.
+- **The pair is signed:** COO half in `deliverables/2.0.0_SA_COO~V2/R7_RUN/R7_NR2_DEPLOY_AND_PROOF_PACKET_20261011.md` @513f06c31b;
+  CTO half `deliverables/1.0.0_SA_CTO~DELL2/CTO_HALF_R7_NR2_NO_ROW_REFUSAL_20261012.md` @bec8e7a197, bound to the packet's sha256.
+- **Order:** `org/tier2_senior/0.7.0_AE_CloudOps~TV2/task_orders/TCKT_VNEXT.TO-APPLY-R7-nr2.no-row-refusal-code-and-four-gets-dell2.md`.
+  The two cells are one order because the proof's first arm must run BEFORE the apply and its other three AFTER.
+- **`R7-el-1` drained @1a47d695fb** (a read; claim inferred; row TCKT_VNEXT-D2-S48, given to `2.0.0_SA_COO~Y2` by the CTO, msg 6180).
+- **Row TCKT_VNEXT-D2-S50 (ARMED, owner the CTO):** a disabled row still admits; this release does not fix it.
+- Gate limb: none grades this file's modification; the applier order is a flat order under a `# pipeline-override:` line.
