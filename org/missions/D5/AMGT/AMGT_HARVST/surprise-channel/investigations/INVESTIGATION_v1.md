@@ -8616,6 +8616,109 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S8",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~HV1",
+     "surfaced_at": "2026-10-12T13:54:35Z",
+     "one_line": "HVST-bx-2 step 9's post-act read cannot see a 403 to an internal session: the deployed handler logs only on a successful enqueue and the portal API stage has no access log, so Branch B (an internal lockout) reads the same as no enqueue having happened.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-bx-2 step 9 (AMENDMENT 2) and the CTO half: the first real internal enqueue after the deploy is read in the function's CloudWatch log /aws/lambda/opal-research-pull-enqueue and must answer 2xx; a 403 to an INTERNAL session within the first trading day's log is Branch B (roll back the same hour).",
+     "world_is": "Measured 2026-10-12 ~13:52Z after the apply. lambda_function.py@824bdb355b has ONE print, line 140, 'OK: enqueued pull request for ...', written only after the enqueue succeeded; the 403 and 400 returns write no line. The log group's only post-apply events are START/END/REPORT for this seat's three arm invocations (3 invocations, 0 'OK:' lines). aws apigatewayv2 get-stages --api-id 7k3ed8px20 reads stage $default with AccessLogSettings null. So the log can show a 2xx (an 'OK:' line) but can never show a 403 to anyone, and the absence of 403 lines in the first trading day is NOT a measurement that no internal session was refused. What the log alone can give: invocations (START count) minus 'OK:' lines = refusals and errors, without the caller's tier. NOT measured: whether any internal session has called the route since 13:50Z (none had by 13:52Z). ID NOTE: the order named this seat's next row AMGT_HARVST-D1-HV1-S1; surprise-row-gate.py:116 ID_RE admits no lane tag (a coordinate is one letter plus digits, then an optional W<n>- or C-), so this row is minted D1-S8 and the next D1-S9.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "git show 824bdb355b:infra/aws/lambda/research/pull_enqueue/lambda_function.py (print at line 140; return _response(403,...) at line 109 carries no log)",
+       "aws logs filter-log-events --log-group-name /aws/lambda/opal-research-pull-enqueue --start-time 2026-10-12T13:50:00Z (read 13:52Z: START/END/REPORT x3, no OK line)",
+       "aws apigatewayv2 get-stages --api-id 7k3ed8px20 -> $default AccessLogSettings null",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round80/bx2_first_internal.out"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S9",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~HV1",
+     "surfaced_at": "2026-10-12T13:54:35Z",
+     "one_line": "The portal authorizer grants ALL access to userType 'Dev' whatever its tier, but the fenced handler admits only tier 'internal', so a Dev login whose tier is not 'internal' is authorized by the portal and refused 403 by this endpoint.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-bx-2 COO half, BLAST RADIUS: 'The internal analyst page is unaffected if the authorizer passes tier: internal for internal logins', and C-d: the apply proceeds when the authorizer emits tier where the handler reads it.",
+     "world_is": "Read from the DEPLOYED opal-portal-authorizer package (index.mjs, CodeSha256 gQp2IooAM3EgebVQeII27xcE+KuEDhyYfrlwr6Jqcsc=, LastModified 2026-10-03T19:52:32Z), function q2: 'if(q.userType===\"Dev\") return \"ALL\"; if(q.tier===\"internal\") return \"ALL\"' -- two independent paths to all-firm access. The context it returns carries both tier (J.tier) and userType; the fenced handler reads tier only. So C-d (the path) is satisfied, and the fence is exact for a login whose tier is 'internal'. NOT measured: whether any login with userType Dev carries a tier other than 'internal' -- no JWT claim set or user table was read. If such logins exist and use the research page they now get 403.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "aws lambda get-function --function-name opal-portal-authorizer (Code.Location package, index.mjs 65333 bytes, read 2026-10-12 ~13:46Z)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round80/bx2_authorizer.out"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-W135-S1",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~135",
+     "surfaced_at": "2026-10-12T13:42:14Z",
+     "one_line": "The order's premise that lib/opal_data_harvest already has 5 failures at the base does not hold: measured at 7b4512b094 the suite has 4 failures (test_ah1 bbg and three in test_aw1) and test_bn1_names_made_whole passes.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-bx-3 PROOF OF SPEC: 'The full lib/opal_data_harvest suite already has 5 failures at the base (test_ah1_fixture_solve.py::test_fixture_solve[bbg], three in test_aw1_origin_load_wait.py, one in test_bn1_names_made_whole.py).'",
+     "world_is": "Measured in worktree C:/Dev/wk-harvst-135 at HEAD 7b4512b094, before any edit: python -m pytest lib/opal_data_harvest -q gives 4 failed, 781 passed, 3 skipped. The four failures are test_ah1_fixture_solve[bbg] and test_aw1_origin_load_wait (three tests). test_bn1_names_made_whole passes. After the HVST-bx-3 build (commit 48ff285b05): 4 failed, 792 passed, 3 skipped, the same four failures, the 11 new bx-3 tests passing. The base count recorded here is 4, not 5.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "lib/opal_data_harvest/test_bn1_names_made_whole.py@7b4512b094 (passes in the base suite run)",
+       "worktree .scratch/baseline_full.txt (uncommitted pytest output of the base suite run: 4 failed, 781 passed, 3 skipped)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-W135-S2",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~135",
+     "surfaced_at": "2026-10-12T13:42:14Z",
+     "one_line": "The reason of a failed pair was lost at three hops, not one: Collector.run_job dropped a job's own detail when a run record existed, the run record's jobs entries carried no detail, and the worker's generic job exception set status error with no detail.",
+     "class": "OBSERVATION",
+     "hazard_standing": "ARMED",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "HVST-bx-3 section 0: the driver's run_job returns a detail such as 'no run record (rc=...): <stderr tail>' or 'job timeout', so the reason is being lost one step earlier, in the job result.",
+     "world_is": "At 7b4512b094: backfill_driver.py run_job returns a detail only on its timeout and no-run-record branches; with a run record it returned {status, run_id, stored} with no detail. worker.py write_run_record copied no detail into jobs[]. worker.py's generic except (status error, error_type only) set no detail, so an error pair had no reason from the worker up. The bbg cycle 20261010T221526Z carries exactly this shape. Fixed in commit 48ff285b05 on wk-AMGT_HARVST-135, not merged: until the merge the served runner on site Z keeps writing bare 'error' details, hence ARMED with the COO as disarm owner (the merge).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "lib/opal_data_harvest/backfill_driver.py@7b4512b094 run_job (run-record branch returns no detail)",
+       "lib/opal_data_harvest/worker.py@7b4512b094 generic except sets status error with error_type and no detail; write_run_record jobs entry has no detail"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-W135-S3",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~135",
+     "surfaced_at": "2026-10-12T13:42:14Z",
+     "one_line": "The HVST-bx-3 redaction also removes URL userinfo (scheme://user:password@host), which the order's listed key set does not name; recorded so the deviation is visible at the merge.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-bx-3 section 1 item 2: replace the value of any Authorization, Cookie, Set-Cookie, token, password, secret, api_key / api-key or Bearer occurrence with [REDACTED]; the listed set is the redaction set.",
+     "world_is": "worker.py's generic except at 7b4512b094 says third-party exception messages can contain credential-bearing proxy URLs. The build (commit 48ff285b05, transport.py redact_reason) also replaces the userinfo of a scheme://user:password@host form with [REDACTED]@. Every listed key is redacted as the order states; the userinfo rule is the one addition.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "lib/opal_data_harvest/worker.py@7b4512b094 generic except comment on credential-bearing proxy URLs",
+       "lib/opal_data_harvest/transport.py@48ff285b05 redact_reason (the _REASON_USERINFO rule)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```

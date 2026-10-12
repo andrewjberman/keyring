@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261012T141128Z-5f49",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~W1",
+ "to_serial": "0.7.0_AE_CloudOps~ZW",
+ "subject": "AMGT_HARVST HVST-by-3: re-pin the runner to 1c69fa35a3; lock both pins",
+ "body_path": "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-by-3.the-runner-repinned-to-the-bx3-merge.md",
+ "opened_at": "2026-10-12T14:11:28Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-12T14:15:11Z",
+  "bus_message_id": "ea404597-2cbb-4441-9c9e-3af39eb86106"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
