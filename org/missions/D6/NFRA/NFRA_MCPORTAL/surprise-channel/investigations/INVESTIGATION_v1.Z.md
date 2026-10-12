@@ -1382,6 +1382,32 @@
     "spec_asserts": "R-13: every Control Plane surface's cold read stays at or under 30 s.",
     "world_is": "Git state is at 25.1 s and rising about 1 s per hour over the last read pair. AC3 still passes, but the bar is close to breaching for the FWD-16 surface. Nothing is broken today: the read completes and the page renders.",
     "notes": "BLOCKING for FWD-16's R-13 at the next close run (MP-q-1), INERT now (no wrong output, only latency). The remedy is a code change to admin_fabric_gitstate.py: a bounded window, an incremental index, or a boot-time warm. That is an amendment-class change to a COMPLETE order and a new cell, so it needs the CTO's round-N analysis, not an issuer amendment. Routed there as the first enrichment item. No act is taken at this seat; the deploy queue is not touched."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S39",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-12T09:10Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S38",
+      "NFRA_MCPORTAL-Z-S37"
+    ],
+    "one_line": "DISPOSES Z-S38 and Z-S37 to an issued remedy. 1.0.0_SA_CTO~Z ruled an addendum now (msg 33458; PRD v0.6 C17 @fc09ade4ea, the bounded git-state read). The issuer cut ONE cell, MP-n-1, to 0.7.0_AE_CloudOps~MP: decomposition @6e73fee848, order @f8ee9e7453, workstream C17 round 1, GO by message. The cause, read at HEAD, is that _refused() scans the whole history when no refusal exists: 2,771 body fetches and 22.8 s on the served code.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "n1.AC3 dry run on the served 28ba9532b6, 2026-10-12 ~08:5xZ: ssm aeb096c6-ae4c-442b-999c-2ac14da5dab4 Success; /health 200; no-identity gitstate 401; gitstate_s=22.8 body_fetches=2771 recorded=4; RESULT: FAIL (bar 10 s).",
+        "n1.AC1 at HEAD: history 1x=240 10x=2400; get_object 1x=242 10x=2402; FAIL. On the issuer's scratch C17 sketch: 98 vs 98; PASS.",
+        "n1.AC2 at HEAD: the superseded refusal is shown; FAIL. On the sketch: 'not recorded' and {at, note}; PASS."
+      ]
+    },
+    "spec_asserts": "Z-S38: FWD-16's cold read is near R-13's 30 s bar with no remedy in flight.",
+    "world_is": "A remedy is in flight under C17 with a 10 s bar. The checks discriminate at HEAD, and AC1/AC2 have a positive control. The served read stays near 23-25 s until MP-n-1 releases; per C17's interim note, only the first read after a restart is cold.",
+    "notes": "Known risk, carried in the order: the 48 h window holds about 2,000 records. Whether the early stops keep the cold read under 10 s depends on how often integrate passes and trunk moves occur; MP-n-1's step-2 load sample measures it before the cutover."
   }
 ]
 ```
