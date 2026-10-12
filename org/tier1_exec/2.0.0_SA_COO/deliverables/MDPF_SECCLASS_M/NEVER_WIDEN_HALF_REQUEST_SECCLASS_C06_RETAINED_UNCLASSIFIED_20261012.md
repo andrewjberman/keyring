@@ -92,7 +92,7 @@ Read from the code written (`reclassify_retained`, working tree `:284-339`):
 | TDSC | ETC CABANA TARGET DRAWDOWN 10 ETF | 17.18 | equity | equity | none |
 | BLIAQ | BB LIQUIDATING INC CL A | 1.04 | equity | equity | none |
 
-Totals: **MOVED 23 of 23** (equity 20, $879,660.53; fixed_income 3, $86,624.93; total $966,285.46). **STAYING 0 of 23.** The returned class equals the NAME:: row class for every row (mismatch 0). The branch that stays `unclassified` is exercised by the unit test (`test_unclassified_without_a_name_row_stays_unclassified_byte_identical_and_uncounted`), not by live data.
+Totals: **MOVED 23 of 23** (equity 20, $879,660.53; fixed_income 3, $86,624.93; total $966,285.46). **STAYING 0 of 23.** These are the classifier's answers for the 23 securities. They are NOT the dollars the act moves on a retained date: the revisit reaches only the holdings in each stored top-10 list. The reach, and the expected move as a range, are in the Reach section. The returned class equals the NAME:: row class for every row (mismatch 0). The branch that stays `unclassified` is exercised by the unit test (`test_unclassified_without_a_name_row_stays_unclassified_byte_identical_and_uncounted`), not by live data.
 
 ## Rollback
 
@@ -105,6 +105,21 @@ The prior C_06 object is the object served now, read by `head-object` on 2026-10
 | `platinum/firm/mix_summary.json` | `_MTtBmpPHKvL3Hvt58tzeIsshH4c_lxb` | `b8ffd506d117c94249592968011e43a0` | 2026-10-12T05:44:00Z | 25124 | pre-act; **restore target** after a D_04 re-run |
 
 Code rollback: `s3api get-object --version-id 5xAeM.OWYUSxd7gHYSF6SKmR.ZTmo.PP` for the code key, then `safe-deploy.sh` of that file; this restores today's behaviour. Data rollback for the relationship JSONs and views: the ship's pre-act read records the VersionIds of every `gold/entities/clients/{id}.json` and `{id}_views.json` the first fire rewrites (3,793 relationship JSONs are listed; this worker did not enumerate their VersionIds). Restoring a relationship JSON does not restore a snapshot day; the summary restore above is the only path for that.
+
+## Reach
+
+Measured read-only on 2026-10-12 over every relationship JSON the retained-only pass reads: `gold/entities/clients/`, top-level `.json`, `_views` and `_composition` skipped. **Relationships read: 3,793** (the denominator; 4.77 GB). The watermark `data_as_of` is 2026-10-09. Dollars are sums over all relationships; the mix-level figure is `mix.unclassified * total_mv`; the listed figure is the `unclassified` holdings inside the stored per-date concentration list (top 10 by market value per relationship per date).
+
+| date | relationships with a mix entry (of 3,793) | mix-level unclassified $ | listed unclassified $ | listed / mix-level | relationships where mix > listed | listed $ that resolve now | canonical 23-security $ (raw, before the AP gate) |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 2026-10-09 | 3,103 | 1,846,399.46 | 1,326,892.62 | 71.86% | 29 | 653,857.12 (8 relationships) | 962,826.84 (85 rows) |
+| 2026-10-08 | 3,262 | 972,749.97 | 630,060.89 | 64.77% | 27 | 629,530.89 (8 relationships) | 963,206.57 (86 rows) |
+
+Cross-check: the 2026-10-09 mix-level sum, 1,846,399.46, is within $66.73 of the served firm Unclassified at that as-of, $1,846,332.73. "Resolve now" is each distinct listed (ticker, name) read through the shared classifier (get_item only; 21 distinct pairs on the two dates, 11 resolve). The canonical figure is read from `gold/canonical/holdings/<date>.parquet` by ticker, from the 23-security list; it is an upper figure because it is taken before the account-performance gate.
+
+**The limit, in plain words.** Unclassified dollars that sit outside a relationship's stored holding list are NOT revisited by this act. Only a rebuild of that date from its canonical partition can move them. The act therefore moves AT MOST the listed share: 71.86% of the 2026-10-09 mix-level unclassified dollars and 64.77% of 2026-10-08, and of those only the holdings that now resolve. The remaining $519,506.84 (2026-10-09, 28.14%) and $342,689.08 (2026-10-08, 35.23%) stay in the served Unclassified until a rebuild.
+
+**Expected move, as a range.** The served retained-date `platinum/firm/mix_summary.json` Unclassified (D_04 firm mix) should be expected to fall by between **$0 and $653,857.12** on 2026-10-09, and by between **$0 and $629,530.89** on 2026-10-08. The upper bound is the listed dollars that resolve; the 23-security canonical dollars on those dates ($962,826.84 and $963,206.57) are above it, so the cap does not bind. The 23-security total of $966,285.46 is the classifier's answer for those 23 securities on the 2026-10-06 list. It is not the point figure for the move. The act is material (about 35% of the 2026-10-09 mix-level unclassified dollars can move), so no gap row is needed for the act itself; the gap is the stored-list limit above.
 
 ## COO half: UNSIGNED
 
