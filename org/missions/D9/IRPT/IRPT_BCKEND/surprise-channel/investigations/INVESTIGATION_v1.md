@@ -28208,3 +28208,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Those 1,296 accounts have rows in the window but cannot be served at all; they are counted in accounts_the_reader_refuses and carry no position class."
 }
 ```
+
+## IRPT_BCKEND-D2-W322-S1 -- The prior row's account_value is not the base the producer tests; the base is the row's own account_value, so the primary classes use the own column (the literal previous-row reading is kept beside it)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W322-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~322",
+  "surfaced_at": "2026-10-12T02:36:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Step 3 of the face asks for the account_value on the account's previous row as the prior day's ending value, and says to use the base column if the gold carries it; the gold does.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_performance.py:743-758 and :856: account_value = included_value + basket_cash is built from the PREVIOUS trading day's positions (prev_positions), so row t's account_value is the basket at the close of t-1",
+      "holdings_performance.py:872-874: the NON-POSITIVE-BASE condition is out[\"account_value\"] <= 0.0 on the same row",
+      "IB161-1_excluded_day_base.json: primary_own_row_base and literal_previous_row are both emitted per cell; on 49F SI the interior days with a positive prior class are 4 under the own-row basis and 601 under the literal previous-row reading"
+    ]
+  },
+  "spec_asserts": "The prior day's ending value is the account_value on the account's previous row in the gold, and that row's value may be the base.",
+  "world_is": "The base is the row's own account_value (the t-1 close); the previous row's value is the close of t-2, a proxy. The primary tables use the own column; both readings are in the json and sum to the same days."
+}
+```
+
+## IRPT_BCKEND-D2-W322-S2 -- The face's day rule (interior, or the last row) leaves a third class of non-OK days uncounted: a trailing run of non-OK rows after the last OK row that is not the final row
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W322-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~322",
+  "surfaced_at": "2026-10-12T02:36:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Interior is 'between two OK days' and last row is the final row; a non-OK run after the last OK row longer than one row is neither, and the reader still skips it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB161-1_excluded_day_base.json trailing_nonok_days_neither_interior_nor_last_row per cell: 49F SI 33472, YTD 8531, QTD 6, 1Y 10411; orion SI 13756, YTD 8632, QTD 15, 1Y 10897",
+      "ib161_measure.py counted_days(): interior = non-OK rows with first_ok < i < last_ok; last row = the final row when non-OK; trailing = non-OK rows after last_ok that are not the final row"
+    ]
+  },
+  "spec_asserts": "Every excluded day of the accounts of step 1 that matters is either interior or the account's last row.",
+  "world_is": "Accounts whose last row is non-OK carry, before it, a run of non-OK days after their last OK day; those days are not between two OK days and are not the last row. They are counted in neither days_counted nor the status tables; they are reported only as a count per cell."
+}
+```
