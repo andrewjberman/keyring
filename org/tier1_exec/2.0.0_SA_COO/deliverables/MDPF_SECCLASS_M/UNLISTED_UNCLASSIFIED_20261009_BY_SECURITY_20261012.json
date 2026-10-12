@@ -1,0 +1,337 @@
+{
+ "claim": "measured: read-only, 2026-10-12T11:33:33Z; rebuilt 2026-10-09 by the C_06 module's own process_date on gold/canonical/holdings/2026-10-09.parquet (partition version DY7h_n97HK6oypextGdn38ietQKp16in, read by head-object before and after the rebuild; same version before and after = True); static tables loaded once by the module's load_static_tables; classify_series of the module called as-is, with a recorder reading the caller's position frame; the reason per distinct (ticker, name) pair is ETFClassifier.classify_with_identity's hop for that input; listed_in_stored from the stored gold/entities/clients/<relationship>.json concentration entry dated 2026-10-09 (3103 relationships carry the entry, all 3103 relationships of the partition); security level only",
+ "read_only": true,
+ "date": "2026-10-09",
+ "total_unclassified_usd": 883483.05,
+ "tolerance_usd": 51.91,
+ "reason_codes": [
+  {
+   "code": "name-not-in-feed",
+   "meaning": "Blank ticker; ETFClassifier.resolve() refused with 'name-not-in-feed' because the normalized name is in no holdings-feed name map, and no canonical NAME:: row exists for it, so classify_with_identity returns unclassified."
+  },
+  {
+   "code": "cusip-carries-no-ticker",
+   "meaning": "Blank ticker; resolve() found exactly one CUSIP for the name, but that CUSIP has no canonical CUSIP:: row and carries no ticker in the holdings feed (refused 'cusip-carries-no-ticker'), and no canonical NAME:: row exists for the name."
+  },
+  {
+   "code": "ticker-has-no-row",
+   "meaning": "Blank ticker; resolve() found one CUSIP and one ticker for the name, but the canonical etf-classifications table has no row for that ticker (refused 'ticker-has-no-row'), and no canonical NAME:: row exists for the name."
+  }
+ ],
+ "securities": [
+  {
+   "ticker": "",
+   "name": "BNP PARIBAS 01/23/2031",
+   "usd": 125475.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": true
+  },
+  {
+   "ticker": "",
+   "name": "CITIGROUP GLOBAL MKTS HLDGS IN 06/10/2031",
+   "usd": 124240.5,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": true
+  },
+  {
+   "ticker": "",
+   "name": "CITIGROUP GLOBAL MKTS HLDGS IN 05/28/2031",
+   "usd": 111400.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": true
+  },
+  {
+   "ticker": "",
+   "name": "BNP PARIBAS 06/11/2029",
+   "usd": 99060.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": true
+  },
+  {
+   "ticker": "",
+   "name": "GS FIN CORP 10/10/2030",
+   "usd": 85374.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": true
+  },
+  {
+   "ticker": "",
+   "name": "BNP PARIBAS 12/03/2029",
+   "usd": 69069.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": true
+  },
+  {
+   "ticker": "",
+   "name": "BARCLAYS BANK PLC 08/19/2030",
+   "usd": 57888.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": true
+  },
+  {
+   "ticker": "",
+   "name": "GS FIN CORP 12/20/2030",
+   "usd": 56672.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "CITIGROUP GLOBAL MKTS HLDGS IN 07/29/2030",
+   "usd": 27972.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "INNOVATOR EQUITY DUAL DIRECTIONAL 10 BUFFER ETF - JUNE",
+   "usd": 21870.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "BARCLAYS BANK PLC 08/26/2031",
+   "usd": 11630.4,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "SOCIETE GENERALE 09/19/2031",
+   "usd": 11000.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "SOCIETE GENERALE 07/07/2031",
+   "usd": 9554.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "INNOVATOR U.S. SMALL CAP POWER BUFFER ETF - JUNE",
+   "usd": 9411.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "SOCIETE GENERALE S.A.",
+   "usd": 8404.2,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "GS FIN CORP 03/25/2031",
+   "usd": 8371.2,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "CUBESMART COM",
+   "usd": 7594.0,
+   "positions": 1,
+   "reason_code": "ticker-has-no-row",
+   "reason": "classify_with_identity('', name) returned hop 'ticker-has-no-row': the name resolves to one CUSIP and one ticker, and the canonical table has no row for that ticker; no NAME:: row exists.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "GS FIN CORP 04/10/2031",
+   "usd": 7287.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "INNOVATOR GROWTH-100 POWER BUFFER ETF - JUNE",
+   "usd": 6299.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "GS FIN CORP 02/28/2031",
+   "usd": 3969.6,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "FIDELITY ADVISOR INTERNATIONAL VALUE Z",
+   "usd": 3662.36,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "FIDELITY ADVISOR MEGA CAP STOCK Z",
+   "usd": 3476.24,
+   "positions": 1,
+   "reason_code": "cusip-carries-no-ticker",
+   "reason": "classify_with_identity('', name) returned hop 'cusip-carries-no-ticker': the name resolves to one CUSIP that has no CUSIP:: row and carries no ticker in the feed; no NAME:: row exists.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "FIDELITY ADVISOR BLUE CHIP GROWTH Z",
+   "usd": 3145.71,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "INNOVATOR INTERNATIONAL DEVELOPED POWER BUFFER ETF NOVEMBER",
+   "usd": 2974.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "FIDELITY ADVISOR MID CAP II Z",
+   "usd": 2726.79,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "FIDELITY ADVISOR VALUE DISCOVERY Z",
+   "usd": 2227.68,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "FIDELITY ADVISOR\u00ae EQUITY DIVIDEND INC Z",
+   "usd": 1443.24,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "INNOVATOR EMERGING MARKETS POWER BUFFER ETF - OCTOBER",
+   "usd": 796.0,
+   "positions": 1,
+   "reason_code": "name-not-in-feed",
+   "reason": "classify_with_identity('', name) returned hop 'name-not-in-feed': the name is in no holdings-feed name map and no NAME:: row exists for it.",
+   "listed_in_stored": false
+  },
+  {
+   "ticker": "",
+   "name": "INNOVATOR U.S. SMALL CAP POWER BUFFER ETF - JULY",
+   "usd": 201.0,
+   "positions": 1,
+   "reason_code": "cusip-carries-no-ticker",
+   "reason": "classify_with_identity('', name) returned hop 'cusip-carries-no-ticker': the name resolves to one CUSIP that has no CUSIP:: row and carries no ticker in the feed; no NAME:: row exists.",
+   "listed_in_stored": true
+  },
+  {
+   "ticker": "",
+   "name": "INNOVATOR INTERNATIONAL DEVELOPED POWER BUFFER ETF - JULY",
+   "usd": 187.0,
+   "positions": 1,
+   "reason_code": "cusip-carries-no-ticker",
+   "reason": "classify_with_identity('', name) returned hop 'cusip-carries-no-ticker': the name resolves to one CUSIP that has no CUSIP:: row and carries no ticker in the feed; no NAME:: row exists.",
+   "listed_in_stored": true
+  },
+  {
+   "ticker": "",
+   "name": "INNOVATOR U.S. EQUITY POWER BUFFER ETF - SEPTEMBER",
+   "usd": 141.0,
+   "positions": 1,
+   "reason_code": "cusip-carries-no-ticker",
+   "reason": "classify_with_identity('', name) returned hop 'cusip-carries-no-ticker': the name resolves to one CUSIP that has no CUSIP:: row and carries no ticker in the feed; no NAME:: row exists.",
+   "listed_in_stored": true
+  },
+  {
+   "ticker": "",
+   "name": "GENTHERM INC COM",
+   "usd": 0.0,
+   "positions": 1,
+   "reason_code": "cusip-carries-no-ticker",
+   "reason": "classify_with_identity('', name) returned hop 'cusip-carries-no-ticker': the name resolves to one CUSIP that has no CUSIP:: row and carries no ticker in the feed; no NAME:: row exists.",
+   "listed_in_stored": false
+  }
+ ],
+ "unplaced_subset": {
+  "usd": 210486.42,
+  "positions": 22
+ },
+ "comparison": {
+  "sc_e95_rebuilt_unclassified_usd": 883483.05,
+  "sc_e95_unlisted_usd": 210486.42,
+  "sc_e95_unlisted_positions": 22,
+  "position_sum_unclassified_usd": 883521.93,
+  "position_sum_minus_class_sum_usd": 38.88,
+  "rounding_bound_usd": 51.71,
+  "served_unclassified_usd": 1846399.46,
+  "partition_version_id": "DY7h_n97HK6oypextGdn38ietQKp16in",
+  "partition_key": "gold/canonical/holdings/2026-10-09.parquet",
+  "relationships_in_partition": 3103,
+  "stored_relationships_with_date": 3103,
+  "stored_json_read": 3793,
+  "stored_json_status": {
+   "OK": 3103,
+   "NO_DATE": 690
+  },
+  "pairs_distinct": 32,
+  "pairs_with_class_nonempty": 0,
+  "security_level_unplaced_usd": 210486.42,
+  "position_level_outside_own_relationship_top10_usd": 210486.43
+ }
+}
