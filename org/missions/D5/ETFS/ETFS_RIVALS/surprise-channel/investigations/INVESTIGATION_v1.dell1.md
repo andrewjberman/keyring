@@ -603,6 +603,27 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Disarm (2.0.0_SA_COO~V1): do not count round 28 closed on this tool's GRADED count. Read the verdict in each cited row. The disarm is done when the round-28 close cites per-criterion verdicts, or when the tool is fixed. Tool owner: 1.0.0_SA_CTO, author of efb0b41626, to rule. Suggested remedy: grade only on a row that DECLARES the criterion it grades (an 'adjudicates' field, which the selftest at :575 already uses) with a verdict value, never on a free-text mention. This seat's rows will name an order's full id only beside a terminal verdict, but older rows cannot be edited (append-only), so the fix belongs in the tool."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W37-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~37",
+    "surfaced_at": "2026-10-12T21:24Z",
+    "one_line": "RIV-xc-1 frame_of: the sentence-initial word list (the a an in on over from between these this its it for with as at by) is matched case-insensitively, and every other capitalised token is <name>; so an all-caps token that spells a listed word (AT, IT, AS, BY) and a capitalised verb opening a sentence (Holds, Buys) both abstract to <name>, and two funds' frames can collide on shape alone.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "RIV-xc-1 Interface 1 (round-29 cell text, ETFS_RIVALS_DECOMP): a token that begins with an uppercase letter and is not one of the sentence-initial words `the a an in on over from between these this its it for with as at by` is NAME-like. The text does not say whether the word match is case-sensitive, nor whether it is restricted to the first token of the sentence.",
+    "world_is": "Built as a case-insensitive match (needed so that 'The' and 'Over' are excluded). Two results follow from the rule as written: frame_of('AT & T rose.') = 'at & <name> rose' (AT reads as the word 'at'), and frame_of('Holds 2 and 3 names.') = '<name> <n> and <n> names' (a capitalised verb is not on the list). A collision drawn on such a frame costs one correction whose reply stands; no grade changes. Measured in data/etfs/scripts/rivalfunds/ai_accounts.py frame_of, worktree wk-ETFS_RIVALS-37 at base d51a290175, uncommitted at filing.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd data/etfs/scripts && python -m pytest -q rivalfunds/tests/test_riv_xc1_verdict_frame.py (worktree C:/tmp/wk-riv29-37, 2026-10-12 21:2xZ): 4 passed, after the expectations were set to the literal rule",
+        "rivalfunds/ai_accounts.py frame_of, worktree wk-ETFS_RIVALS-37 at base d51a290175 (uncommitted at filing); the rule text is RIV-xc-1 interface 1 in the round-29 face"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "For the issuer to rule: whether the listed-word match should be case-sensitive or limited to the sentence's first token. No grade or prompt depends on the frame beyond one extra opening defect, so this is an observation, not a blocker. The cell's AC1 check passes as written under the literal rule."
   }
 ]
 ```
