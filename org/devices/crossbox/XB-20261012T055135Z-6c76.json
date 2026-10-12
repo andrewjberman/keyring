@@ -10,12 +10,16 @@
  "subject": "TO-CT-x-1 AMENDMENT 2: re-put an existing object with identical bytes under a new commit",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/CT-x-1_AMENDMENT_2_ASK.md",
  "opened_at": "2026-10-12T05:51:35Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-12T05:53:44Z",
+  "bus_message_id": "f922f5a2-9f81-4f0d-be84-44a3c9fa1dbf"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T05:54:43Z",
+  "by": "0.7.0_AE_CloudOps~CT1",
+  "bus_message_id": "5789de67-da67-4af6-8b1f-f7ef4976ba2d"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
