@@ -12550,3 +12550,52 @@ name the one known failure instead of silently inheriting it.
   "notes": "Next read, cheap: the gateway's audit records and the journal around the two timestamps (status, Graph status, latency). If upstream Graph 502s are passed through, record it and leave it; if the gateway itself errors, it is a code cell. COMM retries on the next poll, so nothing is lost."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W58-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~58",
+  "surfaced_at": "2026-10-11T23:31:00Z",
+  "one_line": "OG-fd-1 fixes the four mirror-family sweeps (orion, eclipse, blackdiamond, etf) but the schwab sweep has its OWN drain_dlq (schwab_runtime.py:247, outside this order's paths) that still receives and deletes every message on the shared opal-assets-silver-dlq, so a schwab sweep will keep eating other families' failures after the deploy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/schwab_runtime.py:247-268 @91bde9b54c: drain_dlq(sqs, queue_url, cap) calls receive_message then delete_message on every message with no family read; called at :380 from run_sweep.",
+      "infra/aws/terraform/opal-assets/silver.tf:95-101 @91bde9b54c: silver_families holds schwab, orion, eclipse, blackdiamond, etf, smartx; line 680 gives every one the same DLQ_URL.",
+      "The schwab package copy equals its source (schwab_runtime.py 405 lines both), so the defect ships as written; no mirror_conversion.py is vendored into the schwab package, so the OG-fd-1 change cannot reach it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cell OG-fd-1: each silver sweep drains only its own family's DLQ messages; callers named are run_sweep and etf_conversion.py:620.",
+  "world_is": "Two more drain_dlq definitions exist beyond mirror_conversion's; schwab_runtime.py:247 is the second and is a live drainer of the shared queue. Paths for this order exclude it, so it is unchanged. smartx and bd49finsurance packages hold no receive_message or DLQ_URL reference (grep of both snapshot dirs: 0 matches)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W58-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~58",
+  "surfaced_at": "2026-10-11T23:31:00Z",
+  "one_line": "The family attribution rests on the Lambda on-failure destination record carrying requestContext.functionArn; no live message was read (no SQS call is in this order), so the record shape is the documented AWS shape, not a measurement of the queue.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/opal-assets/silver.tf:700-702 @91bde9b54c: the queue is each silver Lambda's event_invoke_config on_failure destination (not a dead_letter_config), so bodies are destination records, not raw event payloads.",
+      "The fix fails safe: a body whose family cannot be read is left in the queue and counted unattributed, never deleted (test_fd1_ac03). If live records lack the field, every message reads unattributed and nothing is drained until the live grade in the ask shows it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says the Lambda destination record names the failing function, opal-assets-silver-<family>.",
+  "world_is": "Unread on the live queue by design; the ask's live grade (plant one synthetic family-A record shaped like a destination record, run family B's sweep) is the first measurement."
+}
+```
