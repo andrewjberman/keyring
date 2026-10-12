@@ -1,13 +1,12 @@
 {
   "prd": "NFRA_CTLPLN_PRD.md",
-  "prd_version": "v0.27",
-  "prd_pin": "0727ecb3b39886aa16edead78569046049e560e9",
+  "prd_version": "v0.28",
+  "prd_pin": "5a2b425d6b2cd9c20df211670c55f7fd9ea54736",
   "half": "ratified-text",
-  "half_hash": "66a9fb379fbb6c01ff59352642dafe23d746ffec9a04293cb6cf5e1bb486ccac",
-  "endpoint_hash": "65eedb452148c444271c025dc7f50851d5c3e8d062d0298c622604c98666ae98",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_CTLPLN_PRD_V027_RATIFIED_TEXT_REVIEW_20261012.md@67b765298a",
+  "half_hash": "d9cecb0201a4887aba56e7120b73711ecff30c1c499b17d376d3d18fc434be53",
+  "endpoint_hash": "b981bcdf2a0c1d34726b8a2dcc4f72b20052aebec743abf69212c465ff58e798",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_CTLPLN_PRD_V028_RATIFIED_TEXT_REVIEW_20261012.md@e4454ea7a3",
   "signed_by": "3.0.0_SA_CVO~L",
-  "signed_at": "2026-10-12T15:32:12Z",
-  "reason": "FWD-28 class (ii) says tier-internal only; the code also admits userType Dev on any firm, which (tier derived from firm) is a widening, not defence-in-depth"
+  "signed_at": "2026-10-12T18:04:09Z"
 }
