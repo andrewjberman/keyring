@@ -5558,3 +5558,104 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "ARMED because the warning's content is unread here and the estate wrote it against this node. Disarm owner is the issuer, who can read the citation and rule on the hold before the deploy order under the act 4 pair."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W60-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~60",
+  "surfaced_at": "2026-10-12T14:26:49Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "FB-g-37: after the 12 stale expectations are updated, the router suite still has 1 failure outside the 12: 'shipped router: a platinum request keeps its legacy key and its legacy bucket' (canonical-platinum.spec.mjs:44-48) now receives the canonical key.",
+  "spec_asserts": "The order names 12 failing assertions and bounds the edit to them (AC1 expects 0 fail in shared-advisor-router). The test 'shipped router: a platinum request keeps its legacy key and its legacy bucket' asserts that the shipped router, whose canonical list is empty, keeps a platinum request on its legacy key /platinum/accounts/z1/s.json and its legacy bucket.",
+  "world_is": "The fixture the order prescribes (a scope with an alias, read from the registry's current state) selects FIRM = 49financial. Its bucket opal-data-49financial is now in the generated CANONICAL_PLATINUM_BUCKETS list of infra/aws/lambda-edge/_shared/firm-config.mjs (flip commit 69679b90e3), so the shipped handler rewrites the request to /advi/49financial/platinum/accounts/z1/s.json. The test passed at base only because its FIRM was inflection. It was not among the 12, so it was left unedited per the bound. bun test test/ in shared-advisor-router reads 51 pass, 1 fail, of 52 tests.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test test/ in infra/aws/lambda-edge/shared-advisor-router at worktree HEAD db1aa38850 plus the uncommitted test edits: 51 pass, 1 fail, Ran 52 tests across 4 files",
+      "bun AssertionError: actual '/advi/49financial/platinum/accounts/z1/s.json', expected '/platinum/accounts/z1/s.json' (canonical-platinum.spec.mjs:45-46)",
+      "infra/aws/lambda-edge/_shared/firm-config.mjs at db1aa38850: CANONICAL_PLATINUM_BUCKETS = ['opal-data-49financial']; the FIRM_CONFIG 49financial bucket is opal-data-49financial"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~B1",
+  "notes": "ARMED because a red shipped-router build gate stays red for every later edge build until the expectation is ruled. The expectation is stale for the flipped scope (the same class as the 12), so the issuer decides the edit. The worker proposes no edit beyond the bound. AC1 cannot pass until ruled."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W60-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~60",
+  "surfaced_at": "2026-10-12T14:31:44Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The commit-time naming gate (LGIC_ENFORCE, enforce mode) refused the first form of the FB-g-37 test edits: new typed firm tokens and bucket domains in the router and guard test .mjs files. The commit aborted and nothing landed.",
+  "spec_asserts": "The order states the expectations as literal bucket names and firm slugs (opal-data-49financial, firm=49financial, the bucket domain form) in the four router test files and the response guard test file, and names no naming-gate precondition.",
+  "world_is": "safe-commit.sh on the first form: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' Its NAMING REFUSE rows were the domain form opal-data-49financial.s3.us-east-1.amazonaws.com (RAISE, '49financial.s3.us' after opal-data- is no scope key) and the new carrier firm=49financial. After the expectations were read from the registry FIRM_CONFIG (no new firm token or domain literal), an offline run of .tools/naming-gate.py on the working-tree diff reads 'NAMING-GATE: WARN 17 graded' with no REFUSE.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for the first commit attempt on worktree wk-firmbkts-60: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.'",
+      "python .tools/naming-gate.py --diff .scratch/d.diff at base db1aa38850 plus the working-tree test edits: 'NAMING-GATE: WARN 17 graded'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolved in the worktree by reading the firm bucket and scope slug through FIRM_CONFIG, the registry route the gate's own remedy names. No gate was edited or bypassed. Recorded so the issuer knows the literal forms of the order cannot land under the gate."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W60-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~60",
+  "surfaced_at": "2026-10-12T14:31:44Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The naming gate documents a test exemption for the path segment /tests/, but the test directories this order names are test/, so every edit under them is graded.",
+  "spec_asserts": "The naming gate documents that anything under */tests/* is not graded. The order names test/ directories as its write surface: shared-advisor-router/test and shared-advisor-router-response/test.",
+  "world_is": ".tools/naming-gate.py at base db1aa38850 exempts a path only when the string '/tests/' occurs in '/' + path (line 2169, comment 'fixtures under */tests/* are not graded'; the same literal at line 996). The paths infra/aws/lambda-edge/shared-advisor-router/test/*.mjs carry '/test/', not '/tests/', so the commit attempt graded all four files: 'DENOMINATOR: 4 path(s) in this diff; declaration-tree domain = 4 MINUS EXCLUDED ... = 4 path(s)'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep for the tests literal in .tools/naming-gate.py at db1aa38850: line 996 and line 2169 test for '/tests/' only",
+      "safe-commit.sh naming-gate output for the first commit attempt: the four test .mjs files graded, 0 excluded"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~B1",
+  "notes": "Recorded, not edited: the gate is outside this order's surface. Whether test/ should be exempt is the issuer's or the gate owner's ruling. Until ruled, a NEW typed firm token or bucket domain in a test/ edit is refused at commit."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W60-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~60",
+  "surfaced_at": "2026-10-12T14:34:45Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "The order's AC1 and AC2 invocations print nothing as written: bun colours its summary lines even when piped, so the anchored grep matches no line.",
+  "spec_asserts": "The order's AC1 and AC2 invocations (grep -E over bun test output for the pass and fail count lines, expect ^ *[0-9]+ pass +0 fail *$) read the counts, and the expectation is a match on that output.",
+  "world_is": "bun 1.4.2 writes each summary line with ANSI escape codes around the count, also when stdout is a pipe: the line reads ESC[0m ESC[32m ' 51 pass' ESC[0m. The anchored pattern matches no line, so both invocations print nothing. With the codes stripped by sed, the same commands read ' 51 pass  1 fail ' (router) and ' 47 pass  0 fail ' (guard), identical on two runs. NO_COLOR=1 does not remove the codes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test test/ in infra/aws/lambda-edge/shared-advisor-router at worktree HEAD 728f3def09 piped to grep -E '^ *[0-9]+ (pass|fail)$': 0 lines matched (wc -l = 0)",
+      "od -c of the summary line: ESC [ 0 m ESC [ 3 2 m ' 5 1 p a s s' ESC [ 0 m newline (raw bytes, no stripping)",
+      "the same grep after sed 's/ESC[[0-9;]*m//g' reads ' 51 pass  1 fail ' and, in the guard, ' 47 pass  0 fail '; two runs each identical"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~B1",
+  "notes": "The worker measured the counts with the codes stripped and reports AC2 as UNVERIFIABLE-BY-INSTRUMENT with that substitute oracle; AC1 is FAIL on the state, one failing test outside the twelve (ADVI_FIRMBKTS-D1-W60-S1). The worker changed no invocation: the issuer amends the instrument."
+}
+```
