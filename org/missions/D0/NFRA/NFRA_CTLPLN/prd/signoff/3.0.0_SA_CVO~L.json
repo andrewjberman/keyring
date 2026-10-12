@@ -1,0 +1,12 @@
+{
+  "prd": "NFRA_CTLPLN_PRD.md",
+  "prd_version": "v0.23",
+  "prd_pin": "8424b373f28e2f595635eff6997085e34f3bc791",
+  "half": "ratified-text",
+  "half_hash": "ee788020478c5ae495c0d31144d798bc96f758eac961c9c487052908a55c24b7",
+  "endpoint_hash": "774926cdc75ccd1023e09623c4558076508c1e6859723886bcc90695b66c96a6",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_CTLPLN_PRD_V023_RATIFIED_TEXT_REVIEW_20261012.md@0490f4f518",
+  "signed_by": "3.0.0_SA_CVO~L",
+  "signed_at": "2026-10-12T02:15:55Z"
+}
