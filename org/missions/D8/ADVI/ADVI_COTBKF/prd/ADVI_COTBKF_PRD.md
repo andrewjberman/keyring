@@ -5,7 +5,7 @@
  "project": "ADVI_COTBKF",
  "directive": "D8",
  "fabric": "dell2",
- "prd_version": "v0.8",
+ "prd_version": "v0.9",
  "step": 4,
  "brief_ref": "docs/briefs/cottonwood-commonwealth-10y-backfill-brief-20261006.md@902feb3a4f",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -337,5 +337,51 @@ ENDPOINT is unchanged.
    the tree's history.
 
 **Acts only Andrew can do:** none.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.9 -- C-BASIS item 2 replaced: the basis field is the one the build already has (L10; CONTRACTS changed)
+
+- **Author:** `1.0.0_SA_CTO~DELL2`, 2026-10-12 ~02:0xZ. **Source:** the reviewer's refusal of v0.8 (`3.0.0_SA_CVO` msg 6278, review
+  @118f800793, read whole). **The refusal is right.** v0.8 item 2 minted two tokens, `AS_TRADED` and `ADJUSTED`, without a census,
+  and this seat had not read the build it was writing a field for. Read since, by this seat:
+  `data/assets/scripts/silver/commonwealth_daily_valuation.py:186-199`, `:211`, `:246-258`;
+  `commonwealth_split_level_probe.py:1-5`. v0.8's items 1, 3, 4 and 5 stand. **Item 2 of v0.8 is WITHDRAWN and its two tokens are
+  not used anywhere.**
+
+**The census (native search, word boundary, case-insensitive, over `data/`; this seat, counts as printed).**
+- `as_traded_close`: 71 occurrences in 26 files. 2 in this project's valuation build, where it is a VALUE of the per-point column
+  `basis` (`:211`); 69 in 25 files under `data/mdpf/scripts/`, where it is a COLUMN of the securities history's own writers. One
+  meaning in both: the close a security traded at.
+- The constants `BASIS_AS_TRADED_CLOSE` and `BASIS_STORE_POINT`: 7 occurrences in 3 files, all this project's build and its tests.
+- `price_basis` (the RUN-level option `store` or `as_traded`, and a member of `sources.json`): found in 18 files under `data/`. It
+  is a different grain (one value per run or per source) and is not the field this contract writes.
+- The reviewer's census is adopted for the rest: `AS_TRADED` upper-case is a served blank-reason token
+  (`commonwealth_account_return_daily.py:523`); the four series classes `as_traded`, `dividend_adjusted`, `mixed`, `other` have 61
+  occurrences in 15 files. Not searched by this seat: `infra/` beyond three candidate tokens (0 hits), `portal`, `docs`.
+
+**C-BASIS item 2, as it now reads.**
+
+2. **The basis of a price is the build's existing per-point column `basis`, with its existing closed two values, and it is carried
+   onto every row of the minted table that a price made.** No token is added.
+   - `as_traded_close`: the point is the vendor's `Close` for the day with this project's split scaling applied on top. The
+     vendor's `Close` alone is split-ADJUSTED and not dividend-adjusted, so it is the price traded at only for a day with no later
+     split; **the value means the traded price only AFTER the split scaling**, and a point that has not passed it is not written
+     with this value.
+   - `store`: the price store's point as it stands. What it does with distributions is NOT KNOWN for that point.
+   - Four postulates. Domain: every price point the valuation reads; both values are assigned at one place (`:252`, `:258` on) and
+     no third exists there. Same grain: one per point. One axis, one intent: where the point came from, which is what fixes what is
+     known of its basis. State: re-pricing from an as-traded source moves `store` to `as_traded_close`; it does not move
+     `as_traded_close`.
+   - **For a fund security, a `store` point prices nothing:** the day is UNPRICED (item 4). A reader of the minted table that needs
+     the traded price rejects `store` on this field.
+3. **The four series classes are the census's and stay the census's: a class of a whole SERIES, never written to the minted
+   table.** They stop deciding what is substituted for a fund. Today the as-traded basis replaces only series classed
+   `dividend_adjusted` or `mixed` (`:190-191`); the 15 failing funds are classed `other`, so they kept their store points, and that
+   is the mechanism of the defect. **Under C-BASIS every fund security is substituted whatever its class.** For other security
+   types the classes keep their present use.
+
+- **The proof gains one arm:** a fund that has split inside the back-fill, priced before and after its split, reproduces the price
+  paid on both sides. If no held fund split, the run says so with the count searched.
 
 -- 1.0.0_SA_CTO~DELL2
