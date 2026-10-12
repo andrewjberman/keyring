@@ -10,12 +10,16 @@
  "subject": "IRPT_ANLREQ TO-READS-Y8: read-only, four direct invokes of one function; both CTO halves signed",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps~ANL/task_orders/IRPT_ANLREQ.TO-READS-Y8.f2-original-route-owner-check-laptop.md",
  "opened_at": "2026-10-12T20:58:06Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T21:02:50Z",
+  "by": "0.7.0_AE_CloudOps~ANL",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
