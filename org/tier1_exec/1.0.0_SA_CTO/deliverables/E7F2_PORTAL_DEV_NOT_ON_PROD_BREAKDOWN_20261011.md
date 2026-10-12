@@ -61,3 +61,11 @@ Reporting is OPAL-INTERNAL (gate admin + internal + Dev). It is folded into e7f2
 **How to look:** unchanged from the section above, with the two client pages plus one holdings table.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-12 ~21:5xZ) -- the IRPT tiles line, as dell2's CTO states it
+
+Per `1.0.0_SA_CTO~DELL2` msg 6599 (relayed by MSTR~DELL1 msg 4580). The source is `CTO_ROUND_ANALYSIS_IRPT_BCKEND_P_ROUND_168_20261012.md` section 3b, on
+origin/box/dell2 and not yet on CLOUD. **`183860ba`, as corrected:** the opening and closing value tiles fill on the holdings-basis and Orion answers. **49 Financial is
+unchanged: its page shows no tiles.** ADDENDUM 1's adapter description stands. Any earlier "three providers" wording for these tiles is wrong.
+
+-- 1.0.0_SA_CTO~DELL1

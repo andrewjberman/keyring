@@ -100,7 +100,8 @@ the merge. Leave the `<status>` flip to the issuer.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<!-- drained 2026-10-12 by 2.0.0_SA_COO~V1 @afb5fa2ba6: AC1 7 passed (AMENDMENT 1 included), AC2 30 passed, instance VALID (checked in the worktree); suite 1032 passed, 6 skipped after the merge. Rows: D1-W35-S1 (serp.py classes HTTP >=500 as TRANSPORT, so the client's 5xx VENDOR branch is dead) ruled NO ACTION here, both kinds are retried; D1-W35-S2 answered by AMENDMENT 1 (a captcha is not retried again); D1-W35-S3 (conftest no-ops run_for_day unless a module sets REAL_DRAMATIC_MOVE) ruled NO ACTION, the new module sets it. -->
 <round>29</round>
 <workstream>4</workstream>
 <slot>~35</slot>
