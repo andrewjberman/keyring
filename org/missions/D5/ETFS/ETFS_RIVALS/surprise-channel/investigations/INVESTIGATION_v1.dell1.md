@@ -624,6 +624,69 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "For the issuer to rule: whether the listed-word match should be case-sensitive or limited to the sentence's first token. No grade or prompt depends on the frame beyond one extra opening defect, so this is an observation, not a blocker. The cell's AC1 check passes as written under the literal rule."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W35-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~35",
+    "surfaced_at": "2026-10-12T21:30Z",
+    "one_line": "RIV-xb-1 face says serp.classify_serp_attempt classes a 5xx as VENDOR; serp.py classes an HTTP status of 500 or more as TRANSPORT, so the 5xx branch of the client's own retry is unreachable. No effect on the policy built here: serp_search retries both kinds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-xb-1 face (round 29, section 2 and the Measured line): 'serp.classify_serp_attempt classes a failure VENDOR (5xx or a vendor-error header), TRANSPORT (no HTTP status or a connection error) or CONFIG (a 4xx)'. serp.py's own docstring (classify_serp_attempt, :268-269) says 'kind VENDOR for a 5xx'.",
+    "world_is": "data/find/dualbiz/scripts/serp.py:281-284: HTTP status None -> TRANSPORT; status >= 400 -> `CONFIG if 400 <= status < 500 else TRANSPORT`. So a real HTTP 5xx is TRANSPORT. VENDOR comes from an x-brd-status-code other than 200, an x-brd-error or x-brd-error-code header, or an empty body with a vendor header (:287-296). Because of :284, the 5xx clause of serp_brightdata_records' retryable test (:459-460, `kind == VENDOR and (captcha or 500 <= http_status < 600)`) cannot be true. Consequence here: none; serp_search retries VENDOR and TRANSPORT alike. Consequence for the failure text: a real 5xx reads 'SERP FAILED: TRANSPORT after 3 attempts', not VENDOR.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/find/dualbiz/scripts/serp.py@8a82ac76c1 :268-269 (docstring), :281-284 (code), :459-460 (dead 5xx clause)",
+        "worktree C:/tmp/wk-riv29-35 at base 8a82ac76c1 (box/dell1), read 2026-10-12 21:2xZ"
+      ]
+    },
+    "notes": "Recorded for the issuer; serp.py is out of this order's bounds and is not edited. The vendor client's owner decides whether the docstring or the code is the intent."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W35-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~35",
+    "surfaced_at": "2026-10-12T21:30Z",
+    "one_line": "serp_brightdata_records already re-attempts a captcha VENDOR failure twice inside the client, so the lookup-level retry built for RIV-xb-1 can make nine Bright Data requests for one search where the face's bound reads three.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-xb-1 face section 1: 'a result with status FAILED and failure.kind in (VENDOR, TRANSPORT) is retried, at most 2 retries (3 attempts)'. The face describes the client call as ONE call that the policy wraps (section 2: 'the default _call is the current body').",
+    "world_is": "data/find/dualbiz/scripts/serp.py:396 (_PAGE_SLEEP) and :400 (retries: int = 2) and :459-463: inside serp_brightdata_records a VENDOR failure is re-attempted up to `retries` times when brd_error_code is 'captcha' (the 5xx clause is dead, see W35-S1), with no sleep between its attempts. serp_search (dramatic_move.py, this order) retries the whole client call twice with sleeps 1.0 and 2.0. Worst case per lookup search: 3 x 3 = 9 Bright Data requests for a captcha. The measured class in the face (HTTP 200, x-brd-status-code 502, expect_element) is not captcha and not 5xx, so the client does not retry it and the outer retry is its only retry. No test reaches this: every test injects _call.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/find/dualbiz/scripts/serp.py@8a82ac76c1 :396, :400, :459-463",
+        "data/etfs/scripts/rivalfunds/dramatic_move.py serp_search in worktree C:/tmp/wk-riv29-35 (the RIV-xb-1 change, committed with this row)"
+      ]
+    },
+    "notes": "Issuer to decide at the merge whether the outer retry should skip the captcha class, which the client already retries. Not changed here: the face fixes the policy and serp.py is out of bounds. Vendor spend is the concern; no live search runs in this cell (the face forbids one)."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W35-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~35",
+    "surfaced_at": "2026-10-12T21:30Z",
+    "one_line": "The package conftest replaces dramatic_move.run_for_day with a no-op in every test module that does not set REAL_DRAMATIC_MOVE = True. The face asks for the seam with the real run_for_day and does not name that flag; a new test that drives run_for_day silently exercises the no-op until the flag is set.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-xb-1 face section 1 (Checks) and section 4 AC2: the seam with the real neighbour run_for_day, exercised through serp_search with an injected _call.",
+    "world_is": "data/etfs/scripts/rivalfunds/tests/conftest.py:31-32 (_no_live_dramatic_move_lookup): unless request.module.REAL_DRAMATIC_MOVE is True, run_for_day is monkeypatched to a no-op returning zero counts. The round29/checks file sits outside rivalfunds/tests, so it reaches the real run_for_day; a module inside the package does not. Measured: a first draft of the run_for_day test in rivalfunds/tests read candidates 0 and plan calls [] until the flag was set. The flag is set in test_riv_xb1_search_retry.py; no existing test was edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/conftest.py@8a82ac76c1 :31-40",
+        "pytest run of rivalfunds/tests/test_riv_xb1_search_retry.py in worktree C:/tmp/wk-riv29-35: 9 passed after the flag was set"
+      ]
+    },
+    "notes": "Recorded for the round's test authors. The flag is the package's own mechanism, so no change is made to conftest.py (outside this order's paths)."
   }
 ]
 ```

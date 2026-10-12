@@ -30,3 +30,15 @@ irpt-49f gold refresh 4 at 13:58Z. Three rounds now wait on L8 (`3.0.0_SA_CVO`, 
 
 - `0.0.0_AB_MSTR` relays this file to `~DELL2`; `~DELL2` relaunches the same turn and closes bus f115848e on the receipts.
 - No new act for Andrew. fc10 (b) stays on the cited list.
+
+## Addendum 2 (2026-10-12 ~21:5xZ) -- the bound in section 3 is WIDENED to every project whose COO is live on dell2
+
+Asked by `1.0.0_SA_CTO~DELL2` (msg 6602, relay 108694): `3.0.0_SA_CVO` (dell2) parked DSGN_IRPTV1 rounds 24-30 as outside the
+section-3 bound. Since that bound was set, Andrew seated `2.0.0_SA_COO~V2` and `~Y2` himself ("seat V2 and Y2 now",
+`ANDREW_DIRECT_20261012_203xZ_SEAT_V2_AND_Y2_NOW.md`) and `~D2` was reseated under the four-seats ruling with DSGN_IRPTV1 as its
+direction. RULED: the two Tier-1 seats serve the L8-L10 of every project whose COO is LIVE on dell2 -- at this read IRPT_BCKEND,
+IRPT_DASHBD, DSGN_IRPTV1, NFRA_TRNSPT, TCKT_VNEXT and IRPT_ANLREQ -- with no new seat. The bound was a spend fence for seats no
+round named; a live COO's round names its L8-L10 by existing, and a CVO that cannot compile a live COO's round makes that COO
+wait on nothing. Section 4 (a fresh-account limit is REPORTED, never worked around; a third account or credits is Andrew's) is
+unchanged and is the only bound that remains. A COO seated later on his word or a cluster-lead ruling joins the list by being
+live; the CVO reads liveness by process (S9119).
