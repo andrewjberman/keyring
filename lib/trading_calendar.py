@@ -142,11 +142,32 @@ def _fallback_source() -> str:
     return "NYSE/hardcoded-fallback-%d-%d" % (FALLBACK_FIRST_YEAR, FALLBACK_LAST_YEAR)
 
 
+_FALLBACK_ANNOUNCED = False
+
+
+def _announce_fallback() -> None:
+    """ONE stderr line per process the first time the fallback ANSWERS (IRPT_BCKEND-D2-W282-S3,
+    2026-10-12): a consumer reading a trading-day answer from the hardcoded table could not tell
+    it from the package's answer, and the table ends at FALLBACK_LAST_YEAR. ASCII, stderr, once;
+    stdout untouched so a CLI's answer line is unchanged."""
+    global _FALLBACK_ANNOUNCED
+    if _FALLBACK_ANNOUNCED:
+        return
+    _FALLBACK_ANNOUNCED = True
+    import sys
+    sys.stderr.write(
+        "WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE "
+        "fallback %s (covers %d-%d; regenerate with lib/tests/gen_nyse_closures.py --write before %d)\n"
+        % (_fallback_source(), FALLBACK_FIRST_YEAR, FALLBACK_LAST_YEAR, FALLBACK_LAST_YEAR + 1))
+
+
 def _require_covered(d: dt.date) -> None:
     """Fail closed: when the ACTIVE source is the fallback, a date whose year the fallback does
-    not cover raises instead of answering. No-op when the package is the source."""
+    not cover raises instead of answering. No-op when the package is the source. Under the
+    fallback it also announces, once per process, that the fallback is the source (W282-S3)."""
     if _USE_PMC:
         return
+    _announce_fallback()
     if not FALLBACK_FIRST_YEAR <= d.year <= FALLBACK_LAST_YEAR:
         raise CalendarCoverageError(
             "calendar source %s does not cover year %d (date %s); install pandas_market_calendars "
