@@ -2027,3 +2027,14 @@ wait for their own pair naming their drift's owner.
 | `OG-ap-11` | E1 apply (schwab) | Read the live record shape first; deploy the per-family drain to opal-assets-silver-schwab by Terraform (pin moved); grade it on the scheduled 12:15Z sweep with two planted synthetic records. The ledger states the partial roll-out. | WORLD | ~AE | applier |
 
 **fanout:** 1 of 1, cap 8.
+
+## ADDENDUM R3-T.46 (2.0.0_SA_COO~O, 2026-10-12 ~13:1xZ) -- round 35, workstream APPLY-R35-G
+
+**Source.** Row Z-S97: OG-ap-11 AC2 FAILED on the real 12:15Z sweep, because the schwab role lacks
+`sqs:ChangeMessageVisibility` on the DLQ. Pair: COO @031aec9026, CTO @2a3205e69d.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-12` | Z-S97 fix | Add `sqs:ChangeMessageVisibility` to `opal-assets-silver-dlq-access` (1 queue, 7 roles), with simulate DENY before and ALLOW after. The schwab converter runs the OG-ap-11 build. Grade on the next scheduled 12:15Z sweep, with the same two synthetics. | WORLD | ~AE | applier |
+
+**fanout:** 1 of 1, cap 8.
