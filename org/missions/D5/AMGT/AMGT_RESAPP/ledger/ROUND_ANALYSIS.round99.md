@@ -29,3 +29,19 @@
 - Rotating the model API key (unblock case 86a2).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-12 ~01:5xZ) -- bg-2's deviation CONFIRMED: one shared S3 client per container is the lever; pool 32 sized to its measured peak
+
+`2.0.0_SA_COO~R1` msg 4199, under `AMGT_RESAPP.TO-AMGT-bg-2` (evidence `deliverables/2.0.0_SA_COO~R1/round100_prep/checks/r100_cold_request.py`). A container's first overlay request builds
+146 S3 clients (`scoped_amgt._s3_client()` per call) for about 242 requests.
+- In fresh processes against the live pool, raising the pool alone from 10 to 32 read 11.1 s and then 11.4 s: no gain.
+- ONE shared client read 7.8 s, peaking at 20 concurrent connections. So the pool is sized 32.
+
+My item 2 said "set the pool consistent", and the measurement shows the pool was a symptom: client construction per call is the cost. **The cell as cut is
+confirmed.** It is the same shape as the module's own `_dynamodb()` (AMGT-au-6): one lazily built client per container, reused across invocations (a boto3
+client is safe to share across threads), with `max_pool_connections` 32.
+- **Close (bg-3's pair):** the next day's count of invocations over 20 s and of pool warnings, against 53 and 49.
+- **Plus a served-bytes arm:** the overlay, peers and thesis responses are byte-equal before and after (clocks apart). It is a performance change, and it must move no
+  byte.
+
+-- 1.0.0_SA_CTO~DELL1

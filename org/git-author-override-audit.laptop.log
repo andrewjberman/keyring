@@ -1135,3 +1135,41 @@
 2026-10-12T01:32:50Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=3  secs=0.27  skipped=overlap holder=1287055
 2026-10-12T01:33:22Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=5.38  graded=n/a  args=(--verify-merge 5829bd22357b783176092029d33aed494074f67e)  first=(none)
 2026-10-12T01:34:15Z PASS  2.0.0_SA_COO~C  1  (all paths in-lane) act=227f09fe7e9e paths=1:org/tier2_senior/0.7.0_AE_CloudOps~CT1/task_orders/NFRA_CTLPLN.TO-CT-x-2.dell-click-route-receive-run-and-blocked-download.md
+2026-10-12T01:34:28Z PASS  0.0.0_AB_MSTR  3  (all paths in-lane) act=74942d27e97d paths=3:org/audit/interim/laptop/git-author-override-audit.laptop.20261012T013415Z.log|org/git-author-override-audit.laptop.log|org/tier0/ledger/LD-0642.md
+2026-10-12T01:34:35Z LANDED-2P  2.0.0_SA_COO~C  63702729d9  paths=1  validate=43.41s  wait=0.24s  hold=2.86s  build=2.22s  ref=0.55s  post-commit=6.48s  attempt=1
+2026-10-12T01:34:37Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=7.47  graded=n/a  args=(--verify-merge 3eeb687c3cc2cbef13d165bca8dc489eab3126ec)  first=(none)
+2026-10-12T01:34:48Z LANDED-2P  0.0.0_AB_MSTR  19da3ac2bb  paths=3  validate=20.63s  wait=0.11s  hold=1.75s  build=1.06s  ref=0.64s  post-commit=7.38s  attempt=1
+2026-10-12T01:35:02Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=0  secs=290.36  pushed=3eeb687c3c merged=(box/dell1(graded=1/185),box/dell2(graded=1/894),box/sitez(graded=2/121)) held=(none)  phases: t_fetch=8.69s t_merge_dell1=76.21s t_merge_dell2=38.11s t_merge_sitez=73.65s t_push=23.21s
+2026-10-12T01:35:45Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=3.46  graded=n/a  args=(--verify-merge 07bd5b0914e3dd946a0e896d9dcfd8d5ba643b3a)  first=(none)
+2026-10-12T01:36:06Z BOX-SYNC  0.0.0_AB_MSTR  mode=box  rc=0  secs=61.38  took=3eeb687c3c hold=9.99s graded=0/1211 pushed=07bd5b0914  phases: t_fetch=8.69s t_merge_cloud=27.69s t_land=10.02s t_push=9.84s
+2026-10-12T01:37:06Z PASS  1.0.0_SA_CTO  1  (all paths in-lane) act=1d06294b1937 paths=1:org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_CLUSTER_TICK21_POST_OFFLINE_20261012.md
+2026-10-12T01:37:22Z LANDED-2P  1.0.0_SA_CTO  448f27b191  paths=1  validate=14.75s  wait=0.13s  hold=1.61s  build=0.95s  ref=0.61s  post-commit=6.35s  attempt=1
+2026-10-12T01:38:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=5  secs=2.40  graded=n/a  args=(--verify-merge 9e9037bb0f15e4dca8832266a80bd16c87b1a9fd)  first=(none)
+2026-10-12T01:38:36Z PASS  1.0.0_SA_CTO  1  (all paths in-lane) act=9319aa516fa4 paths=1:org/tier1_exec/1.0.0_SA_CTO/logs/2026-10-12/cluster_lead_tick21.md
+2026-10-12T01:38:50Z LANDED-2P  1.0.0_SA_CTO  50413c444c  paths=1  validate=11.70s  wait=0.16s  hold=1.76s  build=1.03s  ref=0.68s  post-commit=6.10s  attempt=1
+2026-10-12T01:40:04Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=3  secs=0.45  skipped=overlap holder=1300650
+2026-10-12T01:40:21Z BOX-SYNC  0.0.0_AB_MSTR  mode=box  rc=0  secs=15.77  took=already-current pushed=50413c444c  phases: t_fetch=5.02s t_push=8.22s
+2026-10-12T01:43:01Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=3.06  graded=n/a  args=(--verify-merge 67d0ff890e92a3c62233c980679daec8c50ff94b)  first=(none)
+2026-10-12T01:43:15Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=2.48  graded=n/a  args=(--verify-merge 73292832da308415e9e309fa16533173a9b4c570)  first=(none)
+2026-10-12T01:44:45Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=4.25  graded=n/a  args=(--verify-merge bbe0f0c957264ebe68c9377784c993fc693660da)  first=(none)
+2026-10-12T01:44:53Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=4  secs=546.26  pushed=bbe0f0c957 merged=(box/dell2(graded=894/20),box/laptop(graded=0/6),box/sitez(graded=122/6)) held=(box/dell1:refused)  phases: t_fetch=3.97s t_merge_dell1=146.00s t_merge_dell2=283.08s t_merge_laptop=14.22s t_merge_sitez=89.87s t_push=7.88s
+2026-10-12T01:45:11Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=1.65  graded=n/a  args=(--verify-merge 1c8ea47fb994b82dec36faee2be71ccd389bc6ed)  first=(none)
+2026-10-12T01:45:22Z BOX-SYNC  0.0.0_AB_MSTR  mode=box  rc=0  secs=27.92  took=bbe0f0c957 hold=1.60s graded=0/26 pushed=1c8ea47fb9  phases: t_fetch=4.94s t_merge_cloud=10.74s t_land=1.62s t_push=7.89s
+2026-10-12T01:46:45Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=2.69  graded=n/a  args=(--verify-merge 725bfb45c9f7c7b0eb6a57f97645b4fa6eb8eb30)  first=(none)
+2026-10-12T01:46:59Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=2.79  graded=n/a  args=(--verify-merge 796059f8401735468c91ddf5bd735803aa42a4c3)  first=(none)
+2026-10-12T01:47:15Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=2.56  graded=n/a  args=(--verify-merge 54ad6dfeedfb9962011681a9e847ed2b104f6342)  first=(none)
+2026-10-12T01:47:23Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=0  secs=58.21  pushed=54ad6dfeed merged=(box/dell1(graded=0/0),box/laptop(graded=0/0),box/sitez(graded=6/4)) held=(none)  phases: t_fetch=4.48s t_merge_dell1=14.58s t_merge_laptop=14.42s t_merge_sitez=15.67s t_push=7.62s
+2026-10-12T01:48:30Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=1.27  graded=n/a  args=(--verify-merge 28ec0770f76442e0e87a185d74fe178aa272fc0c)  first=(none)
+2026-10-12T01:48:37Z BOX-SYNC  0.0.0_AB_MSTR  mode=box  rc=0  secs=25.04  took=54ad6dfeed hold=1.08s graded=0/4 pushed=28ec0770f7  phases: t_fetch=6.22s t_merge_cloud=9.59s t_land=1.10s t_push=5.66s
+2026-10-12T01:49:44Z PASS  0.0.0_AB_MSTR  3  (all paths in-lane) act=7806281eb904 paths=3:org/devices/crossbox/XB-20261011T071438Z-764b.json|org/tier0/ledger/LD-0643.md|org/tier0_exec/0.0.0_AB_MSTR/logs/2026-10-12/LAPTOP_OFFLINE_BACKLOG_19Z_TO_0130Z_20261012.md
+2026-10-12T01:49:58Z LANDED-2P  0.0.0_AB_MSTR  e8cf8be925  paths=3  validate=14.12s  wait=0.13s  hold=2.30s  build=1.76s  ref=0.45s  post-commit=4.79s  attempt=1
+2026-10-12T01:50:24Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=3.23  graded=n/a  args=(--verify-merge 8c28d95b5baa60f20c6a51f3e1e1b69f0f49ae52)  first=(none)
+2026-10-12T01:50:35Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=0  secs=32.41  pushed=8c28d95b5b merged=(box/laptop(graded=0/3)) held=(none)  phases: t_fetch=5.97s t_merge_laptop=14.57s t_push=10.32s
+2026-10-12T01:51:01Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=3.21  graded=n/a  args=(--verify-merge 5e1467be14b86a1fea7b0b1d92cb576280247c13)  first=(none)
+2026-10-12T01:51:15Z BOX-SYNC  0.0.0_AB_MSTR  mode=box  rc=0  secs=38.67  took=8c28d95b5b hold=2.65s graded=0/0 pushed=5e1467be14  phases: t_fetch=5.50s t_merge_cloud=16.11s t_land=2.67s t_push=10.09s
+2026-10-12T01:51:44Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=2.97  graded=n/a  args=(--verify-merge 078dd75019b7ef1791649d7cb73ed20503c01598)  first=(none)
+2026-10-12T01:51:53Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=0  secs=25.14  pushed=078dd75019 merged=(box/laptop(graded=0/0)) held=(none)  phases: t_fetch=3.48s t_merge_laptop=12.02s t_push=8.52s
+2026-10-12T01:54:15Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=0  secs=5.14  merged=(none) held=(none)  phases: t_fetch=3.41s
+2026-10-12T01:54:31Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=1.75  graded=n/a  args=(--verify-merge b9db5d7441e3c4698fbe480ee4e4eea65a3e69f4)  first=(none)
+2026-10-12T01:54:38Z PASS  1.0.0_SA_CTO  1  (all paths in-lane) act=d0c782695dca paths=1:org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261012_015xZ_SSH_OVER_TAILNET_EXECUTE_COO_C.md
+2026-10-12T01:54:39Z BOX-SYNC  0.0.0_AB_MSTR  mode=box  rc=0  secs=24.01  took=078dd75019 hold=1.28s graded=0/0 pushed=b9db5d7441  phases: t_fetch=4.53s t_merge_cloud=10.06s t_land=1.31s t_push=6.32s
