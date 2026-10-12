@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~80</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -77,13 +77,38 @@ $1,846,332.73 at as_of 2026-10-09 BEFORE the ship and AFTER it, equal to the cen
 `SC21-e91-AC2` -- `build()` reaches the retained pass on a fire with no new partition and hands `reclassify_retained` a `moved` accumulator.
 
 <criterion id="SC21-e91-AC3" cell_refs="SC-e-91"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R21_CHECKS/sc_r21_half_request_check.py org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_C06_RETAINED_UNCLASSIFIED_20261012.md</invocation><expect>HALF-REQUEST ok=True</expect></criterion>
-`SC21-e91-AC3` -- the half request exists with its five sections and both halves unsigned.
+`SC21-e91-AC3` -- the half request exists with its six sections (amendment 1 adds `Reach`) and both halves unsigned.
 
 <expected_criteria>SC21-e91-AC1, SC21-e91-AC2, SC21-e91-AC3</expected_criteria>
 
 Dry-run at the base (dell1 box/dell1 HEAD, 2026-10-12 ~09:3xZ): SC21-e91-AC1 FAIL as expected (`moved=0 mix_ok=False`; the stays and control arms read True); SC21-e91-AC2 FAIL as
 expected (`early_return_runs_pass=False moved_passed=False`); SC21-e91-AC3 FAIL as expected (the file is absent). A minimally patched temp copy of C_06
 (the retained filter widened, a `moved` parameter, one early-branch call) reads AC1 and AC2 `ok=True`, so both checks can pass.
+
+### AMENDMENT 1 -- the half request states its REACH (issuer 2.0.0_SA_COO~M1, 2026-10-12 ~10:3xZ; answers your row MDPF_SECCLASS-D1-W80-S4)
+
+Your build and your rows are accepted as built (W80-S1 the superseded rollback target, W80-S2 the merge-path diff, W80-S3 the advisor
+write, all read and not reopened). One thing is missing from the half request, and the pair that signs it cannot be asked to sign without it:
+the revisit can only reach a holding that is still in the stored per-date concentration list (your W80-S4: the top-10 by market value per
+relationship per date). The request's "MOVED 23 of 23" is the classifier's answer for those 23 securities, not the dollars the act will move
+on a retained date. Your order is set back to `in_progress` for this one addition.
+1. **Add a sixth section headed `Reach`** to the half request (the issuer's check now requires it). It states, read-only and MEASURED:
+   - for the latest retained date (the watermark's `data_as_of`, 2026-10-09) and for 2026-10-08: over every relationship JSON the
+     retained-only pass reads (`gold/entities/clients/`, top-level `.json`, skip `_views`), the sum of `unclassified` holding dollars INSIDE the
+     stored concentration list (`conc` holdings with `asset_class == 'unclassified'`), and the sum of the date's mix-level unclassified
+     dollars (`mix.unclassified * total_mv`), and their ratio, with the relationship count as the denominator and the count of
+     relationships where the mix-level figure exceeds the listed one;
+   - the sentence, in plain words, that unclassified dollars outside a relationship's stored holding list are NOT revisited by this act, that
+     only a rebuild of that date from its canonical partition can move them, and that the act therefore moves AT MOST the listed share;
+   - the figure the pair should expect the served retained-date `mix_summary.json` Unclassified to move by, as a range (listed dollars that
+     resolve, at most the 23-security dollars on that date), never the 23-security total as a point.
+   Security-level and aggregate figures only; no relationship id.
+2. Do not change the code or its tests for this; if the measurement shows the act cannot move a material share, say so in the section and
+   file a row. Re-validate your proof instance, flip the order `complete` only when AC1-AC3 pass, and report as before with the reach figures.
+3. **Files.** The same `<paths>` grant. `R21_CHECKS/sc_r21_half_request_check.py` on your branch is replaced by the issuer's amended copy
+   (the sixth section); do not edit it.
+4. **Gate limb.** The issuer amends its own criteria without a CTO ruling; no gate limb grades an amendment to an existing order's
+   criteria and `<status>` (the L6 gate grades newly-added orders and `<placeholders>`; this order declares `NONE`).
 
 ## BOUNDS
 
