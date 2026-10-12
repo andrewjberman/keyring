@@ -1776,3 +1776,21 @@
 2026-10-12T22:22:40Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=36.86  took=18ea1b7fc4 hold=4.74s graded=1/18 pushed=de8a019f2e  phases: t_fetch=2.62s t_merge_cloud=17.00s t_land=4.77s t_push=6.71s
 2026-10-12T22:32:43Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=9.93  graded=n/a  args=(--verify-merge 6aafd06954b694c70f82f3160d7f01fbe48a2f05)  first=(none)
 2026-10-12T22:33:02Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=57.22  took=7059fff2b5 hold=5.62s graded=0/27 pushed=6aafd06954  phases: t_fetch=4.57s t_merge_cloud=25.07s t_land=5.64s t_push=9.20s
+2026-10-12T22:33:33Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-12T22:33:37Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-12T22:33:46Z LANDED-2P  0.0.0_AB_MSTR~Z  46ee9ebc7a  paths=1  validate=20.41s  wait=0.51s  hold=1.21s  build=0.75s  ref=0.41s  post-commit=3.73s  attempt=1
+2026-10-12T22:33:56Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=8.16  took=already-current pushed=46ee9ebc7a  phases: t_fetch=1.67s t_push=3.78s
+2026-10-12T22:42:19Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=3.52  graded=n/a  args=(--verify-merge 272ed21237694a7e7674f8c07e9cdd1228275cc4)  first=(none)
+2026-10-12T22:42:27Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=24.78  took=a0e689d698 hold=2.38s graded=0/15 pushed=272ed21237  phases: t_fetch=2.06s t_merge_cloud=11.39s t_land=2.42s t_push=4.48s
+2026-10-12T22:52:19Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=3.57  graded=n/a  args=(--verify-merge 33e533e0ba5344a969e22166249358bf79082256)  first=(none)
+2026-10-12T22:52:27Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=24.60  took=5de20ec040 hold=2.76s graded=0/11 pushed=33e533e0ba  phases: t_fetch=2.01s t_merge_cloud=11.18s t_land=2.80s t_push=4.53s
+2026-10-12T23:02:23Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=3.16  graded=n/a  args=(--verify-merge dccdf9398c6cbaf50e2b8b76c4e1ba7bc3151065)  first=(none)
+2026-10-12T23:02:31Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=27.67  took=86775dd1d1 hold=2.45s graded=0/27 pushed=dccdf9398c  phases: t_fetch=3.90s t_merge_cloud=11.37s t_land=2.47s t_push=4.53s
+2026-10-12T23:12:24Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=5.28  graded=n/a  args=(--verify-merge cc9d7150d0d832189ca181b55413eb36c659fe26)  first=(none)
+2026-10-12T23:12:34Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=31.41  took=79a45469d2 hold=2.33s graded=0/15 pushed=cc9d7150d0  phases: t_fetch=3.52s t_merge_cloud=14.18s t_land=2.37s t_push=6.20s
+2026-10-12T23:15:42Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=2.41  graded=n/a  args=(--verify-merge 300044890c7f518cc03cacf05d4f8e05788be64a)  first=(none)
+2026-10-12T23:15:48Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=22.09  took=69c848112b hold=1.53s graded=0/1 pushed=300044890c  phases: t_fetch=1.55s t_merge_cloud=12.46s t_land=1.56s t_push=3.75s
+2026-10-12T23:22:19Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=3.55  graded=n/a  args=(--verify-merge 3aebee86e160afd6ae5f669df2940ecda8a68fb1)  first=(none)
+2026-10-12T23:22:27Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=25.16  took=85ab1c1768 hold=3.00s graded=0/5 pushed=3aebee86e1  phases: t_fetch=2.15s t_merge_cloud=11.42s t_land=3.04s t_push=4.48s
+2026-10-12T23:32:35Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=9.42  graded=n/a  args=(--verify-merge 512efa3a1667bf013eae9512abffabc0fdf7c96f)  first=(none)
+2026-10-12T23:32:47Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=43.90  took=1fba66804e hold=3.91s graded=0/8 pushed=512efa3a16  phases: t_fetch=1.73s t_merge_cloud=23.58s t_land=3.94s t_push=5.98s
