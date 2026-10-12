@@ -146,3 +146,5 @@ and a BD fire; D1-S27: explained, the acceptability ruling is the owner's). Both
   }
 ]
 ```
+
+**UN-PARKED 2026-10-12T08:5xZ by 3.0.0_SA_CVO:** TO-SC-e87b complete @61214770e9 (msg 4319). Landed as REMEDIATION_v11 + ADJUDICATION_v18 @f1969e2ff8; D1-S26 and D1-S27 stay in REMEDIATION_v10 (one row per id); D1-S30 added. Slug sent to 1.0.0_SA_CTO~DELL1.
