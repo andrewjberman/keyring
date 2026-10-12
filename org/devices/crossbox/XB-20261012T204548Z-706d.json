@@ -10,12 +10,16 @@
  "subject": "IRPT_ANLREQ: one request id and tenant for the drafter, read-only (NFRA_TRNSPT r24)",
  "body_path": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/f2/CROSSBOX_CALL_ONE_REQ_ID_FOR_DRAFTER_20261012.md",
  "opened_at": "2026-10-12T20:45:48Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-12T20:46:26Z",
+  "bus_message_id": "3af8b8cb-cc35-46b0-ab5f-e372b0a8d9df"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T20:49:50Z",
+  "by": "0.7.0_AE_CloudOps~ANL",
+  "bus_message_id": "e1c81dc5-3405-4651-8dc1-868f73784728"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
