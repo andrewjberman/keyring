@@ -3464,3 +3464,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r167/p167_cells.py`: 14 of 18 criteri
 | `IB-pr-486` | READ ONLY on the live host: whether the installed `resident_bindings.json` carries `commentary_ready_queue_url` (the CTO's read first) | FWD-8 | WORLD (a host read) | none | P167-f |
 
 fanout: 6 of 6 chains, cap 8, reason: six cells with disjoint write sets and no edge. Assignees: 0.9.0_WK_IRPT_BCKEND~336 to ~340 (workers; ~338 is a portal cell) and 0.7.0_AE_CloudOps~IB2 (IB-pr-486).
+
+## 160. ROUND 168, WORKSTREAM ~P (2026-10-12 ~21:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6559 = ROUND-168 ANALYSIS section 3)
+
+The CTO's list has three items. Item 1 is the apply of round 167's IB-pr-482 release under the signed pair (COO half 21:03:15Z; CTO half msg 6557, Branch A): cut here as ONE order to `0.7.0_AE_CloudOps~IB2`, carrying the COO half's seven limbs and Branch B's rollback version named BEFORE the upload. Item 2 is the C-VALUEFACTS sequence, whose
+every step starts only after the one before is read live: (a) the portal candidate `wk-IRPT_BCKEND-338-portal` @183860ba lands on DEV (the box manager's act, approved by the CTO), (b) a render of the Reporting tab on DEV against a holdings answer, (c) on Andrew's word, PROD, (d) the `bd_adapter.py` rename's own pair and apply, (e) the fallback's removal. Nothing in item 2 is cut now: (a) is the box manager's, (b) waits on (a), (c) is Andrew's.
+Item 3 (W333-S1) is nothing to cut: the staging fix rides the next resident release.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r168/p168_cells.py`: AC1-AC3 FAIL at base (the re-pin has not landed; live is `kMB8xCI93/...`; no after-reads file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-487` | the apply of `irpt-performance-adapter` (built `abep4h7R...`, live `kMB8xCI93/...`) under the signed pair: ledger first, the one source-map re-pin, the rollback version named before the upload, the digest control, Terraform `safe-apply` on a 1-change planfile, the after-reads and the four direct-invoke arms (which persist named retained revisions) | FWD-3 | WORLD (a deploy) | IB-pr-482 merged and both halves signed | P168-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, an apply to a live seat. Assignee: 0.7.0_AE_CloudOps~IB2. Not a worker spawn.

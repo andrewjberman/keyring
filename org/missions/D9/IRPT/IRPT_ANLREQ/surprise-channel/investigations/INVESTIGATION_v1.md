@@ -3800,3 +3800,171 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W52-S17 -- the version member is written by the reader's result and copied by freeze, because portfolio.py is outside the grant
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S17",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T21:00:10Z",
+  "one_line": "C-STOREDINPUT point 3 says the version member is written at acceptance; the member is set in the reader's read_template result, and freeze_template_portfolio copies that template into the stored document. portfolio.py, where the freeze sits, is not in the grant, so no change was made there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:348-510@636cebdc86 (freeze_template_portfolio; the template is copied into document['template'] at :499)",
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py (read_template result dict carries reader_version = READER_VERSION) in the worker's tree, not yet committed",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_stored_input_contract.py (second test asserts the member is present on an accepted input)"
+    ]
+  },
+  "spec_asserts": "PRD v0.4 C-STOREDINPUT point 3: 'The template stored at acceptance records the reader's version. One member, written at acceptance from a constant in the reader's own file.' The face grants intake/template_reader.py and intake/uploads.py, not intake/portfolio.py.",
+  "world_is": "The one new member is named reader_version and lives in the template dict. The reader writes it from its constant in read_template; the freeze keeps it because the template is copied whole. The stored template of an accepted input carries it, and read_input compares it with READER_VERSION. Nothing in portfolio.py needed a change. The member is written at acceptance by way of the reader's own output, not by a line in the acceptance code.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S18 -- acceptance runs read_input, which imports READER_VERSION by name, so the base-reader test needs a name for that constant
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S18",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T21:00:10Z",
+  "one_line": "Template acceptance ends in a read_input of the new input, and read_input imports READER_VERSION by name. A template_reader module without that constant breaks every acceptance, so the base-reader test sets a sentinel on the module it loads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/uploads.py _normalized_response (worker tree; calls read_input inside create)",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py template branch of read_input (from template_reader import READER_VERSION, read_template), in the worker's tree",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_stored_input_contract.py base_reader (module.READER_VERSION = sentinel) and the first test's stored_by block"
+    ]
+  },
+  "spec_asserts": "Face item 5: the first contract test 'builds its stored input with the BASE reader (load git show 35c3c4bd45:<path> from a temp file, as a module under another name)' and reads each input with the new code.",
+  "world_is": "The base module at 35c3c4bd45 has no READER_VERSION. With it in sys.modules under the name template_reader, the create path raised ImportError inside the acceptance (measured in the first run of the contract tests). The sentinel is not a stored version: the base reader writes no member, so the create-side re-read compares nothing. Production is not affected, because the production reader defines the constant. Importers of template_reader found by comp-find: uploads.py, ops/tests/test_prospect_dates.py, ycharts/generate/tests/test_resolution_retry.py.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S19 -- the artifact store refuses altered original bytes on its own digest before read_input's template check can refuse them
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S19",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T21:00:10Z",
+  "one_line": "Altered original bytes meet the artifact store's integrity check first (ReportRefused, artifact integrity failed). read_input's own digest check on the original is reached only when the store serves altered bytes under a consistent ref, so the test serves them that way.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/repository.py:454-478@636cebdc86 (ArtifactRepository._get: sha256 and byte_length of the blob against the ref, then ReportRefused artifact integrity failed)",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py template branch of read_input (the original's digest check, TEMPLATE_ORIGINAL_BINDING), in the worker's tree",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_stored_input_contract.py third test (serves altered bytes with the stored ref)"
+    ]
+  },
+  "spec_asserts": "PRD v0.4 C-STOREDINPUT point 5: 'an original whose bytes are altered is refused under both versions'. Point 3: the original's bytes against its stored digest stays in read_input.",
+  "world_is": "In the offline double, a blob altered under a stored ref raises ReportRefused from the store before read_input runs, so the refusal class is not TEMPLATE_ORIGINAL_BINDING. The test substitutes the artifact read for the one original, keeping the stored ref, and both versions then refuse with TEMPLATE_ORIGINAL_BINDING. In production the store's check is the first refusal and read_input's digest check is the second.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S20 -- no real-use account header is in the repository, so the rebuilt rule is checked over a constructed population
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S20",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T21:00:10Z",
+  "one_line": "The face asks for account-header forms from real use. None is in the repository. The leading-word rule, checked over a constructed population of 50 forms, leaves nine account-identifier forms unmatched and matches five account-attribute forms it does not exclude.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r13/ONE_ACCOUNT_CHECK_READ.json@636cebdc86 (account_recognition.where_seen: no example in the repository; none of the 10 files in intake/fixtures/holdings/ has an account column)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r16/CLOSED_LISTS_RULE24.json (population, denominator 50, uncovered_by_subtraction, matched_but_attribute_not_identifier)",
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py _is_account_header in the worker's tree"
+    ]
+  },
+  "spec_asserts": "Face item 3: rebuild the account-header list 'on the LEADING WORD ... (and any other you can justify from a header in real use; say where you saw it)'. AC3J: the rule and its exclusions are right 'against a population that holds account columns'.",
+  "world_is": "No real-use header is in the repository, so the population is constructed. Subtraction over it leaves nine account-identifier forms outside the leading-word rule (Accounts, Acc #, Acc No, Custodian Acct, Sub-Account, Account-Number, Client Account, Account/Number, No. of Accounts). They are not added. Five attribute forms (Account Holder, Account Manager, Account Value, Account Status, Account Opened) are matched and not excluded, since no real header justifies an exclusion. Both groups are named for the L9 grader.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S21 -- the account-column and total-row words still tell a person what to do, and the repair named only the repeated-header words
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S21",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T21:00:10Z",
+  "one_line": "ACCOUNT_COLUMN_SEVERAL_VALUES says 'Split the sheet into one file per account' and TOTAL_ROW_PRESENT says 'Remove the row and upload the file again'. The repair named only the repeated-header words, so both are brought back unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py WORDS (ACCOUNT_COLUMN_SEVERAL_VALUES, TOTAL_ROW_PRESENT) in the worker's tree",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_template_account_totals.py (test_account_column_with_two_values_is_turned_back_with_words asserts 'one account per file')",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-162.reader-reland-on-stored-input-contract.md@636cebdc86 (face item 3 and AC3J)"
+    ]
+  },
+  "spec_asserts": "Face item 3: the repeated-header words 'must say WHAT IS SEEN and ASK, never tell'. AC3J: 'each finding's words say what is seen and what to do without telling a person to do the wrong thing'.",
+  "world_is": "Only HEADER_ROW_REPEATED was rewritten. The account-column words and the total-row words still carry the imperative forms the face's repair removed from the repeated-header words. Whether they meet AC3J is a judgment for L9; they were not changed because the face names the repeated-header words alone.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S22 -- the test helper that builds xlsx stamps the wall clock, so a digest over those sheets moves between runs
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S22",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T21:00:10Z",
+  "one_line": "test_template_reader.workbook() writes each zip entry with the current time, so an xlsx built with it has bytes, and a content_sha256, that change from run to run. The version-pin digest moved between two runs of the same code until those sheets were restamped.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/tests/test_template_reader.py workbook() (zipfile writestr per entry) in the worker's tree",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_stored_input_contract.py stable() and reader_digest() in the worker's tree",
+      "measured: the pin digest was 1e3b2d66... and then 1bc92823... on two runs of the same reader code, and 2ce75d14... on two runs after stable() restamped the in-memory xlsx"
+    ]
+  },
+  "spec_asserts": "Face item 4: the version-pin test 'computes the reader's output on a fixed set of fixtures ... digests it, and compares the digest with a value stored BESIDE the version constant'.",
+  "world_is": "A digest over an in-memory xlsx built with the shared helper is not stable. The contract test restamps its own in-memory workbooks to 1980-01-01 before digesting. The shared helper was not changed; the tests that call it do not pin bytes.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
