@@ -41,3 +41,13 @@ ca876849...). The CTO recommends three things: refuse a manager ack on the dead 
 
 This verdict rules the shape of the carrier, not the cell. The verb's cell, its tests (including a planted successor with a
 different body blob, which is refused, and a successor on another box, which is refused) and its owner are the issuer's.
+
+## Addendum, ~19:2xZ -- the CTO's carrier choice @f8f29843ba (msg 108660): ACCEPTED for crossbox/1
+
+The marker sits in `closed.to_by` ("superseded-by <id>") with both closes written; no new key. This seat ran
+`python .tools/crossbox-call.py --selftest` at HEAD: `CROSSBOX-SELFTEST cases=35/35 ok=True`. The only code reader of `to_by` is
+crossbox-call.py itself (comp-find 'to_by' over .tools and org/devices: 9 SURFACED hits, all in that file; the rest are data).
+The shape is the same as the existing `withdraw` (:630): the sender writes both sides, and it avoids a four-box reader rollout.
+Condition 2 is met. CARRY-FORWARD into the CT-w-6 split (crossbox/2): the recipient file is the to_device's alone, so a
+superseded close there lives in the sender file A, like `withdrawn`, and never in R's `closed`. A future reader that treats
+`to_by` as a serial must exclude the `superseded-by ` prefix.
