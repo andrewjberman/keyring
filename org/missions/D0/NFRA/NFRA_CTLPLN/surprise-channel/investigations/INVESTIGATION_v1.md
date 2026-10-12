@@ -8202,3 +8202,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Observation only; the fix is the regenerated block this order lands on its own portal branch."
 }
 ```
+
+## NFRA_CTLPLN-S9112 -- the data proxy's log group holds refresh_token and device_trust cookie material
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9112",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~U7",
+  "surfaced_at": "2026-10-12T11:42:00Z",
+  "one_line": "The data proxy's log group also holds long-lived credential material, not only 15-minute access tokens: the logged events carry the cookie names refresh_token (38 lines, 16 inside the 7 day refresh expiry) and device_trust (29 lines, all inside the 30 day trust window).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "Andrew (a purge of the group's events is a delete, his class), asked by 2.0.0_SA_COO~C through the CT-w-10 report; the code fix of CT-w-10 stops new lines but does not remove these",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CT-w-10 step 2, read 2026-10-12T11:35Z-11:38Z: aws logs filter-log-events on /aws/lambda/opal-portal-data-proxy over the whole 14 day retention, 1202 events, no nextToken, piped straight into a counter (nothing written to disk): 49 lines with a JWT-shaped string, 38 with Cookie/cookie/refresh, 0 with Set-Cookie; the key names found in the 51 Event lines' cookies[] are refresh_token (38) and device_trust (29), names only",
+      "age census of those lines (counts only): refresh_token 16 of 38 aged 7 days or less, oldest 13.6 d, newest 1.35 d; device_trust 29 of 29 aged 30 days or less",
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts REFRESH_TOKEN_EXPIRY = '7d'; deviceTrust.ts DEVICE_TRUST_TTL_SEC = 30 days (server-side row is the authority on expiry)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling msg 108509 and the CT-w-10 pair section 2: the 15-minute access tokens in the old lines are long expired and no purge is owed; a long-lived credential found is a STOP.",
+  "world_is": "Long-lived credential material IS present: whether those refresh tokens and device-trust tokens are still accepted by the auth handler was not tested (no value was used or printed), so they are treated as live until the 7 and 30 day windows pass or the events are purged. CT-w-10 is held pre-apply (ledger nfra-ctlpln-ctw10-data-proxy-logging-fix-20261012, HELD-PRE-APPLY) and nothing was applied.",
+  "notes": "Counts and key names only; no cookie or token value was printed or stored."
+}
+```
