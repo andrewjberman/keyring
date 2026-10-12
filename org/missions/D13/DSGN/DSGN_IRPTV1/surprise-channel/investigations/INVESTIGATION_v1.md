@@ -6429,6 +6429,30 @@
 }
 ```
 
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W67-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~67",
+  "surfaced_at": "2026-10-12T02:29:00Z",
+  "one_line": "IV-e-119: the producer rule on the census gives 36 S18 section ids, not the 46 served; the column on the wire is a bare ordinal",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~67/SHARED_TITLE_46.json (s18 block; produced by shared_title_count.py)",
+      "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py:556-606,650,685,704-707 (read in the worktree at trunk 09fb3f5da1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order expected the producer's rule on the census S18 fields to be checkable against the 46 served cards (19 fields, 2 entity columns, minus skipped cells).",
+  "world_is": "19 S18 fields, one all-null (# of Stock Holdings: unlocated, :685), 18 x 2 entity columns = 36, not 46; 3 columns would give 54. No retained answer of the producer sits in the repo (only 3 synthetic PDFs and a manifest), so the 10-card gap is not explained. Also the served S03 (6 vs 8 derived), S16 (5 vs 10) and S10 (4) counts differ from the model, while S01 (2), S14 (5) and S15 (35) match it. The page cannot name a column: the wire carries the ordinal only.",
+  "notes": "Verdict is SOME_SHARED on the derived 36 (all 36 share) and at least 29 of the served 46 share by pigeonhole whatever the column count is."
+}
+```
+
 ## DSGN_IRPTV1-D2-S25 -- Row DSGN_IRPTV1-D2-W62-S3 (the Holdings tab's navy panel strips) is closed OBSERVATION, INERT by ruling: the strips are the recorded divergence, owned by the design system's successor project; this project restyles nothing for it
 
 ```json
