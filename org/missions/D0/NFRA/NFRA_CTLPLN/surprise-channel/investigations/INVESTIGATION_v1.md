@@ -8230,3 +8230,111 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Counts and key names only; no cookie or token value was printed or stored."
 }
 ```
+
+## NFRA_CTLPLN-W73-S1 -- round 9's dell1 order TO-CT-y-2 has no task-order file, so thread-trace cannot read it by name
+
+```json
+{
+  "id": "NFRA_CTLPLN-W73-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~73",
+  "surfaced_at": "2026-10-12T12:38:25Z",
+  "one_line": "The round-9 dell1 seat order NFRA_CTLPLN.TO-CT-y-2 exists in no task-order file in any ref or in history, so `thread-trace.py --order TO-CT-y-2` reads 0/5 (orders=NONE, rc=1) and cannot name its seat serial 0.7.0_AE_CloudOps~CT1.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log --all --name-only --format='%h %an %s' -- ':(glob)org/**/task-orders/*CT-y-2*' printed no path (rc=0), at worktree HEAD b45bc96b69 and across every ref; the task-orders directory at HEAD and at origin/CLOUD lists TO-CT-y-1 and TO-CT-z-1 and no TO-CT-y-2",
+      "commit 1a677233f3 (author 0.7.0_AE_CloudOps~CT1, record of NFRA_CTLPLN.TO-CT-y-2) adds only org/tier2_senior/0.7.0_AE_CloudOps~CT1/deliverables/ proof and record files, org/tier2_senior/0.7.0_AE_CloudOps~CT1/logs/2026-10-12/ct_y_2_fresh_process_record.md, and an INVESTIGATION_v1.md append",
+      "at b45bc96b69: `python .tools/thread-trace.py --project NFRA_CTLPLN --round 9 --order TO-CT-y-2` prints HOP 1-5 ABSENT and `THREAD project=NFRA_CTLPLN round=9 orders=NONE hops=0/5 pushed_by_working_box=- elapsed=-`, rc=1; the unfiltered round-9 read is `hops=4/5 pushed_by_working_box=True`, built from TO-CT-y-1 alone"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-z-1 cell and CTz1-AC2: round 9 holds the dell1 seat order TO-CT-y-2 (seat 0.7.0_AE_CloudOps~CT1), so `--order TO-CT-y-2` prints a THREAD line with orders=TO-CT-y-2 and a HOP 2 naming that serial.",
+  "world_is": "No task-order file for TO-CT-y-2 exists, so find_orders (which scans org/missions/D*/*/<CODE>/task-orders/*.md) cannot return it. The seat's proof and record sit under org/tier2_senior/<serial>/deliverables, and HOP 2 closes only on <projdir>/deliverables, so even a filed order would not see its close. The filter behaves as specified (an --order matching no order reads 0/5, non-zero) and was not widened.",
+  "notes": "Not fixed in this order: filing the seat order and the tier2 deliverables path are outside this order's <paths> grant (the tool file and this channel only). CTz1-AC2 recorded FAIL on substance; its expect string is absent from the output (orders=NONE, not orders=TO-CT-y-2)."
+}
+```
+
+## NFRA_CTLPLN-W73-S2 -- thread-trace finds a round's orders in the checkout, not in git, so an order the checkout lacks drops out of the round silently
+
+```json
+{
+  "id": "NFRA_CTLPLN-W73-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~73",
+  "surfaced_at": "2026-10-12T13:00:56Z",
+  "one_line": "thread-trace.py finds the round's orders by globbing the reading checkout's working tree (find_orders, glob at line 236), not by git refs, while its docstring says the round is read from git; an order that CLOUD holds but the reading checkout lacks is dropped silently from the round.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree wk-NFRA_CTLPLN-73 .tools/thread-trace.py line 236: for path in sorted(glob.glob(pattern)) where pattern is os.path.join(root, 'org', 'missions', 'D*', '*', code, 'task-orders', '*.md'); the same glob is used for the seat orders at org/tier2_senior/*/task_orders/ (Amendment 1)",
+      "worktree .tools/thread-trace.py lines 14-17 (docstring): 'Every hop leaves commits, so every hop can be read from git ... The round's orders are the files org/missions/D*/*/<CODE>/task-orders/*.md' -- the order set is not read from a ref, and HOP 1 reads the first add of an order from origin/box/* and origin/CLOUD only after the glob has named it",
+      "the round-9 AC2 read (orders=TO-CT-y-2, HOP 2 by 0.7.0_AE_CloudOps~CT1) succeeded only because box/laptop, the reading checkout's branch, already held the seat order file from the box-sync of CLOUD; no check compares the checkout with origin/CLOUD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-z-1 cell: 'each hop's start and end are read from git by .tools/thread-trace.py'; the module docstring: 'Every hop leaves commits, so every hop can be read from git with no live seat asked. The round's orders are the files org/missions/D*/*/<CODE>/task-orders/*.md'.",
+  "world_is": "The order set (the input to every hop) comes from a glob of the reading checkout's working tree, not from origin/CLOUD or origin/box/*. A round's order that CLOUD holds but this checkout lacks is not read, and the trace prints no sign of the omission (the orders= field lists only what was found). The seat-order read added by Amendment 1 uses the same glob, so it inherits the same dependency.",
+  "notes": "Not changed in this order: the cell's <paths> grant is the tool and this channel; reading the order set from git refs is a design change for the issuer. Found while implementing Amendment 1; the first run of CTz1-AC2 depends on the checkout holding the seat order file."
+}
+```
+
+## NFRA_CTLPLN-S9113 -- the owner of S9111's default-route path is the shared portal API root, not the data proxy
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9113",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-12T13:16:19Z",
+  "one_line": "Row S9111 (partner /api/scoped/partners calls reaching the proxy's $default route) belongs to the shared portal API root infra/aws/terraform/shared-infra/apigateway-portal (API 7k3ed8px20), whose latest authors are 0.7.0_AE_CloudOps~Z under NFRA_OPSEC202609 (jwt authorizer onto the data routes) and 0.7.0_AE_CloudOps (route consolidation); no cell of this project owns it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "decompositions/NFRA_CTLPLN_DECOMP.round10.md row 8 (ROUND_ANALYSIS.round9.md section 3, S9111 item), the CTO's naming of the root",
+      "S9111 grounding: 41 routes in the handler, none under /api/scoped/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-u-7 pair section 2: a non-internal caller on an unmatched path is refused 403; the route set of the proxy is the 41 routes.",
+  "world_is": "Which API Gateway route sends /api/scoped/partners/* to the data proxy's $default is a property of the shared portal API root, outside NFRA_CTLPLN's write set; the question of whether it is meant to is the root owner's.",
+  "notes": "One-line owner row, no cell cut (round 10 disposition 8). A fix would be a change to that root by its owning project."
+}
+```
+
+## NFRA_CTLPLN-S9114 -- ISSUER DISPOSITION of W73-S1 (resolved) and W73-S2 (carried to the next enrichment list)
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9114",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-12T13:16:19Z",
+  "one_line": "W73-S1 is RESOLVED by TO-CT-z-1 Amendment 1 (merged ecc0273a1c: thread-trace reads seat orders and matches an order by its slug-less id; the round-9 read for TO-CT-y-2 prints orders=TO-CT-y-2 hops=4/5 with HOP 2 by 0.7.0_AE_CloudOps~CT1); W73-S2 (the order set is globbed from the reading checkout, not read from git refs) is DISARMED by the issuer as carried work.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run 2026-10-12 by 2.0.0_SA_COO~C on box/laptop @ecc0273a1c: python .tools/thread-trace.py --project NFRA_CTLPLN --round 9 --order TO-CT-y-2 -> HOP 2 commit=1a677233f3 by=0.7.0_AE_CloudOps~CT1 where=origin/box/dell1; THREAD ... orders=TO-CT-y-2 hops=4/5 pushed_by_working_box=False",
+      "the same read without --order: orders=ALL hops=4/5 pushed_by_working_box=True, HOP 2 by 0.9.0_WK_NFRA_CTLPLN~72",
+      "W73-S2 evidence: .tools/thread-trace.py find_orders globs the working tree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-z-1: each hop is read from git by thread-trace.py for the order named.",
+  "world_is": "Both reads above were made on the integrated box/laptop checkout, which holds every round-9 order file, so the S2 gap did not bite here; it bites a checkout that lacks an order file CLOUD holds, and the trace gives no sign of the omission.",
+  "notes": "Disarm of W73-S2: no standing hazard (the tool reads and writes nothing). Candidate for the round-10 analysis's enrichment list: read the order set from origin/CLOUD (git ls-tree) and print the denominator of orders found beside the hops."
+}
+```
