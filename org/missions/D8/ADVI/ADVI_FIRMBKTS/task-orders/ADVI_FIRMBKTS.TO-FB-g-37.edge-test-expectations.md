@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D8/ADVI/ADVI_FIRMBKTS/decompositions/ADVI_FIRMBKTS_DECOMP_R4.md</decomp_doc>
 <owned_cells>FB-g-37</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_ADVI_FIRMBKTS~59</issued_to>
+<issued_to>0.9.0_WK_ADVI_FIRMBKTS~60</issued_to>
 <issued_by>2.0.0_SA_COO~B1</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -77,7 +77,7 @@ infra/aws/lambda-edge/shared-advisor-router/test/firm-routing.spec.mjs
 infra/aws/lambda-edge/shared-advisor-router/test/satellites-registry.spec.mjs
 infra/aws/lambda-edge/shared-advisor-router/test/tenant-grain.spec.mjs
 infra/aws/lambda-edge/shared-advisor-router-response/test/
-org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~59/
+org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~60/
 org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -86,10 +86,10 @@ Read-only: the rest of the repository, `infra/aws/lambda-edge/shared-advisor-rou
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~59/ADVI_FIRMBKTS.TO-FB-g-37.edge-test-expectations.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-g-37"><invocation>cd /c/dev/wk-firmbkts-59/infra/aws/lambda-edge/shared-advisor-router &amp;&amp; timeout 110 bun test test/ 2&gt;&amp;1 | grep -E "^ *[0-9]+ (pass|fail)$" | tr "\n" " "</invocation><expect>^ *[0-9]+ pass +0 fail *$</expect></criterion>
-  <criterion id="AC2" cell_refs="FB-g-37"><invocation>cd /c/dev/wk-firmbkts-59/infra/aws/lambda-edge/shared-advisor-router-response &amp;&amp; timeout 110 bun test test/ 2&gt;&amp;1 | grep -E "^ *[0-9]+ (pass|fail)$" | tr "\n" " "</invocation><expect>^ *[0-9]+ pass +0 fail *$</expect></criterion>
-  <criterion id="AC3" cell_refs="FB-g-37"><invocation>cd /c/dev/wk-firmbkts-59 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root /c/dev/wk-firmbkts-59 --allow infra/aws/lambda-edge/shared-advisor-router/test/canonical-platinum.spec.mjs --allow infra/aws/lambda-edge/shared-advisor-router/test/firm-routing.spec.mjs --allow infra/aws/lambda-edge/shared-advisor-router/test/satellites-registry.spec.mjs --allow infra/aws/lambda-edge/shared-advisor-router/test/tenant-grain.spec.mjs --allow infra/aws/lambda-edge/shared-advisor-router-response/test/ --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~59/ --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md; echo "exit=$?"</invocation><expect>ROUND 4 SCOPE: OK</expect></criterion>
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~60/ADVI_FIRMBKTS.TO-FB-g-37.edge-test-expectations.proof_of_spec.json`.
+  <criterion id="AC1" cell_refs="FB-g-37"><invocation>cd /c/dev/wk-firmbkts-60/infra/aws/lambda-edge/shared-advisor-router &amp;&amp; timeout 110 bun test test/ 2&gt;&amp;1 | grep -E "^ *[0-9]+ (pass|fail)$" | tr "\n" " "</invocation><expect>^ *[0-9]+ pass +0 fail *$</expect></criterion>
+  <criterion id="AC2" cell_refs="FB-g-37"><invocation>cd /c/dev/wk-firmbkts-60/infra/aws/lambda-edge/shared-advisor-router-response &amp;&amp; timeout 110 bun test test/ 2&gt;&amp;1 | grep -E "^ *[0-9]+ (pass|fail)$" | tr "\n" " "</invocation><expect>^ *[0-9]+ pass +0 fail *$</expect></criterion>
+  <criterion id="AC3" cell_refs="FB-g-37"><invocation>cd /c/dev/wk-firmbkts-60 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root /c/dev/wk-firmbkts-60 --allow infra/aws/lambda-edge/shared-advisor-router/test/canonical-platinum.spec.mjs --allow infra/aws/lambda-edge/shared-advisor-router/test/firm-routing.spec.mjs --allow infra/aws/lambda-edge/shared-advisor-router/test/satellites-registry.spec.mjs --allow infra/aws/lambda-edge/shared-advisor-router/test/tenant-grain.spec.mjs --allow infra/aws/lambda-edge/shared-advisor-router-response/test/ --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~60/ --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md; echo "exit=$?"</invocation><expect>ROUND 4 SCOPE: OK</expect></criterion>
 </proof_of_spec>
 
 AC1 reads the router gate, AC2 the response guard gate (a pass count not fixed: the guard gains one test and the router one),
@@ -97,9 +97,9 @@ AC3 the write-surface bound. Each invocation terminates inside its bound.
 
 ## 5. WHEN YOU ARE DONE
 
-Instance at `D/ADVI_FIRMBKTS.TO-FB-g-37.edge-test-expectations.proof_of_spec.json`, `D` = `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~59`. Commit
+Instance at `D/ADVI_FIRMBKTS.TO-FB-g-37.edge-test-expectations.proof_of_spec.json`, `D` = `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~60`. Commit
 the test edits FIRST, your rows and the instance second. **Do not flip this order's `<status>`**. Row ids:
-`ADVI_FIRMBKTS-D1-W59-S<k>`, `k` from 1, `surfaced_at` from `date -u +%FT%TZ`. Report once: AC1 to AC3 outputs, the mutant
+`ADVI_FIRMBKTS-D1-W60-S<k>`, `k` from 1, `surfaced_at` from `date -u +%FT%TZ`. Report once: AC1 to AC3 outputs, the mutant
 control's failing test names, the list of the 12 edits (test name and old to new value) and the FULL commit hash.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
@@ -114,7 +114,7 @@ partner 49financial routes to the canonical bucket and key; staff `?firm=49finan
 <round>4</round>
 <workstream>EDGETESTS</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-37</to_id>
-<slot>~59</slot>
+<slot>~60</slot>
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
