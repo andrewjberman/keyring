@@ -6704,3 +6704,29 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED. The D_04 leg G read after the ship will show the residual; the L9 read decides whether it matters."
 }
 ```
+
+## MDPF_SECCLASS-D1-S31 -- D1-W83-S5 recorded BOUNDED (three retained dates, no date added, the latest as_of unaffected) until the SC-e-95 read
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S31",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-12T09:53Z",
+  "one_line": "D1-W83-S5 (C_06 freezes a date at its first build while B_00 moves its canonical bytes) is recorded BOUNDED by its disarm owner, per CTO msg 4327: three retained dates, no date added, the page's latest as_of unaffected; it stays ARMED until the round-22 read prints.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO round-21 analysis @CTO_ROUND_ANALYSIS_MDPF_SECCLASS_ROUND_21_20261012.md section 2: 'The disarm owner 2.0.0_SA_COO~M1 records the hazard as BOUNDED in the meantime: three retained dates (10-06..08), no date added (the watermark is 10-09 and no later canonical partition exists), the page's latest as_of unaffected.'",
+      "SC-e-94 record org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/W78_PARTITION_REWRITE_WRITER_20261012.json (merged 81cfb83df2): watermark gold/meta/client_timeseries_watermark.json data_as_of 2026-10-09; c06_reserves_dates_next_fire false (the incremental filter selects nothing, C_06 :689); the canonical content of 2026-10-06/07/08 moved at 2026-10-11T04:16:35Z and 2026-10-12T00:33:48Z.",
+      "SC-e-93 read (merged 97ca96b08f): the latest canonical partition is gold/canonical/holdings/2026-10-09.parquet, read 2026-10-12T09:09Z; no partition after it exists, so no further date can be frozen until the next canonical partition lands."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A served date is re-derived only when it is new (C_06 builds only partitions dated after the watermark and keeps every already-written date).",
+  "world_is": "The hazard is bounded to the retained dates whose canonical bytes moved after first build: 2026-10-06, 07 and 08 (2026-10-09 is the watermark date and the page's latest as_of). Each new canonical partition adds one date that C_06 builds once and then freezes; a date joins the bound only if B_00 later moves its bytes, so the bound can grow by at most one date per trading day until the ruling, and it is not growing today because no canonical partition after 2026-10-09 exists. The dollars per date and class, the cost of re-deriving a window and the mover's reach are NOT yet read: SC-e-95 reads them."
+}
+```
