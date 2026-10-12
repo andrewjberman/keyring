@@ -109,7 +109,7 @@ Every invocation runs under `timeout 120`, except AC2, whose account-wide read t
 
 <!-- ===================== RECORD FACE -- does NOT travel to the assignee ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <slot>0.7.0_AE_CloudOps~IR</slot>
 <fabric>site-z</fabric>
