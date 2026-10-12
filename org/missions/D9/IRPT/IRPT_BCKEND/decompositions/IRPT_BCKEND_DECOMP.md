@@ -3478,3 +3478,20 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r168/p168_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-487` | the apply of `irpt-performance-adapter` (built `abep4h7R...`, live `kMB8xCI93/...`) under the signed pair: ledger first, the one source-map re-pin, the rollback version named before the upload, the digest control, Terraform `safe-apply` on a 1-change planfile, the after-reads and the four direct-invoke arms (which persist named retained revisions) | FWD-3 | WORLD (a deploy) | IB-pr-482 merged and both halves signed | P168-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, an apply to a live seat. Assignee: 0.7.0_AE_CloudOps~IB2. Not a worker spawn.
+
+## 161. ROUND 169, WORKSTREAM ~P (2026-10-12 ~23:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6660 = ROUND-169 ANALYSIS section 3)
+
+The CTO's list has three items. Item 1 is the walker's `--firm` flag (the `/ui-walk` engine, `.claude/skills/ui-walk/walk.mjs`; no other live order names it: `comp-find` over the task orders reads 0 hits across 29,390 files). Item 2 is the live read that closes row D2-S114: one Inflection walk keeps its selection reference, and the deployed function is invoked once with it, the claim and the two counts compared with the reader's offline prediction. Item 3 is carried: the `bd_adapter.py` rename's APPLY waits until the portal reader is on PROD (Andrew's held promote `dell1-e7f2`), so nothing is cut for it; the DSGN_IRPTV1 fixture cell (row D2-W63-S1, routed by the CTO msg 6626) is cut as a fourth cell.
+
+Items 1 and 2 are one chain: the walk (cell 2) needs the flag (cell 1); the live invoke (cell 3) needs the reference the walk keeps. The CTO's item 2 is cut as two cells because the executors differ (a worker walks; a CloudOps seat invokes a live function and persists up to two retained revisions).
+
+Checks `deliverables/2.0.0_SA_COO~P2/checks/r169/p169_cells.py`, dry-run at the base: IB169-1 AC1 PASS (a bound), AC2 FAIL, AC3 FAIL; IB169-2 AC1 FAIL, AC2 PASS (a bound), AC3 FAIL; IB169-3 AC1-AC3 FAIL; IB169-4 AC1 FAIL, AC2 PASS (a bound), AC3 PASS in a clean worktree. IB169-1-AC2 was also run on a patched copy (PASS) and a patched copy that accepts `--firm` with no label (FAIL).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-488` | the walker gains `--firm "<label>"` (select the header Firm option by its visible label; `FIRM_OPTION_ABSENT` if absent) and `--first-client` (pick the first search result under that firm) | FWD-3 | LOCAL | none | P169-a |
+| `IB-pr-489` | one walk `--firm Inflection --first-client --performance-state` keeps ONE `sel_` reference outside any git tree and leaves the walker disarmed | FWD-3 | SERVED (arms a dormant service account in `opal-users-v2`, reads live data through the local build) | IB-pr-488 | P169-a |
+| `IB-pr-490` | one direct invoke (at most two windows, at most two retained revisions) of the deployed `irpt-performance-adapter` with that reference; claim equals the offline prediction, both counts present; closes D2-S114 | FWD-3 | SERVED (a live function read that persists named retained revisions) | IB-pr-489 | P169-a |
+| `IB-pr-491` | the producer's two `AnalysisReport` contract fixtures send a section the extractor can send (row D2-W63-S1) | FWD-3 | WORLD (the gate floor for an `infra/` path) | none | P169-b |
+
+fanout: 2 of 2 chains, cap 8, reason: chain P169-a is a queue (cells 1 and 2 to worker slot ~341, cell 3 to `0.7.0_AE_CloudOps~IB2` after the walk is drained); chain P169-b is one fixture cell (worker slot ~342).
