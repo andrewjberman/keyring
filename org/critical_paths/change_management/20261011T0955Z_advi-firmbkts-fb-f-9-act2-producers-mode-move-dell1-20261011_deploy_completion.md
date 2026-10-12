@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-11T09:55:46.979659+00:00
-**Status:** HELD-PRE-APPLY -- gate: external / TO-FB-f-9 build-final amendment commit by 2.0.0_SA_COO~B1 (step 3), the GO amendment with its window (step 4), and the ruling on row ADVI_FIRMBKTS-D1-S18 (the producers' role grant at the new home) (held since 2026-10-11T09:56:03.263270+00:00)
+**Status:** SUPERSEDED -- nothing stranded, nothing written under this entry (L1 reads only) -- closed 20261012T062505Z by 0.7.0_AE_CloudOps~FB1; replaced by advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012
 **Deploy:** ADVI_FIRMBKTS TO-FB-f-9 phase B (window act 2): ship the 19 dormant gold .py objects and the dispatcher switch to s3://opal-data-bd/code/gold/, moving BD_PLATINUM_MODE to canonical for the scheduled production chain; pair COO half @12b22ef020 + ADDENDUM 1 @1d7f94ebb1, CTO half @03c1c6f001 + ADDENDA 1 @6ac66a8950 and 2 @3d24ccdbd2
 **Authored by:** 0.7.0_AE_CloudOps~FB1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -8,11 +8,18 @@
 
 ---
 
+> ### SUPERSEDED. READ THE LEG TABLE: "closed" THERE MEANS *DISPOSED OF*, NOT *DONE*.
+>
+> This entry was opened 2026-10-11T09:55Z for the first, held attempt of TO-FB-f-9 phase B (no object written under it; row D1-S18
+> found the producers' role grant missing, since applied by FB-g-8 and FB-f-16). The act ran on the issuer's GO (AMENDMENT 13
+> @f5da2fc917) under `advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012`, which carries the shipment, the switch, `MOVE_TS` and the
+> rollback record.
+
 ## Manifest (every leg must carry proof before CLOSE)
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | verify | step 2 reads: opal-data-bd versioning, the 20 keys' prior VersionIds, the actor's grants at object grain, the producers' role grant at the new home, the schedule, deployed-equal before-read | the entry carries the 20 rows and the read lines |  | OPEN |
+| L1 | verify | step 2 reads: opal-data-bd versioning, the 20 keys' prior VersionIds, the actor's grants at object grain, the producers' role grant at the new home, the schedule, deployed-equal before-read | the entry carries the 20 rows and the read lines | performed 2026-10-11 ~09:5xZ and recorded in this entry's STEP 2 READS section: opal-data-bd versioning Enabled; the 20 keys' prior VersionIds (18 present, 2 new keys); actor identity PutObject allowed on code/gold; the producers' role had NO Allow at the new home (row ADVI_FIRMBKTS-D1-S18, since applied by FB-g-8 and FB-f-16); schedule read. The reads are superseded by the 2026-10-12 entry's fresh reads | CLOSED 20261012T062505Z |
 | L2 | s3-prefix | s3://opal-data-bd/code/gold/ 19 .py objects: 14 writers (C_05 C_06 C_07 C_08 D_00 D_00b D_00c D_00f D_01 D_02 D_03 D_04 E_01 E_24) + lib/{platinum_dest,platinum_dest_view,gold_utils,helpers,etf_classifier}.py (step 3, HELD for the build-final amendment) | 19 of 19 read back equal to git show HEAD:<path> (sha256 per key) | NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 2026-10-12T06:15Z on the issuer's GO, AMENDMENT 13 @f5da2fc917); this entry's reads of 2026-10-11 pre-dated the grant (row D1-S18, applied by FB-g-8) and the window; nothing was written under it | CLOSED 20261012T062428Z |
 | L3 | s3-prefix | s3://opal-data-bd/code/gold/gold_dispatch.sh -- the switch (step 4, HELD for the GO amendment), aws s3 cp --sse AES256 then cmp | cmp read-back equal, 0 bytes above 127, MOVE_TS recorded | NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 2026-10-12T06:15Z on the issuer's GO, AMENDMENT 13 @f5da2fc917); this entry's reads of 2026-10-11 pre-dated the grant (row D1-S18, applied by FB-g-8) and the window; nothing was written under it | CLOSED 20261012T062428Z |
 | L4 | activation | the first SCHEDULED production chain after MOVE_TS (--chain, not --single, not QA) | the chain's exit and a run log with no ValueError and no NoSuchKey on a served read | NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 2026-10-12T06:15Z on the issuer's GO, AMENDMENT 13 @f5da2fc917); this entry's reads of 2026-10-11 pre-dated the grant (row D1-S18, applied by FB-g-8) and the window; nothing was written under it | CLOSED 20261012T062428Z |
@@ -29,6 +36,8 @@
 - 20261012T062428Z LEG L4 closed: NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 202
 - 20261012T062428Z LEG L5 closed: NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 202
 - 20261012T062429Z LEG L6 closed: NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 202
+- 20261012T062505Z LEG L1 closed: performed 2026-10-11 ~09:5xZ and recorded in this entry's STEP 2 READS section: opal-data-bd versioning Enabled; the 20 
+- 20261012T062505Z CLOSED AS SUPERSEDED -- L1 reads performed; L2 to L6 carry NOT PERFORMED proofs; the work ran under advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012
 
 ## STEP 2 READS (0.7.0_AE_CloudOps~FB1, 2026-10-11T09:58:07Z)
 
