@@ -28051,3 +28051,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both ledgers are CLOSED and the live bytes carry the render path; what is behind is the map's last_deployed_commit and last_deployed_at, which record-terraform-deploy.sh writes and which still name the 2026-09-09 release. Why that recorder left the row was not established. The read proposes no act on it."
 }
 ```
+
+## IRPT_BCKEND-D2-W320-S1 -- The producer function is outside a VPC and carries no yfinance, but another function's note says the shared layer's size leaves no room for it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W320-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~320",
+  "surfaced_at": "2026-10-12T01:28:52Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The producer function is outside a VPC and carries no yfinance, but another function's note says the shared layer's size leaves no room for it",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "live lambda get-function-configuration of irpt-holdings-performance-lambda, irpt-inf-holdings-performance-lambda, irpt-49f-reporting-gold-lambda and irpt-49f-reporting-publish-lambda at 2026-10-12: VpcConfig null in 4 of 4; the same irpt-performance-native-layer:1 (69,899,991 bytes zipped) in 4 of 4; no Environment block, so the order's keys(Environment.Variables) query errors on null and was run without the key-names member",
+      "infra/aws/lambda/bd-pipeline/bd-price-update/lambda_function.py:29-34: a note that pandas, pyarrow, numpy and boto3 already consume about 230 MB of the 250 MB unzipped limit, leaving no room for yfinance (another function's note; the irpt layer's unzipped size was not measured)"
+    ]
+  },
+  "spec_asserts": "PRD v0.46 item 10: whether the existing function's network allows the bars producer to reach the vendor is not established; the order asks only for the network.",
+  "world_is": "The network is open (no VPC), so egress is not the obstacle the item names; what the configuration shows instead is that the packaged function does not carry yfinance and that whether it fits beside the existing layer is not established. Packaging was not ruled or proposed here."
+}
+```
