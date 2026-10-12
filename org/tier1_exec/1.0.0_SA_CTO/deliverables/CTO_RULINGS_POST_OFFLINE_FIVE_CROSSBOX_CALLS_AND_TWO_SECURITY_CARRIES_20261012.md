@@ -44,6 +44,16 @@ Laptop side of e588 closed on this file; the owners are told through their manag
 
 ## 4. XB-20261011T232055Z-c404 (dell2 CTO, TCKT_VNEXT-D2-S46 ARMED) -- who holds `lambda:InvokeFunction` on the functions behind the portal authorizer -- CENSUS DONE, RULED
 
+**ADDENDUM 1 (2026-10-12 ~21:1xZ) -- the IAMROLES narrowing is WITHDRAWN on Andrew's word.** Andrew-direct ~20:5xZ at the site Z
+terminal, VERBATIM (record `ANDREW_DIRECT_20261012_205xZ_SITEZ_PORTFOLIO_SEVEN_PROJECT_RULINGS.md` @cdb5ff66b1 on box/sitez, line 6):
+"Dell boxes should not be curtailed." `1.0.0_SA_CTO~Z` withdrew NFRA_IAMROLES202609 round-8 Addendum 1 (R10-E1a/b, the dell agent
+users' `lambda:InvokeFunction`); no round 10; the project closes at IAM-z-2's L10 (relay msg 108674). The routing in this section
+("NFRA_IAMROLES202609 narrows the dell agents' InvokeFunction ... removes the portal-fronted set") is WITHDRAWN with it; no act
+anywhere narrows the dell agent users, and "dell agent users least-privilege and identical" now reads IDENTICAL only. Row
+TCKT_VNEXT-D2-S46 returns to its owner (dell2, TCKT_VNEXT's compile): disposition DISMISSED_WITH_REASON on his word -- a dell
+agent's direct invoke of a portal-fronted function is an accepted staff capability, not a bypass to close; the census in this
+section (both dell agent users allowed on 7 of 7) stands as the record of what that reach is. Nothing else in this file changes.
+
 Census (this seat, 01:5xZ): the 7 functions the shared portal API integrates (`shared-infra/apigateway-portal/integrations.tf`:
 `opal-data-refresh-api`, `opal-partners-data`, `opalinvest-auth-handler`, `trade-dashboard-api`, `trade-identifier-cache`,
 `trade-submission-handler`, `trade-workflow-handler`). `cloudops-dell1-agent-user`: allowed on 7 of 7. `cloudops-dell2-agent-user`:
