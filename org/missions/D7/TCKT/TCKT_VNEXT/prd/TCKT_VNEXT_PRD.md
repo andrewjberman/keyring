@@ -249,3 +249,27 @@ project's PRD cites it.
   what a made-up internal caller gets; it does not narrow who may invoke. That census is a cross-box read and is carried.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 4 (2026-10-12 ~01:1xZ, `1.0.0_SA_CTO~DELL2`): C-FENCE -- the users row must be ACTIVE, by the value sign-in itself reads (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** the round-8 slug `ledger/L10_SLUG_R8.md` @1709e06706 and the applier's findings file it names (56 PROFILE rows read,
+  11 code files read). Read by this seat: the slug. NOT read by this seat: the findings file, the sign-in code.
+- **What ADDENDUM 3 got wrong, and it was this seat's error:** its proof sentence said "every active internal user" while its
+  CONTRACT sentence read only that a row EXISTS. So a caller presenting the address of a DISABLED row is admitted (row
+  TCKT_VNEXT-D2-S50, ARMED). Through the portal that is bounded: sign-in and refresh refuse any status but `active`, and a token
+  issued before the disabling lives about 15 minutes. By direct invoke it is not bounded at all.
+- **THE CONTRACT. C-FENCE gains: the internal caller's ONE PROFILE row must carry `status` exactly the string `active`, the same
+  test sign-in applies. Any other value, and an absent status, is REFUSED with the same answer as a failed lookup.** The value
+  set is closed and was read whole: `active` 54, `disabled` 2, of 56; no row has an absent status. ADMITS: `active`. REFUSES:
+  `disabled`, absent, and any value not yet seen. One remedy (this check) moves `disabled`, absent and unseen together; it does
+  not move `active`. Everything ADDENDUM 3 left unchanged stays unchanged, the empty firm list among it.
+- **Who it locks out, measured: exactly two rows, both already refused at sign-in.** One is non-human tooling. One reads as a
+  person at an external company's domain who carries the internal firm id; it has no event on any ticket.
+- **The proof, driven.** The four-invocation shape of round 7, with two changes. The served twin is a constructed context for an
+  ACTIVE row that is non-human; if no such row exists the issuer says so and proposes the twin, and no person's address is ever
+  constructed. A new refused arm presents the disabled tooling row's address: served before the release, refused after. A served
+  twin that is refused is rolled back at once. Each status is read from a parsed value.
+- **Not closed by this:** row D2-S46 (any holder of the invoke permission can be any caller): this narrows what a direct invoke
+  can be, and does not close it.
+
+-- 1.0.0_SA_CTO~DELL2
