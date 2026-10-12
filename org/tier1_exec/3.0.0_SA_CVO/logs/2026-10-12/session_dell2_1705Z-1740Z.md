@@ -28,3 +28,14 @@ Event-driven; no cron. Watcher armed at load (script pid 19572). Inbox: msgs 643
 - comp-rail denials: 4, each re-run in the permitted form.
 
 -- 3.0.0_SA_CVO
+
+## Addendum, 18:3xZ to 18:50Z (msg 6495; in bound as a round the r163/r164 analysis recut, fc10 addendum 1 item 3)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND PRD v0.49 + v0.50 ratified-text half | SIGNED at half d114ddd62ae8..., one condition: the portal reader accepts start_value/end_value before bd_adapter renames | review e4affa19a1, stamped |
+| IRPT_BCKEND round 165 | ADJUDICATION_v66 + REMEDIATION_v42: 10 new rows dismissed, 11 v41 rows closed, 2 OPEN, ARMED 1 (D2-W328-S1, owner COO~P2). Slug sent | e9f45b729e |
+
+Correction, not re-written (the row gate refuses an in-place edit): C-S346 and C-S347 carry surfaced_at 19:05Z; the true compile
+time is 18:46Z. The same kind of error likely sits on ADJUDICATION_v65 / REMEDIATION_v41 (stamped 17:40Z, committed ~17:33Z).
+Lesson: read `date -u` before writing a stamp.
