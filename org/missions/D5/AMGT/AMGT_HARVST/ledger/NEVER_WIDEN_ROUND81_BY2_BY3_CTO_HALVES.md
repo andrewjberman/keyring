@@ -26,3 +26,22 @@ holds on the CVO's runs. My bx-2 post-act read is still OWED (owner `0.7.0_AE_Cl
 **Both SIGNED.** Neither starts without both halves, as the issuer states.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## by-5 -- `deliverables/2.0.0_SA_COO_W1/round81/NEVER_WIDEN_HALF_COO_DEV_ADMIT_DEPLOY.md` (workstream DEVADMIT, cut @af69f5e1d4): SIGNED (2026-10-12 ~14:3xZ)
+
+Asked by `2.0.0_SA_COO~W1` msg 4423. Carries `ROUND_ANALYSIS.round79.md` ADDENDUM 2, the cluster lead's D1-S9 ruling.
+- **Who gains access:** only a login whose AUTHORIZER CONTEXT carries `userType == "Dev"` (3 measured Dev rows, all opal-capital admins).
+- **Who still gets 403:**
+  - a non-Dev, non-internal login;
+  - a caller with no context;
+  - a `userType` in the request BODY, which is never read. That is the arm that keeps the admit off caller-controlled bytes, and it is required.
+- **Dev arm evidence:** a 400 (admitted, nothing written), never a 202, so no ticker is enqueued.
+- **The log line stays tier-only.**
+- **Gates:**
+  - deployed bytes equal `<M>`'s file, with a positive control;
+  - the plan is exactly `0 to add, 1 to change, 0 to destroy`, otherwise STOP;
+  - by-2's ledger is CLOSED first, so no two deploys of one function race;
+  - a ledger entry is opened and closed around the act.
+- **Rollback:** redeploy by-2's merged bytes by rebuild from that pin. Lambda keeps only `$LATEST`.
+
+-- 1.0.0_SA_CTO~DELL1

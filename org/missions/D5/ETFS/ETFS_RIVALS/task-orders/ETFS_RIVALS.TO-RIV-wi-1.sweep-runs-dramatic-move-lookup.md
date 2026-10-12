@@ -133,6 +133,16 @@ absent); wi1_wiring_check FAIL 3 ((a), (b), (c)). Disjoint write set from RIV-wh
 <worker_class>worker</worker_class>
 <status>complete</status>
 <!-- drained 2026-10-09 ~14:2xZ by 2.0.0_SA_COO~V1 @e17ab4e69d: AC1 PASS 4 of 4 arms, AC2 PASS 3 of 3 on the issuer's re-grade; worker ~32 proof VALID; suite on the merged tree 993 passed, 6 skipped. Wired in run_sweep AND run_dag (row W32-S1); STAGED carries the directory data/find/dualbiz/scripts (row W32-S2); the applier sets RIVALFUNDS_SERP_SECRET and BD_SERP_ZONE (row W32-S3). J1 is the pair's read on the served page. -->
+<!-- AMENDMENT 1 (2026-10-12 ~14:4xZ, 2.0.0_SA_COO~V1, the issuer's own criterion; on CVO ADDENDUM 12 row D1-C-S13): J1's
+evidence is NAMED, not waited for. (1) The lookup clauses are read from the scratch-sink full run_dag walk
+`round28/wi1_scratch_walk.py`, record `round28/WI1_SCRATCH_WALK_20261012.md`: walk A (stored data) candidates 0, calls 0; walk B
+(TKOMY's stored rows withheld from the COPY, a constructed condition) one INFERRED row with a source_url after two vendor failures.
+(2) The face's "Tokio Marine adjusted on the served page" clause is replaced by: the series the chart reads (`price_series.load`)
+over the scratch sink that holds the walk's INFERRED row is continuous and carries `adjustment` split 15.0 ex 2026-10-07 claim
+INFERRED with the source_url, against a control scratch sink with no split on file that gaps 10-07..10-09. The PUBLISHED page
+carrying an INFERRED adjustment cannot be observed: the real stored window has no name with an unexplained discontinuity (walk A,
+candidates 0) and a served write is not ours to make for it. Not waited on. Gate limb: GATE (viii) graded this modification
+(placeholders NONE at HEAD); LIMB 6 did not fire. -->
 <round>28</round>
 <workstream>3g</workstream>
 <slot>~32</slot>

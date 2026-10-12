@@ -114,3 +114,20 @@ org/critical_paths/change_management/
 <round>81</round>
 <slot>dell1</slot>
 <fabric>dell1</fabric>
+
+**COMPLETE 2026-10-12 ~14:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** `0.7.0_AE_CloudOps~HV1` @54a9c0e83c (on box/dell1 HEAD), under the pair COO @49b5ed47f3 and `1.0.0_SA_CTO~DELL1`
+  (`ledger/NEVER_WIDEN_ROUND81_BY2_BY3_CTO_HALVES.md`, msg 4402). Plan `0 to add, 1 to change, 0 to destroy`, one apply; the code hash
+  `+e2d...` -> `cWiraC3E...` (LastModified 2026-10-12T14:22:19Z, Active, Successful). Ledger `harvst-by2-enqueue-refusal-log-20261012`
+  CLOSED. Proof VALID rc 0 at box/dell1 HEAD (re-run by this seat with `--governing-order`).
+- **AC1 PASS** arms 403 (non-internal), 403 (no context), 400 (internal, no ticker). **AC2 PASS** the plan. **AC3 PASS** the log read
+  shows exactly `DENIED: tier=partner` and `DENIED: tier=NONE` inside this seat's arm window, and `DENIED LINES FOR internal: 0`.
+- **The refusal is now observable.** Before this deploy a 403 left no line; it now writes the tier it saw. D1-S8 (the CTO's post-act
+  read could not see a refusal) is closed by this deploy for any refusal AFTER 14:22:19Z.
+- **Step 9 is UNMEASURED, not passed:** at 14:24Z the log held 0 `OK:` lines and 0 `DENIED: tier=internal`; three unattributed
+  invocations at 14:07:53Z predate this deploy's window and are not this seat's. The read stays owed after the first trading day.
+- **Row D1-S10 (INERT), a defect of THIS order's face, ruled:** step 7 named `--filter-pattern '"DENIED"'` (a quoted term); the
+  `.tools/aws` shim turned the quotes into backslashes and the CLI refused it. The seat read the single unquoted term `DENIED`,
+  which is equivalent for one word, and said so in the file's header. Corrected for the next deploy order (by-5 has no log read).
+
+<status>complete</status>

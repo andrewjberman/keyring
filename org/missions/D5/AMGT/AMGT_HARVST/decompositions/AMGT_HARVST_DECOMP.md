@@ -3818,3 +3818,21 @@ the runner (its own cell and pair); the first real internal enqueue read in the 
 - `by-2` AC1, AC2 and AC3 base: FAIL as expected (the `.out` files do not exist).
 - `by-3` AC1 and AC2 are site Z reads and cannot run from dell1: AC1 would read `wk-harvest-runner-pin-b5a7a3a4b6` and FAIL as expected;
   AC2 reads the old state dir and would PASS today (it must still hold after, which is its point). AC3 base: FAIL as expected (no such file).
+
+## 95. ROUND 81, ADDENDUM -- the fence admits a Dev login (`1.0.0_SA_CTO~DELL1` msg 4413, `ledger/ROUND_ANALYSIS.round79.md` ADDENDUM 2; row D1-S9), 2026-10-12 ~14:4xZ
+
+The CTO, as the cluster lead, reversed his own ADDENDUM 1 on the laptop CTO's count (msg 108578: 3 of 6 Dev logins carry a tier other
+than internal, all opal-capital admins): the fence admits `tier == internal` OR `userType == Dev`, no context still 403. He ruled it
+rides by-2's deploy if by-1 is not merged, "otherwise its own pair". by-1 is merged @31590746f1 and by-2's deploy had begun, so it is
+its own build (by-4) and its own deploy (by-5). Series `by` continues. This is a SECOND WORKSTREAM of round 81 (`<workstream>DEVADMIT</workstream>`, as round 75's R47 was): the L6 gate admits one issuance per round per workstream and round 81's first issuance is section 94.
+
+- **Fan-out:** 1 of 1 chain (by-4 -> by-5), cap 8. (by-1 -> by-2 and by-3 are section 94.)
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-by-4` | `by-4` | **The fence admits a Dev login.** `_caller_user_type` beside `_caller_tier` (same two places, the authorizer context only, never the body); admit when `tier == "internal"` or `userType == "Dev"`, exact, case-sensitive; no context 403; log line unchanged (tier only); unit tests and a mutant. | WORLD by the gate's path floor; no world act | worker `0.9.0_WK_AMGT_HARVST~137` |
+| `HVST-by-5` | `by-5` | **The Dev-admitting fence deployed and proved.** The same act as by-2 after it: build, upload, a targeted plan of one change, one `safe-apply`, four side-effect-free arms (no ticker): Dev with an advisor tier 400, advisor non-Dev 403, no context 403, internal 400. Under its own pair. | WORLD | `0.7.0_AE_CloudOps~HV1` |
+
+**Checks dry-run at the base before the cut:**
+- `by-4` AC1 base: FAIL as expected (no test file). AC2 base: PASS as expected (`test_bx1_tier_fence.py` and `test_by1_refusal_logged.py`).
+- `by-5` AC1, AC2 and AC3 base: FAIL as expected (the `.out` files do not exist).
