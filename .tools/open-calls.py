@@ -13,6 +13,8 @@ through its manager. "Touches only its fabric" is a MEASUREMENT here, never a ju
     python .tools/open-calls.py close --id <id> --by <serial> --ruling <path> [--crossbox <crossbox id>]
                                       [--ruled-by andrew|cto]
     python .tools/open-calls.py hold --id <id> --by <serial> --reason <one line>     # held for Andrew; the scan skips it
+    python .tools/open-calls.py lift --id <id> --by <serial> --ruling <path>         # a hold lifted on a ruling (kept on the row)
+  (close also takes --ruled-by cluster-lead: the laptop CTO's record or a RULED xadj file closes a CROSS-BOX row.)
     python .tools/open-calls.py mode get [--box <b>] [--part scan|empty_tick|all]     # the keep-driving switch (/keep-driving)
     python .tools/open-calls.py mode set --part scan|empty_tick|all --state on|off|inherit [--box <b>] --by <s> --reason <t>
     python .tools/open-calls.py scope --project <CODE> [--orders <order file> ...] [--roots <dir> ...]
@@ -92,8 +94,12 @@ CLOSED_KEYS = {"at", "by", "ruling", "crossbox", "ruled_by", "xadj"}
 # `escalation` (optional, Andrew-direct 2026-10-09 ~00:0xZ; .tools/open-calls-scan.py): the box CTO's answer to the scan when it
 # does not rule the call itself -- `xadj` (sent to cross-adjudication, ref = the XA id) or `andrew` (held for his word).
 ESC_KEYS = {"to", "ref", "at", "by", "reason"}
-ESC_TO = ("xadj", "andrew")
-RULED_BY = ("cto", "andrew")
+ESC_TO = ("xadj", "andrew", "lifted")
+RULED_BY = ("cto", "andrew", "cluster-lead")
+# `cluster-lead` (Andrew-direct 2026-10-11 ~03:2xZ, record ANDREW_DIRECT_20261011_032xZ_CTO_LEADS_CLUSTER_OPEN_CALLS_LOOP_60M.md):
+# the laptop CTO adjudicates every box's calls; its ruling closes a CROSS-BOX row when the ruling file is its own record or a
+# RULED cross-adjudication file. Any other path is refused.
+CLUSTER_LEAD_RULING_PREFIXES = ("org/tier1_exec/1.0.0_SA_CTO/deliverables/", "org/critical_paths/cross_adjudication/")
 STATES = ("OPEN", "CLOSED")
 RISK_ORDER = ("LOCAL", "SERVED", "WORLD")
 
@@ -980,7 +986,12 @@ def cmd_close(args) -> int:
             raise Refused("REFUSED: cross-adjudication %s is %s for call %s, not RULED for %s" % (
                 args.xadj, xdoc["state"], xdoc["call_id"], row["id"]))
         xid = xdoc["id"]
-    if row["scope"].get("verdict") == "CROSS-BOX" and ruled_by != "andrew" and xid is None:
+    if ruled_by == "cluster-lead":
+        rel = rel_to_root(ruling, ROOT).replace("\\", "/")
+        if not rel.startswith(CLUSTER_LEAD_RULING_PREFIXES):
+            raise Refused("REFUSED: a cluster-lead close cites the laptop CTO's own record or a RULED cross-adjudication file "
+                          "(under %s); %s is neither" % (" or ".join(CLUSTER_LEAD_RULING_PREFIXES), rel))
+    if row["scope"].get("verdict") == "CROSS-BOX" and ruled_by not in ("andrew", "cluster-lead") and xid is None:
         found, lines = crossbox_closed_both(row["id"], args.crossbox)
         if found is None:
             raise Refused("REFUSED: call %s reads CROSS-BOX and no cross-box file for it reads CLOSED-BOTH (%s). A call that touches "
@@ -991,7 +1002,8 @@ def cmd_close(args) -> int:
                      "ruled_by": ruled_by, "xadj": xid}
     write_list(device, doc, writer_serial(args.by))
     why = cross or ("cross-adjudication %s RULED" % xid if xid else None) or (
-        "not required (Andrew's ruling)" if ruled_by == "andrew" else "not required (OWN-BOX)")
+        "not required (Andrew's ruling)" if ruled_by == "andrew" else
+        "not required (cluster-lead record)" if ruled_by == "cluster-lead" else "not required (OWN-BOX)")
     print("CLOSED id=%s by=%s ruled_by=%s ruling=%s crossbox=%s" % (args.id, args.by, ruled_by, row["closed"]["ruling"], why))
     return 0
 
@@ -1008,6 +1020,29 @@ def set_escalation(device: str, cid: str, esc: dict, serial: str) -> str:
         raise Refused("REFUSED: escalation %r is malformed" % esc)
     row["escalation"] = esc
     return write_list(device, doc, writer_serial(serial))
+
+
+def cmd_lift(args) -> int:
+    """Lift a hold for Andrew on a ruling: the hold's text stays on the row (to=lifted, reason = the hold's own line)."""
+    dev = load_mod("opal_devices", "lib/devices.py")
+    device = this_box(dev, dev.load())
+    doc = read_list(device)
+    row = next((r for r in doc["rows"] if r["id"] == args.id), None)
+    if row is None:
+        raise Refused("REFUSED: no call %s on this box's list (%s)" % (args.id, list_path(device)))
+    esc = row.get("escalation")
+    if row["state"] != "OPEN" or not esc or esc.get("to") != "andrew":
+        raise Refused("REFUSED: call %s is not an OPEN row held for Andrew (state %s, escalation %s)" % (
+            args.id, row["state"], (esc or {}).get("to")))
+    ruling = args.ruling if os.path.isabs(args.ruling) else os.path.join(ROOT, args.ruling)
+    if not os.path.isfile(ruling):
+        raise Refused("REFUSED: ruling %s is not a file; a lift cites the ruling it rests on" % args.ruling)
+    was = "held for andrew by %s at %s: %s" % (esc.get("by"), esc.get("at"), esc.get("reason"))
+    path = set_escalation(device, args.id, {"to": "lifted", "ref": rel_to_root(ruling, ROOT), "at": now_utc(), "by": args.by,
+                                            "reason": was}, args.by)
+    print("LIFTED id=%s by=%s ruling=%s file=%s (the row is OPEN again; close it on the same ruling)" % (
+        args.id, args.by, rel_to_root(ruling, ROOT), path))
+    return 0
 
 
 def cmd_hold(args) -> int:
@@ -1120,6 +1155,37 @@ def close_path_cases(device: str) -> list:
         except Refused:
             refused = True
         out.append(("a malformed escalation is refused", refused))
+        # lift + cluster-lead close (Andrew-direct 2026-10-11 ~03:2xZ, cluster-lead deputation; tool gap found 2026-10-12)
+        doc = read_list(device)
+        doc["rows"].append(row("c-held"))
+        write_list(device, doc, "selftest")
+        a.id, a.by, a.ruling = "c-held", "t", ruling
+        try:
+            cmd_lift(a)
+            refused = False
+        except Refused:
+            refused = True
+        out.append(("a lift on a row not held for Andrew is refused", refused))
+        set_escalation(device, "c-held", {"to": "andrew", "ref": None, "at": now_utc(), "by": "t", "reason": "money"}, "t")
+        esc_after = (cmd_lift(a) == 0 and read_list(device)["rows"][2]["escalation"]) or {}
+        out.append(("a lift on a held row records to=lifted with the hold's own line kept",
+                    esc_after.get("to") == "lifted" and "money" in str(esc_after.get("reason"))))
+        a.ruled_by, a.xadj = "cluster-lead", None
+        try:
+            cmd_close(a)
+            refused = False
+        except Refused:
+            refused = True
+        out.append(("a cluster-lead close citing a ruling outside the CTO's records is refused",
+                    refused and read_list(device)["rows"][2]["state"] == "OPEN"))
+        cl_dir = os.path.join(ROOT, "org", "tier1_exec", "1.0.0_SA_CTO", "deliverables")
+        cl_ruling = os.path.join(cl_dir, ".selftest_cluster_lead_%s.md" % secrets.token_hex(3))
+        with open(cl_ruling, "w", encoding="utf-8") as fh:
+            fh.write("selftest ruling" + chr(10))
+        made.append(cl_ruling)
+        a.ruling = cl_ruling
+        ok = cmd_close(a) == 0 and read_list(device)["rows"][2]["state"] == "CLOSED" and             read_list(device)["rows"][2]["closed"]["ruled_by"] == "cluster-lead"
+        out.append(("a cluster-lead close on the CTO's own record closes a CROSS-BOX row with no cross-box file", ok))
         # context + rec (Andrew-direct 2026-10-09 ~01:1xZ)
         ctx_ok = "Created by round 8's drain; gates BF-w-2's cut and the FWD-6 switch."
 
@@ -1320,6 +1386,10 @@ def build_parser() -> argparse.ArgumentParser:
     hold.add_argument("--id", required=True)
     hold.add_argument("--by", required=True)
     hold.add_argument("--reason", required=True, help="one line: why only Andrew can rule it (money, vendor, directive, his hold)")
+    lift = sub.add_parser("lift", help="lift a hold for Andrew on a ruling that settled the call (the hold's text stays on the row)")
+    lift.add_argument("--id", required=True)
+    lift.add_argument("--by", required=True)
+    lift.add_argument("--ruling", required=True, help="the ruling file the lift rests on")
     sco = sub.add_parser("scope", help="measure whether a call touches only this box")
     sco.add_argument("--project")
     sco.add_argument("--orders", nargs="+", default=[])
@@ -1332,7 +1402,7 @@ def main(argv: list) -> int:
     args = build_parser().parse_args(argv)
     try:
         return {"add": cmd_add, "list": cmd_list, "close": cmd_close, "scope": cmd_scope,
-                "publish": cmd_publish, "hold": cmd_hold, "mode": cmd_mode}[args.cmd](args)
+                "publish": cmd_publish, "hold": cmd_hold, "lift": cmd_lift, "mode": cmd_mode}[args.cmd](args)
     except Refused as exc:
         print(str(exc) if str(exc).startswith("REFUSED") else "ERROR: %s" % exc, file=sys.stderr)
         return 1 if str(exc).startswith("REFUSED") else 2
