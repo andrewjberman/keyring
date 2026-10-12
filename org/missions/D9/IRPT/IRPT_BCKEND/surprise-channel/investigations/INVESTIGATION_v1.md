@@ -28643,3 +28643,96 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The graded run used the amended script at the absolute path in the issuer's correction; the instance carries the order's text. Owner 2.0.0_SA_COO~P2: amend the order file's invocation or merge 04e6040b0c before grading."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W328-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~328",
+  "surfaced_at": "2026-10-12T18:11:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "A stored-bundle probe that is now classified WAF_CHALLENGE still falls into refreshSession, i.e. a fresh sign-in submission, in withAuthenticatedPage (the path mainCli runs); the new challenge ending covers acquireSession's own probe only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js:1627-1633 withAuthenticatedPage: probeSession({bundle}) then `if (!bundle) bundle = await refreshSession(...)` for any probe.authenticated false, whatever its reason",
+      "infra/aws/ec2/investor-reporting-ycharts/tests/probe_challenge_and_pair.js arm c/e: probeSession over a bundle returns reason WAF_CHALLENGE, authenticated false"
+    ]
+  },
+  "spec_asserts": "IB-pr-473: a probe classified as a challenge after an ACCEPTED sign-in ends the capture with a failure that is not AUTH_FAILED; no second submission.",
+  "world_is": "That holds inside acquireSession. On a run that starts from a stored bundle whose tokenless probe is challenged, the stored-bundle probe is not authenticated and the code signs in again (one submission) before any challenge ending can apply. Not changed here: withAuthenticatedPage is outside this order's build list."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W328-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~328",
+  "surfaced_at": "2026-10-12T18:11:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The pair is requested once per run on the first probe after the submission (pairControl: filled && !record.probe_pair); with the new rule a token-less first probe records discriminating=false and no later probe, even one holding a token, runs the pair.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js:1112 pairControl: filled && !record.probe_pair; the non-discriminating pair is assigned to record.probe_pair at the next line",
+      "tests/probe_challenge_and_pair.js arm h: a token-less full flow sends one template request and records discriminating false"
+    ]
+  },
+  "spec_asserts": "IB-pr-473 build item 2: when the jar holds no aws-waf-token the pair is not sent and the receipt records it; when it holds a token the pair runs as today.",
+  "world_is": "Both clauses hold per probe. Across a run, the first probe decides: a token minted after a later navigation is not paired. Left as is (once per run, as before); an owner may want the gate to be `discriminating !== true`."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W328-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~328",
+  "surfaced_at": "2026-10-12T18:11:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order names the challenge header `waf-action`; the capture's probe headers are read from `x-amzn-waf-action` (defaultHttpPort keeps that key), so the new test accepts both spellings case-insensitively.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js: defaultHttpPort keeps ['location','x-amzn-waf-action','content-type']; wafActionOf accepts x-amzn-waf-action and waf-action",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py:188-191 reads reply.waf_action"
+    ]
+  },
+  "spec_asserts": "Face build item 1: a `waf-action` header of challenge, captcha or block is a challenge.",
+  "world_is": "The wire header the vendor's WAF sets is x-amzn-waf-action (as the capture already records it); `waf-action` is the READ path's field name for the same value. Both are accepted; no behaviour is lost."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W328-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~328",
+  "surfaced_at": "2026-10-12T18:16:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The criteria were graded with the issuer's amended p165_cells.py at its absolute path in the base checkout (commit 04e6040b0c), not the worktree's old copy that the order's relative invocation names; the proof instance records the order's relative invocation and the executed one is in output_evidence only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "coordinator correction to worker ~328 mid-task: the changed-files test counted the portal gitlink; fixed at 04e6040b0c on box/dell2",
+      "proof-of-spec-check invocation-alignment refuses a recorded invocation that differs from the order's text (instance recorded with the order's relative form)"
+    ]
+  },
+  "spec_asserts": "The order's criteria invocations name org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py relative to the worktree root.",
+  "world_is": "The worktree's copy is the old script; the three criteria were run from the worktree root with the amended script at C:/dev/ajb_workspace/... and each printed PASS. The order file still names the relative path."
+}
+```
