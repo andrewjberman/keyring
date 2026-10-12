@@ -8719,6 +8719,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S10",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~HV1",
+     "surfaced_at": "2026-10-12T14:25:41Z",
+     "one_line": "HVST-by-2 step 7's literal log-read invocation (--filter-pattern '\"DENIED\"') is refused by the .tools/aws shim with InvalidParameterException, so the order's own read cannot run as written; the single term DENIED returns the same events.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-by-2 step 7: read the function's log group for events since T0 that hold DENIED with `aws logs filter-log-events --filter-pattern '\"DENIED\"'`.",
+     "world_is": "Measured 2026-10-12 ~14:23Z, run as `bash .tools/aws logs filter-log-events --log-group-name /aws/lambda/opal-research-pull-enqueue --start-time <T0 ms> --filter-pattern \"DENIED\"` (the double quotes inside the value, MSYS_NO_PATHCONV=1): `aws: [ERROR]: An error occurred (InvalidParameterException) when calling the FilterLogEvents operation: Invalid character(s) in term '\\'`. So the shim or its argument hand-off turns the embedded double quotes into backslashes before the CLI parses the pattern. The same call with the single term `DENIED` returned the two expected events (tier=partner, tier=NONE). The read was therefore made with the unquoted term, which is equivalent for one word; by2_log.out says so in its header. NOT measured: which layer rewrites the quotes (the shim, MSYS, or the Python subprocess hand-off); a call straight to aws.cmd was not tried. No criterion depends on the quoted form (AC3 reads the file).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round81/by2_log.out (header names the substitution; events are the unquoted-term read)",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-by-2.the-refusal-logging-handler-deployed.md step 7"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
