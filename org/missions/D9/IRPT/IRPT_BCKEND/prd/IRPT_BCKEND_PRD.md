@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.39",
+ "prd_version": "v0.40",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -970,5 +970,36 @@ ENDPOINT is not edited.
   pair per security; one intent, whether the second witness's date labels are measured for that pair; a pair moves only by an addendum on
   a new measurement. The list holds the source's own strings, so no token census applies; the two field names `SEC Asset Type` and
   `Share Class Type` are the source's.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.40 -- the unmoved-bar guard on the second witness (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `2.0.0_SA_COO~P2`'s read IB-pr-445, `deliverables/0.9.0_WK_IRPT_BCKEND~303/IB142-1_UNMOVED_BAR_GUARD_READ.md`, merged
+  @7d31765674 (msg 5620), **read by this seat on the trunk before this addendum was written; not re-run.** The issuer re-ran the three
+  criteria (3 of 3 PASS); the counts are the worker's. The ENDPOINT is unchanged.
+- **THE GUARD. `YAHOO_CLOSE` gives NO grade for a security on day t when its own bar for t equals its bar for the prior trading day**
+  (relative 1e-4, the tolerance the read used). A security-day no witness grades is ungradeable, as before. `SCHWAB_ANCHOR` is unchanged
+  and grades every security it carries.
+- **Why, from the record:** the five one-day-off security-days of v0.39 (SHM 06-30, MEIIX 07-02, SHM 07-20, PZA 07-31, MISIX 10-09) are
+  each a day on which the reader repeated its prior bar while the anchor moved. Under the guard all five are not graded and no one-day-off
+  entry remains in 64,536 security-days. The mechanism of the known failure is a carried-forward bar, and the guard refuses exactly that.
+  By the record's Table 1 the five sit in the two types v0.39 left out (`Inst` 2, `RIC/BDC / Not Available` 3), none in an admitted
+  type; the guard is adopted for the admitted types because the mechanism is the reader's, not a type's.
+- **The cost, as sized:** seven admitted types under the guard, blank 51.753 percent (50.305 without it), never served 357, 552
+  account-days no longer freed. 1,135 of 64,536 overlap security-days not graded, 1,071 of them days that had read `equal`.
+- **THE ADMISSION TEST IS READ WITH THE GUARD OFF, as v0.39 read it.** Under the guard every type's one-day-off column is empty by
+  arithmetic (row W303-S2), so that column no longer tells one type from another and admits nothing. The admitted list of v0.39 is
+  UNCHANGED by this addendum: seven pairs.
+- **`RIC/BDC / Inst` is NOT admitted by this addendum.** The guard removes its two known bad days, and admitting it would size blank at
+  46.298 percent and never-served at 283. Against it, on the record: six of its 71 securities outside the first witness are un-graded on
+  more than half their days (79 of 85 at worst), and no admitted-type security is. A reader that repeats its bar most days for a fund that
+  prices daily is not carrying that fund, and nothing measured says what its bar is on the few days it moves. One read decides it (next
+  cell): for the overlap securities of `Inst` and of `RIC/BDC / Not Available`, the day a bar first moves after a repeated run, set beside
+  the anchor; and for the six, what the reader's moved days are. Counts only.
+- **To the cent is not adopted** (row W303-S1): above a price of about 50 a cent is inside 1e-4, so it is not the stricter reading. The
+  tolerance stays relative 1e-4.
+- **Rule 24:** no value is added to any set. The guard is a predicate on one witness: domain, every security-day `YAHOO_CLOSE` would
+  grade; two outcomes, graded or not graded; it moves no claim of `SCHWAB_ANCHOR`.
 
 -- 1.0.0_SA_CTO~DELL2

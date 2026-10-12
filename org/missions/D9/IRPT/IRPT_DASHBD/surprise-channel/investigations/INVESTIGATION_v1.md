@@ -6575,3 +6575,73 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W113-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~113",
+  "surfaced_at": "2026-10-11T19:05:32Z",
+  "one_line": "DB-b-140: the order says to reuse ~108's and ~111's downloads and read AWS only if they do not hold what is needed; they did not hold the transaction id, the portfolio group or the object each ledger row sat in, so the same Black Diamond transactions prefix was re-read once (GETs only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-140 BOUNDS: AWS reads allowed for 49 Financial's own Black Diamond transactions tree 'only if their existing download does not already hold what you need'; the cell expects the cause to be found from the rows ~108 and ~111 hold.",
+  "world_is": "~108's read90.py kept 12 columns of the transactions tree (return_date, action, type, sub-type, external_flow, account_number, market_value, fees, income, trade and settle date). On the 50 differing days the rows repeated k times, identical in all 12 kept columns, so the kept columns could show a multiplicity but not its source. This worker re-read opal-data-assets/blackdiamond/49financial/silver_legacy/transactions/ (the prefix read90.py names, 1878 date objects, 0 failures, read-only GET and LIST through boto3 built as read90.py builds it), kept every column for the rows of the 17 accounts of the 18 segments, and found the k copies differ only in portfolio_group and share one transaction_id, one date object, one source file and one ingest stamp. No other prefix, no other bucket, no write, no denial. Output is under the private evidence folder for ~113, outside the repo.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~108/read90.py (TXN_PREFIX, TXN_COLS)",
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~113/b2_read.py and b4_vary.py (private, outside the repo)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W113-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~113",
+  "surfaced_at": "2026-10-11T19:05:32Z",
+  "one_line": "DB-b-140: the Black Diamond transactions copy (silver_legacy/transactions) holds one row per (transaction id, portfolio group), so a transaction in k groups is landed k times; a reader that sums its rows by return date without keying on transaction id counts the transaction k times. This is the cause of the 18 unreproduced tie-out segments (50 flow days, all reproduced to the cent by counting each transaction id once).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker ~111's CONTESTED_51.json and the CTO's round-74 analysis: on 18 of the 51 the custodian's flow rows do not reproduce the served flow day by day, 'excluding fee rows does not reconcile them'; the served flow is read as the number whose agreement with the ledger is in question.",
+  "world_is": "On 50 of 50 differing flow days the ledger rows are repeated k times (k 2 to 9, constant within a segment, equal to the account's portfolio-group count in 18 of 18 segments), identical but for portfolio_group; counting each transaction id once gives the served day flow to the cent on 50 of 50, and on 129 of 130 flow days of the 18 segments (the one other, see S3). The served flow (account_return_daily.py lines 536-732, from the custodian's fact_trn) counts each cash leg once, so this is not a defect in the served number. Hazard not surveyed: any other reader that sums this prefix's rows without keying on transaction id would over-count the same way (~108's and ~111's own tables read it by return date); this worker did not read those readers' other uses, and the other 33 of the 51 segments were not re-read by transaction id (on ~108's download 104 of their 105 flow days show one copy of each row).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~113/UNREPRODUCED_18.json",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 536-552 and 713-732 (the served flow's own rule)",
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~113/b5_txnid.py (private, outside the repo)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W113-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~113",
+  "surfaced_at": "2026-10-11T19:05:32Z",
+  "one_line": "DB-b-140: worker ~111's comparison tolerance, max(1.00, 0.1 percent of the day's flow), hid one more differing flow day in one of the 18 segments: at the cent the ledger carries a small 'Other Fee' expense row that the served flow does not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-140 item 1: reproduce 18 segments and 50 differing flow days; a different count is a STOP.",
+  "world_is": "Both counts reproduced at ~111's tolerance (18 segments, 50 days), so no STOP. Re-applying the transaction-id rule to all 130 flow days of the 18 segments at a tolerance of half a cent, 129 reproduce; the 130th is a day on which a very large withdrawal agrees within 0.1 percent while one small Other Fee expense row (tagged Withdrawal by Black Diamond) is not in the served day flow. It is a flow day of a segment that is already under the cause above for its other days, and it is not counted among the 50. The fact_trn row for that day and its code class were not read, so whether the producer classes it as an administrative fee kept inside the return (line 706) is NOT_ESTABLISHED. No dollar figure is recorded here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~113/b5_txnid.py and b6_odd.py (private, outside the repo)",
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~111/s5_mismatch.py (the tolerance)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

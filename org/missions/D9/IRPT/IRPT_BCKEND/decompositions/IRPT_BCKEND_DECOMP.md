@@ -3126,3 +3126,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r144/p144_cells.py`: all six criteria
 
 fanout: 2 of 2 chains, cap 8, reason: two independent cells. Assignees: 0.9.0_WK_IRPT_BCKEND~305 (IB-pr-447, DIRECT-ACT) and
 0.7.0_AE_CloudOps~IB2 (IB-pr-448).
+
+## 137. ROUND 145, WORKSTREAM ~P (2026-10-11 ~19:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5624 and PRD v0.40 @6d12b3dd65)
+
+IB-pr-445 drained @7d31765674. The CTO adopted the unmoved-bar guard (PRD v0.40) and did not admit the institutional class: six of
+its 71 outside securities repeat their bar on more than half their days, and nothing measured says what the bar is when it moves.
+One read-only cell, counts only.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r145/p145_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-449` | for the overlap securities of the Inst and RIC/BDC Not Available pairs, the first moved bar after each repeated run, beside the anchor (five outcomes, no remainder); and the six institutional securities' moved days with their held rows against the bar | FWD-13 (a date label is measured, never assumed) | LOCAL | IB-pr-445 drained | P145-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~306. DIRECT-ACT (one read-only cell, LOCAL).
