@@ -6428,3 +6428,29 @@
   "notes": "No action by this order; the wire regeneration is outside its grant."
 }
 ```
+
+## DSGN_IRPTV1-D2-S25 -- Row DSGN_IRPTV1-D2-W62-S3 (the Holdings tab's navy panel strips) is closed OBSERVATION, INERT by ruling: the strips are the recorded divergence, owned by the design system's successor project; this project restyles nothing for it
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S25",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-12T02:24:18Z",
+  "one_line": "Row DSGN_IRPTV1-D2-W62-S3 (the Holdings tab's navy panel strips) is closed OBSERVATION, INERT by ruling: the strips are the recorded divergence, owned by the design system's successor project; this project restyles nothing for it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row DSGN_IRPTV1-D2-W62-S3 asked for a design ruling: are the five navy strips the Holdings tab draws from the shared PanelHeader and PanelFooter a C3 band (portal/DESIGN.md C3: one deliberate full-bleed band per page; navy never a container fill).",
+  "world_is": "Ruled twice. 1.0.0_SA_CTO~DELL2 msg 5852 (2026-10-11): a navy-filled strip breaks C3's second sentence; the shared src/ui components are not restyled by this project; one cell inside the grant, the Holdings tab passing PanelFooter its existing light ground. That cell is done: IV-e-117, portal 1221f764 on DEV, strips 5 to 3 by measurement, no file under src/ui changed. The laptop's 1.0.0_SA_CTO, the design system's fabric, then ruled on crossbox call XB-20261011T211128Z-f139 (its file CTO_RULINGS_POST_OFFLINE_FIVE_CROSSBOX_CALLS_AND_TWO_SECURITY_CARRIES_20261012.md section 5, read by this seat at origin/CLOUD): a PanelHeader or PanelFooter strip is not a C3 band and not a licence; it is the recorded divergence (portal/CLAUDE.md lines 40-44, row DSGN_REBRND-W2-S5), owned by the DSGN_REBRND successor, a laptop-fabric project to be briefed; the Total Assets hero is the page's one band; DSGN_IRPTV1 restyles nothing for this row. 1.0.0_SA_CTO~DELL2 msg 6352: the row closes OBSERVATION, INERT citing that section. The three header strips stay. Stated, not resolved by this seat: the laptop's ruling says this project restyles nothing for the row, and IV-e-117 had already landed under the dell2 ruling; it changed two call sites on this project's own page to a prop the shared footer already offers and restyled no shared component. The disposition of row W62-S3 itself is the reviewer's to record in its adjudication; this row carries the two rulings to it and is not that disposition.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "origin/CLOUD:org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_POST_OFFLINE_FIVE_CROSSBOX_CALLS_AND_TWO_SECURITY_CARRIES_20261012.md section 5 (read by this seat with git show after a fetch; the file was not yet on box/dell2)",
+      "1.0.0_SA_CTO~DELL2 msgs 5852 and 6352",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~65/HOLDINGS_FOOTER_LIGHT.json (navy_strips 5 to 3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
