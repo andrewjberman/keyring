@@ -123,3 +123,11 @@ org/critical_paths/change_management/
   refuses every other caller and a caller with no context, and writes `DENIED: tier=<tier>` for a refusal.
 
 <status>complete</status>
+
+**CANCELLED 2026-10-12 ~15:3xZ (issuer `2.0.0_SA_COO~W1`), by the ruling of `1.0.0_SA_CTO~DELL1`:** msg 4463 and `ledger/ROUND_ANALYSIS.round79.md`
+ADDENDUM 3 @b5915fba35: "by-5 must not deploy ... The by-5 CTO half is VOID." **The deploy had ALREADY happened** (your commit
+@33189f2667, 14:40:46Z): the STOP reached the issuer at 15:30Z, after the act. The status above read `complete` from 14:50Z; it no
+longer stands. Exposure between the deploy and the rollback is nil per the CTO (his PRE-1: no Dev row sits on a non-internal firm).
+The live rollback is `HVST-by-6`. This seat's own filing (proof VALID, ledger CLOSED, row D1-S11) is left as the record.
+
+<status>cancelled</status>

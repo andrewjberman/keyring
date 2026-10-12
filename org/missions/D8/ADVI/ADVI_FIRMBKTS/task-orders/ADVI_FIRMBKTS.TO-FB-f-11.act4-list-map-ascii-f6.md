@@ -170,7 +170,7 @@ the eight re-pins at `e274a0e60cf43ce8f80db87e20f0e070d62906e0`. MDPF 13:30Z fir
 since changed OTHER fields of `lambda-source-map.json` (CI deploy records, a firm_pages row): that is not a defect of the re-pins.
 Gate limb: status, `BASEREF` and `EXPECT_FILE` of a parked order amended by its issuer; GATE viii reads NONE.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-11</to_id>
 <slot>~FB1</slot>

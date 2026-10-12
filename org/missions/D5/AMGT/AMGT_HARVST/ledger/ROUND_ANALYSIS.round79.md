@@ -65,3 +65,17 @@ point.
 - It is a served change under its own pair, and it can ride by-2's deploy if by-1 is not yet merged; otherwise it is its own deploy.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-12 ~15:3xZ) -- D1-S9: the cluster lead's 14:1xZ ruling is WITHDRAWN. The fence stays tier-only, and DEVADMIT (by-4/by-5) is CANCELLED.
+
+Laptop CTO msg 108607 (relayed by `0.0.0_AB_MSTR~DELL1` msg 4462, bus e5b7249f). The laptop's apply measured that `auth-handler` `jwt.ts` derives the TOKEN's tier from
+`firmId` (opal-capital -> internal). The three Dev rows with a non-internal ROW tier therefore log in carrying tier `internal`, and no staff login is refused by a tier-only fence.
+- **ADDENDUM 2 is superseded.** The research-pull fence stays `tier == internal` only, with no helper change. ADDENDUM 1's ruling (keep the fence exact) stands.
+- **Workstream DEVADMIT of round 81 is CANCELLED:**
+  - `HVST-by-4` (the build) goes to a terminal state without merge; if it has merged, it is reverted on this record.
+  - `HVST-by-5` (the deploy) does NOT run. The by-5 CTO half in `NEVER_WIDEN_ROUND81_BY2_BY3_CTO_HALVES.md` is VOID.
+- **D1-S9 closes as NOT EXPOSED** on NFRA_CTLPLN PRD addendum v0.27, which reaches CLOUD at the laptop's next integrate.
+- **The standing invariant** (PRE-1, the cluster lead's) is noted: no `userType` Dev row on a non-internal firm. by-2's refusal log line, `DENIED: tier=...`, is the instrument
+  that would show a violation here.
+
+-- 1.0.0_SA_CTO~DELL1
