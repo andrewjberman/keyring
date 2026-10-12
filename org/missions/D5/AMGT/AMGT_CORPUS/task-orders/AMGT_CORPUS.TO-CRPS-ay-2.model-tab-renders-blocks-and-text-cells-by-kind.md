@@ -86,6 +86,15 @@ header comment of the issuer's check (`ay2_check.cjs`, arms d9 and d10 are new).
   label + `why`, and no title, years or cell; `MASTER_TEAM_ROW_WHY` is imported from `modelSheet`.
 The decision is keyed on `teamSheet.class === 'master'` (and on `own_new` / `own_model` for the error words); no served-shape change, no method bump. Add NO other behaviour.
 
+**AMENDMENT 3 (issuer, 2026-10-12 ~04:1xZ; the CTO's review of AMENDMENT 2, msg 4257; the order is REOPENED again and you are re-seated).** `startsWith('#')` would hide a team word such as "#1" or "#Top". The error test
+is the CLOSED spreadsheet error set, one function used in every place the code decides error vs word. Your new base is your own amendment-2 candidate: portal commit `bfb44955319a595e3d52ce30d5eb8ce5012dcbf6` (your worktree is on it;
+branch `wk-AMGT_CORPUS-49-7-portal`). The issuer's reference patch, a diff from that commit, is `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round49/ay2_reference_amendment3.patch.txt`
+(`modelSheet.ts` only: 15 insertions, 3 deletions). **Do:** `cd portal && git apply --whitespace=nowarn ../org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round49/ay2_reference_amendment3.patch.txt`;
+`git diff --stat` shows that one file. What it does: exports `isSpreadsheetError(text)`: true iff the trimmed text, case-insensitively, equals one of `#NULL!`, `#DIV/0!`, `#VALUE!`, `#REF!`, `#NAME?`, `#NUM!`, `#N/A`, `#N/A N/A`,
+`#GETTING_DATA`, `#SPILL!`, `#CALC!`, `#FIELD!`, `#BLOCKED!`, `#CONNECT!`, `#UNKNOWN!`; the grid text cell's `textKind`, the block cell's `textKind` and the all-text row's why all use it, so "#1" and "#Top" print verbatim
+as words in all three places and "#N/A" prints in words. `ModelTab.tsx` is unchanged. The issuer's check has an eleventh arm d11 (read its header comment). Add NO other behaviour. Run the tabs harness in YOUR full worktree
+(the outer repo with `portal/` inside), never in a standalone portal tree.
+
 ## 2. BOUNDS
 
 1. Only the files in `<paths>` change. Never edit the issuer's check, snapshot or patch. No `__harness__/` edit.
@@ -113,15 +122,15 @@ with `ay2_base_snapshot.json`, and the reference patch beside them.
 ## 4. PROOF OF SPEC (literal; timeout 120)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="CRPS-ay-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round49/ay2_check.cjs" portal 2&gt;&amp;1 | tail -1</invocation><expect>(?m)^ay2 build 10/10 control 2/2$</expect></criterion>
+  <criterion id="AC1" cell_refs="CRPS-ay-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round49/ay2_check.cjs" portal 2&gt;&amp;1 | tail -1</invocation><expect>(?m)^ay2 build 11/11 control 2/2$</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-ay-2"><invocation>cd "$(git rev-parse --show-toplevel)/portal" &amp;&amp; node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs 2&gt;&amp;1 | tail -1</invocation><expect>(?m)^CHECKS-OK 21 of 21$</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-ay-2"><invocation>cd "$(git rev-parse --show-toplevel)/portal" &amp;&amp; grep -c "data-sheet-block" src/pages/SecurityAnalysis/tabs/ModelTab.tsx</invocation><expect>(?m)^[1-9]\d*$</expect></criterion>
 </proof_of_spec>
 
-- AC1 (AMENDMENT 2: ten arms): blocks (period, case, unread) with their own header cells and the display strings by the cell's own format; BLOCK rows in no period group; the three-way text cell and its census; a
+- AC1 (AMENDMENT 3: eleven arms): blocks (period, case, unread) with their own header cells and the display strings by the cell's own format; BLOCK rows in no period group; the three-way text cell and its census; a
   figure row holding `NA`, `#N/A` and a range stays a FIGURE row; without `blocks` the sheet is byte-equal to the base's (except the added `teamCensus.text`); an inconsistent payload does not throw;
   the unread block prints no value; a block headed by `1Q26..4Q26` is a period block; `ModelTab.tsx` carries the render strings; an own-class block error token is `textKind` error (d9); a master sheet's blocks carry
-  no cell and print the template why (d10).
+  no cell and print the template why (d10); a team word such as "#1" is never an error token, a closed-set token always is (d11).
 - AC2: the page's tab harness still passes (`CHECKS-OK 21 of 21`, the control round 47's order carried). AMENDMENT 1 (issuer, 2026-10-11 ~23:4xZ): the first text pinned a failing set of three checks at `ad774c6f`; that came from a STANDALONE portal tree (the harness reads files of the outer repo beside `portal/`). In a full worktree the harness reads 21 of 21 at base and patched. Gate limb: none graded this amendment (the order declares no `<placeholders>`).
 - AC3: the Model tab renders a block.
 
@@ -130,7 +139,7 @@ with `ay2_base_snapshot.json`, and the reference patch beside them.
 1. Run `bun run typecheck` inside `portal/` and report its exit code (the reference reads rc 0).
 2. Write the instance at the proof path (genre BUILD), with its mutant control; run `python .tools/proof-of-spec-check.py <instance>
    AC1,AC2,AC3 --governing-order <this order>` AFTER your final commit; rc 0.
-3. Only if AC1-AC3 pass, append a new status tag reading complete at the END of this file, in the SAME outer commit as your instance. Your portal commit is on `wk-AMGT_CORPUS-49-6-portal`; report its FULL 40-character hash.
+3. Only if AC1-AC3 pass, append a new status tag reading complete at the END of this file, in the SAME outer commit as your instance. Your portal commit is on `wk-AMGT_CORPUS-49-7-portal` (on top of bfb44955); report its FULL 40-character hash.
 4. Report ONCE: the change, AC1's, AC2's and AC3's lines, the typecheck exit code, the portal branch and FULL 40-character portal commit, your outer commit hash, any row.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
@@ -144,4 +153,3 @@ aw-2). AMENDMENT 1 (2026-10-11 ~23:4xZ): the tabs harness reads 21 of 21 at that
 <round>49</round>
 <slot>~2</slot>
 <fabric>dell1</fabric>
-<status>complete</status>
