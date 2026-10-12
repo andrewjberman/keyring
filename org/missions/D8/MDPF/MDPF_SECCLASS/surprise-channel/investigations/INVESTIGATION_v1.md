@@ -6337,3 +6337,169 @@ by dell1 or by this seat.
   "world_is": "At the 2026-10-09 as-of the served D_04 Unclassified did not move across the ship (identical to the cent), while D_03's did. The code explains it: C_06's incremental run keeps every already-written date and its retained-date pass skips holdings classed 'unclassified', and D_04's firm mix is C_06's snapshot. The fix therefore reaches D_04's served mix only for a date C_06 builds new; retained dates (10-06..10-09) keep the 23 in Unclassified. NOT yet read: whether today's 04:00Z fire builds a new date (the as_of may still be 10-09), and the same read on a new date."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W83-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~83",
+  "surfaced_at": "2026-10-12T09:21:10Z",
+  "one_line": "The 2026-10-06/07/08 canonical holdings partitions are not last written 2026-10-10T23:15Z: their current versions carry LastModified 2026-10-12T04:16:42Z, and the 2026-10-10T23:15:02Z objects are prior versions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-object-versions --bucket opal-data-bd --prefix gold/canonical/holdings/2026-10-06.parquet (2026-10-12 ~09:2xZ): 9 versions; latest IsLatest true LastModified 2026-10-12T04:16:42+00:00 ETag d28efa55e568b130576eeacdb7692ada; 2026-10-10T23:15:02+00:00 is a prior version (ETag a7b28833f854c6ad8ca8c378abf272cb)",
+      "same read for 2026-10-07 (7 versions, latest 2026-10-12T04:16:42+00:00) and 2026-10-08 (5 versions, latest 2026-10-12T04:16:42+00:00)",
+      "aws s3api list-objects-v2 --bucket opal-data-bd --prefix gold/canonical/holdings/ : 2474 keys; LastModified of 2026-10-06, 2026-10-07 and 2026-10-08 all 2026-10-12T04:16:42+00:00"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-94 worker face: all three partitions (2026-10-06, 07 and 08) were last written 2026-10-10T23:15Z, after the served snapshot 2026-10-10T05:26Z.",
+  "world_is": "At 2026-10-12 ~09:2xZ the current version of each of the three partitions has LastModified 2026-10-12T04:16:42Z. The 2026-10-10T23:15:02Z object is a prior version of each key (version counts 9, 7 and 5)."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W83-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~83",
+  "surfaced_at": "2026-10-12T09:21:10Z",
+  "one_line": "The 2026-10-10T23:15Z writes re-put identical bytes: each of the 15 window versions has the ETag of its prior version, so the content change to the three partitions sits at 2026-10-11T04:16:35Z and 2026-10-12T00:33:48Z, not at 23:15Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-object-versions --bucket opal-data-bd --prefix gold/canonical/holdings/ (no truncation, 2969 versions over 2474 keys): 15 versions with LastModified 2026-10-10T23:15:01-03Z; each ETag equals the prior version's ETag of its key (15 same, 0 changed)",
+      "gold/canonical/holdings/2026-10-06.parquet ETag a7b28833f854c6ad8ca8c378abf272cb at 2026-10-10T04:15:48Z and again at 2026-10-10T23:15:02Z; ETag 4cf2018fa797482095dd5f7db3624a5f at 2026-10-11T04:16:35Z; ETag d28efa55e568b130576eeacdb7692ada at 2026-10-12T00:33:48Z; the same ETag pattern holds for 2026-10-07 and 2026-10-08"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-94 and surprise MDPF_SECCLASS-D1-W78-S1 locate the partition change at the 2026-10-10T23:15Z write.",
+  "world_is": "The 23:15Z write re-puts identical bytes. The bytes served at 2026-10-10T05:26Z (from the 04:15:48Z versions) equal the bytes at 23:15:02Z. The content change to the three partitions is at 2026-10-11T04:16:35Z and 2026-10-12T00:33:48Z. The 23:15Z re-put happens on 2026-10-08, 09 and 10 for these keys, and not on 2026-10-11."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W83-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~83",
+  "surfaced_at": "2026-10-12T09:21:10Z",
+  "one_line": "The BD gold runner telemetry carries resource samples keyed by runner group, not by script or output key, so the writer of the 23:15Z versions is named by code and run-time containment, not by a log line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-bd/logs/gold-layer/telemetry/bd-gold-layer-runner/B_00/608de09d26a6.jsonl (run 608de09d26a6): rows span 2026-10-10T23:14:40.239Z to 23:15:02.865Z; fields ts, runner, script (group code B_00), run_id, cpu_pct, memory_mb, threads, no output key",
+      "aws s3api head-object gold/canonical/holdings/2026-10-06.parquet --version-id 2b_PXBL7_MlZH3iHICnCCQvAUH7nJxPc: Metadata {} (no writer metadata)",
+      "aws cloudtrail lookup-events --start-time 2026-10-10T23:00:00Z --end-time 2026-10-10T23:30:00Z --lookup-attributes AttributeKey=EventSource,AttributeValue=s3.amazonaws.com: 0 events; no gold_incremental log file dated 2026-10-10 23:xx under logs/gold-layer/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-94 step 2: name the writer from the object metadata, the BD gold runner telemetry and logs for the window, or CloudTrail management events.",
+  "world_is": "Object metadata is empty. Telemetry names a runner group and a run id, never the script or the key. CloudTrail management lookup holds no S3 PutObject (a data event). The writer is identified by code (B_00.canonical_holdings.py is the only put_object to gold/canonical/holdings/) plus containment of the 15 writes (2026-10-10T23:15:01-03Z) inside B_00 run 608de09d26a6 (23:14:40.239Z-23:15:02.865Z). The IAM principal is not resolved."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W83-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~83",
+  "surfaced_at": "2026-10-12T09:21:10Z",
+  "one_line": "comp-pipescript io lists B_02 as an implicit writer of CANONICAL_HOLDINGS_PREFIX; the code shows B_02 reads that prefix and writes only canonical_lots keys, so the distinct writer count is 1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-pipescript io C_06.client_mix_timeseries.py --pipeline bd-gold: CANONICAL_HOLDINGS_PREFIX <- IMPLICIT: B_00, B_02 (via FUNC-key)",
+      "data/black_diamond/scripts/gold/B_02.canonical_lots.py: reads gold/canonical/holdings/ at lines 202, 711 and 967; puts only canonical_lots_unrealized_key, canonical_lots_realized_key, CANONICAL_LOTS_INCR_WATERMARK and gold/_parity keys at lines 623-629, 859-862, 1018 and 1153",
+      "data/black_diamond/scripts/gold/B_00.canonical_holdings.py: put_object to canonical_holdings_key at lines 860, 1004 and 1352 (the only writer of the prefix in the tree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "comp-pipescript io names the writers of CANONICAL_HOLDINGS_PREFIX as B_00 and B_02 (IMPLICIT, via FUNC-key), so two writers are in scope for the window.",
+  "world_is": "B_02 writes no key under gold/canonical/holdings/. Its puts are canonical_lots keys, a watermark and a parity scorecard. The distinct writer count of the prefix is 1 (B_00)."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W83-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~83",
+  "surfaced_at": "2026-10-12T09:21:10Z",
+  "one_line": "C_06's incremental fires never re-derive a retained date while B_00 keeps moving that date's canonical bytes, so the served C_06 totals for 2026-10-06, 07 and 08 are left on their snapshot by the next default fire.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (the ruling on correction or drift follows the W78 read; the record leaves ruling_on_correction_or_drift null)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py :689 keys_to_process = [k for k in all_keys if _parse_date(k) > watermark] when incremental; :281 the incremental merge keeps every already-written date",
+      "gold/meta/client_timeseries_watermark.json data_as_of 2026-10-09 (LastModified 2026-10-11T05:23:28+00:00); the canonical prefix's last key is 2026-10-09.parquet",
+      "canonical bytes of 2026-10-06/07/08 changed at 2026-10-11T04:16:35Z and 2026-10-12T00:33:48Z (ETag changes in list-object-versions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C_06 builds only partitions dated after the watermark and keeps every already-written date, so a served date is re-derived only when it is new.",
+  "world_is": "The watermark is data_as_of 2026-10-09 and no canonical partition dated after it exists at read time, so the next default fire re-serves none of 2026-10-06, 07 or 08 (c06_reserves_dates_next_fire false), while B_00 has changed those partitions' bytes on 2026-10-11 and 2026-10-12. Whether the served totals should be corrected is not decided here."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W83-S6",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~83",
+  "surfaced_at": "2026-10-12T09:21:10Z",
+  "one_line": "The C_06 holdings listing reads S3_BUCKET directly, not platinum_source; in the default legacy mode both resolve to opal-data-bd with the same key, so the listed partitions are unchanged by the premise's wording.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py :324-332 _list_positions_cube_keys() paginates list_objects_v2 with Bucket=S3_BUCKET; :319 uses platinum_source for per-key reads",
+      "data/black_diamond/scripts/gold/lib/platinum_dest_view.py PLATINUM_CLASSES has no gold/canonical/holdings/ class; data/black_diamond/scripts/gold/lib/platinum_dest.py destination() and source() return (S3_BUCKET, legacy_key) when no class owns the key and the mode is legacy (the default)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-94 step 1: the partitions are listed in the bucket named by platinum_source.",
+  "world_is": "The listing uses S3_BUCKET (opal-data-bd) directly. platinum_source resolves to the same bucket and key for this prefix in the default legacy mode, so the listing and the per-key reads address the same objects."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W83-S7",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~83",
+  "surfaced_at": "2026-10-12T09:24:14Z",
+  "one_line": "The order names row ids MDPF_SECCLASS-W83-S<k>, but the surprise-row gate refuses a dell1 row whose id lacks the D1 coordinate; the six rows above are filed as MDPF_SECCLASS-D1-W83-S<k>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh on the SC-e-94 commit (2026-10-12 ~09:24Z): surprise-row-gate BLOCKED 6 violations, each 'fabric=dell1 but the id carries no coordinate ... dell1 = id <CODE>-D1-S<n> (worker: <CODE>-D1-W<n>-S<k>)'",
+      "existing dell1 worker row ids in the same channel and project, e.g. MDPF_SECCLASS-D1-W78-S1 cited by the round-20 proof MDPF_SECCLASS.TO-SC-e88.c06-total-vs-class-sum-trace.proof_of_spec.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-94 refusal clause: file the surprise row with id MDPF_SECCLASS-W83-S<k>.",
+  "world_is": "The surprise-row gate requires the fabric coordinate in a dell1 row id (MDPF_SECCLASS-D1-W<n>-S<k>) and refuses the bare form. The rows are filed as MDPF_SECCLASS-D1-W83-S1..S6, with this row as S7; the allocator's slot n is 83 in both forms."
+}
+```
