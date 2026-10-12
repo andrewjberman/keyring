@@ -3,7 +3,7 @@
 ship on stale or unreadable worktree state although nothing contends. Drives `.tools/crossbox-deploy-check.py` (imported by path)
 against throwaway git repos in a temp directory; no repo of this workspace is read or written. Run from the repo root being graded.
 
-Usage:  python sc_r21_trunk_first.py <lagging|vanished|planted>
+Usage:  python sc_r21_trunk_first.py <lagging|vanished|planted|branch>
 
 TRUNK is the HEAD of the checkout the check runs in (the `repo_root` argument). A worktree is LAGGING when its HEAD has not taken the
 commit that deleted a sentinel at trunk.
@@ -16,6 +16,11 @@ vanished : (limb e) a registered worktree whose directory is gone (prunable) is 
 planted  : (the CONTROL for both limbs) (a) a live sentinel at trunk HEAD, another author, naming the carried file, still draws exactly
            1 hit; (b) a sentinel that exists ONLY on a worker's branch (never at trunk: a deploy open on its branch until the drain)
            still draws exactly 1 hit.   Prints  TRUNK-FIRST ok=<bool> case=planted trunk_hits=<n> branch_only_hits=<n>
+branch   : (limb e, the amendment, row D1-W81-S2) a worktree whose directory is GONE but whose BRANCH still carries a deploy open on it
+           (committed there, never at trunk) is read THROUGH ITS BRANCH REF and draws exactly 1 hit; a vanished worktree is clear only
+           when its ref was read.   Prints  TRUNK-FIRST ok=<bool> case=branch hits=<n>
+The tool under test is `.tools/crossbox-deploy-check.py` of the repo root; the env var R21_TOOL overrides the path (the issuer's
+positive and negative controls only).
 """
 import importlib.util
 import json
@@ -27,7 +32,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path.cwd()
-TOOL = ROOT / ".tools" / "crossbox-deploy-check.py"
+TOOL = Path(os.environ.get("R21_TOOL") or (ROOT / ".tools" / "crossbox-deploy-check.py"))
 CARRIED = "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py"
 REL = "data/black_diamond"
 OWN, OTHER = "0.7.0_AE_CloudOps~SC1", "0.7.0_AE_CloudOps~RA1"
@@ -124,9 +129,24 @@ def case_planted():
     return 0 if ok else 1
 
 
+def case_branch():
+    mod = _tool()
+    with tempfile.TemporaryDirectory() as td:
+        repo = _repo(td)
+        wt = Path(td) / "worker"
+        _git(repo, "worktree", "add", "-q", "-b", "worker", str(wt))
+        _sentinel(wt / SENT_DIR / "open-on-branch.json", "open-on-branch", OTHER, "OPEN")
+        _commit(wt, "deploy open on the worker's branch until the drain")
+        shutil.rmtree(wt, ignore_errors=True)  # the directory is gone; the registration and the branch remain
+        hits, _ = mod.measure_open_deploy(str(repo), REL, OWN, files=[CARRIED])
+    ok = len(hits) == 1
+    print(f"TRUNK-FIRST ok={ok} case=branch hits={len(hits)}")
+    return 0 if ok else 1
+
+
 if __name__ == "__main__":
-    fns = {"lagging": case_lagging, "vanished": case_vanished, "planted": case_planted}
+    fns = {"lagging": case_lagging, "vanished": case_vanished, "planted": case_planted, "branch": case_branch}
     if len(sys.argv) != 2 or sys.argv[1] not in fns:
-        print("TRUNK-FIRST ok=False error=usage (lagging|vanished|planted)")
+        print("TRUNK-FIRST ok=False error=usage (lagging|vanished|planted|branch)")
         sys.exit(2)
     sys.exit(fns[sys.argv[1]]())
