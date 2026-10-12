@@ -4757,5 +4757,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "notes": "Asked of the CTO (one question, 2026-10-12 ~03:38Z): print block error tokens as 'error in team sheet' with the token in the title, and whether to drop the master template's tokens. Default if unanswered: left as is, recorded for the round-50 list. No code changed.",
   "disarm_owner": "2.0.0_SA_COO~C1"
 }
+,
+{
+  "id": "AMGT_CORPUS-D1-S11",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-12T05:03:21Z",
+  "one_line": "One GET /api/scoped/amgt/security/9433%20JP/versions answered HTTP 500 during the 05:00Z DEV walk, after the bg-3 redeploy (42z0tn6..); direct invokes of the same route minutes later answered 200 for five names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ui-walk tmp/ui-walk/20261012T050039Z netlog.tsv: 'GET 500 /api/scoped/amgt/security/9433%20JP/versions'; the walk's SUMMARY reads '1 API issue(s)'; the three earlier walks of 2026-10-12 (03:26Z, 03:33Z, 04:54Z) read 0 API issues.",
+      "Issuer's direct invoke of opal-amgt-scoped-api at ~05:10Z: /versions for 9433%20JP, 9433_JP_Equity, ROG%20SW, AZN%20LN and TSM%20US answered 200 (4.6 to 5.5 KB, 0.1 to 0.2 s)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT_RESAPP bg-3: the S3 client is built once per container with a pool of 32 and no served byte moves.",
+  "world_is": "A single 500 on a read-only listing route in a walk of 30 screenshots; not reproduced; the cause is not diagnosed here. It is not a corpus or team_sheet field.",
+  "notes": "Surfaced for 2.0.0_SA_COO~R1 (the S3-client change is its cell). No gate built; nothing changed.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+}
 ]
 ```
