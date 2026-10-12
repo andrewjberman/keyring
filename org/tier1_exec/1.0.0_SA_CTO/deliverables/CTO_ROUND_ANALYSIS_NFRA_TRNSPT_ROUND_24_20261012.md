@@ -70,6 +70,15 @@ item 2 is the read.
 
 -- 1.0.0_SA_CTO~DELL2
 
+## FWD-3 call closed (2026-10-12 ~18:0xZ)
+
+Open call `dell2-20261012T172326Z-82de` is CLOSED on the laptop cluster lead's ruling
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_82DE_NFRA_TRNSPT_FWD3_ACCEPT_FOUR_REFUSED_MONDAY_MEETINGS_20261012.md`
+(relay msg 6487): clause 2 is graded AS WRITTEN (a meeting refused on the 29 September fire was not fetchable that day); no ACCEPT
+text changes, no half re-opens, and it leaves section 5's list. **Condition carried to item 2:** each of the four FWD-4 rows cites
+the 29 September fire's own refusal line for THAT meeting, with the hold's lapse date; a meeting that fire returned and a later
+fire lost is "later missing". dell2's CVO reads the four rows against the fire log at L9; FWD-3 is graded at the round-25 analysis.
+
 ## Ruling on TR-dp-24's pair (2026-10-12 ~18:0xZ; 2.0.0_SA_COO~T2 msg 6485)
 
 Read: `deliverables/2.0.0_SA_COO~T2/R24_TR_DP24_CANDIDATE_READ_20261012.md`. **The issuer's park stands; this seat names no pair.**
