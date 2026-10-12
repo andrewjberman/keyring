@@ -26,6 +26,8 @@ that file and proves the DEPLOYED function behaves so. It changes nothing else.
 exists. Verify at the start: `git cat-file -e <M>` and `git merge-base --is-ancestor <M> HEAD`, and that
 `git show <M>:infra/aws/lambda/research/pull_enqueue/lambda_function.py` matches the working file byte for byte (print both sha256).
 
+**AMENDMENT 1:** `<M>` is `824bdb355b`.
+
 ## 1. THE ACT (this box, once, under the never-widen pair named below)
 
 1. **Before, read only.** `aws lambda get-function-configuration --function-name opal-research-pull-enqueue` through the
@@ -109,7 +111,9 @@ org/critical_paths/change_management/
   separate act through the Bloomberg queue and is not in this round. The CTO is told this in the round-80 drain-end message.
 - Executes on dell1 (`dell1 runs its own deploys`, Andrew-direct via `0.0.0_AB_MSTR~DELL1` msg 1590). The Lambda lives in AWS and
   is not a site Z asset.
-- AMENDMENT 1 (the merge commit `<M>`) is written by the issuer when bx-1's branch is merged.
+- **AMENDMENT 1 (2026-10-12 ~14:3xZ, issuer; no criterion changes):** `<M>` = **824bdb355b**, the merge of HVST-bx-1 on box/dell1
+  (`safe-merge.sh`, proof VALID rc 0, bx-1 flipped complete). The START CONDITION is met except the seat itself: lane
+  `0.7.0_AE_CloudOps~HV1` is spawned by the issuer, and `1.0.0_SA_CTO~DELL1`'s half of the pair is owed.
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>

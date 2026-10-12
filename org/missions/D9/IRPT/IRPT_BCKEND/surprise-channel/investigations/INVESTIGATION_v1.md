@@ -28331,3 +28331,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Accounts whose last row is non-OK carry, before it, a run of non-OK days after their last OK day; those days are not between two OK days and are not the last row. They are counted in neither days_counted nor the status tables; they are reported only as a count per cell."
 }
 ```
+
+## IRPT_BCKEND-D2-W324-S1 -- The stored-report get of the column-meaning read was refused by KMS: the dell2 agent identity may list the analysis_reports prefix but may not decrypt an object in it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W324-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~324",
+  "surfaced_at": "2026-10-12T13:24:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The stored-report get of the column-meaning read was refused by KMS: the dell2 agent identity may list the analysis_reports prefix but may not decrypt an object in it",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "address shape tried: s3://<product bucket>/irpt/<firm>/platinum/analysis_reports/RPT-<32 hex>/<sha256>.json (reports/repository.py:185-216 persist -> S3ReportBlobs.put; lib/opal_naming.py:2458-2473 _reporting_destination; infra/logic/registry/reporting_policies.json irpt-x10-v1 ANALYSIS tier platinum table analysis_reports)",
+      "list: 3 calls, rc 0, 21 objects (1 + 20 + 0); get: 1 call, AccessDenied kms:Decrypt; no object body was returned; the error text carries an account id and is not reproduced"
+    ]
+  },
+  "spec_asserts": "IB-pr-469 Read 2 names a list of the stored-report prefix and one get of the most recent report carrying S18; the list succeeded, the get did not.",
+  "world_is": "The list-objects-v2 of the product bucket under the analysis_reports prefix returned 21 objects across the three registered firm prefixes (1, 20 and 0). The one get-object of the newest returned AccessDenied: the dell2 agent user is not authorized to perform kms:Decrypt on the object's key. Per the face's refusal clause no other identity, key or path was tried, so no section id of a stored report was read and Read 2 is recorded read:false."
+}
+```
+
+## IRPT_BCKEND-D2-W324-S2 -- Two census sections can carry one field label on one census page, and the extractor locates a label by the first hit with a value on the page: S15 and S16 both list 'Standard Deviation' on page 10
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W324-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~324",
+  "surfaced_at": "2026-10-12T13:24:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two census sections can carry one field label on one census page, and the extractor locates a label by the first hit with a value on the page: S15 and S16 both list 'Standard Deviation' on page 10",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json: S15 pages [10] field 'Standard Deviation' (line 1468 section), S16 pages [10] field 'Standard Deviation' (line 1636 section)",
+      "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py:656-668 (hinted pages, first hit with cands, break)"
+    ]
+  },
+  "spec_asserts": "extract.py :656-668 searches the census pages first and stops at the first label hit that has candidate values, so a label is located once per census row.",
+  "world_is": "In the census S15 (Risk Info, page 10) and S16 (Risk/Reward, page 10) each carry a field 'Standard Deviation'. Both rows search the same page for the same word run and each stops at its first hit with candidates, so both can land on the same printed row and emit two section ids (S15.standard_deviation.c<n>, S16.standard_deviation.c<n>) for one printed row, and the other printed row is never read. Not measured on a vendor PDF: the read is of the source and the census only."
+}
+```
