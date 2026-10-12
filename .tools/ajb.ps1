@@ -333,14 +333,20 @@ function ajb {
         elseif ($mp) {
             Write-Host "[ajb] $($mp.PolicyId): explicit -Model/-Effort given for ${base}; policy $($mp.Role) not applied (override)" -ForegroundColor Yellow
         }
-        elseif ($modelBySerial.ContainsKey($base)) {
+        elseif (-not $Model -and -not $Effort -and $modelBySerial.ContainsKey($base)) {
             $claudeArgs += $modelBySerial[$base]
             Write-Host "[ajb] model default for ${base}: $($modelBySerial[$base] -join ' ')" -ForegroundColor Cyan
         }
-        elseif ($base -match '^0\.([1-9][0-9]*)\.[0-9]+_') {
+        elseif (-not $Model -and -not $Effort -and $base -match '^0\.([1-9][0-9]*)\.[0-9]+_') {
             $tier2 = @('--model', 'claude-opus-5', '--effort', 'xhigh')
             $claudeArgs += $tier2
             Write-Host "[ajb] TIER-2 default for ${base}: $($tier2 -join ' ') (Andrew-direct 2026-08-24)" -ForegroundColor Cyan
+        }
+        elseif ($Model -or $Effort) {
+            # 0.0.0_AB_MSTR~DELL2 finding 2026-10-12 13:1xZ: with no policy row (a control device) and an explicit
+            # -Model/-Effort, the TIER-2 default was ALSO appended, so claude received two --model flags and which
+            # one it honoured was unmeasured. Explicit always wins; nothing else is appended.
+            Write-Host "[ajb] explicit -Model/-Effort given for ${base}; no default appended (override)" -ForegroundColor Yellow
         }
         # F8 (Andrew-direct 2026-08-20 "rec approved" @ad2585793c, OPAL_ANALYST.W6-T1): the BG seat's
         # identity is BOUND AT LAUNCH. Its own fence (bg-concierge-gate G1) forbids it the XXX.md A.1
