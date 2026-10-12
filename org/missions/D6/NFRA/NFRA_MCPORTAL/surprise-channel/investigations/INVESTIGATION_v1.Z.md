@@ -1356,6 +1356,32 @@
     "spec_asserts": "R-13: every Control Plane surface's cold read stays at or under 30 s. MP-r-2 met it at the act (all eight samples at or under 10.6 s).",
     "world_is": "Today it holds (16.7 s), but the Git state read grows with an undrained population and has risen about 4x in two days. It is the surface most likely to breach the bar next, and AMENDMENT 5's thread-pool remedy covers the activity fetch path, not this one.",
     "notes": "For the next round-N analysis (the CTO's enrichment list): the candidates are a bounded window on the git-state population, a boot-time cache warm, or a per-box incremental index. No act is owed now. The issuer re-reads r2.AC3 at each Andrew-gated close run (MP-q-1) and adds a row if a sample passes 25 s."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S38",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-12T08:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S37"
+    ],
+    "one_line": "Z-S37's 25 s trigger has fired: the live Git state cold read was 25.1 s at 08:29Z, against R-13's 30 s bar (21.8 s about 4 h earlier, 16.7 s on 10-11, 10.6 s on 10-10, 3.9 s on 10-09). It keeps rising overnight. Overlap fell from 11.8 s to 2.2 s over the same night (its activity population drains daily), so this is specific to the git-state population. A breach of the bar is now likely within hours, not days.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MP",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED 2026-10-12 08:29Z: `bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/cp2/checks/r2.AC3.sh` -> ssm e8db49fd-bf2d-4bb5-af89-e8ee744e869d Success; /health 200; all four routes 401 with no identity; overlap_s=2.2, gitstate_s=25.1, calls_s=0.6; RESULT: PASS.",
+        "MEASURED ~04:3xZ the same day, same check: gitstate_s=21.8, overlap_s=11.8 (live deployed_commit 28ba9532b6, which descends from 2a5966dfbd; all 6 CP2 files are the same blob).",
+        "The handler code is unchanged since MP-r-2 (blob equality above), so the growth is in the data, not the code."
+      ]
+    },
+    "spec_asserts": "R-13: every Control Plane surface's cold read stays at or under 30 s.",
+    "world_is": "Git state is at 25.1 s and rising about 1 s per hour over the last read pair. AC3 still passes, but the bar is close to breaching for the FWD-16 surface. Nothing is broken today: the read completes and the page renders.",
+    "notes": "BLOCKING for FWD-16's R-13 at the next close run (MP-q-1), INERT now (no wrong output, only latency). The remedy is a code change to admin_fabric_gitstate.py: a bounded window, an incremental index, or a boot-time warm. That is an amendment-class change to a COMPLETE order and a new cell, so it needs the CTO's round-N analysis, not an issuer amendment. Routed there as the first enrichment item. No act is taken at this seat; the deploy queue is not touched."
   }
 ]
 ```
