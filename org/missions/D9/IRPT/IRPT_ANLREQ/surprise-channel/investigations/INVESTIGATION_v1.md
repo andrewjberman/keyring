@@ -3695,3 +3695,27 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W53-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-12T02:12:46Z",
+  "one_line": "AR-y-163: the order says the ticket contract reads a row's existence so a disabled row still admits a caller (CTO msg 6181); at this base the ticket service already refuses a row whose status is not exactly 'active' (TCKT_VNEXT R9-st1, 97d2d4bede), so 'the reader follows the ticket service' now has two readings, existence and status, and the proposed cell carries both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:384-386 at d90edb3367 (`if got.get(\"status\") != \"active\"` returns the 403 failed-lookup answer, before allowedFirmIds is read) and the diff of 97d2d4bede",
+      "infra/aws/lambda/ticket_center/tests/test_status_active.py read whole (not run); the order's own premise, IRPT_ANLREQ.TO-AR-y-163 cell text, written from CTO msg 6181",
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r8_ds1/DISABLED_USERS_READ_20261012.json: 56 PROFILE rows, 54 active, 2 disabled, both disabled rows carry firmId opal-capital"
+    ]
+  },
+  "spec_asserts": "IRPT_ANLREQ.TO-AR-y-163 cell text: after the ticket release 'the ticket contract reads a row's EXISTENCE, so a DISABLED row still admits a caller' (CTO msg 6181).",
+  "world_is": "At d90edb3367 the ticket service source refuses a disabled row and an absent or unseen status as well as a missing row. I did not read whether round 9 is deployed. The IRPT reader (served.py:1152-1166) reads allowedFirmIds only and admits a disabled row as it admits an active one (run in process). The record names both readings; the CTO rules which the reader follows.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
