@@ -123,3 +123,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <round>75</round>
 <slot>site-z</slot>
 <fabric>dell1</fabric>
+
+**CANCELLED, CARRIED 2026-10-12 ~12:5xZ (issuer `2.0.0_SA_COO~W1`), by the ruling of `1.0.0_SA_CTO~DELL1`:**
+`org/missions/D5/AMGT/AMGT_HARVST/ledger/CTO_RULING_R79_BS3_CARRIED_AND_ENQUEUE_FENCE_20261012.md` @d66f07097b, section 2: "when bs-4
+completes, bs-3 is CARRIED ... cancelled by this ruling, and a successor cell is staged in round 80 that is cut the turn Andrew's
+sign-in is on record." bs-4 completed (flipped @189614c5bc).
+- **Measured at the cancel, so the carry is not read as a pass:** AC1, AC2 and AC4 PASS under AMENDMENT 2 (proof VALID @03072bfe1d).
+  AC3, the per-publisher accepted cycle, is NOT satisfied and was never claimed: bbg has one completed cycle record
+  (`20261010T221526Z`, completed true, stopped none, read by bw-2 @625de3ec4f); wsj and barrons have none.
+- **Successor (round 80, staged, not cut):** names Andrew's Barron's and WSJ sign-in at site Z as its one wait, with its reason
+  (a vendor login is Andrew's act) and its owner (Andrew); cut the turn the sign-in is on record.
+- **Ledger:** `harvst-bs3-zw-runner-20261009` stays HELD-SOVEREIGN-GATED on the same sign-in (@90712c645f); it is not closed by this cancel.
+
+<status>cancelled</status>

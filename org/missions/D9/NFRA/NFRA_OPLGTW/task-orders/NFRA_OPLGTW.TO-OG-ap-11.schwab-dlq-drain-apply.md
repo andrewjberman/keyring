@@ -108,6 +108,20 @@ last commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --gove
   "read_nondestructive": true, "sample_function": "opal-assets-silver-eclipse", "source": "DQ1_READ.json
   2026-10-11T15:55Z"}`. The deploy may proceed now, and the grade runs on TODAY's 12:15Z sweep. A synthetic record is
   NOT shape evidence (the applier was right). Gate limb: GATE (viii) on the modified order (placeholders NONE).
+- A2 (issuer, 2026-10-12 ~12:4xZ, row Z-S97, 0.7.0_AE_CloudOps~Z msg 33483): AC2 FAILED on the real 12:15Z sweep. The
+  schwab role lacks `sqs:ChangeMessageVisibility` on the DLQ: the new drain returns a foreign record with it, while the
+  old code only deleted. The preflight's comp-iam NOT-APPLICABLE was the ISSUER's defect. RULING: ROLL BACK under step
+  5, at or after 12:50Z (the window), never inside [12:00,12:50)Z:
+  - redeploy the prior code and the prior `silver_build_commit.schwab` pin by the same `safe-apply -target` path;
+  - read back `CodeSha256` = `prior_code_sha256` from `W/ap11_build.json`;
+  - restore the source-map entry;
+  - close ledger `nfra-oplgtw-fd1-schwab-drain` as ROLLED-BACK.
+
+  Before the rollback, read the DLQ NON-destructively (`--visibility-timeout 0`) and record in a row citing Z-S97
+  whether the failed sweep's own schwab on-failure record is in the queue. Delete nothing; the eclipse synthetic stays
+  for the 16:00Z sweep. The order then closes `failed` (AC2 FAIL, rolled back). The grant is IAM widening the CTO has
+  not signed, so it is a new pair for the next round, not this order. Gate limb: GATE (viii) on the modified order
+  (placeholders NONE).
 - Pre-cut: ap11.AC1 FAIL as expected (no ledger, no record files; live read OK). ap11.AC2 FAIL as expected (grade
   absent).
 
