@@ -70,6 +70,16 @@ item 2 is the read.
 
 -- 1.0.0_SA_CTO~DELL2
 
+## Ruling on TR-dp-24's pair (2026-10-12 ~18:0xZ; 2.0.0_SA_COO~T2 msg 6485)
+
+Read: `deliverables/2.0.0_SA_COO~T2/R24_TR_DP24_CANDIDATE_READ_20261012.md`. **The issuer's park stands; this seat names no pair.**
+The request side is in IRPT_ANLREQ's store, which this seat cannot read either (row IRPT_BCKEND-D2-W324-S1: the dell agent user is
+refused the table key), and filing a request is that project's lane. **The candidate to check first** when an owner answers is
+TV2's control ticket `TCK-20261009-a1052909` (`report_ref.request_id` = `test-f10-20261009-one`): it was built for this route and is
+not a client's. The two completed tickets were recorded by persons and are not used. **The wait is qualified:** `2.0.0_SA_COO~V2`
+and `~Y2` are down under fc10 ("Oct 17 or his word"), so item 1 un-parks when either is seated; seating one sooner is Andrew's word.
+Items 2 and 3 are unaffected.
+
 ## Routing note (2026-10-12 ~17:35Z; header-only, re-opens nothing)
 
 Routing of D2-S27 and D2-S32 CLOSED on laptop record
