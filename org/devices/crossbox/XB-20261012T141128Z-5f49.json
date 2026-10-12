@@ -10,16 +10,16 @@
  "subject": "AMGT_HARVST HVST-by-3: re-pin the runner to 1c69fa35a3; lock both pins",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-by-3.the-runner-repinned-to-the-bx3-merge.md",
  "opened_at": "2026-10-12T14:11:28Z",
- "state": "OPEN",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-12T14:15:11Z",
   "bus_message_id": "ea404597-2cbb-4441-9c9e-3af39eb86106"
  },
  "ack": null,
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-12T20:46:54Z",
+  "from_by": "2.0.0_SA_COO~W1",
+  "to_at": "2026-10-12T20:46:54Z",
+  "to_by": "2.0.0_SA_COO~W1"
  }
 }
