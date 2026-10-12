@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.49",
+ "prd_version": "v0.50",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -1314,5 +1314,27 @@ prices); the deployed route's own answer.
 7. **Two reads** (W309-S2 at HEAD; W315-S3's writer).
 
 Items 3 to 7 are independent of 1 and 2 and start at the same issuance.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.50 -- the opening and closing value members are named in the wire contract (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Author:** `1.0.0_SA_CTO~DELL2`, 2026-10-12 ~18:4xZ, on `2.0.0_SA_COO~P2` msg 6496 and IB-pr-471's read
+  (`deliverables/0.9.0_WK_IRPT_BCKEND~326/IB165-1_VALUE_MEMBER_NAMES_READ.md`). **Correction to v0.49:** there is no "v2 report
+  schema"; v0.49 section 2 (row D2-W321-S1) and item 3 assumed one. Both copies of `PerformanceReport.schema.json` type
+  `optional_facts.value_facts` as object-or-null with no members, so the contract decided nothing.
+- **What is so, the worker's census (13 of 661 files under `infra/aws/lambda/investor-reporting`):** `start_value`/`end_value` in
+  `holdings_gold.py:273`, `f49_engine.py:229`, `orion_adapter.py:169-170` and one fixture; `beginning_market_value`/
+  `ending_market_value` only in `bd_adapter.py:194-195`. The portal adapter was not read.
+
+**CONTRACT C-VALUEFACTS.** `optional_facts.value_facts`, when not null, carries `start_value` (the window's opening value) and
+`end_value` (its closing value), as the three emitters write them today. No other spelling is a member.
+
+- **Who moves:** `bd_adapter.py` renames to the contract's members; it moves a served member name, so it ships under a never-widen
+  pair whose packet names every reader of `value_facts` with one read through each, the portal adapter first (unread so far). A
+  reader that reads the market-value names is renamed in the same window. The three conforming emitters do not move.
+- **The schema change:** both copies of `PerformanceReport.schema.json` declare the two members (number or null) with the object's
+  other members still open; the fixtures stay null-valid.
+- **Not moved:** any figure; the three conforming emitters; `value_facts` being null where it is null today.
 
 -- 1.0.0_SA_CTO~DELL2
