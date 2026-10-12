@@ -29134,3 +29134,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The stale pin cannot ship wrong bytes: a build from the real map reproduces the LIVE zip, and the packet's digest gate aborts any build whose printed sha256 is not abep4h7R... before an upload. What it CAN do is waste an apply that reads as done. So the apply order (to 0.7.0_AE_CloudOps~IB2, cut after the pair is signed) carries the re-pin as its FIRST criterion, with the digest comparison as the second, and a criterion that the live CodeSha256 afterwards equals abep4h7R.... Owner of that order: 2.0.0_SA_COO~P2. This row closes when that order is issued with those limbs. Not measured: any apply."
 }
 ```
+
+## IRPT_BCKEND-D2-S112 -- TO-IB-pr-487 step 4: the four direct-invoke arms have no selection reference to invoke with; apply stopped before the upload
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S112",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-12T21:47:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-IB-pr-487 step 4 cannot be run as written: the performance-report route needs a server-issued sel_ selection whose members are the arm account, this seat cannot read the selection table (KMS) and the order grants no write that could create one, so the four direct-invoke arms have no input; apply stopped before the upload.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/entry.py:66-89: the only route is GET .../performance/{accountSetId}; accountSetId must match sel_[0-9a-f]{64}; _resolve_selected loads that record from the irpt-requests table (_scope/selection_store.py:29-35, key SELECTION#<ref>) and refuses a reference with no record. The arm is a selection of the arm's account, not the account.",
+      "measured 2026-10-12T21:4xZ by this seat: aws dynamodb scan irpt-requests (begins_with SELECTION#, COUNT) -> AccessDeniedException, kms:Decrypt on key 7f4d3042 denied to user cloudops-dell2-agent-user. Scan only; GetItem not tried because no reference is known. Prior records under org/missions/D9/IRPT hold only fake all-zero references (r57_invokes) and a denied fixture.",
+      "TO-IB-pr-487 BOUNDS: no write other than the apply and the invokes' retained-report persists; no grant. Creating a selection is a put_item into irpt-requests; an IAM or key grant for this seat is a grant. Neither is in <paths>.",
+      "done before stopping: ledger irpt-perf-adapter-claim-chain-ib-pr-487-20261012 opened; rollback version F.G7ZDSNMeGR4mwkm7hElyoh1tLuNpGf named (content-sha256 metadata and own bytes both kMB8xCI9..., 64 versions listed); source-map re-pin committed 3381c42f13 (entry equals the candidate); BUILD_ONLY printed abep4h7RngMS9JomQUdkcOT3EZ+W953OdxeK0HkdzFo= (matched). NOT done: upload, plan, apply. Reads at 21:46Z: versions listed 64, latest F.G7ZDSN, live CodeSha256 kMB8xCI9..., LastModified 14:11:01Z."
+    ]
+  },
+  "spec_asserts": "The order: run four direct-invoke arms against the deployed function, each read before and after the apply, and at least arms 1, 2 and 3 must be exercised for AC3; choose the accounts from the served gold with the round-166 driver; no grant, no new write.",
+  "world_is": "The arm accounts can be chosen offline (ib166_measure.py reads the served gold), but the deployed function reads a selection record, and no record whose members are exactly that account is known to exist or can be read or made by this seat. Without the arms the signed after-read limb (and the Branch B trigger that depends on it) cannot run, and AC3 cannot pass. I did not upload or apply a WORLD change whose signed verification I cannot perform, and I did not weaken the arms. Needs from the issuer, one of: (a) selection references for accounts fitting arms 1 to 3 (created by the owner of the selection flow, not this seat), (b) a named, bounded grant to read or write the selection records for this act, or (c) an amended order and a re-signed pair that names a different after-read. Not established: whether any existing selection already covers an arm account."
+}
+```

@@ -43,6 +43,19 @@ and waits on Andrew's word (push law; the CVO's v0.50 condition). Carried to him
   supplied" on a client-facing page. **So:** the rename is BUILT and its pair is written now; its APPLY waits until the reader is on
   PROD (the CVO's v0.50 condition stands). Not measured: whether some other DEV-only backend fronts the DEV portal.
 
+## 3b. Correction after the DEV render (2026-10-12 ~21:4xZ; 2.0.0_SA_COO~P2 msg 6595)
+
+`2.0.0_SA_COO~D2`'s `/ui-walk` on a local build at portal 183860bac0 (msgs 6582, 6593): **49 Financial shows NO opening/closing
+value tiles at all** -- its answers render the total-return chart, the headline tiles never mount, and "not supplied" appears
+nowhere (3 clients walked: 2 charts, 1 zero-value account refused "not available yet"). Section 2's "holdings, 49 Financial and orion
+... tiles show a value" is WRONG for 49 Financial: this seat's error, a code read taken for a render. **The visible change is on the
+holdings-basis and orion answers only.** Orion was not reached by the walk.
+
+**Ruling on the orion ask: accept the code read and the test; no CRO chase.** The adapter test runs the ORION provider path through
+the contract members (`value-facts-members.test.ts`, case 2), and the PROD promote is gated on Andrew's own visual smoke of DEV
+(`e7f2`), which is the render that counts; a chase for a client name to put through a walk buys nothing that smoke does not, and
+puts a client name on a seat's bus. The e7f2 breakdown line is corrected to "two providers, 49F unchanged (its page has no tiles)".
+
 ## 4. Acts only Andrew can do
 
 - **PROD push of the Reporting tab's value tiles** (open call, held). REC yes: the tiles go from "not supplied" to the window's
