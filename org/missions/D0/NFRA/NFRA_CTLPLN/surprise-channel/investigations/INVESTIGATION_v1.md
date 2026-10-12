@@ -8502,3 +8502,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Found while dell2 confirmed the four seats gone (nine dell2 seats ended today: five by the S9117 tree kill, four with no kill line, cause unread). Not a cell this round; the round-12 recut may fold it into the seat-boundary cell if the writer is the kill/launch path, else it is its own row for the broker's owner."
 }
 ```
+
+## NFRA_CTLPLN-S9120 -- dell2 headless seats end in batches with no KILL line; cause unread; parent-process read owed
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9120",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-12T21:36:25Z",
+  "one_line": "dell2 seats end with no KILL line in batches: CloudOps~IB2 and ~YC2 (20:3xZ-21:3xZ) after ~TV2 (17:07-18:31Z) and COO~D2/~CB2/~TR2/~DELL2 (17:07-20:3xZ); eleven endings today, six unexplained; the common trait MSTR~DELL2 reads is a seat with no open order or idle at a prompt, and every seat relaunched today was spawned HEADLESS (no tab); cause unread.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR msg 108684 (/govern 36, bus 37d2dc83): ended since 20:3xZ with no KILL line: CloudOps~IB2 (relaunched today, no open order) and ~YC2 (parked at the old limit); 'the third batch of unexplained dell2 endings today'",
+      "0.0.0_AB_MSTR msg 108668: every seat relaunched today was spawned headless, so there are no tabs (unstick NOT FOUND even for live ~IB2)",
+      "0.0.0_AB_MSTR msg 108664: a process scan over ALL images returned nothing for the four; audit log holds no KILL/FORCE-KILL/KILL-MAINT-RUN after 17:06Z; Security 4689 absent (auditing off); transcripts off (msg 108651)",
+      "S9117 @9ffd2daac5: the launcher's non-wt path parents a seat under the caller; a seat whose parent exits dies with the tree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2 (one preventive read on the 9 live seats, counts and pids only: each claude.exe's ParentProcessId, the parent's image name and whether it is a transient wrapper; a live seat under a transient parent is the next to vanish and is the cause named; then the headless spawn path is changed to a detached parent, the S9117 cell's second half, owner 2.0.0_SA_COO~C at the round-12 recut)",
+  "spec_asserts": "NFRA_CTLPLN C-SEATS: a seat ends by a kill the audit log names, by its own exit, or by Andrew's word; an idle seat is parked, not ended.",
+  "world_is": "Six dell2 seats ended today with no kill line, no transcript and no event-log entry; the only measured common traits are headless spawn and idleness; the poller fix (5948c06a4f) changes only how liveness reports an ending, not the ending.",
+  "notes": "The read is cheap and preventive: if the live seats' parents are transient wrappers, the cause is the spawn path (the same S9117 class) and the fix is the detached spawn; if the parents are stable, the next candidate is an idle-session exit at the limit prompt, read from the next ending's last stderr line (headless stdout/stderr should be captured to a file per seat from now on -- a log sink, not an alert). Not a cell this round; folds into the round-12 seat-boundary cell."
+}
+```
