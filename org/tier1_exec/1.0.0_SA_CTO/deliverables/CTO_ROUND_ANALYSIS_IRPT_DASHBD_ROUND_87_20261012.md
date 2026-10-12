@@ -33,7 +33,9 @@ The tie-out against Black Diamond stays unworked until Andrew's two answers (rou
 
 ## 4. Acts only Andrew can do
 
-Unchanged: the other system's written statement of its flow timing; the tolerance FWD-8 is graded on (`IRPT_DASHBD_PRD.md` ruling 25).
+The other system's written statement of its flow timing (now open-calls act on dell2's list). **Correction (~20:5xZ):** the
+tolerance FWD-8 is graded on is NOT open: 0.35pp was ruled 2026-10-09 (`CTO_RULING_IRPT_DASHBD_FWD8_TOLERANCE_035PP_20261009.md`,
+call `dell2-20261009T140136Z-2f53` CLOSED); the round-86 analysis listed it as Andrew's in error, and this file repeated it.
 
 ## 5. What this analysis did not measure
 
