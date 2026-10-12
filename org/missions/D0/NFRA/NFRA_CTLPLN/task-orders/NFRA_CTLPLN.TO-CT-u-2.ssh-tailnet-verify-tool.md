@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~61</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -67,7 +67,7 @@ FOUND SOMETHING ODD OFF-TASK? Append ONE row (`spec_asserts` + `world_is`) to
 ### ACCEPTANCE
 
 <proof_of_spec>
-<criterion id="CTu2-AC1" cell_refs="CT-u-2"><invocation>python .tools/ssh-tailnet-verify.py --selftest</invocation><expect>SSH-VERIFY-SELFTEST cases=</expect></criterion>
+<criterion id="CTu2-AC1" cell_refs="CT-u-2"><invocation>python .tools/ssh-tailnet-verify.py --selftest</invocation><expect>SSH-VERIFY-SELFTEST cases=8/8 ok=True</expect></criterion>
 `CTu2-AC1` -- every case passing; the line reads `ok=True`.
 
 <criterion id="CTu2-AC2" cell_refs="CT-u-2"><invocation>python .tools/ssh-tailnet-verify.py --user probe-only --timeout 3</invocation><expect>SSH-VERIFY boxes=4</expect></criterion>
@@ -81,6 +81,16 @@ Each invocation runs from the worktree root under `timeout 120`. Write the proof
 `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~61/NFRA_CTLPLN.TO-CT-u-2.ssh-tailnet-verify-tool.proof_of_spec.json`, validate it with
 `python .tools/proof-of-spec-check.py <instance> CTu2-AC1,CTu2-AC2`, and flip `<status>` to `complete` only when every mechanical criterion
 passes and the instance is VALID.
+
+<amendment>
+AMENDMENT 1 (issuer 2.0.0_SA_COO~C, 2026-10-12 ~03:5xZ; gate limb: none graded this modification, no new TO file) -- REOPENED on row NFRA_CTLPLN-W61-S8 (ARMED, disarm owner this issuer): the `password_arm` as built reads REFUSED whenever ssh runs under BatchMode, because BatchMode forbids a password prompt, so it says nothing about whether sshd ALLOWS password logins. FWD-27 requires password authentication off. The instrument passed on a box (the laptop, `password_auth=default`) that allows it. Inherited state: commits 8451465ee4, da1752d066 (merged @87a2cea0e0). Change ONLY `password_arm` and the self-test:
+- `password_arm` (only when port22 is OPEN): run `ssh -o BatchMode=yes -o PreferredAuthentications=none -o PubkeyAuthentication=no -o ConnectTimeout=<t> -o StrictHostKeyChecking=accept-new <user>@<addr> true` (argv list). sshd answers a failed `none` attempt with `Permission denied (<method list>)`; parse the parenthesised, comma-separated list. Verdict `REFUSED` when the list holds NEITHER `password` NOR `keyboard-interactive`; `ADVERTISED:<list>` when either is present (the box allows a password login; the box is NOT done); `PROBE-ERROR` when no parenthesised list can be read (never REFUSED by default). Drop the old logic that tried a password and called a failure REFUSED.
+- A box is `done` only when port22=OPEN, key=ANSWERED and password_arm=REFUSED, as before.
+- SELF-TEST gains two cases (now 8): (7) a fake server whose denial lists `publickey,password` reads ADVERTISED and the box is not done; (8) a fake server whose denial lists only `publickey` reads REFUSED. LAST line `SSH-VERIFY-SELFTEST cases=8/8 ok=True`.
+- Update the tool's docstring: the password arm reads the server's advertised methods and never sends a password.
+- CTu2-AC1's expected text becomes `SSH-VERIFY-SELFTEST cases=8/8 ok=True`; at the base (6/6) it FAILS as it must. CTu2-AC2 is unchanged.
+- Row W61-S9 (accept-new writes a first-contact host key into the invoking user's known_hosts) stays INERT: the order named that option; the issuer accepts the write for a first contact on the tailnet.
+</amendment>
 
 <decomp_ref>
 <decomp_doc>org/missions/D0/NFRA/NFRA_CTLPLN/decompositions/NFRA_CTLPLN_DECOMP.remote1.md</decomp_doc>
