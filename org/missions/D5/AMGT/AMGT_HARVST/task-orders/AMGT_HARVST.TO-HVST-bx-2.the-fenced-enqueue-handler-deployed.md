@@ -7,7 +7,7 @@
 <decomp_doc>org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md</decomp_doc>
 <owned_cells>HVST-bx-2</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~DELL1</issued_to>
+<issued_to>0.7.0_AE_CloudOps~HV1</issued_to>
 <issued_by>2.0.0_SA_COO~W1</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -32,7 +32,7 @@ exists. Verify at the start: `git cat-file -e <M>` and `git merge-base --is-ance
    `.tools/aws` shim; write `bx2_before.out` holding `CODESHA256 <value>`, `LASTMODIFIED <value>`, and the same read of
    `comp-iam service opal-research-pull-enqueue`.
 2. **Open the ledger** before any write: `python .tools/deploy_ledger.py open --slug harvst-bx2-enqueue-fence-20261012 --title
-   "HVST-bx-2 deploy the fenced opal-research-pull-enqueue handler" --author 0.7.0_AE_CloudOps~DELL1` with legs `BUILD`
+   "HVST-bx-2 deploy the fenced opal-research-pull-enqueue handler" --author 0.7.0_AE_CloudOps~HV1` with legs `BUILD`
    (verify: zip built from <M>'s file), `UPLOAD` (activation: s3 object read back), `APPLY` (activation: Terraform apply of
    `module.harvest_enqueue` only), `ARMS` (verify: the three deployed arms). Commit the sentinel and the entry.
 3. **Build and upload:** `bash infra/aws/terraform/harvest/build-and-upload.sh` (it zips `lambda_function.py` alone and uploads
@@ -69,7 +69,7 @@ exists. Verify at the start: `git cat-file -e <M>` and `git merge-base --is-ance
 - A half-landed deploy is never left: finish in-session or roll back and say so (CLAUDE.md NEVER).
 
 <paths>
-org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~DELL1/
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
 org/critical_paths/.open_deploys/harvst-bx2-enqueue-fence-20261012.json
 org/critical_paths/change_management/
@@ -78,17 +78,17 @@ org/critical_paths/change_management/
 ## PROOF OF SPEC (each invocation LITERAL)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="HVST-bx-2"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~DELL1/round80/bx2_arms.out</invocation><expect>(?s)ARM non_internal: statusCode 403.*ARM no_context: statusCode 403.*ARM internal_no_ticker: statusCode 400</expect></criterion>
-  <criterion id="AC2" cell_refs="HVST-bx-2"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~DELL1/round80/bx2_plan.out</invocation><expect>Plan: 0 to add, 1 to change, 0 to destroy</expect></criterion>
-  <criterion id="AC3" cell_refs="HVST-bx-2"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~DELL1/round80/bx2_after.out</invocation><expect>CODESHA256 CHANGED: yes</expect></criterion>
+  <criterion id="AC1" cell_refs="HVST-bx-2"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round80/bx2_arms.out</invocation><expect>(?s)ARM non_internal: statusCode 403.*ARM no_context: statusCode 403.*ARM internal_no_ticker: statusCode 400</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-bx-2"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round80/bx2_plan.out</invocation><expect>Plan: 0 to add, 1 to change, 0 to destroy</expect></criterion>
+  <criterion id="AC3" cell_refs="HVST-bx-2"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round80/bx2_after.out</invocation><expect>CODESHA256 CHANGED: yes</expect></criterion>
 </proof_of_spec>
 
 - The checker reads `<expect>` as a regular expression. Write all five `.out` files under
-  `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~DELL1/round80/`.
+  `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round80/`.
 - INSTANCE NAMED EXACTLY
-  `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~DELL1/AMGT_HARVST.TO-HVST-bx-2.the-fenced-enqueue-handler-deployed.proof_of_spec.json`
+  `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/AMGT_HARVST.TO-HVST-bx-2.the-fenced-enqueue-handler-deployed.proof_of_spec.json`
   (directly under your serial's folder) with `to_id` `AMGT_HARVST.TO-HVST-bx-2.the-fenced-enqueue-handler-deployed`.
-- A surprise row's `surfaced_at` is `date -u +%FT%TZ` at filing. Your next row id is `AMGT_HARVST-D1-DELL1-S1`.
+- A surprise row's `surfaced_at` is `date -u +%FT%TZ` at filing. Your next row id is `AMGT_HARVST-D1-HV1-S1`.
 - Do not edit this order file: the issuer flips its status.
 
 ## STANDING CONDITIONS (every order to a 0.7.0_AE_CloudOps lane)
