@@ -815,3 +815,31 @@ issuer's hookup commit: that file is lane CLOUD_OPS_OR_ETL, and the COO lane hol
 into MP-r-2 as its step 0, and its assignee `0.7.0_AE_CloudOps~MP` holds that lane. Measured by the issuer on the
 drained tree, uncommitted: routes 4 of 4, and every admin and fabric test file 58 passed. G-REL2's "routes hooked
 up" clause is now satisfied inside MP-r-2, not before it.
+
+## C17 ADDENDUM CELL (PRD v0.6 @fc09ade4ea, issuer 2.0.0_SA_COO~MP, 2026-10-12): the bounded git-state read
+
+**Input.** PRD v0.6 addendum C17 (`1.0.0_SA_CTO~Z`, msg 33458 ruling msg 33456) on row Z-S38. The live Git state cold
+read was 25.1 s against R-13's 30 s bar; the issuer's dry run of n1.AC3 read 22.8 s and 2,771 body fetches on the served
+code. One cell, cut by the addendum path (spine L10 -> L6, "new cells for an addendum"). The frozen rounds and the CP2
+decomposition above are untouched. Its orders carry `<workstream>C17</workstream>` beside `<round>1</round>`, so GATE (x)
+keys this issuance apart from CP2 round 1.
+
+| Cell | Serves | Builds / runs | Assignee | Write surface | Risk |
+|---|---|---|---|---|---|
+| `MP-n-1` | FWD-16 under R-13 (C17) | the bounded read in `app/admin_fabric_gitstate.py` per C17 (windowed listing by `StartAfter`; `integration_refused` stops at the first `integrate` pass of either outcome; `first_seen` stops early per box) + its tests; then the gateway release on the live ref under a never-widen pair (CTO `1.0.0_SA_CTO~Z` + COO `2.0.0_SA_COO~MP`), NEVER-2, manifest, on-host read-back | `0.7.0_AE_CloudOps~MP` (holds the opal-gateway lane) | `app/admin_fabric_gitstate.py`, `tests/test_admin_fabric_gitstate.py`, `infra/aws/ec2/EC2_MANIFEST.json`, ledger paths, its deliverables | WORLD |
+
+**Chain:** one cell, no edge into or out of CP2. **Fan-out:** 0 workers; the assignee is a seat and takes its GO by
+message. **Gate:** none to build. The deploy waits on the never-widen pair signed against the assignee's ASK, and on the
+gateway queue (one release in flight at a time).
+
+**Checks** (`deliverables/2.0.0_SA_COO~MP/c17/checks/`), dry-run by the issuer 2026-10-12 ~08:5xZ:
+
+| Check | HEAD (negative control) | the issuer's scratch C17 sketch (positive control) |
+|---|---|---|
+| n1.AC1: 1x vs 10x history, equal get_object counts | FAIL: 242 vs 2,402 | PASS: 98 vs 98 |
+| n1.AC2: superseded refusal "not recorded"; live refusal {at, note} | FAIL: the superseded refusal is shown | PASS |
+| n1.AC3: served cold _compute, body fetches printed, <= 10 s | FAIL: 22.8 s, 2,771 fetches | not runnable before the release |
+
+**Does not claim:** the 10 s bar holds for every future history size inside the window. The window still grows with the
+producers' write rate, roughly 840 to 1,200 records a day across 4 boxes, so about 2,000 in 48 h. AC3 measures it once,
+on the served release.
