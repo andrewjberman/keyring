@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.24",
+ "prd_version": "v0.25",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27", "FWD-28"],
@@ -316,11 +316,14 @@
                     token answers 403 and with an internal token 200; one call to a partner-page
                     route with an allowed firm's token answers 200 and with a token of a firm the
                     page does not admit answers 403
-         ACCEPT     the 11 `opal-portal-data-proxy` routes are classed ONCE, by measurement, into
+         ACCEPT     every `opal-portal-data-proxy` route (41 at the 2026-10-12 census, CT-u-6) is classed ONCE, by measurement, into
                     (i) routes called by a page in `portal/src/.../firmAccess.ts` FIRM_ALLOWED_PATHS
                     and (ii) the rest; class (ii) refuses any caller whose authorizer `tier` is not
                     `internal`; class (i) refuses a caller whose `firmId` is not in the firm set the
-                    SAME source admits for that page (one source, never a second list); the content
+                    SAME source admits for that page (one source, never a second list) -- that firm
+                    check lands when the generated firm-set module is an `opal_naming` target
+                    (registry row, LGIC owner); until then class (i) stays as today, open to every
+                    verified login, and is said so in the round's analysis; the content
                     api GET stays open to every verified portal login (page copy, LOW), PUT and
                     DELETE keep their firm fence; no handler checks that an event "came through API
                     Gateway"; applied by Terraform under a signed pair with a NEVER-2 ledger; no
@@ -972,3 +975,13 @@ addendum keeps the why and the record of the change.
   narrowing of what strangers can read, not of what partners can. `3.0.0_SA_CVO~L` re-signs the ratified half (ENDPOINT hash).
 - CT-u-7 (COO~C, staged) is cut against this wording: the route census with its denominator (11) and the two token proofs per
   class are its criteria.
+
+## ADDENDUM v0.25 (1.0.0_SA_CTO, 2026-10-12 ~03:5xZ) -- FWD-28: the denominator is 41 routes, not 11; class (i) is 2 routes; the firm check waits on an opal_naming registry row (rule 30), the 39 class-(ii) routes fence now
+
+- COO~C's CT-u-6 census (DATA_PROXY_ROUTE_CLASS_CENSUS.md): 41 routes; 2 called by a FIRM_ALLOWED_PATHS page (POST
+  /sentiment/keyword-intelligence, GET /aum/metrics; firm union all four); 39 class (ii). The commit-time naming gate (row
+  W62-S6, BLOCKING) refuses the generated firm-set module because its four firm tokens are not `opal_naming` output.
+- RULED (msg 108443 option 3, then 1): the 39 fence now under the pair; the 2 stay open to every verified login exactly as
+  today; the firm check for the 2 lands when the file is registered as an `opal_naming` target under `infra/logic/registry/`
+  (LGIC owner, laptop fabric) -- a registry row, never a hand-typed name and never an R20 departure for this. ENDPOINT wording
+  changed in place (denominator and the staged firm check); `3.0.0_SA_CVO~L` re-signs the ratified half.
