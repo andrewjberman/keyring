@@ -79,6 +79,10 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--performance-state') opt.performanceState = true
   else if (a === '--expect-text') opt.expectTexts.push(String(argv[++i] || ''))
   else if (a === '--reload-reopen') opt.reloadReopen = true
+  // --card-census (with --open-request): the opened report's cards read as a reader sees them (title a name or a code,
+  // unit words, cards sharing one title and Label, validation and source lines on the face) and the served sections
+  // answer's SHAPE (key names and category tokens only, never a value). Writes into analysis-request.json.
+  else if (a === '--card-census') opt.cardCensus = true
   else if (a === '--no-login') opt.login = false
   // Extra wait after every settle, for a read whose answer lands after networkidle (a retained Performance
   // reopen fires after the account switch, so a 1200 ms settle screenshots "Loading"). Default 0: unchanged.
@@ -983,8 +987,35 @@ function noteHopResponse(req, res, json, headers) {
   if (kind === 'sections' && json && json.data) {
     row.served_sections = Array.isArray(json.data.sections) ? json.data.sections.length : null
     row.served_undated_sections = Array.isArray(json.data.undated_sections) ? json.data.undated_sections.length : null
+    if (opt.cardCensus) row.served_shape = sectionsShape(json.data)
   }
   requestHops.rows.push(row)
+}
+// --card-census: the served sections answer's shape. Key names and short category tokens only; a token longer than 40
+// characters or not a string is counted under its type, never written.
+function sectionsShape(data) {
+  const tok = (v) => (typeof v === 'string' && v.length <= 40 ? v : `<${v === null ? 'null' : typeof v}>`)
+  const bump = (acc, k) => { acc[k] = (acc[k] || 0) + 1; return acc }
+  const sections = Array.isArray(data.sections) ? data.sections : []
+  const keySets = sections.map((s) => (s && typeof s === 'object' ? Object.keys(s).sort().join(',') : '<not-object>'))
+  const shape = {
+    data_keys: Object.keys(data),
+    section_keys_first: sections[0] && typeof sections[0] === 'object' ? Object.keys(sections[0]) : null,
+    section_key_sets: keySets.reduce(bump, {}),
+    section_type: {}, units: {}, units_found_at: {}, nested_value_keys: {}, validation_keys: {},
+  }
+  for (const s of sections) {
+    if (!s || typeof s !== 'object') continue
+    if ('section_type' in s) bump(shape.section_type, tok(s.section_type))
+    if ('units' in s) { bump(shape.units, tok(s.units)); bump(shape.units_found_at, 'section.units') }
+    for (const [k, v] of Object.entries(s)) {
+      if (!Array.isArray(v) || !v.length || typeof v[0] !== 'object' || v[0] === null) continue
+      bump(shape.nested_value_keys, `${k}: ${Object.keys(v[0]).join(',')}`)
+      for (const item of v) if (item && typeof item === 'object' && 'units' in item) { bump(shape.units, tok(item.units)); bump(shape.units_found_at, `section.${k}[].units`) }
+    }
+  }
+  for (const [k, v] of Object.entries(data)) if (/validation/i.test(k) && v && typeof v === 'object') shape.validation_keys[k] = Object.keys(v)
+  return shape
 }
 async function openRequest(page, label, requestId, afterReload = false) {
   const rows = page.locator('[data-row="owned-analysis-request"]')
@@ -1062,6 +1093,45 @@ async function openRequest(page, label, requestId, afterReload = false) {
       const closed = [...d.querySelectorAll('details:not([open])')].map((x) => x.textContent || '').join('\n')
       return wanted.map((w) => ({ text: w, in_dialog: count(all, w), inside_closed_details: count(closed, w) }))
     }, opt.expectTexts).catch(() => null)
+  }
+  if (opt.cardCensus) {
+    rec.card_census = await page.evaluate(() => {
+      const d = document.querySelector('[data-slot="owned-request-detail"]')
+      if (!d) return null
+      const bump = (acc, k) => { acc[k] = (acc[k] || 0) + 1; return acc }
+      const inClosed = (el) => { for (let p = el.parentElement; p && p !== d; p = p.parentElement) if (p.tagName === 'DETAILS' && !p.open) return true; return false }
+      const CODE = /^S\d{2,3}$/
+      const out = { cards: 0, title_name: 0, title_code: 0, codes_still_printed: {}, units: {}, unit_unknown: 0, label_column_shown: 0, title_label_groups: {} }
+      for (const card of d.querySelectorAll('[data-row="native-section"]')) {
+        out.cards++
+        const title = ((card.querySelector('span') || {}).textContent || '').replace(/^\s*\d+\.\s*/, '').trim()
+        if (CODE.test(title)) { out.title_code++; bump(out.codes_still_printed, title) } else out.title_name++
+        const heads = [...card.querySelectorAll('thead th')].map((th) => th.textContent.trim())
+        const li = heads.indexOf('Label'), ui = heads.indexOf('Unit')
+        if (li >= 0) out.label_column_shown++
+        for (const tr of card.querySelectorAll('[data-row="native-section-value"]')) {
+          const tds = tr.querySelectorAll('td')
+          const unit = ui >= 0 && tds[ui] ? tds[ui].textContent.trim() : '<no unit column>'
+          bump(out.units, unit)
+          if (/^unknown$/i.test(unit)) out.unit_unknown++
+          const lab = li >= 0 && tds[li] ? (tds[li].textContent.trim() || title) : title
+          bump(out.title_label_groups, `${title} | ${lab}`)
+        }
+      }
+      const groups = Object.values(out.title_label_groups)
+      out.groups_total = groups.length
+      out.groups_shared = groups.filter((n) => n > 1).length
+      out.largest_group = groups.length ? Math.max(...groups) : 0
+      out.largest_group_key = Object.keys(out.title_label_groups).find((k) => out.title_label_groups[k] === out.largest_group) || null
+      // Rows sharing ONE title and ONE Label, so they cannot be told apart. The group keys are the page's own labels.
+      const v = d.querySelector('[data-slot="extraction-validation"], [data-slot="computation-validation"]')
+      out.validation_line = v ? { present: true, on_face: !inClosed(v) && v.getClientRects().length > 0 } : { present: false, on_face: false }
+      const srcEls = [...d.querySelectorAll('*')].filter((el) => el.children.length === 0 && /\bSource\b/.test(el.textContent || ''))
+      out.source_line = { elements: srcEls.length, on_face: srcEls.filter((el) => !inClosed(el)).length, inside_closed_details: srcEls.filter(inClosed).length }
+      out.closed_details = d.querySelectorAll('details:not([open])').length
+      out.validation_inside_closed_details = v ? inClosed(v) : null
+      return out
+    }).catch((e) => ({ error: String(e).slice(0, 200) }))
   }
   await checks(page, `${label}-request-open`)
   await page.locator('[data-slot="owned-request-detail"]').evaluate((d) => { d.scrollTop = d.scrollHeight }).catch(() => {})

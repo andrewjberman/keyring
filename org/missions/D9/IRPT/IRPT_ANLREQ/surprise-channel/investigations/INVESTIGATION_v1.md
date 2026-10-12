@@ -3696,7 +3696,34 @@
 }
 ```
 
-## IRPT_ANLREQ-D2-W51-S9 -- worker row, AR-y-164
+## IRPT_ANLREQ-D2-W54-S3 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-12T02:11:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "No request from a person of ANOTHER firm reaches the original-file route's owner comparison: it is stopped at the firm fence, at principal resolution (a client), or at an empty lookup in the caller's own partition",
+  "spec_asserts": "CTO msg 6012 and the order's cell text: F2 is an arm where a caller shaped as another firm's CLIENT asks for the original of a REAL request, so the route's OWNER check runs; the F1 arm stopped at the firm fence only.",
+  "world_is": "Read from the code at d90edb3367: a CLIENT-class caller (x-user-type client) is refused NOT_AUTHORIZED at principal resolution, _scope/prospect.py:34-35, before the record is read; a non-internal caller naming the record's firm as selected_tenant is refused FIRM_BINDING at _authz/served.py:1207-1209; with no selector the lookup runs in the caller's OWN firm partition (reports/repository.py:497-499) and finds nothing, so owner_reads.py:28 refuses on its first clause, the same code and text as a record owned by someone else (:33). The line that compares the caller's firm and principal with a loaded owner (_scope/owner_reads.py:29-31) is reachable only with the record's own firm in x-firm-id and a different principal, a second person of the owner's firm. So an F2 arm built as the cell describes will read as a pass at the fence or at the empty lookup and will not exercise the comparison; the arm that does is same-firm-other-principal. Also: the F1 amendment (R6_FN1_DIRECT_INVOKE_PAIR.md) cites the owner check as ops/owned_requests.py:175-184; that is the reader's second check, and the comparison with the owner is owner_reads.py:28-32. Not looked at: the deployed function, the ordinary authorizer's body.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/owner_reads.py:24-40 @d90edb3367",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:954-959, :1207-1209, :1249 @d90edb3367",
+      "infra/aws/lambda/investor-reporting/_scope/prospect.py:22-48 @d90edb3367",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~54/r16/ORIGINAL_ROUTE_RULE_READ.json (route.order_of_checks, arms)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S9 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
 
 ```json
 {

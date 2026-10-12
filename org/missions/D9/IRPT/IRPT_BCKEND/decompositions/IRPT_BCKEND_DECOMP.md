@@ -3353,3 +3353,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r160/p160_cells.py`: every criterion 
 | `IB-pr-466` | (c) the pages that render the route's returns, by subtraction over the portal checkout; what each shows of the claim, the absences and the excluded days; what the adapter drops | FWD-3 | LOCAL | none | P160-c |
 
 fanout: 3 of 3 chains, cap 8, reason: three independent reads. Assignees: 0.9.0_WK_IRPT_BCKEND~319, ~320, ~321. DIRECT-ACT each.
+
+## 153. ROUND 161, WORKSTREAM ~P (2026-10-12 ~02:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6315)
+
+IB-pr-464 drained @03e9d0d4c2. The CTO ruled the first-day exclusions right and does not rule the interior and last-row ones
+blind: a zero base (an empty account re-funded) and a negative or flagged-positive base need opposite rulings. One read-only
+cell, the same code over the same gold, counts only. No build first.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r161/p161_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-467` | per firm entry and window, every interior and last-row excluded day by status token and by the prior day's ending value (zero, negative, positive, no prior row); the zero-run lengths; accounts all-zero-base against those with a negative or a flagged-positive base | FWD-3 (a return on that account's own end-of-day holdings) | LOCAL | IB-pr-464 drained | P161-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~322. DIRECT-ACT (one read-only cell, LOCAL).
