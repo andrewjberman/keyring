@@ -10,12 +10,16 @@
  "subject": "FINDING row DSGN_IRPTV1-D2-W62-S3 for DSGN_REBRND's owner: navy-filled panel strips break DESIGN.md C3",
  "body_path": "org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md",
  "opened_at": "2026-10-11T21:11:28Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-11T21:12:14Z",
   "bus_message_id": "25cabd6b-5a26-41e6-92bc-11c4665f873a"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T01:52:26Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": "d63c2c3b-2850-4b7f-889a-4893589a5f9f"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
