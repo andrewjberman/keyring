@@ -9,10 +9,13 @@ What it does:
        `python org/mcp/server.py` child process that the Claude Code session
        spawned for this agent. If the MCP server dies (terminal closed, session
        ended, crash), we treat the agent as gone and exit.
-    2. Every 2 seconds, verifies the MCP server PID is still alive. If dead,
-       exits cleanly so last_seen_epoch stops advancing and _clean_stale in
+    2. Every 2 seconds, verifies the MCP server PID is still alive AND, since
+       NFRA_CTLPLN-S9119 (2026-10-12), that the seat's own process (the MCP
+       server's parent, claude.exe) is still alive. If either is dead, exits
+       cleanly so last_seen_epoch stops advancing and _clean_stale in
        server.py + broker.py naturally prunes the agent within their thresholds
-       (no manual deregister_agent call needed).
+       (no manual deregister_agent call needed). A heartbeat never outlives
+       the seat. `python org/mcp/agent-poller.py --selftest` exercises it offline.
     3. While the MCP server is alive, updates last_seen_epoch in liveness.json
        every 2 seconds and heartbeats the broker every 10 seconds.
     4. Single instance per serial via the named mutex Local\\opal-poller-<serial>;
@@ -189,6 +192,89 @@ def _pid_alive(pid: int) -> bool:
         return False
 
 
+def _parent_pid(pid: int) -> int | None:
+    """The ParentProcessId of `pid` via a Toolhelp32 snapshot (stdlib ctypes, no WMI).
+
+    NFRA_CTLPLN-S9119 (2026-10-12, dell2): four seats whose claude.exe had died kept
+    fresh heartbeats because this poller watched only the MCP server pid. The MCP
+    server is a stdio child of the seat's claude.exe, so its parent IS the seat; the
+    poller watches that too and exits when either dies. Returns None off Windows or
+    when the snapshot does not hold the pid.
+    """
+    if os.name != "nt":
+        return None
+    try:
+        import ctypes
+        from ctypes import wintypes
+        TH32CS_SNAPPROCESS = 0x00000002
+        INVALID_HANDLE_VALUE = ctypes.c_void_p(-1).value
+
+        class PROCESSENTRY32(ctypes.Structure):
+            _fields_ = [("dwSize", wintypes.DWORD), ("cntUsage", wintypes.DWORD),
+                        ("th32ProcessID", wintypes.DWORD), ("th32DefaultHeapID", ctypes.c_void_p),
+                        ("th32ModuleID", wintypes.DWORD), ("cntThreads", wintypes.DWORD),
+                        ("th32ParentProcessID", wintypes.DWORD), ("pcPriClassBase", ctypes.c_long),
+                        ("dwFlags", wintypes.DWORD), ("szExeFile", ctypes.c_char * 260)]
+
+        kernel32 = ctypes.windll.kernel32
+        kernel32.CreateToolhelp32Snapshot.restype = ctypes.c_void_p
+        kernel32.Process32First.argtypes = [ctypes.c_void_p, ctypes.POINTER(PROCESSENTRY32)]
+        kernel32.Process32Next.argtypes = [ctypes.c_void_p, ctypes.POINTER(PROCESSENTRY32)]
+        kernel32.CloseHandle.argtypes = [ctypes.c_void_p]
+        snap = kernel32.CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0)
+        if not snap or snap == INVALID_HANDLE_VALUE:
+            return None
+        try:
+            entry = PROCESSENTRY32()
+            entry.dwSize = ctypes.sizeof(PROCESSENTRY32)
+            ok = kernel32.Process32First(snap, ctypes.byref(entry))
+            while ok:
+                if int(entry.th32ProcessID) == int(pid):
+                    return int(entry.th32ParentProcessID)
+                ok = kernel32.Process32Next(snap, ctypes.byref(entry))
+        finally:
+            kernel32.CloseHandle(snap)
+    except Exception:
+        return None
+    return None
+
+
+def _seat_pid_for(mcp_pid: int) -> int | None:
+    """The seat's own process (the MCP server's parent) when it is alive now; else None
+    (a dead or absent parent is not watched, so a wrapper that exited at launch never
+    ends a live poller falsely)."""
+    parent = _parent_pid(mcp_pid)
+    if parent and parent != os.getpid() and _pid_alive(parent):
+        return parent
+    return None
+
+
+def _selftest() -> int:
+    """Offline, no broker: (1) a child's parent resolves to this process; (2) once a
+    watched process has exited its pid reads dead, which is the poller's exit branch."""
+    import subprocess
+    results = []
+    child = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(30)"],
+                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        time.sleep(0.5)
+        parent = _parent_pid(child.pid)
+        results.append(("child-parent-resolves-to-this-process", parent == os.getpid(), f"parent={parent} me={os.getpid()}"))
+        results.append(("live-child-reads-alive", _pid_alive(child.pid), f"pid={child.pid}"))
+    finally:
+        child.kill()
+        child.wait(timeout=10)
+    time.sleep(0.3)
+    results.append(("exited-child-reads-dead-(the-exit-branch)", not _pid_alive(child.pid), f"pid={child.pid}"))
+    results.append(("seat-pid-for-a-dead-mcp-pid-is-None", _seat_pid_for(child.pid) is None, ""))
+    good = 0
+    for name, ok, detail in results:
+        good += 1 if ok else 0
+        print("%s %s%s" % ("ok  " if ok else "FAIL", name, "" if ok or not detail else "  -- " + detail))
+    print("POLLER-SELFTEST cases=%d/%d ok=%s" % (good, len(results), good == len(results)))
+    return 0 if good == len(results) else 1
+
+
 def _read_mcp_pid(serial: str) -> int | None:
     """Read the MCP server PID that register_agent recorded for this serial.
 
@@ -304,6 +390,8 @@ def main():
         sys.exit(1)
 
     serial = sys.argv[1]
+    if serial == "--selftest":
+        sys.exit(_selftest())
     # Single instance per serial, enforced by the poller itself (the launch
     # hook's pidfile check is only a fast path).
     if not _acquire_single_instance(serial):
@@ -339,9 +427,14 @@ def main():
         )
         sys.exit(0)
 
+    # S9119: the seat's own process is the MCP server's parent (claude.exe). Watch it too,
+    # so a heartbeat never outlives the seat. None when the parent is not alive now.
+    seat_pid = _seat_pid_for(mcp_pid)
+
     print(f"Poller started for {full_serial} (my PID {os.getpid()})")
     print(f"  Channel: {channel} (broker port {BROKER_PORT})")
     print(f"  Tracking MCP server PID: {mcp_pid}")
+    print(f"  Tracking seat process PID: {seat_pid if seat_pid else 'NONE (parent not alive at start; MCP pid only)'}")
     print(f"  Heartbeat interval: {POLL_INTERVAL}s")
     print(f"  Liveness: {LIVENESS_FILE}")
     print("  Mode: HEARTBEAT ONLY (inbox handled by conversation-side MCP)")
@@ -365,6 +458,18 @@ def main():
                 print(f"  Now tracking MCP server PID: {entry_pid} (was {mcp_pid})",
                       file=sys.stderr)
                 mcp_pid = entry_pid
+                seat_pid = _seat_pid_for(mcp_pid)
+                print(f"  Now tracking seat process PID: {seat_pid if seat_pid else 'NONE'}", file=sys.stderr)
+
+            # S9119 watchdog: the seat's own process died (claude.exe gone, MCP server
+            # orphaned or its pid reused) -- exit so the heartbeat stops with the seat.
+            if seat_pid and not _pid_alive(seat_pid):
+                print(
+                    f"seat process PID {seat_pid} is no longer alive (MCP server {mcp_pid} orphaned) -- "
+                    f"poller exiting for {full_serial}",
+                    file=sys.stderr,
+                )
+                sys.exit(0)
 
             # Watchdog: if the MCP server process we're proxying for has died,
             # the terminal was closed / session ended / process crashed. Exit
