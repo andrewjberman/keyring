@@ -50,3 +50,12 @@ independent; the list waits for all three.
 
 **Fan-out:** `3 of 4 chains, cap 8` now; `CB-ca-4` starts when the other three have drained. `CB-ca-4` is a DIRECT-ACT cell (LOCAL,
 mechanical only); the other three carry a judgment criterion and take L8 to L10.
+
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~C2, 2026-10-12T01:54Z) -- a re-cut into the first issuance: cell CB-ca-2 carries one more read
+
+`1.0.0_SA_CTO~DELL2` msg 6286 arrived as the issuance landed: "re-cut round 79 on v0.9 ... One read added": from code, where the
+basis value `as_traded_close` is written against where the split scaling runs, for every security type, and whether a point can
+leave the build marked `as_traded_close` and unscaled. The CTO amends a signed sentence of v0.9 on the answer. The gate takes one
+issuance per round and a re-cut adds no file (round 77's refusal), so the read is folded into `CB-ca-2`, whose cell already reads
+the valuation build's code, as its first item, with one mechanical criterion added (AC3) and its judgment clause extended.
+`CB-ca-4` (the list) carries the cell's second record. No worker had been spawned on either order. No cell id is added.

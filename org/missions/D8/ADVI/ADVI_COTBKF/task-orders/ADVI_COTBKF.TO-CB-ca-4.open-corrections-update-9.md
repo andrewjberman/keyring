@@ -46,6 +46,12 @@ one is absent, that is the refusal clause.**
    securities are not priced from their own rows, with the account-day counts; the 15 apart; the no-ticker half);
    `.../0.9.0_WK_ADVI_COTBKF~153/STORE_WRITER.json` under `store_writer` (the versions; what changed between them; the code that
    matches the live shape; the run and whose, or not established; the owner today).
+   **AMENDMENT 1 (issuer, on CTO msg 6286):** and cell 2's second record,
+   `.../0.9.0_WK_ADVI_COTBKF~152/BASIS_VALUE_AGAINST_SPLIT_SCALING.json`, under `basis_against_split_scaling` (where the basis value
+   is written and where the split scaling runs; the order; whether a point can leave the build marked `as_traded_close` and
+   unscaled, path by path; for which security types the signed sentence holds). If the PRD has been amended on it by the time you
+   run (a heading past `## ADDENDUM v0.9`), quote the amendment with its line beside it. This record too is in the tree when you
+   start.
 3. **What C-BASIS changes in earlier items:** the unreconciled item saying a corrected basis has no store to come from is answered
    by C-BASIS item 3 (the source is named: the securities history) and stays open to the extent cell 1 shows the history does not
    yet hold it: reword it with both, in the records' words. The item about the 15 funds classed with the flat-charge allowance is

@@ -62,6 +62,46 @@ again). **The build's prices:** `C:/dev/ajb_workspace/.scratch/advi_cotbkf/r34/a
    "priced_holding_account_days", "measured_account_days"}`), `the_15` (a list), `no_ticker` (`{"held_securities", "how_priced"}`),
    `headline`, `not_established`.
 
+### AMENDMENT 1 (issuer `2.0.0_SA_COO~C2`, 2026-10-12T01:54Z) -- a second item in this cell, on a CTO ruling
+
+**Why.** `1.0.0_SA_CTO~DELL2` msg 6286, with PRD v0.9 SIGNED: "One read added, the reviewer's note and my own doubt. v0.9 says
+`as_traded_close` means the traded price only after the split scaling, and that a point not yet scaled is not written with that
+value. The build's own comment (commonwealth_daily_valuation.py:196) says the scaling 'then applies on top', after the
+substitution that writes the value. So read, from code: where the basis value is written against where the split scaling runs, for
+every security type, and whether a point can leave the build marked `as_traded_close` and unscaled. Until that is shown the
+meaning holds for funds only, and I amend the sentence on your answer."
+
+**The added item. A CODE READ of this project's own valuation build; it is done FIRST, because the CTO amends a signed sentence on
+it. No data is needed to answer it; one check on the build's own output is allowed and named below.**
+
+A1. **Where the basis value is written:** in `data/assets/scripts/silver/commonwealth_daily_valuation.py`, every line that assigns
+    the per-point column `basis` (the constants `BASIS_AS_TRADED_CLOSE` and `BASIS_STORE_POINT`; the signed text cites `:186-199`,
+    `:211`, `:246-258`): the function, the condition under which each value is written, and for which security types and series
+    classes. Quote the lines.
+A2. **Where the split scaling runs:** the function that applies the split store's factors (`load_store_splits` and whatever
+    consumes it), the order of the calls in the build's main path (file and line of each call, in order), which points it scales
+    (every point? only points with a given `basis`? only securities with a split in the store?), and what it does to the `basis`
+    column of a point it scales or leaves alone.
+A3. **The order, as a statement:** is the value `as_traded_close` written BEFORE the scaling runs; and after the scaling, does
+    anything record that a given point HAS been scaled, or that it needed none?
+A4. **Can a point leave the build marked `as_traded_close` and unscaled?** Enumerate the paths by which it could, each with file and
+    line: a security with a split the split store does not hold; a split dated outside what the store covers; the pinned
+    split-store instant (`--split-store-as-of`) leaving out a later-recorded split; a security type the scaling skips; a point
+    after its last split (which needs no scaling: say that this is "unscaled and right"). For each path: reachable, not
+    reachable, or `not_established`, with the reason from the code.
+A5. **For every security type the build values** (the kinds the build's own code distinguishes): does the substitution that writes
+    `as_traded_close` apply to it, and does the scaling apply to it? A small table from the code.
+A6. **One check on the build's own output, allowed and local:** in the served build's price input or price table on disk
+    (`C:/dev/ajb_workspace/.scratch/advi_cotbkf/r34/after/`), if a `basis` column or a price-basis file is present: the count of
+    points by `basis`, and how many securities marked `as_traded_close` have a split in the pinned split store inside their held
+    range. Counts only. If the column is not in the files on disk, say so and make no other read.
+A7. Write a SECOND record, `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~152/BASIS_VALUE_AGAINST_SPLIT_SCALING.json`, beside the first. Top-level keys, exactly: `basis_written_at` (a list of `{"file_line",
+    "value", "condition"}`), `split_scaling_at` (a list of `{"file_line", "what_it_scales"}`), `order` (`value_before_scaling`,
+    `scaling_before_value` or `not_established`), `scaling_is_recorded_per_point` (true or false), `paths_marked_and_unscaled` (a
+    list of `{"path", "file_line", "reachable"}`), `can_leave_marked_and_unscaled` (true, false or `not_established`),
+    `by_security_type` (a list), `output_check`, `the_sentence_holds_for` (a short string: every type, funds only, or none, as the
+    code shows), `headline`, `not_established`.
+
 ### ACCEPTANCE
 
 <criterion id="CB79ca2-AC1" cell_refs="CB-ca-2"><invocation>python -c "import json;d=json.load(open('org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~152/TICKER_MANY_NAMES.json',encoding='utf-8'));c=d['classes'];n=d['not_own_rows'];print('TICKER-MANY-NAMES control=%d/%d test_written=%s held_securities=%d priced_by_ticker=%d ticker_many_names=%d classed=%d not_own_rows=%d measured_account_days=%d the_15_listed=%d classes=%s'%(d['control']['with_more_than_one_name'],d['control']['tickers'],bool(d['test']['written_at']),d['held_securities'],d['priced_from_the_store_by_ticker'],d['ticker_with_more_than_one_name'],sum(c.values()),n['securities'],n['measured_account_days'],len(d['the_15']),json.dumps(c,sort_keys=True)))"</invocation><expect>TICKER-MANY-NAMES control=308/4000 test_written=True</expect></criterion>
@@ -72,9 +112,17 @@ one name is classed (`classed` equals `ticker_many_names`); the issuer reads how
 `CB79ca2-AC2` -- JUDGMENT, graded by 3.0.0_SA_CVO at L9 and never self-graded: the denominators run from every held security down;
 the rule for a security's own name and for "its own rows" was written before any was classed; names that carry the same series
 are said to be indistinguishable and not counted as wrong; a security whose own name cannot be identified is that class and not
-`own_rows`; no account id or amount appears.
+`own_rows`; no account id or amount appears. AMENDMENT 1 adds to this judgment: the order of the basis value and the split scaling is
+read from the calls in the build's main path, with file and line, not from a comment; "can a point leave marked and unscaled" is
+answered path by path, with `not_established` where the code does not settle it; a point after its last split is said to be
+unscaled and right.
 
-<expected_criteria>CB79ca2-AC1,CB79ca2-AC2</expected_criteria>
+<criterion id="CB79ca2-AC3" cell_refs="CB-ca-2"><invocation>python -c "import json;d=json.load(open('org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~152/BASIS_VALUE_AGAINST_SPLIT_SCALING.json',encoding='utf-8'));p=d['paths_marked_and_unscaled'];print('BASIS-VS-SCALING basis_written_at=%d split_scaling_at=%d order=%s scaling_is_recorded_per_point=%s paths=%d reachable=%d not_established=%d can_leave_marked_and_unscaled=%s security_types=%d the_sentence_holds_for=%s'%(len(d['basis_written_at']),len(d['split_scaling_at']),d['order'],d['scaling_is_recorded_per_point'],len(p),sum(1 for x in p if x['reachable'] is True),sum(1 for x in p if x['reachable'] not in (True,False)),d['can_leave_marked_and_unscaled'],len(d['by_security_type']),str(d['the_sentence_holds_for'])[:60]))"</invocation><expect>BASIS-VS-SCALING basis_written_at=</expect></criterion>
+`CB79ca2-AC3` (AMENDMENT 1) -- where the basis value is written and where the split scaling runs are read with file and line; the
+order is stated; every path by which a point could leave marked and unscaled carries a reading. The issuer reads the answer the
+CTO amends its sentence on.
+
+<expected_criteria>CB79ca2-AC1,CB79ca2-AC2,CB79ca2-AC3</expected_criteria>
 
 ## BOUNDS
 
@@ -109,7 +157,7 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: CB79ca2-AC1, CB79ca2-AC2. Instance at
+Criterion ids: CB79ca2-AC1, CB79ca2-AC2, CB79ca2-AC3 (AMENDMENT 1: validate with all three). Instance at
 `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~152/ADVI_COTBKF.TO-CB-ca-2.ticker-many-names.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> CB79ca2-AC1,CB79ca2-AC2` BEFORE the flip. Mechanical: CB79ca2-AC1. A judgment criterion is recorded as PENDING-ADJUDICATION, never PASS. An artifact already committed and not changed
 in the flip commit is pinned to the commit that carried it, never left `PENDING-THIS-COMMIT`.
