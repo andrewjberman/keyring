@@ -109,6 +109,34 @@ patched temp copy of C_06 and D_04 (the three functions, a call before the early
 with `FORCE_RECENT_DAYS = 14` reads AC2 `no_typed_window=False`; a copy with `ROLLING_MAX_DATES = 7` reads AC2 `ok=True`; a half request with a section
 missing, or with a half signed, reads `ok=False`. So every criterion can pass and can fail.
 
+### AMENDMENT 1 -- what your own record settles, and four things the half request must carry (issuer 2.0.0_SA_COO~M1, 2026-10-12 ~12:2xZ; before you start)
+
+Your record (`WINDOW_READ_C06_ROLLING_20261012.json`, SC-e-96 complete, merged @5d5e73ba2d) decides items 5 and 6 and sharpens the half request. Read it
+with python; the numbers below are its, and you re-read them rather than copy them.
+1. **No cap (item 5).** `fits` is true (cold 735.05 s against 1,800 s) and `largest_n_that_fits` is 15 of the 15 window dates: add NO
+   `ROLLING_MAX_DATES`. The half request's **Window and gap** says the window is 15 dates, 2026-09-25 to 2026-10-09, the rule is N=14 read from
+   `gold_dispatch.sh:99` (readable at runtime: `sync_scripts` places it beside C_06), and the gap is 0.
+2. **Orphans (item 6) apply.** The record's `relationships_stored_not_in_partition` is above 0 on 14 of 15 dates (up to 15), so implement the
+   removal for relationships the build would not otherwise visit: after the merge, visit the relationships NOT in the new data whose stored
+   entries carry a window date (the listing `_retained_only_pass` already makes, 3,793 JSON keys at this read, 137.9 s to scan from this seat) and
+   remove the date; state in the half request how many JSON reads a fire makes and that a second fire over unchanged partitions rewrites 0.
+3. **The movement is large and the half request names it per date (Expected outcome and Blast radius).** The record's `per_date` shows the served
+   Unclassified (D_04's rule) of $75.9M to $153.0M on each of 2026-09-30 to 2026-10-06 against a rebuilt $0 to $53,010, and about $1M on 10-07 and
+   10-08, $1.85M on 10-09: the window restates those days by moving that Unclassified into other classes. Print the record's per-date table in
+   the half request (served, rebuilt, delta), and in **Blast radius** name EVERY served object that embeds a window date's firm or advisor class
+   dollars, read from the code and not guessed: D_03's period views (does a quarterly bar use the 2026-09-30 day?), D_04's `platinum/firm/mix_summary.json`
+   (latest date only) and the advisor summaries; for each, say whether the move reaches it and by how much from the record.
+4. **Memory (Blast radius).** The record's `peak_mb` (635.6) was taken in the scan process, not in a derive process; SC-e-95 measured 3.26 to 3.30
+   GB for N = 1 to 5 including the static load (`RESIDUAL_READ_C06_FREEZE_20261012.json`, `rederive`). The build BULK-PRELOADS the window's
+   partitions into `cube_cache` (:845-863). State: the total bytes of the 15 window partitions (head-object sizes), the runner instance type and its
+   memory (a read-only `ec2 describe-instances` of `i-01003b035d2988dfb`; its instance type is in the launch template if stopped), and your
+   estimate of the preload's resident size from one partition's in-memory size times 15; if the estimate exceeds 70 percent of the runner's
+   memory, say so in the half request and say what you changed in the build (for example preloading in batches of the process pool's width).
+   Mark each figure measured or inferred.
+5. **Gate limb.** The issuer amends its own criteria without a CTO ruling; no gate limb grades an amendment to an existing order's criteria and
+   `<status>` (this order declares `<placeholders>NONE`; the L6 gate grades newly-added orders and placeholders). The three criteria are
+   unchanged.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below, plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
