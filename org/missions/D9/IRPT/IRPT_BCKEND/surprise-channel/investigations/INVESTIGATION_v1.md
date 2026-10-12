@@ -28592,3 +28592,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not a work failure: all three criteria PASS by output on the amended check; the order stays status pending only because the checker rc is 1."
 }
 ```
+
+## IRPT_BCKEND-D2-W329-S3 -- IB165-4-AC3 FAIL on the order's relative invocation: the issuer's delivery commit 64d6ae536f puts p165_cells.py itself outside the check's own allowlist
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W329-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~329",
+  "surfaced_at": "2026-10-12T18:27:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Run from the worktree root with the order's relative invocation, IB165-4-AC1 and AC2 PASS and IB165-4-AC3 FAILs: changed_outside lists the issuer-delivered check script, because 64d6ae536f is a commit on this branch whose path is under deliverables/2.0.0_SA_COO~P2/, not under the allowlist.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python \"org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py\" . IB165-4-AC1 -> OK: 5 arms PASS / IB165-4-AC1 PASS (rc 0)",
+      "same, IB165-4-AC2 -> OK: staging test 5 passed; test_build_only.sh exits 0 / IB165-4-AC2 PASS (rc 0)",
+      "same, IB165-4-AC3 -> FAIL: changed outside the grant: ['org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py'] / IB165-4-AC3 FAIL (rc 1), on a clean tree (git status shows only the portal gitlink)",
+      "p165_cells.py lines 87-99 (changed_outside): git diff --name-only <record base_commit 2d923d0564> includes the file changed by 64d6ae536f; the allowlist is the worker deliverables, INV and the task-orders folder only; the gitlink amendment does not cover a regular file"
+    ]
+  },
+  "spec_asserts": "AC3 expects PASS on the order's relative invocation run in the worker's worktree after the issuer delivered the amended check (issuer message: 64d6ae536f makes the relative invocation run the amended check).",
+  "world_is": "The delivery commit itself is a change against base_commit outside the grant, so the amended check fails its own AC3 on any branch that carries it. The worker stopped as ordered: it did not edit p165_cells.py, the record's base_commit, the order's criteria or any threshold, and did not flip the order. The proof instance was not rewritten, since it would have to record a FAIL for AC3.",
+  "notes": "Resolving options for the issuer: add the check's own folder (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/) to the allowlist in changed_outside, or deliver the check without a commit on the worker branch. Not a build failure: AC1 and AC2 PASS and the record satisfies every other AC3 field."
+}
+```
