@@ -24,7 +24,7 @@ and a BD fire; D1-S27: explained, the acceptability ruling is the owner's). Both
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v20",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v20"
     },
@@ -33,7 +33,7 @@ and a BD fire; D1-S27: explained, the acceptability ruling is the owner's). Both
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "MDPF_SECCLASS-D1-W77-S1",
@@ -50,16 +50,20 @@ and a BD fire; D1-S27: explained, the acceptability ruling is the owner's). Both
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v20",
     "remediation": {
-      "state": "OPEN",
+      "state": "CLOSED_UNREMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
-      "round": "v20"
+      "round": "v20",
+      "closure": {
+        "reason": "ACCEPTED_BY_RULING",
+        "pointer": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_MDPF_SECCLASS_ROUND_20_20261012.md:30"
+      }
     },
     "disarm": {
       "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "MDPF_SECCLASS-D1-W78-S1",
