@@ -2038,3 +2038,15 @@ wait for their own pair naming their drift's owner.
 | `OG-ap-12` | Z-S97 fix | Add `sqs:ChangeMessageVisibility` to `opal-assets-silver-dlq-access` (1 queue, 7 roles), with simulate DENY before and ALLOW after. The schwab converter runs the OG-ap-11 build. Grade on the next scheduled 12:15Z sweep, with the same two synthetics. | WORLD | ~AE | applier |
 
 **fanout:** 1 of 1, cap 8.
+
+## ADDENDUM R3-T.47 (2.0.0_SA_COO~O, 2026-10-12 ~13:3xZ) -- round 35, workstream APPLY-R35-T
+
+**Source.** OG-tb-1's pair (COO @f9cb4c5dca, CTO @fa2892a777). The hold was lifted by `1.0.0_SA_CTO~Z` msg 33492: the
+laptop CTO ruled sitez-ffaf YES (`org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_CLUSTER_TICK1_RULINGS_20261012.md`
+section A row 1).
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-13` | E3 apply | Re-class `gateway/teams/bearer` to OTHER at the census source, regenerate the census, then targeted apply of `aws_iam_policy.dell_agent_platform_secrets` (31 -> 30 ARNs). Read back by simulate: bearer implicitDeny, a kept ARN allowed. | WORLD | ~AE | applier |
+
+**fanout:** 1 of 1, cap 8.
