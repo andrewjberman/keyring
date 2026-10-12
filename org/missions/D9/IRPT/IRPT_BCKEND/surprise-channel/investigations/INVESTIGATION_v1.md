@@ -28870,3 +28870,84 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT: nothing is built or deployed under this order, and the failure on a bound queue would be a loud ModuleNotFoundError at runtime construction, not a silent wrong answer. The fix (add ycharts/research to the resident DIRS) is outside this order's paths and is not made."
 }
 ```
+
+## IRPT_BCKEND-D2-W334-S1 -- the order says the two PerformanceReport.schema.json copies differ only in their $id; they differ in more than that
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W334-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~334",
+  "surfaced_at": "2026-10-12T19:12:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The two PerformanceReport.schema.json copies differ by more than $id: the docs v1 copy also carries contract_version, retained_ref, x-contract-version and a longer provider description that the lambda _contracts copy lacks.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "diff infra/aws/lambda/investor-reporting/_contracts/PerformanceReport.schema.json docs/contracts/investor-reporting/v1/PerformanceReport.schema.json at 4650422c34 -> hunks at lines 3 ($id), 23-27 (x-provider-extension layout), 52/56 (lineage.provider description, OPAL_ENGINE sentence), 342a347,382 (contract_version, retained_ref) and 344c384,385 (x-contract-version)",
+      "the value_facts block is byte-identical in both copies at base; both were edited with the same insertion, so the two copies agree on value_facts"
+    ]
+  },
+  "spec_asserts": "The face of IRPT_BCKEND.TO-IB-pr-479 says the two copies differ today only in their $id.",
+  "world_is": "They differ in five places (diff above). The worker kept the two in step on the value_facts block, which is what the order's instruction needs, and changed nothing else."
+}
+```
+
+## IRPT_BCKEND-D2-W334-S2 -- three pins record the PerformanceReport schema bytes or call the docs copy immutable; the value_facts edit leaves two digests stale
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W334-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~334",
+  "surfaced_at": "2026-10-12T19:12:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "infra/aws/lambda/ci/lambda-source-map.json and infra/aws/lambda/layers/irpt-common/BUILD_MANIFEST.json pin the two schema copies by sha256, and PATH_MANIFEST.json calls the docs copy IMMUTABLE once IB-rt-1 completes; the order edits both copies and none of those files is in its paths.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json:3113-3116 (docs copy, sha256 c4e2fdb122...), 4340-4343, 4954-4957",
+      "infra/aws/lambda/layers/irpt-common/BUILD_MANIFEST.json:48-51 (_contracts copy, sha256 114b185a1d...)",
+      "infra/aws/lambda/investor-reporting/PATH_MANIFEST.json:5730 'IMMUTABLE once IB-rt-1 flips complete'",
+      "no consumer of the digests was run; that a build or CI step fails on a stale digest is inferred from the field names, not measured"
+    ]
+  },
+  "spec_asserts": "The order grants edits to both schema copies and says to list hash pins and regenerate one only if it is inside the paths.",
+  "world_is": "Two manifests carry digests of the copies this change alters and are outside the paths, so they were left as they are and are listed in hash_pins of the record. The PATH_MANIFEST immutability note conflicts in words with an edit of the docs copy; the CTO's addendum v0.50 orders the edit.",
+  "notes": "Resolving option for the issuer: regenerate the two digests in a cell whose paths include them, in the step that ships the pair."
+}
+```
+
+## IRPT_BCKEND-D2-W334-S3 -- IB166-4-AC2 validates the fixture wrapper instead of its instance, so it fails on any correct schema
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W334-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~334",
+  "surfaced_at": "2026-10-12T19:14:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB166-4-AC2 cannot PASS on any correct schema: p166_cells.py validates the whole fixture file (a wrapper with _fixture, _source, _expect, instance) instead of its instance member, so 'the valid fixture still validates' fails at base and after.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p166_cells.py lines 251-252 load PerformanceReport.valid.json and .invalid.json whole; lines 266-269 call iter_errors(valid) and iter_errors(invalid) on those whole objects",
+      "the fixture's top-level keys are ['_fixture','_source','_expect','instance'] (invalid: plus '_why_refused'); the schema root is additionalProperties false with required lineage and dates, so iter_errors(wrapper) reports 6 errors, the first 'Additional properties are not allowed (_expect, _fixture, _source, instance were unexpected)', on the base schema and on the edited schema alike",
+      "python run of the same controls on w['instance']: valid instance 0 errors, invalid instance 1 error, a value_facts with start_value 1.5, end_value null and an open currency member validates, a string start_value is rejected, in BOTH schema copies",
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r166/p166_cells.py . IB166-4-AC2 -> 'FAIL: infra/aws/lambda/investor-reporting/_contracts/PerformanceReport.schema.json: the valid fixture no longer validates' / IB166-4-AC2 FAIL (rc 1)"
+    ]
+  },
+  "spec_asserts": "AC2 expects PASS: both schema copies declare the two members, the valid fixture still validates and the invalid one still fails, a value_facts with the members and an open member validates, a string start_value is rejected.",
+  "world_is": "The member declaration, the open-member control and the string control all hold in both copies when run on the fixture's instance member; the check's fixture-validates control runs on the wrapper and fails regardless of the schema. The worker did not edit the check or the fixtures (the contract tests read the wrapper form), so AC2 stays FAIL and the order stays open.",
+  "notes": "Resolving option for the issuer: validate valid['instance'] and invalid['instance'] in the AC2 arm of p166_cells.py (lines 251-252 or 266-269). The same wrapper form would need no fixture change."
+}
+```
