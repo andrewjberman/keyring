@@ -28538,3 +28538,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  "notes": "Read row for ADJUDICATION_v65. Digests, counts and paths only."
 }
 ```
+
+## IRPT_BCKEND-D2-W330-S1 -- The IB165-5-AC1 check reads prices_store.cites, a key the face does not name
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W330-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~330",
+  "surfaced_at": "2026-10-12T18:10:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The IB165-5-AC1 check reads prices_store.cites, a key the worker face does not name (it names writer_cite and schedule_cites); the record carries all three.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py: IB165-5 AC1 calls need_cites(p.get('cites'), 'prices_store.cites')",
+      "the face of IRPT_BCKEND.TO-IB-pr-475 lists prices_store: {writer, writer_cite, schedule_cites, verdict, retired_as_source, in_words, census} and no cites key",
+      "the row IRPT_BCKEND-D2-W315-S3 evidence names 'the store key' but its text does not state the key; read from build_canonical_prices_v2.py:174 and legacy_addresses.json instead"
+    ]
+  },
+  "spec_asserts": "The face names the prices_store keys writer, writer_cite, schedule_cites, verdict, retired_as_source, in_words, census.",
+  "world_is": "The check also requires a non-empty cites list inside prices_store; the worker added it (all cites resolve) so the check could grade; the face and the check disagree by one key."
+}
+```
+
+## IRPT_BCKEND-D2-W330-S2 -- The order names the relative check path; the issuer's correction ran the amended script at an absolute path
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W330-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~330",
+  "surfaced_at": "2026-10-12T18:11:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The issuer's mid-task correction ran the criteria with the amended check at an absolute path (04e6040b0c), but the order file still names the relative path, so proof-of-spec-check refuses an instance that records the absolute path; the instance records the order's own invocation and the evidence names the amended script.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check invocation-alignment violations (3 of 3) when the recorded invocation was python \"C:/dev/ajb_workspace/org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py\" . IB165-5-ACn against the order's relative-path invocation",
+      "the three criteria were run from the worktree root with the amended script at the absolute path: IB165-5-AC1, AC2, AC3 each PASS rc=0",
+      "the worktree's own copy of the script is the pre-04e6040b0c version; this worker did not run it and did not edit it"
+    ]
+  },
+  "spec_asserts": "The order file's invocation is python \"org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py\" . IB165-5-ACn, and the checker holds the record to it.",
+  "world_is": "The graded run used the amended script at the absolute path in the issuer's correction; the instance carries the order's text. Owner 2.0.0_SA_COO~P2: amend the order file's invocation or merge 04e6040b0c before grading."
+}
+```
