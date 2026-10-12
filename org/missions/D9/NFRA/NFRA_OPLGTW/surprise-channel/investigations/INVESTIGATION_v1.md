@@ -12465,3 +12465,193 @@ name the one known failure instead of silently inheriting it.
   "notes": "The pass wrote the missing snapshots write-once to the real access-state table, as the order says; nothing else was written."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S93",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-11T21:22:21Z",
+  "one_line": "ap9.AC2.sh queries Lambda function name 'mcportal-grant-writer', which does not exist -- the function is 'mcportal-grant-writer-lambda' -- so its `live` variable is the CLI's ResourceNotFoundException text rather than a hash, and its first limb can NEVER report equal no matter how correct the deploy is. OG-ap-9's deploy is complete and its ledger CLOSED; only this criterion is unsatisfiable as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ap9.AC2.sh line 10: `live=$(bash .tools/aws lambda get-function-configuration --function-name mcportal-grant-writer --query CodeSha256 --output text 2>&1 ...)` -- note 2>&1, so a failure is CAPTURED INTO the variable rather than surfacing as an error.",
+      "That name does not resolve: get-function-configuration --function-name mcportal-grant-writer returns 'ResourceNotFoundException' / 'Function not found: arn:aws:lambda:us-east-1:313476888478:function:mcportal-grant-writer'.",
+      "The real function does resolve: get-function-configuration --function-name mcportal-grant-writer-lambda returns CodeSha256 894RI63/G4h019yxAGP7E+wQzrpZIfJoMaLhzpTTyck=.",
+      "Terraform declares the name: infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf:128 reads function_name = \"mcportal-grant-writer-lambda\".",
+      "CLIENT-SIDE COUNT over the auto-paginated listing, denominator printed (rule 22a: a paginated list-* with --query length() returns the PAGE count): 237 functions listed; exact matches for 'mcportal-grant-writer' = 0, for 'mcportal-grant-writer-lambda' = 1.",
+      "A FIRST ATTEMPT AT THAT COUNT WAS ITSELF WRONG AND IS RECORDED: `list-functions --query \"length(Functions[?FunctionName=='...'])\"` returned 0 for BOTH names, including the one that demonstrably exists. The control -- querying a name already read successfully -- is what caught it, and the count was redone client-side.",
+      "AC2's OTHER limbs PASS on the same run: 'deployed package accepts calendar_months 13: True; prior package accepts it: False (want False)'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-9 step 6 and its proof_of_spec: AC2 reads the live CodeSha256, finds it equal to the build recorded in W/ap9_build.json and different from the prior, alongside the session-free parse result.",
+  "world_is": "The deploy is DONE and CORRECT and nothing is half-landed: the ledger nfra-oplgtw-grant-writer-rebuild has all 5 legs proven and is CLOSED with its sentinel removed; ap9.AC1 PASSES; the plan was 0/1/0 at rc=0 and the re-plan 0/0/0 at rc=0; and three independent reads agree the live CodeSha256 is 894RI63/G4h019yxAGP7E+wQzrpZIfJoMaLhzpTTyck= -- the plan's intended source_code_hash, get-function-configuration on the real name, and the sha256 of the package downloaded back from get-function. The ONLY thing unsatisfiable is AC2's first limb, because the script reads a nonexistent resource. `<status>` is therefore LEFT AT pending: this seat does not flip an order whose criterion did not PASS, and does not edit its own acceptance check to make it pass.",
+  "notes": "THE FIX IS THE ISSUER'S, one character class: ap9.AC2.sh line 10's --function-name becomes mcportal-grant-writer-lambda, matching tf:128. This seat deliberately did NOT make that edit -- the check lives under deliverables/2.0.0_SA_COO~O/, outside this order's <paths>, and a seat editing the script that grades it is self-grading however small the change. On the GO it re-runs AC2 and flips the status. NOTE THE SHAPE, which is the same class as OG-ap-7 step 5b's false-clean plan: the `2>&1` on line 10 folds the CLI's failure INTO the value being compared, so a resource-name defect presents as a normal 'no' rather than as an error. A check that captures stderr into a compared variable cannot distinguish 'the value differs' from 'the read failed'. The same line's second limb, 'differs from the prior', then reports yes for the wrong reason, because an error string does differ from the prior hash."
+}
+```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S94",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-11T21:41:15Z",
+  "one_line": "RESOLVES NFRA_OPLGTW-Z-S93 by repair, not by ruling: the issuer corrected ap9.AC2.sh @63a7b6620b to query mcportal-grant-writer-lambda and to fail LOUDLY on a non-zero or empty live read instead of capturing the error into the compared value. AC2 re-run reads RESULT: PASS at rc=0 on all four conjuncts, and OG-ap-9 is now complete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The fix is in the bytes at HEAD: ap9.AC2.sh:12 now reads `--function-name mcportal-grant-writer-lambda` with stderr to a FILE and the exit code captured separately, and :13 fails with 'live read FAILED rc=... <aws error>' when the read is non-zero or the value is empty.",
+      "AC2 re-run, clean non-piped rc read: 'live CodeSha256 equals the build: yes; differs from the prior: yes' and 'deployed package accepts calendar_months 13: True; prior package accepts it: False (want False)' -- RESULT: PASS, rc=0.",
+      "@63a7b6620b verified present in local HEAD by merge-base --is-ancestor.",
+      "Issuer msg 33399 states it ran the corrected check live and saw PASS, and that a wrong name now fails with the AWS error."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CLOSED BY REPAIR, NOT BY A JUDGMENT THAT IT DID NOT MATTER -- the enum's only terminal value is DISMISSED_WITH_REASON, so the word understates what happened and the reason is here to say so. The defect Z-S93 named is GONE IN THE BYTES: ap9.AC2.sh:12 queries the function that exists (mcportal-grant-writer-lambda, matching mcportal_grant_writer.tf:128) and :13 fails loudly on a non-zero or empty live read, so the criterion is now both SATISFIABLE and SATISFIED (RESULT: PASS, rc=0, all four conjuncts). Nothing is owed by anyone: the issuer owned the fix because the check grades this seat, and made it at 63a7b6620b. What does NOT close with it is the `notes` measurement -- on this device the guard's rc limb alone would still miss a wrong name, and only the `[ -n \"$live\" ]` conjunct beside it discriminates; that is a live caution about the guard's shape, not a residue of this row.",
+  "spec_asserts": "OG-ap-9's AC2 reads the live CodeSha256 against the recorded build, plus the session-free parse result.",
+  "world_is": "AC2 is satisfiable and satisfied. The DEPLOY never changed: it was complete and its ledger CLOSED before Z-S93 was filed, which is why the row was a grader defect and not a half-landed act. <status> moved pending -> complete only after the corrected check PASSED.",
+  "notes": "ONE THING WORTH CARRYING, measured on the corrected guard rather than assumed: running its own command form against the bad name on this device returns rc=0 with an EMPTY value, because the .tools/aws shim does not propagate the CLI's failure as a non-zero exit (the 'aws shim crash reads as EMPTY result' class). So the new `[ \"$lrc\" = 0 ]` check alone would NOT have caught the wrong name -- it is the `[ -n \"$live\" ]` conjunct beside it that discriminates. Both are present, so the guard holds; the note exists so that nobody later 'simplifies' it to the rc test, which on this device is the weaker half. Credit where due: declining to edit my own grader is what made the repair the issuer's, and the issuer made it at once."
+}
+```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S95",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-11T23:55:06Z",
+  "one_line": "The new GET /hx/teams/channels/{team}/{channel}/messages route (OG-ap-7, live 28ba9532b6) answered 502 on 2 of ~285 COMM_ASSIST polls since the release (2026-10-11 21:27:39Z and 23:30:36Z), per COMMS row COMM_ASSIST-Z-S13 @cf36d47e7c. The gateway-side cause is not yet read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ROW org/missions/D9/COMM/COMM_ASSIST/surprise-channel/investigations/INVESTIGATION_v1.md COMM_ASSIST-Z-S13 @cf36d47e7c (relayed by 2.0.0_SA_COO~ZZ msg 33416): route=channel_messages status=502 at 21:27:39Z and 23:30:36Z, 2 of ~285 polls"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-7: the channel-read routes answer 200, or a refusal the code names (401, 409, 503, PathRefused).",
+  "world_is": "About 0.7% of channel_messages polls answer 502, which none of the route's own refusals produce. A 502 most likely comes from an upstream Graph error passed through (the research_meeting transcript 502 class, row NFRA_TRNSPT-D2-S30), but this is not read.",
+  "notes": "Next read, cheap: the gateway's audit records and the journal around the two timestamps (status, Graph status, latency). If upstream Graph 502s are passed through, record it and leave it; if the gateway itself errors, it is a code cell. COMM retries on the next poll, so nothing is lost."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W58-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~58",
+  "surfaced_at": "2026-10-11T23:31:00Z",
+  "one_line": "OG-fd-1 fixes the four mirror-family sweeps (orion, eclipse, blackdiamond, etf) but the schwab sweep has its OWN drain_dlq (schwab_runtime.py:247, outside this order's paths) that still receives and deletes every message on the shared opal-assets-silver-dlq, so a schwab sweep will keep eating other families' failures after the deploy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/schwab_runtime.py:247-268 @91bde9b54c: drain_dlq(sqs, queue_url, cap) calls receive_message then delete_message on every message with no family read; called at :380 from run_sweep.",
+      "infra/aws/terraform/opal-assets/silver.tf:95-101 @91bde9b54c: silver_families holds schwab, orion, eclipse, blackdiamond, etf, smartx; line 680 gives every one the same DLQ_URL.",
+      "The schwab package copy equals its source (schwab_runtime.py 405 lines both), so the defect ships as written; no mirror_conversion.py is vendored into the schwab package, so the OG-fd-1 change cannot reach it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cell OG-fd-1: each silver sweep drains only its own family's DLQ messages; callers named are run_sweep and etf_conversion.py:620.",
+  "world_is": "Two more drain_dlq definitions exist beyond mirror_conversion's; schwab_runtime.py:247 is the second and is a live drainer of the shared queue. Paths for this order exclude it, so it is unchanged. smartx and bd49finsurance packages hold no receive_message or DLQ_URL reference (grep of both snapshot dirs: 0 matches)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W58-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~58",
+  "surfaced_at": "2026-10-11T23:31:00Z",
+  "one_line": "The family attribution rests on the Lambda on-failure destination record carrying requestContext.functionArn; no live message was read (no SQS call is in this order), so the record shape is the documented AWS shape, not a measurement of the queue.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/opal-assets/silver.tf:700-702 @91bde9b54c: the queue is each silver Lambda's event_invoke_config on_failure destination (not a dead_letter_config), so bodies are destination records, not raw event payloads.",
+      "The fix fails safe: a body whose family cannot be read is left in the queue and counted unattributed, never deleted (test_fd1_ac03). If live records lack the field, every message reads unattributed and nothing is drained until the live grade in the ask shows it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says the Lambda destination record names the failing function, opal-assets-silver-<family>.",
+  "world_is": "Unread on the live queue by design; the ask's live grade (plant one synthetic family-A record shaped like a destination record, run family B's sweep) is the first measurement."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W59-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~59",
+  "surfaced_at": "2026-10-12T00:04:24Z",
+  "one_line": "OG-tb-1: one of the four readers of gateway/teams/bearer is an IAM USER whose ARN carries a person's name, so the order's 'ARNs only' and 'never print a person's name' cannot both hold for that row; the principal ARN is redacted in TB1_READ.json and the ask.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ CloudTrail lookup-events GetSecretValue us-east-1, 129562 events, 186 naming gateway/teams/bearer: 14 carry userIdentity.type IAMUser with an arn of the form arn:aws:iam::313476888478:user/<person's name>; the group's members are cloudops-dell1-agent-user and cloudops-dell2-agent-user (iam get-group), so this principal is not a member",
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~59/TB1_READ.json: the row's arn is 'arn:aws:iam::313476888478:user/[IAM-USER-NAME-REDACTED-ADMIN]', count 14; AC1 needs only a non-empty arn key and an int count and passes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TB1_READ.json principals carry 'ARNs only, no person's name', and the Bounds forbid printing a person's name.",
+  "world_is": "The admin principal's real ARN IS a person's name, so I took the bound as the stronger half and redacted that one segment; the other three ARNs are verbatim. The unredacted ARN is in CloudTrail (event userIdentity) for any seat that needs it. If the issuer wants the real ARN recorded, it is a one-line edit in TB1_READ.json and the ask.",
+  "notes": "Also measured, not a deviation: the first read used the CLI's lookup-events with --max-items and was cut by the 580 s bound (rc 124, empty output); the census was redone with boto3 paginating to the end (2592 pages, 129562 events, DONE line in the run log) in about 20 minutes."
+}
+```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S96",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-12T00:30:07Z",
+  "one_line": "OG-ap-10 step 2 says to run the RELEASE TREE's tests/test_og_mu1.py, and that test cannot pass in a tree cut at the live ref: it loads data/transcripts/scripts/updates/intake.py by absolute path, and that file does not exist at 28ba9532b6 (it is NFRA_TRNSPT trunk work added later at d47fff379b). 31 of 33 release-tree tests pass; both failures are this ONE cause. Nothing is blocked -- AC1 PASSES and AC2 runs no pytest.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Release-tree run of the three named tests: 31 passed, 2 failed, both FileNotFoundError on C:/tmp/og-rel-pptx/data/transcripts/scripts/updates/intake.py (test_ogmu1_ac01, test_ogmu1_ac02).",
+      "NOT a sparse-cone artefact, which was my first theory and was WRONG: after sparse-checkout add data/transcripts/scripts the file was still absent, because it is absent from the COMMIT. git cat-file -e reads ABSENT at 28ba9532b6 and at the release d9f2ebded9, PRESENT at HEAD (cd7f4166b2); positive control 28ba9532b6:infra/aws/ec2/opal-gateway/app/tools.py reads PRESENT, so the instrument is sound.",
+      "git log --diff-filter=A names the adding commit: d47fff379b (NFRA_TRNSPT.TO-TR-i19), i.e. unreleased trunk work outside the .pptx pair -- exactly the class the order says not to take whole from trunk.",
+      "test_og_mu1.py:51 spec_from_file_location(..., _REPO / 'data/transcripts/scripts/updates/intake.py') -- the test is a deliberate CROSS-SYSTEM PARITY check that the gateway's key equals the intake writer's key.",
+      "THE RELEASE HAS NO RUNTIME DEPENDENCY ON IT: executable-intake-refs = 0 in all three shipped app files (tools.py, destructive_ops.py, site_to_s3.py). site_to_s3.py's 4 'intake' hits are a docstring (lines 22-24) and one comment (line 190); tools.py's 5 are unrelated prose about other intake concepts.",
+      "The parity claim was PROVEN for the exact shipped bytes instead: test_og_mu1.py + test_og_ab2_pairs.py run in the MAIN tree, where intake.py exists, read 6 passed rc=0 -- and site_to_s3.py, test_og_mu1.py and test_og_ab2_pairs.py are byte-identical (same blob) between HEAD and the release commit.",
+      "AC1 PASS at exit=0 on the release: base is the live ref, 6 files differ, 0 outside the pair, 3 of 3 byte-equal to HEAD, 3 of 3 patch-ids equal, printf predicate yes. ap10.AC2.sh contains 0 pytest invocations."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-10 step 2: 'Run the release tree's tests/test_advi_site_to_s3.py, tests/test_og_ab2_pairs.py and tests/test_og_mu1.py.' This reads as though all three are runnable in a tree cut at 28ba9532b6.",
+  "world_is": "Two of the three are. test_og_mu1.py is a parity test against a SECOND system's module that postdates the live ref, so in the release tree it fails on a missing file rather than on anything about the release. The release itself is unaffected: no shipped file imports it, and the parity assertion passes against the identical bytes in the main tree. I did not widen the release to carry intake.py -- that would have pulled NFRA_TRNSPT's unreleased work into a .pptx-pair release, which the order forbids and which is the actual hazard here.",
+  "notes": "FOR THE ISSUER, before B2: the instruction is the thing to adjust, not the release. Either scope step 2 to the two tests that are self-contained in the release tree and run the mu-1 parity test in the main tree (what I did, and what proves the claim for the shipped bytes), or state that the mu-1 test is a main-tree check. A generalised form worth keeping: A TEST THAT ASSERTS PARITY BETWEEN TWO SYSTEMS CANNOT LIVE INSIDE A RELEASE CUT OF ONE OF THEM -- its dependency is by construction outside the release boundary, so 'run it in the release tree' is unsatisfiable whenever the other system moved after the base ref. Also recorded against myself: my first reading was 'sparse cone too narrow', which had already been true FOUR times this session (lib, infra/logic, org/standards, data/transcripts/scripts), and that prior made me widen the cone twice before asking the cheaper question -- does the file exist in the commit at all. A repeated true cause is not the next cause."
+}
+```

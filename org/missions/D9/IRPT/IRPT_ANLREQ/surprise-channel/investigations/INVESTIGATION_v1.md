@@ -3217,3 +3217,481 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S59",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T19:16:34Z",
+  "one_line": "L8 round 11, no judgment criterion. A hold with nothing behind it but text: portal commit b8bc5169 on branch wk-IRPT_ANLREQ-51-portal-r11 removes the ticket page's fallback, and if it lands before release 5's return and its after-reads, every ticket's Open report read is refused. The hold is written in the order and the pair; no gate enforces it. This is the same shape as row D2-S51, in the other direction. Also compiled: the live intake poller serves bytes the tree cannot reproduce (21 of its 28 members equal no blob in git).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND11_Y_L8_COMPILE_20261011.md @7de33686e4 (msg 5619)",
+      "the packet's section 3, in the issuer's words: 'The hold is text in the order and in the pair; nothing mechanical enforces it.' This seat made no read of its own for this compile"
+    ]
+  },
+  "spec_asserts": "The never-widen pair for release 5's return: the fallback's removal lands only after the release's after-reads pass.",
+  "world_is": "The branch is local, not pushed and not sent for landing (the issuer's statement). Release 5's return is not applied; its PROD precondition waits on Andrew's word (CTO msg 5603). Disarms when the branch lands in order or is dropped.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S60",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T19:22:52Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-S59: the portal branch that removes the Ticket Center's fallback is withdrawn as a candidate; the removal is re-cut after release 5's after-reads, against the portal as it then stands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-12 analysis @06b01d9b88 (msg 5645): branch wk-IRPT_ANLREQ-51-portal-r11 is not presented, not sent for landing and not kept as a candidate; its commit is recorded in the row; the fallback's removal is re-cut as a cell of the round that follows release 5's after-reads. A change that is safe only after an act is cut after the act. No gate is built.",
+  "world_is": "MEASURED by this seat ~19:2xZ: the branch wk-IRPT_ANLREQ-51-portal-r11 is LOCAL only in the nested portal worktree C:/dev/wk-irpt-anlreq-51/portal (ls-remote origin for that ref prints 0 lines); it was never pushed, never sent to the CTO for a product-file read and never sent to the integrator. Its one commit is b8bc51696b45392f4a156cd80e83286c41d1cdf4 (the removal of readTicketReport and isInvalidInputRefusal, the fallback test file deleted, one test added), cut from portal DEV 3ebc35ebf2. As of this row it is WITHDRAWN: this seat will not present it, push it or cite it as a candidate; the order that built it (IRPT_ANLREQ.TO-AR-y-112) stays complete as a build record only. The removal will be cut again, as a new cell, after release 5's return has passed its after-reads. The branch itself is left in place (a deletion needs a human word); it is inert unless someone pushes it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-remote origin wk-IRPT_ANLREQ-51-portal-r11: 0 lines",
+      "CTO msg 5645",
+      "IRPT_ANLREQ.TO-AR-y-112, complete @c2a2cf957d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The pair for release 5's return (section 6) already names the removal as a step after the after-reads; that step is now a fresh cell, not the landing of this branch. This seat's defect: it cut a change that is safe only after an act BEFORE the act, and held it by text."
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S61",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T20:17:19Z",
+  "one_line": "L9 round 12: AR121-y-AC3 MET. The ticket queue's created cell now shows, beside the created time, how long the ticket has waited in words; one line of the list changes and no column is added. Three limits: the age is rounded down to one unit (47 hours reads 1 day), it does not tick while the page sits open, and the code shows it for every status except completed, wider than the packet's wording. The change is on portal DEV.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND12_Y_L8_COMPILE_20261011.md @3d9a1b2589 (msg 5732)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUND_12_Y_L9_GRADE_20261011.md",
+      "this seat's read 2026-10-11T20:17:19Z of portal commit d16b5510 on origin/DEV c2c6a8aedd: 3 files, 118 lines added and 1 removed; in TicketCenter.tsx one line of the list changes, the created cell; elapsedAge.ts read whole. Not looked at by this seat: a rendered page"
+    ]
+  },
+  "spec_asserts": "AR121-y-AC3 (JUDGMENT, graded by the CVO at L9): a person reading the queue list learns how long each open ticket has waited without subtracting, and nothing else about the list reads differently.",
+  "world_is": "Not looked at by this seat: a rendered page, the age text's contrast, a real ticket.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T20:47:23Z",
+  "one_line": "TO-AR-y-132: the order and the earlier read (TCKT_VNEXT~20) name parse.py as the normalizer, but the door the form reaches does not use it: the deployed upload service refuses the parse.py lane by name (CSV_LANE_NOT_COMPOSED) and the form only sends the template lane, whose reader is template_reader.py reading columns A and B. A check built in parse.py would never run for a person filing in the Ticket Center.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face of IRPT_ANLREQ.TO-AR-y-132 and ONE_ACCOUNT_CHECK_READ.json (~20): 'parse.py recognises identifier, name, unit and currency headers only' is the place a several-accounts check would read.",
+  "world_is": "MEASURED: infra/aws/lambda/investor-reporting/intake/upload_resolution.py:110-111 and :130-132 build both deployed services with parse_mapping and resolve_security = _not_composed('CSV_LANE_NOT_COMPOSED'); portal origin/DEV c2c6a8aedd prospect.ts:118-121 always sends file_base64 + file_type. The live path is infra/aws/lambda/investor-reporting/intake/template_reader.py (xlsx cells outside A/B skipped at :95; csv cut to two values at :129) and portfolio.freeze_template_portfolio. parse.py DOES already carry a subtotal control (SUBTOTAL_ROW_PRESENT, :900), a multi-sheet control (MULTI_SHEET_WORKBOOK, :857) and a stated-total check (TOTAL_MISMATCH, :1201), all measured in process, none reachable from the form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r13/ONE_ACCOUNT_CHECK_READ.json (door_today, door)",
+      "infra/aws/lambda/investor-reporting/intake/upload_resolution.py:105-134",
+      "portal origin/DEV c2c6a8aedd src/pages/InvestorReporting/tabs/analysis/prospect.ts:97-126"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not read: the Terraform / source map that stages the two deployed functions; this row rests on the composition functions in upload_resolution.py, which the order's tests construct."
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T20:47:23Z",
+  "one_line": "TO-AR-y-132: run through the door in process (offline provider stub), a two-account sheet with an Account column and a sheet ending in a 'Total' row are both ACCEPTED (NORMALIZED); the first merged two accounts' AAA rows into one holding (150), the second counted the total as a holding (600 on a 300 sheet). The live provider's answer for the symbol TOTAL was not run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TCKT_VNEXT FWD-3 as quoted in the order: a known-bad sheet (several accounts in one file, a totals row, a holding that cannot be priced) is turned back with what to fix.",
+  "world_is": "MEASURED in process with synthetic sheets (script .scratch/run_door.py of this worktree, not committed): SEVERAL_ACCOUNTS NORMALIZED total 420; TOTALS_ROW 'Total' NORMALIZED total 600; 'Grand Total' turned back only as TICKER_CHECK_UNAVAILABLE (a space keeps it from the provider); shares sheet turned back as SHARES_PRICE_SOURCE_NOT_COMPOSED, no words; unknown ticker turned back with words. Bounded by the stub, which finds any symbol matching security_resolution.py:17.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r13/ONE_ACCOUNT_CHECK_READ.json (door_today)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_deferred_resolution.py (the harness)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This is the state the outcome exists to change, so it is recorded as the base, not as a new defect. The exposure that matters: an accepted merged or double-counted sheet is analysed as given. Not looked at: any report already produced from such a sheet."
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T20:47:23Z",
+  "one_line": "TO-AR-y-132: the door's first answer to every template upload (10 of 10 sheets run) is RESOLVING; the form then says 'submit again in a moment', so a person learns what to fix only after a second press even for a file that is plainly bad.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FWD-3: 'a file that today would come back by email comes back from the form instead' (the order does not say after how many presses).",
+  "world_is": "MEASURED: infra/aws/lambda/investor-reporting/intake/uploads.py:370-382 (_defer publishes RESOLVING; the pure read_template result is discarded) and 10 of 10 in-process runs first=RESOLVING; portal origin/DEV analysisRequest.ts:113-118 shows the 'still being checked' text. The resident step ran in process at once; how long it takes live was not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r13/ONE_ACCOUNT_CHECK_READ.json (form.how_a_refusal_is_shown)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded in the proposed cells as the optional fifth cell and the _defer placement; the ruling is the CTO's."
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S62",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T21:02:29Z",
+  "one_line": "L9 round 13: AR131-y-AC3 MET and AR132-y-AC2 MET. The queue age shows hours below 72 and a closed list of two waiting statuses; its clause 'read from the ticket type's definition' cannot be met because no per-type definition exists. The one-account read is enough to cut the build and moves the check to the file the form actually reaches. One proposed finding, an extra holdings sheet as an error, would turn back the repository's own one-account multi-sheet example and needs a ruling first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND13_Y_L8_COMPILE_20261011.md @6d2fa01d99 (msg 5839)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUND_13_Y_L9_GRADE_20261011.md",
+      "this seat's reads 2026-10-11T21:02:29Z: portal origin/DEV d3ef4a5d88, elapsedAge.ts (hours below 72 hours, the list WAITING_STATUSES of open and in_progress) and TicketCenter.tsx line 140 (the cell decides by membership); the status lists at portal tickets.ts line 13 and ticket_center/lambda_function.py line 155, both open, in_progress, completed; the read's record ONE_ACCOUNT_CHECK_READ.json, its seven signals and five proposed cells"
+    ]
+  },
+  "spec_asserts": "AR131-y-AC3 and AR132-y-AC2 (JUDGMENT, graded by the CVO at L9), as written in the packet's section 3.",
+  "world_is": "Not looked at: a rendered page; the multi-sheet fixture itself. The door was run by the worker in process with a stubbed provider; nothing live.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W53-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-11T21:36:00Z",
+  "one_line": "TO-AR-y-141: the order asks which deployed Lambda function asks the provider whether a ticker exists; none does. The ask runs in the resident process on EC2 i-0167fd745ad906a66, and no lambda-source-map entry packages resolution_broker.py or resident_session.py; the only live-answer route found without a new grant is an upload through a direct invoke of irpt-ycharts-generate, which writes records and is not a read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-y-141 item 1: 'where that runs (which Lambda function, read from lambda-source-map.json: which entries package these files)' and item 3: 'a read that writes is not a read'; decomp premise that a seat can ask with one command.",
+  "world_is": "MEASURED: infra/aws/lambda/ci/lambda-source-map.json functions.irpt-ycharts-generate lists uploads.py, upload_resolution.py, upload_entry.py, template_reader.py, security_resolution.py, portfolio.py, resident_worker.py but NOT resolution_broker.py, resident_session.py or operation_lease.py (membership test False x3; no other entry lists any of 9 files searched); its POST half has no resolve_template (upload_resolution.py:102-113). The call is resolution_broker.py:102 inside the resident (resident.tf header: one supervised process on i-0167fd745ad906a66). The live ask by a seat needs an upload (Y75 y75_x1_arms.py:87-88), which writes UPLOAD#/NORMALIZATION#/RETENTION#/ARTIFACT# rows, a stored original, a queue message, a lease update and a synthetic filer row. Not looked at: whether the host is running now, the seat's exact IAM identity, any live answer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r14/TOTAL_LABEL_PROVIDER_ASK.json",
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf lines 1-20; iam.tf; org/tier2_senior/0.7.0_AE_CloudOps~DELL2/deliverables/irpt_y75/y75_x1_arms.py and Y75-1_release5b_after_reads.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer's live-ask Tier-2 order must name the writes above and the cleanup; S3 deletes stay Andrew's act. Recorded as form only; no significance judged."
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S12 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S12",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T21:30:00Z",
+  "one_line": "TO-AR-y-142: the face names the multi-sheet fixture and the fixture population under intake/tests/fixtures/holdings/ and 'ycharts/ test fixtures that hold sheets'; neither exists there. The fixtures are in intake/fixtures/holdings/ (7 csv, 2 xlsx) and intake/fixtures/graph/attachments/ (4 csv-text .bin); the ycharts tree holds no csv or xlsx fixture.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of infra/aws/lambda/investor-reporting/intake/tests/fixtures: lookup_capture/ only (3 json)",
+      "infra/aws/lambda/investor-reporting/intake/fixtures/holdings/FIXTURE_MANIFEST.json (11 files)",
+      "ls of ycharts/extract/fixtures and ycharts/generate/fixtures: pdf, json, har, py only",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r14/CLOSED_LISTS_RULE24.json (population_note)"
+    ]
+  },
+  "spec_asserts": "Face of IRPT_ANLREQ.TO-AR-y-142: fixture holdings_multi_sheet.xlsx and the Rule 24 population lie under infra/aws/lambda/investor-reporting/intake/tests/fixtures/ and the ycharts test fixtures.",
+  "world_is": "The census was taken over the folders that exist (13 files, 14 sheets); the ycharts population is 0 sheets. The Rule 24 denominators are stated against that population.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S13 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W52-S13",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T21:30:01Z",
+  "one_line": "TO-AR-y-142: the reader's finding() carries no description and the words for a code live in uploads.py CORRECTION_WORDS (outside this order's paths), so to give the three new ERROR findings words in the reader I added an optional description member to finding() (present only when given) and carried the words in template_reader.WORDS; the sheets-not-read line is a NOTICE finding SHEETS_NOT_READ (the place DUPLICATE_SYMBOL_MERGED already uses), not a new result member. test_template_reader.py::test_prefer_named_sheet_other_sheets_and_columns_ignored changed because that answer now carries the NOTICE.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py finding() and WORDS",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:58-93 (_with_correction_words keeps a description already on an unmapped code)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_correction_words.py:81 (an unmapped code gets no description: only TICKER_CHECK_UNAVAILABLE asserted)"
+    ]
+  },
+  "spec_asserts": "Face of IRPT_ANLREQ.TO-AR-y-142: 'ERROR finding ... with words'; findings shaped 'code, row, description'; sheets note goes where the answer already carries notes.",
+  "world_is": "TO-AR-y-143 will add CORRECTION_WORDS for the same codes; its test of 'every finding code has words' must accept either source, and the words in WORDS and in CORRECTION_WORDS must not diverge. Not run: the form's rendering of a description on a NOTICE of an accepted answer.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S14 -- (worker row, filed in the worker's own commit)
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T21:58:16Z",
+  "id": "IRPT_ANLREQ-D2-W52-S14",
+  "one_line": "TO-AR-y-143 AR143-y-AC2 cannot pass as ordered: the first-answer change (item 2) makes intake/tests/test_deferred_resolution.py::test_refusal_is_written_by_name_and_answered_with_findings fail, and that file is outside this order's <paths>. The test posts a sheet with a reader ERROR (AAPL,bad = AMOUNT_NOT_A_NUMBER) beside an unknown ticker and expects the POST to answer RESOLVING, then the resident to write both findings. Under the ruling the POST now answers NEEDS_CORRECTION with the reader's finding alone and sends nothing, so the test's first resolve() has no message (IndexError). The intake folder is 302 passed, 1 failed, 1 skipped; the one failure is this test.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/tests/test_deferred_resolution.py:146-155",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py _defer (the reader's ERROR findings are the first answer)",
+      "python -m pytest tests -q in intake/: 1 failed, 302 passed, 1 skipped"
+    ]
+  },
+  "spec_asserts": "Face of IRPT_ANLREQ.TO-AR-y-143: AR143-y-AC2 'the whole intake test folder passes'; item 2 'every finding read_template itself raises today' is decided at the POST; <paths> names test_correction_words.py and test_template_uploads.py as the only test files.",
+  "world_is": "Item 2 and AC2 cannot both hold with the grant: the one failing test needs its sheet changed so that its reader-clean provider case (MISSING,10) stays RESOLVING and the reader-ERROR case (AAPL,bad) is asserted on the first answer instead (a test that already exists in spirit as test_post_decidable_findings_arrive_on_the_first_answer). Not edited: outside the grant.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S15 -- (worker row, filed in the worker's own commit)
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-11T21:58:16Z",
+  "id": "IRPT_ANLREQ-D2-W52-S15",
+  "one_line": "TO-AR-y-143: ops/status.py CORRECTION_WORDS gained the same 24 entries as uploads.py CORRECTION_WORDS (words only, no logic, no existing key) because two tests lock the pair equal (intake/tests/test_correction_words.py::test_correction_words_are_the_envelopes_words and ycharts/generate/tests/test_y5_proxy_corrections.py::test_the_words_copy_still_equals_the_envelope_source, the second outside this order's paths). The envelope's build_envelope therefore now adds a CORRECT action with words for a NEEDS_CORRECTION state whose public_reason_code is one of the 24 (for example FILE_UNREADABLE), which it did not before.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/status.py:155-158 (words = CORRECTION_WORDS.get(public_reason_code))",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_y5_proxy_corrections.py:122-132",
+      "ycharts/generate: test_y5_proxy_corrections.py + test_resolve_upload.py 35 passed after the edit"
+    ]
+  },
+  "spec_asserts": "Face of IRPT_ANLREQ.TO-AR-y-143 item 1: status.py is a WORDS-ONLY edit 'only if the words actually live there'; ONE source of words per code.",
+  "world_is": "The words live in two literal copies by design (status.py is not staged into the Lambda that ships uploads.py). The 24 codes are in both copies, locked equal; the four reader codes are in neither (their words are template_reader.WORDS, carried as the finding's own description). Not run: any caller of build_envelope with one of the 24 as a NEEDS_CORRECTION reason.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W53-S5 -- the reader is re-run on every re-open of an accepted template input and must EQUAL the template stored at acceptance, so the new reader makes yesterday's accepted multi-sheet, two-account and total-row inputs unopenable
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-11T22:59:08Z",
+  "id": "IRPT_ANLREQ-D2-W53-S5",
+  "one_line": "TO-AR-y-145: UploadService.read_input (uploads.py:632-637) re-reads the retained original with the deployed template_reader and raises UploadRefused TEMPLATE_ORIGINAL_BINDING unless the result equals document['template'] stored at acceptance. After the AR-y-142 reader is deployed, an input accepted before it whose bytes the new reader reads differently (a workbook with a second sheet: SHEETS_NOT_READ; a second-account column; a total row) is refused on the re-POST of its token, on the submit of a request on it (prospect_submission.py:68,:79) and on a supersede (uploads.py:362). Measured in process on synthetic sheets: clean csv and one-sheet workbook OK/OK; two-sheet workbook, two-value Account column and Total row REFUSED/REFUSED. The face and the CTO ruling frame the release as 'a sheet accepted yesterday is turned back'; the wider fact is that an ACCEPTED, STORED input stops opening.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:614-637 read_input and the equality at :636",
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:499 stores the whole template projection in the frozen document",
+      "scratch harness run 2026-10-11 (not committed): accepted with the 3f29017cfc reader, re-opened with HEAD's reader; results in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r14/UPLOAD_DOOR_RELEASE_CENSUS.json accepted_yesterday_turned_back_today.measured_matrix_in_process"
+    ]
+  },
+  "spec_asserts": "Face of IRPT_ANLREQ.TO-AR-y-145 item 3: 'are stored inputs re-read by the new reader anywhere -- a retry, a re-open, a resident re-run? ... if yes, an input accepted yesterday can fail today and the pair must cover it'; CTO round-14 analysis item 5.",
+  "world_is": "Yes: read_input re-reads and compares for the whole template lane. The pair must cover it (a count of the affected accepted inputs in a counts-only window, a product change that makes the comparison tolerate the reader's additions, or an accepted loss). Not run: the live count of affected inputs; the live provider's answer for a Total row, so whether such a sheet was accepted in practice.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W53-S6 -- the reader runs in two runtimes built by two procedures; with only the Lambda released every multi-sheet workbook is accepted by the old resident and then refused by the new Lambda on the next poll
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-11T22:59:08Z",
+  "id": "IRPT_ANLREQ-D2-W53-S6",
+  "one_line": "TO-AR-y-145: the resident's package is built by reports/build_resident_package.py from ONE backend pin over whole directories (intake, ops, reports, ...) and installed by ycharts/generate/install-resident.sh, not through lambda-source-map.json. Measured in process with Lambda reader NEW and resident reader OLD: a two-sheet workbook answers RESOLVING, the old resident freezes it without the SHEETS_NOT_READ notice (NORMALIZED), and the next POST fails read_input's equality (TEMPLATE_ORIGINAL_BINDING; the Entry answers ok:false, state UNAVAILABLE, public reason INVALID_INPUT). A total-row or two-account sheet never reaches the old resident (0 messages). The reverse order is the same by the code, not run.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:27-38",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/install-resident.sh:7,:42,:57-59",
+      "scratch harness run 2026-10-11 (not committed), results in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r14/UPLOAD_DOOR_RELEASE_CENSUS.json resident_runtime.half_released_state_measured_in_process"
+    ]
+  },
+  "spec_asserts": "Amendment 1 of IRPT_ANLREQ.TO-AR-y-145: 'the reader runs in TWO runtimes, and the source map shows only one'; the census is asked what a person sees for each new finding in the half-released state.",
+  "world_is": "A Lambda-only release breaks multi-sheet workbook uploads end to end; the two runtimes must move together. Not read: the resident host, the pin its installed package was built from, whether it already holds the new reader.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W53-S7 -- no portal reader displays the SHEETS_NOT_READ line on an accepted sheet, on PROD or on DEV
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-11T22:59:08Z",
+  "id": "IRPT_ANLREQ-D2-W53-S7",
+  "one_line": "TO-AR-y-145: the CTO ruling (round 14 item 5) says the accepted answer carries one line saying only the first sheet was read. The line is stored in portfolio.findings and portfolio.template.findings of the NORMALIZED answer (measured in process). Every portal reader of the door's answer reads findings only for NEEDS_CORRECTION or RESOLVING (TicketCenter/analysisRequest.ts PROD :103,:110, DEV :165,:175,:180; ProspectComposer.tsx PROD :447, DEV :459), so a person sees no new line on an accepted sheet at either trunk.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal grep over origin/PROD 37aa1247ee and origin/DEV ad774c6f9e: no product file reads portfolio.findings or template.findings (the findings census lists 15 non-test files, none of which reads a NORMALIZED answer's findings)",
+      "scratch harness run 2026-10-11: both-new NORMALIZED answer codes ['SHEETS_NOT_READ']"
+    ]
+  },
+  "spec_asserts": "CTO round-14 analysis section 2 item 5: 'the accepted answer carries one line saying that only the first sheet was read and how many others were not'.",
+  "world_is": "The line exists in the served answer and is read by no page. Not run: a page render on either trunk (portal read by refs only).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W53-S8 -- both portal pages prefix 'Row N: ' to a finding sentence that already begins 'Row N', so two of the four new sentences read 'Row 4: Row 4 is a total...'
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-11T22:59:08Z",
+  "id": "IRPT_ANLREQ-D2-W53-S8",
+  "one_line": "TO-AR-y-145: template_reader.WORDS['TOTAL_ROW_PRESENT'] and ['HEADER_ROW_REPEATED'] begin 'Row {row} ...' (template_reader.py:36-47); the forms prefix 'Row N: ' when the finding has a row (TicketCenter/analysisRequest.ts PROD :77-78, DEV :101; ProspectComposer.tsx PROD :454-455). A person sees 'Row 4: Row 4 is a total, not a holding. ...'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:36-47 (WORDS) and :290-292 (the findings carry row and description)",
+      "git -C portal show origin/PROD:src/pages/TicketCenter/analysisRequest.ts lines 75-79 and origin/DEV lines 98-101"
+    ]
+  },
+  "spec_asserts": "AR-y-142/143 words: each finding carries its words with the row filled in; the form rule 'Row N: ' + the server's sentence (Y-5).",
+  "world_is": "The two rules each hold alone and repeat when combined. Not run: a render.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W53-S9 -- a rebuild of irpt-ycharts-generate from HEAD also ships four members that are not this round's (acceptance.py, durable_job.py, submission.py, submission_service.py)
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-11T22:59:08Z",
+  "id": "IRPT_ANLREQ-D2-W53-S9",
+  "one_line": "TO-AR-y-145: the BUILD_ONLY build of irpt-ycharts-generate (sha256 u0YnPLPQ2E08RFAbiDHxCErVhW5NLCpz9qZ9JZ3bKHY=) differs from the live package (tdpterTMfJlWXjnoAQCwil+wN/Jf8Q/yLjGxTk7yUkk=) in four members that are native to ycharts/generate and unpinned: acceptance.py and submission.py (IB-pr-455, 74bbdbb322), submission_service.py (AR-y-37, 2f7cc7be42), durable_job.py (TO-AR-g-21, 3acafb3f45). The re-pin of uploads.py and template_reader.py the release needs adds two more, so the release moves six members unless the other four are pinned to the live bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BUILD_ONLY runs twice, rc=0, same sha256, 2026-10-11 (no BAU_PARITY_SKIP)",
+      "member-by-member sha256 of the downloaded live zip (104 members) against the built zip (104 members): 4 differ, 0 added, 0 removed",
+      "git log -3 on each of the four files under infra/aws/lambda/investor-reporting/ycharts/generate"
+    ]
+  },
+  "spec_asserts": "Face item 1: changed_members_vs_live, diff members by sha256; earlier releases of this lane pinned unrelated members to the live bytes so a release moves only its own.",
+  "world_is": "The four differ and nothing in this cell pins them. Not assessed: whether each is safe to ship with the pair.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S63",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-11T23:12:41Z",
+  "one_line": "DISARMS rows IRPT_ANLREQ-D2-W53-S5 and IRPT_ANLREQ-D2-W53-S6: the round-14 upload reader, its words and the POST's first answer are reverted off the trunk; the intake folder and ops/status.py equal the round's base again.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO ruling msg 6054: revert, now. A hazard armed on the trunk is disarmed where it is armed. Two ordinary revert commits, no history rewritten; disarm rows D2-W53-S5 and S6 by naming them. No resident package is built from a pin at or after 87202fbaed and before the revert.",
+  "world_is": "MEASURED by this seat ~23:2xZ: commit 114c77fb01 restores seven files to their bytes at the round's base 35c3c4bd45 (template_reader.py, uploads.py, ops/status.py, three test files restored; the new test file test_template_account_totals.py removed). git diff 35c3c4bd45 HEAD over infra/aws/lambda/investor-reporting/intake and ops/status.py prints nothing. The intake tests on the restored tree read 292 passed, 1 skipped, the round's base count. It is ONE commit, not two: it undoes the product and test changes of d95cf11106, 4215d98f26 and 5cb5ba4dbf together and leaves their records, rows and proofs in place (a plain git revert of those commits would also have removed rows from this append-only file). No history is rewritten; the three commits remain in history and on branch wk-IRPT_ANLREQ-52. THE UNSAFE WINDOW on the trunk is every commit from 87202fbaed up to but not including 114c77fb01: a resident package built from a pin in that window carries the reverted reader. INHERITED, not read by this seat: the resident the host runs is at a pin that does not contain 87202fbaed (2.0.0_SA_COO~G2 msg 6052, its own ancestry read with a positive control), and 2.0.0_SA_COO~G2 states it builds none from that window. The two Lambda functions that package these files were never exposed: the source map pins the files at older commits and both builds equalled live for them (RECORD, the census of cell AR-y-145).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 114c77fb01 and git diff 35c3c4bd45 HEAD over the two paths (empty), run by this seat",
+      "intake tests 292 passed on the restored tree, run by this seat",
+      "CTO msg 6054",
+      "2.0.0_SA_COO~G2 msg 6052"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This seat's defect: it merged a reader change without asking what re-reads a stored input; the release census found it, after the merge, not before. The checks of cells AR-y-142 and AR-y-143 no longer pass on the trunk, by design; their orders stay complete as build records. The re-land is its own cell and first settles what read_input compares (the reader's version stored with the input, or the holdings alone): a contract choice brought to the CTO with what each costs on inputs already stored. The portal form's re-post and closed details (on DEV 6eb13c5e875f) are NOT reverted: they work against the service of today."
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S64",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T23:37:38Z",
+  "one_line": "L9 rounds 14 and 15: AR142-y-AC3J NOT MET as written, AR144-y-AC2J MET for the form's half, AR145-y-AC2J MET. The account-word list is incomplete: it matches 'acct #' and not 'account #', and its subtraction ran over 13 fixture files none of which has an account column, so it proves nothing about the class. The repeated-header finding's words tell a person to split what may be one account into two files. The build is reverted, so both are fixed before the re-land. The census found the unsafe re-read of stored inputs, after the merges.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/ledger/IRPT_ANLREQ_ROUND14_Y_L8_COMPILE_20261011.md @73dd169157 (msg 6114)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_ROUNDS_14_15_Y_L9_GRADE_20261011.md",
+      "this seat's reads 2026-10-11T23:37:38Z: the reverted build commit d95cf11106, template_reader.py lines 28 to 52 (the two lists and the four findings' words) and its closed-lists record; the form's re-post rule on portal origin/DEV cdd87181d5d4 (TicketCenter/analysisRequest.ts, re-post only on RESOLVING, a fixed number of tries 3 seconds apart, a still-checking sentence when every try answers RESOLVING); and uploads.py at HEAD lines 516 to 539, where a stored original is re-read and refused unless the result equals the template stored at acceptance"
+    ]
+  },
+  "spec_asserts": "AR142-y-AC3J: the two closed lists are the right ones, and each finding's words tell a person what to do. AR144-y-AC2J: a person who attaches a bad sheet learns what to fix without pressing twice and without reading a code. AR145-y-AC2J: no consumer of the door's answer is missing, and each deciding line is the line that decides. CLAUDE.md rule 24 (i): the subtraction's domain must be the claim's population.",
+  "world_is": "Nothing of the upload check is on the trunk or released. The form's re-post is on portal DEV. Not looked at: a rendered page; a real uploaded file. Not re-derived: the census's counts.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

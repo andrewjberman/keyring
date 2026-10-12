@@ -685,3 +685,42 @@ selected is refused.
 originates": one grain (the member), one intent (who fixes it); BOTH is a member, not an escape, and NOT_ESTABLISHED names the missing read.
 
 fanout: 1 of 1 chains on slot A, cap 8.
+
+## v27 -- round 27 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~19:4xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2's ruling msg 5664
+
+IV-e-113's read returned BOTH for row D2-S21: the vendor section's title never reaches the wire, and the page maps none of the 12 unit
+tokens the producer sends. The CTO ruled both are the page's to fix now, with no schema change.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-115 | the page maps a vendor section's code to its census name (33 names copied from the pinned census, source recorded, a drift test) and maps the producer's 12 unit tokens; an unmapped code or token prints itself, never "unknown"; the page's fixtures send real tokens; an Opal report unchanged | D2-S21, D2-W62-S1 | SERVED | B ~63 | portal/src/pages/InvestorReporting/contracts/adapt.ts and a new names module |
+
+Still open on row D2-S21 and not cut: the missing validation line and source line of a vendor report. A wire title is noted for the
+producer's next release (IRPT_BCKEND's). 2.0.0_SA_COO~P2 is asked for one owner read confirming both on a served answer.
+
+fanout: 1 of 1 chains, cap 8.
+
+## v28 -- round 28 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~21:0xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2 msg 5782
+
+IV-e-115 is on portal DEV (1bf9e1f3). Its screenshot showed several cards of one section reading the same title and the same Label
+(row D2-W63-S2); the CTO named the next cell.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-116 | a vendor card whose Label equals its title prints the title once; a differing Label and an Opal card unchanged; and a READ (no product change) of whether the wire's section id carries a field slug the pinned census can name exactly | D2-W63-S2 | SERVED | B ~64 | portal/src/pages/InvestorReporting/contracts/adapt.ts, tabs/analysis/NativeSections.tsx |
+
+The proof of IV-e-115 on a served vendor report is asked of the laptop's walker
+(`deliverables/2.0.0_SA_COO~D2/LAPTOP_WALK_ASK_2_VENDOR_REPORT_20261011.md`, carried by 0.0.0_AB_MSTR~DELL2).
+
+fanout: 1 of 1 chains, cap 8.
+
+## v29 -- round 29 (issuer 2.0.0_SA_COO~D2, 2026-10-11 ~22:1xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2 msg 5852
+
+IV-e-116 is on portal DEV (ad774c6f9e, CI success, 0.0.0_AB_MSTR~DELL2 receipt msg 5950). The CTO ruled row D2-W62-S3: a navy-filled
+strip breaks C3; the shared components are not this project's to restyle; one cell is inside the grant.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-117 | the Holdings tab passes PanelFooter its light ground (the prop exists on the shared component, which is not changed), removing the navy footer strips; contrast measured; the three header strips stay and go to the design system's owner | D2-W62-S3 | SERVED | B ~65 | portal/src/pages/InvestorReporting/tabs/holdings/ |
+
+fanout: 1 of 1 chains, cap 8.

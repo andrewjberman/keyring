@@ -41,3 +41,43 @@ ADMITTED read as Opal_Terminal (FWD-8, parked); his Monday read through the FWD-
 - `tt23`: `R23-TT23-FAIL missing test_totals_carry_read_refused, test_dry_line_prints_read_refused`
 - `tv23`: `R23-TV23-FAIL absent: infra/aws/terraform/transcripts/readers.auto.tfvars`
 - `mp23`: `R23-MP23-FAIL 2 distinct digests across 3 functions` (teams AI4UQD0M, mail VGIq85Xx, commentary AI4UQD0M)
+
+## AMENDMENT 1 (issuer, 2026-10-11 ~20:3xZ) -- the drafter's closed lists, on the CTO's ruling msg 5761
+
+The issuer's reads (`deliverables/2.0.0_SA_COO~T2/PART2_...20261011.md` @b29c8380cd and `PART2B_...20261011.md` @7b8cf70a8b) found
+three free-text members of the commentary drafter's outside-model prompt guarded only by a length cap. They are sent empty today
+because nothing produces them. The CTO ruled: "Cut your section 6 check now, before a producer exists ... Account type and category
+names are closed lists; a value off the list is dropped and counted, never sent. Themes, if they stay free text, are not sent at all
+until a rule for them is written and signed. It is a served change on the drafter: its own pair, to me."
+
+| cell | item | outcome | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|
+| `TR-cl-23` | the BUILD: `drafter.py` sends `account_type` only from the gold module's own account types, category names only from the classification snapshot's asset classes, and never themes; each withheld value is counted in the draft's provenance; five tests | FWD-10 | dell2 worker (workstream `closedlists`) | LOCAL | worker-light | -- |
+| `TR-ca-23` | the DEPLOY of TR-cl-23's merged commit to the commentary function, under ONE CTO + COO pair. Its packet states which functions of the root move with the rebuilt zip (the tree is ahead of the deployed zip by TR-tt-23 as well) | FWD-10 | ISSUER packet + pair, applier (respawned on the GO) | WORLD | -- | TR-cl-23, then the pair |
+| `TR-cn-23` | a code-only READ: can a firm free-name a model in the comparison catalogue, so that a comparison name sent to the provider could carry a client's name; and whether the composition's writer enforces its schema | FWD-10 | ISSUER (read-only) | LOCAL | -- | -- |
+
+Chain E = TR-cl-23 -> TR-ca-23. TR-cn-23 is the issuer's read, now. Battery: `r23_checks.py cl23` at base: FAIL (5 tests missing).
+
+## AMENDMENT 2 (issuer, 2026-10-12 ~00:4xZ) -- the drafter's ROUTE SWITCH, released by the CTO (msg 6204) after both upstream releases
+
+Conditions, each read as met: TCKT_VNEXT R5-cm-4, the ticket draft route's request-id match, live since 2026-10-11T22:16:38Z
+(2.0.0_SA_COO~V2 msg 5985; CTO msg 5988); IRPT_BCKEND PRD v0.45 signed (3.0.0_SA_CVO @83e8664d75) and the draft store released with
+`ticket_id` in its first OK persist answer (CTO msg 6204: digest cwf6bUEb, modified 2026-10-12T00:06:20Z). The CTO's requirements
+carried into the cells: the request id in the body and the front door as the ticket base in the SAME cell as the switch (msgs 5854,
+5934, 5988; IRPT_YCDGEN row D2-S65); a count a seat can read ON DEMAND of drafts persisted for a ticketed record with no accepted
+post, and what the drafter does on a replay (msg 6034). Where the drafter learns the ticket id was ruled (a): the store's answer
+(msg 5992).
+
+| cell | item | outcome | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|
+| `TR-sw-23` | the BUILD: the store port carries `ticket_id`; a new `post_draft_to_ticket` posts exactly `{draft_commentary, request_id}` to the request's ticket, one attempt, never raising; the queue path posts after persist and logs one `COMMENTARY-POST` line per run; a refused or failed post is not redelivered; a replay posts nothing; `post_census.py` counts unposted drafts on demand; six tests | FWD-10 | dell2 worker (workstream `routeswitch`) | LOCAL | worker | -- |
+| `TR-sa-23` | the DEPLOY: the rebuilt zip to the root's three functions (one digest), AND the commentary function's `TICKET_API_BASE` moved from the gateway's direct address to the portal's front door, read from `integrations/ticketing/intake/runner_config.json` `portal_base`, never typed; under ONE CTO + COO pair. Its packet states the driven proof, which may not start an outside-model call | FWD-10 | ISSUER packet + pair, applier | WORLD | -- | TR-sw-23, then the pair |
+
+Chain F = TR-sw-23 -> TR-sa-23. Battery: `r23_checks.py sw23` at base: FAIL (absent).
+
+**Issuer rulings inside this amendment.**
+(1) A refused or failed post is NOT handed back to the queue. A redelivery finds the draft stored; the store's replay answer carries no
+ticket id (PRD v0.45, the edge the CTO left open by name); so a redelivery could never post it. It is made visible instead.
+(2) The on-demand count reads the function's own `COMMENTARY-POST` log lines, which carry the request id only. It is a CLI a seat runs.
+Nothing schedules it, and it sends nothing (the alert moratorium stands).
+(3) The stream path keeps `write_draft_ticket` (the CREATE). Only the queue path switches.

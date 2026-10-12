@@ -103,7 +103,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-mu-1.market-update-writer.proof
   `<paths>`, yet E1's ruling replaces the key form its `test_ogab2_ac02` pins, so AC1 could not pass. The file is added
   with step 6 (re-pin that one assertion). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>34</round>
 <slot>~55</slot>
 <fabric>site-z</fabric>

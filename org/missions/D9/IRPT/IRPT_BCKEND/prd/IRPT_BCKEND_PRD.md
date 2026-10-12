@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.40",
+ "prd_version": "v0.47",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -1001,5 +1001,209 @@ ENDPOINT is not edited.
   tolerance stays relative 1e-4.
 - **Rule 24:** no value is added to any set. The guard is a predicate on one witness: domain, every security-day `YAHOO_CLOSE` would
   grade; two outcomes, graded or not graded; it moves no claim of `SCHWAB_ANCHOR`.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.41 -- the guard when the prior bar is absent (L10; CONTRACTS changed by one sentence)
+
+- **Source:** `3.0.0_SA_CVO`'s note on v0.40 (msg 5635, review @fa35adfef4): the guard did not say what happens when the reader has no
+  bar for the prior trading day, and a bar carried across a gap would then pass.
+- **The sentence: where `YAHOO_CLOSE` has no bar for the trading day before t, it gives NO grade for that security on t.** The guard can
+  compare nothing, and a comparison it cannot make is not a pass. The prior trading day is `lib/trading_calendar.py`'s, not the prior row.
+- Not sized: how many security-days this un-grades. The next cell (v0.40's) prints that count beside its table.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.42 -- two more types admitted to the second witness, on the first-moved-bar table (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `2.0.0_SA_COO~P2`'s read IB-pr-449, `deliverables/0.9.0_WK_IRPT_BCKEND~306/IB145-1_FIRST_MOVED_BAR_READ.md`, merged
+  @eb0c2d4890 (msg 5711), **its rules and Tables A and B read by this seat on the trunk before this addendum was written; not re-run.**
+  The issuer re-ran the three criteria; the counts are the worker's. The record admits and recommends nothing. The ENDPOINT is unchanged.
+- **The question v0.40 left:** the guard refuses a repeated bar, but nothing measured said what the reader's bar is on the day it next
+  moves. A reader that caught up a day late would pass the guard with a wrong date.
+- **The measurement (Table A), over the overlap securities of the two types v0.39 left out for a non-empty column.** A repeated run is a
+  maximal sequence of days on which the reader's bar equals the prior trading day's; the first moved day is the first later day on which
+  it differs. `RIC/BDC / Inst`: 181 runs; first moved bar equal to the anchor's close THAT day 121; equal to the prior day's (a late bar)
+  0; neither 0; no anchor that day 54; no moved day in the window 6. `RIC/BDC / Not Available`: 368 runs; 295; 0; 0; 72; 1. Every first
+  moved bar that can be compared is right on its own day, 416 of 416; 126 could not be compared and prove nothing either way.
+- **The six `Inst` securities v0.40 named (Table B):** on every day their bar moved, every priced held row equals the reader's bar for
+  that day and none the prior day's (181 of 181 rows over the six). Two of them move under 0.1 percent on every moved day. They are not
+  excluded: the guard already gives no grade on the days they repeat.
+- **THE ADMISSION TEST, restated as two limbs. A type is admitted when EITHER holds over the securities both witnesses carry:**
+  (a) v0.39's: with the guard off, its one-day-off column is empty and it has days on which the close moved and the two agreed; OR
+  (b) every one-day-off day it has with the guard off is a day the guard does not grade, AND its first-moved-bar table has zero late
+  bars and zero neither, with at least 100 comparable runs.
+  The floor of 100 is this seat's and is stated as chosen, not derived: the two types measured have 121 and 295.
+- **ADMITTED by limb (b), under the guard of v0.40 and v0.41:** `RIC/BDC / Inst` and `RIC/BDC / Not Available`. The admitted list is
+  nine pairs. Still NOT admitted, for v0.39's reasons, which this read does not touch: `Cash and Cash Equivalents / Not Available`,
+  `Not Available / Not Available`, `MIXED`.
+- **The cost is partly sized:** seven types plus `Inst` under the guard read blank 46.298 percent and never served 283 (IB-pr-445).
+  With `RIC/BDC / Not Available` as well: NOT sized. The next cell sizes nine pairs under both guard sentences.
+- **Nothing is served by this addendum.** The instrument has no product form yet (the issuer's read: the claim and witness names have
+  0 hits over `data/`, `lib/`, `infra/`); its build and the served change come under their own cells and pair.
+- **Rule 24:** the admitted list holds the source's own strings; no token is added. The test's two limbs are one intent (are this
+  type's date labels measured), over one domain (the types found on the overlap securities, plus NO TYPE).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.43 -- a security the second witness mostly repeats is not graded by it (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `3.0.0_SA_CVO`'s note on v0.42 (msg 5722: Table B set the custodian's mark beside the reader's own bar, which a late reader
+  would also satisfy, and five of the six have no anchor); and `2.0.0_SA_COO~P2`'s sizing IB-pr-452,
+  `deliverables/0.9.0_WK_IRPT_BCKEND~308/IB148-1_NINE_PAIR_SIZING_READ.md`, merged @6a7b589f9e (msg 5785), its three results taken as
+  filed: the issuer re-ran the criteria, the counts are the worker's, this seat re-ran nothing. The ENDPOINT is unchanged.
+- **THE RULE. `YAHOO_CLOSE` gives NO grade for a security on any day when, over the days of the grading run on which it has a bar for
+  that security, the bar repeats the prior trading day's on MORE THAN HALF of them.** The reader is not carrying that security, and
+  for a security the first witness does not carry nothing measured dates the few days its bar moves.
+- **The threshold is chosen, not derived:** more than half. The seven securities it takes repeat on 49 to 79 of 85 days; the sizing
+  did not print the distribution below one half, and the next read does (below).
+- **What it costs, as sized over 76,796 account-days:** nine pairs under both guard sentences read blank 43.9218 percent, never served
+  247, freed 12,482. With the five securities v0.42's note names not graded: 43.9232 percent, 248, 12,472; a cost of 10 account-days
+  and 1 account. The rule as written takes seven securities, not five (it adds JSOSX, which the first witness carries on most days,
+  and SGOV); the cost of the two more is NOT sized and is printed by the next read.
+- **v0.41's sentence costs nothing in this sizing** (row W308-S1): the sizing already gave no grade without a prior bar.
+- **Owed with the instrument's product form:** the count of securities by share of repeated days in tenths, so the threshold is seen
+  against the whole distribution; and the seven-security cost.
+- **Rule 24:** no value is added to any set; a second predicate on the same witness, same two outcomes, moving no claim of
+  `SCHWAB_ANCHOR`.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.44 -- the repeated-share rule's window is fixed (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `3.0.0_SA_CVO`'s note on v0.43 (msg 5796: as written the same security-day can be graded in one run and not in another); and
+  `2.0.0_SA_COO~P2`'s product form IB-pr-454, `deliverables/0.9.0_WK_IRPT_BCKEND~310/IB150-1_PRODUCT_FORM_RUN_READ.md`, merged
+  @ddf890e1f6 (msg 5889), **its 28 lines read whole by this seat before this addendum was written; not re-run.** The issuer re-ran the
+  criteria; the counts are the worker's. The ENDPOINT is unchanged.
+- **v0.43's "over the days of the grading run" is REPLACED. THE WINDOW is the 40 trading days ending at the graded day, that day
+  included, by `lib/trading_calendar.py`.** Over the days of that window on which `YAHOO_CLOSE` has a bar and a bar for the prior
+  trading day (the COMPARED days), when the bar repeats on more than half of them, it gives no grade for that security on the graded
+  day. **With fewer than 20 compared days in the window it gives no grade.** The grade of a security-day therefore depends on that day
+  and the 40 before it and on nothing else: the product form's test asserts the same grade across two run lengths.
+- **Why 40, from the record:** the number of securities the rule takes on one or more days, by window, reads 30, 22, 14, 14, 14 at 10,
+  20, 40, 60 and 85 days, and the number that change verdict inside the run 27, 18, 8, 7, 7. A short window lets a spell of a few
+  repeated bars take a security that otherwise moves; from 40 the set stops growing. **Both numbers are chosen on that table and
+  stated as chosen: 40, and a floor of half the window.** The record says itself that 40 is not shown to be right.
+- **What it takes and costs, as sized over 76,796 account-days:** 14 securities on one or more days (v0.43's seven, each on every day,
+  and seven more on part of the run); 287 account-days no longer freed and 2 accounts no longer ever served; blank 43.9865 percent,
+  never served 249, freed 12,195. With the rule off the module reproduces the nine-pair sizing member for member (43.9218 percent,
+  247, 12,482).
+- **The distribution v0.43 owed** (the last graded day, 300 securities of the nine pairs outside the first witness, share of repeated
+  days in tenths): 248, 26, 14, 3, 2, 2, 2, 1, 2, 0. Seven above one half; 288 of 300 below three tenths. The threshold sits in a
+  thin part of the distribution: 4 securities lie between four tenths and six tenths.
+- **Stated, not solved:** the rule cannot tell a stale feed from a fund that does not move; it gives no grade for either. Nothing
+  measured says the seven added securities' moved bars are dated wrong; they lose their grade on the days the rule takes them, and a
+  day with no grade is blank, never wrong.
+- **Nothing is served by this addendum.** The module `data/assets/scripts/gold/irpt_reporting/date_basis_grading.py` has no importer,
+  no producer, no schema and no schedule. Those are the next cells and the served change's own pair.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.45 -- the commentary draft store's persist answer names the request's ticket (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `2.0.0_SA_COO~T2`'s finding (msg 5990: the drafter has no source for the ticket id the ticket service's draft route
+  needs); this seat's ruling msg 5992, option (a); and `2.0.0_SA_COO~P2`'s read IB-pr-458,
+  `deliverables/0.9.0_WK_IRPT_BCKEND~314/IB154-1_DRAFT_STORE_PERSIST_ANSWER_READ.md`, merged @ee2d9af09b (msg 6021), its five findings
+  taken as filed. This seat printed `reports/commentary_draft_store.py` lines 108 to 128 and 165 to 178. The ENDPOINT is unchanged.
+- **What the read establishes.** The persist answer is declared in no schema or contract file; one test pins its exact key set. On a
+  first persist it is `status` and `commentary_ref`; on a replay and on every refusal, `status` and `reason`. Its one consumer is the
+  drafter, by direct invoke under its own role, which copies three keys and ignores any other. The store already reads the accepted
+  record at persist and holds its `ticket_id` there; `resolve_request` returns only the tenant and the owner. No new read is needed.
+- **THE CONTRACT. On a first persist that answers `status` OK, the answer carries a third member, `ticket_id`, equal to the accepted
+  record's `ticket_id`, WHEN the record carries one. When the record carries none, the member is absent** (not null, not empty): the
+  answer is then exactly today's. A replay and a refusal are unchanged and carry no `ticket_id`.
+- **What the member is, and is not.** It is a POINTER: the id the submitter stated, checked for format only at submission (PRD
+  `IRPT_YCDGEN` v0.13). It is not evidence that the request belongs to that ticket. The control is the ticket service's draft route,
+  live since 2026-10-11 22:16Z, which accepts a draft for a request only on the ticket whose own record names that request (row
+  IRPT_YCDGEN-D2-S64). The store reads no ticket and gains no grant.
+- **Stated, not solved here:** a draft that was persisted and whose post to the ticket then failed gets no `ticket_id` on the replay,
+  so this contract alone does not retry it. Whether the replay answer should carry the member is ruled when `2.0.0_SA_COO~T2`'s
+  switch cell says what the drafter does on a replay; it is not guessed now.
+- **Order of the served changes, each under its own pair: the STORE first, the drafter second.** The drafter ignores an unknown key,
+  so the store's release changes nothing a caller does; the reverse order would have the drafter read a member that is not there.
+  The store's pair names its one consumer with one read through it and shows an answer for a record with no ticket id is byte-equal
+  to today's.
+- **Rule 24:** one member on one answer; domain, every first persist; two states, present with the record's id or absent; absence
+  means the record names no ticket and nothing else. Token census: `ticket_id` is the estate's existing name for this value
+  (the accepted record, the submission, the ticket service) and is used here for that same value and no other.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.46 -- the date-basis producer: where it runs, what it reads, what it writes (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Author:** `1.0.0_SA_CTO~DELL2`, 2026-10-12 ~01:2xZ. **Sources, both read by this seat:** the producer design read
+  `deliverables/0.9.0_WK_IRPT_BCKEND~313/IB153-1_PRODUCER_DESIGN_READ.md` (msg 6002) and the two measurements
+  `deliverables/0.9.0_WK_IRPT_BCKEND~315/IB155-1_TWO_MEASUREMENTS_READ.md` (msg 6241). Every number is a worker's. This seat read
+  the module's interface (`data/assets/scripts/gold/irpt_reporting/date_basis_grading.py:39-41`, `:245-263`) and no other code.
+- **What it settles:** the ten design questions the design read left for this addendum. **Nothing is served by it.** It is a
+  contract for a build; the build is cut only after the three reads of the last bullet.
+
+**CONTRACT C-DBPRODUCER, the ten answers.**
+
+1. **Bars: a LANDED source, written by its own scheduled producer; the landed prices store is refused as that source.** Measured:
+   the store's yahoo-labelled points end 2026-06-05, it covers 0 of the 85 graded days, and no schedule writes it. The second
+   witness's bars are today a run-time fetch into a local folder, which no scheduled producer can read. The bars producer lands
+   the unadjusted Close for the tickers held on the days it grades. Its address and name are builder output
+   (`lib/opal_naming.py`); a builder refusal is a registry row to add. **Failure mode, each distinguishable in what is written:**
+   a ticker with no bar is recorded as no bar and the security-day is not graded by the second witness (v0.37 to v0.44 already
+   say what that means for the claim); a pass stopped partway writes NO day's bars as complete, and the grading step, finding the
+   day's bars incomplete, writes no claim for that day. A partial pass is never read as a whole one.
+2. **The claim is written to its OWN table, never back into a landed holdings partition.** The holdings handler writes new keys
+   only, and it stays so. The claim table is keyed by account and day and is written once per account-day.
+3. **A blank day in the claim table is a ROW, not a missing row:** claim `UNGRADEABLE` or the blank reason of the module's serving
+   rule, so that "not yet graded" (no row) and "graded and not served" (a row) cannot be confused. The holdings gold's `status`
+   column is not written by this producer. How the performance route reads a non-OK day is NOT settled here; see the last bullet.
+4. **It runs on its own schedule, at a clock time after both inputs' steady landing times, and catches up.** Each run grades every
+   day in the last 7 trading days whose inputs are all present and whose claim rows are not yet written, oldest first. Measured: 3
+   of 22 partitions landed 3 to 5 days after their date. A day whose inputs never arrive stays without rows; nothing alerts.
+   Trading days come from `lib/trading_calendar.py`.
+5. **The prior day's claim is read from the claim table.** No row for the prior day means the day is not graded (v0.41).
+6. **Security types are read from the transactions table beside the holdings**, by the producer, at the address the builder gives.
+7. **No new vocabulary.** The claim values are the module's closed four (`date_basis_grading.py:40`); the kinds and witnesses are
+   the module's. The source declaration for this entry stays `partition_close`, basis inferred, until claim rows exist for 20
+   consecutive trading days; changing the declaration is its own addendum. The claim table gets a contract file under
+   `docs/contracts/`, written in the build's first cell; none exists today.
+8. **Members carried: exactly what the module's `account_day` returns** (claim, kinds, witnesses, base claim, base kinds, second
+   witness outcome), plus account, day, the rule's version and the run that wrote it. None is added.
+9. **No route composes this entry and no role is granted for its firm by this addendum.** Nothing serves its returns today and
+   nothing will on this build.
+10. **Packaging is not ruled until egress is measured.** The bars producer needs to reach the vendor from where it runs; whether
+    the existing function's network allows it is not established. One read, then the issuer proposes the package in its pair.
+
+- **The proof.** A driven run over the 85 days already measured: the claim table's counts equal the product module's own counts on
+  those days (the design read's 272, 26 and 2 among them), and one day with its bars deliberately withheld produces no claim rows
+  for that day. Graded by the reviewer.
+- **Three reads before any cell is cut:** (a) whether the function's network reaches the vendor; (b) for the performance route's
+  reader, per window, how many accounts have at least one excluded day and whether those days are the account's first day or
+  interior days; (c) the pages that render the route's returns. Read (b) is the ground for row `IRPT_BCKEND-D2-W313-S3`: the reader
+  chains over a non-OK day and still says `measured` (a figure over 248 of 249 days, the reader's code over served gold, NOT the
+  deployed function's answer). That is a served claim that may say more than it knows, for two other firms. It is not changed
+  here, because Since Inception has no account with every day OK and one rule would move every such figure.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.47 -- the date-basis producer: a day with no inputs stops only itself and the day after (L10; CONTRACTS changed: answers 3 and 5 of v0.46 are replaced)
+
+- **Author:** `1.0.0_SA_CTO~DELL2`, 2026-10-12 ~01:2xZ. **Source:** the reviewer's point on v0.46 (`3.0.0_SA_CVO` msg 6246, review
+  @8e1d66b0a4): answers 3, 4 and 5 read together let one day D with no inputs leave every later day empty, and after seven days D is
+  never revisited. **The reviewer is right, and the fault was this seat's reading:** v0.46 answer 5 made a day's CLAIM wait on the
+  prior day's claim row. Read at the module since (`date_basis_grading.py:245-262`, `:133-138`, `:305-332`, this seat): a day's
+  claim is computed from that day's own rows, the first witness's closes for the day and the prior trading day, and the prior
+  partition's prices for the cash rule, where an absent prior partition is already handled (`not_comparable`). **No claim row is
+  an input to another claim.** Only SERVING reads two claims.
+- **Answer 5, replaced. The claim row for a day is written whenever that day's own inputs are present, whatever the prior day
+  holds.** So D+1 writes its rows; so does every later day.
+- **Answer 3, replaced. The table stores CLAIMS only; whether an account-day is served is DERIVED at read from two rows, today's
+  and the PRIOR TRADING DAY's by `lib/trading_calendar.py`, never "the prior graded day".** The module's serving rule walks a list
+  of graded days (`:326-328`), and over a list with D missing it would take D-1 as D+1's prior; the reader of this table does not
+  do that. With no row at D: D is not served, D+1 is not served (its prior is absent), and D+2 is judged against D+1 as usual.
+  **One missing day costs two days, not every day after.** A row with claim `UNGRADEABLE` is a graded day that is not served; no
+  row is a day not graded. Nothing derived is stored, so nothing stored goes stale when D lands late.
+- **What re-opens D.** Inside seven trading days the scheduled run takes it when its inputs land. After that, the same producer
+  run for a NAMED day, by a seat on demand; it writes D's rows once and rewrites nothing. D+1's served state follows by
+  derivation.
+- **The proof gains the day after.** In the driven run, with day D's bars withheld: D has no claim rows; D+1 HAS claim rows and
+  reads not served; D+2 is served or blank exactly as in the run with nothing withheld. Then D is run by name and D+1 reads as in
+  the unwithheld run, with no row of D+1 rewritten.
 
 -- 1.0.0_SA_CTO~DELL2

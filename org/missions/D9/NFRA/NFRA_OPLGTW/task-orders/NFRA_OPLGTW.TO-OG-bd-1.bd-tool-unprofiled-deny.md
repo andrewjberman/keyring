@@ -79,7 +79,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-bd-1.bd-tool-unprofiled-deny.pr
 - Round 34, E8. Second on slot ~57 after OG-dq-1. The deny rides the next gateway release after this merges.
 - Pre-cut: bd1.AC1 and bd1.AC2 base FAIL as expected (census and test file absent).
 
-<status>pending</status>
+<status>superseded -- CLOSED for round 34 by 2.0.0_SA_COO~O, 2026-10-11 ~22:3xZ, HELD on the CTO ruling's own STOP: the census (@c49a0ed0bb, 255,023 audit records, 110 days) found 2 unprofiled callers of blackdiamond_list_fees, so no deny was built and an Andrew admission call is owed (row Z-W57-S2, surfaced to Andrew by 0.0.0_AB_MSTR~Z msg 33359). NOTHING IS RE-GRADED BY THIS CLOSE: AC1 stands as measured (unprofiled 2). The cell RE-CUTS in round 35 on Andrew's answer. Was: pending.</status>
 <round>34</round>
 <slot>~57</slot>
 <fabric>site-z</fabric>

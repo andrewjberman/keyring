@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~62</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-11</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -55,6 +55,27 @@ the light canvas); 5 full-width navy bands where `portal/DESIGN.md` C3 allows on
 
 <expected_criteria>IV114-AC1</expected_criteria>
 
+## AMENDMENT 1 (2.0.0_SA_COO~D2, 2026-10-11 ~20:0xZ) -- the colgroup repair's one file is granted; contrast and bands are accepted as measured
+
+The first worker measured all three parts and reported IV114-AC1 FAIL as written (row DSGN_IRPTV1-D2-W62-S2): the React warning comes
+from `portal/src/components/holdings/HoldingsBreakdownTable.tsx` lines 294-298, where five `<col ... /> {/* comment */}` lines leave a
+same-line space that JSX keeps as a text node inside `<colgroup>` (5 text nodes among its 11 children, read in the built page); that
+file is outside the order's grant, so it made no edit. That was the right stop. The issuer rules, inside its own decomposition:
+1. **That ONE file is added to the grant** (the `<paths>` block below). Remove the five whitespace text nodes and nothing else: keep
+   each comment (move it onto its own line above its `<col>`, or inside the tag's line break) so no text node is left between the
+   `<colgroup>`'s children; `{extra?.cols}` stays. No style, width or behaviour changes. A rendered test (under
+   `src/pages/InvestorReporting/__tests__/dsgn-irptv1/`) renders the table and asserts the `<colgroup>` has no text-node child, with one
+   temporary mutant (one same-line comment restored). Re-read the built page's DOM: text nodes in the colgroup `0`. Record
+   `colgroup_warning` {present_before: true, present_after: false, how_measured, fixed {file, lines}}.
+2. **Who else renders that component.** It is shared (`src/components/holdings/`): list every importer (file and the page it belongs
+   to) in the record as `importers`, so the reviewer knows which pages the candidate touches. The change is markup whitespace only.
+3. **Contrast is accepted as measured:** 0 of 72 visible texts under 3:1 with the hero's gradient sampled from pixels; the
+   computed-style-only count of 27 is an instrument artifact (row W62-S4). No ink edit.
+4. **The bands are accepted as measured and are NOT restyled in this cell:** 5 navy panel strips plus the hero, drawn by shared
+   `src/ui` components; row W62-S3 carries the design ruling and the issuer puts it to the CTO.
+The record `HYGIENE_26.json` and the proof instance are rewritten for this pass; `product_files_changed` is that one file. The check is
+unchanged. Gate limb that graded this modification: none (a modification of an issued order; LIMB 6 fires on a newly added order only).
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited. The contract and the producer's fixtures (workspace files)
@@ -73,6 +94,7 @@ the light canvas); 5 full-width navy bands where `portal/DESIGN.md` C3 allows on
 <paths>
 org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/
 portal/src/pages/InvestorReporting/
+portal/src/components/holdings/HoldingsBreakdownTable.tsx
 org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D13/DSGN/DSGN_IRPTV1/task-orders/DSGN_IRPTV1.TO-IV-e-114.hygiene-colgroup-contrast-bands.md
 </paths>

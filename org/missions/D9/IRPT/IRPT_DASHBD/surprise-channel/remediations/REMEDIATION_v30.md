@@ -35,11 +35,11 @@ Released from the HELD file at 2026-10-11T18:41:22Z: TO-DB-b-139 is terminal and
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v73",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v73"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

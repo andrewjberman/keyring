@@ -1990,3 +1990,40 @@ token grants answer once their consuming transaction is sent. It has been live s
 **Chains: 7 independent cells plus 1 applier.** Slots queue by write set and kind: ~54 runs db-1 then br-1, ~56 runs
 gw-1 then wr-1, ~57 runs dq-1 then bd-1.
 **fanout:** 4 of 7 chains, cap 8. Reason: Andrew-direct 2026-10-10 slower pacing for the usage limit (relay msg 33086).
+
+## ADDENDUM R3-T.43 (2.0.0_SA_COO~O, 2026-10-11 ~19:1xZ) -- round 34, workstream APPLY-R34
+
+**Source.** Round 34's signed Phase A cells: OG-mu-1 (COO @34bf3d67a4, CTO @e0ca80f880) and OG-gw-1 (COO @88926383b1, CTO
+@bef54b9b62). Applied by `0.7.0_AE_CloudOps~Z`, after OG-ap-7's ledger, one act at a time.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-8` | E1 apply | The market_update PutObject grant: -target, -var from address(), plan 1/0/0 then 0/0/0 at rc=0, live read-back. | WORLD | ~AE | applier |
+| `OG-ap-9` | E2 apply | Rebuild mcportal-grant-writer from live c3af8687e4: -target, -var, plan 0/1/0 then 0/0/0 at rc=0; session-free read-back (CodeSha256 plus the deployed parse_scope taking 13 months, with the prior package refusing it). | WORLD | ~AE | applier |
+
+**fanout:** 1 of 1 chains (ap-8 then ap-9 on one applier), cap 8.
+
+## ADDENDUM R3-T.44 (2.0.0_SA_COO~O, 2026-10-11 ~23:2xZ) -- round 35, ONE issuance
+
+**Source.** `1.0.0_SA_CTO~Z`'s round-34 analysis `ledger/ROUND_ANALYSIS.round34.md` @026a983b34 section 3. E4 (the OG-bd-1
+re-cut) is NOT cut: it is conditional on Andrew's admission answer (row Z-W57-S2, ARMED, held on him) and will issue as its
+own workstream when the answer lands.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-fd-1` | E1 | Each silver sweep drains only its own family's DLQ messages; others are returned (visibility 0); unattributed messages are never deleted (Z-S91). Phase A: source, tests, ask. | LOCAL | ~58 | worker |
+| `OG-ap-10` | E2 | APPLY: the .pptx -> market_update gateway release (OG-ab-2 + OG-mu-1 hunks) re-cut on live 28ba9532b6, stating the key form (Z-W55-S2). B1 re-cut and ask; B2 deploy on GO. | WORLD | ~AE | applier |
+| `OG-tb-1` | E3 | READ: who reads gateway/teams/bearer (90-day CloudTrail, positively controlled), the group's grant statement, then the narrowing ask (Z-S92). | SERVED | ~59 | worker |
+
+**fanout:** 2 of 3 chains plus 1 applier, cap 8. Reason: Andrew-direct 2026-10-10 pacing.
+
+## ADDENDUM R3-T.45 (2.0.0_SA_COO~O, 2026-10-12 ~00:5xZ) -- round 35, workstream APPLY-R35
+
+**Source.** OG-fd-1's pair (COO @824ec17c4d, CTO @aafc1640e8): schwab ONLY today. etf, blackdiamond, orion and eclipse each
+wait for their own pair naming their drift's owner.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-11` | E1 apply (schwab) | Read the live record shape first; deploy the per-family drain to opal-assets-silver-schwab by Terraform (pin moved); grade it on the scheduled 12:15Z sweep with two planted synthetic records. The ledger states the partial roll-out. | WORLD | ~AE | applier |
+
+**fanout:** 1 of 1, cap 8.

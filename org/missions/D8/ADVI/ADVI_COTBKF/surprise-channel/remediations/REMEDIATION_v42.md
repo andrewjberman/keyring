@@ -53,11 +53,11 @@ Graduated, round label v72: 4 rows, all OPEN, INERT. Nothing was applied, served
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v72",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v72"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "ADVI_COTBKF-D2-W118-S2",
@@ -74,11 +74,11 @@ Graduated, round label v72: 4 rows, all OPEN, INERT. Nothing was applied, served
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v72",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v72"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "ADVI_COTBKF-D2-W118-S3",
@@ -95,11 +95,11 @@ Graduated, round label v72: 4 rows, all OPEN, INERT. Nothing was applied, served
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v72",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v72"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

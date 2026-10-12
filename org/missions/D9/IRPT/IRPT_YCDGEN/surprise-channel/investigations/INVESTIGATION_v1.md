@@ -4250,3 +4250,102 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "CHECK VERDICT reads FOUND on 33 hits that are ALL key-name matches; the three value-shaped tests read 0. 25 of the 33 name credential-ish fields whose values are hashed here; 8 are the token pattern matching the probe pair's own with_token_/without_token_ arm names, which hashes four diagnostic classes per arm. So the verdict overstates the concern in the safe direction and under-reports the diagnosis in a way that costs the reader eight values."
 }
 ```
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S62",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T19:40:12Z",
+  "one_line": "L8 round 14, no judgment criterion. FWD-1 is not met and was not run. Row D2-W7-S1 (a research build shipped no logo) is closed: the builder's filter now takes the logo's file ending, read by this seat in the code with its tests passing. Three rows stay ARMED with their owner: S16 (waits on one accepted submission from a browser), D2-S38 and D2-S45. The vendor sign-in is answered by a firewall challenge on its probe; the vendor path is stopped and the question is with Andrew.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r14/ROUND14_DRAIN_END_READ_20261011.md @8e099e4110 (msg 5670)",
+      "this seat's read 2026-10-11T19:40:12Z of org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py at commit 049834ad31: the research filter's list of endings gains .svg, one line; the file is unchanged from that commit to HEAD; its test file run by this seat, 31 passed. Not run by this seat: a research build"
+    ]
+  },
+  "spec_asserts": "Spine L8/L10 (CLAUDE.md rule 27). Remediation row D2-W7-S1's remedy: one research build lists the logo among its members.",
+  "world_is": "The issuer's dry-run build at the st32 pin lists the logo with one member flag (its statement, not re-run). The running resident already carries the logo. The rest of the rollback has not run on st32.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_YCDGEN-D2-S63 -- The source map entry for irpt-ycharts-generate is stale: its recorded commit lacks a fix the live bytes carry, and its recorded hash is not the live one
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S63",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T19:47:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "The source map entry for irpt-ycharts-generate is stale: its recorded commit lacks a fix the live bytes carry, and its recorded hash is not the live one",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-11T16:41Z by 2.0.0_SA_COO~G2: the live function irpt-ycharts-generate reads CodeSha256 tdpterTMfJlWXjnoAQCwil+wN/Jf8Q/yLjGxTk7yUkk=, LastModified 2026-10-09T09:32:22Z (get-function-configuration), and its downloaded package hashes to that same value (104 members). infra/aws/lambda/ci/lambda-source-map.json records for the same function artifact_sha256 ZA0QJ5Wt/7JcwmuzVfHOeNAdFk6th4H5IEeqQStDYm8=, last_deployed_commit 5d3eed890439d8db172902b90571fe04854ad14d, last_deployed_at 2026-10-08T21:35:15Z. The recorded commit does NOT contain fix db8161f46e by ancestry (positive control: HEAD does), while the live package's served.py DOES carry that fix's lines. So the map's entry describes an earlier deploy than the one running: at least one deploy on 2026-10-09 did not update it. Record: org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r14/TWO_ARMED_ROWS_AND_THE_SITTING_20261011.md @cbbff7ab80."
+    ]
+  },
+  "notes": "Filed on the CTO round-15 analysis @c3cf777f3b section 3 item 3. A reader who asks the map what is deployed is told the wrong commit; this seat nearly concluded from it that the fix for row S16 was NOT deployed. Not read: which commit the live package was built from, which other entries of the map are stale (this is one entry, found by accident, not a census), and which deploy on 2026-10-09 skipped the update. The correction is cell YCD-b-15: the entry is corrected from the live digest and the build input, by content.",
+  "spec_asserts": "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-ycharts-generate: artifact_sha256, last_deployed_commit and last_deployed_at describe what is deployed.",
+  "world_is": "MEASURED 2026-10-11T16:41Z by 2.0.0_SA_COO~G2: the live function irpt-ycharts-generate reads CodeSha256 tdpterTMfJlWXjnoAQCwil+wN/Jf8Q/yLjGxTk7yUkk=, LastModified 2026-10-09T09:32:22Z (get-function-configuration), and its downloaded package hashes to that same value (104 members). infra/aws/lambda/ci/lambda-source-map.json records for the same function artifact_sha256 ZA0QJ5Wt/7JcwmuzVfHOeNAdFk6th4H5IEeqQStDYm8=, last_deployed_commit 5d3eed890439d8db172902b90571fe04854ad14d, last_deployed_at 2026-10-08T21:35:15Z. The recorded commit does NOT contain fix db8161f46e by ancestry (positive control: HEAD does), while the live package's served.py DOES carry that fix's lines. So the map's entry describes an earlier deploy than the one running: at least one deploy on 2026-10-09 did not update it. Record: org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r14/TWO_ARMED_ROWS_AND_THE_SITTING_20261011.md @cbbff7ab80."
+}
+```
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S64",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T20:51:22Z",
+  "one_line": "The ticket id on a submission is the caller's unverified statement too: acceptance checks its FORMAT and copies it, and holds no ticket port, so it cannot tell the caller's own ticket from another firm's or from one that does not exist. PRD v0.13 says a false commentary_requested gains only a draft on the caller's OWN ticketed request; that 'own' is not established at acceptance. With the two members together a caller can start a draft at the outside model at will, and where that draft lands depends on a check further down that nobody has named.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's read 2026-10-11T20:51:22Z of infra/aws/lambda/investor-reporting/ycharts/generate: submission.py line 18 (the ticket id's pattern) and lines 78 to 80 (a ticket id is refused only when it is not a string of that pattern or comes without an input id); acceptance.py lines 120 to 121 (the id is copied into the accepted record as sent)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/prd/IRPT_YCDGEN_PRD.md ADDENDUM v0.13 @39c807e066",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_PRD_v0.13_RATIFIED_TEXT_REVIEW_20261011.md"
+    ]
+  },
+  "spec_asserts": "PRD ADDENDUM v0.13: what a caller gains by stating true falsely is a draft on their own ticketed request in their own firm; neither statement reaches another firm or a request with no ticket.",
+  "world_is": "INERT because nothing is bound: no release carries the send and the host has no queue to send to. It blocks the binding's pair, which must name the check that stops a draft landing on a ticket that is not the caller's. Not read by this seat: the drafter, the packager, or the ticket service's check on a landing draft.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_YCDGEN-D2-S65 -- The commentary drafter's live ticket API base is the gateway's direct address, which the authorizer's origin gate refuses: its ticket posts would be denied the day it is switched to the draft route
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S65",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-11T21:04:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "one_line": "The commentary drafter's live ticket API base is the gateway's direct address, which the authorizer's origin gate refuses: its ticket posts would be denied the day it is switched to the draft route",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-11T21:0xZ by 2.0.0_SA_COO~G2 (get-function-configuration, one function): outlook-global-commentary-draft-lambda carries TICKET_API_BASE = https://7k3ed8px20.execute-api.us-east-1.amazonaws.com, the gateway's direct address. READ IN CODE at box/dell2 HEAD: infra/aws/users/lambda/portal-authorizer/originVerify.mjs isOriginVerified returns false for a request with no x-opal-origin-verify header, and index.mjs lines 340-350 deny on that before the token is read; the header is added by the portal's front door, not by a caller. So a post by the drafter to the ticket service at that base would be denied at the authorizer. NOT measured: such a denial (nothing was called), and the deployed authorizer's bytes. On the queue path the drafter posts no ticket today (it stops at draft_stored), so nothing is failing now. Record: org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r16/THREE_READS_FOR_THE_BINDING_20261011.md."
+    ]
+  },
+  "notes": "Found while reading the three items the binding's PART 1 left open (cell YCD-b-16). It is NFRA_TRNSPT's setting and TCKT_VNEXT's route; this seat changes neither. INERT today because the queue path posts no ticket. It becomes live when the drafter is switched to the ticket's draft route, which CTO msg 5830 names as pending behind TCKT_VNEXT's next cell. The same reading fixes the packager's api_base as the front door, https://opalinvest.dev.",
+  "spec_asserts": "infra/aws/terraform/transcripts/commentary.tf (the drafter's environment) and the drafter's ticket client: a draft is written to a ticket through the ticket service at TICKET_API_BASE.",
+  "world_is": "MEASURED 2026-10-11T21:0xZ by 2.0.0_SA_COO~G2 (get-function-configuration, one function): outlook-global-commentary-draft-lambda carries TICKET_API_BASE = https://7k3ed8px20.execute-api.us-east-1.amazonaws.com, the gateway's direct address. READ IN CODE at box/dell2 HEAD: infra/aws/users/lambda/portal-authorizer/originVerify.mjs isOriginVerified returns false for a request with no x-opal-origin-verify header, and index.mjs lines 340-350 deny on that before the token is read; the header is added by the portal's front door, not by a caller. So a post by the drafter to the ticket service at that base would be denied at the authorizer. NOT measured: such a denial (nothing was called), and the deployed authorizer's bytes. On the queue path the drafter posts no ticket today (it stops at draft_stored), so nothing is failing now. Record: org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/r16/THREE_READS_FOR_THE_BINDING_20261011.md."
+}
+```
