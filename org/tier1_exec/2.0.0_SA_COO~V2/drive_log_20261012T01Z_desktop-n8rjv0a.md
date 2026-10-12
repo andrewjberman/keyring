@@ -1,0 +1,5 @@
+# Drive log -- 2.0.0_SA_COO~V2 -- 2026-10-12 01Z -- desktop-n8rjv0a
+
+| time | project | act | detail |
+|---|---|---|---|
+| 01:1xZ | TCKT_VNEXT | the read reported; round 8 closed at L10 | TO-READ-R8-ds1 complete @e377de62b6 (msg 6233), claim measured; DS1-READ-OK re-run by this seat; `round-close-check --round 8`: orders=1, judgment=0, MAY-CLOSE. As the applier measured: sign-in and refresh refuse any status but `active` (auth.ts 106, 255, 538; the deployed sign-in tied three ways); neither authorizer reads the users row per request, so a token lives 15 minutes past a disabling on the portal path; 56 PROFILE rows are 54 active and 2 disabled, no absent status; of the two disabled internal rows one reads as a PERSON at an external company's domain (digest 04fc361f3802) and one is tooling. Row TCKT_VNEXT-D2-S52 (INERT): the authorizer's source at HEAD is 188 lines ahead of the build input the source map records as deployed (a render-token path). This issuer's defect: the order called the HEAD file the authorizer's source. `ledger/L10_SLUG_R8.md` written and sent to the CTO. |

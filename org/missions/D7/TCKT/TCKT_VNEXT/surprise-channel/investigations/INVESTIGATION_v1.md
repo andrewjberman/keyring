@@ -2201,3 +2201,30 @@ specific syntax is what the rule does not name.
 
 **not established:** which other characters CloudWatch's filter grammar swallows unquoted. I measured the hyphen on one log
 group with one pattern. Colons, slashes and dots are plausible and untested, so no claim is made about them.
+
+### TCKT_VNEXT-D2-S52 -- the portal authorizer's source at HEAD is ahead of the build input recorded as deployed (a render-token path)
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S52",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-12T01:04:41Z",
+  "one_line": "The portal authorizer's source at HEAD is 188 lines ahead of the build input recorded as deployed: a render-token path is in the tree and, by the source map, not in the live function.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r8_ds1/DISABLED_USERS_READ_20261012.json @e377de62b6 (0.7.0_AE_CloudOps~TV2, claim measured): opal-portal-authorizer live CodeSha256 equals the source map's artifact hash; the map's last_deployed_commit is 26ffa22b79 (2026-09-09); `infra/aws/users/lambda/portal-authorizer/index.mjs` is 450 lines at HEAD and 262 at that commit",
+      "the same file: the added code is a render-token path (getRenderPublicKeyPem, isRenderAudienceToken, hasForbiddenRenderClaims, assertBoundedRenderExpiry, authorizeRenderToken); the function's LastModified (2026-10-03) is later than the map's last_deployed_at, which the applier reads as consistent with a configuration-only update and did not establish",
+      "NOT read by anyone in this project: the deployed bytes (no download, by the order); whether the artifact was built from 26ffa22b79's source; whether the render-token path is deliberately unreleased or is deployed by a path the source map does not record",
+      "this seat's own part: the round-8 order pointed the applier at the HEAD file as 'the authorizer's source'; the applier re-measured against the recorded build input and found the difference"
+    ]
+  },
+  "spec_asserts": "The round-8 order's pointer: the authorizer's source is `infra/aws/users/lambda/portal-authorizer/index.mjs` (as `infra/aws/terraform/portal-auth/lambdas.tf:61-63` names it).",
+  "world_is": "That file at HEAD is not the build input the source map records as live. The round-8 answer (neither authorizer reads a users row's status) was measured on both and holds on both, so this project's finding is not affected. The gap itself belongs to whoever owns the render-token work (the comment in the file cites IRPT_BCKEND.TO-IB-rtr-2): either a release is owed or the map is behind. Nothing is changed here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
