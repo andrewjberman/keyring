@@ -7483,3 +7483,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "A derivation from _tenants() would give five members. The proposal states four explicit rows, so the test-kind tenant is refused exactly as the portal refuses it today. The CTO should rule whether that tenant is ever to reach a partner page, because the answer decides whether an explicit row or a derived set is correct."
 }
 ```
+
+## NFRA_CTLPLN-D1-S10 -- intake_receive.py install has no target interpreter: it runs `pip install --user` for EVERY wheel in the pack into the running interpreter's user site, so the order's step "install" on dell1 would put click 8.3.1 over the box's 8.5.0 and install the pack's second wheel too
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CT1",
+  "surfaced_at": "2026-10-12T07:46Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-D1-S10",
+  "one_line": "intake_receive.py install installs every wheel of the pack with `pip install --user` into sys.executable's user site; with no --target or venv option it cannot be pointed at an isolated environment, so on a box whose click is newer than the checked one it is a downgrade-and-extra-install, not the route's last step.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_receive.py:538 `cmd = build_pip_command(info[\"path\"], user=True)` inside `for info in res[\"wheels\"]`; build_pip_command (line ~299) starts with [sys.executable, '-m', 'pip', 'install', '--no-index', '--no-deps'] and adds '--user' (no --target on this verb)",
+      "install --help: arguments are --from PACK and --dry-run only; no interpreter, target or venv argument",
+      "the pack delivered for TO-CT-v-3 holds two wheels (click 8.3.1 and rpds_py 2026.6.3 cp314), and dell1's interpreter carries click 8.5.0 (pip show click, Python314 site-packages)",
+      "this seat ran verify and prove with the tool (both ok=True) and installed click with `<fresh venv python> -m pip install --no-index --no-deps -v <verified wheel>`, as the order allows; the tool's own install verb was not run"
+    ]
+  },
+  "spec_asserts": "TO-CT-v-3 step 1 and TO-CT-x-2 AMENDMENT 1: the checked click 8.3.1 is installed index-free into a FRESH, ISOLATED environment, never into the box interpreter (it would downgrade huggingface_hub's click>=8.4.2 requirement); and 'rpds_py is not yours to install'.",
+  "world_is": "The receiving tool's install verb cannot honour either bound: it targets the interpreter that runs it, in the user site, and installs every wheel in the pack. Run with the venv's python it fails (--user is refused in a venv); run with the box's python it shadows click 8.5.0 for the user and installs rpds_py. The route's last step therefore needs a --target or --venv argument and a per-wheel selector before a Dell can use the tool's own install verb. The CTO or the tool's owner should rule which."
+}
+```

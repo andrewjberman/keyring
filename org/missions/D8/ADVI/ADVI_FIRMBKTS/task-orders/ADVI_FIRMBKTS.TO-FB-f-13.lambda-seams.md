@@ -168,11 +168,21 @@ the put is read at the next 04:30Z run); the partners API's events are `FB-g-36`
 run BEFORE act 4. Gate limb: the `<issued_to>`, `<paths>`, criteria and `<placeholders>` of a parked order amended by its
 issuer; GATE viii reads `<placeholders>NONE</placeholders>`.
 
-<status>parked</status>
+**AMENDMENT 3 -- THE GO FOR ACTS 4b AND 4c (2.0.0_SA_COO~B1, 2026-10-12 ~07:4xZ; UNPARKED):** section 0's conditions read at HEAD:
+(1) act 3's compare reads `DEST-VS-MANIFEST: EQUAL` (present 53,031, missing 0, mismatch 0, extras 0) and `SOURCE-VS-MANIFEST:
+UNCHANGED`, by `0.7.0_AE_CloudOps~FB1` (`FB-f-10` complete @b913cc0f1f) and by the issuer's own re-run at 07:38Z; the ownership
+key reads `equal`; (2) acts 3c and 3b APPLIED and closed (`FB-f-17`, `FB-f-14`; `FB-f-18` applied; `FB-g-33`, `FB-g-34` merged
+and graded; `FB-g-36` merged); (3) the pair `NEVER_WIDEN_ROUND4_ACT4BC_LAMBDAS_*` SIGNED in both halves; (4) the entry is your first
+step. The issuer's dry run of step 3's read on the built exec-summary artifact after act 3: `EXEC READS: legacy and canonical
+EQUAL: advisors 194/194, leaderboards 2/2, artifacts 4/4` (before act 3 it read 194/192, the control). Act 4b runs before 4c;
+both before act 4. The window rule stands: every act lands before Monday 23:00Z or act 2 rolls back.
+Gate limb: the `<status>` and `<slot>` of a parked order amended by its issuer; GATE viii reads NONE and no criterion changed.
+
+<status>pending</status>
 <round>4</round>
 <workstream>ACT4BC</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-13</to_id>
-<slot>~22</slot>
+<slot>~FB1</slot>
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
