@@ -31,7 +31,7 @@ not enable anything on any machine.
 ### BUILD
 
 One file: `.tools/ssh-tailnet-enable.ps1` (Windows PowerShell 5.1 compatible; ASCII only). Parameters:
-`-PublicKey <path-or-string>` (repeatable as an array), `-Plan`, `-Rollback`, `-SelfTest`, `-ReceiptDir <path>` (default below).
+`-PublicKey <path-or-string>` (repeatable as an array), `-DisablePassword` (switch, step 5), `-Plan`, `-Rollback`, `-SelfTest`, `-ReceiptDir <path>` (default below).
 
 What a real (elevated, not `-Plan`) run does, in order, each step idempotent:
 1. **A. Service.** If the capability `OpenSSH.Server~~~~0.0.1.0` is not installed, `Add-WindowsCapability -Online -Name 'OpenSSH.Server~~~~0.0.1.0'`.
@@ -85,8 +85,8 @@ FOUND SOMETHING ODD OFF-TASK? Append ONE row (`spec_asserts` + `world_is`) to
 <criterion id="CTu1-AC1" cell_refs="CT-u-1"><invocation>powershell -NoProfile -ExecutionPolicy Bypass -File .tools/ssh-tailnet-enable.ps1 -SelfTest</invocation><expect>SSH-ENABLE-SELFTEST cases=</expect></criterion>
 `CTu1-AC1` -- every case passing; the line reads `ok=True`.
 
-<criterion id="CTu1-AC2" cell_refs="CT-u-1"><invocation>powershell -NoProfile -ExecutionPolicy Bypass -File .tools/ssh-tailnet-enable.ps1 -Plan -ReceiptDir $env:TEMP</invocation><expect>"mode":"plan"</expect></criterion>
-`CTu1-AC2` -- a real `-Plan` on this unelevated machine prints BEFORE, lists the steps it would change, and writes a receipt; it changes nothing.
+<criterion id="CTu1-AC2" cell_refs="CT-u-1"><invocation>powershell -NoProfile -ExecutionPolicy Bypass -File .tools/ssh-tailnet-enable.ps1 -Plan -ReceiptDir .tmp-ssh-plan-receipts</invocation><expect>"mode":"plan"</expect></criterion>
+`CTu1-AC2` -- a real `-Plan` on this unelevated machine prints BEFORE, lists the steps it would change, and writes a receipt; it changes nothing. `-ReceiptDir` creates the folder if absent; delete `.tmp-ssh-plan-receipts` after the proof is written (it is scratch, never committed).
 </proof_of_spec>
 
 <expected_criteria>CTu1-AC1,CTu1-AC2</expected_criteria>
