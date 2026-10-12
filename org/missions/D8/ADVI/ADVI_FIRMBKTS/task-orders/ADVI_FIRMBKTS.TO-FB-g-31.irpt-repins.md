@@ -24,14 +24,15 @@ pins is what moves a deployed byte. You re-pin ONE member in EIGHT functions to 
 
 ### 1a. Steps (the whole spec)
 
-The flip commit is `FLIPCOMMIT` (40 hex; the issuer fills it at the GO). For each of these eight function keys in
+The flip commit is `69679b90e3dc52b670d33fddd96d06be1deaac90` (40 hex; the issuer fills it at the GO). For each of these eight function keys in
 `infra/aws/lambda/ci/lambda-source-map.json` (under `functions`): `irpt-49f-reporting-read-lambda`, `irpt-directory-search`, `irpt-export-render`, `irpt-holdings`,
 `irpt-narrative`, `irpt-performance-adapter`, `irpt-status`, `irpt-ycharts-generate`: in its `staged_from` list, the ONE row
 whose `repo_path` is `infra/aws/lambda/investor-reporting/_authz/loaders.py`:
-1. set `pin` to the 40-hex `FLIPCOMMIT`;
-2. set `sha256` to the SHA-256 (hex) of `git show FLIPCOMMIT:infra/aws/lambda/investor-reporting/_authz/loaders.py` (bytes).
+1. set `pin` to the 40-hex `69679b90e3dc52b670d33fddd96d06be1deaac90`;
+2. set `sha256` to the SHA-256 (hex) of `git show 69679b90e3dc52b670d33fddd96d06be1deaac90:infra/aws/lambda/investor-reporting/_authz/loaders.py` (bytes).
 Change no other row, no other field, no other function, and keep the file's own formatting (indent, key order, line
-endings). Then commit the one file.
+endings). Then commit the one file, and run AC1 and AC2 IMMEDIATELY after that commit and BEFORE any other commit (rows,
+instance): AC1's base is `HEAD~1`, the commit you branched from.
 
 ### 1b. Rules
 
@@ -61,7 +62,7 @@ Read-only: the rest of the repository, the checks under `org/missions/D8/ADVI/AD
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~54/ADVI_FIRMBKTS.TO-FB-g-31.irpt-repins.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-g-31"><invocation>cd /c/dev/wk-firmbkts-54 &amp;&amp; timeout 280 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_repin.py --arms repin --flip FLIPCOMMIT --root /c/dev/wk-firmbkts-54 --base HEAD~1; echo "exit=$?"</invocation><expect>ROUND 4 REPIN: 3 of 3 arms</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-g-31"><invocation>cd /c/dev/wk-firmbkts-54 &amp;&amp; timeout 280 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_repin.py --arms repin --flip 69679b90e3dc52b670d33fddd96d06be1deaac90 --root /c/dev/wk-firmbkts-54 --base HEAD~1; echo "exit=$?"</invocation><expect>ROUND 4 REPIN: 3 of 3 arms</expect></criterion>
   <criterion id="AC2" cell_refs="FB-g-31"><invocation>cd /c/dev/wk-firmbkts-54 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root /c/dev/wk-firmbkts-54 --allow infra/aws/lambda/ci/lambda-source-map.json --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~54/ --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md --require infra/aws/lambda/ci/lambda-source-map.json; echo "exit=$?"</invocation><expect>ROUND 4 SCOPE: OK</expect></criterion>
 </proof_of_spec>
 
@@ -79,11 +80,11 @@ BUILD_ONLY hashes, and the FULL commit hash.
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** STAGED for the window. Spawned only after `FB-g-30` is merged and its full commit hash is known; the worktree
-is cut from that merged head and `FLIPCOMMIT` in the two invocations is filled with it. Rehearsal hashes are in the act-4 COO
+is cut from that merged head and `69679b90e3dc52b670d33fddd96d06be1deaac90` in the two invocations is filled with it. Rehearsal hashes are in the act-4 COO
 ADDENDUM 2. After this commit the build-and-upload of each function (and its scoped plan and apply) is `FB-f-11`'s IRPT leg.
 Workstream `REPIN`. Class WORLD by the path floor.
 
-<status>parked</status>
+<status>pending</status>
 <round>4</round>
 <workstream>REPIN</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-31</to_id>
