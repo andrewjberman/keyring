@@ -10456,3 +10456,60 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order
 ```
+
+## 109. ROUND 101 -- THE /freshness SNAPSHOT IS CURRENT BY THE TRADING CALENDAR (A BUILD AND ITS STAGED APPLY); THE COLD OVERLAY ON LIVE WITH A FRESH SNAPSHOT (A STAGED READ); `AMGT-bg-3`'S DAY-AFTER CLOSE (A STAGED READ). One worker build, one staged seat order, two staged reads, one staged cell
+
+**Input:** the CTO~DELL1 round-100 analysis `ledger/ROUND_ANALYSIS.round100.md` (msg 4287) and its ADDENDUM 1 (msg 4292, the issuer's measurement beat the analysis's cell 1). Prep in
+`deliverables/2.0.0_SA_COO~R1/round101_prep/` (checks `r101_snapshot_rule_check.py`, `r101_snapshot_equal.py`, `r101_cold_live.py`, base NO and against a candidate YES) and
+`round100_prep/` (`r100_cold_requests_by_key.py`). The cells are prefixed `bh`.
+
+### 109a. MEASURED AT THE CUT
+
+- **The analysis's cell 1 (one refdata read per container, the ledger GETs once) does not move the cold request:** the candidate removes the 19 per-peer refdata LISTs and holds the ledger dates:
+  cold ASML_NA overlay 8.8 s at the base, 9.2 s on the candidate; only about half of the cold request's wall time has any S3 request in flight (4.4 to 5.0 s of 8.6 to 9.5 s). Thread-seconds
+  were mistaken for a critical path. NOT BUILT.
+- **What the main-thread profile shows (cold ASML_NA overlay, 10.9 s):** 4.4 s in `_overlay_input_provenance` -> `serve_coverage_freshness` -> `read_coverage_freshness` (the whole-universe
+  coverage view computed live: an 8-page listing of 7,544 bronze keys and 97 ledger GETs), and 2.2 s of botocore response parsing.
+- **Why it computes live:** the stored snapshot (`amgt/harvest/state/freshness_snapshot/current/snapshot.json`) is 65 hours old (generated 2026-10-09T12:30Z, a Friday), the reader refuses
+  anything past 24 hours, and the writer is `cron(30 12 ? * MON-FRI *)`: from Saturday 12:30Z to Monday 12:30Z every request after the 60-second hold recomputes. With the stored snapshot allowed
+  in a fresh process the cold ASML_NA overlay reads 5.8 s against 8.7 s. Both slow days of rounds 98 to 100 were weekend or Monday morning.
+- **Live, before the Monday write:** `r101_cold_live.py` ASML_NA overlay 22.39 s handler time, cold container; ADBE_US 0.53 s (the warm container's held view). The experiment of cell 3 is the
+  same function after the write.
+
+### 109b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bh-1` | the snapshot reader counts a snapshot current by the trading calendar (a build) | `~398` | worker (build) | LOCAL | `snapshot.py`, two test modules | the weekend tail |
+| `AMGT-bh-2` | the apply carrying it -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger | the weekend tail |
+| `AMGT-bh-3` | READ the cold first overlay on the live function with a fresh snapshot, after 12:40Z Monday -- STAGED | `~399` | worker (read-only) | LOCAL | one output file | whether the snapshot is the lever on Lambda |
+| `AMGT-bh-4` | READ the first weekday's over-20 s count from the log, `AMGT-bg-3`'s close -- STAGED until 2026-10-13T12:40Z | `~400` | worker (read-only) | LOCAL | one reading file | the S3-client build's close |
+| `AMGT-bh-5` | the DEMQUE answer's reader and wiring (pp-4) -- STAGED, no order | -- | worker | LOCAL until a redeploy | `lib/research/api/scoped_amgt.py` | D1-S14 |
+
+**Uncovered, with its owner:** the portal PROD promote (call `dell1-20261011T033643Z-e7f2`; it now also carries AMGT_CORPUS's finished Model tab) and the API's drop of the top-level
+`fiscal_year_figures` (step 3) -- Andrew, then a later pair; FWD-16 and the model API key -- Andrew; the cold request's remaining cost after the snapshot is served (5.8 s locally: listing parse,
+the model-block reads, the coverage keys) -- a later cell after `AMGT-bh-3`'s read says whether it still matters.
+
+### 109c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: analysis items 1 and 2 plus the ADDENDUM's cell. Cell 1 as worded -> not built (measured); the snapshot rule -> bh-1 + bh-2 (+ the experiment bh-3); item 2 (the day-after
+  read) -> bh-4; item 3 -> bh-5. Printed denominator 3 of 3 items placed (1 build, 1 staged apply, 2 staged reads, 1 staged cell).
+- **(ii) Same grain.** bh-1 one function of one module; bh-2 one code leg; bh-3 and bh-4 one reading each.
+- **(iii) Intent coherence.** bh-1 changes no served byte by itself; bh-2 serves it; bh-3 measures the lever before bh-2 spends an apply; bh-4 closes bg-3.
+- **(iv) What a cell does NOT move.** bh-1 moves one reader's freshness rule (and no schedule, no writer, no value); bh-2 moves only the function's code, one member; bh-3 and bh-4 write only
+  their reading files and invoke at most two overlay requests.
+
+### 109d. EDGES AND FAN-OUT
+```
+bh-2 after bh-1 merged and reviewed, after bh-3 read on record   (the apply is spent only if the snapshot is the lever)
+bh-4 independent (a log read); its window ends at bh-2's apply if that lands inside it
+bh-5 on the DEMQUE answer
+fanout:
+  cap: 8
+  orders_total: 4          (bh-1 a worker build; bh-2 a staged seat order; bh-3 and bh-4 staged worker reads)
+  chains_total: 4          (bh-1 -> bh-2 ; bh-3 ; bh-4 ; bh-5)
+  wave_0: [bh-1 ~398]
+  wave_1 staged: [bh-3 ~399 (GO after 2026-10-12T12:40Z), bh-4 ~400 (GO at or after 2026-10-13T12:40Z), bh-2 RA1 (after bh-1's merge, bh-3's read and its pair), bh-5 (on the DEMQUE answer)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```
