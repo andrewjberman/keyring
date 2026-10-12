@@ -1,7 +1,7 @@
 # MDPF_SECCLASS -- one canonical security classification -- status
 
 Seat `2.0.0_SA_COO~M1` (dell1), successor to `2.0.0_SA_COO~M`. Contract `org/standards/MDPF_SECCLASS_CONTRACT.json`. Lease **FULL**
-(`drive-mode.py read`); `/canonical-drive` armed at 60m (Andrew-direct 2026-10-10 ~23:3xZ). As of **2026-10-12 ~09:4xZ** (each table row carries its own measure time).
+(`drive-mode.py read`); `/canonical-drive` armed at 60m (Andrew-direct 2026-10-10 ~23:3xZ). As of **2026-10-12 ~10:4xZ** (each table row carries its own measure time).
 History is in git and the drive logs (`org/tier1_exec/2.0.0_SA_COO~M1/drive_log_*Z_*.md`).
 
 Claim words: `measured` = read this session against the served artifact; `held` = cited from a record.
@@ -21,7 +21,7 @@ All MDPF_SECCLASS ledgers are CLOSED except two (one ordered, one held):
 
 | Ledger | State |
 |---|---|
-| e91b C_06 retained-unclassified ship (SC1) | ORDERED 2026-10-12 ~10:0xZ: `TO-SC-e91b` @0b947eb07f to `0.7.0_AE_CloudOps~SC1`, GO sent; both halves SIGNED (COO @ac447d74cf; CTO msg 4324, the outcome is the Reach range, $0 to $653,857.12 at 2026-10-09 and $0 to $629,530.89 at 2026-10-08, beyond either bound is a STOP). One key: `code/gold/C_06.client_mix_timeseries.py` 8e1b350f -> 2e35d043163cc18b135d7698cf11dc56. Ledger slug `secclass-e91-c06-retained-unclassified-sc1-20261012` opens at start; leg G is MINE: the two reads (range at 10-09 and 10-08; the second fire rewrites 0 relationship keys) |
+| e91b C_06 retained-unclassified ship (SC1) | SHIPPED 2026-10-12 09:55:03Z (leg D closed; V and P closed; `E91-SHIPPED ok=True` by SC1 and re-read by me: served ETag `2e35d043163cc18b135d7698cf11dc56`, VersionId `zjQmOYVVYTSGOWLFQ0P33vVeWkwp4_eT`, D_04 / D_03 / lib unmoved, watch set 190 of 190 keys, one moved). Leg P: 29,547 keys, 0 without a VersionId, `E91_PREFIRE_VERSIONS_20261012.json`. Ledger `secclass-e91-c06-retained-unclassified-sc1-20261012` HELD on MY leg G: the first scheduled fire (23:00Z tonight, else 04:00Z), two reads (the Reach range at 10-09 and 10-08; the second fire rewrites 0 relationship keys) plus the chain-runtime STOP rule (30 minutes over the 04:00:46Z fire's launch-to-stop of about 2h19m) |
 | e87b BD three-file ship (SC1) | CLOSED 2026-10-12 06:4xZ, leg G NOT MET: shipped as signed (06:20Z, `E87-SHIPPED ok=True`, ETags = signed digests) but D_04's served `mix_summary.json` Unclassified is unchanged at the same as-of (2026-10-09, identical firm total): $1,846,332.73 before the ship, after the 00:18Z `bd-gold-trigger` run and after the 04:00:46Z nightly fire, equal to the cent. D_03's `firm_composition.json` did move (92 / $3,325,002.64 -> 66 / $2,760,199.32). Cause (code at HEAD): C_06 is incremental and `reclassify_retained` (:274-311) skips retained `unclassified` holdings; D_04 reads C_06's snapshot (:486). Row D1-S30 |
 | e57e61 FWD-10 apply (~S) | HELD on the first scheduled new-security run that plans US stocks |
 | e60 D_04 Unclassified line | CLOSED (SC1): AC1 ok, arm 2 closed as non-e60 drift by the CTO (ADDENDUM 1 @4cac828d3c) |
@@ -42,21 +42,13 @@ All MDPF_SECCLASS ledgers are CLOSED except two (one ordered, one held):
 
 ## Next, in order
 
-1. **Round 21 is CLOSED at my seat** (`dep_stage` ROUND_CLOSE; one issuance `2f215ca75a` on the CTO's round-20 analysis @e5adc667e2, msg 4321; fanout 5 of 5, cap 8; all five drained; `round-close-check` r21 `orders=19 verdict=MAY-CLOSE`; L8 packet `2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/L8_DRAIN_END_PACKET_R21_20261012.md` at the CVO). Round 20 stays graded MAY-CLOSE (CVO L9 @eb33d5d466; `TO-SC-e87b` terminal, leg G NOT MET). DECOMP `decompositions/MDPF_SECCLASS_DECOMP_R21.md`.
+1. **Round 22 is EXECUTING** (one issuance `4d2c87a73b`, 2026-10-12 ~10:4xZ, on the CTO's round-21 analysis, msg 4327; `dep_stage` EXECUTING; fanout 1 of 1). Round 21 closed and graded (CVO slug msg 4325, `ADJUDICATION_v19`, `REMEDIATION_v12`; CTO analysis `CTO_ROUND_ANALYSIS_MDPF_SECCLASS_ROUND_21_20261012.md`).
    | cell | what | risk | slot | state |
    |---|---|---|---|---|
-   | `SC-e-91` | C_06 retained pass revisits retained `unclassified` holdings on every fire (also with no new partition); firm and advisor snapshots follow; never-widen half request, both halves unsigned (row D1-S30) | SERVED | ~80 `worker` | DRAINED e270f70be4 after amendment 1 (the half request states its REACH: the revisit moves at most $0 to $653,857.12 of the 2026-10-09 Unclassified; row D1-W80-S4); BD gold suite 165 passed; both halves UNSIGNED, ship owed |
-   | `SC-e-92` | cross-box deploy check: trunk-first sentinel status; a vanished worktree is not a hit; a branch-only sentinel still hits (row D1-S28) | LOCAL | ~81 `worker` | DRAINED 8d755a8491 after amendment 1 (row D1-W81-S2: a vanished worktree is read through its branch ref); AC1-AC4 re-run by me |
-   | `SC-e-93` | read: served BD positions with the literal ticker NAN / NONE, denominator printed (row D1-W77-S1) | LOCAL | ~82 `worker-light` | DRAINED 97ca96b08f: NOT_EXPOSED (0 NAN/NONE of 114,554 positions at 2026-10-09; 225 null market values) |
-   | `SC-e-94` | read: the writer of the 2026-10-06/07 holdings partition rewrite at 2026-10-10T23:15Z, writer count, whether C_06 re-serves those dates (row D1-W78-S1) | LOCAL | ~83 `worker-light` | DRAINED 81cfb83df2: writer `B_00.canonical_holdings` (run 608de09d26a6), writer_count 1; the 23:15Z rewrite re-put identical bytes, the content moved 10-11T04:16:35Z and 10-12T00:33:48Z; the next default C_06 fire re-serves none of 10-06/07/08 |
-   | `SC-e-90` | portal test `iv-e-46.class-readers.test.ts` locates each named reader by content, plus a negative arm (CTO msg 4167); direct act, portal worktree at origin/DEV `62507dae67` | LOCAL | ~84 `worker-light` | DRAINED 4ff03e1393; portal test commit 64d8c6de38 on origin/DEV (ls-remote, fast-forward from 62507dae67, test file only; AC1 3 pass, AC2 1 pass, re-run by me) |
-   - **Carried, not a cell:** leg G of SC-e-87 on the first NEW as_of (Tuesday 2026-10-13's fire or later), the figure stated at THAT as-of beside D_03's;
-     the CTO withdrew the round-20 target of about $6,335.94 for the SC-e-91 act (msg 4324). SC-e-91 ships through `TO-SC-e91b` (see the ledger table); its G is
-     the two reads above.
-   - **Round 22's first cell (CTO msg 4324):** a read, not a build: who holds the $519,506.84 outside the stored lists at 2026-10-09 and why, and the
-     measured runtime and write set of a BOUNDED rebuild of C_06 over the retained dates from their canonical partitions. A rebuild, if ruled, is its own pair.
-   - Real run at close: the cross-box deploy check reads `verdict=CLEAR` (round 20: STOP with 4 hits); artifact `R21_CHECKS/E92_REAL_RUN_20261012.txt`.
-   - Next: the CVO's grade and slug, the CTO's round-21 analysis; the SC-e-91 ship (COO half mine, CTO half the CTO's); the CTO's ruling on correction or drift for the 2026-10-06..09 dates (rows D1-W78-S1, D1-W83-S5).
+   | `SC-e-95` | ONE read, no served write: per retained date 2026-10-06..09 the served C_06 firm totals against a rebuild from the CURRENT canonical partitions, by class in dollars, beside an untouched control date; the runtime, memory and write set of re-deriving N = 1, 3, 5 trading days per fire against the chain window; the writer that moves canonical after first build, how far back and how often; who holds the 2026-10-09 unlisted unclassified dollars (rows D1-W83-S5, D1-W80-S4) | LOCAL, direct act | ~85 `worker` | running |
+   - **The CTO's ruling follows the read** (a rolling N-day re-derive, a one-off rebuild, or acceptance with the dollars named); it will not choose before the dollars and the cost are on the record.
+   - **D1-W83-S5 is recorded BOUNDED** (row D1-S31): three retained dates (10-06..08), no date added, the latest as_of unaffected; it stays ARMED until the read prints. D1-W80-S4 stays INERT.
+   - **Carried:** SC-e-91's ship `TO-SC-e91b` at `0.7.0_AE_CloudOps~SC1` (@0b947eb07f, SHIPPED 09:55Z; both halves signed; my two-read leg G follows the first post-ship fire); SC-e-87's leg G on the first NEW as_of (Tuesday 2026-10-13's fire or later), the figure restated by the CTO; e57e61 HELD. `TO-SC-e90` is done (round 21, portal 64d8c6de38 on DEV).
 2. **e57e61:** release when a scheduled new-security run plans US stocks.
 3. **p1 residue** (11 keys outside FWD-15's plan): waits on a ruling.
 4. **IB-pr-417:** the COO half on the e56 member is SIGNED (@ced2704270, due Mon 2026-10-12 13:00Z at dell2); push of that commit
