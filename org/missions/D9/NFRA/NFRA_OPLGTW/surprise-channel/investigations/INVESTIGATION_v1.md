@@ -12684,3 +12684,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "WHAT THIS SEAT DID NOT DO, and why each would be the wrong act. (1) No IAM change: granting sqs:ChangeMessageVisibility is a POLICY act that this order excludes -- comp-iam is DECLARED-NOT-APPLICABLE and the bounds say the schwab converter only -- so it needs its own never-widen pair; a seat quietly widening a role to make its own deploy pass is the exact shape the halves exist to prevent. (2) No rollback yet: an apply right now would land inside the order's OWN forbidden window [12:00,12:50)Z, and the failure is not data-destructive -- conversions complete, retries are exhausted, and the next scheduled sweep is a day away -- so there is no case for breaking the window. THE CALL IS THE ISSUER'S and it is a real fork: grant the one action (smallest, and the code is correct as written), or roll back to b3e481b261 + prior code at 12:50Z (restores a working whole-queue sweep but loses the per-family behaviour this round delivered). Rolling back is also what the order's own rollback clause describes. A useful detail for either path: the eclipse synthetic is still in the queue and can be removed by its own receipt handle, so nothing is stranded there."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S98",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-12T14:03:45Z",
+  "one_line": "OG-ap-12 step 2 gives TWO instructions that cannot both be met: 'update the policy description to name the action' AND 'the plan shows exactly 0 to add, 1 to change, 0 to destroy; any other row is a STOP'. An aws_iam_policy description is IMMUTABLE, so editing it FORCES REPLACEMENT -- measured as 1 to add, 0 to change, 1 to destroy, cycling all 7 role attachments. I applied the action WITHOUT the description change, which meets the signed plan bar exactly, and updated only the comment (which forces nothing).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "A/B measured on the same tree, same -target, both at rc=0. WITH the description edit: 'Plan: 1 to add, 0 to change, 1 to destroy' and '# aws_iam_policy.silver_dlq_access must be replaced', with the provider marking the cause inline -- 'description ... # forces replacement'. WITHOUT it (action only): 'Plan: 0 to add, 1 to change, 0 to destroy' and '# aws_iam_policy.silver_dlq_access will be updated in-place'.",
+      "The replacement plan also showed 'attachment_count = 7 -> (known after apply)', 'arn -> (known after apply)' and 'policy_id -> (known after apply)': the policy would be destroyed and recreated with a NEW ARN, cycling the DLQ attachment of all 7 silver converter roles (etf, smartx, orion, schwab, bd49finsurance, eclipse, blackdiamond).",
+      "THE SIGNED MODEL WAS IN-PLACE, so a replacement is outside what the halves cover. The CTO half's own read says 'default version v1 ... There is one version, so the apply's new version needs no prune' -- that is the mental model of a new POLICY VERSION on the same policy, which is what an in-place update produces. Both halves also state the bar as '1 to change (the policy document), 0 add, 0 destroy. Any other row is a STOP.'",
+      "AC1 does not grade the description: its expect reads the ledger lines, 'sqs:ChangeMessageVisibility on arn:aws:sqs:us-east-1:313476888478:opal-assets-silver-dlq: allowed', and 'live CodeSha256 equals the OG-ap-11 build: yes'. So the description is a step-2 instruction, not a graded criterion."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-12 step 2: 'Update the comment above the resource and the policy description to name the action.' AND, three lines later: 'The plan, read at rc=0, shows exactly 0 to add, 1 to change, 0 to destroy on that address ... Any other row is a STOP.'",
+  "world_is": "Mutually exclusive for an aws_iam_policy, because `description` is immutable and the provider replaces the resource to change it. Taking the instruction literally would have destroyed and recreated a policy attached to 7 LIVE converter roles and changed its ARN -- a real production gap across seven families, to carry a cosmetic text change. I kept the description, added the one action, and the plan reads the signed 0/1/0 in-place. The COMMENT above the resource IS updated, and a comment forces nothing, so the 'name the action where a reader will see it' intent is served in the file either way.",
+  "notes": "FOR THE ISSUER: the description text is still worth having, and the safe way to get it is a SEPARATE deliberate act that accepts a replacement with the attachment cycle planned for -- or simply leaving it, since the comment now carries the explanation at more length than a description field could. I did not treat this as a reason to stop: the order's own bounds say to refuse what cannot be met as written, file a row and keep working, and the plan bar is the safety property while the description is cosmetic. GENERAL FORM WORTH KEEPING: when an order states both an EDIT and a PLAN-SHAPE bar, the bar is the signed constraint and the edit is the means; if the means breaks the bar, the means is what gives way. An immutable-field edit hiding inside a 'just update the description' instruction is the kind of thing that reads as trivial and plans as destructive."
+}
+```
