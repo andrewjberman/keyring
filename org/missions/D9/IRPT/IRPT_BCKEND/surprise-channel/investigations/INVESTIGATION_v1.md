@@ -29283,3 +29283,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "portal/ is populated and node_modules already exists as a symbolic link, so the check's ensure_node_modules() found it and made no junction. playwright-core resolves from it. This worker created, linked or deleted nothing under portal/."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W341-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~341",
+  "surfaced_at": "2026-10-12T23:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The IB-pr-489 walk with --firm Inflection stopped at FIRM_OPTION_ABSENT: no Firm option reads exactly Inflection. The control shows Global (All), 49 Financial, Cottonwood Capital Advisors and Inflection Wealth Management. No client was walked, so the Performance tab was not reached and no sel_ reference was produced. The walker disarmed at 23:38:53Z.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".claude/skills/ui-walk/walk.mjs@1c49f8cc6e:408 (throws FIRM_OPTION_ABSENT when no Firm option reads exactly the label; lists the labels the control shows)",
+      "tmp/ui-walk/20261012T233816Z/ in worktree wk-IRPT_BCKEND-341 (walk log at 23:38:48 ERROR FIRM_OPTION_ABSENT; 23:38:53 DISARM row status=disabled; netlog holds no /api/ performance path)",
+      "ui_walker_account.py status at 2026-10-12 after the walk: status=disabled role=admin userType=Dev armed=no armedBy=none"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-489 step 3: run node walk.mjs --route /investor-reporting --firm \"Inflection\" --first-client --performance-state; the Firm label Inflection selects one firm option, and the walk then reaches a client's Performance tab.",
+  "world_is": "The Firm control has no option whose visible label is exactly Inflection. The nearest label is Inflection Wealth Management. The walker threw FIRM_OPTION_ABSENT before any client search, so no client was walked, the Performance tab was not reached, and the net log holds 0 performance API request paths. The process still exited 0, as the first order's note predicted. The walker was disarmed by its own finally block; status reads disabled and armed=no."
+}
+```
