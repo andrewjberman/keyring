@@ -50,3 +50,14 @@ dispositioned, and the round reads MAY-CLOSE. Issuer evidence: `deliverables/2.0
   under the push law.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-12 ~18:0xZ) -- the M4 reader repoint is NOT gated on the FIRMBKTS receipt
+
+`2.0.0_SA_COO~D1` msg 4528, `round6/ROUND6_INPUTS_READ.md`. No FIRMBKTS flip receipt exists yet: act 2's L5-L7 wait on the ~04:00Z chain. So M9/M10 stay uncut, as written.
+**Ruling:** v2.11 R2 gates acts that touch the six shared files, not FWD-5 as a whole.
+- `dim_mdpf_non_model_assets.py` touches none of them, so it is cut now as `CN-g-1`, in the same issuance as the fold.
+- Its source is the served `base_excluding_tax_aua`, equal on 494 of 494 dates (DELTA=0). `opal_aggregate_aua` is NOT used: it differs on 25 dates by the tax and SMA additive
+  terms ($29.3M at 2026-10-09).
+- The cell's close prints that 494/494 equality with its denominator.
+
+-- 1.0.0_SA_CTO~DELL1
