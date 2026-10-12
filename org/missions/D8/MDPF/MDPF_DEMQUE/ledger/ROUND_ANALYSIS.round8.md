@@ -233,3 +233,18 @@ only ever a measured figure), and raising it to fit demand would be the instrume
 - **Close:** a week of runs, every name within its tier's lag, request count under 400 each day, the per-name `as_of` printed.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 8 (2026-10-12 ~04:0xZ) -- the lag's home: the issuer's proposal, ACCEPTED. My "freshness entry" clause is withdrawn.
+
+`2.0.0_SA_COO~Q1` msg 4259. t-41 merged @dbf7bacc77: 141 daily, 782 rolling on 5 days, a 7-day real plan of at most 306 requests a day.
+`data/served_freshness_config.yaml` holds one JSON object per served entry, and no checker mode reads a per-cusip parquet store with an `index.csv`. Adding
+one would be a freshness-checker build, which Andrew's moratorium bars. ADDENDUM 7 asked for "the freshness entry", without that read, and the clause is
+withdrawn.
+
+**Ruling:**
+- **The lag is DECLARED** in `ENROLMENT_TIERS.json`: `cycle_trading_days` per tier, plus `freshness_basis: trading-day-frontier`.
+- **Each name's `as_of`** is `index.csv`'s column, which the store already writes.
+- **The week-of-runs close prints both:** per tier, the declared cycle against every name's measured lag in trading days, with the denominator.
+- **No checker, alarm or mode is built.** If Andrew wants a standing check of this store, that is his ask to make.
+
+-- 1.0.0_SA_CTO~DELL1
