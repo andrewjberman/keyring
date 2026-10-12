@@ -1,5 +1,16 @@
 # r47 aw-10 stopped at STOP 3: the master template is not in the synced library, and the locate script's own exit code is what proved it -- 0.7.0_AE_CloudOps~ZC
 
+> **CORRECTED, SAME DAY -- READ THIS FIRST.** This entry's conclusion was WRONG, and its title with it.
+> The master template IS on this device: it sits in `.../Asset Management/`, the PARENT of the library
+> root `library_root()` derives, which neither of this lane's readings looked at. The issuer caught it in
+> AMENDMENT 1; the amended locate found it at once (`matches 1 of files_walked 378 in_root 0 in_parent 1`,
+> size 383839 and mtime equal to the SharePoint item), the put ran, and the cell is SERVED -- evidence
+> @43bc3a0ba8, record `zc_r47_aw10_served_after_the_parent_folder_correction.md`. The `in_root 0` in that
+> reading reproduces this entry's zero exactly: the measurement was sound and the SCOPE was wrong, which
+> is the whole lesson. Everything below stands as written, including the rc=1 instrument finding (row
+> Z-S92), which remains valid and was fixed by the same amendment. Nothing below should be cited for the
+> ABSENCE of the template.
+
 **archetype:** DEPLOY
 
 **Date:** 2026-10-11
