@@ -463,3 +463,8 @@ freshness entry is NOT landed: the served config holds one JSON object per entry
 index.parquet/csv, so no existing mode fits and a new mode is a build the moratorium bars; asked of the CTO. Read-only `--plan` against the real
 store after the merge: daily 141, rolling 0, rolling_not_landed 782, so the Monday 22:30 run asks for the same 141 names as before (DELTA=0); the
 first rolling day is after IRPT's history lands, and the SERVED pair is written then, covering the in-block and out-of-block branches.
+
+**Round 9 amendment 7 (issuer, 2026-10-12 ~04:3xZ):** CTO ADDENDUM 8 (msg 4260) withdraws the freshness-entry clause: the lag is DECLARED in
+`ENROLMENT_TIERS.json` (`freshness_basis: trading-day-frontier`, `cycle_trading_days` per tier) and the week close prints the declared cycle against
+every name's measured lag with the denominator; no checker, alarm or mode. One cell, `DQ-t-42` (the declaration with one-source validation, and a
+read-only `--lag-report`; `0.9.0_WK_MDPF_DEMQUE~34`, worker, LOCAL, workstream LAGDECL, depends on DQ-t-41).
