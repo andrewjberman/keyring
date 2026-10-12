@@ -1,0 +1,74 @@
+{
+ "claim": "measured: read-only pre-fire baseline for the SC-e-91 leg G (TO-SC-e91b), read 2026-10-12 from the served objects before any fire has run the shipped C_06 (2e35d043)",
+ "mix_daily_summary_md5": "c51968d1d37d3cb078095360d3347d30",
+ "mix_summary_md5": "b8ffd506d117c94249592968011e43a0",
+ "watermark": {
+  "data_as_of": "2026-10-09",
+  "relationship_count": 1
+ },
+ "restated_through_present": false,
+ "firm_days": {
+  "2026-10-06": {
+   "total": 2019548567.6028552,
+   "classes": {
+    "equity": 1463562208.6052825,
+    "fixed_income": 384433617.0905034,
+    "alternatives": 1188369.3619927536,
+    "commodities": 1683822.2355336158,
+    "structured": 25384770.60173879,
+    "cash": 3133989.142300953,
+    "unclassified": 140161795.27288836,
+    "other": 0.0
+   },
+   "d04_remainder_unclassified": 140161790.57
+  },
+  "2026-10-07": {
+   "total": 2013270405.3498535,
+   "classes": {
+    "equity": 1518810275.2863684,
+    "fixed_income": 393532520.01334774,
+    "alternatives": 5212804.404231792,
+    "commodities": 1868342.1819983611,
+    "structured": 88231858.60059412,
+    "cash": 4615842.0166167645,
+    "unclassified": 998634.7827655333,
+    "other": 0.0
+   },
+   "d04_remainder_unclassified": 998762.85
+  },
+  "2026-10-08": {
+   "total": 2014814865.44905,
+   "classes": {
+    "equity": 1515773320.0286634,
+    "fixed_income": 397942679.1585748,
+    "alternatives": 5219514.596580136,
+    "commodities": 1869510.4264871173,
+    "structured": 88662903.0682549,
+    "cash": 4374316.772458771,
+    "unclassified": 972749.9717244315,
+    "other": 0.0
+   },
+   "d04_remainder_unclassified": 972621.4
+  },
+  "2026-10-09": {
+   "total": 2015391646.7191288,
+   "classes": {
+    "equity": 1518033035.2782507,
+    "fixed_income": 397149719.30018806,
+    "alternatives": 5192672.930244257,
+    "commodities": 2059707.9041861505,
+    "structured": 86759811.61603872,
+    "cash": 4350366.96237577,
+    "unclassified": 1846399.4627835276,
+    "other": 0.0
+   },
+   "d04_remainder_unclassified": 1846332.73
+  }
+ },
+ "advisor_count": 56,
+ "mix_summary_unclassified_line": {
+  "market_value": 1846332.7278449535,
+  "pct": 0.0009161160962687389
+ },
+ "mix_summary_data_as_of": "2026-10-09"
+}

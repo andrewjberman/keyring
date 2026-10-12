@@ -28951,3 +28951,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Resolving option for the issuer: validate valid['instance'] and invalid['instance'] in the AC2 arm of p166_cells.py (lines 251-252 or 266-269). The same wrapper form would need no fixture change."
 }
 ```
+
+## IRPT_BCKEND-D2-W331-S1 -- An existing test (test_S298 in test_holdings_gold.py) read a window that chains over a PRICE_MISSING day as claim measured; under C-CHAINCLAIM that status is one the rule does not name, so the window is inferred, and the test's fixture had to change for the order's 'no new failure' bar.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W331-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~331",
+  "surfaced_at": "2026-10-12T19:41:31Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "An existing test (test_S298 in test_holdings_gold.py) read a window that chains over a PRICE_MISSING day as claim measured; under C-CHAINCLAIM that status is one the rule does not name, so the window is inferred, and the test's fixture had to change for the order's 'no new failure' bar.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/tests/test_holdings_gold.py:50-54 (the DAYS fixture) and :385-396: the 'no missing day' branch calls calculate over DAYS, which carries a PRICE_MISSING day on 2026-01-05, and asserted claim measured; at the base commit it passed",
+      "run: performance/tests at the first build: 2 failed, 273 passed (this test and the calendar one the order names); after the amendment: 1 failed, 274 passed",
+      "the fix is two lines of fixture: the 2026-01-05 row of the 'full' branch reads NO-PRIOR-HOLDINGS (a no-base status, claim stays measured); the 'gap' branch and every assertion are as before"
+    ]
+  },
+  "spec_asserts": "The order says the performance suite shows no new failure after the change and gives no instruction about an existing test.",
+  "world_is": "An existing test encoded the old rule (an excluded day never touches the claim) in its fixture; C-CHAINCLAIM item 3 makes an unnamed status (here PRICE_MISSING, which the producer never writes) leave a return out. I changed only that fixture row in the order's <paths> and said so in the test's docstring; no assertion was weakened. Whether the old fixture status should instead be read as a no-base day is the issuer's to rule."
+}
+```
+
+## IRPT_BCKEND-D2-W331-S2 -- The reader's new rule fires on exactly the CTO's v0.49 counts in all 8 cells, but the accounts whose claim MOVES from measured to inferred (base reader vs built reader, same partitions) are fewer in 3 orion cells: SI 750 of 894, YTD 76 of 200, 1Y 106 of 240, because 144, 124 and 134 accounts were already inferred at base for a missing trading day.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W331-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~331",
+  "surfaced_at": "2026-10-12T19:41:31Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The reader's new rule fires on exactly the CTO's v0.49 counts in all 8 cells, but the accounts whose claim MOVES from measured to inferred (base reader vs built reader, same partitions) are fewer in 3 orion cells: SI 750 of 894, YTD 76 of 200, 1Y 106 of 240, because 144, 124 and 134 accounts were already inferred at base for a missing trading day.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~331/IB166-1_reader_record.json: claim_move_counts (literal) 49F SI 23, YTD 19, QTD 2, 1Y 20; orion SI 750, YTD 76, QTD 7, 1Y 106; rule_fires_counts 49F 23, 19, 2, 20; orion 894, 200, 7, 240 (equal to the CTO's); rule_fires_on_accounts_already_inferred_at_base orion SI 144, YTD 124, QTD 0, 1Y 134, 49F all 0",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~331/ib166_measure.py (measure) over 566 49F and 1619 orion partitions <= 2026-10-08, 8 cells, 30843 figures; the base reader is git show 4650422c34:infra/aws/lambda/investor-reporting/performance/holdings_gold.py (blob 64f64d0d23)",
+      "the CTO's v0.49 counts are IB164-1's third column 'if NPB with a prior position also' (moves() there counts every account with a figure as measured today); the 49F cells carry no already-inferred account so they agree; row IRPT_BCKEND-D2-W319-S1 names the missing-trading-day cause for orion"
+    ]
+  },
+  "spec_asserts": "The order: count the accounts whose claim moves from measured to inferred; the CTO's v0.49 counts (49F SI 23, YTD 19, QTD 2, 1Y 20; orion SI 894, YTD 200, QTD 7, 1Y 240) must be reproduced; on a difference, stop and file a row naming the cell and both numbers.",
+  "world_is": "Under the built rule the number of accounts the rule applies to equals the CTO's in every cell, and the number whose served claim changes does not in orion SI (750 vs 894), YTD (76 vs 200) and 1Y (106 vs 240). The record carries both under separate names (claim_move_counts literal; rule_fires_counts) and criterion IB166-1-AC3 grades claim_move_counts, so it FAILs on the literal. I did not edit a threshold or relabel; the issuer rules which number the release packet's never-widen pair names (accounts that change, or accounts the rule reaches). Nothing is deployed."
+}
+```
