@@ -80,6 +80,14 @@ counted in `held`, `factset_line` or `bloomberg_line`, and `raw` is unchanged (0
 whenever `row_labels` is. Without `row_labels` nothing changes. The issuer's check gained a fifth arm: `aw2 build <b>/5 control <c>/2`; AC1's
 expectation below reads `5/5`. Your two rows W2-S3 (a null why) and W2-S4 stand as filed.
 
+**AMENDMENT 2 (issuer, 2026-10-11 ~19:5xZ; the CTO's ruling at the /13 write, msg 4086 point 1: a master answer is labels only).** The lib half now stores,
+for a name with no workbook of its own, `team_sheet.class = 'master'`: the template's rows, classes and labels, with `row_values` and `row_formats` all null and
+`periods` `[]` (the template is filled with one sample company's figures; none is served). Render it: for a teamSheet whose `class` is `'master'`, a FIGURE
+row keeps the existing precedence (the name's own Bloomberg figure when the label matches a row spec and the block carries it), and otherwise takes
+`source: 'why'` with `absentReason` EXACTLY `The research team keeps no workbook for this company; this row is from the team's template.` (the sentence for an own-workbook name stays
+`The research team's sheet holds no value for this line in the years shown.`). HEADING rows stay headings and CONTROL rows stay out; the census is
+unchanged in shape. The issuer's check gained a sixth arm d6: `aw2 build <b>/6 control <c>/2`; AC1 below expects `6/6`. Nothing else changes.
+
 ## 2. BOUNDS
 
 1. Only the files in `<paths>` change. Never edit the issuer's check or snapshot. No `__harness__/` edit.
@@ -109,7 +117,7 @@ Read-only: the whole repository, in particular `portal/CLAUDE.md` and the issuer
 ## 4. PROOF OF SPEC (literal; timeout 120)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="CRPS-aw-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round47/aw2_check.cjs" portal 2&gt;&amp;1 | tail -1</invocation><expect>(?m)^aw2 build 5/5 control 2/2$</expect></criterion>
+  <criterion id="AC1" cell_refs="CRPS-aw-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round47/aw2_check.cjs" portal 2&gt;&amp;1 | tail -1</invocation><expect>(?m)^aw2 build 6/6 control 2/2$</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-aw-2"><invocation>cd "$(git rev-parse --show-toplevel)/portal" &amp;&amp; node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs &gt; /dev/null 2&gt;&amp;1; echo "tabs rc=$?"</invocation><expect>(?m)^tabs rc=0$</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-aw-2"><invocation>cd "$(git rev-parse --show-toplevel)/portal" &amp;&amp; grep -c "formatTeamValue(" src/pages/SecurityAnalysis/tabs/ModelTab.tsx</invocation><expect>(?m)^[1-9]\d*$</expect></criterion>
   <criterion id="AC4" cell_refs="CRPS-aw-11"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round47/aw2_check.cjs" portal 2&gt;&amp;1 | grep -c '^aw2 d5 .* ok true$'</invocation><expect>(?m)^1$</expect></criterion>

@@ -10243,3 +10243,162 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order
 ```
+
+## 105. ROUND 97 -- A WITHHELD LISTING SERVES ITS SECTOR BY LISTING KEY FROM ITS OWN MODEL BLOCK, WITH SOURCE AND AS-OF DATE (THE CLASSIFICATION STAYS WITHHELD); ITS REDEPLOY ON A SCRATCH PIN. One worker order, one staged seat order, one staged cell
+
+**Input:** the CTO~DELL1 round-96 analysis `ledger/ROUND_ANALYSIS.round96.md` (msg 4084; CVO ADJUDICATION_v117, MAY-CLOSE, bc-1 AC2 MET C-S90; the CVO's point adopted: the listing key
+discriminates, not the value). Prep in `deliverables/2.0.0_SA_COO~R1/round97_prep/` (check `r97_sector_serve_census.py`, dry-run at the base K1-K4 FAIL and K5, K6 PASS; against a
+throwaway candidate 6 of 6) and `round96_prep/BC2_ORDER_DRAFT_FOR_ROUND97.md` (SUPERSEDED: it put the sector inside `classification`). The cells are prefixed `bd`.
+
+### 105a. MEASURED AT THE CUT
+
+- **Item 1:** the stored model blocks carry `GICS_SECTOR_NAME` 'Health Care' for `SAN_FP_Equity` (`derived/model_block/SAN_FP_Equity/20261011T130935Z`) and `CSL_AU_Equity`
+  (`.../20260930T093804Z`, so its as-of date is 2026-09-30), source bloomberg-dapi; the control `BA_US_Equity` 'Industrials' (the issuer's and the CVO's own S3 reads). Today the
+  live function serves no sector for either listing on any list route (the round-95 withhold). The route families that serve the withheld classification are three: the ranked
+  rows, the rank timeseries (listed or asked by ticker) and the collected-chatter rows.
+- **Round-95 ADDENDUM 1's fallback has fired:** no merged-pin redeploy happened by round 96's close (AMGT_CORPUS's /13 waits on its template put), so the redeploy ships on a scratch pin
+  parented on `b3512d18fb` plus exactly this round's two api files.
+- **Item 2 (pp-4):** staged on the DEMQUE answer; no quote, no answer.
+
+### 105b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bd-1` | a withheld listing serves its sector by listing key with source 'Bloomberg, listing' and as-of date; the classification stays withheld | `~393` | worker | LOCAL until bd-2 | `lib/research/api/scoped_amgt.py`, `monthly_chatter.py`, one new test | D1-S26's close beyond the withheld state |
+| `AMGT-bd-2` | the ONE redeploy carrying bd-1, on a scratch pin parented on `b3512d18fb` -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger | the same |
+| `AMGT-bd-3` | the DEMQUE answer's reader and wiring (pp-4) -- STAGED, no order | -- | worker | LOCAL until a redeploy | `lib/research/api/scoped_amgt.py` | D1-S14 |
+
+**Uncovered, with its owner:** the portal PROD promote (call `dell1-20261011T033643Z-e7f2`; the breakdown is delivered, the visual smoke and the answer are Andrew's), FWD-16, the model API
+key -- Andrew (analysis section 3); AMGT_CORPUS's /13 redeploy -- `2.0.0_SA_COO~C1`.
+
+### 105c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: analysis items 1-2. 1 -> bd-1 then bd-2; 2 -> bd-3. Printed denominator 2 of 2 items placed (1 worker order, 1 staged seat order, 1 staged cell).
+- **(ii) Same grain.** bd-1 one rule in three places that each serve the withheld classification; bd-2 one code leg.
+- **(iii) Intent coherence.** bd-1 is code; bd-2 the one served act; bd-3 waits on an answer.
+- **(iv) What a cell does NOT move.** bd-1 adds three keys to an entry that is already withheld and moves no classification, name, score, rank or member of any subject; a subject whose
+  table row agrees, or whose block holds no sector or fails to read, is byte-equal; bd-2 moves only the function's code, each member admitted by blob and its table measured route by
+  route first.
+
+### 105d. EDGES AND FAN-OUT
+```
+bd-1 --> bd-2              (the redeploy carries what is merged; the pair from the route-by-route measurement; the scratch pin created at the GO)
+bd-3 on the DEMQUE answer
+fanout:
+  cap: 8
+  orders_total: 2          (bd-1 a worker order; bd-2 a staged seat order)
+  chains_total: 2          (bd-1 -> bd-2 ; bd-3)
+  wave_0: [bd-1 ~393]
+  wave_1 staged: [bd-2 RA1 (bd-1 merged, the pair), bd-3 (on the DEMQUE answer)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```
+
+## 106. ROUND 98 -- THE /13 CORPUS REDEPLOY FROM A MERGED PIN (RETIRES THE SCRATCH PINS); WHICH THESIS PAYLOAD KEYS EACH PORTAL BUILD READS (A READ). One staged seat order, one read-only worker order, one staged cell
+
+**Input:** the CTO~DELL1 round-97 analysis `ledger/ROUND_ANALYSIS.round97.md` section 2 (msg 4123; CVO ADJUDICATION_v118, MAY-CLOSE, C-S92 and C-S93) and the AMGT_CORPUS `aw-4` CTO half
+ADDENDA 1-2 (msgs 4104, 4117). Prep in `deliverables/2.0.0_SA_COO~R1/round98_prep/` (check `r98_payload_key_reading_check.py`, base NO and against a sample YES). The cells are prefixed `be`.
+
+### 106a. MEASURED AT THE CUT
+
+- **Item 1:** the live function is `IpaCHo5h..` (round 97's bd-2, built at the scratch pin `08d5ea2920`); its dossier METHOD is /12 and `model.team_sheet` is the /12 field for 95 of 95
+  names (`aw4_compare.py` on a base capture against itself: `team_sheet_equals_stored13 0/95`, `others_equal 95/95`, max response 1,222,018 bytes, 31 of 95 over 1 MB, margin 5,069,438 to
+  the 6 MB Lambda limit). AMGT_CORPUS's /13 dossiers are stored for 95 of 95 (aw-3 closed). `box/dell1` commit `a03d92221a` carries `dossier.py` `13463426d0da`, `team_sheet.py`
+  `956e69d7be7e`, `template.py` `e03d6a8acf65`, `factset_descriptions.json` `76faa8d6a708` AND bd-1's `scoped_amgt.py` `9b13bf0371d4` and `monthly_chatter.py` `38e9511ccc9c`; against the
+  live build input `08d5ea2920` its content-diff is six lib members (the four corpus files, `opal_naming.py` `3902e0e93ee4` by the builder replay, `analyze.py` `bf1d15b14ba1`
+  producer-side) and two registry files (`exemptions.json`, `name_rulings.json`). `box/dell1` HEAD instead carries the /14 files (`dossier.py` `6c4529c51a13`): its write (`ax-6`) is running
+  (leg w), so /14 is NOT in this round (the CTO: it never holds round 98).
+- **Item 2:** AMGT_CORPUS's census of the Thesis payload by key: `fiscal_year_figures` served at the top level and as `model.fiscal_year_figures`, 32.3 percent of the response each, and
+  `check_face` 24.9 percent. Which build reads which is not measured: it is the cell.
+- **Item 3 (pp-4):** staged on the DEMQUE answer; no quote, no answer.
+
+### 106b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-be-1` | the ONE redeploy from a merged pin carrying the /13 corpus files, bd-1's blobs unchanged; retires both scratch pins -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger | AMGT_CORPUS FWD-12 and FWD-20's served grade |
+| `AMGT-be-2` | READ which of the three payload keys each portal build (DEV, PROD) reads | `~394` | worker (read-only) | LOCAL | one reading file | the payload-size question |
+| `AMGT-be-3` | the DEMQUE answer's reader and wiring (pp-4) -- STAGED, no order | -- | worker | LOCAL until a redeploy | `lib/research/api/scoped_amgt.py` | D1-S14 |
+
+**Uncovered, with its owner:** AMGT_CORPUS's /14 write and its second redeploy -- `2.0.0_SA_COO~C1`; a removal of a payload key no build reads -- a later round's cell under its own pair;
+the portal PROD promote (call `dell1-20261011T033643Z-e7f2`), FWD-16, the model API key -- Andrew (analysis section 3).
+
+### 106c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: analysis items 1-3. 1 -> be-1; 2 -> be-2; 3 -> be-3. Printed denominator 3 of 3 items placed (1 staged seat order, 1 worker order, 1 staged cell).
+- **(ii) Same grain.** be-1 one code leg; be-2 one reading of three keys on two builds.
+- **(iii) Intent coherence.** be-1 the one served act; be-2 a measurement that changes nothing; be-3 waits on an answer.
+- **(iv) What a cell does NOT move.** be-1 moves only the function's code, each member admitted by blob and its table measured route by route first (the dossier pick moves to /13,
+  `model.team_sheet` only; bd-1's sector, the classifications, names, scores, ranks and peer members are byte-equal); be-2 writes nothing in any system and makes no API, AWS or
+  Bloomberg call; no payload key is removed by any cell of this round.
+
+### 106d. EDGES AND FAN-OUT
+```
+be-1 independent of be-2   (be-1 needs no code cell: every blob is already merged; its pair is measured at the pin)
+be-3 on the DEMQUE answer
+fanout:
+  cap: 8
+  orders_total: 2          (be-1 a staged seat order; be-2 a read-only worker order)
+  chains_total: 3          (be-1 ; be-2 ; be-3)
+  wave_0: [be-2 ~394]
+  wave_1 staged: [be-1 RA1 (the pair from the route-by-route measurement at the pin, AMGT_CORPUS's served-effect half and its pre-act capture), be-3 (on the DEMQUE answer)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```
+
+## 107. ROUND 99 -- THE /14 SECOND REDEPLOY (STAGED); THE OVERLAY TAIL OVER A DAY (A READ); THE PORTAL REPOINT OF THE TOP-LEVEL `fiscal_year_figures` READERS (A DEV CANDIDATE). One staged seat order, two worker orders, one staged cell
+
+**Input:** the CTO~DELL1 round-98 analysis `ledger/ROUND_ANALYSIS.round98.md` section 3 (msg 4161; CVO ADJUDICATION_v119, MAY-CLOSE, C-S95 MET), the AMGT_CORPUS `ax-7` CTO half
+(msg 4140) and the be-1 CTO half ADDENDUM 1 (msg 4153). Prep in `deliverables/2.0.0_SA_COO~R1/round99_prep/` (checks `r99_overlay_tail_reading_check.py`, `r99_repoint_readers.py`,
+`r99_fixture_model_copy.py`, `r99_fy_figures_equal.py`, `r99_thesis_*`, base NO and against a candidate YES). The cells are prefixed `bf`.
+
+### 107a. MEASURED AT THE CUT
+
+- **Item 1:** the live function is `mbGRmy1H..` (round 98's be-1, built at the merged pin `a03d92221a`); its dossier METHOD is /13 and `model.team_sheet` is the stored /13 field for 95 of 95 names
+  (C1's post-act read, Branch A). AMGT_CORPUS's /14 dossiers are stored (ax-6 closed: 95 written, `team_sheet` changed on 83 names, 252 label rows moved from absent to `held`, 12 names unchanged).
+  `ax7_compare.py` on a base capture against itself reads `team_sheet_equals_stored14 12/95`, build 0/1. `box/dell1` @b3d4856531 differs from `a03d92221a` in THREE lib members (`dossier.py`
+  `13463426d0da` -> `6c4529c51a13`, `team_sheet.py` `956e69d7be7e` -> `3ba68a99a22f`, `factset_descriptions.json` `76faa8d6a708` -> `690950020aa5`); only `dossier.py` reaches the request path;
+  bd-1's `scoped_amgt.py` and `monthly_chatter.py` are byte-equal.
+- **Item 2:** the log group holds 31,878 REPORT lines in 24 h, 53 over 20 s (maximum 29,000 ms), 202 with an init duration; the over-20 s invocations' own lines carry no request path and a
+  'Connection pool is full' warning (two read). The 22:18:37Z timeout sat among the 53, which are spread over the day (09:45, 11:10, 12:05, 13:48, 15:26, 15:30, 19:24, 20:36, 22:18-22:33 UTC), most
+  before the be-1 apply.
+- **Item 3:** both portal builds read top-level `fiscal_year_figures` at five sites (`ModelTab.tsx:593`, `:602`, `postureCites.ts:369`, `CardFooter.tsx:188`, `:192`); the served payload carries the
+  top-level and `model.` copies EQUAL for 95 of 95 names (`r99_fy_figures_equal.py`); the captured harness fixtures carry NO model block (8 files, 6 with a non-empty top-level list).
+- **Item 4 (pp-4):** staged on the DEMQUE answer; no quote, no answer.
+
+### 107b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bf-1` | the /14 second redeploy from a merged pin, bd-1's blobs unchanged -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger | AMGT_CORPUS FWD-20's served grade |
+| `AMGT-bf-2` | READ the over-20 s invocations of the last day from the function's own log | `~395` | worker (read-only) | LOCAL | one reading file | the overlay-tail question |
+| `AMGT-bf-3` | the portal repoint of the top-level `fiscal_year_figures` readers (step 1) | `~396` | worker (portal DEV candidate) | LOCAL | four source files, six fixtures | the payload de-duplication |
+| `AMGT-bf-4` | the DEMQUE answer's reader and wiring (pp-4) -- STAGED, no order | -- | worker | LOCAL until a redeploy | `lib/research/api/scoped_amgt.py` | D1-S14 |
+
+**Uncovered, with its owner:** the portal PROD promote (step 2, call `dell1-20261011T033643Z-e7f2`) -- Andrew; the API's drop of the top-level key (step 3) -- a later round's cell under its own
+pair after step 2; FWD-16 and the model API key -- Andrew; a remedy for the slow tail -- a later cell after the reading.
+
+### 107c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: analysis section 3 items 1-4. 1 -> bf-1; 2 -> bf-2; 3 -> bf-3; 4 -> bf-4. Printed denominator 4 of 4 items placed (1 staged seat order, 2 worker orders, 1 staged cell).
+- **(ii) Same grain.** bf-1 one code leg; bf-2 one reading of one log group; bf-3 one reader repoint over one module family and its fixtures.
+- **(iii) Intent coherence.** bf-1 the one served act; bf-2 a measurement that changes nothing; bf-3 a candidate that changes no served byte; bf-4 waits on an answer.
+- **(iv) What a cell does NOT move.** bf-1 moves only the function's code, each member admitted by blob and its table measured route by route first (the dossier pick moves to /14,
+  `model.team_sheet` only; bd-1's sector, the classifications, names, scores, ranks and peer members are byte-equal); bf-2 writes nothing and invokes nothing; bf-3 changes no API byte and no
+  served field (the top-level copy is still served), and lands nothing on DEV or PROD by itself.
+
+### 107d. EDGES AND FAN-OUT
+```
+bf-1 independent of bf-2 and bf-3   (bf-1 needs no code cell: every blob is already merged; its pair is measured at the pin)
+bf-3 independent of bf-1            (a portal candidate; the API serves both copies either way)
+bf-4 on the DEMQUE answer
+fanout:
+  cap: 8
+  orders_total: 3          (bf-1 a staged seat order; bf-2 and bf-3 worker orders)
+  chains_total: 4          (bf-1 ; bf-2 ; bf-3 ; bf-4)
+  wave_0: [bf-2 ~395, bf-3 ~396]
+  wave_1 staged: [bf-1 RA1 (the pair from the route-by-route measurement at the pin; AMGT_CORPUS's ax-7 half is signed), bf-4 (on the DEMQUE answer)]
+  portal_ref: ad774c6f9e55        # nested DEV HEAD at the cut; the gitlink at HEAD reads c96efe1714 (an ancestor: measured NOT equal, the first drain moves it); src/pages/SecurityAnalysis is byte-identical between 44ec7e70a9 (the dry-run base) and the ref (git diff --stat empty)
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```
