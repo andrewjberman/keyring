@@ -3309,3 +3309,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r157/p157_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-461` | irpt-commentary-draft-store-lambda applied through safe-apply: who may invoke read first, precheck, a refused-shape before-read, the BUILD_ONLY digest equal to the signed one from a pin at or after the reader's revert, the plan for the one function, after-reads persisting nothing, the member on a real persist recorded UNEXERCISED LIVE; Branch B the recorded S3 version | FWD-4 (the vendor-path job and what it signals) | WORLD | IB-pr-460 drained; both halves signed | P157-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.7.0_AE_CloudOps~IB2.
+
+## 150. ROUND 158, WORKSTREAM ~P (2026-10-12 ~00:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6192)
+
+Site Z tracked four IRPT deploy ledger sentinels left OPEN 16 to 18 days ago (three by 2.0.0_SA_COO~P, one by 2.0.0_SA_COO~M),
+relayed by 0.0.0_AB_MSTR~DELL2 msg 6190. The CTO ruled this lane inherits all four, to MEASURE and close, never to re-execute.
+Each has exactly one open leg, a verify leg (read by the issuer @d68d9a5eda). One read-only cell.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r158/p158_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-462` | the four entries read from origin/box/sitez; each open leg's artifact measured now against what the leg was to produce, with a positive control; verdict SUPERSEDED (world-done, or overtaken and said so) or NOT_DONE with what is half-landed and since when; how and where a close is written; nothing re-executed | FWD-1 (the journey's releases are on record as landed or not) | LOCAL | none | P158-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~317. DIRECT-ACT (one read-only cell, LOCAL).
