@@ -158,6 +158,22 @@ prd-signoff status ADMITTED, ENDPOINT unchanged). Decomposition section "C17 ADD
 - **Assignee:** the applier seat holds the opal-gateway lane (`SHARED_CLOUD_OPS`), and one seat building and releasing
   follows MP-r-2's step-0 precedent (CP2.10). GO by message, the assignee being a seat.
 
+**AMENDMENT 1 (issuer, 2026-10-12 ~10:1xZ, on row Z-S40 / msg 33462): ONE permitted load remedy, option (d).** Step 2
+STOPPED: the release read 16.661 s with 1,346 body fetches against the 10 s bar. C17 works (AC1 98 vs 98, AC2 PASS, issuer
+re-run in `C:/tmp/mp-n1` at @39ae93a10f). The new floor is the 48 h window's own 2,134 records, at about 12.4 ms per fetch,
+eight at a time.
+- In `app/admin_fabric_gitstate.py`, set `FETCH_THREADS = 32` (was 8). This matches `app/admin_fabric.FETCH_THREADS`, the
+  pool size of the shared `_s3_client()` (`max_pool_connections=FETCH_THREADS`, AMENDMENT 5 of MP-r-2), so no client
+  change is needed. Change nothing else. The section 1 line "`FETCH_THREADS` unchanged" is struck for this one constant.
+- Commit it on `wk-mcportal-c17-n1` through the gate. Re-run every admin and fabric test file (0 failed), then AC1 and
+  AC2 (both PASS).
+- Re-take step 2's cold sample on the host, on the release bytes, with the cache asserted empty. At or under 10 s:
+  continue to step 3. Over 10 s: STOP again with a row, and do not tune further. The window, the bar and the producer
+  pointer (Z-S40's (a), (b), (c)) are contract or producer changes, so they go to `1.0.0_SA_CTO~Z`, not to this cell.
+- BOUNDS 2 reads: "If step 2's load sample fails after the C17 change AND AMENDMENT 1, STOP."
+Graded by: `.tools/to-pipeline-gate.py` at this commit (a MODIFIED order, so only GATE (viii) applies, and this order
+declares `<placeholders>NONE</placeholders>`). No other limb grades a modification.
+
 <status>pending</status>
 <round>1</round>
 <workstream>C17</workstream>
