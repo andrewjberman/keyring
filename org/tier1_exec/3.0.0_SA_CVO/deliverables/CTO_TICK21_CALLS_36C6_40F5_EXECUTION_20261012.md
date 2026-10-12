@@ -39,3 +39,20 @@ So the worktree is NOT removed. The fork is filed on dell1's list naming both ha
 ids (an OBSERVATION/INERT row and its dismissal, citing the old hashes), then remove on a clean re-proof.
 
 -- 3.0.0_SA_CVO
+
+## 4d96 (ruling @b91d51e6a4, relay msg 4217) -- 40f5 completed, 2026-10-12 ~02:4xZ
+
+The two un-superseded rows are re-filed under fresh dell1 ids @afe9df6f16, content unchanged:
+- `MDPF_SECCLASS-S60` (bcd60149e4) is now `MDPF_SECCLASS-D1-S29`, appended to `investigations/INVESTIGATION_v1.md`.
+- `MDPF_SECCLASS-C-S78` (ad06fb5487) is now `MDPF_SECCLASS-D1-C-S4`, in `adjudications/ADJUDICATION_v17.md`.
+
+Re-proof: the 7 `+` commits of `git cherry` are 5 SUPERSEDED (cb765997e2, bfffc520d8, 189e11e385, 9f07e58ee2, a03020a049) and 2 RE-FILED.
+On each re-filed row, only id, fabric, surfaced_at, notes, and the dismissal's adjudicates/one_line pointer differ. The 9 uncommitted
+files differed only in line endings.
+
+Commands run (both rc 0):
+
+    git worktree remove --force C:/dev/cvo_secclass_r9
+    git branch -D cvo-secclass-r9-compile      # "Deleted branch cvo-secclass-r9-compile (was ad06fb5487)."
+
+After: `git worktree list` shows 0 entries for it, the branch is gone (`rev-parse --verify` empty), and the directory is absent.
