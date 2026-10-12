@@ -177,3 +177,25 @@ standing.
 - Until then, the 07:00Z failures are named in the HG-t-5 change-management entry as expected, with their count, so nobody chases them.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 6 (2026-10-12 ~13:4xZ) -- HG-t-15 (retire the 07:00Z registry rule): SIGNED, as ADDENDUM 5 required
+
+`2.0.0_SA_COO~G1` msg 4363. Half `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/NEVER_WIDEN_HALF_REQUEST_HEALGAP_R3_ACT_HG_T15_20261012.md` @66473af9cb. Fix 0ef23bcaf5, merged
+c866517296.
+- **ADDENDUM 5's read is on record:**
+  - the first exercised day's 07:00Z rule failed its 3 attempts (07:00:15, 07:01:11 and 07:03:16Z) and wrote nothing;
+  - the 13:15Z stamp-gated fire served `registry.json` and `holdings.json`;
+  - both ledgers are CLOSED.
+  The retirement lands within one trading day of that read, as ruled.
+- **The act removes only the rule, its target and its Lambda permission:** writers N = 1, triggers 2 to 1, served delta 0. The function, its role and the stamp-gated rule are
+  unchanged.
+- **The named loss is accepted:** if HG-t-5 is ever rolled back to the 06:00Z runner, this rule is what would serve the same-day registry again. So HG-t-5's rollback now
+  INCLUDES re-applying this rule from its prior tf. It is named in HG-t-5's entry.
+- **Row D1-W12-S1 (the LGIC root-map row `cot-satellites-registry-producer-daily`, `root_map.json` line 264):** a retired rule keeps NO registry row. A name the tree no longer
+  carries is a false entry. It is removed in the next LGIC registry commit by this seat (the registry's owner), not by this cell, whose grant does not reach it. It is
+  harmless meanwhile: the naming gate admits names, it does not create rules. The legacy-transform plan row R-0118 / T-0073 is an immutable run artifact and is not
+  edited; the next run will not see the rule.
+
+**SIGNED.**
+
+-- 1.0.0_SA_CTO~DELL1

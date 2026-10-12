@@ -83,3 +83,56 @@ and bounded by its per-date table.
 The CTO half is separate and is asked on this record, with the per-date table and the Q3 bar as the sized move.
 
 `2.0.0_SA_COO~M1`
+
+---
+
+## ADDENDUM 1 -- RE-SIGNED on the amended radius (issuer, 2026-10-12 ~13:3xZ; answers C-S17 and the CTO's suspension, msgs 4348 and 4349)
+
+The first signing above stands as to its two named files and its conditions 1 to 8; it did NOT carry the firm total, the AUA, the added and dropped
+relationships or the advisor attribution, and the request it signed on said the totals "are not measured". That was the issuer's miss. The request
+was reopened (`TO-SC-e97` amendment 3 @dce3041fb8, the worker's measurement merged @2e8d5c96ef) and its radius now carries them, measured from the
+build's OWN dry run. This addendum re-signs on that radius, each figure re-run here, not taken from the request.
+
+### Read at re-signing (independent of the worker's report)
+
+- **From the worker's raw capture** (`capture.pkl` of its dry run, which holds the would-be summary and every relationship payload the build would
+  write; I recomputed from it, not from the report): the would-be firm total per date equals the sum of the would-be relationship totals to the cent on
+  all 15 dates; added, dropped and changed relationships reconcile to the firm-total move with a residual of 0.00 on every date; 876 added rows and 151
+  dropped rows over the window; 0 relationships new to the store (every added one is stored on other dates); advisor keys 56 served and 56 would-be,
+  none dropped.
+- **The move, per date** (served -> rebuilt firm total): UP on 09-25 by $32.08M, 09-26 $224.04M, 09-27 $223.81M, 09-28 $246.65M, 09-29 $156.38M, 09-30
+  $149.47M, 10-01 $150.33M, 10-02 $28.22M, 10-03 $5,203.59, 10-04 $48,507.12; DOWN on 10-05 by $1,825,338.25, 10-06 $1,348,850.60, 10-07
+  $1,491,834.79, 10-08 $1,933,181.74; 10-09 HOLDS ($2,015,391,646.72). The CVO's proxy (current partition sums) reproduces the move on 09-25..10-04 and
+  10-09 to the cent and sits about $21M-$23M higher on 09-28..10-01 and 10-05..10-08: the build applies the account gates (AP, insurance, ghost) the
+  proxy does not (row W86-S7).
+- **The AUA does not move**: it is `client_performance`, which the act does not write, and the rebuilt firm total EQUALS it on all 15 dates (to
+  $0.0000). So the act makes C_06's firm total consistent with the AUA the page serves; the served firm total on 09-26..09-28 sits $224M-$247M BELOW it.
+- **Period bars**: the four bars' (and the 2026 annual's) TOTALS do not move (each is the AUA at its end date); the classes do: Q3 and September 2026
+  (end 09-30) Unclassified $82,444,446.18 -> $52,957.36 (-$82.39M), structured $28.41M -> $115.96M (+$87.55M), fixed income -$16.84M, equity
+  +$7.25M, cash +$2.33M, alternatives +$1.73M, commodities +$0.37M; Q4, October and 2026 (end 10-09) Unclassified $1,846,332.73 -> $883,413.33
+  (-$962,919.40), equity +$876,265.04, fixed income +$86,654.36. The after figures exclude SC-e-91's retained pass on window dates (row W86-S9).
+- **Advisors**: no advisor key is dropped (56 and 56), the last five served versions each carry the same 56 keys, so the base code did not drop any
+  (D1-W80-S3 measured: not a defect of this act). But **502 of 840 advisor-days move** and ATTRIBUTION moves: the build reads the CURRENT
+  `rel_architect` lookup, the served map carries an earlier attribution; the largest single moves are Tim Rodgers on 09-28 +$79.3M (served $60.8M ->
+  $140.1M) and Luke Heiligenthal on 09-29 -$52.6M (served $64.2M -> $11.5M), about $55M of window-day history moving between advisors. This is a served
+  restatement of advisor history by the producer's own rule, and it is named here so that neither half signs it unseen.
+- **The ten largest added and dropped relationships per date** are by opaque relationship id and dollars in the request; the full tables are
+  committed beside it in `R23_RADIUS/` (this folder): `added_dropped_by_date.csv`, `added_dropped_top10.csv`, `advisor_window_table.csv`,
+  `aua_vs_firm_by_date.csv`, `bars.json`, `d04_unclassified_by_date.csv`, `advisor_key_sets_v1_v5.json`. No client name and no account id is in them.
+- **Criteria re-run at trunk @2e8d5c96ef**: `ROLLING-REDERIVE ok=True`, `ROLLING-WIRING ok=True`, `HALF-REQUEST ok=True sections=11 of 11 ... totals=True
+  added_dropped=True bars=True`.
+
+### SIGNED again, for the same two files, with the first signing's conditions 1 to 8 AND these
+
+9. **Leg G, the totals (closes C-S17):** for each of the 15 window days, the served `firm[date].total` of `gold/views/mix_daily_summary.json` equals
+   the rebuilt firm total stated in the request within $1.00 (the totals are sums of `total_mv`, with no six-place rounding in them), and equals the
+   AUA of that date; the Q3, September, Q4, October and 2026 bars' TOTALS read unchanged. A day beyond $1.00 is a STOP and the code rollback.
+10. **Leg G, the advisors:** the served advisor map carries the same 56 keys; each advisor-day of the window equals the request's stated rebuilt total
+    (`R23_RADIUS/advisor_window_table.csv`) within $250 (SC-e-91's retained pass runs after the window pass on the first fire and the worker could not
+    measure it; any residual beyond $250 is printed and judged, not waved). The attribution moves are printed beside the table and are the CTO's to
+    have seen BEFORE the ship (condition 11).
+11. **The CTO re-signs or refuses on THIS radius first.** The ship is not given a GO on this half alone; it needs the CTO's half re-signed at the
+    bytes of the request @2e8d5c96ef (or later, with its change stated), the attribution move named in his reading.
+12. **Order of acts** is unchanged from condition 2: SC-e-91's leg G first.
+
+`2.0.0_SA_COO~M1`

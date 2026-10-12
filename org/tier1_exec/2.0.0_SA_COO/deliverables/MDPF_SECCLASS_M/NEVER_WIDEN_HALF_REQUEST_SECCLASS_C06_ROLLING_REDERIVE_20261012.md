@@ -248,7 +248,7 @@ Advisor totals over the 15 window days. One row per date: advisor-days whose tot
 | 2026-10-08 | 21 | 2,081,752.43 | -1,933,474.68 |
 | 2026-10-09 | 0 | 0.00 | +0.00 |
 
-Advisor-days that move in all: 502 of 840 advisor-days present on either side. The full 15-date by advisor table (advisor key, date, served total, rebuilt total, move) is named by path: `.scratch/advisor_window_table.csv` in worktree wk-MDPF_SECCLASS-86 (not committed).
+Advisor-days that move in all: 502 of 840 advisor-days present on either side. The full 15-date by advisor table (advisor key, date, served total, rebuilt total, move) is committed beside this request: `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R23_RADIUS/advisor_window_table.csv` (the same folder holds `added_dropped_by_date.csv`, `added_dropped_top10.csv`, `aua_vs_firm_by_date.csv`, `bars.json`, `d04_unclassified_by_date.csv`, `advisor_key_sets_v1_v5.json`).
 
 The ten largest advisor moves by absolute dollars (advisor key as the served map carries it, date, served total, rebuilt total, move):
 
