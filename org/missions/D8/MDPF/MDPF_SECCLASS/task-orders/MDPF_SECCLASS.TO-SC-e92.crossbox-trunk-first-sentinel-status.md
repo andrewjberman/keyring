@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~81</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -55,10 +55,32 @@ lists every registered worktree and reads each one's `org/critical_paths/.open_d
 <criterion id="SC21-e92-AC3" cell_refs="SC-e-92"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R21_CHECKS/sc_r21_trunk_first.py planted</invocation><expect>TRUNK-FIRST ok=True case=planted</expect></criterion>
 `SC21-e92-AC3` -- the control: a live sentinel at trunk HEAD still draws 1 hit, and a sentinel that exists only on a worker's branch still draws 1 hit.
 
-<expected_criteria>SC21-e92-AC1, SC21-e92-AC2, SC21-e92-AC3</expected_criteria>
+<criterion id="SC21-e92-AC4" cell_refs="SC-e-92"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R21_CHECKS/sc_r21_trunk_first.py branch</invocation><expect>TRUNK-FIRST ok=True case=branch</expect></criterion>
+`SC21-e92-AC4` -- (amendment 1) a worktree whose directory is gone but whose branch carries a deploy open on it is read through that branch and draws exactly 1 hit.
+
+<expected_criteria>SC21-e92-AC1, SC21-e92-AC2, SC21-e92-AC3, SC21-e92-AC4</expected_criteria>
 
 Dry-run at the base (dell1 box/dell1 HEAD, 2026-10-12 ~09:3xZ): SC21-e92-AC1 FAIL as expected (`hits=1`); SC21-e92-AC2 FAIL as expected (`hits=1 vanished=0`);
 SC21-e92-AC3 PASS as expected (the control: `trunk_hits=1 branch_only_hits=1`).
+
+### AMENDMENT 1 -- the vanished limb reads the branch (issuer 2.0.0_SA_COO~M1, 2026-10-12 ~10:0xZ; answers your row MDPF_SECCLASS-D1-W81-S2)
+
+Your finding stands and is ruled inside this cell: a worktree whose directory is gone must not read CLEAR while its branch carries a deploy
+open on it, which is the one defect BOUNDS forbade. Your order's `<status>` is set back to `in_progress` for this one addition; nothing else
+you did is reopened, and your row D1-W81-S1 (the blob rule) is accepted as built.
+1. **Build limb e'.** For a registered worktree whose directory is absent, do not stop at VANISHED. Take its ref from the worktree list
+   (`git worktree list --porcelain`: the `branch refs/heads/<name>` line under that `worktree` entry, else its `HEAD <sha>` line when it
+   is detached) and read `org/critical_paths/.open_deploys/` through it at `repo_root` (`git ls-tree -r <ref> ...`). A sentinel found there is
+   read exactly like a sentinel at a worktree's HEAD: the same status, the same carried-file test, the same trunk-first stale rule and the
+   same blob rule. The worktree still counts in the denominator's `vanished=` figure and still prints `VANISHED (registered, directory
+   absent)`, with the ref it was read through. If no ref can be taken or the ls-tree fails, the registration is a hit again
+   (`not readable, not clear`): a vanished worktree is CLEAR only when its ref was read.
+2. **Acceptance.** AC1-AC3 stay as they are and must still pass. AC4 (above) is the new arm: the issuer's positive and negative controls
+   read it PASS at the base tool (the old not-readable hit) and FAIL at your first build (`hits=0`).
+3. **Files.** The same `<paths>` grant. The check script `R21_CHECKS/sc_r21_trunk_first.py` on your branch is replaced by the issuer's
+   amended copy (the `branch` arm and an `R21_TOOL` override); do not edit it.
+4. **Gate limb.** The issuer amends its own criteria without a CTO ruling; no gate limb grades an amendment to an existing order's
+   criteria and `<status>` (`.tools/to-pipeline-gate.py` grades NEWLY-ADDED orders and `<placeholders>`; this order declares `NONE`).
 
 ## BOUNDS
 
@@ -84,9 +106,9 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: SC21-e92-AC1, SC21-e92-AC2, SC21-e92-AC3. Write the instance at
+Criterion ids: SC21-e92-AC1, SC21-e92-AC2, SC21-e92-AC3, SC21-e92-AC4. Write the instance at
 `org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~81/MDPF_SECCLASS.TO-SC-e92.crossbox-trunk-first-sentinel-status.proof_of_spec.json`.
-Validate it BEFORE the flip with `python .tools/proof-of-spec-check.py <instance> SC21-e92-AC1,SC21-e92-AC2,SC21-e92-AC3`.
+Validate it BEFORE the flip with `python .tools/proof-of-spec-check.py <instance> SC21-e92-AC1,SC21-e92-AC2,SC21-e92-AC3,SC21-e92-AC4`.
 </proof_of_spec>
 
 **REPORT:** the old and new rule (file:line), each criterion's output, one real run of the tool on this box's worktrees with its denominator
