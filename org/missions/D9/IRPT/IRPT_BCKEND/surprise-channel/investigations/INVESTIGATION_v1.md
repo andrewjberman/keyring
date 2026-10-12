@@ -29308,3 +29308,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The Firm control has no option whose visible label is exactly Inflection. The nearest label is Inflection Wealth Management. The walker threw FIRM_OPTION_ABSENT before any client search, so no client was walked, the Performance tab was not reached, and the net log holds 0 performance API request paths. The process still exited 0, as the first order's note predicted. The walker was disarmed by its own finally block; status reads disabled and armed=no."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W341-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~341",
+  "surfaced_at": "2026-10-12T23:50:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The IB-pr-489 walk with --firm 'Inflection Wealth Management' and --first-client selected the Firm option (no FIRM_OPTION_ABSENT), but the empty client search listed no client to walk. No client was walked, the Performance tab was not reached, the net log holds 0 performance request paths and no sel_ reference was written. The walker disarmed itself at 23:50:41Z; status reads disabled and armed=no.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tmp/ui-walk/20261012T234939Z/findings.json in worktree wk-IRPT_BCKEND-341 (check walker:first-client-absent: the empty client search listed no client to walk; counts carry no performance step)",
+      "tmp/ui-walk/20261012T234939Z/netlog.tsv in worktree wk-IRPT_BCKEND-341 (POST /api/scoped/investor-reporting/directory/resolve answered 200 three times; no performance request path; the walk log at 23:50:37 says no --client given)",
+      ".claude/skills/ui-walk/walk.mjs@d84df45bc0 (--first-client walks the first client the empty search lists)",
+      "ui_walker_account.py status at 2026-10-12T23:51 after the walk: status=disabled role=admin userType=Dev armed=no armedBy=none"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-489 step 3 and refusal clause: the walk with --firm 'Inflection Wealth Management' --first-client --performance-state reaches a client listed under that firm and its Performance tab.",
+  "world_is": "The Firm option was selected and the page shows the label Inflection Wealth Management. The empty client search then listed no client, so the walker recorded walker:first-client-absent and walked no client. The Performance tab was not reached, 0 performance request paths were logged, and no reference file was written. Why the empty search listed no client is not established by this walk."
+}
+```
