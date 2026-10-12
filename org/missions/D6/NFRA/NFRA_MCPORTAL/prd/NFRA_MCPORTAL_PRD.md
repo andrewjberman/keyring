@@ -3,13 +3,13 @@
   "project": "NFRA_MCPORTAL",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.6",
+  "prd_version": "v0.7",
   "step": 4,
   "brief_ref": "docs/briefs/mcportal-tech-ops-dashboard-brief-20260917.md@8d1f5c362b",
   "endpoint_outcomes": [
     "FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7",
     "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13",
-    "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19"
+    "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"
   ],
   "status": "DRAFT"
 }
@@ -198,6 +198,15 @@ and ACCEPT are verbatim, and SOURCE lines are dropped.
          ACCEPT     each channel shows its rating and a one-line reason; a channel with no rating
                     reads "unrated", never a default level; no policy acts on a rating
 ```
+
+  FWD-20 Andrew reads the gateway's full breakdown on one page: every vendor or channel, the tools
+         and indexes on each, and who is entitled to each today (v0.7) -- THE FIRST OUTCOME CUT
+         DONE WHEN  EXERCISED -- Andrew reads the page; one channel's tool list is checked against the
+                    deployed gateway's code, and one person's entitlements against the grant store
+         ACCEPT     every channel the deployed gateway serves is listed, none from a hand-kept list
+                    (C15); each lists its tools and catalog indexes (`refs/DATA_CATALOG.yaml`); each
+                    shows the principals holding an active grant on it now, read from the entitlement
+                    and grant stores (C4); a channel with no grant reads "no one", never blank
 
 ## CONTRACTS
 
@@ -510,3 +519,27 @@ every later read. No stopgap is ruled.
 
 **Sign-off.** CONTRACTS only, and the ENDPOINT bytes are unchanged. The sign-off binds to the ENDPOINT hash (v3.19), so no
 delivery is withheld. `3.0.0_SA_CVO~Z` reads C17 at the round-N analysis.
+
+### v0.7 addendum (2026-10-12 ~21:0xZ, 1.0.0_SA_CTO~Z) -- FWD-20: the gateway breakdown is the FIRST outcome cut
+
+**Input.** Andrew-direct ~20:5xZ, item 2, VERBATIM: *"I wouldnt close this project (OPLGTW) until I have seen a full breakdown
+of the vendors/channels available via the gateway, what tools/indexes exist for each, and current state of entitlements. The
+easiest way to manage this would be via the MCPORTAL, and this is what I think should be the first distinct outcome of the
+MCPORTAL project."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261012_205xZ_SITEZ_PORTFOLIO_SEVEN_PROJECT_RULINGS.md`.
+
+**Endpoint.** FWD-20 is ADDED (ENDPOINT above). FWD-18's map (channels, tools, reach) is its first two parts. The third part,
+who holds a grant today, reads the stores FWD-1 already writes. FWD-18 and FWD-19 stand as written, and FWD-20 subsumes
+FWD-18's page; one page serves both.
+
+**Order.** FWD-20 is cut AHEAD of every other open order. The four staged close runs (MP-x-5, MP-q-1, MP-v-2, MP-c-2) keep
+waiting on Andrew's acts and do not gate it.
+
+**Contracts.** C15 applies unchanged: the map is generated from the deployed gateway's definitions. C16's ratings are shown
+where they exist and read "unrated" where they do not. Reading the grant stores is a READ under C2's owner gate. No page writes
+anything for FWD-20.
+
+**Closes NFRA_OPLGTW.** Andrew's reading of this page is the condition he set for NFRA_OPLGTW's close.
+
+**Sign-off.** ENDPOINT changes, so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half is Andrew's own word
+recorded verbatim (PROPORTIONATE SIGN-OFF).
