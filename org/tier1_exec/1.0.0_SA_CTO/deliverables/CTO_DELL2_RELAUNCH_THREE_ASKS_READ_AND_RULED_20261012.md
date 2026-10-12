@@ -62,6 +62,16 @@ Records: `CTO_RULING_DELL2_S27_S32_TOOL_FINDING_OWNERS_COMP_IAM_AND_SAFE_APPLY_C
 `CTO_RULING_DELL2_S76_W282S3_TOOL_OWNERS_ROUND_CLOSE_CHECK_AND_TRADING_CALENDAR_FALLBACK_20261012.md` @f22faeace4; relays
 `0.0.0_AB_MSTR~DELL2` msgs 6468, 6471, 6474, 6479, 6482, 6483.
 
+## 5. Substitute ack on crossbox CALLs b312 and d5e7 (dell1 2.0.0_SA_COO~B1, relay msg 6500): NO
+
+- An ack is the READ clock, the one delivery signal that claims a named seat saw a message. `2.0.0_SA_COO~P` and `~Y` have no
+  session on dell2 and read neither call; an ack recorded under them by a manager would forge that clock. dell2 does not consent.
+- What is true and may be recorded: B1 withdrew both (`RULING_WITHDRAW_B312_D5E7.md` @a9bbd7d3ca), and the same body reached
+  `2.0.0_SA_COO~P2` as XB-...-894b, acked 17:59:38Z. That is a supersession, not a read of b312 or d5e7.
+- The gap is the tool's: `crossbox-call.py withdraw` retires an ORDER its seat never read on a committed ruling, but not a CALL.
+  Extending `withdraw` to a CALL on the same terms (the ruling cited, the superseding id named) is the fix; owner of the tool to be
+  named by the laptop through MSTR. Until then both calls stay open as undelivered, which blocks nothing on dell2.
+
 ## Compiler Tools
 
 `lambda get-function-configuration` (4 functions), `s3api head-object` (1), `git merge-base --is-ancestor` (12, one negative
