@@ -8739,6 +8739,46 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-W137-S1",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~137",
+     "surfaced_at": "2026-10-12T14:31:30Z",
+     "one_line": "The handler module docstring says the fence admits only tier 'internal'; the admit clause now also admits userType 'Dev', so that docstring paragraph is reworded. No behaviour changed.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "Order section 1 item 3, 'Nothing else changes': the 202 body, the 400 for a missing ticker, the status write, the send and the OK: line. Section 1 names the helper and the admit test as the edits and names no docstring.",
+     "world_is": "At af69f5e1d4 the module docstring's THE CALLER FENCE paragraph states that the handler admits only the authorizer tier 'internal'. That sentence is false once the userType clause is added. Commit 2f08f9eb4e rewords the paragraph to the tier-or-userType rule. The response, the refusal log line and the call paths are unchanged.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "infra/aws/lambda/research/pull_enqueue/lambda_function.py@af69f5e1d4 THE CALLER FENCE docstring paragraph (admits only tier internal)",
+       "infra/aws/lambda/research/pull_enqueue/lambda_function.py@2f08f9eb4e docstring paragraph reworded to the tier-or-userType rule"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-W137-S2",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~137",
+     "surfaced_at": "2026-10-12T14:33:10Z",
+     "one_line": "The order's check 'git diff --numstat HEAD' on the channel does not read 1 deletion: git aligns the old closing brace with the new row's closing brace, so the added comma reads as an insertion.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "PROOF OF SPEC note: append a row by BYTES, then 'git diff --numstat HEAD -- <channel>' reads N insertions and 1 deletion (the closing brace of the previous row gains a comma).",
+     "world_is": "After the S1 row was appended (uncommitted, on top of 2f08f9eb4e) the numstat read '20 0 <channel>'. The hunk shows the new object's closing brace matched to the old one, so the comma line is an insertion. The file parses as one JSON array (389 rows at the S1 append, last row S1) and the content is correct. The count was not forced to match the expectation.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md@af69f5e1d4 closing tail '    }' CRLF, ']' CRLF, fence LF",
+       "git diff HEAD -- org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md reads 20 insertions 0 deletions after the S1 append"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
