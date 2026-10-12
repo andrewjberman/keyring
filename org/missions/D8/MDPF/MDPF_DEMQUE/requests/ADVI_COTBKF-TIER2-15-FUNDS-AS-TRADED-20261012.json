@@ -1,0 +1,73 @@
+{
+  "request_id": "ADVI_COTBKF-TIER2-15-FUNDS-AS-TRADED-20261012",
+  "tier": 2,
+  "reason": "ADVI_COTBKF PRD v0.9 contract C-BASIS: a fund security is priced at its as-traded close, read from the one lander (ruling CTO_RULING_DELL2_AS_TRADED_CLOSES_VIA_DEMQUE_20261012.md @479d6deba0 on origin/box/dell1; 1.0.0_SA_CTO~DELL2 msg 6361). 15 funds whose store close fails against the price paid; held days of the back-fill.",
+  "page": "ADVI_COTBKF returns back-fill (minted table account_return_daily; no portal page reads it)",
+  "securities": [
+    {
+      "cusip": "921921300",
+      "symbol": "VEIRX"
+    },
+    {
+      "cusip": "74253Q747",
+      "symbol": "PCBIX"
+    },
+    {
+      "cusip": "097873822",
+      "symbol": "ABNFX"
+    },
+    {
+      "cusip": "32008F606",
+      "symbol": "SGIIX"
+    },
+    {
+      "cusip": "399874825",
+      "symbol": "GFFFX"
+    },
+    {
+      "cusip": "316389105",
+      "symbol": "FOCPX"
+    },
+    {
+      "cusip": "316071109",
+      "symbol": "FCNTX"
+    },
+    {
+      "cusip": "701769408",
+      "symbol": "PRILX"
+    },
+    {
+      "cusip": "024071300",
+      "symbol": "BALCX"
+    },
+    {
+      "cusip": "399874106",
+      "symbol": "AGTHX"
+    },
+    {
+      "cusip": "233203736",
+      "symbol": "DISVX"
+    },
+    {
+      "cusip": "233203827",
+      "symbol": "DFLVX"
+    },
+    {
+      "cusip": "649280823",
+      "symbol": "NFFFX"
+    },
+    {
+      "cusip": "552983694",
+      "symbol": "MEIIX"
+    },
+    {
+      "cusip": "921908885",
+      "symbol": "VGHAX"
+    }
+  ],
+  "fields": [
+    "close"
+  ],
+  "start": "2020-07-06",
+  "end": "2026-06-22"
+}
