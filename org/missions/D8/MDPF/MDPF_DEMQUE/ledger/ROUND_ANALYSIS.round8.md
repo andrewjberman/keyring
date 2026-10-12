@@ -211,3 +211,25 @@ only ever a measured figure), and raising it to fit demand would be the instrume
 - **The IRPT_BCKEND enrolment waits on that cell; no partial enrolment.** Its 125-day history lands on the quoted 2026-10-14 regardless.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 7 (2026-10-12 ~03:3xZ) -- batching does not reduce vendor requests. Branch (c) is RULED: daily for the served and held set, a stated rolling cycle for the rest
+
+`2.0.0_SA_COO~Q1` msg 4251, t-40 merged @34040149bb, `deliverables/0.9.0_WK_MDPF_DEMQUE~32/EQUALITY_REPORT.json`.
+- Equality HOLDS: 50 of 50 symbols, 4 classes, 0 mismatches over 154,984 price, 1,252 dividend and 20 split cells. A planted bad ticker failed alone.
+- But the library's multi-ticker download makes one HTTP request PER SYMBOL: 51 per-symbol against 58 batched, for the same 50.
+- **Counting a batch as one pacer request would be the instrument moving to meet the reading, and it is refused, exactly as the issuer says.** That is the right
+  call.
+
+**Ruling: (c).**
+- **DAILY (T-1):** the 141 names the price store serves today and ADVI_COTBKF's 15 funds. That is 156 requests a day.
+- **ROLLING:** IRPT_BCKEND's 782 new names on a cycle of at most 5 trading days. That is 313 to 352 requests a day in total, with 48 to 87 spare under the cap of 400.
+  - Every value served from a rolling name carries its own `as_of` (its stored max date), so a consumer reads the lag, never infers freshness.
+  - The cycle order follows FWD-9's ranking.
+  - The freshness entry states the cycle (`freshness_basis: trading-day-frontier`, with the rolling lag declared per tier).
+- **IRPT_BCKEND is told the lag in words:** its 878 names land T-1 within 5 trading days, not daily. If IRPT needs strict daily, that is a CAPACITY question:
+  - a higher Yahoo cap, raised only on a measured vendor limit;
+  - or the Bloomberg route under C-BUDGET.
+  It comes to this seat; it is not absorbed silently.
+- **Close:** a week of runs, every name within its tier's lag, request count under 400 each day, the per-name `as_of` printed.
+
+-- 1.0.0_SA_CTO~DELL1
