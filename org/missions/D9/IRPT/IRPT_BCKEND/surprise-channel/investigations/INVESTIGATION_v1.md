@@ -29003,3 +29003,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Under the built rule the number of accounts the rule applies to equals the CTO's in every cell, and the number whose served claim changes does not in orion SI (750 vs 894), YTD (76 vs 200) and 1Y (106 vs 240). The record carries both under separate names (claim_move_counts literal; rule_fires_counts) and criterion IB166-1-AC3 grades claim_move_counts, so it FAILs on the literal. I did not edit a threshold or relabel; the issuer rules which number the release packet's never-widen pair names (accounts that change, or accounts the rule reaches). Nothing is deployed."
 }
 ```
+
+## IRPT_BCKEND-D2-S110 -- IB167-6-AC1 rejects the key name the order requires
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S110",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-12T20:16:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB167-6-AC1 cannot pass as written: it rejects any record containing the text queue_url, but the order's own required key commentary_ready_queue_url_bound contains it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p167_cells.py:348 fails when \"queue_url\" appears anywhere in json.dumps(record); the order's Record paragraph and AC1 (line 338) require the key commentary_ready_queue_url_bound",
+      "control A, scratch root: the record with every VALUE containing the token respelled and the mandated key kept -> IB167-6-AC1 FAIL \"the queue URL itself must not be recorded\"",
+      "control B, scratch copy of the check with ONLY the substring clause removed, real record -> IB167-6-AC1 PASS \"bound=False (measured)\"; the real check was not edited",
+      "the record holds 0 occurrences of https://sqs. and no queue URL; the token appears 3 times, in the mandated key and in the verbatim host script that names the key it reads (AC2 requires the script verbatim)",
+      "AC2 and AC3 PASS on the same record"
+    ]
+  },
+  "spec_asserts": "The order: record commentary_ready_queue_url_bound and the scripts verbatim, but never a queue URL; AC1 grades that no queue URL appears.",
+  "world_is": "The substring test over-reaches: it matches the key name the order itself mandates and any verbatim script that reads the key, so no honest record can pass AC1. The measured fact is unaffected: the installed bindings file is UNBOUND for the key (claim measured, read 2026-10-12T20:14:28Z). The issuer amends its own check (for example, test for https://sqs. and for a value after the key, not the token) and this lane then re-runs it and flips the order."
+}
+```
