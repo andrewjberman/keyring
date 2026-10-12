@@ -9,6 +9,7 @@
 //        [--client "Thiessen, Anna"]... [--max-minutes 40] [--no-arm] [--keep-armed] [--headed] [--no-login]
 //        [--day "<security>=<YYYY-MM-DD>"]...
 //        [--security "VLO US"]... [--thread "Valero"] [--deep]
+//        [--firm "<label>"] [--first-client]   (--firm presses the header Firm option by its visible label first)
 //
 // By default it ARMS the account, walks, and DISARMS in a finally block (always, even on failure).
 import { createRequire } from 'node:module'
@@ -27,7 +28,7 @@ const EMAIL = 'opal-ui-walker@opal.test'
 
 // ---- args ---------------------------------------------------------------------------------------------------------
 const argv = process.argv.slice(2)
-const opt = { base: 'http://localhost:5174', routes: [], clients: [], securities: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, hovers: [], login: true, settleExtraMs: 0, periodsPerAccount: false, days: [], thread: null, expectTexts: [], reloadReopen: false }
+const opt = { base: 'http://localhost:5174', routes: [], clients: [], securities: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, hovers: [], login: true, settleExtraMs: 0, periodsPerAccount: false, days: [], thread: null, expectTexts: [], reloadReopen: false, firm: null, firstClient: false }
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i]
   if (a === '--base') opt.base = argv[++i]
@@ -36,6 +37,10 @@ for (let i = 0; i < argv.length; i++) {
     opt.routes.push(argv[++i].replace(/^[A-Za-z]:[\\/].*?[\\/]Git(?=[\\/])/i, '').replace(/\\/g, '/'))
   }
   else if (a === '--client') opt.clients.push(argv[++i])
+  // --firm "<label>": before the client search, press the header's Firm option whose visible label is <label> (FirmDropdown.tsx).
+  // --first-client (with --firm, no --client): walk the FIRST client the empty search lists, as --client walks a named one.
+  else if (a === '--firm') { opt.firm = argv[++i]; if (!opt.firm || opt.firm.startsWith('--')) throw new Error('--firm wants a label') }
+  else if (a === '--first-client') opt.firstClient = true
   // --probe-get <path> (repeatable; 2.0.0_SA_COO~P 105138 via MSTR 105141): after sign-in, GET that same-origin path
   // from inside the page with the Authorization header the page itself sent, and once WITHOUT it (the control);
   // statuses only are printed and written (probe-get.json). GET only: the guard is unchanged.
@@ -97,6 +102,7 @@ for (let i = 0; i < argv.length; i++) {
   }
   else throw new Error('unknown argument ' + a)
 }
+if (opt.firstClient && (!opt.firm || opt.clients.length)) throw new Error('--first-client wants --firm "<label>" and no --client')
 if (!opt.routes.length && !opt.probeGets?.length) opt.routes.push('/investor-reporting')
 if ((opt.probeGets || []).some((p) => !/^\/api\//.test(p))) throw new Error('REFUSED: --probe-get takes a same-origin /api/ path')
 if (!/^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(opt.base)) throw new Error('REFUSED: --base must be a localhost dev build (the protected dev channel)')
@@ -105,7 +111,9 @@ const deadline = Date.now() + opt.maxMinutes * 60000
 const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\..+/, 'Z')
 const OUT = path.join(ROOT, 'tmp', 'ui-walk', stamp)
 mkdirSync(path.join(OUT, 'shots'), { recursive: true })
-const log = (...m) => console.log(new Date().toISOString().slice(11, 19), ...m)
+// --first-client: the walked name is read from the page and never printed; every terminal line is redacted of it (files stay under OUT).
+let firstName = null
+const log = (...m) => console.log(new Date().toISOString().slice(11, 19), ...m.map((x) => (firstName && String(x).includes(firstName) ? String(x).split(firstName).join('<first client>') : x)))
 
 // ---- account ------------------------------------------------------------------------------------------------------
 const py = (cmd, extraEnv = {}, ...args) => execFileSync('python', [ACCOUNT, cmd, ...args], { encoding: 'utf8', env: { ...process.env, ...extraEnv }, stdio: ['ignore', 'pipe', 'pipe'] })
@@ -385,6 +393,40 @@ async function readBubbles(page, list) {
     const pressed = await cur.click({ timeout: 4000 }).then(() => true).catch(() => false)
     if (pressed) { await settle(page, 1000); await checks(page, `lead-${list}-cursor`) }
   } else findings.push({ step, check: 'walker:control-missing', claim: 'measured', observed: 'control not found: Earlier month' })
+}
+
+// ---- --firm "<label>": the header's Firm control, pressed by its visible label --------------------------------------------
+// FirmDropdown.tsx mounts PageSurfaceControl as="dropdown", which renders a NATIVE <select> with one <option> per firm
+// (PageSurfaceControl.tsx). Its aria-label is "Select Firm" for an internal viewer and "Firm" for a firm viewer. The option
+// whose text equals the label is selected by its value; the control must then show that label, or the walk stops.
+const FIRM_SELECT = 'select[aria-label="Select Firm"], select[aria-label="Firm"]'
+async function selectFirm(page, label) {
+  step = `firm ${label}`
+  const sel = page.locator(FIRM_SELECT).first()
+  await sel.waitFor({ state: 'attached', timeout: 15000 }).catch(() => {})
+  const shown = (await sel.count().catch(() => 0)) ? await sel.locator('option').evaluateAll((os) => os.map((o) => (o.textContent || '').trim())).catch(() => []) : []
+  if (!shown.includes(label)) throw new Error(`FIRM_OPTION_ABSENT: no Firm option reads exactly "${label}"; the Firm control shows ${shown.length ? shown.map((t) => `"${t}"`).join(', ') : 'no options (the page has no Firm control)'}`)
+  const value = await sel.locator('option').evaluateAll((os, want) => { const o = os.find((x) => (x.textContent || '').trim() === want); return o ? o.value : null }, label)
+  await sel.selectOption(value)
+  const shownNow = await page.waitForFunction((want) => { const s = document.querySelector('select[aria-label="Select Firm"], select[aria-label="Firm"]'); const o = s && s.selectedOptions[0]; return !!o && o.textContent.trim() === want }, label, { timeout: 15000 }).then(() => true).catch(() => false)
+  if (!shownNow) throw new Error(`FIRM_NOT_SHOWN: the Firm control did not show "${label}" within 15 s`)
+  await settle(page, 1500)
+  await checks(page, 'firm-selected')
+}
+// the first option the open client search lists (its own listbox, by aria-controls), polled until the search stops reading "Loading clients"
+async function firstListedClient(page, combo) {
+  const t0 = Date.now()
+  for (;;) {
+    const listId = await combo.getAttribute('aria-controls').catch(() => null)
+    const got = await page.evaluate((id) => {
+      const list = id ? document.getElementById(id) : null
+      const first = list ? [...list.querySelectorAll('[role="option"]')].map((x) => (x.textContent || '').replace(/\s+/g, ' ').trim()).find(Boolean) : null
+      return { first: first || null, busy: /Loading clients/.test(document.body.innerText || '') }
+    }, listId).catch(() => ({ first: null, busy: true }))
+    if (got.first && !got.busy) return got.first
+    if (Date.now() - t0 >= SEARCH_ANSWER_CEILING_MS) return got.first
+    await page.waitForTimeout(250)
+  }
 }
 
 // ---- FWD-1: one company picked BY ITS NAME, then the thread hop by hop ----------------------------------------------
@@ -1616,6 +1658,8 @@ try {
     await settle(page, 2500)
     await checks(page, `${route}-load`)
     if (route.startsWith('/investor-reporting')) {
+      // --firm: the header's Firm option is pressed by its visible label before the client search
+      if (opt.firm) await selectFirm(page, opt.firm)
       // the client search: the empty-query state, then each client
       const combo = page.getByRole('combobox', { name: 'Client search' })
       if (await combo.count().catch(() => 0)) {
@@ -1623,7 +1667,14 @@ try {
         await combo.click().catch(() => {})
         await page.waitForTimeout(1200)
         await checks(page, 'search-open-empty')
-        for (const client of opt.clients) {
+        // --first-client: the first client the empty search lists is walked as a named one; its name stays out of the terminal
+        let walkList = opt.clients
+        if (opt.firstClient && !opt.clients.length) {
+          const first = await firstListedClient(page, combo)
+          if (first) { firstName = first; walkList = [first] }
+          else findings.push({ step: 'first-client', check: 'walker:first-client-absent', claim: 'measured', observed: 'the empty client search listed no client to walk', rule: '--first-client walks the first listed client' })
+        }
+        for (const client of walkList) {
           if (!timeLeft()) break
           step = `search ${client}`
           // Clear the box for real: after a pick the page holds the accepted label, and fill('') alone can leave the
@@ -1741,7 +1792,7 @@ try {
             }
           }
         }
-        if (!opt.clients.length) log('NOTE: no --client given; only the page load and the empty search were walked')
+        if (!opt.clients.length && !firstName) log('NOTE: no --client given; only the page load and the empty search were walked')
       }
     } else if (route.startsWith('/security-analysis')) {
       await walkSecurityAnalysis(page, route)
@@ -1811,7 +1862,7 @@ try {
   writeFileSync(path.join(OUT, 'lead-lists.json'), JSON.stringify({ schema_version: '1.0', tool: 'ui-walk', stamp, lists: leadLists }, null, 1))
   writeFileSync(path.join(OUT, 'netlog.tsv'), netlog.join('\n') + '\n')
   writeFileSync(path.join(OUT, 'guard.tsv'), guard.join('\n') + '\n')
-  const md = [`# ui-walk ${stamp}`, '', `base ${opt.base}; routes ${opt.routes.join(', ')}; clients ${opt.clients.join(' | ') || '(none)'}; ${doc.minutes} min; ${shotN} screenshots`, '',
+  const md = [`# ui-walk ${stamp}`, '', `base ${opt.base}; routes ${opt.routes.join(', ')}; clients ${opt.clients.join(' | ') || (firstName ? 'the first listed client' : '(none)')}; ${doc.minutes} min; ${shotN} screenshots`, '',
     `- unique findings: ${unique.length} (from ${findings.length} step observations)`, `- guard aborts (non-admitted writes blocked): ${guard.length}; telemetry answered locally: ${stubbed}`, `- API answers not READY / not ok: ${apiIssues.length}`, `- console errors: ${consoleErrors.length}`, '',
     '| check | unique findings |', '|---|---|', ...Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([k, v]) => `| ${k} | ${v} |`), '',
     '## Unique findings', '', ...unique.map((f) => `- **${f.id}** \`${f.check}\` -- ${String(f.observed).slice(0, 160)} (steps: ${f.steps.length}; first shot ${f.screenshots[0] || 'n/a'})`), '',

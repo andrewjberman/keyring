@@ -29214,3 +29214,72 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  "notes": "Read row for ADJUDICATION_v69, filed so the wait has a carrier. Digests, counts and times only."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W341-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~341",
+  "surfaced_at": "2026-10-12T23:28:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The TO calls the header Firm control a custom dropdown with role and test-id selectors; its markup is a native select with option children, so --firm selects the option by value after an exact text match.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/components/ui/PageSurfaceControl.tsx@53506d4903:121-144 (as=dropdown renders a native select with one option per entry; aria-label passes through rest)",
+      "portal/src/pages/InvestorReporting/header/FirmDropdown.tsx@53506d4903:105-143 (aria-label Select Firm for an internal viewer, Firm for a firm viewer; no role=option and no data-testid in this file or in the dropdown branch)"
+    ]
+  },
+  "spec_asserts": "TO cell IB-pr-488 item 1: the Firm control is the custom dropdown in FirmDropdown.tsx; read it for its role, aria and test-id selectors; press the option whose visible label equals the label.",
+  "world_is": "The control is a native select (PageSurfaceControl as=dropdown) with aria-label Select Firm or Firm and one option element per firm, carrying visible text. Its option is selected by text, then by value; there is no custom listbox and no test-id. The cell is met without any change under portal/."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W341-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~341",
+  "surfaced_at": "2026-10-12T23:28:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A FIRM_OPTION_ABSENT throw is caught by the walk's route-level catch and logged as ERROR, and the process still exits 0; the token reaches the terminal and findings, not the exit status.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".claude/skills/ui-walk/walk.mjs@410abe2d57:1777-1781 (the route try block's catch records walker:error and logs ERROR with the first line of the message)",
+      ".claude/skills/ui-walk/walk.mjs@410abe2d57:1822 (process.exitCode is set only on the walk-void path, value 3)"
+    ]
+  },
+  "spec_asserts": "TO cell IB-pr-488 item 1: if no option has that label, throw an Error whose message starts FIRM_OPTION_ABSENT: and lists the option labels the control showed (fail loud).",
+  "world_is": "The token is thrown and printed as ERROR FIRM_OPTION_ABSENT: with the labels shown, and the walk's findings carry walker:error. The exit status is 0 for that run, because only the walk-void path sets a non-zero code. A driver that reads rc alone cannot tell an absent option from a clean walk. The engine's catch was left as it is: the order bounds the edit to the two flags and their documentation."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W341-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~341",
+  "surfaced_at": "2026-10-12T23:28:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The worktree portal/ is a populated checkout and its node_modules is a symbolic link to the main tree, not an empty directory joined by a junction as the TO environment note states.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la portal and ls -la portal/node_modules in C:/dev/wk-IRPT_BCKEND-341 at 2026-10-12T23:2xZ (portal holds CLAUDE.md, DESIGN.md and other tracked files; node_modules -> /c/dev/ajb_workspace/portal/node_modules/)",
+      "git ls-tree 410abe2d57 portal (gitlink 53506d4903, mode 160000)"
+    ]
+  },
+  "spec_asserts": "TO environment note: a worker worktree has an empty portal/ directory, so the issuer's check joins the main tree's node_modules by a directory junction the first time it runs.",
+  "world_is": "portal/ is populated and node_modules already exists as a symbolic link, so the check's ensure_node_modules() found it and made no junction. playwright-core resolves from it. This worker created, linked or deleted nothing under portal/."
+}
+```
