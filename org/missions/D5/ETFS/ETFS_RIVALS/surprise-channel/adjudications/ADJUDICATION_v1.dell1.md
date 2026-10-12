@@ -68,6 +68,17 @@ J1 MET. In the IDVZ Tokio Marine dialog on 30d, 23 of 23 prices draw a continuou
 and the line beneath reads 'Prices before 2026-10-07 are adjusted for a 15-for-1 split'. The factor comes from the stored
 (MEASURED) row. Row D1-C-S16. All nine round-28 J1s now have a terminal grade.**
 
+**ADDENDUM 16 (2026-10-12T20:50Z, the round-28 L8 compile, held @2d7cb54189 until every ETFS_RIVALS order was terminal): the eight
+BLOCKING or ARMED items surfaced after the site-Z slug (REMEDIATION_v21.Z.md) are GRADUATED into
+`remediations/REMEDIATION_v1.dell1.md` with their true states. REMEDIATED: Z-S79, Z-S80, D1-W25-S1, D1-W25-S2 and
+D1-W26-S1. OPEN: Z-S81, D1-S2, and the tool half of D1-S15, whose round-28 condition is DISARMED. C-S85's two owed
+grades are given (tc-1 MET, aw-1 NOT MET); its clock advance belongs to site Z's file (one-writer), so it is carried for
+site Z's CVO. Row D1-C-S17.**
+
+**ADDENDUM 17 (2026-10-12T20:50Z, on COO~V1 msg 4555 and the CTO ruling, msg 4550): the four site-Z carrier closures superseded
+@8e8ea2b725 are ADJUDICATED SOUND. All 5 of 5 criteria grade from dell1 on the committed bytes, including PREFLIGHT AC1
+MET, so none stays pending. Row D1-C-S18.**
+
 ```json
 [
   {
@@ -426,6 +437,62 @@ and the line beneath reads 'Prices before 2026-10-07 are adjusted for a 15-for-1
         "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/WA1_PAGE_READ_20261012.md @44747fa655",
         "task-orders/ETFS_RIVALS.TO-RIV-wa-1.split-adjusted-series.md:89; this file ETFS_RIVALS-D1-C-S1, D1-C-S13; INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S15",
         "2.0.0_SA_COO~V1 msg 4449"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S17",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-12T20:50Z",
+    "one_line": "Round-28 L8 compile (dell1): the 8 BLOCKING/ARMED investigation items the gate reads as undispositioned are GRADUATED into REMEDIATION_v1.dell1.md, each with the state measured at HEAD: 5 REMEDIATED, 3 OPEN.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "ETFS_RIVALS-Z-S79",
+      "ETFS_RIVALS-Z-S80",
+      "ETFS_RIVALS-Z-S81",
+      "ETFS_RIVALS-D1-S2",
+      "ETFS_RIVALS-D1-W25-S1",
+      "ETFS_RIVALS-D1-W25-S2",
+      "ETFS_RIVALS-D1-W26-S1",
+      "ETFS_RIVALS-D1-S15"
+    ],
+    "spec_asserts": "Spine L10 (CLAUDE.md rule 27): ONE SLUG to the CTO only after every task order of the round is terminal and every BLOCKING or ARMED row is dispositioned. surprise-row-gate.py:1011-1028.",
+    "world_is": "- Census at landing (2026-10-12T20:50Z): .tools/surprise-row-gate.py's own _latest_dispositions + _gating_item_ids over ETFS_RIVALS read 264 investigation items and 8 GATING undispositioned (Z-S79, Z-S80, Z-S81, D1-S2, D1-W25-S1, D1-W25-S2, D1-W26-S1, D1-S15). The same 8 were read at 16:0xZ; none was added since.\n- Each item's state is the one in its REMEDIATION_v1.dell1.md row, measured on 2026-10-12. REMEDIATED: Z-S79/Z-S80 (disarmed @c07077f4e1), D1-W25-S1/S2 (23 passed at HEAD), D1-W26-S1 (readers skip below_tolerance; the served audit shows none). OPEN: Z-S81, D1-S2, and D1-S15 (tool half; round-28 condition disarmed).\n- Task orders: to-check --all --project ETFS_RIVALS reads 2 entries, both seat-home POINTER files (TO-PREFLIGHT-bbg-signin-20261009, TO-RELAY-tw1-vehicle-log-20261009), which the gate counts terminal by proof. The 7 that held the slug at 16:0xZ are terminal: the 3 APPLY orders complete (executor instances VALID per the issuer, read complete here at 19:22Z), and the 4 site-Z carriers superseded @8e8ea2b725, adjudicated in row D1-C-S18.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "remediations/REMEDIATION_v1.dell1.md (this commit)",
+        ".tools/surprise-row-gate.py census at 2026-10-12T20:50Z",
+        "python .tools/to-check.py --all --project ETFS_RIVALS at 2026-10-12T20:50Z",
+        "close packet @55a689301c; 2.0.0_SA_COO~V1 msgs 4468, 4495, 4555"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S18",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-12T20:50Z",
+    "one_line": "The four site-Z carrier closures (ETFS_RIVALS.TO-RELAY-tw1-vehicle-log-20261009, ETFS_RIVALS.TO-CLOSE-XB-AND-AMENDMENT8-20261011, ETFS_RIVALS.TO-TRANSCRIBE-20261011-20261012, ETFS_RIVALS.TO-PREFLIGHT-bbg-signin-20261012), superseded @8e8ea2b725 under the CTO ruling, are ADJUDICATED SOUND. Every criterion of each (RELAY AC1, CLOSE-XB AC1, TRANSCRIBE AC1 and AC2, PREFLIGHT AC1 judgment MET) grades from dell1 on the committed bytes, so none stays pending on ~ZV.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "CTO_RULING_R28_SITEZ_CARRIERS_SUPERSEDED_20261012.md (1.0.0_SA_CTO~DELL1, msg 4550). (1) Each closure cites its commit by hash on origin/box/sitez, with the bytes read by git show and a positive control. (2) Each criterion is graded by its own invocation from dell1, and a site-Z-only criterion stays PENDING. (3) The CVO adjudicates the closures as JUDGMENT.",
+    "world_is": "- Ancestry: 2a0a40bfe4, 55d280983b, 4e3fbbc9f5, 0689a88409 and 956460aeab are each ancestors of origin/box/sitez 8cb06c7653 (git merge-base --is-ancestor, fetched 20:4xZ).\n- Bytes, this seat's own git show, line counts by fixed-string grep:\n  - RELAY AC1: 2a0a40bfe4 0.0.3_BG_BBGTerminal/VEHICLE_LOG_20261009_1100Z.txt is 2583 bytes, '-- DID THIS FIRE REACH THE ENRICHMENT LEG? --' x1. Later dates: 4e3fbbc9f5, 0689a88409, 55d280983b.\n  - CLOSE-XB AC1: 55d280983b 0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261010_1100Z.enrich.txt is 1215 bytes, 'RIVALFUNDS ENRICHMENT STEP' x1 and 'ENRICHMENT EXIT CODE: 97' x1.\n  - TRANSCRIBE AC1: 4e3fbbc9f5 VEHICLE_LOG_20261011_1100Z.txt is 6128 bytes, 'DID THIS FIRE REACH' x1. AC2: 0689a88409 VEHICLE_LOG_20261012_1100Z.txt is 1918 bytes, the same line x1.\n  - PREFLIGHT: 956460aeab task order is 7459 bytes, 'STEPS 1-3 ALL PASSED' x1.\n- Control: git show 2a0a40bfe4:<deliverables>/0.0.3_BG_BBGTerminal/NO_SUCH_FILE.txt -> 'fatal: path ... does not exist', so an absent path does not read as content.\n- Criterion denominators, from each order's <criterion> elements: RELAY 1 (AC1), CLOSE-XB 1 (AC1), TRANSCRIBE 2 (AC1, AC2), PREFLIGHT 1 (AC1 judgment). That is 5 of 5 graded from dell1 and 0 site-Z-only, so no carrier stays pending.\n- PREFLIGHT AC1 judgment ('the Terminal was reachable at the pre-flight') is graded MET here. The report reads steps 1-3 passed at 10:29:33-10:30:48Z, with health ok:true and a returned reference_data draw (SPY US Equity PX_LAST 778.57). The executor's instance @0f2b83b9cc names the 2026-10-11 signed-out fire as its negative arm. The 2026-10-12 11:00Z fire's own log then reads REACHED with 0 session-failure lines (D1-C-S12), which corroborates the session holding to the fire, though the criterion binds the pre-flight instant only.\n- Not done: the executors' own proof instances for RELAY, CLOSE-XB and TRANSCRIBE were not written (site Z weekly limit, reset 2026-10-14 06:00Z). The ruling makes the committed record the evidence, and this seat graded those bytes, not ~ZV's report of them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/ledger/CTO_RULING_R28_SITEZ_CARRIERS_SUPERSEDED_20261012.md",
+        "commit 8e8ea2b725 (the four closures)",
+        "git show of 2a0a40bfe4, 55d280983b, 4e3fbbc9f5, 0689a88409, 956460aeab on origin/box/sitez 8cb06c7653 (20:4xZ)",
+        "deliverables/0.7.0_AE_CloudOps~ZV/ETFS_RIVALS.TO-PREFLIGHT-bbg-signin-20261012.proof_of_spec.json @0f2b83b9cc",
+        "this file ETFS_RIVALS-D1-C-S12",
+        "2.0.0_SA_COO~V1 msg 4555; 1.0.0_SA_CTO~DELL1 msg 4550"
       ]
     },
     "disposition": "GRADUATED"

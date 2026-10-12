@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-12T14:05:54Z",
+ "written_at": "2026-10-12T20:50:32Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -1520,9 +1520,9 @@
    "escalation": {
     "to": "andrew",
     "ref": null,
-    "at": "2026-10-11T04:05:20Z",
-    "by": "0.0.0_AB_MSTR~DELL1",
-    "reason": "client-facing portal PROD promote: /advisor-intelligence carries the ADVI_BILLING fee panel and is in FIRM_ALLOWED_PATHS for all three partner firms; only Andrew's word releases it (laptop CTO msg 108193)"
+    "at": "2026-10-12T20:50:32Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Client-facing portal PROD push: waits on Andrew's word under the push law"
    }
   },
   {
@@ -1879,6 +1879,114 @@
     "crossbox": null,
     "ruled_by": "cluster-lead",
     "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261012T205005Z-4a62",
+   "project": "ADVI_FIRMBKTS",
+   "subject": "SEV1 fix check: may we send ONE real SEV1 test page to your phone, to prove alerts reach you again after the Transactional-default fix? REC yes",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_SEV1_SMS_DELIVERY_STATUS_LOGGING_20261011.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-12T20:50:05Z",
+   "kind": "fork",
+   "context": "Your 10-11 test text arrived, so the fault is SNS's routing; the fix sets the account default SMS type to Transactional. Only a real page proves delivery, and that is a second text to your phone (CTO ruling AMENDMENT 6).",
+   "rec": "Yes: one page reading 'Opal SEV1 test, no action', sent once after the fix applies; delivered = SEV1 paging restored, failed = an AWS Support case. No other text is sent.",
+   "scope": {
+    "measured_at": "2026-10-12T20:50:05Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/modules/opal_name",
+     "infra/aws/terraform/portal-auth"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_IAMROLES202609 placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/portal-auth declares /aws/lambda/auth-validator-edge, /aws/lambda/cache-control-injector, /aws/lambda/opal-portal-authorizer (+53), also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/portal-auth declares cross-firm-secret-deny, also declared by root infra/aws/terraform/shared-infra named by IRPT_BCKEND on dell2"
+     ],
+     "shared": [
+      ".tools/ds-precommit-check.py is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-12T20:50:30Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "A text to Andrew's own phone: only his word sends it"
+   }
+  },
+  {
+   "id": "dell1-20261012T205007Z-8c66",
+   "project": "AMGT_HARVST",
+   "subject": "Sign in once to WSJ and Barron's for the research pull (HVST-bx-4)",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND_ANALYSIS.round82.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-12T20:50:07Z",
+   "kind": "act",
+   "context": "The pull's paywalled sources need your subscriber login; every other AMGT_HARVST piece is built and live.",
+   "rec": "Sign in at the session the runner opens; nothing else waits on you here.",
+   "scope": {
+    "measured_at": "2026-10-12T20:50:07Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/logic/registry overlaps the write set of IRPT_BCKEND placed on dell2 (infra/logic/registry)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~2/check_e2e.py is under the home of project AMGT_RESAPP (org/missions/D5/AMGT/AMGT_RESAPP)",
+      "org/critical_paths/.open_deploys/harvst-bx2-enqueue-fence-20261012.json overlaps the write set of NFRA_IAMROLES202609 placed on sitez (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/harvst-bx2-enqueue-fence-20261012.json overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/harvst-bx2-enqueue-fence-20261012.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/harvst-bx2-enqueue-fence-20261012.json overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/.open_deploys)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/opal_data_harvest/worker.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/transport.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/test_ab3_account_402_fresh_session.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/tab_transport.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/test_aw1_origin_load_wait.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/publishers.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-12T20:50:31Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "His subscriber login: only he can sign in"
    }
   }
  ]
