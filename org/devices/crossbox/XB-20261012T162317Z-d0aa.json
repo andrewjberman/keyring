@@ -10,16 +10,16 @@
  "subject": "ETFS_RIVALS: four proof instances owed (CLOSE-XB AMENDMENT 1) -- the round-28 slug waits on them",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ETFS_RIVALS.TO-CLOSE-XB-AND-AMENDMENT8-20261011.md",
  "opened_at": "2026-10-12T16:23:17Z",
- "state": "OPEN",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-12T16:24:38Z",
   "bus_message_id": "3a2d6fc3-40f8-40cb-8826-4ab53e918165"
  },
  "ack": null,
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-12T21:45:21Z",
+  "from_by": "2.0.0_SA_COO~V1",
+  "to_at": "2026-10-12T21:45:21Z",
+  "to_by": "2.0.0_SA_COO~V1"
  }
 }

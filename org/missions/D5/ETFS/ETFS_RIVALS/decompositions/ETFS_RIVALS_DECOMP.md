@@ -1439,3 +1439,7 @@ xc1 FAIL 4, xd1 FAIL 2 with its control PASS).
   site); no S3, no live search.
 - Checks: `round29/checks/xd1_planted_render_check.py` (AC1 and AC2; base FAIL 2, its control PASSES at the base and must
   keep passing). The organic case (no name with a discontinuity) is the negative arm, read when it occurs.
+
+- APPLY LEG (round-less executor order, not a cell; 2026-10-12, issuer): `TO-APPLY-R29.rivalfunds-packages-deploy-dell1` deploys the four cells'
+  code to the rivalfunds packages at pin de3c6bf211 under the signed pair (COO @ff7e96adf6, CTO `ledger/NEVER_WIDEN_ROUND29_DEPLOY_CTO_HALF.md`);
+  window ruled by the CTO: after the 2026-10-13 13:00Z sweep is read. It adds no cell and changes no criterion.
