@@ -29188,3 +29188,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "No kept ref can be read through the deployed function. This function answers performance only for a firm in COMPOSED_FIRMS with a holdings source, which today is Inflection (orion) alone; 49financial is refused by design and cottonwood has no holdings source. D2's refs are 8 49financial and 1 cottonwood, none inflection. So the after-read cannot be run on these refs, and the 49financial MOVES (64 accounts across four windows) describe the reader's output over the gold, not an answer this function serves; whether another function serves 49financial performance through holdings_gold.py is not established here. I did not upload or apply, and I did not substitute an offline read for the live before-read. Needs from the issuer: an Inflection single-account selection reference at the current directory revision with its window (from the owner of the selection flow; this seat cannot read or write the store), or an amended after-read and a re-signed pair that states what is served for 49financial. Not established: whether a current Inflection selection exists; the PATH B route's use of this reader."
 }
 ```
+
+```json
+{
+ "id": "IRPT_BCKEND-D2-S114",
+ "project": "IRPT_BCKEND",
+ "fabric": "dell2",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-10-12T22:52:00Z",
+ "hazard_standing": "INERT",
+ "class": "OBSERVATION",
+ "one_line": "Round 168 released the claim-by-status reader to irpt-performance-adapter (abep4h7R, 22:35:06Z), and its changed path has not run on one live answer: the only firm the function computes for is Inflection, and no seat can obtain an Inflection selection on demand, so the close is a wait on an organic answer.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lambda get-function-configuration 2026-10-12T22:50Z: irpt-performance-adapter CodeSha256 abep4h7RngMS9JomQUdkcOT3EZ+W953OdxeK0HkdzFo=, LastModified 22:35:06Z, Successful",
+   "logs filter-log-events /aws/lambda/irpt-performance-adapter since 22:35:00Z, auto-paginated: TypeError 0, Traceback 0, REPORT 9, irpt_retained_phases 9 (the packet names all 9 as the executor's smoke invokes)",
+   "git merge-base --is-ancestor 3381c42f13 HEAD: yes (the source-map re-pin)",
+   "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_168_P_DRAIN_END_20261012.md sections 'What was NOT exercised live' and 'Open item'"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CLAUDE.md rule 27 L2: no FWD is a wait; every outcome is provable by an act a seat can take on demand, and a genuinely essential wait is qualified on the outcome with its reason and Andrew's word.",
+ "world_is": "The packet states the wait plainly: the walker cannot set the header Firm control and the page ignores ?firm= for an internal viewer, so no Inflection answer can be driven. The act that would end the wait is a /ui-walk flag that selects the header Firm option (a shared skill), or a driven invoke with an Inflection selection created by an identity allowed to create one. Neither is cut. The figures do not move (30,843 equal, offline); what is unexercised is the claim and the two counts on a served answer.",
+ "notes": "Read row for ADJUDICATION_v69, filed so the wait has a carrier. Digests, counts and times only."
+}
+```
