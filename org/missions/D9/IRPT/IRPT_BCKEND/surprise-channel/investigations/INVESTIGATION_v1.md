@@ -29108,3 +29108,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The signed digest exists only through the candidate map. If the apply order runs the build against the real map without landing the holdings_gold.py re-pin first, the zip it builds equals the live one (the merged claim change does not ship) while the order reads as done, and the digest gate against abep4h7R... aborts. The packet's Branch A step 3 names the re-pin; the order that carries the apply must too. Nothing was edited or applied here."
 }
 ```
+
+## IRPT_BCKEND-D2-S111 -- disarm evidence for row W337-S2: the stale source-map pin fails safe at the packet's digest gate; the apply order carries the re-pin first
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S111",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-12T20:59:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARM EVIDENCE for row IRPT_BCKEND-D2-W337-S2, filed by its disarm owner the turn it was read: the source map's stale holdings_gold.py pin fails SAFE (the digest gate aborts a build that is not the signed bytes), and the apply order that carries it is mine to cut with the re-pin as its first limb.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read by this seat: the packet deliverables/0.9.0_WK_IRPT_BCKEND~337/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-482.md Branch A: step 3 lands the single re-pin (holdings_gold.py -> 05219b8444, sha256 5be3ce009412...), step 4 runs BUILD_ONLY and compares the printed digest to abep4h7RngMS9JomQUdkcOT3EZ+W953OdxeK0HkdzFo= and ABORTS on any difference, step 5 uploads only after that; step 2 aborts unless the live CodeSha256 equals kMB8xCI93/9QLUnzglVIs0EIRY07SSLBiU5ln8iJwUc=.",
+      "read by this seat: the real lambda-source-map.json still pins holdings_gold.py for irpt-performance-adapter at 361c44fa9d (the worker's row and the file agree; the live artifact_sha256 in the map at line 3543 equals the live CodeSha256 the packet names). The issuer re-computed git show 05219b8444:performance/holdings_gold.py | sha256sum = 5be3ce00941215c6..., equal to the worker's built member and the packet's repo blob.",
+      "this order, IB-pr-482, edits no file under infra/ and applies nothing; no byte of the function has moved."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "The stale pin cannot ship wrong bytes: a build from the real map reproduces the LIVE zip, and the packet's digest gate aborts any build whose printed sha256 is not abep4h7R... before an upload. What it CAN do is waste an apply that reads as done. So the apply order (to 0.7.0_AE_CloudOps~IB2, cut after the pair is signed) carries the re-pin as its FIRST criterion, with the digest comparison as the second, and a criterion that the live CodeSha256 afterwards equals abep4h7R.... Owner of that order: 2.0.0_SA_COO~P2. This row closes when that order is issued with those limbs. Not measured: any apply."
+}
+```

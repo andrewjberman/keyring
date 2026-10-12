@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261012T210146Z-725f",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~Y2",
+ "to_serial": "0.7.0_AE_CloudOps~ANL",
+ "subject": "IRPT_ANLREQ: the ticket_id of the one record named, read-only (NFRA_TRNSPT r24)",
+ "body_path": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/f2/CROSSBOX_CALL_TICKET_ID_OF_ONE_REQUEST_20261012.md",
+ "opened_at": "2026-10-12T21:01:46Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
