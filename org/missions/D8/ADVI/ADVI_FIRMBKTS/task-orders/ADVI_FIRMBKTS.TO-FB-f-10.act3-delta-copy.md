@@ -37,14 +37,14 @@ Bring `s3://opal-data-49financial/advi/49financial/platinum/` equal to a FRESH m
 `opal-data-bd`, taken after act 2 so the old home no longer changes. Steps:
 1. Pair, entry (conditions 3, 4).
 2. `python r3_f7.py manifest --out D/F7_MANIFEST_2.tsv.gz` where
-   `D=org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11`; `manifest --verify` it.
+   `D=org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act3`; `manifest --verify` it.
 3. The residue bound before: `python r3_f7.py residue --record before --dir "$D"` (the counts under `gold/advi/` and
    `_campaign/`, unchanged by round 2's copy).
 4. The delta, with `KEEP_NEWER` = `2026-10-12T06:22:08Z` (act 2's `MOVE_TS`): first the READ-ONLY plan,
-   `python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7_delta.py plan --manifest org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11/F7_MANIFEST_2.tsv.gz --keep-newer-than 2026-10-12T06:22:08Z`; print every count
+   `python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7_delta.py plan --manifest org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act3/F7_MANIFEST_2.tsv.gz --keep-newer-than 2026-10-12T06:22:08Z`; print every count
    (ABSENT, EQUAL, DIFFERS, KEPT-NEWER, REFUSED). DIFFERS is expected near 49,000 (the producers rewrote the served keys
    before the move); REFUSED above 0, or a plan that names a class outside the 11, means STOP before the first write. The
-   ownership key prints BY NAME. Then `apply --manifest ... --keep-newer-than 2026-10-12T06:22:08Z --dir org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11 --execute` in bounded runs
+   ownership key prints BY NAME. Then `apply --manifest ... --keep-newer-than 2026-10-12T06:22:08Z --dir org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act3 --execute` in bounded runs
    (`--budget-seconds`) until it prints its completion line; it writes `F7_DELTA_ROLLBACK.tsv` BEFORE each overwrite and
    fsyncs it. Read every line; `errors` or `stale-source` above 0 means STOP. Commit the rollback record with the instance.
 5. AC1-AC3. The residue bound after.
@@ -60,7 +60,7 @@ Bring `s3://opal-data-49financial/advi/49financial/platinum/` equal to a FRESH m
 ## 3. SURFACES
 
 <paths>
-org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11/
+org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act3/
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
 org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -69,10 +69,10 @@ org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION
 ## 4. PROOF OF SPEC (literal)
 
 <proof_of_spec>
-Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11/ADVI_FIRMBKTS.TO-FB-f-10.act3-delta-copy.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-f-10"><invocation>timeout 115 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7.py manifest --verify org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11/F7_MANIFEST_2.tsv.gz; echo "exit=$?"</invocation><expect>MANIFEST VERIFIED: every key placed once by address()</expect></criterion>
-  <criterion id="AC2" cell_refs="FB-f-10"><invocation>timeout 115 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7.py compare --manifest org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11/F7_MANIFEST_2.tsv.gz; echo "exit=$?"</invocation><expect>DEST-VS-MANIFEST: EQUAL</expect></criterion>
-  <criterion id="AC3" cell_refs="FB-f-10"><invocation>timeout 110 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7.py residue --check --dir org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11; echo "exit=$?"</invocation><expect>RESIDUE UNCHANGED: gold/advi/ and _campaign/ key counts equal before, after and now</expect></criterion>
+Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act3/ADVI_FIRMBKTS.TO-FB-f-10.act3-delta-copy.proof_of_spec.json`.
+  <criterion id="AC1" cell_refs="FB-f-10"><invocation>timeout 115 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7.py manifest --verify org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act3/F7_MANIFEST_2.tsv.gz; echo "exit=$?"</invocation><expect>MANIFEST VERIFIED: every key placed once by address()</expect></criterion>
+  <criterion id="AC2" cell_refs="FB-f-10"><invocation>timeout 115 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7.py compare --manifest org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act3/F7_MANIFEST_2.tsv.gz; echo "exit=$?"</invocation><expect>DEST-VS-MANIFEST: EQUAL</expect></criterion>
+  <criterion id="AC3" cell_refs="FB-f-10"><invocation>timeout 110 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7.py residue --check --dir org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act3; echo "exit=$?"</invocation><expect>RESIDUE UNCHANGED: gold/advi/ and _campaign/ key counts equal before, after and now</expect></criterion>
 </proof_of_spec>
 
 AC2's expect is the destination-versus-manifest line alone: after act 2 the source's drift line is not the verdict (the
@@ -130,6 +130,11 @@ F7_DELTA_ROLLBACK.tsv --execute`, per key. Print the manifest's ownership key BY
 LastModified in the entry (the runbook's step 2 read).
 RE-ADDRESSED (the broker refused the GO because the face still named the round-3 worker `0.9.0_WK_ADVI_FIRMBKTS~11`):
 `<issued_to>` is `0.7.0_AE_CloudOps~FB1` and `<slot>` `~FB1`, the executor AMENDMENT 2 already named; the `<paths>` block is unchanged.
+AMENDMENT 4 (2.0.0_SA_COO~B1, 2026-10-12, on `0.7.0_AE_CloudOps~FB1`'s report): the TREE_DELIVERABLES lane rule refuses an actor
+seat under a worker's deliverables folder, so every path of this order (the `<paths>` block, the manifest, the rollback record,
+the instance and AC1 to AC3) now reads `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act3/`. The act's
+reads at @b509efc942 stand: manifest 53,031 objects VERIFIED; plan absent 121, equal 3,800, differs 49,110, kept-newer 0,
+refused 0, versioning Enabled.
 Gate limb: the `<status>` of a parked order amended by its issuer to pending and criteria invocations edited by the issuer; GATE
 viii reads `<placeholders>DELTA_TOOL` at HEAD and every token of the invocations is declared or absent.
 
