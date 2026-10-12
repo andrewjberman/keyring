@@ -95,3 +95,9 @@ Checked and not a finding: portal origin/DEV at 183860ba (IB-pr-483) was landed 
 | item | result | commit |
 |---|---|---|
 | IRPT_BCKEND round 168 | ADJUDICATION_v69 + REMEDIATION_v45: the adapter release read live (abep4h7R, TypeError 0, 9 smoke REPORTs); 3 dismissed; my row D2-S114 graduates to the CTO (changed path unexercised live, close is an organic wait); ARMED 0. Slug sent. First commit refused by an open merge in the shared tree (the D2 drain); retried after it cleared | 0827bac92d |
+
+## Addendum, 23:23Z to 23:30Z (msg 6661)
+
+| item | result | commit |
+|---|---|---|
+| DSGN_IRPTV1 round 31 | ADJUDICATION_v20 + REMEDIATION_v11: D2-W69-S1 disarm recorded on its owner's ruling; W65-S1, W62-S2, S22 read met on portal DEV 183860ba; 14 dismissed, 4 OPEN; ARMED 0. Slug sent. A second open-merge refusal, retried after it cleared | 9ac0c902f4 |
