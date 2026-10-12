@@ -2090,3 +2090,32 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
  "notes": "For the limb's owner, not for this lane: the applier's own NEVER-2 read reached the same verdict independently and is what the act relied on. Not measured here: whether the same stale-copy effect is reachable on other roots, and whether any of the 69 worktrees is prunable (not this lane's write surface, and no worktree was touched). Same stale-copy class the mp23 instance recorded. Statuses, counts, hashes and times only; no transcript text, mail content or prompt text."
 }
 ```
+
+```json
+{
+ "id": "NFRA_TRNSPT-D2-S33",
+ "project": "NFRA_TRNSPT",
+ "fabric": "dell2",
+ "surfaced_by": "0.7.0_AE_CloudOps~TR2",
+ "surfaced_at": "2026-10-12T01:15:00Z",
+ "hazard_standing": "INERT",
+ "one_line": "TR-sa-23 step 7(c) as SIGNED cannot be exercised: the ticket id it names, PROBE-NOSUCH-0, fails the ticket service's own _TICKET_ID_RE in the DISPATCHER (deployed line 1713) and falls to the catch-all 404 at line 1729, so the caller check and the body-key 400 the CTO cited (:1544-1550) are never called. The probe read 404 application/json, which is none of the three signed outcomes.",
+ "class": "BLOCKING",
+ "disarm_owner": "1.0.0_SA_CTO~DELL2 (signed step (c) and chose the id's shape), with 2.0.0_SA_COO~T2 holding the bound that forbids a second probe post without its word. This seat surfaces and holds; it does not re-cut the condition.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "the probe, run once at 2026-10-12T01:11:20Z exactly as the order specifies (base read from the LIVE function's TICKET_API_BASE = https://opalinvest.dev; bearer from opal/ticketing/svc-commentary .token, never printed; body the two keys plus probe_extra_key): PROBE-STATUS-INT 404, PROBE-CONTENT-TYPE application/json, body {\"error\": \"no route for POST /api/scoped/tickets/PROBE-NOSUCH-0/commentary-draft\"}, 82 bytes, PROBE-BODY-NAMES-PROBE_EXTRA_KEY False. Status and content type read as PARSED values per CTO condition 3",
+   "the DEPLOYED opal-ticket-api package, fetched from get-function (base64 sha256 lAt/vc4XG7/H323YAjcxRLHt/fu+hTjvNvFvLm0rT8Q=, LastModified 2026-10-12T00:22:08Z, 1 member): line 156 _TICKET_ID_RE = re.compile(r\"^TCK-\\d{8}-[0-9a-f]{8}$\")",
+   "the same deployed bytes, dispatcher lines 1713-1729: the branch that can reach commentary-draft is guarded by _TICKET_ID_RE.match(tail[0]) at :1713; the commentary-draft branch is :1725-1726; the catch-all return _resp(404, {\"error\": f\"no route for {method} {path}\"}) is :1729 -- the ONLY occurrence of that string in the package, so the ticket service itself emitted the 404",
+   "the same deployed bytes, :1543-1550: the caller check (authorize COMMENTARY_DRAFT then _deny) and the 400 'unexpected field(s) on the commentary-draft path' both live INSIDE commentary_draft_ticket, which the dispatcher never called",
+   "PROBE-NOSUCH-0 tested against the extracted pattern: no match. Nor do TCKT-20261012-0001, PROBE-NOSUCH-0000, T-0001 or PROBENOSUCH0. A conforming made-up id is of the shape TCK-<8 digits>-<8 lowercase hex>",
+   "the act's own state is coherent and proven: AC1 reads R23-SA23-OK digests=1 live=['xC1GDXXp'] local_zip=xC1GDXXp base_is_front_door=True (rc=0), and the targeted 0-diff re-plan returns 'No changes'"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO half @ee3efa0504, step (c) as signed: 'ONE post with the service bearer to the same made-up ticket path, with a body carrying ONE EXTRA KEY beside the two. The route checks the caller, then the body's keys, before it reads any ticket (:1543-1550).' 400 application/json naming the unexpected field is the pass; 403 is one finding; 401, HTML or 5xx is another.",
+ "world_is": "True of the HANDLER, not of the ROUTE. The dispatcher tests the ticket id's SHAPE before it dispatches to the handler, so an id that fails ^TCK-\\d{8}-[0-9a-f]{8}$ never reaches the caller check or the body-key check. With the id the order names, the probe's reachable answers are 404 and nothing else: the pass is unreachable and so are all three enumerated branches. The 404 is also evidence AGAINST the rollback branch it superficially resembles -- the body is the ticket service's own router error, reached past the front door's auth layer (which answers 401 unauthenticated, per the packet's section 2), so the front door and the gateway DID carry the bearer to the right origin. The base switch is not implicated by any read taken here.",
+ "notes": "THE ACT IS NOT ROLLED BACK ON THIS READING. Step 8's rollback is the branch for a measured failure, and the CTO's two rollback rationales are 'the route does NOT admit it' and 'the front door or the gateway did not carry it'; both are contradicted by the evidence above. Re-cutting a signed condition, and ruling that an unexercisable instrument is or is not a failure, are not the applier's acts. The ledger is HELD on this row, not closed and not rolled back, and the applier's one report carries the single ask: the word on ONE more post with a conforming id (e.g. TCK-20261012-deadbeef, which reaches :1725 and then the body-key 400), or the word to roll the base back. The probe wrote nothing and read no ticket: the path from :1702 to :1729 contains no write. No bearer, address or secret value is recorded anywhere in this row."
+}
+```
