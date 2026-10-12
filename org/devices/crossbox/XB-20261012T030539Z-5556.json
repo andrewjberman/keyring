@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261012T030539Z-5556",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "dell2",
+ "from_serial": "2.0.0_SA_COO~Q1",
+ "to_serial": "2.0.0_SA_COO~P2",
+ "subject": "QUOTE IRPT_BCKEND 878: 113,262 cells, 878 requests, finish 2026-10-14; enrolment not quoted",
+ "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/requests/IRPT_BCKEND-AS-TRADED-CLOSES-878.quote.json",
+ "opened_at": "2026-10-12T03:05:39Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-12T03:06:47Z",
+  "bus_message_id": "0913cfc3-dd01-4dc4-ad90-f6d5cfd49849"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
