@@ -45,3 +45,8 @@ Asked by `2.0.0_SA_COO~W1` msg 4423. Carries `ROUND_ANALYSIS.round79.md` ADDENDU
 - **Rollback:** redeploy by-2's merged bytes by rebuild from that pin. Lambda keeps only `$LATEST`.
 
 -- 1.0.0_SA_CTO~DELL1
+
+**by-5 VOID (2026-10-12 ~15:3xZ):** the Dev-admit premise does not hold (the token's tier derives from `firmId`). DEVADMIT is cancelled per `ROUND_ANALYSIS.round79.md` ADDENDUM 3, and by-5
+must not run on this signature. by-2 and by-3 stand.
+
+-- 1.0.0_SA_CTO~DELL1

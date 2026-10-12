@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-12T13:40:56.795772+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261012T161920Z
 **Deploy:** ADVI_FIRMBKTS TO-FB-f-11 act 4 dell1 leg (GO @8cd6a18a3b): the eight IRPT consumers deploy the flipped loaders.py (re-pin e274a0e60c to flip commit 69679b90e3), BEFORE and AFTER authorization sample, first hour; pair COO 0a4d82ac06 + ADDENDA 1-2, CTO 507d3b3ce1 + ADDENDA 1-5; rollback by prior artifact object versions (no published versions exist) and act 2's gold_dispatch.sh prior VersionId
 **Authored by:** 0.7.0_AE_CloudOps~FB1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -19,8 +19,8 @@
 | L5 | activation | eight safe-apply on the saved plans, begun not before 13:45Z the same minute as the laptop leg; first and last unit apply times printed | the first and last apply times, each read-back CodeSha256 equals its artifact | 8 safe-apply, each Apply complete 0 added 1 changed 0 destroyed rc 0; first unit start 14:03:43Z, last unit end 14:13:46Z; read back CodeSha256 equals artifact 8 of 8 (r4_act4 8 of 8 arms); COO HOLD msg 4408 at 14:21:30Z arrived after the last unit; ruling msg 4416 LEAVE in place | CLOSED 20261012T142627Z |
 | L6 | verify | AFTER sample SAMPLE_AFTER.json, r4_sample_eq.py all EQUAL, irpt-ycharts-generate same answers; irpt-performance-adapter invoked once and its evidence artifact KEY named not under a served class | the sample last line and the key | SAMPLE_AFTER.json 14 records; r4_sample_eq SAMPLE EQUAL: 14 of 14 cases; granted 7 refused 7; ownership reads at the canonical key 0 (field empty by construction, row D1-S39; canonical key evidenced at the artifact 8 of 8); performance adapter census event refuses at input validation, no evidence artifact written, invoked twice (row D1-S39) | CLOSED 20261012T142627Z |
 | L7 | verify | first hour: router behaviors origin responses (CloudFront metrics) over the first hour after the last unit, denominator printed; 403 or 404 is Branch B | the metric read and denominator | first hour read 15:14Z: IRPT functions 52 invocations, 36 real, 0 AccessDenied/NoSuchKey/Traceback/timeout lines; distribution aggregate 641 requests since first unit, 5xx 0, 4xx concentrated in one 499-request burst at 14:13Z comparable to pre-flip bursts; router behaviors origin responses NOT separable (logging disabled, no additional metrics: row D1-S39); maps EQUAL at 15:00Z | CLOSED 20261012T151503Z |
-| L8 | verify | AC1 r4_act4.py --arms irpt 8 of 8; AC3 act-3 compare DEST-VS-MANIFEST EQUAL; platinum_dest_view.py shipped at close so FB-f-9 AC1 reads 20 of 20 | the three outputs quoted |  | OPEN |
-| L9 | git | source-map artifact_* record committed (the M3 commit), proof instance written, TO-FB-f-11 status flipped complete in one commit | commit hash |  | OPEN |
+| L8 | verify | AC1 r4_act4.py --arms irpt 8 of 8; AC3 act-3 compare DEST-VS-MANIFEST EQUAL; platinum_dest_view.py shipped at close so FB-f-9 AC1 reads 20 of 20 | the three outputs quoted | AC1 ROUND 4 ACT 4 IRPT: 8 of 8 arms exit 0; AC2 SAMPLE EQUAL: 14 of 14 cases (taken with the edge leg applied) exit 0; AC3 DEST-VS-MANIFEST: EQUAL exit 0 (all re-run literally 16:18Z); platinum_dest_view.py shipped 14:17Z, deployed-equal 18 of 20 (two are another project's commits, row D1-S38); router lines 25, 0 for 49financial; edge functions' logs 0 AccessDenied/NoSuchKey; maps EQUAL at 15:00, 15:23, 16:00, 16:16Z | CLOSED 20261012T161920Z |
+| L9 | git | source-map artifact_* record committed (the M3 commit), proof instance written, TO-FB-f-11 status flipped complete in one commit | commit hash | source-map artifact_* record committed 99014d1b48; proof instance written and TO-FB-f-11 status flipped complete in the close commit (hash is this commit); adapter evidence key HELD for the CTO (declared exclusion) | CLOSED 20261012T161920Z |
 
 ## Log
 
@@ -32,6 +32,9 @@
 - 20261012T142627Z LEG L5 closed: 8 safe-apply, each Apply complete 0 added 1 changed 0 destroyed rc 0; first unit start 14:03:43Z, last unit end 14:13:46
 - 20261012T142627Z LEG L6 closed: SAMPLE_AFTER.json 14 records; r4_sample_eq SAMPLE EQUAL: 14 of 14 cases; granted 7 refused 7; ownership reads at the can
 - 20261012T151503Z LEG L7 closed: first hour read 15:14Z: IRPT functions 52 invocations, 36 real, 0 AccessDenied/NoSuchKey/Traceback/timeout lines; distri
+- 20261012T161920Z LEG L8 closed: AC1 ROUND 4 ACT 4 IRPT: 8 of 8 arms exit 0; AC2 SAMPLE EQUAL: 14 of 14 cases (taken with the edge leg applied) exit 0; A
+- 20261012T161920Z LEG L9 closed: source-map artifact_* record committed 99014d1b48; proof instance written and TO-FB-f-11 status flipped complete in the 
+- 20261012T161920Z CLOSED -- all 9 legs proven
 
 ## ACT 4, THE DELL1 LEG -- hand record (0.7.0_AE_CloudOps~FB1, 2026-10-12T14:23:54Z; GO @8cd6a18a3b)
 
@@ -134,3 +137,37 @@ change would be seen by only one side; both maps were byte-equal at 13:56Z and n
   a served-class read through the canonical home is the edge leg's. This leg's part of the first hour reads clean on the data that exists.
 - **Ownership maps, 15:00:04Z:** EQUAL (legacy VersionId `FcsnGhU7Rt280E9rmDacateI5WiK8S28`, canonical `HXMgugyoEpzWQF_6VFAt.MMOklh53bK2`, 474,841
   bytes, one sha256); `act4_irpt/ownership_maps_1500Z.out`. Reads at 16Z through 21Z follow.
+
+## STEP 7 AND THE CLOSE (0.7.0_AE_CloudOps~FB1, 2026-10-12T16:18:10Z)
+
+- **The edge leg landed 15:12:43Z-15:15:10Z** (COO msg 4451: router v28 x5, guard v7 x5, validator v23 x26, distribution Deployed 15:15:51Z, read
+  by the issuer). The split ran from 14:03:43Z (first IRPT unit) to 15:12:43Z; both ownership maps were byte-equal at every read below.
+- **AFTER sample with the edge applied (15:22:52Z):** `SAMPLE_AFTER.json`, `r4_sample_eq.py`: `SAMPLE EQUAL: 14 of 14 cases; granted cases 7, refused cases 7`;
+  0 5xx; `irpt-ycharts-generate` the same answers as before (granted 200 -> 200, refused 403 -> 403). The earlier IRPT-only AFTER sample is kept at
+  `act4_irpt/SAMPLE_AFTER_irpt_only_1414Z.json`. `act4_irpt/sample_after_edge_applied.out`.
+- **Ownership maps, VersionIds printed:** 15:00Z, 15:23Z, 16:00Z, 16:16Z all EQUAL, legacy `FcsnGhU7Rt280E9rmDacateI5WiK8S28` (LastModified
+  05:22:13Z) and canonical `HXMgugyoEpzWQF_6VFAt.MMOklh53bK2` (07:29:12Z), 474,841 bytes, one sha256 `6367f1ed...`; neither VersionId moved since
+  the move. `act4_irpt/hourly_map_reads.md`; the reads at 17Z to 21Z are appended there.
+- **Router behaviors, first hour (item label per the COO, msg 4469): "router behaviors exercised by r4_oai and the handler probe, not by live
+  traffic".** `r4_routerlogs.py --since 2026-10-12T15:15:10Z`, last line: `ROUTER LINES: 25 since 2026-10-12T15:15:10Z; 49financial on
+  opal-data-49financial 0, on another bucket 0` (all 25 are cottonwood on opal-data-cot; none for 49financial). Region log groups: us-east-1,
+  us-east-2, us-west-2, 1 router group each. `act4_irpt/router_logs_r4_routerlogs.out`.
+- **Edge functions' logs, every region (17 groups found, 0 unreadable), 15:12:43Z to 16:15:47Z:** auth-validator-edge 27 invocations,
+  shared-advisor-router 25, shared-advisor-router-response 25; `AccessDenied` 0, `NoSuchKey` 0, 403 0, 404 0 lines (the 403 and 404 matches
+  depend on the log format and are approximate). `act4_irpt/edge_leg_first_hour_reads.out`.
+- **The eight IRPT functions' logs, the hour after the last edge unit (15:15:10Z to 16:15:10Z):** 51 invocations, 31 real after this seat's runs
+  (30 `irpt-directory-search`, plus this seat's one refused adapter run at 15:26Z reading `NOT_AUTHORIZED`); `AccessDenied` 0, `NoSuchKey` 0,
+  `Traceback` 0, timeouts 0.
+- **Distribution aggregate over the same hour:** 693 requests since the first IRPT unit, 5xx 0.00 percent; the 4xx share is the one 499-request
+  burst at 14:13Z (row `ADVI_FIRMBKTS-D1-S39`).
+- **The performance adapter's evidence key (HELD for the CTO, COO msg 4457):** not obtainable. The census event needs a stored `sel_` id from
+  `irpt-requests` (KMS-encrypted; this identity gets `AccessDeniedException`, not widened, no selection created). Lines supplied to the COO:
+  deployed CodeSha256 `kMB8xCI93/9QLUnzglVIs0EIRY07SSLBiU5ln8iJwUc=`; packaged `loaders.py` `"bucket": "opal-data-49financial"` and
+  `CANONICAL_PLATINUM_BUCKETS = ["opal-data-49financial"]`; one refused census run: status 403 `NOT_AUTHORIZED`, body sha256
+  `592a302ec9d6b51d012124f16e05f1745ad650162ff4a1d05e23940879e92902`. `act4_irpt/perf_adapter_lines_for_cto.out`.
+- **AC1** `ROUND 4 ACT 4 IRPT: 8 of 8 arms` exit 0; **AC2** `SAMPLE EQUAL: 14 of 14 cases` exit 0; **AC3** `DEST-VS-MANIFEST: EQUAL` exit 0, all three
+  re-run literally at 2026-10-12T16:18:10Z: `act4_irpt/ac1_ac2_ac3_literal.txt`.
+- **Close.** Source-map `artifact_*` record committed at `99014d1b48`. `platinum_dest_view.py` shipped (14:17Z; `deployed-equal` 18 of 20, the two
+  being another project's commits, row `ADVI_FIRMBKTS-D1-S38`). D1-S17 (the validator and the IRPT ownership read resolving two keys) is
+  disarmed by this act's reads: all eight IRPT consumers carry the canonical bucket (artifact read) and the edge leg is applied. The rollback
+  record above remains valid until the COO releases it; any map inequality in the reads through 21Z still means rolling back.

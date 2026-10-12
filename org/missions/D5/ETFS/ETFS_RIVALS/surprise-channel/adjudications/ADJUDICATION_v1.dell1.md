@@ -63,6 +63,11 @@ J1 NOT MET on its repeat clause, on the first page rendered with RIV-wf-1. BIDD,
 ending 2026-10-02 (2, 16 and 4 trades) beside a 10-02 cell marked repeat. The page names its second date axis only in each
 cell's hover title, which this seat does not read as 'shown as different'. Row D1-C-S15. D1-S15 stays ARMED on wa-1 (HELD).**
 
+**ADDENDUM 15 (2026-10-12 ~15:25Z, on COO~V1 msg 4449 and this seat's browser render of the served 2026-10-12 bytes): RIV-wa-1
+J1 MET. In the IDVZ Tokio Marine dialog on 30d, 23 of 23 prices draw a continuous curve from 3.29 to 3.58 across 2026-10-07,
+and the line beneath reads 'Prices before 2026-10-07 are adjusted for a 15-for-1 split'. The factor comes from the stored
+(MEASURED) row. Row D1-C-S16. All nine round-28 J1s now have a terminal grade.**
+
 ```json
 [
   {
@@ -397,6 +402,30 @@ cell's hover title, which this seat does not read as 'shown as different'. Row D
         "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/WD1_PAGE_READ_20261012.md @d7d52927cc",
         "task-orders/ETFS_RIVALS.TO-RIV-wd-1...md:107 (J1 face); this file ETFS_RIVALS-D1-C-S1, D1-C-S2",
         "2.0.0_SA_COO~V1 msg 4441; INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S15"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S16",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-12T15:25Z",
+    "one_line": "ETFS_RIVALS.TO-RIV-wa-1.split-adjusted-series J1 MET on the first page published with this code (2026-10-12). The IDVZ dialog for Tokio Marine, on 30d, draws a continuous curve from 3.29 to 3.58 across 2026-10-07 (23 of 23 prices) and names the 15-for-1 split, the factor coming from a stored row (claim MEASURED).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "wa-1 J1 (task order :89): the dialog for Tokio Marine (IDVZ) on the first page published with this code reads a continuous 30d curve near 3.3 across 2026-10-07 and names the 15-for-1 split, the factor coming from a stored row.",
+    "world_is": "- First page published with this code: the page partitions under s3://opal-data-etfs/rivalfunds/etfs/platinum/page/ run ... date=2026-10-08/, date=2026-10-09/, date=2026-10-12/ (delimiter listing, 15:2xZ). The issuer's record (fact 6-7) has date=2026-10-09's IDVZ chart last written 13:08:33Z, before the 14:49Z deploy, with no adjustment key. So 2026-10-12 is the first.\n- Bytes, this seat's read: charts/IDVZ.json (fetched from S3) has securities/TKOMY_US_Equity, name 'Tokio Marine Holdings Inc', with adjustment [{event_type split, ratio 15.0, ex_date 2026-10-07, claim MEASURED, source_url null}]. R30 (from 2026-09-09) has 23 points, 23 drawn, 0 None, min 3.306, max 3.571, largest one-step change 6.0%. Around the ex-date: 10-05 3.306, 10-06 3.367, 10-07 3.33, 10-08 3.35, 10-09 3.40 (all 'm', market close).\n- Render, this seat's: the served index.html (1,718,695 bytes) and IDVZ.json, laid out at their served paths (/rivalfunds/2026-10-12/ and /rivalfunds/2026-10-12/chart/IDVZ) and served from 127.0.0.1:8766 to Playwright. Clicking the Tokio Marine button opened popover rf-s-TKOMY_US_Equity with one chart frame (IDVZ). The 30d toggle is selected, and the line under it reads 'Last 30 days, 2026-09-09 to 2026-10-09: 23 prices, 1 trade marker.' The screenshot shows one unbroken line from 9 Sep to 9 Oct on a 3.29-3.58 axis, with no break at 7 Oct. Directly under the chart: 'Prices before 2026-10-07 are adjusted for a 15-for-1 split' (element .rf-ch-adj). Screenshots: this seat's scratchpad, wa1_tkomy_idvz_*_20261012.png (not committed).\n- Factor from a stored row: the adjustment comes from the stored Bloomberg corporate_actions row (claim MEASURED; D1-C-S13). wa-1's face asks for a stored row, not a particular writer, so the Bloomberg row satisfies it, unlike wi-1's served clause.\n- Not done: the page was rendered locally from the served bytes, not at the production URL, and only the 30d range and the IDVZ frame were read.\n- Round 28: all nine J1s now have a terminal grade. MET: wa-1, wc-1, wc-2, wg-1, wh-1, tc-1, wi-1 (amended). NOT MET: aw-1 (D1-C-S4) and wd-1 (D1-C-S15). Row D1-S15's condition, a MAY-CLOSE counted over non-terminal grades, no longer holds for round 28. The tool defect it names (a mention counts as a grade) remains for later rounds. Its disarm is the disarm owner's (2.0.0_SA_COO~V1) act on that row; this row does not edit it. The L10 slug also waits on round 28's six non-complete orders (round-close-check, 21 orders).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-etfs/rivalfunds/etfs/platinum/page/date=2026-10-12/index.html (1,718,695 bytes) and charts/IDVZ.json, fetched and rendered by this seat 15:2xZ",
+        "s3 delimiter listing of rivalfunds/etfs/platinum/page/ (dates through 2026-10-12)",
+        "data/etfs/scripts/rivalfunds/render.py:1897, :1962 (the adjustment sentence and where it is drawn)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/WA1_PAGE_READ_20261012.md @44747fa655",
+        "task-orders/ETFS_RIVALS.TO-RIV-wa-1.split-adjusted-series.md:89; this file ETFS_RIVALS-D1-C-S1, D1-C-S13; INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S15",
+        "2.0.0_SA_COO~V1 msg 4449"
       ]
     },
     "disposition": "GRADUATED"
