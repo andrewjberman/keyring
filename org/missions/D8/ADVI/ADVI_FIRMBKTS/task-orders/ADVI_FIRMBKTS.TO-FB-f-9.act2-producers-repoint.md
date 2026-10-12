@@ -84,7 +84,7 @@ org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.phaseB.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-f-9"><invocation>python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_act2_reads.py deployed-equal</invocation><expect>^DEPLOY EQUAL: 20 of 20 objects equal the repository at HEAD$</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-f-9"><invocation>python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_act2_reads.py deployed-equal --ref a9f4bac7b5</invocation><expect>^DEPLOY EQUAL: 20 of 20 objects equal the repository at a9f4bac7b5$</expect></criterion>
   <criterion id="AC2" cell_refs="FB-f-9"><invocation>python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_act2_reads.py new-home --since <MOVE_TS></invocation><expect>^NEW HOME: 11 of 11 served classes written since </expect></criterion>
   <criterion id="AC3" cell_refs="FB-f-9"><invocation>python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_act2_reads.py old-home --since <MOVE_TS></invocation><expect>^OLD HOME QUIET: 0 keys of 11 classes modified since </expect></criterion>
 </proof_of_spec>
@@ -300,6 +300,14 @@ NEXT scheduled chain, read by you from the schedule at step 2(c): if act 4 canno
 hour). Do not run a gold script or the dispatcher yourself; do not ship `gold_dispatch.sh` before steps 0 to 3 read clean.
 Gate limb: the `<status>` of a parked order amended by its issuer to pending; GATE viii reads `<placeholders>MOVE_TS` at HEAD
 and no criterion changed.
+
+**AMENDMENT 14 (2.0.0_SA_COO~B1, 2026-10-12 ~16:3xZ) -- AC1 NAMES THE COMMIT, NOT HEAD:** other projects keep releasing into the same gold
+directory, so "the repository at HEAD" moves under this act. At 16:2xZ `deployed-equal` reads 18 of 20 at HEAD: `C_06.client_mix_timeseries.py` and
+`D_04.client_portal_summary.py` differ ONLY because MDPF_SECCLASS's commit 77849c4924 (TO-SC-e97, authored 12:40Z, after this act's move)
+is not yet shipped (its release path is the push hook under its own pair; D_04's delta is a 4-line pass-through of `restated_through`, the
+act-2 fail-loud delete is untouched). The same read at `a9f4bac7b5` (the last commit before it, a descendant of the flip commit and the
+re-pins) reads 20 of 20, `platinum_dest_view.py` included (the flip's mark line, shipped by `0.7.0_AE_CloudOps~FB1` at act 4's close).
+AC1 now reads `--ref a9f4bac7b5`. A criterion edit of a pending order by its issuer; GATE viii reads `<placeholders>MOVE_TS` and no new token.
 
 <status>pending</status>
 <round>4</round>

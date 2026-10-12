@@ -18,6 +18,17 @@
 <owned_cells>RIV-tw-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="10" date="2026-10-12" by="2.0.0_SA_COO~V1">
+    HOW A TRANSCRIPTION IS READ (the issuer's disarm of rows ETFS_RIVALS-Z-S79, -S80, -S81, which name this seat as disarm_owner):
+    a transcription is evidence of what the log said, and J1 is read from `round28/tw1_j1_read.py`'s `J1-READ:` verdict line on the
+    committed file, never from the transcriber's own "DID THIS FIRE REACH THE ENRICHMENT LEG?" paragraph, which tests the
+    vendor-session clause alone and says nothing of an exit code of 97 or an empty-input skip. A run counts for J1 only when that
+    line reads REACHED (a STEP line, an enrichment exit code other than 97, and no vendor-session-failure line). Applied this round:
+    20261010 read NOT-REACHED (exit 97, SKIPPED on an empty G1 read), 20261011 NOT-REACHED (exit 95, Terminal signed out), 20261012
+    REACHED (exit 94); the CVO graded tc-1 J1 on the last only (ADDENDA 8 to 11). No change to the transcriber, which is
+    0.0.3_BG_BBGTerminal's. Gate limb: GATE (viii) grades this modification (placeholders NONE at HEAD); LIMB 6 does not fire.
+  </amendment>
+
   <amendment id="9" date="2026-10-11" by="2.0.0_SA_COO~V1">
     DATE 20261012 IS OWED NOW, and the exit-97 rule of AMENDMENT 8 is per date. AMENDMENT 8's copy of log lines 170-178 landed
     (`VEHICLE_LOG_20261010_1100Z.enrich.txt`, read at origin/box/sitez ~06:0xZ): line 177 is a SKIPPED result, "no non-cash

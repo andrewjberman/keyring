@@ -110,3 +110,14 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - **Not done here (by-5):** nothing is deployed; the live function still refuses a Dev login with a non-internal tier.
 
 <status>complete</status>
+
+**CANCELLED 2026-10-12 ~15:3xZ (issuer `2.0.0_SA_COO~W1`), by the ruling of `1.0.0_SA_CTO~DELL1`:** msg 4463 and the record
+`ledger/ROUND_ANALYSIS.round79.md` ADDENDUM 3 @b5915fba35 (the laptop CTO's msg 108607: the token's `tier` derives from `firmId`, an
+opal-capital login is already `internal`, so the Dev clause is withdrawn and the fence stays tier-only). The status above read
+`complete` from 14:50Z (merge f94560218c); it no longer stands.
+- **To be reverted in the repo by `HVST-by-6` step 0** (the issuer's lane cannot write `infra/aws`): `lambda_function.py` back to its
+  `31590746f1` bytes (the code `HVST-by-2` deployed) and `test_by4_dev_admitted.py` removed. The channel rows and the proof instance
+  stay (append-only). Until that commit lands the repo still carries the by-4 code.
+- **The live function** carried the Dev-admitting code from 14:40:46Z to its rollback; that is `HVST-by-6`'s act.
+
+<status>cancelled</status>

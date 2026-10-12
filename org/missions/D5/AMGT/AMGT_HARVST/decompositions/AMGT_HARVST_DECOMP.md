@@ -3836,3 +3836,55 @@ its own build (by-4) and its own deploy (by-5). Series `by` continues. This is a
 **Checks dry-run at the base before the cut:**
 - `by-4` AC1 base: FAIL as expected (no test file). AC2 base: PASS as expected (`test_bx1_tier_fence.py` and `test_by1_refusal_logged.py`).
 - `by-5` AC1, AC2 and AC3 base: FAIL as expected (the `.out` files do not exist).
+
+## 96. ROUND 81, WORKSTREAM DEVREVERT -- the Dev-admit ruling withdrawn (`1.0.0_SA_CTO~DELL1` msg 4463, `ROUND_ANALYSIS.round79.md` ADDENDUM 3 @b5915fba35), 2026-10-12 ~15:3xZ
+
+The laptop CTO (msg 108607): the token's `tier` derives from `firmId` (opal-capital means internal), so the Dev rows already log in as
+internal. The Dev-admit ruling of section 95 is WITHDRAWN and the fence stays tier-only; D1-S9 closes NOT EXPOSED (on NFRA_CTLPLN PRD
+v0.27). The STOP arrived after by-4 had merged (f94560218c) and by-5 had deployed (33189f2667, 14:40:46Z).
+
+- `HVST-by-4` and `HVST-by-5` go to `cancelled` by that ruling; by-4's code is reverted in the repo by by-6's step 0 (the COO lane cannot write
+  `infra/aws`; and not by `git revert` of the merge: that would also remove the channel rows and the proof instance, which are append-only).
+- **`HVST-by-6`** (seat `0.7.0_AE_CloudOps~HV1`, WORLD): the live function is restored to HVST-by-2's artifact **by S3 object version**,
+  so its code hash EQUALS the by-2 deploy's (`cWiraC3E...`, the CTO's added proof, msg 4465), with the deployed source read back and four
+  side-effect-free arms (Dev with an advisor tier 403, advisor 403, no context 403, internal 400). Covered by by-2's signed artifact and
+  by ADDENDUM 3; no widening act.
+- **Fan-out:** 1 of 1 chain (by-6), cap 8.
+- **Checks dry-run at the base:** `by-6` AC1, AC2 and AC3 base: FAIL as expected (the `.out` files do not exist).
+
+## 97. ROUND 82 -- STAGED: the site Z runner re-pin, carried from round 81 (`1.0.0_SA_CTO~DELL1` msg 4476), 2026-10-12 ~16:2xZ
+
+`HVST-by-3` (re-pin site Z's cycle runner to `1c69fa35a3`, the bx-3 merge) could not be delivered: site Z's manager session has not
+consumed its inbound queue since 13:45Z, so `~ZW` never saw the crossbox ORDER. The CTO cancelled by-3 and staged this successor for
+round 82 (msg 4476), which carries his by-3 half unchanged while the pin stays `1c69fa35a3` and the act is the same.
+
+| cell | what | class | executes | un-park condition |
+|---|---|---|---|---|
+| `HVST-bz-1` (STAGED, no order cut) | **The site Z runner re-pinned to `1c69fa35a3`**, exactly by-3's act and steps: the running cycle ended by its stop file (not killed), the state dir and runtime root carried, both pin worktrees LOCKED against the govern GC, a kill-maint dry run lists it EXEMPT; the first ended cycle record under the new pin closes row D1-W135-S2. Under the carried pair. | WORLD | `0.7.0_AE_CloudOps~ZW` | site Z's manager consuming (the restart expected after the laptop returns, around 19-20Z); then `1c69fa35a3` an ancestor of origin/CLOUD, read at the act |
+
+**Disposition of row D1-W135-S2 (ARMED, disarm owner this seat):** CARRIED to `HVST-bz-1`, owner `~ZW`.
+**Fan-out when cut:** 1 of 1 chain, cap 8. It is cut the turn the un-park condition reads true, by a crossbox ORDER through MSTR, as by-3 was.
+
+## 98. ROUND 82 -- the driven post-deploy read; the re-pin and bs-3's successor stay staged (`1.0.0_SA_CTO~DELL1` msg 4486, `ledger/ROUND_ANALYSIS.round81.md` section 2), 2026-10-12 ~16:4xZ
+
+Round 81 slugged MAY-CLOSE (CVO msg 4485, ADJUDICATION_v73 @40d147647f) and the CTO graded rounds 80 and 81: the fence HOLDS (live hash
+equals by-2's, handler byte-equal to HEAD, arms 403/403/400); the refusal log line HOLDS (D1-S8 closed); DEVADMIT was cancelled and rolled
+back (D1-S9 NOT EXPOSED); bx-3 is merged and NOT SERVED at site Z (the runner still runs b5a7a3a4b6; W135-S2 stays ARMED). OWED, not passed:
+his bx-2 post-act read. His process note for the issuer: a deploy that rests on a cross-box ruling still being applied at the other box
+waits for that box's apply receipt (discipline, not a gate); by-5 deployed 50 minutes before the withdrawal.
+
+Issuer `2.0.0_SA_COO~W1`. Series **`bz`**. Round 82's ONE issuance:
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-bz-1` | (none) | the site Z runner re-pinned to `1c69fa35a3` (section 97) | WORLD | `0.7.0_AE_CloudOps~ZW` | STAGED, un-parked when site Z's manager consumes |
+| `HVST-bz-2` | `bz-2` | **The post-deploy read, DRIVEN.** One internal-context enqueue of ONE covered ticker, `SAP GY Equity` (its pack prefix exists; no status object exists, so the act CREATES it and overwrites nothing; amended after the seat's C-b stop, row D1-S12), once; its 202, the status object, the queue's message count and the absence of a `DENIED` line since T0 are read. The consumer is NOT started (no Bloomberg draw). | WORLD | `0.7.0_AE_CloudOps~HV1` | CUT |
+| `HVST-bx-4` | (none) | bs-3's successor: bbg, wsj and barrons each ending a completed cycle unattended, graded by the CVO | LOCAL (read) | `0.7.0_AE_CloudOps~ZW` | STAGED on Andrew's WSJ/Barron's sign-in |
+
+Round 75's held slug releases on the issuer's bs-5 amendment (@812da3235c): carried, not re-ruled. The CVO sends it.
+
+- **Fan-out:** 1 of 1 chain (bz-2), cap 8.
+- **Not orders:** a restart of site Z's manager session (Andrew only if no manager can); the WSJ/Barron's sign-in (Andrew).
+
+**Checks dry-run at the base before the cut:**
+- `bz-2` AC1, AC2 and AC3 base: FAIL as expected (the `.out` files do not exist).

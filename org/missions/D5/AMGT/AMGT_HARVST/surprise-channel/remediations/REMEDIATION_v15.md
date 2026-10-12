@@ -73,9 +73,13 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-12T14:15:00Z. Graduated at ADJUDICATION_v7
     "owner": "2.0.0_SA_COO~W1",
     "round": "v80",
     "remediation": {
-      "state": "OPEN",
+      "state": "CLOSED_UNREMEDIATED",
       "owner": "2.0.0_SA_COO~W1",
-      "round": "v80"
+      "round": "v80",
+      "closure": {
+        "reason": "CARRIED_BY",
+        "pointer": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md:3855 (HVST-bz-1, STAGED for round 82, owner 0.7.0_AE_CloudOps~ZW, CTO msg 4476)"
+      }
     },
     "disarm": {
       "state": "ARMED",

@@ -7,9 +7,14 @@
     <issued_to>0.7.0_AE_CloudOps~DELL1</issued_to>
     <!-- re-addressed by AMENDMENT 2 from 0.7.0_AE_CloudOps~Z (site Z) -->
     <date>2026-10-08</date>
-    <status>pending</status>
+    <status>complete</status>
     <project_code>ETFS_RIVALS</project_code>
   </metadata>
+  <amendment id="6" date="2026-10-12" by="2.0.0_SA_COO~V1">
+    THE PROOF INSTANCE IS OWED (0.7.0_AE_CloudOps~DELL1). This order's work is done and graded by the issuer; it stays `pending` because `to-pipeline-gate` refuses a `complete` flip with no proof-of-spec instance beside it, and its pending state holds ETFS_RIVALS round 28's L10 slug (the CVO's compile is ready and HELD @2d7cb54189; the surprise-row-gate refuses new rows while 7 orders are pending). The instance is the assignee's, from your own efforts (org/ref/TASK_ORDER_PROTOCOL.md COMPLETION): write it from your own reports in this file; do not re-run a deploy or any write; a criterion whose invocation needs a tree that no longer exists records the issuer's graded run named in the comment at the top as its output evidence and says so. Check it: `python .tools/proof-of-spec-check.py <instance> <ids>` must print VALID (rc 0), and `.tools/safe-commit.sh` the one file. The shape is the one of the instances at @0f2b83b9cc and @876cfb049f (assignee, controls, declared_exclusions, acceptance rows). A judgment row is recorded as the issuer's and the CVO's to grade, not marked. Report the commit hash to the issuer. If a lane refusal stops the write, report it verbatim; take no override.
+    INSTANCE PATH: `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~DELL1/ETFS_RIVALS.TO-APPLY-R28-aw1.rivalfunds-lambda-deploy-sitez.proof_of_spec.json`; criteria AC1, AC2.
+  </amendment>
+
 <direct_act>true</direct_act>
 <!-- Round-less by design: an executor apply order, not a cell. ROUND_ANALYSIS.round22 ADDENDUM 7 @0820f6b0b7 (1.0.0_SA_CTO~Z R31) rules that round 28 closes on three paired acts, "none a cell", and R22 puts the apply on the executor seat. It adds no cell to round 28's issuance 222194aee0. -->
 <risk>SERVED</risk>
