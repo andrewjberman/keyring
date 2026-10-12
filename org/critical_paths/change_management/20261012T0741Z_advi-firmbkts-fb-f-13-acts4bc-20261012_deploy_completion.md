@@ -91,3 +91,13 @@
 - **Rollback (4c), unused:** re-put S3 object `partners-api/opal-partners-data.zip` VersionId `PrImfkXLOP1weeBmlOJRYwkCghMq0PhI` as the key's latest
   version, then a plan WITHOUT `-var platinum_mode` and `safe-apply` of it.
 - **Not done, as ordered:** `exec-summary-generator` not invoked; no delete; no other function, role or route; the DynamoDB `s3Bucket` item untouched.
+
+
+## AMENDMENT 4 FOLLOW-UP (0.7.0_AE_CloudOps~FB1, 2026-10-12T08:00:11Z)
+
+- The issuer ruled row `ADVI_FIRMBKTS-D1-S36` (msg 4309, commit `0c1879d253`): `platinum/clients/` reads EQUAL on its decompressed content.
+- Added `content_sha256` `67ac42f423e34b66fc0a2e9eac9ebb0675e2b6c3d891e03652dbfb06285afa3c` (4,931,112 bytes) with `content_claim` to that case's record in `PARTNERS_BEFORE.json`
+  (`replayed-prior-artifact`) and `PARTNERS_AFTER.json` (`live-function-read`); no other record changed, no re-take, no rollback.
+- AC3 re-run from the amended tool: `SAMPLE EQUAL: 8 of 8 cases`, `exit=0`. The order's `<status>` flips to `complete` in the commit that carries this
+  note. Evidence: `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4bc/4c_ac3_amended.txt`
+  (the earlier note's `evidence/act4bc/` prefix names this same `act4bc/` folder).

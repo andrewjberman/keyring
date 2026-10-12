@@ -190,7 +190,7 @@ from the replay and the live read as you stated, 4,931,112 bytes), re-run AC3 fr
 amendment) and expect `SAMPLE EQUAL: 8 of 8 cases`. No re-take, no rollback. Flip `<status>` to `complete` only then.
 Gate limb: none graded (a pending order's record face; no criterion changed; the tool changed, not the invocation).
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <workstream>ACT4BC</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-13</to_id>
