@@ -5460,3 +5460,52 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Form only; Branch B's changed-body condition does NOT hold by content, so act 4c stays deployed and nothing was rolled back. Two instrument facts for the issuer: (1) the sample must hash the decompressed content when isBase64Encoded and Content-Encoding gzip are set (r4_sample_eq compares whatever hash the records carry); (2) this lane did not re-write PARTNERS_BEFORE.json: the BEFORE reference content hash is the local replay of the prior artifact, not a live read, because the live function is already on the new code. Options for the issuer: accept the replay as the BEFORE and amend AC3 to the content hash, or direct a re-take of the AFTER with a content hash. The order's status is NOT flipped by this lane."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W53-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~53",
+  "surfaced_at": "2026-10-12T06:31:35Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The flip tool's --apply step rewrote the generated mark line of the nested portal/ submodule working copy (firmDisplayNames.generated.ts), uncommitted, though the order said to touch nothing under portal/.",
+  "spec_asserts": "FB-g-30 section 1c rule 2: do NOT edit or commit anything under portal/; the nested portal/ firmDisplayNames.generated.ts is a generated target outside the index, and its mark line is stale (a mark line only).",
+  "world_is": "After r4_flipcommit.py --apply (rc 0, 4 of 4), git -C portal diff shows firmDisplayNames.generated.ts line 1 changed from registry@063240d10e857a3b to registry@9f1cc0a3d5a5997b (1 insertion, 1 deletion; vendorDisplayNames.generated.ts also listed as modified). Nothing under portal/ was staged or committed; the flip commit 69679b90e3dc52b670d33fddd96d06be1deaac90 holds 16 files, none under portal/. The tool's changed-file count was 17 against the 16 committed files, the 17th being this portal target.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C /c/dev/wk-firmbkts-53/portal diff at worktree HEAD 69679b90e3 (firmDisplayNames.generated.ts 1 insertion, 1 deletion)",
+      "r4_flipcommit.py --apply output at 1a8d882931: 'changed files=17: registry 1, value-changing 2, mark-line only 13'",
+      "git show --stat HEAD: 16 files changed, 24 insertions(+), 24 deletions(-), no portal/ path"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not reverted: reverting would itself edit under portal/, which the order forbids. The working-copy mark line is left for the issuer to decide (regenerate-and-commit inside the portal submodule, or leave as a known stale mark line). Recorded so the drain does not commit it by accident."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W53-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~53",
+  "surfaced_at": "2026-10-12T06:31:35Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The safe-commit client-data check could not run for the flip commit: the hashed account-id list is absent on this box, so the commit was not checked for client account ids.",
+  "spec_asserts": "The commit gates run by safe-commit.sh pass the flip commit; the order makes no separate client-data claim.",
+  "world_is": "safe-commit output for 69679b90e3: 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).' The commit still committed (rc 0). Staged content is registry JSON and generated code targets with no account data by construction; the check was not run, so that is not established by the check.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for 69679b90e3dc52b670d33fddd96d06be1deaac90 (run at 2026-10-12T06:3x Z): 'WARN: client-data-check: hashed account-id list ABSENT'",
+      "git show --stat 69679b90e3: 16 files, paths listed in order section 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Environmental: the list lives on another box or path. Not remediated by this worker; the drain or the box owner can rerun the client-data check against this commit with the list in place."
+}
+```
