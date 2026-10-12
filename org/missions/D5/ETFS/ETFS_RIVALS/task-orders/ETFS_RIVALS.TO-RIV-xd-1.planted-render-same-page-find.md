@@ -97,7 +97,8 @@ the merge. Leave the `<status>` flip to the issuer.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<!-- drained 2026-10-12 by 2.0.0_SA_COO~V1 @afb5fa2ba6: AC1 3 passed (control gap passes at base), AC2 30 passed, instance VALID; suite 1032 passed, 6 skipped after the merge. The fix is write_rows(s, rows, hc.as_of(day)) in run_for_day (_partition_day). -->
 <round>29</round>
 <workstream>4</workstream>
 <slot>~35</slot>
