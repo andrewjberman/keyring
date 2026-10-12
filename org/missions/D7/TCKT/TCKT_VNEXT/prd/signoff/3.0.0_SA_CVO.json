@@ -1,12 +1,12 @@
 {
   "prd": "TCKT_VNEXT_PRD.md",
   "prd_version": "v0.4",
-  "prd_pin": "8bb81f8d6c4a5d586f6a43fbf42652766cae6c98",
+  "prd_pin": "fc2100e1e2676c726a63baf83e8c5ca3f25aaaaa",
   "half": "ratified-text",
-  "half_hash": "d2e384f22a1141ca8e66a44190a3a60a0b84ba17d1cd999ab96adc99057a2980",
+  "half_hash": "a1728a868d6881873ffab64025c7d89b878e184d520d85d2e503a00841528acb",
   "endpoint_hash": "264c22a259551c70ef870ba1df5c40cbc5af084037604dccc3123551649e66d7",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_PRD_v0.4_RATIFIED_TEXT_REVIEW_20261011.md@100decda2cb4f00bb0e6283f0c7a031fc26f9c78",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_PRD_v0.4_ADDENDUM_4_RATIFIED_TEXT_REVIEW_20261012.md@73fe8507f88f63f4fa2286494409ed8bca0396ac",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-11T23:29:50Z"
+  "signed_at": "2026-10-12T01:08:01Z"
 }
