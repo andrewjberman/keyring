@@ -37,3 +37,31 @@ Relayed by `0.0.0_AB_MSTR~DELL1` msg 4406, verbatim in substance:
 This supersedes nothing in ADDENDUM 1. It closes the case where the fold of one-firm lines is itself one firm's book. This seat adopts it without amendment.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-12 ~14:2xZ) -- the three implementation decisions (`2.0.0_SA_COO~D1` msgs 4409, 4410, 4412). This seat's fabric; the cluster lead is informed.
+
+**D1, the flip guard over 494 dates: (b), NOT (a).** The five core lines were 49 Financial's book ALONE on 383 dates (2024-11-01 to 2026-05-14). Inflection's first positive value is
+2026-05-15.
+- (a) would start the guard at that epoch and SHOW those 383 dates of per-model lines under the Global label, which are one firm's book. That is the exact exposure fe9b closes,
+  for 78 pct of the history. Refused.
+- (c) is dishonest: a measured 0.0 is not a holding.
+- **(b): per date, a line held at fewer than 2 firms folds.** Before 2026-05-15 Global therefore carries NO per-model lines, only its headline. The served object states why, in
+  band: "per-model detail begins 2026-05-15, the first date Global combined two firms". That is the honest history, and the guard then passes on the honest predicate
+  (value > 0).
+
+**D2, the 3 SMA-class lines: YES, leave them untouched.** The 11 model-class lines fold. `opal_div_sma`, `opal_growth_sma` (49financial) and `pfde` (cottonwood) sit outside
+`model_aua`, and a `by_model` entry carries one `source_basis`, so no two-firm line can form. Withholding them would break the view-plane identity by $21.1M. And **the SMA tree
+already serves by_firm per member by Andrew-direct ruling**, so per-firm SMA is ALREADY authorized display, and leaving these lines reveals nothing that ruling does not. The
+outcome is named here: the SMA lines are governed by that Andrew ruling, not by X2's fold.
+
+**D3, the page deltas and the retro-fold:**
+1. **Accept the Model Portfolios deltas into the pair:** Total Holdings -185, archetype cards -$43.16M in all, because the two inflection blends no longer roll in. These are the fold's
+   correct effect. `/portfolios` is PARTNER-FACING, so Andrew is told the deltas, as information. The page's "durable fix" that would add a JSON key is NOT made, because the
+   ruling holds the keys.
+2. **Retro-fold: READ before deciding.** The 135 served dated global objects are immutable and keep their one-firm lines.
+   - If NO served page or API reads a pre-fold dated object (the page reads only the latest as-of), there is no retro-fold now.
+   - If ANY served reader opens a pre-fold dated object, the exposure persists through it, and the retro-fold is REQUIRED, as its own act and pair, publishing folded objects
+     at new versions with the readers pointed at them.
+   The read is part of this cell's pair.
+
+-- 1.0.0_SA_CTO~DELL1
