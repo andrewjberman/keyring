@@ -631,8 +631,79 @@ class Box:
         self.save(doc)
         return self.status(call_id) + ["WITHDRAWN %s by %s on ruling %s; the named seat %s never read it" % (call_id, by, rel, doc["to_serial"])]
 
+    SUPERSEDED_MARK = "superseded-by "
+
+    def sent_commit(self, doc: dict) -> str:
+        """The commit that recorded this file's `sent` block (the oldest commit introducing its bus id), else the file's
+        last commit. The body blob is pinned HERE, never at HEAD (CVO verdict @a803dad6ae condition 1)."""
+        rel = self.rel(doc["id"])
+        busid = (doc.get("sent") or {}).get("bus_message_id")
+        if busid:
+            rc, out, _ = git(self.root, "log", "--format=%H", "-S", busid, "--", rel)
+            hits = out.split()
+            if rc == 0 and hits:
+                return hits[-1]
+        return self.last_commit(rel)
+
+    def supersede(self, call_id: str, by: str, ruling: str, successor_id: str, at: str | None = None) -> list:
+        """The sending box closes a CALL its addressee never read because the SAME body reached a live seat on the same box
+        under a later file that seat ACKED (CVO verdict @a803dad6ae, 2026-10-12: a manager ack for a dead seat is a forged
+        READ; a withdraw is the wrong fact; the true fact is 'superseded'). Conditions: (1) the body blob is compared at each
+        file's own sent commit, not at HEAD; (2) the close is terminal for every reader -- both closed sides are written, the
+        to side by the marker `superseded-by <id>`, so crossbox/1 readers see CLOSED-BOTH with NO new key; (3) the successor's
+        to_device equals the original's, and only the sender file is written."""
+        doc = self.read(call_id)
+        self.need_box(doc, "from_device", "close --superseded-by")
+        if doc["kind"] != "CALL":
+            raise Refused("close --superseded-by closes a CALL; %s is an %s (an unread ORDER is withdrawn)" % (call_id, doc["kind"]))
+        if doc["ack"] and doc["ack"]["at"]:
+            raise Refused("%s was read by %s at %s; a read call closes with `close --side`, it is not superseded" % (call_id, doc["ack"]["by"], doc["ack"]["at"]))
+        if doc["closed"]["from_at"] or doc["closed"]["to_at"]:
+            raise Refused("%s already has a closed side" % call_id)
+        if not by or not SERIAL_RE.fullmatch(by):
+            raise Refused("--by %r is not a serial" % by)
+        if base_of(by) not in {base_of(doc["from_serial"]), "1.0.0_SA_CTO", "0.0.0_AB_MSTR"}:
+            raise Refused("--by %s is neither the issuer %s nor the issuing box's CTO or MSTR" % (by, doc["from_serial"]))
+        rel = str(ruling or "").replace("\\", "/")
+        if not rel or rel.startswith("/") or ".." in rel.split("/") or re.match(r"[A-Za-z]:", rel) or not (self.root / rel).is_file():
+            raise Refused("--ruling must be a file inside the repository, relative to its root")
+        ok, why = self.tracked_clean(rel)
+        if not ok:
+            raise Refused("--ruling %s %s; the other box reads the ruling by pulling it. Commit it first." % (rel, why))
+        if successor_id == call_id:
+            raise Refused("a call cannot supersede itself")
+        succ = self.read(successor_id)
+        if succ["kind"] != doc["kind"]:
+            raise Refused("successor %s is an %s, %s is a %s" % (successor_id, succ["kind"], call_id, doc["kind"]))
+        if succ["to_device"] != doc["to_device"] or succ["from_device"] != doc["from_device"]:
+            raise Refused("successor %s runs %s -> %s, %s runs %s -> %s; reachability is box to box, so a successor on another "
+                          "box does not answer this call (to_device must match)" % (successor_id, succ["from_device"], succ["to_device"],
+                                                                                   call_id, doc["from_device"], doc["to_device"]))
+        if not (succ["ack"] and succ["ack"]["at"] and succ["ack"]["by"]):
+            raise Refused("successor %s is not acknowledged; a superseded close rests on a READ by a live seat" % successor_id)
+        blobs = {}
+        for d in (doc, succ):
+            commit = self.sent_commit(d)
+            if not commit:
+                raise Refused("%s has no commit in this tree; commit it first" % self.rel(d["id"]))
+            rc, blob, err = git(self.root, "rev-parse", "%s:%s" % (commit, d["body_path"]))
+            if rc != 0 or not blob.strip():
+                raise Refused("could not read the body blob of %s at its sent commit %s (%s)" % (d["id"], commit[:10], err.strip()[:80]))
+            blobs[d["id"]] = (commit[:10], blob.strip())
+        if blobs[call_id][1] != blobs[successor_id][1]:
+            raise Refused("the body of %s at %s (%s) differs from the body of %s at %s (%s): not the same call" % (
+                call_id, blobs[call_id][0], blobs[call_id][1][:10], successor_id, blobs[successor_id][0], blobs[successor_id][1][:10]))
+        when = at or stamp(now_dt())
+        doc["closed"] = {"from_at": when, "from_by": by, "to_at": when, "to_by": self.SUPERSEDED_MARK + successor_id}
+        self.save(doc)
+        return self.status(call_id) + ["SUPERSEDED %s by %s on ruling %s: the same body (blob %s) reached %s under %s, acked by %s at %s" % (
+            call_id, by, rel, blobs[call_id][1][:10], doc["to_device"], successor_id, succ["ack"]["by"], succ["ack"]["at"])]
+
     def status_of(self, doc: dict, now: datetime.datetime | None = None) -> str:
         cid, c = doc["id"], doc["closed"]
+        if c["from_at"] and c["to_at"] and str(c["to_by"] or "").startswith(self.SUPERSEDED_MARK) and not (doc["ack"] and doc["ack"]["at"]):
+            return "STATUS %s SUPERSEDED by %s (closed %s by %s; the body reached %s under the acked file; reads CLOSED-BOTH to every crossbox/1 reader)" % (
+                cid, c["to_by"][len(self.SUPERSEDED_MARK):], c["from_at"], c["from_by"], doc["to_device"])
         if c["from_at"] and c["to_at"] and c["from_by"] == c["to_by"] and not (doc["ack"] and doc["ack"]["at"]):
             return "STATUS %s WITHDRAWN by %s at %s (ORDER never read by %s; reads CLOSED-BOTH to every crossbox/1 reader)" % (
                 cid, c["from_by"], c["from_at"], doc["to_serial"])
@@ -933,6 +1004,47 @@ def run_cases(tmp) -> list:
     rec("withdraw-reads-WITHDRAWN-and-CLOSED-BOTH-with-no-new-key", st.startswith("STATUS %s WITHDRAWN by 1.0.0_SA_CTO" % cid2)
         and a.read(cid2)["state"] == "CLOSED-BOTH" and a.read(cid2)["ack"] is None and wd[-1].startswith("WITHDRAWN"), st)
 
+    # Superseded close (CVO verdict a803dad6ae): an unread CALL closes on the ACKED successor that carried the same body.
+    cid3 = a.open("CALL", b.device, seat, "1.0.0_SA_CTO", "Unread call to an absent seat", BODY)[0].split()[1]
+    h.commit(a, a.rel(cid3))
+    h.push(a.root)
+    a.sent(cid3, "0a1b2c3d-0000-4000-8000-000000000003")
+    h.commit(a, a.rel(cid3))
+    cidx = a.open("CALL", b.device, seat, "1.0.0_SA_CTO", "A different body", body2)[0].split()[1]
+    h.commit(a, a.rel(cidx))
+    cid4 = a.open("CALL", b.device, "%s~P2" % SEAT.rsplit("~", 1)[0], "1.0.0_SA_CTO", "Same call re-addressed to a live seat", BODY)[0].split()[1]
+    h.commit(a, a.rel(cid4))
+    h.push(a.root)
+    a.sent(cid4, "0a1b2c3d-0000-4000-8000-000000000004")
+    h.commit(a, a.rel(cid4))
+    h.push(a.root)
+    a.sent(cidx, "0a1b2c3d-0000-4000-8000-000000000006")
+    a.acked(cidx, "[x] [from %s] CROSSBOX-ACK %s READ by %s at %s" % (seat, cidx, seat, stamp(now_dt())), "0a1b2c3d-0000-4000-8000-000000000007")
+    ok, why = raises(Refused, lambda: a.supersede(cid3, "1.0.0_SA_CTO", BODY, cidx), "differs from the body")
+    rec("supersede-refuses-a-successor-whose-body-blob-differs-even-when-acked", ok, why)
+    ok, why = raises(Refused, lambda: a.supersede(cid3, "1.0.0_SA_CTO", BODY, cid4), "not acknowledged")
+    rec("supersede-refuses-an-unacked-successor", ok, why)
+    live = "%s~P2" % SEAT
+    reply4 = "CROSSBOX-ACK %s READ by %s at %s" % (cid4, live, stamp(now_dt()))
+    a.acked(cid4, "[x] [from %s] %s" % (live, reply4), "0a1b2c3d-0000-4000-8000-000000000005")   # the manager records the reply
+    other = json.loads(a.path(cid4).read_text(encoding="utf-8"))
+    other["id"] = cid5 = cid4[:-4] + "beef"
+    other["to_device"] = "some-other-box"
+    a.path(cid5).write_text(json.dumps(other), encoding="utf-8")
+    ok, why = raises(Refused, lambda: a.supersede(cid3, "1.0.0_SA_CTO", BODY, cid5), "to_device must match")
+    rec("supersede-refuses-a-successor-on-another-box", ok, why)
+    ok, why = raises(Refused, lambda: b.supersede(cid, seat, BODY, cid4), "sending")
+    rec("supersede-is-a-sending-box-act", ok, why)
+    sp = a.supersede(cid3, "1.0.0_SA_CTO", BODY, cid4)
+    st = a.status(cid3)[0]
+    rec("supersede-reads-SUPERSEDED-and-CLOSED-BOTH-with-no-new-key-and-no-ack",
+        st.startswith("STATUS %s SUPERSEDED by %s" % (cid3, cid4)) and a.read(cid3)["state"] == "CLOSED-BOTH"
+        and a.read(cid3)["ack"] is None and a.read(cid3)["closed"]["to_by"] == "superseded-by " + cid4 and sp[-1].startswith("SUPERSEDED"), st)
+    found = open_calls_reader(a.root / REL_DIR, cid3)
+    rec("the-open-calls-close-reader-accepts-a-superseded-close-as-CLOSED-BOTH", found == "%s.json" % cid3, "reader returned %r" % (found,))
+    ok, why = raises(Refused, lambda: a.supersede(cid3, "1.0.0_SA_CTO", BODY, cid4), "already has a closed side")
+    rec("supersede-twice-is-refused", ok, why)
+
     bad = json.loads(a.path(cid).read_text(encoding="utf-8"))
     bad["surprise"] = 1
     a.path(cid).write_text(json.dumps(bad), encoding="utf-8")
@@ -994,6 +1106,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--id", required=True)
     p.add_argument("--side", required=True)
     p.add_argument("--by", required=True)
+    p.add_argument("--superseded-by", help="(sending box, --side from) the id of the ACKED file that carried the same body to the same "
+                                           "box; closes an unread CALL as SUPERSEDED, on a committed --ruling (CVO verdict a803dad6ae)")
+    p.add_argument("--ruling", help="repo-relative path of the committed ruling (required with --superseded-by)")
     p = sub.add_parser("withdraw", help="the issuing box retires an ORDER its named seat never read, on a committed ruling")
     p.add_argument("--id", required=True)
     p.add_argument("--by", required=True)
@@ -1033,6 +1148,12 @@ def main(argv: list) -> int:
             lines = box.ack(args.id, args.by)
         elif args.cmd == "acked":
             lines = box.acked(args.id, args.line, args.bus_message_id)
+        elif args.cmd == "close" and args.superseded_by:
+            if args.side != "from":
+                raise Refused("--superseded-by is a sending-box act: --side must be from")
+            if not args.ruling:
+                raise Refused("--superseded-by needs --ruling (the committed ruling the close rests on)")
+            lines = box.supersede(args.id, args.by, args.ruling, args.superseded_by)
         elif args.cmd == "close":
             lines = box.close(args.id, args.side, args.by)
         elif args.cmd == "withdraw":
