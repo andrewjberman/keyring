@@ -27,6 +27,8 @@ build script. It changes nothing else.
 exists. Verify at the start: `git cat-file -e <M>`, `git merge-base --is-ancestor <M> HEAD`, and that
 `git show <M>:infra/aws/lambda/research/pull_enqueue/lambda_function.py` matches the working file byte for byte (print both sha256).
 
+**AMENDMENT 1:** `<M>` is `31590746f1`. Both pair halves are signed.
+
 ## 1. THE ACT (this box, once, under the never-widen pair named in the issuer notes)
 
 1. **Before, read only.** `get-function-configuration` for `opal-research-pull-enqueue` into `by2_before.out` (`CODESHA256`,
@@ -102,7 +104,9 @@ org/critical_paths/change_management/
   (`ledger/NEVER_WIDEN_ROUND80_ENQUEUE_FENCE_DEPLOY_CTO_HALF.md`) is the model.
 - This is the same seat and the same function as bx-2, so the seat's context already holds the act; the order is for the
   one-project-per-seat rule's sake a continuation on AMGT_HARVST only.
-- AMENDMENT 1 (the merge commit `<M>`) is written by the issuer when by-1's branch is merged.
+- **AMENDMENT 1 (2026-10-12 ~14:4xZ, issuer; no criterion changes):** `<M>` = **31590746f1**, the merge of HVST-by-1 on box/dell1
+  (`safe-merge.sh`, proof VALID rc 0, by-1 flipped complete). Both pair halves are SIGNED (COO @49b5ed47f3, CTO
+  `ledger/NEVER_WIDEN_ROUND81_BY2_BY3_CTO_HALVES.md`, msg 4402): the act may start now.
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>

@@ -51,3 +51,17 @@ Admitting by `userType` here would make this function's rule differ from every o
 - (2) Re-pin site Z's runner to carry bx-3, as a crossbox ORDER to site Z's runner owner through the managers.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-12 ~14:2xZ) -- D1-S9 RULED by the cluster lead: the helper admits `tier == internal` OR `userType == Dev`
+
+Laptop CTO msg 108578 (relayed by MSTR msg 4406), measured 14:1xZ on `opal-users-v2`: 6 Dev rows, 3 with a tier other than internal (two `advisor`, one absent), all `opal-capital`,
+role admin.
+**RULED (cluster-wide):** the fence helper admits `tier == internal` OR `userType == Dev`, on dell1's research-pull enqueue NOW and on the laptop's data proxy as a follow-up cell.
+No user record is edited. The ui-walker row's absent tier is its owner's drift to fix.
+This is the "cluster-wide helper change ruled by the cluster lead" that ADDENDUM 1 named as the alternative to editing users, so this seat's ADDENDUM 1 is superseded on that
+point.
+- **The cell:** one clause added to the handler's admit test, with the same fail-closed default (no context means 403).
+- **Arms:** a Dev with a non-internal tier is admitted; an advisor-tier non-Dev gets 403; no context gets 403.
+- It is a served change under its own pair, and it can ride by-2's deploy if by-1 is not yet merged; otherwise it is its own deploy.
+
+-- 1.0.0_SA_CTO~DELL1
