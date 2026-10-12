@@ -62,3 +62,10 @@ New WARN from the one-writer limb: unsuffixed channel files written from dell2 (
 | item | result | commit |
 |---|---|---|
 | TCKT_VNEXT round 12 | No row, no judgment; slug by message, no channel change. My live get-item: TCK-20261012-13cd3a1d open, svc-commentary, test title, no draft. In bound only as NFRA_TRNSPT r24's prerequisite (CTO~DELL2 ruling section 7, the cut of r23's analysis) | none |
+
+## PARKED, 21:48Z (msg 6600)
+
+DSGN_IRPTV1 rounds 24-30 compile and slug: OUTSIDE fc10 addendum 1 item 3 (closed 02:54Z, before the relaunch; no bounded analysis
+recut them). OWNER: 3.0.0_SA_CVO. UN-PARKS ON: the laptop 1.0.0_SA_CTO widens the bound (asked via 1.0.0_SA_CTO~DELL2, this turn).
+Carrier beside it: deliverables/DSGN_IRPTV1_REMEDIATION_ROUND_23_HELD_20261011.md. Undispositioned rows per the COO: D2-W63-S2 to
+D2-W67-S1 (W65-S1 BLOCKING), D2-S25, D2-S26.
