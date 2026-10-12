@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-09T10:25:13.432884+00:00
-**Status:** OPEN
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / leg L6: the 49F scheduled fire of irpt-holdings-snapshot at 2026-10-12 14:15Z, held open deliberately by CTO ADDENDUM 19.1, which rules that L6 is proven by the producer's own output line at its next SCHEDULED fire and never by an ad-hoc run (held since 2026-10-12T01:56:42.580218+00:00)
 **Deploy:** IRPT_BCKEND IB-pr-404: IB-pr-402 FWD-14 three NARROW per-firm holdings bundles. PIN STATED (ccbe8b8be1): pin 6f7ca4840e, packet blob 4f134ade55, base commit 9efbec3c2f, narrow member sha256 dfa017b824c1aba5c1107e53ef4811edaba93b2b7903c140208e41ab8866262a. THE THREE KEYS: s3://opal-data-49financial/irpt/49financial/code/gold/investor-reporting-holdings.tar.gz; s3://opal-data-inflection/irpt/inflection/code/gold/investor-reporting-holdings.tar.gz; s3://opal-data-cottonwood/irpt/cottonwood/code/gold/investor-reporting-holdings.tar.gz. THE THREE BUILT SHA256: 49financial 3f2e738f83aa415a2b56cf506d54368f9d2f86f7ded8f19202fc373ef6a28901 (md5 01387cef54b9e15e10023f05029e357d, 468666 B); inflection 7036a650703a04b18bcf251717c1310fc5553c817eb9d7ce34ec34ed678c9718 (md5 5daec38f0fbd604c65a770ce08029c67, 468435 B); cottonwood 3f2e738f83aa415a2b56cf506d54368f9d2f86f7ded8f19202fc373ef6a28901 (md5 01387cef54b9e15e10023f05029e357d, 468666 B). THE PULLING FAMILY: irpt-holdings-refresh-lambda, 3 firms, one SSM command each; the producer fired by irpt-holdings-snapshot, cron(15 10 ? * MON-FRI *) America/New_York = 14:15Z today. ROLLBACK VERSIONS (Branch B, copy-object): 49financial 3Q_W49U7kMa_xO30Q6LQE7QLsFu7ARur; inflection SuRm8tIYq9AKTbRD91SxTJp2Fh80CqCo; cottonwood NZIQjid2En9Wbe8kM8ibfsIjxjDWKEoT. The ordered key investor-reporting.tar.gz is NOT touched. COO half @a9d5043ef9, CTO half @c4df78131d conditions 1-7; AMENDMENT 1 runs this ahead of IB-pr-397.
 **Authored by:** 0.7.0_AE_CloudOps~IB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -27,6 +27,7 @@
 - 20261009T104740Z LEG L3 closed: UPLOADED inflection and verified three ways. Direct put with the packet metadata and NO --mint-bundle; not refused. NEW 
 - 20261009T104741Z LEG L4 closed: UPLOADED cottonwood and verified three ways. Direct put with the packet metadata and NO --mint-bundle; not refused. NEW 
 - 20261009T111354Z LEG L5 closed: THE REPLAY RE-RAN ON THE UPLOADED BYTES AND PASSES, well before the 14:15Z fire (CTO condition 4). Each firm NARROW tree
+- 20261012T015642Z HELD-SOVEREIGN-GATED gate=external/leg L6: the 49F scheduled fire of irpt-holdings-snapshot at 2026-10-12 14:15Z, h
 
 ## CORRECTION (0.7.0_AE_CloudOps~IB2, 2026-10-09 ~11:0xZ) -- the interpreter row is S44, not S42
 

@@ -2228,3 +2228,31 @@ group with one pattern. Colons, slashes and dots are plausible and untested, so 
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+### TCKT_VNEXT-D2-S53 -- an ACTIVE users row on an outside company's domain carries the internal firm id with no firm list
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S53",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-12T01:33:52Z",
+  "one_line": "An ACTIVE users row on an outside company's domain carries the internal firm id with no firm list: it signs in and reads every firm, in every service that classes by firm id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (its own word, msg 6259: 'File it as its own row of this project, ARMED, owner me'). Whether the row should be internal is Andrew's; the CTO tells him and the manager carries it to the laptop.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r9_ct1/ACTIVE_INTERNAL_ROWS_BY_DOMAIN_20261012.json @e7bb608065 (0.7.0_AE_CloudOps~TV2, claim measured; its check re-run by this seat: CT-COUNT-OK active_internal=21 opal=20 non_opal=1): a re-scan of opal-users-v2, 86 items, 56 PROFILE, 21 active with firm opal-capital; one of them, digest 1af514167abb, is on a domain that is neither of Opal's two nor a reserved test domain; userType null; firm list ABSENT; updatedAt 2026-10-01; no event on any of 27 tickets",
+      "infra/aws/lambda/ticket_center/lambda_function.py principal_class (lines 312-330): a caller whose firmId is opal-capital and who is not a service subject is INTERNAL; _profile_scope: an absent firm list is no scope, which reads every firm",
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/auth.ts:106: sign-in admits a row whose status is exactly active (the applier's print); this row's status is active",
+      "NOT read by anyone: who created the row and when; whether the person has signed in; what any service other than the ticket service does with it (the sentence about every service that classes by firm id is the CTO's and is inferred beyond the ticket service). By the CTO's word no seat on dell2 changes, disables or probes the row, and no context is constructed for its address"
+    ]
+  },
+  "spec_asserts": "PRD v0.4 C-FENCE and its addenda treat a caller with firm id opal-capital as Opal-internal staff; the CTO's round-8 ruling says an absent firm list means every firm because those rows 'are Opal staff'.",
+  "world_is": "20 of the 21 active internal rows are on Opal's own or a reserved domain. One is on an outside company's domain and has the same standing as staff. It may be a contractor seated on purpose; that is not known. The round-9 status release does not move it (active: admitted before and after) and no arm of its proof uses it. A disabled row on a near-identical domain (digest 04fc361f3802) was the round-8 finding and is a different row.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
