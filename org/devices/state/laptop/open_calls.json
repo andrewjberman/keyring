@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "laptop",
- "written_at": "2026-10-12T12:33:35Z",
+ "written_at": "2026-10-12T13:57:34Z",
  "written_by": "1.0.0_SA_CTO",
  "rows": [
   {
@@ -278,7 +278,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_READ_DELL2_WEEKLY_USAGE_LIMIT_03Z_20261012.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-12T12:33:35Z",
    "kind": "fork",
    "context": "All 16 dell2 seats sit at the limit prompt since 03:08Z; only its manager runs on the fresh account. Stalled until a word: IRPT backend/dashboard/analysis-request, Ticket Center, Cottonwood backfill, transcripts, with Monday 13:00Z and 14:15Z fire reads owed. Gates every dell2 project this week.",
@@ -294,7 +294,14 @@
     "evidence": {},
     "measured_at": "2026-10-12T12:33:35Z"
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-12T13:57:34Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_CLUSTER_TICK1_RULINGS_20261012.md",
+    "crossbox": null,
+    "ruled_by": "cluster-lead",
+    "xadj": null
+   }
   }
  ]
 }
