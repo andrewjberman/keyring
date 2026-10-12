@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~71</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C: CTw9-AC1 (1012 passed: 144 cases = (41 routes + 7 unmatched paths) x 3 callers) and CTw9-AC2 (965 passed, the fence unchanged) re-run on the worker branch; proof instance VALID; the control arm (the pre-edit handler) fails 1009 of 1012. The worker could not flip this file (row W71-S1, outside its grant), so the issuer flips. Nothing is deployed: CT-w-10 applies it under a third pair.</status_reason>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
