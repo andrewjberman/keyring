@@ -28512,3 +28512,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The two orders write the same key in sequence and AC1 of the earlier order was never re-cut for the later one. The honest state is: 404's bytes landed on all three keys, then 413 moved the 49F key forward. The issuer amends AC1 (for example, 49financial's ETag equals either landed value) and this lane re-runs it."
 }
 ```
+
+```json
+{
+ "id": "IRPT_BCKEND-D2-S108",
+ "project": "IRPT_BCKEND",
+ "fabric": "dell2",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-10-12T17:40:00Z",
+ "hazard_standing": "INERT",
+ "class": "OBSERVATION",
+ "one_line": "CVO read at the ~P slug (rounds 117 to 164): both ARMED rows are disarmed on this seat's reads. D2-S60: irpt-status, irpt-performance-adapter and irpt-narrative read 0 'unexpected keyword' and 0 TypeError over 24 hours, controls 184, 42 and 14 REPORT lines; all three were released again 2026-10-12 14:09Z to 14:12Z. D2-W317-S1: 0 of the four stale sentinels at origin/box/sitez bb49ae1cad; 8c85a65a1e (site Z, removes them) is an ancestor.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "logs filter-log-events since 2026-10-11T17:3xZ, auto-paginated, summed client-side: irpt-status kw 0, TypeError 0, REPORT 184; irpt-performance-adapter 0, 0, 42; irpt-narrative 0, 0, 14",
+   "get-function-configuration 2026-10-12T17:3xZ: irpt-status JmOhV/ep... LastModified 14:12:21Z; irpt-performance-adapter kMB8xCI9... 14:11:01Z; irpt-narrative 0+/PHOb/... 14:09:47Z",
+   "git fetch origin box/sitez -> bb49ae1cad; git ls-tree origin/box/sitez org/critical_paths/.open_deploys/: 0 of irpt-holdings-principals-dispatch-m-20260925, irpt-p-live-scope-20260923, irpt-performance-49f-engine-20260924, irpt-performance-inf-one-use-20260925 (positive control: 16 entries listed, e.g. advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012.json); merge-base --is-ancestor 8c85a65a1e origin/box/sitez: yes",
+   "order files at HEAD: 0 IRPT_BCKEND orders active (to-check.py --project IRPT_BCKEND --all, scanned 6042)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Spine L10: every BLOCKING or ARMED row is dispositioned before the slug.",
+ "world_is": "Both armed rows meet their disarm on live reads. Not read here: the four functions D2-S60 never fetched, and a closure run on the 2026-10-12 releases.",
+ "notes": "Read row for ADJUDICATION_v65. Digests, counts and paths only."
+}
+```
