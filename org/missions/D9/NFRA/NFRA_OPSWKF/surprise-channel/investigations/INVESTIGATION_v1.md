@@ -479,3 +479,27 @@ adjudication rows live in `../adjudications/` as `NFRA_OPSWKF-C-S<k>`.
   "notes": "Repair: the pair's AMENDMENT 1 (the probes carry /prod; every answer tabled, including the ones that would mean the issuer is wrong again). Two of the pair's requests are spent. The door is still open as of this row; the closing write waits on the CTO half on the amendment."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S15",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-12T00:10:38Z",
+  "one_line": "L9: OW-sd3-AC1 MET and FWD-10 REALIZED. The second API's public endpoint is closed: its disabling setting reads TRUE by three seats' separate reads, this seat's among them, and the request that the API itself refused with 401 before the act is refused at the endpoint with 404 after. The missing-route request read 404 both before and after, so the probe PRD v0.10 named could never have shown the closure. Not closed: the API, its functions and their key still exist and one call re-opens it; deleting them is Andrew's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/deliverables/S5_FINAL_REPORT_SECOND_DOOR_CLOSED.md @e6c3267f85 (msg 6188)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPSWKF_FWD10_L9_GRADE_20261012.md",
+      "this seat's own live read at 2026-10-12T00:08:48Z, a get of the one API's configuration: name trade-submission-api, protocol HTTP, created 2026-01-06, the disable-default-endpoint setting TRUE; and a read of the account's API domain names in this region, 0. No request was made to the API by this seat"
+    ]
+  },
+  "spec_asserts": "PRD v0.11 FWD-10 DONE WHEN: shown first by the setting read back from the API's own configuration; and by one request with no credential to a route behind its authorizer, answered 401 before the act and by the endpoint's refusal after it, the two answers shown different; both domain planes and the distributions read; no request to the sign-in route.",
+  "world_is": "No request was made to the API by this seat. Not read by this seat: the stage, the distributions. Whether the sign-in route was used before the metric window is not known; access logging was off.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
