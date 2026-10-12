@@ -3367,3 +3367,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r161/p161_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-467` | per firm entry and window, every interior and last-row excluded day by status token and by the prior day's ending value (zero, negative, positive, no prior row); the zero-run lengths; accounts all-zero-base against those with a negative or a flagged-positive base | FWD-3 (a return on that account's own end-of-day holdings) | LOCAL | IB-pr-464 drained | P161-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~322. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 154. ROUND 162, WORKSTREAM ~P (2026-10-12 ~02:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6362)
+
+The other fabric's CTO ruled (@479d6deba0 on origin/box/dell1) that its demand queue lands the as-traded closes; this fabric
+builds no lander and fetches no price. One read-only cell rebuilds the 878-ticker list (only its count was committed) and
+writes the request file in the queue's format. The manager carries it; the quote goes to the CTO.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r162/p162_cells.py`: AC1-AC2 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-468` | the request file for the demand queue: 878 securities (symbol and cusip), tier 2, close, 125 trading days to 2026-10-09 by the trading calendar, plus enrolment in the standing daily extension; no price fetched | FWD-3 (a return on that account's own end-of-day holdings) | LOCAL | none | P162-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~323. DIRECT-ACT (one read-only cell, LOCAL).
