@@ -6969,3 +6969,110 @@ by dell1 or by this seat.
   "notes": "Recorded here so the SC-e-97 wall budget is read against the path measured, not against the build's preloaded run."
 }
 ```
+
+## MDPF_SECCLASS-D1-W86-S3 -- the SC-e-97 order's expected figure at 2026-10-09 (-$962,915.51) does not equal its own inputs (1,846,399.46 minus 883,483.05 is 962,916.41)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W86-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~86",
+  "surfaced_at": "2026-10-12T12:19:17Z",
+  "one_line": "The SC-e-97 order's Expected outcome gives about -$962,915.51 for the 2026-10-09 Unclassified against the rebuild; its own inputs give -$962,916.41 (against the stored key) and -$962,849.68 (against the D_04 remainder the page serves).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Order file org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e97.c06-rolling-rederive.md, RECORD FACE Expected outcome at 7ebc58f42f: '$1,846,399.46 ... reads the rebuilt $883,483.05 (about -$962,915.51 against it)'.",
+      "1,846,399.46 - 883,483.05 = 962,916.41 (python arithmetic, 2026-10-12).",
+      "WINDOW_READ_C06_ROLLING_20261012.json per_date 2026-10-09 at 090b1b8bdd: served_unclassified 1,846,332.73 (D_04 rule), rebuilt 883,483.05, delta -962,849.68; served_key_unclassified 1,846,399.46."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The SC-e-97 half-request expectation names -$962,915.51 as the expected change of the 2026-10-09 Unclassified against the rebuild.",
+  "world_is": "The figure in the order does not match its own inputs. The record gives -$962,849.68 against the served D_04 remainder and -$962,916.41 against the stored key. The half request states both, read from the record, and does not carry the order's figure.",
+  "notes": "Recorded so the CTO half reads the figure from the record, not from the order's text."
+}
+```
+
+## MDPF_SECCLASS-D1-W86-S4 -- the mix summary written each fire carries advisors only where this fire has data, so an advisor with no entry this fire is absent from the written summary
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W86-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~86",
+  "surfaced_at": "2026-10-12T12:19:17Z",
+  "one_line": "C_06 writes the advisors map of gold/views/mix_daily_summary.json from this fire's advisor data only; an advisor with no relationship in the fire's partitions and no window day is not carried. The dry run wrote 56 advisors against 57 in rel_architect_lookup (not reconciled).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py:669-680 (_write_mix_summary writes payload advisors = the advisor_daily argument) and the incremental summary block (build, the call near :1365 at 7ebc58f42f -- the advisors argument is the replace_window_snapshot result, which holds only advisors touched this fire or holding a window day).",
+      "Dry run of the new build from this seat, 2026-10-12 12:02-12:15Z: 'Mix summary: firm=2293 days, advisors=56'; 'rel_architect_lookup: 3,267 relationships, 57 advisors' (scratch .scratch/dryrun.out, uncommitted)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The served mix summary's advisors map is the advisor set the page and D_03 need each fire.",
+  "world_is": "The map is rewritten from this fire's advisor data (plus window-day holders). Whether the stored advisor set before this change already equalled 56 is not read here; the dry-run count of 56 is the set this build writes. The one advisor by the lookup not in the written map is not identified here.",
+  "notes": "Pre-existing shape of the incremental write; the window's fifteen partitions touch most advisors each fire, so the gap is narrower with the window than before it. Not changed by SC-e-97."
+}
+```
+
+## MDPF_SECCLASS-D1-W86-S5 -- the stored firm unclassified key and the D_04 remainder differ by about $6.5M on 2026-10-03 to 2026-10-05; the SC-e-96 $128.58 rounding bound covers the other dates only
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W86-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~86",
+  "surfaced_at": "2026-10-12T12:19:17Z",
+  "one_line": "On 2026-10-03, 10-04 and 10-05 the stored firm[date].unclassified key is about $6.5M below the D_04 remainder (total minus canonical classes), while on the other seven keyed dates the difference is at most $184.61.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WINDOW_READ_C06_ROLLING_20261012.json per_date at 090b1b8bdd: 2026-10-03 served_key_unclassified 145,937,833.03 vs served_unclassified (D_04 rule) 152,418,257.84, served_key_minus_remainder -6,480,424.81; 2026-10-04 -6,488,756.24; 2026-10-05 -6,502,294.55.",
+      "Same object, other keyed dates: 2026-09-30 +96.20; 10-01 -7.87; 10-02 -184.61; 10-06 +4.71; 10-07 -128.06; 10-08 +128.57; 10-09 +66.73.",
+      "Read: gold/views/mix_daily_summary.json VersionId VrrTn2RrESHBImlLOMHQbNP6Fvzi9NZD (LastModified 2026-10-11T05:23:28Z); D_04.client_portal_summary.py:440-462 at 7ebc58f42f."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The SC-e-95 record's six-place rounding bound (row MDPF_SECCLASS-D1-W85-S6, up to $128.58 per snapshot) describes the gap between the class dollars and the total field of a firm snapshot.",
+  "world_is": "The stored unclassified key and the D_04 remainder agree within $184.61 on seven of the ten keyed window dates and differ by about $6.5M on three (2026-10-03 to 2026-10-05). The served Unclassified (D_04's rule) on those three days is the remainder. The cause of the key gap is not read here.",
+  "notes": "The SC-e-97 half request prints the key beside the remainder for every keyed date and does not assert agreement."
+}
+```
+
+## MDPF_SECCLASS-D1-W86-S6 -- the commit naming gate refuses the S3 key literal code/gold/gold_dispatch.sh that the SC-e-97 rule fallback needs; the registry row is outside the worker's grant, so the build is held uncommitted
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W86-S6",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~86",
+  "surfaced_at": "2026-10-12T12:34:36Z",
+  "one_line": "The SC-e-97 rule reader's S3 fallback names the object code/gold/gold_dispatch.sh; the commit naming gate (LGIC_ENFORCE DEC-6) refuses that new literal as out of pattern, and the registry row that would admit it is outside the worker's grant. The C_06 and D_04 build is held uncommitted on the worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output on 2026-10-12 before 12:34:36Z on wk-MDPF_SECCLASS-86 (.scratch/commit_e97.out, uncommitted): 'NAMING REFUSE data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py:417 code/gold/gold_dispatch.sh -> {source}/{scope}/code/gold/gold_dispatch.sh; why: NEW and OUT-OF-PATTERN as S3Key: REFUSE'. The commit was aborted; the worker unstaged the three files it had staged.",
+      "infra/logic/registry/legacy_addresses.json carries a legacy prefix row with template 'code/gold/' (its note: added to replace a split literal). No row names the specific key code/gold/gold_dispatch.sh.",
+      "The order file TO-SC-e97 RECORD FACE item 1 names the S3 object as the rule's fallback when no sibling gold_dispatch.sh is present; the sibling is present in the repo and is placed beside C_06 on the runner by sync_scripts (gold_dispatch.sh:672-674)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-97 item 1: producer_force_recent_days(None) reads the sibling gold_dispatch.sh if present, else the S3 object code/gold/gold_dispatch.sh through the module's own client.",
+  "world_is": "The S3 fallback literal is refused by the naming gate as an unregistered S3 key. Composing the key from the registered 'code/gold/' prefix would be a split literal, which the registry row's own note describes as a replaced pattern; that was not done. Admitting the key needs a row in infra/logic/registry (outside the worker's <paths>) or a registered code-key builder usable on the gold runner. Until one lands the build (C_06 functions, build() window, D_04 pass-through, the 14-case test file, and the half request) is held uncommitted at worktree wk-MDPF_SECCLASS-86, and TO-SC-e97 stays pending. Every criterion passes on the held tree (AC1 rederive ok, AC2 wiring ok, AC3 half ok).",
+  "notes": "Options for the owner, not decided here: a registry row for the dispatcher key; or the sibling-only read, which changes the order's stated fallback. The worker did not choose between them."
+}
+```
