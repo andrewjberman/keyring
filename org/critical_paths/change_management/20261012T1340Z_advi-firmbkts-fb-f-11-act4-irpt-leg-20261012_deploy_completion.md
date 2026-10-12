@@ -18,7 +18,7 @@
 | L4 | activation | eight scoped plans, each changing the function's code hash only (s3_object_version, source_code_hash, last_modified); plan check script prints the attribute diff | each plan summary line and the attribute check | 8 scoped plans each Plan: 0 to add, 1 to change, 0 to destroy; differing attributes last_modified, s3_object_version, source_code_hash only; env equal; after hash equals artifact 8 of 8 | CLOSED 20261012T142627Z |
 | L5 | activation | eight safe-apply on the saved plans, begun not before 13:45Z the same minute as the laptop leg; first and last unit apply times printed | the first and last apply times, each read-back CodeSha256 equals its artifact | 8 safe-apply, each Apply complete 0 added 1 changed 0 destroyed rc 0; first unit start 14:03:43Z, last unit end 14:13:46Z; read back CodeSha256 equals artifact 8 of 8 (r4_act4 8 of 8 arms); COO HOLD msg 4408 at 14:21:30Z arrived after the last unit; ruling msg 4416 LEAVE in place | CLOSED 20261012T142627Z |
 | L6 | verify | AFTER sample SAMPLE_AFTER.json, r4_sample_eq.py all EQUAL, irpt-ycharts-generate same answers; irpt-performance-adapter invoked once and its evidence artifact KEY named not under a served class | the sample last line and the key | SAMPLE_AFTER.json 14 records; r4_sample_eq SAMPLE EQUAL: 14 of 14 cases; granted 7 refused 7; ownership reads at the canonical key 0 (field empty by construction, row D1-S39; canonical key evidenced at the artifact 8 of 8); performance adapter census event refuses at input validation, no evidence artifact written, invoked twice (row D1-S39) | CLOSED 20261012T142627Z |
-| L7 | verify | first hour: router behaviors origin responses (CloudFront metrics) over the first hour after the last unit, denominator printed; 403 or 404 is Branch B | the metric read and denominator |  | OPEN |
+| L7 | verify | first hour: router behaviors origin responses (CloudFront metrics) over the first hour after the last unit, denominator printed; 403 or 404 is Branch B | the metric read and denominator | first hour read 15:14Z: IRPT functions 52 invocations, 36 real, 0 AccessDenied/NoSuchKey/Traceback/timeout lines; distribution aggregate 641 requests since first unit, 5xx 0, 4xx concentrated in one 499-request burst at 14:13Z comparable to pre-flip bursts; router behaviors origin responses NOT separable (logging disabled, no additional metrics: row D1-S39); maps EQUAL at 15:00Z | CLOSED 20261012T151503Z |
 | L8 | verify | AC1 r4_act4.py --arms irpt 8 of 8; AC3 act-3 compare DEST-VS-MANIFEST EQUAL; platinum_dest_view.py shipped at close so FB-f-9 AC1 reads 20 of 20 | the three outputs quoted |  | OPEN |
 | L9 | git | source-map artifact_* record committed (the M3 commit), proof instance written, TO-FB-f-11 status flipped complete in one commit | commit hash |  | OPEN |
 
@@ -31,6 +31,7 @@
 - 20261012T142627Z LEG L4 closed: 8 scoped plans each Plan: 0 to add, 1 to change, 0 to destroy; differing attributes last_modified, s3_object_version, so
 - 20261012T142627Z LEG L5 closed: 8 safe-apply, each Apply complete 0 added 1 changed 0 destroyed rc 0; first unit start 14:03:43Z, last unit end 14:13:46
 - 20261012T142627Z LEG L6 closed: SAMPLE_AFTER.json 14 records; r4_sample_eq SAMPLE EQUAL: 14 of 14 cases; granted 7 refused 7; ownership reads at the can
+- 20261012T151503Z LEG L7 closed: first hour read 15:14Z: IRPT functions 52 invocations, 36 real, 0 AccessDenied/NoSuchKey/Traceback/timeout lines; distri
 
 ## ACT 4, THE DELL1 LEG -- hand record (0.7.0_AE_CloudOps~FB1, 2026-10-12T14:23:54Z; GO @8cd6a18a3b)
 
@@ -79,7 +80,6 @@
   unable to begin by 17:00Z, means ROLL ALL EIGHT BACK. Nothing else moves.
 - Split record: first unit 2026-10-12T14:03:43Z (irpt-49f-reporting-read-lambda), last unit end 2026-10-12T14:13:46Z (irpt-ycharts-generate).
 
-
 ## ROLLBACK ACTOR, NAMED (0.7.0_AE_CloudOps~FB1, 2026-10-12T14:44:09Z; COO msg 4433, CTO ADDENDUM 7)
 
 **The rollback actor for the eight IRPT units AND for act 2's dispatcher is `0.7.0_AE_CloudOps~FB1`** (dell1; identity
@@ -119,3 +119,18 @@ condition 1). Entry of record for the dispatcher: `20261012T0615Z_advi-firmbkts-
 
 **Recorded cost of leaving the split open:** while the edge units read the legacy ownership key and the eight read the canonical one, an ownership
 change would be seen by only one side; both maps were byte-equal at 13:56Z and nothing is hand-edited (COO msg 4416). The hourly reads are the bound.
+
+## THE FIRST HOUR (0.7.0_AE_CloudOps~FB1, read 2026-10-12T15:14Z; window 14:13:46Z to 15:13:46Z after the last unit)
+
+- **The eight functions' own logs** (`act4_irpt/first_hour_irpt_logs.out`): 52 invocations in the window, 36 of them real traffic after this seat's
+  runs (all `irpt-directory-search`); `AccessDenied`, `NoSuchKey`, `Traceback` and `Task timed out` lines: 0 in all eight groups. No error
+  event carrying a public reason code in the real-traffic part.
+- **The distribution aggregate** (`act4_irpt/first_hour_cloudfront_aggregate.out`; the only series that exists): 641 requests since the first unit,
+  5xx 0.00 percent; 4xx 50.23 percent request-weighted, of which 499 requests at 61.92 percent are ONE five-minute bucket (14:13Z, the minute the
+  last unit applied); the other 10 buckets hold 142 requests, none above 27 percent. Pre-flip bursts of 150 to 500 requests at 38 to 63 percent
+  existed at 11:33Z to 12:18Z (row `ADVI_FIRMBKTS-D1-S39`).
+- **What cannot be read:** the router behaviors' origin responses (403 or 404 on a served class) are not separable: logging is disabled and
+  there is no additional-metrics subscription. The edge units have not moved, so the router still rewrites served classes to the legacy home;
+  a served-class read through the canonical home is the edge leg's. This leg's part of the first hour reads clean on the data that exists.
+- **Ownership maps, 15:00:04Z:** EQUAL (legacy VersionId `FcsnGhU7Rt280E9rmDacateI5WiK8S28`, canonical `HXMgugyoEpzWQF_6VFAt.MMOklh53bK2`, 474,841
+  bytes, one sha256); `act4_irpt/ownership_maps_1500Z.out`. Reads at 16Z through 21Z follow.
