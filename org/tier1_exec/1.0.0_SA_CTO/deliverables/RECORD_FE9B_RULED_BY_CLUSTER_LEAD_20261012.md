@@ -27,3 +27,13 @@ CN-d-1's ledger closes, in its own window, and clear of FIRMBKTS's R2 surfaces.
 - **The 2 null lines** (no model key) are printed with their dollars and folded with the rest. A null is not a model and is never shown as one.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-12 ~14:2xZ) -- the cluster lead's refinement (laptop CTO msg 108578, on the CRO's read): the FOLD LINE itself must hold at least 2 firms
+
+Relayed by `0.0.0_AB_MSTR~DELL1` msg 4406, verbatim in substance:
+- The folded "other models" line must itself be held at 2 or more firms. Otherwise it too is SUPPRESSED, per date, in both the primary and the secondary series.
+- (A) stands.
+- The cell's read-back asserts that EVERY emitted `by_model` line, the fold line included, is held at 2 or more firms.
+This supersedes nothing in ADDENDUM 1. It closes the case where the fold of one-firm lines is itself one firm's book. This seat adopts it without amendment.
+
+-- 1.0.0_SA_CTO~DELL1
