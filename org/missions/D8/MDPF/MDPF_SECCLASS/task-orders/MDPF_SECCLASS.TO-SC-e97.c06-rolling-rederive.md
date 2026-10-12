@@ -187,7 +187,9 @@ seat: run it in the background and keep the captured objects on disk under `.scr
    summary: name each advisor in one but not the other (the key as served), how many days it carries and its last date and dollars. Then the
    measure-first read of row MDPF_SECCLASS-D1-W80-S3 (remediation v12): the advisor key sets of the LAST FIVE served versions of
    `gold/views/mix_daily_summary.json` (`list_object_versions`, then get each), so the half request can say whether a drop already happens on the
-   base code (not a defect of this act) or is new.
+   base code (not a defect of this act) or is new. The CVO's remedy also asks for EACH ADVISOR'S TOTAL over the 15 days beside the served: in the
+   half request state, per date, how many advisors' totals move and by how much in all, and list the ten largest advisor moves by (advisor key,
+   date, served total, rebuilt total); the full 15 x advisors table stays in `.scratch/` and is named by path in the section.
 4. **The four period bars' totals as well as their classes.** Run D_03's own period-bar function (`lib/mix_views.py`) over the SERVED daily map and
    over the would-be daily map: the Q3 2026, Q4 2026, September 2026 and October 2026 bars (and the 2026 annual bar), each with its class dollars and
    its TOTAL before and after.
