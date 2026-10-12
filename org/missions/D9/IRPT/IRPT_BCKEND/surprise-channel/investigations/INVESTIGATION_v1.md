@@ -29003,3 +29003,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Under the built rule the number of accounts the rule applies to equals the CTO's in every cell, and the number whose served claim changes does not in orion SI (750 vs 894), YTD (76 vs 200) and 1Y (106 vs 240). The record carries both under separate names (claim_move_counts literal; rule_fires_counts) and criterion IB166-1-AC3 grades claim_move_counts, so it FAILs on the literal. I did not edit a threshold or relabel; the issuer rules which number the release packet's never-widen pair names (accounts that change, or accounts the rule reaches). Nothing is deployed."
 }
 ```
+
+## IRPT_BCKEND-D2-W338-S1 -- Three tests elsewhere in the portal InvestorReporting suite fail at the DEV head worktree, in files this order did not touch.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W338-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~338",
+  "surfaced_at": "2026-10-12T20:34:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Three tests elsewhere in the portal InvestorReporting suite fail at the DEV head worktree and sit in files this order did not touch: iv-e-26.wire-regen (PerformanceReport regeneration not byte-identical), iv-e-98.generators-drift (same file), and fe-s-14/allowlist (FIRMACCESS DIFF +35 where 0 expected).",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "bun test src/pages/InvestorReporting from C:/dev/wk-irpt-bckend-338/portal after the portal candidate commit: 1201 pass, 27 skip, 3 fail of 1231 tests in 390 files; the failures are __tests__/dsgn-irptv1/iv-e-26.wire-regen.test.ts:152, __tests__/dsgn-irptv1/iv-e-98.generators-drift.test.ts:72 and __tests__/fe-s-14/allowlist.test.ts:112.",
+      "git -C portal diff --name-only 53506d4903aeabac675d87b7fe208fc9945c8ce7 HEAD lists only contracts/adapt.ts and __tests__/value-facts-members.test.ts; the two regen tests compare generator output for wire/PerformanceReport.ts, which neither file feeds. INFERRED, not GROUNDED: the three tests were not run at the unmodified base."
+    ]
+  },
+  "spec_asserts": "The order names the new test file and the wire journey test as the portal checks; it does not mention the wider suite.",
+  "world_is": "The wider InvestorReporting suite is not clean at the worktree's DEV head (3 of 1231 fail), unrelated to the adapter change as far as the diff shows. Not fixed here: the files are outside the order's paths."
+}
+```
