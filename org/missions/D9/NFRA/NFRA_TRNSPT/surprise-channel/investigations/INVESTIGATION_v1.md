@@ -2119,3 +2119,30 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
  "notes": "THE ACT IS NOT ROLLED BACK ON THIS READING. Step 8's rollback is the branch for a measured failure, and the CTO's two rollback rationales are 'the route does NOT admit it' and 'the front door or the gateway did not carry it'; both are contradicted by the evidence above. Re-cutting a signed condition, and ruling that an unexercisable instrument is or is not a failure, are not the applier's acts. The ledger is HELD on this row, not closed and not rolled back, and the applier's one report carries the single ask: the word on ONE more post with a conforming id (e.g. TCK-20261012-deadbeef, which reaches :1725 and then the body-key 400), or the word to roll the base back. The probe wrote nothing and read no ticket: the path from :1702 to :1729 contains no write. No bearer, address or secret value is recorded anywhere in this row."
 }
 ```
+
+```json
+{
+ "id": "NFRA_TRNSPT-D2-S34",
+ "project": "NFRA_TRNSPT",
+ "fabric": "dell2",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-10-12T17:16:00Z",
+ "hazard_standing": "INERT",
+ "one_line": "CVO read at the round-23 compile: the 14:00Z SCHEDULED fire landed one transcript (MM-20261012-0858, LANDED and SILVER-WRITTEN) at Max Memory Used 239 MB of 1024 MB, so a scheduled landing run and its peak are now measured. The tree's dist zip on dell2 was rebuilt again at 13:24Z and differs from the live digest.",
+ "class": "OBSERVATION",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lambda get-function-configuration 2026-10-12T17:11:05Z: teams-global-transcripts-pull-lambda, outlook-global-transcripts-pull-lambda and outlook-global-commentary-draft-lambda all CodeSha256 xC1GDXXpuO5vNk2lGqRr2S6rH041rzdQnbCD91KQodE= (LastModified 01:04:45Z to 01:04:58Z; 1024, 1024, 512 MB). Distinct digests: 1",
+   "events list-rule-names-by-target on the Teams pull: teams-global-transcripts-pull-hourly (the only rule)",
+   "log /aws/lambda/teams-global-transcripts-pull-lambda since 11:1xZ, REPORT lines: 13:00:43Z 101 MB, 14:00:48Z 239 MB, 15:00:35Z 101 MB, 16:00:43Z 101 MB, 17:00:34Z 101 MB; every one Memory Size 1024 MB; 0 ERROR or Traceback events on the same filter",
+   "s3://opal-data-transcripts/teams/transcripts/state/pull_runs/run=2026-10-12T14:00:09Z/run.json (address from lib/opal_naming.py address()): monday_meeting listed 21, landed 1, held 16, read_refused 4; ocio_ic 8/0/8/0; asset_management_ic 7/0/7/0; research_meeting refused 1. Outcomes for MM-20261012-0858: LANDED, SILVER-WRITTEN",
+   "infra/aws/lambda/transcripts-pull/dist/transcripts-pull.zip on dell2: mtime 2026-10-12 09:24:28 -0400, 908,069 bytes, base64 sha256 /UyowUGaGBvxGHJTPYH0tRPCjeQV8WcA18mMlihIV/w= -- not the live digest"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Row D2-S16's remedy and the round-23 decomposition's bar: a scheduled fire that lands a transcript, with its REPORT line beside it. Row D2-S31 and the CTO condition: the tree's dist zip hashes to the live digest before a plan of this root.",
+ "world_is": "The first limb is met: an hourly scheduled fire on the deployed bytes landed and wrote silver for one new Monday meeting at a 239 MB peak, a quarter of the function's memory. The second is the D2-S31 state again with a new digest: no seat on dell2 can plan this root from the shared tree without a deliberate rebuild under a signed pair, which is the condition working.",
+ "notes": "Read row for ADJUDICATION_v15. Counts, digests, ids and times only; no transcript text was opened."
+}
+```
