@@ -27729,3 +27729,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "A rewrite of the object does not move its data forward: the store's yahoo points end four months before the reader's newest bar. Why the 2026-10-09 run added no later day was not established (the writer's inputs for that run were not read)."
 }
 ```
+
+## IRPT_BCKEND-D2-W315-S4 -- Amendment 1: the fund-class marker is a table of the build (the census class), not a column of the store, and every one of the 23,976 compared ticker-days lies before the first graded day, so the per-class equality is read on the store's newest weeks only
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W315-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~315",
+  "surfaced_at": "2026-10-12T01:02:48Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Amendment 1: the fund-class marker is a table of the build (the census class), not a column of the store, and every one of the 23,976 compared ticker-days lies before the first graded day, so the per-class equality is read on the store's newest weeks only",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py:200-201, :205, :214-221, :246-288: the replaced set is the census rows of class dividend_adjusted or mixed; the store parquet holds date, asset_name, ticker, price, source only",
+      "VALIDATED_UNADJUSTED.csv (0.9.0_WK_ADVI_COTBKF~128) against price_basis_census.csv (0.9.0_WK_ADVI_COTBKF~60): the 73 substituted funds are census class dividend_adjusted (60) or mixed (13); none of the 197 left on the store is; 270 of 270 agree",
+      "ib155_by_class.py output: compared ticker-days on 37 distinct dates, 2026-04-15 to 2026-06-05; 0 on a graded day; graded days covered by the store 0 of 85; on the 19,121 ticker-days where Adj Close differs from Close the store equals Close on 18,782, Adj Close on 0",
+      "the order's instruction named S2 as the next free row id, but S2 and S3 were already on the branch (filed by the earlier instance of this slot); this instance used S4"
+    ]
+  },
+  "spec_asserts": "Amendment 1 reads the fund-class split as a statement about the store a producer could lean on, and the round-76 records measure the store at 14,250 trade-day closes across 2021 to 2026.",
+  "world_is": "The marker is the build's census and the unmarked class (220 tickers, 214 not in the store) holds funds as well as non-funds. The store has no yahoo-labelled point on any graded day, so the per-class equality (replaced 18,537 of 18,870; not_replaced 5,059 of 5,106) is read on the store's newest weeks, where an adjusted close and the unadjusted one differ least; it neither confirms nor refutes the round-76 finding about older points. A comparison over the store's older dates was not made (the Yahoo cache holds bars from 2026-01-30 only)."
+}
+```
