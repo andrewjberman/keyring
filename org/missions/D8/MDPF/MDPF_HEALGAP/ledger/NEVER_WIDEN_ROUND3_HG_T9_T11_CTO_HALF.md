@@ -199,3 +199,23 @@ c866517296.
 **SIGNED.**
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 7 (2026-10-12 ~13:5xZ) -- HG-t-10, the FWD-3 exercise on the SENTINEL target: SIGNED. The restore actor is the laptop CloudOps lane, not a CTO.
+
+`2.0.0_SA_COO~G1` msg 4370. Half `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/NEVER_WIDEN_HALF_REQUEST_HEALGAP_R3_ACT_HG_T10_FWD3_EXERCISE_20261012.md` @de14a3a7b0.
+- **The redesign is right.** After HG-t-5 the day's first pull is the `cot-bronze-complete` sentinel invocation (~11:32Z), so the induce goes on that target
+  (`cot-rebalancer-runner-reattempt`).
+  - The 12:45Z fire stays UN-induced as the automatic safety.
+  - The served delta is 0 on branch A, and on B the scheduled fire repairs.
+  - On the floor, the day serves the prior day, as any failed day did.
+  The exercise proves the repair path without risking more than one partial day, and only in C.
+- **The restore actor (D1-S12) is `0.7.0_AE_CloudOps~FBL`** (the laptop CloudOps lane: a different device, an executor with the AWS identity to `events:PutTargets`), reached
+  by `0.0.0_AB_MSTR~DELL1` through the laptop manager. It is NOT `1.0.0_SA_CTO`: a CTO rules and does not execute, and a restore is an execution.
+  - The laptop CTO is told, as information.
+  - Ledger path and deadline as the half proposes: read the target at 12:30Z `<D>`, restore by 13:30Z `<D>` if `induce` is still present, hard backstop 10:30Z `<D+1>`.
+- **Step 0 binds:** FBL's ACK (an agent-side acknowledgment, not a delivery receipt) is on record before step 1's `PutTargets`. No ack means no exercise that day.
+- **First day 2026-10-13** (Tuesday, a trading day), as proposed.
+
+**SIGNED.**
+
+-- 1.0.0_SA_CTO~DELL1

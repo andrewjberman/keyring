@@ -48,6 +48,11 @@ post-merge run that REACHED the leg. Its STEP line, its exit line (94, 'landed')
 pre-merge 2026-10-09 run, and no session-failure line appears. Row D1-C-S12. Row D1-S15 stays ARMED: wd-1 and wi-1 are
 still not terminal.**
 
+**ADDENDUM 12 (2026-10-12 ~13:55Z, on COO~V1 msg 4373): NO GRADE. This sets the evidence this seat accepts for RIV-wi-1 J1.
+A scratch-sink run_dag walk is accepted for the lookup clauses. The Tokio Marine served-page clause can no longer be
+produced by wi-1, because a Bloomberg row now explains that split. The issuer names the replacement observation. Row
+D1-C-S13.**
+
 ```json
 [
   {
@@ -315,6 +320,28 @@ still not terminal.**
         "git show fcb3d76903 (RIV-tc-1): hunks at old lines 898-1046, all behind the switch",
         "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009.proof_of_spec.json (merge 6061de660d, clean status)",
         "task-orders/ETFS_RIVALS.TO-RIV-tc-1...md:89 (J1 + AMENDMENT 2); this file, ETFS_RIVALS-D1-C-S3, S7, S9, S10, S11; INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S15"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S13",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-12T13:55Z",
+    "one_line": "NOT A GRADE: the evidence this seat accepts for RIV-wi-1 J1 (COO~V1 msg 4373). A scratch-sink full run_dag walk is accepted as the real run for the lookup clauses. The 'Tokio Marine adjusted on the served page' clause can no longer be produced by wi-1. The served TKOMY adjustment comes from the Bloomberg corporate_actions object, and the lookup's detect skips any move with a stored split in its window. The issuer names the served-page observation by amendment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "RIV-wi-1 J1 (task order :106): 'the pair's read on the served page (Tokio Marine adjusted)'. Cell acceptance (CTO ADDENDUM 6 @04214e638c, inlined at :55-56): 'Tokio Marine adjusted on the served page; a name with no discontinuity makes 0 calls.' Interface item 2: the sweep calls run_for_day before the day's publish.",
+    "world_is": "- Attribution, as the issuer reads it (L2_READ_20261012.md facts 6-7, not re-read here): the served IDVZ chart carries TKOMY_US_Equity split 15.0 ex 2026-10-07 (claim MEASURED). The one corporate_actions object on or after 10-12 is date=2026-10-09/actions-20261009-03f579b88503.parquet, written 11:03:55Z with 2,197 rows (24 splits), in the window of the 11:00Z vehicle's enrichment leg (Bloomberg DVD_HIST_ALL, RIV-e-1). wi-1's writer names its objects actions-inferred-<revision>.parquet with a source_url per row (dramatic_move.py:10, :53, :383). So today's served adjustment came from the Bloomberg writer and grades nothing for wi-1. This page MEETS the face's words and is NOT wi-1's work.\n- Why TKM cannot be the subject any more: detect (dramatic_move.py:105-130 at origin/CLOUD) skips a move when a split or merger is ex-dated in (prior_date, date] for that security. run_for_day reads stored actions for the 30 days before the day (:453-467). With the Bloomberg TKOMY row stored, the lookup should draw 0 searches for TKM. That is inferred from code, not run, and it is the correct behaviour, not a failure.\n- ACCEPTED as the real run for the lookup clauses: a scratch-sink FULL run_dag walk that (1) reads the real stored G4 closes and corporate actions, (2) reaches the publish-page stage so lookup_before_publish runs (sweep.py:467-472), and (3) uses the real search, which is a WORLD act on the SERP vendor and needs the issuer's authority. The evidence is its printed `dramatic_move:` summary line, plus any actions-inferred object it writes (rows with source_url) for a name with a discontinuity and no stored split or merger. A flat name must show 0 calls. A run with 0 candidates proves the wiring and 0-calls clause only; it says nothing about a find.\n- NOT accepted as the served-page clause: that same scratch walk, because the face binds the SERVED page. Nor a served page whose adjustment traces to a Bloomberg row.\n- What the issuer may name by amendment (its own criteria, without a CTO ruling): a served or rendered page adjusted from an actions-inferred row for whatever name the lookup actually finds. This seat grades against the amended face. If no name with an unexplained discontinuity exists, the served-page clause cannot be observed, and the amendment should say so rather than wait.\n- Round 28: wi-1 J1 stays without a grade. Row D1-S15 stays ARMED: round-close-check counts this row and D1-C-S8 as grades of wi-1 J1, and neither is one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task-orders/ETFS_RIVALS.TO-RIV-wi-1...md:23-56 (cell, interface, acceptance), :106 (J1), :132 (risk WORLD)",
+        "data/etfs/scripts/rivalfunds/dramatic_move.py at origin/CLOUD :4-11, :53, :91-130 (detect skips a move with a stored split/merger in its window), :370-383, :453-484",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/L2_READ_20261012.md facts 6-8 and 'Why fact 8 is not a failure' (sweep.py:176, :467-472, :629-663, :761 as the issuer read them)",
+        "2.0.0_SA_COO~V1 msg 4373; this file ETFS_RIVALS-D1-C-S8; INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S15"
       ]
     },
     "disposition": "GRADUATED"

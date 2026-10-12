@@ -174,7 +174,22 @@ eight at a time.
 Graded by: `.tools/to-pipeline-gate.py` at this commit (a MODIFIED order, so only GATE (viii) applies, and this order
 declares `<placeholders>NONE</placeholders>`). No other limb grades a modification.
 
-<status>pending</status>
+**DRAIN:** drained by 2.0.0_SA_COO~MP 2026-10-12 ~13:5xZ (build branch `wk-mcportal-c17-n1` @bf627dd9bb merged
+@f555cd3a91; ledger entry @4497c5b1be; EC2_MANIFEST record @5f543a2363 by the applier). C17 + AMENDMENT 1 are LIVE on
+185dc04888 over d9f2ebded9 (mcportal bc37107). Ledger nfra-mcportal-c17-gitstate-release CLOSED 20261012T130927Z, 4 of 4
+legs. The trunk's two gateway files equal the deployed blobs, 2 of 2. Both never-widen halves were honoured:
+- COO C-1: the payload was committed before the act, and the rollback key read back untouched;
+- CTO-1: the first cut was discarded and the work re-cut on d9f2ebded9.
+The issuer re-ran all three checks:
+- AC1 PASS at HEAD (98 vs 98);
+- AC2 PASS at HEAD (both arms);
+- AC3 PASS on the host, ssm 2c8190a3: gitstate 7.6 s, 1,391 body fetches, 4 recorded, no-identity 401.
+The CP2 regression r2.AC3 also PASSes (overlap 2.9 s, gitstate 7.1 s, calls 0.6 s).
+Margin: about 1.2-1.3x and narrowing (fetches 1,346 -> 1,391 today). The structural fix is Z-S40 (c), the producer
+pointer, and it is routed to 1.0.0_SA_CTO~Z's next analysis.
+Was: pending
+
+<status>complete</status>
 <round>1</round>
 <workstream>C17</workstream>
 <fabric>site-z</fabric>

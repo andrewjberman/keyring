@@ -1512,4 +1512,4 @@ dell2 cloud-ops seat (the pair's condition 6).
 |---|---|---|---|---|
 | `DB-b-164` | the pair's apply: the gold Lambda release over live oNgy4rnr from the packet's four pins, ledger first, one targeted safe-apply, one dry-run invoke read against the 85 percent lines | WORLD | both halves SIGNED; the Monday acceptance fire read | R86-1 |
 
-**fanout:** 1 of 1 chain, cap 8. No worker: the order goes to `0.7.0_AE_CloudOps~DELL2`.
+**fanout:** 1 of 1 chain, cap 8. No worker: the order goes to `0.7.0_AE_CloudOps~IB2` (first sent to `~DELL2`, unread; reseated 2026-10-12).
