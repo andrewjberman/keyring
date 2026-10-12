@@ -10,7 +10,7 @@
  "subject": "TO-READS-Y8 AMENDMENT 1 (follow-up to 552a): restate the verdict member, re-run the check; NO new invoke",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps~ANL/task_orders/IRPT_ANLREQ.TO-READS-Y8.f2-original-route-owner-check-laptop.md",
  "opened_at": "2026-10-12T21:26:26Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-12T21:26:48Z",
   "bus_message_id": "cfa82822-32f0-4090-a926-1e0242a5f132"
@@ -21,8 +21,8 @@
   "bus_message_id": "793e47fd-7a20-4d15-91b2-9caf16da8587"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-12T21:37:54Z",
+  "from_by": "2.0.0_SA_COO~Y2",
   "to_at": "2026-10-12T21:32:32Z",
   "to_by": "0.7.0_AE_CloudOps~ANL"
  }
