@@ -132,3 +132,58 @@ no cell moves `users/me`, the submit or workflow handlers, any table, any grant,
 **Battery (workstream S).** `comp-iam`: DECLARED-NOT-APPLICABLE (no grant changes). `comp-schedule`:
 DECLARED-NOT-APPLICABLE. `comp-adversary`: APPLICABLE at the drain on OW-s-2 (an authorization change). Checks, dry-run
 at the base: `deliverables/2.0.0_SA_COO~O2/S_CHECKS/ow_s_checks.py`.
+
+### Workstream S, additions of 2026-10-11 ~20:3xZ (the issuer)
+
+**Cell ids for the proof tool.** `OW-s-d-1` and `OW-s-r-1` above keep their names; their ids are `OW-sd-1` and `OW-sr-1`
+(the checker's cell-id pattern admits no third dashed segment). Orders and proof instances cite `OW-sd-1` and `OW-sr-1`.
+`OW-sd-1` and `OW-sr-1` are SERVED and EXERCISED as of 2026-10-11 20:01Z (ledger closed; grade
+`deliverables/2.0.0_SA_COO~O2/S_DEPLOY/OW_S_D1_ISSUER_GRADE_20261011.md`); the outcome's grade is the CVO's.
+`OW-s-2` was rebuilt before its merge on PRD v0.6's rule (tier `internal` OR firmId `opal-capital`; row D2-S6), which
+replaces "tier internal" in its cell text above.
+
+**FWD-9 (PRD v0.8 @cfc5091071, ratified-text half SIGNED @1b8530a2fc; `1.0.0_SA_CTO~DELL2` msg 5710): the trade submission
+route is for Opal staff only.** Cut after FWD-8's ledger closed, as its own cell and its own pair.
+
+| cell | builds | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|
+| `OW-s-3` | `submission_handler.py`: `_require_internal(event)` (the same two exact comparisons as `dashboard_api.py`), called FIRST in `lambda_handler`, before the body is parsed, the email check, any table, user lookup or mail; its 403 carries its own message, distinct from the handler's two existing refusals; a new test file; the three existing test files' contexts gain firmId `opal-capital` | FWD-9 | NOT-EVALUATED | dell2 worker | WORLD (path floor: a Lambda handler; the worker applies nothing) | worker | -- |
+| `OW-sd-2` | The release under its own pair: ONE body that cannot be stored (a malformed `ticket_id`, no `initiator_email`); a synthetic caller who is not Opal-internal and carries a verified email reads 400 BEFORE the release; the apply; the pair's table says what each synthetic caller is on every OTHER surface for its token's life, read from that surface's own rule, and makes no read on data-refresh | FWD-9 | NOT-EVALUATED | ISSUER cuts the pair and the apply order; the applier applies | WORLD | -- | OW-s-3 drained |
+| `OW-sr-2` | After the release, on the deployed service: the same caller and body read 403 with the new check's own message; an Opal-internal caller with an email reads 400 `ticket_id is malformed`; no submission row and no mail from any of the three reads; the deployed bytes diffed against the build input member by member | FWD-9 | NOT-EVALUATED | ISSUER | WORLD | -- | OW-sd-2 closed |
+
+**Write set.** `OW-s-3`: `infra/aws/lambda/trade-pipeline/trade-submission-handler/src/submission_handler.py`;
+`.../trade-submission-handler/tests/test_submit_internal_only.py` (new); the three existing files in that `tests/` folder
+(authorizer contexts only). Disjoint from every non-terminal order.
+
+**Chains.** S3 = OW-s-3 -> OW-sd-2 -> OW-sr-2. Fan-out 1 of 1 chains, cap 8.
+
+**Rule 24 record (FWD-9).** Domain: the routes that reach `trade-submission-handler`, which OW-s-1's record counts as 1
+(`POST /api/general/trades/submit`), and the branches of its handler before the first table use. By subtraction: the one
+route's one handler is OW-s-3; the check precedes every branch, so none is left. Remainder: which staff may submit (the PRD
+excludes it); the page's guard; the workflow handler (approve, reject and execute already require a trade-users row and a
+group, by OW-s-1's record). State coherence: no cell moves a grant, an env key, a table, SES, the ticket bridge's rules or
+the portal.
+
+### Workstream S, addition of 2026-10-11 ~22:3xZ (the issuer): the admitted arms by direct invoke, and the second door
+
+PRD v0.9 @d7de5b9217 (ratified-text half SIGNED @59cd7e46ba) reads FWD-9's admitted arm by a direct invoke of the deployed
+function; `1.0.0_SA_CTO~DELL2` msg 5949 adds FWD-8's tier arm by the same method. Both are further reads of cells `OW-sr-2` and
+`OW-sr-1` (order `TO-READ-S3`, under the pair's AMENDMENT 1, both halves signed); no new cell.
+
+| cell | builds | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|
+| `OW-s-5` | A read-only record on the second API that reaches the trade functions (`trade-submission-api`, row D2-S11): the DEPLOYED bytes of `trade-authorizer` and `trade-auth-handler` (what `/auth` issues and to whom; what context the authorizer sets), and that API's request count over 30 days. No call to the API, no invoke, no change. Ordered by `1.0.0_SA_CTO~DELL2` msg 5959, which writes the outcome on the record | FWD-8 and FWD-9 (whether "the service" has a second door that still serves) | NOT-EVALUATED | `0.7.0_AE_CloudOps~DELL2` (live AWS reads a worker subagent does not make) | LOCAL | -- | TO-READ-S3 reported |
+
+**Chains.** S5 = OW-s-5, one seat's queue behind TO-READ-S3. Fan-out 1 of 1 chains, cap 8.
+
+### Workstream S, addition of 2026-10-11 ~23:1xZ (the issuer): FWD-10, the second door closed
+
+PRD v0.10 @47d579b505 (ratified-text half SIGNED @d6ff37c1c8; `1.0.0_SA_CTO~DELL2` msgs 6044, 6058, 6063). Round 3 of the workstream:
+the outcome arrived by a later L10 addendum, on cell `OW-s-5`'s record.
+
+| cell | builds | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|
+| `OW-sd-3` | ONE reversible setting on HTTP API `trade-submission-api` (`w8jnzvs21g`): `DisableExecuteApiEndpoint` false -> true, under its own pair (COO half @90f5a700f4, CTO half @87957ba554). Read first: what else carries the API (domain mappings on both planes, CDN origins), each with its count. Proof: the setting read back from the API's own configuration, and two requests that touch no function, answers recorded in full. No request to the sign-in route, ever. Nothing deleted | FWD-10 | NOT-EVALUATED | ISSUER cuts the order; `0.7.0_AE_CloudOps~DELL2` makes the one write | WORLD | -- | OW-s-5 reported |
+
+**Chains.** S6 = OW-sd-3. Fan-out 1 of 1 chains, cap 8. State coherence: no cell moves a route, an integration, an authorizer, a
+function, a secret, a permission, a table or a Terraform file; the API's deletion is Andrew's act and is no cell.

@@ -27093,3 +27093,907 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "With the five earlier one-day-off days and the guard together, every type meets that rule (Inst and RIC/BDC Not Available included, which v0.39 left out on their one-day-off days); the v0.39 test also needs days equal on which the close moved, so the json adds a second list of 11 (Cash has 0 such days). No class is admitted by this cell."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W304-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~304",
+  "surfaced_at": "2026-10-11T19:07:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The time ycharts/session/current was last changed (2026-10-05T10:04Z) is not the time of the last capture: since st12 the resident rewrites that secret on every cookie rotation, so the read 'no capture has written a bundle in six days' does not follow from it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/session/operation_lease.py:257-292 _keep_rotation writes the secret through persist() whenever rotated_cookies names a changed cookie",
+      "git show 9718ac5c87 (2026-10-02): st12, 'a cookie the vendor rotates is written back to ycharts/session/current at once'; installed 2026-10-02 per org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/ST12/INSTALL_OUTPUT_20261002.txt",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/close/YCD-R4-20261005T0552Z_host_run.txt lines 4-5, 17-18: IRPT_SESSION_ROTATION kept=1 versions written on 2026-10-05",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB129-1_capture_failure_read.json stored_state.session_secret_inference and last_ready.separate_measured_bound"
+    ]
+  },
+  "spec_asserts": "IB129-1 reads the secret's last-changed time as the last capture: 'A successful capture is what writes a fresh bundle back, so no capture has succeeded in writing a session bundle since 2026-10-05T10:04Z', and the order's premise is that captures worked until then.",
+  "world_is": "Two kinds of writer change the secret since 2026-10-02: a capture (ycharts_session.js persistSession) and the resident's cookie-rotation write-back. The record does not say which wrote at 10:04Z. The last scripted sign-in success found in the records is 2026-10-02 ~09:45Z (SIGNIN_C/OUTCOME_SIGNIN_C_20261002.md), the last seed-only capture 2026-10-03T16:33Z (change_management/20261003T1631Z_irpt-signin-har-20261003_deploy_completion.md), and NO_AUTHENTICATED_PROBE is already in the journal on 2026-10-03T00:31Z."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W304-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~304",
+  "surfaced_at": "2026-10-11T19:07:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A successful capture writes no journal line, so the extract of 11 capture failures in 14 days cannot show how many captures succeeded, and 'failures before 2026-10-05 exist' cannot be set against a success count from that extract.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py:413 capture() returns {'captured': True} with no print; run_capture prints nothing on success",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB129-1_journal_capture_attempts.txt lines 12-27: only CAPTURE_FAILED and SESSION_REFRESH_ALREADY_USED lines appear"
+    ]
+  },
+  "spec_asserts": "The order and IB129-1 treat the journal's capture lines as the record of capture attempts, with failures starting late September and captures working until 2026-10-05.",
+  "world_is": "The journal carries failures only; a success leaves the secret's change time (see W304-S1), a READY count that is undivided between the vendor path and the Opal producer, and nothing else. The denominator of successes in the same 14 days is not recoverable from the extract."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W304-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~304",
+  "surfaced_at": "2026-10-11T19:07:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The probe's transport is stated in code to be 'the resident's own client class' but is a different program from the resident's client (Node https against Python urllib), with a different Referer and a different cookie selection; whether they look alike to the vendor has no record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js:291-301 the comment, :314 the headers, :833 the probe headers with Referer base + /indices, :800 context.cookies() sent without domain or path filtering",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py:468-494 urllib opener with a domain and path matched jar; :473-485 headers_for with Referer BASE + /dashboard/; :397 aws-waf-token never sent",
+      "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md:51 a session is usable only after verification from the transport that will use it"
+    ]
+  },
+  "spec_asserts": "The probe (a Node client) verifies a session 'from the transport that will use it' by being the resident's client class (ycharts_session.js:291-300).",
+  "world_is": "The Node probe and the Python replay are two clients; the literal replay transport is verified only after a capture (broker.py:198-210), a step the fifth run never reached. Equivalence of the two on the wire is neither measured nor excluded."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W304-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~304",
+  "surfaced_at": "2026-10-11T19:07:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A change on our side since 2026-10-04 that is not in the capture code: the host's Python path made research-runner calls on the same account and stored session from 2026-10-04T18:42Z to 2026-10-05T13:01Z, three runs stopped by a 202 with a waf action at the 7th call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/close/YCD-R1-20261004T1924Z_host_run.txt, YCD-R1-20261004T1944Z_host_run.txt, YCD-R3-20261005T0219Z_host_run.txt: RUN status=STOPPED stop_reason=WAF_REFRESH_REQUIRED at step 7, status=202",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/WAF_WINDOW/WAF-PROBE-W330_host_run.txt: 12 calls 2026-10-05T12:54Z to 13:01Z at 410 s spacing, COMPLETE",
+      "git show f9f0d95cad (2026-10-04): 'run 2 was WAF-challenged at its 7th call at ~1.5 s spacing'; infra/aws/lambda/investor-reporting/ycharts/research/runner.py MAX_REQUESTS_PER_WINDOW = 6"
+    ]
+  },
+  "spec_asserts": "The question behind the order is whether something of ours changed between the last good bundle and the first challenged probe, looking at the capture library, the wrapper and the host's releases.",
+  "world_is": "The library, wrapper and probe did not change (see the read file), but the host's vendor traffic did: research runs began on the same account and session 2026-10-04T18:42Z, before the 2026-10-05T14:41Z failure. The records do not say whether that traffic bears on the vendor's treatment of the session; it is a change on our side that a read of the capture code alone would miss."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W305-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~305",
+  "surfaced_at": "2026-10-11T19:09:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The task order's premise that dropping firm_registry.json from the poller's package is an outage does not hold for the live bytes: the handler returns before any registry read, because LiveTransport raises unconditionally.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live package irpt-intake-poller CodeSha256 YpE2MyUwdGzMfLaUGXi8cClxoVHFFmOz5LT1BYmoTa8= (downloaded bytes' base64 sha256 equal), read 2026-10-11T19:04:26Z: poller.py:479-502 lambda_handler returns at :492 on LiveCallRefused; graph_client.py:240 raises unconditionally; the registry reads (keys.py:293 and its callers) all sit under run_scan (poller.py:503)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~305/IB144-1_poller_firm_registry_read.json reached_at_run_time"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-447 Why: a release from the tree that drops a file the running code opens is an outage; firm_registry.json is served and declared in the source map.",
+  "world_is": "The running code opens the file only below run_scan, which the deployed handler cannot reach while LiveTransport cannot construct; the six live .py members are byte-equal to the tree's, so a release carries the same refusal. The drop is NO_EFFECT today and would become an outage only if a later change lets the transport construct."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W305-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~305",
+  "surfaced_at": "2026-10-11T19:09:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The served firm_registry.json has the same parsed content as the tree's generated view data/firm_registry.json, differing only by the view's _generated key (5229 vs 5326 bytes), so the 'no true source' note is true of the bytes but not of the content.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py:98 VIEWS lists data/firm_registry.json as a generated carrier; :982 _firm_registry_rows builds its rows from scopes.json",
+      "parsed comparison of the live member with data/firm_registry.json at the worktree HEAD: firms, pseudo and _meta equal, top-level keys differ by _generated; bytes not equal",
+      "infra/aws/lambda/ci/lambda-source-map.json irpt-intake-poller _staged_from_note and the other irpt-* entries' staged_from of data/firm_registry.json"
+    ]
+  },
+  "spec_asserts": "The source-map note for irpt-intake-poller says no true source could be declared for firm_registry.json because its served content has no git blob in reachable history (row IRPT_BCKEND-W4-S34).",
+  "world_is": "The other irpt-* functions stage the same file from data/firm_registry.json, and that view parses equal to the poller's served copy; only the byte form differs. Whether declaring staged_from data/firm_registry.json is acceptable is not decided here."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S95",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T19:35:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The record the CTO ordered for rows IRPT_ANLREQ-D2-W53-S2 and -S3 (msg 5666): the rollback target of irpt-intake-poller is ON RECORD -- version DICktwYaCg5b.R8.Ab6oHhI82db0d9Ls of the function's artifact key holds the live bytes; no release of the poller is ordered now; the release's condition is written here. PARKED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-448 @804e22b7a9, deliverables/0.7.0_AE_CloudOps~IB2/IB144-2_poller_rollback_artifact.json: 2 of 2 versions of the artifact key downloaded and hashed; exactly one has content sha256 YpE2MyUwdGzMfLaUGXi8cClxoVHFFmOz5LT1BYmoTa8=, equal to the live CodeSha256 read 2026-10-11T19:05:15Z; re-read by head-object; the bucket's only lifecycle rule aborts incomplete uploads, none expires a noncurrent version; 0 writes. Criteria re-run by the issuer at HEAD: 3 of 3 PASS.",
+      "IB-pr-447 @ac97d216b9, deliverables/0.9.0_WK_IRPT_BCKEND~305/IB144-1_POLLER_FIRM_REGISTRY_READ.md: the handler returns at poller.py:492 before run_scan (:503) because LiveTransport cannot construct (graph_client.py:240); every read of firm_registry.json (opened at keys.py:293) sits below run_scan; read from the live package's bytes, nothing exercised.",
+      "1.0.0_SA_CTO~DELL2 msg 5666 (2026-10-11T19:32:12Z), read by this seat: no release now; the release is made when the poller is next changed for a reason."
+    ]
+  },
+  "spec_asserts": "A function serving from bytes the tree cannot reproduce has a recorded rollback target that nothing expires, and a written condition for the release that makes it reproducible.",
+  "world_is": "Both hold as of this row. Rollback target: the version id above, by content. This row is written in IRPT_BCKEND's channel and not into the IRPT_ANLREQ rows themselves, which are another project's append-only record; 2.0.0_SA_COO~Y2 carries this id on the build map's entry. PARKED: owner 2.0.0_SA_COO~P2 (cell IB-s-6). Un-parks when the poller is next changed for a reason; that release's order must (1) GENERATE the firm registry at build from infra/logic/registry/scopes.json, never commit it as a served copy; (2) read the transport's refusal first, because a reached read of a missing file raises (keys.py:293, :155); (3) name this version id as the rollback."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W306-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~306",
+  "surfaced_at": "2026-10-11T19:33:26Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "JSOSX, one of the six the face calls outside the first witness with no anchor, is carried by the anchor on 75 of the 87 axis days (the same security is in the overlap table); the anchor_carries_it answer is true for it and false for the other five.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~306/IB145-1_first_moved_bar.json the_six.JSOSX (anchor_carries_it true, anchor_days_carrying_it_of_the_axis 75, rows_held_on_moved_days 23 against 2 in the IB-pr-445 sizing)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~303/IB142-1_UNMOVED_BAR_GUARD_READ.md section 3 (JSOSX 58 of 75 in the overlap, and 67 of 85 among the Inst securities outside)"
+    ]
+  },
+  "spec_asserts": "The face says the six are OUTSIDE the first witness, so no anchor exists for them, and asks anchor_carries_it per ticker from the anchor read.",
+  "world_is": "Five of the six have no anchor close on any of the 87 axis days; JSOSX has one on 75 of them and is outside the first witness only on the days the anchor lacks it, so it is both in the overlap table and in the Inst set outside. Its moved-day rows (23) are all held rows priced from the holdings table, not only the 2 the IB-pr-445 sizing held as outside the first witness. The count is stated per ticker; nothing is re-graded."
+}
+```
+
+## IRPT_BCKEND-D2-S96 -- This applier seat CANNOT perform IB-pr-451's login: an EXPLICIT DENY in a resource-based policy fences the service password from the cloudops user
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S96",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T20:02:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-451 asks this seat to sign in as svc-irpt-analysis using the instrument's login(), which reads the password by name from Secrets Manager; the call is refused by an EXPLICIT DENY in a resource-based policy against arn:aws:iam::313476888478:user/cloudops-dell2-agent-user, so the order cannot be executed by this seat at all and the outcome is REFUSED before any HTTP call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "botocore.exceptions.ClientError on GetSecretValue for SecretId irpt/svc-irpt-analysis/password: 'User: arn:aws:iam::313476888478:user/cloudops-dell2-agent-user is not authorized to perform: secretsmanager:GetSecretValue on resource: irpt/svc-irpt-analysis/password with an explicit deny in a resource-based policy'",
+      "the wording matters and is quoted exactly: an EXPLICIT DENY in a RESOURCE-BASED policy, not an absent identity grant -- it is a deliberate guardrail on the secret, not an oversight in this seat's role",
+      "the instrument the order names reads the password this way and no other: w6_reads.login() calls boto3 secretsmanager get_secret_value(SecretId=f1.SECRET) where f1.SECRET is irpt/svc-irpt-analysis/password (f1_svc_run.py)",
+      "the same instrument has been run successfully by 2.0.0_SA_COO~G2 (its r7 records exist), so the deny is specific to this principal rather than to the instrument",
+      "record IB147-1_vendor_sections_owner_read.json: outcome REFUSED, public_reason_code ACCESS_DENIED, calls [], history_reads absent, submitted 0, values_written 0 -- the refusal landed before any API call"
+    ]
+  },
+  "spec_asserts": "The order's preflight states the lane check as 'Assignee measured LIVE at 19:0xZ and has since completed IB-pr-448 on this project', and the order assigns the login to this seat, reusing 2.0.0_SA_COO~G2's instrument unchanged.",
+  "world_is": "The liveness check is not a capability check, and the gap between them is exactly this row. The seat is live, holds the project, and can read the repo, the host and the artifact buckets -- and is explicitly denied the one secret the order's first step needs. The deny is almost certainly correct: a service principal's password should not be readable by a general cloudops user, and an explicit resource-based deny is how that is said rather than implied. NOT WIDENED, and deliberately so: the order's own refusal clause says 'Do not widen the principal', so no grant was sought, no policy was read beyond the error text, and no second route to the secret was attempted. WHAT IS ACTUALLY NEEDED, as options rather than a choice this seat gets to make: the read runs from a seat whose principal is admitted -- 2.0.0_SA_COO~G2's own, which has demonstrably used this instrument -- or the secret's resource-policy owner decides deliberately whether an applier seat should be admitted for a read of this kind. Either way it is an assignment or a policy question, and both sit above this lane. The substantive question the order exists to answer, whether a served vendor section carries a title member and which units tokens the wire sends, remains UNANSWERED by a served read; 2.0.0_SA_COO~D2's code read and its predictions stand untouched. OWNER: 2.0.0_SA_COO~P2 to re-assign, with 1.0.0_SA_CTO~DELL2 if the policy itself is to be revisited."
+}
+```
+
+## IRPT_BCKEND-D2-S97 -- IB147-1-AC1 and AC3 cannot be met by a REFUSED that happens before the first HTTP call: both presuppose a history GET and a logged call
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S97",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-11T20:02:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The order states all three outcomes pass the checks, but IB147-1-AC1 requires history_reads to be a non-empty list and IB147-1-AC3 requires calls to be non-empty, and a REFUSED at the credential read -- before any HTTP -- produces neither, so AC1 and AC3 FAIL on an honest record and only AC2 passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p147_cells.py IB147-1-AC1: 'if not isinstance(h, list) or not h or any(...)' over history_reads, so an absent or empty list fails before the outcome is considered",
+      "p147_cells.py IB147-1-AC3: 'if not isinstance(calls, list) or not calls: fail(\"calls is empty\")'",
+      "AC1 does handle the REFUSED outcome, but only after that check: 'if o == \"REFUSED\" and not a.get(\"public_reason_code\")' -- the public_reason_code limb is never reached when history_reads is empty",
+      "run at the honest record: IB147-1-AC1 FAIL ('history_reads must list each history GET...'), IB147-1-AC2 PASS ('outcome REFUSED; nothing to grade on the sections'), IB147-1-AC3 FAIL ('calls is empty')",
+      "the record is honest about why both are empty: the deny landed on GetSecretValue, so login() raised before f1.call posted /auth/login, and f1.log stayed empty"
+    ]
+  },
+  "spec_asserts": "The order's face: 'All three outcomes pass the checks; which holds, and every key and token, is UNMEASURED by the issuer.' Its refusal clause also says that a criterion which cannot be met as written is a row and a report, never a weakened check.",
+  "world_is": "The claim is true for a REFUSED that happens at or after the login's HTTP call, which would log a call, and for one that happens at the sections read, which would also have history_reads. It is false for the earliest refusal of all -- the credential read -- which is the one that actually occurred. NOTHING WAS FABRICATED TO CLOSE IT: inventing a history_reads entry or a calls entry would be manufacturing evidence of reads that never happened, which is the precise defect the record exists to avoid, so AC1 and AC3 are reported FAILING and the order's status stays pending. The proof instance records both with a status_reason rather than claiming PASS. The narrow fix, offered rather than taken: let AC1's and AC3's emptiness checks stand only when the outcome is READ or NO_VENDOR_REPORT_FOUND, and for REFUSED require instead the public_reason_code and a stated stop -- which this record already carries. OWNER: 2.0.0_SA_COO~P2 as the check's author; rule 27 L6 lets the issuer amend its own criteria. Related but distinct from row IRPT_BCKEND-D2-S96, which is why the login was refused at all."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W308-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~308",
+  "surfaced_at": "2026-10-11T20:19:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The second guard sentence (no grade where the reader has no bar for the calendar's prior trading day) frees exactly as many account-days as sentence (1) alone in the nine-pair sizing: its cost is 0, because the sizing's row grade already returned no_bar_for_the_day_or_prior whenever the prior-day bar was missing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~308/IB148-1_nine_pair_sizing.json second_sentence (freed 12482 under sentence (1) alone and 12482 under both; UNGRADEABLE 30661 and 30661)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~308/ib442_measure.py classify (returns no_bar_for_the_day_or_prior when nav_d or nav_p is None)"
+    ]
+  },
+  "spec_asserts": "The face asks for how many account-days the SECOND sentence alone costs, as the nine-pair sizing under sentence (1) alone less the same under both, implying a figure that can differ from zero.",
+  "world_is": "The figure is 0 on this population (the 85 graded days, 303 tickers asked). The instrument's row grade (IB-pr-442's classify, imported unchanged and used by every sizing in this chain) already treats a missing prior-day bar as no grade, so sentence (2) was in force in the earlier sizings and adds nothing to them; it differs from sentence (1) alone only in the repeat count and in the overlap table (IB-pr-449 Table C: 6 security-days). Reported as measured; no sentence of the guard is questioned."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S98",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T20:32:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Noted for the vendor producer's NEXT release (CTO msgs 5665 and 5784): a vendor section on the wire carries no title member and no field name for a value; the page now supplies both from a pinned copy of the census. PARKED: the producer cannot be released while the vendor path is stopped.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "2.0.0_SA_COO~D2 msg 5660 and org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/SECTION_TITLE_UNIT.json (a worker's read of code, not re-read by this seat): AnalysisReport.schema.json:126-190 declares no title or label member and forbids additional members; extract.py:707 sets section_type to the census code; publication.py:215-217 strips the underscore keys that hold the title.",
+      "1.0.0_SA_CTO~DELL2 msg 5665 (the page carries the title for the 33 codes; a wire title is noted for the producer's next release) and msg 5784 (the wire carries no field name for a vendor value; note it beside the title member).",
+      "No served vendor answer was read: IB-pr-451 was withdrawn @9053ea7b45 on CTO msg 5770; the confirmation rides the laptop walk that proves DSGN_IRPTV1 cell IV-e-115."
+    ]
+  },
+  "spec_asserts": "A reader of a finished report sees each section by a name and each value by what it is, from the answer the service serves (FWD-5).",
+  "world_is": "Both come from the page's pinned copy of the census, not from the wire. Served vendor reports are immutable and carry only the code, so a wire member would title no report that exists today. PARKED: owner 2.0.0_SA_COO~P2. Un-parks when the vendor producer is next released for a reason; that release's cell adds a title member and a field-name member to the vendor section through a PRD addendum (the contract forbids additional members), and names every reader of the section, the page's map among them."
+}
+```
+
+## IRPT_BCKEND-D2-W309-S1 -- The worker sends analysis_ready on EVERY READY job; it is not gated on a ticket id
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W309-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~309",
+  "surfaced_at": "2026-10-11T20:30:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's why-paragraph says the resident worker sends analysis_ready 'when the job is bound to a ticket id', but the code sends it on every READY job whatever the record carries, and the commentary receiver reads no ticket id either.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:319-329: mark_ready copies ticket_id into the receipt only when present, then calls signal_ready unconditionally",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:163-186: send_ready's only guard is a non-empty IRPT_ANALYSIS_READY_QUEUE_URL",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_ready_signal.py:91-97 test_b_no_ticket_receipt_is_byte_identical_and_still_signals_once; run offline in this worktree: 2 passed",
+      "data/transcripts/scripts/commentary/lambda_handler.py:285-327 and entry.py:264-268: the receiver builds its item from tenant and request_id only and never reads ticket_id"
+    ]
+  },
+  "spec_asserts": "The face (WORKER FACE, Why): 'Today the worker sends it when the job is bound to a ticket id.'",
+  "world_is": "Today a READY job with no ticket id signals analysis_ready exactly as one with a ticket id does, and the receiver drafts if a model is configured. The first place a missing ticket id has any effect on this chain is later and different: the packager refuses TICKET_ID_ABSENT (ycharts/research/opal_packager.py:150-152). Whether the live queue is bound and the model configured is unread. The read file states the code as it is; no judgment on significance is made here."
+}
+```
+
+## IRPT_BCKEND-D2-W309-S2 -- The packager reads commentary_ref from a record that the code says cannot carry it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W309-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~309",
+  "surfaced_at": "2026-10-11T20:30:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "commentary_ref is set as a sibling attribute of the request item, not inside the immutable record, yet the packager reads record.get('commentary_ref') from DynamoAcceptance.get, which returns only the record attribute.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/commentary_draft_store.py:21-24 and :213-219: commentary_ref is set once by conditional update on the item; 'the immutable record attribute is never rewritten'",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py:68-71: get returns json.loads(item['record']['S']) and nothing else",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:334 passes that same acceptance as the packager's acceptance port; ycharts/research/opal_packager.py:153 reads record.get('commentary_ref')",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_packager.py:58-64: the fake acceptance port returns commentary_ref INSIDE the record, so no test crosses the draft store's write and the packager's read",
+      "no live read was made (the order forbids it); INFERRED from code only"
+    ]
+  },
+  "spec_asserts": "The packager's docstring (opal_packager.py:7-8): 'the acceptance record of (tenant, request_id) carries ticket_id (AR-y-11) and commentary_ref (AR-t-12, set once)'.",
+  "world_is": "By the code, a live packager would raise COMMENTARY_REF_ABSENT on a record whose commentary_ref sits beside it. It matters to the addendum only in that a member written into the immutable record at acceptance is read by the same get, while a sibling attribute is not. Unmeasured live."
+}
+```
+
+## IRPT_BCKEND-D2-W309-S3 -- portal/ is an empty submodule directory in this worktree, so the page-consumer search could not be run
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W309-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~309",
+  "surfaced_at": "2026-10-11T20:30:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order asks for a search of portal/ for readers of the accepted record; the worktree's portal directory is empty (gitlink c96efe1714 not checked out), so no page could be searched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la portal in the worktree: an empty directory (0 entries)",
+      "git ls-files -s portal: mode 160000 gitlink c96efe1714784162c4134450da33ce6fd6226b60",
+      "native Grep of portal/ for browser_sha256|acting_principal_id|accepted_at|analysis#: 0 hits (an empty tree, so a zero that cannot say what it saw)",
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:243: the served read returns {identity, accepted_at} only, which bounds what a page can see of the record through that route"
+    ]
+  },
+  "spec_asserts": "The face (item 6): 'search portal/ too if the record reaches a response'.",
+  "world_is": "A page consumer of the accepted record is not ruled out by a search; it is bounded by the served response shape instead. Recorded in not_established of the read."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S99",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-11T20:54:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Row IRPT_BCKEND-D2-W309-S1 (the worker signals on every READY job, ticket or not) is a VINTAGE artifact, and this seat relayed it to the CTO as a finding without reading HEAD: IB-pr-453's worktree was cut at 0bdd920114, which does not contain 2.0.0_SA_COO~G2's ticket gate merged at 8d6fef62e8; on the trunk the send needs a ticket id.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read by this seat 2026-10-11 ~20:5xZ: git merge-base --is-ancestor 8d6fef62e8 0bdd920114 -> rc=1 (not in the worker's base); the same against HEAD -> rc=0; positive control, 0bdd920114 against HEAD -> rc=0.",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py at HEAD: mark_ready reads ticket_id from the accepted record and branches on it (the lines the worker cited, :319-329, have moved).",
+      "1.0.0_SA_CTO~DELL2 msg 5813 named the cause from its own merge-base read; this seat's msg to the CTO at 20:45Z had carried the row's sentence as 'the premise is wrong'."
+    ]
+  },
+  "spec_asserts": "A code read states its vintage, and a finding that contradicts the order's premise is re-read at HEAD before it is relayed.",
+  "world_is": "The read's other results (the submission's closed set, the ticket's add_commentary member, what acceptance holds, the accepted record's members and readers) are also at vintage 0bdd920114 and were NOT re-read at HEAD by this seat; the CTO wrote IRPT_YCDGEN PRD v0.13 from the record with that vintage known. The 50-reader census may be short of any reader the gate's merge added. Owner 2.0.0_SA_COO~P2: before any cell is cut against that census, the reader list is re-counted at the cut's base; a worktree for a code read is cut at HEAD at spawn time and the order's face states the base."
+}
+```
+
+## IRPT_BCKEND-D2-W310-S1 -- PRD v0.43's sentence and IB-pr-452's script count a 'repeat' differently; the product form follows the sentence and the face, and the seven of IB-pr-452 are the same seven over the whole run
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W310-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~310",
+  "surfaced_at": "2026-10-11T21:26:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "PRD v0.43's sentence and IB-pr-452's script count a 'repeat' differently; the product form follows the sentence and the face, and the seven of IB-pr-452 are the same seven over the whole run",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md ADDENDUM v0.43: 'over the days ... on which it has a bar ... the bar repeats the prior trading day's on MORE THAN HALF of them'",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~308/ib452_measure.py:249-257: days_not_graded counts every day the guard gives no grade, including a day with a bar and no prior bar; the sentence counts only a bar equal to the prior day's",
+      "data/assets/scripts/gold/irpt_reporting/date_basis_grading.py repeated_share: a day is compared only when both it and its prior trading day have a bar inside the window; repeated when the two are equal within the tolerance",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~310/IB150-1_product_form_run.json window_proposed.candidates, window 85 at 2026-10-09: the securities repeating on more than half their compared days are ADLYX 49 of 84, BISOX 78 of 84, EIBLX 59 of 84, GPPIX 77 of 84, JSOSX 66 of 84, OLCYX 56 of 84, SGOV 52 of 84: IB-pr-452's seven"
+    ]
+  },
+  "spec_asserts": "PRD v0.43 and ib452_measure.py measure one thing: how often the reader's bar repeats its prior trading day's.",
+  "world_is": "They count differently: the script's 'not graded' includes a day with no prior bar (e.g. ADLYX 49 of 85), the sentence's 'repeats' does not (49 of 84 compared). The product form follows the sentence and the order's definition. Over the whole 85 days both pick the same seven. Not measured: any other run or window where the two readings would pick different securities."
+}
+```
+
+## IRPT_BCKEND-D2-W310-S2 -- The v0.37 kind NEITHER_CLOSE for a row the second witness places at neither close differs from the sizing script, which kept the row's kind OUTSIDE_ANCHOR; the claim is the same
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W310-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~310",
+  "surfaced_at": "2026-10-11T21:26:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The v0.37 kind NEITHER_CLOSE for a row the second witness places at neither close differs from the sizing script, which kept the row's kind OUTSIDE_ANCHOR; the claim is the same",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md ADDENDUM v0.37: 'a wrong instrument's close equals the source's mark within 1e-4 only by chance; otherwise the row reads NEITHER_CLOSE, and the day is blank'",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~308/ib442_measure.py:71-82 new_claim: a day not freed keeps the claim of the cash-rule counter, whose only kind for the row is OUTSIDE_ANCHOR",
+      "data/assets/scripts/gold/irpt_reporting/date_basis_grading.py account_day: kinds in the not-freed branch add NEITHER_CLOSE for a row at neither close and keep OUTSIDE_ANCHOR only when a row has no grade",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~310/IB150-1_product_form_run.json seam_rule_off_reproduces_ib_pr_452: the four claim counts, the serving counts and the freed count are IB-pr-452's member for member, so the difference lives in the kinds list only"
+    ]
+  },
+  "spec_asserts": "The sizing scripts and the product module give an account-day the same claim and the same freed count.",
+  "world_is": "They differ in the kinds listed for an UNGRADEABLE day that holds a security the second witness places at neither close: the script says OUTSIDE_ANCHOR, the module says NEITHER_CLOSE (the PRD's word). No count the checks or the sizing read depends on it. Whether a producer should list both is the CTO's."
+}
+```
+
+## IRPT_BCKEND-D2-W310-S3 -- Seven of the 878 tickers asked returned no bar, three of them class-share tickers written with a dot (BF.B, BRK.A, BRK.B); the dash spelling was not tried because nothing is re-asked
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W310-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~310",
+  "surfaced_at": "2026-10-11T21:26:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Seven of the 878 tickers asked returned no bar, three of them class-share tickers written with a dot (BF.B, BRK.A, BRK.B); the dash spelling was not tried because nothing is re-asked",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the reader's output during the pass (the log sat outside the repo and is deleted at the end): '$BF.B: possibly delisted; no timezone found', '$BRK.B' and '$BRK.A' likewise; FPNIX: 'possibly delisted; no price data found'",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~310/IB150-1_product_form_run.json fetch: 18 calls, 878 distinct tickers each asked once, 871 with bars, 7 with none, 0 rate-limited",
+      "read_yahoo_close over the 878 tickers: none-bar tickers are BF.B, BRK.A, BRK.B, FPNIX, JHG, MCR, UHALB; BRK.A, FPNIX, JHG, MCR, UHALB sit in the outside-the-first-witness list, BF.B, BRK.B, FPNIX, UHALB in the overlap list"
+    ]
+  },
+  "spec_asserts": "A ticker the source states is a ticker the reader can return bars for.",
+  "world_is": "Seven did not. A dotted class-share ticker returns nothing; whether the reader would return bars for the dash form (BRK-B) was not asked, so it is inferred only that the spelling is the cause. A security of the nine pairs with no bar stays ungraded by the second witness and its rows block their account-days (BRK.A is in the outside list). Not measured: the account-days that wait on these five outside-list tickers."
+}
+```
+
+## IRPT_BCKEND-D2-W313-S1 -- A search of the repo by the gold's table name finds 34 files; the readers that reach the gold by the producer's table constant are 4 more, one of them a reader the name search missed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W313-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~313",
+  "surfaced_at": "2026-10-11T22:33:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A search of the repo by the gold's table name finds 34 files; the readers that reach the gold by the producer's table constant are 4 more, one of them a reader the name search missed",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_comparison.py:213 reads the gold through opal_naming.address(..., hp.TABLE_DAILY, ...) and :223 keeps status OK rows; the string holdings_performance_daily is not in that file",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~313/IB153-1_producer_design_read.json consumers.files_naming_the_member_or_the_gold: total 38 = 14 consumers + 8 writers + 16 neither; searched_for names both passes",
+      "PRD ADDENDUM v0.34: 'the release that first serves this gold names every reader of the holdings gold and of the performance route with its key policy'"
+    ]
+  },
+  "spec_asserts": "A name search of the repo for the gold's table string names every reader of the holdings gold.",
+  "world_is": "It named 34 files and missed one reader (a producer's comparison) that builds the address from the module's TABLE_DAILY; the second pass (module name and TABLE_DAILY) added it and 3 namesake files for a different table. A reader that builds the table name from a variable in a way neither pass matched would also be missed: the census is two name passes, not a proof. The portal pages that render the route's returns were not classified."
+}
+```
+
+## IRPT_BCKEND-D2-W313-S2 -- The existing 07:30 and 07:41 America/New_York fires are before the entry's partition usually lands (11:46Z) while daylight time holds; a producer for the entry that reused those times would grade a day before its partition exists
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W313-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~313",
+  "surfaced_at": "2026-10-11T22:33:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The existing 07:30 and 07:41 America/New_York fires are before the entry's partition usually lands (11:46Z) while daylight time holds; a producer for the entry that reused those times would grade a day before its partition exists",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf:92 cron(30 7 ? * MON-FRI *) America/New_York, described live (State ENABLED, input source names the first-witness entry): 11:30Z in daylight time, 12:30Z in standard time",
+      "infra/aws/terraform/investor-reporting/reporting-gold/schedule.tf:10-14 chosen_cron cron(41 7 ? * MON-FRI *): 11:41Z in daylight time",
+      "S3 LastModified of the entry's silver partitions since 2026-09-10: 19 of 22 at 11:46Z the next day, 3 at 3 to 5 days after the date; anchor partitions: 21 of 22 at 09:46Z the next day. Earlier partitions: 46 of 69 entry and 23 of 64 anchor partitions show a last write more than a day after their date",
+      "the times are the S3 LastModified of the objects, recorded in the _meta of each cached partition by ib433_fetch.py (deliverables/0.9.0_WK_IRPT_BCKEND~308); counts of partitions only"
+    ]
+  },
+  "spec_asserts": "PRD ADDENDUM v0.34: 'a scheduled producer runs after both' the anchor (about 09:46Z) and the entry's partition (about 11:46Z the next day).",
+  "world_is": "No schedule exists for the entry. The two schedules that would be copied are before 11:46Z while daylight time holds (to 2026-11-01), and 3 of 22 partitions landed days late. Not measured: whether the partition's S3 LastModified is its first landing (earlier partitions were rewritten)."
+}
+```
+
+## IRPT_BCKEND-D2-W313-S3 -- The performance route's holdings reader skips a non-OK day and chains the remaining days (a partial absence, not a refusal), so a blank account-day written as a non-OK status would be chained over
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W313-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~313",
+  "surfaced_at": "2026-10-11T22:33:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The performance route's holdings reader skips a non-OK day and chains the remaining days (a partial absence, not a refusal), so a blank account-day written as a non-OK status would be chained over",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/holdings_gold.py:246-247 keeps status OK rows and counts the rest as excluded; :314-317 adds the 'excluded_rows' absence with the PARTIAL marker and the figure is served; :259 raises only on a non-finite chain",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1016-1019 and data/assets/scripts/gold/irpt_holdings_performance/holdings_comparison.py:223 key on status OK and do not chain",
+      "PRD ADDENDUM v0.34: 'a return for an account-day only when that day and the prior trading day each read OWN_DATE or NOTHING_TO_GRADE. Any other account-day is blank ... Nothing is shifted, repaired or inferred'"
+    ]
+  },
+  "spec_asserts": "A blank account-day is not served as a return by any reader of the holdings gold.",
+  "world_is": "The route's reader serves a figure chained over the non-OK days with a partial absence named on it. Nothing is served for the date basis today, so nothing is wrong yet; how the producer writes a blank decides whether the route serves one. The read through the route that would show it is named in the design read, not run."
+}
+```
+
+## IRPT_BCKEND-D2-W312-S1 -- The source map's artifact_sha256 for irpt-commentary-draft-store-lambda is not the live CodeSha256 and its _build_note still says DESIRED, not built; the other three entries' digests equal live
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W312-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~312",
+  "surfaced_at": "2026-10-11T22:38:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The source map's artifact_sha256 for irpt-commentary-draft-store-lambda is not the live CodeSha256 and its _build_note still says DESIRED, not built; the other three entries' digests equal live",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json @e7bb7e923a entry irpt-commentary-draft-store-lambda: artifact_sha256 begins xyROb11e, _build_note 'DESIRED, not built and not applied ... No artifact_s3_key/artifact_sha256 yet'",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/IB152-1_live_reads.json function irpt-commentary-draft-store-lambda: live CodeSha256 begins AsKY+KWL (lambda get-function-configuration, read 2026-10-11T22:04Z), LastModified 2026-10-11T04:12:31Z, equal to the sha256 of the downloaded package and to the S3 version ToWX4K7... of the function's own artifact key",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/IB152-1_release_read.json functions[2]: map_artifact_sha256_equals_live_code_sha256 false; the minimal candidate built from this entry differs from the live package in 2 of 16 members, so the live package was built from these pins; the entries for irpt-ycharts-generate, irpt-status and irpt-commentary-composition-read-lambda read true"
+    ]
+  },
+  "spec_asserts": "The map entry describes the package that would be built and its digest; build-and-upload.sh and record-terraform-deploy.sh keep artifact_sha256 equal to the object and the live digest (CTO half 87d92b7c3b condition 4 asks that a stale field of an entry be corrected in the record step).",
+  "world_is": "For this one entry the recorded digest is a different package from the live one and the note says nothing was built; the function is live (Active, handler commentary_draft_store.lambda_handler). Not established: which build the map digest names, or whether a Terraform plan on this function's module reads the map digest."
+}
+```
+
+## IRPT_BCKEND-D2-W312-S2 -- For irpt-ycharts-generate two of the three changed members are NATIVE to its source_dir, so no map row pins them: a minimal candidate re-pins only the schema row, and two riders move that no row can hold back
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W312-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~312",
+  "surfaced_at": "2026-10-11T22:38:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "For irpt-ycharts-generate two of the three changed members are NATIVE to its source_dir, so no map row pins them: a minimal candidate re-pins only the schema row, and two riders move that no row can hold back",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json @e7bb7e923a entry irpt-ycharts-generate: staged_from has a row for contracts/AnalysisSubmissionRequest.schema.json (pin 5be2acd7cc) and NO row for submission.py or acceptance.py; the builder reads a native member from the worktree (build-and-upload.sh stage step and the zip step)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/candidate_repins.json: 7 rows re-pinned over 4 functions, 1 of them in irpt-ycharts-generate",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/IB152-1_release_read.json functions[0].moved_members: 5 members move; durable_job.py (3acafb3f45) and submission_service.py (2f7cc7be42) are native, not IB-pr-455's, and are riders"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-456 face: the candidate map re-pins 'ONLY the rows that pin one of the three members' in the function's entry, and IB-pr-455's worker named entries that package the members through staged_from rows.",
+  "world_is": "In irpt-ycharts-generate the row pins only the schema. Its submission.py and acceptance.py are native, so they move because the build tree is the base; so do the other native members that differ from live (durable_job.py, submission_service.py). Holding either back would need a new staged_from row pinned to the live commit, which the face forbids; the word recorded is RIDERS_MOVE_WITH_THEM. acceptance.py cannot be separated from submission_service.py (replay controls: TypeError, 0 writes)."
+}
+```
+
+## IRPT_BCKEND-D2-W312-S3 -- The resident_worker.py inside the irpt-ycharts-generate zip, live and built, has neither producer_for nor send_ready_if_ticketed, so the Opal-producer branch and the I3 gate AMENDMENT 1 leans on are not in this package; the host's installed package was not read
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W312-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~312",
+  "surfaced_at": "2026-10-11T22:38:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The resident_worker.py inside the irpt-ycharts-generate zip, live and built, has neither producer_for nor send_ready_if_ticketed, so the Opal-producer branch and the I3 gate AMENDMENT 1 leans on are not in this package; the host's installed package was not read",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/IB152-1_replay.json arm 'the zip's resident_worker.py is the OLD one': hasattr(resident_worker, 'send_ready_if_ticketed') and hasattr(resident_worker, 'producer_for') are False on the live and the built tree (identical)",
+      "infra/aws/lambda/ci/lambda-source-map.json @e7bb7e923a entry irpt-ycharts-generate: resident_worker.py staged at the live bytes (pin bb1eb7f92b), so the minimal candidate does not move it",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py @e7bb7e923a:121-133,189-200,700-704 holds OPAL_PRODUCER_PRINCIPALS, producer_for and send_ready_if_ticketed in the tree"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-456 AMENDMENT 1 (CTO msg 5904): an Opal-producer job can exercise the function past acceptance without a vendor call, and the worker half that reads the member is merged and dormant.",
+  "world_is": "The producer switch and the I3 gate are in the tree and in the one-tree candidate's scope, not in the live package and not in the minimal candidate. What the resident host runs is its own installed package (install-resident.sh), which this order's AWS reads cannot see, so whether the host takes the Opal branch for an allow-listed principal today is not established here."
+}
+```
+
+## IRPT_BCKEND-D2-W316-S1 -- No staged_from row pins commentary_draft_store.py in the irpt-commentary-draft-store-lambda map entry: the member is native to source_dir, so the minimal candidate re-pins 0 rows and equals the real map byte for byte
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W316-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~316",
+  "surfaced_at": "2026-10-11T23:26:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "No staged_from row pins commentary_draft_store.py in the irpt-commentary-draft-store-lambda map entry: the member is native to source_dir, so the minimal candidate re-pins 0 rows and equals the real map byte for byte",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~316/candidate_repins.json: rows_repinned 0; store_member.store_in_files true, store_in_staged_from false, source_dir infra/aws/lambda/investor-reporting/reports",
+      "infra/aws/lambda/ci/lambda-source-map.json @b7da10ca46 entry irpt-commentary-draft-store-lambda: staged_from rows are acceptance.py, submission.py, keys.py (pin 283f7e7700) and nine repo-root files; commentary_draft_store.py is in files[] with no staged row",
+      "the candidate map written by make_candidate_map.py has sha256 eec6eea6e30c... equal to the sha256 of lambda-source-map.json at the pin (sha256sum of both files)",
+      "two BUILD_ONLY builds of the function from that candidate are byte-identical and differ from the live package in exactly 1 of 16 members, commentary_draft_store.py"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-460 Part B step 2: in this function's map entry, ONLY the row(s) that pin commentary_draft_store.py are re-pinned to the Part A commit, sha256 recomputed from git show.",
+  "world_is": "No row pins commentary_draft_store.py: it is a native member of the entry's source_dir, which the builder reads from the worktree at the pin. The candidate therefore re-pins 0 rows and is the real map byte for byte; acceptance.py and submission.py stay at their live pins because nothing re-pins them. The release read is unaffected (the built package carries the pin's blob); a Branch A apply needs no map row for this member, only a build from a tree whose store file is that blob."
+}
+```
+
+## IRPT_BCKEND-D2-S100 -- A dynamodb-action simulation is NOT a sound oracle for reading a CMK-encrypted table: Query/Scan/GetItem all read ALLOWED and the live Scan was refused by KMS
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S100",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-12T00:11:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-461's get_ref after-read needed one item from irpt-requests; simulate-principal-policy read dynamodb:Query, dynamodb:Scan and dynamodb:GetItem ALL ALLOWED for this principal on that table, and the live Scan was then refused with an AccessDeniedException from KMS -- no identity-based policy allows kms:Decrypt on the table's customer key -- so an allow on the DynamoDB action says nothing about whether the read of an encrypted table will succeed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "simulate-principal-policy on arn:aws:iam::313476888478:table/irpt-requests for this principal: dynamodb:Query -> allowed, dynamodb:Scan -> allowed, dynamodb:GetItem -> allowed (three separate calls, each printed)",
+      "the live ddb.scan on the same table, same principal, seconds later: 'An error occurred (AccessDeniedException) when calling the Scan operation: KMS key access denied error: ... User: .../cloudops-dell2-agent-user is not authorized to perform: kms:Decrypt on resource: arn:aws:kms:us-east-1:...:key/7f4d3042-... because no identity-based policy allows the kms:Decrypt action'",
+      "the two instruments disagree because they are scoped to different actions on different resources: the simulation was asked about dynamodb:* on the TABLE and answered truthfully; the read also needs kms:Decrypt on the KEY, which was never asked",
+      "the refusal is an ABSENT identity grant ('no identity-based policy allows'), not an explicit deny -- a different shape from the resource-policy deny this lane met earlier today on a Secrets Manager secret",
+      "record IB157-1_draft_store_release_after_reads.json: after_reads.get_ref.made false with why_not_made; the release itself is APPLIED and verified by its other two after-reads"
+    ]
+  },
+  "spec_asserts": "The order's step 6 says the get_ref read happens if 'your simulation for dynamodb:Query/Scan on the table decides whether you can', and the preflight records the issuer's own simulation of 'dynamodb GetItem, Query, Scan allowed on the requests table' as the evidence that the applier could make this read.",
+  "world_is": "The simulation does not decide it, and cannot. A CMK-encrypted DynamoDB table needs TWO grants from the caller -- the DynamoDB action on the table and kms:Decrypt on the key -- and a simulation scoped to the first is blind to the second by construction, so it returns a confident allow for a read that cannot happen. Both the issuer's simulation and mine were correct about what they were asked and wrong as a prediction of the read. WHAT WOULD HAVE CAUGHT IT: including kms:Decrypt on the table's key ARN in the same simulate call, which is one more --action-names entry and no extra round trip. Worth noting the preflight of this very order already carries the mirror-image trap in its SIM leg from an earlier cell -- 'a key-policy-only grant reads implicitDeny in the simulator, so the KEY POLICY is read where the simulator is blind' -- so the fabric knows the KMS limb is where this instrument goes blind, in both directions. NOT WIDENED: no grant was sought, no Query was attempted after the Scan refusal, and no second route to the item was tried; the order's made-false path was taken instead. This cost the order one of three after-reads and nothing else. OWNER: 2.0.0_SA_COO~P2 for the step-6 wording of future orders; the generalisable form belongs with the IAM traps in /cloud-ops, which is why it is filed rather than left in the record."
+}
+```
+
+## IRPT_BCKEND-D2-S101 -- IB157-1-AC3's eight-digit test refuses the ledger slug that IB157-1-AC1 requires, when the slug ends in a bare date
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S101",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-12T00:11:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB157-1-AC1 requires the record to carry the ledger's slug and IB157-1-AC3 refuses any bounded eight-digit run in the record; this seat named its ledger slug with a trailing date, so the true slug trips AC3 and the only two ways to pass are to edit the check, which the order forbids, or to record a slug that is not the real one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p157_cells.py IB157-1-AC1: 'if lg.get(\"state\") != \"closed\" or not lg.get(\"slug\") or not lg.get(\"opened_commit\")' -- the slug is required",
+      "p157_cells.py IB157-1-AC3: 're.search(r\"(?<![0-9A-Za-z])[0-9]{8}(?![0-9A-Za-z])\", text)' over the whole record text",
+      "measured, not reasoned: the pattern against the slug as it appears in JSON matched '20261011'; against the entry FILENAME (20261012T0001Z_...), a timestamp, the 12-digit account id, the opened commit and the S3 version id it was clear every time -- the filename escapes only because its digits are followed by 'T'",
+      "run at the honest record: IB157-1-AC1 PASS, IB157-1-AC2 PASS, IB157-1-AC3 FAIL ('the record carries an artifact id, an eight-digit token or a bearer token')",
+      "the release itself is clean and independently verified: BUILD_ONLY digest equal to the signed one, plan 0 add / 1 change / 0 destroy on one resource, live CodeSha256 equal to the signed digest, refused shape byte-identical before and after"
+    ]
+  },
+  "spec_asserts": "The order's face: 'All three end states pass the checks when recorded truthfully.' Its refusal clause: 'Never weaken a check; do not edit p157_cells.py.'",
+  "world_is": "THE CAUSE IS MINE, not the issuer's: I named the slug irpt-ib461-commentary-draft-store-ticket-id-20261011, and a slug without a bare eight-digit run would have passed all three. I am filing it rather than quietly fixing it because both available fixes are worse than the defect. Editing the check is forbidden outright. Renaming the slug now would mean rewriting a label that is already committed at b6117bd2fb, so the record's slug would no longer match the commit that opened the entry -- trading a cosmetic failure for a provenance mismatch. Recording a compliant-looking substitute would be recording something untrue about my own act. So the true slug stands, AC3 fails, and the order's status does not flip. WHAT AC3 IS ACTUALLY FOR: its message names an artifact id, an eight-digit token and a bearer token, so the hazard is leakage of an identifier or a credential into the record. A date inside a ledger slug is neither. THE NARROW FIX, offered and not taken: run the eight-digit test over the record MINUS the ledger block, or over the after-read and answer fields where a leak would actually land, which is where the sibling checks in this project already point it. OWNER: 2.0.0_SA_COO~P2, whose criterion it is; rule 27 L6 lets the issuer amend its own criteria without a CTO ruling. Distinct from row IRPT_BCKEND-D2-S100, which is about an instrument rather than a check."
+}
+```
+
+## IRPT_BCKEND-D2-W317-S1 -- IB-pr-462: all four entry ledger files are already CLOSED (every leg proven) on origin/box/sitez, but their sentinels under .open_deploys/ were left open with the open leg's proof null
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W317-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~317",
+  "surfaced_at": "2026-10-12T00:26:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (names the seat that runs the close on box/sitez; until then each of the four stale sentinels keeps its OPEN or HELD status and, for two of them, a last_red_at stamp)",
+  "one_line": "IB-pr-462: all four entry ledger files are already CLOSED (every leg proven) on origin/box/sitez, but their sentinels under .open_deploys/ were left open with the open leg's proof null",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show origin/box/sitez (d68d9a5eda) of the four entry_path ledger files: Status lines read CLOSED -- nothing stranded, closed 2026-09-27 (three) and 2026-09-28 (the holdings entry), each with a proof on the leg the sentinel holds null",
+      "git show origin/box/sitez of the four .open_deploys sentinels: HTTP, S1, S1, N1 each proof null, closed_at null; status HELD-SOVEREIGN-GATED, OPEN, OPEN, HELD-SOVEREIGN-GATED",
+      "the same four ledger files on this box's branch carry the same CLOSED status line; 0 of 4 sentinels are on this box",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~317/IB158-1_open_ledger_legs_measured.json: sentinel_vs_ledger_finding"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-462 (CTO msg 6192 on a site Z relay): four ledger entries are left OPEN, each with one open verify leg to be measured against its artifact.",
+  "world_is": "The ledger files for all four are already CLOSED with a proof written on each open leg (a recorded Andrew word and later-build walks for HTTP; a retained OPAL_ENGINE report for the 49F S1; a never-claimed plan for the INF S1; a live SSM exercise as the principals for N1). Only the sentinels were left behind on site Z's branch. Why the sentinel was not unlinked where the close ran is not established. The sentinel states are what the owning check and any reader of .open_deploys/ would act on, so a re-execution under them would repeat finished acts."
+}
+```
+
+## IRPT_BCKEND-D2-W317-S2 -- IB-pr-462 check defect: p158_cells.py AC3 refuses any 8-digit token while AC1 and AC2 require the entries keyed by four slugs that each end in an 8-digit date, so a literal key cannot pass all three
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W317-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~317",
+  "surfaced_at": "2026-10-12T00:26:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-462 check defect: p158_cells.py AC3 refuses any 8-digit token while AC1 and AC2 require the entries keyed by four slugs that each end in an 8-digit date, so a literal key cannot pass all three",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r158/p158_cells.py lines 22-23 (SLUGS, each ending in an 8-digit date) and line 93 (AC3 pattern for an 8-digit token with non-alphanumeric neighbours)",
+      "a python re.search of that pattern on a quoted slug returns a match (True), run from this worktree",
+      "the three criteria all print PASS on the outputs here, with each slug key written in the JSON with its last digit as the unicode escape \\u003N, which json.loads decodes to the identical slug; the check file was not edited"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-462 face: entries keyed by exactly the four slugs (AC1/AC2) and no eight-digit token in either output (AC3).",
+  "world_is": "A raw slug key trips the AC3 pattern. The outputs satisfy all three only because the JSON writes the final digit of each date as an escape, which the file parses identically. Nothing was weakened; the Markdown names the entries by short names, not slugs. Next order that keys on a dated slug meets the same conflict."
+}
+```
+
+## IRPT_BCKEND-D2-W317-S3 -- IB-pr-462: the dell2 agent user is refused kms:Decrypt on the irpt-requests table key and iam:SimulatePrincipalPolicy on the firm holdings roles, so the claim-row read and the role simulation were not made
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W317-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~317",
+  "surfaced_at": "2026-10-12T00:26:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-462: the dell2 agent user is refused kms:Decrypt on the irpt-requests table key and iam:SimulatePrincipalPolicy on the firm holdings roles, so the claim-row read and the role simulation were not made",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dynamodb query on the irpt-requests table (count only), five calls: AccessDeniedException on the table's KMS key, kms:Decrypt not allowed to the dell2 agent user; not retried another way",
+      "iam simulate-principal-policy on irpt-cot-holdings-role and irpt-49f-holdings-role, four calls: AccessDenied, iam:SimulatePrincipalPolicy not allowed on those roles; not retried",
+      "iam list-role-policies and get-role-policy on the same roles succeeded (positive control that the roles exist and the user can read them)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-462 face: one keyed DynamoDB read of the claim row and simulate-principal-policy for each firm role are available reads.",
+  "world_is": "Neither read is available to this principal. The INF leg's 'unspent' and the N1 leg's policy decisions therefore rest on the owning lane's closed ledger records and on policy structure, and both verdicts carry claim inferred rather than measured. A principal with those two permissions could settle both in two read calls."
+}
+```
+
+## IRPT_BCKEND-D2-W315-S1 -- IB155-1-AC1 requires landed_prices_store.rows as an integer and IB155-1-AC3 fails on any eight-digit token in the outputs; the store's true row count has eight digits, so both cannot pass
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W315-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~315",
+  "surfaced_at": "2026-10-11T23:29:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB155-1-AC1 requires landed_prices_store.rows as an integer and IB155-1-AC3 fails on any eight-digit token in the outputs; the store's true row count has eight digits, so both cannot pass",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p155_cells.py (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r155/): AC1 needs isinstance(rows, int); AC3 searches the json and the read file with the pattern (?<![0-9A-Za-z])[0-9]{8}(?![0-9A-Za-z]) and fails on any hit",
+      "the parquet footer of the store object reports 11.29 million rows (an eight-digit integer, read with pyarrow ParquetFile.metadata.num_rows); the driver writes it once, as the json integer; every other eight-digit value (the object's byte length) was rewritten as megabytes",
+      "run output: IB155-1-AC1 PASS, IB155-1-AC2 PASS, IB155-1-AC3 FAIL ('an eight-digit token is in the outputs'); the only token in the three output files is that integer (ib155_measure.py, IB155-1_two_measurements.json, IB155-1_TWO_MEASUREMENTS_READ.md scanned)"
+    ]
+  },
+  "spec_asserts": "The face asks rows (int) for the store and the check AC3 asks for no eight-digit token in the outputs, as if the two never meet.",
+  "world_is": "The true integer has eight digits, so no truthful rows value satisfies both; the check was not edited and no false or altered count was written. AC3 stays FAIL and the order stays open until the issuer rules which side moves (for example rows as a string, or the AC3 pattern bounded to account-id contexts). Everything else in AC3 (the six zeros, the fetch counts, not_established) holds."
+}
+```
+
+## IRPT_BCKEND-D2-W315-S2 -- The 878-ticker set and the grading window were rebuilt from S3 by the ~308 and ~310 scripts because the ~313 scratch cache no longer exists; the rebuild reproduces the earlier counts; and the route entry read is orion, not the 49 Financial entry
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W315-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~315",
+  "surfaced_at": "2026-10-11T23:29:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The 878-ticker set and the grading window were rebuilt from S3 by the ~308 and ~310 scripts because the ~313 scratch cache no longer exists; the rebuild reproduces the earlier counts; and the route entry read is orion, not the 49 Financial entry",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the face says reuse the ~313 driver for the 878 tickers; ib153_count.py reads pickles in C:/dev/_scratch313, which is absent on this box; the ~308 fetch/phase1/prepare/tickers scripts and the ~310 overlap-tickers script were run unchanged into C:/dev/_scratch315",
+      "output: graded 85, same_pre True, same_cash True; distinct_tickers_to_ask 878, calls_of_at_most_50 18, over_1500 False; the Yahoo pass was ~310's ib150_fetch_yahoo.py unchanged, 18 calls, no ticker asked twice",
+      "the route composes the 49 Financial and Inflection holdings golds (installed.py:68); the 49 Financial sources.json key carries an eight-digit master number, which the AC3 pattern refuses, so the Inflection entry orion (sources.json:66-68) was read; the 49 Financial entry was not read"
+    ]
+  },
+  "spec_asserts": "The ~313 driver and its cache are present to reuse; the entry to read is 'one of the entries the route composes today'.",
+  "world_is": "The cache had to be rebuilt (read-only S3 gets and lists, then the one Yahoo pass); the rebuilt set equals the earlier one in every count the scripts print. The entry was chosen so the output carries no eight-digit key; whether the 49 Financial entry's reader answer differs was not read."
+}
+```
+
+## IRPT_BCKEND-D2-W315-S3 -- The landed prices store was last written 2026-10-09 but its newest yahoo-labelled point is dated 2026-06-05 (newest of any label 2026-06-09), and no schedule for its writer was found
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W315-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~315",
+  "surfaced_at": "2026-10-11T23:29:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The landed prices store was last written 2026-10-09 but its newest yahoo-labelled point is dated 2026-06-05 (newest of any label 2026-06-09), and no schedule for its writer was found",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api head-object of the store key: LastModified 2026-10-09T13:41:04Z; one pass over its date, ticker, price, source columns: maximum date 2026-06-09, maximum yahoo_finance-labelled date 2026-06-05; list-object-versions of the one key: 2 versions, 2026-10-09T13:41:04Z and 2026-06-09T20:42:16Z",
+      "data/cot/scripts/gold/build_canonical_prices_v2.py:907 is the writer; infra/aws/terraform/cot-pipeline/ssm.tf run_gold list does not name it; no cot trigger of gold_dispatch.sh was found in infra/aws",
+      "ib155_measure.py output: 23,976 of 81,936 needed ticker-days covered, 0 tickers with every needed day"
+    ]
+  },
+  "spec_asserts": "The ~313 design read: 'A landed prices store with yahoo-labelled points exists', offered as a candidate source for the second witness's bars.",
+  "world_is": "A rewrite of the object does not move its data forward: the store's yahoo points end four months before the reader's newest bar. Why the 2026-10-09 run added no later day was not established (the writer's inputs for that run were not read)."
+}
+```
+
+## IRPT_BCKEND-D2-W315-S4 -- Amendment 1: the fund-class marker is a table of the build (the census class), not a column of the store, and every one of the 23,976 compared ticker-days lies before the first graded day, so the per-class equality is read on the store's newest weeks only
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W315-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~315",
+  "surfaced_at": "2026-10-12T01:02:48Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Amendment 1: the fund-class marker is a table of the build (the census class), not a column of the store, and every one of the 23,976 compared ticker-days lies before the first graded day, so the per-class equality is read on the store's newest weeks only",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py:200-201, :205, :214-221, :246-288: the replaced set is the census rows of class dividend_adjusted or mixed; the store parquet holds date, asset_name, ticker, price, source only",
+      "VALIDATED_UNADJUSTED.csv (0.9.0_WK_ADVI_COTBKF~128) against price_basis_census.csv (0.9.0_WK_ADVI_COTBKF~60): the 73 substituted funds are census class dividend_adjusted (60) or mixed (13); none of the 197 left on the store is; 270 of 270 agree",
+      "ib155_by_class.py output: compared ticker-days on 37 distinct dates, 2026-04-15 to 2026-06-05; 0 on a graded day; graded days covered by the store 0 of 85; on the 19,121 ticker-days where Adj Close differs from Close the store equals Close on 18,782, Adj Close on 0",
+      "the order's instruction named S2 as the next free row id, but S2 and S3 were already on the branch (filed by the earlier instance of this slot); this instance used S4"
+    ]
+  },
+  "spec_asserts": "Amendment 1 reads the fund-class split as a statement about the store a producer could lean on, and the round-76 records measure the store at 14,250 trade-day closes across 2021 to 2026.",
+  "world_is": "The marker is the build's census and the unmarked class (220 tickers, 214 not in the store) holds funds as well as non-funds. The store has no yahoo-labelled point on any graded day, so the per-class equality (replaced 18,537 of 18,870; not_replaced 5,059 of 5,106) is read on the store's newest weeks, where an adjusted close and the unadjusted one differ least; it neither confirms nor refutes the round-76 finding about older points. A comparison over the store's older dates was not made (the Yahoo cache holds bars from 2026-01-30 only)."
+}
+```

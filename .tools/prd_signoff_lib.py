@@ -90,12 +90,26 @@ def _first_word(title):
     return t.split(" ", 1)[0].upper() if t else ""
 
 
+ADDENDUM_FIRST_WORD_RE = re.compile(r"^(ADDENDUM|V\d+(\.\d+)*)$")   # "## ADDENDUM v0.34 ..." or "## v0.34 (...) ..."
+RATIFIED_WORD_RE = re.compile(r"\b(ENDPOINTS?|CONTRACTS?)\b")
+
+
 def half_of_section(title):
     """Which half a top-level section belongs to; the pre-heading preamble (title None) belongs to
-    neither (it carries prd_version, which must NOT re-open a half by itself)."""
+    neither (it carries prd_version, which must NOT re-open a half by itself).
+
+    An ADDENDUM section (first word ADDENDUM or a version like v0.34) whose heading names ENDPOINT or
+    CONTRACT(S) belongs to the ratified-text half. Without this, an addendum that changes a contract
+    below the hashed sections hashed into the BRIEF half, and the ratified-text half read a bare
+    "current" on text its signer never saw (row IRPT_BCKEND-D2-S83, 2026-10-11)."""
     if title is None:
         return None
-    return "ratified-text" if _first_word(title) in RATIFIED_SECTIONS else "brief"
+    first = _first_word(title)
+    if first in RATIFIED_SECTIONS:
+        return "ratified-text"
+    if ADDENDUM_FIRST_WORD_RE.match(first) and RATIFIED_WORD_RE.search(re.sub(r"[`*_]", "", title).upper()):
+        return "ratified-text"
+    return "brief"
 
 
 def _norm(lines):
@@ -567,6 +581,14 @@ def self_test():
     arm("a CELL CANDIDATES edit changes the brief half only", half_hashes(prd_cell)["brief"] != h["brief"] and half_hashes(prd_cell)["ratified-text"] == h["ratified-text"])
     arm("CRLF / trailing-space noise changes no hash", half_hashes(prd.replace("\n", "\r\n").replace("| p |", "| p |   ")) == h)
     arm("backtick-wrapped heading still ratified-text", half_of_section("ENDPOINT (step 2, `/endpoint --forward`)") == "ratified-text")
+    # D2-S83: a contract-changing ADDENDUM below the hashed sections belongs to the ratified-text half; a plain one does not.
+    arm("an ADDENDUM naming CONTRACTS is ratified-text", half_of_section("ADDENDUM v0.34 -- CONTRACTS: unprojected_grant") == "ratified-text")
+    arm("a version addendum naming the ENDPOINT is ratified-text", half_of_section("v0.4 (CTO, 2026-10-11) -- ENDPOINT qualification") == "ratified-text")
+    arm("an ADDENDUM naming neither stays brief", half_of_section("ADDENDUM 2 -- cell order") == "brief")
+    arm("a non-addendum heading that mentions a contract stays brief", half_of_section("SURFACE MANIFEST (contract owners)") == "brief")
+    prd_add = prd + "\n## ADDENDUM v0.5 -- CONTRACTS change\n\n| c2 |\n"
+    arm("appending a CONTRACTS addendum moves the ratified-text hash only",
+        half_hashes(prd_add)["ratified-text"] != h["ratified-text"] and half_hashes(prd_add)["brief"] == h["brief"])
     cro = build_doc("T_PRD.md", prd, "abc", "brief", "SIGNED", "r@1", "4.0.0_SA_CRO")
     cvo = build_doc("T_PRD.md", prd, "abc", "ratified-text", "SIGNED", "r@1", "3.0.0_SA_CVO~Z")
     r = evaluate(prd, {"4.0.0_SA_CRO.json": cro, "3.0.0_SA_CVO.json": cvo})

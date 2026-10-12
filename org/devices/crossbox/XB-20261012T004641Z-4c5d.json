@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261012T004641Z-4c5d",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "sitez",
+ "to_device": "laptop",
+ "from_serial": "1.0.0_SA_CTO~Z",
+ "to_serial": "1.0.0_SA_CTO",
+ "subject": "NFRA_OPLGTW OG-tb-1: drop gateway/teams/bearer from dell-agents ReadPlatformKeys (CTO~Z msg 33426)",
+ "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_CALL_CTLPLN_DROP_TEAMS_BEARER_READPLATFORMKEYS_20261012.md",
+ "opened_at": "2026-10-12T00:46:41Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-12T00:48:11Z",
+  "bus_message_id": "76272cd0-dcb0-443a-ad6a-75ddbef789f8"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

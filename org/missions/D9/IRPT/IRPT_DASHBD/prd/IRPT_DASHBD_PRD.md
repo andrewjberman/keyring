@@ -5,7 +5,7 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.9",
+ "prd_version": "v0.11",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
@@ -590,5 +590,56 @@ flow-bearing account-days of which ONE is eligible. Ruled by `1.0.0_SA_CTO` 2026
 - **The one issuer:** `2.0.0_SA_COO~D2`.
 - **ENDPOINT changed** (FWD-12..20 added). The CVO re-signs the ratified-text half. The brief half is accepted, since the CRO's research and
   Andrew's word are the source.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.10 (2026-10-11 ~23:3xZ, `1.0.0_SA_CTO~DELL2`): C-FLOWTIME -- the measurement is in, no winner is written, the served convention stays END (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** this seat's round-83 analysis @3f7c91e682 and `2.0.0_SA_COO~D2`'s five reads of round 83 (msgs 6038 and 6092; records
+  under `deliverables/0.9.0_WK_IRPT_DASHBD~127`, `~128`, `~129`, `~130`, and the class record of `~121`). Every number below is taken as
+  filed: workers' reads, the issuer re-ran the criteria, this seat re-ran nothing and read the messages and the class record.
+- **What C-FLOWTIME asked and ruling 24 deferred:** score START, END and MID against Black Diamond's own time-weighted return over
+  flow-bearing days from more than one account, and write the winner into the method contract.
+- **The measurement.** 51 tie-out segments over 49 accounts and 234 flow-bearing days (12 accounts have one flow day). The oracle is
+  Black Diamond's stored return; this seat's analysis wrote "the custodian's" and that was wrong (row D2-W130-S1). END, the served
+  convention, closes in 0 of 51; START in 50; MID in 48; both in 47; START only in 3; MID only in 1.
+- **RULED: NO WINNER IS WRITTEN.** END is refuted as the other system's convention. Between START and MID the data does not decide, and
+  a lead of two segments is not a winner. Neither Black Diamond nor the custodian publishes when a flow is taken to arrive (six public
+  pages each read, none a method document; method help is behind a sign-in). A convention is not adopted on a 50-to-48 count.
+- **RULED: THE SERVED `flow_convention` STAYS `END`,** and the reason is written into the method contract beside it: END is the
+  default the contract set, it is not shown to be less accurate than the alternatives, and it is known not to be the convention
+  Black Diamond's figure uses. Matching another system is C-TIEOUT's purpose, not a proof of accuracy: under END a deposit earns
+  nothing on its day and under START the whole day, and which is true depends on when the cash is put to work, which nothing read
+  here shows.
+- **What a change would move, so nobody makes one lightly** (a copy of 6,902 accounts and 2,596,311 account-days, on which the
+  restated END equals the served return on all but 19 days): to START, 98,776 account-days differ and 3,026 by more than 10 basis
+  points; to MID, 98,737 and 1,537. Since inception, of 3,233 accounts, 695 move by more than 10 basis points under START and 433
+  under MID. And the guard moves with it (C-GUARD): START turns about 2,590 served daily returns into `NOT_MEASURABLE` and 71 back;
+  MID about 1,260 and 48. The guard's thresholds were set from the data under END; a change of convention re-derives them.
+- **What the tie-out says from now on, in the record and wherever it is shown:** on these 51 the served return does NOT close against
+  Black Diamond's; it closes when restated under another timing (axis `RESTATED_CLOSE`, ruled in msgs 5886 and 5955); timing START 3,
+  MID 1, not determined 47, claim inferred. The 39 other segments of the 90 close under no timing. The tie-out is not closed.
+- **C-FLOWTIME is amended to say what would settle it:** the other system's own statement of its convention, in writing, read by
+  a person entitled to read it. That is not a seat's act: the method help is behind a sign-in and a question to the vendor is a
+  vendor contact. It is listed for Andrew with FWD-8's tolerance (ruling 25), which is already his.
+- **Rule 24:** no value is added to `flow_convention`; its set is unchanged and its served value is unchanged.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.11 (2026-10-11 ~23:3xZ, `1.0.0_SA_CTO~DELL2`): two sentences corrected on the reviewer's notes; nothing ruled anew (L10; CONTRACTS wording: the ratified-text half re-opens)
+
+- **Source:** `3.0.0_SA_CVO`'s review of v0.10 (msg 6126, @31ffd1b926, signed with two notes) and its round-83 slug (msg 6115).
+- **v0.10's reason for keeping END is restated.** It said END "is not shown to be less accurate than the alternatives". That is true of
+  all three timings and so is a reason for none. The honest sentence: **END is kept BY DEFAULT. It was the contract's starting value
+  and nothing measured chooses a replacement; it was not weighed against START and MID and found better.** Everything else of v0.10
+  stands: no winner is written, the served `flow_convention` stays `END`, and the tie-out says END does not close on the 51.
+- **C-GUARD's table row (line 226) is read with ruling 17, and its stale clause is struck here in words:** a day marked
+  `FLOW_UNRECONCILED` is served with no return, `NOT_MEASURABLE`; it does NOT fall back to price return plus income, and
+  `HOLDINGS_INCOME_FALLBACK` is never emitted. Ruling 17 (lines 454 to 460) already said so; the table row above it was never brought
+  into line, and a reader of the table alone was told the opposite of what is served. Nothing served changes.
+- **Owed to C-FLOWTIME, from the reviewer's second note, as a read and not a ruling:** when a deposit is first put to work is
+  readable from data already held. On the 234 flow-bearing days: a count by when the deposited cash was first invested (the same
+  day, the next trading day, later, never within the window), under a rule written before the count, on a copy. It will not pick
+  a convention. It gives Andrew a fact about these accounts to set beside whatever the vendor says about its own arithmetic.
 
 -- 1.0.0_SA_CTO~DELL2

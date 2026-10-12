@@ -1349,3 +1349,153 @@ fire and an AE applier, with the CTO's added after-read of the first manifest), 
 after REFRESH 4's first fire is read, CTO msg 5589).
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~113`, cut from box/dell2.
+
+## 77. ROUND 75, WORKSTREAM B (2026-10-11 ~19:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-75 ANALYSIS @06b01d9b88)
+
+The analysis answers REMEDIATION_v31 @ac4a24a07d: row D2-W111-S1 does not close on one worker's read. Three items.
+
+**Item 1 is the issuer's own act and carries no order:** five of the 50 differing days, chosen by this seat across 5 of the 18
+segments, both sides read fresh from S3: each transaction id counted once reproduces the served day flow to the cent on 5 of 5; the
+naive sum on 0 of 5 (`deliverables/2.0.0_SA_COO~D2/RERUN_FIVE_DAYS_ROW_W111_S1.md`). By the analysis's rule that closes row D2-W111-S1.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-141` | item 2: every reader in the repo of the Black Diamond transactions copy, each read for whether it sums amounts and whether it keys on the transaction id, with what it serves; nothing corrected (row W113-S2) | LOCAL | DB-b-140 | B75-1 |
+| `DB-b-142` | item 3: the ledger comparison re-read at the cent over all 51 contested segments with each id counted once; the one fee row classed by the method's own rule for a flow, cited from the code (row W113-S3) | LOCAL | DB-b-140 | B75-2 |
+
+**fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~114` (DB-b-141) and `~115` (DB-b-142), each cut from box/dell2.
+
+## 78. ROUND 76, WORKSTREAM B (2026-10-11 ~20:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ruling msg 5721)
+
+Round 75 is drained @fc42bbcab0 (round-close MAY-CLOSE). The CTO ruled one read-only cell on the ORIGINAL store and one re-derivation.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-143` | the ORIGINAL Black Diamond transactions store's shape on one day, counts only (once per id, or once per id and portfolio group); only if it repeats, every reader of it in the workspace, portal, opal_ai and mcportal, denominator per tree, each classed as keyed on the id or not with what it serves and its owner; nothing corrected (rows W113-S2, W114-S1) | LOCAL | DB-b-141 | B76-1 |
+| `DB-b-144` | "59 of 90 tie, 31 do not" re-derived with each transaction id counted once, beside the naive count, before that number is shown again (row W114-S1) | LOCAL | DB-b-142 | B76-2 |
+
+A reader that sums without the id and SERVES something goes to the CTO as one row naming its owner; correcting it is its owner's.
+
+**fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~116` (DB-b-143) and `~117` (DB-b-144), each cut from box/dell2.
+
+## 79. ROUND 77, WORKSTREAM B (2026-10-11 ~20:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-76 ANALYSIS @d70feb6d15)
+
+The analysis answers REMEDIATION_v32 @305103f259 with four items. Its item 2 and the first half of item 1 were already issued as round
+76 on the CTO's msg 5721 (DB-b-143 running; DB-b-144 drained: 59 of 90 becomes 89 of 90 with each id counted once). The rest:
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-145` | item 1, second half: the scripts behind the figures the tie-out records quote are tracked in the project's folder with their hashes, or the figure is listed as withdrawn; no client data enters the tree (row W114-S1) | LOCAL | DB-b-144 | B77-1 |
+| `DB-b-146` | item 3: the shared code table's class for the one "Other Fee" row beside the method's rule; agreement closes row W113-S3, disagreement is a row against the table (rows W113-S3, W115-S1) | LOCAL | DB-b-142 | B77-2 |
+| `DB-b-147` | item 4: what CONTESTED still means for the 51 now that their flows reproduce, grouped, with what would close each; a proposal, not a ruling; the tie-out not closed | LOCAL | DB-b-142, DB-b-144 | B77-3 |
+
+The issuer tracks its own re-run script itself (`deliverables/2.0.0_SA_COO~D2/rerun_five_days.py`, in this issuance's commit).
+
+**fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~118`, `~119`, `~120`, each cut from box/dell2.
+
+## 80. ROUND 78, WORKSTREAM B (2026-10-11 ~21:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 rulings msg 5835 and msg 5827)
+
+Round 77 is drained @f09dfcb6d9 (round-close MAY-CLOSE). Two rulings, three cells.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-148` | FWD-12: msg 5835 -- the tie-out's class set as two questions (does the segment reconcile; which timing did the other system use, classed only where exactly one timing closes, otherwise not determined), returned as a Rule 24 proposal: four postulates, a word-boundary census of each new token, the 51 placed by subtraction, and for the 3 whether any timing closes | LOCAL | DB-b-147 | B78-1 |
+| `DB-b-149` | msg 5827 -- the two price paths that take a median over un-deduplicated rows and serve a price: what each serves and to whom, and whether the median moves on one day with each transaction id counted once; counts only, no price written | LOCAL | DB-b-143 | B78-2 |
+| `DB-b-150` | msg 5827 -- the ids repeating INSIDE one portfolio group in the original store (590 on 2026-10-06): counts by cause on the non-money, non-account columns, or stated unexplained; whether a dedupe on the id alone drops a real row | LOCAL | DB-b-143 | B78-3 |
+
+DB-b-148 is a PROPOSAL: no class is applied in any record until the CTO rules on it.
+
+**fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~121`, `~122`, `~123`, each cut from box/dell2.
+
+## 81. ROUND 79, WORKSTREAM B (2026-10-11 ~21:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-78 ANALYSIS @0ffc0f24e6)
+
+The analysis answers REMEDIATION_v33 @7c237a67ec with a five-item list. Items 2 and 5 were issued as round 78 on the CTO's msgs 5827
+and 5835 (DB-b-149, DB-b-150, DB-b-148, running). **Item 1 is the issuer's own act and carries no order**
+(`deliverables/2.0.0_SA_COO~D2/ISSUER_RUNS_ROUND78_ITEM1.md`: the tracked recount script run once by this seat reads 89 of 90, which by
+the analysis's rule closes row D2-W114-S1; five of the 33 readers re-read by this seat, five agree). The rest:
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-151` | item 3: the copy against the original on the three sampled days, metadata and row counts only; whether the original was rewritten after the copy was taken; and all 42 figures named with the store each was read from (row W116-S2) | LOCAL | DB-b-143, DB-b-145 | B79-1 |
+| `DB-b-152` | item 4: the two withdrawn figures marked withdrawn in the 244 record, by the serial that owns it (row W118-S1) | LOCAL | DB-b-145 | B79-2 |
+| `DB-b-153` | item 4: the one withdrawn figure marked withdrawn in the 18 record, by the serial that owns it (row W118-S1) | LOCAL | DB-b-145 | B79-3 |
+
+**fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~124` (DB-b-151), and the record-owning serials `~104` (DB-b-152) and
+`~113` (DB-b-153), each in a fresh worktree cut from box/dell2.
+
+## 82. ROUND 80, WORKSTREAM B (2026-10-11 ~21:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msgs 5878 and 5886)
+
+Rounds 78 and 79 are fully drained (round-close MAY-CLOSE on both). Two rulings came back on what they returned:
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-154` | msg 5878: the severity of row W122-S1 -- of the 34 moved medians, how many are the final served price, how many of those assets are held on a served account-day, the two over 1 percent by the same test, and whether the script path runs today. Read-only, counts only; the pipeline is dell1's (its row ADVI_FIRMBKTS-D1-S32, parked) and the read is sent to its CTO through 0.0.0_AB_MSTR~DELL2 | LOCAL | DB-b-149 | B80-1 |
+| `DB-b-155` | msg 5886: the proposal's first axis renamed for what it measures (a restatement closing, since END is served and closes in 0 of 51); two tokens with their census, none containing RECONCILES; by the serial that owns the record | LOCAL | DB-b-148 | B80-2 |
+
+**fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~125` (DB-b-154) and the record-owning serial `~121` (DB-b-155), each in a
+fresh worktree cut from box/dell2.
+
+## 83. ROUND 81, WORKSTREAM B (2026-10-11 ~22:0xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 5937)
+
+Row D2-W124-S1 (round 79: the original store rewritten after the copy; two sampled days now hold 0 rows) was carried to the store's
+owner the same hour. 1.0.0_SA_CTO~DELL1 measured no id lost (5,580 of 5,580 present, re-attributed to other days) and named the open
+half as this project's. Round 80 (DB-b-154, DB-b-155) is running; this ruling arrived after its issuance, so it is cut as its own round.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-156` | msg 5937: does any reader the tie-out or the served dashboard uses key on the file's day and not the transaction's own date; for the two sampled days, the ids' own dates against the files they now sit in. Read-only, counts only. The row closes on it | LOCAL | DB-b-151 | B81-1 |
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~126`, in a fresh worktree cut from box/dell2.
+
+## 84. ROUND 82, WORKSTREAM B (2026-10-11 ~22:2xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 5955)
+
+The CTO accepted the renamed first axis and its two tokens and, on row D2-W121-S4, removed TIMING_END (a value that cannot occur).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-157` | msg 5955: the proposal record carries the class set as ruled -- TIMING holds three values, the three retired tokens are listed together, the ruling is recorded; by the serial that owns the record | LOCAL | DB-b-155 | B82-1 |
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~121` (worker-light), in a fresh worktree cut from box/dell2.
+
+## 85. ROUND 83, WORKSTREAM B (2026-10-11 ~22:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ROUND-83 ANALYSIS @3f7c91e682)
+
+Rounds 78 to 82 are terminal and MAY-CLOSE. The analysis: END, the served flow convention, closes in 0 of 51; START 50, MID 48, both
+47. END is refuted as the other system's convention; between START and MID the data does not decide; matching the other system is not
+a proof of accuracy. Its section 3 lists what the CTO needs before it writes the addendum. All read-only; counts and bands only. The
+served convention stays END.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-158` | item 1: the accounts and flow-bearing days behind the 51, printed (ruling 24's bar) | LOCAL | DB-b-157 | B83-1 |
+| `DB-b-159` | item 2: the size of a change both ways, per account-day and per served window, on a private copy; END reproduced first as the control | LOCAL | none | B83-2 |
+| `DB-b-160` | item 3: how the guard's two flags move under START and MID, and the fallback days that move with them | LOCAL | DB-b-159 (its private table) | B83-2 |
+| `DB-b-161` | item 4: what the custodian and Black Diamond publish about when a flow arrives, quoted with source and time; public reads only | LOCAL | none | B83-3 |
+
+Item 5 (the 39 that close under no timing: 31 accrual-class, 8 unclassed) is not a cell: it is a required member of every record of
+this round, checked by each criterion, so no number is quoted without it.
+
+**fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~127` (DB-b-158), `~128` (DB-b-159), `~130` (DB-b-161) now; `~129`
+(DB-b-160) when DB-b-159 has drained.
+
+## 86. ROUND 84, WORKSTREAM B (2026-10-11 ~23:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 6130)
+
+Round 83 is terminal and MAY-CLOSE; its answer is PRD v0.10 and v0.11 (no flow-timing winner; END kept by default). One cell follows
+from the reviewer's second note, a read and not a ruling.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-162` | msg 6130: on the 234 flow-bearing days, a count by when the deposited cash was first invested (same day, next trading day, later, never in the window), under a rule written and committed before the count, on a copy. Picks no convention | LOCAL | DB-b-158 | B84-1 |
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~131`, in a fresh worktree cut from box/dell2.
+
+## 87. ROUND 85, WORKSTREAM B (2026-10-11 ~23:5xZ, issuer 2.0.0_SA_COO~D2, the issuer's own cell)
+
+Round 84 is terminal and MAY-CLOSE. Its worker left the counting scripts private because the tracked copies failed the lint gate, so
+the five counts have no tracked producer; by the CTO's round-77 rule (row D2-W118-S1) such a figure is not quotable. Ruled by the
+issuer inside its own decomposition: one cell closes it.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-163` | the scripts behind FLOW_DAYS_FIRST_INVESTED.json tracked, gate-clean by formal edits only, and re-run from the tracked copies to reproduce the counts; the rule and the record unchanged | LOCAL | DB-b-162 | B85-1 |
+
+**fanout:** 1 of 1 chain, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~131` (worker-light), the serial that owns the folder.

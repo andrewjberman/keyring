@@ -119,7 +119,7 @@ tag to `complete` only if both PASS. Report once per phase.
 - Pre-cut: ap7.AC1 and ap7.AC2 base FAIL as expected. Positive control: a synthetic re-cut on c3af8687e4 read AC1 PASS
   (patch-id 37fa4995232e, 3 files). Negative control: a trunk commit read FAIL. The control record was removed.
 
-<status>pending</status>
+<status>complete</status>
 <round>34</round>
 <slot>~AE</slot>
 <fabric>site-z</fabric>

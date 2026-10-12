@@ -71,7 +71,7 @@ Every invocation runs under `timeout 120`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the assignee ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <slot>0.9.0_WK_NFRA_IAMROLES202609~14</slot>
 <fabric>site-z</fabric>

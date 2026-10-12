@@ -80,7 +80,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-gw-1.grant-writer-rebuild.proof
 - Round 34, E2. This clears the opal-gateway half of row W39-S5. The opal-assets half went to 2.0.0_SA_COO~C (ADVI_COTBKF).
 - Pre-cut: gw1.AC1 and gw1.AC2 base FAIL as expected (zip and plan absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>34</round>
 <slot>~56</slot>
 <fabric>site-z</fabric>

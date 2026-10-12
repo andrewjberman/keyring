@@ -6116,3 +6116,315 @@
   "notes": "Not investigated."
 }
 ```
+
+## DSGN_IRPTV1-D2-W62-S1 -- IV-e-113: the vendor sections wire has no title member and the producer sends lower-case unit tokens; the page prints the section code as title and 'unknown' as unit on every vendor card
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W62-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~62",
+  "surfaced_at": "2026-10-11T19:25:00Z",
+  "one_line": "IV-e-113: the vendor sections wire has no title member and the producer sends lower-case unit tokens; the page prints the section code as title and 'unknown' as unit on every vendor card",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.schema.json:126-190: the vendor section item has section_id, section_type, value, units, as_of_date, date_claim, page, bbox and additionalProperties false; no title or label member",
+      "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py:704-709 section_type = row[\"section_id\"] (the census code S00..S32) and units = row[\"unit\"]; :714 the title is held as `_label`, :781 `_title`; ycharts/extract/publication.py:215-217 public() drops every key starting with an underscore",
+      "docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json: 33 sections S00..S32 each with a title (the producer's table of names, pinned by build_resident_package.py:39); 72 typed field rows with unit tokens count, date, enum, number, pct, price, ratio, score, text, usd_billions, years (all lower case)",
+      "portal 940c17a7 contracts/adapt.ts:530-537 SECTION_UNIT_FOR_WIRE keys DECIMAL_FRACTION, PERCENT, USD, CURRENCY, COUNT, TEXT; :937 title: section.section_type; :941 label: section.section_type; :944 unit: SECTION_UNIT_FOR_WIRE[section.units] ?? 'unknown'",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/SECTION_TITLE_UNIT.json (the whole trace, verdict BOTH, served answer NOT read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A reader who opens a finished analysis report sees each section by a name and each figure with its unit (row DSGN_IRPTV1-D2-S21's spec_asserts; the contract's own description calls units 'the units half; required on every section').",
+  "world_is": "By code at this tree, not by a served vendor answer: the vendor section carries a code in section_type and no name anywhere on the wire, so a name cannot be printed without a contract change (a title member, or a code-to-name table the page reads) on the producer's side; and the wire's units tokens are the census's lower-case set while the page maps only upper-case Opal-era tokens, so all 12 (11 scalar plus 'chart') fall to 'unknown'. The contract fixtures send DECIMAL_FRACTION, which the page maps, so every fixture-driven test passed. The two repairs are on different sides: the title is a contract-plus-producer matter (IRPT_BCKEND / IRPT_YCDGEN), the unit map is a page matter (this project).",
+  "notes": "Not repaired (a read cell). The served-answer read that would close the deployed-vs-tree gap is in SECTION_TITLE_UNIT.json served_answer_how for 2.0.0_SA_COO~P2."
+}
+```
+
+## DSGN_IRPTV1-D2-S24 -- Laptop walk XB-c5ce face 11: with an ACCOUNT row picked in the header's search, Performance's Account select d
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S24",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-11T19:40:29Z",
+  "one_line": "Laptop walk XB-c5ce face 11: with an ACCOUNT row picked in the header's search, Performance's Account select does NOT start on the picked account on a served answer; IV-e-108 recorded hands_tabs true on a test alone",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IV-e-108 (portal cd744428, on DEV since ca23f110): when the header selection is an ACCOUNT row, Performance's Account select starts from that account and Holdings opens on it; its record states header_picker.hands_tabs true, held by a rendered test and a pure-rule arm, with no rendered walk of the account-row case.",
+  "world_is": "The walk's result file, face 11 (walk 5, a fresh session, DEV at or after ca23f110): typing an account's last four digits offered ONE option, the client's name with that account's masked label; after the pick the search box reads the client's name and the Identity band shows the whole client. Performance's Account select then starts on the client's OTHER, larger account: NO. Holdings did open on the picked account, but the walker's Performance select loop had just left that account selected, so the two causes cannot be told apart: NOT SEEN as a clean read. Face 10b: Holdings opened on ONE account in every walk on these heads, the one Performance's select last held, so the all-accounts line was NOT SEEN. NOT established: whether the option the header offers IS an account row or a client row labelled with an account (the walker inferred the former); what selection the header hands on for it. If the header yields a client selection for that option, the page's rule is right and the header never produces an account row for this search; if it yields an account row, the hand-off fails on a served answer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/XB_C5CE_IRPT_DEV_WALK_RESULT_20261011.md lines 53-56 (faces 10a, 10b, 10c, 11), read by this seat",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~60/HOLDINGS_FACE.json (header_picker)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-W62-S2 -- IV-e-114: the colgroup whitespace warning is in the shared HoldingsBreakdownTable (src/components/holdings/, outside the order's grant); five same-line JSX comments after the col elements leave five text nodes in the colgroup
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W62-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~62",
+  "surfaced_at": "2026-10-11T19:52:00Z",
+  "one_line": "IV-e-114: the React colgroup warning is reproduced in a development build and traced to portal/src/components/holdings/HoldingsBreakdownTable.tsx:294-298, a shared component outside this order's grant, so present_after false cannot be met by an edit this order permits",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/measure-dev-before.json (consoleAll entry, type error, text begins 'In HTML, whitespace text nodes cannot be a child of')",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/measure-prod-before.json measured.colgroupText [{children 11, textNodes 5}]",
+      "portal a124694c src/components/holdings/HoldingsBreakdownTable.tsx:293-300",
+      "portal a124694c src/pages/InvestorReporting/tabs/holdings/SecurityList.tsx:429-430,607"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's item 1: find the colgroup whose JSX leaves a whitespace text node, fix it, show it gone (present_after false); the grant is portal/src/pages/InvestorReporting/ only.",
+  "world_is": "The only colgroup the Holdings tab renders is HoldingsBreakdownTable.tsx:293-300 (a search of src/pages/InvestorReporting for colgroup outside tests: 0 hits; the Securities table in SecurityList.tsx:607 renders that shared component). Lines 294-298 each read `<col style={{...}} /> {/* Asset Class */}`: the single space between the slash-angle and the comment brace is on the same line, so JSX keeps it as a text child (a space with no newline is not trimmed). Measured on the built page: the table's colgroup has 11 child nodes, 5 of them text nodes (one per comment line), the 6th col being extra?.cols from SecurityList.tsx:430. React's development build prints 'In HTML, whitespace text nodes cannot be a child of <%s> ... This will cause a hydration error. colgroup' (measure-dev-before.json consoleAll); the production build prints nothing (measure-prod-before.json: 0 console entries containing 'whitespace'), so the warning is development-only. The page-side callers cannot change it: the whitespace is in the shared component's own JSX before extra?.cols. The one-line repair, outside the grant and NOT made: put each comment inside its col element or on its own line.",
+  "notes": "Needs the shared file in a grant (the CTO, or the owner of src/components/holdings/); IV114-AC1 reads FAIL on colgroup_warning.present_after at this record."
+}
+```
+
+## DSGN_IRPTV1-D2-W62-S3 -- IV-e-114: design ruling asked -- the Holdings tab draws five navy panel strips (3 PanelHeader, 2 PanelFooter) plus the Total Assets hero; portal/CLAUDE.md already names the strips as the known divergence from C3
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W62-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~62",
+  "surfaced_at": "2026-10-11T19:52:00Z",
+  "one_line": "IV-e-114: the Holdings tab renders 5 full-width #0A1733 strips from shared PanelHeader/PanelFooter on Panel variant nested, plus the Total Assets hero (6 dark surfaces); a design ruling is asked on whether a panel strip is a C3 band; nothing restyled",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/measure-prod-before.json measured.bands (7 entries: the 5 strips plus two td #111827 'Other' cells of the asset-class column, which are cell fills, not full-width)",
+      "portal/DESIGN.md C3 (read at a124694c)",
+      "portal/CLAUDE.md Color law, Known divergence paragraph"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "portal/DESIGN.md C3: 'band | palette.darkField #0A1733 | ONE deliberate full-bleed band per page, never the default container' and 'Navy #163372 is text and hairline only, never a container fill. A dark card sitting on the light canvas, a panel inside a panel inside a panel, or a second band on one page violates this clause.'",
+  "world_is": "Measured on the built page (computed background-color #0A1733, width 200px or more): 5 strips, each 1326px wide inside a 1392px main column, drawn by the shared PanelHeader (portal/src/ui/components/panels/PanelHeader.tsx:62, bg-[hsl(var(--bg-header))]) x3 -- Identity (IdentityCard.tsx:532), Securities map (HoldingsTreemap.tsx:550), Securities (SecurityList.tsx:552) -- and the shared PanelFooter (PanelFooter.tsx:108, `!light && bg-header`, ground 'band' is the default) x2 -- HoldingsTreemap.tsx:620 and SecurityList.tsx:623; each on Panel variant nested. A sixth dark surface is the Total Assets hero (src/components/CategoryViewTree.tsx, a gradient, called from DrillTree.tsx; its AD-01 comment: 'navy ground (the CTO recorded the C3 departure)'). portal/CLAUDE.md 'Known divergence' says PanelHeader, DarkCard and NestedCard are band-valued and 'A page can therefore render several bands where C3 allows one. C3 is the law and such a page is the defect.' So by the written law the page is the defect, but the fix is the shared Panel family (src/ui; that note counts 4,887 dependent idioms, row DSGN_REBRND-W1-S9), outside this grant and not unambiguously this page's. PanelFooter already takes ground='light' (a hairline, no band): a lever that would remove 2 of the 5 if the ruling is that footers are bands. Nothing restyled.",
+  "notes": "Ruling asked of the CTO: is a panel header or footer strip a band under C3 (then the shared Panel family needs a light variant and 5 strips go), or is C3's band the one deliberate full-bleed section (then the strips are chrome and the walk's count of 5 reads the page wrongly)?"
+}
+```
+
+## DSGN_IRPTV1-D2-W62-S4 -- IV-e-114: the walk's 32-36 under-3:1 texts are not reproduced when the backdrop under the Total Assets hero's gradient is sampled; reading computed background-color alone gives 26, all on the hero
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W62-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~62",
+  "surfaced_at": "2026-10-11T19:52:00Z",
+  "one_line": "IV-e-114: with the hero's gradient backdrop sampled from pixels, 0 of 72 visible Holdings texts are under 3:1 (lowest 4.82); a computed-style-only read paints the hero as the light canvas and yields 26 false failures, the same shape as the walk's 32-36",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/measure-prod-before.json measured.texts (72, each with fg, bg, ratio, and a sampled flag on the 10 gradient texts)",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~62/hygiene-driver.mjs (the measuring driver)",
+      "portal/CLAUDE.md Color law (the hero is the band; light ink is legal on it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row DSGN_IRPTV1-D2-S23: 32 to 36 text elements under 3:1 contrast, the lavender eyebrow such as ALL CATEGORIES on the light canvas.",
+  "world_is": "Naive method (computed color against the first opaque ancestor background-color, as a contrast checker that ignores background-image would): 27 texts under 3:1 on the built page at 1440 wide, 26 of them inside holdings-drill-tree / category-peers (#C5B9FD, #FFFFFF, #F4F6FA read against #F4F6FA), 1 an opacity-0 sidebar label. That region is the Total Assets hero, a navy gradient (background-image, background-color transparent), so the computed backdrop is the canvas by artefact. Sampled method (every text made transparent, full-page screenshot, pixels read under each text's own range rectangle, worst of lightest and darkest pixel kept): 72 texts, 0 under 3:1 and 0 under 4.5:1; lowest 4.82 (#111827 on #3B82F6, 'Equity'); the 'All Categories' eyebrow passes on the hero. I did not see the walker's script, so that it made the same error is INFERRED, not shown. No contrast edit was made; failing_before 0 and failing_after 0 by the sampled method. Not measured: the one-account (picker) and no-client states, hover previews and dialogs; this render is the client-picked all-accounts state on a synthetic fixture."
+}
+```
+
+## DSGN_IRPTV1-D2-W63-S1 -- IV-e-115: the producer's contract fixtures, and the page's copies and fixtures derived from them, send a vendor section with section_type annualized_return and units DECIMAL_FRACTION, which the producer's extractor cannot send
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W63-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~63",
+  "surfaced_at": "2026-10-11T20:04:00Z",
+  "one_line": "IV-e-115: the producer's contract fixtures, and the page's copies and fixtures derived from them, send a vendor section with section_type annualized_return and units DECIMAL_FRACTION, which the producer's extractor cannot send",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisReport.valid.json:26-41 and AnalysisReport.v2.ycharts.valid.json:27-42: section_type annualized_return, units DECIMAL_FRACTION (read, not edited)",
+      "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py:707 section_type = the census code, :709 units = the census unit token (count, date, enum, number, pct, price, ratio, score, text, usd_billions, years), :777 'chart'",
+      "portal fixtures/wire/AnalysisReport.valid.json, 9 fixtures/smoke JSONs, 5 fixtures/fe-s-15 job JSONs and several __tests__/*/fixtures JSONs carry section_type annualized_return (Grep of annualized_return over src/pages/InvestorReporting; the exact file count was not taken)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IV-e-115 item 4: the page's own vendor-report fixtures that send a token the producer never sends are changed to real tokens and codes; the producer's contract fixtures are read, never edited, and a producer fixture that sends a token its code cannot is a row for IRPT_BCKEND.",
+  "world_is": "The producer's contract fixtures do send DECIMAL_FRACTION and annualized_return for a vendor section. The page's fixtures/wire copy and the generated smoke and fe-s-15 fixtures carry the same section; they are written by gen-corpus.ts and gen-fixtures.ts from that copy, so a hand edit would be undone by the next regeneration and the copy is the consumer's mirror of the producer's file. This cell changed the hand-written vendor fixtures in three tests (iv-e-101, iv-e-105, iv-e-106) and a new fixture in this worker's folder; it did not change the copy or the generated files. Their vendor section still prints through the earlier upper-case map (percent) and the code prints itself, so nothing that passed fails.",
+  "notes": "For IRPT_BCKEND: whether the producer's contract fixtures should carry a real census code and token. After that, the portal's wire copy and its generators would follow in a later cell."
+}
+```
+
+## DSGN_IRPTV1-D2-W63-S2 -- IV-e-115: a vendor section is one card per field row and the wire carries no field name, so several cards of one section read the same census title and Label
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W63-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~63",
+  "surfaced_at": "2026-10-11T20:04:30Z",
+  "one_line": "IV-e-115: a vendor section is one card per field row and the wire carries no field name, so several cards of one section read the same census title and Label",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~63/vendor-report.png: two cards read '2. Key Stats' with Label 'Key Stats' (values 0.9 and 12) and four cards read '5. Fundamentals'",
+      "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py:705-707: each scalar row is one section with section_id '<code>.<field slug>.c<n>' and section_type = the code; the field name is only inside section_id",
+      "portal contracts/adapt.ts adaptAnalysisSections maps every wire row to one card; its title and Label are now the census name (vendorSectionTitle)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IV-e-115 item 2: the card's title and Label for a vendor section read the census name for its code.",
+  "world_is": "Done as written. Because the producer emits one section per census field row under the same code, an opened report shows the same census title and Label on several cards in a row, and the card does not say which field (for example Number of Holdings or Weighted Avg PE) its value is. The field name exists only inside section_id (the slug) and is not a wire member of its own. Not changed here: a field name is not a census section name and the order does not name one.",
+  "notes": "Not investigated. A later cell could decide whether the page may print the field from section_id; it is the CTO's to rule."
+}
+```
+
+## DSGN_IRPTV1-D2-W64-S1 -- IV-e-116: the earlier iv-e-115 test asserted the vendor Label cell, which this cell removes, so its helper and four expectations were edited
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W64-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~64",
+  "surfaced_at": "2026-10-11T21:24:00Z",
+  "one_line": "IV-e-116: the earlier iv-e-115 test asserted the vendor Label cell, which this cell removes, so its helper and four expectations were edited",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-115.vendor-section-names-units.test.tsx: base run 1186 pass; after the product change arms (c) and (d) failed (Expected 'Key Stats', Received '1.5'; Expected 'percent', Received 'not stated') because the helper read cells[0] as the Label and cells[2] as the Unit",
+      "portal commit 762ba2b8: the helper reads the Label cell only when the Label header is present and the Unit from its own place; the four vendor Label expectations 'Key Stats', 'S99', 'Asset Allocation', 'source_chart_representation' become '' (the heading still asserts the same words)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IV-e-116 names the new test and the product change; it does not name the earlier IV-e-115 test.",
+  "world_is": "Done as written for the cell. The earlier test's vendor Label expectations were true of the page before this cell and are false after it by design, so they were updated to the new reading, in portal/src/pages/InvestorReporting/ (inside the grant). The title assertions of those arms were kept, and the Opal arm (e) was not touched and still passes.",
+  "notes": "None. The reviewer may read the iv-e-115 diff in 762ba2b8."
+}
+```
+
+## DSGN_IRPTV1-D2-W64-S2 -- IV-e-116: smoke-classification control test timed out once (19.9s against a 5s limit) in one of four whole-scope runs and passed in the others
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W64-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~64",
+  "surfaced_at": "2026-10-11T21:24:00Z",
+  "one_line": "IV-e-116: smoke-classification control test timed out once (19.9s against a 5s limit) in one of four whole-scope runs and passed in the others",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~64/after1_suite.txt: fe-s-66 smoke-classification 'THE CONTROL: a seeded unclassified fixture, in a temp copy of the directory' failed with 'this test timed out after 5000ms' (19878.85ms); the same test passed in the base run (base_suite.txt) and in after_suite.txt",
+      "the fe-s-66 folder alone, run with the iv-e-115/116 tests: 13 pass 0 fail"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A whole-scope run of src/pages/InvestorReporting has 0 failing tests (the order's base: 1186 pass, 27 skip, 0 fail).",
+  "world_is": "One of four whole-scope runs showed this failure; it copies a directory to a temp folder and timed out at 5000ms while the machine was busy. It does not touch NativeSections. The base run and the final run show 0 fail; the other run's two failures were the iv-e-115 arms (row W64-S1). Not investigated further.",
+  "notes": "A timing limit, not a product fact. suite_after in the record uses the run with 0 fail (after_suite.txt)."
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W65-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~65",
+  "surfaced_at": "2026-10-11T22:33:00Z",
+  "one_line": "IV-e-117: two whole-scope tests (iv-e-26 wire-regen, iv-e-98 generators-drift) FAIL at the base ad774c6f9e: the workspace contract AnalysisSubmissionRequest has commentary_requested that the portal wire file lacks; IV117-AC1 asks suite_after fail 0",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~65/base_suite.txt (before any edit): 1188 pass, 27 skip, 2 fail; after_suite.txt (after my commit): 1189 pass, 27 skip, 2 fail; the same two tests both times (IVE26-AC3 gen-wire regeneration idempotent; IVE98 wire folder is generator output)",
+      "iv-e-98 prints: WIRE FOLDER DRIFT: 1 of 28 file(s) differ -- AnalysisSubmissionRequest.ts. A temporary generator run (no file written to the tree) differs from portal/src/pages/InvestorReporting/contracts/wire/AnalysisSubmissionRequest.ts at line 5 (Source sha256 1052343f... generated vs a6f224cd... committed) and lines 23-25 (generated adds 'readonly commentary_requested?: boolean')",
+      "Neither failing test touches a Holdings file; my change adds one passing test and no new failing id"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A whole-scope run of src/pages/InvestorReporting has 0 failing tests at the order's base (IV117-AC1 requires suite_after.fail 0).",
+  "world_is": "The base already has 2 failing tests: the workspace contract the generator reads carries commentary_requested on AnalysisSubmissionRequest and the committed wire file does not. The one command that clears them (bun run src/pages/InvestorReporting/__tests__/fe-s-13/gen-all.ts) rewrites contracts/wire/AnalysisSubmissionRequest.ts, a file outside the Holdings folder, which IV117-AC1 forbids in product_files_changed; the order's refusal clause says report, never repair by a route the order did not name. The record carries suite_after fail 2 as measured, so IV117-AC1 reads FAIL.",
+  "notes": "A regeneration is a one-file wire change the CTO or the issuer may order; no other cell of this order depends on it."
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W65-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~65",
+  "surfaced_at": "2026-10-11T22:34:00Z",
+  "one_line": "IV-e-117: AllocationBars.tsx calls PanelFooter but HoldingsTab never renders it (no import outside tests); its footer was left on the band",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep for '<AllocationBars|import .*AllocationBars' over portal/src excluding __tests__: no match; HoldingsTab.tsx imports only HoldingsTreemap and SecurityList (lines 109-110) and renders them at 487-488"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 1: three files call PanelFooter on the Holdings tab (SecurityList, HoldingsTreemap, AllocationBars); change every one the tab can render.",
+  "world_is": "Two of the three render (Treemap line 620, SecurityList line 623, both at rest in one view); AllocationBars (line 305) is dead code on the tab, so it was not changed. If it is ever mounted its footer is on the band inside a nested (white) panel.",
+  "notes": "Changing it would be a one-word edit in the same folder if the issuer wants it."
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W65-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~65",
+  "surfaced_at": "2026-10-11T22:47:00Z",
+  "one_line": "IV-e-117: AMENDMENT 1 changed the suite clause to no new failure over the measured base; IV117-AC1 now passes; resolves S1 for this order",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AMENDMENT 1 @497d8776e5 in the order file; p29_round29.py . IV117-AC1 prints 'IV117-AC1 PASS'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IV117-AC1 required suite_after.fail 0 (row DSGN_IRPTV1-D2-W65-S1 filed BLOCKING for it).",
+  "world_is": "AMENDMENT 1 @497d8776e5 changed the suite clause to no new failure over the measured base; IV117-AC1 now passes. The two base failures (iv-e-26 IVE26-AC3, iv-e-98 IVE98) remain and belong to whoever regenerates the portal wire file after IRPT_BCKEND IB-pr-455 added commentary_requested to the contract. This resolves S1 for this order.",
+  "notes": "No action by this order; the wire regeneration is outside its grant."
+}
+```
