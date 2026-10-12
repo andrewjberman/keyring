@@ -1,0 +1,360 @@
+{
+  "claim": "measured: read-only, 2026-10-12, the cold and warm walls and the per-date rebuilt Unclassified from the single C_06 measurement process started 2026-10-12T11:19:31Z (cost_run.log), reused because each window partition's current version carries LastModified 2026-10-12T04:16Z, before that start, so no later version exists; the partition versions read now by head-object were: 2026-09-25 1D049GQcZvGT8vIJ6xk4VSA9pfdLaGGA LastModified 2026-10-12T04:16:42Z; 2026-09-26 HKxK__svUhS4pkKnXmGgI6bjImbjW3CW LastModified 2026-10-12T04:16:44Z; 2026-09-27 e4jmuvGsVBxwoxVNSgRlmGMj_6KUINl9 LastModified 2026-10-12T04:16:44Z; 2026-09-28 aUczy_GZLyKy1os8xEB5HnJ6R5Nq.hMB LastModified 2026-10-12T04:16:42Z; 2026-09-29 JGSbd.d1Q0LGwvrpHks_G.pyZ1TLDerQ LastModified 2026-10-12T04:16:42Z; 2026-09-30 KEC8AAY.zQkYF63MZNyUe69rksDlA1yJ LastModified 2026-10-12T04:16:42Z; 2026-10-01 bMeo9FhEM0koh_Q2p8WTxDXHV9.Yl0xZ LastModified 2026-10-12T04:16:42Z; 2026-10-02 QuXvojy2j3zwQEEcPyIa05U4XM1tkQTJ LastModified 2026-10-12T04:16:42Z; 2026-10-03 PBAO3hflTpwVjAgjOw5XwfUEHiDFDN9w LastModified 2026-10-12T04:16:44Z; 2026-10-04 lNPGIvvfPVzPGnpBSpPw2jtUevJ.7J.J LastModified 2026-10-12T04:16:44Z; 2026-10-05 fP9bYPkhVnRmHmZPPEH6kOYEuzF8JhQX LastModified 2026-10-12T04:16:42Z; 2026-10-06 tJefBMGiu9pJAanSnPSUyEhQeJkEdjzv LastModified 2026-10-12T04:16:42Z; 2026-10-07 Ik3oKy8oBvPgIMbcfwL9kndXW24SCoWw LastModified 2026-10-12T04:16:42Z; 2026-10-08 esV2XTz29Dd6jmKYRda23yynL_qSUYEw LastModified 2026-10-12T04:16:42Z; 2026-10-09 DY7h_n97HK6oypextGdn38ietQKp16in LastModified 2026-10-12T04:16:42Z; the served firm figure is D_04 _firm_top_level_mix's rule (total minus the CANONICAL_MIX_CLASSES present) on gold/views/mix_daily_summary.json VersionId VrrTn2RrESHBImlLOMHQbNP6Fvzi9NZD LastModified 2026-10-11T05:23:28Z; peak_mb, the relationship scan, keys, bytes, orphans and gap were computed completed 2026-10-12T11:51:57Z from the same pickled re-derive (no S3 write); of the 15 window dates 10 carry firm[date].unclassified (2026-09-30 to 2026-10-09), and on those dates the key and the D_04 remainder agree to the cent on 0 date(s) (differences, key minus remainder, in served_key_minus_remainder: {\"2026-09-30\": 96.2, \"2026-10-01\": -7.87, \"2026-10-02\": -184.61, \"2026-10-03\": -6480424.81, \"2026-10-04\": -6488756.24, \"2026-10-05\": -6502294.55, \"2026-10-06\": 4.71, \"2026-10-07\": -128.06, \"2026-10-08\": 128.57, \"2026-10-09\": 66.73}).",
+  "read_only": true,
+  "producer_rule": {
+    "source_file": "data/black_diamond/scripts/gold/gold_dispatch.sh",
+    "source_line": 99,
+    "force_recent_days": 14,
+    "anchor_rule": "B_00 (data/black_diamond/scripts/gold/B_00.canonical_holdings.py): the default is 0 (:1032); when N > 0 the anchor is the newest cube date (max of the partition dates it lists, :1124), cutoff = anchor minus N calendar days (:1125), and a date d is kept when d >= cutoff (inclusive, :1126-1127); the kept dates are exempt from the watermark skip (:1130). The dispatcher line passes N through the CATALOG (gold_dispatch.sh:99).",
+    "runtime_source": "s3://opal-data-bd/code/gold/gold_dispatch.sh (head-object VersionId JTxOlFbqGVj9SOajf2YKlMVo.E3Sv35K, LastModified 2026-10-12T06:22:09Z; the get is byte-identical, sha256 ed19181c8f34781f6bfb84c4e29f7f6424ab784a78293f865b13705f03a40654, to the HEAD file data/black_diamond/scripts/gold/gold_dispatch.sh). The runner materializes code/gold/ with sync_scripts (gold_dispatch.sh:672-674, aws s3 sync s3://$BD_S3_BUCKET/code/gold/ into SCRIPTS, which is /tmp/gold_layer_scripts at :78), called before the runs at :481 and :540; so the dispatcher sits flat beside C_06 when C_06 runs.",
+    "readable_at_runtime": true
+  },
+  "window": {
+    "anchor_date": "2026-10-09",
+    "cutoff_date": "2026-09-25",
+    "dates": [
+      "2026-09-25",
+      "2026-09-26",
+      "2026-09-27",
+      "2026-09-28",
+      "2026-09-29",
+      "2026-09-30",
+      "2026-10-01",
+      "2026-10-02",
+      "2026-10-03",
+      "2026-10-04",
+      "2026-10-05",
+      "2026-10-06",
+      "2026-10-07",
+      "2026-10-08",
+      "2026-10-09"
+    ],
+    "partitions_listed": 2474,
+    "partition_listing": "gold/canonical/holdings/ via C_06 _list_positions_cube_keys (paginated; CLI count of the same prefix = 2474)"
+  },
+  "cost": {
+    "dates_rederived": 15,
+    "cold_wall_seconds": 735.05,
+    "warm_wall_seconds": 631.87,
+    "peak_mb": 635.578125,
+    "relationships_rewritten": 3274,
+    "keys_written": 13096,
+    "bytes_written": 8870708106,
+    "instrument": "Measured from dell1 (the Windows 11 laptop seat, Python 3.14.7, pandas 3.0.6, boto3 1.43.108; C:/dev/wk-secclass-86), reading S3 bucket opal-data-bd over the public internet; this is a measurement from this seat, not from the EC2 runner in us-east-1, so the runner's own wall time is not measured here. Each process_date reads its partition from S3 per date (the build's bulk cube_cache preload is not used; the order names process_date per date). Cold = one process: load_static_tables plus process_date over the 15 window dates in ascending order; warm = a second process_date pass over the same dates in the same process with the static tables already loaded. peak_mb = process peak working set (psutil peak_wset) at the end of the whole measurement process, including the relationship JSON scan. Per-date reads: each process_date read its partition from S3 (the walls are per-date S3 reads, accepted per Amendment 1 item 3 of the order; the build's bulk cube_cache preload is not on this path). peak_mb was measured in the scan process (pickled re-derive loaded, then the relationship scan), not in the derive process, whose peak was not recorded.",
+    "added_budget_seconds": 1800,
+    "fits": true,
+    "largest_n_that_fits": 15,
+    "static_load_seconds": 11.07,
+    "cold_walls_by_date": {
+      "2026-09-25": 132.18,
+      "2026-09-26": 42.79,
+      "2026-09-27": 39.55,
+      "2026-09-28": 42.08,
+      "2026-09-29": 44.24,
+      "2026-09-30": 42.71,
+      "2026-10-01": 42.05,
+      "2026-10-02": 41.01,
+      "2026-10-03": 42.96,
+      "2026-10-04": 45.32,
+      "2026-10-05": 44.16,
+      "2026-10-06": 41.56,
+      "2026-10-07": 41.56,
+      "2026-10-08": 41.09,
+      "2026-10-09": 40.73
+    },
+    "warm_walls_by_date": {
+      "2026-09-25": 39.87,
+      "2026-09-26": 43.87,
+      "2026-09-27": 43.82,
+      "2026-09-28": 40.6,
+      "2026-09-29": 41.48,
+      "2026-09-30": 41.64,
+      "2026-10-01": 41.72,
+      "2026-10-02": 42.16,
+      "2026-10-03": 43.36,
+      "2026-10-04": 44.37,
+      "2026-10-05": 42.11,
+      "2026-10-06": 42.85,
+      "2026-10-07": 42.73,
+      "2026-10-08": 40.97,
+      "2026-10-09": 40.34
+    },
+    "cold_vs_warm_identical": true,
+    "relationship_json_keys_listed": 3793,
+    "relationship_json_scan_seconds": 137.88861417770386
+  },
+  "per_date": [
+    {
+      "date": "2026-09-25",
+      "served_unclassified": 42.49726891517639,
+      "rebuilt_unclassified": 10153.32657292077,
+      "delta_unclassified": 10110.829304005594,
+      "relationships_stored_not_in_partition": 10,
+      "relationships_in_partition_not_stored": 18,
+      "relationships_rederived": 3069,
+      "cold_wall_seconds": 132.18,
+      "warm_wall_seconds": 39.87,
+      "served_key_unclassified": null,
+      "served_key_minus_remainder": null,
+      "served_line_in_D04_rule": true
+    },
+    {
+      "date": "2026-09-26",
+      "served_unclassified": 24.937520742416382,
+      "rebuilt_unclassified": 10142.727308284708,
+      "delta_unclassified": 10117.789787542291,
+      "relationships_stored_not_in_partition": 10,
+      "relationships_in_partition_not_stored": 172,
+      "relationships_rederived": 3069,
+      "cold_wall_seconds": 42.79,
+      "warm_wall_seconds": 43.87,
+      "served_key_unclassified": null,
+      "served_key_minus_remainder": null,
+      "served_line_in_D04_rule": true
+    },
+    {
+      "date": "2026-09-27",
+      "served_unclassified": 21.855225563049316,
+      "rebuilt_unclassified": 10132.104260687527,
+      "delta_unclassified": 10110.249035124478,
+      "relationships_stored_not_in_partition": 10,
+      "relationships_in_partition_not_stored": 172,
+      "relationships_rederived": 3069,
+      "cold_wall_seconds": 39.55,
+      "warm_wall_seconds": 43.82,
+      "served_key_unclassified": null,
+      "served_key_minus_remainder": null,
+      "served_line_in_D04_rule": true
+    },
+    {
+      "date": "2026-09-28",
+      "served_unclassified": 73.1947672367096,
+      "rebuilt_unclassified": 10121.45743012923,
+      "delta_unclassified": 10048.26266289252,
+      "relationships_stored_not_in_partition": 9,
+      "relationships_in_partition_not_stored": 205,
+      "relationships_rederived": 3229,
+      "cold_wall_seconds": 42.08,
+      "warm_wall_seconds": 40.6,
+      "served_key_unclassified": null,
+      "served_key_minus_remainder": null,
+      "served_line_in_D04_rule": true
+    },
+    {
+      "date": "2026-09-29",
+      "served_unclassified": -42.043442487716675,
+      "rebuilt_unclassified": 10110.820680085844,
+      "delta_unclassified": 10152.864122573561,
+      "relationships_stored_not_in_partition": 10,
+      "relationships_in_partition_not_stored": 68,
+      "relationships_rederived": 3236,
+      "cold_wall_seconds": 44.24,
+      "warm_wall_seconds": 41.48,
+      "served_key_unclassified": null,
+      "served_key_minus_remainder": null,
+      "served_line_in_D04_rule": true
+    },
+    {
+      "date": "2026-09-30",
+      "served_unclassified": 76259877.65466952,
+      "rebuilt_unclassified": 53010.445702642115,
+      "delta_unclassified": -76206867.20896688,
+      "relationships_stored_not_in_partition": 9,
+      "relationships_in_partition_not_stored": 62,
+      "relationships_rederived": 3242,
+      "cold_wall_seconds": 42.71,
+      "warm_wall_seconds": 41.64,
+      "served_key_unclassified": 76259973.8576987,
+      "served_key_minus_remainder": 96.20302917063236,
+      "served_line_in_D04_rule": true
+    },
+    {
+      "date": "2026-10-01",
+      "served_unclassified": 75964048.04043388,
+      "rebuilt_unclassified": 43081.19500154226,
+      "delta_unclassified": -75920966.84543234,
+      "relationships_stored_not_in_partition": 14,
+      "relationships_in_partition_not_stored": 67,
+      "relationships_rederived": 3246,
+      "cold_wall_seconds": 42.05,
+      "warm_wall_seconds": 41.72,
+      "served_key_unclassified": 75964040.1660719,
+      "served_key_minus_remainder": -7.874361976981163,
+      "served_line_in_D04_rule": true
+    },
+    {
+      "date": "2026-10-02",
+      "served_unclassified": 150433862.60012865,
+      "rebuilt_unclassified": 1924.3363550096499,
+      "delta_unclassified": -150431938.26377365,
+      "relationships_stored_not_in_partition": 14,
+      "relationships_in_partition_not_stored": 25,
+      "relationships_rederived": 3086,
+      "cold_wall_seconds": 41.01,
+      "warm_wall_seconds": 42.16,
+      "served_key_unclassified": 150433677.99180508,
+      "served_key_minus_remainder": -184.60832357406616,
+      "served_line_in_D04_rule": true
+    },
+    {
+      "date": "2026-10-03",
+      "served_unclassified": 152418257.83675718,
+      "rebuilt_unclassified": 1927.0990273003606,
+      "delta_unclassified": -152416330.73772988,
+      "relationships_stored_not_in_partition": 15,
+      "relationships_in_partition_not_stored": 18,
+      "relationships_rederived": 3086,
+      "cold_wall_seconds": 42.96,
+      "warm_wall_seconds": 43.36,
+      "served_key_unclassified": 145937833.02932778,
+      "served_key_minus_remainder": -6480424.807429403,
+      "served_line_in_D04_rule": true
+    },
+    {
+      "date": "2026-10-04",
+      "served_unclassified": 152995165.8382914,
+      "rebuilt_unclassified": 1929.873072117031,
+      "delta_unclassified": -152993235.9652193,
+      "relationships_stored_not_in_partition": 15,
+      "relationships_in_partition_not_stored": 18,
+      "relationships_rederived": 3086,
+      "cold_wall_seconds": 45.32,
+      "warm_wall_seconds": 44.37,
+      "served_key_unclassified": 146506409.60193124,
+      "served_key_minus_remainder": -6488756.2363601625,
+      "served_line_in_D04_rule": true
+    },
+    {
+      "date": "2026-10-05",
+      "served_unclassified": 148224563.77517366,
+      "rebuilt_unclassified": 0.0,
+      "delta_unclassified": -148224563.77517366,
+      "relationships_stored_not_in_partition": 15,
+      "relationships_in_partition_not_stored": 18,
+      "relationships_rederived": 3251,
+      "cold_wall_seconds": 44.16,
+      "warm_wall_seconds": 42.11,
+      "served_key_unclassified": 141722269.22033972,
+      "served_key_minus_remainder": -6502294.554833949,
+      "served_line_in_D04_rule": true
+    },
+    {
+      "date": "2026-10-06",
+      "served_unclassified": 140161790.56550312,
+      "rebuilt_unclassified": 0.0,
+      "delta_unclassified": -140161790.56550312,
+      "relationships_stored_not_in_partition": 11,
+      "relationships_in_partition_not_stored": 17,
+      "relationships_rederived": 3251,
+      "cold_wall_seconds": 41.56,
+      "warm_wall_seconds": 42.85,
+      "served_key_unclassified": 140161795.27288836,
+      "served_key_minus_remainder": 4.707385241985321,
+      "served_line_in_D04_rule": true
+    },
+    {
+      "date": "2026-10-07",
+      "served_unclassified": 998762.8466963768,
+      "rebuilt_unclassified": 32455.33648219881,
+      "delta_unclassified": -966307.510214178,
+      "relationships_stored_not_in_partition": 8,
+      "relationships_in_partition_not_stored": 16,
+      "relationships_rederived": 3255,
+      "cold_wall_seconds": 41.56,
+      "warm_wall_seconds": 42.73,
+      "served_key_unclassified": 998634.7827655333,
+      "served_key_minus_remainder": -128.0639308434911,
+      "served_line_in_D04_rule": true
+    },
+    {
+      "date": "2026-10-08",
+      "served_unclassified": 972621.3980307579,
+      "rebuilt_unclassified": 8030.405820980989,
+      "delta_unclassified": -964590.9922097769,
+      "relationships_stored_not_in_partition": 1,
+      "relationships_in_partition_not_stored": 0,
+      "relationships_rederived": 3261,
+      "cold_wall_seconds": 41.09,
+      "warm_wall_seconds": 40.97,
+      "served_key_unclassified": 972749.9717244315,
+      "served_key_minus_remainder": 128.57369367359206,
+      "served_line_in_D04_rule": true
+    },
+    {
+      "date": "2026-10-09",
+      "served_unclassified": 1846332.727845192,
+      "rebuilt_unclassified": 883483.045914095,
+      "delta_unclassified": -962849.681931097,
+      "relationships_stored_not_in_partition": 0,
+      "relationships_in_partition_not_stored": 0,
+      "relationships_rederived": 3103,
+      "cold_wall_seconds": 40.73,
+      "warm_wall_seconds": 40.34,
+      "served_key_unclassified": 1846399.4627835276,
+      "served_key_minus_remainder": 66.73493833560497,
+      "served_line_in_D04_rule": true
+    }
+  ],
+  "gap_if_truncated": [
+    {
+      "newest_n": 1,
+      "uncorrected_abs_unclassified_usd": 898337131.8591349
+    },
+    {
+      "newest_n": 2,
+      "uncorrected_abs_unclassified_usd": 897372540.8669251
+    },
+    {
+      "newest_n": 3,
+      "uncorrected_abs_unclassified_usd": 896406233.3567109
+    },
+    {
+      "newest_n": 4,
+      "uncorrected_abs_unclassified_usd": 756244442.7912078
+    },
+    {
+      "newest_n": 5,
+      "uncorrected_abs_unclassified_usd": 608019879.0160341
+    },
+    {
+      "newest_n": 6,
+      "uncorrected_abs_unclassified_usd": 455026643.05081487
+    },
+    {
+      "newest_n": 7,
+      "uncorrected_abs_unclassified_usd": 302610312.313085
+    },
+    {
+      "newest_n": 8,
+      "uncorrected_abs_unclassified_usd": 152178374.04931137
+    },
+    {
+      "newest_n": 9,
+      "uncorrected_abs_unclassified_usd": 76257407.20387901
+    },
+    {
+      "newest_n": 10,
+      "uncorrected_abs_unclassified_usd": 50539.99491213844
+    },
+    {
+      "newest_n": 11,
+      "uncorrected_abs_unclassified_usd": 40387.130789564886
+    },
+    {
+      "newest_n": 12,
+      "uncorrected_abs_unclassified_usd": 30338.868126672365
+    },
+    {
+      "newest_n": 13,
+      "uncorrected_abs_unclassified_usd": 20228.619091547887
+    },
+    {
+      "newest_n": 14,
+      "uncorrected_abs_unclassified_usd": 10110.829304005594
+    },
+    {
+      "newest_n": 15,
+      "uncorrected_abs_unclassified_usd": 0
+    }
+  ]
+}
