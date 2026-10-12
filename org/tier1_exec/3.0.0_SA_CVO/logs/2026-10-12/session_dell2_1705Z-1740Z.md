@@ -69,3 +69,11 @@ DSGN_IRPTV1 rounds 24-30 compile and slug: OUTSIDE fc10 addendum 1 item 3 (close
 recut them). OWNER: 3.0.0_SA_CVO. UN-PARKS ON: the laptop 1.0.0_SA_CTO widens the bound (asked via 1.0.0_SA_CTO~DELL2, this turn).
 Carrier beside it: deliverables/DSGN_IRPTV1_REMEDIATION_ROUND_23_HELD_20261011.md. Undispositioned rows per the COO: D2-W63-S2 to
 D2-W67-S1 (W65-S1 BLOCKING), D2-S25, D2-S26.
+
+## UN-PARKED and done, 21:54Z to 22:01Z (msg 6612, fc10 addendum 2: L8-L10 of all six dell2 projects)
+
+| item | result | commit |
+|---|---|---|
+| DSGN_IRPTV1 rounds 24-30 | ADJUDICATION_v19 + REMEDIATION_v10: 20 dismissed, 8 OPEN (2 BLOCKING), ARMED 0; the round-23 held file removed. My read: IV-e-118 on portal DEV, not PROD. Slug sent | 1c481315bb |
+
+Checked and not a finding: portal origin/DEV at 183860ba (IB-pr-483) was landed by 0.0.0_AB_MSTR~DELL2 on the CTO's approval (receipt in the CTO inbox, 21:15Z).

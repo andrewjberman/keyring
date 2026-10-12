@@ -3968,3 +3968,164 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W53-S11 -- the cell names reports/submission.py and reports/acceptance.py; both live under ycharts/generate/
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W53-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-12T21:44:18Z",
+  "one_line": "AR-y-166: the cell's read-first list names reports/submission.py and reports/acceptance.py; at base 41f8c03511 neither exists under reports/. The submission and acceptance modules are ycharts/generate/submission.py and ycharts/generate/acceptance.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/ at 41f8c03511 holds no submission.py and no acceptance.py (directory listing and test -e, this worker)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py at 41f8c03511, validate_public_request lines 47-93 and TICKET_ID at line 18",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py at 41f8c03511, accept lines 90-143 and ticket_id stored at lines 120-121"
+    ]
+  },
+  "spec_asserts": "IRPT_ANLREQ.TO-AR-y-166 cell, read-first list: infra/aws/lambda/investor-reporting/reports/submission.py and reports/acceptance.py.",
+  "world_is": "Both modules live under ycharts/generate/. The cell's two paths do not resolve; the build read the ycharts/generate copies. The issuer should correct the read-first list.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_ANLREQ-D2-W53-S12 -- event (ii) cannot be built from the upload id; the submission needs input_id, which the deferred template lane issues only at NORMALIZED
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W53-S12",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-12T21:44:18Z",
+  "one_line": "AR-y-166: the cell builds event (ii) from the upload id. The submission door needs input_id, a NORMALIZED input. On the template lane the upload answers RESOLVING with input_id null until the resident finishes, so the run stops there and the submission waits on the resident.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py at 41f8c03511, lines 78-80 (ticket_id admitted only with an input_id basis) and 84-88 (EXACTLY_ONE_INPUT_BASIS)",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py at 41f8c03511, lines 311-312 (template lane defers when the resolution port is composed), 349-350 and 451-452 (input_id minted at NORMALIZED), 391-393 (RESOLVING answer carries input_id None)",
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py at 41f8c03511, lines 419-421 (compose_upload wires deferred_upload_service with the send port)"
+    ]
+  },
+  "spec_asserts": "IRPT_ANLREQ.TO-AR-y-166 cell step 4: invoke for event (i), read the upload id from the answer, build event (ii) from it, invoke for event (ii).",
+  "world_is": "The upload id is not an input id. The script stops at RESOLVING and prints the state, and a later run for the same ticket reads the same upload (the token is fixed per ticket). The script does not loop. A later executor may need the resident to finish before event (ii) can be sent.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_ANLREQ-D2-W53-S13 -- the on-behalf upload needs an advisor_email the cell does not name; the script adds a read-only advisor opaque label
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W53-S13",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-12T21:44:18Z",
+  "one_line": "AR-y-166: the door refuses an on-behalf upload that names no advisor when the filer's allowedFirmIds lists the tenant, and the cell names no advisor. The script takes --advisor-opaque (an adv- label, resolved by a read of the users table at run time) and names the advisor email in event (i).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py at 41f8c03511, lines 1063-1067 (an on-behalf upload must name the firm advisor when allowedFirmIds lists the tenant)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py at 41f8c03511, lines 1069-1098 (_advisor_owner: partner profile at the tenant and an active user row at the tenant)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/deliverables/irpt_y75/y75_x1_arms.py at 41f8c03511, line 157 and the advisor_email query use in event() at lines 74-76"
+    ]
+  },
+  "spec_asserts": "IRPT_ANLREQ.TO-AR-y-166 cell step 2(i): the on-behalf template upload by the filer; no advisor is named. Step 1 lists the arguments as --tenant, --ticket, --plan, --self-test, --run.",
+  "world_is": "Which cottonwood advisor to name is a live fact that no code path states. The script's argument list is extended by --advisor-opaque, required for --run only; it reads the users table and prints no address. The issuer should confirm the advisor to use.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_ANLREQ-D2-W53-S14 -- the synthetic filer's users row, as the y75 script writes it, lists only 49financial; the run stops unless the live row names cottonwood
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W53-S14",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-12T21:44:18Z",
+  "one_line": "AR-y-166: the filer shape the y75 script writes lists allowedFirmIds [49financial]. The run's admission check stops unless the live row names cottonwood, and this order writes no users row, so the row's owner must name cottonwood before any run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/deliverables/irpt_y75/y75_x1_arms.py at 41f8c03511, put_filer lines 42-57 (allowedFirmIds [49financial]; the put_item call at line 54)",
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py at 41f8c03511, lines 57-76 (allowedFirmIds read from the subject's profile row)",
+      "live users row not read: no live call in this order"
+    ]
+  },
+  "spec_asserts": "IRPT_ANLREQ.TO-AR-y-166 cell step 4: read the filer's users row and stop if it does not list or admit cottonwood; cell: no new identity is made and no users row is written.",
+  "world_is": "The code-known shape does not admit cottonwood. Whether the live row was written with this shape and not changed since was not read. The next executor reads the live row first; the script stops at the admission check and does not write.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_ANLREQ-D2-W53-S15 -- routes.json says the upload route answers NOT_READY until the composition exists; the installed route composes it, and UploadNotComposed has no caller
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W53-S15",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-12T21:44:18Z",
+  "one_line": "AR-y-166: routes.json's note on POST analysis/inputs says the route answers NOT_READY until the upload composition exists. The installed route composes it (compose_upload); the named-refusing UploadNotComposed has no caller. Whether the deployed bytes match the source was not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json at 41f8c03511, line 188 (the route note)",
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py at 41f8c03511, lines 443-446 (upload routed through compose_upload) and 380-422 (compose_upload wires deferred_upload_service)",
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py at 41f8c03511, lines 364-377 (UploadNotComposed) and a repository-wide grep excluding tests: no UploadNotComposed( call site"
+    ]
+  },
+  "spec_asserts": "docs/contracts/investor-reporting/v1/routes.json, POST analysis/inputs note: a well-formed upload answers NOT_READY / UploadServiceRequired until the upload composition exists.",
+  "world_is": "From source at 41f8c03511 the installed upload route answers RESOLVING or NORMALIZED, not NOT_READY. The route note is stale against the source. The deployed bytes were not read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_ANLREQ-D2-W53-S16 -- AMENDMENT 1 names count_f2.py as the source of the reserved-domain rule; that file is not in the worktree, so the rule was taken from the order text
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W53-S16",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-12T21:57:47Z",
+  "one_line": "AR-y-166 AMENDMENT 1: the order says the reserved-domain rule is the one count_f2.py used, but no count_f2.py is in the worktree. The guard implements the rule as the amendment states it (domain equal to example.com, example.org or example.net, or ending .invalid, .test or .example).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree tracked listing (git ls-files | grep -i count_f2) at ee9616439f: no path returned",
+      "Glob count_f2*.py under org/missions/D9/IRPT/IRPT_ANLREQ in the worktree: no files found",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r16/submit_synthetic_request.py at ee9616439f, reserved_domain (line 109), implements the amendment text; the rule's sample results are in the build session, not in a file"
+    ]
+  },
+  "spec_asserts": "IRPT_ANLREQ.TO-AR-y-166 AMENDMENT 1 point 1: the reserved-domain rule is the rule count_f2.py used.",
+  "world_is": "count_f2.py is not present in this worktree at ee9616439f, so the claimed provenance of the rule cannot be checked here. The guard follows the rule as the amendment writes it; whether count_f2.py states the same rule was not read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
