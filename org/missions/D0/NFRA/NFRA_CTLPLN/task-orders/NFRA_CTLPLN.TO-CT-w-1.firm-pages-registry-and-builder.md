@@ -42,20 +42,28 @@ FOUND SOMETHING ODD OFF-TASK? Append ONE row (`spec_asserts` + `world_is`) to `o
 <criterion id="CTw1-AC1" cell_refs="CT-w-1"><invocation>python -m pytest -q lib/tests/test_opal_naming_firm_pages.py</invocation><expect>passed</expect></criterion>
 `CTw1-AC1` -- the new tests pass (T1-T6), including the drift check and the validate() refusals.
 
-<criterion id="CTw1-AC2" cell_refs="CT-w-1"><invocation>python -I lib/opal_naming.py targets</invocation><expect>firm_page_access.py</expect></criterion>
-`CTw1-AC2` -- the target list names the new module (SHIP lambda); `validate` also exits 0 (report its line).
+<criterion id="CTw1-AC2" cell_refs="CT-w-1"><invocation>python -I lib/opal_naming.py targets</invocation><expect>SHIP lambda infra/aws/lambda/portal_data_proxy/firm_page_access.py</expect></criterion>
+`CTw1-AC2` -- the target list names the new module as `SHIP lambda` (AMENDMENT 1); the command exits 0 (report its exit code) and `validate` exits 0 (report its line).
 </proof_of_spec>
 
 <expected_criteria>CTw1-AC1,CTw1-AC2</expected_criteria>
 
 Each invocation runs from the worktree root under `timeout 120`. Write the proof instance to `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~65/NFRA_CTLPLN.TO-CT-w-1.firm-pages-registry-and-builder.proof_of_spec.json`, validate it with `python .tools/proof-of-spec-check.py <instance> CTw1-AC1,CTw1-AC2`, and flip `<status>` to `complete` only when both pass and the instance is VALID. Your queue then continues with `CT-w-2`, handed by the issuer.
 
+<amendment>
+AMENDMENT 1 (issuer 2.0.0_SA_COO~C, 2026-10-12 ~08:5xZ; gate limb: none graded this modification, no new TO file) -- REOPENED on the CTO's ruling of row NFRA_CTLPLN-W65-S1 (1.0.0_SA_CTO msg 108498, option 1). Inherited state: your commits a99d7e584c (generator), 9efa1021ce (registry), 005a093bfa (generated module), 926c0be442 (tests), c981e7b243 (rows), 7e1506b29b (the INVALID proof instance); keep them. What was wrong: `lambda_plane_consumers` (lib/opal_naming.py about line 2788) skips a function's OWN source directory (`if own == target_abs: continue`), so `targets` reads the module UNCLASSIFIED and exits 1. THE CTO'S RULE: the classifier claims a VIEWS target inside a function's own source dir when that function's build lists it in `files` (SHIP lambda, that function the consumer). DO, in this order:
+1. THE CLASSIFIER EDIT IN ITS OWN COMMIT through `.tools/commit-gate.sh`: in `lambda_plane_consumers`, a function whose own source dir holds `t` AND lists its basename in `files` is a consumer of `t` (append it). Change nothing else about the function's rules (a function that holds the file and does NOT list it stays skipped; the existing `bn in files and not os.path.isfile(own)` and the import-hit branches stay). ONE new selftest case, put in your own `lib/tests/test_opal_naming_firm_pages.py` (do NOT edit `lib/tests/test_opal_naming.py`): a generated target inside a function's own dir, listed in that function's build files, classifies SHIP lambda for that function; and its negative arm (held but not listed -> not claimed).
+2. THE SOURCE-MAP ENTRY (moved here from CT-w-2, because the classifier reads it): in `infra/aws/lambda/ci/lambda-source-map.json`, the `opal-portal-data-proxy` entry's `files` list gains `"firm_page_access.py"` after `"session_tracker.py"`. Nothing else in that file changes. Own commit.
+3. CONDITIONS (CTO): `lib/tests/test_opal_naming.py` lines 352 and 408 pass UNCHANGED (run the whole file; print its result); `python -I lib/opal_naming.py targets` exits 0 and names `firm_page_access.py` as `SHIP lambda` with consumer `opal-portal-data-proxy`; the other 17 targets still regenerate byte-identical (print the count, 17 of 17 unchanged apart from the pre-existing CRLF-only and stale-mark drift on the two portal carriers, which are NOT yours, row W65-S2, owner the CTO).
+NEW <paths>: add `infra/aws/lambda/ci/lambda-source-map.json`. The acceptance is CHANGED as below. REWRITE the proof instance and validate it.
+</amendment>
 <decomp_ref>
 <decomp_doc>org/missions/D0/NFRA/NFRA_CTLPLN/decompositions/NFRA_CTLPLN_DECOMP.round8.md</decomp_doc>
 <owned_cells>CT-w-1</owned_cells>
 </decomp_ref>
 
 <paths>
+infra/aws/lambda/ci/lambda-source-map.json
 infra/logic/registry/firm_pages.json
 lib/opal_naming.py
 lib/tests/test_opal_naming_firm_pages.py

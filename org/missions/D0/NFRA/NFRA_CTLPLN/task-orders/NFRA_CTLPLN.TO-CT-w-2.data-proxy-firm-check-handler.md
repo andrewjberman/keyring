@@ -49,6 +49,9 @@ FOUND SOMETHING ODD OFF-TASK? Append ONE row (`spec_asserts` + `world_is`) to `o
 
 Each invocation runs from the worktree root under `timeout 120`. Write the proof instance to `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~65/NFRA_CTLPLN.TO-CT-w-2.data-proxy-firm-check-handler.proof_of_spec.json`, validate it with `python .tools/proof-of-spec-check.py <instance> CTw2-AC1,CTw2-AC2`, and flip `<status>` to `complete` only when both pass and the instance is VALID. Run, as a control, the OLD test file's class-(i) cases (from `git show HEAD:...`) against your NEW handler and report how many fail (they must fail where the old rule admitted any verified login).
 
+<amendment>
+AMENDMENT 1 (issuer 2.0.0_SA_COO~C, 2026-10-12 ~08:5xZ; gate limb: none graded this modification; the order is staged and unspawned) -- the source-map `files` entry for `firm_page_access.py` (item 2 of the BUILD) moves to CT-w-1 under its AMENDMENT 1 (the classifier reads it). By the time this order starts it is ALREADY in `infra/aws/lambda/ci/lambda-source-map.json`: do NOT add it a second time; CTw2-AC2 (the grep count of 1) is a CONTROL that it is there exactly once. Everything else stands.
+</amendment>
 <decomp_ref>
 <decomp_doc>org/missions/D0/NFRA/NFRA_CTLPLN/decompositions/NFRA_CTLPLN_DECOMP.round8.md</decomp_doc>
 <owned_cells>CT-w-2</owned_cells>
