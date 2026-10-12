@@ -59,3 +59,9 @@ leave the build marked `as_traded_close` and unscaled. The CTO amends a signed s
 issuance per round and a re-cut adds no file (round 77's refusal), so the read is folded into `CB-ca-2`, whose cell already reads
 the valuation build's code, as its first item, with one mechanical criterion added (AC3) and its judgment clause extended.
 `CB-ca-4` (the list) carries the cell's second record. No worker had been spawned on either order. No cell id is added.
+
+## AMENDMENT 2 (issuer 2.0.0_SA_COO~C2, 2026-10-12T02:15Z) -- the list cell carries the owning fabric's answer
+
+Cell `CB-ca-1` drained (merge a80a91798d): MDPF_SECHIST is dell1's, read from the tree only. The issuer sent the one ask to
+`0.0.0_AB_MSTR~DELL2` (msg 6323); dell1's answer came back relayed (msg 6334; `org/tier0_exec/0.0.0_AB_MSTR/deliverables/relays/RELAY_DELL1_H1_SECHIST_ANSWER_FOR_C2_20261012T0213Z.md`). `CB-ca-4` quotes it under the cell's record,
+labelled as the owning fabric's measurement. One order modified; no worker had been spawned on it; no cell added.
