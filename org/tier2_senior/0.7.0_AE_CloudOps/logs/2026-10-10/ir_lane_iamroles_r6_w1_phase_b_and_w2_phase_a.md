@@ -672,3 +672,160 @@ by this seat's own July scope decision; the three wildcard grants (`opal-data-*`
 name-based sweep can classify; and `Z-S42`'s own disarm now sits in `cloud-ops` for the issuer to close.
 
 **Push state: LOCAL.** `box/sitez` is integrator-only.
+
+---
+
+# ROUND 9 -- four orders, three complete: a SERVED portal artifact unfrozen after 67 days, and 15 dead ARNs off six roles
+
+## R9.0 WHAT RAN
+
+| order | what | state |
+|---|---|---|
+| `TO-IAM-z-6` | fred-data-ingestion retires its raw-series write to the 404 `opal-market-update` | **complete** @`4729bf8ba0` |
+| `TO-IAM-z-1` | narrow five dead S3 names off four roles, four acts, four pairs | **complete** @`ad42350eca` |
+| `TO-IAM-z-3` | market-overview drops `opal-market-data-v2`'s declaration and its two dead ARNs | **complete** @`3130d03e8f` |
+| `TO-IAM-z-2` | `opal-data-schwab` off `bd-exporter-ec2-role` | **PHASE A** @`fd151c1946`; PHASE B blocked on its pair |
+
+Twelve proofs VALID across rounds 7-9. Four surprise rows filed: `Z-S49`..`Z-S52`.
+
+## R9.1 THE ROUND'S REAL OUTPUT WAS NOT A PERMISSION CHANGE
+
+`s3://opal-data-portal-v2/json/macro/yield_curve_fred.json` had not been written since
+**2026-08-05T23:02:30Z**. The 23:00Z fire on 2026-10-11 wrote it: new VersionId
+`iPk91o5i_rip1lrwK0gxVcCmRzSiKtdO`, 10 of 10 tenors valued, 0 `PRESERVE:` lines. **67 days.**
+
+The chain is the thing worth keeping, because nothing in the original scope would have found it:
+
+1. A dead-grant census (round 8) turned up `opal-market-update` as a 404 name still carrying a write grant.
+2. Asking what the name was **for** found it was not an env var at all but a **code default** --
+   `os.environ.get('S3_BUCKET', 'opal-market-update')` on a function carrying **zero** env keys.
+3. That default made `upload_to_s3` re-raise, which unwound out of `process_frequency` **past** a daily
+   yield-curve fold nobody had connected to it.
+4. The fold was the **only live producer** of a key the portal serves.
+
+Each step was a question about the previous answer, not a wider sweep. The permission cleanup was the
+pretext; the frozen product surface was the finding.
+
+## R9.2 WHAT MOVED IN THE WORLD
+
+Counted from the POST_APPLY totals, not from memory (my first broker summary got this wrong -- see R9.4):
+
+```
+15 dead ARNs removed, across 6 roles and 6 documents
+ 1 inline policy DELETED (FredIngestionLambdaRole/S3Access -- both its ARNs were dead)
+ 5 policies narrowed;  3 whole Sids dropped (SmartXDataReadWrite, SmartXLegacyRead, SchwabBucketReadWrite pending)
+ 4 Terraform declarations removed (market_data_v2) + 4 stale state entries pruned (55 -> 51)
+ 1 Lambda's raw-series write retired;  1 served portal key unfrozen
+ 0 ARNs, actions, statements or Sids ADDED anywhere
+```
+
+All five of z-1's names now read **0 across 357 principals and 652 policy documents**, and
+`opal-market-data-v2` likewise. Every removed ARN named a bucket returning `NoSuchBucket` -- a name any
+AWS account could have claimed and then been read or written by one of our roles.
+
+## R9.3 THE INSTRUMENT FINDINGS
+
+**A name can be dead in one service and live in another.** `opal-data-smartx` is a 404 **S3 bucket** and
+a live **DynamoDB table** (`drift=LIVE-no-DECLARED`). A narrowing driven by the NAME would have deleted
+`smartx-dynamodb-access` and broken the smartx ingestion pipeline. What caught it was classifying every
+census hit instead of counting them: of 12 hits, **10 were DynamoDB** and the 2 S3-ish ones were
+docstrings. The proof that it survived is a byte comparison -- the DynamoDB document is byte-identical to
+its rollback after the apply -- not my intention.
+
+**`terraform fmt` WRITES by default.** `-write=false` disables it; `-check` is what makes it read-only.
+`terraform fmt -diff <file>`, run only to *inspect* formatting, rewrote the file in both my worktree and
+the **shared tree**. Reverted both; the plan re-run afterwards was identical.
+
+**A rollback must be validated against its CONSUMER.** A shape audit found **2 of 13** of this round's
+rollback documents written in the wrapped `get-role-policy` envelope
+(`{RoleName, PolicyName, PolicyDocument}`) rather than the policy document. `put-role-policy` takes the
+document, so the artifact whose only job was to restore a grant could not have restored it. The control I
+had run -- *equal to a fresh re-fetch* -- is satisfied **perfectly** by the wrapped form, because that is
+exactly what the API returns. It validated the file against its producer. Re-captured: 14 of 14 now
+restorable.
+
+**The same wrapped shape produces a correct-sounding verdict from a vacuous read.** Reading one of those
+files, my script found no top-level `Statement`, reported `statements 0 -> 0, ARNs removed 0`, and then
+printed *"the whole document would be empty -> delete-role-policy"*. The conclusion was right and the
+derivation was empty. Re-derived behind a shape guard that refuses a wrapped response and refuses zero
+statements in a live policy.
+
+**An async EventBridge invocation logs no response body**, so there is no `statusCode` line in CloudWatch.
+z-6's AC2 asked for one "as read from the run's own log". I recorded the figure as **DERIVED**, with its
+three premises each a log line, rather than implying a read -- and did not invoke synchronously to
+manufacture a literal, because that would have written the served key the pair reserved to the function's
+own fires.
+
+**`--max-items` appends its pagination token as a second output line** in text mode, so a `$( )` capture of
+`--query logStreams[0].logStreamName` returned the stream name *and* the word `None`, producing a
+malformed name and a `ResourceNotFoundException` that looks exactly like a missing stream. Use `--limit`.
+
+**A sparse worktree that will run an apply needs `lib` and its own agent home folder in the cone.**
+`safe-apply`'s HALT-gate refuses with `unknown-base` / `SERIAL RESOLVES TO NO KNOWN AGENT`, and the LGIC
+naming limb **BLOCKS** on an absent `lib/opal_naming.py`. Both fail **closed** and both say what they
+need. Reading either as "the gate rejected my change" would be wrong, and the HALT-gate's own message is
+the argument for its behaviour: *scanning a nonexistent inbox would PASS while a real `[STOP]` sat unread.*
+I hit this twice; the second time was avoidable.
+
+**A count is not a finding until you name the thing it counted.** The pre-open sentinel union reported
+"1 matching sentinel" in a worktree; naming the file showed it to be z-6's already-CLOSED entry at a stale
+HEAD. The count alone read as a conflicting open deploy.
+
+## R9.4 WHERE I WAS WRONG, AND HOW IT WAS CAUGHT
+
+**A directory pathspec swept four other lanes' files into my commit.** I passed
+`org/critical_paths/.open_deploys/` to `safe-commit`, which tracked four untracked IRPT sentinels
+(`2.0.0_SA_COO~P` x3, `~M` x1) under my author line. The contamination guard cannot catch this -- I named
+the directory. Reported rather than quietly un-tracked; `0.0.0_AB_MSTR~Z` ruled **KEEP**. Every later
+commit enumerated its files.
+
+**My broker summary overstated the round.** I wrote "15 dead ARNs across 5 roles, 2 policies deleted". It
+is **6 roles** and **1** delete -- the second delete is z-2's and has not happened. Caught by counting the
+POST_APPLY rows instead of trusting the figure I had just typed, and corrected in place with the
+correction visible.
+
+**I nearly reported a true document false.** `convert_schwab_uln_to_silver.py` does not read monolith
+bronze, while the `/49-schwab-conv` skill says *all seven converters* do. The skill is right: the seven are
+invoked as `convert_schwab_lots_to_silver.py uln ult rld`, and **that** file is the monolith reader. The
+one I had found is its retired predecessor and says so in its own header. Counting a deprecated script as
+a member of a set is how a correct record gets reported wrong.
+
+**My own classifier labelled the three most important hits worst.** It tested `[Bb]ucket`; the constants
+are `SRC_BUCKET`, `SCHWAB_BUCKET`, `BUCKET`. The counts hold only because every hit is printed and I read
+them. A census that prints its hits survives a broken classifier; one that prints only its classes does not.
+
+**A bad positive control, caught before it mattered**: for one precondition I grepped `SRC_BUCKET` -- a
+substring of the very thing I was testing for absence, so it could not discriminate. Redone with tokens
+that must exist.
+
+## R9.5 STATE AND WHAT IS OWED
+
+Nothing of mine is open: **0 `iamroles` sentinels**, six NEVER-2 entries opened and all six CLOSED
+(`iamroles-r9-fred-retire`, `-narrow-dead-fred-s3access`, `-narrow-dead-workspace-sync`,
+`-narrow-dead-shared-infra`, `-narrow-dead-smartx-pipeline`, `-market-data-v2`). Three orders complete with
+VALID proofs; `TF-debt A7` closed after this seat disowned it in July as not-authorized.
+
+**Owed by me:** `z-2` PHASE B -- `delete-role-policy schwab-bucket-access` on `bd-exporter-ec2-role` --
+blocked on its pair and the issuer's GO. Its precondition is already met (`AC1` reads 0; z-5
+@`7411ca0892`). Note for whoever signs it: **that role is HOT** (`RoleLastUsed 2026-10-12T02:30:42Z`,
+~1h before the read), the only round-9 role that is, so it is the only act with a readable post-change run
+and a real branch B.
+
+**Owed by others:** `Z-S49` (a dead SECRET ARN in a live grant; the dead default surviving in the portal
+submodule's vestigial copy of the FRED handler), `Z-S50` (the served yield curve's `data_as_of` is the
+GENERATION date, not the data's as-of date -- pre-existing, and it stops being inert now that the key
+moves again), `Z-S51` (44 live S3 references to the 404 `opal-data-smartx-v2` across two consumers, plus a
+Terraform module lifecycling that bucket), `Z-S52` (three used-but-retired call paths against
+`opal-data-schwab`). The three wildcard grants (`opal-data-*`, `opal-*`, `opal*`) remain unclassifiable by
+any name-based sweep.
+
+**A thing that went right and should not be invisible.** z-3's untargeted apply reconciled
+`market_update_lambda_role`'s stored `inline_policy` and `managed_policy_arns` to live values **without**
+re-attaching `AmazonS3FullAccess` and `AmazonDynamoDBFullAccess`, which the state still listed and the
+world had already dropped. The reason is THE OMISSION RULE: the declaration omits both attributes. Had it
+named `managed_policy_arns`, an apply whose stated purpose was to *remove* a permission would silently have
+re-widened a production role, behind a summary line reading `0 to add, 1 to change, 0 to destroy`. A
+control only ever observed working is the one people stop believing in, so it is written down.
+
+**Push state: LOCAL** @`fd151c1946` (`ls-remote` read; origin `9892da26df`). `box/sitez` is
+integrator-only.
