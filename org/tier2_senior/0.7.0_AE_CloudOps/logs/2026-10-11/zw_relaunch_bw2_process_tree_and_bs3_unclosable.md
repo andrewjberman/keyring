@@ -264,3 +264,52 @@ exempts nothing, so the reaper would have killed a leg that was working.
 Not messaged to the issuer: ~20 vs ~17.6 min/pair does not change their planning -- step 6 is still
 tomorrow, not today -- and addendum 3's message already said the figure could move and named its sample.
 Leg at 37 of 107, 0 faults.
+
+---
+
+## Addendum 6, 2026-10-12 12:5xZ: HVST-bs-4 step 6 done -- the leg COMPLETED, and all three orders are closed out
+
+```
+PAIRS sa: collected 237 retry 4 gave_up 1 never_started 0 of 242
+```
+
+`never_started 0` is the clause that makes this a completion and not a second stop: every pair was
+attempted. `publishers.sa.stopped` null, checkpoint `stopped` map empty, interrupted false, JOB-EXIT
+rc=0. Ran 32h07m (2026-10-11T04:01:39Z to 2026-10-12T12:08:48Z), 8221 articles stored, **101 uploads
+with 0 failed** -- against 4 of 4 FAILED on 10-09, which is the sharpest single contrast with the stop
+this relaunch answered. Instance VALID (rc=0), pin-drift 0, 6 of 6 artifact rows resolved.
+`@11270dbfe6`, check `@17f6b7a09d`.
+
+**Three judgment calls in writing this record, each the harder option.**
+- The superseded 10-09 STOPPED-INCOMPLETE text was PRESERVED as
+  `bs4_completed.stopped_incomplete_20261009.out`, not overwritten. Overwriting would have destroyed the
+  bytes the earlier AC2 PASS was graded against. It also serves as the determinism control: the two
+  records differ in exactly the discriminating field, `never_started` 104 against 0.
+- The headline is 237, not 242. The five non-collected pairs are named individually rather than absorbed
+  into a round number, and the issuer was told explicitly so the flip is made against the real figure.
+- The record explains WHY the 4 `contract_unavailable` pairs did not stop the leg, because that is the
+  same shape as what killed it: the driver spends its leg-level `--auto-resume-transient` budget on
+  `error` but holds `contract_unavailable` at the per-pair 3-attempt budget. No RESUME line fired and
+  `auto_resumes` is unchanged since 2026-10-09. A grader would otherwise have to reconstruct that.
+
+**Two checker refusals, both mine, both fixed rather than worked around.** `criterion_verbatim: 'PAIRS'
+is too short` -- the order's `expect` token is not a criterion statement, so the verbatim now carries
+step 6's sentence and `expect` keeps `PAIRS`. And the new artifacts read ABSENT at the instance's
+last-committed state, because the checker resolves artifacts against the commit the instance sits in,
+not the worktree; committing the instance and its artifacts together resolved all 6.
+
+**The issuer's relay, msg 33486, acked, no act.** It rules: do NOT re-run the 4 `contract_unavailable`
+or the 1 `gave_up` (the cycle runner re-asks failed pairs once sa is on it); do NOT add sa to the runner,
+that is a round-80 cell, change nothing on the runner; nothing further is owed on bs-4; COO~W1 flips the
+tick. That matches what this seat did -- the re-run was named the issuer's call and not taken.
+
+**Push state, measured now with `merge-base --is-ancestor` against a fresh fetch:** every commit of this
+session is on `origin/CLOUD` AND `origin/box/sitez` -- 11270dbfe6, 17f6b7a09d, 625de3ec4f, 03072bfe1d,
+e5b4cca091, 4423445a9c, 22e4bebaa1, c04b012973. The integrator carried them; this lane never pushed, and
+its one attempt was refused by never-rules-gate as designed.
+
+**LANE STATE: all three orders worked to the end, zero owed.** bw-2 read and filed (242 of 242
+attempted). bs-3 instance VALID under AMENDMENT 2, AC3 measured and not claimed. bs-4 steps 1-6 and 8
+done, instance VALID. Every `<status>` flip is the issuer's. Open findings belong to others: row Z-S113
+(the driver's transport-class mislabelling, the project's call) and the 6 `surprise-corpus` failures in
+ADVI_COTBKF's REMEDIATION_v34.md (the CVO's).
