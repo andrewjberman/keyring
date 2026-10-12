@@ -3427,3 +3427,22 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-475` | two reads: `commentary_ref` at HEAD (row W309-S2); the prices store's writer and its schedule (row W315-S3) (item 7) | FWD-8, FWD-13 | LOCAL | none | P165-e |
 
 fanout: 5 of 5 chains, cap 8, reason: five cells with disjoint write sets and no edge. Assignees: 0.9.0_WK_IRPT_BCKEND~326 to ~330 (one each).
+
+## 158. ROUND 166, WORKSTREAM ~P (2026-10-12 ~19:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6503 = CTO ROUND-166 ANALYSIS section 3)
+
+The CTO's list has six items; the ratified-text half is SIGNED current at v0.50 (prd-signoff read, status ADMITTED). Items 1 and 2 are ONE cell (one release under one never-widen pair, the same reader surface). Item 5 is cut as its first
+step only: the CTO's own words are "bd_adapter's rename cut on that read", so this round reads every reader of `value_facts` (the portal included) and declares the contract's two members in both schema copies; the portal adapter's move and
+the `bd_adapter` rename are cut in a later round on that read, ordered as one pair per the analysis section 2 (portal reads the contract members with a market-value fallback; `bd_adapter` renames; the fallback is removed).
+`IB-pr-476` and `IB-pr-479` touch different objects of `PerformanceReport.schema.json` only if `IB-pr-476` needs a schema edit; it is not granted one (the two new integers ride in the open `value_facts` object).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r166/p166_cells.py`: AC1-AC3 FAIL at base for IB166-1, -3, -5 and IB166-2 AC1/AC3, IB166-4 AC1/AC2; IB166-2-AC2 and IB166-4-AC3 PASS at base BY DESIGN (regression guards).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-476` | the reader's claim by the excluded day's status (C-CHAINCLAIM, v0.48 as amended by v0.49 s1) with the two counts beside `days_linked`; PARTIAL only when an absence holds (row W321-S2); the claim-move counts reproduce the CTO's | FWD-3 | WORLD (floor: infra path; nothing deployed) | none | P166-a |
+| `IB-pr-477` | a challenged stored-bundle probe ends the capture without a fresh sign-in (rows W328-S1, S109); the pair gate `discriminating !== true` (W328-S2) | FWD-4 | WORLD (floor) | none | P166-b |
+| `IB-pr-478` | the packager reads `commentary_ref` from the item's sibling attribute, the record untouched; a round-trip test from the writer to the packager (row W309-S2) | FWD-8 | WORLD (floor) | none | P166-c |
+| `IB-pr-479` | C-VALUEFACTS step 1: every reader of `value_facts` (backend and portal, read-only) and the two members declared in both schema copies (row W321-S1) | FWD-3 | WORLD (floor) | none | P166-d |
+| `IB-pr-480` | every reader of the landed prices store under `investor-reporting/` and whether a served figure depends on it (row W315-S3) | FWD-13 | LOCAL | none | P166-e |
+
+fanout: 5 of 5 chains, cap 8, reason: five cells with disjoint write sets and no edge. Assignees: 0.9.0_WK_IRPT_BCKEND~331 to ~335 (one each).
