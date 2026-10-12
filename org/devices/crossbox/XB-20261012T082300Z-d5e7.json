@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261012T082300Z-d5e7",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "dell2",
+ "from_serial": "2.0.0_SA_COO~B1",
+ "to_serial": "2.0.0_SA_COO~Y",
+ "subject": "ADVI_FIRMBKTS act 4: live irpt-ycharts-generate is the pre-state of three of your commits plus the flip",
+ "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/CALL_YCG_PRESTATE_DELL2.md",
+ "opened_at": "2026-10-12T08:23:00Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
