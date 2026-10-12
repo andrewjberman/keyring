@@ -17,10 +17,11 @@ Claim words: `measured` = read this session against the served artifact; `held` 
 
 ## Deploy ledgers
 
-All MDPF_SECCLASS ledgers are CLOSED except one (HELD):
+All MDPF_SECCLASS ledgers are CLOSED except two (one ordered, one held):
 
 | Ledger | State |
 |---|---|
+| e91b C_06 retained-unclassified ship (SC1) | ORDERED 2026-10-12 ~10:0xZ: `TO-SC-e91b` @0b947eb07f to `0.7.0_AE_CloudOps~SC1`, GO sent; both halves SIGNED (COO @ac447d74cf; CTO msg 4324, the outcome is the Reach range, $0 to $653,857.12 at 2026-10-09 and $0 to $629,530.89 at 2026-10-08, beyond either bound is a STOP). One key: `code/gold/C_06.client_mix_timeseries.py` 8e1b350f -> 2e35d043163cc18b135d7698cf11dc56. Ledger slug `secclass-e91-c06-retained-unclassified-sc1-20261012` opens at start; leg G is MINE: the two reads (range at 10-09 and 10-08; the second fire rewrites 0 relationship keys) |
 | e87b BD three-file ship (SC1) | CLOSED 2026-10-12 06:4xZ, leg G NOT MET: shipped as signed (06:20Z, `E87-SHIPPED ok=True`, ETags = signed digests) but D_04's served `mix_summary.json` Unclassified is unchanged at the same as-of (2026-10-09, identical firm total): $1,846,332.73 before the ship, after the 00:18Z `bd-gold-trigger` run and after the 04:00:46Z nightly fire, equal to the cent. D_03's `firm_composition.json` did move (92 / $3,325,002.64 -> 66 / $2,760,199.32). Cause (code at HEAD): C_06 is incremental and `reclassify_retained` (:274-311) skips retained `unclassified` holdings; D_04 reads C_06's snapshot (:486). Row D1-S30 |
 | e57e61 FWD-10 apply (~S) | HELD on the first scheduled new-security run that plans US stocks |
 | e60 D_04 Unclassified line | CLOSED (SC1): AC1 ok, arm 2 closed as non-e60 drift by the CTO (ADDENDUM 1 @4cac828d3c) |
@@ -49,8 +50,11 @@ All MDPF_SECCLASS ledgers are CLOSED except one (HELD):
    | `SC-e-93` | read: served BD positions with the literal ticker NAN / NONE, denominator printed (row D1-W77-S1) | LOCAL | ~82 `worker-light` | DRAINED 97ca96b08f: NOT_EXPOSED (0 NAN/NONE of 114,554 positions at 2026-10-09; 225 null market values) |
    | `SC-e-94` | read: the writer of the 2026-10-06/07 holdings partition rewrite at 2026-10-10T23:15Z, writer count, whether C_06 re-serves those dates (row D1-W78-S1) | LOCAL | ~83 `worker-light` | DRAINED 81cfb83df2: writer `B_00.canonical_holdings` (run 608de09d26a6), writer_count 1; the 23:15Z rewrite re-put identical bytes, the content moved 10-11T04:16:35Z and 10-12T00:33:48Z; the next default C_06 fire re-serves none of 10-06/07/08 |
    | `SC-e-90` | portal test `iv-e-46.class-readers.test.ts` locates each named reader by content, plus a negative arm (CTO msg 4167); direct act, portal worktree at origin/DEV `62507dae67` | LOCAL | ~84 `worker-light` | DRAINED 4ff03e1393; portal test commit 64d8c6de38 on origin/DEV (ls-remote, fast-forward from 62507dae67, test file only; AC1 3 pass, AC2 1 pass, re-run by me) |
-   - **Carried, not a cell:** leg G of SC-e-87 and D1-S30, read on the first post-ship as_of (Tuesday 2026-10-13's fire or later), the expected
-     figure stated at THAT as-of, never at 10-08. SC-e-91 must also ship (a pair-gated act by a CloudOps lane) before that read can pass.
+   - **Carried, not a cell:** leg G of SC-e-87 on the first NEW as_of (Tuesday 2026-10-13's fire or later), the figure stated at THAT as-of beside D_03's;
+     the CTO withdrew the round-20 target of about $6,335.94 for the SC-e-91 act (msg 4324). SC-e-91 ships through `TO-SC-e91b` (see the ledger table); its G is
+     the two reads above.
+   - **Round 22's first cell (CTO msg 4324):** a read, not a build: who holds the $519,506.84 outside the stored lists at 2026-10-09 and why, and the
+     measured runtime and write set of a BOUNDED rebuild of C_06 over the retained dates from their canonical partitions. A rebuild, if ruled, is its own pair.
    - Real run at close: the cross-box deploy check reads `verdict=CLEAR` (round 20: STOP with 4 hits); artifact `R21_CHECKS/E92_REAL_RUN_20261012.txt`.
    - Next: the CVO's grade and slug, the CTO's round-21 analysis; the SC-e-91 ship (COO half mine, CTO half the CTO's); the CTO's ruling on correction or drift for the 2026-10-06..09 dates (rows D1-W78-S1, D1-W83-S5).
 2. **e57e61:** release when a scheduled new-security run plans US stocks.
