@@ -476,6 +476,19 @@ def _check(src, root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, de
         return lines, "ROUND-CLOSE project=- device=%s reviewer=%s orders=0 judgment=0 graded=0 ungraded=0 self_graded=0 verdict=%s" % (
             device, rv["state"], verdict)
     orders = read_orders(src, proj_dir, rnd, ws)
+    # IRPT_BCKEND-D2-S76 (2026-10-12): an untagged seat-folder order (no <round>) is counted in every round's
+    # check so its issuer sees the missing tag (D2-S23). With no --workstream that counted ANOTHER lane's
+    # untagged orders into this issuer's close. Now an untagged order GATES the verdict only when its
+    # <issued_by> is one of the round's own issuers (read from the round's tagged orders); another lane's
+    # untagged order is NAMED below and left out of the counts. No tagged orders in scope: unchanged, all count.
+    round_issuers = {o["issued_by"] for o in orders if not o.get("untagged") and o["issued_by"]}
+    foreign_untagged = [o for o in orders if o.get("untagged") and round_issuers
+                        and o["issued_by"] and o["issued_by"] not in round_issuers]
+    if foreign_untagged:
+        orders = [o for o in orders if o not in foreign_untagged]
+        lines.append("  SEAT-FOLDER orders NAMED, not counted (no <round> tag, issued by a lane outside this round's "
+                     "issuers %s): %s" % (",".join(sorted(round_issuers)),
+                                          ", ".join("%s<-%s" % (o["id"].split(".")[-1], o["issued_by"]) for o in foreign_untagged)))
     n_orders = len(orders)
     done = [o for o in orders if o["status"] in COMPLETE_WORDS]
     open_ = [o for o in orders if o["status"] not in COMPLETE_WORDS and o["status"] not in OTHER_TERMINAL_WORDS]

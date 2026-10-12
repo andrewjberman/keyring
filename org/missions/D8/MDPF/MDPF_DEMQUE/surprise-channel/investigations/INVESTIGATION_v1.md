@@ -1407,6 +1407,26 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "DQ-t-42 AC2: the two tiers partition the indexed names, and the declared rolling cycle is read against the rolling names.",
     "world_is": "The partition holds (141 + 0 = 141), but the rolling tier is unmeasured on real data until the rolling names land. The rolling branch of the report is exercised only by the three tests and the stub store. Nothing was extended or drawn to change this."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S14",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-12T17:45:34Z",
+    "one_line": "Yahoo spells the dotted share classes with a dash (BRK-B, BRK-A, BF-B); the dotted form returns no bar, and no request builder translates it, so a request passes the crosswalk spelling as given.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_BCKEND-D2-W310-S3 (routed, msg 4516): seven of the 878 tickers had no bar and the dash spelling for BF-B, BRK-A and BRK-B was never tried. The vendor pull takes a request's `symbol` field as the Yahoo ticker with no translation (yahoo_pull.pull).",
+    "world_is": "2026-10-12T17:45:34Z, read-only probe, one request per spelling, 8 to 12 s gaps, nothing stored: BRK-B OK 7,655 rows to 2026-10-12; BRK-A OK 11,738 rows to 2026-10-12; BF-B OK 11,738 rows to 2026-10-12; BRK.B, BRK.A, BF.B each FAILED_EMPTY (the library logs 'possibly delisted; no timezone found'). Scan of every request file and queue file: only IRPT_BCKEND-AS-TRADED-CLOSES-878 carries a dotted symbol (3 of 878). The id had 0 ledger rows, so the 3 symbols were re-spelled in the request file and its queue copy before the first draw (the two copies byte-equal, validate OK, 878 securities, quote counts unchanged: 878 requests, 113,262 cells). The other 4 of the 7 no-bar names are not share classes and are not changed by this row. The lock still decides identity: a spelling that returns another security's bars is rejected by the 90 pct trade-agreement floor.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "probe output in this seat's session 2026-10-12 ~17:5xZ (yahoo_pull.pull per spelling, no pacer state written)",
+        "requests/IRPT_BCKEND-AS-TRADED-CLOSES-878.json at the commit that re-spells the three symbols; ~/.opal/demque/ledger.jsonl read: 0 rows for the id"
+      ]
+    }
   }
 ]
 ```
