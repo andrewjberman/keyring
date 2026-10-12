@@ -1712,3 +1712,23 @@
 2026-10-12T20:33:40Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=8.43  took=already-current pushed=c4341672f8  phases: t_fetch=1.80s t_push=3.92s
 2026-10-12T20:42:26Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=3.68  graded=n/a  args=(--verify-merge 8e77a842529cd196eb12fcd1facdcb83e6b8c9f1)  first=(none)
 2026-10-12T20:42:35Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=32.66  took=b03673a17c hold=2.16s graded=0/12 pushed=8e77a84252  phases: t_fetch=2.08s t_merge_cloud=15.86s t_land=2.20s t_push=6.53s
+2026-10-12T20:44:47Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-12T20:44:54Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-12T20:45:09Z LANDED-2P  0.0.0_AB_MSTR~Z  8cb06c7653  paths=1  validate=26.21s  wait=0.16s  hold=1.56s  build=1.10s  ref=0.41s  post-commit=6.54s  attempt=1
+2026-10-12T20:45:27Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=11.82  took=already-current pushed=8cb06c7653  phases: t_fetch=1.81s t_push=6.16s
+2026-10-12T20:50:46Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=4ddab7af8426 paths=1:org/devices/crossbox/XB-20261012T141128Z-5f49.json
+2026-10-12T20:50:54Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=4ddab7af8426 paths=1:org/devices/crossbox/XB-20261012T141128Z-5f49.json
+2026-10-12T20:51:10Z LANDED-2P  0.0.0_AB_MSTR~Z  882f0771ce  paths=1  validate=25.08s  wait=0.51s  hold=1.97s  build=1.07s  ref=0.84s  post-commit=7.83s  attempt=1
+2026-10-12T20:51:37Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=4.91  graded=n/a  args=(--verify-merge 8663bb1851bcd9dc0ad1198bd26797e8a98a70cb)  first=(none)
+2026-10-12T20:51:48Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=35.52  took=88a7874321 hold=1.57s graded=1/20 pushed=8663bb1851  phases: t_fetch=2.01s t_merge_cloud=18.76s t_land=1.60s t_push=8.27s
+2026-10-12T20:52:22Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=15.83  took=already-current pushed=8663bb1851  phases: t_fetch=3.83s
+2026-10-12T21:02:15Z PASS  1.0.0_SA_CTO~Z  6  (all paths in-lane) act=390c359464f6 paths=6:org/devices/state/sitez/open_calls.json|org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round8.md|org/missions/D6/NFRA/NFRA_MCPMSP/project.json|org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md|org/projects/NFRA_MCPMSP.json|org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261012_205xZ_SITEZ_PORTFOLIO_SEVEN_PROJECT_RULINGS.md
+2026-10-12T21:02:22Z PASS  1.0.0_SA_CTO~Z  6  (all paths in-lane) act=390c359464f6 paths=6:org/devices/state/sitez/open_calls.json|org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round8.md|org/missions/D6/NFRA/NFRA_MCPMSP/project.json|org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md|org/projects/NFRA_MCPMSP.json|org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261012_205xZ_SITEZ_PORTFOLIO_SEVEN_PROJECT_RULINGS.md
+2026-10-12T21:02:27Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=3.85  graded=n/a  args=(--verify-merge d04e9fb82c11e88949dc71ce984bd775e6c94c4d)  first=(none)
+2026-10-12T21:02:38Z LANDED-2P  1.0.0_SA_CTO~Z  cdb5ff66b1  paths=6  validate=36.89s  wait=0.16s  hold=1.69s  build=1.18s  ref=0.46s  post-commit=8.32s  attempt=1
+2026-10-12T21:02:53Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=8.27  graded=n/a  args=(--verify-merge aa7f4a83797b1826e8847aee6863d97630bc4645)  first=(none)
+2026-10-12T21:03:03Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=54.90  took=b6ef2d3cd3 hold=2.51s graded=0/35 pushed=aa7f4a8379  phases: t_fetch=2.80s t_merge_cloud=12.24s a2.t_merge_cloud=22.54s t_land=2.53s t_push=5.75s
+2026-10-12T21:12:20Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=3.91  graded=n/a  args=(--verify-merge 4cdcbe2cf54273d456d5f610411abe52814bab80)  first=(none)
+2026-10-12T21:12:28Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=25.53  took=41e8bca608 hold=2.46s graded=0/14 pushed=4cdcbe2cf5  phases: t_fetch=1.66s t_merge_cloud=12.43s t_land=2.49s t_push=4.89s
+2026-10-12T21:22:26Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=5.95  graded=n/a  args=(--verify-merge bef2e4dbe5a50700b1cf809a978fff725514652b)  first=(none)
+2026-10-12T21:22:36Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=33.22  took=2974ca35c8 hold=2.49s graded=0/53 pushed=bef2e4dbe5  phases: t_fetch=3.73s t_merge_cloud=15.76s t_land=2.52s t_push=5.82s

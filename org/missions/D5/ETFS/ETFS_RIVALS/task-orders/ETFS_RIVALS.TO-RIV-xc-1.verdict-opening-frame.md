@@ -106,7 +106,8 @@ the merge. Leave the `<status>` flip to the issuer.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<!-- drained 2026-10-12 by 2.0.0_SA_COO~V1 @84bc9f8e34: AC1 4 passed, AC2 23 passed, instance VALID (checked in the worktree); suite 1016 passed, 6 skipped. Row D1-W37-S1 (the stoplist match is case-insensitive and applies to every token, so `AT & T` reads `at & <name>`): ruled ACCEPT AS BUILT -- the frame has to be deterministic and equal across funds, not linguistically exact; no change, no cell. J1 is the CVO's on the next sweep page. -->
 <round>29</round>
 <workstream>4</workstream>
 <slot>~37</slot>
