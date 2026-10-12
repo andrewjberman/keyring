@@ -1,0 +1,165 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "AMGT_CORPUS",
+ "round": 49,
+ "graded_by": "1.0.0_SA_CTO~DELL1",
+ "graded_utc": "2026-10-12T05:28Z",
+ "report_ref": "org/missions/D5/AMGT/AMGT_CORPUS/ledger/COMPLETION_REPORT.round49.json@cb5897f4dc",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/FWD_EVIDENCE_ROUND13.json@d1c92f63c1",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (ROUND_ANALYSIS.round5.md:116). Round-13 evidence: objects 356, files 356, match 356, mismatch 0. Not re-run at the current 97 folders; round 44 re-runs it as regression. Carried unchanged from COMPLETION_GRADES.round43.json; no round since moved it."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-3.typed-per-report-record-and-period.proof_of_spec.json@3522f1dacd",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (round5.md:116); round 6 resolved its residual (round6.md:107). Carried unchanged from COMPLETION_GRADES.round43.json; no round since moved it."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-4.backlog-folder-census-and-resolution.proof_of_spec.json@b5b2c17763",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (round5.md:116), met again at round 13. Carried unchanged from COMPLETION_GRADES.round43.json; no round since moved it."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-r-1.schedule-induction-run.proof_of_spec.json@dba1e7f6bb",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 14 (ROUND_ANALYSIS.round14.md:52). Carried unchanged from COMPLETION_GRADES.round43.json; no round since moved it."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-6.per-name-continuation-artifact.proof_of_spec.json@1930a67cff",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (round5.md:116), met again at round 13. Carried unchanged from COMPLETION_GRADES.round43.json; no round since moved it."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-e-3.sector-template-write-once.proof_of_spec.json@317db60775",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (round5.md:116). Carried unchanged from COMPLETION_GRADES.round43.json; no round since moved it."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-c-9.generic-model-typecast.proof_of_spec.json@0f7cb16163",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (round5.md:116). Carried unchanged from COMPLETION_GRADES.round43.json; no round since moved it."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-2.continuation-pdf-pillar-branch.proof_of_spec.json@c9a219f98c",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (round5.md:116). Carried unchanged from COMPLETION_GRADES.round43.json; no round since moved it."
+  },
+  {
+   "fwd_id": "FWD-9",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-p-1.fwd9-inside-its-bound.proof_of_spec.json@5c2951a388",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED inside its bound at round 14 (round14.md:54). The Z-S90 census break was repaired at round 41: tristate library 0, unresolved 0 (ROUND41_DRAIN_END_PACKET.md:14). Carried unchanged from COMPLETION_GRADES.round43.json; no round since moved it."
+  },
+  {
+   "fwd_id": "FWD-10",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/adjudications/ADJUDICATION_v60.md@fe15fb8e74",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 45 (ROUND_ANALYSIS.round45.md s.1): re-read on the current build incl. the IMB LN Thesis-tab walk."
+  },
+  {
+   "fwd_id": "FWD-11",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/adjudications/ADJUDICATION_v61.md@80f1356183",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 46 (ROUND_ANALYSIS.round46.md s.1): officer passage beside the filing roster; AMD reads its absence."
+  },
+  {
+   "fwd_id": "FWD-12",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/adjudications/ADJUDICATION_v63.md@400c84ed5c",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 48 (ROUND_ANALYSIS.round48.md s.1) on the served page: own sheets render their rows; master names the template rows, labels only."
+  },
+  {
+   "fwd_id": "FWD-13",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/FWD_EVIDENCE_ROUND13.json@d1c92f63c1",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 5 (round5.md:116). Round-13 census: fields 2375, neither 0, with a negative control. Not re-run on the /9 dossiers; round 44 re-runs it as regression. Carried unchanged from COMPLETION_GRADES.round43.json; no round since moved it."
+  },
+  {
+   "fwd_id": "FWD-14",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/adjudications/ADJUDICATION_v60.md@fe15fb8e74",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 45: the four-count line sums to the folder count, 102 = 102, read fresh at site Z."
+  },
+  {
+   "fwd_id": "FWD-15",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/adjudications/ADJUDICATION_v61.md@80f1356183",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 46 on PRD v0.10 ADDENDUM E (Posture tab), ratified-text half re-signed by 3.0.0_SA_CVO (L4R review @b77ebc587b)."
+  },
+  {
+   "fwd_id": "FWD-16",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/adjudications/ADJUDICATION_v61.md@80f1356183",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 46: ADBE (PDF-only) end to end; the docx control unchanged."
+  },
+  {
+   "fwd_id": "FWD-17",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-p-3.fwd17-scratch-drive.proof_of_spec.json@986c886b9a",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 14 (round14.md:55). Carried unchanged from COMPLETION_GRADES.round43.json; no round since moved it."
+  },
+  {
+   "fwd_id": "FWD-18",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/adjudications/ADJUDICATION_v60.md@fe15fb8e74",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 45 on the CVO grade of the round-44 packet."
+  },
+  {
+   "fwd_id": "FWD-19",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-r-1.schedule-induction-run.proof_of_spec.json@dba1e7f6bb",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED, unchanged (ADJUDICATION_v45.md:46; round39.md:21). Carried unchanged from COMPLETION_GRADES.round43.json; no round since moved it."
+  },
+  {
+   "fwd_id": "FWD-20",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/adjudications/ADJUDICATION_v64.md@2328b59e9c",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 49 (ROUND_ANALYSIS.round49.md) on the served page: 0 values under a foreign header, 3,103 = 401 + 2,690 + 12, 0 raw tokens, master block cells 0, unmapped 0 of 11,467."
+  },
+  {
+   "fwd_id": "FWD-21",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/adjudications/ADJUDICATION_v61.md@80f1356183",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 46: history byte-unchanged 95/95; UNVGY reads its reason."
+  },
+  {
+   "fwd_id": "FWD-22",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-aj-1.daily-refresh-producer.proof_of_spec.json@bb6e248f1f",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED (ADJUDICATION_v45.md:45; round39.md:9). The 2026-10-09 scheduled fire pulled 96 of 96 (ADJUDICATION_v47). The report's WAIT note is stale. Carried unchanged from COMPLETION_GRADES.round43.json; no round since moved it."
+  }
+ ]
+}
