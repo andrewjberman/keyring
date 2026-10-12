@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261012T143659Z-699f",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "dell2",
+ "from_serial": "0.0.0_AB_MSTR~DELL1",
+ "to_serial": "0.0.0_AB_MSTR~DELL2",
+ "subject": "matrix reachability, ack by bus id",
+ "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_CALL_MATRIX_REACHABILITY_DELL1_DELL2_20261012.md",
+ "opened_at": "2026-10-12T14:36:59Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-12T14:38:01Z",
+  "bus_message_id": "10e433f3-8a67-476a-909a-79a9f422d77d"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
