@@ -8364,3 +8364,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For the issuer: confirm that widening _mission_dir is in scope of CT-aa-1 (the order set comes from git), or record it as a separate enrichment. Hazard INERT: the tool reads and writes nothing, and the widened lookup is read-only."
 }
 ```
+
+## NFRA_CTLPLN-S9115 -- the Dev clause admits nobody new: the Dev walker's token already carries tier internal
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9115",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~U7",
+  "surfaced_at": "2026-10-12T15:08:00Z",
+  "one_line": "The Dev-type walker login already carries tier=internal in its token (the auth handler derives tier from firmId opal-capital), so the CT-aa-4 Dev clause admits no login that the tier test did not already admit, and R3 cannot discriminate it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CT-aa-4 baseline read 2026-10-12T14:57Z (before the apply) and R3 read 15:03Z (after): the UI walker row logged in through the real /auth/login; the four claim values the fence reads, decoded in memory from its access token: firmId opal-capital, role admin, tier internal, userType Dev; GET /v1/health/data-availability answered HTTP 200 under the third pair code and again under the fourth",
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts generateAccessToken: tier = user.firmId === 'opal-capital' ? 'internal' : 'advisor' (the row's own tier attribute is not read); types.ts marks the field vestigial",
+      "PRE-1, opal-users-v2, 56 PROFILE rows: 6 userType Dev, all 6 on firm opal-capital, 3 with a row tier other than internal or absent; the 14 day proxy log group: 42 of 42 opal-capital requests carried tier internal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-aa-4 pair section 2 and the CTO half: three staff logins of userType Dev carry a tier other than internal and are refused on the 39 class-(ii) routes; the walker row (tier ABSENT) is a Dev-type account whose tier is not internal, so R3 reads the case the fence is being changed for.",
+  "world_is": "The row attribute tier is absent or advisor on those rows, but the TOKEN tier is internal for every login of firm opal-capital, so the walker is served by the tier test with or without the clause (200 before and after). Measured for the walker only; the other two non-internal-row Dev logins are inferred to be the same (same firm, same derivation). What the clause changes is a Dev-type login on a NON-internal firm (PRE-1(d) = 0 today), plus any token minted outside the auth handler with userType Dev and a non-internal tier. The issuer and the CTO decide whether R3 needs a minted caller, is dropped, or whether the clause was needed at all.",
+  "notes": "Said at the point of the apply: the fourth pair conditions all held and the act landed as signed; this row only reports that R3 could not be exercised."
+}
+```
