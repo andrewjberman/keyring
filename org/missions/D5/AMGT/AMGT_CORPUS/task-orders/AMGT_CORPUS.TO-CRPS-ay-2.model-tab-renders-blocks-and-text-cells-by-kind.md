@@ -144,3 +144,4 @@ aw-2). AMENDMENT 1 (2026-10-11 ~23:4xZ): the tabs harness reads 21 of 21 at that
 <round>49</round>
 <slot>~2</slot>
 <fabric>dell1</fabric>
+<status>complete</status>
