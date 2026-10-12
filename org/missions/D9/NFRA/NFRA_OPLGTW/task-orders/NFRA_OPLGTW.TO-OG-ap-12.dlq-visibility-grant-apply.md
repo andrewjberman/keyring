@@ -103,6 +103,13 @@ the ONE `<status>` tag to `complete` only if both PASS.
 **ISSUER NOTES:**
 - Round 35, workstream APPLY-R35-G. Cause: row Z-S97 (the issuer's comp-iam defect on OG-ap-11). OG-ap-11 closes
   `failed` (AC2 FAIL) whichever way its rollback went; this order carries the fix.
+- A1 (issuer, 2026-10-12 ~21:4xZ, row Z-S98): step 2's "and the policy `description`" is STRUCK. An `aws_iam_policy`
+  description forces replacement, so it contradicts the step's own plan bar. The applier was right to keep the
+  description bytes and change the comment only (@5911f27f74). The plan bar stands: 0 add, 1 change, 0 destroy.
+  - At 21:3xZ: the grant is live (ap12.AC1 simulate `allowed`); schwab is still the pre-drain build
+    (`uibjggn...`, `b3e481b261`); ledger `nfra-oplgtw-ap12-dlq-visibility` is still OPEN, past its 4 h window.
+  - The schwab leg runs outside [21:15,23:35)Z and before [09:15,11:35)Z, so the 2026-10-13 12:15Z sweep grades it.
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 - Pre-cut (2026-10-12 ~13:08Z), both FAIL as expected:
   - ap12.AC1: no ledger; simulate implicitDeny; live code = the OG-ap-11 build.
   - ap12.AC2: grade absent.
