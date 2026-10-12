@@ -454,3 +454,12 @@ DQ-t-40 merged @34040149bb: batch equals per-symbol (50 of 50) but the library i
 blocks on a 5-trading-day cycle, a refusal above the cap less a reserve of 20, `--plan-week`, the per-tier lag in the freshness entry;
 `0.9.0_WK_MDPF_DEMQUE~33`, worker, LOCAL, workstream ROLLTIER, depends on DQ-t-31/36/37). The apply is the issuer's under its own pair, written
 on the merged bytes. dell2 was told the lag in words (crossbox CALL XB-20261012T033435Z-54b6, `DELL2_IRPT_ENROLMENT_LAG_20261012.md`).
+
+**Round 9 close of DQ-t-41 (issuer, 2026-10-12 ~04:2xZ):** merged @dbf7bacc77 (AC1 TIER-OK, AC2 TIER-REAL-OK: 7 trading days, max 306 requests a day,
+782 rolling names each within 5 trading days; folder 145 passed). Rulings on its rows, all inside this decomposition: **W33-S2** the enrolment key
+`rolling[].stored_at_enrolment` (the 96 CUSIPs in the index when IRPT was enrolled; they stay daily) is RATIFIED, it is the snapshot the cell's rule needs.
+**W33-S4** an ADVI fund that is also an IRPT name is DAILY (8 of the 10 overlap are not yet stored; the rolling set is 774 once they land). **W33-S3** the
+freshness entry is NOT landed: the served config holds one JSON object per entry and the store is thousands of cusip-partitioned parquet files with an
+index.parquet/csv, so no existing mode fits and a new mode is a build the moratorium bars; asked of the CTO. Read-only `--plan` against the real
+store after the merge: daily 141, rolling 0, rolling_not_landed 782, so the Monday 22:30 run asks for the same 141 names as before (DELTA=0); the
+first rolling day is after IRPT's history lands, and the SERVED pair is written then, covering the in-block and out-of-block branches.

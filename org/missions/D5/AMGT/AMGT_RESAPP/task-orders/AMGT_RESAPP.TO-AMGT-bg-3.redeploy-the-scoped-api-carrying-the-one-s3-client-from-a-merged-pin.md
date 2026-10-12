@@ -29,7 +29,7 @@ entry printed before and after.
 
 BEFORE the apply capture the live Thesis payloads (`aw4_capture.py`, read-only, 95 names, local) to `.scratch_bg3/thesis_pre.json`, IMMEDIATELY before; AFTER, to `.scratch_bg3/thesis_post.json`.
 The effect is NO served byte: every path of every route reads as it did (generation clocks apart). **No other reader runs on the function during your capture and replay.** One request over
-20 s in the replay: three re-invokes, 200 with identical bytes. The close of the CTO's cell is a read by the issuer the day AFTER the apply (the 24-hour count of invocations over 20 s and
+20 s in the replay: three re-invokes, 200 with identical bytes. The pair adds a COLD-FIRST-REQUEST arm (CTO msg 4244): the first overlay request of `ASML_NA_Equity` and of `ADBE_US_Equity` after the apply, and after a quiet period of at least 15 minutes, each 200 and under 27 s (a 27 s to under 29 s 200 with identical re-invokes is recorded, a timeout or a differing re-invoke is Branch 2). The close of the CTO's cell is a read by the issuer the day AFTER the apply (the 24-hour count of invocations over 20 s and
 of pool warnings against 53 and 49, by the round-99 method); it is not this order's.
 
 ## 2. BOUNDS
@@ -68,6 +68,7 @@ The instance is genre DEPLOY, with a NAMED rollback and the recorded VersionIds 
 - the change-management entry's slug and state;
 - every criterion's output lines;
 - the post-act compare file path, with the changed-path count and the count outside the table;
+- the duration, status and three re-invoke statuses of the FIRST overlay request of the post-apply replay for `ASML_NA_Equity` and `ADBE_US_Equity`, and of the same two requests after a quiet period of at least 15 minutes (no other read of the function in between), each against the 27 s margin of the pair;
 - any row.
 
 Flip `<status>` to `complete` only if every criterion PASSES.
