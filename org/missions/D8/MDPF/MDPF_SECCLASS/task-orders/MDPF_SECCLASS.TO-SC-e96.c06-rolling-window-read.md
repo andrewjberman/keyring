@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~86</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -73,6 +73,29 @@ a copy with one field broken fails the same check first.
 Dry-run at the base (dell1 box/dell1 HEAD, 2026-10-12 ~11:3xZ): `WINDOW-READ ok=False error=absent`; a synthetic valid record reads `ok=True
 control=ok`; one with `fits` that disagrees with the cold wall, one whose gap does not end at 0 and one with fewer than five dates each read
 `ok=False`.
+
+### AMENDMENT 1 -- the served Unclassified is what the page serves: D_04's rule, not a key (issuer 2.0.0_SA_COO~M1, 2026-10-12 ~11:5xZ; answers your row MDPF_SECCLASS-D1-W86-S1)
+
+Your stop was right and your finding is a RESULT: `gold/views/mix_daily_summary.json` `firm[date]` carries no `unclassified` key for 2026-09-01 to
+2026-09-29 (the class was not published as a key before then), so my order's "the stored firm figure" named a field that does not exist on 5 of the
+15 window dates. The figure the page SERVES never read that key as a field: `D_04.client_portal_summary.py` `_firm_top_level_mix` (:445-462) serves
+`Unclassified.market_value = total - sum(the CANONICAL_MIX_CLASSES values present in that day)`. That is the served figure on every date, key or no
+key, and it is the one SC-e-95 and the CVO's $1,846,399.46 were read from. Your rows S1 (dispositioned here) and S2 (the walls are per-date reads;
+accepted, state it in `instrument`) are ruled.
+1. **`served_unclassified` is D_04's rule.** Per window date: `firm[date]['total']` minus the sum of the `CANONICAL_MIX_CLASSES` values present in
+   `firm[date]` (import `CANONICAL_MIX_CLASSES` and, if importable, `_firm_top_level_mix` from the D_04 module at HEAD; do not retype the class
+   list). `delta_unclassified` stays `rebuilt - served`. The rebuilt figure is unchanged: it is the sum over relationships of
+   `mix['unclassified'] * total_mv` from the re-derived entries, as you computed it.
+2. **Cross-check, not a field the checker grades.** For each date whose `firm[date]` DOES carry an `unclassified` key, print the key beside the
+   remainder and say in the record's `claim` whether they agree to the cent on those dates (and by how much where not). Add one sentence to the
+   claim naming how many of the window dates carry the key.
+3. **Your measured parts stand.** The rule (N=14, source `code/gold/gold_dispatch.sh`, `sync_scripts` places it flat beside C_06), the window (15
+   dates, 2026-09-25 to 2026-10-09), the cold 735.05 s and warm 631.87 s and the per-date rebuilt Unclassified are accepted as read; reuse your
+   `.scratch/` per-date results if each partition's version and LastModified are unchanged (the cost fields describe THIS window and THIS
+   partition set, so state the versions in the claim), and re-derive only what changed. Then finish the parts you did not reach: `peak_mb`,
+   `relationships_rewritten`, `keys_written` (four per rewritten relationship), `bytes_written`, `per_date` orphan counts and `gap_if_truncated`.
+4. **Gate limb.** The issuer amends its own criteria without a CTO ruling; no gate limb grades an amendment to an existing order's criteria and
+   `<status>` (this order declares `<placeholders>NONE`; the L6 gate grades newly-added orders and placeholders).
 
 ## BOUNDS
 
