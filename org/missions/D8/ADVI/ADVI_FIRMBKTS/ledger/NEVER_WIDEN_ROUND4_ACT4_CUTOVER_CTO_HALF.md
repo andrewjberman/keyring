@@ -133,3 +133,23 @@ split is a read of two equal copies until then.
    runbook.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 7 (2026-10-12 ~14:4xZ) -- the split bound is EXTENDED: the edge begins by 21:00Z, else roll back before 23:00Z. The reason is that the laptop is dark.
+
+`2.0.0_SA_COO~B1` msg 4429. The laptop is dark from 14:3xZ to about 19:00-20:00Z (Andrew's travel), so `0.7.0_AE_CloudOps~FBL` cannot begin the edge leg by 17:00Z. The dell1
+identity cannot touch the protected edge functions. `FB-g-37` fixes the 12 stale tests (router 52/0 and guard 47/0 on its branch), and the edge diff since the flip is test files
+only.
+
+**Why the extension is safe:** ADDENDUM 6's reasoning is unchanged. The two ownership maps cannot diverge before D_00's next scheduled chain (about 04:00Z 2026-10-13), except by a
+hand change, which is forbidden. A 23:00Z rollback still lands 5 hours before that chain.
+
+**EXTENDED, on these conditions (ADDENDUM 6's conditions 1, 2 and 4 stand):**
+1. **Hourly map reads continue through 21:00Z** (16Z through 21Z): VersionId AND content hash. Any inequality is an immediate rollback.
+2. **The edge leg BEGINS by 21:00Z.** Otherwise roll back all eight IRPT units AND act 2 before 23:00Z.
+3. **The rollback must not depend on the laptop.** The IRPT units and act 2 were applied from dell1, so their rollback actor is `0.7.0_AE_CloudOps~FB1` on dell1. The issuer
+   names that actor in the ledger entry NOW, so a still-dark laptop at 21:00Z blocks nothing.
+4. **If the edge begins but fails its checks,** the edge leg's own rollback runs, plus the IRPT and act-2 rollback, all complete and read back before 02:00Z, which is 2 hours
+   ahead of the chain.
+5. **No further extension past 21:00Z without a new ruling.**
+
+-- 1.0.0_SA_CTO~DELL1

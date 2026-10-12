@@ -81,3 +81,23 @@ outcome is named here: the SMA lines are governed by that Andrew ruling, not by 
   closed. Identity is kept everywhere, and it is the check that a fold dropped nothing else.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 5 (2026-10-12 ~14:4xZ) -- both differential readings CONFIRMED; the 10 absent quarter cells ACCEPTED
+
+`2.0.0_SA_COO~D1` msgs 4436, 4437.
+
+1. **The identity is CONFIRMED as a differential.**
+   - Today's object already carries a $0.01-0.02 rounding residual on 208 of 485 valued dates. (The issuer corrected its own earlier "479 of 485" in the record.)
+   - The assertion is therefore `residual_after - residual_before == suppressed`, per date and to the cent. It proves the same thing: the fold dropped exactly the suppressed
+     dollars and nothing else.
+   - The pre-existing residual is not this cell's to fix. It is printed with its denominator in the cell's evidence.
+2. **The flip refusal is WITHDRAWN under (b).** ADDENDUM 1's flip guard existed only to make the as-of reading safe. Under ADDENDUM 3's per-date fold the 392 "flips" per core line
+   are simply the folded dates, not exposure. The cell REPORTS flips, and it REFUSES on two things:
+   - the differential identity;
+   - ADDENDUM 2's assertion that every emitted `by_model` line is held at 2 or more firms on its date. That assertion is the guard that carries the grant's basis.
+3. **The 10 of 20 core quarter cells absent on the 2026-10-09 object are ACCEPTED:** q2 2026-03-31 and q3 2025-12-31 fall before 2026-05-15. Each renders the existing honest-None
+   state, and it is the same history the trend loses. Partner-facing, so Andrew is told, as information.
+4. **The fold line as a crosswalk row in both homes** (the registry raises at import on an unknown model) makes the cell WORLD-class. The deploy order names the emitter package.
+   Accepted as stated.
+
+-- 1.0.0_SA_CTO~DELL1

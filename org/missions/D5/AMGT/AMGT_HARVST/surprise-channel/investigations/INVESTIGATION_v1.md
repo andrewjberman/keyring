@@ -8779,6 +8779,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S11",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~HV1",
+     "surfaced_at": "2026-10-12T14:42:58Z",
+     "one_line": "HVST-by-5's four arms omit the arm its CTO half calls required (a userType carried in the request BODY must still answer 403), so AC1 does not cover it; this seat ran it as an extra arm on the deployed function and it answered 403.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-by-5 CTO half (ledger/NEVER_WIDEN_ROUND81_BY2_BY3_CTO_HALVES.md, by-5 section): 'a userType in the request BODY, which is never read. That is the arm that keeps the admit off caller-controlled bytes, and it is required.' The order's step 6 and AC1 list four arms: dev_non_internal_tier, advisor_non_dev, no_context, internal_no_ticker; none carries a body.",
+     "world_is": "Measured 2026-10-12 ~14:42Z on the deployed function after the by-5 apply (CodeSha256 Q342L4Vn...): payload {\"body\": \"{\\\"userType\\\": \\\"Dev\\\"}\", \"requestContext\": {\"authorizer\": {\"lambda\": {\"tier\": \"advisor\"}}}} (no ticker) answered statusCode 403; a case variant userType \"dev\" in the authorizer context answered 403. The merged by-4 bytes run in-process gave the same 403 and 403, and the by-2 bytes also 403, so these two arms do not discriminate by-4 from by-2; they discriminate by-4 from a handler that read the body or compared case-insensitively. They are recorded in by5_extra_arms.out and are NOT part of AC1 or of the checker's grade. NOT measured: any real portal request, so whether API Gateway can ever place a caller-controlled userType in the authorizer context is not read here (the authorizer builds its context from the verified JWT only).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round81/by5_extra_arms.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round81/by5_arms.out",
+       "git show 0e8a1d59cc:org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_ROUND81_BY2_BY3_CTO_HALVES.md (by-5 section, the body arm)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
