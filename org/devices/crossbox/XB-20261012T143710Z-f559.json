@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261012T143710Z-f559",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "0.0.0_AB_MSTR~DELL2",
+ "to_serial": "2.0.0_SA_COO~C",
+ "subject": "FWD-3 matrix: dell2->laptop pair, ack only",
+ "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/XB_DELL2_TO_LAPTOP_MATRIX_PAIR_20261012.md",
+ "opened_at": "2026-10-12T14:37:10Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
