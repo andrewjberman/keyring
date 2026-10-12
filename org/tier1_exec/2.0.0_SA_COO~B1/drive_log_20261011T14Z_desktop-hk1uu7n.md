@@ -61,3 +61,7 @@
 - FB-g-36 @5e684dc53e merged, VALID, complete; FB-f-13 step 9 amended (real id per entity class, 200 denominator).
 - FB-f-20 (c290) done by ~FBL 17:19Z (laptop commit 8e2c4a76e6 on origin/box/laptop, ls-remote read): plan 1 to change, diff default_sms_type alone; AC1 Transactional, AC2 50 0, AC3 No changes; no text sent. Graded from the committed evidence (plan.txt, apply.txt, instance); the dell1 identity cannot read SNS attributes, so no independent live read from this seat. 99a0 from-side closed 17:30:30Z (HALF-CLOSED until the to-side record lands).
 - Open: real SEV1 publish (Andrew word, CTO asking); window GO Monday.
+
+## 2026-10-12 06:07Z tick (B1)
+- Producers chain still writing the legacy home at 06:05Z (7055 keys since 05:50Z, 397 since 05:52:53Z); window not open. Poll monitor running; GO after 12 quiet minutes and the remaining section-0 conditions.
+- FB-f-15 re-run: ~FBL committed d6093ad983 (16:20Z Oct 11), AC1 PASS from the committed r4_sim.py: 9 of 9 allowed, 2 of 2 negatives, OAI ok. Graded from the instance; b717 from-side closed 06:06:52Z (to-side not yet recorded); 5cf5 CLOSED-BOTH.
