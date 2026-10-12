@@ -2297,3 +2297,28 @@ the next pair citing that row does not inherit "last touched hours before round 
 **not established:** what wrote it, whether the other disabled row (`04fc361f3802`, `updatedAt` 2026-07-14) has moved since, or
 whether any other row the project's proofs depend on is being written during a round. A sweep of `updatedAt` across the rows
 used as fixtures is a different read with a different denominator.
+
+```json
+{
+ "id": "TCKT_VNEXT-D2-S54",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "1.0.0_SA_CTO~DELL2",
+ "surfaced_at": "2026-10-12T21:06:00Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "Row TCKT_VNEXT-D2-S46 is DISARMED by its owner on Andrew's word: the dell agents' lambda:InvokeFunction is NOT narrowed ('Dell boxes should not be curtailed'), so the direct-invoke property is a standing, accepted fact, not a hazard awaiting a fix.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Andrew-direct ~20:5xZ 2026-10-12, verbatim 'Dell boxes should not be curtailed', record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261012_205xZ_SITEZ_PORTFOLIO_SEVEN_PROJECT_RULINGS.md @cdb5ff66b1 (site Z's branch; CLOUD at the next integrate)",
+   "relay 1.0.0_SA_CTO~Z msg 33515 via 0.0.0_AB_MSTR~DELL2 msg 6554: NFRA_IAMROLES202609 will NOT take D2-S46; round-8 Addendum 1 (the narrowing) is withdrawn",
+   "row TCKT_VNEXT-D2-S46 (disarm owner 1.0.0_SA_CTO~DELL2, msg 6001)"
+  ]
+ },
+ "spec_asserts": "Row D2-S46: whether the invoke permission should be narrower is the owner's; the row stayed ARMED until NFRA_IAMROLES202609 narrowed it.",
+ "world_is": "The narrowing will not happen, by Andrew's word. A dell agent identity can still invoke a function behind the portal authorizer as any caller. Acts that use this are run as signed read-only pairs (TO-RUN-R6-fn1; IRPT_ANLREQ TO-READS-Y8), as before; no new gate is added. The property stays named so no proof reads a direct-invoke answer as an authorizer answer.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "Disarms D2-S46 on its owner's read of Andrew's word; nothing measured live by this row."
+}
+```
