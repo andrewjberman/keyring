@@ -3695,3 +3695,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W51-S9 -- worker row, AR-y-164
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-12T02:11:20Z",
+  "one_line": "AR-y-164: the commentary-sent handler differs from the face in four places (403, completed ticket allowed, already-recorded answer carries no stamp, 404 before 400); the page was built to the code.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:1597-1636 @wk-IRPT_ANLREQ-51 (route dispatch :1731-1732): commentary_sent_ticket. 403 from authorize COMMENTARY_SENT at :1602-1604 (the face lists no 403); a completed ticket is accepted (docstring :1600; no status check before :1624); SENT_ALREADY_RECORDED at :1621-1623 answers {error, code} only, no stamp; the 404 (:1609-1610) is answered BEFORE the 400 for a body key (:1611-1614); 409 codes at :1615-1617 (WRONG_TICKET_TYPE), :1618-1620 (NO_DRAFT), :1621-1623 (ALREADY_RECORDED), :1633-1635 (TICKET_CHANGED); 200 {ticket_id, commentary_sent: {sent_by, sent_at}} at :1624,:1636.",
+      "portal/src/api/api-client.ts:178-181 @0a06280a40: a non-2xx throws Error('API request failed: <status> <text> - <body>'), so the page reads the status and the code out of the message text; there is no structured error.",
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx: the sibling lines (generated_at, attached_at) print the stamp as served; the page's fmtWhen lives in TicketCenter.tsx, which imports this file, so the stamp is shown as served."
+    ]
+  },
+  "spec_asserts": "The face: the route answers 200, 409 with four codes, 404 and (any body key) 400; the control is for an analysis request with a draft and nothing recorded; an already-recorded refusal says by whom and when if the answer or a refreshed ticket says so; the stamp uses the page's existing date formatting.",
+  "world_is": "A 403 exists and is shown as a sentence; a completed ticket is accepted, so the control is offered on a completed ticket; the already-recorded answer holds no stamp, so the page asks its list to refresh (an optional onRefresh prop, wired in TicketCenter.tsx to the board's refresh) and the refreshed ticket's commentary_sent shows who and when; the stamp is shown as served. The route was never called, by any test or by the worker.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
