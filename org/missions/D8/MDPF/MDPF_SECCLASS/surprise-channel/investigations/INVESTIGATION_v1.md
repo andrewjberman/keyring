@@ -6310,3 +6310,30 @@ by dell1 or by this seat.
  "notes": "RE-FILED under a fresh id by 3.0.0_SA_CVO on 1.0.0_SA_CTO ruling 4d96 (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL1_4D96_CVO_WORKTREE_TWO_UNSUPERSEDED_ROWS_REFILE_20261012.md @b91d51e6a4). Original: id MDPF_SECCLASS-S60, surfaced 2026-10-07T16:38Z (laptop) in commit bcd60149e4 on branch cvo-secclass-r9-compile, never landed; the trunk reuses MDPF_SECCLASS-S60 for 2.0.0_SA_COO~M1's COT multi_asset row. Content otherwise unchanged. Prior notes: Filed on dell1 by 3.0.0_SA_CVO (dell1 owns MDPF_SECCLASS rows). Close when the 403 is shown to be walker scope (a real advisor's read of the same path answers 200), or graduate BLOCKING against FWD-1 if a real advisor gets 403."
 }
 ```
+
+## MDPF_SECCLASS-D1-S30 -- leg G first read: D_04's served Unclassified is unchanged across the SC-e-87 ship on the same as-of; C_06 never revisits a retained date's unclassified holdings
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S30",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-12T04:47Z",
+  "one_line": "Leg G of TO-SC-e87b, first post-ship read: on the SAME as_of (2026-10-09, identical firm total) D_04's served platinum/firm/mix_summary.json Unclassified is $1,846,332.73 before the ship and after it, unchanged to the cent, while D_03's firm_composition unclassified moved 92 / $3,325,002.64 -> 66 / $2,760,199.32. C_06 is incremental and never revisits a retained date's 'unclassified' holdings, so the SC-e-87 fix reaches D_04 only on a date C_06 builds new.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 object versions of platinum/firm/mix_summary.json (opal-data-bd), read 2026-10-12 ~04:3xZ: version written 2026-10-11T05:45:16Z (the 04:00Z fire, BEFORE the 06:20Z ship) reads data_as_of 2026-10-09, Unclassified market_value 1846332.73, mix_total 2015391646.72; version written 2026-10-12T02:01:03Z (run launched 00:18:09Z by bd-gold-trigger, AFTER the ship, D_04 at 02:01Z) reads the same data_as_of, the same Unclassified 1846332.73 and the same mix_total. Pre/post are equal to the cent.",
+      "S3 object versions of gold/views/firm_composition.json: 2026-10-11T05:24:35Z reads data_as_of 2026-10-09, unclassified count 92, market_value 3325002.64, total_market_value 2015391646.72; 2026-10-12T01:40:16Z reads the same data_as_of and total, count 66, market_value 2760199.32. The ship's effect shows at D_03 (-26 securities, -$564,803.32); the 23-security / $966,285.46 expectation was measured on the 2026-10-06 partition, so the dollar figure is not directly comparable.",
+      "Code at HEAD (box/dell1): C_06.client_mix_timeseries.py :274-275 SERVED_HOLDING_CLASSES includes 'unclassified'; :278-311 reclassify_retained only revisits retained holdings whose asset_class is OUTSIDE that set, so a retained date's 'unclassified' holdings are never re-run; :997-1028 / :659-690 incremental mode processes only new dates; D_04.client_portal_summary.py :486 reads gold/views/mix_daily_summary.json (C_06's snapshot). gold/views/mix_daily_summary.json LastModified stayed 2026-10-11T05:23:28Z across the post-ship run in which C_06 executed at 01:37Z (telemetry C_06/cd341221d869).",
+      "CloudTrail StartInstances for i-01003b035d2988dfb: 2026-10-11T20:18:09-04:00 by bd-gold-trigger (the Lambda that also launched 04:00:46Z and 23:00:11Z fires); the 04:00:46Z fire of 2026-10-12 is running at 04:43Z."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-87's fix (a ticker-no-row position is placed by its NAME:: row at the three BD classify sites) moves the securities out of the served Unclassified once the three files ship and a BD gold fire runs; leg G reads about $6,335.94 left Unclassified (at the 10-08 as-of), not zero.",
+  "world_is": "At the 2026-10-09 as-of the served D_04 Unclassified did not move across the ship (identical to the cent), while D_03's did. The code explains it: C_06's incremental run keeps every already-written date and its retained-date pass skips holdings classed 'unclassified', and D_04's firm mix is C_06's snapshot. The fix therefore reaches D_04's served mix only for a date C_06 builds new; retained dates (10-06..10-09) keep the 23 in Unclassified. NOT yet read: whether today's 04:00Z fire builds a new date (the as_of may still be 10-09), and the same read on a new date."
+}
+```
