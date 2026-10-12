@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261012T023834Z-c4eb",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "dell1",
+ "from_serial": "2.0.0_SA_COO~C2",
+ "to_serial": "2.0.0_SA_COO~Q1",
+ "subject": "ADVI_COTBKF tier-2 demand-queue request: 15 funds, as-traded close, 2020-07-06 to 2026-06-22 (ruling 479d6deba0)",
+ "body_path": "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF-TIER2-15-FUNDS-AS-TRADED-20261012.request.json",
+ "opened_at": "2026-10-12T02:38:34Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

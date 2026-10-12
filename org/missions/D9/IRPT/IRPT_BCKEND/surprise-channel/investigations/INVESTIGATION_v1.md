@@ -28233,3 +28233,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "S60's three NAMED splits are released away: the adapter and the narrative by IB-pr-420 (2026-10-11), irpt-status by its own release, and none of the three has logged the error since. A served route passes through each (performance, narrative, status and request reads), so 0 over 46, 13 and 243 invocations is a read of served traffic and not of an idle function; it is not a sweep of every path. NOT cleared by this row: the signature-closure instrument was never run on irpt-49f-reporting-read-lambda, irpt-export-render or irpt-holdings-refresh-lambda (the row's fetch failures); irpt-ycharts-generate carries 4 method-call sites the closure limb reports on live and built alike (IB-pr-426, IB-pr-456), unexercised. The owner's own failure, stated: the row sat ARMED from 2026-10-09T16:40Z to now with no disposition although its remedy (IB-pr-416, IB-pr-420) was applied on 2026-10-11; this seat did not file the evidence when it applied the remedy. The disarm clock is the CVO's to write."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S103",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-12T02:36:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "ADDS A THIRD MEMBER to parked row IRPT_BCKEND-D2-S98: a vendor section on the wire does not say what each COLUMN is (a compared security or a period), so cards of one field share a name. PARKED with S98 for the vendor producer's next release.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "2.0.0_SA_COO~D2 msg 6377 and org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~67/SHARED_TITLE_46.json @900b5af891 (a worker's read of code and census, not re-read by this seat): section_id is <code>.<field slug>.c<column> (ycharts/extract/extract.py:704-707); the column is the ordinal of a value on the row (:604-606); S18 by the producer's rule is 18 fields x 2 columns = 36 cards with 18 names.",
+      "The same message: the served count was 46, not 36; the gap is unexplained (row DSGN_IRPTV1-D2-W67-S1).",
+      "No served or stored vendor answer was read by this seat: the owner read IB-pr-451 was withdrawn @9053ea7b45 (CTO msg 5770) and no served-read window is open."
+    ]
+  },
+  "spec_asserts": "A reader of a finished report sees each value by what it is, from the answer the service serves (FWD-5).",
+  "world_is": "The wire names the field through the section id's slug and gives the column only as an ordinal. PARKED: owner 2.0.0_SA_COO~P2. Un-parks with row D2-S98, when the vendor producer is next released for a reason; that release's cell adds, through one PRD addendum (the contract forbids additional members), a title member, a field-name member and a column label (the compared security or the period). NOT answered here: where 46 comes from. A code read gives 36; the difference can only be read from a stored or served report, which this seat has no order to read. Whoever next reads one counts the section ids of S18 by slug and column."
+}
+```
