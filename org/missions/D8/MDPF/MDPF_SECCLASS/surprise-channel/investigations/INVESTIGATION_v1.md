@@ -6337,3 +6337,27 @@ by dell1 or by this seat.
   "world_is": "At the 2026-10-09 as-of the served D_04 Unclassified did not move across the ship (identical to the cent), while D_03's did. The code explains it: C_06's incremental run keeps every already-written date and its retained-date pass skips holdings classed 'unclassified', and D_04's firm mix is C_06's snapshot. The fix therefore reaches D_04's served mix only for a date C_06 builds new; retained dates (10-06..10-09) keep the 23 in Unclassified. NOT yet read: whether today's 04:00Z fire builds a new date (the as_of may still be 10-09), and the same read on a new date."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-W84-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~84",
+  "surfaced_at": "2026-10-12T09:12:37Z",
+  "one_line": "iv-e-46.class-readers.test.ts documents a 'mutant control below' (comment at :45-47) that does not exist in the file; the order's 'do not weaken the census test or its mutant control' names a control that is not there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/AdvisorIntelligence/__tests__/iv-e-46.class-readers.test.ts@62507dae67 :45-47 says the whole-file check is 'caught by this test's own mutant control below'",
+      "portal/src/pages/AdvisorIntelligence/__tests__/iv-e-46.class-readers.test.ts@62507dae67 grep -i mutant returns only line 47; no other top-level __tests__/*.ts names a mutant",
+      "portal/src/pages/AdvisorIntelligence/__tests__/iv-e-46.class-readers.test.ts@64d8c6de38 leaves :45-47 untouched and adds no mutant control; the census test and its assertions are unchanged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order says: do not weaken or delete the existing census test or its mutant control (iv-e-46.class-readers.test.ts).",
+  "world_is": "At origin/DEV 62507dae67 the file has the census test and no mutant control; the only 'mutant' text is the comment at :45-47, which names a control 'below' that is absent. Nothing was deleted or weakened; the repair (portal 64d8c6de38) only swapped NAMED line numbers for content anchors and added the NEGATIVE-ARM test. Whether a mutant control was meant to exist is not decided here."
+}
+```

@@ -45,10 +45,10 @@ All MDPF_SECCLASS ledgers are CLOSED except one (HELD):
    | cell | what | risk | slot | state |
    |---|---|---|---|---|
    | `SC-e-91` | C_06 retained pass revisits retained `unclassified` holdings on every fire (also with no new partition); firm and advisor snapshots follow; never-widen half request, both halves unsigned (row D1-S30) | SERVED | ~80 `worker` | running |
-   | `SC-e-92` | cross-box deploy check: trunk-first sentinel status; a vanished worktree is not a hit; a branch-only sentinel still hits (row D1-S28) | LOCAL | ~81 `worker` | running |
-   | `SC-e-93` | read: served BD positions with the literal ticker NAN / NONE, denominator printed (row D1-W77-S1) | LOCAL | ~82 `worker-light` | running |
+   | `SC-e-92` | cross-box deploy check: trunk-first sentinel status; a vanished worktree is not a hit; a branch-only sentinel still hits (row D1-S28) | LOCAL | ~81 `worker` | built; reopened by amendment 1 (row D1-W81-S2: a vanished worktree is read through its branch) |
+   | `SC-e-93` | read: served BD positions with the literal ticker NAN / NONE, denominator printed (row D1-W77-S1) | LOCAL | ~82 `worker-light` | DRAINED 97ca96b08f: NOT_EXPOSED (0 NAN/NONE of 114,554 positions at 2026-10-09; 225 null market values) |
    | `SC-e-94` | read: the writer of the 2026-10-06/07 holdings partition rewrite at 2026-10-10T23:15Z, writer count, whether C_06 re-serves those dates (row D1-W78-S1) | LOCAL | ~83 `worker-light` | running |
-   | `SC-e-90` | portal test `iv-e-46.class-readers.test.ts` locates each named reader by content, plus a negative arm (CTO msg 4167); direct act, portal worktree at origin/DEV `62507dae67` | LOCAL | ~84 `worker-light` | running |
+   | `SC-e-90` | portal test `iv-e-46.class-readers.test.ts` locates each named reader by content, plus a negative arm (CTO msg 4167); direct act, portal worktree at origin/DEV `62507dae67` | LOCAL | ~84 `worker-light` | DRAINED 4ff03e1393; portal test commit 64d8c6de38 on origin/DEV (ls-remote, fast-forward from 62507dae67, test file only; AC1 3 pass, AC2 1 pass, re-run by me) |
    - **Carried, not a cell:** leg G of SC-e-87 and D1-S30, read on the first post-ship as_of (Tuesday 2026-10-13's fire or later), the expected
      figure stated at THAT as-of, never at 10-08. SC-e-91 must also ship (a pair-gated act by a CloudOps lane) before that read can pass.
    - Drain per chain end (`/dispatch` Step 5), then the real run of each outcome, the L8 packet to the CVO, the `round-close-check`.
