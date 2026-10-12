@@ -7089,3 +7089,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Recorded because the no-key-write rule and the invocation read differently. No change made; the invocation stays as the order names it."
 }
 ```
+
+## NFRA_CTLPLN-W61-S10 -- The amended selftest has no case for the password arm's PROBE-ERROR verdict, so the never-REFUSED-by-default rule is checked only by a direct call
+
+```json
+{
+  "id": "NFRA_CTLPLN-W61-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~61",
+  "surfaced_at": "2026-10-12T03:24:37Z",
+  "one_line": "The amended selftest has eight cases and none exercises the password arm's PROBE-ERROR verdict (a denial with no parenthesised method list), so that verdict is checked only by a direct call to password_verdict.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "selftest run in the worktree at wk-NFRA_CTLPLN-61 (uncommitted at the run): CASE 1 to CASE 8, SSH-VERIFY-SELFTEST cases=8/8 ok=True; no case sets a denial without a parenthesised list",
+      "direct control on the same tool file: password_verdict(255, '', 'Permission denied, please try again.') -> PROBE-ERROR; password_verdict(255, '', 'Permission denied (publickey).') -> REFUSED; password_verdict(255, '', 'Permission denied (publickey,password).') -> ADVERTISED:publickey,password",
+      "the amendment at org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-u-2.ssh-tailnet-verify-tool.md names exactly eight cases and the line cases=8/8"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-u-2 AMENDMENT 1: password_arm reads PROBE-ERROR when no parenthesised list can be read (never REFUSED by default); the self-test gains exactly two cases, now 8.",
+  "world_is": "The eight cases cover ADVERTISED, REFUSED, LOGGED-IN and the port and key arms, but no case covers the password arm's PROBE-ERROR branch. A direct call returns PROBE-ERROR for that branch, so the code matches the amendment, but the selftest would not catch a regression that made it REFUSED by default. A ninth case was not added because the amendment fixes the count at 8/8.",
+  "notes": "No change made beyond the amendment. The issuer may rule whether the PROBE-ERROR branch needs its own case, which would move the expected count. Until then the claim rests on the direct-call control, which is recorded in the proof instance."
+}
+```
