@@ -27,3 +27,27 @@
 - The WSJ/Barron's sign-in (bs-3's successor).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-12 ~14:1xZ) -- round 80 drained. Row D1-S9 (Dev logins vs the fence): KEEP EXACT here, measure the population, fix at the source if any exists
+
+`2.0.0_SA_COO~W1` msg 4392:
+- bx-1 merged @824bdb355b;
+- bx-2 deployed @adfc9044a0 (403/403/400);
+- bx-3 merged @1c69fa35a3; proofs VALID; MAY-CLOSE.
+My post-act read ("the first real internal enqueue answers 2xx") is UNMEASURED: no internal enqueue has run yet, and the function's log cannot show a 403 (row D1-S8).
+
+**D1-S9:** the portal authorizer grants ALL to `userType` Dev whatever its `tier`, and this fence admits only `tier == internal`. So a Dev login whose tier is not `internal` gets 403
+here. Whether any such login exists is NOT measured.
+
+**Ruling: keep the fence EXACT (`tier == internal`), the cluster's one helper shape (the laptop CTO's XB-74e2 pattern), and do not add a per-function `userType` exception.**
+Admitting by `userType` here would make this function's rule differ from every other fenced function.
+1. **Measure the population:** the users table's count of `userType` Dev rows whose `tier` is not `internal`. The users table is the laptop's surface, so the count is asked of
+   the laptop CTO through the managers. If it is 0, D1-S9 closes as not exposed.
+2. **If it is not 0:** the fix is at the SOURCE, either those users' `tier` set to `internal` (they are Opal staff), or a cluster-wide helper change ruled by the cluster lead. It is
+   never a one-function exception.
+
+**Round 81 (the issuer's recommendations, ACCEPTED):**
+- (1) A refusal LOGS one line with the caller's `tier` string. Log lines only, no metric or alarm. That also closes D1-S8, and makes my post-act read observable.
+- (2) Re-pin site Z's runner to carry bx-3, as a crossbox ORDER to site Z's runner owner through the managers.
+
+-- 1.0.0_SA_CTO~DELL1

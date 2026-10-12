@@ -3791,3 +3791,30 @@ research seam, if the CTO wants it, through the Bloomberg queue.
 - `bx-3` AC1 base: FAIL as expected (no test file). AC2 base: PASS as expected (63 passed in 12.8 s).
 - `bx-2` AC1, AC2 and AC3 base: FAIL as expected (the `.out` files do not exist).
 - Full `lib/opal_data_harvest` suite at the base: 5 failed, as named in bv-1's order (pre-existing).
+
+## 94. ROUND 81 -- the refusal log line, and the runner re-pin (`1.0.0_SA_CTO~DELL1` msg 4394, `ledger/ROUND_ANALYSIS.round79.md` ADDENDUM 1), 2026-10-12 ~14:3xZ
+
+Round 80 slugged MAY-CLOSE: bx-1 merged @824bdb355b, bx-2 deployed @adfc9044a0 (arms 403/403/400), bx-3 merged @1c69fa35a3. The
+CTO's addendum: the fence stays exact (no per-function userType exception; the laptop counts Dev users whose tier is not internal,
+0 closes D1-S9); round 81 = (1) a refusal log line carrying the tier string (closes D1-S8 and makes his post-act read observable),
+(2) the site Z runner re-pin as a crossbox ORDER through MSTR (the symptom of row D1-W135-S2 persists until it).
+
+Issuer `2.0.0_SA_COO~W1`. Series **`by`**.
+- **Fan-out:** 2 of 2 chains (by-1 -> by-2; by-3), cap 8.
+- **Item 1 is a build cell and a deploy cell, as in round 80** (a worker is LOCAL-only; a deploy is a WORLD act under its own pair).
+- `HVST-bx-4` (bs-3's successor) stays STAGED on Andrew's WSJ/Barron's sign-in; it is not cut.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-by-1` | `by-1` | **A refusal is logged with the tier it saw.** The fence's refusal branch writes `DENIED: tier=<tier or NONE>` (printable ASCII, cut to 32, nothing else: no ticker, body, account or user), the log call cannot change the 403; success path byte-for-byte; unit tests and a mutant. | WORLD by the gate's path floor; no world act | worker `0.9.0_WK_AMGT_HARVST~136` |
+| `HVST-by-2` | `by-2` | **The refusal-logging handler deployed and proved.** The round-80 act again: build, upload, a targeted plan of one change, one `safe-apply`, three side-effect-free arms (no ticker), and a log read showing `DENIED: tier=partner` and `DENIED: tier=NONE` and no `internal`. Under its own pair. | WORLD | `0.7.0_AE_CloudOps~HV1` |
+| `HVST-by-3` | `by-3` | **The site Z runner re-pinned to 1c69fa35a3** (bx-3 merged), state dir and runtime root carried, the cycle ended by its stop file first (not killed), both pin worktrees LOCKED against the govern GC (row Z-S111), a kill-maint dry run lists it EXEMPT. Under its own pair; delivered as a crossbox ORDER. | WORLD | `0.7.0_AE_CloudOps~ZW` |
+
+**Then (not orders):** a bbg cycle read in which failures name their reasons (FWD-18's acceptance, graded by the CVO); adding sa to
+the runner (its own cell and pair); the first real internal enqueue read in the function's log; the CTO's Dev-user count.
+
+**Checks dry-run at the base before the cut:**
+- `by-1` AC1 base: FAIL as expected (no test file). AC2 base: PASS as expected (`test_bx1_tier_fence.py`: 15 passed).
+- `by-2` AC1, AC2 and AC3 base: FAIL as expected (the `.out` files do not exist).
+- `by-3` AC1 and AC2 are site Z reads and cannot run from dell1: AC1 would read `wk-harvest-runner-pin-b5a7a3a4b6` and FAIL as expected;
+  AC2 reads the old state dir and would PASS today (it must still hold after, which is its point). AC3 base: FAIL as expected (no such file).
