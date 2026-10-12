@@ -6337,3 +6337,84 @@ by dell1 or by this seat.
   "world_is": "At the 2026-10-09 as-of the served D_04 Unclassified did not move across the ship (identical to the cent), while D_03's did. The code explains it: C_06's incremental run keeps every already-written date and its retained-date pass skips holdings classed 'unclassified', and D_04's firm mix is C_06's snapshot. The fix therefore reaches D_04's served mix only for a date C_06 builds new; retained dates (10-06..10-09) keep the 23 in Unclassified. NOT yet read: whether today's 04:00Z fire builds a new date (the as_of may still be 10-09), and the same read on a new date."
 }
 ```
+
+## MDPF_SECCLASS-D1-W81-S1 -- A trunk-deleted sentinel re-opened under the same name on a worker branch would read STALE by history alone
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W81-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~81",
+  "surfaced_at": "2026-10-12T09:13:11Z",
+  "one_line": "Read literally, the SC-e-92 stale test (trunk history carries the path) marks a sentinel re-opened under a trunk-deleted file name on a worker branch as STALE, so it draws no hit and a real open deploy reads CLEAR. The tool also requires the stale reading's blob to be one trunk carried at that path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Tool at commit 2cbf819176 (.tools/crossbox-deploy-check.py, measure_open_deploy: stale_at built from git log -m --raw per path absent at trunk HEAD; a reading is stale only when its blob is in that set).",
+      "Control run 2026-10-12 ~09:1xZ, .scratch/control_reopen.py in worktree wk-MDPF_SECCLASS-81: a closed-at-trunk slug re-opened on branch 'worker' under the same file name with a new blob prints REOPEN-CONTROL hits=1 (expect 1), stale=0, the branch reading drawn as HIT open deploy reopen (status OPEN).",
+      "Same control, lagging case (trunk deleted the sentinel, lagging HEAD still holds the trunk blob): LAGGING-LINES hits=0, one STALE line naming the deleting commit, stale=1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-92 build step 1 (worker face): a sentinel absent at trunk HEAD whose path trunk history carries is STALE and draws no hit; a sentinel trunk never carried is a deploy open on a worker branch and counts as today.",
+  "world_is": "A path can carry a closed sentinel in trunk history and a fresh open sentinel on a worker branch under the same file name, with a blob trunk never carried. The history test alone cannot tell the two apart, so the literal rule reads a real open deploy CLEAR. The tool keeps the stale rule narrow: stale also requires the blob to be one trunk carried at that path (the lagging-copy case still reads stale).",
+  "notes": "SURFACED, NOT CHASED. The narrowing is an addition beyond the literal build step 1, kept because the cell forbids a clear-when-open read; the issuer may ratify or reverse it. Hazard INERT while the blob condition stands."
+}
+```
+
+## MDPF_SECCLASS-D1-W81-S2 -- A deploy open on the branch of a removed worktree reads CLEAR: VANISHED never draws a hit and branch refs are not read
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W81-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~81",
+  "surfaced_at": "2026-10-12T09:13:11Z",
+  "one_line": "Under limb e a sentinel committed on the branch of a registered worktree whose directory is gone reads CLEAR, because the tool reads only each registered worktree's HEAD at its path, and VANISHED never draws a hit. Before this change the same state drew a hit.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Control run 2026-10-12 ~09:1xZ, .scratch/control_vanished_branch.py at worktree wk-MDPF_SECCLASS-81 (tool at 2cbf819176): a sentinel committed on branch 'gone', then the worktree directory removed, prints VANISHED-BRANCH-CONTROL hits=0; denominator 'vanished=1 stale=0', 0 sentinel reads.",
+      "Base tool at 2f215ca75a:.tools/crossbox-deploy-check.py lines 341-356 classified the same state as a hit (ls-tree rc=128, not readable, not clear) because VANISHED covered only a tree that left the list during the read.",
+      "Live run 2026-10-12 09:10Z of .tools/crossbox-deploy-check.py at 2cbf819176 on /c/dev/wk-secclass-81 (64 worktree(s), 1163 sentinel read(s)): vanished=0, so no such state is present in the live worktree list at this read."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-92 build step 2: a registered worktree whose directory does not exist is VANISHED, counted in vanished= and never a hit. The cell's defect statement: a change that makes the check read CLEAR when a real deploy is open on a branch is the one defect the cell must not create.",
+  "world_is": "A deploy open on a worker's branch stays on that branch until the drain (CLAUDE.md NEVER-2). If its worktree directory is removed before the drain, the tool cannot see the sentinel: it reads each registered worktree's HEAD at its path, and the branch ref is not read. The state reads OPEN-DEPLOY clear, which the cell forbids.",
+  "notes": "SURFACED, NOT CHASED. Not implemented: a branch-ref read for VANISHED entries is new reading surface outside the TO's build, and the frozen spec allows only this row. The issuer decides whether VANISHED entries' branch sentinels count as hits. Disarm owner is the issuer that cut SC-e-92."
+}
+```
+
+## MDPF_SECCLASS-D1-W81-S3 -- The worker face names rows MDPF_SECCLASS-W81-S<k>; the surprise-row gate requires the dell1 coordinate
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W81-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~81",
+  "surfaced_at": "2026-10-12T09:13:11Z",
+  "one_line": "The worker face names this order's rows MDPF_SECCLASS-W81-S<k>; the surprise-row gate refused a dell1 row without the D1 coordinate, so this order's rows are minted MDPF_SECCLASS-D1-W81-S<k>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit of the W81 rows at worktree wk-MDPF_SECCLASS-81 (base 2cbf819176) refused with: BLOCKED -- 2 violation(s) on NEW rows: fabric='dell1' but the id carries no coordinate. A row filed on dell1 is written <CODE>-D1-S<n> (worker: <CODE>-D1-W<n>-S<k>).",
+      "Existing dell1 worker rows in this channel carry the coordinate, e.g. MDPF_SECCLASS-D1-W78-S1 (channel line 6212)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face: this order's rows mint MDPF_SECCLASS-W81-S<k>.",
+  "world_is": "The gate requires the fabric coordinate on a dell1 worker row: MDPF_SECCLASS-D1-W81-S<k>. The two refused rows were never committed and were re-minted with the coordinate before the commit.",
+  "notes": "SURFACED, NOT CHASED. Id form only; no content changed."
+}
+```
