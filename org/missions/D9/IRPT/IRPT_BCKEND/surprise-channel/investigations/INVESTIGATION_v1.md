@@ -28233,3 +28233,26 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "S60's three NAMED splits are released away: the adapter and the narrative by IB-pr-420 (2026-10-11), irpt-status by its own release, and none of the three has logged the error since. A served route passes through each (performance, narrative, status and request reads), so 0 over 46, 13 and 243 invocations is a read of served traffic and not of an idle function; it is not a sweep of every path. NOT cleared by this row: the signature-closure instrument was never run on irpt-49f-reporting-read-lambda, irpt-export-render or irpt-holdings-refresh-lambda (the row's fetch failures); irpt-ycharts-generate carries 4 method-call sites the closure limb reports on live and built alike (IB-pr-426, IB-pr-456), unexercised. The owner's own failure, stated: the row sat ARMED from 2026-10-09T16:40Z to now with no disposition although its remedy (IB-pr-416, IB-pr-420) was applied on 2026-10-11; this seat did not file the evidence when it applied the remedy. The disarm clock is the CVO's to write."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W323-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~323",
+  "surfaced_at": "2026-10-12T02:39:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The earlier cells stored no command line for the partition window of the 878 list; this cell inferred 2026-06-09 to 2026-10-09 from the 85 graded days and the list reproduced (303, 894, 878); six of the 878 symbols map to more than one cusip",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~323/IB162-1_request_derivation.json: tickers_derived 878; symbols_mapping_to_more_than_one_cusip 6; cusips_mapping_to_more_than_one_symbol 0; partitions_read: holdings 91 and anchor 86 present of 2026-06-09..2026-10-09, 85 graded days",
+      "the window is inferred, not read: ~308/ib433_fetch.py takes first and last date as arguments and no record of the arguments was found; the 303 of IB-pr-452, the 894 of IB-pr-439 and the 878 of IB-pr-454 all reproduced, which is the test the face set"
+    ]
+  },
+  "spec_asserts": "The face says to read the SAME partitions the earlier cells read (their records state the window); the earlier records state 85 trading days 2026-06-10 to 2026-10-09 but not the fetch arguments.",
+  "world_is": "The cache window 2026-06-09 to 2026-10-09 (the graded days plus the prior trading day) gives the list exactly; a wider window would add graded days and was not tried. The request carries the lexicographically first cusip for each of the six symbols that have more than one cusip; which cusip the queue should quote is not established."
+}
+```
