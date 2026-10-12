@@ -8595,6 +8595,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-W134-S1",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~134",
+     "surfaced_at": "2026-10-12T13:29:13Z",
+     "one_line": "HVST-bx-1 AC1's expect (?m)^\\d+ passed in does not match a clean run of its named test file as written: the handler's pre-existing _utc_now() utcnow() call emits a DeprecationWarning under this Python, so pytest prints '15 passed, 3 warnings in' and the anchored pattern fails.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-bx-1 PROOF OF SPEC AC1: python -m pytest infra/aws/lambda/research/pull_enqueue/test_bx1_tier_fence.py -q -p no:cacheprovider --color=no, expect (?m)^\\d+ passed in (a run with no failure). The invocation is named literally and the cell does not name a warnings filter.",
+     "world_is": "Measured in the worktree before any warnings filter was added: the named file's run finished with 15 tests passing and the summary line '15 passed, 3 warnings in 0.27s', so the expect did not match although every test passed. The three warnings are all DeprecationWarning from lambda_function.py line 49, return _dt.datetime.utcnow(), which is the untouched base line 44 at 7b4512b094. The cell forbids changing anything but the fence. Mitigation landed in the TEST file only, a module-level pytest filterwarnings mark that ignores that one utcnow warning; the handler's _utc_now is unchanged. With the mark the criterion's run reads '15 passed in 0.29s' and rc 0.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "infra/aws/lambda/research/pull_enqueue/lambda_function.py@7b4512b094 line 44 (return _dt.datetime.utcnow().strftime(...)); git show 7b4512b094:infra/aws/lambda/research/pull_enqueue/lambda_function.py",
+       "infra/aws/lambda/research/pull_enqueue/test_bx1_tier_fence.py@12e8e945ae (pytestmark filterwarnings mark, the only warnings handling)",
+       "AMGT_HARVST.TO-HVST-bx-1 task order, PROOF OF SPEC AC1 expect line"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
