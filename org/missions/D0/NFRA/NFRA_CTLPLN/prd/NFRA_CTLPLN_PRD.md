@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.23",
+ "prd_version": "v0.24",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27", "FWD-28"],
@@ -310,17 +310,25 @@
                     "I also want that tailnet port set up so that we can ssh into the various devices
                     as well as rdp ... perhaps COO~C can handle it"
 
-  FWD-28 A function behind the portal authorizer that serves Opal-internal data reads the caller's
-         tier before it answers
-         DONE WHEN  EXERCISED -- one call to `opal-portal-data-proxy` and one GET to
-                    `opal-portal-content-api` with a partner-firm token answer 403, and the same two
-                    with an internal token answer 200
-         ACCEPT     `opal-portal-data-proxy` (its 11 routes) and `opal-portal-content-api` GET read
-                    `tier` from the authorizer context the way `get_users_me` does and refuse a
-                    caller whose tier is not `internal`; PUT and DELETE on the content api keep their
-                    firm fence; no handler checks that an event "came through API Gateway"; applied
-                    by Terraform under a signed pair with a NEVER-2 ledger
-         SOURCE     CTO ruling on XB-20261011T194408Z-e588 (2026-10-12), the XB-74e2 pattern
+  FWD-28 A data-proxy route that no partner page calls answers only an Opal-internal caller; a
+         route a partner page calls answers the firms that page admits, and no one else
+         DONE WHEN  EXERCISED -- one call to an internal-only data-proxy route with a partner-firm
+                    token answers 403 and with an internal token 200; one call to a partner-page
+                    route with an allowed firm's token answers 200 and with a token of a firm the
+                    page does not admit answers 403
+         ACCEPT     the 11 `opal-portal-data-proxy` routes are classed ONCE, by measurement, into
+                    (i) routes called by a page in `portal/src/.../firmAccess.ts` FIRM_ALLOWED_PATHS
+                    and (ii) the rest; class (ii) refuses any caller whose authorizer `tier` is not
+                    `internal`; class (i) refuses a caller whose `firmId` is not in the firm set the
+                    SAME source admits for that page (one source, never a second list); the content
+                    api GET stays open to every verified portal login (page copy, LOW), PUT and
+                    DELETE keep their firm fence; no handler checks that an event "came through API
+                    Gateway"; applied by Terraform under a signed pair with a NEVER-2 ledger; no
+                    page a partner login can open today changes what it shows that login
+         SOURCE     CTO ruling on XB-20261011T194408Z-e588 (2026-10-12), amended on row
+                    NFRA_CTLPLN-W62-S1 (2.0.0_SA_COO~C msg 108433, 02:5xZ): the tier-only fence
+                    would 403 the market/portfolios/positioning/valuations/macro/philosophy pages
+                    partner firms are admitted to
 ```
 
 ## PROVENANCE (outside the ratified section)
@@ -955,3 +963,12 @@ addendum keeps the why and the record of the change.
   section 3 (why the proxy and content api land here: both predate the tree and no project owns them).
 - `2.0.0_SA_COO~C` cuts FWD-27 (one packaging cell, three per-box cells) and FWD-28 (one cell) in its issuance, order its own;
   E1-E8 unchanged. Workers haiku, high effort (treatment device). No alert, monitor or timeout is built by either outcome.
+
+## ADDENDUM v0.24 (1.0.0_SA_CTO, 2026-10-12 ~03:0xZ) -- FWD-28 re-worded on COO~C's measurement (row W62-S1): fence by route class, not by tier alone
+
+- ENDPOINT change on one outcome: FWD-28's ACCEPT now classes the 11 data-proxy routes by whether a FIRM_ALLOWED_PATHS page
+  calls them; partner-page routes admit the firms that source admits (firmId), the rest admit tier internal only; the content
+  GET is not fenced. Nothing a partner login sees today changes, so no client-facing release waits on Andrew; the apply is a
+  narrowing of what strangers can read, not of what partners can. `3.0.0_SA_CVO~L` re-signs the ratified half (ENDPOINT hash).
+- CT-u-7 (COO~C, staged) is cut against this wording: the route census with its denominator (11) and the two token proofs per
+  class are its criteria.
