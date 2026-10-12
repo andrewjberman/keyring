@@ -98,6 +98,23 @@ last commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --gove
 
 <!-- ===================== RECORD FACE ===================== -->
 
+
+**CLOSED FAILED** (issuer ruling A2 @aebec97ee4 option b, confirmed msg 33493 'Finish OG-ap-11 as you
+said: closed failed'). The deploy LANDED correctly and the code could not RUN:
+opal-assets-silver-schwab-role is not authorized for `sqs:ChangeMessageVisibility` on
+opal-assets-silver-dlq, so `drain_dlq` raises at `schwab_runtime.py:319` the moment it tries to RETURN a
+foreign family's message, and the scheduled sweep fails AFTER completing its conversion lanes. AC1 PASSED
+(the deploy was sound); AC2 FAILED on the live grade. Two AC2 fields are recorded NOT-TRUE rather than
+true, because no sweep report exists to be absent from: `foreign_absent_from_schwab_report` is NULL and
+`schwab_drained_and_reported` is FALSE on the conjunction (drained yes, reported no). The order's
+`comp-iam: DECLARED-NOT-APPLICABLE` preflight was the defect and the issuer has taken it as its own; that
+permission became load-bearing exactly at this deploy, because the old code drained by DELETING and never
+called change-visibility. ROLLED BACK to the pre-drain build and pin b3e481b261 at 13:14:03Z, ledger
+`nfra-oplgtw-fd1-schwab-drain-rollback` CLOSED, live CodeSha256 confirmed back to
+`uibjggn93MPPtuIh33Yvehv1xECqrfhPxsWLdmcdYjE=`. Row `NFRA_OPLGTW-Z-S97` BLOCKING/ARMED carries it. The
+grant goes to the CTO as its OWN never-widen pair and NFRA_OPLGTW.TO-OG-ap-12 re-deploys the a11240c01c
+build after it lands. Evidence: `W/AP11_GRADE.json`.
+
 **ISSUER NOTES:**
 - Round 35, workstream APPLY-R35. Row Z-S91 stays open until every sweeping family is per-family.
 - A1 (issuer, 2026-10-12 ~01:1xZ, 0.7.0_AE_CloudOps~Z msg 33434: the DLQ is EMPTY now, refilling at 13:07Z): COO half condition C
@@ -125,7 +142,7 @@ last commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --gove
 - Pre-cut: ap11.AC1 FAIL as expected (no ledger, no record files; live read OK). ap11.AC2 FAIL as expected (grade
   absent).
 
-<status>pending</status>
+<status>failed</status>
 <round>35</round>
 <workstream>APPLY-R35</workstream>
 <slot>~AE</slot>
