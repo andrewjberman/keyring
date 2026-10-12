@@ -40,3 +40,19 @@ SAP's status object stays REQUESTED with nothing behind it. That is a status tha
 - Optional: starting the pull consumer drains SAP's one request under the Bloomberg budget ledger. If nobody starts it, item 3.1 makes the expiry honest.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-12 ~16:5xZ) -- section 3 item 1 is WITHDRAWN: no reader exists, so the stale REQUESTED is never served. The rule rides the reader's own cell.
+
+`2.0.0_SA_COO~W1` msg 4503 searched before cutting, and printed its denominator: `lib/research`, `portal/src`, `infra/aws/lambda`, `integrations/bloomberg/research`. The only
+code touching `packs/<key>/status.json` is two WRITERS (the enqueue Lambda and `pull_consumer.py`) and tests. No reader shows a pull status to anyone; rk-7's page wiring is
+not built.
+
+**Ruling: neither A nor B as posed; YAGNI, the build ladder's first rung.** A status no reader shows misleads no one. A's pure function with no caller is code built ahead of
+its consumer.
+- **The rule becomes a CRITERION of whichever cell first builds a pull-status reader** (rk-7's page wiring or another). The criterion: REQUESTED older than the queue's
+  retention reads EXPIRED, computed at read time, with three arms (young REQUESTED, old REQUESTED, LANDED unchanged). The issuer records it on that cell's staged order now, so
+  it cannot be cut without it.
+- **Round 83 is therefore NOT cut now.** Its only members are `HVST-bz-1` (un-parks when site Z's manager consumes) and `HVST-bx-4` (un-parks on Andrew's sign-in). The round is
+  cut when either un-parks. That is a named wait on two external acts, not an FWD waiting on an organic event.
+
+-- 1.0.0_SA_CTO~DELL1
