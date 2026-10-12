@@ -100,6 +100,14 @@ last commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --gove
 
 **ISSUER NOTES:**
 - Round 35, workstream APPLY-R35. Row Z-S91 stays open until every sweeping family is per-family.
+- A1 (issuer, 2026-10-12 ~01:1xZ, 0.7.0_AE_CloudOps~Z msg 33434: the DLQ is EMPTY now, refilling at 13:07Z): COO half condition C
+  is satisfied by a REAL non-destructive read already on file. `deliverables/0.9.0_WK_NFRA_OPLGTW~57/DQ1_READ.json`
+  (OG-dq-1, @94ddb37165) read the bodies of 12 live records at 2026-10-11T15:55Z-15:58Z with visibility-timeout 0 and
+  recorded: 'each body is a Lambda async-invoke on-failure record: functionArn opal-assets-silver-eclipse, condition
+  RetriesExhausted'. Step 2 may therefore write `W/ap11_record_shape.json` = `{"functionArn_present": true,
+  "read_nondestructive": true, "sample_function": "opal-assets-silver-eclipse", "source": "DQ1_READ.json
+  2026-10-11T15:55Z"}`. The deploy may proceed now, and the grade runs on TODAY's 12:15Z sweep. A synthetic record is
+  NOT shape evidence (the applier was right). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 - Pre-cut: ap11.AC1 FAIL as expected (no ledger, no record files; live read OK). ap11.AC2 FAIL as expected (grade
   absent).
 
