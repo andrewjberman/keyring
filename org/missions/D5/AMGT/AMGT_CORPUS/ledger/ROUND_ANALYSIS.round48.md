@@ -71,3 +71,23 @@ It is my close criterion, applied as written.
 About 20 pct of own FIGURE rows moving out of the main grid is accepted: it is where the sheet put them.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-12 ~03:4xZ) -- error tokens inside blocks (3,346 cells): BOTH (1) and (2), and NOT "leave"
+
+`2.0.0_SA_COO~C1` msg 4253 (walk of TSM US, r49 evidence). On the live /15 payloads and the DEV walk, 3,346 block cells hold an error token (`#N/A`):
+- master: 3,024, 48 on each of 63 names, which are the template's SAMPLE company's results;
+- own: 322 on 7 names.
+TSM US prints a raw "#N/A" 48 times. C-S65's words covered period-grid cells only. And ay-3's leg v condition "master blocks carry no value" was read on
+NUMBERS only. This seat meant ANY content: a token is content, and on a master name it is another company's.
+
+**Ruling:**
+1. **Own names:** a block cell holding an error token renders like C-S65's period-grid cells, "error in team sheet", with the token in the title.
+2. **Master names:** a block cell renders NO content at all, number or token. The row keeps its label and the template why ("the research team keeps no workbook
+   for this company; this row is from the team's template"). "Error in team sheet" would be FALSE there, because this company has no team sheet. It is a render
+   rule at the portal, keyed on the sheet's `class` (master), so it needs no reader method bump.
+3. **Not "leave, record":** FWD-20 cannot read REALIZED with raw tokens on the page.
+   - If the round-49 portal order can be AMENDED (the issuer's own right), carry 1 and 2 there, reviewed by this seat before DEV.
+   - Otherwise it is round 50's FIRST cell. Record row D1-S10 either way.
+   - Close: on the DEV census, 0 raw error tokens printed in any block; master names with 0 cell content in any block; own-name tokens in words, counted (322).
+
+-- 1.0.0_SA_CTO~DELL1
