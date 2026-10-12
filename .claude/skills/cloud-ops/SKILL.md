@@ -216,6 +216,51 @@ naming the right one; real -> 0 findings).
 *A POSITIVE CONTROL IS ONLY A CONTROL IF IT IS RUN IN ISOLATION FROM THE TARGET* -- mode (1) silently
 disarms the very control this rule leans on.
 
+### FOUR APPLY-SIDE TRAPS, MEASURED 2026-10-12 (NFRA_IAMROLES202609 round 9, 0.7.0_AE_CloudOps~IR)
+
+Each of these cost a real round-trip or produced a wrong-looking record on a WORLD-risk act. All four are
+reads or writes you cannot re-derive at the call site.
+
+**(1) `terraform fmt` WRITES BY DEFAULT.** `-write=false` disables it; **`-check` is what makes it
+read-only**, and `-diff` does NOT imply read-only. `terraform fmt -diff <file>`, run only to *inspect*
+whether a flagged deviation was mine, silently rewrote the file in the worktree AND the shared tree -- so
+three realigned lines sat inside a never-widen act's diff as "added lines" in an act claiming to add
+nothing. To decide whether a deviation is PRE-EXISTING: run `-check` at HEAD in the shared tree, compare
+the flagged FILE LIST, then compare the flagged HUNK (identical content shifted by your own edit =
+pre-existing). Never fix a pre-existing fmt deviation inside an unrelated signed act.
+COST: one extra `-check` run. NON-APPLICATION: a commit whose declared purpose IS reformatting.
+
+**(2) A ROLLBACK MUST BE VALIDATED AGAINST ITS CONSUMER, NOT ITS PRODUCER.** `get-role-policy` returns
+`{RoleName, PolicyName, PolicyDocument}`; `put-role-policy --policy-document` takes **only** the inner
+document. **2 of 13** rollbacks in one round were saved as the envelope -- unreplayable, on acts whose
+pairs cited them as the rollback path. The control I had run (*each file equal to a fresh re-fetch*, 7 of
+7, canonical `sort_keys`) is satisfied **perfectly** by the wrong shape, because the envelope is exactly
+what the API returns. Capture with `--query PolicyDocument`, and guard every read: refuse a dict carrying
+`PolicyDocument` with no top-level `Statement`, and refuse zero statements in a policy just read live --
+that same shape once made a script print *"the document would be empty -> delete-role-policy"* from a
+vacuous read. COST: one `--query` and a two-line guard. NON-APPLICATION: an artifact no command will
+replay.
+
+**(3) `RoleLastUsed` ANSWERS "WAS THIS ROLE USED", NEVER "DID A JOB COMPLETE".** On a PERSISTENT EC2
+instance the two come apart entirely: the box touches the role continuously between runs. After a
+`delete-role-policy` whose pair required a real post-change run, `RoleLastUsed` advanced past the delete
+floor within two minutes **while 0 run-record objects had been written** (`gold/.checkpoints/<date>/`,
+`gold/meta/`, `watermarks.json`, `silver/` all 0 after the floor). A grader handed only the advancing
+timestamp would have called the branch satisfied. Grade a run by **the record it writes**, and read
+`RoleLastUsed` only as a liveness floor. It also lags up to 4h, so it is weak in both directions.
+COST: one server-side `list-objects-v2 --query "length(Contents[?LastModified>'<floor>'])"`.
+NON-APPLICATION: a role whose only consumer is an ephemeral runner that exits per run.
+
+**(4) A SPARSE WORKTREE THAT WILL RUN AN APPLY NEEDS `lib` AND ITS OWN AGENT HOME FOLDER IN THE CONE.**
+`safe-apply`'s HALT-gate refuses with `unknown-base` / `SERIAL RESOLVES TO NO KNOWN AGENT` when no
+`org/tier*_*/<base>*` matches your serial, and the LGIC naming limb then **BLOCKS** (`LGIC_ENFORCE DEC-6`)
+on an absent `lib/opal_naming.py`; `crossbox-deploy-check` WARNs on an absent `lib/devices.py`. All three
+fail **CLOSED** and name what they need. **Neither is a verdict about your change** -- and the HALT-gate's
+own message is why it behaves this way: *scanning a nonexistent inbox would PASS while a real `[STOP]` to
+the real you sits unread.* Fix by widening the cone (`sparse-checkout add lib org/<tier>/<base>`), NEVER
+by writing a different serial to make the gate pass.
+COST: one `sparse-checkout add` at worktree creation. NON-APPLICATION: a full (non-sparse) checkout.
+
 ### THE ON-BOX WRAPPER SET -- moved from CLAUDE.md Rule 26, 2026-08-25
 
 CLAUDE.md Rule 26 still carries the ruling (**the apply runs on the device that owns the work; never

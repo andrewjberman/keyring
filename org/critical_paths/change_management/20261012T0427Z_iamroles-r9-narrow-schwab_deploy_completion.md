@@ -12,9 +12,10 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| delete | activation | bd-exporter-ec2-role/schwab-bucket-access | list-role-policies reads 16 with schwab-bucket-access absent; get-role-policy on it returns NoSuchEntity; the other 16 policies untouched |  | OPEN |
+| delete | activation | bd-exporter-ec2-role/schwab-bucket-access | list-role-policies reads 16 with schwab-bucket-access absent; get-role-policy on it returns NoSuchEntity; the other 16 policies untouched | all four baselines matched before the act (policy==rollback canonically, list-role-policies 17, opal-data-schwab NoSuchBucket, AC1 grep 0 at HEAD); delete-role-policy rc=0 at 04:29:22Z; the policy-name set read back as a DIFFERENCE 17 -> 16 with REMOVED=['schwab-bucket-access'] and ADDED=[]; get-role-policy on it rc=254 NoSuchEntity against a positive control of s3-access rc=0; the role's CreateDate and its 2 attached managed policies unchanged | CLOSED 20261012T044831Z |
 | realrun | verify | bd-exporter-ec2-role | ONE real bd run that STARTS AFTER the delete and completes successfully -- RoleLastUsed advances past the delete time and the run's own record shows success; NEVER substituted by a simulation |  | OPEN |
 
 ## Log
 
 - 20261012T042723Z OPENED by 0.7.0_AE_CloudOps~IR with 2 leg(s)
+- 20261012T044831Z LEG delete closed: all four baselines matched before the act (policy==rollback canonically, list-role-policies 17, opal-data-schwab NoSuchB
