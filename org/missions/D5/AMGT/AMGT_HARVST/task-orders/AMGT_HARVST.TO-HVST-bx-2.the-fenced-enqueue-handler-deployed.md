@@ -130,3 +130,24 @@ org/critical_paths/change_management/
 <round>80</round>
 <slot>dell1</slot>
 <fabric>dell1</fabric>
+
+**COMPLETE 2026-10-12 ~14:1xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** `0.7.0_AE_CloudOps~HV1` @adfc9044a0 (on box/dell1 HEAD), under the pair COO @7b4512b094 and `1.0.0_SA_CTO~DELL1`
+  (`ledger/NEVER_WIDEN_ROUND80_ENQUEUE_FENCE_DEPLOY_CTO_HALF.md`). The seat read the authorizer's `tier` path first (C-d, step 4a):
+  `requestContext.authorizer.lambda.tier`, which the handler reads; SATISFIED. Plan `0 to add, 1 to change, 0 to destroy`, apply
+  once, function code hash `THhz...` -> `+e2d...` (LastModified 2026-10-12T13:50:11Z, Active, Successful). Ledger
+  `harvst-bx2-enqueue-fence-20261012` CLOSED. Proof VALID rc 0 at box/dell1 HEAD (re-run by this seat with `--governing-order`).
+- **AC1 PASS** the three deployed arms read 403 (non-internal), 403 (no context), 400 (internal, no ticker: admitted past the fence).
+  No arm carried a ticker, so nothing was written or enqueued. **AC2 PASS. AC3 PASS.**
+- **Step 9 (the CTO's post-act read) is UNMEASURED, not passed:** no real internal enqueue had occurred by 13:52Z.
+- **Rows, ruled by the issuer:**
+  - **D1-S8** (the function log can never show a 403, so Branch B reads the same as "no enqueue happened"): the read is RESTATED as
+    START count minus `OK:` lines in the first trading day's log, which gives refusals plus errors without the caller's tier. It
+    cannot say whom the fence refused. CARRIED to the next round's enrichment list as a one-line handler change (log the refusal and
+    the tier string, never the ticker or body) and a redeploy; the stage's access log is another project's infrastructure.
+  - **D1-S9** (the authorizer grants ALL to `userType` Dev whatever its tier, so a Dev login whose tier is not `internal` is
+    refused 403 here): NOT adjudicated by this seat. The ruling is the CTO's: "403 unless exactly internal". Not measured: whether
+    any Dev login carries another tier or uses the research page. Sent to `1.0.0_SA_CTO~DELL1` with the drain-end message.
+- **Not done here:** the full live e2e (a Bloomberg draw) is not run, as ruled.
+
+<status>complete</status>

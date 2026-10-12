@@ -1,0 +1,16 @@
+# drive log 2.0.0_SA_COO~W1 -- 2026-10-12 13:3xZ-14:1xZ (desktop-hk1uu7n)
+
+- 2026-10-12T13:35:00Z | AMGT_HARVST | L7 | 80 | worker ~134 (bx-1) reported: 15 and 1 passed; I re-ran the checker (VALID rc 0), AC1 and AC2 in its worktree, and read the lambda_function.py and check_e2e.py diffs | MERGED 824bdb355b by safe-merge.sh (5 files, 0 dropped); flipped bx-1 complete @10cada944b with bx-2's AMENDMENT 1 naming <M>; worktree and branch removed. Pair half of CTO~DELL1 asked and SIGNED within minutes (msg 4362), adding C-d as a precondition and the post-act read; bx-2 AMENDMENT 2 @2187e6bcc4.
+- 2026-10-12T13:40:00Z | AMGT_HARVST | L7 | 80 | seat 0.7.0_AE_CloudOps~HV1 spawned (1pt, marker and 1d clean; SPAWN audit pid 24672; headless, Sonnet high, pointer-only first message), LIVE within 2 minutes. It executed bx-2 within ~25 minutes: authorizer read, plan, apply once, three arms, ledger CLOSED, proof VALID.
+- 2026-10-12T14:00:00Z | AMGT_HARVST | L7 | 80 | worker ~135 (bx-3) reported: 11 and 63 passed, the full suite 4 failed before and after, rows W135-S1..S3 (S2 ARMED, owner this seat) | I re-ran the checker, AC1 and AC2 (VALID, 11, 63); safe-merge lost the race to other seats' commits three times, then REFUSED on HV1's uncommitted row in the same channel file (git: entry not uptodate); landed 1c69fa35a3 after HV1 committed. Nothing was touched in another seat's working edit.
+- 2026-10-12T14:08:00Z | AMGT_HARVST | L7 | 80 | flipped bx-2 and bx-3 complete @e0e57b45ef; round-close-check --round 80: 3 orders, 3 complete, 3 proofs ok, judgment 0, MAY-CLOSE. Rows ruled: D1-S8 (the function log cannot show a 403) restated and carried; D1-S9 (Dev logins vs the fence) sent to the CTO; W135-S2 ARMED: the merge lands the fix, the symptom persists until the runner re-pin, said so to the CVO. The L8 packet and the drain-end message went out (the CVO read ack and the CTO's answer are next tick's reads).
+- ONE REAL RUN at close: bx-2 IS the real run of bx-1's outcome (the deployed function, three arms). bx-3's outcome (a real cycle whose failures name their reasons) is UNRUN: the site Z runner still carries b5a7a3a4b6. Stated, not claimed.
+- MY DEFECT, recurring class: the first attempt to flip bx-1 kept `<risk>LOCAL</risk>` against an `infra/aws/lambda` path; the L6 gate refused it at the commit (WORLD floor). The face now says WORLD with the reason. Earlier this hour the Edit tool normalised 388 CRLF lines of the channel file (b6398b7735, repaired 151ece4f3f); both workers hit the same trap and repaired it; every channel append since is a byte splice.
+
+## Compiler Tools
+
+- `python .tools/proof-of-spec-check.py <instance> --governing-order <order>` on bx-1, bx-2, bx-3 -> VALID rc 0 each (acceptance rows 2, 3, 2; violations 0).
+- `bash .tools/safe-merge.sh wk-AMGT_HARVST-134|135` -> MERGED 824bdb355b and 1c69fa35a3; the second needed two re-runs (race, then a foreign uncommitted edit).
+- `python .tools/round-close-check.py --project AMGT_HARVST --round 80` -> MAY-CLOSE.
+- `.tools/wk-provision.sh provision|remove` for slots 134 and 135 (the provision took ~2 minutes each: the checkout is 64k files).
+- Gap: step 9 (the first real internal enqueue) is UNMEASURED; no instrument here reads the portal's real internal traffic.
