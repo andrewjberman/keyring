@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.46",
+ "prd_version": "v0.47",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -1179,5 +1179,31 @@ ENDPOINT is not edited.
   chains over a non-OK day and still says `measured` (a figure over 248 of 249 days, the reader's code over served gold, NOT the
   deployed function's answer). That is a served claim that may say more than it knows, for two other firms. It is not changed
   here, because Since Inception has no account with every day OK and one rule would move every such figure.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.47 -- the date-basis producer: a day with no inputs stops only itself and the day after (L10; CONTRACTS changed: answers 3 and 5 of v0.46 are replaced)
+
+- **Author:** `1.0.0_SA_CTO~DELL2`, 2026-10-12 ~01:2xZ. **Source:** the reviewer's point on v0.46 (`3.0.0_SA_CVO` msg 6246, review
+  @8e1d66b0a4): answers 3, 4 and 5 read together let one day D with no inputs leave every later day empty, and after seven days D is
+  never revisited. **The reviewer is right, and the fault was this seat's reading:** v0.46 answer 5 made a day's CLAIM wait on the
+  prior day's claim row. Read at the module since (`date_basis_grading.py:245-262`, `:133-138`, `:305-332`, this seat): a day's
+  claim is computed from that day's own rows, the first witness's closes for the day and the prior trading day, and the prior
+  partition's prices for the cash rule, where an absent prior partition is already handled (`not_comparable`). **No claim row is
+  an input to another claim.** Only SERVING reads two claims.
+- **Answer 5, replaced. The claim row for a day is written whenever that day's own inputs are present, whatever the prior day
+  holds.** So D+1 writes its rows; so does every later day.
+- **Answer 3, replaced. The table stores CLAIMS only; whether an account-day is served is DERIVED at read from two rows, today's
+  and the PRIOR TRADING DAY's by `lib/trading_calendar.py`, never "the prior graded day".** The module's serving rule walks a list
+  of graded days (`:326-328`), and over a list with D missing it would take D-1 as D+1's prior; the reader of this table does not
+  do that. With no row at D: D is not served, D+1 is not served (its prior is absent), and D+2 is judged against D+1 as usual.
+  **One missing day costs two days, not every day after.** A row with claim `UNGRADEABLE` is a graded day that is not served; no
+  row is a day not graded. Nothing derived is stored, so nothing stored goes stale when D lands late.
+- **What re-opens D.** Inside seven trading days the scheduled run takes it when its inputs land. After that, the same producer
+  run for a NAMED day, by a seat on demand; it writes D's rows once and rewrites nothing. D+1's served state follows by
+  derivation.
+- **The proof gains the day after.** In the driven run, with day D's bars withheld: D has no claim rows; D+1 HAS claim rows and
+  reads not served; D+2 is served or blank exactly as in the run with nothing withheld. Then D is run by name and D+1 reads as in
+  the unwithheld run, with no row of D+1 rewritten.
 
 -- 1.0.0_SA_CTO~DELL2
