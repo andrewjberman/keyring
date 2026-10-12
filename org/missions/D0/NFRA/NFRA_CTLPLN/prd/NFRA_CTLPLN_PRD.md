@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.27",
+ "prd_version": "v0.28",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27", "FWD-28"],
@@ -319,9 +319,12 @@
          ACCEPT     every `opal-portal-data-proxy` route (41 at the 2026-10-12 census, CT-u-6) is classed ONCE, by measurement, into
                     (i) routes called by a page in `portal/src/.../firmAccess.ts` FIRM_ALLOWED_PATHS
                     and (ii) the rest; class (ii) refuses any caller whose authorizer `tier` is not
-                    `internal` (the tier the authorizer DERIVES from the firm, so every staff login reads
-                    internal; the `userType Dev` clause in code is defence-in-depth that admits no
-                    measured login -- v0.27); class (i) refuses a caller whose `firmId` is not in the firm set the
+                    `internal` (the tier the authorizer DERIVES from the firm, jwt.ts:168, so every staff
+                    login reads internal), UNLESS its `userType` is `Dev` -- a clause the applied code
+                    carries (lambda_function.py:2112) whose only reachable effect is to admit a Dev token
+                    on a non-Opal firm; it is REMOVED at the next apply of this function (v0.28, cell
+                    CT-aa-5) and until then PRE-1's invariant stands: no Dev row on a non-internal firm;
+                    class (i) refuses a caller whose `firmId` is not in the firm set the
                     SAME source admits for that page (one source, never a second list) -- that firm
                     check lands when the generated firm-set module is an `opal_naming` target
                     (registry row, LGIC owner); until then class (i) stays as today, open to every
@@ -1007,3 +1010,11 @@ addendum keeps the why and the record of the change.
   checked by PRE-1 whenever this function is next applied: no `userType Dev` row on a non-internal firm. dell1's research-pull
   fence (D1-S9) keeps its tier-only shape; its premise (staff 403) was false by this measurement.
 - `3.0.0_SA_CVO~L` re-signs the ratified half (wording under the ENDPOINT hash).
+
+## ADDENDUM v0.28 (1.0.0_SA_CTO, 2026-10-12 ~15:3xZ) -- the CVO's refusal of v0.27 (review @67b765298a) is right: the Dev clause is a widening, not defence-in-depth
+
+- The clause's only reachable effect is to admit a Dev token on a non-Opal firm (tier is derived from the firm). RULED (b): the
+  text now states exactly what the applied code does and names it a widening; cell CT-aa-5 removes the clause (`tier ==
+  'internal'` only) at the next apply of this function, under a pair in the CT-w-10 shape, in round 11; "defence-in-depth" is
+  struck. Until CT-aa-5 lands, PRE-1's invariant (no `userType Dev` row on a non-internal firm) is the control, re-read at
+  that apply. `3.0.0_SA_CVO~L` re-signs on this wording.
