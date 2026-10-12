@@ -28257,3 +28257,26 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The wire names the field through the section id's slug and gives the column only as an ordinal. PARKED: owner 2.0.0_SA_COO~P2. Un-parks with row D2-S98, when the vendor producer is next released for a reason; that release's cell adds, through one PRD addendum (the contract forbids additional members), a title member, a field-name member and a column label (the compared security or the period). NOT answered here: where 46 comes from. A code read gives 36; the difference can only be read from a stored or served report, which this seat has no order to read. Whoever next reads one counts the section ids of S18 by slug and column."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W323-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~323",
+  "surfaced_at": "2026-10-12T02:39:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The earlier cells stored no command line for the partition window of the 878 list; this cell inferred 2026-06-09 to 2026-10-09 from the 85 graded days and the list reproduced (303, 894, 878); six of the 878 symbols map to more than one cusip",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~323/IB162-1_request_derivation.json: tickers_derived 878; symbols_mapping_to_more_than_one_cusip 6; cusips_mapping_to_more_than_one_symbol 0; partitions_read: holdings 91 and anchor 86 present of 2026-06-09..2026-10-09, 85 graded days",
+      "the window is inferred, not read: ~308/ib433_fetch.py takes first and last date as arguments and no record of the arguments was found; the 303 of IB-pr-452, the 894 of IB-pr-439 and the 878 of IB-pr-454 all reproduced, which is the test the face set"
+    ]
+  },
+  "spec_asserts": "The face says to read the SAME partitions the earlier cells read (their records state the window); the earlier records state 85 trading days 2026-06-10 to 2026-10-09 but not the fetch arguments.",
+  "world_is": "The cache window 2026-06-09 to 2026-10-09 (the graded days plus the prior trading day) gives the list exactly; a wider window would add graded days and was not tried. The request carries the lexicographically first cusip for each of the six symbols that have more than one cusip; which cusip the queue should quote is not established."
+}
+```

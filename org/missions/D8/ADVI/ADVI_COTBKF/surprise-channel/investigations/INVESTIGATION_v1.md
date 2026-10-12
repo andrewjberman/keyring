@@ -7454,3 +7454,27 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S133",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-12T02:45:15Z",
+  "one_line": "L9 round 79: three criteria MET. This seat printed the code that makes the other box's as-traded column: the vendor's close times every split ratio dated strictly after the day. So the property PRD v0.10 rests on holds in the writer's code; no landed value exists yet to check. The build writes its basis value before its split step runs, as the record says. The live price store was put by this project's own rewrite; its parent has no author. Not explained: three equities whose build price is a half, a seventh and a tenth of the store's row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_79_DRAIN_END_20261012.md @324559b1ec (msg 6393)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_79_L9_GRADE_20261012.md",
+      "this seat's reads 2026-10-12T02:45:15Z, both printed: data/mdpf/scripts/demque/yahoo_pull.py lines 124 to 138, where as_traded_close is the vendor's close times every split ratio dated strictly after the day; and commonwealth_daily_valuation.py lines 269 to 284 and 974 to 985, where the basis value is written inside the substitution, the price input is written, and only then the split plan runs and is applied, and only under the round-28 method"
+    ]
+  },
+  "spec_asserts": "CB79ca1-AC2, CB79ca2-AC2, CB79ca3-AC2 (JUDGMENT, graded by the CVO at L9, never self-graded), as written in the three orders.",
+  "world_is": "Not re-derived: the 133 many-name tickers; the store's two versions. Not read: whether any of the three equities is held on a measured day; the other box's store. Nothing was built, served or fetched.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

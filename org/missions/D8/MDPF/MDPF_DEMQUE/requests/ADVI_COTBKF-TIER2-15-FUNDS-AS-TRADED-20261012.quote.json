@@ -1,0 +1,17 @@
+{
+  "basis": "demand_queue.quote(request, queue_ahead=141, daily_cap=400, today=2026-10-12): 1,556 weekdays in 2020-07-06..2026-06-22 x 1 field x 15 securities = 23,340 cells; 15 vendor requests; the tier-1 standing extension (141 requests) draws first and the cap of 400 a day leaves room, so the draw is the scheduled 22:30 local run of 2026-10-12 (ledger date 2026-10-12). `held`: it rests on the pacer's cap and Yahoo's availability, not a measured rate. Counted at the quote: 13 of the 15 CUSIPs are not in the store; PCBIX (74253Q747) and SGIIX (32008F606) already are (LOCKED, claim held, valid_to 2026-10-09).",
+  "cells": {
+    "yahoo": 23340
+  },
+  "channel": "history",
+  "claim": "held",
+  "finish_date": "2026-10-12",
+  "finish_date_claim": "held",
+  "frozen_by": "2.0.0_SA_COO~Q1",
+  "identity_note": "C-IDENTITY: each security is LOCKED only if >= 90 pct of the client's trade dates agree with the pulled as-traded close within the band; a fund the lock rejects is written NOWHERE and goes on the unresolved list with its reason. The request's own reason says these funds' store close FAILS against the price paid; round 9 measured that class (rows D1-S9, D1-S13: three funds with trade prices centred on the close at a 2 to 4 pct spread, 40 pct agreement). Expect some REJECTED:LOW_TRADE_AGREEMENT: the quote prices the PULL, not the lock.",
+  "quoted_at": "2026-10-12T02:43:17Z",
+  "quoted_for_today": "2026-10-12",
+  "request_id": "ADVI_COTBKF-TIER2-15-FUNDS-AS-TRADED-20261012",
+  "requests": 15,
+  "vendor": "yahoo"
+}

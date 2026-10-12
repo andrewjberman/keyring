@@ -6774,5 +6774,9 @@
     ],
     "what_this_report_is": "PRODUCT 2, SENSITIVITY ANALYSIS, varietal 1 of 3 (Andrew's classification, 2026-09-09). In this varietal 'sensitivity' is expressed as a side-by-side of a client portfolio against an Opal model on: asset allocation, region/country, market cap, style box, stock sector, bond sector/maturity/credit, look-through fundamentals, drawdown windows, and risk statistics (alpha, beta, std dev, Sharpe, Sortino, max drawdown, monthly VaR 5%). No historical-scenario replay (2008, 2016, Aug-2024) appears in this varietal; the closest fields are Drawdown Info (S14) and Monthly VaR 5% (S15). The two remaining varietals are NOT captured; the field census of product 2 is therefore a floor at 1 of 3.",
     "what_this_report_is_not": "It is NOT a sample of PRODUCT 1 (performance reporting). Its p23 disclosure says so in the vendor's own words: 'THIS REPORT IS NOT AN INVESTMENT PERFORMANCE REPORT'. The first cut of this file mis-framed it against product 1; corrected per _meta.classification_correction."
+  },
+  "row_type_words": {
+    "_note": "PROPOSED by 0.9.0_WK_DSGN_IRPTV1~66 (TO-IV-e-118). The plain word a report page prints for a row whose section_type is not a section code. Not a section: the 33 section names above are unchanged.",
+    "source_chart_representation": "Chart from the source report; no figures read"
   }
 }
