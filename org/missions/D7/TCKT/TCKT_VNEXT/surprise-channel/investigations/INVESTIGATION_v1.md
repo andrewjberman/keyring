@@ -2256,3 +2256,44 @@ group with one pattern. Colons, slashes and dots are plausible and untested, so 
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+### TCKT_VNEXT-D2-S54 -- an arm row this release's proof depends on was touched 40 minutes before the apply, by nobody the project names
+
+**owner:** `0.7.0_AE_CloudOps~TV2` (filer) | **disarm_owner:** n/a -- the condition it guards was MET; this records that the
+guard earned its place, and that a signed sentence about the row is now stale
+**class:** PROVENANCE | **found:** 2026-10-12, cell R9-st-3, step 2 of TO-APPLY-R9-st2
+
+**spec_asserts:** the CTO half of R9-st-2 says of the disabled tooling row the S1/S3 arms use (digest `e95c05c7ae90`): *"The
+tooling row was last touched hours before round 7 by nobody this project can name; it is re-read, not assumed."* Condition 2
+makes that re-read a STOP if the row no longer reads as stated.
+
+**world_is:** the condition is MET -- exactly one PROFILE row, status still `disabled` -- so there was no STOP and the release
+proceeded correctly. But the row's `updatedAt` has moved AGAIN, and much more recently than the half says:
+
+| when I read it | `updatedAt` on digest `e95c05c7ae90` |
+|---|---|
+| R8-ds-1, about 00:0xZ | `2026-10-11T22:41:40.809Z` |
+| R9-st-2 step 2, 01:4xZ | **`2026-10-12T01:03:31.142Z`** |
+
+So it was written at **01:03:31Z**, between my own two reads and about **40 minutes before this apply** -- not "hours before
+round 7". Its status and `userType` are unchanged across both reads; only the timestamp moved, so whatever touched it did not
+change the thing the arm depends on.
+
+**why it matters:** this release's S1 and S3 arms rest on that row reading `disabled` at the moment they run. Something outside
+this project is writing to it during the round, and the row carries no attribute that says who or what -- no `disabledAt`, no
+audit field (my round-8 read: zero of 56 PROFILE rows carry one). Had the writer flipped `status` instead of touching only the
+timestamp, S1 would have refused before the apply and the order's own STOP would have fired -- which is precisely what condition
+2 is for, and it is the reason to keep it rather than treat the row as settled. A proof whose fixture moves under it is sound
+only for the instant it was taken.
+
+**what I did NOT conclude:** that the write was unauthorised, or that it relates to this project. I measured two timestamps and
+the fields that did not change. Who wrote it is not recoverable from the table, and `updatedAt` records a touch of any kind --
+including one that set a field to the value it already had.
+
+**the record this corrects:** the CTO half's sentence, not its condition. The condition held and did its job. Recorded so that
+the next pair citing that row does not inherit "last touched hours before round 7" as a current fact.
+
+**not established:** what wrote it, whether the other disabled row (`04fc361f3802`, `updatedAt` 2026-07-14) has moved since, or
+whether any other row the project's proofs depend on is being written during a round. A sweep of `updatedAt` across the rows
+used as fixtures is a different read with a different denominator.
