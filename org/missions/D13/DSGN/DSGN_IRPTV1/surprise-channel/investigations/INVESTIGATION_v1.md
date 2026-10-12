@@ -6669,3 +6669,131 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-W70-S1 -- The analysis view dropped checks_run and notes from the vendor verdict; IV-e-122 carries them in adapt.ts
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W70-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~70",
+  "surfaced_at": "2026-10-12T22:49:32Z",
+  "one_line": "The order's four extraction_validation keys do not reach the face through the analysis view: the vendor branch of the adapter carried status and checks_failed only, so checks_run and notes were dropped. Carried now on a structural subtype in adapt.ts (inside the grant).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IV-e-122 point 1: the validation sentence is read from the four extraction_validation members (status, checks_run, checks_failed, notes), read through AnalysisReport.extractionValidation as adapt.ts maps it (keys_read must be all four).",
+  "world_is": "At portal 183860bac055 the vendor branch of adaptAnalysisReport and of adaptAnalysisReportSlice mapped only validated, unconfirmedValueCount and reasonCode. The view type ExtractionValidation (contracts/index.ts, outside the grant) has no checks_run or notes member. Fix made inside the grant: adapt.ts adaptVendorValidation returns VendorExtractionValidation (checksRun, notes added as a structural subtype); the Opal branch and the provider member are untouched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@183860bac055 src/pages/InvestorReporting/contracts/adapt.ts:1083-1087 (vendor branch of adaptAnalysisReport) and :1470-1474 (adaptAnalysisReportSlice) mapped only three members",
+      "portal@183860bac055 src/pages/InvestorReporting/contracts/index.ts:674-679 ExtractionValidation has no checks_run or notes member",
+      "portal@1b8614bc334b2398366df2d93428e0b894ae6320 src/pages/InvestorReporting/contracts/adapt.ts adaptVendorValidation carries checksRun and notes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-W70-S2 -- The vendor report's wire names its provider, but the analysis view carries no vendor member, so the source line names no vendor
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W70-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~70",
+  "surfaced_at": "2026-10-12T22:49:32Z",
+  "one_line": "The source line for a vendor report says the fixed words 'Source: a vendor's report.' because the consumed view has no vendor member; the generated wire names provider YCHARTS. Whether the view may carry it is a CTO call, since IV-e-101 arm (c) pins that a vendor view adds no provider.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IV-e-122 point 2: the source line names the vendor the report came from, read from the wire (vendor_artifact and the vendor view); if the wire names no vendor for the report the line says the fixed words and a row says the wire lacks it. Never invent a vendor.",
+  "world_is": "The generated wire type carries provider 'YCHARTS' on the vendor member (contracts/wire/AnalysisReport.ts line 13); vendor_artifact carries no vendor name. The adapter drops provider for a vendor view (adapt.ts vendor branch), and __tests__/dsgn-irptv1/iv-e-101.opal-report-words.test.tsx arm (c) asserts 'provider' is absent from a vendor view, so this cell did not carry it. The face therefore says the fixed words. Named by this row, not repaired.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@183860bac055 src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts:13 provider 'YCHARTS' and :20 vendor_artifact with no vendor name",
+      "portal@183860bac055 src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-101.opal-report-words.test.tsx:76-81 arm (c) asserts 'provider' in a vendor view is false",
+      "portal@183860bac055 src/pages/InvestorReporting/contracts/index.ts:698-699 says a v1 report names no provider (the consumed contract and the generated wire disagree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-W70-S3 -- Moving the wire read out of adaptAnalysisReport's body turned the committed consumed table stale (IVE98 drift)
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W70-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~70",
+  "surfaced_at": "2026-10-12T22:49:32Z",
+  "one_line": "The consumed-table generator derives each adapter's wire reads from its function body text, so a refactor that moves a wire.<field> read into a helper trips the IVE98 drift test. Kept the read inside adaptAnalysisReport's body.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Round 31 cell IV-e-122 changes the adapter's vendor verdict mapping; the mapping's reads of the wire are part of the adapter's committed consumed contract.",
+  "world_is": "__tests__/fe-s-13/gen-consumed.ts functionBody and fieldReads read the text of export function adaptAnalysisReport and collect wire.<field> names. The first IV-e-122 edit passed the wire into a helper, the body lost wire.extraction_validation, and the regenerated table differed from the committed file (suite: 2 fail, one new, IVE98). Commit 985dbac1 passes the verdict object instead, so the body keeps the read; IVE98 passes and no committed generated file was touched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@183860bac055 src/pages/InvestorReporting/__tests__/fe-s-13/gen-consumed.ts:96-108 functionBody and :113-118 fieldReads",
+      "portal 1b8614bc vs 985dbac1 contracts/adapt.ts adaptAnalysisReport body: extractionValidation read path changed",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~70/VALIDATION_SOURCE_LINES.json suite_base and suite_after records the run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-W70-S4 -- Each vendor card still prints the producer's status word in its UNSUPPORTED reason, beside the new validation sentence
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W70-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~70",
+  "surfaced_at": "2026-10-12T22:49:32Z",
+  "one_line": "On an UNCERTIFIED vendor report each unsupported card still reads 'the producer's extraction validation is UNCERTIFIED; N value(s) could not be confirmed'. That card reason was not in this cell and is unchanged; the order's no-status-token rule binds the one validation sentence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IV-e-122 point 1: the face carries ONE plain sentence for the validation, with no CERTIFIED or UNCERTIFIED token and no check count without its meaning.",
+  "world_is": "The one sentence is worded without the token. The per-card reason from SectionBlock (NativeSections.tsx unsupportedReason, unchanged) still prints the producer's code word on every unsupported card of the same face (see the screenshot in the deliverables folder, cards 2 and 3).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@183860bac055 src/pages/InvestorReporting/tabs/analysis/NativeSections.tsx:146-150 (unsupported-reason slot) and :84-87 (unsupportedReason wording)",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~70/IV122_vendor_report_opened.png (read by this worker)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-W70-S5 -- The opened-report screenshot is a static page of the component's real markup, not the running app
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W70-S5",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~70",
+  "surfaced_at": "2026-10-12T22:49:32Z",
+  "one_line": "No route in the portal opens a synthetic analysis report without the live API, and AnalysisTab is not mounted in the rendered app at this base; the screenshot therefore renders RetainedSections to static markup and styles it with the portal's Tailwind v4 over that markup, then shoots it with playwright-core on Edge.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IV-e-122 point 4: a screenshot of an opened synthetic vendor report showing both lines, read by the worker; a dev server allowed only on a port other than 5174.",
+  "world_is": "AnalysisTab's header says it is not yet wired into the rendered app at this cell's base (tabs/analysis/AnalysisTab.tsx:4-10), and no harness exists that feeds it a synthetic report offline. No dev server was started; the screenshot is of the real component's markup under the same stylesheet source, which is the same markup the page emits, with no client data.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@183860bac055 src/pages/InvestorReporting/tabs/analysis/AnalysisTab.tsx:4-10 (header: not yet wired into the rendered app)",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~70/IV122_vendor_report_opened.png (synthetic data only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
