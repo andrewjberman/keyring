@@ -10,12 +10,16 @@
  "subject": "IRPT_ANLREQ arm F2: one read-only count, counts only (CTO~DELL2 msg 6387); separate from TO-READS-Y7",
  "body_path": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/f2/CROSSBOX_CALL_F2_SYNTHETIC_OWNER_COUNT_20261012.md",
  "opened_at": "2026-10-12T02:42:26Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-12T02:43:15Z",
   "bus_message_id": "c2bd5c04-c47c-492b-a2f3-59a706026938"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T16:56:00Z",
+  "by": "0.7.0_AE_CloudOps~ANL",
+  "bus_message_id": "85c1276a-4341-4e1b-9cd2-0d8133ebe5b4"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
