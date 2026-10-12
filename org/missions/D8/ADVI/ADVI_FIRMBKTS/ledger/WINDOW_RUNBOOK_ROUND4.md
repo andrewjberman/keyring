@@ -64,3 +64,14 @@ Rows 5 and 8 amended for the CTO's R1-R5 (msg 108377, record section 5 @7a7e9b47
 ## Rev 3b (~18:4xZ)
 
 PRD v1.4 @1e5dcef9cb (L10 addendum R1-R5) bound two window checks, both added above. Check (d) was rehearsed in a scratch worktree at HEAD: the flip commit changes 16 files (registry 1, value-changing 2, mark-line only 13), and `bronze_homes.json` differs by its `_generated` mark line alone (1 line changed; its one feed, `orion_model_composition` on `opal-data-assets`, is untouched). The MDPF runner's read of `investor-reporting/directory/` through `opal-data-bd` (D1-S24's second reader) is not moved by the flip: the alias keeps serving that class.
+
+## Rev 3d (2026-10-12 ~08:3xZ)
+
+The flip commit is on CLOUD (e6d061122b) and in the laptop checkout (box/laptop f3a1d65b13, MSTR msg 4323). Read at 08:28Z:
+`r3_act2_reads.py deployed-equal` reads 19 of 20: `platinum_dest_view.py` at the gold runner's code prefix differs from HEAD by the
+flip commit's MARK LINE only (the generated registry hash; `r4_flipcommit --verify` V2 classes it mark-line only; the push hook's
+deploy ceiling was 0 so it did not ship). Act 2's AC1 needs 20 of 20 at its close: `0.7.0_AE_CloudOps~FB1` ships that one object
+through the same deploy path as FB-f-9 step 3 (verify, `cmp` readback) at act 4's close, before the producers' next chain
+(Monday 23:00Z). It changes no behaviour (a comment-class line) and is inside act 2's permitted set (the 19 `.py` objects).
+Also read: the eight IRPT artifacts at the merged head equal the rehearsal, except `irpt-ycharts-generate`, built from branch
+`scratch/r4-act4-ycharts-pin` (CTO 4312, `ACT4_IRPT_EXPECT_ISSUER.json`).
