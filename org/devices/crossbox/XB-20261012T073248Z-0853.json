@@ -10,12 +10,16 @@
  "subject": "TO-CT-v-3 GO: pip kit merged, click pack Taildropped",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/CT-v-3_GO_ASK.md",
  "opened_at": "2026-10-12T07:32:48Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-12T07:34:44Z",
+  "bus_message_id": "3ef1cd84-940e-4b88-b316-ce5ef9841752"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T07:35:34Z",
+  "by": "0.7.0_AE_CloudOps~CT1",
+  "bus_message_id": "d9b6c534-f5b8-46cd-93bd-3d6e7fe5d7ff"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
