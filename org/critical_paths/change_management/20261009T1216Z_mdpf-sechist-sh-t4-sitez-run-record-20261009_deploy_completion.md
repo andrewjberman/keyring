@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-09T12:16:14.880319+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261012T114458Z
 **Deploy:** MDPF_SECHIST SH-t-4: site Z working tree takes etf_daily_pull.py at HEAD (run record prints the backfill draw beside the bbg_budget remainder), taken by site Z's 12:00Z restore task after the 11:00Z acceptance pull
 **Authored by:** 2.0.0_SA_COO~H1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -14,10 +14,12 @@
 |---|---|---|---|---|---|
 | L1 | git | 19e50528d3 (SH-t-4 reland) on origin CLOUD | is-ancestor read of origin/CLOUD | git merge-base --is-ancestor 19e50528d3 origin/CLOUD -> true (read by 2.0.0_SA_COO~H1 2026-10-09 12:2xZ after fetch) | CLOSED 20261009T121629Z |
 | L2 | verify | site-Z working-tree integrations/bloomberg/pipeline/etf_daily_pull.py | git hash-object reads blob 73735f44d6 (= HEAD) | RELAYED, not measured by this seat: 0.0.0_AB_MSTR~Z bus 4cea6d26 via 0.0.0_AB_MSTR~DELL1 msg 2398 (12:14Z): after the 11:00Z pull returned 0, the 12:00Z restore task returned 0 and etf_daily_pull.py matches HEAD, blob 73735f44d6 (the same HEAD blob 0.7.0_AE_CloudOps~Z measured in row MDPF_SECHIST-Z-S1) | CLOSED 20261009T121629Z |
-| L3 | verify | first SCHEDULED run after L2 (2026-10-12 07:00 ET): s3://opal-data-etfs/bbg/<asof>/run_manifest.json | history_backfill_budget carries spent_after and remainder keys (non-null when a backfill ran), run_class scheduled, leg exit 0 |  | OPEN |
+| L3 | verify | first SCHEDULED run after L2 (2026-10-12 07:00 ET): s3://opal-data-etfs/bbg/<asof>/run_manifest.json | history_backfill_budget carries spent_after and remainder keys (non-null when a backfill ran), run_class scheduled, leg exit 0 | MEASURED by 2.0.0_SA_COO~H1 2026-10-12 11:34Z: first scheduled run after L2 (07:00 ET 2026-10-12) manifest s3://opal-data-etfs/bbg/2026-10-09/run_manifest.json LastModified 2026-10-12T11:03:03Z (6553 B; the 10-10 object was 4994 B): run_class scheduled, history_backfill_budget {estimate 412, limit 120000, spent_before 0, recorded 17, spent_after 17, remainder 119983} both keys non-null with remainder == max(limit - spent_after, 0), history_backfill_error null, objects_failed []; r3_fwd7_read.py FWD7-READ-OK; TO-SH-t20 complete @bb6b1e5b43. leg exit 0 RELAYED, not measured by this seat: 0.0.0_AB_MSTR~Z bus 9a5fc115 via 0.0.0_AB_MSTR~DELL1 msg 4337 (11:44Z), log opal_bbg_logs/bbg_tplus1_20261012_070002.log 14048 B last write 11:04:26Z, line 128 'ETF LEG EXIT CODE: 0' and line 109 'history backfill exhausted count: 2'; corroborated by the manifest's own history_backfill_exhausted holding exactly two tickers (PFDE, PFOE), so the log is the same run. | CLOSED 20261012T114458Z |
 
 ## Log
 
 - 20261009T121614Z OPENED by 2.0.0_SA_COO~H1 with 3 leg(s)
 - 20261009T121629Z LEG L1 closed: git merge-base --is-ancestor 19e50528d3 origin/CLOUD -> true (read by 2.0.0_SA_COO~H1 2026-10-09 12:2xZ after fetch)
 - 20261009T121629Z LEG L2 closed: RELAYED, not measured by this seat: 0.0.0_AB_MSTR~Z bus 4cea6d26 via 0.0.0_AB_MSTR~DELL1 msg 2398 (12:14Z): after the 11
+- 20261012T114458Z LEG L3 closed: MEASURED by 2.0.0_SA_COO~H1 2026-10-12 11:34Z: first scheduled run after L2 (07:00 ET 2026-10-12) manifest s3://opal-dat
+- 20261012T114458Z CLOSED -- all 3 legs proven
