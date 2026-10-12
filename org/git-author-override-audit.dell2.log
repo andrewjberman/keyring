@@ -4334,3 +4334,55 @@
 2026-10-12T14:16:23Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=11.99  took=already-current pushed=a91d96e2ca  phases: t_fetch=6.90s t_push=3.07s
 2026-10-12T14:26:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.71  graded=n/a  args=(--verify-merge 0d645ee6cac74db44ec0c31962303936748f1abe)  first=(none)
 2026-10-12T14:26:24Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=22.19  took=6cc9f93edb hold=3.61s graded=0/53 pushed=0d645ee6ca  phases: t_fetch=2.45s t_merge_cloud=10.94s t_land=3.63s t_push=3.12s
+2026-10-12T14:31:15Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=c6fb6123110e paths=1:org/git-author-override-audit.dell2.log
+2026-10-12T14:31:21Z LANDED-2P  0.0.0_AB_MSTR~DELL2  7b08cd63bc  paths=1  validate=6.24s  wait=0.06s  hold=0.94s  build=0.54s  ref=0.32s  post-commit=2.28s  attempt=1
+2026-10-12T14:31:34Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.18  graded=n/a  args=(--verify-merge 465479c27c0375e73089bad8e9fbd476da0600b0)  first=(none)
+2026-10-12T14:31:38Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=16.06  took=d5f83c68bc hold=0.78s graded=0/52 pushed=465479c27c  phases: t_fetch=1.69s t_merge_cloud=9.69s t_land=0.78s t_push=2.92s
+2026-10-12T14:36:19Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=2.77  graded=n/a  args=(--verify-merge a2b74ad35bd3b6b1d8794bacae35b7b61b3986ad)  first=(none)
+2026-10-12T14:36:24Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=22.12  took=372b2effb1 hold=1.71s graded=0/2 pushed=a2b74ad35b  phases: t_fetch=2.76s t_merge_cloud=12.33s t_land=1.78s t_push=3.26s
+2026-10-12T14:36:27Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=a24ec27fc5bc paths=1:org/tier0_exec/0.0.0_AB_MSTR/deliverables/XB_DELL2_TO_LAPTOP_MATRIX_PAIR_20261012.md
+2026-10-12T14:36:34Z LANDED-2P  0.0.0_AB_MSTR~DELL2  c3230c5572  paths=1  validate=6.88s  wait=0.06s  hold=0.93s  build=0.53s  ref=0.31s  post-commit=2.33s  attempt=1
+2026-10-12T14:37:15Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=eff61a1e2f82 paths=1:org/devices/crossbox/XB-20261012T143710Z-f559.json
+2026-10-12T14:37:21Z LANDED-2P  0.0.0_AB_MSTR~DELL2  addf1554ae  paths=1  validate=6.43s  wait=0.06s  hold=0.85s  build=0.52s  ref=0.30s  post-commit=2.29s  attempt=1
+2026-10-12T14:37:26Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=5.17  took=already-current pushed=addf1554ae  phases: t_fetch=1.35s t_push=2.86s
+2026-10-12T14:37:52Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=eff61a1e2f82 paths=1:org/devices/crossbox/XB-20261012T143710Z-f559.json
+2026-10-12T14:37:59Z LANDED-2P  0.0.0_AB_MSTR~DELL2  2329e219a5  paths=1  validate=6.59s  wait=0.06s  hold=0.84s  build=0.51s  ref=0.31s  post-commit=2.46s  attempt=1
+2026-10-12T14:38:57Z PASS  0.7.0_AE_CloudOps~IB2  7  (all paths in-lane) act=ea5c41e114b4 paths=7:org/critical_paths/.open_deploys/irpt-fwd14-49f-e56-cusip-memfix-bundle-ib413-20261011.json|org/critical_paths/.open_deploys/irpt-fwd14-narrow-holdings-bundles-20261009.json|org/critical_paths/change_management/20261009T1025Z_irpt-fwd14-narrow-holdings-bundles-20261009_deploy_completion.md|org/critical_paths/change_management/20261011T0255Z_irpt-fwd14-49f-e56-cusip-memfix-bundle-ib413-20261011_deploy_completion.md|org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB105-1_narrow_bundles_after_reads.json|org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB114-1_49f_bundle_after_reads.json|org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
+2026-10-12T14:38:58Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=2c43b70f323a paths=1:org/devices/crossbox/XB-20261012T143659Z-699f.json
+2026-10-12T14:39:04Z LANDED-2P  0.0.0_AB_MSTR~DELL2  041b9c0d15  paths=1  validate=6.93s  wait=0.06s  hold=0.92s  build=0.53s  ref=0.37s  post-commit=2.23s  attempt=1
+2026-10-12T14:39:37Z LANDED-2P  0.7.0_AE_CloudOps~IB2  aa73530282  paths=7  validate=71.57s  wait=0.06s  hold=1.10s  build=0.65s  ref=0.42s  post-commit=3.33s  attempt=1
+2026-10-12T14:39:39Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=c13dd49a0366 paths=1:org/tier0_exec/0.0.0_AB_MSTR/deliverables/CROSSBOX_CALL_MATRIX_REACHABILITY_DELL1_DELL2_20261012.md
+2026-10-12T14:39:48Z LANDED-2P  0.0.0_AB_MSTR~DELL2  ba1c31b596  paths=1  validate=8.11s  wait=0.12s  hold=1.19s  build=0.73s  ref=0.38s  post-commit=3.37s  attempt=1
+2026-10-12T14:40:25Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=2c43b70f323a paths=1:org/devices/crossbox/XB-20261012T143659Z-699f.json
+2026-10-12T14:40:32Z LANDED-2P  0.0.0_AB_MSTR~DELL2  b6260164b0  paths=1  validate=6.70s  wait=0.12s  hold=0.88s  build=0.55s  ref=0.31s  post-commit=2.42s  attempt=1
+2026-10-12T14:40:47Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.60  graded=n/a  args=(--verify-merge 489e60d85b3de2189d0aa75dd66da9485d711293)  first=(WARN -- 1 of 30 needed file(s) kept the first parent's version (fine for a PICK-ours resolutio)
+2026-10-12T14:40:53Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=21.27  took=a3814f1733 hold=0.85s graded=2/29 pushed=489e60d85b  phases: t_fetch=2.67s t_merge_cloud=11.44s t_land=0.86s t_push=5.04s
+2026-10-12T14:42:46Z PASS  2.0.0_SA_COO~P2  2  (all paths in-lane) act=13fd8762b928 paths=2:org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r105/p105_cells.py|org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r114/p114_cells.py
+2026-10-12T14:42:52Z LANDED-2P  2.0.0_SA_COO~P2  a1f10a3824  paths=2  validate=6.95s  wait=0.12s  hold=0.86s  build=0.52s  ref=0.31s  post-commit=2.20s  attempt=1
+2026-10-12T14:45:22Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=eff61a1e2f82 paths=1:org/devices/crossbox/XB-20261012T143710Z-f559.json
+2026-10-12T14:45:28Z LANDED-2P  0.0.0_AB_MSTR~DELL2  6add70f038  paths=1  validate=6.31s  wait=0.06s  hold=0.91s  build=0.58s  ref=0.30s  post-commit=2.27s  attempt=1
+2026-10-12T14:45:41Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.01  graded=n/a  args=(--verify-merge c1cf3ea2fa703f8dde52328bb43a8fd99e804f41)  first=(none)
+2026-10-12T14:45:45Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=16.35  took=8987371fed hold=0.74s graded=1/4 pushed=c1cf3ea2fa  phases: t_fetch=2.31s t_merge_cloud=9.36s t_land=0.75s t_push=2.95s
+2026-10-12T14:46:06Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=3.58  took=already-current pushed=c1cf3ea2fa  phases: t_fetch=1.47s
+2026-10-12T14:47:44Z PASS  0.7.0_AE_CloudOps~IB2  4  (all paths in-lane) act=75ef4232aa88 paths=4:org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IRPT_BCKEND.TO-IB-pr-404.fwd14-narrow-bundles-applied.proof_of_spec.json|org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IRPT_BCKEND.TO-IB-pr-413.49f-e56-cusip-bundle-applied.proof_of_spec.json|org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-404.fwd14-narrow-bundles-applied.md|org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-413.49f-e56-cusip-bundle-applied.md
+2026-10-12T14:47:57Z LANDED-2P  0.7.0_AE_CloudOps~IB2  e2073040ab  paths=4  validate=36.61s  wait=0.06s  hold=0.99s  build=0.59s  ref=0.37s  post-commit=2.33s  attempt=1
+2026-10-12T14:56:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.75  graded=n/a  args=(--verify-merge 75862c4a697f42b2c79bfe2d19f42f02d0c1cb99)  first=(none)
+2026-10-12T14:56:22Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.95  took=b89ac455c9 hold=1.44s graded=0/56 pushed=75862c4a69  phases: t_fetch=2.57s t_merge_cloud=10.55s t_land=1.45s t_push=3.20s
+2026-10-12T15:06:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.50  graded=n/a  args=(--verify-merge 7a6d3147ae8fe247bb85aa61bdb5bf4f1e2b6828)  first=(none)
+2026-10-12T15:06:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.83  took=bafd444fe0 hold=1.33s graded=0/1 pushed=7a6d3147ae  phases: t_fetch=1.96s t_merge_cloud=10.33s t_land=1.34s t_push=2.95s
+2026-10-12T15:16:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.61  graded=n/a  args=(--verify-merge e5e9ec5325e999669c3c1117ebd84f2611ff8f99)  first=(none)
+2026-10-12T15:16:23Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=21.08  took=f5ff318f7f hold=3.48s graded=0/16 pushed=e5e9ec5325  phases: t_fetch=2.04s t_merge_cloud=10.32s t_land=3.49s t_push=3.16s
+2026-10-12T15:16:44Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=2.22  took=already-current pushed=e5e9ec5325  phases: t_fetch=1.36s
+2026-10-12T15:26:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.51  graded=n/a  args=(--verify-merge 27aff95b42120efa4bc883803ed23c088f383518)  first=(none)
+2026-10-12T15:26:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.45  took=fa801f33ec hold=1.42s graded=0/11 pushed=27aff95b42  phases: t_fetch=2.02s t_merge_cloud=10.05s t_land=1.43s t_push=2.94s
+2026-10-12T15:31:10Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=c6fb6123110e paths=1:org/git-author-override-audit.dell2.log
+2026-10-12T15:31:16Z LANDED-2P  0.0.0_AB_MSTR~DELL2  268e9f76cf  paths=1  validate=5.99s  wait=0.06s  hold=0.84s  build=0.51s  ref=0.31s  post-commit=2.28s  attempt=1
+2026-10-12T15:31:28Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.00  graded=n/a  args=(--verify-merge b821130a9d8a2076e5099de29cecf9b72b83a266)  first=(none)
+2026-10-12T15:31:32Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=15.22  took=54c1489e3d hold=0.82s graded=0/4 pushed=b821130a9d  phases: t_fetch=1.70s t_merge_cloud=8.82s t_land=0.85s t_push=2.83s
+2026-10-12T15:36:08Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=5.36  took=already-current pushed=b821130a9d  phases: t_fetch=3.29s
+2026-10-12T15:46:06Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=3.81  took=already-current pushed=b821130a9d  phases: t_fetch=1.78s
+2026-10-12T15:56:06Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=3.75  took=already-current pushed=b821130a9d  phases: t_fetch=1.83s
+2026-10-12T16:00:28Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=2.27  took=already-current pushed=b821130a9d  phases: t_fetch=1.35s
+2026-10-12T16:06:06Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=3.71  took=already-current pushed=b821130a9d  phases: t_fetch=1.74s
+2026-10-12T16:16:06Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=3.67  took=already-current pushed=b821130a9d  phases: t_fetch=1.69s
+2026-10-12T16:26:06Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=3.86  took=already-current pushed=b821130a9d  phases: t_fetch=1.88s
