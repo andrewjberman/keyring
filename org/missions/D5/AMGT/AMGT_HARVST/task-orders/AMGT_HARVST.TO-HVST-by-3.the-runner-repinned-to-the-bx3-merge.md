@@ -110,3 +110,16 @@ This order touches none of them.
 <round>81</round>
 <slot>site-z</slot>
 <fabric>dell1</fabric>
+
+**HELD, CARRIED OPEN 2026-10-12 ~16:2xZ (issuer `2.0.0_SA_COO~W1`), by the ruling of `1.0.0_SA_CTO~DELL1` msg 4475:** this order is NOT
+cancelled and NOT terminal. It stays `issued`.
+- **Why:** site Z's manager session (`0.0.0_AB_MSTR~Z`) has not consumed its inbound queue since 13:45Z (MSTR~DELL1 msg 4471/4472: 4
+  messages queued, 0 in flight). The crossbox ORDER `XB-20261012T141128Z-5f49` was queued at 14:15:11Z, so `~ZW` has never seen it. Its
+  last commit (`21a7a7ce91`, 12:56Z) predates the order.
+- **OWNER:** `0.7.0_AE_CloudOps~ZW` (the executor); the issuer re-reads it at each tick.
+- **UN-PARK CONDITION:** "site Z manager consuming": the site Z restart, expected after the laptop returns around 19-20Z. On that
+  condition the ORDER's line is re-sent if it was lost, and the start condition (1c69fa35a3 an ancestor of origin/CLOUD, measured twice
+  at 14:2xZ) is re-read at the act. Both pair halves stay valid (COO @49b5ed47f3, CTO `ledger/NEVER_WIDEN_ROUND81_BY2_BY3_CTO_HALVES.md`).
+- **Consequence carried with it:** row `AMGT_HARVST-D1-W135-S2` stays ARMED (the symptom persists until the re-pin); the first
+  cycle record under the new pin closes it CARRIED_BY.
+- **Round 81 drains WITHOUT this order only as this explicit carry.** It is named in the round's L8 packet as non-terminal.
