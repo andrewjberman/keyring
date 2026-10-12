@@ -3722,3 +3722,54 @@
   }
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-12T22:42:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "With the AR-y-172 reader change, five _authz tests outside the order's write grant now fail, so the folder is rc=1 and AC2 cannot pass inside <paths>",
+  "spec_asserts": "The order's AC2 (y172-keep) requires the whole _authz folder to pass with at least 320. Its <paths> grants served.py, test_allowed_firm_ids.py, the new test file and this channel only. The cell says a test that ASSUMED a no-row caller is admitted changes with its reason, inside the grant.",
+  "world_is": "Measured at the worktree working tree over base 43e1e85895: python -m pytest _authz/tests gives 332 passed, 5 failed, 337 collected (320 base + 17 new), rc=1. The five, all outside <paths> and not edited here: test_interactive_entry.py::test_other_creator_record_reaches_compute_with_real_viewer[prospect-owner-v1], [custody-owner-v1]; test_interactive_entry.py::test_opal_prospect_create_is_prospect_not_custody_or_partner; test_interactive_entry.py::test_foreign_creator_input_keeps_both_identities_for_submitter_contract (their Entry is built with no load_service_profile, so the default profile read decides; an internal caller selecting 49financial gets FIRM_BINDING where the test asserts admission); test_svc_custody_statement.py::test_svc_custody_statement_does_not_change_opal_or_dev_admission (fixture _ALL_ROW = {'allowedFirmIds': 'ALL'} carries no status, so an internal caller selecting inflection is refused). The status rule refuses both shapes by design; whether the fixtures or the grant change is the issuer's decision.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1157-1162 (working tree over 43e1e85895)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_interactive_entry.py:25-37 @43e1e85895 (failing arms; no load_service_profile injected)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_svc_custody_statement.py:53-63 @43e1e85895 (_ALL_ROW fixture and its loader)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-172.internal-reader-status-active.md (ACCEPTANCE AC2, paths)"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-12T22:42:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "The narrative test file reports 13 passed after the reader change, but it runs the PINNED served.py (staged_from pin 361c44fa9d), not the worktree file, so its green run says nothing about AR-y-172 on narrative",
+  "spec_asserts": "The AR-y-163 read (INTERNAL_READER_NO_ROW_READ.json, proposed_cell.what) says narrative needs its own decision after the change: its two call sites catch the raise, so a no-row narrative caller who selects another firm would be REFUSED where it is held to its own firm today. A green narrative run is not evidence of narrative unchanged.",
+  "world_is": "narrative/tests/test_served_error_path.py _stage() takes each bundled member from the git blob at the staged_from pin in infra/aws/lambda/ci/lambda-source-map.json (functions.irpt-narrative: served.py at pin 361c44fa9d40992c8cacfd625cc789536f84b920) and reads the worktree file only for members with no staged row. Measured: narrative/tests/test_no_row_unknown.py gives 13 passed, rc 0, at the working tree over 43e1e85895. By code reading only, not run: narrative/entry.py _held_to_verified_firm (:218) now receives a raise from _internal_allowed_firms for a no-row or non-active caller; the except at :221 returns the event to the shared boundary, which refuses FIRM_BINDING; the base dropped the selection and served the caller's own firm, class UNKNOWN. The narrative arm norow_none_selecting_other cannot fail until the pin moves to a commit that carries this served.py. The pin bump and its census are cell AR-y-173, not this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-narrative.staged_from, served.py pin 361c44fa9d40992c8cacfd625cc789536f84b920 @43e1e85895",
+      "infra/aws/lambda/investor-reporting/narrative/tests/test_served_error_path.py:80-97 @43e1e85895 (_stage reads the git blob at the pin)",
+      "infra/aws/lambda/investor-reporting/narrative/entry.py:204-222 @43e1e85895 (_held_to_verified_firm)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r16/INTERNAL_READER_NO_ROW_READ.json (proposed_cell.what)"
+    ]
+  }
+}
+```
