@@ -111,4 +111,24 @@ the round-2 gaps.
   `Opal_Muni_Sleeve` stays kept out with its reason until call `203a`. That call decides the sleeve's membership, not FWD-3's
   grade.
 
-## 6. The one real run -- PENDING (2026-10-10 after 13:30Z)
+## 6. The one real run -- READ 2026-10-12 13:30Z (workstream 1 L4); workstream 2 L3 runner half still OPEN
+
+Full read: `deliverables/2.0.0_SA_COO~S1/R2_RUN_READ_20261012.md`. The 10-10 and 10-11 fires refused Global at the cross-axis gate
+(rows D1-S9, D1-S10, UNREAD, not failed). The 2026-10-12 13:30Z fire built 16 of 16, `errors=none`, and wrote Global 2026-10-09.json.
+
+| item | read | class |
+|---|---|---|
+| FWD-2 | divz held out `OVERLAP` 1,370,211.85; pfde counted 411,720.53; none silent | MEASURED |
+| FWD-6 | divz row `inside_model_figure=True` with its held-out line by name and value (condition 2); every SMA row states both fields | MEASURED |
+| FWD-7 | `unidentified_strategies` as_of 2026-10-09, names_scanned 18, `Opal_Muni_Sleeve` 553,337.61 `RULE_NOT_COUNTED` | MEASURED |
+| Total | 2,172,724,681.31 = base + tax + sma within a cent; Global history 0 diffs on 493 common dates x 4 series | MEASURED |
+| Condition 1 | CTO-ruled per-firm read (@5a151aacea) clean on 49financial, inflection, cottonwood; 49financial by_model 1.99 vs model_aua 1.98 | MEASURED |
+| FWD-3 organic | Global `muni` row 0.00, `held_out=[]`; the sleeve is on the unidentified list | MEASURED, grade is the CVO's |
+| Client | **NOT GRADED**: served as_of 2026-10-09 vs the 268,516,586.73 figure's as_of 2026-10-08; no same-date pre-deploy Client exists | ABSENT |
+
+- **Issuer defect:** `r2_run_read.py` applied the Client clause with no date guard against the packet's "where the date is unchanged";
+  amended with a date guard and a NOT-GRADED line, controls in the read page. The CVO rules whether NOT-GRADED stands or a QA run of
+  the pre-round-2 pin on the 2026-10-09 inputs is owed.
+- **Ledger:** `mdpf-stratid-r2-global-fold` CLOSED (all 5 legs). `mdpf-stratid-w2-wiring-silver` L3 stays OPEN: Stage 6 dies at
+  `lib.opal_naming` before step 6d on the runner (MDPF_TAXSMA-S5, ARMED, owner `2.0.0_SA_COO~T`; row D1-S10), so no dispatch can show the
+  6d log until S5 is disarmed. The served-slice half of L3 is read and equal.
