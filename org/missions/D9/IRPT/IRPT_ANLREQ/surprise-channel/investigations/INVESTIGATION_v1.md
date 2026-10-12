@@ -4353,3 +4353,85 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W54-S7 -- the actor and renderer arms of test_final_release_refuses_changed_actor_owner_or_service_identity bite on a second identity comparison, not on the named principal comparison
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-12T23:10:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AMENDMENT 2 bite check: with the principal identity comparison disabled, the actor and renderer arms of test_final_release_refuses_changed_actor_owner_or_service_identity still PASS, because a second identity comparison refuses them after compute; only the owner arms fail under their named comparison",
+  "spec_asserts": "AMENDMENT 2 point 2 (order IRPT_ANLREQ.TO-AR-y-172, section AMENDMENT 2): each of the six final-release arms reaches the identity check it names, and a scratch mutant that disables the identity comparison the arm names makes that arm FAIL.",
+  "world_is": "Measured in scratch copies outside the product tree (registry read through IRPT_FIRM_REGISTRY, pointing at the worktree data file; no product file written). Reach: all six arms now refuse at an identity check, not at the fence: actor-read and actor-prospect at owner_reads.py:39 and prospect.py:93 (current principal changed during read / current prospect actor changed during compute); owner-read and owner-prospect at owner_reads.py:41 and prospect.py:95; renderer-read and renderer-prospect at the principal re-resolution owner_reads.py:38 and prospect.py:92 (verified firm advisor or operations owner required). Mutant P (principal comparison disabled, owner_reads.py:38 and prospect.py:92): all six arms still PASS. The actor and renderer arms are then refused by interactive_access.py:110 (principal != self.current(), where current() reads the LIVE request headers), reached through the post-compute retained() check as issued record not currently authorized and prospect input not currently authorized. Mutant O (retained owner comparison disabled, owner_reads.py:40 and prospect.py:94): owner-read and owner-prospect FAIL, the private payload is returned. So the actor and renderer arms are caught by a principal identity check, but the named comparison alone does not make them fail. Assertions unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/owner_reads.py:36-41 @c6de1b49fa (pre- and post-compute principal and retained-owner comparisons)",
+      "infra/aws/lambda/investor-reporting/_scope/prospect.py:87-95 @c6de1b49fa (retained prospect check and actor and owner comparisons)",
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py:101-110 @c6de1b49fa (authorize_current compares the principal with the live current())",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_interactive_entry.py:86-103 @c6de1b49fa (the six arms)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S8 -- the AMENDMENT 2 commit is refused by the lane gate, because the order is terminal at HEAD (status complete) and a terminal order grants no path
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-12T23:12:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The fixture commit for AMENDMENT 2 is refused by the owned-paths lane gate: the order file at HEAD carries status complete, so the order grants no path, including the two test files the amendment names",
+  "spec_asserts": "The order's <paths> names both _authz test files and the investigation file, the amendment says commit as a NEW commit with the safe-commit line the order gives, and ADHC_OWNPTH.005 says the order is the worker's grant (a missing path is a cut defect, never an override).",
+  "world_is": "At HEAD c6de1b49fa the order file carries <status>complete</status> (set by ca7263fa92 after AMENDMENT 1), and the amendment commit c6de1b49fa did not reopen it. .tools/owned-paths-validate.py treats terminal status words as granting nothing (_TERMINAL_TO_WORDS, _worker_orders). A safe-commit of the two test files returned rc=1: lane=IRPT_LIVE_SCOPE_P, agent not in permitted_agents, no NON-TERMINAL task order at HEAD issued_to this serial names this path. Nothing was committed (HEAD still c6de1b49fa). The worker did not reopen the order: the status is the issuer's to set, and a worker re-granting its own terminal order is the act ADHC_OWNPTH.005 refuses. The fixture and comment edits, the check runs and the mutant results sit uncommitted in the worktree. Needed: the issuer 2.0.0_SA_COO~Y2 reopens the order in its own commit (a non-terminal status at HEAD), or the CTO rules.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-172.internal-reader-status-active.md:8 @c6de1b49fa (<status>complete</status>)",
+      ".tools/owned-paths-validate.py:146 @c6de1b49fa (_TERMINAL_TO_WORDS)",
+      ".tools/owned-paths-validate.py:189-216 @c6de1b49fa (_worker_orders skips terminal orders and grants nothing)",
+      ".tools/owned-paths-validate.py:476-479 @c6de1b49fa (the refusal text printed by safe-commit rc=1)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W54-S9 -- the rule-revert mutant fires 3 of the 5 named status tests, not 5: the active-row arm and the service-and-client arm assert behaviour the revert does not change
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-12T23:22:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AMENDMENT 3 point 2 premise: under the rule-revert mutant the five named status tests do not all FAIL. Three refusal tests fail (disabled row, row with no status, no row); test_internal_caller_with_an_active_row_is_admitted and test_service_and_client_callers_are_unchanged pass, because the revert does not change what they assert",
+  "spec_asserts": "AMENDMENT 3 point 2 (order IRPT_ANLREQ.TO-AR-y-172, section AMENDMENT 3): in a scratch copy outside the product tree, with _internal_allowed_firms put back to the pre-AR-y-172 behaviour, the five named status tests FAIL, and that is recorded as the control.",
+  "world_is": "Measured in the scratch copy .scratch/mutant_y172 (outside infra/aws/lambda/investor-reporting/_authz/served.py of the worktree). Unmutated copy: test_internal_status_active.py 17 passed, rc=0 (the control). Mutated copy, served.py lines 1157-1161 replaced by the single pre-AR-y-172 line: 15 failed, 2 passed, rc=1. Failing: the disabled-row test (8 parameters), the row-and-no-status test (6 parameters), the no-row test. Passing: the active-row test (its four assertions admit under both behaviours) and the service-and-client test (the service branch and the client branch are not the function the revert changes). A revert of the internal reader cannot make an arm that asserts unchanged behaviour fail. The control is recorded with the corrected expectation (the three refusal tests fire, so the mutant fires); the five-FAIL wording was not forced. The full _authz folder was not run in the scratch copy: 5 test modules raise FileNotFoundError at collection there, because the copy holds only the investor-reporting folder.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_internal_status_active.py:79-82 @c557f59211 (the active-row arm: four admissions)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_internal_status_active.py:110-122 @c557f59211 (the service-and-client arm)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1157-1162 @72f9b2bb1a (the rule the mutant reverts; AR-y-172 block added at 9b9c573ce7)",
+      "git show 9b9c573ce7 -- infra/aws/lambda/investor-reporting/_authz/served.py (the removed pre-AR-y-172 line: if row is None or \"allowedFirmIds\" not in row: return None)"
+    ]
+  }
+}
+```
+
