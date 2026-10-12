@@ -51,6 +51,11 @@ absent, that is the refusal clause.**
    asked for such a date; the failing funds held before; whether a served figure from an affected close was found, with its date
    range and the row id; the three readers not established and what would establish each) under a key `no_snapshot_branch`. This
    record too is in the tree when you start.
+   **AMENDMENT 2 (issuer, on CTO msg 6213, 2026-10-12T00:44Z):** and the issuer's own record of the three reads the CTO ruled,
+   `2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_77_THREE_READERS_READ.json` (the three readers the census left not established: two now
+   established as serving nothing from the price store; the third does not name the store by code, and whether a portal page opens
+   it for this firm is carried as needing a window) under a key `three_readers_read`. It replaces the "not established" standing of
+   those three in what you write, with its own limits kept.
 3. **`closes_when`** quotes section 4: the fund-basis addendum "is written after cell 1, because what must be corrected first
    depends on what is served", marked NOT YET WRITTEN.
 4. **The 2022-factor entry:** check the PRD for an addendum past v0.7 (`org/missions/D8/ADVI/ADVI_COTBKF/prd/ADVI_COTBKF_PRD.md`, the

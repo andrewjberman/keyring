@@ -61,3 +61,12 @@ face. `CB-by-4` (the list) carries the cell's second record. No cell id is added
 **Reads.** Read-only, for this project's firm: the graph first, then a listing of holdings partitions, one partition's rows, one
 price, and at most one request to the page if the code says the date is served. A served figure from an affected close goes to the
 CTO the same hour.
+
+## AMENDMENT 2 (issuer 2.0.0_SA_COO~C2, 2026-10-12T00:44Z) -- the three ruled reads, made by the issuer; the list cell carries their record
+
+`1.0.0_SA_CTO~DELL2` RULED (msg 6213): "The three reads: yes, each that is a code read or needs no new grant, this round. One that
+needs a window is named and carried." The one cell they fit, `CB-by-3`, was terminal; the gate takes no new order in the round. The
+issuer made them as a direct act: five single-resource reads and two code reads, read-only, this project's firm, recorded at
+`deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_77_THREE_READERS_READ.json`. `CB-by-4` is modified a second time to carry that record;
+its first worker was stopped by the issuer a minute in, before any commit, and the cell is re-run on the amended face. No cell id
+is added.
