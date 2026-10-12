@@ -5558,3 +5558,82 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "ARMED because the warning's content is unread here and the estate wrote it against this node. Disarm owner is the issuer, who can read the citation and rule on the hold before the deploy order under the act 4 pair."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-f-11, act 4 IRPT leg)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S37",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-12T14:23:54Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-11 step 4: irpt-narrative built from the main working tree reads cQ+WcTub... against the rehearsal's 0+/PHOb...; five JSON data members carry CRLF line endings in that tree; a build from a clean detached worktree reads the rehearsal hash.",
+  "spec_asserts": "TO-FB-f-11 step 4: the printed artifact sha256 equals the rehearsal's for each function if the tree is otherwise unchanged; a difference is printed, explained and is a STOP until read.",
+  "world_is": "Of the eight builds, six from the main tree equal the rehearsal; irpt-narrative reads cQ+WcTubuw3nZvIewiWzOEYBhOufHtY++DQ8vmn0hK4= (220,459 bytes). A member-by-member compare against the clean build (0+/PHOb/xGvYNBrz/j4Ltk5k85clmAo96BOJzi9n3ZY=, 220,364 bytes): 22 of 27 members byte-equal, 5 differ by size only (event_policy.json 4663 to 4718, fixtures/FIXTURE_MANIFEST.json, fixtures/performance_report_inf.json, fixtures/topics_predating.json, fixtures/topics_window.json); `git hash-object` of each working file differs from its committed blob while `git status` reads clean (CRLF working copy, autocrlf normalisation). The tree-resident narrative inputs are unchanged between the issuer's head ec099f0623 and HEAD. The CRLF object (S3 VersionId PZfbDaKAdbJRWlbKluX_bhpIS80WlIbX) was never applied; irpt-narrative was rebuilt from a detached worktree at e274a0e60c and uploaded; the deployed CodeSha256 equals the rehearsal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4_irpt/build_irpt-narrative_main_tree_CRLF_SUPERSEDED.txt",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4_irpt/build_irpt-narrative.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No decision owed for this act. For the issuer's builds: a main-tree BUILD_ONLY of irpt-narrative will not reproduce its rehearsal while that tree keeps CRLF data members; a clean worktree does."
+}
+```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-f-11, act 4 IRPT leg)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S38",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-12T14:23:54Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-f-9 AC1 (deployed-equal against HEAD) reads 18 of 20 after platinum_dest_view.py was shipped: C_06.client_mix_timeseries.py and D_04.client_portal_summary.py at HEAD carry MDPF_SECCLASS commits made after act 2's shipment.",
+  "spec_asserts": "Runbook rev 3d: shipping platinum_dest_view.py at act 4's close makes FB-f-9 AC1 read 20 of 20.",
+  "world_is": "r3_act2_reads.py deployed-equal at 14:16:47Z read 17 of 20 (platinum_dest_view.py, C_06, D_04 differ); after the one-object safe-deploy of data/black_diamond/scripts/gold/lib/platinum_dest_view.py (DEPLOYED, VERIFY OK) it reads 18 of 20 at 14:18:26Z, naming C_06.client_mix_timeseries.py and D_04.client_portal_summary.py. `git log` for the two files: 77849c4924 (0.9.0_WK_MDPF_SECCLASS~86, 2026-10-12 12:40Z) and a9f4bac7b5 (0.9.0_WK_MDPF_SECCLASS~80, 09:24Z) after act 2's 06:21Z shipment. This lane shipped no other object: those two scripts belong to another project's deploy cycle. safe-deploy printed WARN [seat-gates] would stop under ENFORCE (crossbox-deploy:data/black_diamond) and proceeded in WARN mode.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4_irpt/deployed_equal.out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The instrument compares to HEAD, so the literal 20 of 20 cannot be reached without deploying another project's unreviewed script changes. Options for the issuer: pin deployed-equal to the act-2 commit, or accept 18 of 20 with the two named as another project's pending deploy."
+}
+```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-f-11, act 4 IRPT leg)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S39",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-12T14:23:54Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-11 instrument gaps: the first-hour origin 403/404 read has no per-behavior source; the performance adapter's census event refuses at input validation so it writes no evidence key; the sample's ownership_read field cannot be filled from logs.",
+  "spec_asserts": "Step 6: read the router behaviors' origin responses over the first hour (CloudFront metrics or logs); step 5: the performance adapter is invoked once and its evidence artifact KEY named; AC2/r4_sample_eq counts ownership reads at the canonical key.",
+  "world_is": "(a) Distribution EVTSA9VEHNZVH: Logging.Enabled False, additional metrics NoSuchMonitoringSubscription, 0 realtime log configs; only the aggregate Requests, 4xxErrorRate and 5xxErrorRate exist, and bursts of 150 to 500 requests at 38 to 63 percent 4xx were present before the first unit (11:33Z to 12:18Z), so the aggregate has no clean baseline and cannot separate a viewer-request 401/403 from an origin 403/404. (b) irpt-performance-adapter, census event with the granted viewer and a minted typed account id: ok false, public_reason_code INVALID_INPUT, exception PerformanceInputRefused 'explicit server-issued selection required' before retained.py:321; invoked twice (once by the sampler, once in a debug re-run), no artifact written, no key to name. (c) None of the eight IRPT functions logs the ownership key, so every SAMPLE_*.json ownership_read is empty and r4_sample_eq prints 'ownership reads at the canonical key 0'; the canonical-key evidence is the artifact: 8 of 8 deployed zips carry loaders.py equal to the flip commit's blob (sha256 a2283dc8...) and name opal-data-49financial.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4_irpt/cf_1420.out",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4_irpt/perf.out",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4_irpt/member.out",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4_irpt/sample_eq.out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: what instrument closes the first-hour read (the 8 IRPT functions' own error logs are available; the router behaviors' origin responses are not), and whether a server-issued selection is to be supplied for the performance adapter's one run."
+}
+```
