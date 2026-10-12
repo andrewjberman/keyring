@@ -1001,9 +1001,11 @@ def _validate_firm_pages(reg, refuse):
         firms = []
     for i, row in enumerate(firms):
         rw = "%s firms[%d]" % (where, i)
-        if not isinstance(row, dict) or set(row) != {"firm", "pages", "evidence"}:
-            refuse(rw, "row", "fields must be exactly firm, pages, evidence")
+        if not isinstance(row, dict) or set(row) - {"note"} != {"firm", "pages", "evidence"}:
+            refuse(rw, "row", "fields must be exactly firm, pages, evidence, with an optional note")
             continue
+        if "note" in row and (not isinstance(row["note"], str) or not row["note"]):
+            refuse(rw, "note", "an optional non-empty string: the record and the date of the ruling that shapes the row")
         f = row["firm"]
         if f is None or f == "null":
             refuse(rw, "firm", "%r is never a firm value: no registry row names the claim of no firm" % (f,))
@@ -1432,13 +1434,17 @@ def _blk_route_firms(reg, h16, path):
 
 
 def _blk_firm_allowed_paths(reg, h16, path):
-    """The portal's per-firm page matrix (NFRA_CTLPLN CT-w-4; FWD-28 step 8): FIRM_ALLOWED_PATHS, one `'<firm>': new Set([...])`
+    """The portal's per-firm page matrix (NFRA_CTLPLN CT-w-4; FWD-28 step 8; CT-w-8): FIRM_ALLOWED_PATHS, one `'<firm>': new Set([...])`
     entry per firm row of firm_pages.json, in registry order, its pages in row order. The object keeps the shape the portal
-    reads (a Record of ReadonlySet), and the hand-kept lines around it are untouched. The rationale comments that sat
-    inside the literal are not carried into the block; the registry's evidence field names each row's source."""
+    reads (a Record of ReadonlySet), and the hand-kept lines around it are untouched. A row's optional note renders as
+    `    //` comment lines directly above that row's entry: each note line is written after the `//` exactly as it is stored,
+    so a note line keeps the single leading space the hand-kept comment carried. The registry's evidence field names each
+    row's source."""
     doc = _firm_pages(reg)
     lines = ["export const FIRM_ALLOWED_PATHS: Record<string, ReadonlySet<string>> = {"]
     for row in doc["firms"]:
+        if "note" in row:
+            lines.extend("    //" + t for t in row["note"].split("\n"))
         lines.append("  %s: new Set([" % _js_str(row["firm"]))
         lines.extend("    %s," % _js_str(p) for p in row["pages"])
         lines.append("  ]),")
