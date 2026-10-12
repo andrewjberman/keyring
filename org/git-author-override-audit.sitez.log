@@ -1706,3 +1706,9 @@
 2026-10-12T20:22:28Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=26.19  took=5dcfeebd3b hold=2.75s graded=0/10 pushed=b491f5f50e  phases: t_fetch=3.51s t_merge_cloud=11.13s t_land=2.78s t_push=4.62s
 2026-10-12T20:32:30Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=4.21  graded=n/a  args=(--verify-merge 4663298bce44d87a6b0092ec3dc6e5a1ae33c294)  first=(none)
 2026-10-12T20:32:43Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=39.38  took=26c402cd8b hold=3.78s graded=0/10 pushed=4663298bce  phases: t_fetch=2.71s t_merge_cloud=17.56s t_land=3.81s t_push=7.75s
+2026-10-12T20:33:10Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-12T20:33:16Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-12T20:33:28Z LANDED-2P  0.0.0_AB_MSTR~Z  c4341672f8  paths=1  validate=21.81s  wait=0.51s  hold=1.24s  build=0.77s  ref=0.42s  post-commit=4.93s  attempt=1
+2026-10-12T20:33:40Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=8.43  took=already-current pushed=c4341672f8  phases: t_fetch=1.80s t_push=3.92s
+2026-10-12T20:42:26Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=3.68  graded=n/a  args=(--verify-merge 8e77a842529cd196eb12fcd1facdcb83e6b8c9f1)  first=(none)
+2026-10-12T20:42:35Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=32.66  took=b03673a17c hold=2.16s graded=0/12 pushed=8e77a84252  phases: t_fetch=2.08s t_merge_cloud=15.86s t_land=2.20s t_push=6.53s

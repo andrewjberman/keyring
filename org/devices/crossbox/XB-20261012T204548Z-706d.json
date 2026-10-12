@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261012T204548Z-706d",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~Y2",
+ "to_serial": "0.7.0_AE_CloudOps~ANL",
+ "subject": "IRPT_ANLREQ: one request id and tenant for the drafter, read-only (NFRA_TRNSPT r24)",
+ "body_path": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/f2/CROSSBOX_CALL_ONE_REQ_ID_FOR_DRAFTER_20261012.md",
+ "opened_at": "2026-10-12T20:45:48Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
