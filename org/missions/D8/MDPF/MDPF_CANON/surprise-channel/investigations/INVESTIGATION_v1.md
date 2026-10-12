@@ -960,3 +960,53 @@
   "notes": "Filed by the worker at CN-e-1 so the import difference from the order's step 1 is traceable. The CVO reads it at L8."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S17",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-12T17:50:00Z",
+  "one_line": "The one on-demand gold run built the new global account-distribution (exactly the two cottonwood_fold keys beyond a process stamp) but could NOT land it: the writer reports status conflict on every object whose as-of date already exists, so C4's served-object clause is unobservable until a new as-of date is minted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ADHOC.canon-r4-code-deploy C4 / pair section 5: after the one on-demand run the global account-distribution for the latest date gains exactly meta.cottonwood_fold.value_date and .age_trading_days; every other object of every scope and type is value-equal; the manifest errors are empty.",
+  "world_is": "Measured 2026-10-12T17:31:44Z-17:32:57Z. Invoke status 200, no FunctionError, payload status green, errors [], a4_objects_built 16 of 16. Served objects: 18 of 18 baseline objects value-equal and byte-equal (sha256) before and after, INCLUDING global/account-distribution/2026-10-12.json (sha256 0a8205c0e791...), i.e. it did NOT gain the two keys. Cause read from the run's own manifest s3://opal-data-assets/portal/gold/mdpf/_manifests/2026-10-09/20261012T173257Z.json: writes carry status conflict for 13 objects, unchanged for 3, staged 4, written 1 (the taxsma control). The conflict row for global/account-distribution/2026-10-12.json lists business_diff_paths = [_provenance.process_time, meta.cottonwood_fold.age_trading_days, meta.cottonwood_fold.value_date] (3 of 3), so the new body differs from the existing one by exactly the two keys plus the process-time stamp, which meets the order's content expectation, but the object was not replaced. The only new object under portal/gold/mdpf/ is the manifest itself. The other 12 conflicts differ by provenance or time stamps, plus cottonwood meta.assignment_date, source, value_date_rekey and one knowledge_date (cottonwood sidecar-driven; not from this change). The pair's own section 6 acceptance is the FIRST SCHEDULED run that mints a new as-of date; the next is 2026-10-13T13:30Z.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/portal/gold/mdpf/_manifests/2026-10-09/20261012T173257Z.json (writes[], run.data_as_of 2026-10-09)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/canon_r4_served_baseline_BEFORE_20261012.json and the after-read compare, 18 of 18 equal",
+      "aws lambda invoke 2026-10-12T17:31:38Z-17:32:57Z, StatusCode 200"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This seat did not retry: the order allows ONE run and a retry could not differ. The ledger mdpf-canon-r4-code-deploy-dell1-20261012 keeps leg L6 open and is held on the first scheduled run reading the served global account-distribution for a new date. Whether C4 grades on the manifest's business diff or waits for that run is the issuer's and the CVO's."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S18",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-12T17:50:30Z",
+  "one_line": "The gold lambda's declared vintage MDPF_GOLD_COMMIT still reads 88e974ca10 while the deployed package is built from 0d39789fdf, so every run manifest stamps run.code.commit 88e974ca10, a vintage its own bytes do not match.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "infra/aws/terraform/mdpf-pipeline/gold-lambda.tf (the environment block's own rule): WHEN RE-PINNING, SET THIS FROM THE --pin YOU ACTUALLY BUILT WITH. The order's D2 says the plan moves only the function's code and forbids a source edit.",
+  "world_is": "Measured 2026-10-12T17:30-17:33Z. Function environment MDPF_GOLD_COMMIT = 88e974ca10237b6555bcda633ca83a54e4a5dcc9 before and after D2 (the plan graded it unchanged). The deployed package's in-zip BUILD_MANIFEST source_vintage.commit = 0d39789fdf38df2550cf1b60fb03798fadca22e2. The on-demand run's manifest run.code.commit read 88e974ca10. Same drift class gold-lambda.tf documents three times already (2026-08-24, 2026-08-28). Nothing served moves; the provenance line is wrong until a one-line env change is applied.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration mdpf-gold-lambda, 2026-10-12T17:25Z and 17:31Z",
+      "deployed package BUILD_MANIFEST.json read from Code.Location, 2026-10-12T17:31Z",
+      "s3://opal-data-assets/portal/gold/mdpf/_manifests/2026-10-09/20261012T173257Z.json run.code"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Fix is a one-line value change in gold-lambda.tf plus a targeted apply, under its own order and pair: it is an environment attribute, which this order's plan check treats as a stop. Not done here."
+}
+```
