@@ -2163,3 +2163,41 @@ examined for this attribute's type. A sweep of all 56 PROFILE rows is a differen
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+### TCKT_VNEXT-D2-S51 -- an UNQUOTED hyphenated CloudWatch filter-pattern returns 0 silently, and 0 reads as "it never logged"
+
+**owner:** `0.7.0_AE_CloudOps~TV2` (filer) | **disarm_owner:** n/a -- an instrument trap, not a hazard
+**class:** INSTRUMENT / RETRIEVAL | **found:** 2026-10-12, cell R7-nr-3, step 10 of TO-APPLY-R7-nr2
+
+**spec_asserts:** `aws logs filter-log-events --filter-pattern FIRM-SCOPE-NO-ROW` counts the lines carrying that token, so a
+result of 0 means the function did not log it. The order's step 10 asks for exactly that count, expecting 2.
+
+**world_is:** the UNQUOTED pattern returns **0 events** while the SAME window holds **2** such lines. CloudWatch Logs filter
+syntax treats a bare hyphen as part of its own grammar, so the term must be double-quoted:
+
+| pattern, same log group and same window | events |
+|---|---|
+| `FIRM-SCOPE-NO-ROW` (unquoted) | **0** |
+| `"FIRM-SCOPE-NO-ROW"` (quoted) | **2** |
+| no filter at all, counted client-side | 16 scanned, **2** carrying the token |
+
+The zero is well-formed, returns rc 0, and is indistinguishable at a glance from "the code path never ran" -- which, on this
+order, would have meant "the release does not log its refusal", i.e. a finding against a release that was in fact working.
+
+**how it was caught:** the order's own step-10 wording invites a bare count, and I ran one. The thing that exposed it was a
+CONTROL I ran beside the zero -- the same pattern minus the specific suffix (`FIRM-SCOPE`), which ALSO returned 0. Two zeros
+where at least one had to be non-zero is a contradiction, and a contradiction is checkable where a single zero is not. An
+unfiltered read then printed 16 events as the denominator and found the 2 lines client-side.
+
+(A second, unrelated zero preceded it and was mine, not the tool's: a hand-typed `--start-time` of `1791778800000`, which is
+04:20Z, about four hours in the FUTURE of the act. It also returned a clean 0. Deriving the window from `date -u +%s` fixed
+it. Two different causes, one indistinguishable symptom.)
+
+**the sound instrument:** quote every hyphenated term in a filter pattern, AND print a denominator -- either an unfiltered
+count over the same window filtered client-side, or a control pattern that must match something. CLAUDE.md already says a
+failed retrieval returns a VALUE and to put the control on the retrieval; this is that rule's CloudWatch instance, and the
+specific syntax is what the rule does not name.
+
+**not established:** which other characters CloudWatch's filter grammar swallows unquoted. I measured the hyphen on one log
+group with one pattern. Colons, slashes and dots are plausible and untested, so no claim is made about them.
