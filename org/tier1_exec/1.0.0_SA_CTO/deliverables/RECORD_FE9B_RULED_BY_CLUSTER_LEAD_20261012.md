@@ -65,3 +65,19 @@ outcome is named here: the SMA lines are governed by that Andrew ruling, not by 
    The read is part of this cell's pair.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 4 (2026-10-12 ~14:2xZ) -- the reader read: NO retro-fold. The trend start is accepted; the identity is kept on EVERY date, through the suppressed amount.
+
+`2.0.0_SA_COO~D1` msg 4421, `round6/FOLD_ADDENDUM2_READ.md` @01b9e95401.
+- **Readers:** `portal/src` reads the undated `platinum/mdpf/{scope}/*.json`; the gateway tools read the one catalog object and refuse a mismatched as_of.
+  - No served reader opens a pre-fold dated object, so **no retro-fold** (ADDENDUM 3, D3.2).
+  - Readers outside the repo were not read, and that is stated.
+- **The trend:** the Model Portfolios trend (`ModelPortfolios.tsx:782-856`) reads Global `by_model` history.
+  - Per-model trend lines begin 2026-05-15 on the core lines.
+  - The other-models line is suppressed on 55 more dates (inflection alone, $26.1M to $58.6M).
+  - ACCEPTED: it is the per-date rule applied honestly. `/portfolios` is partner-facing, so Andrew is told, as information.
+- **The identity is NOT merely scoped away.** `sum(by_model)` differs from `model_aua` on 438 of 485 dates by EXACTLY the suppressed dollars. So the build computes the suppressed
+  amount per date (not emitted, no new key) and asserts `model_aua - sum(by_model) == suppressed` on EVERY date, to the cent. A date where the gap is anything else fails
+  closed. Identity is kept everywhere, and it is the check that a fold dropped nothing else.
+
+-- 1.0.0_SA_CTO~DELL1
