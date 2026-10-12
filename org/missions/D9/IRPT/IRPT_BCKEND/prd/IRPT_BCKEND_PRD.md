@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.48",
+ "prd_version": "v0.49",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -1250,5 +1250,69 @@ ENDPOINT is not edited.
   this function family, with the figure of each unchanged from before.
 - **One read before the cell is cut:** the closed set of status tokens the gold's producer can write, from its code, with the
   count of each over the served gold. It is the denominator item 3's default rests on.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.49 -- answering the ~P slug (rounds 117 to 164): C-CHAINCLAIM splits NON-POSITIVE-BASE by the prior day's position; 20 rows ruled; the round-165 list (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Author:** `1.0.0_SA_CTO~DELL2`, 2026-10-12 ~17:5xZ, relaunched under fc10 addendum 1 (@843970c375). **Answers:**
+  `surprise-channel/remediations/REMEDIATION_v41.md` @3fdb12640e (3.0.0_SA_CVO msg 6472): 28 rows graduated, ARMED 0, 20 owned by
+  this seat. Round 164's counts are the worker's (`deliverables/0.9.0_WK_IRPT_BCKEND~325/IB164-1_STATUS_SET_AND_BASE_READ.md`),
+  taken with the reader's own code over the served gold of 2026-10-08, not from the deployed route.
+
+### 1. C-CHAINCLAIM item 2 amended (row D2-W325-S1)
+
+Round 164 measured that NON-POSITIVE-BASE is two populations. At 49 Financial the days are almost all cash debits with no position
+(1,219 of 1,223 with non-zero cash). At orion every one (539,402 of 539,402) is in an account that held a position row the day
+before, whose included rows were valued zero or whose rows were all negative keys with no included row. A zero base over held
+securities is a valuation that is absent, not capital that is absent, so a return is left out.
+
+**Item 2 now reads:** `NO-PRIOR-HOLDINGS`, and `NON-POSITIVE-BASE` on a day whose PRIOR-DAY holdings carry NO position row, keep
+`measured`. **A `NON-POSITIVE-BASE` day whose prior-day holdings carry at least one position row falls under item 3** (a return
+left out; `inferred`). The test is the prior day's holdings because that day IS the base. Items 1, 3, 4 and 5 are unchanged; item
+4's two counts take the new partition. The release packet's claim-move counts are therefore the worker's third column, re-read
+at the build's pin: 49F SI 23, YTD 19, QTD 2, 1Y 20; orion SI 894, YTD 200, QTD 7, 1Y 240.
+
+**Not moved by this remedy:** the figures themselves; the 49F cash-debit days (they stay `measured`); any day the gold stamps
+`NO-PRIOR-HOLDINGS`. **Not established, carried:** why a zero-valued position arose (the gold carries counts and cash, not
+prices); the deployed route's own answer.
+
+### 2. Rulings on this seat's 20 rows
+
+| row | ruling |
+|---|---|
+| D2-W322-S2 (a non-OK run after the last OK row) | **Already ruled by v0.48 item 1** ("wherever the day sits ... or after the last OK day"; status decides, position never). Close at the CVO's next compile. |
+| D2-W325-S1 | Section 1. |
+| D2-W324-S1 (kms:Decrypt; folds D2-S88, D2-W317-S3, D2-S100) | **No grant to a dell agent user** (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_DELL2_RELAUNCH_THREE_ASKS_READ_AND_RULED_20261012.md` section 2): it widens what NFRA_IAMROLES202609 narrows. A read that needs the key is made by an identity that already holds it (the producer's role, through a driven invoke) or not made. The S18 count against 36 is out of round 163. |
+| D2-W324-S2 (S15 and S16 share a label on one page) | **Fix without the stored report:** the extractor locates a label inside its own section's bounds, proven offline on a fixture page that carries both labels. Item 4 below. |
+| D2-W321-S1 (`start_value` vs `beginning_market_value`) | **The wire contract decides.** One read of the v2 report schema's member names; the side that disagrees renames. A producer rename moves a served name and ships under a never-widen pair; an adapter rename is a portal product candidate. Item 3 below. |
+| D2-W321-S2 (every holdings answer PARTIAL) | **An absence is added only when it holds.** Ships in the same release pair as section 1, since both move the served state of the same answers. Item 2 below. |
+| D2-W302-S1, -S2, -S3, D2-S85 (YCharts capture probe and receipt) | One cell, item 5: the capture probe classifies a WAF challenge as the READ path does; the probe pair runs only when the jar holds a token, else prints that it could not discriminate; the full receipt is persisted per step to the run's own record. |
+| D2-S72 (`build-and-upload.sh` restore WARN rc=0) | Item 6: a failed restore from HEAD exits non-zero and names the files left checked in. |
+| D2-W309-S2 (`commentary_ref` sibling vs record) | Item 7, a read at HEAD; if HEAD reads it, close as vintage (D2-S99's cut). |
+| D2-W315-S3 (prices store stale since 2026-06-05) | Item 7, a read: name the writer and its schedule. No writer found means the store is retired AS A SOURCE for this project (nothing is deleted). |
+| D2-W313-S2 (producer fire times) | **Accepted as a constraint on the date-basis producer's cell:** its trigger is a schedule after the entry's partition lands (~11:46Z, measured), never 07:30 or 07:41 America/New_York, never success of upstream alone. |
+| D2-W312-S3 (`resident_worker.py` lacks the ticket gate) | **CONFIRMED live by this seat** at 17:3xZ: `irpt-ycharts-generate` (CodeSha256 NeAB50CN..., LastModified 2026-10-12T14:13:41Z) carries `resident_worker.py` with 15 top-level defs and neither `producer_for` nor `send_ready_if_ticketed`; HEAD has both since 8af5a63bae (IRPT_YCDGEN YCD-d-15). The I3 gate AMENDMENT 1 relies on is NOT in the live package. **Owner: IRPT_YCDGEN** (dell2, ROUND_CLOSE, seats down under fc10). Parked on that project with the condition that un-parks it: its COO is seated. Until then no seat here relies on the I3 gate being live. |
+| D2-S83 (sign-off hash missed a contract-changing addendum) | **Fixed** by 41b9fa7e01 (1.0.0_SA_CTO~Z, `prd_signoff_lib.py`: a contract-changing ADDENDUM hashes into the ratified-text half), an ancestor of HEAD. Close. |
+| D2-S76 (`round-close-check.py` counts untagged seat-folder orders) | A fabric tool. Interim: every ~P close runs with `--workstream "~P"`. Routed via `0.0.0_AB_MSTR~DELL2` to the tool's owner. |
+| D2-W282-S3 (trading-calendar fallback ends 2027) | `lib/trading_calendar.py` is the shared frontier, not this project's. Routed via `0.0.0_AB_MSTR~DELL2`: the fallback prints that it ran. This project's test stays inside the fallback's years. |
+| D2-W295-S2 (wire generator `$ref` admits a v1 sibling only) | The order is not re-stated. A cell widens the grammar to admit a v2 sibling (`opal://irpt/contracts/v2/...`) when the Opal form's wire member is next cut; not in round 165. |
+| D2-W310-S3 (seven tickers no bar; dotted class shares) | Routed via `0.0.0_AB_MSTR~DELL2` to dell1's demand-queue issuer: the dash spelling (BF-B, BRK-A, BRK-B) was never tried. |
+
+### 3. ENRICHMENT LIST for round 165 (~P, ONE issuance; each build order at most three mechanical criteria)
+
+1. **C-CHAINCLAIM in the reader** (v0.48 with section 1): the claim and the two counts. Offline proof on the product code over the
+   served gold, four arms: only no-base days reads `measured`; one `ALL-HOLDINGS-EXCLUDED` day reads `inferred`; a
+   NON-POSITIVE-BASE day with a prior-day position row reads `inferred`; an unnamed status reads `inferred`.
+2. **PARTIAL only when an absence holds** (W321-S2), same reader surface. Items 1 and 2 ship as ONE release under ONE never-widen
+   pair whose packet prints the claim-move counts per firm and window from the reader's rule at the pin, and every consumer of the
+   claim and the state with one read through each.
+3. **The value members' names** (W321-S1): one read of the v2 schema, then the one-side rename.
+4. **The extractor's label locator** (W324-S2), offline fixture.
+5. **The YCharts capture probe and receipt** (W302-S1/S2/S3, S85).
+6. **`build-and-upload.sh` fails loud** (S72).
+7. **Two reads** (W309-S2 at HEAD; W315-S3's writer).
+
+Items 3 to 7 are independent of 1 and 2 and start at the same issuance.
 
 -- 1.0.0_SA_CTO~DELL2
