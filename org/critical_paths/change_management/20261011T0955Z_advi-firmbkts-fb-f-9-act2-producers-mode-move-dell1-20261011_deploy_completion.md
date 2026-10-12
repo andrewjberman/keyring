@@ -13,17 +13,22 @@
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
 | L1 | verify | step 2 reads: opal-data-bd versioning, the 20 keys' prior VersionIds, the actor's grants at object grain, the producers' role grant at the new home, the schedule, deployed-equal before-read | the entry carries the 20 rows and the read lines |  | OPEN |
-| L2 | s3-prefix | s3://opal-data-bd/code/gold/ 19 .py objects: 14 writers (C_05 C_06 C_07 C_08 D_00 D_00b D_00c D_00f D_01 D_02 D_03 D_04 E_01 E_24) + lib/{platinum_dest,platinum_dest_view,gold_utils,helpers,etf_classifier}.py (step 3, HELD for the build-final amendment) | 19 of 19 read back equal to git show HEAD:<path> (sha256 per key) |  | OPEN |
-| L3 | s3-prefix | s3://opal-data-bd/code/gold/gold_dispatch.sh -- the switch (step 4, HELD for the GO amendment), aws s3 cp --sse AES256 then cmp | cmp read-back equal, 0 bytes above 127, MOVE_TS recorded |  | OPEN |
-| L4 | activation | the first SCHEDULED production chain after MOVE_TS (--chain, not --single, not QA) | the chain's exit and a run log with no ValueError and no NoSuchKey on a served read |  | OPEN |
-| L5 | verify | AC1 deployed-equal 20 of 20, AC2 new-home 11 of 11 since MOVE_TS, AC3 old-home 0 keys of 11 classes since MOVE_TS | the three outputs of r3_act2_reads.py quoted |  | OPEN |
-| L6 | git | proof instance written and TO-FB-f-9 status flipped complete in one commit | commit hash |  | OPEN |
+| L2 | s3-prefix | s3://opal-data-bd/code/gold/ 19 .py objects: 14 writers (C_05 C_06 C_07 C_08 D_00 D_00b D_00c D_00f D_01 D_02 D_03 D_04 E_01 E_24) + lib/{platinum_dest,platinum_dest_view,gold_utils,helpers,etf_classifier}.py (step 3, HELD for the build-final amendment) | 19 of 19 read back equal to git show HEAD:<path> (sha256 per key) | NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 2026-10-12T06:15Z on the issuer's GO, AMENDMENT 13 @f5da2fc917); this entry's reads of 2026-10-11 pre-dated the grant (row D1-S18, applied by FB-g-8) and the window; nothing was written under it | CLOSED 20261012T062428Z |
+| L3 | s3-prefix | s3://opal-data-bd/code/gold/gold_dispatch.sh -- the switch (step 4, HELD for the GO amendment), aws s3 cp --sse AES256 then cmp | cmp read-back equal, 0 bytes above 127, MOVE_TS recorded | NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 2026-10-12T06:15Z on the issuer's GO, AMENDMENT 13 @f5da2fc917); this entry's reads of 2026-10-11 pre-dated the grant (row D1-S18, applied by FB-g-8) and the window; nothing was written under it | CLOSED 20261012T062428Z |
+| L4 | activation | the first SCHEDULED production chain after MOVE_TS (--chain, not --single, not QA) | the chain's exit and a run log with no ValueError and no NoSuchKey on a served read | NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 2026-10-12T06:15Z on the issuer's GO, AMENDMENT 13 @f5da2fc917); this entry's reads of 2026-10-11 pre-dated the grant (row D1-S18, applied by FB-g-8) and the window; nothing was written under it | CLOSED 20261012T062428Z |
+| L5 | verify | AC1 deployed-equal 20 of 20, AC2 new-home 11 of 11 since MOVE_TS, AC3 old-home 0 keys of 11 classes since MOVE_TS | the three outputs of r3_act2_reads.py quoted | NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 2026-10-12T06:15Z on the issuer's GO, AMENDMENT 13 @f5da2fc917); this entry's reads of 2026-10-11 pre-dated the grant (row D1-S18, applied by FB-g-8) and the window; nothing was written under it | CLOSED 20261012T062428Z |
+| L6 | git | proof instance written and TO-FB-f-9 status flipped complete in one commit | commit hash | NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 2026-10-12T06:15Z on the issuer's GO, AMENDMENT 13 @f5da2fc917); this entry's reads of 2026-10-11 pre-dated the grant (row D1-S18, applied by FB-g-8) and the window; nothing was written under it | CLOSED 20261012T062429Z |
 
 ## Log
 
 - 20261011T095546Z OPENED by 0.7.0_AE_CloudOps~FB1 with 6 leg(s)
 - 20261011T095603Z HELD-PRE-APPLY gate=external/TO-FB-f-9 amendment commit by 2.0.0_SA_COO~B1 declaring the build final (step 3)
 - 20261011T095840Z HELD-PRE-APPLY gate=external/TO-FB-f-9 build-final amendment commit by 2.0.0_SA_COO~B1 (step 3), the GO amend
+- 20261012T062428Z LEG L2 closed: NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 202
+- 20261012T062428Z LEG L3 closed: NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 202
+- 20261012T062428Z LEG L4 closed: NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 202
+- 20261012T062428Z LEG L5 closed: NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 202
+- 20261012T062429Z LEG L6 closed: NOT PERFORMED under this entry -- superseded by the entry advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012 (opened 202
 
 ## STEP 2 READS (0.7.0_AE_CloudOps~FB1, 2026-10-11T09:58:07Z)
 
