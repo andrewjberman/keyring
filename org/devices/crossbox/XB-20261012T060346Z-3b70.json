@@ -10,12 +10,16 @@
  "subject": "TO-CT-x-1 AMENDMENT 3: one scratch ref may carry the receipt commit",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/CT-x-1_AMENDMENT_3_ASK.md",
  "opened_at": "2026-10-12T06:03:46Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-12T06:05:41Z",
   "bus_message_id": "a12089ab-04a5-4d5f-9192-b0426a749c27"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T06:07:29Z",
+  "by": "0.7.0_AE_CloudOps~CT1",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

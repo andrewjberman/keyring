@@ -10,7 +10,7 @@
  "subject": "ADVI_FIRMBKTS FB-f-15 AMENDMENT 1: re-run r4_sim.py from the committed script @408768aae2, read-only",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-15.act3b-close-simulation.md",
  "opened_at": "2026-10-11T16:02:29Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T16:06:03Z",
   "bus_message_id": "0ebe13fd-12e4-44eb-a70c-c7b3c33c7e16"
@@ -21,8 +21,8 @@
   "bus_message_id": "2a8df14c-3c8d-43af-bc78-38f656fdc1b5"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-12T06:06:52Z",
+  "from_by": "2.0.0_SA_COO~B1",
   "to_at": "2026-10-12T06:09:07Z",
   "to_by": "0.7.0_AE_CloudOps~FBL"
  }
