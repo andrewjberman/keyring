@@ -10,7 +10,7 @@
  "subject": "IRPT_ANLREQ: the ticket_id of the one record named, read-only (NFRA_TRNSPT r24)",
  "body_path": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/f2/CROSSBOX_CALL_TICKET_ID_OF_ONE_REQUEST_20261012.md",
  "opened_at": "2026-10-12T21:01:46Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-12T21:02:19Z",
   "bus_message_id": "2a63d426-a7dc-4ce6-aacc-9b0ca0218700"
@@ -21,8 +21,8 @@
   "bus_message_id": "53d43629-0627-4f18-b02d-89860fd5f08a"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-12T21:25:16Z",
+  "from_by": "2.0.0_SA_COO~Y2",
   "to_at": "2026-10-12T21:17:12Z",
   "to_by": "0.7.0_AE_CloudOps~ANL"
  }

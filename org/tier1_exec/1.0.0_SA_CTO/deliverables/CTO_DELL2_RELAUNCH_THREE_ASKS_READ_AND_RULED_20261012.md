@@ -89,6 +89,18 @@ Records: `CTO_RULING_DELL2_S27_S32_TOOL_FINDING_OWNERS_COMP_IAM_AND_SAFE_APPLY_C
 - **TO-AR-y-162: GO** (msg 6529): the round-16 count (`Y7_stored_input_count.json` @49af906f74) reads 0 of 56 read differently and
   0 turned back, so no stored input needs a ruling before the re-land.
 
+## 7. One new synthetic analysis request for NFRA_TRNSPT TR-dp-24 (`2.0.0_SA_COO~Y2` msg 6572): YES, tenant cottonwood
+
+- Why: the driven first draft needs an accepted request that carries a `ticket_id`; the record the laptop read
+  (`F2_one_request_ticket_id.json` @3e417eb6ff) has none, and the 33 reserved-domain requests predate the member.
+- Ruling: ONE request through the intake door, as the project's existing synthetic filer (no identity minted), in tenant
+  **cottonwood** (in `COMMENTARY_ALLOWED_FIRMS`; where TV2's earlier test ticket and 25 of the 33 synthetic requests already sit),
+  naming a ticket `2.0.0_SA_COO~V2` files FIRST, titled as a test. Conditions: the holdings file is synthetic (no real client
+  value); the act's write set is the literal keys it creates (request item, its upload objects, the ticket), listed in its
+  record; the draft posts only to that ticket; nothing is deleted after (a delete is a human act); the outside-model call runs
+  under the standing C-KIMI word (call `dell2-20261009T015641Z-1889`, abstract fields only).
+- Executor: the issuer names it; a seat that can write the store (dell2 cannot decrypt the IRPT key).
+
 ## Compiler Tools
 
 `lambda get-function-configuration` (4 functions), `s3api head-object` (1), `git merge-base --is-ancestor` (12, one negative
