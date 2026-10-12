@@ -10,12 +10,16 @@
  "subject": "MDPF_SECHIST: will it land as-traded closes for a ticker list dell2 supplies (ADVI_COTBKF 15 funds, IRPT_BCKEND 878)",
  "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CROSSBOX_CALL_BODY_MDPF_SECHIST_AS_TRADED_CLOSES_FOR_TWO_DELL2_PROJECTS_20261012.md",
  "opened_at": "2026-10-12T02:18:38Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-12T02:22:13Z",
   "bus_message_id": "bed4aa13-876a-41ec-943f-b7ce0b2d941e"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T02:27:15Z",
+  "by": "1.0.0_SA_CTO~DELL1",
+  "bus_message_id": "22d22f25-ecd5-4bc4-8485-56b3fd8d0724"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
