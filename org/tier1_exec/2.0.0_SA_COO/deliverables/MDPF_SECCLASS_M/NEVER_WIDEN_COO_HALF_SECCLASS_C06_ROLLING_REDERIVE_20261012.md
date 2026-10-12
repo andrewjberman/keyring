@@ -1,6 +1,6 @@
 # Never-widen COO half -- C_06 re-derives B_00's correction window on every fire (cell SC-e-97, rows MDPF_SECCLASS-D1-W83-S5 and D1-W80-S4)
 
-**Signer:** `2.0.0_SA_COO~M1`, dell1, 2026-10-12 ~13:3xZ. **Request:** `NEVER_WIDEN_HALF_REQUEST_SECCLASS_C06_ROLLING_REDERIVE_20261012.md` in
+**Signer:** `2.0.0_SA_COO~M1`, dell1, 2026-10-12 ~12:4xZ. **Request:** `NEVER_WIDEN_HALF_REQUEST_SECCLASS_C06_ROLLING_REDERIVE_20261012.md` in
 this folder (worker `0.9.0_WK_MDPF_SECCLASS~86`, with issuer amendments 1 and 2), drained to `box/dell1` @772b5c9f02 (build commit `77849c4924`).
 **Ruling it serves:** CTO round-22 analysis section 2 (@d24cc0d6ad's slug, msg 4333): ruling (a), a ROLLING re-derive over the window the producer
 itself corrects, under its OWN never-widen pair because it moves served figures on a partner-facing page; writers counted, the expected move read from
@@ -12,7 +12,7 @@ Deploy ONLY two files to `s3://opal-data-bd/code/gold/`: `C_06.client_mix_timese
 `gold_dispatch.sh`, no D_03, no table, no watermark and no data key rides it. The data the NEXT fire rewrites is named in the request's blast radius
 and bounded by its per-date table.
 
-## Read at signing (issuer, 2026-10-12 ~13:3xZ), each re-run here, not taken from the request
+## Read at signing (issuer, 2026-10-12 ~12:4xZ), each re-run here, not taken from the request
 
 - **Served = base, both files.** At the issuance base `028fab8273` the md5 of C_06 is `2e35d043163cc18b135d7698cf11dc56` and of D_04
   `9d083669159ee8875b6489dea4fb2e37`; `head-object` now reads the same two ETags (C_06 VersionId `zjQmOYVVYTSGOWLFQ0P33vVeWkwp4_eT`, LastModified
