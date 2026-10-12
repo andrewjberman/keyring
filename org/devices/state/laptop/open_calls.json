@@ -1,0 +1,300 @@
+{
+ "schema": "open-calls/1",
+ "device": "laptop",
+ "written_at": "2026-10-12T12:33:35Z",
+ "written_by": "1.0.0_SA_CTO",
+ "rows": [
+  {
+   "id": "laptop-20261008T190819Z-d642",
+   "project": "NFRA_MCPINDEX",
+   "subject": "Alyssa's sitting: when (reconnect + r6.J1 cold run + G-CLOSE)",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-08T19:08:19Z",
+   "scope": {
+    "measured_at": "2026-10-08T19:08:19Z",
+    "paths": "hit",
+    "placement": "hit",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway",
+     "infra/aws/terraform/bd-pipeline"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml overlaps the write set of NFRA_OPALAI placed on sitez (infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_REPORT placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ETFS_RIVALS placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [
+      "project NFRA_MCPINDEX is placed on sitez, this box is laptop"
+     ],
+     "resources": [
+      "root infra/aws/terraform/opal-gateway declares ${local.schwab_catalog_role_name}-policy, ${local.schwab_data_role_name}-policy, ${var.name}-access-admin-policy (+44), also declared by root infra/aws/terraform/opal-gateway named by NFRA_MCPMSP on sitez",
+      "root infra/aws/terraform/bd-pipeline declares cloudwatch-metrics, also declared by root infra/aws/terraform/shared-infra named by NFRA_REPORT on sitez"
+     ],
+     "shared": [
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-08T20:14:27Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
+  },
+  {
+   "id": "laptop-20261008T190820Z-4a4c",
+   "project": "NFRA_MCPINDEX",
+   "subject": "Loosen Schwab account anonymization for entitled advisors: how far",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-08T19:08:20Z",
+   "scope": {
+    "measured_at": "2026-10-08T19:08:20Z",
+    "paths": "hit",
+    "placement": "hit",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway",
+     "infra/aws/terraform/bd-pipeline"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml overlaps the write set of NFRA_OPALAI placed on sitez (infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_REPORT placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ETFS_RIVALS placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [
+      "project NFRA_MCPINDEX is placed on sitez, this box is laptop"
+     ],
+     "resources": [
+      "root infra/aws/terraform/opal-gateway declares ${local.schwab_catalog_role_name}-policy, ${local.schwab_data_role_name}-policy, ${var.name}-access-admin-policy (+44), also declared by root infra/aws/terraform/opal-gateway named by NFRA_MCPMSP on sitez",
+      "root infra/aws/terraform/bd-pipeline declares cloudwatch-metrics, also declared by root infra/aws/terraform/shared-infra named by NFRA_REPORT on sitez"
+     ],
+     "shared": [
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-08T20:14:29Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
+  },
+  {
+   "id": "laptop-20261008T190821Z-ad10",
+   "project": "NFRA_MCPINDEX",
+   "subject": "Alyssa download access (Z-W15-S41): yes or no",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-08T19:08:21Z",
+   "scope": {
+    "measured_at": "2026-10-08T19:08:21Z",
+    "paths": "hit",
+    "placement": "hit",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway",
+     "infra/aws/terraform/bd-pipeline"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml overlaps the write set of NFRA_OPALAI placed on sitez (infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_REPORT placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ETFS_RIVALS placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [
+      "project NFRA_MCPINDEX is placed on sitez, this box is laptop"
+     ],
+     "resources": [
+      "root infra/aws/terraform/opal-gateway declares ${local.schwab_catalog_role_name}-policy, ${local.schwab_data_role_name}-policy, ${var.name}-access-admin-policy (+44), also declared by root infra/aws/terraform/opal-gateway named by NFRA_MCPMSP on sitez",
+      "root infra/aws/terraform/bd-pipeline declares cloudwatch-metrics, also declared by root infra/aws/terraform/shared-infra named by NFRA_REPORT on sitez"
+     ],
+     "shared": [
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-08T20:14:31Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
+  },
+  {
+   "id": "laptop-20261008T191516Z-9b49",
+   "project": "NONE",
+   "subject": "Register the Teams/email assistant work as macro COMM under D9? (yes / other name)",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-08T19:15:16Z",
+   "kind": "fork",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-08T19:15:16Z"
+   },
+   "closed": {
+    "at": "2026-10-08T20:14:33Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
+  },
+  {
+   "id": "laptop-20261008T191518Z-4439",
+   "project": "NONE",
+   "subject": "Grade a merge only on the paths it changes (plus cross-file checks on both-sides files)? (yes / no)",
+   "asked_by": "4.0.0_SA_CRO~A",
+   "source": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/MERGE_ROOT_CAUSE_B3_20261008.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-08T19:15:18Z",
+   "kind": "fork",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-08T19:15:18Z"
+   },
+   "closed": {
+    "at": "2026-10-08T20:14:35Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
+  },
+  {
+   "id": "laptop-20261009T004633Z-eaef",
+   "project": "LGIC_BLANKFIX",
+   "subject": "Turn on FWD-6's creation-time refusal (create org/mcp/naming-place.enforce) once BF-w-1 merges? yes/no/later. REC later: switch on after 3.0.0_SA_CVO grades BF-w-1's arms A-G (BW1-AC4); it refuses bad new names in every seat's commits, so Andrew's word may be needed",
+   "asked_by": "2.0.0_SA_COO~G",
+   "source": "org/missions/D14/LGIC/LGIC_BLANKFIX/decompositions/LGIC_BLANKFIX_DECOMP.round8.md",
+   "orders": [
+    "org/missions/D14/LGIC/LGIC_BLANKFIX/task-orders/LGIC_BLANKFIX.TO-BF-w-1.fwd6-build.md"
+   ],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T00:46:33Z",
+   "kind": "fork",
+   "scope": {
+    "measured_at": "2026-10-09T00:46:33Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/opal_naming_rootcheck.py is on the shared branch (lib)",
+      "lib/tests/test_opal_naming_rootcheck.py is on the shared branch (lib)",
+      ".tools/naming-gate.py is on the shared branch (.tools)",
+      ".tools/naming-apply-gate.py is on the shared branch (.tools)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T00:53:56Z",
+    "by": "1.0.0_SA_CTO",
+    "ruling": "org/critical_paths/cross_adjudication/20261009T0053Z_XA-20261009T005240Z-625e.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261009T005240Z-625e"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261009T005240Z-625e",
+    "at": "2026-10-09T00:52:40Z",
+    "by": "1.0.0_SA_CTO",
+    "reason": null
+   }
+  },
+  {
+   "id": "laptop-20261012T123335Z-fc10",
+   "project": "NONE",
+   "subject": "dell2 hit its WEEKLY Claude usage limit 03:08Z (resets Oct 17 5pm ET): (a) re-seat its 16 seats on the fresh account, (b) buy credits, (c) re-place the time-bound projects on dell1/laptop, or (d) wait five days?",
+   "asked_by": "1.0.0_SA_CTO",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_READ_DELL2_WEEKLY_USAGE_LIMIT_03Z_20261012.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-12T12:33:35Z",
+   "kind": "fork",
+   "context": "All 16 dell2 seats sit at the limit prompt since 03:08Z; only its manager runs on the fresh account. Stalled until a word: IRPT backend/dashboard/analysis-request, Ticket Center, Cottonwood backfill, transcripts, with Monday 13:00Z and 14:15Z fire reads owed. Gates every dell2 project this week.",
+   "rec": "(a) for the three time-bound lanes first (IRPT_BCKEND, IRPT_DASHBD, NFRA_TRNSPT and their CloudOps lanes), the rest (a) or (d) by his word; (c) only if the fresh account is a lesser tier. Money and seating are his.",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-12T12:33:35Z"
+   },
+   "closed": null
+  }
+ ]
+}

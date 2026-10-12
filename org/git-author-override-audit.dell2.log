@@ -4097,3 +4097,175 @@
 2026-10-12T02:43:37Z PASS  0.9.0_WK_IRPT_BCKEND~323  2  (all paths in-lane) act=21fd27aab2ed paths=2:org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~323/IRPT_BCKEND.TO-IB-pr-468.demand-queue-request-878-as-traded-closes.proof_of_spec.json|org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-468.demand-queue-request-878-as-traded-closes.md
 2026-10-12T02:44:00Z MERGE-ATTEMPT  2.0.0_SA_COO~D2  rc=0  secs=27.55  graded=1/10 fast-lane  args=(wk-dsgn-irptv1-r21-57)  first=(none)
 2026-10-12T02:45:01Z PASS  0.9.0_WK_IRPT_BCKEND~322  2  (all paths in-lane) act=1d2f617c4dea paths=2:org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~322/IRPT_BCKEND.TO-IB-pr-467.excluded-day-base-zero-negative-positive.proof_of_spec.json|org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-467.excluded-day-base-zero-negative-positive.md
+2026-10-12T02:45:28Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=c6fb6123110e paths=1:org/git-author-override-audit.dell2.log
+2026-10-12T02:45:36Z LANDED-2P  0.0.0_AB_MSTR~DELL2  eebdede255  paths=1  validate=7.87s  wait=0.08s  hold=1.17s  build=0.67s  ref=0.47s  post-commit=2.87s  attempt=1
+2026-10-12T02:45:50Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.17  graded=n/a  args=(--verify-merge 9ddc3f6bd3f7944a9b3998511c37991d309c8cf2)  first=(none)
+2026-10-12T02:45:51Z PASS  3.0.0_SA_CVO  4  (all paths in-lane) act=731cc0f5225b paths=4:org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/adjudications/ADJUDICATION_v56.md|org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md|org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/remediations/REMEDIATION_v48.md|org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_79_L9_GRADE_20261012.md
+2026-10-12T02:45:55Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.78  took=7c82dfadec hold=0.98s graded=0/7 pushed=9ddc3f6bd3  phases: t_fetch=1.91s t_merge_cloud=10.91s t_land=1.00s t_push=3.67s
+2026-10-12T02:46:06Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=4.28  took=already-current pushed=9ddc3f6bd3  phases: t_fetch=1.77s
+2026-10-12T02:46:23Z LANDED-2P  3.0.0_SA_CVO  29d14cb8dd  paths=4  validate=61.33s  wait=0.07s  hold=1.19s  build=0.71s  ref=0.44s  post-commit=3.37s  attempt=1
+2026-10-12T02:46:42Z PASS  0.0.0_AB_MSTR~DELL2  2  (all paths in-lane) act=2e3dc225ef4d paths=2:org/devices/crossbox/XB-20261012T023834Z-c4eb.json|org/devices/crossbox/XB-20261012T024226Z-0dce.json
+2026-10-12T02:46:50Z LANDED-2P  0.0.0_AB_MSTR~DELL2  280c558a0c  paths=2  validate=8.35s  wait=0.11s  hold=1.21s  build=0.78s  ref=0.41s  post-commit=2.78s  attempt=1
+2026-10-12T02:47:17Z MERGE-ATTEMPT  2.0.0_SA_COO~P2  rc=3  secs=149.22  graded=1/6 fast-lane  args=(wk-IRPT_BCKEND-323 -m drain(IRPT_BCKEND round 162 IB-pr-468, 2.0.0_SA_COO~P2): merge wk-IRPT_BCKEND-323 @f50c52b726 -- the demand-queue request file for 878 securities; no price fetched)  first=(none)
+2026-10-12T02:47:45Z PASS  3.0.0_SA_CVO  2  (all paths in-lane) act=f31b50a6eb61 paths=2:org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/remediations/REMEDIATION_v48.md|org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_79_L9_GRADE_20261012.md
+2026-10-12T02:48:06Z LANDED-2P  3.0.0_SA_CVO  222ab69461  paths=2  validate=41.02s  wait=0.12s  hold=1.01s  build=0.58s  ref=0.40s  post-commit=2.82s  attempt=1
+2026-10-12T02:48:07Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=add34947b4a2 paths=1:org/devices/crossbox/XB-20261012T023834Z-5414.json
+2026-10-12T02:48:14Z LANDED-2P  0.0.0_AB_MSTR~DELL2  331ea0d2ba  paths=1  validate=8.08s  wait=0.07s  hold=1.15s  build=0.77s  ref=0.35s  post-commit=2.55s  attempt=1
+2026-10-12T02:49:07Z MERGE-ATTEMPT  2.0.0_SA_COO~P2  rc=0  secs=93.30  graded=1/6 fast-lane  args=(wk-IRPT_BCKEND-323 -m drain(IRPT_BCKEND round 162 IB-pr-468, 2.0.0_SA_COO~P2): merge wk-IRPT_BCKEND-323 @f50c52b726 -- the demand-queue request file for 878 securities; no price fetched)  first=(none)
+2026-10-12T02:49:15Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane) act=5b9e4dfd9446 paths=1:org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_ADVI_COTBKF_ROUND_80_20261012.md
+2026-10-12T02:49:30Z LANDED-2P  1.0.0_SA_CTO~DELL2  7bfd7c4664  paths=1  validate=9.06s  wait=0.06s  hold=1.16s  build=0.71s  ref=0.39s  post-commit=9.30s  attempt=1
+2026-10-12T02:49:57Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=8.25  took=already-current pushed=7bfd7c4664  phases: t_fetch=1.46s t_push=4.92s
+2026-10-12T02:51:18Z MERGE-ATTEMPT  2.0.0_SA_COO~P2  rc=0  secs=61.54  graded=1/7 fast-lane  args=(wk-IRPT_BCKEND-322 -m drain(IRPT_BCKEND round 161 IB-pr-467, 2.0.0_SA_COO~P2): merge wk-IRPT_BCKEND-322 @37f5ca176d -- the base on the interior and last-row excluded days: zero, negative or positive)  first=(none)
+2026-10-12T02:51:55Z PASS  2.0.0_SA_COO~Y2  1  (all paths in-lane) act=fefb0c05af8b paths=1:org/tier1_exec/2.0.0_SA_COO~Y2/drive_log_20261012T02Z_desktop-n8rjv0a.md
+2026-10-12T02:52:03Z LANDED-2P  2.0.0_SA_COO~Y2  da37153908  paths=1  validate=9.28s  wait=0.09s  hold=1.15s  build=0.72s  ref=0.40s  post-commit=2.63s  attempt=1
+2026-10-12T02:52:06Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane) act=4f06a8bcc93a paths=1:org/tier1_exec/1.0.0_SA_CTO/logs/2026-10-12/ctoDELL2_self_drive_dell2_every_project_tick26.md
+2026-10-12T02:52:14Z LANDED-2P  1.0.0_SA_CTO~DELL2  7b85396a08  paths=1  validate=7.44s  wait=0.07s  hold=1.03s  build=0.62s  ref=0.38s  post-commit=2.48s  attempt=1
+2026-10-12T02:53:38Z PASS  2.0.0_SA_COO~C2  4  (all paths in-lane) act=4f4e417b81fa paths=4:org/missions/D8/ADVI/ADVI_COTBKF/decompositions/ADVI_COTBKF_DECOMP.round80.md|org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-cb-1.three-equities.md|org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-cb-2.fund-closes-read-back.md|org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-cb-3.open-corrections-update-10.md
+2026-10-12T02:53:39Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=742b7e929418 paths=1:org/devices/crossbox/XB-20261012T025331Z-3e07.json
+2026-10-12T02:53:42Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane) act=d4dc663f621c paths=1:org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md
+2026-10-12T02:53:50Z LANDED-2P  0.0.0_AB_MSTR~DELL2  0a3aa51f29  paths=1  validate=11.97s  wait=0.11s  hold=1.36s  build=0.84s  ref=0.42s  post-commit=3.49s  attempt=1
+2026-10-12T02:53:53Z LANDED-2P  1.0.0_SA_CTO~DELL2  a4cdeb6232  paths=1  validate=12.86s  wait=0.12s  hold=1.41s  build=0.90s  ref=0.47s  post-commit=4.83s  attempt=1
+2026-10-12T02:53:54Z OVERRIDE  2.0.0_SA_COO~Y2  1  (--author-override TREE_DELIVERABLES applied) act=a6c6a1174ccb paths=1:org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r16/count_stored_inputs.py
+2026-10-12T02:54:00Z LANDED-2P  2.0.0_SA_COO~C2  1367ff975c  paths=4  validate=40.80s  wait=0.27s  hold=1.45s  build=0.98s  ref=0.44s  post-commit=2.77s  attempt=1
+2026-10-12T02:54:02Z LANDED-2P  2.0.0_SA_COO~Y2  73feb5dd7a  paths=1  validate=10.43s  wait=0.08s  hold=1.16s  build=0.71s  ref=0.42s  post-commit=2.76s  attempt=1
+2026-10-12T02:54:07Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.56  graded=n/a  args=(--verify-merge beca96d4347ef0d800fe8d21528aea83ae775dbb)  first=(none)
+2026-10-12T02:54:09Z PASS  2.0.0_SA_COO~Y2  1  (all paths in-lane) act=b203e8687981 paths=1:org/tier2_senior/0.7.0_AE_CloudOps~ANL/task_orders/IRPT_ANLREQ.TO-READS-Y7.stored-input-count-laptop.md
+2026-10-12T02:54:20Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.22  graded=n/a  args=(--verify-merge 5cbd828760230faf264ab68abddb16e983e3571c)  first=(none)
+2026-10-12T02:54:20Z LANDED-2P  2.0.0_SA_COO~Y2  fd6f995094  paths=1  validate=9.04s  wait=0.16s  hold=1.25s  build=0.71s  ref=0.51s  post-commit=4.96s  attempt=1
+2026-10-12T02:54:31Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.27  graded=n/a  args=(--verify-merge c9fa53a37796cedc1e670e8f80759f6250c79399)  first=(none)
+2026-10-12T02:54:36Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=45.34  took=f33ab45886 hold=0.92s graded=0/4 pushed=c9fa53a377  phases: t_fetch=2.37s t_merge_cloud=12.43s a2.t_merge_cloud=11.99s a3.t_merge_cloud=11.26s t_land=0.93s t_push=3.68s
+2026-10-12T02:55:11Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane) act=742b7e929418 paths=1:org/devices/crossbox/XB-20261012T025331Z-3e07.json
+2026-10-12T02:55:14Z PASS  2.0.0_SA_COO~P2  3  (all paths in-lane) act=b22770a92038 paths=3:org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md|org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r163/p163_cells.py|org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-469.vendor-section-column-meaning-read.md
+2026-10-12T02:55:20Z LANDED-2P  0.0.0_AB_MSTR~DELL2  9bc8979668  paths=1  validate=10.21s  wait=0.07s  hold=1.25s  build=0.78s  ref=0.43s  post-commit=3.06s  attempt=1
+2026-10-12T02:55:37Z LANDED-2P  2.0.0_SA_COO~P2  49fb205145  paths=3  validate=58.48s  wait=0.07s  hold=1.38s  build=0.88s  ref=0.45s  post-commit=3.80s  attempt=1
+2026-10-12T02:55:37Z PASS  3.0.0_SA_CVO  1  (all paths in-lane) act=eea40f0c4907 paths=1:org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_PRD_v0.48_RATIFIED_TEXT_REVIEW_20261012.md
+2026-10-12T02:55:45Z LANDED-2P  3.0.0_SA_CVO  3e8621492b  paths=1  validate=9.05s  wait=0.09s  hold=1.51s  build=0.81s  ref=0.67s  post-commit=3.13s  attempt=1
+2026-10-12T02:55:52Z PASS  3.0.0_SA_CVO  1  (all paths in-lane) act=b4b56aa4fbd3 paths=1:org/missions/D9/IRPT/IRPT_BCKEND/prd/signoff/3.0.0_SA_CVO.json
+2026-10-12T02:56:02Z LANDED-2P  3.0.0_SA_CVO  a94db569fc  paths=1  validate=8.92s  wait=0.18s  hold=1.50s  build=0.91s  ref=0.51s  post-commit=3.92s  attempt=1
+2026-10-12T02:56:12Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=9.13  took=already-current pushed=a94db569fc  phases: t_fetch=2.20s t_push=3.84s
+2026-10-12T02:56:29Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=2.28  took=already-current pushed=a94db569fc  phases: t_fetch=1.33s
+2026-10-12T02:57:53Z PASS  2.0.0_SA_COO~D2  1  (all paths in-lane) act=6bf72c29bf5b paths=1:org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md
+2026-10-12T02:58:14Z LANDED-2P  2.0.0_SA_COO~D2  f993d06605  paths=1  validate=34.66s  wait=0.14s  hold=1.58s  build=0.74s  ref=0.74s  post-commit=3.05s  attempt=1
+2026-10-12T03:00:22Z PASS  2.0.0_SA_COO~P2  3  (all paths in-lane) act=02bcb99954ce paths=3:org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md|org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r164/p164_cells.py|org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-470.status-set-and-non-positive-base-prior-holdings.md
+2026-10-12T03:00:47Z LANDED-2P  2.0.0_SA_COO~P2  13e1d6d3fb  paths=3  validate=58.79s  wait=0.38s  hold=1.19s  build=0.72s  ref=0.44s  post-commit=4.03s  attempt=1
+2026-10-12T03:03:30Z PASS  2.0.0_SA_COO~P2  2  (all paths in-lane) act=ad1e5030b760 paths=2:org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUNDS_161_162_P_DRAIN_END_20261012.md|org/tier1_exec/2.0.0_SA_COO~P2/drive_log_20261012T03Z_desktop-n8rjv0a.md
+2026-10-12T03:03:36Z LANDED-2P  2.0.0_SA_COO~P2  2ef3e605e0  paths=2  validate=6.32s  wait=0.06s  hold=1.02s  build=0.60s  ref=0.39s  post-commit=2.30s  attempt=1
+2026-10-12T03:04:14Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.00  graded=n/a  args=(--verify-merge 56b1843d331b15ea4ad37b933ee87f3805d9c2e6)  first=(none)
+2026-10-12T03:04:18Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=17.00  took=83afae5424 hold=0.79s graded=0/17 pushed=56b1843d33  phases: t_fetch=3.32s t_merge_cloud=8.99s t_land=0.80s t_push=2.98s
+2026-10-12T03:06:05Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=3.82  took=already-current pushed=56b1843d33  phases: t_fetch=1.79s
+2026-10-12T03:16:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.50  graded=n/a  args=(--verify-merge 0b342649ee628c4f731763a9e064d1e0c6544a92)  first=(none)
+2026-10-12T03:16:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.30  took=fee7217ea7 hold=1.31s graded=0/15 pushed=0b342649ee  phases: t_fetch=2.68s t_merge_cloud=10.21s t_land=1.32s t_push=3.02s
+2026-10-12T03:26:15Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.64  graded=n/a  args=(--verify-merge 7b124f78284ac47cbaa828a731866a261d8e46f4)  first=(none)
+2026-10-12T03:26:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.84  took=85d8a93020 hold=1.59s graded=0/5 pushed=7b124f7828  phases: t_fetch=1.87s t_merge_cloud=10.20s t_land=1.66s t_push=3.07s
+2026-10-12T03:36:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.83  graded=n/a  args=(--verify-merge e64c4703053f5613cd8e75d89cd82a89e5b70f9e)  first=(none)
+2026-10-12T03:36:22Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=20.27  took=c517bbdfb5 hold=1.52s graded=0/19 pushed=e64c470305  phases: t_fetch=2.71s t_merge_cloud=10.57s t_land=1.52s t_push=3.26s
+2026-10-12T03:46:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.55  graded=n/a  args=(--verify-merge b44674471db05e2ad68c05e65fc4c952d71e894c)  first=(none)
+2026-10-12T03:46:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.06  took=cd32e2f4b5 hold=1.42s graded=0/29 pushed=b44674471d  phases: t_fetch=2.62s t_merge_cloud=10.04s t_land=1.43s t_push=2.84s
+2026-10-12T03:56:15Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.54  graded=n/a  args=(--verify-merge 5bc83176ba10dc37db5d0dd849ba71fc01eb891b)  first=(none)
+2026-10-12T03:56:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.28  took=d46e8b22f9 hold=1.36s graded=0/10 pushed=5bc83176ba  phases: t_fetch=1.78s t_merge_cloud=10.05s t_land=1.37s t_push=3.03s
+2026-10-12T04:06:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.56  graded=n/a  args=(--verify-merge 30938182e8fa17794a53cd045ab37cd4c5ea3f83)  first=(none)
+2026-10-12T04:06:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.37  took=51d64fb179 hold=1.44s graded=0/17 pushed=30938182e8  phases: t_fetch=2.57s t_merge_cloud=10.16s t_land=1.45s t_push=3.04s
+2026-10-12T04:16:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.50  graded=n/a  args=(--verify-merge 990a9103216148f6e1f28c06f44c4bb0d3551464)  first=(none)
+2026-10-12T04:16:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.65  took=33340c2c66 hold=1.36s graded=0/17 pushed=990a910321  phases: t_fetch=3.00s t_merge_cloud=10.08s t_land=1.37s t_push=2.97s
+2026-10-12T04:26:15Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.56  graded=n/a  args=(--verify-merge d0b9ac8901fc1d3048ab7180bb0bef6846f4facf)  first=(none)
+2026-10-12T04:26:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.24  took=b11a236a93 hold=1.43s graded=0/28 pushed=d0b9ac8901  phases: t_fetch=1.91s t_merge_cloud=9.99s t_land=1.45s t_push=2.92s
+2026-10-12T04:36:15Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.55  graded=n/a  args=(--verify-merge 338628783cb6e1d9745edc659399d5a322367804)  first=(none)
+2026-10-12T04:36:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.50  took=c302892b8e hold=1.69s graded=0/14 pushed=338628783c  phases: t_fetch=1.86s t_merge_cloud=10.00s t_land=1.70s t_push=2.93s
+2026-10-12T04:46:15Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.56  graded=n/a  args=(--verify-merge 237864ff3977b038d40a11a5f8b7e72a1bbf3b99)  first=(none)
+2026-10-12T04:46:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.45  took=ef076e8d70 hold=1.39s graded=0/5 pushed=237864ff39  phases: t_fetch=1.88s t_merge_cloud=10.12s t_land=1.40s t_push=3.02s
+2026-10-12T04:56:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.84  graded=n/a  args=(--verify-merge 65af94d9e25754bdf79bba6a3490e4cff954f610)  first=(none)
+2026-10-12T04:56:22Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=20.70  took=7286f1e641 hold=1.46s graded=0/8 pushed=65af94d9e2  phases: t_fetch=2.90s t_merge_cloud=10.79s t_land=1.48s t_push=3.31s
+2026-10-12T05:06:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.55  graded=n/a  args=(--verify-merge b8d21a80ebf370765c962f6ba9508d2121d5dd38)  first=(none)
+2026-10-12T05:06:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.42  took=9424fcc4ee hold=1.41s graded=0/14 pushed=b8d21a80eb  phases: t_fetch=1.90s t_merge_cloud=10.05s t_land=1.42s t_push=3.02s
+2026-10-12T05:16:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.58  graded=n/a  args=(--verify-merge 3231c787d660f74d5dced5403eb87d490c9b0fad)  first=(none)
+2026-10-12T05:16:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.50  took=db93e48bd4 hold=1.33s graded=0/6 pushed=3231c787d6  phases: t_fetch=1.96s t_merge_cloud=10.13s t_land=1.34s t_push=2.97s
+2026-10-12T05:26:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.64  graded=n/a  args=(--verify-merge 48f2a5fc8b8aa7bbe73f2b825419595510013bf3)  first=(none)
+2026-10-12T05:26:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.60  took=9e32f65064 hold=1.42s graded=0/11 pushed=48f2a5fc8b  phases: t_fetch=1.96s t_merge_cloud=10.40s t_land=1.43s t_push=3.69s
+2026-10-12T05:36:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.47  graded=n/a  args=(--verify-merge b545d380adad2b46b63427ca2bdb7243ec38bcae)  first=(none)
+2026-10-12T05:36:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.01  took=0e9cb855b6 hold=1.91s graded=0/8 pushed=b545d380ad  phases: t_fetch=1.94s t_merge_cloud=10.01s t_land=1.92s t_push=2.88s
+2026-10-12T05:46:15Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.49  graded=n/a  args=(--verify-merge cf54b1e3a8661bc48232387163ea33c6e09bd63c)  first=(none)
+2026-10-12T05:46:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.18  took=50a8d408be hold=1.44s graded=0/12 pushed=cf54b1e3a8  phases: t_fetch=1.92s t_merge_cloud=9.89s t_land=1.45s t_push=2.88s
+2026-10-12T05:56:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.57  graded=n/a  args=(--verify-merge 34b698d395217f286ca6e7f24e5066668209c7a5)  first=(none)
+2026-10-12T05:56:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.38  took=be589a3811 hold=1.34s graded=0/20 pushed=34b698d395  phases: t_fetch=3.00s t_merge_cloud=10.11s t_land=1.35s t_push=2.83s
+2026-10-12T06:06:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.56  graded=n/a  args=(--verify-merge c7852fd4a8d90eb14c8858e2caf0c395806b03f2)  first=(none)
+2026-10-12T06:06:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.80  took=c55054d37b hold=1.43s graded=0/6 pushed=c7852fd4a8  phases: t_fetch=1.73s t_merge_cloud=10.28s t_land=1.44s t_push=3.17s
+2026-10-12T06:16:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.52  graded=n/a  args=(--verify-merge 7ca3621e0c46109437e00a7844531273d21e531d)  first=(none)
+2026-10-12T06:16:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.80  took=545b5f56e7 hold=1.35s graded=0/3 pushed=7ca3621e0c  phases: t_fetch=1.96s t_merge_cloud=10.19s t_land=1.36s t_push=2.93s
+2026-10-12T06:26:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.55  graded=n/a  args=(--verify-merge 6bd37f487f2d041f5c68a7c5ba067a9f7e1f32b5)  first=(none)
+2026-10-12T06:26:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.28  took=5498fbb076 hold=1.36s graded=0/17 pushed=6bd37f487f  phases: t_fetch=1.82s t_merge_cloud=10.10s t_land=1.37s t_push=3.03s
+2026-10-12T06:36:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.51  graded=n/a  args=(--verify-merge 1b8cdd35b1871af5eb5424780cc5b03d77eea829)  first=(none)
+2026-10-12T06:36:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.70  took=981aedb0e0 hold=1.62s graded=0/11 pushed=1b8cdd35b1  phases: t_fetch=2.07s t_merge_cloud=10.03s t_land=1.63s t_push=2.93s
+2026-10-12T06:46:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.60  graded=n/a  args=(--verify-merge f1455eef109a9f2863d54c9702efba1c6c69cbe2)  first=(none)
+2026-10-12T06:46:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.84  took=65d6737eea hold=1.51s graded=0/12 pushed=f1455eef10  phases: t_fetch=1.86s t_merge_cloud=10.19s t_land=1.52s t_push=3.07s
+2026-10-12T06:56:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.46  graded=n/a  args=(--verify-merge eb47e517939893428af73cb7832c5d4c0ea05012)  first=(none)
+2026-10-12T06:56:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.57  took=2710f5e26e hold=1.34s graded=0/2 pushed=eb47e51793  phases: t_fetch=2.01s t_merge_cloud=10.06s t_land=1.42s t_push=2.91s
+2026-10-12T07:06:15Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.47  graded=n/a  args=(--verify-merge 1282acd3e480ae2e99b2c1bd7fc9c3f037c055f5)  first=(none)
+2026-10-12T07:06:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.43  took=814284201f hold=1.44s graded=0/8 pushed=1282acd3e4  phases: t_fetch=1.96s t_merge_cloud=9.94s t_land=1.45s t_push=3.02s
+2026-10-12T07:16:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.55  graded=n/a  args=(--verify-merge 1ef03850efe42e51c787839e88e512def4c514b4)  first=(none)
+2026-10-12T07:16:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.52  took=61b30cbbb0 hold=1.45s graded=0/9 pushed=1ef03850ef  phases: t_fetch=1.93s t_merge_cloud=10.13s t_land=1.46s t_push=2.93s
+2026-10-12T07:26:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.72  graded=n/a  args=(--verify-merge 82e4a14493865fc8934cef2ac43de7110c491def)  first=(none)
+2026-10-12T07:26:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.08  took=e6900014d5 hold=1.43s graded=0/0 pushed=82e4a14493  phases: t_fetch=1.86s t_merge_cloud=10.34s t_land=1.44s t_push=3.22s
+2026-10-12T07:36:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.49  graded=n/a  args=(--verify-merge b4d188a265fd302e5b069c7a23c4ad99ee4ba66a)  first=(none)
+2026-10-12T07:36:22Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=20.21  took=cf4de0063b hold=1.82s graded=0/13 pushed=b4d188a265  phases: t_fetch=3.04s t_merge_cloud=10.07s t_land=1.83s t_push=2.97s
+2026-10-12T07:46:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.55  graded=n/a  args=(--verify-merge fc1311addb458b70af199621752a60888b332b4c)  first=(none)
+2026-10-12T07:46:22Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.80  took=ae9ab8ab8c hold=1.31s graded=0/3 pushed=fc1311addb  phases: t_fetch=3.47s t_merge_cloud=9.98s t_land=1.32s t_push=2.98s
+2026-10-12T07:56:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.65  graded=n/a  args=(--verify-merge 73e8ae6b254fadcbc429abf79e80280ddfb057bd)  first=(none)
+2026-10-12T07:56:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.73  took=782114d0da hold=1.50s graded=0/33 pushed=73e8ae6b25  phases: t_fetch=2.01s t_merge_cloud=10.19s t_land=1.51s t_push=2.97s
+2026-10-12T08:06:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.77  graded=n/a  args=(--verify-merge a75b9d153cbabf52f4c9456b9beba930b8b3eff9)  first=(none)
+2026-10-12T08:06:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.23  took=0cb06e57a4 hold=1.52s graded=0/0 pushed=a75b9d153c  phases: t_fetch=1.85s t_merge_cloud=10.40s t_land=1.53s t_push=3.26s
+2026-10-12T08:16:22Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=1  secs=19.58  fetch=failed
+2026-10-12T08:26:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.59  graded=n/a  args=(--verify-merge c9dbc9d2bcabf792104d51509872a94ba2c9c5ad)  first=(none)
+2026-10-12T08:26:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.99  took=e6d061122b hold=1.36s graded=0/55 pushed=c9dbc9d2bc  phases: t_fetch=2.53s t_merge_cloud=10.07s t_land=1.37s t_push=2.97s
+2026-10-12T08:36:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.59  graded=n/a  args=(--verify-merge fdb759430b1539e96df0d846eb7b89d39f16597b)  first=(none)
+2026-10-12T08:36:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.54  took=566ac54257 hold=1.36s graded=0/4 pushed=fdb759430b  phases: t_fetch=1.86s t_merge_cloud=10.18s t_land=1.37s t_push=3.02s
+2026-10-12T08:46:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.75  graded=n/a  args=(--verify-merge 603dd6eb12506a66294ecc69785ab31edf2eced7)  first=(none)
+2026-10-12T08:46:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.07  took=54de90a7be hold=1.68s graded=0/3 pushed=603dd6eb12  phases: t_fetch=1.92s t_merge_cloud=10.29s t_land=1.69s t_push=3.07s
+2026-10-12T08:56:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.50  graded=n/a  args=(--verify-merge 0988dcd35db78d4257e62006882468286c6aeab0)  first=(none)
+2026-10-12T08:56:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.00  took=7ee9bc9f67 hold=1.41s graded=0/5 pushed=0988dcd35d  phases: t_fetch=2.15s t_merge_cloud=10.17s t_land=1.42s t_push=3.03s
+2026-10-12T09:06:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.58  graded=n/a  args=(--verify-merge 215df728a47555d15cfd1611b2ca45dabe6e39b3)  first=(none)
+2026-10-12T09:06:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.25  took=0bffadb5db hold=1.34s graded=0/9 pushed=215df728a4  phases: t_fetch=1.87s t_merge_cloud=10.10s t_land=1.35s t_push=2.98s
+2026-10-12T09:16:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.58  graded=n/a  args=(--verify-merge 9d529ee1d916f8de3e606c6b91f5a439f1c7e280)  first=(none)
+2026-10-12T09:16:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.52  took=fdb33d0be8 hold=1.34s graded=0/15 pushed=9d529ee1d9  phases: t_fetch=2.01s t_merge_cloud=10.15s t_land=1.35s t_push=2.84s
+2026-10-12T09:26:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.57  graded=n/a  args=(--verify-merge 102d4a2f5aab6d50fec9f967aa823f3adf945a86)  first=(none)
+2026-10-12T09:26:22Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=20.21  took=d4de9f2619 hold=1.39s graded=0/13 pushed=102d4a2f5a  phases: t_fetch=3.00s t_merge_cloud=10.30s t_land=1.40s t_push=3.45s
+2026-10-12T09:36:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.94  graded=n/a  args=(--verify-merge 114a4fa2d897cc14c1d4e5677f54c73dc545bc79)  first=(none)
+2026-10-12T09:36:22Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.85  took=c08259be7b hold=1.52s graded=0/16 pushed=114a4fa2d8  phases: t_fetch=1.97s t_merge_cloud=10.77s t_land=1.53s t_push=3.45s
+2026-10-12T09:46:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.59  graded=n/a  args=(--verify-merge d7ff20b40dda90197ec44dfd97c94adebea56279)  first=(none)
+2026-10-12T09:46:22Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.40  took=d5ec459307 hold=1.79s graded=0/11 pushed=d7ff20b40d  phases: t_fetch=2.62s t_merge_cloud=10.00s t_land=1.80s t_push=2.93s
+2026-10-12T09:56:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.55  graded=n/a  args=(--verify-merge a25c0425ff2a239e48ec7e3814d568110c33afb2)  first=(none)
+2026-10-12T09:56:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.95  took=912b487986 hold=1.51s graded=0/27 pushed=a25c0425ff  phases: t_fetch=2.15s t_merge_cloud=10.04s t_land=1.52s t_push=3.12s
+2026-10-12T10:06:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.64  graded=n/a  args=(--verify-merge 849dc8f6af200eb10c0f6e12d7f8eaa9ecfe21c7)  first=(none)
+2026-10-12T10:06:22Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.92  took=5e8e7ba94b hold=1.35s graded=0/12 pushed=849dc8f6af  phases: t_fetch=3.05s t_merge_cloud=10.32s t_land=1.36s t_push=3.07s
+2026-10-12T10:16:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.96  graded=n/a  args=(--verify-merge 184f7f03967319e79aeda43673070d934ab8c5d7)  first=(none)
+2026-10-12T10:16:22Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.78  took=a6c28afb45 hold=1.51s graded=0/30 pushed=184f7f0396  phases: t_fetch=1.86s t_merge_cloud=10.74s t_land=1.52s t_push=3.26s
+2026-10-12T10:26:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.58  graded=n/a  args=(--verify-merge 3c5a758e34eb6f6d47bb85cbdf15a29f5e47d69c)  first=(none)
+2026-10-12T10:26:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.95  took=d49dbd38af hold=1.37s graded=0/9 pushed=3c5a758e34  phases: t_fetch=2.58s t_merge_cloud=10.10s t_land=1.38s t_push=2.89s
+2026-10-12T10:36:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.56  graded=n/a  args=(--verify-merge c2bcb3367197817b7259eba839e1261b1be68f53)  first=(none)
+2026-10-12T10:36:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.78  took=35284c5af7 hold=1.39s graded=0/3 pushed=c2bcb33671  phases: t_fetch=2.02s t_merge_cloud=10.11s t_land=1.48s t_push=3.02s
+2026-10-12T10:46:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.67  graded=n/a  args=(--verify-merge 027eb680c57342137d2d6905ffd8996bae05fd9a)  first=(none)
+2026-10-12T10:46:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.97  took=cd8ebd4a8a hold=1.43s graded=0/9 pushed=027eb680c5  phases: t_fetch=1.96s t_merge_cloud=10.29s t_land=1.44s t_push=3.16s
+2026-10-12T10:56:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.50  graded=n/a  args=(--verify-merge fde99bf8b32e1884b2f6cee557f09635d3d4438a)  first=(none)
+2026-10-12T10:56:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.84  took=debdc6ebbc hold=1.59s graded=0/10 pushed=fde99bf8b3  phases: t_fetch=1.90s t_merge_cloud=10.22s t_land=1.60s t_push=2.83s
+2026-10-12T11:06:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.60  graded=n/a  args=(--verify-merge 2501e93b1ef18f30f5dc2fa780d8c72014530aee)  first=(none)
+2026-10-12T11:06:22Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.19  took=ae9cf4d631 hold=1.37s graded=0/20 pushed=2501e93b1e  phases: t_fetch=2.72s t_merge_cloud=10.01s t_land=1.38s t_push=2.92s
+2026-10-12T11:16:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.56  graded=n/a  args=(--verify-merge 442de61c9b60f436542b1757b2d08f1b05722647)  first=(none)
+2026-10-12T11:16:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.65  took=240d225e42 hold=1.39s graded=0/14 pushed=442de61c9b  phases: t_fetch=2.00s t_merge_cloud=10.08s t_land=1.47s t_push=2.99s
+2026-10-12T11:26:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.65  graded=n/a  args=(--verify-merge 11c6dc72686d8b0a933f708a7aa04ec33c138175)  first=(none)
+2026-10-12T11:26:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.80  took=840d963b40 hold=1.44s graded=0/8 pushed=11c6dc7268  phases: t_fetch=1.83s t_merge_cloud=10.33s t_land=1.45s t_push=3.02s
+2026-10-12T11:36:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.48  graded=n/a  args=(--verify-merge 0f027a37685733ea841678bede5f79e3da503b7f)  first=(none)
+2026-10-12T11:36:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.84  took=9693403a1c hold=1.34s graded=0/9 pushed=0f027a3768  phases: t_fetch=2.11s t_merge_cloud=10.09s t_land=1.35s t_push=2.98s
+2026-10-12T11:46:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.57  graded=n/a  args=(--verify-merge 3846c46e7f2fbee556b411fe9de6acc4cd3a7d29)  first=(none)
+2026-10-12T11:46:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.24  took=e1b415a94b hold=1.34s graded=0/7 pushed=3846c46e7f  phases: t_fetch=2.73s t_merge_cloud=10.05s t_land=1.35s t_push=3.03s
+2026-10-12T11:56:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.55  graded=n/a  args=(--verify-merge 92cebd0529120be8f4eb48fc474154e5912c3a9d)  first=(none)
+2026-10-12T11:56:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=18.66  took=b201dab003 hold=1.42s graded=0/16 pushed=92cebd0529  phases: t_fetch=1.85s t_merge_cloud=10.17s t_land=1.43s t_push=3.27s
+2026-10-12T12:06:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.77  graded=n/a  args=(--verify-merge a32732b38902a8eeaa06dcb2f7c4e9bd1154d6a9)  first=(none)
+2026-10-12T12:06:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.36  took=ac93cac054 hold=1.81s graded=0/3 pushed=a32732b389  phases: t_fetch=1.87s t_merge_cloud=10.43s t_land=1.82s t_push=3.03s
+2026-10-12T12:16:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.62  graded=n/a  args=(--verify-merge 28786b7f929d28d011894d30ce0167a5447c5f10)  first=(none)
+2026-10-12T12:16:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.17  took=351ebe0b13 hold=1.40s graded=0/31 pushed=28786b7f92  phases: t_fetch=2.39s t_merge_cloud=10.25s t_land=1.41s t_push=3.02s
+2026-10-12T12:26:16Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.74  graded=n/a  args=(--verify-merge 4652ea4743dd249622a733b53f19404d8e4476a5)  first=(none)
+2026-10-12T12:26:21Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=19.23  took=22ba50fa2a hold=1.33s graded=0/0 pushed=4652ea4743  phases: t_fetch=1.86s t_merge_cloud=10.32s t_land=1.34s t_push=3.43s
+2026-10-12T12:27:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=2.32  took=already-current pushed=4652ea4743  phases: t_fetch=1.46s
+2026-10-12T12:29:08Z PASS  0.0.0_AB_MSTR~DELL2  2  (all paths in-lane) act=e8f4cf31a390 paths=2:org/devices/crossbox/XB-20261012T025331Z-3e07.json|org/devices/crossbox/XB-20261012T070501Z-cb95.json
+2026-10-12T12:29:14Z LANDED-2P  0.0.0_AB_MSTR~DELL2  c4a6fd58ca  paths=2  validate=8.70s  wait=0.11s  hold=0.91s  build=0.52s  ref=0.35s  post-commit=2.48s  attempt=1
+2026-10-12T12:36:18Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.62  graded=n/a  args=(--verify-merge d25665fa2aa1be279323a145f3e280eb97bfa351)  first=(none)
+2026-10-12T12:36:23Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=21.10  took=5b014c9857 hold=1.46s graded=0/2 pushed=d25665fa2a  phases: t_fetch=2.71s t_merge_cloud=11.75s t_land=1.47s t_push=3.02s
