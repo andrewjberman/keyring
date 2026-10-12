@@ -28565,3 +28565,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Disarm owner not needed (INERT). Resolving option for the issuer: align the portal checkout to the indexed commit, or have changed_outside skip a gitlink path that equals the index entry's drift."
 }
 ```
+
+## IRPT_BCKEND-D2-W329-S2 -- proof checker INVALID: the recorded absolute check path differs from the order's relative one (issuer correction never reached the order file)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W329-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~329",
+  "surfaced_at": "2026-10-12T18:12:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The issuer's mid-task correction (run the amended check by its absolute path) reached the spawn prompt and not the task-order file, so the proof checker reads the recorded absolute invocation as not equal to the order's relative one and returns INVALID; it also supersedes row D2-W329-S1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python \"C:/dev/ajb_workspace/org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py\" . IB165-4-AC1/AC2/AC3 -> IB165-4-AC1 PASS, IB165-4-AC2 PASS, IB165-4-AC3 PASS (rc 0 each) at worktree HEAD e6067ab123",
+      "python .tools/proof-of-spec-check.py <instance> IB165-4-AC1,IB165-4-AC2,IB165-4-AC3 -> VIOLATION invocation-alignment[IB165-4-AC1..AC3]: TO-CRITERION relative path 'p165_cells.py\" . IB165-4-ACn' vs INSTANCE-RECORD absolute path; INVALID (rc=1)",
+      "the same relative invocation run in this worktree against its OLD check copy reads IB165-4-AC3 FAIL (changed outside the grant: ['portal']) - that is row D2-W329-S1, now explained by the issuer's correction (fix at 04e6040b0c on box/dell2)"
+    ]
+  },
+  "spec_asserts": "The order's criteria name the relative check path and the proof checker requires the recorded invocation to equal the order's criterion invocation (IRPT_FNTEND-S31).",
+  "world_is": "The worktree holds the old check; the amended one lives only at the absolute path in the base checkout. Recording the order's relative invocation would record a command whose output in this worktree is a FAIL, so the instance records the absolute invocation that actually ran and is INVALID until the order file's criteria are amended by the issuer (or the fix reaches this branch). The worker did not edit the order's criteria, the check or the portal gitlink. Row D2-W329-S1 is superseded by the correction: AC3 reads PASS on the amended check.",
+  "notes": "Not a work failure: all three criteria PASS by output on the amended check; the order stays status pending only because the checker rc is 1."
+}
+```
