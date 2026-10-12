@@ -118,7 +118,7 @@ if [ -z "${JQ}" ]; then
     exit 0
 fi
 export JQ
-_hk_stamp jq
+_hk_stamp jq_ready
 
 # Session-id-keyed serial resolution (canonical section 7.2 binding).
 SESSION_ID="$(echo "${HOOK_INPUT}" | "$JQ" -r '.session_id // empty')"
