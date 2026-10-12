@@ -12624,3 +12624,34 @@ name the one known failure instead of silently inheriting it.
   "notes": "Also measured, not a deviation: the first read used the CLI's lookup-events with --max-items and was cut by the 580 s bound (rc 124, empty output); the census was redone with boto3 paginating to the end (2592 pages, 129562 events, DONE line in the run log) in about 20 minutes."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S96",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-12T00:30:07Z",
+  "one_line": "OG-ap-10 step 2 says to run the RELEASE TREE's tests/test_og_mu1.py, and that test cannot pass in a tree cut at the live ref: it loads data/transcripts/scripts/updates/intake.py by absolute path, and that file does not exist at 28ba9532b6 (it is NFRA_TRNSPT trunk work added later at d47fff379b). 31 of 33 release-tree tests pass; both failures are this ONE cause. Nothing is blocked -- AC1 PASSES and AC2 runs no pytest.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Release-tree run of the three named tests: 31 passed, 2 failed, both FileNotFoundError on C:/tmp/og-rel-pptx/data/transcripts/scripts/updates/intake.py (test_ogmu1_ac01, test_ogmu1_ac02).",
+      "NOT a sparse-cone artefact, which was my first theory and was WRONG: after sparse-checkout add data/transcripts/scripts the file was still absent, because it is absent from the COMMIT. git cat-file -e reads ABSENT at 28ba9532b6 and at the release d9f2ebded9, PRESENT at HEAD (cd7f4166b2); positive control 28ba9532b6:infra/aws/ec2/opal-gateway/app/tools.py reads PRESENT, so the instrument is sound.",
+      "git log --diff-filter=A names the adding commit: d47fff379b (NFRA_TRNSPT.TO-TR-i19), i.e. unreleased trunk work outside the .pptx pair -- exactly the class the order says not to take whole from trunk.",
+      "test_og_mu1.py:51 spec_from_file_location(..., _REPO / 'data/transcripts/scripts/updates/intake.py') -- the test is a deliberate CROSS-SYSTEM PARITY check that the gateway's key equals the intake writer's key.",
+      "THE RELEASE HAS NO RUNTIME DEPENDENCY ON IT: executable-intake-refs = 0 in all three shipped app files (tools.py, destructive_ops.py, site_to_s3.py). site_to_s3.py's 4 'intake' hits are a docstring (lines 22-24) and one comment (line 190); tools.py's 5 are unrelated prose about other intake concepts.",
+      "The parity claim was PROVEN for the exact shipped bytes instead: test_og_mu1.py + test_og_ab2_pairs.py run in the MAIN tree, where intake.py exists, read 6 passed rc=0 -- and site_to_s3.py, test_og_mu1.py and test_og_ab2_pairs.py are byte-identical (same blob) between HEAD and the release commit.",
+      "AC1 PASS at exit=0 on the release: base is the live ref, 6 files differ, 0 outside the pair, 3 of 3 byte-equal to HEAD, 3 of 3 patch-ids equal, printf predicate yes. ap10.AC2.sh contains 0 pytest invocations."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-10 step 2: 'Run the release tree's tests/test_advi_site_to_s3.py, tests/test_og_ab2_pairs.py and tests/test_og_mu1.py.' This reads as though all three are runnable in a tree cut at 28ba9532b6.",
+  "world_is": "Two of the three are. test_og_mu1.py is a parity test against a SECOND system's module that postdates the live ref, so in the release tree it fails on a missing file rather than on anything about the release. The release itself is unaffected: no shipped file imports it, and the parity assertion passes against the identical bytes in the main tree. I did not widen the release to carry intake.py -- that would have pulled NFRA_TRNSPT's unreleased work into a .pptx-pair release, which the order forbids and which is the actual hazard here.",
+  "notes": "FOR THE ISSUER, before B2: the instruction is the thing to adjust, not the release. Either scope step 2 to the two tests that are self-contained in the release tree and run the mu-1 parity test in the main tree (what I did, and what proves the claim for the shipped bytes), or state that the mu-1 test is a main-tree check. A generalised form worth keeping: A TEST THAT ASSERTS PARITY BETWEEN TWO SYSTEMS CANNOT LIVE INSIDE A RELEASE CUT OF ONE OF THEM -- its dependency is by construction outside the release boundary, so 'run it in the release tree' is unsatisfiable whenever the other system moved after the base ref. Also recorded against myself: my first reading was 'sparse cone too narrow', which had already been true FOUR times this session (lib, infra/logic, org/standards, data/transcripts/scripts), and that prior made me widen the cone twice before asking the cheaper question -- does the file exist in the commit at all. A repeated true cause is not the next cause."
+}
+```
