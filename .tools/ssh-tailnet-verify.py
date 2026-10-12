@@ -11,10 +11,12 @@ address or login is typed here. Per box, one line with four arms:
     key             ssh by key (BatchMode, login <user>, runs `hostname`). ANSWERED:<host> when the printed name equals
                     the box's name, tailnet name or an alias (case-insensitive); MISMATCH:<host> when it does not;
                     DENIED; PROBE-ERROR otherwise. NOT-RUN unless port22 is OPEN.
-    password_arm    ssh with password auth only (BatchMode, public key off). REFUSED when sshd answers Permission denied
-                    or no more authentication methods; LOGGED-IN is a failure; PROBE-ERROR otherwise. NOT-RUN unless
-                    port22 is OPEN. LIMIT: BatchMode never types or sends a password, so REFUSED shows that no login
-                    was made without one; by itself it does not prove sshd has PasswordAuthentication off.
+    password_arm    reads the server's advertised methods: ssh with PreferredAuthentications=none (BatchMode, public
+                    key off) runs `true`, which sshd refuses, and its denial line `Permission denied (<list>)` names
+                    the methods sshd offers. REFUSED when the list holds neither password nor keyboard-interactive;
+                    ADVERTISED:<list> when either is there (the box allows a password login, so it is not done);
+                    LOGGED-IN when the login succeeds with no credential (a failure); PROBE-ERROR when no list can be
+                    read (never REFUSED by default). NOT-RUN unless port22 is OPEN. The tool never sends a password.
     nontailnet_arm  NOT-DRIVEN for every box: this tool cannot source a connection from a non-tailnet address. The
                     firewall's remote scope is read from the box's own enable receipt, not here.
 
@@ -25,7 +27,7 @@ Exit 0 when every requested box is done, 1 otherwise, 2 on refusal.
     python .tools/ssh-tailnet-verify.py [--box <name> ...] [--user <login>] [--timeout 5] [--selftest]
 
 --user defaults to the environment variable OPAL_SSH_USER; with neither set the tool refuses
-(REFUSED: no login name, rc 2). --selftest runs six cases against a loopback listener and a stub ssh; it
+(REFUSED: no login name, rc 2). --selftest runs eight cases against a loopback listener and a stub ssh; it
 touches nothing beyond loopback and does not read the real register.
 """
 from __future__ import annotations
@@ -35,6 +37,7 @@ import json
 import math
 import os
 import pathlib
+import re
 import shutil
 import socket
 import subprocess
@@ -53,7 +56,10 @@ PROBE_ERROR = "PROBE-ERROR"
 NOT_RUN = "NOT-RUN"
 REFUSED = "REFUSED"
 LOGGED_IN = "LOGGED-IN"
+ADVERTISED = "ADVERTISED"
 DENIED = "DENIED"
+PASSWORD_METHODS = ("password", "keyboard-interactive")
+METHOD_LIST = re.compile(r"permission denied \(([^)]*)\)", re.IGNORECASE)
 NONTAILNET = ("NOT-DRIVEN (this tool cannot source a non-tailnet connection; "
               "the firewall remote scope is read from the box's enable receipt)")
 
@@ -61,7 +67,7 @@ STUB = (
     "import json, os, sys\n"
     "argv = sys.argv[1:]\n"
     "script = json.loads(os.environ.get('FAKE_SSH_SCRIPT', '{}'))\n"
-    "arm = 'password' if any('PreferredAuthentications=password' in a for a in argv) else 'key'\n"
+    "arm = 'password' if any('PreferredAuthentications=none' in a for a in argv) else 'key'\n"
     "spec = script.get(arm) or {'rc': 255, 'out': '', 'err': 'Permission denied (publickey).\\n'}\n"
     "sys.stdout.write(spec.get('out', ''))\n"
     "sys.stderr.write(spec.get('err', ''))\n"
@@ -101,9 +107,10 @@ def key_argv(ssh_cmd, user, addr, timeout):
 
 
 def password_argv(ssh_cmd, user, addr, timeout):
+    # offers sshd the 'none' method only: no password is ever sent, and sshd's denial names what it advertises
     return list(ssh_cmd) + _common_opts(timeout) + [
-        "-o", "PreferredAuthentications=password", "-o", "PubkeyAuthentication=no",
-        "%s@%s" % (user, addr), "hostname"]
+        "-o", "PreferredAuthentications=none", "-o", "PubkeyAuthentication=no",
+        "%s@%s" % (user, addr), "true"]
 
 
 def run_ssh(argv, timeout):
@@ -141,11 +148,14 @@ def password_verdict(rc, out, err):
         return PROBE_ERROR
     if rc == 0:
         return LOGGED_IN
-    text = (out + err).lower()
-    if "permission denied" in text or "no more authentication methods" in text:
-        return REFUSED
-    note("password arm: ssh rc=%s with no refusal verdict: %s" % (rc, (err or out).strip()[:200]))
-    return PROBE_ERROR
+    found = METHOD_LIST.search(out + err)
+    if not found:
+        note("password arm: ssh rc=%s with no advertised-method list: %s" % (rc, (err or out).strip()[:200]))
+        return PROBE_ERROR
+    methods = [m.strip().lower() for m in found.group(1).split(",") if m.strip()]
+    if any(m in PASSWORD_METHODS for m in methods):
+        return "%s:%s" % (ADVERTISED, ",".join(methods))
+    return REFUSED
 
 
 def verify_box(row, user, timeout, ssh_cmd=("ssh",), port=SSH_PORT, connect=socket.create_connection):
@@ -237,8 +247,9 @@ def selftest(emit):
     def ok(out):
         return {"rc": 0, "out": out, "err": ""}
 
-    def deny(arm):
-        return {"rc": 255, "out": "", "err": "fake-host: Permission denied (%s).\n" % arm}
+    def deny(methods):
+        # sshd's denial names the methods it advertises; the password probe reads this list
+        return {"rc": 255, "out": "", "err": "fake-host: Permission denied (%s).\n" % methods}
 
     try:
         stub = os.path.join(tmp, "fake_ssh.py")
@@ -268,14 +279,15 @@ def selftest(emit):
                "tailnet_address": "127.0.0.1"}
 
         def case_own_name_done():
-            set_script(ok("fake-box-one\n"), deny("password"))
+            set_script(ok("fake-box-one\n"), deny("publickey"))
             r = verify_box(box, "probe-user", 3, fake, open_port)
-            set_script(ok("FBONE-ALIAS\n"), deny("password"))
+            set_script(ok("FBONE-ALIAS\n"), deny("publickey"))
             alias = verify_box(box, "probe-user", 3, fake, open_port)
             argv_ok = ("BatchMode=yes" in key_argv(fake, "probe-user", "127.0.0.1", 3)
                        and "PasswordAuthentication=no" in key_argv(fake, "probe-user", "127.0.0.1", 3)
-                       and "PreferredAuthentications=password" in password_argv(fake, "probe-user", "127.0.0.1", 3)
-                       and "PubkeyAuthentication=no" in password_argv(fake, "probe-user", "127.0.0.1", 3))
+                       and "PreferredAuthentications=none" in password_argv(fake, "probe-user", "127.0.0.1", 3)
+                       and "PubkeyAuthentication=no" in password_argv(fake, "probe-user", "127.0.0.1", 3)
+                       and password_argv(fake, "probe-user", "127.0.0.1", 3)[-1] == "true")
             passed = (r["port22"] == OPEN and r["key"] == "ANSWERED:fake-box-one"
                       and r["password_arm"] == REFUSED and r["done"] and alias["key"] == "ANSWERED:FBONE-ALIAS"
                       and argv_ok)
@@ -283,14 +295,14 @@ def selftest(emit):
                 r["port22"], r["key"], r["password_arm"], r["done"], alias["key"], argv_ok)
 
         def case_closed_is_closed():
-            set_script(ok("fake-box-one\n"), deny("password"))
+            set_script(ok("fake-box-one\n"), deny("publickey"))
             r = verify_box(box, "probe-user", 3, fake, closed_port)
             passed = (r["port22"] == CLOSED and r["key"] == NOT_RUN and r["password_arm"] == NOT_RUN
                       and not r["done"])
             return passed, "port22=%s key=%s done=%s" % (r["port22"], r["key"], r["done"])
 
         def case_cannot_start_is_probe_error():
-            set_script(ok("fake-box-one\n"), deny("password"))
+            set_script(ok("fake-box-one\n"), deny("publickey"))
             a = verify_box(box, "probe-user", 3, missing, open_port)
 
             def boom(address, timeout=None):
@@ -303,7 +315,7 @@ def selftest(emit):
                 a["port22"], a["key"], b["port22"], b["key"])
 
         def case_mismatch_not_done():
-            set_script(ok("someone-else\n"), deny("password"))
+            set_script(ok("someone-else\n"), deny("publickey"))
             r = verify_box(box, "probe-user", 3, fake, open_port)
             passed = r["key"] == "MISMATCH:someone-else" and not r["done"]
             return passed, "key=%s done=%s" % (r["key"], r["done"])
@@ -320,6 +332,19 @@ def selftest(emit):
             passed = rc == 2 and any(s.startswith("REFUSED: no login name") for s in emitted)
             return passed, "rc=%s first=%s" % (rc, emitted[0] if emitted else "(none)")
 
+        def case_password_advertised_not_done():
+            set_script(ok("fake-box-one\n"), deny("publickey,password"))
+            r = verify_box(box, "probe-user", 3, fake, open_port)
+            passed = (r["key"] == "ANSWERED:fake-box-one" and r["password_arm"] == "ADVERTISED:publickey,password"
+                      and not r["done"])
+            return passed, "key=%s password_arm=%s done=%s" % (r["key"], r["password_arm"], r["done"])
+
+        def case_publickey_only_refused_done():
+            set_script(ok("fake-box-one\n"), deny("publickey"))
+            r = verify_box(box, "probe-user", 3, fake, open_port)
+            passed = r["key"] == "ANSWERED:fake-box-one" and r["password_arm"] == REFUSED and r["done"]
+            return passed, "key=%s password_arm=%s done=%s" % (r["key"], r["password_arm"], r["done"])
+
         cases = [
             ("own-name-key-is-done", case_own_name_done),
             ("closed-port-is-closed", case_closed_is_closed),
@@ -327,6 +352,8 @@ def selftest(emit):
             ("hostname-mismatch-not-done", case_mismatch_not_done),
             ("password-login-logged-in-not-done", case_password_login_not_done),
             ("no-login-refuses", case_no_login_refuses),
+            ("password-advertised-not-done", case_password_advertised_not_done),
+            ("publickey-only-refused-is-done", case_publickey_only_refused_done),
         ]
         for label, fn in cases:
             try:
