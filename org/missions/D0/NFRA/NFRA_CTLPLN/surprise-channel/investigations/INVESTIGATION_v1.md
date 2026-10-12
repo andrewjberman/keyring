@@ -7831,3 +7831,57 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+
+## NFRA_CTLPLN-W65-S4 -- the proxy's own deploy.sh zips two files, so a zip it builds omits firm_page_access.py that the patched handler imports
+
+```json
+{
+  "id": "NFRA_CTLPLN-W65-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~65",
+  "surfaced_at": "2026-10-12T09:25:14Z",
+  "one_line": "infra/aws/lambda/portal_data_proxy/deploy.sh copies only lambda_function.py and session_tracker.py into its zip. The CT-w-2 handler now imports firm_page_access.py at module load, so a zip built by that script fails to import and every route answers an error. The source map files list (which the TO and the plan of record name as the build's member list) does carry the module.",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C: before any zip of opal-portal-data-proxy is built for the CT-w-3 apply, the build must carry firm_page_access.py (amend deploy.sh's cp line, or build from the source map files list). deploy.sh also calls aws lambda update-function-code directly, which the NEVER-9 rule reserves to Terraform; that is a separate question for the same owner.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/portal_data_proxy/deploy.sh:27 at worktree HEAD ea4f6e926f: 'cp lambda_function.py session_tracker.py _build_tmp/' (grep of the proxy folder, excluding tests/)",
+      "infra/aws/lambda/portal_data_proxy/lambda_function.py:78 (worktree, uncommitted patch on ea4f6e926f): 'from firm_page_access import ROUTE_FIRMS' at module load",
+      "infra/aws/lambda/ci/lambda-source-map.json opal-portal-data-proxy files: lambda_function.py, session_tracker.py, firm_page_access.py (the entry's _build_note names build-and-upload.sh with files[] as the zip's members)",
+      "Not run: no build, no zip, no deploy, no AWS call in this order (TO CT-w-2 RULES)"
+    ]
+  },
+  "spec_asserts": "TO CT-w-3 preflight (the apply cell builds and reads the zip's members) and plan of record section 7 step 6 (a code-only zip deployed, artifact sha256 read back): the shipped zip carries the module the handler imports.",
+  "world_is": "deploy.sh, a file outside this order's paths, ships a two-member zip. A zip made by it lacks firm_page_access.py, so the handler's import fails. The source map is correct; the legacy deploy script is not in step with it."
+}
+```
+
+## NFRA_CTLPLN-W65-S5 -- the class-(i) firm check admits on firmId alone, so any tier (client, service, none) with an admitted firm reaches the two routes
+
+```json
+{
+  "id": "NFRA_CTLPLN-W65-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~65",
+  "surfaced_at": "2026-10-12T09:25:14Z",
+  "one_line": "The CT-w-2 patch (proposal section 4) returns None for a class-(i) route whenever firmId is in ROUTE_FIRMS, with no tier test after the internal check. The TO wording says the admitted case is tier advisor. Measured: an admitted firm reaches GET /aum/metrics on tiers advisor, client and service, and with no tier; the new suite pins only the advisor case.",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/portal_data_proxy/lambda_function.py:2110-2112 at worktree (uncommitted on ea4f6e926f): firm check with no tier condition",
+      "probe: python .scratch/ctrl/probe_tier.py (worktree) -- advisor+admitted ADMITTED; client+admitted ADMITTED; service+admitted ADMITTED; no-tier+admitted ADMITTED; advisor+unregistered DENIED 403; DENOMINATOR 5 claim cases on GET /aum/metrics",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~64/PROPOSAL_FIRM_ACCESS_REGISTRY_ROW.md section 4 (the patch has no tier condition; 'Effect by case' names partner firm, not tier)"
+    ]
+  },
+  "spec_asserts": "TO CT-w-2 THE CELL: 'a class-(i) route admits a caller whose firmId is in ROUTE_FIRMS[route] with tier advisor'. PRD v0.25 FWD-28 ACCEPT: 'a route a partner page calls answers the firms that page admits, and no one else'.",
+  "world_is": "The handler decides class (i) on firmId alone, as the proposal's patch does; tier is tested only for 'internal'. A verified client, service or untiered login whose firmId is admitted reaches the two routes. The old rule admitted every verified login, so this is tighter than before, but it is wider than the advisor wording. Whether tier must be advisor is a CTO ruling; the CT-w-2 tests were not widened past the TO."
+}
+```
