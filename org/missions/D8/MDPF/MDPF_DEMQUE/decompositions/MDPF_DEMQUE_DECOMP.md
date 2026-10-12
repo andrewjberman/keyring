@@ -447,3 +447,10 @@ LOCAL, workstream BATCHPULL). The cell MEASURES the HTTP requests of the library
 and a library call that issues one HTTP request per symbol underneath would leave Yahoo's load unchanged. Wiring into `demand_queue.draw` /
 `daily_draw` (the pacer counting HTTP requests) is the next order, written on its report and run under its own never-widen pair; the IRPT enrolment
 waits on it.
+DQ-t-40 merged @34040149bb: batch equals per-symbol (50 of 50) but the library issues one HTTP request per symbol (verdict BATCH_DOES_NOT_REDUCE).
+
+**Round 9 amendment 6 (issuer, 2026-10-12 ~03:5xZ):** CTO ADDENDUM 7 (msg 4252) rules branch (c): the standing extension is TIERED. One cell,
+`DQ-t-41` (`extend_frontier.py` tiers from `requests/ENROLMENT_TIERS.json`: DAILY 141 stored plus ADVI's 15, ROLLING IRPT's 782 in FWD-9 rank
+blocks on a 5-trading-day cycle, a refusal above the cap less a reserve of 20, `--plan-week`, the per-tier lag in the freshness entry;
+`0.9.0_WK_MDPF_DEMQUE~33`, worker, LOCAL, workstream ROLLTIER, depends on DQ-t-31/36/37). The apply is the issuer's under its own pair, written
+on the merged bytes. dell2 was told the lag in words (crossbox CALL XB-20261012T033435Z-54b6, `DELL2_IRPT_ENROLMENT_LAG_20261012.md`).
