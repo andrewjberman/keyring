@@ -10,12 +10,16 @@
  "subject": "Dash spelling BF-B BRK-A BRK-B is in the 878 request before first draw (W310-S3)",
  "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/DELL2_IRPT_DASH_SPELLING_20261012.md",
  "opened_at": "2026-10-12T17:46:58Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-12T17:47:59Z",
   "bus_message_id": "abe2114e-f38c-4a39-a952-06f6e64fdb2f"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T17:59:38Z",
+  "by": "2.0.0_SA_COO~P2",
+  "bus_message_id": "fcacfa1a-9325-42e0-9820-a9ca4a084014"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
