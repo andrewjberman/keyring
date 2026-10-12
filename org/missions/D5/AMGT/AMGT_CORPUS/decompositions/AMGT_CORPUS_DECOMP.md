@@ -1,88 +1,81 @@
-# AMGT_CORPUS -- L5 decomposition v47.1 -- ROUND 47 (the round-46 analysis's enrichment list: field-code rows read in words, the team's own number format, the portal render, and the master template)
+# AMGT_CORPUS -- L5 decomposition v49.1 -- ROUND 49 (the round-48 analysis's enrichment list: every value under its own block's header -- period grids, case tables, an unread block with a why; a text cell by what it is; /14's redeploy; FWD-20's last served census)
 
-**Issuer:** `2.0.0_SA_COO~C1` (dell1), 2026-10-11 ~16:0xZ.
+**Issuer:** `2.0.0_SA_COO~C1` (dell1), 2026-10-11 ~23:2xZ.
 
-**Source:** `1.0.0_SA_CTO~DELL1` round-46 analysis `ledger/ROUND_ANALYSIS.round46.md` (msg 3965) and its ADDENDUM 1 (msg 3972), over
-`3.0.0_SA_CVO` slug msg 3960 (ADJUDICATION_v61 @80f1356183). REALIZED 19 of 22 (FWD-15 makes 20 on the CVO's re-sign); open FWD-12 (master
-arm) and FWD-20 (labels and formats). PRD v0.10 (ADDENDUM E, FWD-15 to the Posture tab). Round 46's decomposition kept as
-`AMGT_CORPUS_DECOMP.round46.md`.
+**Source:** `1.0.0_SA_CTO~DELL1` round-48 analysis `ledger/ROUND_ANALYSIS.round48.md` (msg 4158) and its ADDENDUM 1 (msg 4165: full width confirmed; period block vs case table
+vs unread), over `3.0.0_SA_CVO` slug msg 4157 (ADJUDICATION_v63 @400c84ed5c). REALIZED 21 of 22; open FWD-20 (PARTIAL: C-S64 ARMED, C-S65 INERT).
+Round 48's decomposition kept as `AMGT_CORPUS_DECOMP.round48.md`. v49.0 -> v49.1: the row class and field are `BLOCK` / `blocks` (not "case"), each block carries a `kind`.
 
 ## 0. What this round IS
 
-| # | item (analysis s.3, ADDENDUM 1) | cell | executor | risk |
+| # | item (analysis s.3 and ADDENDUM 1) | cell | executor | risk |
 |---|---|---|---|---|
-| 1 | the label of every field-code row, in words: Bloomberg's description as stored, cited; a FactSet data item takes FactSet's published description with its cite, else the label "FactSet line" (code and why in the title); `*_OVERRIDE` and `EQY_FUND_YEAR` are CONTROL by name; each team cell's own Excel number format is captured; METHOD /13 | `CRPS-aw-1` | worker `~1`: `lib/research/corpus/` | LOCAL |
-| 2 | the render: a code-labelled row prints the served label, never the code; a FactSet row's cell says "FactSet, via team model"; a team value prints by its own number format with the full value in the title | `CRPS-aw-2` | worker `~2`: `portal/src/pages/SecurityAnalysis/` | LOCAL |
-| 3 | the /13 dossier write over the served names (each name's `row_labels` split by source, the class census re-printed and summing per workbook) | `CRPS-aw-3` | the issuer's paired served act after aw-1 drains; own never-widen pair | SERVED |
-| 4 | the API redeploy that picks /13 (carries aw-1's closure), admitted by blob | `CRPS-aw-4` | `AMGT_RESAPP`'s window (`2.0.0_SA_COO~R1` / `0.7.0_AE_CloudOps~RA1`) | SERVED |
-| 5 | the portal candidate reviewed by the CTO before DEV; DEV landing under the push law; the PROD release waits on Andrew's `e7f2` | `CRPS-aw-5` | the issuer's candidate after aw-2 drains | LOCAL (DEV only) |
-| 6 | FWD-20's served read on DEV: 0 raw codes visible over the FIGURE rows split by source with the fallback count printed; 0 team cells beyond their format's decimals; percents as percents; the class census | `CRPS-aw-6` | the issuer's read on the live payloads and the real `modelSheet.ts` | LOCAL (read) |
-| 7 | FWD-12's master arm: locate `FactSet Based ONE PAGER TEMPLATE 2026 03 09_v2.xlsx` across the research SharePoint (site-wide file search, denominator printed); found, ingest under the harvest path; nowhere, the team's file to supply (analysis s.4) | `CRPS-aw-7` | the issuer's read (the gateway's SharePoint tools; a worker holds none) | LOCAL (read) |
-| 8 | the graded-reads packet for L9: FWD-12 and FWD-20 | `CRPS-aw-8` | the issuer's packet to `3.0.0_SA_CVO` (depends on aw-6, aw-10) | -- |
-| 9 | (AMENDMENT 1, after the CTO's ADDENDA 2 and 3, msgs 3994 and 4001) the master template is its own bronze table `research_template` (partition `template=<SharePoint item id>`, the address builder as it prints today); the master-arm reader reads that table; the team's own labels of the code rows are MEASURED from the workbook (column-B metric name, single-row pass-through), cited, claim measured, the count printed | `CRPS-aw-9` | worker `~1` (FOLDED INTO the `CRPS-aw-1` order as its AMENDMENT 2: GATE (x) refuses a second order into round 47, and the files are the same): `lib/research/corpus/` | LOCAL |
-| 10 | the template's one write-once put into `research_template` at site Z (the library is synced there only), under its own never-widen pair and a ledger entry opened before the act; the stored object re-opened and compared | `CRPS-aw-10` | the issuer's paired served act, executed by `0.7.0_AE_CloudOps~ZC` under its own order in workstream `TEMPLATE` of round 47 (a disjoint write surface and lane, Rule 27) | SERVED |
-| 11 | the render of `claim: measured` (the label text, the title naming the cite, the census `measured` count) | `CRPS-aw-11` | worker `~2` (FOLDED INTO the `CRPS-aw-2` order as its AMENDMENT 1): `portal/src/pages/SecurityAnalysis/` | LOCAL |
+| 1 | **C-S64, the reader.** Every value is served under the header row of ITS OWN BLOCK as the sheet wrote it: a block headed by periods is a PERIOD grid, a block headed by non-period words is a CASE table, a block whose header the reader cannot read is UNREAD (out of both, with a why); method /15 | `CRPS-ay-1` | worker `0.9.0_WK_AMGT_CORPUS~1` (lib) | LOCAL |
+| 2 | **C-S64 the portal render, and C-S65.** The Model tab renders each served block under the sheet's own headers (an unread block as its labels and the why); a text cell prints by what it is (error token -> the why in words; the team's word verbatim; `--` only for an empty cell) | `CRPS-ay-2` | worker `0.9.0_WK_AMGT_CORPUS~2` (portal) | LOCAL |
+| 3 | the /15 dossier write over the 95 names, its own never-widen pair, read leg v against /14 | `CRPS-ay-3` | the issuer's paired served act (after ay-1 merges) | SERVED |
+| 4 | **the carried act:** the /14 redeploy of `opal-amgt-scoped-api`, AMGT_RESAPP round 99's first cell, under `NEVER_WIDEN_ROUND48_AX7` (CTO half SIGNED msg 4139). If `ay-3` reads Branch A before R1 cuts round 99, the CTO may rule that round 99 carries /15 in its place | `CRPS-ay-4` (carried; not this issuance's act) | `2.0.0_SA_COO~R1` / `0.7.0_AE_CloudOps~RA1` | SERVED |
+| 5 | **FWD-20's last served census** on the live function and the DEV-built page: the BLOCK rows split three ways with their denominator, three browser walks (a second PERIOD block, a CASE block, a master template), 0 values under a header that is not their block's own; the issuer disarms C-S64 on that read | `CRPS-ay-5` | the issuer's read | LOCAL (read) |
 
-**Chains:** `aw-1 -> aw-9 -> aw-10 -> aw-3 -> aw-4 -> aw-6`; `aw-2 -> aw-11 -> aw-5 -> aw-6`; `aw-7` (DONE: found, evidence
-`r47_aw7_master_template_search_20261011.md`); `aw-6, aw-10 -> aw-8`.
-`fanout: 2 of 2 worker chains (aw-1, aw-2); aw-9 and aw-11 are amendments to those two orders (queue rule: same files, same chain; GATE (x)
-refuses a second issuance into the round and adds no file)`; the rest are issuer acts, the AMGT_RESAPP window, or the CVO. The /13 write
-(aw-3) waits for aw-9 and aw-10 so the page is written once.
+**Chains:** `ay-1 -> ay-3 -> ay-4' -> ay-5`; `ay-2 -> ay-5` (the portal candidate is reviewed by the CTO before DEV); `ay-4` is carried. `fanout: 2 of 2 worker chains (ay-1, ay-2), cap 8`.
+The two worker cells write disjoint surfaces (lib vs portal); they meet only at the served shape of section 1, which both faces state in full.
 
-## 1. The served shape (fixed here so aw-1 and aw-2 build in parallel)
+## 1. The served shape (the contract both worker faces carry; method `amgt-corpus-dossier/15`)
 
-`read_thesis_bundle(key)["model"]["team_sheet"]` keeps every round-46 key (`class`, `workbook_key`, `sheet`, `rows`, `model_rows_beside`,
-`reason`, `row_classes`, `row_numbers`, `row_values`, `periods`, `row_counts`) and gains, aligned with `rows`:
+**Principle (CTO ADDENDUM 1).** Every value renders under the header row of ITS OWN BLOCK, as the sheet wrote it. A block whose header names periods (any years, quarters or `E`
+forms) is a period grid aligned to THAT block's periods and is never made a "case table", even when its years differ from the main grid's. A block whose header names non-period
+words is a case table under those words. A block whose header the reader cannot read stays out of both, with a why.
+
+**Measured population** (the issuer's reference reader over the stored workbooks, nothing written; `evidence/r49_case_scope_census_20261011.txt`): the defect sits on all 32 own sheets
+and all 63 master templates, 3,103 rows, and outside those rows no label, number or value moves. The CVO's 62 rows on 13 names are the text-separator subset.
+
+**A BLOCK row** is a counted row (label + two or more numbers; the reader's existing rule) after the sheet's period header, that the period grid would misread, meeting (a) or (b):
+- (a) **a value under another header.** A value cell in a period column of the row lies in a column whose most recent HEADER RUN above it (a raw sheet row's run of three or more
+  adjacent period labels: integer years rising by exactly one, or text forms `2026E`, `FY26`, `1Q26`, `Q1 2026`, `2026Q1`, `1H26`, `H1 2026`) carries a period other than the period
+  header's year in that column. A run that repeats the period header's years changes nothing. A control row (`EQY_FUND_YEAR`, `*_OVERRIDE`) is never a header and never a BLOCK row.
+- (b) **a label inside the period columns.** A period column of the row holds a text cell that has at least one letter, does not start with `#`, is not one of `NA`, `N/A`, `NM`, `n/a`
+  (any case), and is not a range such as `2.5%-3.1%` or `12.4x-15.6x` (it does not match `^[0-9.,%x -]+$`).
+A row with only error tokens (`#N/A`, `#VALUE!`, `#N/A N/A`), `NA`/`NM` words or ranges in its period columns and every figure under the period header stays a FIGURE row, byte for byte.
+
+**A block** is the band a BLOCK row belongs to: from its topmost header-like raw row (a TITLE row: every non-empty cell is text; or a YEARS row: a header run) that is adjacent above and is
+not a counted row, down through the contiguous BLOCK rows and the non-blank uncounted rows after them, ending at the first blank raw row or at a counted row that is not a BLOCK row.
+A BLOCK row with no header-like row adjacent above joins the block before it when no counted row lies between them. A block holds no counted row of another class.
+
+**A block's kind:** `case` when one of its uncounted rows is a TITLE HEADER (two or more non-empty cells, every one a word: alphabetic text, not an error token, not `NA`/`NM`, not a
+range, not a period label); else `period` when one of its rows is a YEARS row; else `unread`.
 
 ```
-row_labels   [null | {"text", "source": "bloomberg"|"factset", "claim": "held"|"absent", "cite": <repo path>|null, "code", "why": <words>|null}, ...]
-row_formats  [null | [<the period cell's Excel number format string, or null where the sheet carries no cell> per period, ...], ...]   (non-null only for a FIGURE row)
+team_sheet (a class own_new / own_model / master name that has at least one BLOCK row; a name with none is UNCHANGED, key for key)
+  row_classes[i]      "BLOCK" for each BLOCK row (FIGURE / HEADING / CONTROL as today)
+  row_values[i], row_formats[i]   null for a BLOCK row
+  row_counts          the three round-46 keys as today, PLUS "BLOCK": <n> only when n > 0; the values sum to len(rows)
+  blocks              present ONLY when there is at least one BLOCK row; a list in sheet order:
+    { "first_row": <1-based sheet row>, "last_row": <1-based>,
+      "kind": "period" | "case" | "unread",
+      "why": null | "The sheet gives these values no column header the reader can read, so they are not shown."   (the words, for unread only),
+      "withheld": <count of numeric cells of body rows that have no header-like cell above them in their column within the block; each is served as null>,
+      "columns": ["B","C",...],                         # column letters, leftmost to rightmost non-empty cell over the block's rows; [] for unread
+      "rows": [ { "row_number": <1-based>,
+                  "kind": "title" | "years" | "body",    # years: a header run; title: every non-empty cell is text; body: otherwise
+                  "block_row": <true when this raw row is one of the BLOCK rows above>,
+                  "cells": [ null | { "v": <the saved value verbatim: number or text>, "f": <the cell's Excel number format, numbers only> } per column ]   # [] for unread
+              } ] }
 ```
+Every raw row `first_row..last_row` that has a non-empty cell is listed, in order; a blank raw row is not. Values are read as the reader's `_verbatim` reads them. `row_numbers[i]`
+of a BLOCK row is its sheet row, and that row appears once, with `block_row` true, in exactly one block. A master answer keeps its class and blocks but carries no figure: a numeric
+cell that is not part of a header run is null.
 
-`row_labels[i]` is null unless the sheet label has the identifier form (`^[A-Z][A-Z0-9]*(_[A-Z0-9]+)+$`). An identifier label whose code is a mnemonic of
-`integrations/bloomberg/research/field_map.json` takes that field's `basis.definition` AS STORED (`source bloomberg`, `claim held`, `cite` the field
-map's path). A code starting `FF_`, `FFI_`, `FG_`, `FE_` or `P_` is a FactSet data item: `lib/research/corpus/factset_descriptions.json` is read first
-(`{"entries": {"<code>": {"text", "cite"}}}`, FactSet's own published description and where it was published; `claim held`); with no entry the label is
-"FactSet line", `claim absent`, `why` says no published FactSet description was found and the meaning is not inferred from the name. Any other
-identifier the field map does not carry is "Bloomberg line", `claim absent`, `why` says the estate's field metadata does not describe it.
-The API serves the stored field as stored, so no API code changes; what the redeploy carries is the `dossier.py` METHOD literal, so that the reader picks
-the /13 objects.
+**The portal** reads `blocks` and `row_classes` `"BLOCK"`; a payload without `blocks` builds the sheet it builds today, byte for byte. An unread block prints its rows' labels and its
+`why`, never a value.
 
-## 2. The rules (CTO ADDENDUM 1, msg 3972; the issuer's reading is stated where it adds)
+## 2. The reads (what each prints)
 
-- **CONTROL by name:** a counted row whose label is `*_OVERRIDE` (`^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*_OVERRIDE$`) or is `EQY_FUND_YEAR` is CONTROL
-  wherever it sits and whatever its cells hold. It is counted, never rendered, and never the period header. Cite: the estate's own use of
-  `BEST_FPERIOD_OVERRIDE` as the request parameter (`integrations/bloomberg/research/model_block_pull.py` `FORECAST_OVERRIDE_FIELD`) and
-  `EQY_FUND_YEAR` as the fund-year key (`FIELD_BASIS`), and Bloomberg's `_OVERRIDE` naming convention.
-- **Label by source, claim held:** nothing is inferred from the letters of a code.
-- **Number format:** the saved value is carried unchanged (`row_values` stays verbatim); the render prints it by the cell's own format and the full
-  value rides the title. `General` prints at most 4 decimals with trailing zeros trimmed (the issuer's reading of "0 cells beyond the format's decimals");
-  a percent format prints as a percent.
-- **Measured at the cut (the live /12 team_sheet over the 32 own workbooks):** 1348 FIGURE rows carry a code label: 646 on 56 Bloomberg mnemonics
-  the field map describes, 702 on 50 codes it does not (FactSet data items and 4 Bloomberg names). The by-name rule moves 29 FIGURE and 32 HEADING
-  rows to CONTROL; the /13 write's census re-prints the classes.
-- **AMENDMENT 1 -- the period header (issuer, ~17:1xZ).** Round 46's header test (all numeric cells of the row are years) took the
-  `EQY_FUND_YEAR` row as the header on CLX, ML FP and BABA and classed ~190 of their model rows HEADING (row D1-S7). A YEAR ROW is now a counted
-  row with at least 3 strictly increasing integer-year cells that make up at least 80% of its numeric cells; the period columns are those
-  cells' columns; a named CONTROL row is never the header. The /13 write carries the corrected classes. Amends the aw-1 order face
-  (@93aceffa31).
-- **AMENDMENT 1 -- measured labels (CTO ADDENDA 2 and 3).** Precedence for a code row's label: the Bloomberg field map's description (held);
-  an entry of `factset_descriptions.json` (held); the team's own label MEASURED from the workbook (column-B metric name, else the one label of
-  the single labelled row that passes the code row through in a period column), cited `<sheet>!<cell>`; else the fallback line (claim absent).
-- **Searched for FactSet's published descriptions (2026-10-11, 2 web searches and 2 fetches of the vendor's developer pages): no source found.** The
-  search was bounded, not exhaustive; `factset_descriptions.json` ships with no entries, so all 50 codes read "FactSet line" until an entry with its
-  cite is added, and the mechanism needs no code change for that.
-- **Four Bloomberg names the field map does not carry** (`BS_TIER1_COM_EQUITY_RATIO`, `BS_TOT_LOAN`, `CF_DECR_CAP_STOCK`, `CF_INCR_CAP_STOCK`): the
-  ruling names only FactSet codes. The issuer reads "Bloomberg line" with the code and why in the title; stated to the CTO.
+- **ay-3 leg v** (`checks/round49/ay3_diff.py`, the issuer's): every field of every name classed against /14; CHANGED on `team_sheet` only; DROPPED 0; per name the BLOCK row count, the
+  blocks by kind and the withheld cells; every row outside the BLOCK rows byte-equal to /14; the 62 text-separator rows all BLOCK; the stored field equals a fresh `rows_for`.
+- **ay-5** prints, on the live function and the DEV-built page: the capture's CodeSha256 and LastModified; the FIGURE rows by source (the round-48 census); the BLOCK rows split
+  period / case / unread with the denominator; **values rendered under a header that is not their block's own: 0**; the text cells by class (error / word / empty) and none unclassed;
+  the `aw4_compare` line at the served method; and three browser walks (a second PERIOD block, a CASE block, a master template).
 
-## 3. The cells (every check dry-run at the base before the cut)
+## 3. Not in round 49
 
-**CRPS-aw-1** `checks/round47/aw1_check.py` (an in-memory workbook, no network). Base: `aw1 build 0/4 control 2/2`; green arm (a reference
-implementation, not shipped): `build 4/4 control 2/2`.
-**CRPS-aw-2** `checks/round47/aw2_check.cjs` (the REAL `modelSheet.ts` in a vm) on portal DEV `cb76f857`: base `aw2 build 0/4 control 2/2`; green arm
-(a throwaway reference patch, not shipped): `build 4/4 control 2/2`. Snapshot `aw2_base_snapshot.json`.
-**CRPS-aw-3 .. aw-8** issuer reads and paired acts; their instruments are named in the packet that carries each read.
-
-## 4. Not in round 47: the 10 files in 6 unresolved folders (each folder's identity is its own cell, cut when named and owned); vocabulary growth
-(ruling F); the 4 Bloomberg codes' descriptions (a Bloomberg field-description pull goes only through the Bloomberg queue);
-anything that changes the 13:00Z fire's call, field list or address; the PROD promote of the portal (Andrew's `e7f2`).
+The 10 files in 6 unresolved folders; vocabulary growth; the PROD release of the portal (Andrew's `e7f2`, the av-2 hold stands until FWD-20 reads REALIZED on DEV); the payload duplicate
+(routed to AMGT_RESAPP, CTO msg 4113); the long label column and the clipped table (C-S66, accepted); any change to the 13:00Z fire.

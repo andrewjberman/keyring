@@ -21,7 +21,7 @@ All MDPF_SECCLASS ledgers are CLOSED except two (both HELD):
 
 | Ledger | State |
 |---|---|
-| e87b BD three-file ship (SC1) | SHIPPED 06:20Z (legs V, P, D CLOSED, `E87-SHIPPED ok=True`); HELD on MY leg G after the next scheduled BD fire (23:00Z fallback Mon-Sat, else 04:00Z). Served ETags re-read by me 06:3xZ: D_04 304573cf, C_06 1aa6e3b5, D_03 6238716b = the signed digests, lib eb9bb852 unmoved. Leg G should read about $6,335.94 left Unclassified, not zero |
+| e87b BD three-file ship (SC1) | SHIPPED 06:20Z (legs V, P, D CLOSED, `E87-SHIPPED ok=True`); HELD on MY leg G after the next scheduled BD fire (23:00Z fallback Mon-Sat, else 04:00Z). 2026-10-11 is a Sunday, so no 23:00Z fire tonight: the next is Mon 2026-10-12 04:00Z, chain end about 06:20Z, leg G read after that. (Measured 23:4xZ: the runner stopped, launched 12:45Z; mix_summary.json / mix_daily_summary.json / firm_composition.json unchanged since the 04:00Z fire, so the 12:45Z run, which wrote only A_00 / A_02 / S_00 telemetry, did not touch them.) Served ETags re-read by me 06:3xZ: D_04 304573cf, C_06 1aa6e3b5, D_03 6238716b = the signed digests, lib eb9bb852 unmoved. Leg G should read about $6,335.94 left Unclassified, not zero |
 | e57e61 FWD-10 apply (~S) | HELD on the first scheduled new-security run that plans US stocks |
 | e60 D_04 Unclassified line | CLOSED (SC1): AC1 ok, arm 2 closed as non-e60 drift by the CTO (ADDENDUM 1 @4cac828d3c) |
 | e79 BD lib ship | CLOSED, leg G NOT MET: the lib is inert on the served path (row D1-S26) |
@@ -46,6 +46,10 @@ All MDPF_SECCLASS ledgers are CLOSED except two (both HELD):
    CVO (L8 packet READ 04:12Z; L9 @eb33d5d466, MAY-CLOSE). The L10 slug is HELD at the CVO until `TO-SC-e87b`'s leg G reads, which
    is mine after the next scheduled BD fire (`3.0.0_SA_CVO/deliverables/MDPF_SECCLASS_R20_SLUG_HELD_REMEDIATION_v11.md`). Then the CTO's round-20 analysis; cut round 21 in
    ONE issuance the tick it lands.
+   - **Carried into that issuance, `SC-e-90` (CTO msg 4167):** the portal test `iv-e-46.class-readers.test.ts` reads 1 pass 1 fail at origin/DEV
+     (its `NAMED` entries cite file:line; two lines moved). Repair: locate by content, plus a negative arm; the test file only. Draft:
+     `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R21_DRAFTS/TO-SC-e90_DRAFT_class-readers-test-locate-by-content.md`. Not cut in
+     round 20: `to-pipeline-gate` refuses a new order there (one issuance per round; `dep_stage` ROUND_CLOSE).
 2. **e57e61:** release when a scheduled new-security run plans US stocks.
 3. **p1 residue** (11 keys outside FWD-15's plan): waits on a ruling.
 4. **IB-pr-417:** the COO half on the e56 member is SIGNED (@ced2704270, due Mon 2026-10-12 13:00Z at dell2); push of that commit
