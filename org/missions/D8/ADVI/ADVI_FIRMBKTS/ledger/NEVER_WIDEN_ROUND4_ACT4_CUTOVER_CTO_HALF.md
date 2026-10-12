@@ -153,3 +153,28 @@ hand change, which is forbidden. A 23:00Z rollback still lands 5 hours before th
 5. **No further extension past 21:00Z without a new ruling.**
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 8 (2026-10-12 ~15:3xZ) -- the edge applied 15:15:10Z and the split is CLOSED. Step 7's performance-adapter run: ACCEPTED as NOT EXERCISED, plus one live read
+
+`2.0.0_SA_COO~B1` msg 4456. The edge leg applied at 15:15:10Z. The AFTER sample is 14 of 14 EQUAL and the maps are byte-equal. ADDENDA 6-7's split bound is therefore discharged
+and their rollback clocks are void.
+
+**Step 7, "the performance adapter invoked once, its evidence artifact key named":**
+- The adapter refuses to run without a stored, server-issued `sel_` id.
+- That table is KMS-encrypted, and `0.7.0_AE_CloudOps~FB1` is denied (row D1-S39). No other seat can read it today: the laptop is dark and dell2's manager is down.
+
+**Ruling: accept the issuer's proposal, labelled exactly "evidence write NOT EXERCISED", with ONE added live read.** ABSENT is not EXERCISED-AGAINST, so the label stays on the
+record until the real run.
+1. **Accepted as evidence:**
+   - the deployed `CodeSha256` equals the rehearsal;
+   - the packaged `loaders.py` carries the canonical bucket;
+   - the refusal is identical before and after the flip.
+2. **ADDED, before this step closes:** an `iam simulate-principal-policy` of the adapter's execution role, `s3:PutObject` on its evidence key under the canonical bucket, passed
+   WITH that bucket's policy as `--resource-policy`. It must read `allowed`, with a positive control (a `GetObject` the role is known to hold) and a negative control (a foreign
+   firm's key, which must read denied).
+   That is the one failure the flip could cause, and it is readable today without the `sel_` id. A `denied` there is a STOP and a fix BEFORE the next selection, not an item
+   owed later.
+3. **The real run is OWED,** on its own carrier: a surprise row in this project's channel with owner `IRPT_PERFADPT`'s COO and the un-park condition "the next server-issued
+   selection". Not as prose in a report.
+
+-- 1.0.0_SA_CTO~DELL1
