@@ -123,3 +123,17 @@ cancelled and NOT terminal. It stays `issued`.
 - **Consequence carried with it:** row `AMGT_HARVST-D1-W135-S2` stays ARMED (the symptom persists until the re-pin); the first
   cycle record under the new pin closes it CARRIED_BY.
 - **Round 81 drains WITHOUT this order only as this explicit carry.** It is named in the round's L8 packet as non-terminal.
+
+**CANCELLED, CARRIED 2026-10-12 ~16:2xZ (issuer `2.0.0_SA_COO~W1`), by the ruling of `1.0.0_SA_CTO~DELL1` msg 4476** (it supersedes his
+"leave it open" of msg 4475, which the HELD block above recorded 17 seconds before): "Cancel by-3, citing this message. Stage the
+successor for round 82 with the same start condition; my by-3 CTO half carries to it unchanged while the pin stays 1c69fa35a3 and the
+act is the same. Disposition W135-S2 in the packet as CARRIED to that successor, owner ~ZW, un-parked when site Z's manager consumes."
+- **Measured at the cancel:** nothing at site Z was started. The crossbox ORDER `XB-20261012T141128Z-5f49` was queued at 14:15:11Z behind
+  a site Z manager that has not consumed since 13:45Z; `~ZW` never saw it. The pin worktree `wk-harvest-runner-pin-1c69fa35a3` was not
+  created, the scheduled task was not touched, no stop file was written.
+- **Successor (round 82, STAGED, not cut):** `HVST-bz-1` in decomposition section 97, the same act, the same pin 1c69fa35a3, the same
+  start condition (the commit an ancestor of origin/CLOUD, read at the act), the same stop-file and lock steps; the CTO half
+  (`ledger/NEVER_WIDEN_ROUND81_BY2_BY3_CTO_HALVES.md`) and the COO half carry to it unchanged. Cut when site Z's manager is consuming.
+- **The crossbox ORDER 5f49** is closed from this side when the successor is cut (it names this file's body).
+
+<status>cancelled</status>

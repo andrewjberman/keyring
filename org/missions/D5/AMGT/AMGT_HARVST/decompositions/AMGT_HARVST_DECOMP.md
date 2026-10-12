@@ -3851,3 +3851,16 @@ v0.27). The STOP arrived after by-4 had merged (f94560218c) and by-5 had deploye
   by ADDENDUM 3; no widening act.
 - **Fan-out:** 1 of 1 chain (by-6), cap 8.
 - **Checks dry-run at the base:** `by-6` AC1, AC2 and AC3 base: FAIL as expected (the `.out` files do not exist).
+
+## 97. ROUND 82 -- STAGED: the site Z runner re-pin, carried from round 81 (`1.0.0_SA_CTO~DELL1` msg 4476), 2026-10-12 ~16:2xZ
+
+`HVST-by-3` (re-pin site Z's cycle runner to `1c69fa35a3`, the bx-3 merge) could not be delivered: site Z's manager session has not
+consumed its inbound queue since 13:45Z, so `~ZW` never saw the crossbox ORDER. The CTO cancelled by-3 and staged this successor for
+round 82 (msg 4476), which carries his by-3 half unchanged while the pin stays `1c69fa35a3` and the act is the same.
+
+| cell | what | class | executes | un-park condition |
+|---|---|---|---|---|
+| `HVST-bz-1` (STAGED, no order cut) | **The site Z runner re-pinned to `1c69fa35a3`**, exactly by-3's act and steps: the running cycle ended by its stop file (not killed), the state dir and runtime root carried, both pin worktrees LOCKED against the govern GC, a kill-maint dry run lists it EXEMPT; the first ended cycle record under the new pin closes row D1-W135-S2. Under the carried pair. | WORLD | `0.7.0_AE_CloudOps~ZW` | site Z's manager consuming (the restart expected after the laptop returns, around 19-20Z); then `1c69fa35a3` an ancestor of origin/CLOUD, read at the act |
+
+**Disposition of row D1-W135-S2 (ARMED, disarm owner this seat):** CARRIED to `HVST-bz-1`, owner `~ZW`.
+**Fan-out when cut:** 1 of 1 chain, cap 8. It is cut the turn the un-park condition reads true, by a crossbox ORDER through MSTR, as by-3 was.
