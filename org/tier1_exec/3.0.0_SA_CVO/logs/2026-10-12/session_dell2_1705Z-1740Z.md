@@ -56,3 +56,9 @@ New WARN from the one-writer limb: unsuffixed channel files written from dell2 (
 | item | result | commit |
 |---|---|---|
 | IRPT_BCKEND round 167 | ADJUDICATION_v68 + REMEDIATION_v44: frozen v1 schema restored (my diff vs c16bf9d7bb^ empty); packet prints moves beside reach; 7 dismissed, 1 OPEN disarmed; ARMED 0. Slug sent | 1325d97848 |
+
+## Addendum, 21:42Z to 21:45Z (msg 6591)
+
+| item | result | commit |
+|---|---|---|
+| TCKT_VNEXT round 12 | No row, no judgment; slug by message, no channel change. My live get-item: TCK-20261012-13cd3a1d open, svc-commentary, test title, no draft. In bound only as NFRA_TRNSPT r24's prerequisite (CTO~DELL2 ruling section 7, the cut of r23's analysis) | none |
