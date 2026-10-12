@@ -1,0 +1,21 @@
+{
+  "basis": "demand_queue.quote(request, queue_ahead=156, daily_cap=400, today=2026-10-12): 129 weekdays in 2026-04-14..2026-10-09 x 1 field x 878 securities = 113,262 cells; 878 vendor requests; the tier-1 standing extension (141) and dell2's ADVI_COTBKF tier-2 request (15) draw first, so (156 + 878) / 400 = 3 weekdays of the shared pacer's cap, the last on 2026-10-14. `held`: it rests on the cap (400 requests a day, pushback stops the day) and Yahoo's availability, not a measured rate. 96 of the 878 CUSIPs are already in the store (the first draw re-pulls them); 782 are new.",
+  "cells": {
+    "yahoo": 113262
+  },
+  "channel": "history",
+  "claim": "held",
+  "finish_date": "2026-10-14",
+  "finish_date_claim": "held",
+  "frozen_by": "2.0.0_SA_COO~Q1",
+  "identity_note": "C-IDENTITY: each security is LOCKED only if the client's trades agree with the pulled as-traded close (>= 90 pct of trade dates within the band); a name with no client trades carries the claim held (nothing to prove); a name the lock rejects is written nowhere and goes on the unresolved list.",
+  "quoted_at": "2026-10-12T03:05:08Z",
+  "quoted_for_today": "2026-10-12",
+  "request_id": "IRPT_BCKEND-AS-TRADED-CLOSES-878",
+  "requests": 878,
+  "standing_enrolment": {
+    "answer": "NOT quoted and NOT yet runnable: the request asks to enrol the 878 in the standing daily tier-1 extension. (a) extend_frontier.py lists only the price store's index, so the new names enter it after this history lands them (a build for 'enrol before they land' is a round-10 cell); (b) CAPACITY: the extension re-pulls every enrolled symbol each trading day, one vendor request each. 141 stored + 782 new + dell2's 15 = about 938 requests a day against the shared pacer's daily cap of 400 (8 to 12 s apart, so about 2.5 hours of a night), i.e. the extension alone would take three days per cycle and the store would not hold a T-1 frontier daily for all. Raising the cap, an incremental or tiered daily set, or a lower-frequency enrolment for the 878 is a ruling for the CTO; Yahoo's tolerance above 400 a day is unmeasured here.",
+    "quoted": false
+  },
+  "vendor": "yahoo"
+}

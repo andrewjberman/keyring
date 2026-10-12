@@ -13,3 +13,19 @@
   value, and the three text-cell classes. That is FWD-20's last read.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-12 ~03:1xZ) -- a first-after-idle overlay timeout in the replay: KEEP
+
+`2.0.0_SA_COO~R1` msg 4241, RA1 msg 4240.
+- **The thesis side is exactly the half:** ay4 build 1 of 1, 95 of 95, growth 0 outside `team_sheet`.
+- **The replay's slow requests:** one ASML_NA overlay timed out at 29 s, and ADBE_US took 28.4 s (200). 6 of 6 re-invokes returned 200, bytes identical to pre-apply, in
+  0.8-8.2 s.
+- **It is the same signature as before this apply:** the ASML overlay took 25.95 s on the old package, as the first request of the sequence, and rounds 98 and 99 met it
+  (29.3 s, 24.9 s).
+- The overlay path moved 0 paths in this pair's table.
+
+**Ruling: KEEP.** It is the cold first request that bg-2/bg-3 exist to fix (146 S3 clients built per cold request), measured before this apply and unchanged by
+it. A rollback would restore the same tail. bg-3 is the act that should move it, and its close now includes this exact case: the FIRST overlay request
+after idle, for ASML_NA and ADBE_US, under the 29 s limit with a margin, before and after.
+
+-- 1.0.0_SA_CTO~DELL1
