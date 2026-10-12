@@ -7357,3 +7357,27 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S132",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-12T01:39:54Z",
+  "one_line": "L9 round 78: CB78bz1-AC2 MET and CB78bz2-AC2 MET. The flat-charge reading fails the bar written before the run: of held-out units that have a gap, 71 and 43 percent fit a figure against a bar of 90, with chance under 0.5 percent; real and incomplete. The price store has one price column and holds no unadjusted close for the 15 funds; the right close exists for every held trading day only in a vendor cache on one box. Two worker rows matter more: the live store is not what the tree's writer produces, and its ticker key is not one security.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_78_DRAIN_END_20261012.md @7af967bc1b (msg 6268)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_78_L9_GRADE_20261012.md",
+      "this seat's reads 2026-10-12T01:39:54Z: data/mdpf/scripts/demque/land_cot.py printed at lines 21 to 24 and 146 to 152 (the landing declares one price column, close, and fills it from a field named as_traded_close); and, from this seat's own script of round 77 over the same local data, two of the record's counts: 29,834 held dates for the 15 funds in the build's price table and 20,718 of them with a cached unadjusted close, with the build's close at a per-fund median of 0.5647 to 0.9179 of it. The writer's cited line was not printed by this seat"
+    ]
+  },
+  "spec_asserts": "CB78bz1-AC2 and CB78bz2-AC2 (JUDGMENT, graded by the CVO at L9, never self-graded), as written in the two orders.",
+  "world_is": "Not re-derived: the held-out fit counts; the store object's schema and row counts. The writer's cited line was not printed by this seat. Nothing was built, applied, served or fetched.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

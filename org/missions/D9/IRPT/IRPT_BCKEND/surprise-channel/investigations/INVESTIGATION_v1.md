@@ -28051,3 +28051,82 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both ledgers are CLOSED and the live bytes carry the render path; what is behind is the map's last_deployed_commit and last_deployed_at, which record-terraform-deploy.sh writes and which still name the 2026-09-09 release. Why that recorder left the row was not established. The read proposes no act on it."
 }
 ```
+
+## IRPT_BCKEND-D2-W320-S1 -- The producer function is outside a VPC and carries no yfinance, but another function's note says the shared layer's size leaves no room for it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W320-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~320",
+  "surfaced_at": "2026-10-12T01:28:52Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The producer function is outside a VPC and carries no yfinance, but another function's note says the shared layer's size leaves no room for it",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "live lambda get-function-configuration of irpt-holdings-performance-lambda, irpt-inf-holdings-performance-lambda, irpt-49f-reporting-gold-lambda and irpt-49f-reporting-publish-lambda at 2026-10-12: VpcConfig null in 4 of 4; the same irpt-performance-native-layer:1 (69,899,991 bytes zipped) in 4 of 4; no Environment block, so the order's keys(Environment.Variables) query errors on null and was run without the key-names member",
+      "infra/aws/lambda/bd-pipeline/bd-price-update/lambda_function.py:29-34: a note that pandas, pyarrow, numpy and boto3 already consume about 230 MB of the 250 MB unzipped limit, leaving no room for yfinance (another function's note; the irpt layer's unzipped size was not measured)"
+    ]
+  },
+  "spec_asserts": "PRD v0.46 item 10: whether the existing function's network allows the bars producer to reach the vendor is not established; the order asks only for the network.",
+  "world_is": "The network is open (no VPC), so egress is not the obstacle the item names; what the configuration shows instead is that the packaged function does not carry yfinance and that whether it fits beside the existing layer is not established. Packaging was not ruled or proposed here."
+}
+```
+
+## IRPT_BCKEND-D2-W321-S1 -- The holdings producer writes the opening and closing value as start_value and end_value; the portal adapter reads beginning_market_value and ending_market_value, so by the code the two value tiles read 'not supplied' for a holdings-basis answer
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W321-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~321",
+  "surfaced_at": "2026-10-12T01:31:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The holdings producer writes the opening and closing value as start_value and end_value; the portal adapter reads beginning_market_value and ending_market_value, so by the code the two value tiles read 'not supplied' for a holdings-basis answer",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/holdings_gold.py:273: value_facts = {start_value, end_value, days_linked, days_observed, days_excluded, currency, period_start, period_end, basis}",
+      "C:/dev/ajb_workspace/portal/src/pages/InvestorReporting/contracts/adapt.ts:797-799 and :839-840 (portal commit dbeb6764eaa688230f44cfcc1763bd73db6e1142): the adapter reads beginning_market_value and ending_market_value; the only producer writing those names is performance/bd_adapter.py:194-195 (grep of infra/aws/lambda/investor-reporting)",
+      "C:/dev/ajb_workspace/portal/src/pages/InvestorReporting/tabs/reporting/PerformanceHeadline.tsx:110-111, :146-147, :185-194: a missing value renders as a 'not supplied' line, never a tile",
+      "INFERRED: two code reads only; no served response was fetched and the portal checkout may be ahead of or behind what is served"
+    ]
+  },
+  "spec_asserts": "The portal's PerformanceReport wire type and adapter treat optional_facts.value_facts as the carrier of the opening and closing value, and the order's read assumes the figure's facts reach a page.",
+  "world_is": "The names differ between the holdings producer and the adapter. By the code the Reporting tab's ending and beginning value tiles are absent for a holdings-basis answer; whether a served response shows the same was not read."
+}
+```
+
+## IRPT_BCKEND-D2-W321-S2 -- By the code every holdings-basis performance answer is state PARTIAL, because three absences are added unconditionally, so the only trace of absences the portal shows does not tell a window with a non-OK day from one without
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W321-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~321",
+  "surfaced_at": "2026-10-12T01:31:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "By the code every holdings-basis performance answer is state PARTIAL, because three absences are added unconditionally, so the only trace of absences the portal shows does not tell a window with a non-OK day from one without",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/holdings_gold.py:308-313: accrual_basis, fees_and_income and money_weighted_return are appended on every call; :314-317 adds excluded_rows only when excluded > 0",
+      "infra/aws/lambda/investor-reporting/performance/entry.py:279-288: partial = bool(outcome.get('absences') or outcome.get('refusals')); state PARTIAL, public_reason_code PERFORMANCE_PARTIAL; :301 returns only the report, retained_ref and _status (no absences list)",
+      "C:/dev/ajb_workspace/portal/src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx:831, :877-879 and render/Page.tsx:323-345: PARTIAL gives the amber 'qualified' presentation and 'Reason: PERFORMANCE_PARTIAL' on the print band",
+      "INFERRED: read from code at base 7c00a44b5a and portal dbeb6764eaa688230f44cfcc1763bd73db6e1142; no served response was read"
+    ]
+  },
+  "spec_asserts": "PRD ADDENDUM v0.46 reads the route's claim, absences and days_excluded as what separates a window with a non-OK day from one with none.",
+  "world_is": "The absences list is not on the wire, and the state that stands for it is PARTIAL on every holdings-basis answer by the code, so on screen the qualified presentation appears with or without an excluded day. Not seen on a served response."
+}
+```

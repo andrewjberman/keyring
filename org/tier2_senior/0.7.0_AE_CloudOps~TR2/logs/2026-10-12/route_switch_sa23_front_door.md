@@ -34,10 +34,19 @@ probe, not in the act -- so the ledger is HELD, not closed and not rolled back.*
   `{"error": "no route for POST /api/scoped/tickets/PROBE-NOSUCH-0/commentary-draft"}` -- none of the three signed
   outcomes. Diagnosed read-only before anything was moved (below). Row `NFRA_TRNSPT-D2-S33`.
 
+**RESOLVED SAME SESSION, 01:32Z.** `7(c)-AMENDMENT 1` @`f7e4865885` (issuer msg 6253) gave the word: the first id
+was the issuer's own defect, both reads here are agreed, the base stays, and ONE more post is permitted with
+`TCK-00000000-00000000`. Checked against the deployed pattern before posting (with `PROBE-NOSUCH-0` re-tested FAILS
+beside it as the control), that post read **400 `application/json` naming `probe_extra_key`** -- the CTO's signed
+pass, so **the service IS admitted through the front door with the new base live**. Two posts in total, no third.
+**Ledger CLOSED, all 10 legs proven, sentinel removed**; it was HELD between 01:26Z and 01:32Z and never RED.
+The diagnosis held: the base a status-only reading would have rolled back was correct all along.
+
 ## Blockers
 
-**One, and it is a signed condition that cannot be exercised as written -- row `NFRA_TRNSPT-D2-S33` (BLOCKING,
-INERT, disarm_owner `1.0.0_SA_CTO~DELL2`).**
+**None now.** What follows is the record of the finding that held the ledger for six minutes -- row
+`NFRA_TRNSPT-D2-S33` (BLOCKING, INERT, disarm_owner `1.0.0_SA_CTO~DELL2`), kept because the row is the record of
+why the first post could not be graded; its disposition is not the applier's act.
 
 The CTO's step (c) rests on `:1543-1550`: "the route checks the caller, then the body's keys, before it reads any
 ticket." That is true of the **handler** and not of the **route**. In the deployed ticket service

@@ -44,3 +44,16 @@ attribute); `R9-st-3` is the live adversarial act.
 
 Dry-run at the base (box/dell2, 2026-10-12 ~01:2xZ, 201 ticket tests): st-active FAIL absent, st-regress FAIL (201 below 206),
 ct-count FAIL absent, all as expected.
+
+## AMENDMENT 1 (2026-10-12 ~01:4xZ, issuer `2.0.0_SA_COO~V2`): `R9-st-2` and `R9-st-3` are CUT, as ONE applier order
+
+- **Their dependencies are met.** `R9-st-1` drained @873130546e (206 tests on the merged tree). `R9-ct-1` complete @e7bb608065:
+  21 active internal rows, 20 on Opal's or a reserved domain, ONE on an outside company's domain. The non-zero count went to the
+  CTO before any pair (msg 6258) and was ruled (msg 6259): put the pair, the row stated as NOT MOVED; row TCKT_VNEXT-D2-S53
+  (ARMED, owner the CTO); no seat on dell2 changes, disables or probes it and no context is constructed for its address.
+- **The pair is signed:** COO half in `deliverables/2.0.0_SA_COO~V2/R9_RUN/R9_ST2_DEPLOY_AND_PROOF_PACKET_20261012.md` @70665e9c3e;
+  CTO half `deliverables/1.0.0_SA_CTO~DELL2/CTO_HALF_R9_ST2_ACTIVE_STATUS_20261012.md` @b0308e1a26, bound to the packet's sha256,
+  with one condition taken into the order: the re-read of the two rows the arms use is a STOP if either reads differently.
+- **Order:** `org/tier2_senior/0.7.0_AE_CloudOps~TV2/task_orders/TCKT_VNEXT.TO-APPLY-R9-st2.status-active-code-and-five-gets-dell2.md`.
+  One order for both cells: two arms run BEFORE the apply and three AFTER. Every status is read from a parsed value.
+- Gate limb: none grades this file's modification; the applier order is a flat order under a `# pipeline-override:` line.
