@@ -75,3 +75,18 @@ through the same deploy path as FB-f-9 step 3 (verify, `cmp` readback) at act 4'
 (Monday 23:00Z). It changes no behaviour (a comment-class line) and is inside act 2's permitted set (the 19 `.py` objects).
 Also read: the eight IRPT artifacts at the merged head equal the rehearsal, except `irpt-ycharts-generate`, built from branch
 `scratch/r4-act4-ycharts-pin` (CTO 4312, `ACT4_IRPT_EXPECT_ISSUER.json`).
+
+## Rev 3e (2026-10-12 ~14:4xZ) -- what the window taught
+
+- **Split (CTO act 4 CTO half ADDENDA 6 and 7):** the eight IRPT units were applied 14:03:43Z-14:13:46Z before the edge leg, which was
+  held on 12 stale expectations of the router and response-guard test gates (rows S21 and W60-S1; `FB-g-37`, test files only, merged
+  @d0a1f93043; the edge diff since the flip is four test files). The laptop lane is dark until about 19:00-20:00Z. The CTO accepted the
+  split, hourly VersionId and content-hash reads of both ownership maps through 21Z, edge to BEGIN by 21:00Z, else roll back every IRPT
+  unit and act 2 before 23:00Z with read-back before 02:00Z. `0.7.0_AE_CloudOps~FB1` is the rollback actor for the IRPT units and act 2.
+- **Rule from now on (CTO ADDENDUM 6 cond. 4):** the IRPT GO is gated on EDGE READINESS: the edge leg's build gates read green at the
+  integrated head and its executor has acked. Step 6 begins both legs in one minute; the GO to the dell1 leg is a separate line sent
+  only after the edge executor's ack states its first-unit time.
+- **Pre-flip reads to add (measured here):** the router's and guard's own build gates (`bun run test`, ANSI-stripped) at the head the
+  edge leg builds from; a staff-view probe of the router (`?firm=49financial` canonical; `?firm=bd` refused for the advi class and the
+  frozen legacy bucket for others: the portal's `ROUTER_FIRM_SUFFIX` follow-up).
+
