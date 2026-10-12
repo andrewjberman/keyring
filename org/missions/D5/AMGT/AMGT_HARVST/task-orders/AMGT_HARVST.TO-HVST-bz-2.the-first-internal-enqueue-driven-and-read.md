@@ -127,3 +127,22 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <round>82</round>
 <slot>dell1</slot>
 <fabric>dell1</fabric>
+
+**COMPLETE 2026-10-12 ~16:5xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** `0.7.0_AE_CloudOps~HV1` @bbb4869e33 (on box/dell1 HEAD), under the pair COO @7a059e1a23 and `1.0.0_SA_CTO~DELL1` @5d747ddc80
+  (ADDENDUM 1, msg 4497). ONE invoke at 16:43:38Z of `opal-research-pull-enqueue` with `{"requestContext": {"authorizer": {"tier":
+  "internal"}}, "ticker": "SAP GY Equity"}` answered **202** (`state REQUESTED`, `security_key SAP_GY_Equity`). Proof VALID rc 0 at box/dell1
+  HEAD (re-run by this seat with `--governing-order`). Live code hash at the start equalled by-2's (`cWiraC3E...`).
+- **AC1 PASS** `ENQUEUE statusCode 202`. **AC2 PASS** the status object was CREATED (`REQUESTED`, requested_at 16:43:40Z, VersionId
+  `F8iBxqlr...`) and the queue went 0 -> 1. **AC3 PASS** one `OK: enqueued pull request for 'SAP GY Equity'` line and `DENIED LINES
+  SINCE T0: 0`.
+- **The CTO's control arm HELD:** the NVDA status object's VersionId read `5tYJlox...` before and after, UNCHANGED: yes. Nothing was deleted.
+- **What this act did and did not do, as the seat stated it:** one status object created and one message queued. NO Bloomberg draw, the
+  consumer was not started, so SAP's status stays REQUESTED and the message stays queued until a person runs the consumer.
+- **What it proves, and what it does not:** a DIRECT invoke proves the FUNCTION admits an internal context and writes no `DENIED` line. It does
+  not prove the portal route and the authorizer path for a real login. The organic first enqueue from a real internal portal session
+  is still UNMEASURED and remains the NEGATIVE arm, read when it occurs (CTO, `ROUND_ANALYSIS.round81.md` section 2 item 1).
+- **Row D1-S12 (INERT), a defect of THIS order's condition C-b, ruled by AMENDMENT 2:** a prior `LANDED` object was never a valid proof of "in
+  the pull universe". The seat stopped, said so, and the re-cut fixed the ticker.
+
+<status>complete</status>
