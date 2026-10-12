@@ -3935,3 +3935,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W53-S16 -- AMENDMENT 1 names count_f2.py as the source of the reserved-domain rule; that file is not in the worktree, so the rule was taken from the order text
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W53-S16",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-12T21:57:47Z",
+  "one_line": "AR-y-166 AMENDMENT 1: the order says the reserved-domain rule is the one count_f2.py used, but no count_f2.py is in the worktree. The guard implements the rule as the amendment states it (domain equal to example.com, example.org or example.net, or ending .invalid, .test or .example).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree tracked listing (git ls-files | grep -i count_f2) at ee9616439f: no path returned",
+      "Glob count_f2*.py under org/missions/D9/IRPT/IRPT_ANLREQ in the worktree: no files found",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r16/submit_synthetic_request.py at ee9616439f, reserved_domain (line 109), implements the amendment text; the rule's sample results are in the build session, not in a file"
+    ]
+  },
+  "spec_asserts": "IRPT_ANLREQ.TO-AR-y-166 AMENDMENT 1 point 1: the reserved-domain rule is the rule count_f2.py used.",
+  "world_is": "count_f2.py is not present in this worktree at ee9616439f, so the claimed provenance of the rule cannot be checked here. The guard follows the rule as the amendment writes it; whether count_f2.py states the same rule was not read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
