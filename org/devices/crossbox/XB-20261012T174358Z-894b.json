@@ -10,15 +10,19 @@
  "subject": "ADVI_FIRMBKTS act 4: live irpt-ycharts-generate is the pre-state of three IRPT commits plus the flip",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/CALL_YCG_PRESTATE_DELL2.md",
  "opened_at": "2026-10-12T17:43:58Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-12T17:45:01Z",
   "bus_message_id": "62a17b7f-8bd4-413a-820e-e99a07b8d921"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T17:59:38Z",
+  "by": "2.0.0_SA_COO~P2",
+  "bus_message_id": "ca876849-f76b-48b1-9ca8-e733ce2a9265"
+ },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-12T18:01:11Z",
+  "from_by": "2.0.0_SA_COO~B1",
   "to_at": null,
   "to_by": null
  }
