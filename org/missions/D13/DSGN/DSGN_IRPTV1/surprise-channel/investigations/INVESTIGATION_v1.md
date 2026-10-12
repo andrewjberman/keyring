@@ -6503,3 +6503,31 @@
   "notes": "Whoever next builds the producer package takes the new hash from the file; no action by this order."
 }
 ```
+
+## DSGN_IRPTV1-D2-S26 -- Answer to row DSGN_IRPTV1-D2-W66-S1 (1.0.0_SA_CTO~DELL2 msg 6418): no reader of the census_sha256 stamped on a published report REFUSES or WARNS on an unexpected value; every reader ignores the value or checks its form only. Code read; no installed resident and no served report read
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S26",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-12T02:57:33Z",
+  "one_line": "Answer to row DSGN_IRPTV1-D2-W66-S1 (1.0.0_SA_CTO~DELL2 msg 6418): no reader of the census_sha256 stamped on a published report REFUSES or WARNS on an unexpected value; every reader ignores the value or checks its form only. Code read; no installed resident and no served report read",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row W66-S1: IV-e-118 added one top-level member to the pinned census, so the file's sha256 moved from 44853788... to 053560a1.... 1.0.0_SA_CTO~DELL2 msg 6418 asks, before any resident rebuild is cut by any lane: every reader of the census_sha256 the producer stamps on a published report (ycharts/extract/publication.py:207), in the workspace and the portal checkout, and what each does on a value it does not expect: refuse, warn or ignore. A reader that refuses makes the next rebuild a served change needing its own pair.",
+  "world_is": "Instrument and denominator: comp-find 'census_sha256' --files --all over the workspace, 46 hits across 94,019 files scanned (corpus all; 2,149 ephemeral-floor, 2 unreadable and 25,656 binary files not searched), 30 files; and the native Grep tool for census_sha256, censusSha and CENSUS_SHA256 over the portal checkout's src at portal 606e5ef5f6, 7 lines in 5 files. Every hit line in runtime code was then printed and read by this seat. WRITERS of the stamp, 2: ycharts/extract/publication.py:207 and ycharts/generate/publisher.py:267, each the sha256 of the census it was handed. READERS of the stamped value, by what each does on an unexpected value: (1) the three AnalysisReport schemas (_contracts/AnalysisReport.schema.json:248, _contracts/AnalysisReport.v2.schema.json:293, docs/contracts/investor-reporting/v1/AnalysisReport.schema.json:248) require the member and a 64-hex pattern: FORM only, any 64-hex value passes: IGNORE. (2) the portal: contracts/wire/AnalysisReport.ts:59 types it as a string; no page file reads the member (the other portal hits are two test fixtures with a made-up value and the page's own CENSUS_SHA256 constant, which the IV-e-115 drift test compares with the census FILE's bytes at test time, never with a report's stamp): IGNORE. No reader refuses and none warns. NOT readers of the stamp, though they compare a census hash: ycharts/generate/resident_worker.py:574 and reports/resident_installed.py:151 and :420 compare the installed package's OWN census bytes with the hash in the package's OWN bindings (refusing PINNED_FILE_DIFFERS:census); a package is self-consistent whichever census it was built from. A test-time comparison that is ALREADY false and is not moved by this change: ycharts/extract/tests/run_offline_suite.py lines 79 to 88 compare each fixture manifest's source_census_sha256 with the census file's hash; both fixture manifests declare 9a457073..., which is neither the old hash nor the new one, so census_sha_matches and fresh read false before IV-e-118 and after it (the fixtures were generated from an earlier census; not this cell's, stated for the producer's owner). So by this read a resident rebuild changes the stamped hash on new reports and nothing that reads the stamp behaves differently. LIMITS: code and files in the repo and the portal checkout only; a consumer outside both (a stored report read by a script outside the repo, a dashboard query) is not covered; no installed resident, deployed function or served report was read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find 'census_sha256' --files --all, run by this seat 2026-10-12 ~02:55Z: DENOMINATOR 46 hit(s) across 94019 file(s)",
+      "infra/aws/lambda/investor-reporting/ycharts/extract/publication.py:207; ycharts/generate/publisher.py:267; ycharts/generate/resident_worker.py:573-574; reports/resident_installed.py:151, 420",
+      "infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.v2.schema.json:293-295",
+      "portal 606e5ef5f6: src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts:59; contracts/vendorSectionNames.ts:21; __tests__/dsgn-irptv1/iv-e-115.vendor-section-names-units.test.tsx:90",
+      "infra/aws/lambda/investor-reporting/ycharts/extract/tests/run_offline_suite.py:79-88; fixtures/synthetic_pdf/MANIFEST.json:14; fixtures/unmapped_glyph/MANIFEST.json:14"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
