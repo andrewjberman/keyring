@@ -28736,3 +28736,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The worktree's copy is the old script; the three criteria were run from the worktree root with the amended script at C:/dev/ajb_workspace/... and each printed PASS. The order file still names the relative path."
 }
 ```
+
+## IRPT_BCKEND-D2-S109 -- disarm evidence for row W328-S1: the sign-in-again on a challenged stored-bundle probe is the base code's and unreleased; its repair precedes any resident release
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S109",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-12T18:20:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARM EVIDENCE for row IRPT_BCKEND-D2-W328-S1, filed by its disarm owner the turn it was read: the stored-bundle path that signs in again on a challenged probe is the base code's, not this build's, and no byte carrying it is released; the repair is a precondition of the next resident release, not a hazard that is live today.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read by this seat at 2d923d0564 (the base of IB-pr-473, git show of infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js): withAuthenticatedPage line 1525 reads `if (!bundle) bundle = await refreshSession(stored.present ? 'stored bundle failed the probe' : stored.reason)`, so a stored bundle whose probe is not authenticated, for ANY reason, goes to a fresh sign-in; refreshSession is defined at line 1502. At the base a challenged reply was only status-classified NOT_LIVE (row D2-W302-S1), which is also not authenticated, so the same sign-in followed. IB-pr-473 changed the NAME of that probe's reason to WAF_CHALLENGE and left this branch as it was.",
+      "worker 0.9.0_WK_IRPT_BCKEND~328, row W328-S1: the same lines at its branch (1627-1633) and its arms c and e (a stored-bundle probe returns WAF_CHALLENGE, authenticated false).",
+      "the library is pinned by hash on the capture host and reaches it only in a resident release under its own never-widen pair (IB-pr-434 and IB-pr-473 record); no such release has been cut, and the vendor path is stopped for every seat (CTO msg 5025 and the standing hold). So no running capture carries either the base's behaviour or the build's."
+    ]
+  },
+  "spec_asserts": "IB-pr-473 and the vendor-path stop: a challenged probe after an accepted sign-in must not lead to a second submission; a vendor that locks accounts is the reason the path is stopped.",
+  "world_is": "STILL a defect in the code (a challenged stored-bundle probe signs in again), NOT introduced by IB-pr-473 and NOT reachable today. It stays ARMED in the sense that a resident release would make it reachable. RULING by the issuer (inside its own decomposition): (1) the repair is a cell of round 166 beside the CTO's items 1 and 2: in withAuthenticatedPage a probe whose reason is WAF_CHALLENGE ends the run with the same challenge ending acquireSession uses, and does NOT call refreshSession; an arm for it in probe_challenge_and_pair.js; (2) NO resident release carrying ycharts_session.js is to be cut until that cell is merged, and the issuer will refuse to pass a release packet for it before then; (3) the disarm of W328-S1 is complete when the round-166 cell reads merged. Owner of (1)-(3): 2.0.0_SA_COO~P2. Not measured: any live capture run (none is allowed)."
+}
+```
