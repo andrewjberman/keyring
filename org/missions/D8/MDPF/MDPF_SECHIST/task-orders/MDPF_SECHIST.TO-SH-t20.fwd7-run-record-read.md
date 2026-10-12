@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECHIST~19</issued_to>
 <issued_by>2.0.0_SA_COO~H1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
@@ -46,7 +46,7 @@ Each criterion FAILS at the base (2026-10-09 ~16:4xZ, decomposition Battery). Ru
   `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~76/`. Search only inside the paths named here.
 
 <paths>
-org/missions/D8/MDPF/MDPF_SECHIST/deliverables/0.9.0_WK_MDPF_SECHIST~19/MDPF_SECHIST.TO-SH-t20.fwd7-run-record-read.proof_of_spec.json
+org/missions/D8/MDPF/MDPF_SECHIST/deliverables/2.0.0_SA_COO~H1/MDPF_SECHIST.TO-SH-t20.fwd7-run-record-read.proof_of_spec.json
 </paths>
 
 <decomp_ref>
@@ -55,7 +55,7 @@ org/missions/D8/MDPF/MDPF_SECHIST/deliverables/0.9.0_WK_MDPF_SECHIST~19/MDPF_SEC
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: SH5-t20-AC1. Instance at `org/missions/D8/MDPF/MDPF_SECHIST/deliverables/0.9.0_WK_MDPF_SECHIST~19/MDPF_SECHIST.TO-SH-t20.fwd7-run-record-read.proof_of_spec.json`, validated with `python .tools/proof-of-spec-check.py <instance> SH5-t20-AC1`
+Criterion ids: SH5-t20-AC1. Instance at `org/missions/D8/MDPF/MDPF_SECHIST/deliverables/2.0.0_SA_COO~H1/MDPF_SECHIST.TO-SH-t20.fwd7-run-record-read.proof_of_spec.json`, validated with `python .tools/proof-of-spec-check.py <instance> SH5-t20-AC1`
 BEFORE the flip.
 </proof_of_spec>
 
