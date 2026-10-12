@@ -5433,3 +5433,30 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Form only; the act completed and nothing is armed. For the tool's owner (the issuer): (1) print a progress line per N rows in the record phase, and one line when it ends, so a reader can tell 'recording' from 'hung'; (2) open the record 'w' or skip keys already recorded, so a re-run does not append duplicates; (3) state in the docstring that --budget-seconds bounds the copy phase only, and that the first run needs about 45 minutes of wall clock. The CTO's per-key rollback still works from a duplicated record (same prior VersionId in every duplicate), so no rollback was ever at risk; this lane archived its partial record to scratch before the full run."
 }
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-f-13, act 4c sample, the hash of a gzip body)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S36",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-12T07:56:23Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-FB-f-13 AC3 reads SAMPLE EQUAL 7 of 8 because the partners sample hashes the response body as returned, and the platinum/clients class returns base64 gzip whose header carries a timestamp: the compressed hash differs on every invocation while the decompressed content is identical (old artifact in legacy mode, new in both modes and the live canonical function: one sha256, 4,931,112 bytes).",
+  "spec_asserts": "TO-FB-f-13 step 9: one record per class with status and the body's sha256; step 11 and AC3: r4_sample_eq every case EQUAL, or a difference only for a key whose canonical-home object's LastModified is after the mode move; the pair's Branch B: a changed body for a key not written after the move.",
+  "world_is": "AFTER sample 2026-10-12T07:49:52Z against opal-partners-data at c9FXD84s...: 7 of 8 cases EQUAL; platinum/clients/ status 200 to 200 with body_sha256 c6203872... to 2a4bf88b... (DIFFERENT), exit=1. Determinism probe at the new version: platinum/clients/ gave 3 distinct compressed hashes in 4 invocations and 5 in 8; the response is isBase64Encoded=True with Content-Encoding gzip; the gzip header MTIME field of 6 bodies took four values on consecutive seconds; the DECOMPRESSED content hash was 1 distinct in 6 invocations. Local replay of the prior artifact (VersionId PrImfkXLOP1weeBmlOJRYwkCghMq0PhI) in legacy mode, the new artifact in legacy and in canonical mode, and the live canonical function: the same status 200 and the same content sha256 67ac42f423e34b66..., 4,931,112 bytes, in all four. The other seven classes return a plain body and read 1 distinct hash per 4 invocations. The class gold/entities/clients/ reads 404 before and after even with a real id (named, as the order asks).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4bc/4c_platinum_clients_content_replay.txt",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act4bc/4c_ac1_ac2_ac3.txt (AC3 as printed, exit=1)",
+      "PARTNERS_BEFORE.json and PARTNERS_AFTER.json (the raw records, unchanged)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only; Branch B's changed-body condition does NOT hold by content, so act 4c stays deployed and nothing was rolled back. Two instrument facts for the issuer: (1) the sample must hash the decompressed content when isBase64Encoded and Content-Encoding gzip are set (r4_sample_eq compares whatever hash the records carry); (2) this lane did not re-write PARTNERS_BEFORE.json: the BEFORE reference content hash is the local replay of the prior artifact, not a live read, because the live function is already on the new code. Options for the issuer: accept the replay as the BEFORE and amend AC3 to the content hash, or direct a re-take of the AFTER with a content hash. The order's status is NOT flipped by this lane."
+}
+```
