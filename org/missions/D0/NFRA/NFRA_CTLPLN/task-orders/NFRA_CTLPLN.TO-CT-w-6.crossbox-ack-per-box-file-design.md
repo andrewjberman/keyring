@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~68</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C: CTw6-AC1 re-run (1), proof instance VALID, the design carries all eight sections and the counts line (fields=24 verbs=13 files_to_change=9 questions=5). CTw6-AC2 is the CVO's judgment. The worker could not flip this file (row W68-S7: the order file was outside its paths), so the issuer flips; the order template grants the flip by convention, but the lane read it as outside.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>

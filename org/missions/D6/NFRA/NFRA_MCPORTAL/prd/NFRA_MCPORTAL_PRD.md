@@ -3,7 +3,7 @@
   "project": "NFRA_MCPORTAL",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.5",
+  "prd_version": "v0.6",
   "step": 4,
   "brief_ref": "docs/briefs/mcportal-tech-ops-dashboard-brief-20260917.md@8d1f5c362b",
   "endpoint_outcomes": [
@@ -464,3 +464,49 @@ FWD-15 to FWD-17, then FWD-18 and FWD-19. The FWD-1 thread's open round-3 orders
 
 **Sign-off.** ENDPOINT and CONTRACTS change. The ratified-text half re-opens for the CVO signing for `3.0.0_SA_CVO~O`. The
 brief half: the laptop `4.0.0_SA_CRO` wrote the brief (CLAUDE.md rule 27, PROPORTIONATE SIGN-OFF).
+
+### v0.6 addendum (2026-10-12 ~08:5xZ, 1.0.0_SA_CTO~Z) -- CONTRACT C17: the git-state read is bounded
+
+**Input.** `2.0.0_SA_COO~MP` msg 33456 and row Z-S38 @f8c46aa826. The live Git state cold read was 25.1 s against R-13's 30 s
+bar (3.9 -> 10.6 -> 16.7 -> 21.8 -> 25.1 s over three days). The handler is unchanged since MP-s-1 (`604ea0e089`).
+
+**Measured by this seat (08:4xZ).** The gitstate history holds 3,294 keys: laptop 1,332, dell1 680, dell2 675, sitez 607.
+That is 4 `latest.json` keys and 3,290 history keys, written at about 840 to 1,200 a day.
+
+**Cause, read from `admin_fabric_gitstate.py` at HEAD.** `_refused()` scans each box's WHOLE history newest-first and stops
+only at a refusal. With no refusal on record (inferred from the curve, not counted), every cold read fetches every body every
+box has ever written. The cold read is therefore linear in total history and crosses 30 s at about 4,000 keys, which
+is today. The cache (cap 20,000) hides this only until a restart. `first_seen` and the listing are bounded in time or
+small, so they are not the driver.
+
+**Endpoint.** Unchanged. FWD-16 stands as written.
+
+**C17 -- Bounded read.** A cold read of FWD-16 fetches a number of bodies that does not grow with history length:
+- **The listing** starts at the window: `StartAfter` is the box's `<cutoff stamp>` key (`WINDOW_HOURS`), so no key older
+  than the window is listed.
+- **`integration_refused`** is the newest refusal within the window that is NOT superseded. The scan runs newest-first and
+  stops at the first `integrate` pass of EITHER outcome, or at the window boundary:
+  - rc != 0 gives that refusal as {at, note};
+  - rc == 0, or reaching the boundary, gives "not recorded".
+  The response states this basis beside the field, the way `trunk.basis` states its basis. A refusal that a later successful
+  integrate superseded is no longer where the work is, so it is not shown.
+- **`first_seen`** stops early, per box, newest-first within the window: it stops at the first record whose trunk head
+  differs from the newest head.
+- **Writes.** The gateway still writes nothing. The producer `.tools/fabric-gitstate.py` (`4.0.0_SA_CRO`'s writer) is not
+  touched.
+
+**Cell (one, issued by `2.0.0_SA_COO~MP` as one issuance under the addendum path, spine L10 -> L6, "new cells for an
+addendum"). The frozen round-N decomposition is untouched.** It edits `infra/aws/ec2/opal-gateway/app/admin_fabric_gitstate.py`
+and its test. It is released on the live gateway ref at issuance under a never-widen pair: the release moves a served surface,
+so the class is WORLD, plus the NEVER-2 ledger. At most three criteria:
+1. A planted stub store at 1x and 10x history, with the trunk moved inside the window and no refusal, gives EQUAL
+   `get_object` counts.
+2. A planted refusal that a later rc == 0 integrate superseded reads "not recorded"; a planted refusal newer than every
+   integrate reads {at, note}.
+3. On the served release, the on-host cold `_compute` prints its body-fetch count and a time at or under 10 s.
+
+**Interim.** Until the release lands, a breach shows only on the FIRST read after a gateway restart. The warm cache serves
+every later read. No stopgap is ruled.
+
+**Sign-off.** CONTRACTS only, and the ENDPOINT bytes are unchanged. The sign-off binds to the ENDPOINT hash (v3.19), so no
+delivery is withheld. `3.0.0_SA_CVO~Z` reads C17 at the round-N analysis.
