@@ -6608,3 +6608,99 @@ by dell1 or by this seat.
   "world_is": "The surprise-row gate requires the fabric coordinate in a dell1 row id (MDPF_SECCLASS-D1-W<n>-S<k>) and refuses the bare form. The rows are filed as MDPF_SECCLASS-D1-W83-S1..S6, with this row as S7; the allocator's slot n is 83 in both forms."
 }
 ```
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W80-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~80",
+  "surfaced_at": "2026-10-12T09:18:49Z",
+  "one_line": "The order rollback handle for the served C_06 (ETag 1aa6e3b5..., VersionId AREnJgLo...) is the SC-e-87 post-act object, not the object served now.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e91.c06-retained-unclassified-revisit.md@2f215ca75a (Rollback clause)",
+      "org/critical_paths/change_management/20261011T0616Z_secclass-e87-bd-served-path-reach-sc1-20261011_deploy_completion.md@2f215ca75a:15-17 (AREnJ post-act row)",
+      "org/critical_paths/change_management/20261012T0615Z_advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012_deploy_completion.md@2f215ca75a:94 (VersionId 5xAe row)",
+      "git show 2f215ca75a:data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py | md5sum = 8e1b350fc55607bddd1ac84329cb1a98",
+      "head-object s3://opal-data-bd/code/gold/C_06.client_mix_timeseries.py (read-only, 2026-10-12): ETag 8e1b350fc55607bddd1ac84329cb1a98, VersionId 5xAeM.OWYUSxd7gHYSF6SKmR.ZTmo.PP, LastModified 2026-10-12T06:18:21Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The TO SC-e91 Rollback clause names the prior C_06 object as ETag 1aa6e3b555815417bb90c65db3f2152f and VersionId AREnJgLoyQnZ1zKwPan793py8CCkNHHA: the object served before this cell.",
+  "world_is": "The served C_06 object is ETag 8e1b350fc55607bddd1ac84329cb1a98 (VersionId 5xAeM.OWYUSxd7gHYSF6SKmR.ZTmo.PP, 2026-10-12T06:18:21Z), whose bytes equal base HEAD 2f215ca75a. AREnJ is the SC-e-87 post-act version; the 06:18Z ADVI FB-f-9 mode move superseded it. The half request records the served object as the rollback target.",
+  "notes": "SURFACED, NOT CHASED. No deploy is in this cell; the rollback handle in the half request is the currently served object, read by head-object."
+}
+```
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W80-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~80",
+  "surfaced_at": "2026-10-12T09:18:49Z",
+  "one_line": "The sibling test pins the literal merge-path call, so the merge path cannot pass the moved accumulator and derives its moves by a before/after diff.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/tests/test_c06_retained_dates_six_class.py@2f215ca75a (test_incremental_merge_calls_it_and_prints_the_census_line asserts the literal call text)",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py@2f215ca75a:795 (the merge call, literal three-argument form)",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py (working tree) :278-359 reclassify_retained(moved=None), _retained_candidates, _moves_since; :947 merge diff; :1137 merge snapshot adjustment"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build item 1 adds an optional moved accumulator to reclassify_retained, and build item 2 adjusts the firm and advisor snapshots on a fire WITH new partitions from those moves; the sibling test must still pass.",
+  "world_is": "Keeping the sibling literal means the merge call stays three-argument, so the merge path takes its moves from a before/after diff over the retained candidates; test_merge_path_diff_reports_the_same_moves_the_moved_list_does asserts the diff equals the moved list. The retained-only pass (no new partition) passes moved directly, as AC2 requires.",
+  "notes": "SURFACED, NOT CHASED. The two mechanisms agree on every moved holding in the unit test; the COO may prefer one mechanism at the L9 read."
+}
+```
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W80-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~80",
+  "surfaced_at": "2026-10-12T09:18:49Z",
+  "one_line": "The incremental summary write carries only the advisors with new dates in that fire, so an advisor with no new date drops out of mix_daily_summary.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py@2f215ca75a:761-770 (advisor_daily_new is accumulated from the fire new data only)",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py@2f215ca75a:971-985 (incremental merge, then _write_mix_summary(firm_daily, advisor_daily_new, dry_run))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The incremental branch merges the fire into the existing summary (its comment: \"Incremental: merge with existing summary\"), so an advisor not touched by a fire keeps its history.",
+  "world_is": "advisor_daily_new is built only from the fire new partitions, and the payload written at :985 is that dict. An advisor with no new date in the fire is not in the payload. This worker did not change that write; it only ensures the advisors with retained moves are included in full. Not measured live.",
+  "notes": "SURFACED, NOT CHASED. Pre-existing; outside SC-e-91 scope; the line numbers are base 2f215ca75a."
+}
+```
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W80-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~80",
+  "surfaced_at": "2026-10-12T09:18:49Z",
+  "one_line": "The retained revisit sees only the top-10 holdings per date, so an unclassified holding ranked outside a date top 10 is not revisited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py@2f215ca75a:94 (TOP_N_CONC = 10)",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py@2f215ca75a:616-623 (conc_grp ... .head(TOP_N_CONC))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build item 1: the retained pass revisits a retained holding whose class is unclassified and moves its pct inside that date mix.",
+  "world_is": "The concentration entry of a date keeps only its top-10 holdings by market value. An unclassified holding outside that list is absent from the entry and cannot be revisited by holding, so the date mix-level unclassified keeps its dollars. Not measured live: the share of unclassified dollars outside the top 10 on the retained dates.",
+  "notes": "SURFACED, NOT CHASED. The D_04 leg G read after the ship will show the residual; the L9 read decides whether it matters."
+}
+```

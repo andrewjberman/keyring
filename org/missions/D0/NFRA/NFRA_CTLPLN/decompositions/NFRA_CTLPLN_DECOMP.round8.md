@@ -26,6 +26,8 @@ Plan of record: `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTL
 | `CT-w-5` | `intake_receive.py install` takes a target interpreter (or installs `--target` into a given folder) and never `--user` into `sys.executable` unless asked; tests | FWD-15 (row D1-S10) | LOCAL | `~67` |
 | `CT-w-6` | A DESIGN proposal for the CTO, nothing applied: the crossbox ack moves to a per-recipient-box file so two boxes stop writing one JSON (61 of 69 conflicted paths since 2026-10-09). Reads `.tools/crossbox-call.py`, `crossbox-matrix.py`, `box-sync.sh` and the E8 census; writes one document. | FWD-8, FWD-3 | LOCAL | `~68` |
 
+| `CT-w-7` | ADDED on the CTO's ruling (msg 108501, 2026-10-12 ~09:3xZ, after the cut; the decomposition is otherwise frozen): retire the legacy `infra/aws/lambda/portal_data_proxy/deploy.sh` (it copies two files, calls `aws lambda update-function-code`, which the law forbids, and would now ship a zip that cannot import) and leave a one-line README pointer to the source-map build and `safe-apply`. A DIRECT-ACT cell (LOCAL, under 300 lines). | FWD-28 hygiene | LOCAL | `~69` |
+
 E9 (FWD-27): `CT-u-1`/`CT-u-2` are complete; the per-box cells are re-cut ACTIVE with their GO when Andrew's public keys land (the withdrawn orders' text is the template). It stays a qualified essential wait on Andrew's word (decomposition `NFRA_CTLPLN_DECOMP.remote1.md`).
 E11: the CVO graduates D1-S8 and D1-S10 at this round's drain (no staged FWD-27 order remains).
 
