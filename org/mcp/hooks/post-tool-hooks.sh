@@ -37,6 +37,26 @@
 set -u  # NOT -e: a hook must degrade, never hard-stop mid-file (the jsonl write
         # and every external call below carry their own explicit failure handling)
 
+# TIMING STAMPS (CTO order 2026-10-12, after a PostToolUse hang the killed session could not
+# name): one line per step to org/devices/state/<device>/hook-timings.log (gitignored *.log;
+# device from AGENTBUS_DEVICE, never hardcoded; before ROOT is known, the temp dir). Reads
+# $EPOCHREALTIME (bash 5.x), falls back to seconds. Never raises; adds no spawn.
+_hk_now() { printf '%s' "${EPOCHREALTIME:-$(date +%s).000000}"; }
+_HK_T0="$(_hk_now)"; _HK_LAST="start"
+_hk_stamp() {
+    _HK_LAST="$1"; local _n="$(_hk_now)" _a _b _ms _p
+    _a="${_n//./}"; _b="${_HK_T0//./}"; _ms=$(( ( ${_a:-0} - ${_b:-0} ) / 1000 )) 2>/dev/null || _ms=-1
+    if [ -n "${ROOT:-}" ] && [ -d "${ROOT}/org/mcp" ]; then
+        _p="${ROOT}/org/devices/state/${AGENTBUS_DEVICE:-unknown-device}/hook-timings.log"
+        mkdir -p "$(dirname "${_p}")" 2>/dev/null || true
+    else
+        _p="${TEMP:-/tmp}/claude-hook-timings-noroot.log"
+    fi
+    printf '%s step=%s elapsed_ms=%s tool=%s rc=%s pid=%s
+' "$(date -u +%FT%TZ)" "$1" "${_ms}" "${TOOL_NAME:-?}" "${2:-}" "$$" >> "${_p}" 2>/dev/null || true
+}
+trap '_hk_stamp "exit:${_HK_LAST}" "$?"' EXIT
+
 # BOUNDED stdin read (Andrew-direct 2026-07-30): a bare $(cat) on a hook stdin that
 # never closes blocked a 3-process chain of the predecessor script for 5 days
 # (PIDs 850873/93/94, Jul 25->30). timeout(1) is Git Bash default-install
@@ -98,6 +118,7 @@ if [ -z "${JQ}" ]; then
     exit 0
 fi
 export JQ
+_hk_stamp jq
 
 # Session-id-keyed serial resolution (canonical section 7.2 binding).
 SESSION_ID="$(echo "${HOOK_INPUT}" | "$JQ" -r '.session_id // empty')"
@@ -148,6 +169,7 @@ TS_ISO="$(date -u +%FT%T.%3NZ)"
 
 # ============================================================================
 # JOB 1 of 2 -- TELEMETRY (canonical TELEMETRY_LIVENESS_FRAMEWORK.md v0.4)
+_hk_stamp serial
 # ============================================================================
 
 # Kind classification, INLINE (was classify-tool-kind.sh -- one bash spawn per
@@ -208,6 +230,7 @@ mkdir -p "$(dirname "${JSONL_PATH}")"
 if ! echo "${JSONL_LINE}" >> "${JSONL_PATH}"; then
     echo "$(date -u +%FT%TZ) JSONL_WRITE_FAIL ${AGENT} ${TOOL_NAME}" >> "${ROOT}/org/mcp/hook_errors.log"
 fi
+_hk_stamp jsonl
 
 # ASYNC broker hot-path: REMOVED (Andrew finish-out 2026-07-30). The consolidation
 # initially carried it forward flagged-not-cut -- then measurement showed it was
