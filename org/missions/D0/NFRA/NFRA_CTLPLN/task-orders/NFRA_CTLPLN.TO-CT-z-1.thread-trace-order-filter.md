@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~73</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -32,6 +32,11 @@ In `.tools/thread-trace.py` (read the module docstring at the top, `find_orders`
 3. The LAST line gains the filter: `THREAD project=<CODE> round=<n> orders=<ids or ALL> hops=<k>/5 ...` (keep every existing field and its order; add `orders=` after `round=`). Update the docstring.
 4. Selftest: add FOUR cases to the temporary-repository fixture: (a) two orders in one round issued to different serials on different box branches; `--order` for the first reads the first's hops only (HOP 2 names the first's serial and branch); (b) the same for the second; (c) no `--order` reads the whole round as before (the same line a pre-change run printed, plus `orders=ALL`); (d) an unknown `--order` reads 0 of 5 and exits non-zero. LAST selftest line `THREAD-TRACE-SELFTEST cases=8/8 ok=True`.
 
+AMENDMENT 1 (issuer 2.0.0_SA_COO~C, 2026-10-12; gate limb: none graded this modification; the first run, worker commit 178961aef1 on branch wk-NFRA_CTLPLN-73, is INHERITED STATE: keep it and build on it). The premise of the BUILD was wrong in one place and the worker's row NFRA_CTLPLN-W73-S1 is RIGHT: `find_orders` reads only `org/missions/D*/*/<CODE>/task-orders/*.md`, but `TO-CT-y-2` is a SEAT order at `org/tier2_senior/0.7.0_AE_CloudOps~CT1/task_orders/NFRA_CTLPLN.TO-CT-y-2.dell1-fresh-process-blocked-download.md` (round 9, status complete, `<issued_to>` `0.7.0_AE_CloudOps~CT1`). Add two things, keeping the unfiltered behaviour of the tree orders byte-identical:
+5. `find_orders` also reads `org/tier2_senior/*/task_orders/<CODE>.*.md` (same round, status and tag rules). The unfiltered whole-round read then ALSO includes the seat orders of the round: that is a deliberate change; state it in the docstring.
+6. `--order TO-CT-y-2` matches an order by the id with its slug dropped: for the to_id `NFRA_CTLPLN.TO-CT-y-2.dell1-fresh-process-blocked-download` the spellings are the whole to_id, the file stem, each without the `NFRA_CTLPLN.` prefix, and `TO-CT-y-2` (the first dot-separated segment after the prefix). An id that is a prefix of another (`TO-CT-y-1` versus `TO-CT-y-10`) must not match it.
+Selftest: add case (e) to the fixture: a seat order under `org/tier2_senior/<seat>/task_orders/` is found and `--order` by its slug-less id reads its hops (HOP 2 names the seat's serial); and case (f): `TO-CT-y-1` does not match an order whose id starts `TO-CT-y-10`. The LAST line becomes `THREAD-TRACE-SELFTEST cases=10/10 ok=True`. CTz1-AC1 below expects `cases=10/10`. CTz1-AC2 is unchanged and now expected to pass: HOP 2 names `0.7.0_AE_CloudOps~CT1` (the commit 1a677233f3). Re-run it, update the proof instance, validate it, and report the whole AC2 output. Your `<paths>` do not change.
+
 ### RULES FOR THIS CELL
 
 Write surface = the `<paths>`. The tool READS git; it writes nothing, fetches only with `--fetch`, pushes nothing. Tests run in temporary directories and temporary git repositories. No aws, no terraform, nothing on the agent bus. Standard library only; ruff clean; ASCII only; no box name or path under a user's home typed. The law files CLAUDE.md and org/XXX.md are LOCKED. Do NOT commit the `portal` gitlink. FOUND SOMETHING ODD OFF-TASK? Append ONE row (`spec_asserts` + `world_is`) to `org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md` (id `NFRA_CTLPLN-W73-S<k>`, `surfaced_at` = `date -u +%FT%TZ`) and keep working.
@@ -39,8 +44,8 @@ Write surface = the `<paths>`. The tool READS git; it writes nothing, fetches on
 ### ACCEPTANCE
 
 <proof_of_spec>
-<criterion id="CTz1-AC1" cell_refs="CT-z-1"><invocation>python .tools/thread-trace.py --selftest</invocation><expect>THREAD-TRACE-SELFTEST cases=8/8 ok=True</expect></criterion>
-`CTz1-AC1` -- the old four and the new four pass.
+<criterion id="CTz1-AC1" cell_refs="CT-z-1"><invocation>python .tools/thread-trace.py --selftest</invocation><expect>THREAD-TRACE-SELFTEST cases=10/10 ok=True</expect></criterion>
+`CTz1-AC1` -- the old four and the new six pass (amended from 8/8 by Amendment 1).
 
 <criterion id="CTz1-AC2" cell_refs="CT-z-1"><invocation>python .tools/thread-trace.py --project NFRA_CTLPLN --round 9 --order TO-CT-y-2</invocation><expect>orders=TO-CT-y-2</expect></criterion>
 `CTz1-AC2` -- a real read of round 9 for the dell1 order alone; its last line carries `orders=TO-CT-y-2`, and HOP 2 names `0.7.0_AE_CloudOps~CT1` (report the whole output). The grade hop may read ABSENT; the exit code is not graded.
