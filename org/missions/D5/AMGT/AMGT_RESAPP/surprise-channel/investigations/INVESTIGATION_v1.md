@@ -25115,3 +25115,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~397 at AMGT-bg-2. The served-byte control holds in the measured sense (no name, timeline or collected rows; exit 0), but the literal expected output names two lines and one printed. The worker did not rerun the criterion to find a 2-path noise reading and did not rewrite it; the issuer decides whether the noise expectation is a count, a presence, or dropped."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W399-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~399",
+  "surfaced_at": "2026-10-12T12:43:26Z",
+  "one_line": "AC1 (r101_snapshot_equal.py) printed 'R101 SNAPSHOT EQUAL: NO' with exit 1 after the 12:30Z write: the stored snapshot is current and differs from the live recompute by one printed key difference ('reads'), and the script cuts that difference to 60 characters, so the output does not show where the two differ.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bh-3 worker face section 4, AC1: r101_snapshot_equal.py, run after the Monday write, prints as its last line 'R101 SNAPSHOT EQUAL: YES' with 'snapshot generated_at 2026-10-12T12:30Z' above it, and exit=0. A NO prints each differing row's columns, which the reading reports whole.",
+  "world_is": "Run at 2026-10-12T12:40:59Z in C:/dev/wk-resapp-399: 'snapshot generated_at 2026-10-12T12:30Z age 0.18 h | rows: snapshot 302, recompute 302 | differing: 1', then 'key reads: snapshot \"{'universe': {'status': 'SERVED', 'read_completed': True, 'p\" vs recompute \"{'universe': {'status': 'SERVED', 'read_completed': True, 'p\"', then 'R101 SNAPSHOT EQUAL: NO'; exit=1. The printed prefixes are identical. The script prints key differences cut at 60 characters (r101_snapshot_equal.py line 36) and row differences cut at 80 (line 43); no row difference was printed, so no row's columns are available to report whole.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round101_prep/checks/r101_snapshot_equal.py@a22d817c76 lines 36, 43-45: key diffs are cut to 60 characters, row diffs to 80 characters; the summary line prints differing count and the last line prints the verdict",
+      "run in C:/dev/wk-resapp-399 at 2026-10-12T12:40:59Z: stdout (verbatim in BH3_COLD_LIVE_OUTPUT_20261012.txt, committed with this row) ends 'R101 SNAPSHOT EQUAL: NO'; exit=1",
+      "the order's AC1 expectation (YES, exit 0) is the premise that failed; no re-run was made, per the order's one-run rule"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~399 at AMGT-bh-3. The stored snapshot does not equal the live recompute under the printed comparison (one key difference, 'reads'). The script's truncation leaves the differing content unprinted, so the reading cannot name it. The issuer decides whether to re-run the comparison as a separate read, widen the printed prefix, or treat the difference as a real input that landed after the write."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W399-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~399",
+  "surfaced_at": "2026-10-12T12:43:26Z",
+  "one_line": "r101_cold_live.py counted 1 invocation in the preceding 15 minutes and printed 'R101 COLD LIVE: NO', not 'NOT QUIET': the script emits NOT QUIET only when its cold pass is otherwise ok, and the ASML_NA_Equity handler (20.05 s) failed its 20.0 s gate, so the quiet state the count shows is not in the verdict.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bh-3 worker face section 1 step 2: if the 15 minutes before the first invoke held invocations, the script says NOT QUIET, and that is a real result, not a failure to retry.",
+  "world_is": "Run at 2026-10-12T12:41:04Z in C:/dev/wk-resapp-399: 'invocations in the preceding 15 minutes: 1'; 'ASML_NA_Equity status 200 handler 20.05 s (wall 22.03 s) cold container YES init 686.71 ms'; 'ADBE_US_Equity status 200 handler 0.59 s (wall 0.64 s) cold container no'; 'R101 COLD LIVE: NO'; exit=1. r101_cold_live.py sets ok False on the 20.0 s gate (line 65) and reports NOT QUIET only inside 'if ok' (lines 66-68), so the NO verdict masks the count of 1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round101_prep/checks/r101_cold_live.py@a22d817c76 line 48: the count is printed before the first invoke",
+      "round101_prep/checks/r101_cold_live.py@a22d817c76 lines 65-70: ok requires handler_s < 20.0; verdict NOT QUIET only when ok and n_recent not in (0, None); exit 0 only on YES",
+      "run in C:/dev/wk-resapp-399 at 2026-10-12T12:41:04Z: stdout verbatim in BH3_COLD_LIVE_OUTPUT_20261012.txt, committed with this row; exit=1; the script was run once"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~399 at AMGT-bh-3. The order's NOT QUIET rule does not hold on this run as written: a count of 1 with a failed gate reads NO. The cold and handler numbers are printed in full, so the reading can state them. The issuer decides whether the verdict should carry the quiet state independently of the gate."
+}
+```
