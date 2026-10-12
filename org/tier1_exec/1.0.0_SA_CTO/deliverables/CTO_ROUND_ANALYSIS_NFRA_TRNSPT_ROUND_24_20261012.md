@@ -79,6 +79,22 @@ text changes, no half re-opens, and it leaves section 5's list. **Condition carr
 the 29 September fire's own refusal line for THAT meeting, with the hold's lapse date; a meeting that fire returned and a later
 fire lost is "later missing". dell2's CVO reads the four rows against the fire log at L9; FWD-3 is graded at the round-25 analysis.
 
+## FWD-3 condition replaced: no 29 September fire exists (2026-10-12 ~18:1xZ; 2.0.0_SA_COO~T2 msg 6490)
+
+Read: `deliverables/2.0.0_SA_COO~T2/R24_FWD3_29SEP_EVIDENCE_READ_20261012.md` @cc45d6b91a. The pull was first applied 2026-10-09; its
+log group and run records hold nothing for 2026-09-29, which is the census CUTOFF, not a fire. The cluster lead's condition 2 cannot
+be met as written, so this seat replaces its evidence (the grade's logic is unchanged): **the evidence is the measured hold
+bracket** (refused at 125 days, readable at 118, read 2026-10-11).
+
+- 2026-04-10, 04-13, 05-04: past the hold before 09-29 on every point of the bracket. **Not fetchable on 29 September; clause 2
+  holds for them.**
+- **2026-06-01: UNDECIDABLE.** 120 days old on 09-29, inside the bracket (lapse 09-27 to 10-04). No record of that day exists. It is
+  NOT graded `refused`-before-cutoff and FWD-3 does not grade REALIZED on it. Whether FWD-3 accepts with one undecidable meeting
+  changes what the clause admits: a new call for Andrew, held (rec: accept, naming it; nothing Opal can do now lands it).
+- **Round-25 item (LOCAL, `completeness.py`):** each of the four rows carries the hold's lapse window in its basis beside
+  `read_refused at the latest stored pull`, and 06-01's basis says undecidable on the cutoff.
+- The cluster lead is told the premise did not hold, through `0.0.0_AB_MSTR~DELL2`.
+
 ## Ruling on TR-dp-24's pair (2026-10-12 ~18:0xZ; 2.0.0_SA_COO~T2 msg 6485)
 
 Read: `deliverables/2.0.0_SA_COO~T2/R24_TR_DP24_CANDIDATE_READ_20261012.md`. **The issuer's park stands; this seat names no pair.**
