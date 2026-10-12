@@ -53,10 +53,10 @@ SCHEMA_PATH = os.path.join(REPO, "org", "standards", "NAMING_SCHEMA.json")
 DIRECTIVES_PATH = os.path.join(REPO, "org", "missions", "DIRECTIVES.yaml")
 REGISTRY_FILES = ("systems.json", "scopes.json", "tiers.json", "exemptions.json", "remediations.json",
                    "resources.json", "reporting_policies.json", "legacy_addresses.json", "feeds.json",
-                   "platinum_destinations.json")
+                   "platinum_destinations.json", "firm_pages.json")
 # Registry files an older deployed package may not carry; load_registry() reads an absent one as None.
 OPTIONAL_REGISTRY_FILES = ("reporting_policies.json", "legacy_addresses.json", "feeds.json",
-                           "platinum_destinations.json")
+                           "platinum_destinations.json", "firm_pages.json")
 # The legacy_addresses.json row's closed field set (1.0.0_SA_CTO ruling 2, ADVI_COTBKF r2-r3 analysis).
 LEGACY_FIELDS = ("key", "bucket", "template", "shape", "params", "reader", "evidence", "note")
 # The resources.json row's fields (LGIC_ENFORCE EN-r-4, PRD v1.2 DEC-1 candidate E13; 1.0.0_SA_CTO ruling 97177):
@@ -88,6 +88,13 @@ PLATINUM_DEST_VIEW_LAMBDA_PATHS = (
     "infra/aws/lambda/exec-summary-generator/platinum_dest_view.py",
     "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/platinum_dest_view.py",
 )
+# The data proxy's firm-access module (FWD-28; CTO ruling CT-v-2): the class (i) routes and the firms each admits, generated
+# from firm_pages.json. A whole-file Python module beside lambda_function.py, which imports ROUTE_FIRMS from it.
+FIRM_PAGE_ACCESS_PATH = "infra/aws/lambda/portal_data_proxy/firm_page_access.py"
+# The root-wide route whose explicit page list is the union of every firm row's pages (CTO ruling CT-v-2, point 3): a page
+# that a firm row names but this list does not is refused by validate(), so a new page needs its own row here.
+FIRM_UNION_ROUTE = "GET /aum/metrics"
+FIRM_PAGES_KEYS = ("_about", "internal_firm", "exempt_pages", "proxy_routes", "firms", "open_routes")
 PLATINUM_FIELDS = ("legacy_bucket", "legacy_prefix", "source", "scope", "tier", "table", "partition", "reader", "evidence")
 PLATINUM_TAIL = "{tail}"
 _PROBE_P, _PROBE_O = "zzprobep", "zzprobeo"
@@ -110,6 +117,7 @@ VIEWS = (
     (PLATINUM_DEST_VIEW_PATH, "py", ("PLATINUM_DESTINATIONS",)),
     (PLATINUM_DEST_VIEW_LAMBDA_PATHS[0], "py", ("PLATINUM_DESTINATIONS",)),
     (PLATINUM_DEST_VIEW_LAMBDA_PATHS[1], "py", ("PLATINUM_DESTINATIONS",)),
+    (FIRM_PAGE_ACCESS_PATH, "py", ("ROUTE_FIRMS",)),
 )
 
 # A block that a hand-kept carrier does not hold yet lands right after its anchor block (the first generate only;
@@ -127,6 +135,7 @@ WHOLE_FILE_TARGETS = (
     PLATINUM_DEST_VIEW_PATH,
     PLATINUM_DEST_VIEW_LAMBDA_PATHS[0],
     PLATINUM_DEST_VIEW_LAMBDA_PATHS[1],
+    FIRM_PAGE_ACCESS_PATH,
 )
 
 # Which registry file(s) each generated target's renderer reads (LGIC_ENFORCE EN-r-6; row W1-S14): one
@@ -191,6 +200,9 @@ TARGET_REGISTRY_KEYS = {
     PLATINUM_DEST_VIEW_PATH: ("platinum_destinations", "scopes", "systems", "tiers"),
     PLATINUM_DEST_VIEW_LAMBDA_PATHS[0]: ("platinum_destinations", "scopes", "systems", "tiers"),
     PLATINUM_DEST_VIEW_LAMBDA_PATHS[1]: ("platinum_destinations", "scopes", "systems", "tiers"),
+    # ROUTE_FIRMS (FWD-28; CTO ruling CT-v-2) -- _blk_route_firms() reads the rows of firm_pages.json, and checks each firm
+    # against the served tenants (_tenants(), scopes.json) before it writes one admitted set.
+    FIRM_PAGE_ACCESS_PATH: ("firm_pages", "scopes"),
     VECTORS_PATH: ("scopes", "systems", "exemptions", "resources"),
     TFTEST_PATH: ("scopes", "systems", "exemptions", "resources"),
 }
@@ -942,7 +954,101 @@ def validate(reg_dir=None, systems_file=None):
             except (KeyError, RegistryError, ValueError) as exc:
                 refuse(where, "table", "the builder refuses this destination: %s" % (exc,))
 
+    _validate_firm_pages(reg, refuse)
     return refusals, warnings
+
+
+def _validate_firm_pages(reg, refuse):
+    """firm_pages.json (FWD-28; CTO ruling CT-v-2). A firm is a served tenant key of scopes.json, never null and never the
+    word 'null' (the claim a request carries when it has no firm). An open route is a route of the data proxy (proxy_routes,
+    carried as data), class (i) only, and names its pages explicitly: a wildcard such as ALL is refused. A firm row's page is
+    in the union the GET /aum/metrics row names, and that row names no page no firm row admits. An absent file is an older
+    package, which validates as before."""
+    doc = reg.get("firm_pages")
+    if doc is None:
+        return
+    where = "firm_pages.json"
+    if not isinstance(doc, dict):
+        refuse(where, "document", "a JSON object")
+        return
+    if set(doc) != set(FIRM_PAGES_KEYS):
+        refuse(where, "keys", "the closed key set is %s" % ", ".join(FIRM_PAGES_KEYS))
+    served = {tid for tid, _s, _t, _own in _tenants(reg)}
+    internal = doc.get("internal_firm")
+    if not isinstance(internal, str) or not internal:
+        refuse(where, "internal_firm", "a non-empty string: the firm admitted by tier, not by a row")
+    proxy = doc.get("proxy_routes")
+    if not (isinstance(proxy, list) and proxy and all(isinstance(r, str) and re.match(r"^(GET|POST|PUT|DELETE) /", r) for r in proxy)
+            and len(set(proxy)) == len(proxy)):
+        refuse(where, "proxy_routes", "a non-empty list of distinct 'METHOD /path' route keys of the data proxy")
+        proxy = []
+    exempt = doc.get("exempt_pages")
+    if not (isinstance(exempt, list) and all(isinstance(p, str) and p.startswith("/") for p in exempt)):
+        refuse(where, "exempt_pages", "a list of page paths starting /")
+    firms = doc.get("firms")
+    pages_of = {}
+    if not isinstance(firms, list) or not firms:
+        refuse(where, "firms", "a non-empty list of firm rows")
+        firms = []
+    for i, row in enumerate(firms):
+        rw = "%s firms[%d]" % (where, i)
+        if not isinstance(row, dict) or set(row) != {"firm", "pages", "evidence"}:
+            refuse(rw, "row", "fields must be exactly firm, pages, evidence")
+            continue
+        f = row["firm"]
+        if f is None or f == "null":
+            refuse(rw, "firm", "%r is never a firm value: no registry row names the claim of no firm" % (f,))
+            continue
+        if not isinstance(f, str) or f not in served:
+            refuse(rw, "firm", "%r is not a served tenant key of scopes.json" % (f,))
+            continue
+        if f == internal:
+            refuse(rw, "firm", "the internal firm is admitted by tier, never by a row")
+        if f in pages_of:
+            refuse(rw, "firm", "%r is a repeated firm row" % f)
+        pages = row["pages"]
+        if not (isinstance(pages, list) and pages and all(isinstance(p, str) and p.startswith("/") for p in pages)):
+            refuse(rw, "pages", "a non-empty explicit list of page paths; a wildcard such as ALL is not a page list")
+            continue
+        pages_of[f] = set(pages)
+    union = set().union(*pages_of.values()) if pages_of else set()
+    seen = set()
+    union_pages = None
+    routes = doc.get("open_routes")
+    if not isinstance(routes, list):
+        refuse(where, "open_routes", "a list of open route rows")
+        routes = []
+    for i, r in enumerate(routes):
+        rw = "%s open_routes[%d]" % (where, i)
+        if not isinstance(r, dict) or set(r) != {"route", "class", "pages", "evidence"}:
+            refuse(rw, "row", "fields must be exactly route, class, pages, evidence")
+            continue
+        rt = r["route"]
+        if not isinstance(rt, str) or rt not in proxy:
+            refuse(rw, "route", "%r is not a route of the data proxy (proxy_routes)" % (rt,))
+        elif rt in seen:
+            refuse(rw, "route", "%r is a repeated open route" % (rt,))
+        else:
+            seen.add(rt)
+        if r["class"] != "i":
+            refuse(rw, "class", "only a class (i) route is open to a partner firm; a class (ii) route stays internal-only")
+        pages = r["pages"]
+        if not (isinstance(pages, list) and pages and all(isinstance(p, str) and p.startswith("/") for p in pages)):
+            refuse(rw, "pages", "a non-empty explicit list of page paths; a wildcard such as ALL is not a page list")
+            continue
+        if rt == FIRM_UNION_ROUTE:
+            union_pages = set(pages)
+        for p in pages:
+            if p not in union:
+                refuse(rw, "pages", "%r is a page no firm row admits" % p)
+    if union_pages is None:
+        refuse(where, "open_routes", "the union route %r is absent: it names the explicit page union" % FIRM_UNION_ROUTE)
+    else:
+        for f, ps in sorted(pages_of.items()):
+            for p in sorted(ps - union_pages):
+                refuse("%s firms[%s]" % (where, f), "pages", "%r is not in the union %r names: a new page needs its own row there" % (p, FIRM_UNION_ROUTE))
+        for p in sorted(union_pages - union):
+            refuse(where, "open_routes", "%r is named by %r but no firm row admits it" % (p, FIRM_UNION_ROUTE))
 
 
 def _check_tenant(t, where, tenant_kinds, refuse):
@@ -1287,6 +1393,35 @@ def _blk_vendor_display_names(reg, h16, path):
     return _block("VENDOR_DISPLAY_NAMES", h16, "//", path, "\n".join(lines))
 
 
+def _firm_pages(reg):
+    """firm_pages.json's document, or RegistryError when the package does not carry it (an older package reads it as None)."""
+    doc = reg.get("firm_pages")
+    if not isinstance(doc, dict):
+        raise RegistryError("infra/logic/registry/firm_pages.json is absent from this package")
+    return doc
+
+
+def _blk_route_firms(reg, h16, path):
+    """The data proxy's class (i) routes and the firms each admits (FWD-28; CTO ruling CT-v-2): ROUTE_FIRMS, one entry per
+    open_routes row of firm_pages.json, holding the frozenset of the firms whose explicit page list meets the row's pages.
+    A firm must be a served tenant (_tenants(), scopes.json); the test tenant has no row, so it is in no set. Nothing is
+    admitted by a wildcard: every page is named, and a set is written sorted, so the bytes do not depend on dict order."""
+    doc = _firm_pages(reg)
+    served = {tid for tid, _s, _t, _own in _tenants(reg)}
+    pages_of = {}
+    for row in doc["firms"]:
+        if row["firm"] not in served:
+            raise RegistryError("firm_pages.json names %r, which is not a served tenant key of scopes.json" % row["firm"])
+        pages_of[row["firm"]] = set(row["pages"])
+    lines = ["ROUTE_FIRMS = {"]
+    for r in sorted(doc["open_routes"], key=lambda r: r["route"]):
+        admitted = sorted(f for f, ps in pages_of.items() if ps & set(r["pages"]))
+        body = "frozenset((%s,))" % ", ".join(_py_lit(f) for f in admitted) if admitted else "frozenset()"
+        lines.append("    %s: %s," % (_py_lit(r["route"]), body))
+    lines.append("}")
+    return _block("ROUTE_FIRMS", h16, "#", path, "\n".join(lines))
+
+
 def _bronze_homes(reg):
     """feed -> {bucket, key_prefix} for every row of feeds.json, from the builder's own internals: the bucket is
     _home_bucket()'s for the scope's tenancy (tiers.json), the prefix is key()'s minus the partition, which the caller
@@ -1370,6 +1505,7 @@ BLOCKS = {
     "ASSET_DIM_REST_PIN": _blk_asset_dim_rest_pin,
     "FIRM_DISPLAY_NAMES": _blk_firm_display_names,
     "VENDOR_DISPLAY_NAMES": _blk_vendor_display_names,
+    "ROUTE_FIRMS": _blk_route_firms,
 }
 
 
@@ -2666,7 +2802,11 @@ def lambda_plane_consumers(t):
         files = f.get("files") or []
         own = os.path.normpath(os.path.join(REPO, *sd.split("/"), bn))
         if own == target_abs:
-            continue  # the function IS the shared file's own location, not a consumer
+            # the function's own source dir holds `t`: a consumer only when its build lists the basename (the VIEWS
+            # target inside a function's own dir, CTO ruling msg 108498); held but unlisted stays unclaimed
+            if bn in files:
+                consumers.append(fname)
+            continue
         if bn in files and not os.path.isfile(own):
             consumers.append(fname)
             continue
