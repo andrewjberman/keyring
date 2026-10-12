@@ -43,6 +43,11 @@ lies outside its diff. J1 is read on the next REACHED run. Row D1-C-S10.**
 The Terminal session failed to start, and the enrichment leg exited 95 ('Bloomberg unreachable'), so the run did not REACH
 the leg. Row D1-C-S11.**
 
+**ADDENDUM 11 (2026-10-12 ~11:27Z, on the 2026-10-12 11:00Z run transcribed @0689a88409): RIV-tc-1 J1 MET. This is the first
+post-merge run that REACHED the leg. Its STEP line, its exit line (94, 'landed') and its absent HISTORY OWED line match the
+pre-merge 2026-10-09 run, and no session-failure line appears. Row D1-C-S12. Row D1-S15 stays ARMED: wd-1 and wi-1 are
+still not terminal.**
+
 ```json
 [
   {
@@ -286,6 +291,30 @@ the leg. Row D1-C-S11.**
         "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/tw1_j1_read.py, run at origin/box/sitez 9550773715 and origin/CLOUD b4d4b158b9 for 20261011 (NOT-REACHED)",
         "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261011_1100Z.txt at origin/box/sitez (commit 4e3fbbc9f5)",
         "this file, ETFS_RIVALS-D1-C-S10"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S12",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-12T11:27Z",
+    "one_line": "ETFS_RIVALS.TO-RIV-tc-1.a-top-up-close-is-stored-with-a-currency-and-the-owed-window-ends-on-the-page-day J1 MET. The 2026-10-12 11:00Z vehicle run is the first after the merge that REACHED the enrichment leg (STEP line, exit 94, no session-failure line). Its leg lines and exit code read the same as the pre-merge 2026-10-09 run's, with the switch unset.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "tc-1 J1 (task order :89, with AMENDMENT 2): the first scheduled vehicle run after the merge that REACHED the enrichment leg shows the leg's lines and exit code unchanged with the switch unset.",
+    "world_is": "- Subject: `python round28/tw1_j1_read.py origin/box/sitez 20261012` (3ca2f35ab9) prints STEP 1, exit '170: RIVALFUNDS ENRICHMENT EXIT CODE: 94 -- landed.', 0 vendor-session-failure lines, 0 HISTORY OWED lines, 'J1-READ: REACHED'. Source: deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261012_1100Z.txt (@0689a88409; log 14048 bytes, 170 lines). At 11:25Z origin/CLOUD 840d963b40 did not yet carry the file (NO-FILE); box-sync carries it later.\n- Unchanged, compared with the pre-merge control, the 2026-10-09 run (0.0.3_BG_BBGTerminal/VEHICLE_LOG_20261009_1100Z.txt, the run D1-C-S3 graded tw-1 on). The leg's copied lines read the same: 'RIVALFUNDS ENRICHMENT STEP (RIV-e-1)' then 'RIVALFUNDS ENRICHMENT EXIT CODE: 94 -- landed.' (10-09 lines 170/172; 10-12 lines 168/170). No HISTORY OWED line appears in either file. The other legs also match: PULL, PUBLISH, ETF, CONSTITUENTS and PRICE exit 0, and the rivalfunds Bloomberg leg exits 90 'landed, batch whole'.\n- Why unchanged is the expected result: in fcb3d76903, the daily path calls `_history_owed` only when `_history_owed_switch()` returns 'print' or 'ask'. With the variable unset it returns None and nothing tc-1 changed runs (_page_day, the `_owed_line` currency clause, the CRNCY lookup, HISTORY_OWED_CAP 20000). This run is the live arm of that branch.\n- Switch unset: read from the log, since no HISTORY OWED line appears while the vendor session worked and the leg landed. Row Z-S79's objection (a zero is evidence of nothing when the session never started) does not apply on this run. The environment variable on the terminal was not read directly.\n- Code at the fire: held, not measured. The vehicle runs the terminal's working tree. TO-MERGE-tc1 (0.7.0_AE_CloudOps~ZV) merged tc-1 tip b0b65368fb into that tree at 6061de660d, with git status clean for data/etfs/scripts/rivalfunds/. This seat cannot read that tree's HEAD at the fire.\n- Not compared: the module's JSON result line between STEP and EXIT (10-12 line 169, 10-09 line 171). Neither transcription copies it, and its batch id and outputs change every day by design. The exit code, and the exit line that names the outcome, are what J1 binds.\n- Graded on the issuer's own reader at origin before the issuer's packet arrived. If the issuer's read differs, this seat re-reads.\n- Round 28 standing: tc-1 J1 is now MET in fact. Row D1-S15 stays ARMED, because round-close-check still credits wd-1 J1 (HELD, D1-C-S2) and wi-1 J1 (no grade from this seat) as GRADED.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/tw1_j1_read.py, run at origin/box/sitez 3ca2f35ab9 for 20261012 (REACHED) and origin/CLOUD 840d963b40 (NO-FILE at 11:25Z)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261012_1100Z.txt at origin/box/sitez (commit 0689a88409)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.0.3_BG_BBGTerminal/VEHICLE_LOG_20261009_1100Z.txt at origin/box/sitez (the pre-merge control)",
+        "git show fcb3d76903 (RIV-tc-1): hunks at old lines 898-1046, all behind the switch",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009.proof_of_spec.json (merge 6061de660d, clean status)",
+        "task-orders/ETFS_RIVALS.TO-RIV-tc-1...md:89 (J1 + AMENDMENT 2); this file, ETFS_RIVALS-D1-C-S3, S7, S9, S10, S11; INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S15"
       ]
     },
     "disposition": "GRADUATED"
