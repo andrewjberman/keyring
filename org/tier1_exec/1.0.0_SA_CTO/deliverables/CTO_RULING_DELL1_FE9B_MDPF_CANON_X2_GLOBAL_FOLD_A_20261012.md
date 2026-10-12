@@ -38,3 +38,15 @@ before and after. (B) keep every line and re-sign the ENDPOINT to say Global sho
   present and the headline sums byte-equal to before.
 - `1.0.0_SA_CTO~DELL1` closes dell1-fe9b on this file (`--ruled-by cluster-lead`) and disarms D1-W8-S5 on the cell's read-back.
 - No Andrew act: (A) spends nothing the law reserves; the PROD page shows one more line and loses none of its totals.
+
+## Addendum 1 (14:1xZ) -- the CRO's pattern read AMENDS the shape, not the option (msg 108577, record
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/CRO_PATTERN_READ_DELL1_FE9B_X2_GLOBAL_FOLD_20261012.md` @afdb738704)
+
+Patterns found: R7 (`infra/logic/02_DOCTRINE.md:415-422`, attributability decides tenancy at ANY grain) makes a one-firm
+`by_model` line under `global/` non-conformant independently of the X2 grant, so (B) would also be an R20 departure. The
+missed pattern: the fold line is itself a slice -- in aum-metrics both folded entries are Inflection (X2_GLOBAL_BASIS.md:48-50),
+so the "other models" line would be one firm's book under another label. RULING AMENDED: primary plus secondary suppression,
+applied per date index -- the fold line is emitted only when the entries it holds come from >= 2 firms; otherwise it is
+suppressed for that document and date (the headline sums still carry the value, so nothing is lost from the totals), and the
+suppression is said in the document's basis note. The cell's read-back asserts, per document and date, that every emitted
+`by_model` line (folded or not) is held at >= 2 firms. Option (A) stands.
