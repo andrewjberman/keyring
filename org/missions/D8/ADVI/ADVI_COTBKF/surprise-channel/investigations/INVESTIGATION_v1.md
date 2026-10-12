@@ -7027,3 +7027,310 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W124-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~124",
+  "surfaced_at": "2026-10-11T19:37:42Z",
+  "one_line": "CB-bu-2 item 1 says the key whose conditional put is refused prints NOT-WRITTEN; items 2 and 5 and the issuer's brief say it prints CHANGED-BY-ANOTHER-WRITER. The mode follows items 2 and 5: a refused key prints CHANGED-BY-ANOTHER-WRITER, and NOT-WRITTEN is kept for a key whose version is still the capture's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-bu-2.remint-edges.md WORKER FACE item 1 (the key 'prints NOT-WRITTEN with the reason') against item 2 and item 5 (the key 'prints CHANGED-BY-ANOTHER-WRITER' and 'is never WRITTEN')",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py _remint_state @22d276fe02: a key whose version moved with no put of this run returned for it is CHANGED-BY-ANOTHER-WRITER; a key still at the capture's version is NOT-WRITTEN",
+      "data/assets/scripts/silver/tests/test_commonwealth_ard_remint.py::test_edge1_a_second_writer_in_the_gap_is_refused_and_never_read_as_this_runs_write[7 cases] @22d276fe02: the planted key prints CHANGED-BY-ANOTHER-WRITER; the refusal's ERROR line says the put was refused and nothing was stored for it"
+    ]
+  },
+  "spec_asserts": "CB-bu-2 worker face item 1: a key changed by anyone after the capture check fails its put, the run stops, and the key prints NOT-WRITTEN with the reason.",
+  "world_is": "The refused key's version has MOVED (the other writer's put), so NOT-WRITTEN (version unchanged from the capture) would be false for it; the same face's item 2 and item 5 name CHANGED-BY-ANOTHER-WRITER for exactly this key. Built to items 2 and 5; the ERROR line carries the reason item 1 asks for (the put was refused, nothing was stored for it).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S124",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T20:12:07Z",
+  "one_line": "L9 round 73: CB73bu1-AC2 MET and CB73bu2-AC3 MET. The three-date read reproduces on this seat's own script figure for figure (101 funds, 944 cells, 794 / 744 / 579, winners 17 / 15 / 0 / 69, 42 validated); the convention reads undetermined and the worker did not bend the rule to the nine. The re-mint mode refuses a second writer by a conditional write and never prints another writer's change as its own, on the faked bucket; the hard kill is now counted as not described everywhere.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_73_DRAIN_END_20261011.md @f3bffdeb6f (msg 5731)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_73_L9_GRADE_20261011.md",
+      "this seat's re-derivations 2026-10-11T20:12:07Z. (1) The three-date rule as written, applied by this seat's own script to the custodian's reinvestment rows and the cache on disk: 270 fund series, 149 with a cache, 198 with a row, 101 with both; 944 compared cells; equal same day 794, the day before 744, the day after 579, all three 458; funds by winner 17 same, 15 before, 0 after, 69 undecided; the nine 6 before and 3 undecided; 42 funds validated. Each equals the worker's figure. (2) The decided funds by the first two words of the custodian's security description: of the 15 that follow the day before, 12 are American Funds; of the 17 that follow the same day, 1 is. (3) The re-mint code read at the merged tree; 0 delete calls; its test file run by this seat, 120 passed"
+    ]
+  },
+  "spec_asserts": "CB73bu1-AC2 and CB73bu2-AC3 (JUDGMENT, graded by the CVO at L9, never self-graded), as written in the two orders.",
+  "world_is": "Not re-derived: the split of the 42 into adjusted and not; the reach of 1,874. Untested by anyone: whether the real bucket honours the write condition. Nothing was applied, served, re-minted or fetched.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S125",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T20:12:07Z",
+  "one_line": "The date convention the round read as undetermined splits by fund family. Of the 15 decided funds whose reinvestment row matches the cached close of the trading day BEFORE, 12 are American Funds; of the 17 that match the same day, 1 is. The family is read from the first two words of the custodian's own security description. Eight of the nine funds of rounds 71 and 72 are American Funds; the ninth is the one that matched on the same day. A count on 32 funds, with exceptions each way: a lead, not a result.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_73_L9_GRADE_20261011.md",
+      "this seat's re-derivations 2026-10-11T20:12:07Z. (1) The three-date rule as written, applied by this seat's own script to the custodian's reinvestment rows and the cache on disk: 270 fund series, 149 with a cache, 198 with a row, 101 with both; 944 compared cells; equal same day 794, the day before 744, the day after 579, all three 458; funds by winner 17 same, 15 before, 0 after, 69 undecided; the nine 6 before and 3 undecided; 42 funds validated. Each equals the worker's figure. (2) The decided funds by the first two words of the custodian's security description: of the 15 that follow the day before, 12 are American Funds; of the 17 that follow the same day, 1 is. (3) The re-mint code read at the merged tree; 0 delete calls; its test file run by this seat, 120 passed"
+    ]
+  },
+  "spec_asserts": "The round 73 record: no split by kind, build group or period separates the two groups, and no sponsor field is on disk.",
+  "world_is": "The custodian's security description is on disk in the transaction cache and names the family. Not established: why the row is dated a day later for that family; whether it holds on the 69 undecided funds; the 3 other families on the before side.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S126",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-11T20:46:45Z",
+  "one_line": "One fetched fund, VBTLX, sits far off the build's close on part of its history: lowest ratio 0.1823 (build close over fetched unadjusted close) and 7.83 percent of 1,482 shared dates below 0.98, while it reads 'looks unadjusted' with the other 24. A ratio of 0.18 is not a dividend adjustment. Not investigated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~130/FETCH_HELD_27.json (not_established) and FETCH_HELD_27.csv, the VBTLX row; merged @08bbd1d8c2. The worker's figures; the issuer did not re-derive them."
+    ]
+  },
+  "spec_asserts": "Round 74 cell CB-bv-4 reads all 25 fetched fund series 'looks unadjusted' against the build's close, by a rule that calls a series adjusted only when at least half its shared dates sit below 0.98.",
+  "world_is": "VBTLX passes that rule and still has a stretch where the build's close is about a fifth of the fetched close: the shape of a mis-scaled or mis-keyed price stretch, not of an adjustment. Not established: which dates, which store the build's close came from on them, whether any measured account-day rests on them, and whether the round-70 scan already classed this series.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W129-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~129",
+  "surfaced_at": "2026-10-11T21:17:17Z",
+  "one_line": "The valuation chain cannot be pointed at a copied basis-census file by a flag or an environment variable: the path is the module constant BASIS_CENSUS in commonwealth_daily_valuation.py (load_basis_classes(path=None) falls back to it and the chain passes no path). Both CB-bv-3 builds were run through a scratch wrapper that sets that constant before calling the regrade main; no product file was edited. Separately: of the 19 moved funds only 5 are held on any account-day measured in both builds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py lines 200-201 (BASIS_CENSUS), 214-221 (load_basis_classes), 305 (apply_price_basis calls load_basis_classes() with no path); no argparse flag or os.environ read names the census (grep of the file for census, environ, getenv).",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~129/RETURN_CHANGE.md section 2 (wrapper, command lines) and RETURN_CHANGE.json variant.made_by, variant.measured_in_both_account_days_holding_fund (ANCFX 312, BALCX 426, CAIBX 49, CWGIX 361, FCNTX 1102; the other 14 moved funds 0)."
+    ]
+  },
+  "spec_asserts": "The order, item 2: the variant is the same chain run against a COPY of the census file; if the chain cannot be pointed at a copy without a code change, STOP and say which constant binds it.",
+  "world_is": "The chain can be pointed at a copy only by a wrapper that sets the module constant (the issuer's alternative ii); the same wrapper ran the baseline with the original path and the baseline equals the served returns exactly. Not established: whether a flag for the census path is wanted; why 14 of the 19 moved funds have no measured-in-both account-day.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S127",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T21:47:49Z",
+  "one_line": "L9 round 74: three criteria MET. The first return number reproduces on this seat's script (baseline equal to served on 107,316; 1,577 changed at a finer floor, the same bands). A lead on what the record left unexplained: the largest changes are PURCHASE days, not price steps. Of 96 changes over 10 bp, the 12 on a day the account bought one of the exposed funds are all higher, the 2 sale days both lower; the baseline values new shares at a close that is too low. 74 of the 96 have no such row and are not explained. The family split reads not established and row D2-S125 closes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_74_DRAIN_END_20261011.md @1732725e87 (msg 5893)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_74_L9_GRADE_20261011.md",
+      "this seat's re-derivation 2026-10-11T21:47:49Z, by its own script over the served copy and the worker's two builds: served against baseline, 1,691,729 rows each, 107,316 measured on both, 0 differing at 1e-12; baseline against variant, 1,577 changed at a floor of 1e-12 (the worker's floor is 1e-9 and reads 1,575), bands under 1 bp 1,056, 1 to 10 bp 425, over 10 bp 96, largest 882.0 bp, 828 higher and 749 lower, 8 measured in the variant only; 554 dates and 9 accounts. For the fund on the largest change, the variant price over the baseline price is one constant across the ten trading days around it. Of the 96 changes over 10 bp, 22 fall on a day the account has a share-moving row in one of the five exposed funds: 12 purchases, all 12 higher, the two largest among them; 2 sales, both lower; 8 reinvestments, 7 lower; 74 have no such row"
+    ]
+  },
+  "spec_asserts": "CB74bv1-AC2, CB74bv2-AC2, CB74bv3-AC2 (JUDGMENT, graded by the CVO at L9, never self-graded), as written in the three orders.",
+  "world_is": "Not re-derived: the 33 validated funds; the family counts. No return was recomputed by this seat; the purchase-day reading is a count over transaction rows. Nothing was applied or served.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S128",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T22:35:08Z",
+  "one_line": "L9 round 75: three criteria MET. The purchase-day reading is confirmed under a rule written first, and by this seat on the custodian's own figures: on the 12 purchases the validated unadjusted close equals the price paid (12 of 12 within 1 percent) and the close the served table uses is about three quarters of it (0 of 12, median 0.76). The 74 changes with no trade row all take a cause, but the list's order decides nine and its largest cause is a description, not a cause. Unexamined: 26 percent of all 936 purchase rows do not fit the unadjusted close.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_75_DRAIN_END_20261011.md @056535ed50 (msg 5976)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_75_L9_GRADE_20261011.md",
+      "this seat's check 2026-10-11T22:35:08Z, on a fact the worker's formula does not use: the cash paid over the shares bought on each purchase row, from the custodian's transactions, beside the close in each build's price input. 12 purchase account-day-funds on a changed day (10 in one fund, 2 in another), all 12 with a change over 10 bp. The variant's close over the price paid: within 1 percent on 12 of 12, median 1.0000. The baseline's close over the price paid: within 1 percent on 0 of 12, median 0.7586, range 0.747 to 0.910"
+    ]
+  },
+  "spec_asserts": "CB75bw1-AC2, CB75bw2-AC2, CB75bw4-AC2 (JUDGMENT, graded by the CVO at L9, never self-graded), as written in the three orders.",
+  "world_is": "Not re-derived: the worker's recomputation over 1,577 days; the 74 causes; the refuting control. Row D2-S127 stays OPEN: the return error on trade days is not sized beyond the measured accounts. Nothing was applied, served, built or fetched.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W140-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~140",
+  "surfaced_at": "2026-10-11T23:13:37Z",
+  "one_line": "The order asks that VBTLX be flagged excluded in the csv and that the csv have exactly nine named columns; both cannot hold. The csv keeps the nine columns and VBTLX carries its rule class like every fund; the exclusion flag is in the record (against_earlier.excluded_tickers) and the md. VBTLX is too_few under the rule (1 decisive unit, 0 failing), so it is not in named and the five counts still sum to 270.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~140/FUNDS_BY_TRADES.csv header (nine columns) and FUNDS_BY_TRADES.json against_earlier.excluded_tickers",
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-bx-3.funds-by-trades.md item 5 (columns listed) and the issuing message (flag VBTLX excluded in the csv)"
+    ]
+  },
+  "spec_asserts": "The csv has exactly the columns cusip, ticker, class_by_trades, trade_rows, failing_rows, median_ratio, class_by_reinvestment, substituted, moved_in_round_74, and VBTLX is flagged excluded in it.",
+  "world_is": "Nine columns, none of which can carry an exclusion flag without changing the schema or the class values; the flag was placed in the JSON and md instead. Not established: whether the issuer wants a tenth column.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S129",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T23:41:22Z",
+  "one_line": "L9 round 76: four criteria MET. The price-paid instrument reproduces on this seat's script figure for figure: on funds whose price the build did not replace, the close is over 20 percent below the price paid on 3,205 of 3,614 read trades, purchases and sales alike, median ratio 0.742; on funds it did replace, within 1 percent on 10,411 of 10,636. A close at three quarters of the traded price is a LEVEL error: any value or weight built from it is low too, and whether one is served has not been read. The instrument reads 14,250 of 91,040 units.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_76_DRAIN_END_20261011.md @aa7b318a3a (msg 6139)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_76_L9_GRADE_20261011.md",
+      "this seat's re-derivation 2026-10-11T23:41:22Z, by its own script over the custodian's transaction rows and the build's price table: 270 fund series, 73 substituted; 91,533 purchase and sale rows (51,232 and 40,301), each with an amount and a quantity; 14,250 units with a close on the trade's day, in 92 funds and 544 accounts. Funds left on the store: 3,614 units, 112 within 1 percent of the price paid, 3,205 over 20 percent off (3,202 with the close below the price), median ratio 0.742, 61 funds; purchases 1,574 of 1,754 and sales 1,631 of 1,860 over 20 percent. Substituted funds: 10,636 units, 10,411 within 1 percent, 6 over 20 percent, median 1.000, 31 funds. Each figure equals the worker's"
+    ]
+  },
+  "spec_asserts": "CB76bx1-AC2, CB76bx2-AC2, CB76bx3-AC2, CB76bx4-AC2 (JUDGMENT, graded by the CVO at L9, never self-graded), as written in the four orders.",
+  "world_is": "Not re-derived: the closed list's assignments, the 15 failing funds, the 31 measured trade days. Not read by this seat: whether a value or weight built from the affected close is served. Nothing was applied, served, built or fetched.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S130",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-12T00:56:37Z",
+  "one_line": "L9 round 77: CB77by1-AC2 MET and CB77by3-AC2 MET. No served figure carries the three-quarters error today. 47 served holdings partitions do take the store's close, on dates where it is right: by this seat's own script the ratio to the unadjusted close over that window is 0.9845 to 1.0061 on 480 fund-days, and the median by year runs from 0.46 in 2020 to 1.00 in 2026. Limits: 7 of 15 funds matched as held; 46 of 47 partitions unopened; the store read is a local copy of 2026-10-08.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_77_DRAIN_END_20261012.md @dca4f4d16f (msg 6226)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_77_L9_GRADE_20261012.md",
+      "this seat's reads 2026-10-12T00:56:37Z. (1) data/cot/scripts/gold/B_00.canonical_holdings.py printed at lines 160 to 174, 1112 to 1122 and 1143 to 1147: with a snapshot present each holding is priced at market value over units, and the builder returns before the price store is loaded. (2) By this seat's own script, the build's close over the cached unadjusted close for the 15 failing funds: over 2026-04-22 to 2026-06-07, 15 funds, 480 fund-days, ratio 0.9845 to 1.0061, median 1.0000, 0 below 0.98; over the whole history, 20,718 fund-days, per-fund medians 0.5647 to 0.9179; the median by year runs 0.46 in 2020, 0.51, 0.63, 0.74, 0.79, 0.88 and 1.00 in 2026"
+    ]
+  },
+  "spec_asserts": "CB77by1-AC2 and CB77by3-AC2 (JUDGMENT, graded by the CVO at L9, never self-graded), as written in the two orders.",
+  "world_is": "Not re-derived: the 18 sweeps and their denominators; the listing of 87 snapshot keys; the page's route. This seat's re-derivation uses the same local copy of the store as the worker's.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S131",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-12T00:56:37Z",
+  "one_line": "Two latent hazards from round 77 that no row carried. (1) The 47 served holdings partitions of 2026-04-22 to 2026-06-07 are right only because they were written when the store's close was current; a REBUILD of them from a later copy of the store would price the 15 funds low, and nothing in the tree prevents one. (2) This project's own minted table holds 259,357 account-days valued from these closes and has no reader; the first reader built on it serves the error.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_77_DRAIN_END_20261012.md @dca4f4d16f (msg 6226)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_77_L9_GRADE_20261012.md",
+      "this seat's reads 2026-10-12T00:56:37Z. (1) data/cot/scripts/gold/B_00.canonical_holdings.py printed at lines 160 to 174, 1112 to 1122 and 1143 to 1147: with a snapshot present each holding is priced at market value over units, and the builder returns before the price store is loaded. (2) By this seat's own script, the build's close over the cached unadjusted close for the 15 failing funds: over 2026-04-22 to 2026-06-07, 15 funds, 480 fund-days, ratio 0.9845 to 1.0061, median 1.0000, 0 below 0.98; over the whole history, 20,718 fund-days, per-fund medians 0.5647 to 0.9179; the median by year runs 0.46 in 2020, 0.51, 0.63, 0.74, 0.79, 0.88 and 1.00 in 2026"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 4: a value must carry its claim. A partition whose correctness depends on WHEN it was written carries no field that says so.",
+  "world_is": "INERT: no rebuild of those partitions is scheduled that this seat knows of, and the minted table is unread (the worker's census). Both statements are the round's, not this seat's reads. It blocks a rebuild of the early partitions and the first consumer of the minted table until the fund closes are corrected.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W149-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~149",
+  "surfaced_at": "2026-10-12T01:13:03Z",
+  "one_line": "The live price store object is not the output of the writer at HEAD: it has 5 columns (no source_firm) and carries a source value the HEAD writer never assigns (scoped_override, 12,042 rows).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/build_canonical_prices_v2.py:873 writes date, asset_name, ticker, price, source, source_firm and :902 stores opal_input_resolution metadata; its docstring :23-28 says cot runs no scoped-override inject step",
+      "this seat's one get of s3://opal-data-cot/silver/prices/canonical_prices.parquet, LastModified 2026-10-09T13:41:04Z, 97,443,387 bytes: pyarrow schema date, asset_name, ticker, price, source (5 columns); source value counts over 11,289,398 rows: linear_interpolation 7,831,140; yahoo_finance 3,396,067; transaction_observed 50,143; scoped_override 12,042; transaction_observed_capped 6; no carry_forward",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~149/STORE_UNADJUSTED_FIELD.json"
+    ]
+  },
+  "spec_asserts": "The writer at HEAD (build_canonical_prices_v2.py:873, :23-28) is the store's writer and writes 6 columns with no scoped_override source.",
+  "world_is": "The object's last-modified is 2026-10-09 yet it has no source_firm column and holds scoped_override rows: it was written by a different version of the writer (or another writer) than the file at HEAD. Which writer wrote it was not read; the writer is not in the live step list, so the object is not rebuilt by a schedule.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W149-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~149",
+  "surfaced_at": "2026-10-12T01:13:03Z",
+  "one_line": "The price store's ticker key is not one security: 308 of 4,000 tickers carry more than one asset_name, 5,748,151 of 11,289,398 rows carry no ticker, and VGHAX (one of the 15 funds) carries 3 names (VANGUARD HEALTH CARE INV, INVESCO HEALTH CARE INVSTOR, VANGUARD HEALTH CARE ADM) with the same Yahoo series under all three.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's one get of the store object (LastModified 2026-10-09T13:41:04Z): ticker x asset_name distinct pairs over the whole object: 4,000 tickers, 308 with more than one asset_name (AMD 9, SOXL 8, SPY 8, TSLA 8, QYLD 7), 5,748,151 null-ticker rows of 11,289,398",
+      "VGHAX in the store: 4,926 rows on 2,095 distinct dates, asset_name VANGUARD HEALTH CARE INV 2020-09-14 to 2026-06-09, INVESCO HEALTH CARE INVSTOR 2021-12-17 to 2026-06-09, VANGUARD HEALTH CARE ADM 2023-03-03 to 2026-06-09; on the 817 dates all three have, one price value per date",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~149/STORE_UNADJUSTED_FIELD.json"
+    ]
+  },
+  "spec_asserts": "ADVI_COTBKF.TO-CB-bz-2 and the round-77 records treat the store as keyed by ticker, one fund per key (the census read key = ticker).",
+  "world_is": "A reader that keys the store by ticker takes one series for several asset names; for VGHAX the 2,095 held dates from 2020-09-14 come from rows of three names. Whether the held CUSIP is the Admiral class (the ADM name starts 2023-03-03) was not read; any figure that joins this store by ticker alone carries that ambiguity.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

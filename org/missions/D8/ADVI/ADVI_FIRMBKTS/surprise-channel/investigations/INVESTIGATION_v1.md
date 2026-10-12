@@ -5326,3 +5326,82 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Surfaced for the issuer. The census is built from the handler's own field reads and passes AC1 at 4 of 4 arms; the events are synthetic by the order's design, so an entity-keyed event reads a placeholder key and returns the seam's 404 body, while the three firm-level events (gold/artifacts filters, platinum/firm clients-tab, gold/views firm composition) name no entity and would read live objects if the firm row exists. Whether FIRM#49financial exists in opal-users-v2 is not checked (no AWS call). For the issuer: a fixture or a named placeholder convention for this Lambda would settle the spelling. No Lambda file was edited."
 }
 ```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-S32",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "1.0.0_SA_CTO~DELL1",
+    "surfaced_at": "2026-10-11T21:45:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "bd_price_update.py:344 takes the median of calc_price over silver/transactions/<date>.parquet rows that repeat once per portfolio group (no transaction_id dedupe on the per-date loader :263-271), so the T-1 price is weighted by how many groups hold the asset -- a rule nobody chose. Routed from dell2 (IRPT_DASHBD-D2-W122-S1).",
+    "spec_asserts": "A served price is computed by a stated rule; a median over distinct trades, not over per-group duplicates.",
+    "world_is": "Measured by 0.9.0_WK_IRPT_DASHBD~122 on 2026-10-09's day object (origin/box/dell2: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~122/PRICE_PATHS_MEDIAN.json): extract_t1_prices groups by asset_name and medians calc_price over rows the per-date loader does not dedupe by transaction_id.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/silver/bd_price_update.py:263-271, :327-344, :778, :821",
+        "origin/box/dell2 PRICE_PATHS_MEDIAN.json (CTO~DELL2 msg 5879 via MSTR msg 4126)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Owner 1.0.0_SA_CTO~DELL1 (the 49 Financial Black Diamond pipeline in opal-data-bd is this fabric's). PARKED, not a window cell: no producer logic changes inside ADVI_FIRMBKTS's Monday window. Un-park condition: act 4's read-back complete. Then cut as its own cell with a never-widen pair (served prices move): dedupe by transaction_id before the median, before/after per asset printed, the movers named."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-S33",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "1.0.0_SA_CTO~DELL1",
+    "surfaced_at": "2026-10-11T22:30:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "B_01.holdings_lots.py picks each asset's served price by sort_values('date', ascending=False).drop_duplicates('asset_name', keep='first') over the concat of silver/prices/<date>.parquet and canonical_prices.parquet; the default sort is not stable, so on a same-date tie which object's price wins is undefined by the code -- the 'not established' of dell2 D2-W125-S1/-S2 is not establishable by reading.",
+    "spec_asserts": "A served price is chosen by a stated precedence, not by an unstable sort's tie order.",
+    "world_is": "data/black_diamond/scripts/gold/B_01.holdings_lots.py:331-361 (read by this seat): files concatenated in sorted(key) order (daily files before canonical_prices.parquet), then sort_values('date') with pandas' default kind (quicksort, not stable) and keep='first'. Dell2's severity read (origin/box/dell2 IRPT_DASHBD deliverables/0.9.0_WK_IRPT_DASHBD~125/MOVED_MEDIANS_SEVERITY.json @7f80ca32da): on 2026-10-09, 34 of 160 assets carry the un-deduplicated median in the daily file and a Yahoo/other price in canonical_prices; canonical_prices is rewritten four times a day by a writer not identified.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/B_01.holdings_lots.py:331-361",
+        "COO~D2 dell2 msg 5961 via MSTR msg 4145"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Owner 1.0.0_SA_CTO~DELL1. Joins D1-S32's parked cell (un-park: act 4 read-back): (1) dedupe by transaction_id before the median; (2) an EXPLICIT price precedence in B_01 (stable sort with a stated source rank), replacing the tie order; (3) identify canonical_prices.parquet's four-a-day writer (writer census; DEC-12 read/write logging where it exists). Before any change: a read-only run of B_01's price load on 2026-10-09 prints which object wins for each of the 34, so the before state is MEASURED, then the change under a never-widen pair with before/after per asset."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-S34",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "1.0.0_SA_CTO~DELL1",
+    "surfaced_at": "2026-10-11T22:30:30Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Three SERVED readers key on the silver/transactions FILE day, not trade_date: B_03.account_gains.py:327, bd_price_update.py:265 and its Lambda twin :143. The late-August rewrites moved 5,580 ids one file each toward their own trade date (0 then, 4,505 and 1,030 now), so a re-run of those readers can serve different 08-20..08-23 figures than first served.",
+    "spec_asserts": "A served figure keyed to a date reads the rows whose trade (or effective) date it is, not whichever file a loader placed them in.",
+    "world_is": "Dell2 measurement (origin/box/dell2 IRPT_DASHBD deliverables/0.9.0_WK_IRPT_DASHBD~126/FILE_DAY_READERS.json @915ae4bc64), with this seat's loss check (org/tier1_exec/1.0.0_SA_CTO/deliverables/BD49F_SILVER_TRANSACTIONS_LOSS_CHECK_20261011.md): 0 of 5,580 ids lost; the rows moved toward trade date. Not established: whether the readers re-ran since, or whether any served figure for 08-20..08-23 changed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/black_diamond/scripts/gold/B_03.account_gains.py:327",
+        "data/black_diamond/scripts/silver/bd_price_update.py:265",
+        "CTO~DELL2 msg 5968 via MSTR msg 4148"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Owner 1.0.0_SA_CTO~DELL1. Joins the parked D1-S32/S33 cell (un-park: act 4 read-back), read first and changed second: (1) whether each of the three readers re-ran since 2026-09-02, and the served 08-20..08-23 figures before and after; (2) whether file-day keying is replaced by trade_date keying, decided on that measurement under the cell's never-widen pair. Dell2's W124-S1 is closed on its side."
+  }
+]
+```

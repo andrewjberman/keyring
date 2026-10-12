@@ -3,6 +3,11 @@
   tt23  TR23-tt23-AC1  read_refused is in pull.totals and the PULL-DRY line; test_eod_voice.py collects; the pull's suites stay green
   tv23  TR23-tv23-AC1  LIVE read-only: a TRACKED readers.auto.tfvars holds exactly the second-reader role's live trust principals;
                        the variable keeps no default; the header no longer says the readers are not applied
+  cl23  TR23-cl23-AC1  the drafter's prompt carries only closed-list values: five named tests pass with the commentary suites
+  ca23  TR23-ca23-AC1  LIVE read-only: the three functions run ONE digest, the built dist zip's, and not the pre-act zip
+  sw23  TR23-sw23-AC1  the drafter posts its draft to the request's ticket and leaves a census: six named tests pass with every commentary test file
+  sa23  TR23-sa23-AC1  LIVE read-only: three functions on ONE digest (the built zip's, not the pre-act zip) and the drafter's
+                       ticket base is the front door
   mp23  TR23-mp23-AC1  LIVE read-only: all three functions of the transcripts root read ONE CodeSha256, the Teams pull's
 
 Prints R23-<TOKEN>-OK or R23-<TOKEN>-FAIL <reason> and exits 0 / 1. Run from the repo root (or a worktree root).
@@ -82,6 +87,43 @@ def tv23():
     return True, facts + " equal; no default; header states the applied state"
 
 
+CL_FILE = TESTS / "test_commentary_drafter.py"
+CL_NAMES = ["test_account_type_off_list_is_not_sent", "test_account_type_on_list_is_sent",
+            "test_category_off_list_is_dropped_and_counted", "test_themes_are_never_sent",
+            "test_allowed_sets_come_from_the_estate"]
+CL_SUITE = [CL_FILE, TESTS / "test_commentary_seam.py", TESTS / "test_commentary_entry.py"]
+
+
+def cl23():
+    if not CL_FILE.exists():
+        return False, "absent: %s" % CL_FILE.as_posix()
+    text = CL_FILE.read_text(encoding="utf-8")
+    missing = [n for n in CL_NAMES if "def %s(" % n not in text]
+    if missing:
+        return False, "missing %s" % ", ".join(missing)
+    rc, passed, tail = _pytest(CL_SUITE)
+    return (rc == 0 and passed >= len(CL_NAMES)), tail
+
+
+SW_FILE = TESTS / "test_commentary_route_switch.py"
+SW_NAMES = ["test_persist_answer_carries_ticket_id_when_the_store_names_one",
+            "test_post_goes_to_the_named_ticket_with_exactly_two_body_keys", "test_no_ticket_id_means_no_post",
+            "test_refused_post_is_logged_and_not_handed_back_to_the_queue", "test_replay_of_a_stored_draft_posts_nothing",
+            "test_census_counts_unposted_drafts"]
+
+
+def sw23():
+    if not SW_FILE.exists():
+        return False, "absent: %s" % SW_FILE.as_posix()
+    text = SW_FILE.read_text(encoding="utf-8")
+    missing = [n for n in SW_NAMES if "def %s(" % n not in text]
+    if missing:
+        return False, "missing %s" % ", ".join(missing)
+    suite = sorted(TESTS.glob("test_commentary_*.py"))
+    rc, passed, tail = _pytest(suite)
+    return (rc == 0 and passed >= len(SW_NAMES)), "%s (%d commentary test files)" % (tail, len(suite))
+
+
 def mp23():
     import boto3
 
@@ -93,10 +135,70 @@ def mp23():
     return True, "one digest across 3 functions; " + facts
 
 
+PRE_CA23_SHA = "AI4UQD0ME+ABza1X0BrBjGjpqjN7f2fc0Cdxb88aA/I="
+DIST_ZIP = Path("infra/aws/lambda/transcripts-pull/dist/transcripts-pull.zip")
+
+
+def ca23():
+    """Live read-only: all three functions run ONE digest, it is the built dist zip's, and it is not the pre-act zip."""
+    import base64
+    import hashlib
+
+    import boto3
+
+    if not DIST_ZIP.exists():
+        return False, "absent: %s" % DIST_ZIP.as_posix()
+    local = base64.b64encode(hashlib.sha256(DIST_ZIP.read_bytes()).digest()).decode()
+    lam = boto3.client("lambda", region_name="us-east-1")
+    shas = {f: lam.get_function_configuration(FunctionName=f)["CodeSha256"] for f in (PULL_FN, MAIL_FN, COMMENTARY_FN)}
+    facts = "digests=%d live=%s local_zip=%s" % (len(set(shas.values())), sorted({s[:8] for s in shas.values()}), local[:8])
+    if set(shas.values()) == {PRE_CA23_SHA}:
+        return False, "the functions still run the pre-act zip; " + facts
+    if len(set(shas.values())) != 1:
+        return False, "the three functions are not on one digest; " + facts
+    if next(iter(shas.values())) != local:
+        return False, "the live digest is not the local dist zip's; " + facts
+    return True, facts
+
+
+PRE_SA23_SHA = "auyn4IvltKLLl6yw+SsMWGi3VVlYZKnmJKFssjJaVNY="
+RUNNER_CONFIG = Path("integrations/ticketing/intake/runner_config.json")
+
+
+def sa23():
+    """Live read-only: three functions on ONE digest, the built dist zip's, not the pre-act zip; the commentary function's
+    ticket base is the front door named by the ticketing intake's own config."""
+    import base64
+    import hashlib
+    import json
+
+    import boto3
+
+    if not DIST_ZIP.exists():
+        return False, "absent: %s" % DIST_ZIP.as_posix()
+    local = base64.b64encode(hashlib.sha256(DIST_ZIP.read_bytes()).digest()).decode()
+    front = json.loads(RUNNER_CONFIG.read_text(encoding="utf-8"))["portal_base"]
+    lam = boto3.client("lambda", region_name="us-east-1")
+    cfg = {f: lam.get_function_configuration(FunctionName=f) for f in (PULL_FN, MAIL_FN, COMMENTARY_FN)}
+    shas = {f: c["CodeSha256"] for f, c in cfg.items()}
+    base = cfg[COMMENTARY_FN].get("Environment", {}).get("Variables", {}).get("TICKET_API_BASE")
+    facts = "digests=%d live=%s local_zip=%s base_is_front_door=%s" % (
+        len(set(shas.values())), sorted({s[:8] for s in shas.values()}), local[:8], base == front)
+    if PRE_SA23_SHA in shas.values():
+        return False, "a function still runs the pre-act zip; " + facts
+    if len(set(shas.values())) != 1:
+        return False, "the three functions are not on one digest; " + facts
+    if next(iter(shas.values())) != local:
+        return False, "the live digest is not the local dist zip's; " + facts
+    if base != front:
+        return False, "the commentary function's ticket base is not the front door; " + facts
+    return True, facts
+
+
 if __name__ == "__main__":
-    fns = {"tt23": tt23, "tv23": tv23, "mp23": mp23}
+    fns = {"tt23": tt23, "tv23": tv23, "mp23": mp23, "cl23": cl23, "ca23": ca23, "sw23": sw23, "sa23": sa23}
     if len(sys.argv) != 2 or sys.argv[1] not in fns:
-        print("usage: r23_checks.py {tt23|tv23|mp23}")
+        print("usage: r23_checks.py {tt23|tv23|mp23|cl23|ca23|sw23|sa23}")
         sys.exit(2)
     ok, why = fns[sys.argv[1]]()
     print("R23-%s-%s %s" % (sys.argv[1].upper(), "OK" if ok else "FAIL", why))

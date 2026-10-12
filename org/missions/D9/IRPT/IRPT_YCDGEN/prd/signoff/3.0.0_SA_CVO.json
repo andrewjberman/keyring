@@ -1,12 +1,12 @@
 {
   "prd": "IRPT_YCDGEN_PRD.md",
-  "prd_version": "v0.12",
-  "prd_pin": "aa4a647f6e784040e13b017459da51d689dc1a6b",
+  "prd_version": "v0.13",
+  "prd_pin": "39c807e066277697a6ec23097e97bb9031648183",
   "half": "ratified-text",
-  "half_hash": "08db6524eaff15b6574b13d35e3c668a5acc82dd3aceb6ecfdbbc9a553210469",
+  "half_hash": "d47a90517ce66cb5a8bcdfdee7992a086f3df139f0a03e78019be556bfbf657d",
   "endpoint_hash": "49717e2ed5af3b024d807041ba8447b45a21e7548c89efbc8faf0dd0c21792c9",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_PRD_v0.12_RATIFIED_TEXT_REVIEW_20261011.md@ca4cdf3fb958fe4de5098e0fd8659badd463a1dd",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_PRD_v0.13_RATIFIED_TEXT_REVIEW_20261011.md@e1506c3a049d7c97287182769c82f931fae5c16f",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-11T14:36:42Z"
+  "signed_at": "2026-10-11T23:31:01Z"
 }

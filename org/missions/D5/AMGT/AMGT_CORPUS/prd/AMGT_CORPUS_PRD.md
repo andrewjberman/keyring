@@ -5,7 +5,7 @@
   "project": "AMGT_CORPUS",
   "directive": "D5",
   "fabric": "dell1",
-  "prd_version": "v0.10",
+  "prd_version": "v0.11",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md@6c52138c2f",
   "endpoint_outcomes": [
@@ -1117,3 +1117,12 @@ live `VNcX9ntm`). "Every row the team's sheet carries" is read by row class over
 FWD-12's master arm (63 `master_absent` names) is unaffected by this reading.
 
 **Not changed:** every other outcome and every contract.
+
+## ADDENDUM F, v0.11, 2026-10-11 -- DEC only: FWD-20's label rule covers the FactSet codes (row D1-S6) (`1.0.0_SA_CTO~DELL1`, round-47 analysis)
+
+ADDENDUM E's DEC named only Bloomberg field codes. The team's sheets also carry 50 FactSet data-item codes, and no estate or vendor source
+describing them was found (round-46 ADDENDA 1-3). **DEC:** a FIGURE row labelled by a FactSet code shows the team's OWN label for that code where
+the team's workbooks or master template print one unambiguously. The label is cited to sheet, row and column and claimed `measured`: 337 rows
+at round 47. Otherwise it shows "FactSet line", with the code and the why in the title: 394 rows at round 47. The cell's source reads "FactSet, via
+team model". A raw code is never a visible label. No label is inferred from a code's letters. This narrows nothing in the ENDPOINT and
+re-opens no half.

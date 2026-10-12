@@ -3140,3 +3140,216 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r145/p145_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-449` | for the overlap securities of the Inst and RIC/BDC Not Available pairs, the first moved bar after each repeated run, beside the anchor (five outcomes, no remainder); and the six institutional securities' moved days with their held rows against the bar | FWD-13 (a date label is measured, never assumed) | LOCAL | IB-pr-445 drained | P145-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~306. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 138. ROUND 146, WORKSTREAM ~P (2026-10-11 ~19:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5650)
+
+PRD v0.40 and v0.41 both SIGNED: the guard is contract and may be built, nothing served. The read v0.40 names is IB-pr-449 (round
+145, issued @b3500144f4 before msg 5650 arrived, amended @1286cbf961 with v0.41's count); it is not re-issued. The grading
+instrument is not product code today (it is the measurement scripts in worker folders), so the guard lands as one pure function in
+IRPT's gold folder with its tests; nothing imports it. A served change comes later under its own pair.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r146/p146_cells.py`: AC1-AC3 FAIL at base (no module).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-450` | `second_witness_grades(bars, t)`: true only with a bar on t, a bar on the calendar's prior trading day, and the two differing by more than relative 1e-4; with its tests | FWD-13 (a date label is measured, never assumed) | LOCAL | none | P146-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~307 (worker-light). DIRECT-ACT.
+
+## 139. ROUND 147, WORKSTREAM ~P (2026-10-11 ~19:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5665)
+
+Row DSGN_IRPTV1-D2-S21 ruled: the page carries the title for the 33 codes and maps the 12 unit tokens; no schema change now.
+The producer's side owes one owner read confirming both on a SERVED vendor answer, key names only. One read-only cell.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r147/p147_cells.py`: AC1-AC3 FAIL at base (no record).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-451` | one owner read of a served vendor report's sections through the service principal: is there a title or label member, the section_type and units tokens with counts; key names only, GET only | FWD-5 (what a reader of a finished report is served) | WORLD (declared; reads only, by an applier) | none | P147-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.7.0_AE_CloudOps~IB2.
+
+## 140. ROUND 148, WORKSTREAM ~P (2026-10-11 ~20:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5724 and PRD v0.42 @73d4348a31, signed @b05e8baee2)
+
+IB-pr-449 drained @eb0c2d4890: 416 of 416 comparable first moved bars equal the anchor that day. v0.42 admits nine pairs under the
+guard. The reviewer's note: five institutional securities have no anchor, so nothing shows their moved days are dated right. The
+CTO rules a per-security exclusion on three numbers. One read-only cell, counts only.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r148/p148_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-452` | nine pairs sized under both guard sentences (blank share, never served, freed); the same with ADLYX, BISOX, EIBLX, GPPIX, OLCYX not graded by the second witness; how many securities of the nine pairs outside the first witness repeat on more than half their days | FWD-13 (a date label is measured, never assumed) | LOCAL | IB-pr-449, IB-pr-450 drained | P148-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~308. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 141. ROUND 149, WORKSTREAM ~P (2026-10-11 ~20:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5748)
+
+Ruled on 2.0.0_SA_COO~G2's question: whether commentary was asked for is decided once, at acceptance, and carried on the accepted
+record; the worker sends analysis_ready only with a ticket id AND that member true. The accepted record's contract changes, so the
+CTO writes an addendum first, from one code-only read. Nothing is bound before that half lands. One read-only cell.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r149/p149_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-453` | which member of a submission, or of its ticket, says commentary is asked for today; where acceptance could read it; every reader of the accepted record and what each does with an absent or unknown member | FWD-4 (the vendor-path job and what it signals) | LOCAL | none | P149-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~309. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 142. ROUND 150, WORKSTREAM ~P (2026-10-11 ~20:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 5788 and 5800; PRD v0.43 @44828c43b8, signed @4c07d90a47)
+
+IB-pr-452 drained @6a7b589f9e (nine pairs blank 43.9218 percent; the five cost 10 account-days; seven securities mostly repeat).
+v0.43 adopts the repeated-share rule; the reviewer's note is that a rule over 'the grading run' is not reproducible. One build
+cell: the instrument's product form with a FIXED trailing window, built and tested, nothing served, returning the window proposal,
+the distribution in tenths and the rule's cost. The served change is a later pair.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r150/p150_cells.py`: AC1-AC3 FAIL at base (no module).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-454` | `date_basis_grading.py`: the ordered claim rule, the two witnesses, the nine pairs, the guard (imported) and the repeated-share rule over a fixed trailing window, as pure functions with tests; one read-only run returning the proposed window, the securities by share of repeated days in tenths, and the cost of the securities the rule takes | FWD-13 (a date label is measured, never assumed) | LOCAL | IB-pr-450, IB-pr-452 drained | P150-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~310. Not direct-act (above the size floor).
+
+## 143. ROUND 151, WORKSTREAM ~P (2026-10-11 ~21:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5863; IRPT_YCDGEN PRD v0.13 @39c807e066, signed @6f8aeb03b7)
+
+SERVICE FIRST: the worker's half is merged and dormant (@dddafd6832); the submission and acceptance half is IRPT_BCKEND's; the
+form's half follows only after this half's release is live and read. One build cell here; its release pair is a later act and
+names every reader of the accepted record with one read through each. Disjoint write set from IB-pr-454 (round 150, running).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r151/p151_cells.py`: AC1 FAIL, AC2 FAIL, AC3 PASS at base (AC3 is the control).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-455` | the submission's closed set admits the optional boolean `commentary_requested` and refuses any other type; acceptance copies it into the accepted record only when sent; the public contract declares it; a submission without it is accepted exactly as today | FWD-4 (the vendor-path job and what it signals) | WORLD (L6 floor: paths under infra/; nothing released) | the worker half merged @dddafd6832 | P151-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~311.
+
+## 144. ROUND 152, WORKSTREAM ~P (2026-10-11 ~21:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5863)
+
+IB-pr-455 drained @0322231fc8: the submission admits commentary_requested and acceptance carries it; nothing released. Its release
+pair names every function, every moved member and every reader. One build-only cell with AWS reads is that read; no apply order
+is cut here and none follows without a signed pair. Known entanglement: irpt-ycharts-generate's one-tree rebuild (IB-pr-426) is
+merged and held on the CTO's word.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r152/p152_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-456` | every source-map entry packaging one of the three changed members (by subtraction), each built from a minimal candidate map and set beside live: moved members, riders, the minimal-release word; the entanglements; every reader of the accepted record re-counted at base with the pair's read through each; replay arms; the packet | FWD-4 (the vendor-path job and what it signals) | WORLD (live reads and builds; nothing uploaded) | IB-pr-455 drained | P152-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~312.
+
+## 145. ROUND 153, WORKSTREAM ~P (2026-10-11 ~22:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 5896 and 5933; PRD v0.44 @84fec7b9b4, signed @7b75b691c1)
+
+IB-pr-454 drained @ddf890e1f6: the grading module exists with no importer. v0.44 fixes the window at 40 trading days, floor 20.
+The next cell is the producer's design as a READ, not a build: where the module would be called, what it would serve, every
+consumer of the date-basis member; with one count the CTO asked for. Runs beside IB-pr-456 (round 152), disjoint write sets.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r153/p153_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-457` | the candidate call sites with their schedules and what each lacks; where each module input lives (a landed source of the second witness's bars, or none); every consumer of the date-basis member and of the gold it rides on, by subtraction, with the read a release makes through each; the security-days the short-history floor leaves ungraded split from the repeat rule's | FWD-3 (a return on that account's own end-of-day holdings) and FWD-13 | LOCAL | IB-pr-454 drained | P153-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~313. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 146. ROUND 154, WORKSTREAM ~P (2026-10-11 ~22:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 5993)
+
+Ruled on 2.0.0_SA_COO~T2's question: the drafter learns the ticket id from the draft store's persist answer. That answer is a
+contract, so the CTO writes an addendum first, from one code-only read. Runs beside rounds 152 and 153, disjoint write sets.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r154/p154_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-458` | the persist answer's members today per outcome and where its shape is declared; who invokes persist; every consumer of the answer by subtraction; whether the store reads the accepted record at persist; what the answer carries with and without a ticket id | FWD-4 (the vendor-path job and what it signals) | LOCAL | none | P154-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~314. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 147. ROUND 155, WORKSTREAM ~P (2026-10-11 ~23:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6004)
+
+IB-pr-457 drained @01502183ee with ten open design questions. The CTO owes the producer's addendum and does not write it before
+two facts. One read-only cell measures both. Runs beside rounds 152 and 154, disjoint write sets.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r155/p155_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-459` | (1) the landed prices store's yahoo-labelled points against the unadjusted Close for the 878 tickers, each ticker placed, with the store's writer, schedule and cadence; (2) the performance route reader's answer (days_excluded, claim, absences) for a window holding a non-OK day, by the reader's own code over the served gold, with a control | FWD-3 (a return on that account's own end-of-day holdings) | LOCAL | IB-pr-457 drained | P155-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~315. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 148. ROUND 156, WORKSTREAM ~P (2026-10-11 ~23:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 6024 and 6033; PRD v0.45 @9de9ab8cf2, signed @83e8664d75)
+
+IB-pr-458 drained @ee2d9af09b: the draft store holds the ticket id at persist and returns only tenant and owner. v0.45: the first
+OK persist answer carries ticket_id when the record has one, absent otherwise. The store first, the drafter second
+(2.0.0_SA_COO~T2). One cell here: the build and the release read for the one function; its pair follows from the read. No apply
+order is cut. Runs beside round 155, disjoint write sets.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r156/p156_cells.py`: AC1 FAIL, AC2 FAIL, AC3 PASS at base (AC3 is the control).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-460` | `commentary_draft_store.py`: the first-persist OK answer carries the record's ticket_id from the read it already makes, absent when the record has none; new tests, the existing test file untouched; then irpt-commentary-draft-store-lambda built from a minimal candidate beside live: moved members, riders, replay, the one consumer, the packet | FWD-4 (the vendor-path job and what it signals) | WORLD (L6 floor: paths under infra/; nothing released) | IB-pr-458 drained | P156-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~316.
+
+## 149. ROUND 157, WORKSTREAM ~P (2026-10-11 ~23:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the signed pair of IB-pr-460 and CTO msg 6150)
+
+IB-pr-460 drained @294566c734. COO half @39597f02ec; CTO half @7a2a9182a2, bound to the COO half's sha256, the crash-recovery
+reading confirmed, its riders note withdrawn. One apply cell: one function, one member, no riders. The store first; the drafter's
+switch is 2.0.0_SA_COO~T2's later pair.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r157/p157_cells.py`: AC1-AC3 FAIL at base (no record).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-461` | irpt-commentary-draft-store-lambda applied through safe-apply: who may invoke read first, precheck, a refused-shape before-read, the BUILD_ONLY digest equal to the signed one from a pin at or after the reader's revert, the plan for the one function, after-reads persisting nothing, the member on a real persist recorded UNEXERCISED LIVE; Branch B the recorded S3 version | FWD-4 (the vendor-path job and what it signals) | WORLD | IB-pr-460 drained; both halves signed | P157-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.7.0_AE_CloudOps~IB2.
+
+## 150. ROUND 158, WORKSTREAM ~P (2026-10-12 ~00:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6192)
+
+Site Z tracked four IRPT deploy ledger sentinels left OPEN 16 to 18 days ago (three by 2.0.0_SA_COO~P, one by 2.0.0_SA_COO~M),
+relayed by 0.0.0_AB_MSTR~DELL2 msg 6190. The CTO ruled this lane inherits all four, to MEASURE and close, never to re-execute.
+Each has exactly one open leg, a verify leg (read by the issuer @d68d9a5eda). One read-only cell.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r158/p158_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-462` | the four entries read from origin/box/sitez; each open leg's artifact measured now against what the leg was to produce, with a positive control; verdict SUPERSEDED (world-done, or overtaken and said so) or NOT_DONE with what is half-landed and since when; how and where a close is written; nothing re-executed | FWD-1 (the journey's releases are on record as landed or not) | LOCAL | none | P158-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~317. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 151. ROUND 159, WORKSTREAM ~P (2026-10-12 ~01:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6237)
+
+Row TCKT_VNEXT-D2-S52 (2.0.0_SA_COO~V2): the portal authorizer's source in the tree is 188 lines ahead of the build input the
+source map records as deployed; the added code is a render-token path this project's orders built (IB-rtq-2, IB-rtr-2, export
+section A, IB-pr-307). The CTO reads the row as this lane's. One read-only cell; nothing is invoked, built or released.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r159/p159_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-463` | the live authorizer read by its bytes and matched by content to a commit's blob; the commits after it; how the function is packaged and whether the map's recorder sees it; every render-token sender and route with what it gets from the live authorizer today; the orders behind the unreleased commits; one verdict of four | FWD-7 (the export of what the advisor sees) | LOCAL | none | P159-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~318. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 152. ROUND 160, WORKSTREAM ~P (2026-10-12 ~01:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6245; PRD v0.46 @3f577ef37f, ratified-text half asked)
+
+IB-pr-459 drained @9e2f9ef21e. PRD v0.46 is the date-basis producer's contract (ten design answers); nothing is served by it and
+NO build cell is cut before three reads. Three read-only cells, disjoint write sets, no edge between them; (b) goes to the CTO
+first. Reads need no signature; a build cell waits for the ratified-text half.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r160/p160_cells.py`: every criterion FAILs at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-464` | (b) the performance route's reader, per composed firm and per window: accounts with an excluded day, each placed first-day-only, interior-only, both, or last-day; the claim the reader gives them; what a non-OK row means | FWD-3 | LOCAL | none | P160-a |
+| `IB-pr-465` | (a) whether the holdings-performance producer function's network reaches the vendor, from configuration; what a fetch would use; whether the package carries it | FWD-13 | LOCAL | none | P160-b |
+| `IB-pr-466` | (c) the pages that render the route's returns, by subtraction over the portal checkout; what each shows of the claim, the absences and the excluded days; what the adapter drops | FWD-3 | LOCAL | none | P160-c |
+
+fanout: 3 of 3 chains, cap 8, reason: three independent reads. Assignees: 0.9.0_WK_IRPT_BCKEND~319, ~320, ~321. DIRECT-ACT each.

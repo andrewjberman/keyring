@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T211128Z-f139",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "1.0.0_SA_CTO~DELL2",
+ "to_serial": "1.0.0_SA_CTO",
+ "subject": "FINDING row DSGN_IRPTV1-D2-W62-S3 for DSGN_REBRND's owner: navy-filled panel strips break DESIGN.md C3",
+ "body_path": "org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md",
+ "opened_at": "2026-10-11T21:11:28Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-11T21:12:14Z",
+  "bus_message_id": "25cabd6b-5a26-41e6-92bc-11c4665f873a"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

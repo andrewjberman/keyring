@@ -4566,6 +4566,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "The spec says code rows and codes in the same breath. The template line therefore counts each code once, and the census line counts each row once; on a repeated code the two sums differ by the repeats.",
   "notes": "For the issuer to choose per code or per row for the template line; the census line is per row by construction (its sum equals the rows).",
   "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S15",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T19:22:09Z",
+  "one_line": "A master answer keeps the template's FIGURE row classes and row_counts (FIGURE 126 per name) while its row_values and row_formats are None, as AMENDMENT 3 requires; a reader that counts FIGURE rows without checking row_values will show the template's rows as figures with no numbers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/team_sheet.py _answer (AMENDMENT 3 branch): row_values and row_formats are [None]*len(rows), periods [], and row_classes, row_counts and row_labels are the template's",
+      "live census (read-only, 2026-10-11): 'team_sheet row classes FIGURE 11467 HEADING 359 CONTROL 438'; the 63 master names carry FIGURE 126 each (8505 rows), and rows_with_values 0 on them",
+      "lib/research/corpus/tests/test_template_round47.py test_a_master_answer_carries_rows_but_no_team_values asserts the None values beside FIGURE classes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 3: a master answer's row_values and row_formats are None per row and periods is []; rows, row_classes, row_numbers, row_counts, row_labels are unchanged.",
+  "world_is": "The page and the census read row_classes and row_counts as the team's rows; on a master answer those counts describe the template's rows (8505 FIGURE rows across the 63 master names) and not one value among them. The count FIGURE 11467 in the census line includes those rows.",
+  "notes": "For the issuer to decide whether the census class line should split master FIGURE rows from own FIGURE rows; the own-only count is FIGURE 3529 with rows_with_values 3529.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
 }
 ,
 {
@@ -4590,6 +4613,124 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "spec_asserts": "Step 3's invocation, run at the site-Z repository root, prints the locate lines and exits 0 (one match) or 3 (none or several), so that STOP 3 and STOP 4 are decidable from its output.",
   "world_is": "The ordered form raises before it walks anything and exits 1, a code the script does not define. The STOP is still reached in this instance -- under PYTHONPATH=. the script reports `matches 0`, so STOP 3 fires for a REAL reason -- but it is reached by an invocation the order does not contain.",
   "notes": "THE HAZARD IS THE INDISTINGUISHABILITY, not the broken import. An executor who reads rc!=0 as the STOP condition reports STOP 3 from an INSTRUMENT FAILURE that never opened the library, and a genuine absence and a failed import then look identical in the record -- on a WORLD-risk order whose whole purpose is to decide whether one object gets written. The discriminator is cheap and is the script's own docstring: rc 0 and rc 3 are the only defined exits, so rc=1 is the instrument, never the world. Disarm is one line in the order: `PYTHONPATH=. python ...`, or ship the check as `python -m` with a package path. Generalises to every future checks/<round>/*.py that imports `lib.*` and is ordered as a bare path; round 45's checks script escaped it only by importing nothing but stdlib. No gate built and no script edited by this lane.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+}
+,
+{
+  "id": "AMGT_CORPUS-D1-W1-S16",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T21:06:31Z",
+  "one_line": "The order's premise that round 47's tests pass unchanged, bar the one reversed entries test, does not hold: the nine shipped entries change two round-47 fixture results, so those two tests are isolated from the shipped file by an empty entries cache.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/factset_descriptions.json@e54dbf921e holds nine entries (AC4 grep count 9), FF_COM_SHS_OUT_EPS_DIL among them, text 'Avg Diluted Shares'.",
+      "Scratch read, not committed, of the round-47 fixture book against the SHIPPED entries file: per-code measure kinds {'FF_SALES': 'pass_through', 'FE_ESTIMATE': 'metric_name', 'FF_COM_SHS_OUT_EPS_DIL': 'held', 'FF_GROSS_INC': 'none', 'BEST_EBIT': 'held'}; the two-label code reads text 'Avg Diluted Shares' claim held, where test_a_code_two_labels_reference_is_left_as_a_factset_line expects 'FactSet line'.",
+      "The labels CLI line of the same book moves from two_label_left 1 bloomberg_held 1 to two_label_left 0 bloomberg_held 2, where test_the_labels_cli_prints_the_count_line pins the first.",
+      "lib/research/corpus/tests/test_template_round47.py@e54dbf921e: both tests now monkeypatch the factset cache to {} and say so in a comment; no expected value was changed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2: the round-47, round-46 and round-44 tests pass, and the only round-47 assertion the order changes is the entries-file-wins test, which becomes its reverse; the order names no other test as changed.",
+  "world_is": "With the shipped entries file, two round-47 fixture assertions that pin the measured-and-fallback rule for codes the file now describes fail unless isolated; the isolation keeps each test on the rule its name states and does not alter the shipped data.",
+  "notes": "For the issuer to decide whether these two fixtures should keep the empty cache (as built) or assert the shipped file. The live census moves on the shipped file as the order intends (factset_held 0 becomes 252, measured unchanged at 1345); the census test already isolates its fixture. No gate built and no expectation edited.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+}
+,
+{
+  "id": "AMGT_CORPUS-D1-W1-S17",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-11T21:06:31Z",
+  "one_line": "The order's bound 'the formula grid read at most once per workbook' holds per SHEET, not per workbook: a workbook whose two team sheets both carry figures has its bytes loaded once for each sheet that needs a measured label.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/team_sheet.py@e54dbf921e sheet_reading: _reading(rows, s, lambda s=s: _formula_grid(body, s)) is called once per figure-carrying sheet, and each _reading holds its own grid list.",
+      "lib/research/corpus/team_sheet.py@e54dbf921e _formula_grid: openpyxl.load_workbook(io.BytesIO(body), read_only=True, data_only=False) on every call, so one workbook's bytes load once per sheet that calls it.",
+      "The change adds the measured run for an entries-file code, so a sheet that holds only entries-file codes now also calls its grid; the count of loads per workbook can rise on the shipped entries. Not counted by this worker: the number of two-sheet workbooks that need a grid."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build item 2: the measured rule runs for a FactSet code that has an entry, and the workbook's formula grid is read at most once per workbook.",
+  "world_is": "The grid is read at most once per figure-carrying sheet, so a workbook with both Model NEW VERSION and Model carrying figures can be loaded twice; the 'once per workbook' bound is not what the code enforces, and the change does not enforce it either.",
+  "notes": "Per-sheet is the round-47 behaviour and the order said to keep it; a per-workbook bound would need one load shared by both sheets, which is a change to sheet_reading outside this order. Declared, not fixed. No gate built.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+}
+,
+{
+  "id": "AMGT_CORPUS-D1-S8",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-11T23:21:11Z",
+  "one_line": "The Security Analysis tabs harness fails three checks at portal origin/DEV ad774c6f (short_read_refused, short_read_control_served, generation_captions_present) that pass at the local DEV cb76f857 (21 of 21); the failures are not AMGT_CORPUS's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer's run, 2026-10-11 ~23:1xZ, in a detached portal tree at ad774c6f: node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs printed 'CHECKS-WRONG-WAY short_read_refused,short_read_control_served,generation_captions_present' and exited 1; the same tree with the CRPS-ay-2 reference patch applied printed the same line.",
+      "The harness at portal cb76f857 (the local DEV) passes 21 of 21 (a fork's run on the same machine, same day). origin/DEV ad774c6f merges other teams' work (git log: wk-dsgn-irptv1-r21-57, IRPT_ANLREQ AR-y-144, TicketCenter)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-ay-2 AC2: the page's tabs harness is the Model tab's regression control and exits 0.",
+  "world_is": "At origin/DEV ad774c6f the harness exits 1 on three checks that no AMGT_CORPUS file touches, so AC2 of CRPS-ay-2 pins the failing SET to those three (the change adds none and masks none) instead of an exit code.",
+  "notes": "Not an AMGT_CORPUS surface; surfaced for the seats that own those checks. No gate built; no fix attempted here.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W2-S6",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+  "surfaced_at": "2026-10-11T23:29:07Z",
+  "one_line": "AC2 of CRPS-ay-2 expects the tabs harness to print CHECKS-WRONG-WAY with three named checks, but in this worker's portal worktree at ad774c6f the harness prints CHECKS-OK 21 of 21 both with and without the reference patch.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs@ad774c6f: timeout 120 node tabs.harness.cjs run in worktree C:/tmp/wk-AMGT_CORPUS-49-2/portal with the reference patch applied (portal commit bd66cb6e): last line CHECKS-OK 21 of 21, rc 0; the CHECK lines short_read_refused, short_read_control_served and generation_captions_present read true (expected true).",
+      "The same harness with the patch reverted by git apply -R (then reapplied): last line CHECKS-OK 21 of 21, rc 0. The base's only false CHECK line is coverage_tab_mounted, expected false."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-ay-2 AC2 (proof criterion, order section 4): the output of node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs, tail -1, matches ^CHECKS-WRONG-WAY short_read_refused,short_read_control_served,generation_captions_present$ at portal origin/DEV ad774c6f.",
+  "world_is": "At portal ad774c6f in this worktree the failing set of the tabs harness is empty: the last line is CHECKS-OK 21 of 21 at base and with the patch. The pinned three-check set is therefore not produced here, and AC2's regex does not match. The patch neither adds nor masks a failure in this tree.",
+  "notes": "Differs from AMGT_CORPUS-D1-S8, the issuer's run in a detached portal tree at ad774c6f, which printed CHECKS-WRONG-WAY with the same three names. The cause of the difference is not diagnosed here (candidates: an input the detached tree lacks, or a different tree state). No harness edit was made. AC2 is recorded FAIL on its regex; the order stays open.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+}
+,
+{
+  "id": "AMGT_CORPUS-D1-S9",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-11T23:38:30Z",
+  "one_line": "Row AMGT_CORPUS-D1-S8 is RETRACTED by its author: the tabs harness does not fail three checks at portal origin/DEV ad774c6f; the failure came from a standalone portal tree that lacks the outer repo the harness reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tabs.harness.cjs line 40-41: base = path.resolve(__dirname, '../../../..'); workspace = path.resolve(base, '..') -- the harness reads files of the directory above portal/.",
+      "Worker 0.9.0_WK_AMGT_CORPUS~2 (a full worktree with portal/ nested in the outer repo) and the issuer, 2026-10-11, in that tree at ad774c6f patched: CHECKS-OK 21 of 21; the worker's run with the patch reverted: CHECKS-OK 21 of 21.",
+      "The S8 run was in a detached portal worktree (C:/tmp/ay2-ref) with no outer repo above it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRPS-ay-2 AC2 (as first written): the tabs harness fails exactly three checks at origin/DEV ad774c6f.",
+  "world_is": "In a full worktree the harness passes 21 of 21 at ad774c6f; row S8 and worker row AMGT_CORPUS-D1-W2-S6 (BLOCKING) both rest on the standalone-tree artifact. AC2 is amended to pin CHECKS-OK 21 of 21.",
+  "notes": "A harness that reads the outer repo gives a false failure in a standalone portal worktree and says nothing about why; surfaced, not fixed. For the CVO's disposition of S8 and W2-S6 with the round-49 packet.",
   "disarm_owner": "2.0.0_SA_COO~C1"
 }
 ]

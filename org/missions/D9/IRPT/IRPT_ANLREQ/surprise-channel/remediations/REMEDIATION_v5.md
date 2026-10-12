@@ -32,15 +32,15 @@ Graduated, round label v10: 3 rows, OPEN. ARMED: 1 (D2-S51), disarm owner `1.0.0
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v10",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v10"
   },
-  "closed": false,
+  "closed": true,
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO~DELL2",
-   "at": null
+   "at": "2026-10-11T18:20:00Z"
   }
  },
  {

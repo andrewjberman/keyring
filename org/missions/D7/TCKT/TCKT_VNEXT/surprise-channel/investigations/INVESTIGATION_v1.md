@@ -1878,3 +1878,353 @@ not have to rediscover it, and so that "the rendered plan said so" is never offe
 **not established:** whether this is specific to the `aws_lambda_function` environment block, to this provider version, or
 general to every map-typed attribute. One object, two sightings, same attribute -- the domain of the claim is
 `environment.variables` on this resource type and nothing wider is asserted here.
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S43",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T20:10:59Z",
+  "one_line": "Row TCKT_VNEXT-D2-W6-S2 (data-refresh admits a caller with no userType; ARMED since round 1) is DISARMED and closed by CTO ruling msg 5737 on a read of the deployed bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r5_dr1/DATA_REFRESH_DEPLOYED_VS_BUILD_INPUT_20261011.md and members.json beside it (0.7.0_AE_CloudOps~TV2, order TCKT_VNEXT.TO-READ-R5-dr1, report msg 5712): MEMBERS 2 EQUAL 2 DIFFERENT 0 NOT_IN_SOURCE_DIR 0; deployed == recorded commit d9539cc0b7 == HEAD; the download's sha256 equals the live CodeSha256",
+      "the same file, from the deployed lambda_function.py (is_opal_internal line 142, validate_user_type line 168): userType Dev admitted by exact match; a caller with no userType refused unless Opal-internal; tier internal admitted whatever its userType",
+      "1.0.0_SA_CTO~DELL2 msg 5737: 'Row TCKT_VNEXT-D2-W6-S2: DISARMED and closed ... That is the estate's rule, exercised live today by NFRA_OPSWKF's release. Record the applier's file in the row.'",
+      "not re-read by this seat: the deployed package (the applier's read); the NFRA_OPSWKF exercise (the CTO's statement)"
+    ]
+  },
+  "spec_asserts": "Row D2-W6-S2: a caller whose userType is absent is admitted on the data-refresh routes.",
+  "world_is": "The deployed function refuses a caller with no userType unless that caller is Opal-internal, and it is byte-equal to its build input. An Opal-internal caller with any userType is admitted; the CTO rules that is the estate's rule and not a defect of this function (rows D2-S16 and D2-S17 describe it).",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CTO ruling msg 5737: the deployed data-refresh function equals its build input and refuses a caller with no userType unless Opal-internal; that is the estate's rule. This row records the closure of row TCKT_VNEXT-D2-W6-S2 and carries no hazard of its own."
+}
+```
+
+### TCKT_VNEXT-D2-S44 -- the closure record of row D2-W6-S2, renumbered by citation: the JSON row above by 2.0.0_SA_COO~V2 took the id D2-S43, which the applier's row already held
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S44",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T20:18:57Z",
+  "one_line": "Two rows in this channel carry the id TCKT_VNEXT-D2-S43: the applier's heading-and-prose row on terraform's rendered null, and this seat's JSON row recording the closure of row D2-W6-S2 (commit 11e26d72b5). Cite the closure record as THIS row, D2-S44.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this file: the heading '### TCKT_VNEXT-D2-S43 -- terraform's RENDERED plan prints an empty env string as null' (0.7.0_AE_CloudOps~TV2, filed during R4-pk-3) and, directly after its prose, the JSON block whose id is TCKT_VNEXT-D2-S43 and whose surfaced_by is 2.0.0_SA_COO~V2",
+      "this seat's id scan read JSON id lines only (max 42, so it minted 43) and did not read headings; the applier's row has no JSON id line",
+      "surprise-row-gate refused a renumbering of the committed row ('The channel is append-only: retire it with a new row that cites it'), so this row is the retirement"
+    ]
+  },
+  "spec_asserts": "A row id names one row.",
+  "world_is": "D2-S43 names two. The applier's row keeps the id. The closure of row D2-W6-S2 (DISARMED and closed by CTO ruling msg 5737 on the applier's read of the deployed data-refresh bytes: MEMBERS 2 EQUAL 2; a caller with no userType refused unless Opal-internal) is to be cited as D2-S44; its evidence is in the JSON block above with this seat's name.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+### TCKT_VNEXT-D2-S45 -- the clamp precheck's 27 is a CLOSED historical set, so it can never take in a new scoped route
+
+**owner:** `0.7.0_AE_CloudOps~TV2` (filer) | **disarm_owner:** n/a -- not a hazard; the routes ARE clamped (see world_is)
+**class:** INSTRUMENT / DENOMINATOR | **found:** 2026-10-11, cell R5-ml-2, step 8 of TO-APPLY-R5-ml2
+**read the same hour by:** `1.0.0_SA_CTO~DELL2` -- its half asked for exactly this row ("an unclamped scoped route is not
+left to a later round")
+
+**spec_asserts:** `clamp_precheck.py` reading `READ27 27/27` after an apply that adds two scoped ticket routes tells a reader
+that the firm clamp covers the routes now live. The task order's step 8 anticipated the two readings it could give: the census
+"does not take in the two new routes", or "the total changes".
+
+**world_is:** NEITHER, exactly. The total did **not** change -- it reads `READ27 27/27` with `opal-ticket-api 7113a749
+CLAMPED` -- and the two new route names appear **nowhere** in its output or its JSON table (0 mentions of `commentary`;
+`commentary-draft` and `commentary-sent` both absent from the table). The reason is in the precheck's own first line: it reads
+*"which of the **27 formerly-MORE_THAN_ONE** routes run the firm clamp LIVE"*. Its denominator is a **frozen historical set**
+named in round 3, not a live census of scoped routes. So:
+
+- `27/27` is TRUE of its declared domain and says **nothing at all** about a route created after that set was fixed;
+- the total was never going to move, so "the total changes" could not have happened either;
+- the tell is the one rule 24(i) names: a denominator whose scope **in TIME** is narrower than the sentence beside it. "27 of
+  27 clamped" reads like coverage of the live surface; it is coverage of a 2026-10-xx snapshot.
+
+**the substantive question, answered directly from the DEPLOYED bytes rather than left to the instrument:** both new routes DO
+run a firm check. Read from the package downloaded from the function's own `Code.Location` after the apply (handler sha256
+`7113a749...`):
+
+- `commentary_draft_ticket`, deployed line 1532: at line 1552,
+  `if cur is None or (cur.get("requester") or {}).get("firm") not in COMMENTARY_ALLOWED_FIRMS: return _deny("COMMENTARY_DRAFT", pc)`
+  -- one folded check, so a missing ticket and an off-list firm return the **same** deny. That is AMENDMENT 1's first
+  requirement, confirmed in the deployed bytes and not merely in the diff.
+- `commentary_sent_ticket`, deployed line 1575: `_resolve_scope(actor, pc)` at 1583 and
+  `_in_profile_scope(actor, (cur.get("requester") or {}).get("firm"))` at 1587, answering 404 out of scope -- the report
+  route's own check.
+
+So there is **no unclamped scoped route**. What there is, is an acceptance instrument that cannot see two live routes and
+whose PASS line invites the opposite conclusion.
+
+**why it matters:** AC1 was the only mechanical criterion on this apply. A reader taking `READ27 27/27` as "the clamp covers
+the ticket routes" would be wrong by two routes, and would be wrong the same way after the next route is added. The failure is
+silent and reads identically to full coverage.
+
+**what would fix it (not done here -- not this seat's and not in this order's bounds):** the precheck's domain becomes the
+live scoped-route set rather than the 27, with its total printed as `<clamped>/<routes found live>` so adding a route moves
+the denominator. Until then the criterion's expectation is the issuer's to amend, which the order says plainly.
+
+**not established:** whether any OTHER scoped route created since the 27 was fixed is outside the clamp. I measured the two
+routes this apply added and did not sweep the rest of the API's 121 routes; that sweep is a different read with a different
+denominator.
+
+### TCKT_VNEXT-D2-W24-S1 -- the precheck's table is a list, so the handler rows go to a sibling file
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W24-S1",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~24",
+  "surfaced_at": "2026-10-11T22:10:03Z",
+  "one_line": "TO-R5-pc2 asks for a NEW top-level key ticket_handlers in the precheck's JSON table, but that table is a JSON list with no top-level key, and existing tests read it as a list; the handler rows are written to a sibling file instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~13/clamp_precheck/clamp_precheck.py main(): Path(a.out).write_text(json.dumps(table, indent=1)) where table is the list build_table returns",
+      "test_clamp_precheck.py test_irpt_host_on_a_release_build_is_clamped and test_unreadable_host_is_named_and_the_total_is_not_full iterate json.loads(out) as a list of rows (t['function']); the order says no existing test changes and the existing rows stay byte-identical",
+      "also: the shared test helper ticket_source() gained a lambda_handler router (additive, no existing test body changed) because a deployed member with no lambda_handler now exits non-zero (TICKET_HANDLERS UNREADABLE) rather than passing as 0 handlers"
+    ]
+  },
+  "spec_asserts": "The precheck's JSON table has top-level keys, and a new key ticket_handlers can be added beside the existing ones without changing the existing rows.",
+  "world_is": "The --out table is a bare list of host rows. Wrapping it in an object would change every existing row's container and break the tests that read it as a list. The handler rows are written to <out stem>_ticket_handlers.json as {ticket_handlers, dispatched, classed}; the --out file is byte-identical to before for the same inputs (asserted by test_the_read27_line_and_its_table_rows_are_unchanged).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+### TCKT_VNEXT-D2-S46 -- any holder of lambda:InvokeFunction on a function behind the portal authorizer can be any caller to it
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S46",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T22:43:51Z",
+  "one_line": "Any holder of lambda:InvokeFunction on a function behind the portal authorizer can be any caller to it: a direct invoke goes around the authorizer and the function believes the event's own caller context.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (its own word, msg 6001: 'one row in this project's channel, owner me')",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:300-309 (_actor): the caller's email, userType, firmId and allowedFirmIds are taken from event.requestContext.authorizer.lambda and from nowhere else; nothing in the handler checks that the event came through API Gateway",
+      "aws lambda get-policy on opal-ticket-api (this seat, 2026-10-11 22:4xZ): the RESOURCE policy has one statement, the API Gateway service with the portal API's source ARN; it does not bound identity-based grants",
+      "iam simulate-principal-policy for arn:aws:iam::313476888478:user/cloudops-dell2-agent-user on that function's ARN (this seat, same minute): lambda:InvokeFunction allowed, lambda:GetFunction allowed",
+      "1.0.0_SA_CTO~DELL2 msg 5396: an administrator identity reads every secret and the laptop's agent sessions run as it; by the same reasoning it may invoke any function. NOT read by this seat: which other identities hold lambda:InvokeFunction on this or any other function behind the authorizer",
+      "scope: ONE function read (opal-ticket-api) and ONE identity simulated; the sentence about 'a function behind the portal authorizer' in general is the CTO's and is inferred for every other function"
+    ]
+  },
+  "spec_asserts": "The portal authorizer is the only identity source of the ticket service (the handler's own docstring at line 301).",
+  "world_is": "It is the only identity source the handler READS, and a direct invoke supplies it. An agent identity on this box can therefore call the ticket service as any internal person, any client or any service subject, read and write, with no token. The round-6 direct-invoke act (TO-RUN-R6-fn1) uses exactly this, for five GETs under a signed pair. No grant is added by this project; whether the invoke permission should be narrower is the owner's.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S47",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T23:10:27Z",
+  "one_line": "L9 round 6: TO-RUN-R6-fn1 AC2 MET for the ticket. By five direct invocations of the deployed ticket function, a client of another firm is refused the ticket, the list and a missing id, and an internal caller is served as the control. The refusal is by class: the ticket's own firm's client is refused the same way. FWD-2 is not yet realized, because its sentence also names the file and the file's second arm is owed. Not shown live: the firm fence between internal callers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/ledger/L8_PACKET.R6_FN1.md @31091d1eeb (msg 6047)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_R6_FN1_L9_GRADE_20261011.md",
+      "this seat's reads 2026-10-11T23:10:27Z: the applier's result file org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r6_fn1/RESULT.json, 5 arms, each with no function error: four answered 403 with the principal class client-human and naming no ticket, one answered 200 with 27 key names and a status only; and the ticket function's live code hash, which begins as the packet states it did at the act. No invocation was made by this seat"
+    ]
+  },
+  "spec_asserts": "TO-RUN-R6-fn1 AC2 (JUDGMENT, graded by the CVO at L9): FWD-2's ACCEPT for the TICKET, 'a person at another firm cannot open the request', shown by arms A2, A3 and A5 refused with A4 served as the control.",
+  "world_is": "No invocation was made by this seat. The file is served by another service and was not touched. Rows D2-S20 and D2-S46 stand.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+### TCKT_VNEXT-D2-S48 -- the investor-reporting internal firm reader leaves a caller with no users row unrestricted, as the ticket service did
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S48",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-11T23:39:35Z",
+  "one_line": "The investor-reporting service's INTERNAL firm reader has the same no-row case the ticket service is about to close: an internal caller with no users row is left unrestricted, by the code's own stated rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1138-1166 (_internal_allowed_firms), printed by this seat 2026-10-11 ~23:5xZ: 'Returns None = UNCHANGED (no row, no attribute, or an empty list)'; `if row is None or \"allowedFirmIds\" not in row: return None`",
+      "the same file, lines 1100-1136 (_service_allowed_firms), read by worker 0.9.0_WK_TCKT_VNEXT~26 and NOT printed by this seat: no row, no attribute and an empty list each return an empty list (no firm)",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~26/EMPTY_FIRM_LIST_READ.json @1a47d695fb (claim: inferred; the portal authorizer was not found in the checkout and three of its cells are NOT_READ)",
+      "scope: code read at HEAD on box/dell2; nothing invoked; the deployed bytes of the investor-reporting functions were not compared with this file"
+    ]
+  },
+  "spec_asserts": "TCKT_VNEXT PRD v0.4 ADDENDUM 3 (C-FENCE): an internal caller the users table does not know is refused; 'the service does not grant its widest reading to a caller it cannot find'. The addendum rules on the ticket service only.",
+  "world_is": "The ticket service is being changed to refuse that caller (TO-R7-nr1). The investor-reporting internal reader, which applies when a firm other than the caller's own is selected, returns unchanged for no row, and its docstring states that as the rule (IB-pr-387, CTO msgs 2367 and 2569). After the ticket release the two services answer the same caller differently. Whether the investor-reporting reader should follow is not this project's to rule: it is IRPT's contract and the CTO's. Nothing is changed here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+### TCKT_VNEXT-D2-S49 -- "refused today" by the firm-scope lookup is NOT a row count, and a live row proves it
+
+**owner:** `0.7.0_AE_CloudOps~TV2` (filer) | **disarm_owner:** n/a -- not a hazard: the affected caller is refused either
+way. The hazard would be a release built on the count alone.
+**class:** DENOMINATOR / MECE | **found:** 2026-10-11, cell R7-ct-1, step 2 of TO-READ-R7-ct1
+**for:** the pair of the release that refuses an internal caller with no PROFILE row
+
+**spec_asserts:** the order and the PRD's ADDENDUM 3 describe who the firm-scope lookup refuses TODAY as a ROW COUNT:
+"More than one such item is a refusal today; none will be a refusal after the release." On that model, reading
+`with_more_than_one_row = 0` says nobody is refused today, and the release's only new refusal is the no-row case.
+
+**world_is:** the count is indeed 0, and that is not the whole set. `_profile_scope`
+(`infra/aws/lambda/ticket_center/lambda_function.py`, read at HEAD) has THREE refusal paths, only one of which is a count:
+
+1. line 375 -- more than one PROFILE row: `403 firm scope lookup failed`. **Measured: 0 callers.**
+2. line 381 -- the lookup raised: `403 firm scope lookup failed`. Not reachable by a read of rows.
+3. **line 391 -- `allowedFirmIds` is present and is NOT a list: `403 firm scope malformed`.** The guard is
+   `if isinstance(val, list)`, and `_ddb` is `boto3.resource` (line 71), so a DynamoDB `S` arrives as a Python `str`,
+   fails that test, and falls through to the refusal. **Measured: ONE live row**, digest `35cb8f292b44`, `firmId
+   opal-capital`, `status active`, carrying `allowedFirmIds` as a STRING of length 10 which is not the literal `ALL`.
+   (A string `ALL` would fail the same way -- the code's own docstring says the literal belongs INSIDE a list, where it
+   "is just an id that matches nothing".)
+
+So the set of internal callers the lookup refuses today is `{count > 1} UNION {non-list value}`, and the second member
+is non-empty while the first is empty. A reader who checks only the count concludes "nobody is refused today" and is
+wrong by one.
+
+**a second path on the SAME row, which makes the first possibly unreachable:** that row also carries `userType
+"service"` with a local-part that is NOT one of the three service subjects the handler knows
+(`svc-ticket-form`, `svc-analyst-intake`, `svc-commentary`). If the authorizer mints `userType "service"` for it,
+`principal_class` returns UNRESOLVABLE at line 324 -- "an unknown service subject is nobody" -- and every action denies
+BEFORE the scope lookup is reached, so the malformed value never fires. **Which path fires depends on the userType the
+authorizer mints, which is NOT visible to a read of these two tables.** Either way the caller is refused; the point of
+this row is that neither path is a row count.
+
+**why it matters:** the release's pair is being built on a count. The count is a sound answer to "who has no row" and
+not to "who does the lookup refuse". If the pair's record says "0 refused today" on the strength of
+`with_more_than_one_row = 0`, it will be contradicted the first time this row is exercised, and the contradiction will
+look like a regression introduced by the release when it predates it.
+
+**what would close it (not mine, and not in this order's bounds):** the release's pair states its "refused today"
+population as the UNION of the three paths, with the non-list case measured; and someone who owns that identity decides
+whether the attribute should be a list, be absent, or whether the row should exist at all.
+
+**not established:** whether any row in a firm OTHER than `opal-capital` carries a non-list `allowedFirmIds`. My
+population was the internal one this order defines -- 30 addresses -- so the 33 PROFILE rows of other firms were not
+examined for this attribute's type. A sweep of all 56 PROFILE rows is a different read with a different denominator.
+
+### TCKT_VNEXT-D2-S50 -- a DISABLED users row still admits its address: the no-row rule reads existence, not status
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S50",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-12T00:08:14Z",
+  "one_line": "The no-row refusal reads whether a users row EXISTS, not its status: a DISABLED row still admits a caller presenting its address by direct invoke.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (its own word, msg 6180: 'File it as one row of this project, owner me, beside D2-S46. This release does not fix it.')",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py at 09488abbb1, _profile_scope: the lookup keeps items whose SK is PROFILE and reads allowedFirmIds; no line reads the row's status",
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r7_ct1/INTERNAL_CALLERS_AND_PROFILE_ROWS_20261011.json @8d900213a1: 23 internal addresses with one row, 21 active and 2 disabled; both disabled rows have no firm list (this seat's read of the file)",
+      "PRD v0.4 ADDENDUM 3 line 239 says 'every active internal user'; its CONTRACT sentence (line 235) says 'holds no PROFILE row'. The CTO's msg 6180 names the first as its own error",
+      "scope: code and one count file read; NOT read: whether the portal authorizer refuses a disabled user at sign-in (it is not in this checkout), so the admission is shown only for a caller that goes around the authorizer (row TCKT_VNEXT-D2-S46)"
+    ]
+  },
+  "spec_asserts": "PRD v0.4 ADDENDUM 3: an internal caller the users table does not know is refused; its count speaks of ACTIVE internal users.",
+  "world_is": "After the round-7 release a caller presenting a disabled user's address by direct invoke is admitted with no firm fence, exactly as before it. The round-7 proof's twin arm N3 uses one such row deliberately (a non-human Dev identity). The release does not fix this and does not claim to.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+### TCKT_VNEXT-D2-S51 -- an UNQUOTED hyphenated CloudWatch filter-pattern returns 0 silently, and 0 reads as "it never logged"
+
+**owner:** `0.7.0_AE_CloudOps~TV2` (filer) | **disarm_owner:** n/a -- an instrument trap, not a hazard
+**class:** INSTRUMENT / RETRIEVAL | **found:** 2026-10-12, cell R7-nr-3, step 10 of TO-APPLY-R7-nr2
+
+**spec_asserts:** `aws logs filter-log-events --filter-pattern FIRM-SCOPE-NO-ROW` counts the lines carrying that token, so a
+result of 0 means the function did not log it. The order's step 10 asks for exactly that count, expecting 2.
+
+**world_is:** the UNQUOTED pattern returns **0 events** while the SAME window holds **2** such lines. CloudWatch Logs filter
+syntax treats a bare hyphen as part of its own grammar, so the term must be double-quoted:
+
+| pattern, same log group and same window | events |
+|---|---|
+| `FIRM-SCOPE-NO-ROW` (unquoted) | **0** |
+| `"FIRM-SCOPE-NO-ROW"` (quoted) | **2** |
+| no filter at all, counted client-side | 16 scanned, **2** carrying the token |
+
+The zero is well-formed, returns rc 0, and is indistinguishable at a glance from "the code path never ran" -- which, on this
+order, would have meant "the release does not log its refusal", i.e. a finding against a release that was in fact working.
+
+**how it was caught:** the order's own step-10 wording invites a bare count, and I ran one. The thing that exposed it was a
+CONTROL I ran beside the zero -- the same pattern minus the specific suffix (`FIRM-SCOPE`), which ALSO returned 0. Two zeros
+where at least one had to be non-zero is a contradiction, and a contradiction is checkable where a single zero is not. An
+unfiltered read then printed 16 events as the denominator and found the 2 lines client-side.
+
+(A second, unrelated zero preceded it and was mine, not the tool's: a hand-typed `--start-time` of `1791778800000`, which is
+04:20Z, about four hours in the FUTURE of the act. It also returned a clean 0. Deriving the window from `date -u +%s` fixed
+it. Two different causes, one indistinguishable symptom.)
+
+**the sound instrument:** quote every hyphenated term in a filter pattern, AND print a denominator -- either an unfiltered
+count over the same window filtered client-side, or a control pattern that must match something. CLAUDE.md already says a
+failed retrieval returns a VALUE and to put the control on the retrieval; this is that rule's CloudWatch instance, and the
+specific syntax is what the rule does not name.
+
+**not established:** which other characters CloudWatch's filter grammar swallows unquoted. I measured the hyphen on one log
+group with one pattern. Colons, slashes and dots are plausible and untested, so no claim is made about them.
+
+### TCKT_VNEXT-D2-S52 -- the portal authorizer's source at HEAD is ahead of the build input recorded as deployed (a render-token path)
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S52",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-12T01:04:41Z",
+  "one_line": "The portal authorizer's source at HEAD is 188 lines ahead of the build input recorded as deployed: a render-token path is in the tree and, by the source map, not in the live function.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r8_ds1/DISABLED_USERS_READ_20261012.json @e377de62b6 (0.7.0_AE_CloudOps~TV2, claim measured): opal-portal-authorizer live CodeSha256 equals the source map's artifact hash; the map's last_deployed_commit is 26ffa22b79 (2026-09-09); `infra/aws/users/lambda/portal-authorizer/index.mjs` is 450 lines at HEAD and 262 at that commit",
+      "the same file: the added code is a render-token path (getRenderPublicKeyPem, isRenderAudienceToken, hasForbiddenRenderClaims, assertBoundedRenderExpiry, authorizeRenderToken); the function's LastModified (2026-10-03) is later than the map's last_deployed_at, which the applier reads as consistent with a configuration-only update and did not establish",
+      "NOT read by anyone in this project: the deployed bytes (no download, by the order); whether the artifact was built from 26ffa22b79's source; whether the render-token path is deliberately unreleased or is deployed by a path the source map does not record",
+      "this seat's own part: the round-8 order pointed the applier at the HEAD file as 'the authorizer's source'; the applier re-measured against the recorded build input and found the difference"
+    ]
+  },
+  "spec_asserts": "The round-8 order's pointer: the authorizer's source is `infra/aws/users/lambda/portal-authorizer/index.mjs` (as `infra/aws/terraform/portal-auth/lambdas.tf:61-63` names it).",
+  "world_is": "That file at HEAD is not the build input the source map records as live. The round-8 answer (neither authorizer reads a users row's status) was measured on both and holds on both, so this project's finding is not affected. The gap itself belongs to whoever owns the render-token work (the comment in the file cites IRPT_BCKEND.TO-IB-rtr-2): either a release is owed or the map is behind. Nothing is changed here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
