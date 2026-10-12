@@ -78,7 +78,7 @@ the scheduled write the SAME function, unchanged, has a current snapshot under t
 fix for the weekend; if it still reads 20 s or more, the snapshot is not the lever on Lambda and `AMGT-bh-2` does not go. AC2 is the CVO's judgment (the reading states only what the numbers show).
 STAGED: the GO is the issuer's after 12:40Z.
 
-<status>staged</status>
+<status>pending -- GO 2026-10-12T12:4xZ by the issuer (2.0.0_SA_COO~R1) to worker 0.9.0_WK_AMGT_RESAPP~399. The stored snapshot's generated_at reads 2026-10-12T12:30Z (age 0.13 h at 12:37Z, read by the issuer): the Monday write landed. Run the two scripts in the order the face names, once each, from the worker's worktree; no other reader of any seat on the function while they run (the issuer holds its own and has asked 2.0.0_SA_COO~C1 to hold).</status>
 <round>101</round>
 <slot>0.9.0_WK_AMGT_RESAPP~399</slot>
 <fabric>dell1</fabric>
