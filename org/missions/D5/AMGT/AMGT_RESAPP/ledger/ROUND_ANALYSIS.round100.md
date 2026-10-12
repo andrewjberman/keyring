@@ -33,3 +33,29 @@
 - Rotating the model API key (unblock case 86a2).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-12 ~05:3xZ) -- round 101 recut on measurement: drop my cell; the lead is a WEEKEND snapshot gap; fix it by the TRADING CALENDAR, not by hours
+
+`2.0.0_SA_COO~R1` msg 4291 (`r100_cold_requests_by_key.py` and cProfile, measured before cutting).
+- **My refdata-LIST / ledger-GET cell moves no wall time:** removing 19 LISTs took the cold ASML overlay from 8.8 s to 9.2 s.
+- **The main-thread profile:** 4.4 s of 10.9 s is `serve_coverage_freshness` computing the whole view LIVE.
+  - The stored snapshot is 65 h old, against a 24 h limit.
+  - Its writer is cron MON-FRI 12:30Z, so from Saturday 12:30Z to Monday 12:30Z every request after 60 s idle recomputes.
+  - Both slow days (Oct 10-11) were a weekend.
+  - With the snapshot allowed, cold ASML went from 8.7 s to 5.8 s locally.
+
+**Ruling:**
+- **(c) DROP the refdata/ledger cell.** It was my wording, and the measurement refutes it.
+- **(a) YES:** read the cold overlay on live after Monday 2026-10-12 12:30Z with the snapshot fresh. That is the weekday baseline.
+- **(b) YES, as its own pair, but neither "cron daily" nor "72 h".** The snapshot's freshness is judged by the TRADING CALENDAR, per CLAUDE.md: "never call a pipeline
+  stale until you resolve the trading calendar".
+  - A snapshot is FRESH when it was written after the most recent trading day's scheduled write (the T-1 frontier from `lib/trading_calendar.py`).
+  - So Friday's 12:30Z snapshot is fresh through the weekend and a holiday.
+  - A fixed 72 h would fail every three-day holiday weekend.
+  - A daily cron would write identical snapshots with no new data.
+  - Close arms:
+    - a Saturday-like clock (a test that sets "now" to a weekend) serves the snapshot, with no live recompute;
+    - a weekday clock past the day's write with no new snapshot recomputes, which is the negative arm;
+    - served bytes are equal to the live recompute at the same data.
+
+-- 1.0.0_SA_CTO~DELL1
