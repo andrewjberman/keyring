@@ -27756,3 +27756,59 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "No row pins commentary_draft_store.py: it is a native member of the entry's source_dir, which the builder reads from the worktree at the pin. The candidate therefore re-pins 0 rows and is the real map byte for byte; acceptance.py and submission.py stay at their live pins because nothing re-pins them. The release read is unaffected (the built package carries the pin's blob); a Branch A apply needs no map row for this member, only a build from a tree whose store file is that blob."
 }
 ```
+
+## IRPT_BCKEND-D2-S100 -- A dynamodb-action simulation is NOT a sound oracle for reading a CMK-encrypted table: Query/Scan/GetItem all read ALLOWED and the live Scan was refused by KMS
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S100",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-12T00:11:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-461's get_ref after-read needed one item from irpt-requests; simulate-principal-policy read dynamodb:Query, dynamodb:Scan and dynamodb:GetItem ALL ALLOWED for this principal on that table, and the live Scan was then refused with an AccessDeniedException from KMS -- no identity-based policy allows kms:Decrypt on the table's customer key -- so an allow on the DynamoDB action says nothing about whether the read of an encrypted table will succeed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "simulate-principal-policy on arn:aws:iam::313476888478:table/irpt-requests for this principal: dynamodb:Query -> allowed, dynamodb:Scan -> allowed, dynamodb:GetItem -> allowed (three separate calls, each printed)",
+      "the live ddb.scan on the same table, same principal, seconds later: 'An error occurred (AccessDeniedException) when calling the Scan operation: KMS key access denied error: ... User: .../cloudops-dell2-agent-user is not authorized to perform: kms:Decrypt on resource: arn:aws:kms:us-east-1:...:key/7f4d3042-... because no identity-based policy allows the kms:Decrypt action'",
+      "the two instruments disagree because they are scoped to different actions on different resources: the simulation was asked about dynamodb:* on the TABLE and answered truthfully; the read also needs kms:Decrypt on the KEY, which was never asked",
+      "the refusal is an ABSENT identity grant ('no identity-based policy allows'), not an explicit deny -- a different shape from the resource-policy deny this lane met earlier today on a Secrets Manager secret",
+      "record IB157-1_draft_store_release_after_reads.json: after_reads.get_ref.made false with why_not_made; the release itself is APPLIED and verified by its other two after-reads"
+    ]
+  },
+  "spec_asserts": "The order's step 6 says the get_ref read happens if 'your simulation for dynamodb:Query/Scan on the table decides whether you can', and the preflight records the issuer's own simulation of 'dynamodb GetItem, Query, Scan allowed on the requests table' as the evidence that the applier could make this read.",
+  "world_is": "The simulation does not decide it, and cannot. A CMK-encrypted DynamoDB table needs TWO grants from the caller -- the DynamoDB action on the table and kms:Decrypt on the key -- and a simulation scoped to the first is blind to the second by construction, so it returns a confident allow for a read that cannot happen. Both the issuer's simulation and mine were correct about what they were asked and wrong as a prediction of the read. WHAT WOULD HAVE CAUGHT IT: including kms:Decrypt on the table's key ARN in the same simulate call, which is one more --action-names entry and no extra round trip. Worth noting the preflight of this very order already carries the mirror-image trap in its SIM leg from an earlier cell -- 'a key-policy-only grant reads implicitDeny in the simulator, so the KEY POLICY is read where the simulator is blind' -- so the fabric knows the KMS limb is where this instrument goes blind, in both directions. NOT WIDENED: no grant was sought, no Query was attempted after the Scan refusal, and no second route to the item was tried; the order's made-false path was taken instead. This cost the order one of three after-reads and nothing else. OWNER: 2.0.0_SA_COO~P2 for the step-6 wording of future orders; the generalisable form belongs with the IAM traps in /cloud-ops, which is why it is filed rather than left in the record."
+}
+```
+
+## IRPT_BCKEND-D2-S101 -- IB157-1-AC3's eight-digit test refuses the ledger slug that IB157-1-AC1 requires, when the slug ends in a bare date
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S101",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-12T00:11:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB157-1-AC1 requires the record to carry the ledger's slug and IB157-1-AC3 refuses any bounded eight-digit run in the record; this seat named its ledger slug with a trailing date, so the true slug trips AC3 and the only two ways to pass are to edit the check, which the order forbids, or to record a slug that is not the real one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p157_cells.py IB157-1-AC1: 'if lg.get(\"state\") != \"closed\" or not lg.get(\"slug\") or not lg.get(\"opened_commit\")' -- the slug is required",
+      "p157_cells.py IB157-1-AC3: 're.search(r\"(?<![0-9A-Za-z])[0-9]{8}(?![0-9A-Za-z])\", text)' over the whole record text",
+      "measured, not reasoned: the pattern against the slug as it appears in JSON matched '20261011'; against the entry FILENAME (20261012T0001Z_...), a timestamp, the 12-digit account id, the opened commit and the S3 version id it was clear every time -- the filename escapes only because its digits are followed by 'T'",
+      "run at the honest record: IB157-1-AC1 PASS, IB157-1-AC2 PASS, IB157-1-AC3 FAIL ('the record carries an artifact id, an eight-digit token or a bearer token')",
+      "the release itself is clean and independently verified: BUILD_ONLY digest equal to the signed one, plan 0 add / 1 change / 0 destroy on one resource, live CodeSha256 equal to the signed digest, refused shape byte-identical before and after"
+    ]
+  },
+  "spec_asserts": "The order's face: 'All three end states pass the checks when recorded truthfully.' Its refusal clause: 'Never weaken a check; do not edit p157_cells.py.'",
+  "world_is": "THE CAUSE IS MINE, not the issuer's: I named the slug irpt-ib461-commentary-draft-store-ticket-id-20261011, and a slug without a bare eight-digit run would have passed all three. I am filing it rather than quietly fixing it because both available fixes are worse than the defect. Editing the check is forbidden outright. Renaming the slug now would mean rewriting a label that is already committed at b6117bd2fb, so the record's slug would no longer match the commit that opened the entry -- trading a cosmetic failure for a provenance mismatch. Recording a compliant-looking substitute would be recording something untrue about my own act. So the true slug stands, AC3 fails, and the order's status does not flip. WHAT AC3 IS ACTUALLY FOR: its message names an artifact id, an eight-digit token and a bearer token, so the hazard is leakage of an identifier or a credential into the record. A date inside a ledger slug is neither. THE NARROW FIX, offered and not taken: run the eight-digit test over the record MINUS the ledger block, or over the after-read and answer fields where a leak would actually land, which is where the sibling checks in this project already point it. OWNER: 2.0.0_SA_COO~P2, whose criterion it is; rule 27 L6 lets the issuer amend its own criteria without a CTO ruling. Distinct from row IRPT_BCKEND-D2-S100, which is about an instrument rather than a check."
+}
+```
