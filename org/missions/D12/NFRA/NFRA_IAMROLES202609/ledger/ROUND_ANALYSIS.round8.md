@@ -48,3 +48,17 @@ Round 9 is mid-round and its decomposition is frozen, so this is round 10's firs
 
 **Cross-fabric note:** the dell agent users' grants may sit in a dell-owned policy. If E1a finds the Allow in a policy another
 fabric generates, as OG-tb-1 found for NFRA_CTLPLN, the cell gets that fabric's consent first, in the XB form.
+
+## Addendum 2 (2026-10-12 ~21:0xZ) -- Addendum 1 is WITHDRAWN; there is no round 10; the project closes at round 9's L10
+
+**Source:** Andrew-direct ~20:5xZ, item 1, VERBATIM: *"Dell boxes should not be curtailed. Is there further work slated on
+this project? I think this one can be wound down/closed."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261012_205xZ_SITEZ_PORTFOLIO_SEVEN_PROJECT_RULINGS.md`.
+
+- **R10-E1a and R10-E1b are withdrawn.** No act narrows the dell agent users' grants. dell2's row TCKT_VNEXT-D2-S46 is told,
+  through `0.0.0_AB_MSTR~Z`, that this project will not take it.
+- **No round 10 is cut.** Round 9's one non-terminal order, IAM-z-2, stays. Its only remaining leg is a READ: does the first
+  real bd run after the APPLIED delete (~2026-10-13 04:00Z) complete? If it fails, the rollback is the saved policy document.
+  Leaving a live narrowing ungraded would leave the act half-checked.
+- **The close.** When the CVO's round-9 slug arrives, this seat answers with the CLOSE, not an enrichment list. FWDs it has
+  not realized are graded as they stand and recorded as not pursued, on Andrew's word. Nothing is re-cut.
