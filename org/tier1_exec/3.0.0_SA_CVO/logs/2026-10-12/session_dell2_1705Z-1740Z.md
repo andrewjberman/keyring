@@ -50,3 +50,9 @@ My miss, stated in row D2-W334-S2: v0.50 ordered both schema copies changed, and
 I signed v0.50 without reading PATH_MANIFEST. Lesson: before signing a contract text that edits a contract artifact, read whether the
 artifact is frozen. Also corrected in D2-W331-S2: my v0.49 review named the rule's reach as the claim moves.
 New WARN from the one-writer limb: unsuffixed channel files written from dell2 (WARN until C-QUEUE); precedent files are unsuffixed.
+
+## Addendum, 21:05Z to 21:10Z (msg 6555)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 167 | ADJUDICATION_v68 + REMEDIATION_v44: frozen v1 schema restored (my diff vs c16bf9d7bb^ empty); packet prints moves beside reach; 7 dismissed, 1 OPEN disarmed; ARMED 0. Slug sent | 1325d97848 |

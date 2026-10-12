@@ -26,8 +26,14 @@ THREE LIMBS, each printed with its evidence:
                    row in the investigation file; each is listed with its grading row or UNGRADED.
   NOT-BY-A-DOER    a grading row whose author is the order's issuer or assignee (or another lane of either base serial) is not a
                    grade; it is counted self_graded and the criterion stays ungraded.
+  HEADER GRADES   a grade written only in a markdown header, outside the fenced rows ("**RIV-wc-1 J1 MET.**"), is read from the
+                  file's `Author:` line and grades by a verdict word (MET, NOT MET, PASS, FAIL, PARTIAL); HELD, NOT MEASURED and
+                  UNVERIFIABLE name none. A fenced row still grades by any mention unless --strict-grades is given; every run
+                  prints STRICT-GRADES (graded_with_a_verdict_word, bare_mention) so the difference is measured, never silent.
+                  --strict-grades: a row grades only by a verdict word within fourteen tokens after the criterion, same clause,
+                  or by a `grades` entry {criterion, verdict}. ETFS_RIVALS D1-S15, CTO~DELL1 msg 4559.
 BLIND (stated): whether a grade is a GOOD grade. This tool sees that a different CVO-kind seat wrote a row naming the
-criterion, not what the row says. Orders not yet `complete` are listed and do not enter the verdict (a round with an open
+criterion (with a verdict word, under --strict-grades or in a header), not what the row says. Orders not yet `complete` are listed and do not enter the verdict (a round with an open
 order is the issuer's to close, not this tool's to read).
 
 LAST line (always):
@@ -59,6 +65,14 @@ LANE = re.compile(r"~([A-Za-z0-9]+)$")
 FENCE = re.compile(r"```json\s*\n(.*?)```", re.S)
 CRIT_TAG = re.compile(r"<criterion\b([^>]*?)/?>")
 ATTR = re.compile(r'([A-Za-z_]+)="([^"]*)"')
+# A grade needs a VERDICT (ETFS_RIVALS D1-S15, CTO~DELL1 msg 4559). Words that REACH a verdict, and words that name none.
+# Census of the 1056 criterion-then-word matches in 779 tracked adjudication files: MET 324, PASS 314, FAIL 94, NOT MET 68,
+# PASSES 20, NOT MEASURED 15, HELD 6, PARTIAL 4, UNGRADED 4. Upper case only: a grader writes the verdict in capitals.
+VERDICT_NONE = ("NOT[ _]MEASURED", "NOT[ _]EVALUATED", "UNVERIFIABLE(?:-BY-INSTRUMENT)?", "UNCOMPUTABLE", "UNGRADED", "HELD", "VOID")
+VERDICT_GRADED = ("NOT[ _]MET", "MET", "PASS(?:ES|ED)?", "FAIL(?:S|ED)?", "PARTIAL(?:LY[ _]MET)?")
+VERDICT_WORD = re.compile(r"(?<![A-Za-z0-9_])(%s)(?![A-Za-z0-9_])" % "|".join(VERDICT_NONE + VERDICT_GRADED))
+VERDICT_NONE_RE = re.compile(r"^(?:%s)$" % "|".join(VERDICT_NONE))
+AUTHOR_LINE = re.compile(r"^Author:\s*(\d+\.\d+\.\d+_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Za-z0-9]+)?)", re.M)
 
 
 class Usage(Exception):
@@ -410,10 +424,82 @@ def author_of(row: dict) -> str:
     return ""
 
 
-def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, kind_of) -> tuple:
+def load_prose(src, files: list) -> list:
+    """[(file, pseudo-row)]: each file's text OUTSIDE its fenced json blocks, authored by its `Author:` line. A grade written
+    only in a header ("RIV-wc-1 J1 MET.") lives here; it grades by a verdict word and never by a bare mention."""
+    out = []
+    for path in files:
+        text = src.read(path)
+        m = AUTHOR_LINE.search(text)
+        out.append((path, {"id": os.path.basename(path) + "#header", "author": m.group(1) if m else "",
+                           "_prose": FENCE.sub("", text)}))
+    return out
+
+
+def _strings(value, out: list) -> None:
+    if isinstance(value, str):
+        out.append(value)
+    elif isinstance(value, dict):
+        for item in value.values():
+            _strings(item, out)
+    elif isinstance(value, list):
+        for item in value:
+            _strings(item, out)
+
+
+def row_text(row: dict) -> str:
+    """Every string in the row, one blank line between fields, so a verdict in the next field never reads as adjacent."""
+    out: list = []
+    _strings(row, out)
+    return "\n\n".join(out)
+
+
+def verdict_after(text: str, crit_pat, order_pat, span: int = 40) -> str:
+    """The first verdict word within fourteen tokens after a mention of the criterion, in the same clause (no sentence
+    break between, so a list "AC3, AC4 and AC5 MET" carries one verdict for all of it); '' when none. A
+    generic id (order_pat set) must also have its order named in the `span` characters before it (the order's full id
+    plus its "TO-" and a separator, so a long slugged id is not cut)."""
+    for m in crit_pat.finditer(text):
+        if order_pat and not order_pat.search(text[max(0, m.start() - span):m.start()]):
+            continue
+        tail = text[m.end():m.end() + 90]
+        v = VERDICT_WORD.search(tail)
+        if not v:
+            continue
+        gap = tail[:v.start()]
+        if re.search(r"[.;]\s|\n\n", gap) or len(re.findall(r"[A-Za-z0-9_]+", gap)) > 14:
+            continue
+        return v.group(1)
+    return ""
+
+
+def structured_grade(row: dict, crit_id: str, order_pat) -> str:
+    """The verdict of a `grades` entry ({criterion, verdict, instance}) that names this criterion; '' when none."""
+    entries = row.get("grades")
+    if not isinstance(entries, list):
+        return ""
+    for e in entries:
+        if not isinstance(e, dict):
+            continue
+        named = str(e.get("criterion", ""))
+        # A generic id (AC5) is written namespaced by a grader (RPs1-AC5); the entry's instance names the order.
+        if named != crit_id and not (order_pat and named.endswith("-" + crit_id)):
+            continue
+        if order_pat and not order_pat.search(json.dumps(e)):
+            continue
+        v = VERDICT_WORD.match(str(e.get("verdict", "")).strip().upper())
+        if v:
+            return v.group(1)
+    return ""
+
+
+def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, kind_of, strict: bool = False) -> tuple:
     """(state GRADED|SELF|UNGRADED, detail). Adjudication-file rows: a doer is a self-grade, a CVO-kind non-doer a grade.
     Investigation-file rows: only a CVO-kind author counts (a doer's own surprise rows name criteria all the time and are
-    not grades); a CVO-kind doer is a self-grade."""
+    not grades); a CVO-kind doer is a self-grade.
+    A header-only grade (a `_prose` pseudo-row) and every row under strict=True needs a VERDICT word after the criterion
+    (or a `grades` entry with one); a mention without a verdict is not a grade. strict=False keeps the older reading for
+    a fenced row: any mention of the criterion by a CVO-kind non-doer grades."""
     pat = re.compile(r"(?<![A-Za-z0-9])%s(?![A-Za-z0-9])" % re.escape(crit_id))
     # A generic id (AC3, J2) is a substring of every order's AC3/J2 and of any check-script name (rl9.AC3.sh): the row must
     # also name THIS order (its to_id or the short id after "TO-"), or a stale row from another round grades it.
@@ -426,16 +512,24 @@ def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, k
     self_hit = None
     for source, rows in (("adjudication", adj_rows), ("investigation", inv_rows)):
         for _path, row in rows:
-            text = json.dumps(row)
-            if not pat.search(text) or (order_pat and not order_pat.search(text)):
-                continue
+            via = ""
+            if strict or row.get("_prose"):
+                v = structured_grade(row, crit_id, order_pat) or verdict_after(
+                    row_text(row), pat, order_pat, max(40, len(order["id"]) + 16))
+                if not v or VERDICT_NONE_RE.match(v):
+                    continue
+                via = " (verdict %s)" % v
+            else:
+                text = json.dumps(row)
+                if not pat.search(text) or (order_pat and not order_pat.search(text)):
+                    continue
             who = author_of(row)
             if not who:
                 continue
             is_doer = base_of(who) in doers
             is_cvo = kind_of(who) == "CVO"
             if is_cvo and not is_doer:
-                return "GRADED", "%s row %s by %s" % (source, row.get("id", "?"), who)
+                return "GRADED", "%s row %s by %s%s" % (source, row.get("id", "?"), who, via)
             if is_doer and (source == "adjudication" or is_cvo):
                 self_hit = self_hit or "%s row %s by %s, the order's own %s" % (
                     source, row.get("id", "?"), who, "issuer" if base_of(who) == base_of(order["issued_by"]) else "assignee")
@@ -447,16 +541,17 @@ def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, k
 # ---------------------------------------------------------------- the whole check
 
 def check(root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, deep=False, max_age=DEFAULT_MAX_AGE_MIN,
-          reviewer_only=False, staged=False, env=None) -> tuple:
+          reviewer_only=False, staged=False, env=None, strict_grades=False) -> tuple:
     """(lines, last_line). staged=True reads the project's repository files from the git index (see Staged)."""
     src = Staged(root, env) if staged else WorkTree(root)
     try:
-        return _check(src, root, sl, ctx, code, rnd, ws, device, this_box, kind_of, deep, max_age, reviewer_only)
+        return _check(src, root, sl, ctx, code, rnd, ws, device, this_box, kind_of, deep, max_age, reviewer_only, strict_grades)
     finally:
         src.close()
 
 
-def _check(src, root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, deep, max_age, reviewer_only) -> tuple:
+def _check(src, root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, deep, max_age, reviewer_only,
+           strict_grades=False) -> tuple:
     lines = []
     macro = ""
     proj_dir = None
@@ -516,17 +611,27 @@ def _check(src, root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, de
     inv_rows, bad_i = load_rows(src, inv_files)
     lines.append("GRADING-ROWS adjudication=%d row(s) in %d file(s), investigation=%d row(s) in %d file(s), %d json block(s) did not parse" % (
         len(adj_rows), len(adj_files), len(inv_rows), len(inv_files), bad_a + bad_i))
+    adj_all = adj_rows + load_prose(src, adj_files)
+    inv_all = inv_rows + load_prose(src, inv_files)
+    bare = strict_n = 0
     for o in done:
         for c in o["criteria"]:
             if not c["judgment"]:
                 continue
             n_j += 1
-            state, why = grade_criterion(c["id"], o, adj_rows, inv_rows, kind_of)
+            state, why = grade_criterion(c["id"], o, adj_all, inv_all, kind_of, strict=strict_grades)
+            s_state = state if strict_grades else grade_criterion(c["id"], o, adj_all, inv_all, kind_of, strict=True)[0]
+            strict_n += s_state == "GRADED"
+            if state == "GRADED" and s_state != "GRADED":
+                bare += 1
+                why += " -- BARE MENTION: no verdict word after the criterion"
             if state == "GRADED":
                 n_g += 1
             if state == "SELF":
                 n_s += 1
             lines.append("  JUDGMENT %s %s -> %s (%s)" % (o["id"].split(".")[-1], c["id"], state, why))
+    lines.append("STRICT-GRADES mode=%s graded_with_a_verdict_word=%d bare_mention=%d of judgment=%d (--strict-grades makes the "
+                 "verdict use this reading)" % ("verdict" if strict_grades else "report", strict_n, bare, n_j))
     n_u = n_j - n_g
     ok = rv["state"] == "present" and n_u == 0 and n_s == 0 and bad_proofs == 0
     return lines, "ROUND-CLOSE project=%s device=%s reviewer=%s orders=%d judgment=%d graded=%d ungraded=%d self_graded=%d verdict=%s" % (
@@ -621,6 +726,29 @@ def selftest() -> int:
         case("all present is MAY-CLOSE", run(), "orders=2", "judgment=1", "graded=1", "ungraded=0", "self_graded=0", "verdict=MAY-CLOSE")
         reset(where="investigation")
         case("a CVO-kind row in the investigation file grades", run(), "graded=1", "verdict=MAY-CLOSE")
+        # D1-S15 (ETFS_RIVALS round 28): a header-only grade reads GRADED; a mention without a verdict reads UNGRADED.
+        reset(graded_by="")
+        w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md",
+          "# round 1 L9\n\nAuthor: 3.0.0_SA_CVO, 2026-10-12.\n\n**TEST_PROJ.TO-1 T1-AC2 MET.** The grade is written in this header only.\n")
+        case("a header-only grade by a CVO-kind author reads GRADED", run(), "graded=1", "ungraded=0", "verdict=MAY-CLOSE")
+        w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md",
+          "# round 1 L9\n\nAuthor: 3.0.0_SA_CVO, 2026-10-12.\n\n**TEST_PROJ.TO-1 T1-AC2 HELD:** no page is published yet.\n")
+        case("a header that names the criterion HELD is not a grade", run(), "graded=0", "ungraded=1", "verdict=REFUSED")
+        w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md",
+          "# round 1 L9\n\nAuthor: 2.0.0_SA_COO~C, 2026-10-12.\n\n**TEST_PROJ.TO-1 T1-AC2 MET.**\n")
+        case("a header grade by the order's own issuer is not a grade", run(), "graded=0", "verdict=REFUSED")
+        reset()
+        bare = {"id": "TEST_PROJ-C-S2", "surfaced_by": "3.0.0_SA_CVO", "one_line": "Read T1-AC2 and its instance beside the packet."}
+        w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md", "```json\n%s\n```\n" % json.dumps([bare]))
+        case("a mention without a verdict still grades by default and is REPORTED bare", run(), "graded=1", "verdict=MAY-CLOSE")
+        case("a mention without a verdict reads UNGRADED under --strict-grades", run(strict_grades=True), "graded=0", "ungraded=1", "verdict=REFUSED")
+        verdict_row = {"id": "TEST_PROJ-C-S3", "surfaced_by": "3.0.0_SA_CVO", "one_line": "TEST_PROJ.TO-1 T1-AC2: MET on this seat's read."}
+        w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md", "```json\n%s\n```\n" % json.dumps([verdict_row]))
+        case("a row with the verdict word grades under --strict-grades", run(strict_grades=True), "graded=1", "verdict=MAY-CLOSE")
+        struct_row = {"id": "TEST_PROJ-C-S4", "surfaced_by": "3.0.0_SA_CVO",
+                      "grades": [{"criterion": "T1-AC2", "instance": "x/TEST_PROJ.TO-1.one.proof_of_spec.json@abc", "verdict": "PASS"}]}
+        w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md", "```json\n%s\n```\n" % json.dumps([struct_row]))
+        case("a structured `grades` entry with a verdict grades under --strict-grades", run(strict_grades=True), "graded=1", "verdict=MAY-CLOSE")
         # A generic id (AC2): a CVO row naming AC2 only through another object (rl9.AC2.sh) must not grade this order.
         reset()
         w(base + "/task-orders/TEST_PROJ.TO-1.one.md", order.replace("T1-AC2", "AC2"))
@@ -704,6 +832,8 @@ def main(argv: list) -> int:
     ap.add_argument("--max-age-minutes", type=int, default=DEFAULT_MAX_AGE_MIN)
     ap.add_argument("--reviewer-only", action="store_true")
     ap.add_argument("--staged", action="store_true", help="read the project's files from the git index, not the working tree")
+    ap.add_argument("--strict-grades", action="store_true",
+                    help="a judgment criterion is graded only by a verdict word (or a `grades` entry), never by a mention")
     ap.add_argument("--selftest", action="store_true")
     args = ap.parse_args(argv)
     if args.selftest:
@@ -715,7 +845,7 @@ def main(argv: list) -> int:
         this_box = resolve_this_box(ROOT)
         lines, last = check(ROOT, sl, sl.Ctx(None), args.project, args.round, args.workstream, args.device or this_box,
                             this_box, sl.kind_resolver(), deep=args.deep, max_age=args.max_age_minutes,
-                            reviewer_only=args.reviewer_only, staged=args.staged)
+                            reviewer_only=args.reviewer_only, staged=args.staged, strict_grades=args.strict_grades)
     except Usage as exc:
         print("ERROR: %s" % exc, file=sys.stderr)
         return 2
