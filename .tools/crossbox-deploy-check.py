@@ -41,7 +41,8 @@ LAST line: CROSSBOX-DEPLOY device=<d> root=<name> open_call=<clear|hit> overlap=
            open_deploy=<clear|hit> verdict=<CLEAR|STOP>
 SC-e-92 (OPEN-DEPLOY): a sentinel that trunk (the HEAD of --repo-root) deleted, read stale at a lagging worktree HEAD, is STALE and
 draws no hit (one STALE line per slug, with the deleting commit); a registered worktree whose directory is gone is VANISHED in the
-denominator (vanished=), never a hit. A sentinel trunk never carried is a deploy open on a branch and still counts.
+denominator (vanished=) and is read through its branch ref (else its detached HEAD sha) at --repo-root: clear only when that ref was
+read, else a hit. A sentinel trunk never carried is a deploy open on a branch and still counts.
 Exit: 0 CLEAR, 1 STOP, 2 a usage error. CLEAR means this box acts and tells the laptop; STOP names what it hit and routes a
 cross-box call (cell CT-s-6's tool).
 """
@@ -326,6 +327,28 @@ def file_patterns(files: list) -> list:
     return pats
 
 
+def worktree_refs(porcelain: str) -> dict:
+    """{worktree path: its branch ref (refs/heads/...), else its detached HEAD sha, else None} from `git worktree list --porcelain`."""
+    refs, path = {}, None
+    for ln in porcelain.splitlines():
+        if not ln.strip():
+            path = None
+        elif ln.startswith("worktree "):
+            path = ln[9:].strip()
+            refs[path] = None
+        elif path is not None and ln.startswith("branch "):
+            refs[path] = ln[7:].strip()
+        elif path is not None and ln.startswith("HEAD ") and refs.get(path) is None:
+            refs[path] = ln[5:].strip()
+    return refs
+
+
+def listing_rows(listing: str) -> tuple:
+    """(all rows, sentinel rows) of an ls-tree listing: a sentinel is a file whose name does not start with a dot."""
+    entries = [ln.split(None, 3) for ln in listing.splitlines() if ln.strip()]
+    return entries, [e for e in entries if len(e) == 4 and not os.path.basename(e[3].split("\t")[-1]).startswith(".")]
+
+
 def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
     """files None, or a Terraform root: a sentinel hits when its text names the root (the state of a whole root is what an apply
     works on). A non-Terraform root in FILES MODE: a sentinel hits only when its text names a carried file."""
@@ -336,6 +359,7 @@ def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
         lines.append("  files mode: a sentinel hits only if it names one of the %d carried file(s), not the shared root" % len(files))
     rc, out = git_lines(repo_root, "worktree", "list", "--porcelain")
     trees = [ln[9:].strip() for ln in out.splitlines() if ln.startswith("worktree ")] if rc == 0 else []
+    refs = worktree_refs(out) if rc == 0 else {}
     if rc != 0 or not trees:
         hits.append("git worktree list failed (rc=%d): the open deploys of other seats cannot be read, so this is not clear" % rc)
         return hits, ["  HIT %s" % hits[0]]
@@ -343,9 +367,20 @@ def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
     vanished = 0
     for tree in trees:
         if not os.path.isdir(tree):
-            # SC-e-92 limb e: a registration whose directory is gone (prunable) is VANISHED in the denominator, never a hit.
+            # SC-e-92 limb e, AMENDED (AMENDMENT 1, row D1-W81-S2): a registration whose directory is gone is VANISHED in the denominator,
+            # and its ref (branch, else detached HEAD sha) is read at repo_root exactly like a HEAD. Clear only when the ref was read.
             vanished += 1
-            lines.append("  worktree %s: VANISHED (registered, directory absent)" % tree.replace("\\", "/"))
+            shown, ref = tree.replace("\\", "/"), refs.get(tree)
+            rc, listing = git_lines(repo_root, "ls-tree", "-r", ref, "org/critical_paths/.open_deploys/") if ref else (1, "")
+            if not ref or rc != 0:
+                why = ("ls-tree %s rc=%d" % (ref, rc)) if ref else "no branch or HEAD ref to read"
+                hits.append("worktree %s: VANISHED (registered, directory absent), %s: not readable, not clear" % (shown, why))
+                lines.append("  HIT %s" % hits[-1])
+                continue
+            entries, sentinels = listing_rows(listing)
+            lines.append("  worktree %s: VANISHED (registered, directory absent), read through %s: %d file(s), %d sentinel(s)" % (
+                shown, ref, len(entries), len(sentinels)))
+            found.extend((e[2], e[3].strip(), tree) for e in sentinels)
             continue
         rc, listing = git_lines(tree, "ls-tree", "-r", "HEAD", "org/critical_paths/.open_deploys/")
         if rc != 0:
@@ -362,9 +397,8 @@ def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
             hits.append("worktree %s: ls-tree rc=%d (not readable, not clear)" % (tree, rc))
             lines.append("  HIT %s" % hits[-1])
             continue
-        entries = [ln.split(None, 3) for ln in listing.splitlines() if ln.strip()]
-        sentinels = [e for e in entries if len(e) == 4 and not os.path.basename(e[3].split("\t")[-1]).startswith(".")]
-        lines.append("  worktree %s: %d file(s) at HEAD, %d sentinel(s) read" % (tree.replace("\\", "/"), len(entries), len(sentinels)))
+        entries, sentinels = listing_rows(listing)
+        lines.append("  worktree %s: %d file(s) at HEAD, %d sentinel(s) read"% (tree.replace("\\", "/"), len(entries), len(sentinels)))
         found.extend((e[2], e[3].strip(), tree) for e in sentinels)
     # SC-e-92 limb d, TRUNK FIRST: the HEAD of repo_root is trunk. A sentinel that trunk does not carry, at a path trunk's history DOES
     # carry, was deleted at trunk: a worktree that has not taken the closing commit still reads it, so it is STALE and draws no hit.
