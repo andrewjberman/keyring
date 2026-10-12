@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~70</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after re-running both criteria: CTw8-AC1 12 passed, CTw8-AC2 3 (AMENDMENT 1); the suites test_opal_naming.py 96, test_opal_naming_firm_pages.py 16, test_opal_naming_firm_access_ts.py 5 pass; the proof instance is VALID. The comments moved verbatim: 38 lines in the old literal, 38 in the registry notes (inflection 4, cottonwood 11, demo 23). The portal commit 1df22d9666 (base 2ed4373d, 35 insertions, 33 deletions) is prepared on the portal branch wk-NFRA_CTLPLN-70-portal and landed by the issuer. A channel splice made by the issuer's own conflict resolution was repaired by rebuilding the branch from the worker's pre-merge commit and re-merging main; the worker's row W70-S4 (about the splice) was never committed and was dropped from the instance as moot.</status_reason>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>

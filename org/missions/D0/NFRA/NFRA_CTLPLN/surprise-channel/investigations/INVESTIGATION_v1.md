@@ -8125,3 +8125,80 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Observation only. Of the 18 non-ASCII lines, two are print lines; the rest sit in comments and strings."
 }
 ```
+
+## NFRA_CTLPLN-W70-S1 -- CTw8-AC2 expects four firm notes; only three firm sets carried hand comments at the portal base
+
+```json
+{
+  "id": "NFRA_CTLPLN-W70-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~70",
+  "surfaced_at": "2026-10-12T10:46:55Z",
+  "one_line": "CTw8-AC2 expects four firm rows carrying a note; the portal base 2ed4373d holds comment lines in three firm sets, so grep -c \"note\" on firm_pages.json reads 3.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal show 2ed4373d523a278d2064967b5bd9fc24cfc35b3e:src/lib/firmAccess.ts: the first firm's set (lines 45-54) holds no // line; comment lines sit at 63-66 (inflection), 71-73 and 77-84 (cottonwood), 91-113 (demo): 4 + 11 + 23 = 38",
+      "infra/logic/registry/firm_pages.json at commit e76206bdcb: grep -c \"note\" reads 3; validate() refuses an empty note (the cell's rule: a non-empty string)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTw8-AC2 (grep -c \"note\" infra/logic/registry/firm_pages.json, expect 4) and cell step 1: each firm's comment lines move into that firm's registry row as a note.",
+  "world_is": "The first firm row has no comment line inside its set, so there is no text to move and no note to write. A placeholder note would render a comment line and break the multiset equality with the old 38 lines (T2), and an empty note is refused. Three rows carry a note; CTw8-AC2 reads 3 and is recorded FAIL. The order stays open until the issuer rules whether the first row takes a note.",
+  "notes": "Found while building step 1. Not resolved by this worker: a fourth note is an issuer decision, not a widening of this order."
+}
+```
+
+## NFRA_CTLPLN-W70-S2 -- the old firm comments are not all ASCII; five moved comment lines carry non-ASCII
+
+```json
+{
+  "id": "NFRA_CTLPLN-W70-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~70",
+  "surfaced_at": "2026-10-12T10:46:55Z",
+  "one_line": "The cell says the old comments are ASCII; five of the 38 comment lines inside the literal at 2ed4373d carry non-ASCII characters.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal show 2ed4373d523a278d2064967b5bd9fc24cfc35b3e:src/lib/firmAccess.ts: non-ASCII lines inside the literal are 63, 66 (inflection), 71, 73 (cottonwood), 91 (demo); the file holds 12 non-ASCII lines in all; code points U+2014 (8), U+2192 (4), U+00A7 (1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell's rule: no non-ASCII is added, because the old comments are ASCII; if one is not, say so and keep it byte for byte.",
+  "world_is": "The moved text keeps its characters. The registry stores them as JSON escapes, so the registry file itself is ASCII; the generated block in the portal file carries the characters, as the hand-kept file did. No wording changed.",
+  "notes": "Observation only; the premise of the cell is what does not hold."
+}
+```
+
+## NFRA_CTLPLN-W70-S3 -- the CT-w-4 block is absent from this worktree's portal base, so the existing access suite fails before this order
+
+```json
+{
+  "id": "NFRA_CTLPLN-W70-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~70",
+  "surfaced_at": "2026-10-12T10:46:55Z",
+  "one_line": "The cell requires lib/tests/test_opal_naming_firm_access_ts.py to still pass; before this order it read 5 failed, 16 passed on the pair of firm suites, because portal base 2ed4373d holds no generated block.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest on lib/tests/test_opal_naming_firm_access_ts.py and lib/tests/test_opal_naming_firm_pages.py at worktree HEAD 6be7ede50d, before this order's commits: 5 failed (StopIteration on the block mark), 16 passed",
+      "the CT-w-4 block is commit ef65ad67 on portal branch wk-NFRA_CTLPLN-65-portal; this worktree's portal branch wk-NFRA_CTLPLN-70-portal is at 2ed4373d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cell acceptance: the existing lib/tests/test_opal_naming_firm_access_ts.py must still pass after the change.",
+  "world_is": "The suite needs the generated block in the portal file. Portal commit 1df22d9666 regenerates the block on 2ed4373d, and the pair then reads 21 passed. Against ef65ad67 the block differs only in the mark hash and the note lines.",
+  "notes": "Observation only; the fix is the regenerated block this order lands on its own portal branch."
+}
+```
