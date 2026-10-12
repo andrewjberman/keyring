@@ -3337,3 +3337,19 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r159/p159_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-463` | the live authorizer read by its bytes and matched by content to a commit's blob; the commits after it; how the function is packaged and whether the map's recorder sees it; every render-token sender and route with what it gets from the live authorizer today; the orders behind the unreleased commits; one verdict of four | FWD-7 (the export of what the advisor sees) | LOCAL | none | P159-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~318. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 152. ROUND 160, WORKSTREAM ~P (2026-10-12 ~01:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6245; PRD v0.46 @3f577ef37f, ratified-text half asked)
+
+IB-pr-459 drained @9e2f9ef21e. PRD v0.46 is the date-basis producer's contract (ten design answers); nothing is served by it and
+NO build cell is cut before three reads. Three read-only cells, disjoint write sets, no edge between them; (b) goes to the CTO
+first. Reads need no signature; a build cell waits for the ratified-text half.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r160/p160_cells.py`: every criterion FAILs at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-464` | (b) the performance route's reader, per composed firm and per window: accounts with an excluded day, each placed first-day-only, interior-only, both, or last-day; the claim the reader gives them; what a non-OK row means | FWD-3 | LOCAL | none | P160-a |
+| `IB-pr-465` | (a) whether the holdings-performance producer function's network reaches the vendor, from configuration; what a fetch would use; whether the package carries it | FWD-13 | LOCAL | none | P160-b |
+| `IB-pr-466` | (c) the pages that render the route's returns, by subtraction over the portal checkout; what each shows of the claim, the absences and the excluded days; what the adapter drops | FWD-3 | LOCAL | none | P160-c |
+
+fanout: 3 of 3 chains, cap 8, reason: three independent reads. Assignees: 0.9.0_WK_IRPT_BCKEND~319, ~320, ~321. DIRECT-ACT each.
