@@ -1401,3 +1401,41 @@
 2026-10-12T08:32:34Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=6.50  graded=n/a  args=(--verify-merge c18f85427c6380c21ce8e6b2fcd2cf75d6edff8c)  first=(none)
 2026-10-12T08:32:47Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=43.86  took=566ac54257 hold=3.94s graded=0/16 pushed=c18f85427c  phases: t_fetch=3.29s t_merge_cloud=20.26s t_land=3.97s t_push=6.51s
 2026-10-12T08:33:08Z PASS  2.0.0_SA_COO~MP  1  (all paths in-lane) act=84ef2c55abf3 paths=1:org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/INVESTIGATION_v1.Z.md
+2026-10-12T08:33:35Z PASS  2.0.0_SA_COO~MP  1  (all paths in-lane) act=84ef2c55abf3 paths=1:org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/INVESTIGATION_v1.Z.md
+2026-10-12T08:33:36Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-12T08:33:46Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-12T08:33:56Z LANDED-2P  2.0.0_SA_COO~MP  f8c46aa826  paths=1  validate=68.35s  wait=0.16s  hold=2.63s  build=1.55s  ref=0.75s  post-commit=7.84s  attempt=1
+2026-10-12T08:34:04Z LANDED-2P  0.0.0_AB_MSTR~Z  8d11a90992  paths=1  validate=32.18s  wait=0.80s  hold=2.63s  build=2.12s  ref=0.44s  post-commit=7.38s  attempt=1
+2026-10-12T08:34:29Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=19.86  took=already-current pushed=8d11a90992  phases: t_fetch=1.79s t_push=10.01s
+2026-10-12T08:42:34Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=5.87  graded=n/a  args=(--verify-merge 7496cbb0ac5f99828726685a5e4adab8d167590d)  first=(none)
+2026-10-12T08:42:47Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=42.51  took=54de90a7be hold=2.76s graded=0/1 pushed=7496cbb0ac  phases: t_fetch=3.50s t_merge_cloud=20.06s t_land=2.79s t_push=8.04s
+2026-10-12T08:47:04Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane) act=21ff39eadd43 paths=1:org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md
+2026-10-12T08:47:14Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane) act=21ff39eadd43 paths=1:org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md
+2026-10-12T08:47:30Z LANDED-2P  1.0.0_SA_CTO~Z  fc09ade4ea  paths=1  validate=27.81s  wait=0.16s  hold=1.98s  build=1.13s  ref=0.79s  post-commit=6.64s  attempt=1
+2026-10-12T08:52:22Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=5.08  graded=n/a  args=(--verify-merge dc59f211a8271634499003fb58f7724ab8bf6a26)  first=(none)
+2026-10-12T08:52:39Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=36.94  took=7ee9bc9f67 hold=4.28s graded=0/5 pushed=dc59f211a8  phases: t_fetch=2.03s t_merge_cloud=14.11s t_land=4.96s t_push=10.27s
+2026-10-12T09:02:24Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=3.85  graded=n/a  args=(--verify-merge ebde03cec658b3cc9ea7a424b283c70402284792)  first=(none)
+2026-10-12T09:02:37Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=32.73  took=0bffadb5db hold=4.22s graded=0/8 pushed=ebde03cec6  phases: t_fetch=3.02s t_merge_cloud=12.54s t_land=4.25s t_push=7.59s
+2026-10-12T09:03:50Z PASS  2.0.0_SA_COO~MP  6  (all paths in-lane) act=c9fc662b4189 paths=6:org/missions/D6/NFRA/NFRA_MCPORTAL/decompositions/NFRA_MCPORTAL_DECOMP.md|org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/c17/checks/_n1_harness.py|org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/c17/checks/_n1_probe.py|org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/c17/checks/n1.AC1.sh|org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/c17/checks/n1.AC2.sh|org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/c17/checks/n1.AC3.sh
+2026-10-12T09:03:57Z PASS  2.0.0_SA_COO~MP  6  (all paths in-lane) act=c9fc662b4189 paths=6:org/missions/D6/NFRA/NFRA_MCPORTAL/decompositions/NFRA_MCPORTAL_DECOMP.md|org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/c17/checks/_n1_harness.py|org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/c17/checks/_n1_probe.py|org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/c17/checks/n1.AC1.sh|org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/c17/checks/n1.AC2.sh|org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/c17/checks/n1.AC3.sh
+2026-10-12T09:04:32Z LANDED-2P  2.0.0_SA_COO~MP  6e73fee848  paths=6  validate=27.34s  wait=0.46s  hold=5.73s  build=3.37s  ref=1.46s  post-commit=19.90s  attempt=1
+2026-10-12T09:07:09Z PASS  2.0.0_SA_COO~MP  1  (all paths in-lane) act=c353d2915932 paths=1:org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-n-1.bounded-gitstate-read.md
+2026-10-12T09:07:21Z PASS  2.0.0_SA_COO~MP  1  (all paths in-lane) act=c353d2915932 paths=1:org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-n-1.bounded-gitstate-read.md
+2026-10-12T09:07:37Z LANDED-2P  2.0.0_SA_COO~MP  f8ee9e7453  paths=1  validate=49.22s  wait=0.45s  hold=1.64s  build=1.12s  ref=0.45s  post-commit=7.89s  attempt=1
+2026-10-12T09:10:38Z PASS  2.0.0_SA_COO~MP  1  (all paths in-lane) act=84ef2c55abf3 paths=1:org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/INVESTIGATION_v1.Z.md
+2026-10-12T09:11:01Z PASS  2.0.0_SA_COO~MP  1  (all paths in-lane) act=84ef2c55abf3 paths=1:org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/INVESTIGATION_v1.Z.md
+2026-10-12T09:11:16Z LANDED-2P  2.0.0_SA_COO~MP  4c8c45bc1a  paths=1  validate=61.11s  wait=0.16s  hold=1.27s  build=0.77s  ref=0.43s  post-commit=5.16s  attempt=1
+2026-10-12T09:12:46Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=8.12  graded=n/a  args=(--verify-merge 53cd0cdaf77049cc1c615f4e1d7421ee1fcb08dc)  first=(none)
+2026-10-12T09:13:06Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=59.85  took=fdb33d0be8 hold=5.13s graded=0/15 pushed=53cd0cdaf7  phases: t_fetch=3.81s t_merge_cloud=25.72s t_land=5.16s t_push=11.47s
+2026-10-12T09:14:32Z PASS  0.7.0_AE_CloudOps~IR  1  (all paths in-lane) act=e15d57983c74 paths=1:org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round9/schwab/POST_APPLY.md
+2026-10-12T09:14:48Z PASS  0.7.0_AE_CloudOps~IR  1  (all paths in-lane) act=e15d57983c74 paths=1:org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round9/schwab/POST_APPLY.md
+2026-10-12T09:15:15Z LANDED-2P  0.7.0_AE_CloudOps~IR  3eb20fbdcc  paths=1  validate=44.41s  wait=1.82s  hold=3.81s  build=2.24s  ref=1.15s  post-commit=11.27s  attempt=1
+2026-10-12T09:20:02Z PASS  0.7.0_AE_CloudOps~IR  1  (all paths in-lane) act=e15d57983c74 paths=1:org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round9/schwab/POST_APPLY.md
+2026-10-12T09:20:18Z PASS  0.7.0_AE_CloudOps~IR  1  (all paths in-lane) act=e15d57983c74 paths=1:org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round9/schwab/POST_APPLY.md
+2026-10-12T09:20:36Z LANDED-2P  0.7.0_AE_CloudOps~IR  e442f91f2f  paths=1  validate=36.74s  wait=0.16s  hold=2.55s  build=1.23s  ref=0.89s  post-commit=5.59s  attempt=1
+2026-10-12T09:22:33Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=7.00  graded=n/a  args=(--verify-merge 92050a056009881cad08cd3aaa1bff027e87777e)  first=(none)
+2026-10-12T09:22:48Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=43.75  took=d4de9f2619 hold=3.96s graded=0/5 pushed=92050a0560  phases: t_fetch=4.23s t_merge_cloud=19.29s t_land=3.99s t_push=8.93s
+2026-10-12T09:32:10Z PASS  0.7.0_AE_CloudOps~MP  2  (all paths in-lane) act=cb87f87b8e3b paths=2:infra/aws/ec2/opal-gateway/app/admin_fabric_gitstate.py|infra/aws/ec2/opal-gateway/tests/test_admin_fabric_gitstate.py
+2026-10-12T09:32:18Z PASS  0.7.0_AE_CloudOps~MP  2  (all paths in-lane) act=cb87f87b8e3b paths=2:infra/aws/ec2/opal-gateway/app/admin_fabric_gitstate.py|infra/aws/ec2/opal-gateway/tests/test_admin_fabric_gitstate.py
+2026-10-12T09:32:32Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=6.90  graded=n/a  args=(--verify-merge 3f69fe25f54d9022f6a8f1bf8f33043365282cd0)  first=(none)
+2026-10-12T09:32:49Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=45.71  took=c08259be7b hold=4.31s graded=0/15 pushed=3f69fe25f5  phases: t_fetch=3.67s t_merge_cloud=19.40s t_land=4.34s t_push=8.42s
