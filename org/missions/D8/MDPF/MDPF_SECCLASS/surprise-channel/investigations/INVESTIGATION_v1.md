@@ -6361,3 +6361,346 @@ by dell1 or by this seat.
   "world_is": "At origin/DEV 62507dae67 the file has the census test and no mutant control; the only 'mutant' text is the comment at :45-47, which names a control 'below' that is absent. Nothing was deleted or weakened; the repair (portal 64d8c6de38) only swapped NAMED line numbers for content anchors and added the NEGATIVE-ARM test. Whether a mutant control was meant to exist is not decided here."
 }
 ```
+
+## MDPF_SECCLASS-D1-W81-S1 -- A trunk-deleted sentinel re-opened under the same name on a worker branch would read STALE by history alone
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W81-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~81",
+  "surfaced_at": "2026-10-12T09:13:11Z",
+  "one_line": "Read literally, the SC-e-92 stale test (trunk history carries the path) marks a sentinel re-opened under a trunk-deleted file name on a worker branch as STALE, so it draws no hit and a real open deploy reads CLEAR. The tool also requires the stale reading's blob to be one trunk carried at that path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Tool at commit 2cbf819176 (.tools/crossbox-deploy-check.py, measure_open_deploy: stale_at built from git log -m --raw per path absent at trunk HEAD; a reading is stale only when its blob is in that set).",
+      "Control run 2026-10-12 ~09:1xZ, .scratch/control_reopen.py in worktree wk-MDPF_SECCLASS-81: a closed-at-trunk slug re-opened on branch 'worker' under the same file name with a new blob prints REOPEN-CONTROL hits=1 (expect 1), stale=0, the branch reading drawn as HIT open deploy reopen (status OPEN).",
+      "Same control, lagging case (trunk deleted the sentinel, lagging HEAD still holds the trunk blob): LAGGING-LINES hits=0, one STALE line naming the deleting commit, stale=1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-92 build step 1 (worker face): a sentinel absent at trunk HEAD whose path trunk history carries is STALE and draws no hit; a sentinel trunk never carried is a deploy open on a worker branch and counts as today.",
+  "world_is": "A path can carry a closed sentinel in trunk history and a fresh open sentinel on a worker branch under the same file name, with a blob trunk never carried. The history test alone cannot tell the two apart, so the literal rule reads a real open deploy CLEAR. The tool keeps the stale rule narrow: stale also requires the blob to be one trunk carried at that path (the lagging-copy case still reads stale).",
+  "notes": "SURFACED, NOT CHASED. The narrowing is an addition beyond the literal build step 1, kept because the cell forbids a clear-when-open read; the issuer may ratify or reverse it. Hazard INERT while the blob condition stands."
+}
+```
+
+## MDPF_SECCLASS-D1-W81-S2 -- A deploy open on the branch of a removed worktree reads CLEAR: VANISHED never draws a hit and branch refs are not read
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W81-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~81",
+  "surfaced_at": "2026-10-12T09:13:11Z",
+  "one_line": "Under limb e a sentinel committed on the branch of a registered worktree whose directory is gone reads CLEAR, because the tool reads only each registered worktree's HEAD at its path, and VANISHED never draws a hit. Before this change the same state drew a hit.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Control run 2026-10-12 ~09:1xZ, .scratch/control_vanished_branch.py at worktree wk-MDPF_SECCLASS-81 (tool at 2cbf819176): a sentinel committed on branch 'gone', then the worktree directory removed, prints VANISHED-BRANCH-CONTROL hits=0; denominator 'vanished=1 stale=0', 0 sentinel reads.",
+      "Base tool at 2f215ca75a:.tools/crossbox-deploy-check.py lines 341-356 classified the same state as a hit (ls-tree rc=128, not readable, not clear) because VANISHED covered only a tree that left the list during the read.",
+      "Live run 2026-10-12 09:10Z of .tools/crossbox-deploy-check.py at 2cbf819176 on /c/dev/wk-secclass-81 (64 worktree(s), 1163 sentinel read(s)): vanished=0, so no such state is present in the live worktree list at this read."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-92 build step 2: a registered worktree whose directory does not exist is VANISHED, counted in vanished= and never a hit. The cell's defect statement: a change that makes the check read CLEAR when a real deploy is open on a branch is the one defect the cell must not create.",
+  "world_is": "A deploy open on a worker's branch stays on that branch until the drain (CLAUDE.md NEVER-2). If its worktree directory is removed before the drain, the tool cannot see the sentinel: it reads each registered worktree's HEAD at its path, and the branch ref is not read. The state reads OPEN-DEPLOY clear, which the cell forbids.",
+  "notes": "SURFACED, NOT CHASED. Not implemented: a branch-ref read for VANISHED entries is new reading surface outside the TO's build, and the frozen spec allows only this row. The issuer decides whether VANISHED entries' branch sentinels count as hits. Disarm owner is the issuer that cut SC-e-92."
+}
+```
+
+## MDPF_SECCLASS-D1-W81-S3 -- The worker face names rows MDPF_SECCLASS-W81-S<k>; the surprise-row gate requires the dell1 coordinate
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W81-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~81",
+  "surfaced_at": "2026-10-12T09:13:11Z",
+  "one_line": "The worker face names this order's rows MDPF_SECCLASS-W81-S<k>; the surprise-row gate refused a dell1 row without the D1 coordinate, so this order's rows are minted MDPF_SECCLASS-D1-W81-S<k>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit of the W81 rows at worktree wk-MDPF_SECCLASS-81 (base 2cbf819176) refused with: BLOCKED -- 2 violation(s) on NEW rows: fabric='dell1' but the id carries no coordinate. A row filed on dell1 is written <CODE>-D1-S<n> (worker: <CODE>-D1-W<n>-S<k>).",
+      "Existing dell1 worker rows in this channel carry the coordinate, e.g. MDPF_SECCLASS-D1-W78-S1 (channel line 6212)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face: this order's rows mint MDPF_SECCLASS-W81-S<k>.",
+  "world_is": "The gate requires the fabric coordinate on a dell1 worker row: MDPF_SECCLASS-D1-W81-S<k>. The two refused rows were never committed and were re-minted with the coordinate before the commit.",
+  "notes": "SURFACED, NOT CHASED. Id form only; no content changed."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W83-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~83",
+  "surfaced_at": "2026-10-12T09:21:10Z",
+  "one_line": "The 2026-10-06/07/08 canonical holdings partitions are not last written 2026-10-10T23:15Z: their current versions carry LastModified 2026-10-12T04:16:42Z, and the 2026-10-10T23:15:02Z objects are prior versions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-object-versions --bucket opal-data-bd --prefix gold/canonical/holdings/2026-10-06.parquet (2026-10-12 ~09:2xZ): 9 versions; latest IsLatest true LastModified 2026-10-12T04:16:42+00:00 ETag d28efa55e568b130576eeacdb7692ada; 2026-10-10T23:15:02+00:00 is a prior version (ETag a7b28833f854c6ad8ca8c378abf272cb)",
+      "same read for 2026-10-07 (7 versions, latest 2026-10-12T04:16:42+00:00) and 2026-10-08 (5 versions, latest 2026-10-12T04:16:42+00:00)",
+      "aws s3api list-objects-v2 --bucket opal-data-bd --prefix gold/canonical/holdings/ : 2474 keys; LastModified of 2026-10-06, 2026-10-07 and 2026-10-08 all 2026-10-12T04:16:42+00:00"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-94 worker face: all three partitions (2026-10-06, 07 and 08) were last written 2026-10-10T23:15Z, after the served snapshot 2026-10-10T05:26Z.",
+  "world_is": "At 2026-10-12 ~09:2xZ the current version of each of the three partitions has LastModified 2026-10-12T04:16:42Z. The 2026-10-10T23:15:02Z object is a prior version of each key (version counts 9, 7 and 5)."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W83-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~83",
+  "surfaced_at": "2026-10-12T09:21:10Z",
+  "one_line": "The 2026-10-10T23:15Z writes re-put identical bytes: each of the 15 window versions has the ETag of its prior version, so the content change to the three partitions sits at 2026-10-11T04:16:35Z and 2026-10-12T00:33:48Z, not at 23:15Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-object-versions --bucket opal-data-bd --prefix gold/canonical/holdings/ (no truncation, 2969 versions over 2474 keys): 15 versions with LastModified 2026-10-10T23:15:01-03Z; each ETag equals the prior version's ETag of its key (15 same, 0 changed)",
+      "gold/canonical/holdings/2026-10-06.parquet ETag a7b28833f854c6ad8ca8c378abf272cb at 2026-10-10T04:15:48Z and again at 2026-10-10T23:15:02Z; ETag 4cf2018fa797482095dd5f7db3624a5f at 2026-10-11T04:16:35Z; ETag d28efa55e568b130576eeacdb7692ada at 2026-10-12T00:33:48Z; the same ETag pattern holds for 2026-10-07 and 2026-10-08"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-94 and surprise MDPF_SECCLASS-D1-W78-S1 locate the partition change at the 2026-10-10T23:15Z write.",
+  "world_is": "The 23:15Z write re-puts identical bytes. The bytes served at 2026-10-10T05:26Z (from the 04:15:48Z versions) equal the bytes at 23:15:02Z. The content change to the three partitions is at 2026-10-11T04:16:35Z and 2026-10-12T00:33:48Z. The 23:15Z re-put happens on 2026-10-08, 09 and 10 for these keys, and not on 2026-10-11."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W83-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~83",
+  "surfaced_at": "2026-10-12T09:21:10Z",
+  "one_line": "The BD gold runner telemetry carries resource samples keyed by runner group, not by script or output key, so the writer of the 23:15Z versions is named by code and run-time containment, not by a log line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-bd/logs/gold-layer/telemetry/bd-gold-layer-runner/B_00/608de09d26a6.jsonl (run 608de09d26a6): rows span 2026-10-10T23:14:40.239Z to 23:15:02.865Z; fields ts, runner, script (group code B_00), run_id, cpu_pct, memory_mb, threads, no output key",
+      "aws s3api head-object gold/canonical/holdings/2026-10-06.parquet --version-id 2b_PXBL7_MlZH3iHICnCCQvAUH7nJxPc: Metadata {} (no writer metadata)",
+      "aws cloudtrail lookup-events --start-time 2026-10-10T23:00:00Z --end-time 2026-10-10T23:30:00Z --lookup-attributes AttributeKey=EventSource,AttributeValue=s3.amazonaws.com: 0 events; no gold_incremental log file dated 2026-10-10 23:xx under logs/gold-layer/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-94 step 2: name the writer from the object metadata, the BD gold runner telemetry and logs for the window, or CloudTrail management events.",
+  "world_is": "Object metadata is empty. Telemetry names a runner group and a run id, never the script or the key. CloudTrail management lookup holds no S3 PutObject (a data event). The writer is identified by code (B_00.canonical_holdings.py is the only put_object to gold/canonical/holdings/) plus containment of the 15 writes (2026-10-10T23:15:01-03Z) inside B_00 run 608de09d26a6 (23:14:40.239Z-23:15:02.865Z). The IAM principal is not resolved."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W83-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~83",
+  "surfaced_at": "2026-10-12T09:21:10Z",
+  "one_line": "comp-pipescript io lists B_02 as an implicit writer of CANONICAL_HOLDINGS_PREFIX; the code shows B_02 reads that prefix and writes only canonical_lots keys, so the distinct writer count is 1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-pipescript io C_06.client_mix_timeseries.py --pipeline bd-gold: CANONICAL_HOLDINGS_PREFIX <- IMPLICIT: B_00, B_02 (via FUNC-key)",
+      "data/black_diamond/scripts/gold/B_02.canonical_lots.py: reads gold/canonical/holdings/ at lines 202, 711 and 967; puts only canonical_lots_unrealized_key, canonical_lots_realized_key, CANONICAL_LOTS_INCR_WATERMARK and gold/_parity keys at lines 623-629, 859-862, 1018 and 1153",
+      "data/black_diamond/scripts/gold/B_00.canonical_holdings.py: put_object to canonical_holdings_key at lines 860, 1004 and 1352 (the only writer of the prefix in the tree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "comp-pipescript io names the writers of CANONICAL_HOLDINGS_PREFIX as B_00 and B_02 (IMPLICIT, via FUNC-key), so two writers are in scope for the window.",
+  "world_is": "B_02 writes no key under gold/canonical/holdings/. Its puts are canonical_lots keys, a watermark and a parity scorecard. The distinct writer count of the prefix is 1 (B_00)."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W83-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~83",
+  "surfaced_at": "2026-10-12T09:21:10Z",
+  "one_line": "C_06's incremental fires never re-derive a retained date while B_00 keeps moving that date's canonical bytes, so the served C_06 totals for 2026-10-06, 07 and 08 are left on their snapshot by the next default fire.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (the ruling on correction or drift follows the W78 read; the record leaves ruling_on_correction_or_drift null)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py :689 keys_to_process = [k for k in all_keys if _parse_date(k) > watermark] when incremental; :281 the incremental merge keeps every already-written date",
+      "gold/meta/client_timeseries_watermark.json data_as_of 2026-10-09 (LastModified 2026-10-11T05:23:28+00:00); the canonical prefix's last key is 2026-10-09.parquet",
+      "canonical bytes of 2026-10-06/07/08 changed at 2026-10-11T04:16:35Z and 2026-10-12T00:33:48Z (ETag changes in list-object-versions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C_06 builds only partitions dated after the watermark and keeps every already-written date, so a served date is re-derived only when it is new.",
+  "world_is": "The watermark is data_as_of 2026-10-09 and no canonical partition dated after it exists at read time, so the next default fire re-serves none of 2026-10-06, 07 or 08 (c06_reserves_dates_next_fire false), while B_00 has changed those partitions' bytes on 2026-10-11 and 2026-10-12. Whether the served totals should be corrected is not decided here."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W83-S6",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~83",
+  "surfaced_at": "2026-10-12T09:21:10Z",
+  "one_line": "The C_06 holdings listing reads S3_BUCKET directly, not platinum_source; in the default legacy mode both resolve to opal-data-bd with the same key, so the listed partitions are unchanged by the premise's wording.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py :324-332 _list_positions_cube_keys() paginates list_objects_v2 with Bucket=S3_BUCKET; :319 uses platinum_source for per-key reads",
+      "data/black_diamond/scripts/gold/lib/platinum_dest_view.py PLATINUM_CLASSES has no gold/canonical/holdings/ class; data/black_diamond/scripts/gold/lib/platinum_dest.py destination() and source() return (S3_BUCKET, legacy_key) when no class owns the key and the mode is legacy (the default)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-94 step 1: the partitions are listed in the bucket named by platinum_source.",
+  "world_is": "The listing uses S3_BUCKET (opal-data-bd) directly. platinum_source resolves to the same bucket and key for this prefix in the default legacy mode, so the listing and the per-key reads address the same objects."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W83-S7",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~83",
+  "surfaced_at": "2026-10-12T09:24:14Z",
+  "one_line": "The order names row ids MDPF_SECCLASS-W83-S<k>, but the surprise-row gate refuses a dell1 row whose id lacks the D1 coordinate; the six rows above are filed as MDPF_SECCLASS-D1-W83-S<k>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh on the SC-e-94 commit (2026-10-12 ~09:24Z): surprise-row-gate BLOCKED 6 violations, each 'fabric=dell1 but the id carries no coordinate ... dell1 = id <CODE>-D1-S<n> (worker: <CODE>-D1-W<n>-S<k>)'",
+      "existing dell1 worker row ids in the same channel and project, e.g. MDPF_SECCLASS-D1-W78-S1 cited by the round-20 proof MDPF_SECCLASS.TO-SC-e88.c06-total-vs-class-sum-trace.proof_of_spec.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-94 refusal clause: file the surprise row with id MDPF_SECCLASS-W83-S<k>.",
+  "world_is": "The surprise-row gate requires the fabric coordinate in a dell1 row id (MDPF_SECCLASS-D1-W<n>-S<k>) and refuses the bare form. The rows are filed as MDPF_SECCLASS-D1-W83-S1..S6, with this row as S7; the allocator's slot n is 83 in both forms."
+}
+```
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W80-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~80",
+  "surfaced_at": "2026-10-12T09:18:49Z",
+  "one_line": "The order rollback handle for the served C_06 (ETag 1aa6e3b5..., VersionId AREnJgLo...) is the SC-e-87 post-act object, not the object served now.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e91.c06-retained-unclassified-revisit.md@2f215ca75a (Rollback clause)",
+      "org/critical_paths/change_management/20261011T0616Z_secclass-e87-bd-served-path-reach-sc1-20261011_deploy_completion.md@2f215ca75a:15-17 (AREnJ post-act row)",
+      "org/critical_paths/change_management/20261012T0615Z_advi-firmbkts-fb-f-9-act2-mode-move-dell1-20261012_deploy_completion.md@2f215ca75a:94 (VersionId 5xAe row)",
+      "git show 2f215ca75a:data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py | md5sum = 8e1b350fc55607bddd1ac84329cb1a98",
+      "head-object s3://opal-data-bd/code/gold/C_06.client_mix_timeseries.py (read-only, 2026-10-12): ETag 8e1b350fc55607bddd1ac84329cb1a98, VersionId 5xAeM.OWYUSxd7gHYSF6SKmR.ZTmo.PP, LastModified 2026-10-12T06:18:21Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The TO SC-e91 Rollback clause names the prior C_06 object as ETag 1aa6e3b555815417bb90c65db3f2152f and VersionId AREnJgLoyQnZ1zKwPan793py8CCkNHHA: the object served before this cell.",
+  "world_is": "The served C_06 object is ETag 8e1b350fc55607bddd1ac84329cb1a98 (VersionId 5xAeM.OWYUSxd7gHYSF6SKmR.ZTmo.PP, 2026-10-12T06:18:21Z), whose bytes equal base HEAD 2f215ca75a. AREnJ is the SC-e-87 post-act version; the 06:18Z ADVI FB-f-9 mode move superseded it. The half request records the served object as the rollback target.",
+  "notes": "SURFACED, NOT CHASED. No deploy is in this cell; the rollback handle in the half request is the currently served object, read by head-object."
+}
+```
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W80-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~80",
+  "surfaced_at": "2026-10-12T09:18:49Z",
+  "one_line": "The sibling test pins the literal merge-path call, so the merge path cannot pass the moved accumulator and derives its moves by a before/after diff.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/tests/test_c06_retained_dates_six_class.py@2f215ca75a (test_incremental_merge_calls_it_and_prints_the_census_line asserts the literal call text)",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py@2f215ca75a:795 (the merge call, literal three-argument form)",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py (working tree) :278-359 reclassify_retained(moved=None), _retained_candidates, _moves_since; :947 merge diff; :1137 merge snapshot adjustment"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build item 1 adds an optional moved accumulator to reclassify_retained, and build item 2 adjusts the firm and advisor snapshots on a fire WITH new partitions from those moves; the sibling test must still pass.",
+  "world_is": "Keeping the sibling literal means the merge call stays three-argument, so the merge path takes its moves from a before/after diff over the retained candidates; test_merge_path_diff_reports_the_same_moves_the_moved_list_does asserts the diff equals the moved list. The retained-only pass (no new partition) passes moved directly, as AC2 requires.",
+  "notes": "SURFACED, NOT CHASED. The two mechanisms agree on every moved holding in the unit test; the COO may prefer one mechanism at the L9 read."
+}
+```
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W80-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~80",
+  "surfaced_at": "2026-10-12T09:18:49Z",
+  "one_line": "The incremental summary write carries only the advisors with new dates in that fire, so an advisor with no new date drops out of mix_daily_summary.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py@2f215ca75a:761-770 (advisor_daily_new is accumulated from the fire new data only)",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py@2f215ca75a:971-985 (incremental merge, then _write_mix_summary(firm_daily, advisor_daily_new, dry_run))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The incremental branch merges the fire into the existing summary (its comment: \"Incremental: merge with existing summary\"), so an advisor not touched by a fire keeps its history.",
+  "world_is": "advisor_daily_new is built only from the fire new partitions, and the payload written at :985 is that dict. An advisor with no new date in the fire is not in the payload. This worker did not change that write; it only ensures the advisors with retained moves are included in full. Not measured live.",
+  "notes": "SURFACED, NOT CHASED. Pre-existing; outside SC-e-91 scope; the line numbers are base 2f215ca75a."
+}
+```
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W80-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~80",
+  "surfaced_at": "2026-10-12T09:18:49Z",
+  "one_line": "The retained revisit sees only the top-10 holdings per date, so an unclassified holding ranked outside a date top 10 is not revisited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py@2f215ca75a:94 (TOP_N_CONC = 10)",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py@2f215ca75a:616-623 (conc_grp ... .head(TOP_N_CONC))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build item 1: the retained pass revisits a retained holding whose class is unclassified and moves its pct inside that date mix.",
+  "world_is": "The concentration entry of a date keeps only its top-10 holdings by market value. An unclassified holding outside that list is absent from the entry and cannot be revisited by holding, so the date mix-level unclassified keeps its dollars. Not measured live: the share of unclassified dollars outside the top 10 on the retained dates.",
+  "notes": "SURFACED, NOT CHASED. The D_04 leg G read after the ship will show the residual; the L9 read decides whether it matters."
+}
+```
