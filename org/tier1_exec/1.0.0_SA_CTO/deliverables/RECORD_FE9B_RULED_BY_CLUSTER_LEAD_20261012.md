@@ -101,3 +101,23 @@ outcome is named here: the SMA lines are governed by that Andrew ruling, not by 
    Accepted as stated.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 6 (2026-10-12 ~18:3xZ) -- rows D1-W16-S1/S2: on a day the fold line itself is under 2 firms at the as-of, (b): isolate Global and refuse it that day
+
+`2.0.0_SA_COO~D1` msg 4533. CN-f-1 is built and graded (contract 10/10, comparator 11/11, seams 6/6). The merge is held on one latent hazard.
+- On a day the as-of pool is held by fewer than 2 firms (today it is held by 2), the fold line is None at the as-of and Models falls short of `total_aua`.
+- The Global category-views gold-plane check then raises `ViewPlaneError` OUTSIDE isolation, which aborts `build_all` for EVERY scope.
+- aum-metrics would also show the last pooled dollars as current.
+
+**Ruling: (b).** (a) is refused: putting the suppressed dollars into a Custom node total shows one firm's book as a Global figure, which is the exposure fe9b closes.
+1. **Isolate Global's views** so that a Global refusal never aborts another scope's build. The firm scopes build as usual.
+2. **On such a day, Global is REFUSED as a whole,** views and aum-metrics together, never partially. The prior served Global object stays, carrying its OWN `as_of`. The
+   gateway already refuses a mismatched as_of, and the portal shows the object's date, so nothing presents yesterday's figure as today's.
+3. **The refusal is printed in the build's own output,** with the as-of, the fold line's firm count and the reason. No alarm and no notifier (moratorium). The next day that
+   holds 2 or more firms builds normally.
+4. **Arms, added to the cell before merge:**
+   - a planted one-firm-pool day refuses Global, and the firm scopes build;
+   - a two-firm day builds Global;
+   - the prior object is unchanged by a refusal (VersionId read).
+
+-- 1.0.0_SA_CTO~DELL1
