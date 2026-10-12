@@ -28381,3 +28381,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "In the census S15 (Risk Info, page 10) and S16 (Risk/Reward, page 10) each carry a field 'Standard Deviation'. Both rows search the same page for the same word run and each stops at its first hit with candidates, so both can land on the same printed row and emit two section ids (S15.standard_deviation.c<n>, S16.standard_deviation.c<n>) for one printed row, and the other printed row is never read. Not measured on a vendor PDF: the read is of the source and the census only."
 }
 ```
+
+## IRPT_BCKEND-D2-W325-S1 -- NON-POSITIVE-BASE days: the 49F entry's are no-position cash debits, orion's are all in accounts with a position row
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W325-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~325",
+  "surfaced_at": "2026-10-12T13:38:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "NON-POSITIVE-BASE is not one population: the 49F entry's days are almost all no-position-with-a-cash-debit, the orion entry's days are all in accounts with a position row, and the orion share is 575039 of 1430575 gold rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB164-1_status_set_and_base.json status_counts_over_the_served_gold: orion by_token NON-POSITIVE-BASE 575039, OK 855536, no other token; the 49F entry NON-POSITIVE-BASE 1596 of 3256566",
+      "IB164-1_status_set_and_base.json per_entry_and_window SI: the 49F entry all-positions NPB days 1223 of which held_none 1218, held a position 5; orion 539402 of which held_none 0, held a position 539402",
+      "holdings_performance.py:869-873 read with the gold's held_count, included_count, negative_count, cash_value columns (all present in 566 and 1619 of 566 and 1619 partitions)"
+    ]
+  },
+  "spec_asserts": "The face (and PRD v0.48 C-CHAINCLAIM) places NON-POSITIVE-BASE on the measured side because the base (included basket plus positive cash) is not positive, with the weak place being an account that held positions the day before.",
+  "world_is": "The weak place is the whole of one entry: every orion NON-POSITIVE-BASE day (539402 of 539402 in SI) is in an account with a position row the day before (by the producer's conditions, included rows valued zero or negative keys, with cash zero), and in 49F 5 of 1223 SI days are. Under the reading that moves a NON-POSITIVE-BASE day with a prior position, orion's claim moves for 894 of 926 accounts with a figure in SI (0 as the contract is written). The count of days in accounts with no figure is separate."
+}
+```
