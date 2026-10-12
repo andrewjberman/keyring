@@ -10,7 +10,7 @@
  "subject": "TCKT_VNEXT R5-gr-1: read-only, who may read the svc-commentary secret (CTO~DELL2 round-5 analysis item 5)",
  "body_path": "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R5_RUN/CROSSBOX_ASK_SVC_COMMENTARY_SECRET_READERS_20261011.md",
  "opened_at": "2026-10-11T19:38:44Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T19:39:39Z",
   "bus_message_id": "582e52b8-bbcd-4ae3-bd8c-4e9190548046"
@@ -21,9 +21,9 @@
   "bus_message_id": "9cba76e0-fd44-422d-bdc7-9cbd0e6c01a7"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-12T02:19:03Z",
+  "from_by": "2.0.0_SA_COO~V2",
+  "to_at": "2026-10-12T02:10:22Z",
+  "to_by": "1.0.0_SA_CTO"
  }
 }

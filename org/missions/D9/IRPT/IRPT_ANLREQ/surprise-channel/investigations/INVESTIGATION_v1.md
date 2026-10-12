@@ -3695,3 +3695,82 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W54-S3 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-12T02:11:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "No request from a person of ANOTHER firm reaches the original-file route's owner comparison: it is stopped at the firm fence, at principal resolution (a client), or at an empty lookup in the caller's own partition",
+  "spec_asserts": "CTO msg 6012 and the order's cell text: F2 is an arm where a caller shaped as another firm's CLIENT asks for the original of a REAL request, so the route's OWNER check runs; the F1 arm stopped at the firm fence only.",
+  "world_is": "Read from the code at d90edb3367: a CLIENT-class caller (x-user-type client) is refused NOT_AUTHORIZED at principal resolution, _scope/prospect.py:34-35, before the record is read; a non-internal caller naming the record's firm as selected_tenant is refused FIRM_BINDING at _authz/served.py:1207-1209; with no selector the lookup runs in the caller's OWN firm partition (reports/repository.py:497-499) and finds nothing, so owner_reads.py:28 refuses on its first clause, the same code and text as a record owned by someone else (:33). The line that compares the caller's firm and principal with a loaded owner (_scope/owner_reads.py:29-31) is reachable only with the record's own firm in x-firm-id and a different principal, a second person of the owner's firm. So an F2 arm built as the cell describes will read as a pass at the fence or at the empty lookup and will not exercise the comparison; the arm that does is same-firm-other-principal. Also: the F1 amendment (R6_FN1_DIRECT_INVOKE_PAIR.md) cites the owner check as ops/owned_requests.py:175-184; that is the reader's second check, and the comparison with the owner is owner_reads.py:28-32. Not looked at: the deployed function, the ordinary authorizer's body.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/owner_reads.py:24-40 @d90edb3367",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:954-959, :1207-1209, :1249 @d90edb3367",
+      "infra/aws/lambda/investor-reporting/_scope/prospect.py:22-48 @d90edb3367",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~54/r16/ORIGINAL_ROUTE_RULE_READ.json (route.order_of_checks, arms)"
+    ]
+  }
+}
+```
+
+## IRPT_ANLREQ-D2-W51-S9 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W51-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~51",
+  "surfaced_at": "2026-10-12T02:11:20Z",
+  "one_line": "AR-y-164: the commentary-sent handler differs from the face in four places (403, completed ticket allowed, already-recorded answer carries no stamp, 404 before 400); the page was built to the code.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:1597-1636 @wk-IRPT_ANLREQ-51 (route dispatch :1731-1732): commentary_sent_ticket. 403 from authorize COMMENTARY_SENT at :1602-1604 (the face lists no 403); a completed ticket is accepted (docstring :1600; no status check before :1624); SENT_ALREADY_RECORDED at :1621-1623 answers {error, code} only, no stamp; the 404 (:1609-1610) is answered BEFORE the 400 for a body key (:1611-1614); 409 codes at :1615-1617 (WRONG_TICKET_TYPE), :1618-1620 (NO_DRAFT), :1621-1623 (ALREADY_RECORDED), :1633-1635 (TICKET_CHANGED); 200 {ticket_id, commentary_sent: {sent_by, sent_at}} at :1624,:1636.",
+      "portal/src/api/api-client.ts:178-181 @0a06280a40: a non-2xx throws Error('API request failed: <status> <text> - <body>'), so the page reads the status and the code out of the message text; there is no structured error.",
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx: the sibling lines (generated_at, attached_at) print the stamp as served; the page's fmtWhen lives in TicketCenter.tsx, which imports this file, so the stamp is shown as served."
+    ]
+  },
+  "spec_asserts": "The face: the route answers 200, 409 with four codes, 404 and (any body key) 400; the control is for an analysis request with a draft and nothing recorded; an already-recorded refusal says by whom and when if the answer or a refreshed ticket says so; the stamp uses the page's existing date formatting.",
+  "world_is": "A 403 exists and is shown as a sentence; a completed ticket is accepted, so the control is offered on a completed ticket; the already-recorded answer holds no stamp, so the page asks its list to refresh (an optional onRefresh prop, wired in TicketCenter.tsx to the board's refresh) and the refreshed ticket's commentary_sent shows who and when; the stamp is shown as served. The route was never called, by any test or by the worker.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W52-S16 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T02:16:12Z",
+  "id": "IRPT_ANLREQ-D2-W52-S16",
+  "one_line": "TO-AR-y-161: the face lists the script's reads as the requests table plus GetObject of each template input's original; the stored template and the request-to-input tie live in two more retained objects, so the script also reads each template input's normalized document and each accepted request's composition (GetObject, read only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:352-366 (INPUT# row holds only artifact_ref and a digest) and :538 (the stored template is document['template'], the bytes of the NORMALIZED_PORTFOLIO artifact)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py:115-120 (the accepted record holds browser_sha256 and composition_ref, no input id) and submission.py:175-193 (the composition document holds browser.input_id and resolved.input_ref.input_id)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r16/COUNT_SCRIPT_RECORD.json (reads, not_read)"
+    ]
+  },
+  "spec_asserts": "Face of IRPT_ANLREQ.TO-AR-y-161: 'Reads ONLY: a scan or query of the requests table for input rows and for accepted analysis requests ... and GetObject of each template input's retained original.'",
+  "world_is": "Comparing the new reader's output to the template stored at acceptance needs that template, which is in the normalized document's artifact; naming the input an accepted request was made from needs the request's composition artifact. Both are GetObject (by the version the ARTIFACT# row records) plus GetItem of the ARTIFACT# row; no write, no list. The seat that runs the script therefore needs GetObject on those keys too, not only on the originals. Not read: the real table and bucket, the key prefix of the artifacts, job state and REPORT# rows ('with a report' is an accepted request naming the input).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

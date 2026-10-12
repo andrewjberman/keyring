@@ -28208,3 +28208,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Those 1,296 accounts have rows in the window but cannot be served at all; they are counted in accounts_the_reader_refuses and carry no position class."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S102",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-12T02:20:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARM EVIDENCE for rows IRPT_BCKEND-D2-S60 and IRPT_BCKEND-D2-W317-S1, filed by their disarm owner two days late for the first: the three functions S60 names have each been RELEASED since it was filed and show 0 keyword errors and 0 TypeError lines since their releases; the four stale sentinels of W317-S1 were removed by site Z.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read by this seat 2026-10-12 ~02:1xZ, get-function-configuration: irpt-performance-adapter CodeSha256 9kYLdR64... modified 2026-10-11T10:03:25Z; irpt-narrative x0SqAx2U... modified 2026-10-11T04:08:06Z; irpt-status 6idtFvAm... modified 2026-10-11T11:26:53Z. All three are later than the row's filing (2026-10-09T16:40Z). The first two digests are the ones IB-pr-420 applied under the pair of IB-pr-416, whose packet reads the signature, attribute and method closure limbs 0 on those built zips; irpt-status is 2.0.0_SA_COO~Y2's release.",
+      "read by this seat, logs filter-log-events with the quoted pattern \"unexpected keyword argument\" and the pattern TypeError, auto-continued over every page, from each function's last release to now: irpt-performance-adapter 0 and 0, positive control (\"REPORT RequestId\") 46; irpt-status 0 and 0, control 243; irpt-narrative 0 and 0, control 13. The row had counted 52 in irpt-status and 2 in the adapter over 24 hours.",
+      "the four functions the row could NOT fetch, same two patterns since 2026-10-09T16:40Z: irpt-49f-reporting-read-lambda 0 and 0 (control 66); irpt-export-render 0 and 0 (control 105); irpt-ycharts-generate 0 and 0 (control 119); irpt-holdings-refresh-lambda 0 and 0 with a control of 0, so that one is ABSENT of invocations in the window, not exercised and not cleared by this read.",
+      "W317-S1: 0.0.0_AB_MSTR~DELL2 msg 6224 relays site Z's statement that the four stale sentinels were removed at 8c85a65a1e after re-reading their ledgers CLOSED; that commit is on site Z's branch and was not read by this seat."
+    ]
+  },
+  "spec_asserts": "An ARMED row is disarmed the same turn by its disarm owner, or carries a sentence saying why it is still armed (CTO msg 6320).",
+  "world_is": "S60's three NAMED splits are released away: the adapter and the narrative by IB-pr-420 (2026-10-11), irpt-status by its own release, and none of the three has logged the error since. A served route passes through each (performance, narrative, status and request reads), so 0 over 46, 13 and 243 invocations is a read of served traffic and not of an idle function; it is not a sweep of every path. NOT cleared by this row: the signature-closure instrument was never run on irpt-49f-reporting-read-lambda, irpt-export-render or irpt-holdings-refresh-lambda (the row's fetch failures); irpt-ycharts-generate carries 4 method-call sites the closure limb reports on live and built alike (IB-pr-426, IB-pr-456), unexercised. The owner's own failure, stated: the row sat ARMED from 2026-10-09T16:40Z to now with no disposition although its remedy (IB-pr-416, IB-pr-420) was applied on 2026-10-11; this seat did not file the evidence when it applied the remedy. The disarm clock is the CVO's to write."
+}
+```
