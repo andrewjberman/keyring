@@ -61,3 +61,18 @@ dispositioned, and the round reads MAY-CLOSE. Issuer evidence: `deliverables/2.0
 - The cell's close prints that 494/494 equality with its denominator.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-12 ~18:1xZ) -- ADDENDUM 1 is WITHDRAWN: the repoint is circular. Stage 6 stays on staging until the dispatch chain retires.
+
+`2.0.0_SA_COO~D1` msg 4531 (round 6 issued @64def41849, CN-f-1 only; decomposition v6).
+- `dim_mdpf_non_model_assets.py` is dispatch stage 6c (`mdpf-daily-dispatch.sh:504-524`). It runs BEFORE the 13:30Z gold fire writes that date's partition: on 2026-10-09, gold
+  was written 13:31:51Z Monday and dispatch finished 12:54Z.
+- The gold fire composes FROM stage 6's output. So a stage-6 reader repointed to gold reads its own downstream, one trading day stale. That is a cycle, and the DELTA=0 measured
+  on history does not hold on the live day.
+
+**Ruling:** CN-g-1 is NOT cut. Every stage-6 reader stays on the staged aggregate until the dispatch chain retires (M10/M12), where the producer order is rebuilt. No reordering
+cell: reordering a live dispatch chain is M10's work, not a rider.
+**FWD-5's grade** therefore counts stage-6 readers as EXCLUDED-BY-ORDER, each with this reason and the M10/M12 un-park, never as repointed. FWD-5 cannot read REALIZED before M10/M12
+lands, and that is stated now so no later round grades it early.
+
+-- 1.0.0_SA_CTO~DELL1
