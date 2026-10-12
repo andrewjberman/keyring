@@ -6797,3 +6797,84 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-W69-S1 -- IV-e-121: the header's search for an account's last four digits offers a RELATIONSHIP-kind option; a pick of it names no account, so Performance's Account select starts on the largest account
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W69-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~69",
+  "surfaced_at": "2026-10-12T22:45:00Z",
+  "one_line": "IV-e-121: the header option a last-four search offers is the producer's RELATIONSHIP-kind entry (accountId null, the account's tail in its discriminator), not an ACCOUNT row; a pick sends RELATIONSHIP and the Performance preselect falls to the largest account",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO IV-e-121 and IV-e-108 (header_picker): an account search yields an ACCOUNT row, and an ACCOUNT row picked in the header starts Performance's Account select on that account (headerPickedAccountId reads the picked row's account). The order asks the record to say which row kind the header yields for an account search.",
+  "world_is": "The header yields a RELATIONSHIP-kind option for a last-four search in the producer fixture: src/pages/InvestorReporting/fixtures/directoryEntry.success.json has kind relationship, accountId null, maskedDiscriminator ****4417. headerPickedAccountId (tabs/reporting/accountFocus.ts:120) reads only row.entry.kind === 'account', and selectionRequest.ts:15-16 sends RELATIONSHIP for a relationship row, so no account is named and the largest account is preselected. Rendered (committed test probe, not kept in the committed file): the relationship-kind pick sent RELATIONSHIP rel-77b and Performance's Account select read value 1, ****2222 / Brokerage (the larger). The ACCOUNT-row case passes at base (IV121-AC1 record). Not established: the live producer's search ranking (the fixture is synthetic, no live request was made).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 183860bac0555cecb8f31a06f1a4378a71bde290 src/pages/InvestorReporting/tabs/reporting/accountFocus.ts:114-124 (headerPickedAccountId reads kind 'account' only)",
+      "portal 183860bac0555cecb8f31a06f1a4378a71bde290 src/pages/InvestorReporting/selectionRequest.ts is header/selectionRequest.ts:12-18 (relationship row sends RELATIONSHIP)",
+      "portal 183860bac0555cecb8f31a06f1a4378a71bde290 src/pages/InvestorReporting/fixtures/directoryEntry.success.json (kind relationship, accountId null, maskedDiscriminator ****4417)",
+      "portal 7d45f44ff2038ad14230230b5062c33175e58165 src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-121.account-pick-rendered.test.tsx (the ACCOUNT-row arms; the relationship-kind probe was a throwaway copy, deleted, run once in this round)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-W69-S2 -- IV-e-121: Holdings' account focus sends the account NODE ref as the ACCOUNT scope id; the two agree only where the server's ACCOUNT node id equals the account id
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W69-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~69",
+  "surfaced_at": "2026-10-12T22:45:30Z",
+  "one_line": "IV-e-121: pickedAccountRef returns the account node ref and the Holdings focus posts ACCOUNT with that ref; correct only where the ACCOUNT node id equals the account id",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IV-e-108 header_picker (record HOLDINGS_FACE.json): Holdings opens on the header's ACCOUNT row through pickedAccountRef (tabs/holdings/HoldingsTab.tsx), which names the picked account by its id.",
+  "world_is": "pickedAccountRef (HoldingsTab.tsx:171-190) returns the card's account NODE ref (DrillTree.tsx:749-763 maps to account.nodeRef), and focusedAccountId (HoldingsTab.tsx:304) is that ref; the focus read then calls resolveAccountFocus with it as accountId (HoldingsTab.tsx:327), which posts ACCOUNT scope_ids [that ref]. In a rendered run whose fixture node ref differed from the account id, the focus post carried the node ref (scope_ids nd-acct-a). Production is consistent with this only if the ACCOUNT node id equals the account id: infra/aws/lambda/investor-reporting/holdings/snapshot.py:441 derives the account ids from ACCOUNT node_ids, and contracts/adapt.ts:1150 maps nodeRef from node.node_id. Not established against a live payload; the rendered test aligns the fixture's node ids with its account ids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 183860bac0555cecb8f31a06f1a4378a71bde290 src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx:171-190 (pickedAccountRef returns the node ref), :304 (focusedAccountId), :327 (resolveAccountFocus per focused id)",
+      "portal 183860bac0555cecb8f31a06f1a4378a71bde290 src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:749-763 (accountRefForCardLabel values are account.nodeRef)",
+      "portal 183860bac0555cecb8f31a06f1a4378a71bde290 src/pages/InvestorReporting/contracts/adapt.ts:1150 (nodeRef from node.node_id)",
+      "infra/aws/lambda/investor-reporting/holdings/snapshot.py:441 at 0.9.0 worktree HEAD of wk-DSGN_IRPTV1-69 (account_ids from ACCOUNT node_ids)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## DSGN_IRPTV1-D2-S28 -- Row W69-S1 disarmed by the issuer: the header yields a RELATIONSHIP-kind entry for a last-four search; IV-e-108's claim corrected; the page rule is unchanged and the question is carried to the CTO
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S28",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-12T23:04:53Z",
+  "one_line": "Row DSGN_IRPTV1-D2-W69-S1 is disarmed by the issuer: the header yields a RELATIONSHIP-kind entry for a last-four search, so IV-e-108's claim that an account search hands on an ACCOUNT row is corrected; the page's rule is unchanged and the open question (should such a pick start on the matched account) is carried to 1.0.0_SA_CTO~DELL2",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row W69-S1 (disarm owner this seat): TO IV-e-121 and the IV-e-108 header_picker record state that an account search yields an ACCOUNT row and that such a pick starts Performance's Account select on that account.",
+  "world_is": "Measured by worker 0.9.0_WK_DSGN_IRPTV1~69 and re-graded by this seat at its worktree (IV121-AC1 PASS, proof VALID): headerPickedAccountId (tabs/reporting/accountFocus.ts:120) reads only an entry of kind 'account'; the producer's last-four search entry in the synthetic fixture is kind 'relationship' with accountId null and the account's tail in maskedDiscriminator; selectionRequest.ts:15-16 sends RELATIONSHIP for it. Rendered: an ACCOUNT row picked starts Performance's Account select and Holdings on that account (passes at the base, no product change); a relationship-kind pick starts on the client's largest account. This matches the laptop walk behind row D2-S24 (a last-four pick started on the larger account). The page behaves by its stated rule and ships unchanged; nothing wrong is shown, the default account is the largest. The claim in the IV-e-108 record is the part that was wrong. Not established: the live producer's ranking (fixture only, no live request). Carried, not built: whether a relationship-kind pick whose entry carries an account tail should start on the matching account is a page rule or a producer entry kind (IRPT_BCKEND's directory); it is asked of 1.0.0_SA_CTO~DELL2 in this round's drain-end message as a round-32 candidate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~69/ACCOUNT_PICK_RENDERED.json (header_yields CLIENT_ROW, header_basis)",
+      "python checks/r31/p31_round31.py . IV121-AC1 -> PASS, re-run by this seat in the worker's worktree 2026-10-12",
+      "portal wk-DSGN_IRPTV1-69-portal 42832dc4: iv-e-121.account-pick-rendered.test.tsx, mutant fails arm (b)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
