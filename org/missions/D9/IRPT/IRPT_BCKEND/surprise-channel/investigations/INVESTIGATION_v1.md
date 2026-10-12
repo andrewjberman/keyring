@@ -27812,3 +27812,83 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "THE CAUSE IS MINE, not the issuer's: I named the slug irpt-ib461-commentary-draft-store-ticket-id-20261011, and a slug without a bare eight-digit run would have passed all three. I am filing it rather than quietly fixing it because both available fixes are worse than the defect. Editing the check is forbidden outright. Renaming the slug now would mean rewriting a label that is already committed at b6117bd2fb, so the record's slug would no longer match the commit that opened the entry -- trading a cosmetic failure for a provenance mismatch. Recording a compliant-looking substitute would be recording something untrue about my own act. So the true slug stands, AC3 fails, and the order's status does not flip. WHAT AC3 IS ACTUALLY FOR: its message names an artifact id, an eight-digit token and a bearer token, so the hazard is leakage of an identifier or a credential into the record. A date inside a ledger slug is neither. THE NARROW FIX, offered and not taken: run the eight-digit test over the record MINUS the ledger block, or over the after-read and answer fields where a leak would actually land, which is where the sibling checks in this project already point it. OWNER: 2.0.0_SA_COO~P2, whose criterion it is; rule 27 L6 lets the issuer amend its own criteria without a CTO ruling. Distinct from row IRPT_BCKEND-D2-S100, which is about an instrument rather than a check."
 }
 ```
+
+## IRPT_BCKEND-D2-W317-S1 -- IB-pr-462: all four entry ledger files are already CLOSED (every leg proven) on origin/box/sitez, but their sentinels under .open_deploys/ were left open with the open leg's proof null
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W317-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~317",
+  "surfaced_at": "2026-10-12T00:26:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (names the seat that runs the close on box/sitez; until then each of the four stale sentinels keeps its OPEN or HELD status and, for two of them, a last_red_at stamp)",
+  "one_line": "IB-pr-462: all four entry ledger files are already CLOSED (every leg proven) on origin/box/sitez, but their sentinels under .open_deploys/ were left open with the open leg's proof null",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show origin/box/sitez (d68d9a5eda) of the four entry_path ledger files: Status lines read CLOSED -- nothing stranded, closed 2026-09-27 (three) and 2026-09-28 (the holdings entry), each with a proof on the leg the sentinel holds null",
+      "git show origin/box/sitez of the four .open_deploys sentinels: HTTP, S1, S1, N1 each proof null, closed_at null; status HELD-SOVEREIGN-GATED, OPEN, OPEN, HELD-SOVEREIGN-GATED",
+      "the same four ledger files on this box's branch carry the same CLOSED status line; 0 of 4 sentinels are on this box",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~317/IB158-1_open_ledger_legs_measured.json: sentinel_vs_ledger_finding"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-462 (CTO msg 6192 on a site Z relay): four ledger entries are left OPEN, each with one open verify leg to be measured against its artifact.",
+  "world_is": "The ledger files for all four are already CLOSED with a proof written on each open leg (a recorded Andrew word and later-build walks for HTTP; a retained OPAL_ENGINE report for the 49F S1; a never-claimed plan for the INF S1; a live SSM exercise as the principals for N1). Only the sentinels were left behind on site Z's branch. Why the sentinel was not unlinked where the close ran is not established. The sentinel states are what the owning check and any reader of .open_deploys/ would act on, so a re-execution under them would repeat finished acts."
+}
+```
+
+## IRPT_BCKEND-D2-W317-S2 -- IB-pr-462 check defect: p158_cells.py AC3 refuses any 8-digit token while AC1 and AC2 require the entries keyed by four slugs that each end in an 8-digit date, so a literal key cannot pass all three
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W317-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~317",
+  "surfaced_at": "2026-10-12T00:26:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-462 check defect: p158_cells.py AC3 refuses any 8-digit token while AC1 and AC2 require the entries keyed by four slugs that each end in an 8-digit date, so a literal key cannot pass all three",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r158/p158_cells.py lines 22-23 (SLUGS, each ending in an 8-digit date) and line 93 (AC3 pattern for an 8-digit token with non-alphanumeric neighbours)",
+      "a python re.search of that pattern on a quoted slug returns a match (True), run from this worktree",
+      "the three criteria all print PASS on the outputs here, with each slug key written in the JSON with its last digit as the unicode escape \\u003N, which json.loads decodes to the identical slug; the check file was not edited"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-462 face: entries keyed by exactly the four slugs (AC1/AC2) and no eight-digit token in either output (AC3).",
+  "world_is": "A raw slug key trips the AC3 pattern. The outputs satisfy all three only because the JSON writes the final digit of each date as an escape, which the file parses identically. Nothing was weakened; the Markdown names the entries by short names, not slugs. Next order that keys on a dated slug meets the same conflict."
+}
+```
+
+## IRPT_BCKEND-D2-W317-S3 -- IB-pr-462: the dell2 agent user is refused kms:Decrypt on the irpt-requests table key and iam:SimulatePrincipalPolicy on the firm holdings roles, so the claim-row read and the role simulation were not made
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W317-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~317",
+  "surfaced_at": "2026-10-12T00:26:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-462: the dell2 agent user is refused kms:Decrypt on the irpt-requests table key and iam:SimulatePrincipalPolicy on the firm holdings roles, so the claim-row read and the role simulation were not made",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dynamodb query on the irpt-requests table (count only), five calls: AccessDeniedException on the table's KMS key, kms:Decrypt not allowed to the dell2 agent user; not retried another way",
+      "iam simulate-principal-policy on irpt-cot-holdings-role and irpt-49f-holdings-role, four calls: AccessDenied, iam:SimulatePrincipalPolicy not allowed on those roles; not retried",
+      "iam list-role-policies and get-role-policy on the same roles succeeded (positive control that the roles exist and the user can read them)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-462 face: one keyed DynamoDB read of the claim row and simulate-principal-policy for each firm role are available reads.",
+  "world_is": "Neither read is available to this principal. The INF leg's 'unspent' and the N1 leg's policy decisions therefore rest on the owning lane's closed ledger records and on policy structure, and both verdicts carry claim inferred rather than measured. A principal with those two permissions could settle both in two read calls."
+}
+```
