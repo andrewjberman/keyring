@@ -41,17 +41,18 @@ All MDPF_SECCLASS ledgers are CLOSED except one (HELD):
 
 ## Next, in order
 
-1. **Round 21 is EXECUTING** (one issuance `2f215ca75a`, 2026-10-12 ~09:4xZ, on the CTO's round-20 analysis @e5adc667e2, msg 4321; `dep_stage` EXECUTING; fanout 5 of 5, cap 8). Round 20 stays graded MAY-CLOSE (CVO L9 @eb33d5d466; `TO-SC-e87b` terminal, leg G NOT MET). DECOMP `decompositions/MDPF_SECCLASS_DECOMP_R21.md`.
+1. **Round 21 is CLOSED at my seat** (`dep_stage` ROUND_CLOSE; one issuance `2f215ca75a` on the CTO's round-20 analysis @e5adc667e2, msg 4321; fanout 5 of 5, cap 8; all five drained; `round-close-check` r21 `orders=19 verdict=MAY-CLOSE`; L8 packet `2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/L8_DRAIN_END_PACKET_R21_20261012.md` at the CVO). Round 20 stays graded MAY-CLOSE (CVO L9 @eb33d5d466; `TO-SC-e87b` terminal, leg G NOT MET). DECOMP `decompositions/MDPF_SECCLASS_DECOMP_R21.md`.
    | cell | what | risk | slot | state |
    |---|---|---|---|---|
-   | `SC-e-91` | C_06 retained pass revisits retained `unclassified` holdings on every fire (also with no new partition); firm and advisor snapshots follow; never-widen half request, both halves unsigned (row D1-S30) | SERVED | ~80 `worker` | built, AC1-AC3 re-run by me; reopened by amendment 1: the half request must state its REACH (row D1-W80-S4: the revisit only sees each date's stored top-10 holdings) |
+   | `SC-e-91` | C_06 retained pass revisits retained `unclassified` holdings on every fire (also with no new partition); firm and advisor snapshots follow; never-widen half request, both halves unsigned (row D1-S30) | SERVED | ~80 `worker` | DRAINED e270f70be4 after amendment 1 (the half request states its REACH: the revisit moves at most $0 to $653,857.12 of the 2026-10-09 Unclassified; row D1-W80-S4); BD gold suite 165 passed; both halves UNSIGNED, ship owed |
    | `SC-e-92` | cross-box deploy check: trunk-first sentinel status; a vanished worktree is not a hit; a branch-only sentinel still hits (row D1-S28) | LOCAL | ~81 `worker` | DRAINED 8d755a8491 after amendment 1 (row D1-W81-S2: a vanished worktree is read through its branch ref); AC1-AC4 re-run by me |
    | `SC-e-93` | read: served BD positions with the literal ticker NAN / NONE, denominator printed (row D1-W77-S1) | LOCAL | ~82 `worker-light` | DRAINED 97ca96b08f: NOT_EXPOSED (0 NAN/NONE of 114,554 positions at 2026-10-09; 225 null market values) |
    | `SC-e-94` | read: the writer of the 2026-10-06/07 holdings partition rewrite at 2026-10-10T23:15Z, writer count, whether C_06 re-serves those dates (row D1-W78-S1) | LOCAL | ~83 `worker-light` | DRAINED 81cfb83df2: writer `B_00.canonical_holdings` (run 608de09d26a6), writer_count 1; the 23:15Z rewrite re-put identical bytes, the content moved 10-11T04:16:35Z and 10-12T00:33:48Z; the next default C_06 fire re-serves none of 10-06/07/08 |
    | `SC-e-90` | portal test `iv-e-46.class-readers.test.ts` locates each named reader by content, plus a negative arm (CTO msg 4167); direct act, portal worktree at origin/DEV `62507dae67` | LOCAL | ~84 `worker-light` | DRAINED 4ff03e1393; portal test commit 64d8c6de38 on origin/DEV (ls-remote, fast-forward from 62507dae67, test file only; AC1 3 pass, AC2 1 pass, re-run by me) |
    - **Carried, not a cell:** leg G of SC-e-87 and D1-S30, read on the first post-ship as_of (Tuesday 2026-10-13's fire or later), the expected
      figure stated at THAT as-of, never at 10-08. SC-e-91 must also ship (a pair-gated act by a CloudOps lane) before that read can pass.
-   - Drain per chain end (`/dispatch` Step 5), then the real run of each outcome, the L8 packet to the CVO, the `round-close-check`.
+   - Real run at close: the cross-box deploy check reads `verdict=CLEAR` (round 20: STOP with 4 hits); artifact `R21_CHECKS/E92_REAL_RUN_20261012.txt`.
+   - Next: the CVO's grade and slug, the CTO's round-21 analysis; the SC-e-91 ship (COO half mine, CTO half the CTO's); the CTO's ruling on correction or drift for the 2026-10-06..09 dates (rows D1-W78-S1, D1-W83-S5).
 2. **e57e61:** release when a scheduled new-security run plans US stocks.
 3. **p1 residue** (11 keys outside FWD-15's plan): waits on a ruling.
 4. **IB-pr-417:** the COO half on the e56 member is SIGNED (@ced2704270, due Mon 2026-10-12 13:00Z at dell2); push of that commit
