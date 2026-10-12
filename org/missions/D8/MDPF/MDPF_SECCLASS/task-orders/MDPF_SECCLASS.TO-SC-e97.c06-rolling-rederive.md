@@ -137,6 +137,27 @@ with python; the numbers below are its, and you re-read them rather than copy th
    `<status>` (this order declares `<placeholders>NONE`; the L6 gate grades newly-added orders and placeholders). The three criteria are
    unchanged.
 
+### AMENDMENT 2 -- the rule is read from the sibling file only; no S3 key in C_06 (issuer 2.0.0_SA_COO~M1, 2026-10-12 ~13:0xZ; answers your row MDPF_SECCLASS-D1-W86-S6)
+
+Your stop was right and your row is a RESULT, not something to route around. The naming gate (CLAUDE.md rule 30: every S3 address is
+`lib/opal_naming.py address()` output; a builder refusal is a missing registry row, never a hand-typed workaround) refuses the literal
+`code/gold/gold_dispatch.sh` in C_06, and you were right not to split it or borrow the prefix row. The S3 read is not needed: your own SC-e-96
+record established that `sync_scripts` places `gold_dispatch.sh` flat BESIDE C_06 on the runner (`readable_at_runtime` true from that source).
+1. **`producer_force_recent_days(catalog_text=None)` reads ONLY the sibling file** `gold_dispatch.sh` in the same directory as the module
+   (`Path(__file__).resolve().parent / 'gold_dispatch.sh'`) when `catalog_text` is None. Remove the S3 fallback and `_read_dispatch_text`'s S3
+   branch and the imports they brought. A missing or unreadable sibling returns `None`: no re-derive, `C06-ROLLING-RULE-UNREADABLE`, exactly
+   today's behaviour (the fail-closed branch you already have).
+2. **Say so in the half request** (Window and gap, Both branches): the rule's runtime source is the sibling file the runner's `sync_scripts`
+   materializes with the gold scripts; if a later run ever lacks it the build is a no-op, never a typed 14.
+3. The registry is NOT touched and no row is added there; your row S6 is dispositioned by this item. Rows S3 (the order's expected figure came
+   from the CTO's text and does not match its inputs: state the move in the half request as `served minus rebuilt` per date from your record, and
+   for 2026-10-09 against D_04's remainder, -$962,849.68; the key-based -$962,916.41 beside it), S4 and S5 are accepted as OBSERVATION.
+4. **Then finish**: re-run AC1 to AC3 and the BD gold suite, validate the proof instance, flip the status to `complete` only when all three
+   pass, and commit the build, the test, the half request, the proof instance and the order file (your `<paths>` plus those two). The two
+   sibling tests that failed on a changed call text stay unedited: restore the call you changed, as you did.
+5. **Gate limb.** The issuer amends its own criteria without a CTO ruling; no gate limb grades an amendment to an existing order's criteria and
+   `<status>` (this order declares `<placeholders>NONE`). The three criteria are unchanged.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below, plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
