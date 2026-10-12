@@ -28565,3 +28565,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  "notes": "Check not edited and not weakened. A fix is the issuer's: restore the gitlink checkout or exclude gitlinks in changed_outside()."
 }
 ```
+
+## IRPT_BCKEND-D2-W327-S1 -- IB165-2-AC3 reads the portal gitlink as a change outside the grant
+
+```json
+{
+ "id": "IRPT_BCKEND-D2-W327-S1",
+ "project": "IRPT_BCKEND",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_IRPT_BCKEND~327",
+ "surfaced_at": "2026-10-12T18:07:39Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "IB165-2-AC3 cannot read PASS in this worktree: p165_cells.py changed_outside() lists the modified portal gitlink as a change outside the grant.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py . IB165-2-AC3 -> 'FAIL: changed outside the grant: [portal]', rc 1; AC1 and AC2 PASS",
+   "p165_cells.py:87-95 changed_outside(): git diff --name-only <base> keeps every name not under the deliverables, the investigation file or task-orders; AC3 then also exempts only ycharts/extract/",
+   "git diff HEAD --stat -- portal: 1 file changed (gitlink 160000 53506d4903 at HEAD, worktree portal HEAD dbeb6764ee); the dispatch said the portal line is not the worker's and is to be left"
+  ]
+ },
+ "spec_asserts": "AC3 grades that nothing outside the extract folder and the deliverables changed; the order says the worktree is clean except the portal gitlink line, which the worker leaves.",
+ "world_is": "The portal gitlink differs from HEAD in the worktree before any edit of this order, and git diff --name-only <base> lists it, so the AC3 check reads 'portal' as a change outside the grant whatever the worker does. The check's earlier lines (base_commit, section_bounds_rule, equal hash lists 4 of 4, the both-labels fixture, request_sent and deployed false) ran before the failing line and did not fail. Not read here: whether the check passes on a worktree whose portal gitlink matches HEAD."
+}
+```
