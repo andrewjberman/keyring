@@ -3,27 +3,36 @@
 its denominators and is internally consistent. Reads one JSON file; writes nothing. A synthetic record with one field broken must fail (the
 negative control runs before the real record is graded).
 
+AMENDMENT 1 (issuer, 2026-10-12, answering the worker's row D1-W85-S1): a rebuild from the CURRENT partition also reads the CURRENT reference
+inputs (the classifier table, the static tables), so "served vs rebuilt" is two drifts. Each date therefore carries THREE snapshots: the served
+one, a rebuild from the partition version that was current when C_06 first built the date (FIRST_BUILD, run through the current classifier and
+static tables) and a rebuild from the CURRENT partition. REFERENCE drift = first_build - served; BYTE drift = rebuilt - first_build.
+
 Usage:  python r22_residual_read_check.py <path-to-record.json>
 
 Keys (all required):
   claim (non-empty), read_only (true)
   classes            list of class names the dollars are split by (>= 3)
   dates              list of >= 4 entries, one per retained date 2026-10-06 .. 2026-10-09, each:
-                       date, served_total, rebuilt_total, delta_total, by_class{<class>:{served,rebuilt,delta}}
-  control_date       one entry of the same shape, a date whose canonical partition did NOT change after its first build, plus `why`
+                       date, first_build_version{version_id, last_modified}, served_total, first_build_total, rebuilt_total,
+                       reference_drift_total, byte_drift_total, delta_total,
+                       by_class{<class>:{served, first_build, rebuilt, reference_drift, byte_drift, delta}}
+  control_date       one entry of the same shape for a date whose canonical key has exactly ONE version (`versions` == 1), plus `why`,
+                       `repeat_delta` (the rebuild run twice: the two rebuilt totals differ by at most 0.01). Its byte_drift_total must be
+                       within 1.00 (one version: the harness is not moving); its reference_drift_total is a RESULT, not a failure.
   rederive           list with exactly the N values 1, 3, 5, each: n, trading_days (list of n dates), wall_seconds (>0), peak_mb (>0),
                        relationships_rewritten (int >=0), keys_written (int >=0), bytes_written (int >=0)
-  chain_window       launch_to_stop_seconds (>0), c06_wall_seconds_last_fire (>0), source (non-empty)
+  chain_window       launch_to_stop_seconds (>0; a lower bound is allowed and then `lower_bound` is true), c06_wall_seconds_last_fire (>0), source
   canonical_movers   writer (non-empty), dates[ {date, versions >= 1, content_changes >= 0, last_content_change} ], how_far_back_days (int >=0),
                        how_often (non-empty)
   unlisted_unclassified   date (2026-10-09), usd (>= 0), positions (int >= 0), top[ {ticker, name, usd, has_name_row(bool)} ] (<= 20,
-                       security level only: no relationship, account or client id), why (non-empty): the rebuilt unclassified dollars NOT in
-                       any relationship's stored top-10 list, by security
+                       security level only), why (non-empty): the REBUILT (current) unclassified dollars NOT in any relationship's stored
+                       top-10 list, by security
 Consistency:
-  per date: sum(by_class served) == served_total and sum(by_class rebuilt) == rebuilt_total (to the cent), delta = rebuilt - served per class
-  and in total (to the cent); the CONTROL date's |delta_total| <= 1.00 (else the harness, not the data, is moving).
+  per entry: the by_class sums equal the totals; reference_drift = first_build - served and byte_drift = rebuilt - first_build and delta =
+  rebuilt - served, per class and in total (to the cent).
   rederive is non-decreasing in relationships_rewritten and wall_seconds as n grows.
-Prints  R22-RESIDUAL ok=<bool> dates=<n> control_delta=<usd> rederive=<n> movers_dates=<n> control=<ok|BROKEN>
+Prints  R22-RESIDUAL ok=<bool> dates=<n> control_byte_drift=<usd> control_reference_drift=<usd> rederive=<n> movers_dates=<n> control=<ok|BROKEN>
 """
 import copy
 import json
@@ -37,14 +46,21 @@ def _entry_ok(e: dict, classes: list) -> bool:
     bc = e["by_class"]
     if set(bc) != set(classes):
         return False
-    s = sum(float(bc[c]["served"]) for c in classes)
-    r = sum(float(bc[c]["rebuilt"]) for c in classes)
-    if abs(s - float(e["served_total"])) > CENT * len(classes) or abs(r - float(e["rebuilt_total"])) > CENT * len(classes):
-        return False
-    for c in classes:
-        if abs(float(bc[c]["rebuilt"]) - float(bc[c]["served"]) - float(bc[c]["delta"])) > CENT:
+    n = len(classes)
+    for tot, key in (("served_total", "served"), ("first_build_total", "first_build"), ("rebuilt_total", "rebuilt")):
+        if abs(sum(float(bc[c][key]) for c in classes) - float(e[tot])) > CENT * n:
             return False
-    return abs(float(e["rebuilt_total"]) - float(e["served_total"]) - float(e["delta_total"])) <= CENT * len(classes)
+    for c in classes:
+        v = bc[c]
+        if abs(float(v["first_build"]) - float(v["served"]) - float(v["reference_drift"])) > CENT:
+            return False
+        if abs(float(v["rebuilt"]) - float(v["first_build"]) - float(v["byte_drift"])) > CENT:
+            return False
+        if abs(float(v["rebuilt"]) - float(v["served"]) - float(v["delta"])) > CENT:
+            return False
+    s, f, r = float(e["served_total"]), float(e["first_build_total"]), float(e["rebuilt_total"])
+    return (abs(f - s - float(e["reference_drift_total"])) <= CENT * n and abs(r - f - float(e["byte_drift_total"])) <= CENT * n
+            and abs(r - s - float(e["delta_total"])) <= CENT * n)
 
 
 def _grade(d: dict) -> bool:
@@ -56,12 +72,12 @@ def _grade(d: dict) -> bool:
         want = {"2026-10-06", "2026-10-07", "2026-10-08", "2026-10-09"}
         if len(dates) < 4 or not want <= {x["date"] for x in dates}:
             return False
-        if not all(_entry_ok(x, classes) for x in dates):
+        if not all(_entry_ok(x, classes) and x["first_build_version"]["version_id"] for x in dates):
             return False
         c = d["control_date"]
-        if not _entry_ok(c, classes) or abs(float(c["delta_total"])) > 1.00 or not str(c.get("why", "")).strip():
+        if not _entry_ok(c, classes) or int(c["versions"]) != 1 or c["date"] in want or not str(c.get("why", "")).strip():
             return False
-        if c["date"] in want:
+        if abs(float(c["byte_drift_total"])) > 1.00 or abs(float(c["repeat_delta"])) > 0.01:
             return False
         rd = sorted(d["rederive"], key=lambda x: x["n"])
         if [x["n"] for x in rd] != [1, 3, 5]:
@@ -112,8 +128,9 @@ def main(argv) -> int:
         pass
     control = "ok" if (good and not _grade(broken)) else "BROKEN"
     ok = good and control == "ok"
-    cd = d.get("control_date", {}).get("delta_total") if isinstance(d.get("control_date"), dict) else None
-    print(f"R22-RESIDUAL ok={ok} dates={len(d.get('dates', []))} control_delta={cd} rederive={len(d.get('rederive', []))} "
+    c = d.get("control_date") if isinstance(d.get("control_date"), dict) else {}
+    print(f"R22-RESIDUAL ok={ok} dates={len(d.get('dates', []))} control_byte_drift={c.get('byte_drift_total')} "
+          f"control_reference_drift={c.get('reference_drift_total')} rederive={len(d.get('rederive', []))} "
           f"movers_dates={len((d.get('canonical_movers') or {}).get('dates', []))} control={control}")
     return 0 if ok else 1
 

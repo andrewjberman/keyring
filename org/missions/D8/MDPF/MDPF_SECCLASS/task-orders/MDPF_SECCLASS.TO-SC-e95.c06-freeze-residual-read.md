@@ -73,12 +73,46 @@ one-off rebuild and acceptance before the dollars and the cost are on the record
 ### ACCEPTANCE
 
 <criterion id="SC22-e95-AC1" cell_refs="SC-e-95"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R22_CHECKS/r22_residual_read_check.py org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/RESIDUAL_READ_C06_FREEZE_20261012.json</invocation><expect>R22-RESIDUAL ok=True</expect></criterion>
-`SC22-e95-AC1` -- the record exists with its four dates, its control date reproducing, its three N entries, its chain window, its mover and its unlisted-unclassified section, and its arithmetic is internally consistent (a copy with one field broken fails the same check first).
+`SC22-e95-AC1` -- the record exists with its four dates at three snapshots, its control date (one version, byte drift within $1.00, repeatable), its three N entries, its chain window, its mover and its unlisted-unclassified section, and its arithmetic is internally consistent (a copy with one field broken fails the same check first).
 
 <expected_criteria>SC22-e95-AC1</expected_criteria>
 
 Dry-run at the base (dell1 box/dell1 HEAD, 2026-10-12 ~10:3xZ): SC22-e95-AC1 FAIL as expected (`R22-RESIDUAL ok=False error=absent`). A synthetic valid record reads
 `ok=True control=ok`; the same record with a $50 move on the control date reads `ok=False`; one with a relationship key in the security list reads `ok=False`.
+
+### AMENDMENT 1 -- the rebuild is read at THREE snapshots; the control is for the harness, not for the references (issuer 2.0.0_SA_COO~M1, 2026-10-12 ~11:0xZ; answers your row MDPF_SECCLASS-D1-W85-S1)
+
+Your stop was right and your finding is a RESULT, not a harness failure. The order asked for a control that reproduces the served figure. You showed that a
+date whose canonical key has ONE version still rebuilds +$1,106,337.63 away (2026-09-04), with the class split moving about $87M: a rebuild from the
+CURRENT partition also reads the CURRENT reference inputs (the classifier table at run time, the static tables), so "served vs rebuilt" is two drifts
+the order conflated. The CTO's question needs them apart (a re-derive restates history by reference drift even when no canonical byte moved). Your
+other rows are accepted as read: S2 (line numbers; FOUR keys per relationship, so `keys_written` counts four), S3 (the stop has no StopInstances
+event; `launch_to_stop_seconds` is a LOWER BOUND from the last telemetry sample, say so with `lower_bound: true`), S4 (the latest C_06 run of 15.5 s is
+the pre-ship no-new-partition early return, which is the BASELINE the SC-e-91 pass will be compared with; cite it as `c06_wall_seconds_last_fire`),
+S5 (the mover: B_00 nightly `--upload --force-recent-days 14`, content changes at the 04:15Z fire, reach 20 trading days back).
+1. **Three snapshots per retained date 2026-10-06..09** (replaces item 1's two):
+   (a) SERVED, from `gold/views/mix_daily_summary.json` (as before);
+   (b) FIRST_BUILD: a rebuild from the canonical partition VERSION that was current when C_06 first built that date: find the first version of
+       `gold/views/mix_daily_summary.json` (`list_object_versions` on that key) in which `firm[date]` appears, take its
+       `LastModified` T0, and take the newest version of that date's canonical key with `LastModified` <= T0; record its VersionId and LastModified
+       as `first_build_version`. Run it through the current code path, classifier and static tables, exactly as (c);
+   (c) REBUILT: a rebuild from the CURRENT partition version (as before).
+   Record by class and in total: `reference_drift = first_build - served`, `byte_drift = rebuilt - first_build`, `delta = rebuilt - served`.
+2. **The control date (item 2) is for the HARNESS.** Keep your 2026-09-04 (one version, one ETag): its `byte_drift_total` must be within $1.00
+   (one version, so first_build and rebuilt are the same bytes) and it must carry `versions: 1` and `repeat_delta` (run the rebuild twice; the two
+   rebuilt totals differ by at most $0.01). Its `reference_drift_total` is a RESULT and is recorded as read (your +$1,106,337.63): it is the measure of
+   how far the reference inputs have moved for a date nothing else touched.
+3. **Item 5 (the unlisted holders) is read on the REBUILT snapshot of 2026-10-09** (as you did) and stays marked with `why`; it no longer waits on
+   the control. Your figures ($210,486.42 across 22 blank-ticker positions) stand; add the unclassified dollars of the REBUILT snapshot beside them and
+   the served figure, so the reader sees that the rebuilt Unclassified is lower than the served by the securities the current classifier now places.
+4. **Item 3 (the cost, N = 1, 3, 5) is not blocked** and was not run: run it now. Use the first_build rebuild path or the current one, whichever is the
+   path a re-derive would take (the current partition), and state which. Four keys per relationship.
+5. **Record and check.** The record schema is the issuer's amended `R22_CHECKS/r22_residual_read_check.py` (its header lists every sub-key; the
+   copy on your branch is replaced by the issuer's, do not edit it). A synthetic record with reference drift on the control passes; one with byte
+   drift on the control, a control with more than one version, or reference + byte != delta fails.
+6. Your row D1-W85-S1 (BLOCKING, ARMED, my disarm) is dispositioned by this amendment: ruled, built into the spec. File nothing new for it.
+7. **Gate limb.** The issuer amends its own criteria without a CTO ruling; no gate limb grades an amendment to an existing order's criteria and
+   `<status>` (this order declares `<placeholders>NONE`; the L6 gate grades newly-added orders and placeholders).
 
 ## BOUNDS
 
