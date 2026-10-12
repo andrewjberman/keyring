@@ -7238,3 +7238,51 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S130",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-12T00:56:37Z",
+  "one_line": "L9 round 77: CB77by1-AC2 MET and CB77by3-AC2 MET. No served figure carries the three-quarters error today. 47 served holdings partitions do take the store's close, on dates where it is right: by this seat's own script the ratio to the unadjusted close over that window is 0.9845 to 1.0061 on 480 fund-days, and the median by year runs from 0.46 in 2020 to 1.00 in 2026. Limits: 7 of 15 funds matched as held; 46 of 47 partitions unopened; the store read is a local copy of 2026-10-08.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_77_DRAIN_END_20261012.md @dca4f4d16f (msg 6226)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_77_L9_GRADE_20261012.md",
+      "this seat's reads 2026-10-12T00:56:37Z. (1) data/cot/scripts/gold/B_00.canonical_holdings.py printed at lines 160 to 174, 1112 to 1122 and 1143 to 1147: with a snapshot present each holding is priced at market value over units, and the builder returns before the price store is loaded. (2) By this seat's own script, the build's close over the cached unadjusted close for the 15 failing funds: over 2026-04-22 to 2026-06-07, 15 funds, 480 fund-days, ratio 0.9845 to 1.0061, median 1.0000, 0 below 0.98; over the whole history, 20,718 fund-days, per-fund medians 0.5647 to 0.9179; the median by year runs 0.46 in 2020, 0.51, 0.63, 0.74, 0.79, 0.88 and 1.00 in 2026"
+    ]
+  },
+  "spec_asserts": "CB77by1-AC2 and CB77by3-AC2 (JUDGMENT, graded by the CVO at L9, never self-graded), as written in the two orders.",
+  "world_is": "Not re-derived: the 18 sweeps and their denominators; the listing of 87 snapshot keys; the page's route. This seat's re-derivation uses the same local copy of the store as the worker's.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S131",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-12T00:56:37Z",
+  "one_line": "Two latent hazards from round 77 that no row carried. (1) The 47 served holdings partitions of 2026-04-22 to 2026-06-07 are right only because they were written when the store's close was current; a REBUILD of them from a later copy of the store would price the 15 funds low, and nothing in the tree prevents one. (2) This project's own minted table holds 259,357 account-days valued from these closes and has no reader; the first reader built on it serves the error.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_77_DRAIN_END_20261012.md @dca4f4d16f (msg 6226)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_77_L9_GRADE_20261012.md",
+      "this seat's reads 2026-10-12T00:56:37Z. (1) data/cot/scripts/gold/B_00.canonical_holdings.py printed at lines 160 to 174, 1112 to 1122 and 1143 to 1147: with a snapshot present each holding is priced at market value over units, and the builder returns before the price store is loaded. (2) By this seat's own script, the build's close over the cached unadjusted close for the 15 failing funds: over 2026-04-22 to 2026-06-07, 15 funds, 480 fund-days, ratio 0.9845 to 1.0061, median 1.0000, 0 below 0.98; over the whole history, 20,718 fund-days, per-fund medians 0.5647 to 0.9179; the median by year runs 0.46 in 2020, 0.51, 0.63, 0.74, 0.79, 0.88 and 1.00 in 2026"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 4: a value must carry its claim. A partition whose correctness depends on WHEN it was written carries no field that says so.",
+  "world_is": "INERT: no rebuild of those partitions is scheduled that this seat knows of, and the minted table is unread (the worker's census). Both statements are the round's, not this seat's reads. It blocks a rebuild of the early partitions and the first consumer of the minted table until the fund closes are corrected.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
