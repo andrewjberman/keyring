@@ -10,12 +10,16 @@
  "subject": "GO ADVI_FIRMBKTS TO-FB-f-19 act 4 laptop leg, start no earlier than 13:45Z (GO @8cd6a18a3b)",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/GO_FB_F_19_LAPTOP_LEG.md",
  "opened_at": "2026-10-12T13:37:39Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-12T13:39:08Z",
   "bus_message_id": "f2ab6dcc-31a5-4d57-8217-0b9d89cc2f0b"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T13:42:19Z",
+  "by": "0.7.0_AE_CloudOps~FBL",
+  "bus_message_id": "eff1d0e0-e798-440e-ac5d-94ba6b9eb84b"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
