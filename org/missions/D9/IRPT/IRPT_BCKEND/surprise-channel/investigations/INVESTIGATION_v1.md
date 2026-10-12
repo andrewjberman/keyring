@@ -29283,3 +29283,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "portal/ is populated and node_modules already exists as a symbolic link, so the check's ensure_node_modules() found it and made no junction. playwright-core resolves from it. This worker created, linked or deleted nothing under portal/."
 }
 ```
+
+```json
+{
+ "id": "IRPT_BCKEND-D2-W342-S1",
+ "project": "IRPT_BCKEND",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_IRPT_BCKEND~342",
+ "surfaced_at": "2026-10-12T23:24:19Z",
+ "hazard_standing": "INERT",
+ "class": "BLOCKING",
+ "one_line": "IB-pr-491 criterion IB169-4-AC1 cannot pass as written: its check refuses any file containing the substring annualized_return, and the section_id the order names, 2.annualized_return.c1, contains it. The order's section_id and the check disagree; the fixtures validate.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python checks/r169/p169_cells.py . IB169-4-AC1 at worktree HEAD (after the two fixture edits): FAIL: infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisReport.valid.json still carries annualized_return or DECIMAL_FRACTION; IB169-4-AC1 FAIL; rc=1",
+   "p169_cells.py:236 raw substring test over json.dumps(d): if annualized_return in raw or DECIMAL_FRACTION in raw",
+   "extract.py:755-762 section form <code>.<_slug(field)>.c<n> (_slug at extract.py:978 lowercases and joins with underscores), so the order's section_id is the extractor's form for field Annualized Return",
+   "fixtures after edit: section_id 2.annualized_return.c1, section_type '2', value 7.12, units pct in the 11-token set (both files; read by python -I)",
+   "AC2 PASS (both fixtures validate against their schemas); AC3 PASS (nothing outside the grant changed); rc=0 each"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO IB-pr-491: section_id 2.annualized_return.c1 with section_type 2, units pct; criterion IB169-4-AC1 expects neither fixture to carry annualized_return or DECIMAL_FRACTION (order's own AC1 wording: neither fixture carries annualized_return).",
+ "world_is": "The check's test is a raw substring over the whole file, so the section_id the order names trips it. Both fixtures validate, the section fields match the extractor's form and token set, and the only text that trips the check is the section_id. The fixtures are left at the order's values; AC1 is recorded FAIL and the order stays open. Choosing another slug or editing the check is a CTO or COO decision, not this worker's.",
+ "notes": "Worker IRPT_BCKEND-D2-W342 on 2.0.0_SA_COO~P2 round 169 cell IB-pr-491. The worktree branch wk-IRPT_BCKEND-342 carries the two fixture edits, the proof instance and this row."
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-D2-W342-S2",
+ "project": "IRPT_BCKEND",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_IRPT_BCKEND~342",
+ "surfaced_at": "2026-10-12T23:24:19Z",
+ "hazard_standing": "INERT",
+ "class": "OBSERVATION",
+ "one_line": "Running the _contracts test suite after the IB-pr-491 fixture edits: 4 failed, 122 passed, all 4 in tests/test_seam_paired.py on consumer-smoke and analysis-request-original route checks; none names an AnalysisReport fixture or the old tokens.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "timeout 120 python -m pytest infra/aws/lambda/investor-reporting/_contracts/tests -q -p no:cacheprovider at worktree HEAD: 4 failed, 122 passed in 3.09s, rc=1",
+   "FAILED test_seam_paired.py::test_the_consumer_fixture_source_is_named_and_non_empty (AssertionError: 19), ::test_the_operation_map_covers_the_consumers_own_denominator, ::test_every_declared_route_has_a_response_contract_whose_refs_resolve (analysis-request-original), ::test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[analysis-request-original] (TypeError NoneType at test_seam_paired.py:810)",
+   "read of tests/ by the file viewer: test_analysisreport_v2.py:41,77-78 and test_undated_analysis.py:17 read the two fixtures and compare the v1 and ycharts sections as equal (both edited identically, so the equality holds); no test asserts annualized_return or DECIMAL_FRACTION"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO IB-pr-491 Stop clause: STOP and file a row if a test in infra/aws/lambda/investor-reporting/_contracts/ asserts the old tokens. The order does not name the other _contracts tests as a gate.",
+ "world_is": "No test asserts the old tokens, so the stop clause does not fire. Four unrelated test_seam_paired.py assertions fail; they concern the consumer smoke fixture and route contracts, not the two edited fixtures. Whether they also fail at base was not measured in this worktree, so no attribution is made.",
+ "notes": "Not a criterion of this order. Recorded so the suite state after the edit is on the channel."
+}
+```
