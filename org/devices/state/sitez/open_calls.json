@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-11T22:47:36Z",
+ "written_at": "2026-10-12T02:29:39Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1597,6 +1597,52 @@
      "shared": [
       ".tools/halt-gate-check.sh is on the shared branch (.tools)",
       ".tools/halt-gate-worker-order-test.sh is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261012T022939Z-ffaf",
+   "project": "NFRA_OPLGTW",
+   "subject": "Remove the dell agents' read of gateway/teams/bearer (the credential that reads your Teams chats) from the platform-key class you widened on 10-08 (CT-a-1 amendment 16)?",
+   "asked_by": "2.0.0_SA_COO~O",
+   "source": "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~59/NEVER_WIDEN_ASK_OG-tb-1.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-12T02:29:39Z",
+   "kind": "fork",
+   "context": "nfra-ctlpln-identity/iam.tf:236-248 grants cloudops-dell-agents-group the whole PLATFORM-KEY class, including gateway bearers, on Andrew's 2026-10-08 'WIDEN THE TWO GRANTS, YES'. A 90-day CloudTrail census shows the group never read this one bearer (186 reads, 4 principals, 0 by the group). Narrowing it narrows a class Andrew widened, so it is his word.",
+   "rec": "Yes: exclude only gateway/teams/bearer. The group never used it, and it reaches your 1:1 and group chats; every other platform key stays as you widened it.",
+   "scope": {
+    "measured_at": "2026-10-12T02:29:39Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-assets",
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_DEMQUE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_STRATID placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/halt-gate-check.sh is on the shared branch (.tools)",
+      ".tools/halt-gate-worker-order-test.sh is on the shared branch (.tools)",
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)",
       "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
      ]
     }

@@ -1174,3 +1174,66 @@
 2026-10-12T01:30:43Z LANDED-2P  1.0.0_SA_CTO~Z  364e77ecdd  paths=4  validate=32.90s  wait=0.46s  hold=3.09s  build=2.48s  ref=0.43s  post-commit=10.23s  attempt=1
 2026-10-12T01:32:44Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=8.41  graded=n/a  args=(--verify-merge 14d09942df2f98c4efd56ab62a540a4d9be3734b)  first=(none)
 2026-10-12T01:33:07Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=60.25  took=a8a3b56816 hold=12.08s graded=0/24 pushed=14d09942df  phases: t_fetch=4.86s t_merge_cloud=21.92s t_land=12.11s t_push=8.76s
+2026-10-12T01:34:28Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-12T01:34:38Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-12T01:34:59Z LANDED-2P  0.0.0_AB_MSTR~Z  ace0bedbf2  paths=1  validate=39.15s  wait=1.12s  hold=1.92s  build=1.09s  ref=0.76s  post-commit=8.92s  attempt=1
+2026-10-12T01:35:04Z PASS  0.7.0_AE_CloudOps~Z  3  (all paths in-lane) act=f447b0a8209a paths=3:infra/aws/lambda/opal-assets/opal-assets-silver-schwab/schwab_runtime.py|infra/aws/terraform/opal-assets/silver.tf|org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/ap11_record_shape.json
+2026-10-12T01:35:19Z PASS  0.7.0_AE_CloudOps~Z  3  (all paths in-lane) act=f447b0a8209a paths=3:infra/aws/lambda/opal-assets/opal-assets-silver-schwab/schwab_runtime.py|infra/aws/terraform/opal-assets/silver.tf|org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/ap11_record_shape.json
+2026-10-12T01:35:46Z LANDED-2P  0.7.0_AE_CloudOps~Z  2bf592c841  paths=3  validate=64.36s  wait=0.50s  hold=4.03s  build=1.84s  ref=1.40s  post-commit=11.31s  attempt=1
+2026-10-12T01:38:21Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=8.07  graded=n/a  args=(--verify-merge 0730a81e7b4af7019cf17e541f649ef9a5cec44c)  first=(none)
+2026-10-12T01:40:23Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=10.00  graded=n/a  args=(--verify-merge 1f282cc3974b571b5cec3075e47647779dc82502)  first=(none)
+2026-10-12T01:40:31Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=324.95  took=3eeb687c3c hold=2.55s graded=122/1077 pushed=1f282cc397  phases: t_fetch=4.14s t_merge_cloud=187.14s a2.t_merge_cloud=121.30s t_land=2.57s t_push=5.18s
+2026-10-12T01:42:19Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=13.04  took=already-current pushed=1f282cc397  phases: t_fetch=3.50s
+2026-10-12T01:53:15Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=17.05  graded=n/a  args=(--verify-merge 0666998002007e721520d9ac6c4e6b854b58220a)  first=(none)
+2026-10-12T01:53:27Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=80.64  held=dirty-overlap graded=0/29  phases: t_fetch=6.03s t_merge_cloud=49.11s
+2026-10-12T01:54:55Z PASS  0.7.0_AE_CloudOps~IR  3  (all paths in-lane) act=c7ab1683dc2e paths=3:org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round9/market_data_v2/MDV2_SURVEY.md|org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round9/market_data_v2/ROLLBACK_market-data-generator-lambda-role_market-data-generator-permissions.json|org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round9/market_data_v2/ROLLBACK_market-data-generator-permissions.json
+2026-10-12T01:55:11Z PASS  0.7.0_AE_CloudOps~IR  3  (all paths in-lane) act=c7ab1683dc2e paths=3:org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round9/market_data_v2/MDV2_SURVEY.md|org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round9/market_data_v2/ROLLBACK_market-data-generator-lambda-role_market-data-generator-permissions.json|org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round9/market_data_v2/ROLLBACK_market-data-generator-permissions.json
+2026-10-12T01:55:35Z LANDED-2P  0.7.0_AE_CloudOps~IR  768b30250a  paths=3  validate=46.93s  wait=0.45s  hold=4.00s  build=2.90s  ref=0.79s  post-commit=9.79s  attempt=1
+2026-10-12T01:57:53Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=a9099a8686e1 paths=1:org/devices/crossbox/XB-20261012T004641Z-4c5d.json
+2026-10-12T01:58:06Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=a9099a8686e1 paths=1:org/devices/crossbox/XB-20261012T004641Z-4c5d.json
+2026-10-12T01:58:27Z LANDED-2P  0.0.0_AB_MSTR~Z  779870cea1  paths=1  validate=47.23s  wait=1.02s  hold=2.81s  build=2.32s  ref=0.43s  post-commit=7.13s  attempt=1
+2026-10-12T02:02:00Z PASS  2.0.0_SA_COO~ZI  1  (all paths in-lane) act=b67f0dd18b47 paths=1:org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/NEVER_WIDEN_ROUND9_Z-3_COO_HALF.md
+2026-10-12T02:02:12Z PASS  2.0.0_SA_COO~ZI  1  (all paths in-lane) act=b67f0dd18b47 paths=1:org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/NEVER_WIDEN_ROUND9_Z-3_COO_HALF.md
+2026-10-12T02:02:29Z LANDED-2P  2.0.0_SA_COO~ZI  04146e0808  paths=1  validate=30.06s  wait=0.45s  hold=2.75s  build=2.07s  ref=0.47s  post-commit=8.83s  attempt=1
+2026-10-12T02:02:40Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=10.71  graded=n/a  args=(--verify-merge d6af1be153ce46c8a9a26420dcfff88380bd6cdd)  first=(WARN -- 1 of 94 needed file(s) kept the first parent's version (fine for a PICK-ours resolutio)
+2026-10-12T02:03:19Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=14.72  graded=n/a  args=(--verify-merge 547a83fcaec0e4c2581498b305d9fdefeaa5f749)  first=(WARN -- 1 of 94 needed file(s) kept the first parent's version (fine for a PICK-ours resolutio)
+2026-10-12T02:03:25Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=77.95  held=dirty-overlap graded=1/93  phases: t_fetch=3.14s t_merge_cloud=26.79s a2.t_merge_cloud=37.24s
+2026-10-12T02:04:17Z PASS  0.7.0_AE_CloudOps~IR  2  (all paths in-lane) act=e193c078a561 paths=2:org/critical_paths/.open_deploys/iamroles-r9-narrow-dead-fred-s3access.json|org/critical_paths/change_management/20261012T0203Z_iamroles-r9-narrow-dead-fred-s3access_deploy_completion.md
+2026-10-12T02:04:29Z PASS  0.7.0_AE_CloudOps~IR  2  (all paths in-lane) act=e193c078a561 paths=2:org/critical_paths/.open_deploys/iamroles-r9-narrow-dead-fred-s3access.json|org/critical_paths/change_management/20261012T0203Z_iamroles-r9-narrow-dead-fred-s3access_deploy_completion.md
+2026-10-12T02:04:45Z LANDED-2P  0.7.0_AE_CloudOps~IR  7829572731  paths=2  validate=38.65s  wait=0.15s  hold=2.25s  build=1.47s  ref=0.42s  post-commit=6.44s  attempt=1
+2026-10-12T02:08:14Z PASS  0.7.0_AE_CloudOps~Z  4  (all paths in-lane) act=3280cbcf471b paths=4:infra/aws/lambda/ci/lambda-source-map.json|org/critical_paths/.open_deploys/nfra-oplgtw-fd1-schwab-drain.json|org/critical_paths/change_management/20261012T0126Z_nfra-oplgtw-fd1-schwab-drain_deploy_completion.md|org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/ap11_build.json
+2026-10-12T02:08:19Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane) act=6ced901ee6eb paths=1:org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/NEVER_WIDEN_ROUND9_Z-3_CTO_HALF.md
+2026-10-12T02:08:28Z PASS  0.7.0_AE_CloudOps~Z  4  (all paths in-lane) act=3280cbcf471b paths=4:infra/aws/lambda/ci/lambda-source-map.json|org/critical_paths/.open_deploys/nfra-oplgtw-fd1-schwab-drain.json|org/critical_paths/change_management/20261012T0126Z_nfra-oplgtw-fd1-schwab-drain_deploy_completion.md|org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/ap11_build.json
+2026-10-12T02:08:33Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane) act=6ced901ee6eb paths=1:org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/NEVER_WIDEN_ROUND9_Z-3_CTO_HALF.md
+2026-10-12T02:08:53Z LANDED-2P  0.7.0_AE_CloudOps~Z  04c8836f50  paths=4  validate=90.66s  wait=0.46s  hold=2.72s  build=1.66s  ref=0.75s  post-commit=14.26s  attempt=1
+2026-10-12T02:08:58Z LANDED-2P  1.0.0_SA_CTO~Z  e03d903463  paths=1  validate=42.02s  wait=2.55s  hold=2.81s  build=2.07s  ref=0.68s  post-commit=8.04s  attempt=1
+2026-10-12T02:12:44Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=10.34  graded=n/a  args=(--verify-merge 4d9b54412f372fbf345c5c121375fe2a441c8e4b)  first=(WARN -- 1 of 133 needed file(s) kept the first parent's version (fine for a PICK-ours resoluti)
+2026-10-12T02:13:00Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=56.80  took=dab7327537 hold=5.06s graded=2/132 pushed=4d9b54412f  phases: t_fetch=4.83s t_merge_cloud=27.54s t_land=5.08s t_push=9.61s
+2026-10-12T02:13:59Z PASS  0.7.0_AE_CloudOps~Z  1  (all paths in-lane) act=dbc28a3e5bcb paths=1:org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/ap11_parser_exercise.json
+2026-10-12T02:14:15Z PASS  0.7.0_AE_CloudOps~Z  1  (all paths in-lane) act=dbc28a3e5bcb paths=1:org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/ap11_parser_exercise.json
+2026-10-12T02:14:38Z LANDED-2P  0.7.0_AE_CloudOps~Z  7dc59897b9  paths=1  validate=41.42s  wait=0.46s  hold=3.99s  build=1.93s  ref=2.01s  post-commit=9.37s  attempt=1
+2026-10-12T02:17:41Z PASS  0.7.0_AE_CloudOps~IR  2  (all paths in-lane) act=4181d093fbd0 paths=2:org/critical_paths/.open_deploys/iamroles-r9-narrow-dead-workspace-sync.json|org/critical_paths/change_management/20261012T0217Z_iamroles-r9-narrow-dead-workspace-sync_deploy_completion.md
+2026-10-12T02:17:53Z PASS  0.7.0_AE_CloudOps~IR  2  (all paths in-lane) act=4181d093fbd0 paths=2:org/critical_paths/.open_deploys/iamroles-r9-narrow-dead-workspace-sync.json|org/critical_paths/change_management/20261012T0217Z_iamroles-r9-narrow-dead-workspace-sync_deploy_completion.md
+2026-10-12T02:18:17Z LANDED-2P  0.7.0_AE_CloudOps~IR  d943ba7761  paths=2  validate=34.80s  wait=0.47s  hold=3.77s  build=2.47s  ref=0.90s  post-commit=10.25s  attempt=1
+2026-10-12T02:22:22Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=3  secs=1.58  skipped=overlap holder=191859
+2026-10-12T02:22:33Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=11.91  graded=n/a  args=(--verify-merge 2f70d80f9be55e905591200805425504ba57c378)  first=(none)
+2026-10-12T02:22:44Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=65.91  held=dirty-overlap graded=0/35  phases: t_fetch=2.61s t_merge_cloud=47.34s
+2026-10-12T02:24:13Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane) act=7f56e4fe67ab paths=1:org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round8.md
+2026-10-12T02:24:42Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane) act=7f56e4fe67ab paths=1:org/missions/D12/NFRA/NFRA_IAMROLES202609/ledger/ROUND_ANALYSIS.round8.md
+2026-10-12T02:25:23Z LANDED-2P  1.0.0_SA_CTO~Z  7f7fef056b  paths=1  validate=85.76s  wait=1.48s  hold=6.23s  build=2.42s  ref=3.42s  post-commit=14.86s  attempt=1
+2026-10-12T02:26:05Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane) act=5219f78f2f0b paths=1:org/devices/crossbox/XB-20261012T004641Z-4c5d.json
+2026-10-12T02:26:23Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane) act=5219f78f2f0b paths=1:org/devices/crossbox/XB-20261012T004641Z-4c5d.json
+2026-10-12T02:26:50Z LANDED-2P  1.0.0_SA_CTO~Z  3db5fe0127  paths=1  validate=58.33s  wait=0.45s  hold=4.10s  build=2.19s  ref=1.40s  post-commit=9.57s  attempt=1
+2026-10-12T02:28:48Z PASS  0.0.0_AB_MSTR~Z  0  (no staged files) act=none paths=0:
+2026-10-12T02:29:26Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=5.26  graded=n/a  args=(--verify-merge 698556a7d5d1d418b00315ef4523303814b09d87)  first=(none)
+2026-10-12T02:29:36Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=40.96  took=356949192a hold=2.17s graded=1/63 pushed=698556a7d5  phases: t_fetch=2.83s t_merge_cloud=23.31s t_land=2.19s t_push=6.01s
+2026-10-12T02:29:57Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane) act=1619511d76eb paths=1:org/devices/state/sitez/open_calls.json
+2026-10-12T02:30:03Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane) act=1619511d76eb paths=1:org/devices/state/sitez/open_calls.json
+2026-10-12T02:30:27Z LANDED-2P  1.0.0_SA_CTO~Z  014a547f9e  paths=1  validate=27.23s  wait=0.75s  hold=3.69s  build=2.98s  ref=0.45s  post-commit=10.74s  attempt=1
+2026-10-12T02:32:35Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=6.46  graded=n/a  args=(--verify-merge efe48f5b05b870f25ec26ec206242ff860e8aae7)  first=(none)
+2026-10-12T02:32:49Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=44.83  took=ac28f350da hold=4.43s graded=0/17 pushed=efe48f5b05  phases: t_fetch=3.32s t_merge_cloud=20.06s t_land=4.74s t_push=8.36s
+2026-10-12T02:33:32Z PASS  0.7.0_AE_CloudOps~IR  2  (all paths in-lane) act=58f2b4b135c8 paths=2:org/critical_paths/.open_deploys/iamroles-r9-narrow-dead-shared-infra.json|org/critical_paths/change_management/20261012T0233Z_iamroles-r9-narrow-dead-shared-infra_deploy_completion.md
+2026-10-12T02:33:43Z PASS  0.7.0_AE_CloudOps~IR  2  (all paths in-lane) act=58f2b4b135c8 paths=2:org/critical_paths/.open_deploys/iamroles-r9-narrow-dead-shared-infra.json|org/critical_paths/change_management/20261012T0233Z_iamroles-r9-narrow-dead-shared-infra_deploy_completion.md
+2026-10-12T02:34:06Z LANDED-2P  0.7.0_AE_CloudOps~IR  99e036d0f4  paths=2  validate=31.80s  wait=0.43s  hold=4.00s  build=1.75s  ref=2.20s  post-commit=9.97s  attempt=1
+2026-10-12T02:36:09Z PASS  0.7.0_AE_CloudOps~IR  1  (all paths in-lane) act=378cd97a80ae paths=1:infra/aws/terraform/shared-infra/iam_legacy.tf
+2026-10-12T02:36:17Z PASS  0.7.0_AE_CloudOps~IR  1  (all paths in-lane) act=378cd97a80ae paths=1:infra/aws/terraform/shared-infra/iam_legacy.tf
