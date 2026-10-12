@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-12T20:50:32Z",
+ "written_at": "2026-10-12T21:15:16Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -1889,7 +1889,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_SEV1_SMS_DELIVERY_STATUS_LOGGING_20261011.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-12T20:50:05Z",
    "kind": "fork",
    "context": "Your 10-11 test text arrived, so the fault is SNS's routing; the fix sets the account default SMS type to Transactional. Only a real page proves delivery, and that is a second text to your phone (CTO ruling AMENDMENT 6).",
@@ -1926,13 +1926,20 @@
      ]
     }
    },
-   "closed": null,
-   "escalation": {
-    "to": "andrew",
-    "ref": null,
-    "at": "2026-10-12T20:50:30Z",
+   "closed": {
+    "at": "2026-10-12T21:15:16Z",
     "by": "1.0.0_SA_CTO~DELL1",
-    "reason": "A text to Andrew's own phone: only his word sends it"
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL1_4A62_SEV1_TEST_PAGE_YES_ONCE_AND_THREE_NEW_CITED_ACTS_20261012.md",
+    "crossbox": null,
+    "ruled_by": "cluster-lead",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "lifted",
+    "ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL1_4A62_SEV1_TEST_PAGE_YES_ONCE_AND_THREE_NEW_CITED_ACTS_20261012.md",
+    "at": "2026-10-12T21:15:15Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "held for andrew by 1.0.0_SA_CTO~DELL1 at 2026-10-12T20:50:30Z: A text to Andrew's own phone: only his word sends it"
    }
   },
   {
