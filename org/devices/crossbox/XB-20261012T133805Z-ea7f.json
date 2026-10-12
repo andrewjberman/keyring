@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN TO-CT-aa-2 (round 11, E1 grade hop): write the plain-language click-route summary",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/CT-aa-2_GO_ASK.md",
  "opened_at": "2026-10-12T13:38:05Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T13:50:16Z",
+  "by": "0.7.0_AE_CloudOps~CT1",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
