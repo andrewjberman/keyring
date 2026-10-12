@@ -10,12 +10,16 @@
  "subject": "IRPT 878 land T-1 within 5 trading days, not daily; ADVI 15 daily",
  "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/DELL2_IRPT_ENROLMENT_LAG_20261012.md",
  "opened_at": "2026-10-12T03:34:35Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-12T03:40:40Z",
   "bus_message_id": "77593e90-3ddd-44ce-9328-6416c78debc5"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T17:43:57Z",
+  "by": "2.0.0_SA_COO~P2",
+  "bus_message_id": "56e0fc03-67a6-4cca-ae7d-c18e8b0ce9ec"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
