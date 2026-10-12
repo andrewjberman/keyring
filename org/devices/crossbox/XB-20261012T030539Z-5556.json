@@ -10,12 +10,16 @@
  "subject": "QUOTE IRPT_BCKEND 878: 113,262 cells, 878 requests, finish 2026-10-14; enrolment not quoted",
  "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/requests/IRPT_BCKEND-AS-TRADED-CLOSES-878.quote.json",
  "opened_at": "2026-10-12T03:05:39Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-12T03:06:47Z",
   "bus_message_id": "0913cfc3-dd01-4dc4-ad90-f6d5cfd49849"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T17:43:57Z",
+  "by": "2.0.0_SA_COO~P2",
+  "bus_message_id": "f95a719a-4570-4601-a3fc-cef5cacb1aec"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
