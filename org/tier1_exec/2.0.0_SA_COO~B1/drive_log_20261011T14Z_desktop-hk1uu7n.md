@@ -65,3 +65,8 @@
 ## 2026-10-12 06:07Z tick (B1)
 - Producers chain still writing the legacy home at 06:05Z (7055 keys since 05:50Z, 397 since 05:52:53Z); window not open. Poll monitor running; GO after 12 quiet minutes and the remaining section-0 conditions.
 - FB-f-15 re-run: ~FBL committed d6093ad983 (16:20Z Oct 11), AC1 PASS from the committed r4_sim.py: 9 of 9 allowed, 2 of 2 negatives, OAI ok. Graded from the instance; b717 from-side closed 06:06:52Z (to-side not yet recorded); 5cf5 CLOSED-BOTH.
+
+## 2026-10-12 08:20Z tick (B1)
+- Act 2 DONE (FB1): MOVE_TS 2026-10-12T06:22:08Z, AC1 20/20, legacy quiet. Act 3 DONE: DEST-VS-MANIFEST EQUAL 53031/0/0/0, ownership key equal (my re-run 07:38Z). Acts 4b/4c DEPLOYED and complete (FB-f-13 @3e8181a764): exec-summary fdPwod..., partners c9FXD84..., mode canonical, sample 8/8 (one case by content hash, claim replayed-prior-artifact; D1-S36 ruled, AMENDMENT 4).
+- FB-g-30 flip commit 69679b90e3 merged @49bff125c6 (verify 4/4); FB-g-31 re-pins e274a0e60c merged @ec099f0623 (repin 3/3). ycharts-generate at HEAD carries 3 unreleased YCDGEN/BCKEND commits; built from pre-state branch scratch/r4-act4-ycharts-pin (c4ca0c9a99), hash NeAB50CN equals the rehearsal. CTO 4312 no objection with two conditions (kept ref; relay to dell2 owners), both done.
+- NEXT: laptop integrates box/dell1 to CLOUD (MSTR asked); 13:30Z MDPF fire read; un-park FB-f-11 and FB-f-19 at 13:45Z+ (mk_r4_af.py), then step 5 pre-flip reads, act 4, step 7 reads, close.
