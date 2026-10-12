@@ -468,3 +468,10 @@ first rolling day is after IRPT's history lands, and the SERVED pair is written 
 `ENROLMENT_TIERS.json` (`freshness_basis: trading-day-frontier`, `cycle_trading_days` per tier) and the week close prints the declared cycle against
 every name's measured lag with the denominator; no checker, alarm or mode. One cell, `DQ-t-42` (the declaration with one-source validation, and a
 read-only `--lag-report`; `0.9.0_WK_MDPF_DEMQUE~34`, worker, LOCAL, workstream LAGDECL, depends on DQ-t-41).
+
+**Round 9 close of DQ-t-42 (issuer, 2026-10-12 ~04:2xZ):** merged @e148463ae6 (AC1 LAG-OK, AC2 LAG-REAL-OK: 141 indexed, daily 127 within and 14 over at lag 77 from
+2026-06-23, rolling 0 landed and 782 not landed; folder 148 passed). The declaration is in `ENROLMENT_TIERS.json`; the report is
+`extend_frontier.py --lag-report`; no checker or mode exists. **W34-S1 ruled:** the cell measured the lag from `valid_to` (the lock window end the
+extension writes); `as_of` is the max date of the price rows and is the stored max date proper. They agree on all 141 today. The week close
+recomputes each name's lag from `as_of`, prints the count of names where the two differ, and where it is non-zero `as_of` governs. **W34-S2:** the
+rolling cycle of 5 is unmeasured on real data until IRPT's history lands (2026-10-14); the week close is the first reading.
