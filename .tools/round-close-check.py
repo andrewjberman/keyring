@@ -28,10 +28,10 @@ THREE LIMBS, each printed with its evidence:
                    grade; it is counted self_graded and the criterion stays ungraded.
   HEADER GRADES   a grade written only in a markdown header, outside the fenced rows ("**RIV-wc-1 J1 MET.**"), is read from the
                   file's `Author:` line and grades by a verdict word (MET, NOT MET, PASS, FAIL, PARTIAL); HELD, NOT MEASURED and
-                  UNVERIFIABLE name none. A fenced row still grades by any mention unless --strict-grades is given; every run
-                  prints STRICT-GRADES (graded_with_a_verdict_word, bare_mention) so the difference is measured, never silent.
-                  --strict-grades: a row grades only by a verdict word within fourteen tokens after the criterion, same clause,
-                  or by a `grades` entry {criterion, verdict}. ETFS_RIVALS D1-S15, CTO~DELL1 msg 4559.
+                  UNVERIFIABLE name none. A fenced row grades only by a verdict word within fourteen tokens after the
+                  criterion, same clause, or by a `grades` entry {criterion, verdict}: a mention without a verdict is not a
+                  grade (the default, CTO~DELL1 msg 4566). --loose-grades restores the mention reading and the report prints
+                  LOOSE-GRADES IN USE; every run counts bare mentions. ETFS_RIVALS D1-S15, CTO~DELL1 msg 4559.
 BLIND (stated): whether a grade is a GOOD grade. This tool sees that a different CVO-kind seat wrote a row naming the
 criterion (with a verdict word, under --strict-grades or in a header), not what the row says. Orders not yet `complete` are listed and do not enter the verdict (a round with an open
 order is the issuer's to close, not this tool's to read).
@@ -541,7 +541,7 @@ def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, k
 # ---------------------------------------------------------------- the whole check
 
 def check(root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, deep=False, max_age=DEFAULT_MAX_AGE_MIN,
-          reviewer_only=False, staged=False, env=None, strict_grades=False) -> tuple:
+          reviewer_only=False, staged=False, env=None, strict_grades=True) -> tuple:
     """(lines, last_line). staged=True reads the project's repository files from the git index (see Staged)."""
     src = Staged(root, env) if staged else WorkTree(root)
     try:
@@ -551,7 +551,7 @@ def check(root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, deep=Fal
 
 
 def _check(src, root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, deep, max_age, reviewer_only,
-           strict_grades=False) -> tuple:
+           strict_grades=True) -> tuple:
     lines = []
     macro = ""
     proj_dir = None
@@ -630,8 +630,13 @@ def _check(src, root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, de
             if state == "SELF":
                 n_s += 1
             lines.append("  JUDGMENT %s %s -> %s (%s)" % (o["id"].split(".")[-1], c["id"], state, why))
-    lines.append("STRICT-GRADES mode=%s graded_with_a_verdict_word=%d bare_mention=%d of judgment=%d (--strict-grades makes the "
-                 "verdict use this reading)" % ("verdict" if strict_grades else "report", strict_n, bare, n_j))
+    if strict_grades:
+        lines.append("STRICT-GRADES mode=verdict graded_with_a_verdict_word=%d bare_mention=%d of judgment=%d (a mention "
+                     "without a verdict word is not a grade; --loose-grades restores the older mention reading)" % (
+                         strict_n, bare, n_j))
+    else:
+        lines.append("LOOSE-GRADES IN USE (--loose-grades): a fenced row grades by any mention of the criterion; "
+                     "graded_with_a_verdict_word=%d bare_mention=%d of judgment=%d" % (strict_n, bare, n_j))
     n_u = n_j - n_g
     ok = rv["state"] == "present" and n_u == 0 and n_s == 0 and bad_proofs == 0
     return lines, "ROUND-CLOSE project=%s device=%s reviewer=%s orders=%d judgment=%d graded=%d ungraded=%d self_graded=%d verdict=%s" % (
@@ -690,7 +695,8 @@ def selftest() -> int:
                 {"to_id": "TEST_PROJ.TO-1", "acceptance": [
                     {"criterion_id": "T1-AC1", "status": "PASS"},
                     {"criterion_id": "T1-AC2", "status": "UNVERIFIABLE-BY-INSTRUMENT", "judgment": True}]}))
-        row = {"id": "TEST_PROJ-C-S1", "surfaced_by": graded_by, "adjudicates": ["T1-AC2"]}
+        row = {"id": "TEST_PROJ-C-S1", "surfaced_by": graded_by, "adjudicates": ["T1-AC2"],
+               "one_line": "TEST_PROJ.TO-1 T1-AC2: MET on this seat's read."}
         if graded_by:
             fname = "adjudications/ADJUDICATION_v1.md" if where == "adjudication" else "investigations/INVESTIGATION_v1.md"
             w(base + "/surprise-channel/" + fname, "# rows\n\n```json\n%s\n```\n" % json.dumps([row], indent=1))
@@ -740,8 +746,8 @@ def selftest() -> int:
         reset()
         bare = {"id": "TEST_PROJ-C-S2", "surfaced_by": "3.0.0_SA_CVO", "one_line": "Read T1-AC2 and its instance beside the packet."}
         w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md", "```json\n%s\n```\n" % json.dumps([bare]))
-        case("a mention without a verdict still grades by default and is REPORTED bare", run(), "graded=1", "verdict=MAY-CLOSE")
-        case("a mention without a verdict reads UNGRADED under --strict-grades", run(strict_grades=True), "graded=0", "ungraded=1", "verdict=REFUSED")
+        case("a mention without a verdict reads UNGRADED by default", run(), "graded=0", "ungraded=1", "verdict=REFUSED")
+        case("--loose-grades keeps the older mention reading", run(strict_grades=False), "graded=1", "verdict=MAY-CLOSE")
         verdict_row = {"id": "TEST_PROJ-C-S3", "surfaced_by": "3.0.0_SA_CVO", "one_line": "TEST_PROJ.TO-1 T1-AC2: MET on this seat's read."}
         w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md", "```json\n%s\n```\n" % json.dumps([verdict_row]))
         case("a row with the verdict word grades under --strict-grades", run(strict_grades=True), "graded=1", "verdict=MAY-CLOSE")
@@ -759,7 +765,7 @@ def selftest() -> int:
         stale = {"id": "TEST_PROJ-C-S9", "surfaced_by": "3.0.0_SA_CVO", "evidence": ["checks/rl9.AC2.sh re-run: PASS"]}
         w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md", "```json\n%s\n```\n" % json.dumps([stale]))
         case("a generic AC id named only by another object does not grade", run(), "graded=0", "ungraded=1", "verdict=REFUSED")
-        stale["adjudicates"] = "TEST_PROJ.TO-1 AC2"
+        stale["adjudicates"] = "TEST_PROJ.TO-1 AC2 MET"
         w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md", "```json\n%s\n```\n" % json.dumps([stale]))
         case("a generic AC id with the order named grades", run(), "graded=1", "verdict=MAY-CLOSE")
         # A generic J id (J2) is scoped the same way: a CVO row from ANOTHER round's order must not grade this one.
@@ -772,7 +778,7 @@ def selftest() -> int:
         other = {"id": "TEST_PROJ-C-S8", "surfaced_by": "3.0.0_SA_CVO", "adjudicates": "TEST_PROJ.TO-9 J2"}
         w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md", "```json\n%s\n```\n" % json.dumps([other]))
         case("a generic J id graded on another round's order does not grade", run(), "graded=0", "ungraded=1", "verdict=REFUSED")
-        other["adjudicates"] = "TEST_PROJ.TO-1 J2"
+        other["adjudicates"] = "TEST_PROJ.TO-1 J2 MET"
         w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md", "```json\n%s\n```\n" % json.dumps([other]))
         case("a generic J id with the order named grades", run(), "graded=1", "verdict=MAY-CLOSE")
         reset(seen=NOW - 100000)
@@ -833,7 +839,9 @@ def main(argv: list) -> int:
     ap.add_argument("--reviewer-only", action="store_true")
     ap.add_argument("--staged", action="store_true", help="read the project's files from the git index, not the working tree")
     ap.add_argument("--strict-grades", action="store_true",
-                    help="a judgment criterion is graded only by a verdict word (or a `grades` entry), never by a mention")
+                    help="the default: a judgment criterion is graded only by a verdict word (or a `grades` entry)")
+    ap.add_argument("--loose-grades", action="store_true",
+                    help="escape: a fenced row grades by any mention of the criterion (the report prints LOOSE-GRADES IN USE)")
     ap.add_argument("--selftest", action="store_true")
     args = ap.parse_args(argv)
     if args.selftest:
@@ -845,7 +853,7 @@ def main(argv: list) -> int:
         this_box = resolve_this_box(ROOT)
         lines, last = check(ROOT, sl, sl.Ctx(None), args.project, args.round, args.workstream, args.device or this_box,
                             this_box, sl.kind_resolver(), deep=args.deep, max_age=args.max_age_minutes,
-                            reviewer_only=args.reviewer_only, staged=args.staged, strict_grades=args.strict_grades)
+                            reviewer_only=args.reviewer_only, staged=args.staged, strict_grades=not args.loose_grades)
     except Usage as exc:
         print("ERROR: %s" % exc, file=sys.stderr)
         return 2
