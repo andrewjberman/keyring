@@ -52,8 +52,8 @@ _hk_stamp() {
     else
         _p="${TEMP:-/tmp}/claude-hook-timings-noroot.log"
     fi
-    printf '%s step=%s elapsed_ms=%s tool=%s rc=%s pid=%s
-' "$(date -u +%FT%TZ)" "$1" "${_ms}" "${TOOL_NAME:-?}" "${2:-}" "$$" >> "${_p}" 2>/dev/null || true
+    printf '%s step=%s elapsed_ms=%s tool=%s serial=%s rc=%s pid=%s
+' "$(date -u +%FT%TZ)" "$1" "${_ms}" "${TOOL_NAME:-?}" "${AGENT:-?}" "${2:-}" "$$" >> "${_p}" 2>/dev/null || true
 }
 trap '_hk_stamp "exit:${_HK_LAST}" "$?"' EXIT
 
@@ -294,7 +294,9 @@ if [ "${TOOL_NAME}" = "mcp__opal-agent-comms__send_message" ] \
                 fi
                 DESC=$(printf '%s' "$DESC" | head -c 250)
                 [ -n "$TO_AGENT" ] && DESC="[->$TO_AGENT] $DESC"
+                _hk_stamp job2_append_start
                 bash "${ROOT}/org/mcp/append-commitment.sh" "$AGENT" "$DESC" >/dev/null 2>&1 || true
+                _hk_stamp job2_append_done
             fi
         fi
     fi
