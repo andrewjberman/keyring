@@ -1109,3 +1109,53 @@
   "notes": "Recorded as a premise check for the round-6 close. No level printed."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W16-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~16",
+  "surfaced_at": "2026-10-12T18:40:21Z",
+  "one_line": "AMENDMENT 1 disarms S2 only for a one-firm as-of. On a no-pool as-of the fold line is None on the last date with no dollars withheld, yet aum-metrics still fills the Other Models current value from its last pooled value, so the carried dollars are served as current.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (routes to 1.0.0_SA_CTO: the current-value fallback in build_aum_metrics must not fill a fold line from an earlier date)",
+  "spec_asserts": "AMENDMENT 1 step 6a and the S2 disarm claim: the as-of line is never None-with-dollars, and a pool with no value on the last date is not a refusal because there are no dollars to withhold.",
+  "world_is": "dim_mdpf_aum_metrics.py build_aum_metrics by_model loop: cur_val = mvals[gi] (:551); when that is None it sets cur_val = _frontier(mvals) (:555), which returns the last non-None value of the series (:364-369). On a day where no folded line has a value on the last date, the fold line is None on the last date while it carried dollars on an earlier date, so the row is built with that earlier value as its current aum. Measured here by reading the code, not by running build_aum_metrics. Today's as-of (2026-10-09) is emitted, so the path is not live; it is reachable on any no-pool day.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dim_mdpf_aum_metrics.py:551-556 and :364-369 (read at HEAD d2849f4221)",
+      "r6 contract C12 no-pool arm asserts the Global build only, not the aum-metrics row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed here: the fallback is pre-existing code and the order does not name aum-metrics' current value. The issuer must rule whether a fold line on a no-pool day is absent from the aum-metrics by_model or carried. No level printed."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W16-S5",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~16",
+  "surfaced_at": "2026-10-12T18:40:21Z",
+  "one_line": "The refusal does not stop the global staging write: build_all writes the unfolded global aggregate to gold/mdpf_revamp/global/aggregate_aua_timeseries.json before the fold guard runs, so on a refused day that object is still written although Global is refused whole.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (routes to 1.0.0_SA_CTO: rule whether the staging copy moves behind the fold guard, or whether a refused day skips it)",
+  "spec_asserts": "AMENDMENT 1 step 6a: Global is refused WHOLE (its category views, aum-metrics and account distribution are not built or written for that run) and the prior Global object stays served.",
+  "world_is": "mdpf_gold_consolidator.py: stage_put of f-string STAGING_PREFIX/global/aggregate_aua_timeseries.json at :2838, inside the global branch before the tax and SMA overlays, and before guard_global_min_firms_fold at :2943. The staged copy is pre-tax, pre-overlay and unfolded on every run, not only on a refused day. Its readers are unverified: comp-pipescript io reports the consolidator's dynamic prefixes as UNRESOLVED-PREFIX and cannot name who reads the staged key. The amendment's 'not built or written' list does not name this object.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mdpf_gold_consolidator.py:2838 (stage_put of global/aggregate_aua_timeseries.json) and :2943 (guard) at HEAD d2849f4221",
+      "comp-pipescript io data/mdpf/scripts/gold/mdpf_gold_consolidator.py: READS none detected; UNRESOLVED-PREFIX (4); WRITES none detected"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed here: moving the write changes staged content on every run, which is outside this amendment. The reader question is open."
+}
+```
