@@ -1,0 +1,36 @@
+{
+  "claim": "measured: read-only, 2026-10-12T09:20Z (S3 list-objects-v2 and list-object-versions of gold/canonical/holdings/ in opal-data-bd; head-object and get of the two watermark keys; CloudTrail lookup-events for s3.amazonaws.com 2026-10-10T23:00Z-23:30Z; code and telemetry reads of the BD gold tree)",
+  "partitions": [
+    {
+      "date": "2026-10-06",
+      "key": "gold/canonical/holdings/2026-10-06.parquet",
+      "last_modified": "2026-10-12T04:16:42Z",
+      "version_count": 9
+    },
+    {
+      "date": "2026-10-07",
+      "key": "gold/canonical/holdings/2026-10-07.parquet",
+      "last_modified": "2026-10-12T04:16:42Z",
+      "version_count": 7
+    },
+    {
+      "date": "2026-10-08",
+      "key": "gold/canonical/holdings/2026-10-08.parquet",
+      "last_modified": "2026-10-12T04:16:42Z",
+      "version_count": 5
+    }
+  ],
+  "rewrite_window": {
+    "from": "2026-10-10T23:15:01Z",
+    "to": "2026-10-10T23:15:03Z"
+  },
+  "writer": {
+    "principal": "bd-gold-layer-runner group B_00, run 608de09d26a6 (IAM principal NOT resolved)",
+    "identified_by": "CODE: B_00.canonical_holdings.py is the only writer of canonical_holdings_key() (gold/canonical/holdings/{date}.parquet): put_object at lines 860, 1004 and 1352. B_02.canonical_lots.py reads that prefix (lines 202, 711, 967) and writes only canonical_lots keys (lines 623-629, 859-862, 1018, 1153); B_01, B_03, D_04 and E_25 write other keys. TELEMETRY: the B_00 run 608de09d26a6 telemetry spans 2026-10-10T23:14:40.239Z to 23:15:02.865Z; telemetry carries resource samples keyed by runner group and no write target. The 15 versions in the window (LastModified 23:15:01-03Z) fall inside that span. The same containment holds for B_00 runs fb5078055b2e (04:15:48Z writes), 237003635d3e (2026-10-11 04:16:35Z), 44f5204c24e3 (2026-10-12 00:33:48Z). OBJECT METADATA: none (Metadata is empty on the 23:15:02Z version of 2026-10-06). CLOUDTRAIL: lookup-events for s3.amazonaws.com in 2026-10-10T23:00-23:30Z returned 0 events (S3 PutObject is a data event and is not in lookup). Lambda and instance management events were not queried: the write is a direct put_object from the B_00 script. bd-gold-trigger launch time was not read. CONFIDENCE: high for the script (code plus containment in four B_00 runs); medium for the run id (time containment only). WRITER_COUNT: 1 = distinct writers of the prefix in 2026-10-10T23:00Z-23:30Z (15 versions, all attributable to run 608de09d26a6). CONTENT: each of the 15 window versions carries the same ETag as its immediately prior version (15 of 15 identical, 0 changed), so the 23:15 write re-put identical bytes.",
+    "script_or_lambda": "data/black_diamond/scripts/gold/B_00.canonical_holdings.py (runner group B_00; direct put_object; not a Lambda)"
+  },
+  "writer_count": 1,
+  "c06_reserves_dates_next_fire": false,
+  "c06_reason": "The default next fire is the catalog's incremental run (data/black_diamond/scripts/gold/gold_dispatch.sh:111, --upload --incremental). Watermark: gold/meta/client_timeseries_watermark.json holds data_as_of 2026-10-09 (C_06 _load_watermark :341-347 reads this key first; the legacy gold/client_timeseries/_watermark.json holds the same value, LastModified 2026-10-11T05:23:28Z). C_06 build() selects keys whose date is greater than the watermark (C_06 :689). The canonical holdings prefix holds 2474 keys and its last key is 2026-10-09.parquet, so the incremental selection is empty and the run returns at :694-696. 2026-10-06, 2026-10-07 and 2026-10-08 are not selected, so the next default fire does not re-serve them. Exception: a FULL dispatch drops --incremental (gold_dispatch.sh :411-414), and a full build would re-serve every date; that is not the default fire.",
+  "ruling_on_correction_or_drift": null
+}
