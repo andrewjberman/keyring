@@ -1285,6 +1285,87 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "TO build item 2: record, for 10 symbols, the request count of (i) 10 per-symbol history() calls and (ii) ONE multi-ticker download; state whether the multi-ticker call is ONE request or n requests.",
     "world_is": "The multi-ticker call is n requests: one chart request per symbol (yfinance multi.py calls Ticker.history() per symbol), measured on 50 real symbols plus the planted ticker. The 10-symbol download is not in the report; the COO reads the 51-symbol measurement instead."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W33-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~33",
+    "surfaced_at": "2026-10-12T03:52:00Z",
+    "one_line": "The cell's trading_day_ordinal(frontier) is not a function of lib/trading_calendar.py: the module has no ordinal, so extend_frontier.py defines one locally as the NYSE trading-day count from 2020-01-01.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/trading_calendar.py@347c6585ca: the public functions are is_trading_day, prev_trading_day, expected_last_trading_day, trading_days_behind, trading_days_between, trading_days_mtd, trading_days_ytd, total_trading_days_in_window, calendar_source; no ordinal or index function (grep of 'def ' in the worktree file)",
+        "data/mdpf/scripts/demque/extend_frontier.py@this order's commit: trading_day_ordinal(day) = len(tc.trading_days_between(ORDINAL_ANCHOR, day)); the block index is ordinal % cycle_trading_days"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-41 build item 3: the block for a day is trading_day_ordinal(frontier) mod cycle, an integer from the trading calendar, so the rotation is stateless.",
+    "world_is": "No such function exists at HEAD. The local definition is pure and stateless; the anchor shifts which day each block lands on, not the rotation itself. A calendar-level ordinal would be a lib/ edit outside this order's grant. Owner of that call: 2.0.0_SA_COO~Q1."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W33-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~33",
+    "surfaced_at": "2026-10-12T03:52:30Z",
+    "one_line": "The rolling rule 'not already in the index when enrolled' cannot be evaluated from the live index after the rolling names land, so the enrolment file carries an enrolment-time snapshot the cell's JSON does not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "price_store.index on s3://opal-data-assets/yahoo/global/silver/price_history at this order's build: 141 CUSIPs; IRPT_BCKEND-AS-TRADED-CLOSES-878 has 878 unique CUSIPs, 96 of them in the index, 782 not (python read, 2026-10-12)",
+        "requests/ENROLMENT_TIERS.json@this order's commit: rolling[0].stored_at_enrolment = the 96 CUSIPs; plan() refuses (SystemExit) a stored CUSIP the request does not carry"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-41 build item 2: rolling = the rolling request's names NOT already in the index when enrolled; the 96 stored ones stay daily.",
+    "world_is": "Once a rolling name lands it is in the index, so a rule that reads the live index alone moves all 782 into daily (878 requests a day, over the cap of 380). The fix is the snapshot key in the rolling entry. That key is not in the cell's enrolment JSON: it is a deliberate addition, stated here for the CTO and 2.0.0_SA_COO~Q1 to ratify or replace."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W33-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~33",
+    "surfaced_at": "2026-10-12T03:53:00Z",
+    "one_line": "Build item 6 is stopped: no existing freshness config fits the Yahoo price_history store, which is cusip-partitioned parquet with its as-of per name inside the file, so no entry was added to the served config or the manifest generator.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/comp-freshness _max_partition_date (lines 503-520): reads a YYYY-MM-DD date-key from object names under the prefix; the store has cusip=<CUSIP>/ prefixes with no date-key, so the partition-key check reports PARTITION-KEY UNCHECKED (lines 908-919)",
+        ".tools/comp-freshness as_of_field and as_of_map_field (lines 1006, 965): content modes that read a JSON document; the store's files are parquet (lock.json and prices.parquet per CUSIP)",
+        "data/served_freshness_config.yaml@347c6585ca: no entry for the Yahoo price store; the only freshness_basis entries are for mdpf, cot, bd and inf artifacts"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-41 build item 6: add ONE freshness entry for the Yahoo price_history store with freshness_basis trading-day-frontier and the lag per tier in its note; if no existing config fits, file a row and stop that item.",
+    "world_is": "An entry written now would verdict UNCHECKED on this prefix, or an mtime verdict on a per-name rewrite, which is a false-clean risk. The per-name as-of the rolling tier needs is a schema question for 2.0.0_SA_COO~Q1 and the CTO. Nothing was invented."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W33-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~33",
+    "surfaced_at": "2026-10-12T03:53:30Z",
+    "one_line": "Ten of ADVI_COTBKF's fifteen funds are also IRPT_BCKEND names, so the two tiers overlap; the build resolves it by daily precedence and the cell does not state which tier wins.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python read at this order's build: the ADVI_COTBKF request's 15 CUSIPs against the IRPT_BCKEND request's 878 CUSIPs share 10; 2 of the 15 are in the index",
+        "extend_frontier.py _tiers(): a daily_extra CUSIP that has landed is daily even when it is also a rolling name; the day's request holds each CUSIP once; plan-week under --assume-landed IRPT_BCKEND-AS-TRADED-CLOSES-878 gives daily 149, daily_extra_not_landed 5, rolling_names 782"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-41 build item 2: daily = every other indexed name, including the daily_extra funds once landed; rolling = the 782 IRPT names not stored at enrolment.",
+    "world_is": "The two rules overlap on the ten funds. The build takes daily precedence, so those funds are requested every day and still count in rolling_names; the ruling on that precedence is the issuer's to confirm."
   }
 ]
 ```
