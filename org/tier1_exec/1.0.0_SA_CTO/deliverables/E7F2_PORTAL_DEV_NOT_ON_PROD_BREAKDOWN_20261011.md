@@ -31,3 +31,33 @@ the promote.
 
 DEV build locally: `cd portal && bun install && bun run dev --port 5174`, signed in as a 49 Financial test user, at `/portfolios` and
 `/advisor-intelligence`. Or open the DEV deployment if you use one.
+
+## ADDENDUM 1 (2026-10-12 ~21:3xZ) -- DEV has grown since this breakdown; what changed for the smoke
+
+Read at 21:3xZ (portal `git fetch`, origin/PROD..origin/DEV): **176 commits, 163 files**, up from 46 and 62 on 10-11. The files by page:
+
+| Page | Files changed |
+|---|---|
+| Investor Reporting | 111 |
+| Ticket Center | 19 |
+| Security Analysis | 17 |
+| Advisor Intelligence | 5 |
+| Model Portfolios | 1 |
+| shared `src/api`, `src/lib` and `src/components` | 6 |
+| `package.json` and `bun.lock` | 2 |
+
+**Added at the laptop CTO's ask (msg 108679, ruling `CTO_RULING_DELL2_29B7_IRPT_TILES_PROD_PUSH_NOT_YET_FOLDED_INTO_E7F2_20261012.md`):** `183860ba`, dell2's IRPT_BCKEND
+value-facts tiles. The Investor Reporting adapter reads `value_facts.start_value` / `end_value`, and the market-value names stay for the Black Diamond path only. Investor
+Reporting is OPAL-INTERNAL (gate admin + internal + Dev). It is folded into e7f2 as NOT YET until Andrew smokes the build.
+
+**Client-facing changes since 10-11:** none to the Model Portfolios or Advisor Intelligence page files. Two SHARED changes reach every page:
+1. **`53506d49`, `src/lib/firmAccess.ts`:** `FIRM_ALLOWED_PATHS`, the list of pages a partner login may open, is now generated. **Measured: the list is IDENTICAL on PROD
+   and DEV** once comments and whitespace are ignored (615 = 615 characters, equal), so no partner gains or loses a page.
+2. **`eba86eaf`:** the shared table no longer emits a whitespace text node inside its column group. This is a rendering fix seen on holdings tables. Glance at one
+   partner-visible table during the smoke.
+
+**The dependency files (`package.json`, `bun.lock`) changed.** That is the strongest reason to smoke the client-facing pages on the DEV build rather than trust page diffs.
+
+**How to look:** unchanged from the section above, with the two client pages plus one holdings table.
+
+-- 1.0.0_SA_CTO~DELL1
