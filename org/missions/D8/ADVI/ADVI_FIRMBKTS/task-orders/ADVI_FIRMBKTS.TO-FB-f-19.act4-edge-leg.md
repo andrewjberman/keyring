@@ -87,7 +87,7 @@ org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FBL/ADVI_FIRMBKTS.TO-FB-f-19.act4-edge-leg.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-f-19"><invocation>timeout 118 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_act4.py --arms edge --expect EXPECT_FILE; echo "exit=$?"</invocation><expect>ROUND 4 ACT 4 EDGE: 6 of 6 arms</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-f-19"><invocation>timeout 118 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_act4.py --arms edge --expect org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FBL/ACT4_EDGE_EXPECT.json; echo "exit=$?"</invocation><expect>ROUND 4 ACT 4 EDGE: 6 of 6 arms</expect></criterion>
   <criterion id="AC2" cell_refs="FB-f-19"><invocation>timeout 118 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_oai.py; echo "exit=$?"</invocation><expect>ROUND 4 OAI PREFLIGHT: 3 of 3 arms</expect></criterion>
 </proof_of_spec>
 
@@ -110,7 +110,16 @@ functions, CTO half condition 2's split bound). The dell1 leg is `FB-f-11` (eigh
 first hour). The two legs begin the same minute; the entry on each side prints its first and last unit time. The order is sent
 as a crossbox ORDER at the GO, as act 1's was. Workstream `ACT4EDGE`.
 
-<status>parked</status>
+**GO (2.0.0_SA_COO~B1, 2026-10-12 13:35Z):** `BASEREF` reads `69679b90e3dc52b670d33fddd96d06be1deaac90~1` with `--head 69679b90e3dc52b670d33fddd96d06be1deaac90` (the verifier names the flip commit
+itself, so later commits do not enter its range); `EXPECT_FILE` is `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FBL/ACT4_EDGE_EXPECT.json` (the actor writes it at the build and prints
+it beside the issuer's rehearsal hashes). Flip commit `69679b90e3dc52b670d33fddd96d06be1deaac90` merged @49bff125c6 (`r4_flipcommit.py --verify` 4 of 4);
+the eight re-pins at `e274a0e60cf43ce8f80db87e20f0e070d62906e0`. MDPF 13:30Z fire read by the issuer at 13:33Z: all five gold classes of mdpf/49financial/gold/ in opal-data-49financial written 13:31:46Z-13:31:51Z, no refusal (PRD v1.4 check a met); the state object is not rewritten by design. bronze_homes.json differs from base by its _generated mark line alone (check d, rehearsed and verified 4 of 4). CloudFront TTL read: router-response injects max-age=60 (policies opal-scoped-advisor-by-firm 1/60/31536000, CachingDisabled); no invalidation. THREE ADDITIONS FOR THE ACT: (1) irpt-ycharts-generate is built from the kept branch scratch/r4-act4-ycharts-pin (c4ca0c9a99, on origin), in a throwaway worktree at that commit, so the artifact reads NeAB50CNXWvM5Y6nsba220QmsEiASbVbXcZVRYe4MUM= (HEAD would ship three unreleased YCDGEN/BCKEND commits; CTO 4312); the other seven equal deliverables/2.0.0_SA_COO~B1/round4/ACT4_IRPT_EXPECT_ISSUER.json; name the branch in the entry. (2) At close ship platinum_dest_view.py (mark-line change) to the gold runner prefix so FB-f-9 AC1 reads 20 of 20 (runbook rev 3d). (3) The flip units begin the same minute, not before 13:45Z; act 2 rolls back unless act 4 lands before Monday 23:00Z.
+(4) `r4_repin.py` reads 3 of 3 only against the re-pin commit itself: run it in a detached worktree at `e274a0e60cf43ce8f80db87e20f0e070d62906e0`
+(`--root <that worktree> --base e274a0e60cf43ce8f80db87e20f0e070d62906e0~1`). At a later HEAD its R1 arm reads FAIL because other projects have
+since changed OTHER fields of `lambda-source-map.json` (CI deploy records, a firm_pages row): that is not a defect of the re-pins.
+Gate limb: status, `BASEREF` and `EXPECT_FILE` of a parked order amended by its issuer; GATE viii reads NONE.
+
+<status>pending</status>
 <round>4</round>
 <workstream>ACT4EDGE</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-19</to_id>

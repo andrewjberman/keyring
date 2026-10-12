@@ -22,7 +22,7 @@ The GO is the issuer's amendment commit that records the window's time, fills `B
 `<status>pending</status>`. It is made only when ALL of these read true at HEAD (the issuer reads each):
 1. Act 2's step 4 recorded `MOVE_TS` and `r3_act2_reads.py old-home --since <MOVE_TS>` reads 0 keys; act 3's `compare` reads
    `DEST-VS-MANIFEST: EQUAL` (denominator printed).
-2. The flip commit (`FB-g-30`) and the eight re-pins (`FB-g-31`) are merged: `r4_flipcommit.py --verify --base BASEREF` reads
+2. The flip commit (`FB-g-30`) and the eight re-pins (`FB-g-31`) are merged: `r4_flipcommit.py --verify --base 69679b90e3dc52b670d33fddd96d06be1deaac90~1 --head 69679b90e3dc52b670d33fddd96d06be1deaac90` reads
    4 of 4 and `r4_repin.py` reads 3 of 3.
 3. Acts 4b and 4c are APPLIED and their Branch A read (the CTO's order, msg 4013: they run BEFORE this act). The pair for this act
    reads SIGNED in both halves: `org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/NEVER_WIDEN_ROUND4_ACT4_CUTOVER_COO_HALF.md` (+ ADDENDA 1, 2) and
@@ -44,7 +44,7 @@ ADDENDA 2 to 5. Load `/cloud-ops` before any AWS act.
    (below). Commit the entry and its `.open_deploys/` sentinel first. Name in it: the router behaviors' cache TTLs (read, never
    assumed: `aws cloudfront get-distribution-config --id EVTSA9VEHNZVH`), and that no invalidation is added.
 2. **Pre-flip reads, all green or STOP** (print each last line into the entry): `python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_oai.py` reads 3 of 3 (the tree as
-   built, NOT simulated); `python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_flipcommit.py --root . --verify --base BASEREF` 4 of 4; `python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_repin.py
+   built, NOT simulated); `python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_flipcommit.py --root . --verify --base 69679b90e3dc52b670d33fddd96d06be1deaac90~1 --head 69679b90e3dc52b670d33fddd96d06be1deaac90` 4 of 4; `python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_repin.py
    --arms repin --flip <flip commit> --base <the re-pin's parent>` 3 of 3; the producers' next scheduled chain start read and
    more than the act's expected length away.
 3. **The BEFORE sample.** For each of the seven side-effect-free IRPT functions in the census (the performance adapter once, by the
@@ -112,7 +112,7 @@ org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ADVI_FIRMBKTS.TO-FB-f-11.act4-irpt-leg.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-f-11"><invocation>cd /c/dev/ajb_workspace &amp;&amp; timeout 118 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_act4.py --arms irpt --expect EXPECT_FILE; echo "exit=$?"</invocation><expect>ROUND 4 ACT 4 IRPT: 8 of 8 arms</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-f-11"><invocation>cd /c/dev/ajb_workspace &amp;&amp; timeout 118 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_act4.py --arms irpt --expect org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ACT4_EXPECT.json; echo "exit=$?"</invocation><expect>ROUND 4 ACT 4 IRPT: 8 of 8 arms</expect></criterion>
   <criterion id="AC2" cell_refs="FB-f-11"><invocation>cd /c/dev/ajb_workspace &amp;&amp; timeout 118 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_sample_eq.py --before org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/SAMPLE_BEFORE.json --after org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/SAMPLE_AFTER.json; echo "exit=$?"</invocation><expect>SAMPLE EQUAL: (\d+) of \1 cases</expect></criterion>
   <criterion id="AC3" cell_refs="FB-f-11"><invocation>cd /c/dev/ajb_workspace &amp;&amp; timeout 115 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7.py compare --manifest org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11/F7_MANIFEST_2.tsv.gz; echo "exit=$?"</invocation><expect>DEST-VS-MANIFEST: EQUAL</expect></criterion>
 </proof_of_spec>
@@ -161,10 +161,19 @@ the eight re-pins are `FB-g-30` and `FB-g-31` (worker cells). Instruments: `r4_a
 the GO as text. Gate limb: the `<issued_to>`, `<paths>`, criteria and `<placeholders>` of a parked order amended by its issuer;
 GATE viii reads `<placeholders>NONE</placeholders>` after this amendment (the four round-3 tokens are gone with the face).
 
-<status>parked</status>
+**GO (2.0.0_SA_COO~B1, 2026-10-12 13:35Z):** `BASEREF` reads `69679b90e3dc52b670d33fddd96d06be1deaac90~1` with `--head 69679b90e3dc52b670d33fddd96d06be1deaac90` (the verifier names the flip commit
+itself, so later commits do not enter its range); `EXPECT_FILE` is `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ACT4_EXPECT.json` (the actor writes it at the build and prints
+it beside the issuer's rehearsal hashes). Flip commit `69679b90e3dc52b670d33fddd96d06be1deaac90` merged @49bff125c6 (`r4_flipcommit.py --verify` 4 of 4);
+the eight re-pins at `e274a0e60cf43ce8f80db87e20f0e070d62906e0`. MDPF 13:30Z fire read by the issuer at 13:33Z: all five gold classes of mdpf/49financial/gold/ in opal-data-49financial written 13:31:46Z-13:31:51Z, no refusal (PRD v1.4 check a met); the state object is not rewritten by design. bronze_homes.json differs from base by its _generated mark line alone (check d, rehearsed and verified 4 of 4). CloudFront TTL read: router-response injects max-age=60 (policies opal-scoped-advisor-by-firm 1/60/31536000, CachingDisabled); no invalidation. THREE ADDITIONS FOR THE ACT: (1) irpt-ycharts-generate is built from the kept branch scratch/r4-act4-ycharts-pin (c4ca0c9a99, on origin), in a throwaway worktree at that commit, so the artifact reads NeAB50CNXWvM5Y6nsba220QmsEiASbVbXcZVRYe4MUM= (HEAD would ship three unreleased YCDGEN/BCKEND commits; CTO 4312); the other seven equal deliverables/2.0.0_SA_COO~B1/round4/ACT4_IRPT_EXPECT_ISSUER.json; name the branch in the entry. (2) At close ship platinum_dest_view.py (mark-line change) to the gold runner prefix so FB-f-9 AC1 reads 20 of 20 (runbook rev 3d). (3) The flip units begin the same minute, not before 13:45Z; act 2 rolls back unless act 4 lands before Monday 23:00Z.
+(4) `r4_repin.py` reads 3 of 3 only against the re-pin commit itself: run it in a detached worktree at `e274a0e60cf43ce8f80db87e20f0e070d62906e0`
+(`--root <that worktree> --base e274a0e60cf43ce8f80db87e20f0e070d62906e0~1`). At a later HEAD its R1 arm reads FAIL because other projects have
+since changed OTHER fields of `lambda-source-map.json` (CI deploy records, a firm_pages row): that is not a defect of the re-pins.
+Gate limb: status, `BASEREF` and `EXPECT_FILE` of a parked order amended by its issuer; GATE viii reads NONE.
+
+<status>pending</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-11</to_id>
-<slot>~18</slot>
+<slot>~FB1</slot>
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
