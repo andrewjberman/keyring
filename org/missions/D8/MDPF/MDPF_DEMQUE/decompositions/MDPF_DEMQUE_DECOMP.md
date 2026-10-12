@@ -439,3 +439,11 @@ prices are split-adjusted from the same pull; restated prices beside an old `spl
 (`price_store.write` holds a name whose pull adds a split row; `0.9.0_WK_MDPF_DEMQUE~31`, worker-light, LOCAL, workstream SPLITHOLD). The
 apply runs after it merges. Names held are listed with split date, ratio and the account count of holders (a positions read); those rows get their
 own pair and wait on Andrew if the valuation reaches a client page.
+
+**Round 9 amendment 5 (issuer, 2026-10-12 ~03:2xZ):** CTO ADDENDUM 6 (msg 4243): dell2's IRPT_BCKEND enrolment adds about 938 symbols a day to
+the standing extension against the pacer cap of 400, which stays; the daily pull becomes INCREMENTAL and BATCHED, proved cell-for-cell on 50+
+symbols, else tiered. One cell, `DQ-t-40` (`batch_pull.py`, the HTTP-request measurement, the equality report; `0.9.0_WK_MDPF_DEMQUE~32`, worker,
+LOCAL, workstream BATCHPULL). The cell MEASURES the HTTP requests of the library's multi-ticker call first: the pacer's unit is "vendor requests",
+and a library call that issues one HTTP request per symbol underneath would leave Yahoo's load unchanged. Wiring into `demand_queue.draw` /
+`daily_draw` (the pacer counting HTTP requests) is the next order, written on its report and run under its own never-widen pair; the IRPT enrolment
+waits on it.
