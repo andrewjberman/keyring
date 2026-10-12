@@ -8020,6 +8020,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+## NFRA_CTLPLN-D1-S11 -- a dell1 process started with a fresh registry environment lacks SystemRoot, so pip crashes in ssl initialisation (rc 2, folder empty): a crash and a stop are the same to a folder-empty, rc-non-zero test
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CT1",
+  "surfaced_at": "2026-10-12T10:52Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-D1-S11",
+  "one_line": "Start-Process -UseNewEnvironment from this seat's session gives the child no SystemRoot and no USERPROFILE and USERNAME=SYSTEM; python -m pip download then crashes with ssl.SSLError 0xa080024 (rc 2, folder empty) before reading any index setting, which a test written as 'rc non-zero and folder empty' reads as BLOCKED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "diagnostic child (cmd.exe /d /c, Start-Process -UseNewEnvironment): SystemRoot=[], USERPROFILE=[], USERNAME=SYSTEM, windir=C:\\WINDOWS, PIP_NO_INDEX present, Path = the User Path only (System32 absent, so `where` and `findstr` are not found)",
+      "first fresh-child pip run: traceback ends ssl.py line 438 `self = _SSLContext.__new__(cls, protocol)`, `ssl.SSLError: [SSL] unknown error (0xa080024)`, exit code 2, folder entries 0; the script's rc-and-folder verdict printed a blocked-class line with an empty error field",
+      "the same child with SystemRoot=C:\\WINDOWS set inside it: rc 1, 'Could not find a version that satisfies the requirement six==1.16.0 (from versions: none)', folder entries 0",
+      "powershell.exe as the child shell fails outright in this mode: 'Loading managed Windows PowerShell failed with error 8009001d', exit -65536"
+    ]
+  },
+  "spec_asserts": "TO-CT-y-2 step 2 and 3: a child started with a fresh user environment carries PIP_NO_INDEX=1, and one explicit-index download from that same child is stopped by it (BLOCKED <what stopped it>: pip's own error, rc non-zero, the folder empty).",
+  "world_is": "The mechanism the order names produces a child that is not a logon environment, and in it a download fails for a reason unrelated to PIP_NO_INDEX. The order's own BLOCKED test (pip error, rc non-zero, folder empty) cannot tell the two apart. This seat recorded the valid arm only after setting SystemRoot inside the child and graded on pip's 'from versions: none' signature as well; a criterion that reads only the BLOCKED token would have passed the crash. The CTO or issuer should rule whether the read needs a real logon session (a scheduled task or a runas as the user) or this signature rule."
+}
+```
+
 ## NFRA_CTLPLN-W71-S1 -- the order's close step flips the task-order status, which sits outside the order's write grant
 
 ```json

@@ -1,0 +1,729 @@
+{
+  "claim": "measured: read-only, 2026-10-12T10:50:20Z (get_object with VersionId on gold/canonical/holdings/*.parquet and gold/views/mix_daily_summary.json; list_object_versions paginated; C_06 process_date on injected versions; DynamoDB get_item via the classifier; S3 listing for write-set bytes; CloudTrail lookup-events and ec2 describe-instances for the runner; telemetry objects read by get_object)",
+  "read_only": true,
+  "classes": [
+    "equity",
+    "fixed_income",
+    "alternatives",
+    "commodities",
+    "structured",
+    "cash",
+    "unclassified",
+    "other"
+  ],
+  "dates": [
+    {
+      "date": "2026-10-06",
+      "first_build_version": {
+        "version_id": "AZaAODPf8dS1wCnpD4mXNSfhzQrUnbIA",
+        "last_modified": "2026-10-08T04:15:38Z"
+      },
+      "served_total": 2019548572.31,
+      "first_build_total": 2019548523.84,
+      "rebuilt_total": 2018199759.15,
+      "reference_drift_total": -48.47,
+      "byte_drift_total": -1348764.69,
+      "delta_total": -1348813.16,
+      "total_field": {
+        "served": 2019548567.6,
+        "first_build": 2019548567.6,
+        "rebuilt": 2018199717.0,
+        "note": "the snapshot total field as C_06 accumulated it; differs from the class sum by per-relationship 6dp mix rounding"
+      },
+      "by_class": {
+        "equity": {
+          "served": 1463562208.61,
+          "first_build": 1527812571.02,
+          "rebuilt": 1527760101.46,
+          "reference_drift": 64250362.41,
+          "byte_drift": -52469.56,
+          "delta": 64197892.85
+        },
+        "fixed_income": {
+          "served": 384433617.09,
+          "first_build": 391911854.11,
+          "rebuilt": 392268747.64,
+          "reference_drift": 7478237.02,
+          "byte_drift": 356893.53,
+          "delta": 7835130.55
+        },
+        "alternatives": {
+          "served": 1188369.36,
+          "first_build": 5331068.89,
+          "rebuilt": 5331519.62,
+          "reference_drift": 4142699.53,
+          "byte_drift": 450.73,
+          "delta": 4143150.26
+        },
+        "commodities": {
+          "served": 1683822.24,
+          "first_build": 1908469.3,
+          "rebuilt": 1905901.27,
+          "reference_drift": 224647.06,
+          "byte_drift": -2568.03,
+          "delta": 222079.03
+        },
+        "structured": {
+          "served": 25384770.6,
+          "first_build": 87972755.06,
+          "rebuilt": 86330375.7,
+          "reference_drift": 62587984.46,
+          "byte_drift": -1642379.36,
+          "delta": 60945605.1
+        },
+        "cash": {
+          "served": 3133989.14,
+          "first_build": 4611805.46,
+          "rebuilt": 4603113.46,
+          "reference_drift": 1477816.32,
+          "byte_drift": -8692.0,
+          "delta": 1469124.32
+        },
+        "unclassified": {
+          "served": 140161795.27,
+          "first_build": 0.0,
+          "rebuilt": 0.0,
+          "reference_drift": -140161795.27,
+          "byte_drift": 0.0,
+          "delta": -140161795.27
+        },
+        "other": {
+          "served": 0.0,
+          "first_build": 0.0,
+          "rebuilt": 0.0,
+          "reference_drift": 0.0,
+          "byte_drift": 0.0,
+          "delta": 0.0
+        }
+      },
+      "versions": 9
+    },
+    {
+      "date": "2026-10-07",
+      "first_build_version": {
+        "version_id": "t3Ggy.OSw5vLGWEQ6AeV3X1IKu08ov6F",
+        "last_modified": "2026-10-09T04:15:55Z"
+      },
+      "served_total": 2013270277.28,
+      "first_build_total": 2013270461.07,
+      "rebuilt_total": 2011778507.42,
+      "reference_drift_total": 183.79,
+      "byte_drift_total": -1491953.65,
+      "delta_total": -1491769.86,
+      "total_field": {
+        "served": 2013270405.35,
+        "first_build": 2013270405.35,
+        "rebuilt": 2011778570.56,
+        "note": "the snapshot total field as C_06 accumulated it; differs from the class sum by per-relationship 6dp mix rounding"
+      },
+      "by_class": {
+        "equity": {
+          "served": 1518810275.29,
+          "first_build": 1519689936.84,
+          "rebuilt": 1519481628.74,
+          "reference_drift": 879661.55,
+          "byte_drift": -208308.1,
+          "delta": 671353.45
+        },
+        "fixed_income": {
+          "served": 393532520.01,
+          "first_build": 393619073.79,
+          "rebuilt": 393983039.95,
+          "reference_drift": 86553.78,
+          "byte_drift": 363966.16,
+          "delta": 450519.94
+        },
+        "alternatives": {
+          "served": 5212804.4,
+          "first_build": 5212838.93,
+          "rebuilt": 5216716.14,
+          "reference_drift": 34.53,
+          "byte_drift": 3877.21,
+          "delta": 3911.74
+        },
+        "commodities": {
+          "served": 1868342.18,
+          "first_build": 1868379.66,
+          "rebuilt": 1868692.87,
+          "reference_drift": 37.48,
+          "byte_drift": 313.21,
+          "delta": 350.69
+        },
+        "structured": {
+          "served": 88231858.6,
+          "first_build": 88231947.33,
+          "rebuilt": 86588883.5,
+          "reference_drift": 88.73,
+          "byte_drift": -1643063.83,
+          "delta": -1642975.1
+        },
+        "cash": {
+          "served": 4615842.02,
+          "first_build": 4615829.18,
+          "rebuilt": 4607090.88,
+          "reference_drift": -12.84,
+          "byte_drift": -8738.3,
+          "delta": -8751.14
+        },
+        "unclassified": {
+          "served": 998634.78,
+          "first_build": 32455.34,
+          "rebuilt": 32455.34,
+          "reference_drift": -966179.44,
+          "byte_drift": 0.0,
+          "delta": -966179.44
+        },
+        "other": {
+          "served": 0.0,
+          "first_build": 0.0,
+          "rebuilt": 0.0,
+          "reference_drift": 0.0,
+          "byte_drift": 0.0,
+          "delta": 0.0
+        }
+      },
+      "versions": 7
+    },
+    {
+      "date": "2026-10-08",
+      "first_build_version": {
+        "version_id": "JI7Ed9Cue3xH0CmTMQl8WvldqttUDdra",
+        "last_modified": "2026-10-10T04:15:48Z"
+      },
+      "served_total": 2014814994.03,
+      "first_build_total": 2014814902.41,
+      "rebuilt_total": 2012881709.63,
+      "reference_drift_total": -91.62,
+      "byte_drift_total": -1933192.78,
+      "delta_total": -1933284.4,
+      "total_field": {
+        "served": 2014814865.45,
+        "first_build": 2014814865.45,
+        "rebuilt": 2012881683.71,
+        "note": "the snapshot total field as C_06 accumulated it; differs from the class sum by per-relationship 6dp mix rounding"
+      },
+      "by_class": {
+        "equity": {
+          "served": 1515773320.03,
+          "first_build": 1516651391.14,
+          "rebuilt": 1516295765.46,
+          "reference_drift": 878071.11,
+          "byte_drift": -355625.68,
+          "delta": 522445.43
+        },
+        "fixed_income": {
+          "served": 397942679.16,
+          "first_build": 398029236.37,
+          "rebuilt": 398103308.56,
+          "reference_drift": 86557.21,
+          "byte_drift": 74072.19,
+          "delta": 160629.4
+        },
+        "alternatives": {
+          "served": 5219514.6,
+          "first_build": 5219514.43,
+          "rebuilt": 5219583.52,
+          "reference_drift": -0.17,
+          "byte_drift": 69.09,
+          "delta": 68.92
+        },
+        "commodities": {
+          "served": 1869510.43,
+          "first_build": 1869510.72,
+          "rebuilt": 1869623.18,
+          "reference_drift": 0.29,
+          "byte_drift": 112.46,
+          "delta": 112.75
+        },
+        "structured": {
+          "served": 88662903.07,
+          "first_build": 88662901.58,
+          "rebuilt": 87019830.47,
+          "reference_drift": -1.49,
+          "byte_drift": -1643071.11,
+          "delta": -1643072.6
+        },
+        "cash": {
+          "served": 4374316.77,
+          "first_build": 4374316.76,
+          "rebuilt": 4365568.03,
+          "reference_drift": -0.01,
+          "byte_drift": -8748.73,
+          "delta": -8748.74
+        },
+        "unclassified": {
+          "served": 972749.97,
+          "first_build": 8031.41,
+          "rebuilt": 8030.41,
+          "reference_drift": -964718.56,
+          "byte_drift": -1.0,
+          "delta": -964719.56
+        },
+        "other": {
+          "served": 0.0,
+          "first_build": 0.0,
+          "rebuilt": 0.0,
+          "reference_drift": 0.0,
+          "byte_drift": 0.0,
+          "delta": 0.0
+        }
+      },
+      "versions": 5
+    },
+    {
+      "date": "2026-10-09",
+      "first_build_version": {
+        "version_id": "ytk9SuGrCLQ7MXq7c_0VW1ovMLyJ_ACX",
+        "last_modified": "2026-10-11T04:16:35Z"
+      },
+      "served_total": 2015391713.45,
+      "first_build_total": 2015391716.44,
+      "rebuilt_total": 2015391716.44,
+      "reference_drift_total": 2.99,
+      "byte_drift_total": 0.0,
+      "delta_total": 2.99,
+      "total_field": {
+        "served": 2015391646.72,
+        "first_build": 2015391646.72,
+        "rebuilt": 2015391646.72,
+        "note": "the snapshot total field as C_06 accumulated it; differs from the class sum by per-relationship 6dp mix rounding"
+      },
+      "by_class": {
+        "equity": {
+          "served": 1518033035.28,
+          "first_build": 1518909300.32,
+          "rebuilt": 1518909300.32,
+          "reference_drift": 876265.04,
+          "byte_drift": 0.0,
+          "delta": 876265.04
+        },
+        "fixed_income": {
+          "served": 397149719.3,
+          "first_build": 397236373.66,
+          "rebuilt": 397236373.66,
+          "reference_drift": 86654.36,
+          "byte_drift": 0.0,
+          "delta": 86654.36
+        },
+        "alternatives": {
+          "served": 5192672.93,
+          "first_build": 5192672.93,
+          "rebuilt": 5192672.93,
+          "reference_drift": 0.0,
+          "byte_drift": 0.0,
+          "delta": 0.0
+        },
+        "commodities": {
+          "served": 2059707.9,
+          "first_build": 2059707.9,
+          "rebuilt": 2059707.9,
+          "reference_drift": 0.0,
+          "byte_drift": 0.0,
+          "delta": 0.0
+        },
+        "structured": {
+          "served": 86759811.62,
+          "first_build": 86759811.62,
+          "rebuilt": 86759811.62,
+          "reference_drift": 0.0,
+          "byte_drift": 0.0,
+          "delta": 0.0
+        },
+        "cash": {
+          "served": 4350366.96,
+          "first_build": 4350366.96,
+          "rebuilt": 4350366.96,
+          "reference_drift": 0.0,
+          "byte_drift": 0.0,
+          "delta": 0.0
+        },
+        "unclassified": {
+          "served": 1846399.46,
+          "first_build": 883483.05,
+          "rebuilt": 883483.05,
+          "reference_drift": -962916.41,
+          "byte_drift": 0.0,
+          "delta": -962916.41
+        },
+        "other": {
+          "served": 0.0,
+          "first_build": 0.0,
+          "rebuilt": 0.0,
+          "reference_drift": 0.0,
+          "byte_drift": 0.0,
+          "delta": 0.0
+        }
+      },
+      "versions": 3
+    }
+  ],
+  "control_date": {
+    "date": "2026-09-04",
+    "versions": 1,
+    "first_build_version": {
+      "last_modified": "2026-09-22T23:15:37Z",
+      "version_id": "vQrxFMq4xSy_F6t4MQ0Jmosb9Mps1RO8"
+    },
+    "served_total": 1967661958.7,
+    "first_build_total": 1968768321.18,
+    "rebuilt_total": 1968768321.18,
+    "reference_drift_total": 1106362.48,
+    "byte_drift_total": 0.0,
+    "delta_total": 1106362.48,
+    "total_field": {
+      "served": 1967661945.18,
+      "first_build": 1968768282.81,
+      "rebuilt": 1968768282.81,
+      "note": "the snapshot total field as C_06 accumulated it; differs from the class sum by per-relationship 6dp mix rounding"
+    },
+    "by_class": {
+      "equity": {
+        "served": 1493628050.93,
+        "first_build": 1483619230.09,
+        "rebuilt": 1483619230.09,
+        "reference_drift": -10008820.84,
+        "byte_drift": 0.0,
+        "delta": -10008820.84
+      },
+      "fixed_income": {
+        "served": 383444721.55,
+        "first_build": 387270635.12,
+        "rebuilt": 387270635.12,
+        "reference_drift": 3825913.57,
+        "byte_drift": 0.0,
+        "delta": 3825913.57
+      },
+      "alternatives": {
+        "served": 90589186.22,
+        "first_build": 4141342.94,
+        "rebuilt": 4141342.94,
+        "reference_drift": -86447843.28,
+        "byte_drift": 0.0,
+        "delta": -86447843.28
+      },
+      "commodities": {
+        "served": 0.0,
+        "first_build": 1897080.89,
+        "rebuilt": 1897080.89,
+        "reference_drift": 1897080.89,
+        "byte_drift": 0.0,
+        "delta": 1897080.89
+      },
+      "structured": {
+        "served": 0.0,
+        "first_build": 87132412.42,
+        "rebuilt": 87132412.42,
+        "reference_drift": 87132412.42,
+        "byte_drift": 0.0,
+        "delta": 87132412.42
+      },
+      "cash": {
+        "served": 0.0,
+        "first_build": 4649298.34,
+        "rebuilt": 4649298.34,
+        "reference_drift": 4649298.34,
+        "byte_drift": 0.0,
+        "delta": 4649298.34
+      },
+      "unclassified": {
+        "served": 0.0,
+        "first_build": 58321.38,
+        "rebuilt": 58321.38,
+        "reference_drift": 58321.38,
+        "byte_drift": 0.0,
+        "delta": 58321.38
+      },
+      "other": {
+        "served": 0.0,
+        "first_build": 0.0,
+        "rebuilt": 0.0,
+        "reference_drift": 0.0,
+        "byte_drift": 0.0,
+        "delta": 0.0
+      }
+    },
+    "repeat_delta": 0.0,
+    "why": "Harness control (Amendment 1). One canonical version (ETag unchanged since first write 2026-09-22T23:15:37Z), so first build and rebuilt read the same bytes: byte_drift_total must sit within 1.00 and repeat_delta within 0.01. reference_drift_total is a RESULT: the current classifier and static tables move a date nothing else touched."
+  },
+  "rederive": [
+    {
+      "n": 1,
+      "trading_days": [
+        "2026-10-09"
+      ],
+      "wall_seconds": 129.82,
+      "warm_wall_seconds": 41.34,
+      "peak_mb": 3299.5,
+      "baseline_peak_mb": 3299.5,
+      "static_load_seconds": 18.88,
+      "relationships_rewritten": 3103,
+      "keys_written": 12412,
+      "keys_per_relationship": 4,
+      "keys_missing_in_listing": 0,
+      "bytes_written": 8296240706,
+      "path": "current partition (C_06 process_date on the current version, S3 read); cold pass = first pass in the process, warm = second pass"
+    },
+    {
+      "n": 3,
+      "trading_days": [
+        "2026-10-07",
+        "2026-10-08",
+        "2026-10-09"
+      ],
+      "wall_seconds": 238.51,
+      "warm_wall_seconds": 126.88,
+      "peak_mb": 3281.1,
+      "baseline_peak_mb": 3281.1,
+      "static_load_seconds": 18.32,
+      "relationships_rewritten": 3267,
+      "keys_written": 13068,
+      "keys_per_relationship": 4,
+      "keys_missing_in_listing": 0,
+      "bytes_written": 8779255974,
+      "path": "current partition (C_06 process_date on the current version, S3 read); cold pass = first pass in the process, warm = second pass"
+    },
+    {
+      "n": 5,
+      "trading_days": [
+        "2026-10-05",
+        "2026-10-06",
+        "2026-10-07",
+        "2026-10-08",
+        "2026-10-09"
+      ],
+      "wall_seconds": 291.21,
+      "warm_wall_seconds": 207.3,
+      "peak_mb": 3258.4,
+      "baseline_peak_mb": 3258.4,
+      "static_load_seconds": 17.98,
+      "relationships_rewritten": 3267,
+      "keys_written": 13068,
+      "keys_per_relationship": 4,
+      "keys_missing_in_listing": 0,
+      "bytes_written": 8779255974,
+      "path": "current partition (C_06 process_date on the current version, S3 read); cold pass = first pass in the process, warm = second pass"
+    }
+  ],
+  "chain_window": {
+    "launch_to_stop_seconds": 7766.689,
+    "lower_bound": true,
+    "c06_wall_seconds_last_fire": 15.498,
+    "source": "StartInstances by bd-gold-trigger at 2026-10-12T04:00:46Z (CloudTrail, = 00:00:46 ET) and describe-instances LaunchTime; the stop is an instance-initiated shutdown with no StopInstances event, so the stop instant is not recorded by any API; the bound is the last telemetry sample of the chain (D_00f, 2026-10-12T06:10:12.689Z): launch_to_stop_seconds is a LOWER BOUND. c06_wall_seconds_last_fire: the latest C_06 telemetry run (run 4850986714c5), 2026-10-12T05:20:12.948Z to 05:20:28.446Z, the pre-ship no-new-partition early return (surprise MDPF_SECCLASS-D1-W85-S4), the baseline for the SC-e-91 comparison."
+  },
+  "canonical_movers": {
+    "writer": "B_00 canonical holdings (data/black_diamond/scripts/gold/B_00.canonical_holdings.py, the only put_object to gold/canonical/holdings/ at lines 860, 1004, 1352), run by the nightly catalog line B_00 --upload --force-recent-days 14 (gold_dispatch.sh:99). Run ids of the 2026-10-12 00:33Z content changes: 44f5204c24e3 (W78 record); the 04:15Z run ids were not read.",
+    "dates": [
+      {
+        "date": "2026-10-02",
+        "versions": 16,
+        "content_changes": 7,
+        "last_content_change": "2026-10-12T00:33:47Z",
+        "list_pages": 1
+      },
+      {
+        "date": "2026-10-03",
+        "versions": 11,
+        "content_changes": 6,
+        "last_content_change": "2026-10-12T00:33:49Z",
+        "list_pages": 1
+      },
+      {
+        "date": "2026-10-04",
+        "versions": 11,
+        "content_changes": 6,
+        "last_content_change": "2026-10-12T00:33:49Z",
+        "list_pages": 1
+      },
+      {
+        "date": "2026-10-05",
+        "versions": 11,
+        "content_changes": 6,
+        "last_content_change": "2026-10-12T00:33:48Z",
+        "list_pages": 1
+      },
+      {
+        "date": "2026-10-06",
+        "versions": 9,
+        "content_changes": 4,
+        "last_content_change": "2026-10-12T00:33:48Z",
+        "list_pages": 1
+      },
+      {
+        "date": "2026-10-07",
+        "versions": 7,
+        "content_changes": 4,
+        "last_content_change": "2026-10-12T00:33:47Z",
+        "list_pages": 1
+      },
+      {
+        "date": "2026-10-08",
+        "versions": 5,
+        "content_changes": 2,
+        "last_content_change": "2026-10-12T00:33:48Z",
+        "list_pages": 1
+      },
+      {
+        "date": "2026-10-09",
+        "versions": 3,
+        "content_changes": 1,
+        "last_content_change": "2026-10-12T00:33:48Z",
+        "list_pages": 1
+      }
+    ],
+    "how_far_back_days": 20,
+    "how_far_back_basis": "oldest content change on 2026-09-11, 20 trading days before the watermark 2026-10-09 (lib/trading_calendar.py); the current window under --force-recent-days 14 reaches 10 trading days (from 2026-09-25)",
+    "how_often": "Each nightly 04:14-04:16Z fire re-puts 11 partitions (the new one plus the 10 inside the 14-calendar-day window); the bytes of the 10 history partitions changed on the fires of 2026-09-27, 09-30, 10-01, 10-02, 10-03, 10-04, 10-07, 10-08, 10-09, 10-10 and 10-11, and were identical on 09-28, 09-29, 10-05 and 10-06. The 23:15Z fires re-put identical bytes. Off-cycle content changes of 1 to 2 partitions occurred at 09-30 16:51, 10-02 14:53, 10-03 10:17, 10-07 23:14 and 10-09 23:15, and an 11-partition change at 10-12 00:33Z."
+  },
+  "unlisted_unclassified": {
+    "date": "2026-10-09",
+    "usd": 210486.42,
+    "positions": 22,
+    "securities": 22,
+    "rebuilt_unclassified_usd": 883483.05,
+    "first_build_unclassified_usd": 883483.05,
+    "served_unclassified_usd": 1846399.46,
+    "top": [
+      {
+        "ticker": "",
+        "name": "GS FIN CORP 12/20/2030",
+        "usd": 56672.0,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "CITIGROUP GLOBAL MKTS HLDGS IN 07/29/2030",
+        "usd": 27972.0,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "INNOVATOR EQUITY DUAL DIRECTIONAL 10 BUFFER ETF - JUNE",
+        "usd": 21870.0,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "BARCLAYS BANK PLC 08/26/2031",
+        "usd": 11630.4,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "SOCIETE GENERALE 09/19/2031",
+        "usd": 11000.0,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "SOCIETE GENERALE 07/07/2031",
+        "usd": 9554.0,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "INNOVATOR U.S. SMALL CAP POWER BUFFER ETF - JUNE",
+        "usd": 9411.0,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "SOCIETE GENERALE S.A.",
+        "usd": 8404.2,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "GS FIN CORP 03/25/2031",
+        "usd": 8371.2,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "CUBESMART COM",
+        "usd": 7594.0,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "GS FIN CORP 04/10/2031",
+        "usd": 7287.0,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "INNOVATOR GROWTH-100 POWER BUFFER ETF - JUNE",
+        "usd": 6299.0,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "GS FIN CORP 02/28/2031",
+        "usd": 3969.6,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "FIDELITY ADVISOR INTERNATIONAL VALUE Z",
+        "usd": 3662.36,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "FIDELITY ADVISOR MEGA CAP STOCK Z",
+        "usd": 3476.24,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "FIDELITY ADVISOR BLUE CHIP GROWTH Z",
+        "usd": 3145.71,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "INNOVATOR INTERNATIONAL DEVELOPED POWER BUFFER ETF NOVEMBER",
+        "usd": 2974.0,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "FIDELITY ADVISOR MID CAP II Z",
+        "usd": 2726.79,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "FIDELITY ADVISOR VALUE DISCOVERY Z",
+        "usd": 2227.68,
+        "positions": 1,
+        "has_name_row": false
+      },
+      {
+        "ticker": "",
+        "name": "FIDELITY ADVISOR\u00ae EQUITY DIVIDEND INC Z",
+        "usd": 1443.24,
+        "positions": 1,
+        "has_name_row": false
+      }
+    ],
+    "why": "REBUILT (current partition, current classifier and static tables) unclassified dollars NOT in any relationship's stored top-10 holdings, by security (the per-relationship holdings ranked by market value, minus the top ten). Read on the rebuilt snapshot as Amendment 1 item 3 asks. The rebuilt unclassified total is lower than served by the securities the current classifier now places; the served figure is shown beside it. Security level only."
+  }
+}
