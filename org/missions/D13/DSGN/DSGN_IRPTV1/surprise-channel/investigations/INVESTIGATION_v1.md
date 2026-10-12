@@ -6531,3 +6531,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## DSGN_IRPTV1-D2-S27 -- Round 31 list: three of six items already satisfied on portal DEV 183860ba (wire, colgroup, FIRM_BINDING words); no order cut for them
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-S27",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-12T22:12:03Z",
+  "one_line": "Round 31 list (CTO msg 6625): three of its six items are already satisfied on portal DEV 183860ba -- the wire (W65-S1), the colgroup (W62-S2) and the FIRM_BINDING words (S22); no order is cut for them",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-31 analysis section 2: item 1 regenerate the portal wire first (row W65-S1, two whole-scope tests fail); item 2 one cell on HoldingsBreakdownTable.tsx for the colgroup text nodes (row W62-S2); item 5 a page cell so an UNAVAILABLE/FIRM_BINDING answer states itself on its face (row S22). The analysis states it re-measured nothing.",
+  "world_is": "Measured by this seat 2026-10-12 against the portal checkout fast-forwarded to origin DEV 183860bac055 (ls-remote read; local DEV was dbeb6764 before). (1) iv-e-98.generators-drift and iv-e-26.wire-regen run alone: 2 pass 0 fail, 'WIRE FOLDER DRIFT: 0 of 28 file(s) differ'; the committed wire file AnalysisSubmissionRequest.ts carries commentary_requested (count 1). The whole IR scope at that head: 1203 pass, 27 skip, 1 fail (F14-AC3, a diff check against DEV 1f3ce9f0, not a wire test; output kept in this seat's scratchpad). (2) HoldingsBreakdownTable.tsx lines 293-305 hold no comment on the same line as a col; commit eba86eaf (2026-10-11, 'no whitespace text node inside the shared table's colgroup (DSGN_IRPTV1.TO-IV-e-114)') landed after the row was filed. Source read only; no render was run for this item. (3) ReportingTab.tsx:438-462 (IV-e-112, CTO ruling msg 5562) words FIRM_BINDING with its code in slot reporting-firm-binding; this seat's signed-in walk of the local build at 183860ba (tmp/ui-walk/20261012T213157Z, one Cottonwood client, header Firm at Global) read the sentence 'The firm selected in the header does not match this client's firm...' and the code FIRM_BINDING on the Performance face. Not established: the manifest and client-summary reads of row S22 on a firm-matched client. Items 3 (Total Assets base inside the card), 4 (account pick) and 6 (vendor validation and source line) remain and are cut as IV-e-120, IV-e-121 and IV-e-122.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test on iv-e-98.generators-drift.test.ts and iv-e-26.wire-regen.test.ts at portal 183860bac055: 2 pass, 0 fail",
+      "portal 183860bac055 src/components/holdings/HoldingsBreakdownTable.tsx:293-305; git log eba86eaf",
+      "portal 183860bac055 src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx:438-462 and :904",
+      "tmp/ui-walk/20261012T213157Z/shots/009-trust-performance-Account-3772-Trust-3-7.png (local, gitignored)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
