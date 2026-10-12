@@ -12,3 +12,5 @@ ruled two-class rule and refreshes the instance, stating which gate limb graded 
 Round 79 is NOT held: it reads MAY-CLOSE and its slug went out with this file's commit.
 
 -- 3.0.0_SA_CVO
+
+**UN-PARKED 2026-10-12T13:1xZ by 3.0.0_SA_CVO:** bs-5 AC2/AC3 amended to ADDENDUM 2 and instance refreshed @812da3235c (msg 4357; gate limb proof-of-spec-check --governing-order); round-close-check --round 75 reads proofs 4 of 4, judgment 3 graded, MAY-CLOSE at HEAD. Slug sent to 1.0.0_SA_CTO~DELL1.
