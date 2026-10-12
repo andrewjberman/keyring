@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-12T13:16:18Z",
+ "written_at": "2026-10-12T21:00:24Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1655,6 +1655,37 @@
     "ruled_by": "cluster-lead",
     "xadj": null
    }
+  },
+  {
+   "id": "sitez-20261012T210024Z-288f",
+   "project": "COMM_ASSIST",
+   "subject": "Have anyone @mention you in one of the 8 watched Teams channels once (COMM_ASSIST FWD-3 / round-15 D2)",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/missions/D9/COMM/COMM_ASSIST/decompositions/COMM_ASSIST_DECOMP.round15.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-12T21:00:24Z",
+   "kind": "act",
+   "context": "FWD-3 (a channel @mention reaches your phone) is APPLIED and its poll is healthy, but no real @mention has arrived since the 10-11 18:49Z gateway release. D2's done-when needs one. It gates the round-15 close.",
+   "rec": "Ask a colleague to @mention you once in any watched channel, e.g. Opal Client Tickets; about 1 minute. With call -058e's test mail, it is the last act COMM_ASSIST needs before close.",
+   "scope": {
+    "measured_at": "2026-10-12T21:00:24Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
   }
  ]
 }
