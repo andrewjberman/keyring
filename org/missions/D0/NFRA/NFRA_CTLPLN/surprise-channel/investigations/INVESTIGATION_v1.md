@@ -8019,3 +8019,82 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Observation only; no data was served by either answer."
 }
 ```
+
+## NFRA_CTLPLN-W71-S1 -- the order's close step flips the task-order status, which sits outside the order's write grant
+
+```json
+{
+  "id": "NFRA_CTLPLN-W71-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~71",
+  "surfaced_at": "2026-10-12T10:40:13Z",
+  "one_line": "The order's close step flips the task-order status to complete, but the task-order file is outside the order's <paths> grant, so this worker cannot make the flip.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-w-9.data-proxy-stop-logging-the-event.md at 8c040cada9: the paths block names infra/aws/lambda/portal_data_proxy/lambda_function.py, infra/aws/lambda/portal_data_proxy/tests/ and the INVESTIGATION_v1.md file only",
+      "the same order, BUILD close step: flip the status to complete when both criteria pass, and commit the instance, deliverables and flip together"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task-order status is flipped to complete in the order file once CTw9-AC1 and CTw9-AC2 pass and the proof instance is checked.",
+  "world_is": "Both criteria pass on branch wk-NFRA_CTLPLN-71 (CTw9-AC1 1012 passed; CTw9-AC2 965 passed), but the order file is not in the write grant, so its status stays pending. The flip is left to the issuing COO at close.",
+  "notes": "Not an override: the order file was not edited. The proof instance and the commits carry the verdict."
+}
+```
+
+## NFRA_CTLPLN-W71-S2 -- the order's control handler, git show 2fbb74e87d, predates the route-class fence and cannot be collected
+
+```json
+{
+  "id": "NFRA_CTLPLN-W71-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~71",
+  "surfaced_at": "2026-10-12T10:40:13Z",
+  "one_line": "The order names git show 2fbb74e87d as the control handler, but that commit predates the route-class fence: its lambda_function.py reads no firm_page_access and has no ROUTE_FIRMS, so the suite cannot be collected against it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 2fbb74e87d:infra/aws/lambda/portal_data_proxy/lambda_function.py holds the Event print at line 2126 and imports only session_tracker; git show 2fbb74e87d:infra/aws/lambda/portal_data_proxy/firm_page_access.py: path not in that commit",
+      "PORTAL_PROXY_UNDER_TEST pointed at that copy: 1 error during collection, AttributeError: module has no attribute ROUTE_FIRMS (pytest rc=2)",
+      "the control arm was run on the immediate pre-edit commit 8c040cada9, copied to .scratch/control-head: 1009 failed, 3 passed; the JWT-text assertion failed in 144 of 144 cases"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Control arm: the same credential-log test against the OLD handler, the version at the commit before the edit or git show 2fbb74e87d, must FAIL on the eyJ assertion.",
+  "world_is": "2fbb74e87d predates the firm fence, so a suite that reads ROUTE_FIRMS cannot drive it. The pre-edit commit 8c040cada9 was used as the control, and it fails the eyJ assertion in every case.",
+  "notes": "The control's purpose, proving the test discriminates, is met by the pre-edit commit. The issuer may name a different control commit in a later order."
+}
+```
+
+## NFRA_CTLPLN-W71-S3 -- lambda_function.py carries two non-ASCII production print lines, against the no-non-ASCII-in-logs rule
+
+```json
+{
+  "id": "NFRA_CTLPLN-W71-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~71",
+  "surfaced_at": "2026-10-12T10:40:13Z",
+  "one_line": "lambda_function.py has two non-ASCII production print lines (1032 and 1504), against the rule of no non-ASCII in production logs; both predate this cell and neither can carry a credential.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "a python scan of infra/aws/lambda/portal_data_proxy/lambda_function.py at 8c040cada9, before the edit: 18 non-ASCII lines; the print lines are 1032 (a warning emoji in the Skipping neutral topic print) and 1504 (an em dash in the Cache MISS computing live print)",
+      "the same scan of session_tracker.py: 0 non-ASCII lines"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md section 4: no non-ASCII in production code, logs or AWS; use the OK, WARN, ERROR, SKIP and BLOCKED markers.",
+  "world_is": "The two print lines carry non-ASCII characters. This cell did not add them and did not change them, because the order changes no log line other than the credential sites.",
+  "notes": "Observation only. Of the 18 non-ASCII lines, two are print lines; the rest sit in comments and strings."
+}
+```
