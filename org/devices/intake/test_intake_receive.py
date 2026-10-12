@@ -83,6 +83,32 @@ def cli(*args, env_extra=None, drop_device=False):
     return cp.returncode, (lines[-1] if lines else ""), cp.stdout
 
 
+def pip_list(py):
+    """Installed distributions of interpreter py as sorted (name, version) pairs. pip runs with no index and no version check."""
+    cp = subprocess.run([py, "-m", "pip", "list", "--format=json"], capture_output=True, text=True,
+                        env=ir.build_child_env(), timeout=110, stdin=subprocess.DEVNULL)
+    assert cp.returncode == 0, cp.stderr
+    return sorted((d["name"].lower(), d["version"]) for d in json.loads(cp.stdout))
+
+
+def venv_python(venv):
+    return os.path.join(venv, "Scripts", "python.exe") if os.name == "nt" else os.path.join(venv, "bin", "python")
+
+
+def install_records(pack):
+    rdir = os.path.join(pack, "receipts")
+    return [n for n in os.listdir(rdir) if ".install." in n] if os.path.isdir(rdir) else []
+
+
+def read_install_record(pack, wheel, device="testbox"):
+    with open(os.path.join(pack, "receipts", "%s.install.%s.json" % (wheel, device)), "rb") as fh:
+        return json.loads(fh.read().decode("ascii"))
+
+
+def dry_run_commands(out):
+    return [json.loads(ln[len("DRY-RUN: "):]) for ln in out.splitlines() if ln.startswith("DRY-RUN: ")]
+
+
 GOOD = {"alphapkg": {"alphapkg": "NAME = 'alpha'\n"}, "betapkg": {"betapkg": "NAME = 'beta'\n"}}
 PACK_GOOD, NAMES_GOOD = new_pack("good", GOOD)
 SCR_GOOD = scratch_for("good")
@@ -401,29 +427,39 @@ def case_child_environment_pinned():
 def case_install_refuses_without_receipts():
     pack, _ = new_pack("noreceipt", {"nrpkg": {"nrpkg": "X = 1\n"}})
     env = {"AGENTBUS_DEVICE": "testbox"}
+    target = os.path.join(TMP_ROOT, "noreceipt", "target")
     for extra in ((), ("--dry-run",)):
-        rc, last, out = cli("install", "--from", pack, *extra, env_extra=env)
+        rc, last, out = cli("install", "--from", pack, "--target", target, *extra, env_extra=env)
         assert rc == 1 and "installed=0" in last and "ok=False" in last, last
         assert "no receipt" in out and "DRY-RUN" not in out, out
+    assert not os.path.exists(target), "a refused install created its target folder"
     # a receipt for ANOTHER device does not clear this one
-    rc, last, out = cli("install", "--from", PACK_GOOD, "--dry-run", env_extra={"AGENTBUS_DEVICE": "otherbox"})
+    rc, last, out = cli("install", "--from", PACK_GOOD, "--target", os.path.join(TMP_ROOT, "otherbox_t"), "--dry-run",
+                        env_extra={"AGENTBUS_DEVICE": "otherbox"})
     assert rc == 1 and "ok=False" in last, last
     # unproven (refused) wheel in the mixed pack: its receipt reads refused, so the whole install is refused
-    rc, last, out = cli("install", "--from", PACK_MIXED, "--dry-run", env_extra=env)
+    rc, last, out = cli("install", "--from", PACK_MIXED, "--target", os.path.join(TMP_ROOT, "mixed_t"), "--dry-run",
+                        env_extra=env)
     assert rc == 1 and "ok=False" in last and "DRY-RUN" not in out, out
-    rc, last, out = cli("install", "--from", PACK_GOOD, "--dry-run", drop_device=True)
+    rc, last, out = cli("install", "--from", PACK_GOOD, "--target", os.path.join(TMP_ROOT, "nodev_t"), "--dry-run",
+                        drop_device=True)
     assert rc == 2 and "AGENTBUS_DEVICE is not set" in out, out
 
 
 @case
-def case_install_dry_run_prints_user_command_after_receipts():
-    rc, last, out = cli("install", "--from", PACK_GOOD, "--dry-run", env_extra={"AGENTBUS_DEVICE": "testbox"})
-    assert rc == 0 and last.endswith("dry_run=True ok=True"), (last, out)
-    cmds = [json.loads(ln[len("DRY-RUN: "):]) for ln in out.splitlines() if ln.startswith("DRY-RUN: ")]
+def case_install_dry_run_prints_target_command_after_receipts():
+    target = os.path.join(TMP_ROOT, "dryrun_target")
+    rc, last, out = cli("install", "--from", PACK_GOOD, "--target", target, "--dry-run",
+                        env_extra={"AGENTBUS_DEVICE": "testbox"})
+    assert rc == 0 and last.endswith("target_form=target dry_run=True ok=True"), (last, out)
+    cmds = dry_run_commands(out)
     assert len(cmds) == 2, out
     for cmd in cmds:
-        assert cmd[1:5] == ["-m", "pip", "install", "--no-index"] and "--no-deps" in cmd and "--user" in cmd, cmd
-        assert "--target" not in cmd and "http" not in " ".join(cmd).lower(), cmd
+        assert cmd[1:5] == ["-m", "pip", "install", "--no-index"] and "--no-deps" in cmd, cmd
+        assert cmd[cmd.index("--target") + 1] == target and "--user" not in cmd, cmd
+        assert "http" not in " ".join(cmd).lower(), cmd
+    assert not os.path.exists(target), "a dry run created the target folder"
+    assert not install_records(PACK_GOOD), "a dry run wrote an install record"
 
 
 @case
@@ -497,6 +533,94 @@ def case_tool_has_no_network_module_and_no_url():
             found.add(node.module.split(".")[0])
     assert not (found & banned), found & banned
     assert b"http" not in src.lower().replace(b"https_proxy", b""), "an http string in the tool"
+
+
+@case
+def case_install_without_target_is_refused_and_installs_nothing():
+    before = pip_list(sys.executable)
+    for extra in ((), ("--dry-run",)):
+        rc, last, out = cli("install", "--from", PACK_GOOD, *extra, env_extra={"AGENTBUS_DEVICE": "testbox"})
+        assert rc == 1, (rc, out)
+        assert "REFUSED: install needs a target: --python <interpreter> | --target <new dir> | --user" in out, out
+        assert "DRY-RUN" not in out and "FAILED" not in out and "RECEIPT-OK" not in out, out
+    assert pip_list(sys.executable) == before, "a refused install changed the box site"
+    assert not install_records(PACK_GOOD), "a refused install wrote an install record"
+
+
+@case
+def case_python_venv_install_leaves_box_site_untouched():
+    venv = os.path.join(TMP_ROOT, "venv_b", "venv")
+    os.makedirs(os.path.dirname(venv))
+    cp = subprocess.run([sys.executable, "-m", "venv", venv], capture_output=True, text=True, timeout=110,
+                        stdin=subprocess.DEVNULL)
+    assert cp.returncode == 0, cp.stderr
+    vpy = venv_python(venv)
+    assert os.path.isfile(vpy), vpy
+    pack, names = new_pack("venvpy", {"venvpkg": {"venvpkg": "VALUE = 'venv'\n"}})
+    rc_p, summ_p, _ = run_prove(pack, scratch_for("venvpy"))  # the install gate needs a prove receipt first
+    assert rc_p == 0 and summ_p["ok"], summ_p
+    box_before = pip_list(sys.executable)
+    venv_before = pip_list(vpy)
+    rc, last, out = cli("install", "--from", pack, "--python", vpy, env_extra={"AGENTBUS_DEVICE": "testbox"})
+    assert rc == 0 and last.endswith("target_form=python dry_run=False ok=True"), (last, out)
+    assert pip_list(sys.executable) == box_before, "the box interpreter's site changed"
+    venv_after = pip_list(vpy)
+    assert ("venvpkg", "1.0") in venv_after and ("venvpkg", "1.0") not in venv_before, venv_after
+    rec = read_install_record(pack, names["venvpkg"])
+    assert rec["install"]["target_form"] == "python" and rec["install"]["interpreter"] == vpy, rec
+    assert rec["install"]["rc"] == 0 and rec["install"]["command"][0] == vpy and "--user" not in rec["install"]["command"], rec
+
+
+@case
+def case_python_box_interpreter_refused_without_user():
+    pack, _ = new_pack("boxpy", {"boxpkg": {"boxpkg": "X = 1\n"}})
+    box_before = pip_list(sys.executable)
+    rc, last, out = cli("install", "--from", pack, "--python", sys.executable, env_extra={"AGENTBUS_DEVICE": "testbox"})
+    assert rc == 1 and "REFUSED: --python is this interpreter" in out and "add --user" in out, out
+    assert "DRY-RUN" not in out and "FAILED" not in out and "INTAKE-INSTALL" not in out, out
+    assert pip_list(sys.executable) == box_before, "a refused install changed the box site"
+    assert not install_records(pack), "a refused install wrote an install record"
+
+
+@case
+def case_target_into_new_folder_installs_there():
+    pack, names = new_pack("tgt", {"tgta": {"tgta": "X = 1\n"}, "tgtb": {"tgtb": "Y = 2\n"}})
+    target = os.path.join(TMP_ROOT, "tgt", "new_target")
+    env = {"AGENTBUS_DEVICE": "testbox"}
+    rc_p, summ_p, _ = run_prove(pack, scratch_for("tgt"))  # the install gate needs a prove receipt first
+    assert rc_p == 0 and summ_p["ok"], summ_p
+    box_before = pip_list(sys.executable)
+    rc, last, out = cli("install", "--from", pack, "--target", target, env_extra=env)
+    assert rc == 0 and last.endswith("target_form=target dry_run=False ok=True"), (last, out)
+    assert os.path.isfile(os.path.join(target, "tgta", "__init__.py")), target
+    assert os.path.isfile(os.path.join(target, "tgtb", "__init__.py")), target
+    assert pip_list(sys.executable) == box_before, "the box interpreter's site changed"
+    rec = read_install_record(pack, names["tgta"])
+    assert rec["install"]["target_form"] == "target" and rec["install"]["target"] == target, rec
+    assert "--target" in rec["install"]["command"] and "--user" not in rec["install"]["command"], rec
+    # the folder is no longer new or empty, so a second install into it is refused
+    rc2, last2, out2 = cli("install", "--from", pack, "--target", target, env_extra=env)
+    assert rc2 == 1 and "REFUSED: --target must be a new or empty directory" in out2, out2
+
+
+@case
+def case_user_form_builds_old_command_dry_run_only():
+    box_before = pip_list(sys.executable)
+    env = {"AGENTBUS_DEVICE": "testbox"}
+    rc, last, out = cli("install", "--from", PACK_GOOD, "--user", "--dry-run", env_extra=env)
+    assert rc == 0 and last.endswith("target_form=user dry_run=True ok=True"), (last, out)
+    cmds = dry_run_commands(out)
+    assert len(cmds) == 2, out
+    for cmd in cmds:
+        assert cmd == [sys.executable, "-m", "pip", "install", "--no-index", "--no-deps", "--user", cmd[-1]], cmd
+        assert cmd[-1].endswith(".whl") and "--target" not in cmd, cmd
+    # naming this interpreter with --python is accepted only together with --user (dry run again)
+    rc2, last2, out2 = cli("install", "--from", PACK_GOOD, "--python", sys.executable, "--user", "--dry-run", env_extra=env)
+    assert rc2 == 0 and last2.endswith("target_form=user dry_run=True ok=True"), (last2, out2)
+    assert len(dry_run_commands(out2)) == 2, out2
+    assert pip_list(sys.executable) == box_before, "a dry run changed the box site"
+    built = ir.build_pip_command("w.whl", user=True)
+    assert built == [sys.executable, "-m", "pip", "install", "--no-index", "--no-deps", "--user", "w.whl"], built
 
 
 def main():

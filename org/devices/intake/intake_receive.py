@@ -14,7 +14,15 @@ Verbs:
   verify  --from <pack>                       read-only; LAST line INTAKE-VERIFY ...
   prove   --from <pack> --scratch <new dir>   verify, then install each wheel with no index into its own scratch target,
                                               import it, write one receipt per wheel into <pack>/receipts/; LAST line INTAKE-PROVE ...
-  install --from <pack> [--dry-run]           the real (--user) install, refused without good receipts; LAST line INTAKE-INSTALL ...
+  install --from <pack> --python <exe> | --target <new dir> | --user [--dry-run]
+                                              the real install, refused without good receipts and without EXACTLY ONE target.
+                                              --python <exe>: pip in that interpreter's own site, no --user (a fresh venv's
+                                              python); --python equal to this interpreter is refused unless --user is also given.
+                                              --target <new dir>: pip --target into a new or empty folder.
+                                              --user: the old user-site install of this interpreter, only when asked for by name.
+                                              The old default (a --user install with no target) is gone. Each real install writes
+                                              receipts/<wheel>.install.<device>.json with install.target_form and the interpreter;
+                                              LAST line INTAKE-INSTALL ...
   selftest-unchecked                          synthetic pack with one "not_checked" wheel; proves it is refused
 
 The device name comes from the environment variable AGENTBUS_DEVICE and from nothing else.
@@ -294,12 +302,14 @@ def print_verify_detail(res):
 
 # ---------------------------------------------------------------- pip and import plumbing
 
-def build_pip_command(wheel_path, target=None, user=False):
-    """The one pip command line this tool ever builds: a list, no shell, never an index, never a resolver."""
-    cmd = [sys.executable, "-m", "pip", "install", "--no-index", "--no-deps"]
+def build_pip_command(wheel_path, target=None, user=False, interpreter=None):
+    """The one pip command line this tool ever builds: a list, no shell, never an index, never a resolver.
+    interpreter is the python that runs pip (default: this one). user=True adds --user; a target folder adds --target;
+    with neither, pip installs into the interpreter's own site (a venv's python)."""
+    cmd = [interpreter or sys.executable, "-m", "pip", "install", "--no-index", "--no-deps"]
     if user:
         cmd.append("--user")
-    else:
+    elif target is not None:
         cmd += ["--target", target]
     cmd.append(wheel_path)
     return cmd
@@ -376,7 +386,7 @@ def receipt_path(pack, wheel_name, device):
     return os.path.join(pack, RECEIPTS_DIR, "%s.receipt.%s.json" % (wheel_name, device))
 
 
-def write_receipt(pack, info, device, outcome, reason, command=None, rc=None, imports=None):
+def write_receipt(pack, info, device, outcome, reason, command=None, rc=None, imports=None, form=None, interp=None):
     rec = {
         "schema": "intake-receipt/1",
         "device": device,
@@ -384,7 +394,8 @@ def write_receipt(pack, info, device, outcome, reason, command=None, rc=None, im
         "file_name": info["name"],
         "received_sha256": info.get("wheel_sha256"),
         "check_record_sha256": info.get("check_record_sha256"),
-        "install": {"command": command if command is not None else [], "rc": rc},
+        "install": {"command": command if command is not None else [], "rc": rc,
+                    "target_form": form, "interpreter": interp},
         "imports": imports or [],
         "outcome": outcome,
         "reason": reason,
@@ -437,7 +448,8 @@ def prove_pack(pack, scratch, device_override=None):
         cmd = build_pip_command(info["path"], target=target)
         rc, last = run_pip(cmd)
         if rc != 0:
-            write_receipt(pack, info, device, "install_failed", "pip rc=%d: %s" % (rc, last), cmd, rc)
+            write_receipt(pack, info, device, "install_failed", "pip rc=%d: %s" % (rc, last), cmd, rc,
+                          form="target", interp=sys.executable)
             summ["failed"] += 1
             continue
         summ["installed"] += 1
@@ -460,7 +472,7 @@ def prove_pack(pack, scratch, device_override=None):
             outcome = "installed_import_failed"
             reason = "import_failed: " + ",".join(r["module"] for r in hard)
             summ["import_failed"] += 1
-        write_receipt(pack, info, device, outcome, reason, cmd, rc, imports)
+        write_receipt(pack, info, device, outcome, reason, cmd, rc, imports, form="target", interp=sys.executable)
         print("PROVED: %s %s (%s)" % (ascii_line(name), outcome, ascii_line(reason)))
     summ["ok"] = summ["refused"] == 0 and summ["failed"] == 0
     print("INTAKE-PROVE-DETAIL import_failed=%d no_module=%d" % (summ["import_failed"], summ["no_module"]))
@@ -512,9 +524,63 @@ def receipt_gate(pack, device, res):
     return out
 
 
-def install_pack(pack, dry_run):
+INSTALL_NEEDS_TARGET = "REFUSED: install needs a target: --python <interpreter> | --target <new dir> | --user"
+
+
+def _same_interpreter(path):
+    return os.path.normcase(os.path.abspath(path)) == os.path.normcase(os.path.abspath(sys.executable))
+
+
+def resolve_install_target(python, target, user):
+    """Exactly one install target. Returns (form, interpreter, target_dir, problem); form is python, target or user.
+    Nothing is created or installed here."""
+    if python is None and target is None and not user:
+        return None, None, None, INSTALL_NEEDS_TARGET
+    if target is not None and (python is not None or user):
+        return None, None, None, "REFUSED: give exactly one target: --target cannot be combined with --python or --user"
+    if target is not None:
+        if os.path.exists(target) and (not os.path.isdir(target) or os.listdir(target)):
+            return None, None, None, "REFUSED: --target must be a new or empty directory"
+        return "target", sys.executable, target, None
+    if python is not None:
+        if not os.path.isfile(python):
+            return None, None, None, "REFUSED: --python %s is not a file" % ascii_line(python)
+        if user:
+            if not _same_interpreter(python):
+                return None, None, None, ("REFUSED: --user with --python is accepted only for this interpreter (%s)"
+                                          % ascii_line(sys.executable))
+            return "user", sys.executable, None, None
+        if _same_interpreter(python):
+            return None, None, None, ("REFUSED: --python is this interpreter (%s); add --user to install into its user "
+                                      "site, or name another interpreter" % ascii_line(sys.executable))
+        return "python", python, None, None
+    return "user", sys.executable, None, None
+
+
+def write_install_record(pack, info, device, form, interpreter, target, cmd, rc, last):
+    """One record per wheel per real install: where the wheel went (install.target_form, the interpreter, the folder).
+    It sits beside the prove receipt and the receipt gate does not read it."""
+    rec = {
+        "schema": "intake-install/1",
+        "device": device,
+        "file_name": info["name"],
+        "received_sha256": info.get("wheel_sha256"),
+        "install": {"command": cmd, "rc": rc, "target_form": form, "interpreter": interpreter, "target": target},
+        "last_line": ascii_line(last),
+        "at": now_utc(),
+    }
+    os.makedirs(os.path.join(pack, RECEIPTS_DIR), exist_ok=True)
+    path = os.path.join(pack, RECEIPTS_DIR, "%s.install.%s.json" % (info["name"], device))
+    with open(path, "w", encoding="ascii", newline="\n") as fh:
+        json.dump(rec, fh, indent=2, ensure_ascii=True)
+        fh.write("\n")
+    return rec
+
+
+def install_pack(pack, dry_run, form, interpreter=None, target=None):
+    """form is python, target or user (from resolve_install_target); the caller has already refused a missing target."""
     device, problem = device_name()
-    summ = {"device": device or "UNSET", "n": 0, "installed": 0, "refused": 0, "ok": False}
+    summ = {"device": device or "UNSET", "n": 0, "installed": 0, "refused": 0, "ok": False, "form": form}
     if problem:
         print("REFUSED: %s" % problem)
         return 2, summ
@@ -533,13 +599,14 @@ def install_pack(pack, dry_run):
         summ["refused"] = sum(1 for _, ok, _ in gate if not ok)
         print("REFUSED: install needs a good receipt for every wheel; nothing installed")
         return 1, summ
+    where = interpreter or sys.executable
     for info in res["wheels"]:
-        cmd = build_pip_command(info["path"], user=True)
+        cmd = build_pip_command(info["path"], target=target, user=(form == "user"), interpreter=where)
         if dry_run:
             print("DRY-RUN: " + json.dumps(cmd))
-            summ["installed"] += 0
             continue
         rc, last = run_pip(cmd)
+        write_install_record(pack, info, device, form, where, target, cmd, rc, last)
         if rc != 0:
             print("FAILED: %s pip rc=%d: %s" % (ascii_line(info["name"]), rc, last))
             summ["refused"] += 1
@@ -631,6 +698,15 @@ def selftest_unchecked():
 
 # ---------------------------------------------------------------- CLI
 
+INSTALL_HELP = """install needs EXACTLY ONE target. There is no default: the old --user default is gone.
+  --python <exe>   pip installs into that interpreter's own site, with no --user (use a fresh venv's python).
+                   Naming this tool's own interpreter is refused unless --user is also given.
+  --target <dir>   pip --target into a NEW or EMPTY folder (refused if the folder exists and holds anything).
+  --user           the old user-site install of this interpreter, only when asked for by name.
+A refused install prints REFUSED and installs nothing. Each real install writes receipts/<wheel>.install.<device>.json
+recording install.target_form (python, target or user) and the interpreter."""
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="intake_receive.py", description=__doc__.split("\n")[0])
     sub = ap.add_subparsers(dest="verb", required=True)
@@ -639,9 +715,16 @@ def main(argv=None):
     p = sub.add_parser("prove")
     p.add_argument("--from", dest="pack", required=True)
     p.add_argument("--scratch", required=True)
-    i = sub.add_parser("install")
+    i = sub.add_parser("install", formatter_class=argparse.RawDescriptionHelpFormatter, description=INSTALL_HELP)
     i.add_argument("--from", dest="pack", required=True)
     i.add_argument("--dry-run", action="store_true", dest="dry_run")
+    i.add_argument("--python", metavar="EXE", default=None,
+                   help="install with this interpreter's own site and no --user (a fresh venv's python); "
+                        "naming this tool's own interpreter needs --user as well")
+    i.add_argument("--target", metavar="NEW_DIR", default=None,
+                   help="pip --target into this NEW or EMPTY folder")
+    i.add_argument("--user", action="store_true",
+                   help="the old user-site install of this interpreter; only when asked for by name")
     sub.add_parser("selftest-unchecked")
     args = ap.parse_args(argv)
     if args.verb == "verify":
@@ -654,10 +737,14 @@ def main(argv=None):
         print_prove_last(summ)
         return rc
     if args.verb == "install":
-        rc, summ = install_pack(args.pack, args.dry_run)
-        print("INTAKE-INSTALL device=%s python=%s wheels=%d installed=%d refused=%d dry_run=%s ok=%s" % (
+        form, interp, target_dir, problem = resolve_install_target(args.python, args.target, args.user)
+        if problem:
+            print(problem)
+            return 1
+        rc, summ = install_pack(args.pack, args.dry_run, form, interp, target_dir)
+        print("INTAKE-INSTALL device=%s python=%s wheels=%d installed=%d refused=%d target_form=%s dry_run=%s ok=%s" % (
             summ["device"], platform.python_version(), summ["n"], summ["installed"], summ["refused"],
-            bool(args.dry_run), summ["ok"]))
+            summ["form"], bool(args.dry_run), summ["ok"]))
         return rc
     summ = selftest_unchecked()
     print_prove_last(summ)
