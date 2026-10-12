@@ -8616,6 +8616,48 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S8",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~HV1",
+     "surfaced_at": "2026-10-12T13:54:35Z",
+     "one_line": "HVST-bx-2 step 9's post-act read cannot see a 403 to an internal session: the deployed handler logs only on a successful enqueue and the portal API stage has no access log, so Branch B (an internal lockout) reads the same as no enqueue having happened.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-bx-2 step 9 (AMENDMENT 2) and the CTO half: the first real internal enqueue after the deploy is read in the function's CloudWatch log /aws/lambda/opal-research-pull-enqueue and must answer 2xx; a 403 to an INTERNAL session within the first trading day's log is Branch B (roll back the same hour).",
+     "world_is": "Measured 2026-10-12 ~13:52Z after the apply. lambda_function.py@824bdb355b has ONE print, line 140, 'OK: enqueued pull request for ...', written only after the enqueue succeeded; the 403 and 400 returns write no line. The log group's only post-apply events are START/END/REPORT for this seat's three arm invocations (3 invocations, 0 'OK:' lines). aws apigatewayv2 get-stages --api-id 7k3ed8px20 reads stage $default with AccessLogSettings null. So the log can show a 2xx (an 'OK:' line) but can never show a 403 to anyone, and the absence of 403 lines in the first trading day is NOT a measurement that no internal session was refused. What the log alone can give: invocations (START count) minus 'OK:' lines = refusals and errors, without the caller's tier. NOT measured: whether any internal session has called the route since 13:50Z (none had by 13:52Z). ID NOTE: the order named this seat's next row AMGT_HARVST-D1-HV1-S1; surprise-row-gate.py:116 ID_RE admits no lane tag (a coordinate is one letter plus digits, then an optional W<n>- or C-), so this row is minted D1-S8 and the next D1-S9.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "git show 824bdb355b:infra/aws/lambda/research/pull_enqueue/lambda_function.py (print at line 140; return _response(403,...) at line 109 carries no log)",
+       "aws logs filter-log-events --log-group-name /aws/lambda/opal-research-pull-enqueue --start-time 2026-10-12T13:50:00Z (read 13:52Z: START/END/REPORT x3, no OK line)",
+       "aws apigatewayv2 get-stages --api-id 7k3ed8px20 -> $default AccessLogSettings null",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round80/bx2_first_internal.out"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S9",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~HV1",
+     "surfaced_at": "2026-10-12T13:54:35Z",
+     "one_line": "The portal authorizer grants ALL access to userType 'Dev' whatever its tier, but the fenced handler admits only tier 'internal', so a Dev login whose tier is not 'internal' is authorized by the portal and refused 403 by this endpoint.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-bx-2 COO half, BLAST RADIUS: 'The internal analyst page is unaffected if the authorizer passes tier: internal for internal logins', and C-d: the apply proceeds when the authorizer emits tier where the handler reads it.",
+     "world_is": "Read from the DEPLOYED opal-portal-authorizer package (index.mjs, CodeSha256 gQp2IooAM3EgebVQeII27xcE+KuEDhyYfrlwr6Jqcsc=, LastModified 2026-10-03T19:52:32Z), function q2: 'if(q.userType===\"Dev\") return \"ALL\"; if(q.tier===\"internal\") return \"ALL\"' -- two independent paths to all-firm access. The context it returns carries both tier (J.tier) and userType; the fenced handler reads tier only. So C-d (the path) is satisfied, and the fence is exact for a login whose tier is 'internal'. NOT measured: whether any login with userType Dev carries a tier other than 'internal' -- no JWT claim set or user table was read. If such logins exist and use the research page they now get 403.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "aws lambda get-function --function-name opal-portal-authorizer (Code.Location package, index.mjs 65333 bytes, read 2026-10-12 ~13:46Z)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round80/bx2_authorizer.out"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
