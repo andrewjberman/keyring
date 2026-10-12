@@ -119,3 +119,19 @@ org/critical_paths/change_management/
 <workstream>DEVREVERT</workstream>
 <slot>dell1</slot>
 <fabric>dell1</fabric>
+
+**COMPLETE 2026-10-12 ~15:5xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** `0.7.0_AE_CloudOps~HV1` @37e6f3cdea (the repo revert: `lambda_function.py` back to its `31590746f1` bytes, `test_by4_dev_admitted.py`
+  removed, 22 tests passing) and @a373db5f1d (the deploy record), both on box/dell1 HEAD. Proof VALID rc 0 at HEAD (re-run by this seat
+  with `--governing-order`). Ledger `harvst-by6-enqueue-rollback-tier-only-20261012` CLOSED.
+- **Restored by VERSION, not rebuilt** (the CTO's proof, msg 4465): S3 object version `S9217s5ck1gZJvwSC.Ayeg4vFAkV063z` (read from by-2's
+  plan, its own metadata `content-sha256` verified) was copied to be the latest object (new version `pHqpZEyj...`). The function's
+  `CODESHA256` is `cWiraC3EeuTU9WDIpc5RXzpw6+RT9WxoeqfH/eZiaxo=`, EQUAL to by-2's deploy; before it read `Q342L4Vn...` (by-5).
+- **AC1 PASS** the four deployed arms read 403 (Dev with an advisor tier: the clause is gone), 403, 403, 400. **AC2 PASS** the served
+  package's `lambda_function.py` sha256 equals `31590746f1`'s (`1778584a...`), the repo file equals it too, no `userType` clause.
+  **AC3 PASS** the plan `0 to add, 1 to change, 0 to destroy`.
+- **Window of exposure, measured by the seat:** the Dev-admitting code was live from 14:40:46Z to 15:38:20Z. In 14:40 to 15:39Z, 0 real calls
+  reached the function (log read). The CTO's own read: nil under his PRE-1. Not an incident.
+- **State of the fence now:** `tier == internal` only, no context 403, a refusal writes `DENIED: tier=<tier>` (by-1 and by-2, standing).
+
+<status>complete</status>
