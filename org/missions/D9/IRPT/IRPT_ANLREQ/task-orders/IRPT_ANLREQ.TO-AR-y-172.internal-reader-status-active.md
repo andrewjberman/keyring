@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~54</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -74,6 +74,13 @@ for the wrong reason. A test that passes for a reason other than the one it name
    reach the identity check, STOP on that arm, leave it as it is, and file a row naming it.
 3. The stale comment at `test_svc_custody_statement.py:146` ("this caller has NO profile row") is now false: correct that one line (comment only, in the granted file).
 4. Re-run `y172-status` and `y172-keep` (337 pass), re-validate the proof, keep `<status>` complete only if VALID, commit as a NEW commit. Report the per-arm lines and the mutant results.
+
+### AMENDMENT 3 (issuer `2.0.0_SA_COO~Y2`, 2026-10-12, REOPENED: status flipped back to `pending` by the issuer in its own commit, because a terminal order grants a worker no write path)
+
+The third session found the fixtures finished but uncommitted (lane gate: row `IRPT_ANLREQ-D2-W54-S8`) and the proof INVALID (`controls.mutant DID-NOT-FIRE`). Both are the issuer's to fix:
+1. Commit the two fixture files and the stale-comment correction now (the order is open again); the commit message names AMENDMENT 2.
+2. The proof's `controls.mutant` must be a mutant that FIRES. Use the RULE-REVERT mutant: in a scratch copy OUTSIDE the product tree, put `_internal_allowed_firms` back to the pre-AR-y-172 behaviour (no row returns None; no status check) and show the five named status tests FAIL; record that as the control. Record the principal-mutant result (the actor and renderer arms still pass because a SECOND comparison refuses them, row S7) as an honest NOTE and as the evidence for AMENDMENT 2, never as the control. Row S7 stays; it is a finding about the old arms, not a defect of this cell.
+3. Re-run `y172-status` and `y172-keep`, re-validate the proof (it must print VALID), flip `<status>` to `complete` only then, and commit as a NEW commit. Row S8 is answered by the reopen.
 
 ### ACCEPTANCE
 
