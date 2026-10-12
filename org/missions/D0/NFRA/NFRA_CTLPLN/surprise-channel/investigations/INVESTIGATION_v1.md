@@ -7885,3 +7885,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The handler decides class (i) on firmId alone, as the proposal's patch does; tier is tested only for 'internal'. A verified client, service or untiered login whose firmId is admitted reaches the two routes. The old rule admitted every verified login, so this is tighter than before, but it is wider than the advisor wording. Whether tier must be advisor is a CTO ruling; the CT-w-2 tests were not widened past the TO."
 }
 ```
+
+## NFRA_CTLPLN-W69-S1 -- the proxy's source-map _build_note says files[] is two members; the entry lists three
+
+```json
+{
+  "id": "NFRA_CTLPLN-W69-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~69",
+  "surfaced_at": "2026-10-12T09:49:07Z",
+  "one_line": "The source map's _build_note for opal-portal-data-proxy says the code-only zip is lambda_function.py + session_tracker.py; the entry's files list has three members, including firm_page_access.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json@8d32dbf0b7, functions.opal-portal-data-proxy: files = [lambda_function.py, session_tracker.py, firm_page_access.py]; _build_note = 'CODE-ONLY zip via build-and-upload.sh (files[] = lambda_function.py + session_tracker.py)'",
+      "infra/aws/lambda/ci/build-and-upload.sh@8d32dbf0b7 lines 115 and 376: the builder reads files[] from the map (FN_FILES), so the automated build takes all three members; the note is prose the builder does not read",
+      "infra/aws/lambda/portal_data_proxy/deploy.sh@8d32dbf0b7 (retired by TO NFRA_CTLPLN.TO-CT-w-7) copied only lambda_function.py and session_tracker.py, the same stale two-member list the note repeats"
+    ]
+  },
+  "spec_asserts": "lambda-source-map.json functions.opal-portal-data-proxy _build_note: 'CODE-ONLY zip via build-and-upload.sh (files[] = lambda_function.py + session_tracker.py)'. TO CT-w-7 face: the zip's member list is the entry's files list.",
+  "world_is": "The entry's files[] names three members; firm_page_access.py is the third, and the proxy imports it at load. A zip built by hand from the two names in the note cannot import. build-and-upload.sh reads files[], so the automated build is correct and the hazard is INERT while the note is not followed. The note is stale prose; refreshing it belongs to the source map's owner, outside this order's paths."
+}
+```
