@@ -6428,3 +6428,28 @@
   "notes": "No action by this order; the wire regeneration is outside its grant."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W66-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~66",
+  "surfaced_at": "2026-10-12T02:38:00Z",
+  "one_line": "IV-e-118: the census file's bytes (and sha256) change with the new row_type_words member; the page's pin moved with it, but a producer package built from the old census and the older IRPT_MVP_P script constant still name the old hash",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json @a1b500eb1f: sha256 053560a14bd5d5b2a95a25c641062c1bdcfeaca08d4d476075bd2e3891d7e831 (was 44853788fa6d39c8b6011c2f86fc82ea6906c2e006935df549f153378c950905)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py:47 CENSUS_SHA holds the old hash (a historical build script, read only); infra/aws/lambda/investor-reporting/reports/build_resident_package.py:79 hashes whatever census it reads, so a package built after a1b500eb1f carries the new hash",
+      "ycharts/extract/extract.py reads census['sections'] only (lines 219-240), so the added top-level member changes no producer behaviour"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: add ONE new top-level census member, the 33 section names byte-identical; the page's copy is kept in step by the IV-e-115 drift test.",
+  "world_is": "Done as ordered. The 33 section names are unchanged and the page's CENSUS_PIN and CENSUS_SHA256 now name the new bytes (portal ac8febb7d3). Adding any member changes the file hash, so a resident package already built from the old census still carries the old hash and has no row_type_words; nothing at run time reads that member (the page holds a copy), so no served behaviour depends on it.",
+  "notes": "Whoever next builds the producer package takes the new hash from the file; no action by this order."
+}
+```
