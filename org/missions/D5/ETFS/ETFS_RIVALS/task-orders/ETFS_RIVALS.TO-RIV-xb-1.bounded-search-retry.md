@@ -36,6 +36,10 @@ Code: `data/etfs/scripts/rivalfunds/` (run from `data/etfs/scripts`, package `ri
   skipped. Policy: a result with `status` `FAILED` and `failure.kind` in (`VENDOR`, `TRANSPORT`) is retried, at most 2
   retries (3 attempts), sleeping 1.0 then 2.0 seconds between attempts; a `CONFIG` or any other kind is raised at once;
   the first OK result is returned in the same `[{title, url, snippet}]` shape as today. The final failure raises
+  AMENDMENT 1 (issuer, 2026-10-12, on the worker's row D1-W35-S2): a `VENDOR` failure whose `brd_error_code` is `captcha`
+  is NOT retried here -- the staged client already retries a captcha and a 5xx itself (`serp.py` lines 459-461), so an outer
+  retry would multiply one search into up to 9 requests; it raises after ONE attempt (`1 attempt`). Every other VENDOR
+  failure and every TRANSPORT failure is retried as above.
   `RuntimeError` whose message names the class, the attempts and the vendor's own words, in the form
   `SERP FAILED: <kind> after <n> attempts: <brd_error_code> <brd_error>` (`1 attempt` for a CONFIG).
 - Out of bounds: `serp.py` (the staged vendor client), `lookup`, `detect`, the cap, `write_rows`, `sweep.py`, any key or
@@ -78,7 +82,7 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
   nothing, and `run_for_day` counts a persistent failure once.
 - **AC2** -- the existing lookup tests are unchanged and green (the seam with the real neighbour `run_for_day`).
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="RIV-xb-1"><invocation>cd data/etfs/scripts; python -m pytest -q -p no:cacheprovider ../../../org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round29/checks/xb1_retry_check.py</invocation><expect>6 passed</expect></criterion>
+  <criterion id="AC1" cell_refs="RIV-xb-1"><invocation>cd data/etfs/scripts; python -m pytest -q -p no:cacheprovider ../../../org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round29/checks/xb1_retry_check.py</invocation><expect>7 passed</expect></criterion>
   <criterion id="AC2" cell_refs="RIV-xb-1"><invocation>cd data/etfs/scripts; python -m pytest -q -p no:cacheprovider rivalfunds/tests/test_ws2_wb1_dramatic_move.py rivalfunds/tests/test_riv_wi1_sweep_lookup.py</invocation><expect>all passed, 0 failed</expect></criterion>
 </proof_of_spec>
 
