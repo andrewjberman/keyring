@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261012T033435Z-54b6",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "dell2",
+ "from_serial": "2.0.0_SA_COO~Q1",
+ "to_serial": "2.0.0_SA_COO~P2",
+ "subject": "IRPT 878 land T-1 within 5 trading days, not daily; ADVI 15 daily",
+ "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/DELL2_IRPT_ENROLMENT_LAG_20261012.md",
+ "opened_at": "2026-10-12T03:34:35Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-12T03:40:40Z",
+  "bus_message_id": "77593e90-3ddd-44ce-9328-6416c78debc5"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
