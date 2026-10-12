@@ -3775,32 +3775,6 @@
 }
 ```
 
-## IRPT_ANLREQ-D2-W53-S10 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W53-S10",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
-  "surfaced_at": "2026-10-12T02:12:46Z",
-  "one_line": "AR-y-163: the order says the ticket contract reads a row's existence so a disabled row still admits a caller (CTO msg 6181); at this base the ticket service already refuses a row whose status is not exactly 'active' (TCKT_VNEXT R9-st1, 97d2d4bede), so 'the reader follows the ticket service' now has two readings, existence and status, and the proposed cell carries both.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/lambda/ticket_center/lambda_function.py:384-386 at d90edb3367 (`if got.get(\"status\") != \"active\"` returns the 403 failed-lookup answer, before allowedFirmIds is read) and the diff of 97d2d4bede",
-      "infra/aws/lambda/ticket_center/tests/test_status_active.py read whole (not run); the order's own premise, IRPT_ANLREQ.TO-AR-y-163 cell text, written from CTO msg 6181",
-      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r8_ds1/DISABLED_USERS_READ_20261012.json: 56 PROFILE rows, 54 active, 2 disabled, both disabled rows carry firmId opal-capital"
-    ]
-  },
-  "spec_asserts": "IRPT_ANLREQ.TO-AR-y-163 cell text: after the ticket release 'the ticket contract reads a row's EXISTENCE, so a DISABLED row still admits a caller' (CTO msg 6181).",
-  "world_is": "At d90edb3367 the ticket service source refuses a disabled row and an absent or unseen status as well as a missing row. I did not read whether round 9 is deployed. The IRPT reader (served.py:1152-1166) reads allowedFirmIds only and admits a disabled row as it admits an active one (run in process). The record names both readings; the CTO rules which the reader follows.",
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
 ## IRPT_ANLREQ-D2-W52-S17 -- the version member is written by the reader's result and copied by freeze, because portfolio.py is outside the grant
 
 ```json
@@ -3969,6 +3943,116 @@
 ]
 ```
 
+## IRPT_ANLREQ-D2-W52-S23 -- a closed whole-cell exclusion list cannot pass an attribute form it does not name, so the rule also reads the words after the account word
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S23",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T22:44:44Z",
+  "one_line": "The order asks for the five measured attribute forms to be whole-cell exclusions AND for one new attribute form, not in the seeds, to be handled right. A closed list cannot do the second. The rule therefore also treats an account word followed by a non-identifier word as an attribute (Account Balance is not turned back), with the five forms still listed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py@ccbed3339b (_is_account_header, ACCOUNT_TAIL_WORDS, ACCOUNT_HEADER_EXCLUDED)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r17/ACCOUNT_HEADER_POPULATION.json@632f24f159 (new_attribute_form Account Balance)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r17/CLOSED_LISTS_RULE24.json@632f24f159 (exclusion_note)"
+    ]
+  },
+  "spec_asserts": "Point 2 of IRPT_ANLREQ.TO-AR-y-171: the five attribute forms are added to the whole-cell exclusions with reason and census line. AC1: one new form of each class not in the seeds is handled right.",
+  "world_is": "A whole-cell list names only the forms it is given, so an unseen attribute header (Account Balance) would be turned back as several accounts under the leading-word rule. The repair adds an identifier-tail test (only identifier words may follow the account word). That is a rule shape the cell did not name. Whether the tail vocabulary is the right one is a judgment for L9.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S24 -- four account-naming headers are not matched by the repaired rule: Brokerage Account, Subaccount, Account Seq, Account Sequence
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S24",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T22:44:44Z",
+  "one_line": "The repaired rule admits a modifier only from custodian, client, sub, or no. of, and an identifier tail only from a closed word list. Brokerage Account, Subaccount, Account Seq and Account Sequence name accounts and are not matched, so a multi-account file under one of them passes as one account. The leading-word rule before the repair missed them too, so this is not a regression.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py@ccbed3339b (ACCOUNT_MODIFIERS, ACCOUNT_TAIL_WORDS, _is_account_header)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r17/CLOSED_LISTS_RULE24.json@632f24f159 (subtraction.identifier_like_not_matched)",
+      "scratch run .scratch/subtract_r17.py against the committed rule: Brokerage Account False, Subaccount False, Account Seq False, Account Sequence False"
+    ]
+  },
+  "spec_asserts": "Point 2 of IRPT_ANLREQ.TO-AR-y-171 and the CVO's FAIL clause 1: the rule must not miss an account-identifier header (the costly direction, a two-account file passes as one silently).",
+  "world_is": "Four identifier-like headers outside the stated modifier and identifier vocabularies are not matched. The reader is built and not released; the release pair would carry this gap. Widening the vocabularies is a ruling for the issuer or the CTO, not a choice made by the worker.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S25 -- the client-account gate could not check this worker's commits: its hashed account-id list is absent on this device
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S25",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T22:44:44Z",
+  "one_line": "Every safe-commit of this order printed 'client-data-check: hashed account-id list ABSENT ... this commit was NOT checked for client account ids'. The commits carry synthetic labels only (ACCT-ONE, ACCT-TWO, Client Acct No.). The gate's client-account read is therefore not evidence for these commits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for 350497c220, ccbed3339b and 632f24f159 (WARN: client-data-check ... ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt)",
+      "the same WARN text says absent is not empty; the list is set by OPAL_ACCOUNT_ID_HASHES or the path above"
+    ]
+  },
+  "spec_asserts": "The commit path (.tools/safe-commit.sh) checks each commit for client account ids.",
+  "world_is": "On this device the hashed list is not present, so the check reports NOT CHECKED rather than clean. No account id is known to be in these commits; the synthetic test labels are the only account-shaped strings the worker added.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W53-S10 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W53-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~53",
+  "surfaced_at": "2026-10-12T02:12:46Z",
+  "one_line": "AR-y-163: the order says the ticket contract reads a row's existence so a disabled row still admits a caller (CTO msg 6181); at this base the ticket service already refuses a row whose status is not exactly 'active' (TCKT_VNEXT R9-st1, 97d2d4bede), so 'the reader follows the ticket service' now has two readings, existence and status, and the proposed cell carries both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:384-386 at d90edb3367 (`if got.get(\"status\") != \"active\"` returns the 403 failed-lookup answer, before allowedFirmIds is read) and the diff of 97d2d4bede",
+      "infra/aws/lambda/ticket_center/tests/test_status_active.py read whole (not run); the order's own premise, IRPT_ANLREQ.TO-AR-y-163 cell text, written from CTO msg 6181",
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r8_ds1/DISABLED_USERS_READ_20261012.json: 56 PROFILE rows, 54 active, 2 disabled, both disabled rows carry firmId opal-capital"
+    ]
+  },
+  "spec_asserts": "IRPT_ANLREQ.TO-AR-y-163 cell text: after the ticket release 'the ticket contract reads a row's EXISTENCE, so a DISABLED row still admits a caller' (CTO msg 6181).",
+  "world_is": "At d90edb3367 the ticket service source refuses a disabled row and an absent or unseen status as well as a missing row. I did not read whether round 9 is deployed. The IRPT reader (served.py:1152-1166) reads allowedFirmIds only and admits a disabled row as it admits an active one (run in process). The record names both readings; the CTO rules which the reader follows.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## IRPT_ANLREQ-D2-W53-S11 -- the cell names reports/submission.py and reports/acceptance.py; both live under ycharts/generate/
 
 ```json
@@ -4130,87 +4214,142 @@
 }
 ```
 
-## IRPT_ANLREQ-D2-W52-S23 -- a closed whole-cell exclusion list cannot pass an attribute form it does not name, so the rule also reads the words after the account word
+## IRPT_ANLREQ-D2-W52-S26 -- the Read-first reader and tests are under infra/aws/lambda/investor-reporting, not at the worktree root the order names
 
 ```json
 [
 {
-  "id": "IRPT_ANLREQ-D2-W52-S23",
+  "id": "IRPT_ANLREQ-D2-W52-S26",
   "project": "IRPT_ANLREQ",
   "fabric": "dell2",
   "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
-  "surfaced_at": "2026-10-12T22:44:44Z",
-  "one_line": "The order asks for the five measured attribute forms to be whole-cell exclusions AND for one new attribute form, not in the seeds, to be handled right. A closed list cannot do the second. The rule therefore also treats an account word followed by a non-identifier word as an attribute (Account Balance is not turned back), with the five forms still listed.",
+  "surfaced_at": "2026-10-12T23:07:22Z",
+  "one_line": "TO-AR-y-174 names its Read-first files as intake/template_reader.py, intake/uploads.py and intake/tests/test_stored_input_contract.py, relative to the worktree root. They sit under infra/aws/lambda/investor-reporting/. The root path does not exist; the reads used the investor-reporting path.",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "infra/aws/lambda/investor-reporting/intake/template_reader.py@ccbed3339b (_is_account_header, ACCOUNT_TAIL_WORDS, ACCOUNT_HEADER_EXCLUDED)",
-      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r17/ACCOUNT_HEADER_POPULATION.json@632f24f159 (new_attribute_form Account Balance)",
-      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r17/CLOSED_LISTS_RULE24.json@632f24f159 (exclusion_note)"
+      "comp-find --name 'template_reader*' in C:/dev/wk-irpt-anlreq-52: 1 hit, infra/aws/lambda/investor-reporting/intake/template_reader.py (79285 files scanned)",
+      "grep -n READER_VERSION intake/template_reader.py at the worktree root (HEAD dec1c4624b): No such file or directory"
     ]
   },
-  "spec_asserts": "Point 2 of IRPT_ANLREQ.TO-AR-y-171: the five attribute forms are added to the whole-cell exclusions with reason and census line. AC1: one new form of each class not in the seeds is handled right.",
-  "world_is": "A whole-cell list names only the forms it is given, so an unseen attribute header (Account Balance) would be turned back as several accounts under the leading-word rule. The repair adds an identifier-tail test (only identifier words may follow the account word). That is a rule shape the cell did not name. Whether the tail vocabulary is the right one is a judgment for L9.",
+  "spec_asserts": "TO-AR-y-174 Read first: intake/template_reader.py, intake/uploads.py and intake/tests/test_stored_input_contract.py, relative to the worktree root.",
+  "world_is": "The three files are at infra/aws/lambda/investor-reporting/intake/ (template_reader.py blob 42037c84f452 at HEAD). Nothing was created or moved to match the order; the reads used the investor-reporting path.",
   "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
 
-## IRPT_ANLREQ-D2-W52-S24 -- four account-naming headers are not matched by the repaired rule: Brokerage Account, Subaccount, Account Seq, Account Sequence
+## IRPT_ANLREQ-D2-W52-S27 -- the AR-y-171 drain named in the spawn amendment is not an ancestor of this worker's HEAD; the same reader content is at ccbed3339b
 
 ```json
 [
 {
-  "id": "IRPT_ANLREQ-D2-W52-S24",
+  "id": "IRPT_ANLREQ-D2-W52-S27",
   "project": "IRPT_ANLREQ",
   "fabric": "dell2",
   "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
-  "surfaced_at": "2026-10-12T22:44:44Z",
-  "one_line": "The repaired rule admits a modifier only from custodian, client, sub, or no. of, and an identifier tail only from a closed word list. Brokerage Account, Subaccount, Account Seq and Account Sequence name accounts and are not matched, so a multi-account file under one of them passes as one account. The leading-word rule before the repair missed them too, so this is not a regression.",
+  "surfaced_at": "2026-10-12T23:07:22Z",
+  "one_line": "The spawn amendment names the AR-y-171 drain as b09e84971f. That commit is not an ancestor of this worker's HEAD (dec1c4624b) and is on box/dell2 only. The repair is in this history as ccbed3339b, and the reader blob is byte-identical at both (42037c84f452), so the trace ran on the named content.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor b09e84971f HEAD: not an ancestor; git branch --contains b09e84971f: box/dell2 only (merge-base 53b8f242cf)",
+      "git merge-base --is-ancestor ccbed3339b HEAD: ancestor; git log -- infra/aws/lambda/investor-reporting/intake/template_reader.py: ccbed3339b is the latest commit touching it",
+      "git rev-parse b09e84971f:infra/aws/lambda/investor-reporting/intake/template_reader.py and git hash-object of the worktree file: both 42037c84f452"
+    ]
+  },
+  "spec_asserts": "The spawn amendment: AR-y-171 is merged @b09e84971f, and the trace runs on that repaired reader (r17.1).",
+  "world_is": "The repaired reader is on this worker's HEAD as ccbed3339b, with the same content as b09e84971f on box/dell2. The two commits are not ancestors of one another on this branch. The content identity is measured by blob; the commit identity is not shared. Not blocking.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S28 -- the deployed Lambda's reader pin is a third version (3f29017cfc, no version member), outside the round-16 and repaired pair
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S28",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T23:07:22Z",
+  "one_line": "The source map pins irpt-ycharts-generate's template_reader.py at 3f29017cfc and its uploads.py at f09b802cdc, both before the AR-y-142 and AR-y-162 changes. The 3f29017cfc reader writes no reader_version member. So the Lambda's reader is neither the round-16 reader (aaf156e8eb) that the trace calls old, nor the repaired one; the four traced pairs do not cover the Lambda as it is pinned today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json lines 4542-4564 (irpt-ycharts-generate entry at line 3988): uploads.py pin f09b802cdc, template_reader.py pin 3f29017cfc (sha256 76795b75...)",
+      "git show 3f29017cfc:infra/aws/lambda/investor-reporting/intake/template_reader.py | grep -c reader_version: 0; the same blob has no READER_VERSION (0); aaf156e8eb has 2"
+    ]
+  },
+  "spec_asserts": "The cell and the spawn amendment treat the mixed state as a Lambda and a resident running two reader versions (round-16 and repaired), so the trace of those two covers the release question.",
+  "world_is": "The deployed Lambda's pinned reader is a third version, 3f29017cfc, with no version member. Its inputs are not compared on re-open under any running version, and the four pairs do not include it. The release pair's precondition must name the pin the Lambda moves from.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S29 -- a two-account sheet stored by the round-16 door reads NORMALIZED on a same-token re-POST under the repaired reader, while a fresh token is turned back
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S29",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T23:07:22Z",
+  "one_line": "Under the repaired reader, a two-account Account-Number sheet that the round-16 door stored answers NORMALIZED on a same-token re-POST, while a fresh-token POST of the same bytes is turned back with ACCOUNT_COLUMN_SEVERAL_VALUES. A stored normalization row is answered without judging the file again.",
   "class": "OBSERVATION",
   "hazard_standing": "ARMED",
   "disarm_owner": "2.0.0_SA_COO~Y2",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "infra/aws/lambda/investor-reporting/intake/template_reader.py@ccbed3339b (ACCOUNT_MODIFIERS, ACCOUNT_TAIL_WORDS, _is_account_header)",
-      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r17/CLOSED_LISTS_RULE24.json@632f24f159 (subtraction.identifier_like_not_matched)",
-      "scratch run .scratch/subtract_r17.py against the committed rule: Brokerage Account False, Subaccount False, Account Seq False, Account Sequence False"
+      "MIXED_VERSION_TRACE.json case old/new repair_header_two_values: writer door NORMALIZED; repost under the repaired reader NORMALIZED; re-open ACCEPTED with no comparison",
+      "MIXED_VERSION_TRACE.json case new/new repair_header_two_values: writer door NEEDS_CORRECTION ACCOUNT_COLUMN_SEVERAL_VALUES",
+      "intake/uploads.py:397-399 (prior_normalization answered by _answer) and :493-499 (_answer returns the stored NORMALIZED row before any read), at HEAD ccbed3339b"
     ]
   },
-  "spec_asserts": "Point 2 of IRPT_ANLREQ.TO-AR-y-171 and the CVO's FAIL clause 1: the rule must not miss an account-identifier header (the costly direction, a two-account file passes as one silently).",
-  "world_is": "Four identifier-like headers outside the stated modifier and identifier vocabularies are not matched. The reader is built and not released; the release pair would carry this gap. Widening the vocabularies is a ruling for the issuer or the CTO, not a choice made by the worker.",
-  "disposition": "UNDER_INVESTIGATION"
+  "spec_asserts": "The round-16 and round-17 account rule: the account-column finding turns a two-account file back at the door (one account per file), so a two-account file does not reach a portfolio.",
+  "world_is": "A two-account file stored by the round-16 door stays NORMALIZED for its token and opens under the repaired reader, because the stored row is answered and the re-open does not compare (C-STOREDINPUT). The repaired rule refuses new POSTs; it does not reach rows already stored. ARMED at the release pair: the stored row stays usable after the release unless the pair counts and disposes of it.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Arms at the release pair, which the issuer cuts; the disarm owner is named so the pair's counting step can carry it."
 }
 ]
 ```
 
-## IRPT_ANLREQ-D2-W52-S25 -- the client-account gate could not check this worker's commits: its hashed account-id list is absent on this device
+## IRPT_ANLREQ-D2-W52-S30 -- the round-14 census's refusal on re-open was measured before the stored-input contract; in mixed-version re-opens under the contract nothing is refused
 
 ```json
 [
 {
-  "id": "IRPT_ANLREQ-D2-W52-S25",
+  "id": "IRPT_ANLREQ-D2-W52-S30",
   "project": "IRPT_ANLREQ",
   "fabric": "dell2",
   "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
-  "surfaced_at": "2026-10-12T22:44:44Z",
-  "one_line": "Every safe-commit of this order printed 'client-data-check: hashed account-id list ABSENT ... this commit was NOT checked for client account ids'. The commits carry synthetic labels only (ACCT-ONE, ACCT-TWO, Client Acct No.). The gate's client-account read is therefore not evidence for these commits.",
+  "surfaced_at": "2026-10-12T23:07:22Z",
+  "one_line": "The round-14 census says every accepted multi-sheet, two-account and total-row input is refused on re-open after the release (TEMPLATE_ORIGINAL_BINDING). That was measured at HEAD f166732b43, before the stored-input contract. Under the contract the in-process mixed re-opens accept 8 of 8 with no comparison, and the same-version re-opens accept 8 of 8 with the comparison passing.",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "safe-commit output for 350497c220, ccbed3339b and 632f24f159 (WARN: client-data-check ... ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt)",
-      "the same WARN text says absent is not empty; the list is set by OPAL_ACCOUNT_ID_HASHES or the path above"
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~53/r14/UPLOAD_DOOR_RELEASE_CENSUS.json (accepted_yesterday_turned_back_today; measured_matrix_in_process) at dec1c4624b, tree_head_at_read f166732b43",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:638-641 at ccbed3339b: the full re-read is compared only when stored_version == READER_VERSION",
+      "r17/MIXED_VERSION_TRACE.json (in-process, 28 cases): 16 of 16 stored templates re-opened ACCEPTED; compare_runs_on_reopen false in all 8 mixed cases"
     ]
   },
-  "spec_asserts": "The commit path (.tools/safe-commit.sh) checks each commit for client account ids.",
-  "world_is": "On this device the hashed list is not present, so the check reports NOT CHECKED rather than clean. No account id is known to be in these commits; the synthetic test labels are the only account-shaped strings the worker added.",
+  "spec_asserts": "The census's claim that after the release every stored input whose re-read differs is refused on each re-open (its FATAL finding for the release pair).",
+  "world_is": "At HEAD with the contract, the refusal needs the stored version to equal the running one and the re-read to differ. Mixed-version re-opens are not compared, so the census's refusal is a pre-contract result. The census is not marked superseded, so the CTO's analysis should read it with this row beside it.",
   "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
-
