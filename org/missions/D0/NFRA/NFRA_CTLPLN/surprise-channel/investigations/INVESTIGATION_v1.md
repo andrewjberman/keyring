@@ -7911,3 +7911,57 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The entry's files[] names three members; firm_page_access.py is the third, and the proxy imports it at load. A zip built by hand from the two names in the note cannot import. build-and-upload.sh reads files[], so the automated build is correct and the hazard is INERT while the note is not followed. The note is stale prose; refreshing it belongs to the source map's owner, outside this order's paths."
 }
 ```
+
+## NFRA_CTLPLN-W65-S6 -- the generated FIRM_ALLOWED_PATHS block drops the rationale comments that sat inside the hand-kept literal
+
+```json
+{
+  "id": "NFRA_CTLPLN-W65-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~65",
+  "surfaced_at": "2026-10-12T09:48:58Z",
+  "one_line": "The CT-w-4 block replaces the whole FIRM_ALLOWED_PATHS literal, so the inline reasons inside it (ADVI_INFMVP.F2, ADVI_PRTORG.04, the 2026-09-01 attribution note, ADVI_DEMOV1.008 and the /ticket-center exclusion) leave the portal file. The sets are equal; the reasons survive only in git history at 2ed4373d.",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal ef65ad67 (branch wk-NFRA_CTLPLN-65-portal): git -C portal show --stat reports 2 insertions and 38 deletions in src/lib/firmAccess.ts; the deleted lines are the // comment lines inside the old literal",
+      "lib/opal_naming.py@c5d1415676 _blk_firm_allowed_paths: the block is one `'<firm>': new Set([...])` entry per firm row, and no comment line is rendered",
+      "infra/logic/registry/firm_pages.json: validate() refuses any firm row whose key set is not exactly firm, pages, evidence, so no note can ride a row without a validator change; that file is outside the CT-w-4 paths"
+    ]
+  },
+  "spec_asserts": "CT-w-4 BUILD 1: the generated block must reproduce the object literal's shape so the portal reads it unchanged; the hand-kept header, INTERNAL_FIRM_ID, FIRM_EXEMPT_PATHS and the functions stay hand-kept. The order does not say what becomes of the comments inside the literal.",
+  "world_is": "The literal's inline comments carry decisions a later editor needs: why /ticket-center is deliberately not in the demo set (unscoped board, Andrew surfaced it), why cottonwood and demo gained /attribution and /factor-tilts (house-view pages, no firm-scoped fetch), and why Inflection lost /trade-submission. After regeneration those reasons are absent from the working file. Nothing in the generated output or the registry carries them. The matrix content is unchanged, so the hazard is documentary: a future reader could add /ticket-center to the registry as an oversight. The CTO decides where the reasons live (registry evidence text, a generator header, or a note field after a validator change).",
+  "notes": "T3 set equality holds: 4 firms, 35 firm-page pairs, same firm order, base and generated. Not armed: no grant changes."
+}
+```
+
+## NFRA_CTLPLN-W65-S7 -- the evidence line ranges in firm_pages.json cite firmAccess.ts lines the regenerated file has moved
+
+```json
+{
+  "id": "NFRA_CTLPLN-W65-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~65",
+  "surfaced_at": "2026-10-12T09:48:58Z",
+  "one_line": "Each firm row of firm_pages.json cites its source as portal/src/lib/firmAccess.ts:<lines> (45-54, 55-67, 68-90, 114-125). After the portal block is generated (ef65ad67) the rows sit at lines 46-55, 56-64, 65-76 and 77-88, so the citations name the wrong lines.",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/firm_pages.json firms[].evidence (the four cited ranges, as committed at the CT-w-1 registry)",
+      "portal/src/lib/firmAccess.ts at the portal branch head ef65ad67: `grep -n` of the object keys gives 46 '49financial', 56 'inflection', 65 'cottonwood', 77 'demo'; the block spans lines 44-90",
+      "portal/src/lib/firmAccess.ts at 2ed4373d (the base): FIRM_ALLOWED_PATHS opens at line 44, which is where the CT-w-1 ranges were read"
+    ]
+  },
+  "spec_asserts": "CT-w-1 registry rows: each firm row's evidence field names the file and lines the row was copied from, so a reader can verify the row against the file.",
+  "world_is": "The registry values still equal the portal's sets. The line citations do not, because the block moved the matrix and changed its line count. A citation ages separately from the text it quotes. firm_pages.json is outside the CT-w-4 paths, so the registry owner must re-cite (or cite the block by its mark) after the portal carrier lands.",
+  "notes": "Observation only: no access value changes. The owner of the registry rows (the CT-w-1 writer or the CTO) decides the new citation form."
+}
+```

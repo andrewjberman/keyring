@@ -91,6 +91,11 @@ PLATINUM_DEST_VIEW_LAMBDA_PATHS = (
 # The data proxy's firm-access module (FWD-28; CTO ruling CT-v-2): the class (i) routes and the firms each admits, generated
 # from firm_pages.json. A whole-file Python module beside lambda_function.py, which imports ROUTE_FIRMS from it.
 FIRM_PAGE_ACCESS_PATH = "infra/aws/lambda/portal_data_proxy/firm_page_access.py"
+# The portal's firm-access matrix (NFRA_CTLPLN CT-w-4; FWD-28 step 8): ONE generated block, FIRM_ALLOWED_PATHS, inside the
+# hand-kept firmAccess.ts. The header, INTERNAL_FIRM_ID, FIRM_EXEMPT_PATHS and the functions stay hand-kept, so this is a
+# block target, never a whole-file one. The block's span ends at the object's closing `}` line (MJS_BRACE_CLOSE_TAGS).
+FIRM_ACCESS_TS_PATH = "portal/src/lib/firmAccess.ts"
+MJS_BRACE_CLOSE_TAGS = ("FIRM_ALLOWED_PATHS",)
 # The root-wide route whose explicit page list is the union of every firm row's pages (CTO ruling CT-v-2, point 3): a page
 # that a firm row names but this list does not is refused by validate(), so a new page needs its own row here.
 FIRM_UNION_ROUTE = "GET /aum/metrics"
@@ -118,6 +123,7 @@ VIEWS = (
     (PLATINUM_DEST_VIEW_LAMBDA_PATHS[0], "py", ("PLATINUM_DESTINATIONS",)),
     (PLATINUM_DEST_VIEW_LAMBDA_PATHS[1], "py", ("PLATINUM_DESTINATIONS",)),
     (FIRM_PAGE_ACCESS_PATH, "py", ("ROUTE_FIRMS",)),
+    (FIRM_ACCESS_TS_PATH, "mjs", ("FIRM_ALLOWED_PATHS",)),
 )
 
 # A block that a hand-kept carrier does not hold yet lands right after its anchor block (the first generate only;
@@ -203,6 +209,9 @@ TARGET_REGISTRY_KEYS = {
     # ROUTE_FIRMS (FWD-28; CTO ruling CT-v-2) -- _blk_route_firms() reads the rows of firm_pages.json, and checks each firm
     # against the served tenants (_tenants(), scopes.json) before it writes one admitted set.
     FIRM_PAGE_ACCESS_PATH: ("firm_pages", "scopes"),
+    # FIRM_ALLOWED_PATHS (NFRA_CTLPLN CT-w-4) -- _blk_firm_allowed_paths() reads the firm rows of firm_pages.json ONLY. It does
+    # not re-check the served tenants: generate() runs validate() first, and validate() refuses any firm that is not one.
+    FIRM_ACCESS_TS_PATH: ("firm_pages",),
     VECTORS_PATH: ("scopes", "systems", "exemptions", "resources"),
     TFTEST_PATH: ("scopes", "systems", "exemptions", "resources"),
 }
@@ -1422,6 +1431,21 @@ def _blk_route_firms(reg, h16, path):
     return _block("ROUTE_FIRMS", h16, "#", path, "\n".join(lines))
 
 
+def _blk_firm_allowed_paths(reg, h16, path):
+    """The portal's per-firm page matrix (NFRA_CTLPLN CT-w-4; FWD-28 step 8): FIRM_ALLOWED_PATHS, one `'<firm>': new Set([...])`
+    entry per firm row of firm_pages.json, in registry order, its pages in row order. The object keeps the shape the portal
+    reads (a Record of ReadonlySet), and the hand-kept lines around it are untouched. The rationale comments that sat
+    inside the literal are not carried into the block; the registry's evidence field names each row's source."""
+    doc = _firm_pages(reg)
+    lines = ["export const FIRM_ALLOWED_PATHS: Record<string, ReadonlySet<string>> = {"]
+    for row in doc["firms"]:
+        lines.append("  %s: new Set([" % _js_str(row["firm"]))
+        lines.extend("    %s," % _js_str(p) for p in row["pages"])
+        lines.append("  ]),")
+    lines.append("}")
+    return _block("FIRM_ALLOWED_PATHS", h16, "//", path, "\n".join(lines))
+
+
 def _bronze_homes(reg):
     """feed -> {bucket, key_prefix} for every row of feeds.json, from the builder's own internals: the bucket is
     _home_bucket()'s for the scope's tenancy (tiers.json), the prefix is key()'s minus the partition, which the caller
@@ -1506,6 +1530,7 @@ BLOCKS = {
     "FIRM_DISPLAY_NAMES": _blk_firm_display_names,
     "VENDOR_DISPLAY_NAMES": _blk_vendor_display_names,
     "ROUTE_FIRMS": _blk_route_firms,
+    "FIRM_ALLOWED_PATHS": _blk_firm_allowed_paths,
 }
 
 
@@ -1533,6 +1558,15 @@ def _py_span(text, tag):
 
 def _mjs_span(text, tag):
     lines = text.split("\n")
+    if tag in MJS_BRACE_CLOSE_TAGS:
+        # An object literal typed by annotation (`export const TAG: T = {`) that closes on a line that is exactly `}`.
+        start = next((i for i, ln in enumerate(lines) if re.match(r"export const %s[ :=]" % re.escape(tag), ln)), None)
+        if start is None:
+            raise RegistryError("no `export const %s`" % tag)
+        end = next((j for j in range(start, len(lines)) if lines[j] == "}"), None)
+        if end is None:
+            raise RegistryError("`export const %s` has no closing `}`" % tag)
+        return start, end + 1
     start = next((i for i, ln in enumerate(lines) if ln.startswith("export const %s " % tag)), None)
     if start is None:
         raise RegistryError("no `export const %s`" % tag)
