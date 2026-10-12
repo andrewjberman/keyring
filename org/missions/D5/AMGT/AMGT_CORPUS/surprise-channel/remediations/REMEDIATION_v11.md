@@ -20,16 +20,16 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-11T22:55:00Z. Graduated at ADJUDICATION_v6
     "owner": "2.0.0_SA_COO~C1",
     "round": "v48",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~C1",
       "round": "v48"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~C1",
-      "at": null
+      "at": "2026-10-12T05:30:00Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_CORPUS-D1-C-S65",
@@ -45,7 +45,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-11T22:55:00Z. Graduated at ADJUDICATION_v6
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v48",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v48"
     },
@@ -54,7 +54,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-11T22:55:00Z. Graduated at ADJUDICATION_v6
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
