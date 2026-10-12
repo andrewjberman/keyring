@@ -29,7 +29,9 @@ make that commit, and ONLY that commit. You deploy nothing.
 2. Run the tool that does steps 1 and 3 and prints what changed:
    `python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_flipcommit.py --root /c/dev/wk-firmbkts-53 --apply`
    (it edits the registry text, runs `python lib/opal_naming.py generate --out <root>`, and reads the result).
-3. Commit exactly the registry file and the regenerated targets below, nothing else, in ONE commit.
+3. Commit exactly the registry file and the regenerated targets below, nothing else, in ONE commit. Run AC1 and AC2 IMMEDIATELY
+   after that commit and BEFORE any other commit (rows, instance): AC1's base is `HEAD~1`, the commit you branched from, and any
+   later commit in the range makes it read FAIL.
 
 ### 1b. The files this commit may change (the whole list; 1 registry and 15 generated targets)
 
@@ -81,7 +83,7 @@ Read-only: the rest of the repository, the checks under `org/missions/D8/ADVI/AD
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~53/ADVI_FIRMBKTS.TO-FB-g-30.flip-commit.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-g-30"><invocation>cd /c/dev/wk-firmbkts-53 &amp;&amp; timeout 118 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_flipcommit.py --root /c/dev/wk-firmbkts-53 --verify --base BASEREF; echo "exit=$?"</invocation><expect>ROUND 4 FLIP COMMIT: 4 of 4 arms</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-g-30"><invocation>cd /c/dev/wk-firmbkts-53 &amp;&amp; timeout 118 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_flipcommit.py --root /c/dev/wk-firmbkts-53 --verify --base HEAD~1; echo "exit=$?"</invocation><expect>ROUND 4 FLIP COMMIT: 4 of 4 arms</expect></criterion>
   <criterion id="AC2" cell_refs="FB-g-30"><invocation>cd /c/dev/wk-firmbkts-53 &amp;&amp; timeout 60 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/checks/r4_scope.py --root /c/dev/wk-firmbkts-53 --allow infra/logic/registry/scopes.json --allow .tools/ds-precommit-check.py --allow data/assets/scripts/gold/investor_reporting/directory_runner.py --allow data/assets/scripts/gold/investor_reporting/holdings_snapshot.py --allow data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py --allow data/black_diamond/scripts/bronze/_asset_dim_rest_pin.py --allow data/black_diamond/scripts/gold/lib/platinum_dest_view.py --allow data/firm_registry.json --allow data/mdpf/config/bronze_homes.json --allow infra/aws/lambda-edge/_shared/firm-config.mjs --allow infra/aws/lambda/exec-summary-generator/platinum_dest_view.py --allow infra/aws/lambda/investor-reporting/_authz/loaders.py --allow infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/platinum_dest_view.py --allow infra/aws/terraform/modules/opal_name/generated_locals.tf --allow infra/aws/terraform/modules/opal_name/tests/opal_name.tftest.hcl --allow infra/aws/terraform/modules/opal_name/tests/vectors.json --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~53/ --allow org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md --require infra/logic/registry/scopes.json --require infra/aws/lambda-edge/_shared/firm-config.mjs --require infra/aws/lambda/investor-reporting/_authz/loaders.py; echo "exit=$?"</invocation><expect>ROUND 4 SCOPE: OK</expect></criterion>
 </proof_of_spec>
 
@@ -99,12 +101,12 @@ outputs and the FULL 40-hex commit hash of the flip commit.
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** STAGED for the window (act 4). Not spawned until the issuer's GO (the registry hash in every mark line is
-the hash at the cut, so the commit is made in the window against the HEAD of that moment; BASEREF in AC1 is filled at the GO).
+the hash at the cut, so the commit is made in the window against the HEAD of that moment; AC1's base reads `HEAD~1` since the GO of 2026-10-12: the worker's flip commit is the first commit on its branch).
 The worker's order grant covers the generated targets' lanes (a worker is admitted to exactly its order's paths). Its merge is
 the issuer's, at the drain, immediately followed by `FB-g-31` (the eight re-pins), the integrate pass and the units' builds.
 Workstream `FLIPCOMMIT`. Class WORLD by the path floor.
 
-<status>parked</status>
+<status>pending</status>
 <round>4</round>
 <workstream>FLIPCOMMIT</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-g-30</to_id>
