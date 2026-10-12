@@ -7006,3 +7006,57 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Handled in the build, so the hazard is INERT in the artifact. Recorded because the order did not name the placement or the backup."
 }
 ```
+
+## NFRA_CTLPLN-W61-S8 -- The password arm reads REFUSED under BatchMode whether or not sshd allows password logins, so a box can read done while password login is still on
+
+```json
+{
+  "id": "NFRA_CTLPLN-W61-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~61",
+  "surfaced_at": "2026-10-12T03:08:00Z",
+  "one_line": "The password arm reads REFUSED under BatchMode whether or not sshd allows password logins, so a box can read done while password login is still on.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C (issuer of NFRA_CTLPLN.TO-CT-u-2): rule on a discriminating password arm, or on reading the box's sshd_config, before any box is called done for FWD-27",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "AC2 one-shot read 2026-10-12 ~03:05Z by 0.9.0_WK_NFRA_CTLPLN~61: 'BOX laptop 100.96.167.100 port22=OPEN key=DENIED password_arm=REFUSED'",
+      "CT-u-1 proof org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~61/NFRA_CTLPLN.TO-CT-u-1.ssh-tailnet-enable-script.proof_of_spec.json@c23c237eba CTu1-AC2 BEFORE line records password_auth=default on the laptop",
+      "the order's rule text: BatchMode means no password is ever typed or sent; the limit is printed in the docstring of .tools/ssh-tailnet-verify.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-u-2 build item 2: password_arm is REFUSED when sshd prints Permission denied; a box is done only when password_arm=REFUSED; FWD-27 ACCEPT: a password login is refused.",
+  "world_is": "Under BatchMode ssh cannot send a password, so every box that answers prints Permission denied and reads REFUSED whatever its PasswordAuthentication setting. The laptop reads REFUSED while CT-u-1's receipt records its password_auth as default, so the arm does not measure what FWD-27 asks.",
+  "notes": "Built as the order specifies, with the limit printed in the tool docstring; no discriminator added because a different invocation is not in the order. Until disarmed, a done line proves the key answer and that no password was sent, not that sshd refuses passwords."
+}
+```
+
+## NFRA_CTLPLN-W61-S9 -- The key invocation's accept-new writes a first-contact host key into the laptop user's known_hosts, outside the worktree
+
+```json
+{
+  "id": "NFRA_CTLPLN-W61-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~61",
+  "surfaced_at": "2026-10-12T03:08:00Z",
+  "one_line": "The order's key invocation sets StrictHostKeyChecking=accept-new, so the first contact with an open port 22 writes that host key into the laptop user's known_hosts file, outside this worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "build item 2 of NFRA_CTLPLN.TO-CT-u-2 names -o StrictHostKeyChecking=accept-new for the key arm; the tool passes it verbatim in key_argv in .tools/ssh-tailnet-verify.py",
+      "AC2 run 2026-10-12 ~03:05Z: the laptop port22 answered, so the key arm ran ssh; /c/Users/AndrewBerman/.ssh/known_hosts still carries its 2026 Jan 22 mtime (ls -la read after the run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-u-2 RULES: never write a key or an authorized_keys file anywhere; the key arm invocation names StrictHostKeyChecking=accept-new.",
+  "world_is": "accept-new adds a remote host's public key to known_hosts on first contact, a write outside the worktree that the order did not name. It is not a key of ours, and an existing entry whose key changes is refused by ssh, not accepted.",
+  "notes": "Recorded because the no-key-write rule and the invocation read differently. No change made; the invocation stays as the order names it."
+}
+```
