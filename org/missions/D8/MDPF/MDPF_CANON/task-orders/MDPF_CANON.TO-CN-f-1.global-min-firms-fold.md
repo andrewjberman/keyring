@@ -18,6 +18,10 @@ EGRESS CLASS, declared: NONE (the worker writes no AWS).
 
 ## 1. THE CELL -- `CN-f-1` (round 6, decomposition v6)
 
+**AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-12 ~18:5xZ, the CTO's ADDENDUM 6, msg 4534):** one new behaviour, step 6a below. A day whose as-of
+pool is held by fewer than two firms refuses Global whole instead of publishing a short Models node. AC1 now reads 13 arms (C11-C13 are new;
+C6 plants a different two-firm world). Everything already built stays; add the refusal and its tests and re-run the three criteria.
+
 **The rule (the cluster lead's ruling (A) and the CTO's ADDENDA 1-4, which you do not need to read).** The combined Global view lists per-model
 lines. A line that only one firm holds is that firm's own book under a Global label. So Global shows a model-class line on a date ONLY where at
 least TWO firms hold that model on that date; every model-class line held by fewer folds, on that date, into ONE line `other_models`, and that
@@ -58,6 +62,13 @@ Behaviour, exactly:
    {"display_name": "Other Models", "cohort_class": "model", "model_value": [...], "account_count": [...]}` with the pooled value (rounded to 2)
    and count on `i`. When it is not emitted both arrays hold None on `i` and the pooled dollars are the SUPPRESSED amount of `i`. Include the key
    only if it is emitted on at least one date. No `count_as_of`, no `source_basis`.
+   **6a. A one-firm as-of refuses Global WHOLE (AMENDMENT 1, the CTO's ADDENDUM 6).** If on the LAST date the pool has a value
+   (`pool_value[last]` is not None) and is NOT emitted because `len(pool_firms[last]) < min_firms`, `apply_global_min_firms_fold` raises
+   `SystemExit` whose message STARTS `GLOBAL MIN-FIRMS FOLD REFUSED:` and names the as-of date and the number of firms holding the pool, never a
+   dollar level. Do this check BEFORE building any output. `guard_global_min_firms_fold` (Step 2) isolates it: Global is refused whole, so
+   its category views, aum-metrics and account distribution are not built or written for that run (never partially), the three firm scopes
+   build as before, and the prior Global object stays served with its own as_of. A pool with NO value on the last date is not a refusal
+   (there are no dollars to withhold). Dates before the last are never a refusal: they are suppressed as in step 6.
 7. **Output.** A shallow copy `out` of `arts` whose `"global"` is a copy of `g` with `by_model` and `meta` replaced; every other scope is the
    SAME object. Nothing of `arts` is mutated. Keep the dict's key order rule (the keys are in sorted order today; keep it sorted).
    - `by_model`: the non-model-class entries (SMA lines, `tax`) are carried unchanged and are never folded; kept lines carry their arrays with the
@@ -132,7 +143,9 @@ It joins no `SERVED_MODEL_KEYS`, `CORE_MODEL_KEYS` or `BLEND_MODEL_KEYS` (no mod
 also holds is kept); (b) `other_models` equals the sum of the pooled values and an all-None pool stays None, never 0.0; (c) the fold line is
 suppressed on a date its pooled lines are held by one firm, in both arrays, and a kept line held by one firm on a date is None there;
 (d) the differential identity tolerates a pre-existing 0.01 gap and refuses a planted loss; (e) a malformed array or an unclassified line is
-refused with the prefix; (f) the guard returns `global` None with the three firm scopes the SAME objects and records the refusal; and the SMA
+refused with the prefix; (f) the guard returns `global` None with the three firm scopes the SAME objects and records the refusal; (g) a day whose
+as-of pool is held by one firm is refused by the function and the guard (the message names the as-of date and carries no level), a two-firm
+day builds and emits `other_models`, and a day whose pool has no value at the as-of builds; and the SMA
 line and `tax` are carried byte-equal. Name the documents in the test with the real model keys of the world described in the issuer's check
 `org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round6/checks/r6_cn_f_1.py` (`_synthetic`; read it, never edit it).
 
@@ -175,7 +188,7 @@ read what each arm asserts).
 ## 4. PROOF OF SPEC (literal; timeout 120 per invocation)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="CN-f-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round6/checks/r6_cn_f_1.py" contract; echo "exit=$?"</invocation><expect>ROUND 6 CONTRACT: 10 of 10 arms -- and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="CN-f-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round6/checks/r6_cn_f_1.py" contract; echo "exit=$?"</invocation><expect>ROUND 6 CONTRACT: 13 of 13 arms -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="CN-f-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round6/checks/r6_cn_f_1_comparator.py"; echo "exit=$?"</invocation><expect>ROUND 6 COMPARATOR: 11 of 11 arms -- and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="CN-f-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round6/checks/r6_cn_f_1.py" seams; echo "exit=$?"</invocation><expect>ROUND 6 SEAMS: 6 of 6 arms -- and exit=0</expect></criterion>
   <criterion id="AC4" cell_refs="CN-f-1" judgment="true"/>
@@ -237,7 +250,7 @@ D1-W8-S5 (disarms on this cell's read-back); open call dell1-20261011T053810Z-fe
 - **Checks at base (dry-run from `round6/checks/` before the cut):** `r6_cn_f_1.py contract` 0 of 10, `seams` 0 of 6, `r6_cn_f_1_comparator.py`
   1 of 11 (K0 is a control). A reference tree reads 10 of 10, 6 of 6 and 11 of 11; three planted defects turn it red.
 
-<status>complete</status>
+<status>pending</status>
 <round>6</round>
 <to_id>MDPF_CANON.TO-CN-f-1</to_id>
 <slot>~16</slot>
