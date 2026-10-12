@@ -1383,6 +1383,9 @@ xc1 FAIL 4, xd1 FAIL 2 with its control PASS).
   `SERP FAILED: <kind> after <n> attempts: <brd_error_code> <brd_error>` (`1 attempt` for a CONFIG).
 - Out of bounds: `serp.py` (the staged vendor client), `lookup`, `detect`, the cap, `write_rows`, `sweep.py`, any key or
   environment change; no live search.
+- AMENDMENT 1 (issuer, 2026-10-12, on worker row D1-W35-S2): a `VENDOR` failure whose `brd_error_code` is `captcha` is NOT retried
+  here; the staged client already retries a captcha and a 5xx itself (`serp.py:459-461`), so an outer retry would turn one
+  search into up to 9 requests. It raises after one attempt. AC1's check gains one arm (7 tests).
 - Checks: `round29/checks/xb1_retry_check.py` (AC1; base FAIL 6 -- the call has no `_call`) and the existing lookup tests
   (AC2: must stay green). J1 is not set: a retry is read in the next sweep's `failed` count when a candidate exists.
 
