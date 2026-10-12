@@ -1,8 +1,8 @@
-# Four invokes of irpt-status ran once; the control's envelope has no ok:true, so the verdict is ANOMALY and the check fails -- 0.7.0_AE_CloudOps~ANL
+# Four invokes of irpt-status ran once; verdict OWNER_SCOPED_REFUSAL after the issuer's amendment -- 0.7.0_AE_CloudOps~ANL
 
 **Date:** 2026-10-12
 **Task Order:** IRPT_ANLREQ.TO-READS-Y8.f2-original-route-owner-check-laptop
-**Status:** BLOCKED
+**Status:** COMPLETE
 
 ---
 
@@ -18,11 +18,13 @@ Four read-only direct invokes of the deployed `irpt-status` against one retained
 - Verdict by the order's rule: ANOMALY (control `ok` is not true). `reads8_check.py` prints READS8-FAIL: it expects UNEXERCISED_LIVE for a control whose `ok` is not true, which would say the record was unreachable, and the control was served. I did not change the verdict to pass the check.
 - No second run: bounds require the issuer's word.
 
+- AMENDMENT 1 (crossbox XB-20261012T212626Z-f656, acked 21:29Z): the issuer ruled a served control carries no ok member (link present, no refusal code). Verdict restated from the same arms to OWNER_SCOPED_REFUSAL, amended_by added; NO second invoke. reads8_check.py now prints READS8-OK; proof-of-spec-check VALID.
+
 ## Compiler Tools
 
 | Tool | Command | Result | Note |
 |------|---------|--------|------|
-| reads8_check | python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r16/reads8_check.py | FAIL | READS8-FAIL, verdict rule vs the control envelope |
+| reads8_check | python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r16/reads8_check.py | PASS | READS8-OK after AMENDMENT 1 (first run FAIL: verdict rule vs the control envelope) |
 | comp-iam | none | SKIPPED | read-only order; policy simulation on own identity |
 
 **What worked:** the log check, the ledger sweep, the same-record control.
