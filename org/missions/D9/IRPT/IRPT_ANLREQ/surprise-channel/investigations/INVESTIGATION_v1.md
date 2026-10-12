@@ -3748,3 +3748,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W52-S16 -- (heading added at the merge by the issuer; the row below is the worker's, byte for byte)
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T02:16:12Z",
+  "id": "IRPT_ANLREQ-D2-W52-S16",
+  "one_line": "TO-AR-y-161: the face lists the script's reads as the requests table plus GetObject of each template input's original; the stored template and the request-to-input tie live in two more retained objects, so the script also reads each template input's normalized document and each accepted request's composition (GetObject, read only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:352-366 (INPUT# row holds only artifact_ref and a digest) and :538 (the stored template is document['template'], the bytes of the NORMALIZED_PORTFOLIO artifact)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py:115-120 (the accepted record holds browser_sha256 and composition_ref, no input id) and submission.py:175-193 (the composition document holds browser.input_id and resolved.input_ref.input_id)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r16/COUNT_SCRIPT_RECORD.json (reads, not_read)"
+    ]
+  },
+  "spec_asserts": "Face of IRPT_ANLREQ.TO-AR-y-161: 'Reads ONLY: a scan or query of the requests table for input rows and for accepted analysis requests ... and GetObject of each template input's retained original.'",
+  "world_is": "Comparing the new reader's output to the template stored at acceptance needs that template, which is in the normalized document's artifact; naming the input an accepted request was made from needs the request's composition artifact. Both are GetObject (by the version the ARTIFACT# row records) plus GetItem of the ARTIFACT# row; no write, no list. The seat that runs the script therefore needs GetObject on those keys too, not only on the originals. Not read: the real table and bucket, the key prefix of the artifacts, job state and REPORT# rows ('with a report' is an accepted request naming the input).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
