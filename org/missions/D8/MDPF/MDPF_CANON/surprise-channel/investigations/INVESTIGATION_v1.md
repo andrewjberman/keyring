@@ -1034,3 +1034,78 @@
   "notes": "No fact in S17 or S18 depends on the stamp; both stand."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W16-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~16",
+  "surfaced_at": "2026-10-12T18:25:06Z",
+  "one_line": "Global category-views re-sums by_model into Models and compares it with total_aua at the gold plane. On a date whose fold pool is held by one firm the fold line is None, Models falls short, and ViewPlaneError is raised outside any isolation, which aborts build_all for every scope.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (routes to 1.0.0_SA_CTO, owner of the Global category-views gold-plane read; the fold may not suppress the as-of pool until that read takes it)",
+  "spec_asserts": "CN-f-1 Step 2: read every statement from the fold guard to the last use of arts[global][by_model]; a statement that re-sums by_model or compares it with a headline total is a BLOCKING row. The fold moves dollars out of by_model without redistribution and leaves headline totals unchanged.",
+  "world_is": "mdpf_gold_consolidator.py: _shape_category_views (def at :635) sums the as-of model_value of every by_model member into Models (models_aum, :787) and passes total_aua to registry.build_category_views (:990). The Global call (:3084) is not inside _isolated. mdpf_category_registry.py:1325-1331 raises ViewPlaneError when sum(TOP_LEVEL_PEERS) differs from total_aua beyond RECON_TOLERANCE. Measured read-only 2026-10-12 on the served global objects at 2026-10-09: other_models_emitted_as_of True and the as-of is not in suppressed_dates, so NOT live today. It is reachable on any day the as-of pool is held by fewer than two firms. The consolidator's own note at :684-689 records that such a raise aborted build_all for all scopes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r6_cn_f_1_comparator.py read of the served global objects at 2026-10-09: K0-K10 11 of 11",
+      "read-only probe .scratch/as_of_probe.py: other_models_emitted_as_of True; as-of in suppressed_dates False; fold_keys 11; emitted dates 47",
+      "mdpf_category_registry.py:1325-1331 (gold-plane raise); mdpf_gold_consolidator.py:635, :787, :990, :3084"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed in this cell: the consumer sits outside the cell's paths, and the registry is read-only for this order. No level printed."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W16-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~16",
+  "surfaced_at": "2026-10-12T18:25:06Z",
+  "one_line": "The aum-metrics current value for the Other Models row falls back to its last real pooled value when the as-of is null, so a suppressed as-of would show dollars the fold had withheld.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (routes to 1.0.0_SA_CTO: a fold line's current value must be honest-None on a suppressed as-of, not the last pooled value)",
+  "spec_asserts": "CN-f-1 Step 3b: the other_models row is built by the existing code from the folded series and follows the honest-None law (a null is absent, never zero and never carried).",
+  "world_is": "dim_mdpf_aum_metrics.py build_aum_metrics, by_model loop: cur_val = mvals[gi]; when that is None it sets cur_val = _frontier(mvals) (:364-369), which returns the last non-None value. When the as-of fold line is suppressed it is None on the as-of, so the row would carry its last pooled dollars as current and its q-cells would be computed from that carried figure. Measured read-only: the as-of is emitted today, so it does not fire now.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only probe .scratch/as_of_probe.py: other_models_emitted_as_of True at 2026-10-09",
+      "dim_mdpf_aum_metrics.py:364-369 (_frontier) and the by_model loop of build_aum_metrics"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed here: the fallback is pre-existing code for absent keys, and changing it is a decision for the issuer. The new fact is that a fold line reaches it."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W16-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~16",
+  "surfaced_at": "2026-10-12T18:25:06Z",
+  "one_line": "The AC4 roll-up delta is not the as-of delta: on 2026-10-09 the fold line is emitted, so the two blends' dollars stay in Models through Other Models. The change falls on per-model rows and history, not on the as-of roll-up total.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-f-1 section 4, AC4 SEMANTIC: the only client-visible deltas are the two inflection blends leaving the Model Portfolios roll-up, the Total Holdings count, and per-model history starting where Global first combined two firms.",
+  "world_is": "Read-only probe at 2026-10-12 on the served global objects at 2026-10-09: other_models_emitted_as_of True; 11 fold keys, 9 held by one firm and 2 by none on the as-of; 5 of 5 kept lines carried on the as-of. With the fold line emitted on the as-of, no suppressed dollars fall on the as-of, so the Models total is unchanged there. The suppressed dollars fall on 438 of 485 valued dates, which is the per-model history change. The fold changes no account_count_total and no distribution total (spec), so no total count moves; the count changes are per-model. Judgment for L9, not graded by this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only probe .scratch/as_of_probe.py at 2026-10-12: other_models_emitted_as_of True; kept lines 5 of 5 on the as-of",
+      "r6_cn_f_1_comparator.py K5: dates where the gap moved 438 of 485 valued dates, each equal to its suppressed dollars"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as a premise check for the round-6 close. No level printed."
+}
+```
