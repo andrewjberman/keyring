@@ -6888,3 +6888,29 @@ by dell1 or by this seat.
   "world_is": "C_06 rounds each relationship's class share to six places before multiplying by total_mv, so the class dollars of every firm snapshot differ from its total field by tens to a hundred-odd dollars (largest 128.58 on the served 2026-10-08 snapshot). The same gap appears on the first-build and rebuilt snapshots, so it is arithmetic, not drift. The record states each total as the class sum and keeps the snapshot's own total field beside it."
 }
 ```
+
+## MDPF_SECCLASS-D1-W87-S1 -- The 2026-10-09 canonical partition has a newer version than the one SC-e-95 names; the rebuilt Unclassified and its 22 unlisted securities are unchanged to the cent
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W87-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~87",
+  "surfaced_at": "2026-10-12T11:34:29Z",
+  "one_line": "SC-e-95 names the 2026-10-09 canonical partition at version ytk9SuGrCLQ7MXq7c_0VW1ovMLyJ_ACX (last modified 2026-10-11T04:16:35Z); the current version DY7h_n97HK6oypextGdn38ietQKp16in (last modified 2026-10-12T04:16:42Z) rebuilds to the same class-sum Unclassified (883,483.05) and the same 22 unlisted securities (210,486.42).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/RESIDUAL_READ_C06_FREEZE_20261012.json @5ad172b731: dates entry 2026-10-09 carries first_build_version ytk9SuGrCLQ7MXq7c_0VW1ovMLyJ_ACX, last_modified 2026-10-11T04:16:35Z; by_class.unclassified.rebuilt 883483.05; unlisted_unclassified.usd 210486.42 over 22 positions.",
+      "S3 head-object gold/canonical/holdings/2026-10-09.parquet at 2026-10-12T11:29:35Z (before the rebuild) and 2026-10-12T11:32:01Z (after): the same VersionId DY7h_n97HK6oypextGdn38ietQKp16in, LastModified 2026-10-12T04:16:42Z.",
+      "Worker read of 2026-10-12 via C_06 process_date at base 028fab8273 (scratch aggregate, uncommitted): class-sum unclassified 883483.05; position sum 883521.93 (difference 38.88, inside the 6dp rounding bound 51.71); 32 securities, 22 unlisted, unplaced 210486.42."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-95's record names the 2026-10-09 partition by version ytk9SuGrCLQ7MXq7c_0VW1ovMLyJ_ACX, first built 2026-10-11T04:16:35Z, as the snapshot its rebuilt figures were read from.",
+  "world_is": "The partition at read time is version DY7h_n97HK6oypextGdn38ietQKp16in, last modified 2026-10-12T04:16:42Z, a newer version than SC-e-95 names. The rebuilt Unclassified is 883,483.05 (equal to SC-e-95 to the cent) and the unlisted list is the same 22 positions for 210,486.42, so no unclassified dollar moved on this date. A record that names a partition by version reads stale once a newer version exists, even when its figures still agree."
+}
+```
