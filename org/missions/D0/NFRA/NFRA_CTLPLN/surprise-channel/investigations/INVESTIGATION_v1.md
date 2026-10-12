@@ -7164,3 +7164,55 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The generated module is a new hand-kept carrier of four firm tokens, which the naming limb refuses. Registering the generator as a generated target is an edit to lib/opal_naming.py and infra/logic/registry/, outside this order's paths; a deliberate departure is an R20 register entry that Andrew acknowledges. The tokens were not encoded or wrapped to pass the gate. Nothing from the data-proxy set is committed; the code sits uncommitted in the worktree. The content-api revert (step 4) is committed separately because it adds no firm token."
 }
 ```
+
+## NFRA_CTLPLN-W62-S7 -- an unmatched path answers 403 only for a non-internal caller; the internal tier gets the handler's own 404
+
+```json
+{
+  "id": "NFRA_CTLPLN-W62-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~62",
+  "surfaced_at": "2026-10-12T03:57:30Z",
+  "one_line": "AMENDMENT 2 says an unmatched path answers 403 for every caller. The fence refuses it for every non-internal caller; the internal tier passes the gate and reaches the handler's own 404 fall-through.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/portal_data_proxy/lambda_function.py@worktree (uncommitted over fef258cb98): _require_route_access returns None for a route in _ROUTES_OPEN_TO_VERIFIED_LOGINS or for tier 'internal'; every other call is 403",
+      "infra/aws/lambda/portal_data_proxy/lambda_function.py:2433-2435 (UNKNOWN ROUTE): the fall-through returns 404 'Route not found' for any path the if-chain does not match",
+      "infra/aws/lambda/portal_data_proxy/tests/test_route_class_fence.py: test_unknown_path_is_403_for_a_partner and test_unknown_path_is_403_for_no_context pass (7 paths each); test_unknown_path_for_internal_reaches_the_handler_own_404 passes (404)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CT-u-6 AMENDMENT 2, THE HANDLER: 'EVERY OTHER matched route answers 403 unless tier is internal; an unmatched path answers 403.' and ACCEPTANCE test 'Unknown path 403'.",
+  "world_is": "For a non-internal caller an unmatched path answers 403. For the internal tier the gate admits the call and the handler's own UNKNOWN ROUTE fall-through answers 404, as before the fence. Answering 403 to the internal tier as well needs the 41-route set inside the gate, a second route table; AMENDMENT 2 fixes the constant at exactly the two open routes. The order does not say which is wanted, so the implementation keeps the constant at two routes and records the internal arm as 404. The CTO or the issuer should rule which arm governs."
+}
+```
+
+## NFRA_CTLPLN-W62-S8 -- the two class-i routes are not gated by the handler, so a request with no authorizer context reaches them
+
+```json
+{
+  "id": "NFRA_CTLPLN-W62-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~62",
+  "surfaced_at": "2026-10-12T03:57:30Z",
+  "one_line": "The fail-closed rule (missing, empty or 'null' tier is 403) holds for the 39 class-ii routes. The two class-i routes answer any request that reaches the handler, with no authorizer context, as they do today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/portal_data_proxy/lambda_function.py@worktree: _require_route_access tests f'{http_method} {path}' in _ROUTES_OPEN_TO_VERIFIED_LOGINS before it reads requestContext, so an open route returns None with no context read",
+      "infra/aws/lambda/portal_data_proxy/tests/test_route_class_fence.py: test_class_i_route_is_not_gated_by_the_handler_as_today passes for POST /sentiment/keyword-intelligence and GET /aum/metrics with no requestContext",
+      "DATA_PROXY_ROUTE_CLASS_CENSUS.md: RULED line (PRD v0.25 / msg 108445): class (i) routes stay open"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CT-u-6 BUILD item 1 and AMENDMENT 2: the gate 'fails closed on a missing, empty or null value'; the two class-(i) routes 'stay open to every verified login exactly as today (the handler does not gate them)'.",
+  "world_is": "The handler does not gate the two class-(i) routes, so a request whose authorizer context is missing, empty or 'null' reaches them, as it did before the fence. Their only login check is the API Gateway authorizer, which is outside this order. The fail-closed rule therefore holds for class (ii) and not for these two routes, by the ruling's own design. The CTO should confirm that reading before CT-u-7 applies, because the test pins it."
+}
+```
