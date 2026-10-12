@@ -63,6 +63,18 @@ changes. **The grant now includes those two test files.** Do exactly this:
 4. Your first run's rows S4 and S5 stay. S4 is answered by this amendment (say so in your report); S5 (the narrative test runs a PINNED `served.py`, so its green run is no evidence) is
    the CTO's and stays ARMED: say in the report what narrative's pin means for the release pair.
 
+### AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-12, after reading the second worker's report and row `IRPT_ANLREQ-D2-W54-S6`)
+
+All 337 pass, but row S6 names a loss of coverage that a green run hides: the six arms of `test_final_release_refuses_changed_actor_owner_or_service_identity`
+(`test_interactive_entry.py:86`) used to reach the identity check they NAME. With no active row for their caller they are now refused at the FENCE (FIRM_BINDING) first, so they pass
+for the wrong reason. A test that passes for a reason other than the one it names is a coverage defect, even with the assertion unchanged. Do this, fixtures only:
+1. Give that test the same `active_internal_row` fixture (`@pytest.mark.usefixtures`) so its caller is admitted at the fence and the refusal comes from the identity check. Its assertions stay.
+2. PROVE it, per arm: for each of the six (mode, change) arms print the refusal code or reason it ends with and say it comes from the identity check, not the fence; and run a
+   one-time mutant in a scratch copy OUTSIDE the product tree (disable the identity comparison the arm names) showing that arm FAILS, so the arm still bites. If an arm cannot be made to
+   reach the identity check, STOP on that arm, leave it as it is, and file a row naming it.
+3. The stale comment at `test_svc_custody_statement.py:146` ("this caller has NO profile row") is now false: correct that one line (comment only, in the granted file).
+4. Re-run `y172-status` and `y172-keep` (337 pass), re-validate the proof, keep `<status>` complete only if VALID, commit as a NEW commit. Report the per-arm lines and the mutant results.
+
 ### ACCEPTANCE
 
 <criterion id="AR172-y-AC1" cell_refs="AR-y-172"><invocation>python C:/dev/wk-irpt-anlreq-54/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r17/ar17_checks.py y172-status --root C:/dev/wk-irpt-anlreq-54</invocation><expect>Y172-STATUS-OK</expect></criterion>
