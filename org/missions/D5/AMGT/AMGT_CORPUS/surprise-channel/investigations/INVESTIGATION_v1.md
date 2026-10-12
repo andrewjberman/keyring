@@ -4733,5 +4733,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "notes": "A harness that reads the outer repo gives a false failure in a standalone portal worktree and says nothing about why; surfaced, not fixed. For the CVO's disposition of S8 and W2-S6 with the round-49 packet.",
   "disarm_owner": "2.0.0_SA_COO~C1"
 }
+,
+{
+  "id": "AMGT_CORPUS-D1-S10",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-12T03:38:47Z",
+  "one_line": "A served block prints a spreadsheet error token verbatim: 3,346 block cells hold '#N/A' (master 3,024, 48 on each of 63 names, the template's sample company's results; own 322 on 7 names), where C-S65 prints the period grid's error tokens in words.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer's count over the live /15 capture (7DUlZxh.., 03:21Z), `model.team_sheet.blocks[].rows[].cells[].v` strings starting '#': master 3,024 of 9,261 cells on 63 names, own 322 of 10,762 on 7 names (9433 JP 103, IMB LN 79, NOVN SW 53).",
+      "ui-walk of TSM US on the DEV-built tree (portal 0a06280a, 2026-10-12 03:33Z): finding unconnected-field '\"#N/A\" x48' on the Model tab; the master blocks print the template's error tokens raw.",
+      "The block cell is the sheet's own text as written (ADDENDUM 1: 'as the sheet wrote it'); C-S65's words are the period grid's text cells (CRPS-ay-2 d2)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-48 ruling C-S65: an error token renders the why in words; a bare token is not a why. ADDENDUM 1: every value renders under its own block's header as the sheet wrote it.",
+  "world_is": "In a block, an error token prints as '#N/A'. On a master name the token is the template's sample company's result, not a fact about this name. The leg-v condition 'master blocks carry no value' was measured on numbers (63 of 63); these are text.",
+  "notes": "Asked of the CTO (one question, 2026-10-12 ~03:38Z): print block error tokens as 'error in team sheet' with the token in the title, and whether to drop the master template's tokens. Default if unanswered: left as is, recorded for the round-50 list. No code changed.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
+}
 ]
 ```
