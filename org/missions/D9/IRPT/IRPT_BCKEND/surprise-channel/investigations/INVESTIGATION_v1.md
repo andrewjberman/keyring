@@ -28565,3 +28565,200 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  "notes": "Check not edited and not weakened. A fix is the issuer's: restore the gitlink checkout or exclude gitlinks in changed_outside()."
 }
 ```
+
+## IRPT_BCKEND-D2-W327-S1 -- IB165-2-AC3 reads the portal gitlink as a change outside the grant
+
+```json
+{
+ "id": "IRPT_BCKEND-D2-W327-S1",
+ "project": "IRPT_BCKEND",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_IRPT_BCKEND~327",
+ "surfaced_at": "2026-10-12T18:07:39Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "IB165-2-AC3 cannot read PASS in this worktree: p165_cells.py changed_outside() lists the modified portal gitlink as a change outside the grant.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py . IB165-2-AC3 -> 'FAIL: changed outside the grant: [portal]', rc 1; AC1 and AC2 PASS",
+   "p165_cells.py:87-95 changed_outside(): git diff --name-only <base> keeps every name not under the deliverables, the investigation file or task-orders; AC3 then also exempts only ycharts/extract/",
+   "git diff HEAD --stat -- portal: 1 file changed (gitlink 160000 53506d4903 at HEAD, worktree portal HEAD dbeb6764ee); the dispatch said the portal line is not the worker's and is to be left"
+  ]
+ },
+ "spec_asserts": "AC3 grades that nothing outside the extract folder and the deliverables changed; the order says the worktree is clean except the portal gitlink line, which the worker leaves.",
+ "world_is": "The portal gitlink differs from HEAD in the worktree before any edit of this order, and git diff --name-only <base> lists it, so the AC3 check reads 'portal' as a change outside the grant whatever the worker does. The check's earlier lines (base_commit, section_bounds_rule, equal hash lists 4 of 4, the both-labels fixture, request_sent and deployed false) ran before the failing line and did not fail. Not read here: whether the check passes on a worktree whose portal gitlink matches HEAD."
+}
+```
+
+## IRPT_BCKEND-D2-W330-S1 -- The IB165-5-AC1 check reads prices_store.cites, a key the face does not name
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W330-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~330",
+  "surfaced_at": "2026-10-12T18:10:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The IB165-5-AC1 check reads prices_store.cites, a key the worker face does not name (it names writer_cite and schedule_cites); the record carries all three.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py: IB165-5 AC1 calls need_cites(p.get('cites'), 'prices_store.cites')",
+      "the face of IRPT_BCKEND.TO-IB-pr-475 lists prices_store: {writer, writer_cite, schedule_cites, verdict, retired_as_source, in_words, census} and no cites key",
+      "the row IRPT_BCKEND-D2-W315-S3 evidence names 'the store key' but its text does not state the key; read from build_canonical_prices_v2.py:174 and legacy_addresses.json instead"
+    ]
+  },
+  "spec_asserts": "The face names the prices_store keys writer, writer_cite, schedule_cites, verdict, retired_as_source, in_words, census.",
+  "world_is": "The check also requires a non-empty cites list inside prices_store; the worker added it (all cites resolve) so the check could grade; the face and the check disagree by one key."
+}
+```
+
+## IRPT_BCKEND-D2-W330-S2 -- The order names the relative check path; the issuer's correction ran the amended script at an absolute path
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W330-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~330",
+  "surfaced_at": "2026-10-12T18:11:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The issuer's mid-task correction ran the criteria with the amended check at an absolute path (04e6040b0c), but the order file still names the relative path, so proof-of-spec-check refuses an instance that records the absolute path; the instance records the order's own invocation and the evidence names the amended script.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check invocation-alignment violations (3 of 3) when the recorded invocation was python \"C:/dev/ajb_workspace/org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py\" . IB165-5-ACn against the order's relative-path invocation",
+      "the three criteria were run from the worktree root with the amended script at the absolute path: IB165-5-AC1, AC2, AC3 each PASS rc=0",
+      "the worktree's own copy of the script is the pre-04e6040b0c version; this worker did not run it and did not edit it"
+    ]
+  },
+  "spec_asserts": "The order file's invocation is python \"org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py\" . IB165-5-ACn, and the checker holds the record to it.",
+  "world_is": "The graded run used the amended script at the absolute path in the issuer's correction; the instance carries the order's text. Owner 2.0.0_SA_COO~P2: amend the order file's invocation or merge 04e6040b0c before grading."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W328-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~328",
+  "surfaced_at": "2026-10-12T18:11:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "A stored-bundle probe that is now classified WAF_CHALLENGE still falls into refreshSession, i.e. a fresh sign-in submission, in withAuthenticatedPage (the path mainCli runs); the new challenge ending covers acquireSession's own probe only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js:1627-1633 withAuthenticatedPage: probeSession({bundle}) then `if (!bundle) bundle = await refreshSession(...)` for any probe.authenticated false, whatever its reason",
+      "infra/aws/ec2/investor-reporting-ycharts/tests/probe_challenge_and_pair.js arm c/e: probeSession over a bundle returns reason WAF_CHALLENGE, authenticated false"
+    ]
+  },
+  "spec_asserts": "IB-pr-473: a probe classified as a challenge after an ACCEPTED sign-in ends the capture with a failure that is not AUTH_FAILED; no second submission.",
+  "world_is": "That holds inside acquireSession. On a run that starts from a stored bundle whose tokenless probe is challenged, the stored-bundle probe is not authenticated and the code signs in again (one submission) before any challenge ending can apply. Not changed here: withAuthenticatedPage is outside this order's build list."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W328-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~328",
+  "surfaced_at": "2026-10-12T18:11:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The pair is requested once per run on the first probe after the submission (pairControl: filled && !record.probe_pair); with the new rule a token-less first probe records discriminating=false and no later probe, even one holding a token, runs the pair.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js:1112 pairControl: filled && !record.probe_pair; the non-discriminating pair is assigned to record.probe_pair at the next line",
+      "tests/probe_challenge_and_pair.js arm h: a token-less full flow sends one template request and records discriminating false"
+    ]
+  },
+  "spec_asserts": "IB-pr-473 build item 2: when the jar holds no aws-waf-token the pair is not sent and the receipt records it; when it holds a token the pair runs as today.",
+  "world_is": "Both clauses hold per probe. Across a run, the first probe decides: a token minted after a later navigation is not paired. Left as is (once per run, as before); an owner may want the gate to be `discriminating !== true`."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W328-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~328",
+  "surfaced_at": "2026-10-12T18:11:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order names the challenge header `waf-action`; the capture's probe headers are read from `x-amzn-waf-action` (defaultHttpPort keeps that key), so the new test accepts both spellings case-insensitively.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js: defaultHttpPort keeps ['location','x-amzn-waf-action','content-type']; wafActionOf accepts x-amzn-waf-action and waf-action",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py:188-191 reads reply.waf_action"
+    ]
+  },
+  "spec_asserts": "Face build item 1: a `waf-action` header of challenge, captcha or block is a challenge.",
+  "world_is": "The wire header the vendor's WAF sets is x-amzn-waf-action (as the capture already records it); `waf-action` is the READ path's field name for the same value. Both are accepted; no behaviour is lost."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W328-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~328",
+  "surfaced_at": "2026-10-12T18:16:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The criteria were graded with the issuer's amended p165_cells.py at its absolute path in the base checkout (commit 04e6040b0c), not the worktree's old copy that the order's relative invocation names; the proof instance records the order's relative invocation and the executed one is in output_evidence only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "coordinator correction to worker ~328 mid-task: the changed-files test counted the portal gitlink; fixed at 04e6040b0c on box/dell2",
+      "proof-of-spec-check invocation-alignment refuses a recorded invocation that differs from the order's text (instance recorded with the order's relative form)"
+    ]
+  },
+  "spec_asserts": "The order's criteria invocations name org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py relative to the worktree root.",
+  "world_is": "The worktree's copy is the old script; the three criteria were run from the worktree root with the amended script at C:/dev/ajb_workspace/... and each printed PASS. The order file still names the relative path."
+}
+```
+
+## IRPT_BCKEND-D2-S109 -- disarm evidence for row W328-S1: the sign-in-again on a challenged stored-bundle probe is the base code's and unreleased; its repair precedes any resident release
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S109",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-12T18:20:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DISARM EVIDENCE for row IRPT_BCKEND-D2-W328-S1, filed by its disarm owner the turn it was read: the stored-bundle path that signs in again on a challenged probe is the base code's, not this build's, and no byte carrying it is released; the repair is a precondition of the next resident release, not a hazard that is live today.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read by this seat at 2d923d0564 (the base of IB-pr-473, git show of infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js): withAuthenticatedPage line 1525 reads `if (!bundle) bundle = await refreshSession(stored.present ? 'stored bundle failed the probe' : stored.reason)`, so a stored bundle whose probe is not authenticated, for ANY reason, goes to a fresh sign-in; refreshSession is defined at line 1502. At the base a challenged reply was only status-classified NOT_LIVE (row D2-W302-S1), which is also not authenticated, so the same sign-in followed. IB-pr-473 changed the NAME of that probe's reason to WAF_CHALLENGE and left this branch as it was.",
+      "worker 0.9.0_WK_IRPT_BCKEND~328, row W328-S1: the same lines at its branch (1627-1633) and its arms c and e (a stored-bundle probe returns WAF_CHALLENGE, authenticated false).",
+      "the library is pinned by hash on the capture host and reaches it only in a resident release under its own never-widen pair (IB-pr-434 and IB-pr-473 record); no such release has been cut, and the vendor path is stopped for every seat (CTO msg 5025 and the standing hold). So no running capture carries either the base's behaviour or the build's."
+    ]
+  },
+  "spec_asserts": "IB-pr-473 and the vendor-path stop: a challenged probe after an accepted sign-in must not lead to a second submission; a vendor that locks accounts is the reason the path is stopped.",
+  "world_is": "STILL a defect in the code (a challenged stored-bundle probe signs in again), NOT introduced by IB-pr-473 and NOT reachable today. It stays ARMED in the sense that a resident release would make it reachable. RULING by the issuer (inside its own decomposition): (1) the repair is a cell of round 166 beside the CTO's items 1 and 2: in withAuthenticatedPage a probe whose reason is WAF_CHALLENGE ends the run with the same challenge ending acquireSession uses, and does NOT call refreshSession; an arm for it in probe_challenge_and_pair.js; (2) NO resident release carrying ycharts_session.js is to be cut until that cell is merged, and the issuer will refuse to pass a release packet for it before then; (3) the disarm of W328-S1 is complete when the round-166 cell reads merged. Owner of (1)-(3): 2.0.0_SA_COO~P2. Not measured: any live capture run (none is allowed)."
+}
+```
