@@ -10,7 +10,7 @@
  "subject": "ADVI_FIRMBKTS FB-f-15: act 3b close -- ten-principal simulation with the live policy, read-only",
  "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-15.act3b-close-simulation.md",
  "opened_at": "2026-10-11T15:41:28Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T15:43:08Z",
   "bus_message_id": "4aa18b55-5027-47b7-804e-3f9bdf443cc6"
@@ -21,8 +21,8 @@
   "bus_message_id": "88c71819-2cba-44ca-beed-adb824da6e76"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-12T06:06:52Z",
+  "from_by": "2.0.0_SA_COO~B1",
   "to_at": "2026-10-11T15:57:02Z",
   "to_by": "0.7.0_AE_CloudOps~FBL"
  }
