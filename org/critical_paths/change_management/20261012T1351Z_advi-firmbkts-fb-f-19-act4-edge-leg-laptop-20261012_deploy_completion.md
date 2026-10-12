@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | verify | step 0 gate and step 1 pre-act reads: pair SIGNED both halves, flip+re-pins ancestor of HEAD, registry routed false, firm-config buckets, 12 of 12 simulate pairs + control, distribution/functions/WAF pre-state saved | files in deliverables/0.7.0_AE_CloudOps~FBL/evidence_f19/ |  | OPEN |
+| L1 | verify | step 0 gate and step 1 pre-act reads: pair SIGNED both halves, flip+re-pins ancestor of HEAD, registry routed false, firm-config buckets, 12 of 12 simulate pairs + control, distribution/functions/WAF pre-state saved | files in deliverables/0.7.0_AE_CloudOps~FBL/evidence_f19/ | 13:44Z-13:51Z: COO+CTO halves SIGNED (CTO ADDENDA 1-5, COO ADDENDA 1,2); flip 69679b90e3 and re-pins e274a0e60c ancestors of HEAD 20215ccd98, flip on origin/CLOUD; scopes.json opal-data-bd routed true->false in the flip commit; firm-config.mjs 49financial and mockadv -> opal-data-49financial; simulate 12 of 12 allowed one resource per call (UpdateFunctionCode and PublishVersion x 3 functions x function and function:*) + separate GetFunctionConfiguration control allowed; pre-state: dist EVTSA9VEHNZVH Deployed ETag ELAAK8OWYOWV1, router v27 x5, guard v6 x5, validator v22 x26, WAF ACL a09833c0 LockToken 848a6d0b 6 rules; files in evidence_f19/ | CLOSED 20261012T135229Z |
 | L2 | verify | step 2 build of 3 artifacts from HEAD; router test 51 pass 0 fail; guard and validator counts; bytes above 127; sha256 each | 3 sha256 lines, counts, non-ASCII counts |  | OPEN |
 | L3 | verify | step 3 pre-flip r4_oai.py on the built tree and step 4 scoped plan JSON read | ROUND 4 OAI PREFLIGHT 3 of 3 arms; plan names exactly 3 functions + distribution + WAF version rider |  | OPEN |
 | L4 | activation | step 4 safe-apply of the saved plan; first and last unit time printed | apply summary rc=0 with start and end times |  | OPEN |
@@ -23,3 +23,4 @@
 ## Log
 
 - 20261012T135119Z OPENED by 0.7.0_AE_CloudOps~FBL with 7 leg(s)
+- 20261012T135229Z LEG L1 closed: 13:44Z-13:51Z: COO+CTO halves SIGNED (CTO ADDENDA 1-5, COO ADDENDA 1,2); flip 69679b90e3 and re-pins e274a0e60c ancestor
