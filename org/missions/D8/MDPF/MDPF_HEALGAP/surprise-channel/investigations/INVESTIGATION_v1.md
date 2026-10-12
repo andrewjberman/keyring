@@ -963,6 +963,28 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "The never-widen halves for round 3 name 2.0.0_SA_COO~G1 on dell1 as the acting seat for each apply (R2 act 1's pattern) and the CTO signed them; the apply step of each half reads 'the targeted plan reads exactly ...' as the only condition at apply time.",
     "world_is": "The wrapper's APPLY-WHO gate holds a rule that a COO does not apply and a CloudOps or Tier-2 seat does; it is in WARN, so four applies landed. Under ENFORCE they would each stop at APPLY-WHO and at CROSSBOX-DEPLOY (an open deploy by another seat naming the same root). No harm is measured: every plan was one rule. What is open is which seat applies a signed half's act, and whether an open deploy by another seat that names the root should hold a targeted one-rule apply. REMEDY (owner 1.0.0_SA_CTO~DELL1): rule which seat applies in the halves that follow (the retirement pair for the 07:00Z rule and HG-t-10), and either seat a CloudOps lane for the apply or have the half name the COO as acting seat with the gate's mode ruled; this seat does not choose.",
     "notes": "Recorded and disclosed, no edit to the gate. The gate lines were in the output of every apply; this seat should have read them at the first apply, not the fourth. UNDER_INVESTIGATION is deliberate: GRADUATED is the CVO's L9 field."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W12-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~12",
+    "surfaced_at": "2026-10-12T13:33:31Z",
+    "one_line": "The LGIC root map still registers cot-satellites-registry-producer-daily as an EVENT_RULE name (system posn, root_map.json line 264). After HG-t-15 no tf resource declares that rule, so the registry row names a rule the tree no longer carries. Recorded only; the registry is outside this cell's grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/root_map.json lines 263-268 at 0d488da900: the row name cot-satellites-registry-producer-daily, type EVENT_RULE, system posn, evidence 'the rule fires that producer. Decided by 4.0.0_SA_CRO 2026-10-07; no row existed.'",
+        "Grep of infra/ in the worktree after the HG-t-15 edit: the name occurs only at infra/logic/registry/root_map.json:264 and as a comment at infra/aws/terraform/cot-pipeline/satellites-characteristics-producer.tf:35 (the anchor block already filed as MDPF_HEALGAP-D1-W11-S1); no aws_cloudwatch_event_rule declares it after the edit",
+        "infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf after the HG-t-15 edit: the daily rule, target and permission are removed; module stamp_gated_rule_name and the stamp-gated resources are unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The LGIC root map row at line 264 records cot-satellites-registry-producer-daily as a decided EVENT_RULE name for the posn system, the rule that fires the registry producer.",
+    "world_is": "The rule is retired by MDPF_HEALGAP.TO-HG-t15 and no tf declares it, but the root map row remains. The registry does not state whether a retired rule keeps its row.",
+    "notes": "Recorded only; no edit to the registry. The CVO decides at L9 whether the row is retired with the rule."
   }
 ]
 ```

@@ -7076,3 +7076,108 @@ by dell1 or by this seat.
   "notes": "Options for the owner, not decided here: a registry row for the dispatcher key; or the sibling-only read, which changes the order's stated fallback. The worker did not choose between them."
 }
 ```
+
+## MDPF_SECCLASS-D1-W86-S7 -- The CVO figures for the Amendment 3 radius (14 of 15 window dates above the served firm total, up to $270,086,670
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W86-S7",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~86",
+  "surfaced_at": "2026-10-12T13:28:04Z",
+  "one_line": "The CVO figures for the Amendment 3 radius (14 of 15 window dates above the served firm total, up to $270,086,670.20) do not reproduce from the build's dry run: 10 dates above, 4 below, largest excess $246,650,838.07 on 2026-09-28.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CVO statement quoted in the order's Amendment 3 (issued 2026-10-12 ~13:1xZ): partition market-value sums above the served firm total on 14 of 15 window days.",
+      "Dry-run capture of C_06 build() at a57c9d1c94 (writers wrapped, nothing written): firm[date].total rebuilt minus served, from the live mix_daily_summary VrrTn2RrESHBImlLOMHQbNP6Fvzi9NZD (MD5 equal to its ETag). Minimum up $5,203.59 on 2026-10-03 and equality on 2026-10-09 reproduce; the 14-of-15 sign pattern and the $270M maximum do not.",
+      "Served firm total equals the sum of the stored relationship JSON total_mv on every window date (to the cent). Scratch: .scratch/analyze.out and analyze2.out in worktree wk-MDPF_SECCLASS-86 (uncommitted)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 3 of TO-SC-e97 (issuer 2.0.0_SA_COO~M1, 2026-10-12): the current partitions' market-value sums sit $5,203.59 to $270,086,670.20 above the served firm total on 14 of the 15 window days, equal only on 2026-10-09.",
+  "world_is": "The dry run reads the rebuilt firm total above the served total on 10 window dates (2026-09-25 to 2026-10-04, $5,203.59 to $246,650,838.07), below it on 4 (2026-10-05 to 2026-10-08, $1.3M to $1.9M), and equal on 2026-10-09. The rebuilt total equals client_performance AUA on all 15 dates.",
+  "notes": "The half request states the measured signs and magnitudes (section Totals and AUA). The source of the CVO figure is not identified here. The order asks for no build change and none is made."
+}
+```
+
+## MDPF_SECCLASS-D1-W86-S8 -- The rebuilt advisor totals on the window days take their attribution from the build's current rel_architect lookup, while the served advisor map carries the attribution of an earlier lookup for the same days: about $55M per advisor-day moves between advisors with no change to the firm total
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W86-S8",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~86",
+  "surfaced_at": "2026-10-12T13:28:04Z",
+  "one_line": "The rebuilt advisor totals on the window days take their attribution from the build's current rel_architect lookup, while the served advisor map carries the attribution of an earlier lookup for the same days: about $55M per advisor-day moves between advisors with no change to the firm total.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C_06.client_mix_timeseries.py:687 (_load_rel_architect_lookup) and the rel_advisor_dict uses at :1091, :1138 and :1249 at a57c9d1c94: each rebuilt advisor day is attributed from the lookup read at build time.",
+      "Control measured in the dry-run session (3,267 lookup relationships, 57 advisors): served advisor totals against the stored JSONs under the same lookup. Worked example in the half request, section Advisors the map drops: Tim Rodgers 2026-09-29 served 65,301,323.27, stored under the current lookup 120,160,715.02, would-be 140,118,264.42."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e97 item 3: a re-derived date's advisor day is replaced whole by the re-derived dollars (C_06 replace_window_snapshot, :483-503 at a57c9d1c94). The re-derive restates dollars; the order does not state that attribution changes on the window days.",
+  "world_is": "Served advisor totals on window days differ from the stored relationship JSONs summed under the lookup the build reads at run time: 825 advisor-day controls, largest gap $54,859,391.75 (2026-09-29, Tim Rodgers; Luke Heiligenthal the opposite sign by $54,842,073.40). Dates before 2026-09-25 keep the older attribution, so the advisor series steps at the window boundary. Advisor key sets are equal (56 and 56) in the served and would-be maps.",
+  "notes": "The same shape exists on the base code for each new date, since the lookup is read at build time. The act extends it to the 15 window days. Not changed by this order (build not in scope). The owner of the lookup dating is not identified here."
+}
+```
+
+## MDPF_SECCLASS-D1-W86-S9 -- The after figures for the period bars and the window days' class dollars exclude the SC-e-91 retained-only pass, which runs after the main write on a window-only fire; the dry run ran that pass against stored state, so its post-act effect is not measured
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W86-S9",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~86",
+  "surfaced_at": "2026-10-12T13:28:04Z",
+  "one_line": "The after figures for the period bars and the window days' class dollars exclude the SC-e-91 retained-only pass, which runs after the main write on a window-only fire; the dry run ran that pass against stored state, so its post-act effect is not measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C_06.client_mix_timeseries.py:1016, :1359, :1362-1363 at a57c9d1c94 (line references read at the commit).",
+      "Dry-run output of the pass (reads, rewrites, holdings moved) and the per-date class-move comparison against the stored summary. Scratch: .scratch/dryrun.log and analyze3.out in worktree wk-MDPF_SECCLASS-86 (uncommitted)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e97 item 3 and SC-e-91: _retained_only_pass keeps running on every date outside the window and is not changed by the order; the amendment asks for the after figures from the build's own dry run.",
+  "world_is": "C_06.client_mix_timeseries.py:1362-1363 runs _retained_only_pass() after the summary write (:1359) on a window-only fire; its _apply_retained_moves(..., set()) at :1016 applies no window-date exclusion. The dry run's pass read 3,793 stored JSONs and reported 796 rewrites and 5,907 holdings moved, against stored state. Its class moves on window dates were 34.8M (09-30), 96.7M (10-02), 88.8M (10-05), 0.6M (10-07). Class-to-class, so totals are unaffected (C_06 _adjust_day :354-358).",
+  "notes": "A measured limit, not a defect found. The post-act state would need a dry run of the pass against the re-derived JSONs; not run by this worker, since the order asks for the main build's dry run and writes nothing."
+}
+```
+
+## MDPF_SECCLASS-D1-W86-S10 -- On 2026-10-09 the D_04 rule gives $883,413
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W86-S10",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~86",
+  "surfaced_at": "2026-10-12T13:28:04Z",
+  "one_line": "On 2026-10-09 the D_04 rule gives $883,413.33 for Unclassified and the stored firm Unclassified key is $883,483.05; they differ by $69.72, inside the $128.58 per-snapshot rounding the Expected outcome names, and the cause is not read per relationship.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "D_04.client_portal_summary.py:440-462 at a57c9d1c94: the served Unclassified is total minus the six canonical classes.",
+      "WINDOW_READ_C06_ROLLING_20261012.json per_date (SC-e-96 record) and UNLISTED_UNCLASSIFIED_20261009_BY_SECURITY_20261012.json comparison block (SC-e-98): the per-relationship sum is 883,483.05; that record's own position_sum_minus_class_sum is 38.88, a different pair."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Half request Expected outcome (from the SC-e-95 record, row MDPF_SECCLASS-D1-W85-S6): the served firm class dollars equal an independent rebuild within the rounding the code carries, up to $128.58 per snapshot; the served Unclassified is D_04's rule.",
+  "world_is": "Would-be firm snapshot on 2026-10-09 (dry run, writes nothing): total 2,015,391,646.72; six canonical classes sum to 2,014,508,233.39 (so the D_04 remainder is 883,413.33); stored key unclassified 883,483.05. Served snapshot: key 1,846,399.46, D_04 remainder 1,846,332.73. The six classes and the key together exceed the firm total by $69.72.",
+  "notes": "Cause inferred, not measured: the six-place rounding of per-relationship class shares. The half request states both figures and does not choose one."
+}
+```
