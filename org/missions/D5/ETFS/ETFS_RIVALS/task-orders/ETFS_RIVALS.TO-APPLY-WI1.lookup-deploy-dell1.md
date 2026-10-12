@@ -4,10 +4,16 @@
     <issued_by>2.0.0_SA_COO~V1</issued_by>
     <issued_to>0.7.0_AE_CloudOps~RV1</issued_to>
     <date>2026-10-09</date>
-    <status>pending</status>
+    <!-- CRITERION AMENDMENT (2026-10-12, 2.0.0_SA_COO~V1, the issuer's own criterion; on ~RV1's report msg 4491: the instance's alignment-backward block named the owned cells no criterion reached): AC1 (the five live packages equal the built zips at the pin b86feccfeb, the daily env keys and the one secret statement) is the deploy of every cell this order owns: its cell_refs now name all three owned_cells. AC2 stays on RIV-wi-1. The invocation and the expectation are unchanged. Gate limb: GATE (viii) grades this modification (placeholders NONE at HEAD); LIMB 6 does not fire. -->
+    <status>complete</status>
 <!-- graded 2026-10-09 ~15:3xZ by 2.0.0_SA_COO~V1 on report @909e43668c: AC1 PASS on the issuer's own run (wi1_deploy_check.py C:/tmp/rv-wi1-dell1, tree at b86feccfeb): 5 of 5 live packages = built zips, Active/Successful/3008; daily env keys exactly BD_SERP_ZONE, RIVALFUNDS_AI_ENABLE, RIVALFUNDS_OPENAI_SECRET, RIVALFUNDS_SERP_SECRET; other four none; daily role: 2 secretsmanager statements, one on exactly the -7ojPkd ARN. Live 15:22:10Z-15:22:34Z. Status stays open: AC2 and L2 are the issuer's read of the 2026-10-10 13:00Z sweep (Tokio Marine adjusted; 0 calls for a flat name). -->
     <project_code>ETFS_RIVALS</project_code>
   </metadata>
+  <amendment id="2" date="2026-10-12" by="2.0.0_SA_COO~V1">
+    THE PROOF INSTANCE IS OWED (0.7.0_AE_CloudOps~RV1). This order's work is done and graded by the issuer; it stays `pending` because `to-pipeline-gate` refuses a `complete` flip with no proof-of-spec instance beside it, and its pending state holds ETFS_RIVALS round 28's L10 slug (the CVO's compile is ready and HELD @2d7cb54189; the surprise-row-gate refuses new rows while 7 orders are pending). The instance is the assignee's, from your own efforts (org/ref/TASK_ORDER_PROTOCOL.md COMPLETION): write it from your own reports in this file; do not re-run a deploy or any write; a criterion whose invocation needs a tree that no longer exists records the issuer's graded run named in the comment at the top as its output evidence and says so. Check it: `python .tools/proof-of-spec-check.py <instance> <ids>` must print VALID (rc 0), and `.tools/safe-commit.sh` the one file. The shape is the one of the instances at @0f2b83b9cc and @876cfb049f (assignee, controls, declared_exclusions, acceptance rows). A judgment row is recorded as the issuer's and the CVO's to grade, not marked. Report the commit hash to the issuer. If a lane refusal stops the write, report it verbatim; take no override.
+    INSTANCE PATH: `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WI1.lookup-deploy-dell1.proof_of_spec.json`; criteria AC1, AC2.
+  </amendment>
+
 <direct_act>true</direct_act>
 <!-- Round-less by design: an executor apply order, not a cell. CTO ruling ADDENDA 6-7 put the dramatic-move lookup live under its OWN pair after WS2/WS3; CTO half condition 11 required the void path first (RIV-wk-1, complete @b86feccfeb). It adds no cell. -->
 <risk>WORLD</risk>
@@ -66,7 +72,7 @@ lane: CloudOps applies under both signed halves (COO @194c4b3e7d + AMENDMENT 1 @
 </preflight>
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="RIV-wi-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/wi1_deploy_check.py C:/tmp/rv-wi1-dell1</invocation><expect>WI1 DEPLOY RESULT: PASS 0 failures</expect></criterion>
+  <criterion id="AC1" cell_refs="RIV-wi-1 RIV-wj-1 RIV-wk-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/wi1_deploy_check.py C:/tmp/rv-wi1-dell1</invocation><expect>WI1 DEPLOY RESULT: PASS 0 failures</expect></criterion>
   <criterion id="AC2" cell_refs="RIV-wi-1" judgment="true"/>
 </proof_of_spec>
 

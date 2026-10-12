@@ -8800,6 +8800,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S12",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~HV1",
+     "surfaced_at": "2026-10-12T16:38:03Z",
+     "one_line": "HVST-bz-2 cannot start: none of its three named tickers (SAP GY, BA US, BABA US Equity) has a status.json, so C-b fails and no in-universe ticker is provable; the only status object in the harvest bucket is NVDA US Equity (LANDED), which neither the order nor its pair names.",
+     "class": "BLOCKING",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-bz-2 step 1 and COO half C-b: 'choose ONE of AMGT-s-1's covered-name test securities SAP GY Equity, BA US Equity, BABA US Equity, and prove membership by READING the object packs/<security_key>/status.json ... it must exist and read a prior terminal state (LANDED). If none of the three has a status object reading LANDED, STOP: do not invent a ticker; file a row naming the three reads.'",
+     "world_is": "Measured 2026-10-12 ~16:4xZ, read-only. Bucket opal-data-harvest (the function's own HARVEST_BUCKET): get-object on packs/SAP_GY_Equity/status.json, packs/BA_US_Equity/status.json and packs/BABA_US_Equity/status.json each returned NoSuchKey. CONTROL: list-objects-v2 prefix packs/ delimiter / returned 105 common prefixes in one page, including packs/SAP_GY_Equity/, packs/BA_US_Equity/, packs/BABA_US_Equity/ (and packs/BA_US/, packs/BABA_US/); head-object on <prefix>status.json for all 105 found exactly one, packs/NVDA_US_Equity/status.json (state LANDED, LastModified 2026-09-11T19:18:56Z, one version, bucket versioning Enabled). So the key grammar is right and the three absences are real: the three names have pack prefixes but never carried a status object. The order's premise ('prior terminal state LANDED') is false for all three. The live CODESHA256 equals by-2's (C-a held); the queue holds 0 messages with 0 event source mappings. NOT measured: why the three have no status object (AMGT-s-1's test may have run through a path that did not write one, or the objects were never written); no invoke was made.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round82/bz2_ticker.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round82/bz2_report.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-bz-2.the-first-internal-enqueue-driven-and-read.md step 1"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```

@@ -80,3 +80,10 @@
 - Edge leg held by FBL on S21 (router 42/9, guard 43/3 at the flip): 12 stale expectations, handlers probed correct; FB-g-37 merged @d0a1f93043 (52/0, 47/0), edge diff since flip = four test files. Laptop dark until ~19-20Z (Andrew travelling): orders 5a5a, 843a queued; ae20 acked 13:42Z.
 - MDPF 13:30Z fire: five gold classes written 13:31:46-51Z (PRD v1.4 check a met; CTO confirms via MDPF_CANON read @6c49fa41d0). bronze_homes.json mark-line only (check d).
 - Armed rows to disposition at L8: W60-S3 (naming gate exempts tests/ not test/), W54-S2. Portal ROUTER_FIRM_SUFFIX (49financial -> bd) follow-up needs Andrew for PROD.
+
+## 2026-10-12 16:35Z tick (B1)
+- ACT 4 LANDED. IRPT leg 14:03:43Z-14:13:46Z (FB1); edge leg 15:12:43Z-15:15:10Z (FBL): router v28 x5, guard v7 x5, validator v23 x26 (my live read of the distribution agrees), split closed 15:15:10Z. Independent grades: r4_act4 irpt 8 of 8 live (ycharts from scratch/r4-act4-ycharts-pin, NeAB50CN); actor expect file equals the issuer file; sample 14/14 EQUAL; maps byte-equal at 15:00/15:23/16:00/16:16Z; FB-f-11 instance VALID, order complete.
+- Edge gates fixed by FB-g-37 (12 stale assertions, test files only; edge diff since flip = 4 test files); validator test (i) ruled stale (796f); portal ROUTER_FIRM_SUFFIX follow-up open (needs Andrew for PROD).
+- Step 7 items: adapter evidence write NOT EXERCISED, canonical read simulated allowed (CTO ADDENDA 8, 9); router behaviors not exercised by live 49financial traffic (r4_routerlogs: 25 lines since 15:15Z, 0 for 49financial); FBL L6 (validator first non-admin ownership read) open on organic traffic.
+- FB-f-9 AC1 repinned to --ref a9f4bac7b5 (20/20); MDPF_SECCLASS 77849c4924 (C_06, D_04) unreleased by its owner, not shipped by us. FB-f-9 stays open until the first scheduled chain after act 4 (Mon 23:00Z fallback or Tue ~04:00Z).
+- NEXT: grade FB-f-19 on its close; read the chain; L8 packet and L10 slug after every order is terminal and every BLOCKING/ARMED row dispositioned (list: W60-S3, W54-S2, S21, D1-S38, D1-S39, S35-S37).
