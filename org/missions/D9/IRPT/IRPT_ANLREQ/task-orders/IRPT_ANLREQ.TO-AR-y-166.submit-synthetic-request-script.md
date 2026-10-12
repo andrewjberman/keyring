@@ -72,6 +72,19 @@ you only build it and prove it offline.
    which); whether the door is reachable by a direct invoke or only through the portal; and anything that makes the request fail
    acceptance (for example a provider resolution the resident must finish) so the next seat knows what it will see.
 
+### AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-12, after reading the script)
+
+The script passes both checks and I read it. ONE gap against the CTO's ruling (msg 6575: synthetic only, no identity minted): the on-behalf
+upload makes the ADVISOR the request's owner, and `resolve_advisor` accepts ANY active cottonwood user whose opaque label matches, so a real
+person could end up owning the test request. Close it, in the same script:
+1. After `resolve_advisor` finds the address, `--run` STOPS before ANY invoke unless that address is on a RESERVED domain: the part after the last
+   at-sign, lower-cased, equal to `example.com`, `example.org` or `example.net`, or ending `.invalid`, `.test` or `.example` (the rule `count_f2.py`
+   used). Print `STOP: the advisor is not a synthetic address. No invoke was made.` and never the address.
+2. `--self-test` gains two arms: a resolved advisor on a real-looking domain (for example `person@firm.com` in the fake users table) stops with zero
+   invokes; a reserved-domain advisor proceeds (the existing happy path). The count of arms changes; the printed token does not.
+3. Add the reserved-domain rule to `SUBMIT_SCRIPT_RECORD.json` (what `--run` reads and when it stops) and say in your report that S13 is closed by it.
+4. Re-run both criteria and re-validate the proof instance; commit as a new commit (do not amend). Nothing else changes.
+
 ### ACCEPTANCE
 
 <criterion id="AR166-y-AC1" cell_refs="AR-y-166"><invocation>python C:/dev/wk-irpt-anlreq-53/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r16/ar16d_checks.py y166-self --root C:/dev/wk-irpt-anlreq-53</invocation><expect>Y166-SELF-OK</expect></criterion>
