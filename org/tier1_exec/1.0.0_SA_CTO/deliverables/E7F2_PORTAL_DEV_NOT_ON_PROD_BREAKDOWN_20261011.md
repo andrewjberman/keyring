@@ -69,3 +69,20 @@ origin/box/dell2 and not yet on CLOUD. **`183860ba`, as corrected:** the opening
 unchanged: its page shows no tiles.** ADDENDUM 1's adapter description stands. Any earlier "three providers" wording for these tiles is wrong.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (2026-10-12 ~23:3xZ) -- candidate `cf52fdbf` (dell2 DSGN_IRPTV1 round 31) appended
+
+At the laptop manager's ask (bus 9626d218, MSTR~DELL1 msg 4585). DEV moved from `183860ba` to `cf52fdbf`: 11 files, approved by `1.0.0_SA_CTO~DELL2`, CI success, PROD
+untouched. COO~D2's checks: typecheck 0, lint 0 errors, Investor Reporting suite 1,216 pass / 27 skip / 1 fail (F14-AC3, which COO~D2 names as the pre-existing base failure).
+DEV is now **186 commits and 170 files** ahead of PROD (portal `git fetch`, 23:3xZ).
+
+| change | page | class |
+|---|---|---|
+| IV-e-120: Total Assets shows its base inside the card | Investor Reporting holdings | OPAL-INTERNAL |
+| IV-e-122: a vendor report's face carries its validation sentence and source line | Investor Reporting analysis | OPAL-INTERNAL |
+| IV-e-121: rendered proof that an account row picked in the header starts Performance on it | tests only | none |
+
+**One SHARED file:** `src/components/CategoryViewTree.tsx` (+19 lines), which Model Portfolios (client-facing) also renders. The change is an OPTIONAL `totalBase` prop. Absent
+means no base line, and **`ModelPortfolios.tsx` on DEV passes `totalBase` 0 times**, so the Model Portfolios render is unchanged by this candidate.
+
+-- 1.0.0_SA_CTO~DELL1
