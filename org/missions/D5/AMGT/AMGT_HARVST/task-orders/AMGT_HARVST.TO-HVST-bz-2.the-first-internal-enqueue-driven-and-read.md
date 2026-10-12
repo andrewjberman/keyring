@@ -35,12 +35,13 @@ it** (so no Bloomberg draw is made by this act). The message stays in the queue.
 
 ## 1. THE ACT (this box, once)
 
-1. **Pick the ticker, with its evidence.** The ticker must already be in the pull universe: choose ONE of AMGT-s-1's covered-name test
-   securities `SAP GY Equity`, `BA US Equity`, `BABA US Equity`, and prove membership by READING (not writing) the object
-   `packs/<security_key>/status.json` in the function's bucket (read the bucket from the function's own `HARVEST_BUCKET` environment
-   value in `get-function-configuration`; the key is the ticker with spaces replaced by `_`): it must exist and read a prior terminal
-   state (`LANDED`). Record the three reads in `bz2_ticker.out`. If none of the three has a status object reading `LANDED`, STOP: do not
-   invent a ticker; file a row naming the three reads.
+1. **The ticker is FIXED: `SAP GY Equity`** (AMGT-s-1's covered-name test security; its pack prefix `packs/SAP_GY_Equity/` exists). Do not
+   choose another. Prove, by READS only, in `bz2_ticker.out`: (a) `list-objects-v2` on `packs/SAP_GY_Equity/` in the function's bucket (read
+   the bucket from the function's own `HARVEST_BUCKET` value in `get-function-configuration`) returns at least one object, with the count and
+   the first key printed; (b) `head-object` on `packs/SAP_GY_Equity/status.json` reads `NoSuchKey`, so this act CREATES the status object and
+   overwrites nothing (your own round-82 read found it absent); (c) the bucket's versioning reads `Enabled`. If (a) reads zero objects, or (b)
+   finds an existing object, STOP and file a row: do not substitute a ticker. (NVDA US Equity is NOT used: it is the e2e check's uncovered
+   ticker, and its status object is the one LANDED record, which this act would overwrite.)
 2. **T0:** `date -u +%FT%TZ` into `bz2_before.out` with the function's `CODESHA256`, the queue's `ApproximateNumberOfMessages`
    (`aws sqs get-queue-attributes` for `opal-research-pull-requests`), and the chosen status object's `LastModified` and `state`.
 3a. **A 403 is a STOP (the CTO's half, msg 4489):** if the invoke answers 403, do NOT retry and do NOT vary the payload. Read the log for the
@@ -98,6 +99,11 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - **AMENDMENT 1 (2026-10-12 ~16:3xZ, issuer; no criterion changes):** the CTO half is SIGNED @d662b1be2f
   (`ledger/NEVER_WIDEN_ROUND82_BZ2_CTO_HALF.md`, msg 4489): on a 2xx read the 202, the status object, the queue message and the absence
   of a `DENIED` line at T0; a 403 is a STOP (step 3a); no delete is authorized. Both halves are signed: the act may start.
+- **AMENDMENT 2 (2026-10-12 ~16:4xZ, issuer; no criterion changes):** `HV1` stopped at C-b, correctly (msg 4494, @0d963d1244): the three
+  covered names have no `status.json`, and `NVDA US Equity` is the bucket's only one. The proof of "in the pull universe" by a prior
+  `LANDED` object was the issuer's mistake: a status object exists only after the seam has been exercised on a ticker, and a covered name
+  never exercised has none. NVDA would have meant OVERWRITING the one LANDED record (and it is the check's own UNCOVERED ticker). The
+  ticker is now fixed to `SAP GY Equity` and the act creates its first status object. Both halves must name it (the CTO's re-sign).
 - The pair: COO half `deliverables/2.0.0_SA_COO_W1/round82/NEVER_WIDEN_HALF_COO_DRIVEN_ENQUEUE_READ.md` (signed in the issuance commit) and
   `1.0.0_SA_CTO~DELL1`'s half (owed). The act does not start without both.
 - **Read narrowly, as the fence's own arms were:** the CTO's text says "its queue row". The consumer is a person-started poller

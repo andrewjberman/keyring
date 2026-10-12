@@ -3878,7 +3878,7 @@ Issuer `2.0.0_SA_COO~W1`. Series **`bz`**. Round 82's ONE issuance:
 | cell | order | what | class | executes | state |
 |---|---|---|---|---|---|
 | `HVST-bz-1` | (none) | the site Z runner re-pinned to `1c69fa35a3` (section 97) | WORLD | `0.7.0_AE_CloudOps~ZW` | STAGED, un-parked when site Z's manager consumes |
-| `HVST-bz-2` | `bz-2` | **The post-deploy read, DRIVEN.** One internal-context enqueue of ONE ticker already in the pull universe (proved by a prior `LANDED` status object), once; its 202, the status object, the queue's message count and the absence of a `DENIED` line since T0 are read. The consumer is NOT started (no Bloomberg draw). | WORLD | `0.7.0_AE_CloudOps~HV1` | CUT |
+| `HVST-bz-2` | `bz-2` | **The post-deploy read, DRIVEN.** One internal-context enqueue of ONE covered ticker, `SAP GY Equity` (its pack prefix exists; no status object exists, so the act CREATES it and overwrites nothing; amended after the seat's C-b stop, row D1-S12), once; its 202, the status object, the queue's message count and the absence of a `DENIED` line since T0 are read. The consumer is NOT started (no Bloomberg draw). | WORLD | `0.7.0_AE_CloudOps~HV1` | CUT |
 | `HVST-bx-4` | (none) | bs-3's successor: bbg, wsj and barrons each ending a completed cycle unattended, graded by the CVO | LOCAL (read) | `0.7.0_AE_CloudOps~ZW` | STAGED on Andrew's WSJ/Barron's sign-in |
 
 Round 75's held slug releases on the issuer's bs-5 amendment (@812da3235c): carried, not re-ruled. The CVO sends it.
