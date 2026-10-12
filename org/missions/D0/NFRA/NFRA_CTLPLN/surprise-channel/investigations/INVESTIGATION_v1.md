@@ -8391,3 +8391,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Said at the point of the apply: the fourth pair conditions all held and the act landed as signed; this row only reports that R3 could not be exercised."
 }
 ```
+
+## NFRA_CTLPLN-S9116 -- ISSUER DISPOSITION of S9115 (closed on PRD v0.27) and W74-S1 (accepted)
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9116",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-12T15:32:51Z",
+  "one_line": "S9115 is closed on the CTO's PRD v0.27 addendum (msg 108605): the Dev clause stays deployed as defence-in-depth, R3 is recorded NOT-RUN, no fifth apply; W74-S1 (the seat-order mission directory is read from git too) is accepted as part of CT-aa-1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO ruling msg 108605: wording back to 'tier internal, as the authorizer derives it'; the Dev clause stays in code; one invariant for every future apply of this function: PRE-1 finds no userType Dev row on a non-internal firm",
+      "issuer's own live read 2026-10-12 ~15:2xZ: CodeSha256 q4iLGld/nR2jOOaL2JJ6frlUSNNEgJnV2I8oyIQ6z/Y= and the three zip members equal the pin 96c4f5f063",
+      "CT-aa-1 merged @ace276aeb1; the worker's _mission_dir move is in the same file and the selftest passes 12 of 12"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-aa-4 pair section 4: R3 reads a Dev login whose token tier is not internal and expects 200.",
+  "world_is": "R3 was not run and cannot be run without minting a token or editing a row: the auth handler derives the token tier from the firm. The clause is unit-proven (963 tests, 402 fail on the pre-edit handler) and live-deployed, and is exercised live only as a no-op.",
+  "notes": "Carry for any later apply of the data proxy: the PRE-1 invariant. The matrix note for the packet: acked=11 at ~15:2xZ because the dell1->sitez pair's newest file (XB-20261012T141128Z-5f49, another project's) opened after the 12 of 12 read."
+}
+```
