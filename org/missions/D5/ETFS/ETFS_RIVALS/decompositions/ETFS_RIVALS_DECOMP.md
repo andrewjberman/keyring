@@ -1329,3 +1329,110 @@ the three WS2 guards and takes no file a live WS2 order owns: `render.py` belong
   deploy. The void CLI is never run against S3 by this cell.
 - Check: `ws3_item8_prep/wk1_void_check.py` (AC1; base FAIL 2 -- arms B and C; arm A, both rows adjusting before any void,
   PASSES at the base and must keep passing).
+
+## ROUND 29 (the round-28 analysis's enrichment list) -- APPENDED 2026-10-12, revision 1.29 of this file
+
+Input: `ledger/ROUND_ANALYSIS.round28.md` (1.0.0_SA_CTO~DELL1, msg 4558); the CVO's slug msg 4557 @995a0646f4; this seat's close
+packet `deliverables/2.0.0_SA_COO~V1/round28/ROUND28_GRADED_READS_PACKET.md` @55a689301c. PRD v0.21 (ADMITTED); no FWD moves.
+
+Cut this round: RIV-xa-1, RIV-xb-1, RIV-xc-1, RIV-xd-1 (section 3 items 1, 2, 4, 5). Not cut, with the reason:
+- item 3 (aw-1's re-read on the next sweep): a READ of the 2026-10-13 13:00Z page, not a cell; a cell only if NOT MET.
+- item 6 (the trading-day gate on the enrichment leg; C-S85's clock advance): STAGED for site Z, un-park 2026-10-14 06:00Z;
+  `enrichment_bloomberg.py` is the vehicle's file and the deploy is site Z's under `1.0.0_SA_CTO~Z`'s half.
+- item 7 (the queue-state READER cell, row D1-S2, and the switch-on): carried by the analysis. Its precondition is now MET
+  (the state address is builder output in `MDPF_DEMQUE/requests/ETFS_RIVALS-HISTORY-OWED-DAILY.json`, the writer DQ-t-16 is
+  complete); it edits the same vehicle file as item 6 and deploys in the same pair, so it is held for that window: asked of
+  the CTO in the issuance report.
+
+Chains (M = 3): A = RIV-xb-1 then RIV-xd-1 (one file, `dramatic_move.py`: a write-set serialization, not a data edge),
+B = RIV-xa-1 (`render.py`), C = RIV-xc-1 (`ai_accounts.py`). Write sets are otherwise disjoint; each cell adds one new test
+file. Checks: `deliverables/2.0.0_SA_COO~V1/round29/checks/`, dry-run at the base before the cut (xa1 FAIL 2, xb1 FAIL 6,
+xc1 FAIL 4, xd1 FAIL 2 with its control PASS).
+
+### `RIV-xa-1` -- the audit page states its calendar's day axis in VISIBLE text (round 28 analysis section 2.1; RIV-wd-1's repeat clause NOT MET) -- APPENDED 2026-10-12, revision 1.29
+- Placement: `ledger/ROUND_ANALYSIS.round28.md` section 2.1 and section 3 item 1 (1.0.0_SA_CTO~DELL1 msg 4558); CVO ADDENDUM 14
+  @9d49b613e9, row D1-C-S15.
+- Measured (the 2026-10-12 `audit.html`, 13 fund sections): BIDD, CGIC and SCHY each carry a trade window ending 2026-10-02
+  (2, 16 and 4 trades) beside a 10-02 calendar cell marked `repeat`. The calendar's day axis (`data-day`, the column header
+  `MM-DD`) is the day a report was EXPECTED; the report's own date is in each cell's hover `title` ("report dated ...") only.
+  The visible text never names it: the legend paragraph (`render.py:2469`) reads "Calendar legend: new / repeat / regressed
+  (older than the previous report) / gap / periodic per day; BBG = Bloomberg, ISS = issuer, HOME = home producer."
+- Interface: in `render._render_audit_body`, the legend paragraph gains, after "HOME = home producer.", ONE space and exactly
+  this sentence (ASCII; the apostrophe is U+0027): `Each calendar column is the day a holdings report was expected; a cell reads repeat when the report received that day is the same holdings window as the previous report. Trade windows are dated by the report's own date, so a window can end on a day this calendar marks repeat.` It stays in the same `<p class="muted">`. The cell markup,
+  the hover titles, the statuses and every other word of the page are unchanged.
+- Out of bounds: `render._calendar`, `gold_holdings_coverage.py`, `publish_page.py`, the page's main document, any status
+  rule (the classification of repeat is not touched).
+- Checks: `round29/checks/xa1_axis_line_check.py` (AC1 and AC2; base FAIL 2). J1 (the CVO's): on the next published audit
+  page the sentence reads beside the calendar for BIDD, CGIC and SCHY.
+
+### `RIV-xb-1` -- the lookup's search retries a vendor 5xx or a transport failure, at most twice with backoff, never a 4xx (round 28 analysis section 2.2) -- APPENDED 2026-10-12, revision 1.29
+- Placement: `ledger/ROUND_ANALYSIS.round28.md` section 2.2 and section 3 item 2 (msg 4558).
+- Measured (2026-10-12, zone `serp_opal`, this seat's `WI1_SCRATCH_WALK_20261012.md`): 5 of 9 Bright Data searches failed (4
+  `VENDOR`: HTTP 200 with `x-brd-status-code` 502, `brd_error_code` `expect_element`; 1 `TRANSPORT`); the same query failed
+  once and succeeded once. `serp.classify_serp_attempt` classes a failure `VENDOR` (5xx or a vendor-error header),
+  `TRANSPORT` (no HTTP status or a connection error) or `CONFIG` (a 4xx). `dramatic_move.serp_search` (about line 341) makes
+  ONE call and raises `RuntimeError("SERP FAILED: <kind>")`; `run_for_day` counts that as `failed` and the candidate waits for
+  the next walk.
+- Interface: `dramatic_move.serp_search(query, *, _call=None, _sleep=None) -> list[dict]`. `_call(query)` defaults to the
+  current body (key lookup, the staged `serp` import, `serp_module.serp_brightdata_records(query, max_pages=1, gl="us",
+  hl="en")` returning its dict); `_sleep` defaults to `time.sleep`. With `_call` given the key lookup and the import are
+  skipped. Policy: a result with `status` `FAILED` and `failure.kind` in (`VENDOR`, `TRANSPORT`) is retried, at most 2
+  retries (3 attempts), sleeping 1.0 then 2.0 seconds between attempts; a `CONFIG` or any other kind is raised at once;
+  the first OK result is returned in the same `[{title, url, snippet}]` shape as today. The final failure raises
+  `RuntimeError` whose message names the class, the attempts and the vendor's own words, in the form
+  `SERP FAILED: <kind> after <n> attempts: <brd_error_code> <brd_error>` (`1 attempt` for a CONFIG).
+- Out of bounds: `serp.py` (the staged vendor client), `lookup`, `detect`, the cap, `write_rows`, `sweep.py`, any key or
+  environment change; no live search.
+- Checks: `round29/checks/xb1_retry_check.py` (AC1; base FAIL 6 -- the call has no `_call`) and the existing lookup tests
+  (AC2: must stay green). J1 is not set: a retry is read in the next sweep's `failed` count when a candidate exists.
+
+### `RIV-xc-1` -- no two funds' Direction Verdict openings share a name-abstracted frame on one page (round 28 analysis section 2.7; the CVO's round-29 item at ADDENDUM 4) -- APPENDED 2026-10-12, revision 1.29
+- Placement: `ledger/ROUND_ANALYSIS.round28.md` section 2.7 and section 3 item 4 (msg 4558); CVO ADDENDUM 4 (row D1-C-S5).
+- Measured (the 2026-10-12 page, `sweep_read.py`): 13 Direction Verdict openings; the CVO's own measure found 6 of 13 sharing a
+  name-abstracted frame ("<name> is the clearest fund-specific tell: ..." is the common one). `ai_accounts.opening_check`
+  (RIV-wg-1) tests one opening alone (a generic period phrase); no code compares openings ACROSS funds. `run_chain` (one fund,
+  two chats and at most one correction per item) is called once per fund by `run_day`, in a loop with no shared state.
+- Interface (`data/etfs/scripts/rivalfunds/ai_accounts.py` only; `PROMPT_VERSION` stays `a1-chain/8`; no prompt text changes):
+  1. `frame_of(text) -> str`: take the first sentence (split as `opening_check` does, at the first sentence-final `.`, `!` or
+     `?` followed by whitespace); tokenise on whitespace; strip any of `,;.!?"'()` from both ends of a token (keep `:`); a
+     token containing a digit is `<n>`; a token that begins with an uppercase letter and is not one of the sentence-initial
+     words `the a an in on over from between these this its it for with as at by` is NAME-like, and a maximal run of NAME-like
+     tokens (a connector token `&`, `-`, `of`, `de` or `and` counts inside a run when a NAME-like token follows it) is ONE
+     `<name>`; consecutive `<n>` collapse to one; lowercase everything else; the frame is the first FIVE resulting tokens
+     joined by single spaces (fewer if fewer). `frame_of("")` is `""`. Examples that must hold: "Alpha Co is the clearest
+     fund-specific tell: it was bought." and "Beta Corp is the clearest fund-specific tell: it was sold." both give
+     `<name> is the clearest fund-specific`; "Alpha Co is the clearest tell: it was bought." gives `<name> is the clearest
+     tell:`; "Alpha Co added $2.7 million over 2026-09-01 to 2026-09-30." gives `<name> added <n> million over`.
+  2. `run_chain(..., seen_frames: dict | None = None)`: when given, a `direction_verdict` item whose `frame_of(text)` is already
+     a key of `seen_frames` (frame -> the fund id that first used it) gets ONE more defect in the item's existing
+     `opening` list, so the chain's existing one-correction path sends it back once and the corrected reply replaces it and is
+     graded as today: `the opening shares its frame "<frame>" with <fund>'s verdict on this page: open with the single finding
+     most particular to this fund, in different words from that opening`. After the final reply, `seen_frames.setdefault(
+     frame_of(final text), fund_id)` (a non-empty frame only). With `seen_frames` None nothing changes.
+  3. `run_day` creates ONE `seen_frames = {}` before its fund loop and passes it to every `run_chain` call (in the universe's
+     order), including the retry attempt.
+- Out of bounds: every prompt constant, `opening_check`, `grounding_check`, `wording_check`, `ai_stage.py`, `sweep.py`, any vendor
+  call (a stub client only), `PROMPT_VERSION`.
+- Checks: `round29/checks/xc1_frame_check.py` (AC1; base FAIL 4) and the existing AI tests (AC2: must stay green). J1 (the
+  CVO's): on the next sweep page no two openings share a frame by the CVO's own measure, or a correction is on the record for
+  each that did.
+
+### `RIV-xd-1` -- a move the lookup finds is adjusted on the page of the SAME day, shown by an offline render of a planted discontinuity (round 28 analysis section 2.8) -- APPENDED 2026-10-12, revision 1.29
+- Placement: `ledger/ROUND_ANALYSIS.round28.md` section 2.8 and section 3 item 5 (msg 4558); CVO ADDENDUM 12 (row D1-C-S13).
+- Measured (this seat, `WI1_SCRATCH_WALK_20261012.md` and the dry-run of the check below): `sweep.run_dag` calls
+  `dramatic_move.run_for_day(day, sink)` with `day` = the page day; `run_for_day` writes the find with `write_rows(s, rows,
+  day)`, so the object lands in `gold/corporate_actions/date=<page day>/`; but the page's charts read the series with
+  `price_series.load(s, keys, lo, asof)` where `asof = gold_holding_contribution.as_of(day)` (the previous trading day), and
+  `_actions` reads only partitions `lo <= date <= asof`. A find on page day D is therefore invisible to page D's chart and
+  appears one trading day late. Measured: the same row read with a window ending 2026-10-07 gives `adjustment == []`, ending
+  2026-10-12 gives the INFERRED split.
+- Interface: `dramatic_move.run_for_day` writes with the partition day `gold_holding_contribution.as_of(day)` instead of
+  `day` (`uri = write_rows(s, rows, <as_of(day)>)`); every other behaviour is unchanged: the candidate window (30 days up to
+  `day`, which includes that partition), the report, the printed line, the idempotence (a second run reads the stored row
+  and searches nothing). Where an existing test pins the partition date of a lookup row, change that assertion to the
+  as-of date and say so in the report.
+- Out of bounds: `price_series.py`, `publish_page.py`, `render.py`, `sweep.py`, `write_rows`'s own signature, `void_rows`,
+  everything the retry cell (RIV-xb-1) changes in `serp_search` (it lands first, on the same file: yours is the one call
+  site); no S3, no live search.
+- Checks: `round29/checks/xd1_planted_render_check.py` (AC1 and AC2; base FAIL 2, its control PASSES at the base and must
+  keep passing). The organic case (no name with a discontinuity) is the negative arm, read when it occurs.

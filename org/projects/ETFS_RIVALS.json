@@ -4,7 +4,7 @@
  "directive": "D5",
  "macro_code": "ETFS",
  "fabric": "dell1",
- "dep_stage": "ROUND_CLOSE",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "Rival funds (rivalfunds): six rival active ETFs' daily holdings collected, coalesced into one canonical shape, each fund's reverse-engineered trade schedule as the foundation, and a daily research page with AI analyses served at /rivalfunds and archived by day",
  "generated_from": "org/missions/D5/ETFS/ETFS_RIVALS/project.json",

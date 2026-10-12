@@ -7208,3 +7208,183 @@ by dell1 or by this seat.
   "world_is": "The first radius said the AUA and cube totals were not measured. The amended radius measures them: the firm total moves on 14 of 15 window dates (up 10, down 4), the AUA holds on all 15, and the rebuilt total equals it; the window-day advisor totals also move (502 of 840 advisor-days, about $55M of attribution between two advisors on 09-29) because the build reads the current rel_architect lookup. The CTO half re-signs or refuses on this radius; the ship waits on both halves and on SC-e-91's leg G."
 }
 ```
+
+## MDPF_SECCLASS-D1-W88-S1 -- criterion 1 bound: the order types 53010.45 beside a rule that reads the maximum from the file
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W88-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~88",
+  "surfaced_at": "2026-10-12T21:03:52Z",
+  "one_line": "Criterion 1 of TO SC-e-99 says the bound is the largest per-date rebuilt Unclassified of the SC-e-96 record, read from the file, and types 0 .. 53010.45 beside it. Over all 15 per_date rows that maximum is 883,483.05 (2026-10-09); 53,010.45 is the maximum over the seven criterion dates 2026-09-30..10-06. The instrument reads the seven-date maximum, the stricter bound.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/WINDOW_READ_C06_ROLLING_20261012.json per_date[].rebuilt_unclassified @93e1116459: 15 rows; maximum 883483.045914095 on 2026-10-09; maximum over 2026-09-30..10-06 is 53010.445702642115 on 2026-09-30",
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e99.legg-read-instruments.md lines 66-68 @93e1116459: 'the bound is the largest per-date rebuilt Unclassified ... read the maximum from that file rather than typing it' next to '0 .. 53010.45'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-99 criterion 1 (lines 66-68): the bound is the largest per-date rebuilt Unclassified of the SC-e-96 record, read from the file rather than typed, and the same clause types 0 .. 53010.45.",
+  "world_is": "The file's maximum over all 15 per_date rows is 883,483.05, on 2026-10-09, outside the criterion's dates. The typed 53,010.45 is the maximum over 2026-09-30..10-06. Applying the 15-date maximum would widen the bound for the criterion's own dates by about $830k, so the instrument uses the seven-date maximum and prints it as bound_max."
+}
+```
+
+## MDPF_SECCLASS-D1-W88-S2 -- criterion 1 lower bound 0 is contradicted by the order's own post-act fixture recipe on 2026-10-06
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W88-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~88",
+  "surfaced_at": "2026-10-12T21:03:52Z",
+  "one_line": "Criterion 1 needs the D_04 remainder of 2026-09-30..10-06 inside 0 .. bound plus $250. The order's positive fixture recipe sets the remainder to the would-be after figure, which is -42.15 on 2026-10-06, so the positive selftest fails on that one item and SC24-e99-AC1 cannot pass as written. The lower bound stays 0; nothing was weakened.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R23_RADIUS/d04_unclassified_by_date.csv row 2026-10-06 @93e1116459: would_be_d04_unclassified -42.15",
+      "data/black_diamond/scripts/gold/D_04.client_portal_summary.py lines 452-460 @93e1116459: _firm_top_level_mix writes the Unclassified line as total minus the covered classes with no clamp, so a negative remainder is a real output of the rule",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/WINDOW_READ_C06_ROLLING_20261012.json per_date 2026-10-06 rebuilt_unclassified 0.0 @93e1116459 (the stored key is clamped, the remainder is not)",
+      "measured on this worker's branch: r24_legg_read.py selftest prints 'R24-FIX e97 positive ... ok=False failing=[unclassified_window]'; the crit detail names 2026-10-06 as the only item outside [0, hi]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-99 criterion 1 (lines 66-68): the D_04 remainder lies in 0 .. bound plus $250 on each of 2026-09-30..10-06. The selftest paragraph (lines 86-89): a post-act fixture with the remainder set to d04_unclassified_by_date.csv's after figure must grade ok=True for e97.",
+  "world_is": "The after figure for 2026-10-06 is -42.15: on the would-be snapshot the six canonical classes exceed the firm total by 42.15, and D_04 does not clamp the Unclassified line. The lower bound 0 and the after figure cannot both hold, so the positive fixture cannot grade ok=True as written. The criterion needs the Coordinator's ruling on the lower bound; the instrument keeps 0.",
+  "notes": "Cause of the negative remainder not read per relationship; the would-be snapshot is the C_06 dry run the request cites."
+}
+```
+
+## MDPF_SECCLASS-D1-W88-S3 -- criterion 2 is not met by the would-be snapshot's own stored Unclassified key on 2026-10-03..05
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W88-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~88",
+  "surfaced_at": "2026-10-12T21:03:52Z",
+  "one_line": "Criterion 2 (stored unclassified key within $1.00 of the D_04 remainder on 2026-10-03..05) fails on the would-be snapshot's own figures: the stored key differs from the would-be remainder by 162.29, 3.94 and 166.72. The positive fixture sets the key equal to the remainder because the order's recipe names no stored key, so criterion 2 passes only on that constructed value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/WINDOW_READ_C06_ROLLING_20261012.json per_date rebuilt_unclassified @93e1116459: 2026-10-03 1927.10, 2026-10-04 1929.87, 2026-10-05 0.00",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R23_RADIUS/d04_unclassified_by_date.csv @93e1116459: would_be_d04_unclassified 2026-10-03 2089.39, 2026-10-04 1925.93, 2026-10-05 166.72",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_C06_ROLLING_REDERIVE_20261012.md line 150 @93e1116459: the stored key and the D_04 rule differ on 2026-10-09 by $69.72, the same class of gap (row MDPF_SECCLASS-D1-W86-S10)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-99 criterion 2 (lines 69-70): the absolute difference between the stored unclassified key and the D_04 remainder is under $1.00 on 2026-10-03, 10-04 and 10-05. The fixture recipe (lines 86-89) sets the remainder and names no stored key.",
+  "world_is": "On the would-be snapshot the stored key and the D_04 remainder are 162.29, 3.94 and 166.72 apart on those three dates, so a served state in which the key equals the would-be key fails criterion 2 at the $1.00 bar. The instrument grades what the served key says; this row records that the criterion and the would-be state disagree."
+}
+```
+
+## MDPF_SECCLASS-D1-W88-S4 -- bars.json carries the Unclassified class only; the other five classes' after figures are in the request table
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W88-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~88",
+  "surfaced_at": "2026-10-12T21:03:52Z",
+  "one_line": "TO SC-e-99 says bars.json carries total and class dollars before and after. It carries the bar total and the Unclassified class only. Criterion 4 grades the other five classes against the after figures in the request's Period bars table (committed), cross-checks Unclassified against bars.json (agrees), and does not grade the 'other' class, which neither committed table carries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R23_RADIUS/bars.json @93e1116459: bar_rows, 5 rows of 7 columns (granularity, label, end, total before, total after, unclassified before, unclassified after)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_C06_ROLLING_REDERIVE_20261012.md lines 270-310 @93e1116459: Period bars table with equity, fixed_income, alternatives, commodities, structured, cash and unclassified before and after for the five bars"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-99 inputs (lines 36-39) and criterion 4 (lines 74-76): bars.json holds the four bars and the annual bar with total and class dollars before and after, and each class dollar is within $250 of the bars.json after figure.",
+  "world_is": "bars.json holds totals and the Unclassified class only. The per-class after figures for the other five classes exist only in the request's Period bars table. The table's Unclassified figures agree with bars.json to the cent, so the graded after figures are the committed ones; 'other' is in neither and is not graded."
+}
+```
+
+## MDPF_SECCLASS-D1-W88-S5 -- the second-fire idempotence prefix holds 18,230 keys, not the 3,793 relationship JSONs, and other writers are active under it
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W88-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~88",
+  "surfaced_at": "2026-10-12T21:03:52Z",
+  "one_line": "The e91 --since line lists gold/entities/clients/ and finds 18,230 keys: 10,929 flat .json objects and 7,301 nested objects such as {id}/detail.json and aua_timeseries.json. The request names 3,793 relationship JSONs, a subset. 10,140 keys carry a LastModified at or after 2026-10-12T05:00:00Z while mix_daily_summary.json is unchanged, so the expected 0 keys for a second fire is not measured over the relationship JSONs alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_C06_ROLLING_REDERIVE_20261012.md line 156 @93e1116459: 3,793 relationship JSONs",
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e99.legg-read-instruments.md lines 58-60 @93e1116459: list-objects-v2 over gold/entities/clients/ and the second-fire expectation of 0 keys",
+      "measured on this worker's branch at 2026-10-12T20:5xZ: e91 --since 2026-10-12T05:00:00Z printed 'E91-LEGG-B keys_modified_since=10140 of 18230 pages=19 mds_unchanged_since=True'; key shapes counted from the same listing: flat json 10929, nested json 7301"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-99 e91 --since (lines 58-60): list-objects-v2 over gold/entities/clients/, paginated, counting keys at or after T; the second fire's expected value is 0 keys and True.",
+  "world_is": "The live prefix holds 18,230 keys across 19 pages, not the relationship JSONs alone. Since 05:00Z on 2026-10-12, 10,140 of them were written while the mix daily summary stayed at its 2026-10-11 version. Which producer wrote them is not read here. The 0-key expectation needs a narrower prefix or a named producer scope."
+}
+```
+
+## MDPF_SECCLASS-D1-W88-S6 -- the leg-G reach bound for 2026-10-09 is below the request's would-be move on that date
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W88-S6",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~88",
+  "surfaced_at": "2026-10-12T21:03:52Z",
+  "one_line": "The baseline reach bound for 2026-10-09 is 653,857.12. The request's would-be Unclassified move on 2026-10-09 is -962,919.40, a fall above the bound. The request says its after figures exclude the post-act SC-e-91 retained-only pass, so the two figures are not the same quantity by the request's own text. The leg-G in_range read is not compared to the request's move without that distinction.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/LEGG_E91_PREFIRE_BASELINE_20261012.json reach_bounds_usd 2026-10-09 653857.12 and 2026-10-08 629530.89 @93e1116459",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_C06_ROLLING_REDERIVE_20261012.md line 296 @93e1116459: 2026-10-09 served Unclassified 1,846,332.73 to would-be 883,413.33, move -962,919.40; line 312: the after figures exclude the post-act SC-e-91 retained-only pass"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-99 e91 reach (lines 48-50): 0 <= fall <= reach_bounds_usd[date], with the bounds read from the baseline.",
+  "world_is": "The committed reach bound for 2026-10-09 is below the request's would-be fall on the same remainder. The request measures the rolling re-derive, not the SC-e-91 fire alone, so whether leg G's fall on that date fits the bound is not decided by the committed records."
+}
+```
+
+## MDPF_SECCLASS-D1-W88-S7 -- the $50 w86 negative control cannot fail the amended $250 tolerance; the negative is set at tolerance plus $1
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W88-S7",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~88",
+  "surfaced_at": "2026-10-12T21:10:35Z",
+  "one_line": "TO SC-e-99's selftest names a W86-S5 negative control with a $50 key gap. AMENDMENT 1 sets criterion 2's tolerance at $250, so a $50 gap passes and cannot be the negative. The instrument's negative is a gap of the tolerance plus $1 ($251) on 2026-10-04, the same boundary construction as the e91 in_range negative.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e99.legg-read-instruments.md lines 86-94 @6ccde25a34: the selftest paragraph names 'a W86-S5 gap of $50 (w86_s5)' as a negative",
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e99.legg-read-instruments.md lines 120-122 @6ccde25a34: AMENDMENT 1 item 2, the tolerance is $250, 'criterion is |stored unclassified key - D_04 remainder| < 250'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-99 selftest paragraph: each negative control must grade ok=False on exactly its own criterion, and one of them is a W86-S5 gap of $50. AMENDMENT 1 item 2 sets the w86_s5 tolerance at $250.",
+  "world_is": "A $50 gap is inside the amended tolerance, so the named negative cannot fail criterion 2 and the strict check cannot pass for it. The amendment does not state a magnitude for this negative; the instrument uses tolerance plus $1 and prints it in the selftest as 'key gap = tolerance $250 + $1 on 10-04'."
+}
+```
