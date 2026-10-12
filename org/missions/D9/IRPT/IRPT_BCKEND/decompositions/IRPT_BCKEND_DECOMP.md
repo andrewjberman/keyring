@@ -3394,3 +3394,16 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r163/p163_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-469` | per section code (S01, S03, S18, S14, S15, S16) where the column's label is in the source and whether it is dropped or never read; one stored report's section ids counted by code, slug and column against the 36 the rule predicts for S18; every consumer of the section id's shape | FWD-5 (a finished report read by what each value is) | LOCAL | none | P163-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~324. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 156. ROUND 164, WORKSTREAM ~P (2026-10-12 ~03:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 6414 and 6420)
+
+PRD v0.48 (contract C-CHAINCLAIM) is signed. One read before its cell: the closed status set with counts, and whether a
+NON-POSITIVE-BASE day belongs to an account that held positions the day before. No cell before the table reaches the CTO.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r164/p164_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-470` | the status tokens the gold's producer can write, with each count over the served gold; per firm entry and window the NON-POSITIVE-BASE days by what the account held the prior day; the order of assignment against ALL-HOLDINGS-EXCLUDED; the accounts whose claim moves under the contract as written and under the other reading | FWD-3 (a return on that account's own end-of-day holdings) | LOCAL | IB-pr-467 drained | P164-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~325. DIRECT-ACT (one read-only cell, LOCAL).
