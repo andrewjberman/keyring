@@ -8446,3 +8446,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Fix shape for the cell: (1) Stop-ProcessTree stops at a descendant claude.exe whose command line carries a different serial, prints it and the kill log names it; (2) the launcher's non-wt path spawns detached so a seat is never another seat's child. The five ended COOs respawn from files on Oct 17 or Andrew's word (fc10 unchanged); nothing of theirs waits on a file edit. Not a cell this round: the round-11 decomp is frozen."
 }
 ```
+
+## NFRA_CTLPLN-S9118 -- S9117 widens: kill-maint.ps1 (the /govern reaper) kills whole trees with taskkill /T, the same seat-boundary gap
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9118",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-12T17:20:28Z",
+  "one_line": "S9117 widens: .tools/kill-maint.ps1 (the /govern reaper every manager runs -Unattended each cycle) stops each target's WHOLE TREE with taskkill /T /F (:722, by design for wrappers), the same seat-boundary gap as kill-agent.ps1; interim rule adopted on dell1, dell2 and the laptop, site Z pending (MSTR msg 108628).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR msg 108628: dell1's reaper ran 113 times (108 with 0 targets, 5 with 1 target and 1 kill); every laptop run today read 0 targets; dell1's kill-agent ran once (10-11 02:23Z, before the rule)",
+      ".tools/kill-maint.ps1:696-697 (whole-tree by design: Stop-Process on one PID orphaned typeperf + awk on the laptop 2026-10-08) and :722 `taskkill.exe /T /F /PID`",
+      "S9117 @9ffd2daac5: the same tree walk in kill-agent.ps1 ended five parked dell2 COOs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR (interim, in force: kill-maint runs dry first each cycle; -Execute/-Unattended only when no target's tree holds a claude.exe carrying another serial); 2.0.0_SA_COO~C (permanent: the S9117 round-12 cell covers both tools)",
+  "spec_asserts": "NFRA_CTLPLN C-SEATS: a reaper or kill ends the seat or wrapper it targets and nothing seated under another serial.",
+  "world_is": "Two tools kill whole trees with no seat boundary: kill-agent.ps1 (Stop-ProcessTree) and kill-maint.ps1 (taskkill /T). A seat spawned under another seat's tree is reachable by either. Zero kill-maint losses measured so far; one kill-agent loss (S9117).",
+  "notes": "Fix shape for the one cell: a shared seat-boundary check (walk the tree, refuse the kill and print the serial found when a descendant claude.exe carries a serial other than the target's) used by both tools; the wrapper rationale of :696 stands for native children, which carry no serial. The laptop-dark window saw no reaper target, so nothing here aged."
+}
+```
