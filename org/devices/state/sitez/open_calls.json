@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-11T05:26:26Z",
+ "written_at": "2026-10-11T22:47:36Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1558,6 +1558,50 @@
     "ruled_by": "cto",
     "xadj": null
    }
+  },
+  {
+   "id": "sitez-20261011T224736Z-1b36",
+   "project": "NFRA_OPLGTW",
+   "subject": "Admit the 2 unprofiled callers of blackdiamond_list_fees (one master_admin; 5 calls 10-01..10-08) by profile and grant, so client-firm fee data can be denied to unprofiled principals?",
+   "asked_by": "2.0.0_SA_COO~O",
+   "source": "org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/remediations/REMEDIATION_v17.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-11T22:47:36Z",
+   "kind": "fork",
+   "context": "The BD fee tool serves 49financial fee data and is open to any principal with no profile, unlike every Schwab tool (row W45-S2, CTO ruling @135719d313). OG-bd-1's caller census found 2 live unprofiled callers, so the deny was correctly NOT shipped (row Z-W57-S2, ARMED). Admission is Andrew's act (C8).",
+   "rec": "Yes: admit both by profile with an active grant naming the tool, read both back, then ship the deny. Client data then needs a grant, the same as Schwab; both callers keep their access, and an unknown principal no longer reaches it.",
+   "scope": {
+    "measured_at": "2026-10-11T22:47:36Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_FIRMBKTS placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_DEMQUE placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of MDPF_STRATID placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/halt-gate-check.sh is on the shared branch (.tools)",
+      ".tools/halt-gate-worker-order-test.sh is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null
   }
  ]
 }
