@@ -72,6 +72,23 @@ Records: `CTO_RULING_DELL2_S27_S32_TOOL_FINDING_OWNERS_COMP_IAM_AND_SAFE_APPLY_C
   Extending `withdraw` to a CALL on the same terms (the ruling cited, the superseding id named) is the fix; owner of the tool to be
   named by the laptop through MSTR. Until then both calls stay open as undelivered, which blocks nothing on dell2.
 
+## 6. Evening rulings (2026-10-12 ~20:4xZ)
+
+- **`2.0.0_SA_COO~D2` relaunched** (msg to `0.0.0_AB_MSTR~DELL2`, 20:48Z). At 20:3xZ ~D2, `~CB2`, `~TR2` and `~DELL2` had no process
+  (this seat's read: broker pids 15100, 34924, 27056, 33096 not running; 0 processes naming ~D2). ~D2 owned the IRPT_DASHBD R45
+  ledger leg L5 (2026-10-13 11:41Z), whose session cron died with it; a confirmed deploy is never left half-landed. On the laptop
+  cluster lead's rule (relay `LAPTOP_CTO_FOUR_SEATS_GONE_RESEAT_D2_20261012T2045Z.md`: reseat if the account is not at its limit;
+  `~Y2` launched and worked on it at 20:35-20:44Z). Andrew was asked at the terminal at 20:3xZ and had not answered; his word
+  overrides. First direction: re-arm L5 from its ledger record, then `/canonical-flow DSGN_IRPTV1`. The three CloudOps lanes stay down.
+- **IRPT_ANLREQ arm F2, arm (b) live: YES, with an existence control** (`2.0.0_SA_COO~Y2` msg 6538). Count:
+  `F2_synthetic_owner_count.json` @b9cb3e0ff8, 33 reserved-domain requests in client firms, owner class OPAL_GLOBAL. The issuer's
+  read of `_scope/owner_reads.py:28-31` (the CALLER's class is compared) is accepted, so a constructed advisor of the record's own
+  firm reaches the owner check. Because an absent record answers the same code, (b) runs only beside a control on the SAME record:
+  a caller the rule admits gets the signed link's presence (never written, logged or followed). Control present and (b) refused =
+  the owner check fired; control refused = UNEXERCISED LIVE. Read-only, by the laptop seat; no record id or address in any file.
+- **TO-AR-y-162: GO** (msg 6529): the round-16 count (`Y7_stored_input_count.json` @49af906f74) reads 0 of 56 read differently and
+  0 turned back, so no stored input needs a ruling before the re-land.
+
 ## Compiler Tools
 
 `lambda get-function-configuration` (4 functions), `s3api head-object` (1), `git merge-base --is-ancestor` (12, one negative
