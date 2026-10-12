@@ -3864,3 +3864,27 @@ round 82 (msg 4476), which carries his by-3 half unchanged while the pin stays `
 
 **Disposition of row D1-W135-S2 (ARMED, disarm owner this seat):** CARRIED to `HVST-bz-1`, owner `~ZW`.
 **Fan-out when cut:** 1 of 1 chain, cap 8. It is cut the turn the un-park condition reads true, by a crossbox ORDER through MSTR, as by-3 was.
+
+## 98. ROUND 82 -- the driven post-deploy read; the re-pin and bs-3's successor stay staged (`1.0.0_SA_CTO~DELL1` msg 4486, `ledger/ROUND_ANALYSIS.round81.md` section 2), 2026-10-12 ~16:4xZ
+
+Round 81 slugged MAY-CLOSE (CVO msg 4485, ADJUDICATION_v73 @40d147647f) and the CTO graded rounds 80 and 81: the fence HOLDS (live hash
+equals by-2's, handler byte-equal to HEAD, arms 403/403/400); the refusal log line HOLDS (D1-S8 closed); DEVADMIT was cancelled and rolled
+back (D1-S9 NOT EXPOSED); bx-3 is merged and NOT SERVED at site Z (the runner still runs b5a7a3a4b6; W135-S2 stays ARMED). OWED, not passed:
+his bx-2 post-act read. His process note for the issuer: a deploy that rests on a cross-box ruling still being applied at the other box
+waits for that box's apply receipt (discipline, not a gate); by-5 deployed 50 minutes before the withdrawal.
+
+Issuer `2.0.0_SA_COO~W1`. Series **`bz`**. Round 82's ONE issuance:
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-bz-1` | (none) | the site Z runner re-pinned to `1c69fa35a3` (section 97) | WORLD | `0.7.0_AE_CloudOps~ZW` | STAGED, un-parked when site Z's manager consumes |
+| `HVST-bz-2` | `bz-2` | **The post-deploy read, DRIVEN.** One internal-context enqueue of ONE ticker already in the pull universe (proved by a prior `LANDED` status object), once; its 202, the status object, the queue's message count and the absence of a `DENIED` line since T0 are read. The consumer is NOT started (no Bloomberg draw). | WORLD | `0.7.0_AE_CloudOps~HV1` | CUT |
+| `HVST-bx-4` | (none) | bs-3's successor: bbg, wsj and barrons each ending a completed cycle unattended, graded by the CVO | LOCAL (read) | `0.7.0_AE_CloudOps~ZW` | STAGED on Andrew's WSJ/Barron's sign-in |
+
+Round 75's held slug releases on the issuer's bs-5 amendment (@812da3235c): carried, not re-ruled. The CVO sends it.
+
+- **Fan-out:** 1 of 1 chain (bz-2), cap 8.
+- **Not orders:** a restart of site Z's manager session (Andrew only if no manager can); the WSJ/Barron's sign-in (Andrew).
+
+**Checks dry-run at the base before the cut:**
+- `bz-2` AC1, AC2 and AC3 base: FAIL as expected (the `.out` files do not exist).
