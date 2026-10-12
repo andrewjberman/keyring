@@ -262,3 +262,244 @@ adjudication rows live in `../adjudications/` as `NFRA_OPSWKF-C-S<k>`.
   "notes": "Disarm: the issuer does not cut the release pair (OW-s-d-1) and does not merge wk-NFRA_OPSWKF-8 until 1.0.0_SA_CTO~DELL2 rules what 'internal' is for FWD-8; the ENDPOINT's wording is the CTO's. The issuer's recommendation: tier internal OR firmId exactly opal-capital, as the owner's ruling line 27 and data_refresh already have it, with the probe gaining an arm for an advisor-tier opal-capital caller (served) and an advisor-tier caller of another firm (refused). Found while building the pair's caller census, not by the order's checks: both of the order's checks pass on the branch."
 }
 ```
+
+## NFRA_OPSWKF-D2-S7 -- data-refresh admits a test-filer whose firmId is opal-capital: the release pair's expected refusal was the issuer's error
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S7",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~O2",
+  "surfaced_at": "2026-10-11T19:46:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The FWD-8 release pair expected data-refresh to REFUSE a userType test-filer caller; the deployed service ADMITTED synthetic caller IN-F (firmId opal-capital, tier advisor, userType test-filer) on GET /api/scoped/data-refresh/history. The code at HEAD says it should: data_refresh admits Dev OR any Opal-internal principal, and firmId opal-capital is Opal-internal. The expectation was the issuer's error, copied from an older pair without re-reading.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20261011T1909Z_opswkf-fwd8-trade-dashboard-api-20261011_deploy_completion.md leg L6 (0.7.0_AE_CloudOps~DELL2, closed 19:44:10Z): 7(f) IN-F on GET /api/scoped/data-refresh/history?limit=1 answered HTTP 200 from the API (apigw-requestid present, application/json, top-level key executions); field names only were recorded",
+      "infra/aws/lambda/data_refresh/lambda_function.py:209-216 @HEAD: userType Dev admits; otherwise is_opal_internal(context) admits; :142-165: is_opal_internal is tier internal OR firmId exactly opal-capital. userType test-filer is neither refused nor read past that point",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R1_RUN/TV_R1_SEAT_ARM_PLAN_AND_PAIR.md:110-116: the premise this pair copied (data_refresh lambda_function.py:165-167 admits only an empty userType or Dev) describes bytes that the file at HEAD no longer carries",
+      "the same ledger leg L2: both tokens carry ONE absolute exp, 2026-10-11T19:56:21Z, held in the executor's memory only"
+    ]
+  },
+  "spec_asserts": "Release pair OW_S_D1_RELEASE_PAIR_20261011.md section 4 and CTO half condition (the data-refresh read by IN-F): expect refused; an admit is a STOP and cleanup.",
+  "world_is": "Admitted, by the function's own rule. This is not a defect of the FWD-8 release (trade-dashboard-api does not serve the route; R0, R1, R3, R4 and the bytes all read as expected) and not a new opening in data-refresh: an opal-capital principal is who that service is for. What it does change: (1) a synthetic test identity given firmId opal-capital is NOT kept out of data-refresh by a userType, so any pair that mints one must count the data-refresh routes in its blast radius; this run's IN-F had that reach from mint (19:2xZ) to exp 19:56:21Z and used it once, a GET with limit=1; (2) TCKT_VNEXT's synthetic filer carries firmId opal-capital and the same userType, and its pair rests on the same premise. NOT read by this seat: whether the data-refresh write routes (trigger, rollback, upload) pass through the same validate_user_type; the deployed bytes of data-refresh.",
+  "notes": "Ruled by the issuer for its own decomposition (msg to 0.7.0_AE_CloudOps~DELL2 answering 5693): K1 stays in place, the applier records the deploy and runs the cleanup as written, no further call with either token. Routed in the round's slug to 1.0.0_SA_CTO~DELL2, whose half carried the expectation and who holds TCKT_VNEXT's halves; nothing is asked of TCKT_VNEXT's seats by this row."
+}
+```
+
+## NFRA_OPSWKF-D2-S8 -- FWD-9 refuses the non-Opal filer FWD-1's ACCEPT admits; ruled by the owner, to be met by an addendum when advisor reach is built
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S8",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~O2",
+  "surfaced_at": "2026-10-11T20:52:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "FWD-9 (the submit route answers Opal staff only) refuses a filer that FWD-1's ACCEPT says may file: an advisor of a partner firm filing a trade request in the Ticket Center, whose submission the bridge carries to that route. Nothing live breaks today; the two outcomes disagree when advisor reach is built.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPSWKF/prd/NFRA_OPSWKF_PRD.md @cfc5091071: FWD-1 ACCEPT 'an advisor files a trade request in the Ticket Center'; FWD-9 DONE WHEN 'refuses a verified caller who is not OPAL-INTERNAL'",
+      "infra/aws/lambda/trade-pipeline/trade-submission-handler/src/submission_handler.py @234c3b4b10: _require_internal is called before the body is parsed, so a ticket-bound submission by a non-Opal filer is refused before the ticket check runs",
+      "org/missions/D9/NFRA/NFRA_OPSWKF/decompositions/NFRA_OPSWKF_DECOMP.md round 1 Rule 24 remainder: the Ticket Center is internal-only today, so no non-Opal filer reaches the route",
+      "org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/1.0.0_SA_CTO~DELL2/CTO_HALF_OW_SD2_FWD9_RELEASE_20261011.md @1ca1f1ea52, last section: RULED -- FWD-9 stands; when advisor reach is built, a ticket-bound submission by a firm's own advisor gets its own admission rule by addendum, and this check is not loosened"
+    ]
+  },
+  "spec_asserts": "FWD-1 ACCEPT and FWD-9 DONE WHEN both hold.",
+  "world_is": "They hold together only while every filer is Opal staff. The owner has ruled which gives way and how; the row exists so the enrichment item that builds advisor reach finds the ruling.",
+  "notes": "Owner: 1.0.0_SA_CTO~DELL2 (its ruling, msg 5817). Filed by the issuer at the owner's direction; not a defect of the FWD-9 release and it holds nothing."
+}
+```
+
+## NFRA_OPSWKF-D2-S9 -- Row D2-S6 DISARMED: the wider rule was ruled, built before the merge, and read live
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S9",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~O2",
+  "surfaced_at": "2026-10-11T21:54:53Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Nothing remains to investigate: row D2-S6's hazard (a tier-only release locking out 7 of the 9 trade users) was disarmed before any release, by its disarm owner.",
+  "one_line": "Resolves row NFRA_OPSWKF-D2-S6: PRD v0.6 @ca5f93a729 ruled OPAL-INTERNAL as tier internal OR firmId opal-capital; OW-s-2 was rebuilt on it before its merge (@abf78fcb7f); the release read an advisor-tier opal-capital caller SERVED on the deployed service (R3, 19:35:56Z, 200 count 12).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 5574: ruled as the issuer recommended; PRD v0.6 @ca5f93a729, ratified-text half SIGNED @d4d5a850cf",
+      "order amendment @7baffab6a0; merged build @abf78fcb7f: OW-S2-PROBE-OK refused=80 of 80, served=30 of 30 (three insider shapes) on the merged tree",
+      "org/critical_paths/change_management/20261011T1909Z_opswkf-fwd8-trade-dashboard-api-20261011_deploy_completion.md leg L6: R3 IN-F (tier advisor, firmId opal-capital) 200 count 12 after the apply; ledger CLOSED 20:01:09Z",
+      "the tier-only build c02c0aa8e7 was never merged and never released"
+    ]
+  },
+  "spec_asserts": "FWD-8 serves Opal staff as before and refuses everyone else.",
+  "world_is": "It does, for the firmId branch, read live. The tier branch is proven at the pin and UNEXERCISED on the deployed service (the CTO half refused the tier-internal synthetic caller); that gap is stated in the issuer's grade and is not this row's hazard.",
+  "notes": "Resolving row written by the issuer, the disarm owner; append-only, S6 left as written."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S10",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T21:59:53Z",
+  "one_line": "L9 workstream S: OW-sd1-AC2 MET, OW-sr1-AC1 MET, OW-sd2-AC2 MET, OW-sr2-AC1 MET for the refusal. FWD-8 is REALIZED. FWD-9 is realized for the refusal, and one read of its DONE WHEN is owed: after the release, an Opal-internal caller answered 400. It was never made, so a staff member being admitted to submit rests on tests and bytes, not on a read of the route. This seat repeated the member-by-member diff from both live functions: 3 of 3 byte-equal to the tree at each release pin.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/2.0.0_SA_COO~O2/S_DEPLOY/WORKSTREAM_S_L8_PACKET_AND_FWD9_GRADE_20261011.md @4daa06ebad (msg 5930)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPSWKF_WORKSTREAM_S_L9_GRADE_20261011.md",
+      "this seat's live read 2026-10-11T21:59:53Z: both function packages downloaded and read in memory. trade-dashboard-api: last modified 2026-10-11T19:30:58, active, the downloaded zip's sha256 equals the function's code hash, 3 members, each byte-equal to its file in the tree at pin abf78fcb7f, 1 environment key. trade-submission-handler: last modified 2026-10-11T21:27:29, active, zip hash equal, 3 members, each byte-equal to its file at pin 234c3b4b10, 4 environment keys; the deployed handler holds the new refusal's message once. No call was made to either service by this seat"
+    ]
+  },
+  "spec_asserts": "PRD v0.8 FWD-9 DONE WHEN: on the deployed service the outside caller reads 400 before and 403 after with the new check's own message; and after, an Opal-internal caller with an email is answered 400; no submission row and no mail from any of the three reads. PRD v0.6 FWD-8 DONE WHEN: both arms on the deployed service.",
+  "world_is": "Two of FWD-9's three reads were made. The mail side was not read. The CTO's rule stands in place of the third read: a staff 403 is an immediate rollback to a named version. No call was made to either service by this seat.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_OPSWKF-D2-S11 -- a second live API (trade-submission-api) reaches the dashboard, submit and workflow functions under its own authorizer; FWD-8 and FWD-9 were proven on the portal door only
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S11",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~O2",
+  "surfaced_at": "2026-10-11T22:13:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A second HTTP API, trade-submission-api (w8jnzvs21g), is LIVE with its own public endpoint and 7 routes that reach trade-dashboard-api, trade-submission-handler and trade-workflow-handler under its own authorizer (function trade-authorizer), plus POST /auth with no authorization. FWD-8 and FWD-9 were specified, built and proven against the portal API only; what this door's callers get from the two changed functions depends on a context this seat has not read.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-policy on trade-submission-handler and on trade-dashboard-api (2026-10-11 ~22:1xZ, cloudops-dell2-agent-user): 3 of 3 statements each, all principal apigateway.amazonaws.com; one statement on each, Sid apigateway-w8jnzvs21g, admits source ARN arn:aws:execute-api:us-east-1:313476888478:w8jnzvs21g/*/*",
+      "aws apigatewayv2 get-api w8jnzvs21g: Name trade-submission-api, ProtocolType HTTP, ApiEndpoint https://w8jnzvs21g.execute-api.us-east-1.amazonaws.com, CreatedDate 2026-01-06; get-stages: prod, AutoDeploy true",
+      "aws apigatewayv2 get-routes w8jnzvs21g: 7 routes, no NextToken: GET /submissions, GET /submissions/{proxy+}, GET /submissions/{submission_id}/excel, GET /users, POST /submit, POST /workflow, each AuthorizationType CUSTOM authorizer nfa51m; POST /auth AuthorizationType NONE. get-integrations: the four GETs reach trade-dashboard-api, POST /submit reaches trade-submission-handler, POST /workflow trade-workflow-handler, POST /auth trade-auth-handler",
+      "aws apigatewayv2 get-authorizer nfa51m: Name trade-auth, REQUEST, function trade-authorizer, payload 2.0, simple responses, identity source the Authorization header",
+      "infra/aws/terraform/trade-pipeline/apigateway.tf:15-17 @HEAD: 'an older API GW w8jnzvs21g also has invoke permissions on 3 of 4 trade Lambdas. That GW is dormant; cleanup tracked separately in TRSB_PATHFIX.TO-3 ... Permissions remain console-only until then.'"
+    ]
+  },
+  "spec_asserts": "FWD-8 and FWD-9 (PRD v0.9): the trade blotter, the user list and the submit route answer Opal staff only; census and pairs name the portal's HTTP API as the door.",
+  "world_is": "There are two doors. Through the second, the two changed functions now decide on whatever context trade-authorizer supplies: if it carries neither tier internal nor firmId opal-capital they refuse every caller of that door (fail closed) where until today they served whoever that authorizer admitted; if it carries either, that door still serves. The workflow handler behind it was not changed by this project. NOT read: trade-authorizer's source (not found in the repository by this seat) and so its context keys; what POST /auth issues and to whom; whether anything calls this API (no log was read); the census's 115-route denominator did not include this API. No call was made to it.",
+  "notes": "Found while reading who may invoke each function directly, for the FWD-9 pair's AMENDMENT 1 (CTO msg 5949). BLOCKING because the two outcomes' DONE WHEN cannot be called EXERCISED for 'the service' while a second door is unread; INERT because nothing this project did opened it and the changed functions fail closed on an unknown context. Owner of the API: the trade pipeline (TRSB, inactive); routed to 1.0.0_SA_CTO~DELL2 in the amendment. Out of lane for this seat to call, change or remove."
+}
+```
+
+## NFRA_OPSWKF-D2-S12 -- a plaintext jwt_secret left on disk in the shared main checkout by an earlier deploy, two days old and still readable
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S12",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-11T22:19:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A plaintext jwt_secret sits on disk in the SHARED main checkout at infra/aws/terraform/trade-pipeline/secrets.auto.tfvars, 80 bytes, mtime 2026-10-09T09:39:14Z -- two days older than this seat's session and about 23 minutes before that day's trade-submission-handler deploy. It is gitignored so it cannot be committed, but it persists in the working tree of a box several seats share.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la and os.path.getmtime on infra/aws/terraform/trade-pipeline/secrets.auto.tfvars (2026-10-11 ~22:1xZ): 80 bytes, mtime 2026-10-09T09:39:14.982219Z UTC. Contents were never printed; only the variable NAME it sets was read, by grep of line-leading lowercase tokens -- jwt_secret, and nothing else.",
+      "git ls-files --error-unmatch on that path: NOT tracked. git check-ignore -v: ignored by infra/aws/terraform/.gitignore:5 (*.auto.tfvars), so it cannot enter a commit by accident.",
+      "Timing against that day's deploy: aws lambda get-function-configuration on trade-submission-handler recorded LastModified 2026-10-09T10:02:52Z (read by this seat at step 2 of TO-APPLY-S2), about 23 minutes after the file's mtime, and the 2026-10-09 trade-pipeline deploy is the one the source map and the 20261009T0922Z change-management entry record.",
+      "Not this seat's file: the two secrets.auto.tfvars this seat wrote today were created in DETACHED worktrees (/c/dev/opswkf-s1-pin ~19:2xZ and /c/dev/opswkf-s2-pin ~21:19Z), each read live from trade-auth-handler without being echoed, and each overwritten with zero bytes, fsynced and removed at the end of its act. A glob of infra/aws/terraform/*/*.tfvars in both worktrees now returns only the tracked transcripts/readers.auto.tfvars."
+    ]
+  },
+  "spec_asserts": "The trade-pipeline root's README gives the operator recipe for var.jwt_secret -- read the live value and write it to secrets.auto.tfvars, which is gitignored -- and both FWD-8's and FWD-9's pairs bound their executors to holding token and key material in memory only, never stored, printed, committed or sent.",
+  "world_is": "The recipe's own artifact outlives the act that needs it. The gitignore stops the value reaching a commit, which is the exposure the recipe was written against, but nothing removes the file afterwards, so a live signing secret for the trade auth functions has sat readable in a shared checkout for two days. NOT ESTABLISHED by this seat: whether the stored value is still the live one (it was not read or compared); who created it, which is inferred from the mtime and that day's deploy rather than from an audit record; whether other terraform roots on this box or on other boxes carry the same leftover, since only this root and the two pin worktrees were looked at; and whether any other process has read it. No value was read, copied or moved by this row.",
+  "notes": "Found at the end of TO-APPLY-S2 while confirming this seat's OWN secret files were shredded -- the check that found it was hygiene on my own act, not a hunt. OBSERVATION because it blocks no outcome and no task order: FWD-8 and FWD-9 are released and proven either way. INERT because it fires nothing on its own and there is no same-turn disarm to take; it is a standing exposure, not an armed hazard. NOT REMEDIATED BY THIS SEAT, deliberately: the file is another seat's working artifact in a shared tree, deleting another seat's untracked file is not this seat's call, and the bounds of both orders this seat held forbid touching anything outside the one function's code. The remedy that would actually hold is mechanical rather than a one-off delete -- the operator recipe could shred the file at the end of the act the way this seat's two were shredded, so the artifact cannot outlive its use. Routed as an observation for 1.0.0_SA_CTO~DELL2 and the box's manager; owner of the recipe: the trade-pipeline root's README."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S13",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T22:48:30Z",
+  "one_line": "L9 workstream S, the four direct invokes: OW-sr2-AC2 MET and OW-sr1-AC2 MET. FWD-9 is REALIZED as PRD v0.9 defines it: the refusing twin read 403 first, then both comparisons of the check admitted (400 on the unstorable body), and no row was stored. FWD-8's tier arm read 200. The invokes ran against bytes this seat has read member by member. Still not shown: the context the portal's authorizer hands a real staff session; and, per row D2-S11, what a second live API's authorizer sets on the way to the same functions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/deliverables/S3_FINAL_REPORT_FOUR_DIRECT_INVOKES.md @891dfaf600 (msg 6007)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPSWKF_WORKSTREAM_S_L9_GRADE_20261011.md",
+      "this seat's live read 2026-10-11T22:48:30Z: the code hash of both functions, read from their configuration, is unchanged since this seat downloaded both packages and found 3 of 3 members byte-equal to the tree at each release pin, and equals the two digests the applier read before its first invoke. So the four invokes ran against the bytes this seat read. No invoke or call was made by this seat"
+    ]
+  },
+  "spec_asserts": "PRD v0.9 FWD-9 DONE WHEN: after the release, one direct invoke of the deployed handler with a context carrying the Opal firm id and an email, answered 400 on the unstorable body, and the same invoke with a context that fails both comparisons answered the new 403; no submission row and no mail from any read.",
+  "world_is": "Four invokes, each once, by the applier under the amended pair; no token, identity, grant or write. No invoke or call was made by this seat. The mail service's log was not read by anyone.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_OPSWKF-D2-S14 -- the FWD-10 probes omitted the stage: both answered 404 for 'no such stage' and proved nothing; stopped before the write
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S14",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~O2",
+  "surfaced_at": "2026-10-11T23:39:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The FWD-10 pair's two probes omitted the API's stage. trade-submission-api has one stage, prod, and no $default stage, so both requests matched no stage, answered 404 for that reason, and could not have told an open endpoint from a closed one. The executor stopped at the pair's own guard; nothing was written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~DELL2 msg 6142: U BEFORE (GET /users, no Authorization, 23:30:08Z) 404 {\"message\":\"Not Found\"}, identical to N; get-stages 23:31:22Z: one stage, prod, no $default; DisableExecuteApiEndpoint re-read false; ledger CLOSED NOT EXECUTED @f57b83a3f0",
+      "this seat's own get-stages at ~22:1xZ printed the single row 'prod True' and the pair written an hour later did not use it",
+      "org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/2.0.0_SA_COO~O2/S_DEPLOY/OW_SD3_FWD10_SECOND_DOOR_CLOSE_PAIR_20261011.md section 4: both probe paths written bare"
+    ]
+  },
+  "spec_asserts": "The pair: probe N answers 404 from the API and probe U answers 401 from the API before the act, and U discriminates if N does not.",
+  "world_is": "Neither probe reached the API's routing. The expected outcome was predicted from the portal API's shape (a $default stage, bare paths) and not read from this API's own stage list, which this seat had in hand. It is the same error class as row D2-S7, by the same seat, on the same day. The guard written for a different doubt (U not 401 is a STOP) caught it before the write.",
+  "notes": "Repair: the pair's AMENDMENT 1 (the probes carry /prod; every answer tabled, including the ones that would mean the issuer is wrong again). Two of the pair's requests are spent. The door is still open as of this row; the closing write waits on the CTO half on the amendment."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S15",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-12T00:10:38Z",
+  "one_line": "L9: OW-sd3-AC1 MET and FWD-10 REALIZED. The second API's public endpoint is closed: its disabling setting reads TRUE by three seats' separate reads, this seat's among them, and the request that the API itself refused with 401 before the act is refused at the endpoint with 404 after. The missing-route request read 404 both before and after, so the probe PRD v0.10 named could never have shown the closure. Not closed: the API, its functions and their key still exist and one call re-opens it; deleting them is Andrew's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/deliverables/S5_FINAL_REPORT_SECOND_DOOR_CLOSED.md @e6c3267f85 (msg 6188)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_OPSWKF_FWD10_L9_GRADE_20261012.md",
+      "this seat's own live read at 2026-10-12T00:08:48Z, a get of the one API's configuration: name trade-submission-api, protocol HTTP, created 2026-01-06, the disable-default-endpoint setting TRUE; and a read of the account's API domain names in this region, 0. No request was made to the API by this seat"
+    ]
+  },
+  "spec_asserts": "PRD v0.11 FWD-10 DONE WHEN: shown first by the setting read back from the API's own configuration; and by one request with no credential to a route behind its authorizer, answered 401 before the act and by the endpoint's refusal after it, the two answers shown different; both domain planes and the distributions read; no request to the sign-in route.",
+  "world_is": "No request was made to the API by this seat. Not read by this seat: the stage, the distributions. Whether the sign-in route was used before the metric window is not known; access logging was off.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

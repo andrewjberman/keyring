@@ -6645,3 +6645,450 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W114-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~114",
+  "surfaced_at": "2026-10-11T19:44:34Z",
+  "one_line": "DB-b-141: the tracked tree holds one reader of the silver_legacy transactions copy (a project script, not keyed on the transaction id, nothing served); the readers whose figures the records quote live outside the tree, and one record figure rests on an unkeyed sum.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-141: list every reader of the copy in the repo, each read for whether it keys on the transaction id; the tracked code only.",
+  "world_is": "Over 71502 files scanned the only tracked reader of the copy is org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~81/bd_dates_two_sided.py (line 58 sums by return date, no id, nothing served); no production code reads it. The scripts that actually read the copy for ~108, ~111, ~113, ~115 and the issuer's re-run are in the private evidence folder, outside the tree, so they are not in the reader list. Of those, ~108 and ~111 sum without the id, and UNCLASSED_90.json line 66 (59 of 90 tie, 31 do not) quotes ~108's unkeyed sum: whether the 31 include repetition is NOT_ESTABLISHED. Also NOT_ESTABLISHED: whether the ORIGINAL silver transactions the copy was made from (opal-data-bd silver/transactions) repeats a transaction per portfolio group; no AWS call was made. portal, opal_ai and mcportal are empty gitlinks in this worktree and were not searched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~114/BD_TXN_READERS.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~81/bd_dates_two_sided.py lines 32, 58, 60",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~108/UNCLASSED_90.json line 66",
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/ (private, outside the repo): 0.9.0_WK_IRPT_DASHBD~108/read90.py line 26, table90.py line 45; 0.9.0_WK_IRPT_DASHBD~111/s2_read.py line 85, s5_mismatch.py lines 35 and 39"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W115-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~115",
+  "surfaced_at": "2026-10-11T19:47:23Z",
+  "one_line": "DB-b-142: at the cent the comparison over the 51 contested segments differs on 51 flow days (18 segments), 50 reproduced by counting each transaction id once and 1 not (the Other Fee expense row); the method's flow term (lines 713-717, 706) leaves an administrative expense out, so the served flow rightly omits it; the shared code table's class for that one row was not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-142 item 2: the fee row is classed by the method's own rule cited from the code; if the method counts it a flow and the served flow omits it, a row with the day count.",
+  "world_is": "The method's rule is read from account_return_daily.py lines 702-706 and 713-717 and METHOD_ROWS row 2 line 123 (fee_basis GROSS_ONLY): the flow term holds class EXTERNAL, FEE-MANAGEMENT and inter-account legs, and a FEE-ADMIN expense stays inside the return. The Other Fee row (type Expense) is the only Other Fee row on the 235 flow days, and the day reproduces to half a cent only with it left out; all 56 days carrying a Management Fee row (the class the method counts) reproduce with it counted. So the served number follows the rule and there is no defect row. NOT_ESTABLISHED: the custodian's fact_trn code row for this one Other Fee leg and the shared code table's class for it were outside the order's read grant (the Black Diamond copy and the served gold), so the class FEE-ADMIN is inferred from the rule's text and the served number's behaviour, not read from that row. A 1-day fact_trn read by a later order would settle it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~115/CENT_REREAD.json",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 702-706, 713-717, 123",
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~115/c2_compare.py, c4_types.py (private, outside the repo)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W116-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~116",
+  "surfaced_at": "2026-10-11T20:32:30Z",
+  "one_line": "DB-b-143: the mcportal tree the order says to read read-only at the shared checkout is an empty directory, so it was not searched; portal and opal_ai were searched (zero readers of the original Black Diamond transactions store in either).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-143 item 2: portal, opal_ai and mcportal are readable read-only at C:/dev/ajb_workspace/<tree>, with a commit to state by git -C <path> rev-parse --short HEAD (the issuer gave mcportal at e8bbf97fb4).",
+  "world_is": "C:/dev/ajb_workspace/mcportal holds 0 entries (ls -A), as do the mcportal directories of the 20 sibling worktree copies listed; git -C on it resolves to the workspace repo, so the hash it prints is the workspace's, not a mcportal commit. portal reads dbeb6764 on DEV (its origin/DEV ref reads c2c6a8ae, so it is behind that ref) and opal_ai reads de5ce25. No reader of the store was found in portal (2069 tracked files) or opal_ai (36 tracked files); opal_ai's bucket allowlist DENIES opal-data-bd. Whether any mcportal tool reads silver/transactions is NOT_ESTABLISHED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~116/ORIGINAL_STORE_SHAPE.json (trees member)",
+      "C:/dev/ajb_workspace/opal_ai/opal/agent/refs/BUCKET_ALLOWLIST.yaml lines 66-67"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W116-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~116",
+  "surfaced_at": "2026-10-11T20:32:40Z",
+  "one_line": "DB-b-143: on the 3 days where both stores hold a day (3 days near the end of the copy's range sampled), the original silver transactions object and the silver_legacy copy differ in size and ETag, so the copy is not byte-identical to the original as it stands now; a rewrite of the originals since the copy is the likely reason (NOT_ESTABLISHED).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The ADVI_STITCH decomposition (STI-inv-2, DECOMP.md line 74) and DB-b-141's adjacent_store_not_counted say silver_legacy parquet is byte-identical to its source object, by table and date.",
+  "world_is": "head-object on the original (opal-data-bd silver/transactions/<day>.parquet) and on the copy (opal-data-assets blackdiamond/49financial/silver_legacy/transactions/date=<day>/<day>.parquet) for 2026-08-22, 2026-08-23, 2026-08-24: the original reads 35302, 35302 and 266067 bytes; the copy reads 1315934, 272971 and 34882 bytes; the three ETag pairs differ. The copy's range ends at 2026-08-25. So the copy is a snapshot of the objects as they stood at copy time, and the original objects were probably overwritten later (inferred; the 2026-08-22 original is now smaller than the copy by about 97 percent). NOT_ESTABLISHED: what rewrote them, and whether the repeat-per-group shape of the copy (DB-b-140) is the shape the original had on those days; only the shape of the original's 2026-10-06 object was counted (ORIGINAL_STORE_SHAPE.json). Sample of 3 days, metadata only, no rows read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~116/ORIGINAL_STORE_SHAPE.json (how_firm_was_told member)",
+      "workflows/atom_decomposition/runs/advi-stitch/ (the August run) DECOMP.md line 74"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W118-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~118",
+  "surfaced_at": "2026-10-11T20:53:19Z",
+  "one_line": "DB-b-145: 3 of 42 figures the tie-out records quote have no producing line in any private script and are WITHDRAWN in FIGURE_PRODUCERS.json: ~104 (the 122/113/9 verdict split of the 244; 'none of the 244 among the 74 restated') and ~113 (the per-type tally of the 50 differing days).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-145 item 2: each figure a record quotes from a private script has that script tracked in the project's folder, or the figure is listed as withdrawn with why, and ONE row lists the withdrawn figures (the records are their owners' to amend).",
+  "world_is": "Of 42 figures listed from 6 tie-out records (and the issuer's re-run note, whose script the issuer tracks), 39 have their producing lines in 32 tracked, hashed copies. 3 do not: (1) UNEXPLAINED_244.json how-text, 'of the 244: 122 verdict UNEXPLAINED, 113 confirmed, 9 no DB-b-106 row' is a literal in class_244.py (line 96); the script tallies by class and not by verdict, and its only 9 is the ZERO_GAIN class; (2) the same record's 'none of the 244 is among the 74 restated': class_244.py counts restated segments only inside the 90 remainder (line 74), so the number 74 and the 'none of 244' are stated, not computed there; (3) UNREPRODUCED_18.json 'the 50 differing days by row type: 22 cash deposits, 13 cash withdrawals, 11 management fee rows, 4 single mixed or transfer days' came from a console command that was not saved as a file; no script in the ~113 private folder prints that tally (a2_show.py lists the first 20 days only). Counts only, no client figure. The records are not amended by this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~118/FIGURE_PRODUCERS.json (figures with state WITHDRAWN)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~118/producers/0.9.0_WK_IRPT_DASHBD~104/class_244.py lines 74, 96",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~104/UNEXPLAINED_244.json; org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~113/UNREPRODUCED_18.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W122-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~122",
+  "surfaced_at": "2026-10-11T21:20:57Z",
+  "one_line": "DB-b-149: on one day, 34 of the 160 per-asset medians the two price paths take over the original Black Diamond store change when each transaction id is counted once (26 under 0.1 percent, 6 between 0.1 and 1 percent, 2 over 1 percent); the Lambda path serves them, so the owner decides which weighting a price should carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-149 item 3: a path whose served price moves when ids are counted once is ONE ROW naming its owner; this cell corrects nothing. ORIGINAL_STORE_SHAPE.json (W116) said the effect of the un-deduplicated median on a served price was not measured.",
+  "world_is": "Day 2026-10-09 object silver/transactions/2026-10-09.parquet: 5216 rows, 1156 distinct ids, 1006 priced ids carry more than one row, every one of them with the same per-row price in all its copies; 160 per-asset medians; with each id counted once (drop_duplicates on transaction_id, either keep) 34 moved at 8-decimal precision and 126 did not, no asset appeared or vanished. The two paths share one function (bd_price_update.py 327-344; bd-price-update lambda_function.py 185-202), so this is one comparison for both. The Lambda path (event-chained, newest log event 2026-10-11T00:19Z) lets this median outrank Yahoo for every asset it prices; the script path lets overrides and Yahoo outrank it and its schedule is not established. INERT, not ARMED: the cell does not show the deduplicated price is the right one, nor that a moved median is the price that reached canonical_prices (the gold silver-prep S_00 rebuild may replace it). Owner: Black Diamond pipeline lambda (infra/aws/lambda/bd-pipeline) and Black Diamond silver pipeline (data/black_diamond/scripts/silver); no owned-paths row found. Counts only; no price value.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~122/PRICE_PATHS_MEDIAN.json (medians, paths)",
+      "data/black_diamond/scripts/silver/bd_price_update.py lines 263-271, 327-344, 778, 821",
+      "infra/aws/lambda/bd-pipeline/bd-price-update/lambda_function.py lines 141-149, 185-202, 301-304, 610, 653"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W122-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~122",
+  "surfaced_at": "2026-10-11T21:20:57Z",
+  "one_line": "DB-b-149: infra/aws/ec2/EC2_MANIFEST.json says the bd_price_update.py script is invoked at the end of the opal-bd-allocation-download SSM sequence, but the repo's SSM document has no price step, and the live Lambda it 'replaces' is the one that ran on 2026-10-11.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-149 item 1: each path's `scheduled` is read from the Terraform or scheduler definition (DESIRED) and said apart from what is APPLIED.",
+  "world_is": "EC2_MANIFEST.json lines 318-331 (service bd-price-runner) states a weekday trigger at the end of the opal-bd-allocation-download sequence and says it replaces the bd-price-update Lambda 'after EC2 migration verified'. infra/aws/ssm/opal-bd-allocation-download.json contains no occurrence of 'price' (0 hits). The Lambda is still Active (last modified 2026-04-06), has no resource-based policy, and logged at 2026-10-11T00:19Z. The script's schedule is therefore recorded `scheduled: false` as 'no schedule definition found', NOT_ESTABLISHED as to whether it runs; the SSM document as APPLIED was not read (outside the order's allowed reads). The deployed Lambda bytes were not compared with the repo file either. Owner of the manifest: the EC2 manifest's service owner (not named in the file).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/EC2_MANIFEST.json lines 318-331",
+      "infra/aws/ssm/opal-bd-allocation-download.json (Grep price, 0 hits)",
+      "live: lambda get-function-configuration / get-policy / logs describe-log-streams on bd-price-update, 2026-10-11 (read through .tools/aws)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "IRPT_DASHBD-D2-W121-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~121",
+  "surfaced_at": "2026-10-11T21:30:00Z",
+  "one_line": "DB-b-148: the producer sha256 CONTESTED_51_MEANING.json records for x1_crosstab.py does not match the tracked file's bytes; the tracked file reproduces the record's counts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONTESTED_51_MEANING.json producer: file x1_crosstab.py, sha256 86507b8f3e7f76c13ca093b1d2399d43615660373747338058e1bb23d2c03668 (a hash of the producer of the cross-tabulation).",
+  "world_is": "git show HEAD:<path of ~120/x1_crosstab.py> hashes to 5af12eb885c14ae0a825eb97e9b70744b62c77c75f6662a41f0dfaadda6361c6, and the same after removing carriage returns, so line endings do not explain it. Running a copy of the tracked file (only its output folder repointed to ~121's private folder, since the file writes into ~120's) printed outcomes 25/14/12, timing both 47 / START only 3 / MID only 1, groups 43/4/3/1 and cells summing 51: every count in the record. The script that was hashed and the script that is tracked are therefore different bytes with the same counts; the record's owner (~120) amends it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~120/CONTESTED_51_MEANING.json (producer.sha256)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~120/x1_crosstab.py (sha256 5af12eb8...)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~121/TIMING_CLASSES_PROPOSAL.json (placement.re_derived)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W121-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~121",
+  "surfaced_at": "2026-10-11T21:30:00Z",
+  "one_line": "DB-b-148: the three within 0.35 pp each close under BOTH START and MID, so they are among the segments where more than one timing closes, and the ruling's list of such segments (32, 11, the fee-row day) leaves them out.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO msg 5835 item 2: 'Where more than one closes (32, 11, the fee-row day) ... timing not determined' and item 3: the 3 within 0.35 points need first to be asked whether any closes; if none, they alone stay contested.",
+  "world_is": "Recomputed from worker 108's per-segment tables: for each of the 3, START and MID close the return within 0.35 pp and END does not (END is 0.02 to 0.18 pp outside the tolerance). Closing set across the 51: START+MID 47, START only 3, MID only 1. The 47 = 3 + 32 + 11 + 1. The three do not stay contested; placed by the rule they are RECONCILES_YES and TIMING_NOT_DETERMINED. Not an error in the ruling's frame: it asked the question first; the list in its item 2 was not exhaustive.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~121/TIMING_CLASSES_PROPOSAL.json (the_three, placement)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~121/y1_place.py (output lines on the three and on the closing sets)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W121-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~121",
+  "surfaced_at": "2026-10-11T21:30:00Z",
+  "one_line": "DB-b-148: comp-find -i with word boundaries over the repo from the worktree root did not return within the 120 s bound (rc 124); the token census was taken with native Grep.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order names comp-find -i with word boundaries, or the native Grep tool over the tracked tree, for the census of each new token.",
+  "world_is": "The first token's comp-find census did not finish in 120 s; the run was moved to the background and not awaited. The six censuses were taken with the native Grep tool over the worktree (case-insensitive, word boundaries); the denominator is not printed by Grep, so it is taken as git ls-files (76096) plus untracked-not-ignored (1) = 76097 files, the corpus Grep honours. Gitignored files are not in it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~121/TIMING_CLASSES_PROPOSAL.json (census_instrument_note, token_census)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W124-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~124",
+  "surfaced_at": "2026-10-11T21:44:28Z",
+  "one_line": "DB-b-151: the original silver transactions day objects of 2026-08-22 and 2026-08-23 now hold 0 rows where the silver_legacy copy holds rows (4545 and 1035 distinct ids, none in common), and 2026-08-24 is the reverse; the original was rewritten after the copy (bucket versions), and the copy is the only store that still holds the first two days' rows as of the copy.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Row W116-S2 and the ADVI_STITCH decomposition: the copy is byte-identical to the original; W116-S2 inferred a later rewrite of the originals (NOT_ESTABLISHED) and the tie-out figures taken from the copy were assumed to describe the original.",
+  "world_is": "get-bucket-versioning reads Enabled on opal-data-bd and opal-data-assets. list-object-versions on the three exact original keys: 4 versions each, 3 written after the copy (copy written 2026-08-25T23:05:52Z; later versions 2026-08-26 to 2026-09-02 UTC); the version current at copy time equals the copy in size and ETag on all 3 days. Current originals: 2026-08-22 and 2026-08-23 read 0 rows (copy 23229 rows over 4545 distinct ids and 4990 rows over 1035 distinct ids; 0 ids in common); 2026-08-24 reads 4864 rows over 1075 distinct ids (copy 0 rows; 0 ids in common). The writer (merge-daily-incremental.py lines 183-190, 513-519) replaces a day object wholesale on a re-landed bronze file and filters ids seen in the prior 30 days (lines 474-507). NOT_ESTABLISHED: which run wrote each later version, why the first two days now hold no rows, and the row content of the non-current versions (not read). Counts only; no money or account column read. Record: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~124/COPY_VS_ORIGINAL.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~124/COPY_VS_ORIGINAL.json (days, rewritten_reason)",
+      "data/black_diamond/scripts/silver/merge-daily-incremental.py lines 183-190, 474-507, 513-519"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "hazard_standing not assessed by this worker: whether downstream readers that load every original day object (gold A_03, B_01, B_03, nna_flows) now miss the first two days' rows was not measured."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W121-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~121",
+  "surfaced_at": "2026-10-11T22:04:00Z",
+  "one_line": "DB-b-155: under the renamed first axis (a close under START or MID, the served END not counting) the ruling's kept TIMING_END value cannot hold a member by construction; it is empty today for the measured reason and empty always for the structural one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO msg 5886: the first axis is renamed for what it measures, the return closes when RESTATED under an admitted timing other than the served one; the two axes and the TIMING tokens stand: 3 START, 1 MID, 47 not determined.",
+  "world_is": "TIMING is asked only of segments in the first value, which now requires a close under START or MID. TIMING_END means exactly one admitted timing closes and it is END, which contradicts that requirement, so the value has no possible member, not only no member today (END closes in 0 of 51). The record keeps the token as the ruling says and states the emptiness on the TIMING_END value meaning. Whether to keep, retire or redefine TIMING_END is not decided here. The producer's rule line still counts any of the three timings as closing; on the 90 this changes no placement (51 close under START or MID, 39 fail the four-item dollar tie), recomputed by no one in this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~121/TIMING_CLASSES_PROPOSAL.json (axes[1].value_meaning.TIMING_END, axes[0].domain_changed_by_the_rename)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W125-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~125",
+  "surfaced_at": "2026-10-11T22:13:22Z",
+  "one_line": "DB-b-154: the 34 moved medians of 2026-10-09 are the served price in the daily price file and in the first canonical write of that day, but the canonical object's rows for that day were rewritten the same evening (all 34 now linear_interpolation) and again later (28 of 34 yahoo_finance), so 'the final served price' has no single answer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-154 item 2: the served price objects for the day are read and, for each of the 34, the served row's own source column decides whether the median IS the served price; one split of the 34 into final-served, outranked by Yahoo, outranked by override, not placed.",
+  "world_is": "silver/prices/2026-10-09.parquet has one version (2026-10-09T00:14:50Z): 34 of 34 transaction_observed at the un-deduplicated median. canonical_prices.parquet 10-09 rows: version of 2026-10-09T00:14:48Z same 34 of 34; version current at the end of 2026-10-09 (23:03:03Z, and 23:02:48Z) 0 of 34 transaction_observed, all linear_interpolation; current version (2026-10-11T12:48:11Z) 28 yahoo_finance, 4 linear_interpolation, 2 transaction_observed at a price that is not the median. The object has about 4 writer pairs a day with no bd-price-update log event near them. The headline counts are recorded NOT_ESTABLISHED, with the per-object split in by_served_object, because B_01 load_latest_prices (lines 319-361) keeps one row per asset by latest date across the canonical object and every daily file, a tie on a same-date row whose order was not established. Counts only; no name or price. Record: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~125/MOVED_MEDIANS_SEVERITY.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~125/MOVED_MEDIANS_SEVERITY.json (final_served, by_served_object)",
+      "data/black_diamond/scripts/gold/B_01.holdings_lots.py lines 319-361",
+      "infra/aws/lambda/bd-pipeline/bd-price-update/lambda_function.py lines 301-306; data/black_diamond/scripts/silver/bd_price_update.py lines 445-467"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "hazard_standing not assessed by this worker beyond INERT-as-recorded: which object a portal figure ends up using was not followed."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W125-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~125",
+  "surfaced_at": "2026-10-11T22:13:22Z",
+  "one_line": "DB-b-154: whether the bd_price_update.py script runs today is NOT_ESTABLISHED: the Lambda is shown to write the daily price files, the SSM document is a retired no-op, no rule targets the Lambda, ssm:ListDocuments is denied, and the writer of the four-times-daily canonical rewrites is unidentified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-154 item 5: the script path's running today is established from live state (Lambda newest log event against the last write time of the two price objects, and any schedule or document that invokes the script).",
+  "world_is": "bd-price-update newest log stream 2026-10-11, events 00:18:42Z to 00:19:50Z; its daily file and canonical writes of 2026-10-11 (00:19:28Z, 00:19:26Z) fall inside it; the same on 10-10 and 10-09. SSM document opal-bd-allocation-download version 6 is a retired no-op with no price step (get-document). list-rule-names-by-target for the function returned nothing. ssm list-documents: AccessDeniedException for cloudops-dell2-agent-user (ssm:ListDocuments), recorded and not retried another way. The EC2 service bd-price-runner of EC2_MANIFEST.json and SSM command history were not read (outside the order's reads). canonical_prices.parquet has writer pairs about 04:03Z, 09:49Z, 12:47Z and 23:02Z, newer than the Lambda's last event, by a writer not identified. Answer recorded NOT_ESTABLISHED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~125/MOVED_MEDIANS_SEVERITY.json (script_path_runs_today, limits)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_DASHBD-D2-W122-S2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W126-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~126",
+  "surfaced_at": "2026-10-11T22:22:00Z",
+  "one_line": "DB-b-156: served readers of the original silver transactions store key on the FILE's day (B_03.account_gains.py line 327; bd_price_update.py line 265 and its lambda twin line 143), and all 5580 ids of 2026-08-22 and 2026-08-23 now sit in the files two days earlier, so those three readers place the same ids on a different day than before; owner of the readers is the Black Diamond gold and silver pipeline.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Row W124-S1 and the owner's record (1.0.0_SA_CTO~DELL1, box/dell1, BD49F_SILVER_TRANSACTIONS_LOSS_CHECK): no id is lost; whether a reader keyed by FILE day rather than by the transaction's own date reads a different day's figures after the move was left open as this project's question. DB-b-143 (ORIGINAL_STORE_SHAPE.json) listed the readers and did not class what they key on.",
+  "world_is": "Read in this worktree at the lines named: of 17 served readers, 3 are FILE_DAY (B_03.account_gains.py line 327: loads silver/transactions/D.parquet for day D and sums every income-type row as day D; bd_price_update.py line 265 and infra/aws/lambda/bd-pipeline/bd-price-update/lambda_function.py line 143: load the object of the target date and take the median price of every row as that date's), 5 are BOTH, 8 key on the row's own date, 1 uses no day. For the two days the oldest version of each day object (4545 and 1035 distinct ids) was compared with 84 current objects dated 2026-07-20 to 2026-10-11: all 5580 ids are found, each in exactly one current file, the file two days before the old one (2026-08-20 and 2026-08-21), none in the old day's file. No id's own trade_date or return_date equals the old file's day (0 of 5580); return_date equals the new file's day for 5580 of 5580 and trade_date for 4505 and 1030. The ids' own date values are unchanged between versions. Counts only; transaction id and date columns read, no money or account column; no S3 write. NOT_ESTABLISHED: whether those three readers have run since the rewrites (2026-08-26 to 2026-09-02), and whether any served figure for the four days 2026-08-20 to 2026-08-23 changed (no served figure was recomputed; no gold partition read). Owner as DB-b-143 recorded it: Black Diamond gold pipeline (path data/black_diamond/scripts/gold) for B_03; Black Diamond silver pipeline (data/black_diamond/scripts/silver) and the bd-pipeline lambda (infra/aws/lambda/bd-pipeline) for the price update. Record: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~126/FILE_DAY_READERS.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~126/FILE_DAY_READERS.json (readers, days, answer)",
+      "data/black_diamond/scripts/gold/B_03.account_gains.py lines 327-329, 888-893",
+      "data/black_diamond/scripts/silver/bd_price_update.py lines 263-271, 327-344, 821"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "hazard_standing not assessed by this worker: it depends on whether the three file-day readers re-ran after the rewrites and what their fingerprint or incremental logic rebuilt, which was not read."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W128-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~128",
+  "surfaced_at": "2026-10-11T22:54:00Z",
+  "one_line": "DB-b-159: three premises of the order differ from the tree: the producer is under data/assets/scripts/gold/irpt_reporting, not infra/aws/lambda/investor-reporting; no served row is a price-return fallback day; month to date is not a served window.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-159 worker face: start at account_return_daily.py under infra/aws/lambda/investor-reporting/; days where the served return is the guard's price-return fallback are a named class to count separately; windows are month to date, year to date and since inception, chained as the served file does.",
+  "world_is": "account_return_daily.py is at data/assets/scripts/gold/irpt_reporting/account_return_daily.py (the lambda folder holds only the reporting-gold and reporting-publish handlers). Its BASIS_FALLBACK member (line 170) is marked NEVER EMITTED (lines 164-169); in the 2659140 served rows read (567 partitions, one firm, one method_version) return_basis is TWR on 2596311 and NOT_MEASURABLE on 62829, none HOLDINGS_INCOME_FALLBACK, so the fallback class is empty and the control needed no carve-out for it. The publisher's served windows are YTD, QTD, 1Y, 3Y and SI (reporting-publish/publisher.py lines 275-310); MTD is not served, so the record applies the same rule with the anchor at the prior month end and says so. Counts only; no S3 write.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 161-172, 1383-1406",
+      "infra/aws/lambda/investor-reporting/reporting-publish/publisher.py lines 275-310",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~128/CONVENTION_CHANGE_SIZE.json (end_reproduces, served_rule)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W130-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~130",
+  "surfaced_at": "2026-10-11T22:58:12Z",
+  "one_line": "DB-b-161: the order and the round-83 analysis speak of 'the custodian's' time-weighted return the 51 segments were scored against, but the project's records show the oracle is Black Diamond's reporting_performance pull; the custodian (Schwab) supplies Opal's side, so two parties were read and the 51 are recorded as scored against Black Diamond.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Order TO-DB-b-161 item 1: name the custodian whose reporting-performance pull the tie-out compares against, and Black Diamond; the round-83 analysis section 2 says the served return closes against 'the custodian's' in 0 of 51.",
+  "world_is": "PRD C-TIEOUT and C-FLOWTIME name Black Diamond's own time-weighted return as the oracle; INVESTIGATION_v1.md rows cite the stored Black Diamond reporting_performance bronze pull as the tie-out source; PRD C-ADAPTERS builds the 49 Financial adapter from Schwab silver. So the returns the 51 were scored against are Black Diamond's, and the custodian named in the record (Charles Schwab) is the source of Opal's own inputs. PUBLISHED_FLOW_TIMING.json records scored_against BLACK_DIAMOND with this note. The wording in the analysis is the CTO's to correct if it matters; it changes no count here.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md C-FLOWTIME, C-TIEOUT, C-ADAPTERS",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~130/PUBLISHED_FLOW_TIMING.json (scored_against_note)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W129-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~129",
+  "surfaced_at": "2026-10-11T23:09:00Z",
+  "one_line": "DB-b-160: a flagged day does not fall back to the price return in the code; FLOW_UNRECONCILED serves a null return, LARGE_FLOW keeps the TWR return; the PRD C-GUARD clause and the order wording still say fallback.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-160 worker face and the CTO round-83 analysis: C-GUARD marks a day FLOW_UNRECONCILED or LARGE_FLOW and such a day falls back to the price return; the producer is under infra/aws/lambda/investor-reporting/.",
+  "world_is": "The producer is data/assets/scripts/gold/irpt_reporting/account_return_daily.py. Its selection chain (lines 1498-1528) serves a FLOW_UNRECONCILED day with total_return_daily null and return_basis NOT_MEASURABLE, and a LARGE_FLOW day with its TWR return kept (a reader warning). HOLDINGS_INCOME_FALLBACK is never emitted (lines 164-170); PRD addendum v0.4 ruling 17 withdraws the substitution, so no day falls back to the price return and fallback_days_moved to the price return is 0 under START and MID. What a moved flag changes is whether the served return is a value or null: under START 71 flagged-or-null days gain a value and 2590 lose theirs; under MID 48 and 1260. Separately, the two guard thresholds are not in the copy; they were inferred from the served flags by bracketing (record GUARD_INTERPLAY.json, thresholds). Counts only; no S3 read or write.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 164-170, 1498-1528",
+      "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md lines 454-461 (ruling 17)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~129/GUARD_INTERPLAY.json (what_a_flagged_day_becomes, fallback_days_moved)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S18",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-11T23:24:29Z",
+  "one_line": "CORRECTION of this seat's slug for rounds 78 to 82 (REMEDIATION_v34's head): it said the served flow-timing convention 'closes against the custodian's return in 0 of 51'. The 51 segments were scored against Black Diamond's stored return, not the custodian's; the custodian supplies Opal's side of the comparison. This seat repeated the word from the CTO's ruling without checking which system the comparison used. Worker row D2-W130-S1 found it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "investigation row IRPT_DASHBD-D2-W130-S1",
+      "msgs 6039 and 6093 (IRPT_DASHBD round 83 closed @6d8691758d, 4 of 4; orders DB-b-158 to DB-b-161)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/remediations/REMEDIATION_v34.md, item 2 of its head"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md rule 24 (i): an inherited claim has no denominator; ask which instrument produced it and what that instrument can see.",
+  "world_is": "The comparison is Opal's return, built from the custodian's feed, against Black Diamond's reported return. Matching Black Diamond is not matching the custodian, and neither is a proof of accuracy (the CTO's own sentence, msg 5982). This seat read no record for this row beyond the worker's.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

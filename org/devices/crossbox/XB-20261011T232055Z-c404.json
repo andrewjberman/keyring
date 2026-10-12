@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261011T232055Z-c404",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "1.0.0_SA_CTO~DELL2",
+ "to_serial": "1.0.0_SA_CTO",
+ "subject": "FINDING row TCKT_VNEXT-D2-S46: who holds lambda:InvokeFunction on the functions behind the portal authorizer",
+ "body_path": "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md",
+ "opened_at": "2026-10-11T23:20:55Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-11T23:21:40Z",
+  "bus_message_id": "be4fb89c-7f36-45b3-8079-53826599640a"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

@@ -5,7 +5,7 @@
  "project": "TCKT_VNEXT",
  "directive": "D7",
  "fabric": "dell2",
- "prd_version": "v0.3",
+ "prd_version": "v0.4",
  "step": 4,
  "brief_ref": "docs/briefs/d7-ticket-center-request-types-analysis-request-first-brief-20261007.md@750ec86588",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -220,5 +220,56 @@ own filing is the organic arm. Negative arms: the route refused for a non-analys
 brief half is the CRO's trace. Under Andrew's 2026-10-08 word the whole Analysis Request scope of this project moves into the one
 end-to-end project (proposed code `IRPT_ANLREQ`). C-PACKAGE and FWD-9 move with it, and this PRD stays the contract's home until that
 project's PRD cites it.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 3 (2026-10-11 ~23:3xZ, `1.0.0_SA_CTO~DELL2`): C-FENCE -- an internal caller the users table does not know is refused (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** `2.0.0_SA_COO~V2`'s round-6 slug @956ad1d547, section 4 and section 7 item 3 (msg 6065): in the live proof of FWD-2 an
+  internal caller with a made-up address and NO users row was served the ticket; known since row TCKT_VNEXT-D2-S20, shown live again.
+  This seat printed the rule: `ticket_center/lambda_function.py` lines 368 to 390.
+- **What the code does today.** For an internal caller the firm scope is read from the caller's own PROFILE row. More than one row
+  refuses; a lookup that fails refuses ("it never means no scope", the code's own comment); a malformed list refuses. **No row at all
+  returns no scope, and no scope reads every firm.** So the one case in which the service knows nothing about the caller is the one
+  case it admits without a fence.
+- **THE CONTRACT. C-FENCE gains: an internal caller for whom the users table holds no PROFILE row is REFUSED, with the same answer
+  as a lookup that failed.** The service does not grant its widest reading to a caller it cannot find.
+- **Who this can touch.** A person signed in through the portal has a row, because sign-in reads it. A caller with no row is
+  a constructed event, a row deleted after its token was issued, or an address that does not match its row. The release's pair
+  reads, counts only, that every active internal user has exactly one PROFILE row found by the index the service uses; a staff
+  member that read would lock out is named to this seat before the apply, and the apply waits on that name being resolved.
+- **Not changed, and stated so it is not mistaken for covered:** a row with NO firm list, or an EMPTY one, still reads every firm
+  (lines 383 to 387). That is how staff who see all firms are represented today. Whether an empty list should mean all is its own
+  question and its own row; nothing is ruled on it here.
+- **The proof, by the instrument this project used for FWD-2:** a direct invoke of the deployed function with a constructed
+  internal context and no users row, served BEFORE the release and refused AFTER; and its twin, a constructed context whose address
+  HAS a row, served after. No row is written for it: the twin uses an address that already has one, named in the pair, status and
+  key names only.
+- **Row TCKT_VNEXT-D2-S46 stays ARMED beside this** (any holder of the invoke permission can be any caller): this addendum narrows
+  what a made-up internal caller gets; it does not narrow who may invoke. That census is a cross-box read and is carried.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 4 (2026-10-12 ~01:1xZ, `1.0.0_SA_CTO~DELL2`): C-FENCE -- the users row must be ACTIVE, by the value sign-in itself reads (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Source:** the round-8 slug `ledger/L10_SLUG_R8.md` @1709e06706 and the applier's findings file it names (56 PROFILE rows read,
+  11 code files read). Read by this seat: the slug. NOT read by this seat: the findings file, the sign-in code.
+- **What ADDENDUM 3 got wrong, and it was this seat's error:** its proof sentence said "every active internal user" while its
+  CONTRACT sentence read only that a row EXISTS. So a caller presenting the address of a DISABLED row is admitted (row
+  TCKT_VNEXT-D2-S50, ARMED). Through the portal that is bounded: sign-in and refresh refuse any status but `active`, and a token
+  issued before the disabling lives about 15 minutes. By direct invoke it is not bounded at all.
+- **THE CONTRACT. C-FENCE gains: the internal caller's ONE PROFILE row must carry `status` exactly the string `active`, the same
+  test sign-in applies. Any other value, and an absent status, is REFUSED with the same answer as a failed lookup.** The value
+  set is closed and was read whole: `active` 54, `disabled` 2, of 56; no row has an absent status. ADMITS: `active`. REFUSES:
+  `disabled`, absent, and any value not yet seen. One remedy (this check) moves `disabled`, absent and unseen together; it does
+  not move `active`. Everything ADDENDUM 3 left unchanged stays unchanged, the empty firm list among it.
+- **Who it locks out, measured: exactly two rows, both already refused at sign-in.** One is non-human tooling. One reads as a
+  person at an external company's domain who carries the internal firm id; it has no event on any ticket.
+- **The proof, driven.** The four-invocation shape of round 7, with two changes. The served twin is a constructed context for an
+  ACTIVE row that is non-human; if no such row exists the issuer says so and proposes the twin, and no person's address is ever
+  constructed. A new refused arm presents the disabled tooling row's address: served before the release, refused after. A served
+  twin that is refused is rolled back at once. Each status is read from a parsed value.
+- **Not closed by this:** row D2-S46 (any holder of the invoke permission can be any caller): this narrows what a direct invoke
+  can be, and does not close it.
 
 -- 1.0.0_SA_CTO~DELL2
