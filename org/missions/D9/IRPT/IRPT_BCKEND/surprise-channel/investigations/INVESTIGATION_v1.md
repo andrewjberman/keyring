@@ -28608,3 +28608,26 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The wire header the vendor's WAF sets is x-amzn-waf-action (as the capture already records it); `waf-action` is the READ path's field name for the same value. Both are accepted; no behaviour is lost."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W328-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~328",
+  "surfaced_at": "2026-10-12T18:16:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The criteria were graded with the issuer's amended p165_cells.py at its absolute path in the base checkout (commit 04e6040b0c), not the worktree's old copy that the order's relative invocation names; the proof instance records the order's relative invocation and the executed one is in output_evidence only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "coordinator correction to worker ~328 mid-task: the changed-files test counted the portal gitlink; fixed at 04e6040b0c on box/dell2",
+      "proof-of-spec-check invocation-alignment refuses a recorded invocation that differs from the order's text (instance recorded with the order's relative form)"
+    ]
+  },
+  "spec_asserts": "The order's criteria invocations name org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py relative to the worktree root.",
+  "world_is": "The worktree's copy is the old script; the three criteria were run from the worktree root with the amended script at C:/dev/ajb_workspace/... and each printed PASS. The order file still names the relative path."
+}
+```
