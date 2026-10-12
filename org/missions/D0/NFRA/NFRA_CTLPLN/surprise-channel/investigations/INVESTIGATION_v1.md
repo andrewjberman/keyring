@@ -7965,3 +7965,57 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Observation only: no access value changes. The owner of the registry rows (the CT-w-1 writer or the CTO) decides the new citation form."
 }
 ```
+
+## NFRA_CTLPLN-S9110 -- the data proxy writes callers' bearer tokens into its own log group
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9110",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~U7",
+  "surfaced_at": "2026-10-12T10:05:00Z",
+  "one_line": "The data proxy handler prints the whole incoming event, so each caller's bearer access token is written to the log group /aws/lambda/opal-portal-data-proxy: 45 of the 47 handler Event lines in the 14-day retention contain a JWT-shaped string.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/portal_data_proxy/lambda_function.py at pin 50c8feb76b, lambda_handler: print(f\"Event: {json.dumps(event)}\") as the first statement after the tracker is built",
+      "aws logs filter-log-events on /aws/lambda/opal-portal-data-proxy, pattern \"Event:\", whole 14 day retention, read 2026-10-12T09:44Z: 47 events, 45 matched 'eyJ' (count only; the dump was parsed locally for aggregates and deleted; no token value was printed or kept)",
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts generateAccessToken comment: 15 minute access token"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-u-7 and CT-w-3 pairs: no token is printed or stored by the exercise; the act changes who is answered, not what is logged.",
+  "world_is": "The function itself logs every caller's Authorization header into a 14-day group. The token lives 15 minutes, so the standing exposure is a replayable token for up to 15 minutes after each request to anyone who can read that log group; classed INERT here because the readers are IAM principals and this seat did not enumerate who they are. Not measured: whether cookies or other secrets are also in the printed event. The CTO rules the class; the fix is a code change to stop printing the event (or its headers), a cell for the issuer.",
+  "notes": "Observation made during CT-w-3 step 2 (the pre-apply log read). Not changed by CT-w-3: the handler's print is in both the old and the new code."
+}
+```
+
+## NFRA_CTLPLN-S9111 -- a real partner login's /api/scoped/partners calls reach the data proxy's default route
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9111",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~U7",
+  "surfaced_at": "2026-10-12T10:05:30Z",
+  "one_line": "A real partner login (firm 49financial, role user, no tier claim in its authorizer context) sent two /api/scoped/partners/books/relationship/... requests to the data proxy's default route on 2026-10-09T07:12:33Z; the proxy has no such route.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/opal-portal-data-proxy, Event lines 2026-10-09T07:12:33Z: GET .../fee-quarter/2026Q3 and GET .../platinum-summary, stage $default, authorizer context firmId 49financial, tier absent, role user, allowedFirmIds 49financial",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~62/DATA_PROXY_ROUTE_CLASS_CENSUS.md: the handler matches 41 routes, none under /api/scoped/",
+      "the 14 day window holds 0 other non-internal events outside this seat's own synthetic reads"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-u-7 pair section 2: callers read are the portal's FIRM_ALLOWED_PATHS pages; 36 routes have no portal caller and a non-internal caller on an unmatched path is refused 403.",
+  "world_is": "On 2026-10-09 these two paths matched no route in the handler code, whose unmatched-path answer is 404 Route not found (read from the code; the response itself is not in the log); since the CT-u-7 apply at 2026-10-12T04:31Z a non-internal caller on an unmatched path gets 403 instead. Either answer is a failure of the partner page that made the call, so CT-u-7 changed the status code and not the outcome. Whether the default route is meant to reach this function for /api/scoped/partners/* is not established here (the API Gateway route table was not read).",
+  "notes": "Observation only; no data was served by either answer."
+}
+```
