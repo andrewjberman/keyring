@@ -3407,3 +3407,23 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r164/p164_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-470` | the status tokens the gold's producer can write, with each count over the served gold; per firm entry and window the NON-POSITIVE-BASE days by what the account held the prior day; the order of assignment against ALL-HOLDINGS-EXCLUDED; the accounts whose claim moves under the contract as written and under the other reading | FWD-3 (a return on that account's own end-of-day holdings) | LOCAL | IB-pr-467 drained | P164-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~325. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 157. ROUND 165, WORKSTREAM ~P (2026-10-12 ~18:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6476 = PRD ADDENDUM v0.49 @6bed773b76 section 3)
+
+The CTO's list has seven items. Items 3 to 7 are cut now (independent of the reader). Items 1 and 2 (C-CHAINCLAIM in the reader;
+PARTIAL only when an absence holds) wait on the CVO's re-sign of the ratified-text half, by the CTO's word, and are cut in a
+later issuance of this workstream as round 166 (one release under one never-widen pair). Item 3 and items 1-2 share
+`performance/holdings_gold.py`; the later cut reads the merged file, so no two orders write it at once.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py`: AC1-AC3 FAIL at base for IB165-1, -2, -3, -5 and for IB165-4 AC1 and AC3
+(no file). IB165-4-AC2 PASSes at base BY DESIGN: it is the regression guard (the existing staging test, 5 passed, and test_build_only.sh, rc 0).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-471` | the opening/closing value members' names: every emitter and the wire contract, then a one-side producer rename only if the contract names them (PRD item 3, row W321-S1) | FWD-3 | WORLD (floor: infra path; nothing deployed) | none | P165-a |
+| `IB-pr-472` | the extractor locates a label inside its own section's bounds, proven offline on a page that carries both labels (item 4, row W324-S2) | FWD-4 | WORLD (floor) | none | P165-b |
+| `IB-pr-473` | the capture probe classifies a challenge as the READ path does; the probe pair runs only when the jar holds a token; the receipt keeps the probe's leaves per step (item 5, rows W302-S1/S2/S3, S85) | FWD-4 | WORLD (floor) | none | P165-c |
+| `IB-pr-474` | `build-and-upload.sh` exits non-zero when a restore from HEAD fails and names the files left (item 6, row S72) | FWD-14 | WORLD (floor) | none | P165-d |
+| `IB-pr-475` | two reads: `commentary_ref` at HEAD (row W309-S2); the prices store's writer and its schedule (row W315-S3) (item 7) | FWD-8, FWD-13 | LOCAL | none | P165-e |
+
+fanout: 5 of 5 chains, cap 8, reason: five cells with disjoint write sets and no edge. Assignees: 0.9.0_WK_IRPT_BCKEND~326 to ~330 (one each).

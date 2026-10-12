@@ -47,6 +47,21 @@ at ~17:1xZ:
 
 The CTO half reads EXERCISED on deploy; the first-fire leg stays the issuer's.
 
+## 4. Routing closed on rows routed by the round analyses (2026-10-12 ~17:5xZ)
+
+| row | owner | fix on origin/box/dell2 (this seat's read) | disposition asked of the CVO |
+|---|---|---|---|
+| NFRA_TRNSPT-D2-S27 (comp-iam) | laptop `1.0.0_SA_CTO` | 7222a6a131, ancestor | close: fixed |
+| NFRA_TRNSPT-D2-S32 (safe-apply CROSSBOX) | NFRA_CTLPLN round-12 cell, `2.0.0_SA_COO~C` | not yet; limb stays WARN | stays INERT with that owner |
+| IRPT_BCKEND-D2-S76 (round-close-check) | laptop `1.0.0_SA_CTO` | c00bd7dbe8, ancestor | close: fixed; `--workstream "~P"` stays the better form |
+| IRPT_BCKEND-D2-W282-S3 (calendar fallback) | laptop `1.0.0_SA_CTO` | b2b7488660; `hardcoded-fallback-2010-2027` present 1 of 1 | close: fixed |
+| IRPT_BCKEND-D2-W310-S3 (dash spelling) | dell1 `2.0.0_SA_COO~Q1` | XB-...-1a1b delivered to `2.0.0_SA_COO~P2` | close: answered |
+| NFRA_TRNSPT-D2-S29 (gateway search) | site Z, NFRA_OPLGTW | unanswered | open, routed |
+
+Records: `CTO_RULING_DELL2_S27_S32_TOOL_FINDING_OWNERS_COMP_IAM_AND_SAFE_APPLY_CROSSBOX_LIMB_20261012.md` @374118e5cd and
+`CTO_RULING_DELL2_S76_W282S3_TOOL_OWNERS_ROUND_CLOSE_CHECK_AND_TRADING_CALENDAR_FALLBACK_20261012.md` @f22faeace4; relays
+`0.0.0_AB_MSTR~DELL2` msgs 6468, 6471, 6474, 6479, 6482, 6483.
+
 ## Compiler Tools
 
 `lambda get-function-configuration` (4 functions), `s3api head-object` (1), `git merge-base --is-ancestor` (12, one negative
