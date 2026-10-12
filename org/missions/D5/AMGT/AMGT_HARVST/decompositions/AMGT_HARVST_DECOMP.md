@@ -3761,3 +3761,33 @@ Issuer `2.0.0_SA_COO~W1`. Series **`bw`**.
 - `bw-1` AC1 and AC2 are site-Z reads and cannot run from dell1 (by bu-1, AC1 would FAIL: WORKDIR is the old pin). AC3 base: FAIL
   as expected (no such file).
 - `bw-2` AC1 and AC2 base: FAIL as expected (no such file).
+
+## 93. ROUND 80 -- the enqueue tier fence, failure reasons, and the staged bs-3 successor (`1.0.0_SA_CTO~DELL1` msg 4352, `ledger/ROUND_ANALYSIS.round79.md` section 2), 2026-10-12 ~13:4xZ
+
+Round 79 slugged MAY-CLOSE (`3.0.0_SA_CVO` msg 4351, ADJUDICATION_v71 @b284aa2d50). bw-2 AC3 graded FAIL on clause 3 (all 8 failure
+details the bare word `error`, row D1-S7). The analysis's enrichment list: (1) the research-pull-enqueue tier fence, FIRST, fail
+closed, four arms; (2) D1-S7: every failure row carries its reason; (3) bs-5's instance rows amended to the two-class rule, which
+releases round 75's slug; (4) bs-3's successor, STAGED on Andrew's WSJ/Barron's sign-in.
+
+Issuer `2.0.0_SA_COO~W1`. Series **`bx`**.
+- **Fan-out:** 2 of 2 chains (bx-1 -> bx-2; bx-3), cap 8.
+- **Item 1 is cut as TWO cells** (build, then deploy) because a worker is LOCAL-only and a deploy is a WORLD act under its own
+  pair, as the CTO's ruling says ("under its own pair"). It is one outcome; the split is the class boundary, not extra scope.
+- **Item 3 is an issuer amendment, not a cell** (done @812da3235c; round 75 reads MAY-CLOSE).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bx-1` | `bx-1` | **The enqueue handler refuses a non-internal caller.** `lambda_handler` reads the authorizer `tier`, 403 unless exactly `internal`, no context is 403 (fail closed), the fence before any S3 or SQS call; unit tests (four arms and a mutant); `check_e2e.py` amended to send an internal context and given `--enqueue-only`. | WORLD by the gate's path floor (an `infra/aws/lambda/` path); the cell executes no world act | worker `0.9.0_WK_AMGT_HARVST~134` |
+| `HVST-bx-2` | `bx-2` | **The fenced handler deployed, and the deployed function proved.** Build, upload, a targeted plan that changes only the code hash, one `safe-apply`, and three side-effect-free invocations (no ticker): non-internal 403, no context 403, internal with no ticker 400. Under its own never-widen pair. The authorizer's `tier` field is read before the apply (C-d). | WORLD | `0.7.0_AE_CloudOps~DELL1` |
+| `HVST-bx-3` | `bx-3` | **Every failed pair names its reason.** The exception class and the vendor's message, cut to 300 characters, secrets redacted, no full body; a success row unchanged; planted failure of each kind in the fixture. | LOCAL | worker `0.9.0_WK_AMGT_HARVST~135` |
+| `HVST-bx-4` | (none) | **bs-3's successor, STAGED.** bbg, wsj and barrons each ending a completed cycle unattended, graded by the CVO. It names Andrew's Barron's and WSJ sign-in at site Z as its one wait (a vendor login is his act). Cut the turn the sign-in is on record. | LOCAL (read) | `0.7.0_AE_CloudOps~ZW` |
+
+**Then (not orders):** bx-3's merge under a never-widen pair (COO + the CTO's producer half); a re-pin of site Z's runner to the
+merged commit (a WORLD act under its own pair) and a bbg cycle read in which failures name their reasons; the full live e2e of the
+research seam, if the CTO wants it, through the Bloomberg queue.
+
+**Checks dry-run at the base before the cut:**
+- `bx-1` AC1 and AC2 base: FAIL as expected (no test file; "no tests ran").
+- `bx-3` AC1 base: FAIL as expected (no test file). AC2 base: PASS as expected (63 passed in 12.8 s).
+- `bx-2` AC1, AC2 and AC3 base: FAIL as expected (the `.out` files do not exist).
+- Full `lib/opal_data_harvest` suite at the base: 5 failed, as named in bv-1's order (pre-existing).
