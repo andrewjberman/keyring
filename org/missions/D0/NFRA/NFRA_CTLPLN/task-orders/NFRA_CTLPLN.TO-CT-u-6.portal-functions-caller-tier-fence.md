@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~62</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -72,19 +72,39 @@ PARTNER-firm login can open, name the page and the route in a row: the fence wil
 ### ACCEPTANCE
 
 <proof_of_spec>
-<criterion id="CTu6-AC1" cell_refs="CT-u-6"><invocation>python -m pytest -q infra/aws/lambda/portal_data_proxy/tests/test_internal_only.py</invocation><expect>passed</expect></criterion>
-`CTu6-AC1` -- the data-proxy tests pass, including the ten-route partner-403 arm.
+<criterion id="CTu6-AC1" cell_refs="CT-u-6"><invocation>grep -c "ROUTES total=" org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~62/DATA_PROXY_ROUTE_CLASS_CENSUS.md</invocation><expect>1</expect></criterion>
+`CTu6-AC1` -- the census exists and prints its denominator line once (AMENDMENT 1, step 1).
 
-<criterion id="CTu6-AC2" cell_refs="CT-u-6"><invocation>python -m pytest -q infra/aws/lambda/portal_content/tests/test_internal_only.py</invocation><expect>passed</expect></criterion>
-`CTu6-AC2` -- the content-api tests pass, including GET 403 for a partner, and PUT/DELETE unchanged.
+<criterion id="CTu6-AC2" cell_refs="CT-u-6"><invocation>python -m pytest -q infra/aws/lambda/portal_data_proxy/tests/test_route_class_fence.py</invocation><expect>passed</expect></criterion>
+`CTu6-AC2` -- the per-class data-proxy tests pass, including the `FIRM-SETS-CURRENT` drift test.
+
+<criterion id="CTu6-AC3" cell_refs="CT-u-6"><invocation>python -m pytest -q infra/aws/lambda/portal_content/tests/test_get_open_put_delete_fenced.py</invocation><expect>passed</expect></criterion>
+`CTu6-AC3` -- the content api GET is open to a partner and an internal caller; PUT/DELETE keep their firm fence.
 </proof_of_spec>
 
-<expected_criteria>CTu6-AC1,CTu6-AC2</expected_criteria>
+<expected_criteria>CTu6-AC1,CTu6-AC2,CTu6-AC3</expected_criteria>
 
 Each invocation runs from the worktree root under `timeout 120`. Write the proof instance to
 `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~62/NFRA_CTLPLN.TO-CT-u-6.portal-functions-caller-tier-fence.proof_of_spec.json`, validate it with
 `python .tools/proof-of-spec-check.py <instance> CTu6-AC1,CTu6-AC2`, and flip `<status>` to `complete` only when every mechanical criterion
 passes and the instance is VALID.
+
+
+<amendment>
+AMENDMENT 1 (issuer 2.0.0_SA_COO~C, 2026-10-12 ~03:2xZ) -- REOPENED on the CTO's ruling (1.0.0_SA_CTO msg 108435; PRD v0.24, FWD-28 re-worded) after row NFRA_CTLPLN-W62-S1: the tier-only fence would 403 pages partner firms are admitted to. Gate limb: none graded this modification (no new TO file; <placeholders> unchanged). SUPERSEDES the BUILD section's rule, items 1-3, as follows; the commits 1048c86508..02223f164c are inherited state:
+- THE NEW RULE (PRD v0.24 FWD-28): classify the data-proxy routes ONCE, by measurement. CLASS (i): a route called, directly or through a shared component, by a page whose path is in `FIRM_ALLOWED_PATHS` (`portal/src/lib/firmAccess.ts`). CLASS (ii): every other route. Class (ii) answers 403 unless authorizer `tier` is `internal`. Class (i) answers 403 unless the caller's `firmId` is in the union of the firm sets that SAME file admits for the pages that call it, OR `tier` is `internal`. The firm sets are never typed a second time.
+- CONSERVATIVE BY RULE: misclassifying a route as (ii) breaks partner pages (the hazard of row W62-S1); misclassifying one as (i) only leaves it as open as today to the partner firms. So a route is class (ii) ONLY when you can show that no `FIRM_ALLOWED_PATHS` page's import closure reaches the client function that calls it. Any route you cannot trace is class (i), with the union of ALL firm sets in the file.
+- STEP 1, CENSUS (write it first): `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~62/DATA_PROXY_ROUTE_CLASS_CENSUS.md`. Enumerate every route the data-proxy handler matches (print the denominator as a line `ROUTES total=<n>`; the CTO's figure is 11, report the true count and any difference). Per route: the route pattern, the `portal/src/api/portal-proxy.ts` function that calls it, each page file that imports that function (and each shared component that does), the page's `<Route path>` in `portal/src/App.tsx`, whether that path is in `FIRM_ALLOWED_PATHS`, the class, and the firm union. Trace by reading the portal source at the paths below; do not run the portal.
+- STEP 2, GENERATED FIRM SETS (one source): add `.tools/portal-proxy-firm-sets-gen.py`, which reads `portal/src/lib/firmAccess.ts` (default path, `--ts <path>` to override) and `infra/aws/lambda/portal_data_proxy/route_pages.json` (your census as data: route pattern -> list of page paths, class) and writes `infra/aws/lambda/portal_data_proxy/firm_access_generated.py` (a module with a dict `ROUTE_RULES`: route pattern -> `{"class": "i"|"ii", "firms": [..sorted..]}`). `--check` regenerates in memory and compares to the committed file, printing `FIRM-SETS-CURRENT` or `FIRM-SETS-DRIFT` and exiting 0 or 1. Standard library only; ASCII only; the generated file carries a header line naming the source file, its sha256 and the generator.
+- STEP 3, THE HANDLER: replace the single `_require_internal` gate in `infra/aws/lambda/portal_data_proxy/lambda_function.py` with a per-route gate driven by `firm_access_generated.ROUTE_RULES` (import it; the file `firm_access_generated.py` will be added to the function's package by the apply cell). Same position as before (after the OPTIONS and `?warm=1` returns, before every route). A path that matches no known route answers 403 (fail closed). Keep the helper's context read (`claims = ctx.get('lambda', ctx)`; `tier`, `firmId` read with `str(x or '').strip()`).
+- STEP 4, THE CONTENT API IS UNFENCED AGAIN: revert `infra/aws/lambda/portal_content/lambda_function.py` to the issuance base (`git show edef413890:infra/aws/lambda/portal_content/lambda_function.py`): the GET stays open to every verified portal login (page copy, LOW); PUT and DELETE keep their firm fence. DELETE `infra/aws/lambda/portal_content/tests/test_internal_only.py` (it asserts the superseded GET fence) and write a NEW file `infra/aws/lambda/portal_content/tests/test_get_open_put_delete_fenced.py` that proves exactly that: GET answers for a partner and for an internal caller, PUT/DELETE by a non-internal firm still 403.
+- TESTS (a NEW file `infra/aws/lambda/portal_data_proxy/tests/test_route_class_fence.py`; DELETE the old `test_internal_only.py` there, it asserts the superseded tier-only rule): per class, internal caller allowed; a partner in the admitted union allowed (class i); a firm outside the union 403 (class i); a partner firm 403 (class ii); no context, '', 'null' 403; unknown route 403; OPTIONS and `?warm=1` still 200 with no context; one test asserts `python .tools/portal-proxy-firm-sets-gen.py --check` prints `FIRM-SETS-CURRENT`.
+- NEW ACCEPTANCE (replaces the two criteria; at most three):
+  CTu6-AC1: `grep -c 'ROUTES total=' org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~62/DATA_PROXY_ROUTE_CLASS_CENSUS.md` expects `1`.
+  CTu6-AC2: `python -m pytest -q infra/aws/lambda/portal_data_proxy/tests/test_route_class_fence.py` expects `passed`.
+  CTu6-AC3: `python -m pytest -q infra/aws/lambda/portal_content/tests/test_get_open_put_delete_fenced.py` expects `passed`.
+- ADDED PATHS (the <paths> block below carries them): `.tools/portal-proxy-firm-sets-gen.py`, `infra/aws/lambda/portal_data_proxy/firm_access_generated.py`, `infra/aws/lambda/portal_data_proxy/route_pages.json`, and the READ-ONLY `portal/src/` tree for the census. You edit nothing under `portal/`.
+</amendment>
 
 <decomp_ref>
 <decomp_doc>org/missions/D0/NFRA/NFRA_CTLPLN/decompositions/NFRA_CTLPLN_DECOMP.remote1.md</decomp_doc>
@@ -93,7 +113,11 @@ passes and the instance is VALID.
 
 <paths>
 infra/aws/lambda/portal_data_proxy/lambda_function.py
+infra/aws/lambda/portal_data_proxy/firm_access_generated.py
+infra/aws/lambda/portal_data_proxy/route_pages.json
 infra/aws/lambda/portal_data_proxy/tests/
+.tools/portal-proxy-firm-sets-gen.py
+portal/src/
 infra/aws/lambda/portal_content/lambda_function.py
 infra/aws/lambda/portal_content/tests/
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
