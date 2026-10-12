@@ -28130,3 +28130,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The absences list is not on the wire, and the state that stands for it is PARTIAL on every holdings-basis answer by the code, so on screen the qualified presentation appears with or without an excluded day. Not seen on a served response."
 }
 ```
+
+## IRPT_BCKEND-D2-W319-S1 -- The reader's claim is inferred, not measured, for 124 to 144 of orion's accounts with an excluded day, for the reason of a missing trading day and not of the excluded day
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W319-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~319",
+  "surfaced_at": "2026-10-12T01:51:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The face says the reader skips a non-OK day and still gives the claim measured; for the 49F entry that holds in every cell, but for orion the claim is inferred for 144 of 894 (SI), 124 of 200 (YTD) and 134 of 240 (1Y) accounts with an excluded day, because of a different PARTIAL absence",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~319/IB160-1_reader_excluded_days.json: orion SI claim_the_reader_gives {inferred 144, measured 750}; orion YTD {inferred 124, measured 76}; orion 1Y {inferred 134, measured 106}; the accounts with none: inferred 32 in each of the three windows",
+      "infra/aws/lambda/investor-reporting/performance/holdings_gold.py:288-295 and :343: claim is inferred iff missing_trading_days is non-empty; absences_named of the same json: every inferred account carries missing_trading_days:PARTIAL (orion SI 21 + 51 + 72 = 144)",
+      "control: the same orion account with no excluded day, read again with one in-memory day set non-OK, keeps its claim in every cell"
+    ]
+  },
+  "spec_asserts": "The face (and PRD v0.46) states that the reader skips a non-OK day, chains the rest and still gives the claim measured.",
+  "world_is": "The claim follows missing trading days only (holdings_gold.py:288-295); an excluded day never changes it. For orion the claim is also inferred for accounts with none (32), so the claim value alone does not tell an excluded-day account from another."
+}
+```
+
+## IRPT_BCKEND-D2-W319-S2 -- A figure is served for accounts whose last row in the window is non-OK: 105 of orion's 200 YTD accounts with an excluded day, 125 of 894 in SI, 178 of 3736 for the 49F entry in SI
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W319-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~319",
+  "surfaced_at": "2026-10-12T01:51:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The face asks for a last_day_involved class and does not say how large it would be; the largest class for orion YTD and 1Y is the account whose last row is non-OK, not a first-day or an interior exclusion",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB160-1_reader_excluded_days.json: position_of_the_excluded_days last_day_involved: orion SI 125, YTD 105, QTD 4, 1Y 115; the 49F entry SI 178, YTD 114, QTD 4, 1Y 122",
+      "holdings_gold.py:246-250: the chain runs over the OK rows only, so a figure ends at the last OK day while the window's end is the latest landed day; the reader's period_end in value_facts (holdings_gold.py:275) names that day",
+      "not separated here: an account that left the book versus a late fault (counts only; the producer's inputs were not read)"
+    ]
+  },
+  "spec_asserts": "The face expects the position classes to be dominated by first-day and interior exclusions.",
+  "world_is": "A non-OK final row is common: the reader returns a figure that ends before the window's end for those accounts, with the same claim as for any other."
+}
+```
+
+## IRPT_BCKEND-D2-W319-S3 -- The reader refuses 1,296 of the 49F entry's Since Inception accounts (506 YTD, 714 1Y) as 'mapping missing or duplicate' because the account key list is read from the window's LAST partition only
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W319-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~319",
+  "surfaced_at": "2026-10-12T01:51:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The face splits accounts_read into with, none and refused and names refusal codes in refusals; it does not say a second refusal exists beside 'no OK row' that depends on the account being present on the latest day",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB160-1_reader_excluded_days.json: the 49F entry refusals SI {mapping missing or duplicate 1296, no OK row 724}; YTD {506, 788}; QTD {1, 898}; 1Y {714, 780}; orion has only 'no OK row' (53, 73, 174, 63)",
+      "holdings_gold.py:238 and :198-209: map_account matches the account against source.account_keys(days[-1]); an account with rows earlier in the window and none on the last partition is refused by name",
+      "driver choices that are not the reader's: a stand-in for the S3 transport and a memoised ids.opaque_account; the sample of 50 accounts per entry on SI and YTD gave identical outcomes in 200 of 200 comparisons (4 cells of 50)"
+    ]
+  },
+  "spec_asserts": "The face counts accounts_read as every account with one or more rows in the window.",
+  "world_is": "Those 1,296 accounts have rows in the window but cannot be served at all; they are counted in accounts_the_reader_refuses and carry no position class."
+}
+```
