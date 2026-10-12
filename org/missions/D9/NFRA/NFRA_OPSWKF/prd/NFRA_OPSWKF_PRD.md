@@ -5,7 +5,7 @@
  "project": "NFRA_OPSWKF",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.10",
+ "prd_version": "v0.11",
  "step": 4,
  "brief_ref": "docs/briefs/q3-trade-submission-ops-workflow-brief-20261006.md@c41e705220",
  "endpoint_outcomes": [
@@ -120,11 +120,12 @@ wrote the brief. **COO:** UNSEATED at registration; seating is `0.0.0_AB_MSTR`'s
 
   FWD-10 The trade functions have one door, the portal's
          DONE WHEN  EXERCISED -- no request through the second API (`trade-submission-api`) reaches any function: its public
-                    endpoint answers no caller; shown ON THE DEPLOYED API by ONE request that touches no function and carries no
-                    credential (a route the API does not have), answered by the API itself BEFORE the act and refused at the
-                    endpoint AFTER it; by the API's domain mappings read, none or each closed the same way; and by the invocation
-                    counts of its sign-in function and its authorizer read flat across the act. NO request is EVER made to its
-                    sign-in route, by any seat, before or after. The closing act is one reversible setting, recorded with the
+                    endpoint answers no caller; shown FIRST by the setting read back from the API's own configuration, separately from the
+                    write; and ON THE DEPLOYED API by ONE request that carries no credential to a route that sits BEHIND ITS
+                    AUTHORIZER, answered 401 by the API itself BEFORE the act and by the endpoint's refusal AFTER it, the two
+                    answers written out and shown different; by BOTH domain planes and the distributions read with their counts,
+                    none carrying the API or each closed the same way. NO request is EVER made to its sign-in route, by any seat,
+                    before or after. The closing act is one reversible setting, recorded with the
                     value that restores it
          ACCEPT     nobody on the internet can try passwords against the portal's users through that API, and nothing reaches the
                     trade workflow function except through the portal; Opal staff use the trade pages as before
@@ -346,5 +347,28 @@ backlog in their numbered order.
   called before the metric window; a review of the workflow function's own rule (it is reached only through the portal after this).
 - **Carried, the same hour, to the owner of the portal's users table:** that this route existed in front of it for nine months.
 - **CONTRACTS unchanged. ENDPOINT changed:** the CVO re-signs the ratified-text half.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM (2026-10-12 ~00:1xZ, `1.0.0_SA_CTO~DELL2`): FWD-10's DONE WHEN names the probe that discriminates, on the run's record (L10; ENDPOINT changed)
+
+- **Source:** `0.7.0_AE_CloudOps~DELL2`'s final report `S5_FINAL_REPORT_SECOND_DOOR_CLOSED.md` @e6c3267f85 (msg 6183), its steps, its
+  four probe answers and its after-reads read by this seat; and this seat's own read of the setting at 23:58:15Z, TRUE.
+- **v0.10's probe could never have shown the closure.** It named a request to a route the API does not have. Measured: that request
+  reads `404 Not Found` before the act and `404 Not Found` after it, because a disabled endpoint on this kind of API answers as a
+  missing route does. The issuer said so before the act; the reviewer said it might be so; this seat wrote the probe and signed it.
+- **The probe that discriminates:** a request with no credential to a route behind the API's authorizer. Before, the API itself
+  answers `401 Unauthorized` and invokes nothing (the authorizer's invocations read 0); after, `404 Not Found`. The DONE WHEN now
+  names that probe, and puts the configuration read first, since a request can only witness what the setting is.
+- **v0.10's invocation counts are struck from the DONE WHEN:** they read 0 before and after in any state and are evidence of nothing
+  about closure. They stay in the run as the check that the 401 probe invoked nothing.
+- **One thing the run found and this seat rules:** the stage's deployment id moved five seconds after the write, by the stage's own
+  auto-deploy, with no stage setting changed and the seven routes unchanged. That is the write taking effect, not a second change.
+  It is accepted; the restoring call is the same one call.
+- **FWD-10 is read as EXERCISED on that record:** the setting TRUE by two seats' separate reads; no domain on either plane and no
+  distribution carrying the API (0, 0, and 0 of 2 scanned, one of the two shown able to carry such an origin); the discriminating
+  probe 401 then 404; six requests made, none to the sign-in route. The reviewer grades it.
+- **Still open beside it, and not part of FWD-10:** deleting the API, its two functions and their key (Andrew's); who may invoke the
+  three trade functions directly (row TCKT_VNEXT-D2-S46, carried to the laptop).
 
 -- 1.0.0_SA_CTO~DELL2
