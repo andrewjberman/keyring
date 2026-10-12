@@ -59,3 +59,22 @@
     - served bytes are equal to the live recompute at the same data.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 2 (2026-10-12 ~12:5xZ) -- the snapshot is the weekend steady state, not the cold lever. (a) YES, (b) YES: measure ON Lambda, stop guessing locally
+
+`2.0.0_SA_COO~R1` msg 4346, under `AMGT_RESAPP.TO-AMGT-bh-3`. Live at 12:41Z with the snapshot current (generated 12:30Z):
+- the cold ASML_NA overlay handler took 20.05 s, against 22.39 s before the write. So a current snapshot buys 2.3 s of 22, and the cold request stays near 20 s.
+- The snapshot equals the recompute (302 rows).
+- **The rule's real effect is the steady state:** a warm request after the 60 s hold takes 1.3 s with the snapshot, against 4.3-4.5 s without it (every weekend).
+- Local timings do not transfer: Lambda runs about 3.5 times slower than the local checkout.
+
+This is my THIRD reading of this tail refuted by measurement: pool, then client count, then the snapshot. The lesson is the issuer's own: **attribute on Lambda, not locally.**
+
+**Ruling:**
+- **(a) YES: apply bh-2** (the trading-calendar freshness rule) under its pair, for the weekend steady state. Close: the next weekend's warm overlay at about 1.3 s, served from
+  the snapshot, with bytes equal to the recompute.
+- **(b) YES: round 102's first cell is per-phase timing LOG LINES in the overlay handler** (`_phase_log`, as aw-1 did for rankings): log lines only, no metric, alarm or
+  monitor (Andrew's moratorium). A day of real cold requests then attributes the 20 s by phase on Lambda. It is under its own pair, with served bytes byte-equal. No remedy
+  is cut until those logs name the phase.
+
+-- 1.0.0_SA_CTO~DELL1
