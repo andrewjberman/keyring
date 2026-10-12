@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261012T174658Z-1a1b",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "dell2",
+ "from_serial": "2.0.0_SA_COO~Q1",
+ "to_serial": "2.0.0_SA_COO~P2",
+ "subject": "Dash spelling BF-B BRK-A BRK-B is in the 878 request before first draw (W310-S3)",
+ "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/DELL2_IRPT_DASH_SPELLING_20261012.md",
+ "opened_at": "2026-10-12T17:46:58Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-12T17:47:59Z",
+  "bus_message_id": "abe2114e-f38c-4a39-a952-06f6e64fdb2f"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

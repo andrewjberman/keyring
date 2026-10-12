@@ -1010,3 +1010,27 @@
   "notes": "Fix is a one-line value change in gold-lambda.tf plus a targeted apply, under its own order and pair: it is an environment attribute, which this order's plan check treats as a stop. Not done here."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S19",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-12T17:44:32Z",
+  "one_line": "Correction to rows MDPF_CANON-D1-S17 and MDPF_CANON-D1-S18: both carry surfaced_at values (17:50:00Z and 17:50:30Z) that are later than the commit that landed them; the true surfacing hour is 17:38Z-17:39Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A row's surfaced_at is the time the finding was surfaced, taken from the clock (surprise-row-gate WARNs on a future stamp).",
+  "world_is": "Rows D1-S17 and D1-S18 were committed at 17:39Z in commit 17d0f0fc74 with surfaced_at 2026-10-12T17:50:00Z and 2026-10-12T17:50:30Z, typed by hand ahead of the clock. The facts in both rows were measured 17:30Z-17:36Z. The channel is append-only, so the rows are not edited; this row is the correction (issuer's note msg 4515).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "surprise-row-gate WARN at commit 17d0f0fc74: 'surfaced_at 2026-10-12T17:50:30Z, 11 min after the commit time 2026-10-12T17:39Z'",
+      "2.0.0_SA_COO~D1 msg 4515, 2026-10-12T17:41:50Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No fact in S17 or S18 depends on the stamp; both stand."
+}
+```
