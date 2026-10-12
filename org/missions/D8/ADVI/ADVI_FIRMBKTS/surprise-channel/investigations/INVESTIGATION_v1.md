@@ -5405,3 +5405,31 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   }
 ]
 ```
+
+## Row filed by 0.7.0_AE_CloudOps~FB1 (FB-f-10, act 3 delta copy, the tool's record phase)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S35",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~FB1",
+  "surfaced_at": "2026-10-12T07:34:48Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "r3_f7_delta.py apply reads every overwrite key's prior version serially (49,110 head_object calls, about 42 minutes at 17 per second) BEFORE its first copy, prints nothing until it ends, opens the rollback record in append mode, and its --budget-seconds bounds only the copy phase; an outer timeout kills the record phase silently and each re-run appends duplicate rows.",
+  "spec_asserts": "TO-FB-f-10 step 4 and the tool's own docstring: apply runs 'in bounded runs (--budget-seconds) until it prints its completion line'; it 'writes F7_DELTA_ROLLBACK.tsv BEFORE each overwrite and fsyncs it'; the issuer's amendment 1 describes apply as resumable.",
+  "world_is": "2026-10-12 06:33Z to 07:31Z, apply against the 53,031-key manifest (differs=49,110). Run 1 under an outer 590 s timeout and a 480 s budget: killed at 590 s, no output, 11,909 rows in the record, 0 copies landed (30 of 30 sampled recorded keys still at their prior VersionId; the plan unchanged). Probe under a 150 s timeout and a 20 s budget: killed, no output, record grown to 14,415 rows of which 2,506 were duplicates of keys already recorded (the second run restarted at the first key and appended). Full run with no outer timeout: record phase (cmd_apply lines 128-139: one head_object per key, written and flushed and fsynced after the loop) about 42 minutes, then the copy phase copied=49231 stale-source=0 errors=0 not-reached=0 in about 4 minutes; record 49,110 unique rows. The record is complete and fsynced before the first copy (the intent holds); 'before each overwrite' is per run, not per key; no copy ever ran before the record was complete, so no overwritten key lacks its prior row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools-adjacent: org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7_delta.py cmd_apply lines 112-168",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/act3/F7_ACT3_APPLY_RUN.txt (the full run's four lines)",
+      "the archived partial record: 11,909 unique keys of 11,909 rows, then 14,415 rows with 2,506 duplicates (scratchpad copy, counts quoted in the entry)",
+      "plan_after: absent=0 equal=53031 differs=0 refused=0 (the act's end state)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only; the act completed and nothing is armed. For the tool's owner (the issuer): (1) print a progress line per N rows in the record phase, and one line when it ends, so a reader can tell 'recording' from 'hung'; (2) open the record 'w' or skip keys already recorded, so a re-run does not append duplicates; (3) state in the docstring that --budget-seconds bounds the copy phase only, and that the first run needs about 45 minutes of wall clock. The CTO's per-key rollback still works from a duplicated record (same prior VersionId in every duplicate), so no rollback was ever at risk; this lane archived its partial record to scratch before the full run."
+}
+```
