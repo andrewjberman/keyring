@@ -42,6 +42,9 @@ it** (so no Bloomberg draw is made by this act). The message stays in the queue.
    overwrites nothing (your own round-82 read found it absent); (c) the bucket's versioning reads `Enabled`. If (a) reads zero objects, or (b)
    finds an existing object, STOP and file a row: do not substitute a ticker. (NVDA US Equity is NOT used: it is the e2e check's uncovered
    ticker, and its status object is the one LANDED record, which this act would overwrite.)
+1a. **The CTO's added arm, before the invoke (ADDENDUM 1 of his half, msg 4497):** in the same `bz2_ticker.out`, read the NVDA status object
+   `packs/NVDA_US_Equity/status.json` as the CONTROL (it must be present: `head-object` with its `VersionId` and `LastModified`, state
+   `LANDED`) next to the SAP key's `NoSuchKey`. A control that reads absent means the key grammar is wrong: STOP.
 2. **T0:** `date -u +%FT%TZ` into `bz2_before.out` with the function's `CODESHA256`, the queue's `ApproximateNumberOfMessages`
    (`aws sqs get-queue-attributes` for `opal-research-pull-requests`), and the chosen status object's `LastModified` and `state`.
 3a. **A 403 is a STOP (the CTO's half, msg 4489):** if the invoke answers 403, do NOT retry and do NOT vary the payload. Read the log for the
@@ -56,6 +59,8 @@ it** (so no Bloomberg draw is made by this act). The message stays in the queue.
    - the queue: `READ queue ApproximateNumberOfMessages <before> -> <after>` (expect +1; other callers may add more, so print both numbers);
    - the log group `/aws/lambda/opal-research-pull-enqueue` for events since T0: print every `OK:` line and every `DENIED` line verbatim
      (read with the single UNQUOTED term, the shim rewrites a quoted pattern: row D1-S10), then `DENIED LINES SINCE T0: <n>`.
+   - **the control, after:** `head-object` on `packs/NVDA_US_Equity/status.json` again; write
+     `NVDA status VersionId before <v> after <v> UNCHANGED: yes|no`. **Any change is a STOP** (report it, do not repair it).
    Write all to `bz2_reads.out`.
 5. **Leave the pull consumer alone.** Do not run `pull_consumer.py` in any mode. Do not delete the message.
 6. Write `bz2_report.out` stating, in prose, what the act changed in the world (one status object, one message), what it did not do (no
@@ -104,6 +109,9 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   `LANDED` object was the issuer's mistake: a status object exists only after the seam has been exercised on a ticker, and a covered name
   never exercised has none. NVDA would have meant OVERWRITING the one LANDED record (and it is the check's own UNCOVERED ticker). The
   ticker is now fixed to `SAP GY Equity` and the act creates its first status object. Both halves must name it (the CTO's re-sign).
+- **AMENDMENT 3 (2026-10-12 ~16:4xZ, issuer; no criterion changes):** the CTO half is RE-SIGNED for `SAP GY Equity` @5d747ddc80
+  (`ledger/NEVER_WIDEN_ROUND82_BZ2_CTO_HALF.md` ADDENDUM 1, msg 4497) with one added arm: the NVDA status key is the control before, and its
+  VersionId must be UNCHANGED after (steps 1a and 4). Both halves now name the ticker: the act may start.
 - The pair: COO half `deliverables/2.0.0_SA_COO_W1/round82/NEVER_WIDEN_HALF_COO_DRIVEN_ENQUEUE_READ.md` (signed in the issuance commit) and
   `1.0.0_SA_CTO~DELL1`'s half (owed). The act does not start without both.
 - **Read narrowly, as the fence's own arms were:** the CTO's text says "its queue row". The consumer is a person-started poller
