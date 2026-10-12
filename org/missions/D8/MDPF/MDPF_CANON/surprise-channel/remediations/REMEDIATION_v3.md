@@ -22,7 +22,7 @@ round-3 analysis (ARMED disarm owner as filed). The rows in REMEDIATION_v1 and v
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v4"
     },
@@ -31,7 +31,7 @@ round-3 analysis (ARMED disarm owner as filed). The rows in REMEDIATION_v1 and v
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "MDPF_CANON-D1-W8-S2",

@@ -104,3 +104,20 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <round>80</round>
 <slot>dell1</slot>
 <fabric>dell1</fabric>
+
+**COMPLETE 2026-10-12 ~14:1xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Built:** worker ~135, branch `wk-AMGT_HARVST-135` @4b549b166b (build 48ff285b05, rows cd505416c0, proof 6235bc9e9e, channel bytes
+  restored 4b549b166b). Proof VALID rc 0 (re-run by this seat in the worktree with `--governing-order`).
+- **Merged:** 1c69fa35a3 on box/dell1 by `safe-merge.sh` (6 files, 0 dropped; the first two attempts lost the race to other seats'
+  commits and the third refused on another seat's uncommitted row in the same channel file, so nothing landed until `HV1` committed).
+- **AC1 PASS** `11 passed in 1.33s` (re-run). **AC2 PASS** `63 passed in 31.81s` (re-run). Full suite: 4 failed before and after (the
+  same four), 781 -> 792 passed. The mutant arm fired.
+- **Rows:** D1-W135-S1 INERT (the base count is 4, not the 5 this face quoted: test_bn1 passes at the base; the issuer's number was
+  inherited from bv-1's order and was stale). D1-W135-S3 INERT (redaction also removes URL userinfo; accepted: it only removes more).
+  **D1-W135-S2 ARMED, disarm owner this seat:** the reason was dropped at three hops (the driver's run-record branch, the worker's
+  run-record entry, the worker's generic exception). The merge lands the fix. **The world still differs from the spec until the site Z
+  runner is re-pinned from b5a7a3a4b6 to a commit carrying 1c69fa35a3**: that is a WORLD act under its own pair, not this round's
+  order, so the hazard's text is met by the merge and the SYMPTOM persists. The CVO writes the clock; this seat sends the word and says so.
+- **Next (not orders):** the re-pin, and a bbg cycle read in which failures name their reasons (AMGT_HARVST FWD-18's acceptance).
+
+<status>complete</status>

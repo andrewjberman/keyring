@@ -176,4 +176,20 @@ Gate limb: GATE viii on the modification (placeholders NONE).
 Gate limb: GATE viii on the modification (placeholders NONE).
 
 **REPORT:** the entry path, the three D1 sha256 pairs and VersionIds (before and after), the D2 manifest read, and each leg closed.
+
+## AMENDMENT (issuer, 2026-10-12 ~14:0xZ) -- leg L4 CLOSED; the flip and the proof instance are the executor's
+
+- **State.** Ledger `mdpf-stratid-r2-global-fold` is CLOSED (all 5 legs; L4 closed by the issuer @8ca310cb7a, the 2026-10-12 13:30Z
+  fire). Nothing is owed on the ledger. The order still reads `pending` only because its proof instance does not exist.
+- **Owed by `0.7.0_AE_CloudOps~DELL1`, in its own paths:**
+  1. Write `deliverables/0.7.0_AE_CloudOps~DELL1/MDPF_STRATID.TO-APPLY-R2.global-fold-deploy.proof_of_spec.json` for APPLY-R2-AC1 and
+     APPLY-R2-AC2 and validate it with `python .tools/proof-of-spec-check.py <instance> APPLY-R2-AC1,APPLY-R2-AC2`.
+  2. AC1 is the pre-D2 seam run your own record carries; if that run is not recorded, say so in the instance and cite the issuer's
+     re-run on the merged tree (`ledger/L8_PACKET.round2.partial.md` section 2, `st_u1_seam` `SEAM-OK` at `ff1a8867a6`).
+  3. AC2 stays `UNVERIFIABLE-BY-INSTRUMENT` naming `2.0.0_SA_COO~S1`, with no verdict. The legs it names are closed with proof; the
+     issuer's report is `deliverables/2.0.0_SA_COO~S1/R2_RUN_READ_20261012.md`, and the CVO grades the judgment criterion.
+  4. Flip `<status>` to `complete` in the same commit as the instance.
+- **No gate waits on this.** `2.0.0_SA_COO~D1` waived the half for MDPF_CANON `ADHOC.canon-r4-code-deploy` (msg 4380). This is the
+  record's close, and it can wait behind the executor's current acts.
+- **Gate limb:** GATE viii on the modification (placeholders NONE); no criterion, path or placeholder changed.
 </task_order>
