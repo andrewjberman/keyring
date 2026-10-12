@@ -7334,3 +7334,26 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W148-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~148",
+  "surfaced_at": "2026-10-12T01:22:40Z",
+  "one_line": "The served close the order names for the 19 funds (r34/after security_day_price) is not their unadjusted close: it agrees with the cache Close on 6 of 1,878 units, so the flat-charge gap fits 2 of 936 on it and 936 of 936 on round 76's own close (w129 variant).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's DATA line: served close = r34/after/security_day_price.parquet, and the face's P3 and 'the 19 funds' read against the served close; the test text defines close as the UNADJUSTED close.",
+  "world_is": "For the 19 funds r34/after is the stored series that round 77 left on the store (not substituted); only the 73 substituted funds carry the unadjusted vendor close there. Round 76's unadjusted close for the 19 is the w129 variant series (agrees with the cache Close on 25,236 of 25,311 series dates). I ran the unit build on r34/after first (in-sample fit 2 of 936), saw it, then used the w129 variant for the 19 (IN, P3) as the test text's 'unadjusted close' requires; P1 uses r34/after (31 funds, 10,633 of 10,636 units agree with the cache Close within a cent) and P2 the cache Close. No constant, window, threshold or order was changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-cotbkf-83/.scratch/w148/chk1.py output at 2026-10-12T01:22:40Z: baseline 1687 of 25333 and variant 25236 of 25311 series dates agree with the cache Close; r34/after close of the 19 vs cache Close: 6 of 1878 units agree",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~148/PRICE_PAID_CAUSES.json close_source_for_the_nineteen"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
