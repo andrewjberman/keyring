@@ -5509,3 +5509,52 @@ Routing the read census UNROUTED sites and the negative arm surfaced the rows be
   "notes": "Environmental: the list lives on another box or path. Not remediated by this worker; the drain or the box owner can rerun the client-data check against this commit with the list in place."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W54-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~54",
+  "surfaced_at": "2026-10-12T08:07:32Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The safe-commit client-data check could not run for the re-pin commit e274a0e60c: the hashed account-id list is absent on this box, so the commit was not checked for client account ids.",
+  "spec_asserts": "The commit gates run by safe-commit.sh pass the re-pin commit; the order makes no separate client-data claim.",
+  "world_is": "safe-commit output for e274a0e60c: 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).' The commit still committed (rc 0). Staged content is the source map's pin and sha256 hex values only; the check was not run, so that is not established by the check. Same condition as ADVI_FIRMBKTS-D1-W53-S2 on the flip commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for e274a0e60c (run 2026-10-12 in /c/dev/wk-firmbkts-54): 'WARN: client-data-check: hashed account-id list ABSENT'",
+      "git show --stat e274a0e60c: 1 file changed, 16 insertions(+), 16 deletions(-) in infra/aws/lambda/ci/lambda-source-map.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Environmental: the list is not on this box. Not remediated by this worker; the drain or the box owner can rerun the client-data check against e274a0e60c with the list in place."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W54-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~54",
+  "surfaced_at": "2026-10-12T08:07:32Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B1",
+  "one_line": "The pre-commit risk reflex put HOLD on infra/aws/lambda/ci/lambda-source-map.json and cited a memory file that is not readable on this box; the commit proceeded.",
+  "spec_asserts": "The order names no pre-commit risk check; the one-file re-pin commit proceeds on the order's own gates.",
+  "world_is": "risk-reflex output at commit e274a0e60c: two '[HOLD] infra/aws/lambda/ci/lambda-source-map.json' lines (15 recorded claims each), citing memory/feedback_structural_over_cultural_pattern.md:21 ('6. **Untracked-production-source-file gate (pending ...) surfaced 2026-05'). That memory file was not found under ~/.claude/projects/C--dev-ajb-workspace/memory on this box, so the cited text was not read. The cited claim concerns an untracked production-source gate; this commit touches one tracked file. The commit went through (rc 0).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for e274a0e60c: '[risk-reflex] [HOLD] infra/aws/lambda/ci/lambda-source-map.json' with 'memory/feedback_structural_over_cultural_pattern.md:21' cited",
+      "read at this box: sed -n '15,25p' on /c/Users/Test/.claude/projects/C--dev-ajb-workspace/memory/feedback_structural_over_cultural_pattern.md returned 'No such file or directory'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED because the warning's content is unread here and the estate wrote it against this node. Disarm owner is the issuer, who can read the citation and rule on the hold before the deploy order under the act 4 pair."
+}
+```
