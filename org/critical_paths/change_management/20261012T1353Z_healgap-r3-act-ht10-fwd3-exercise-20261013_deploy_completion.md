@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | verify | restore actor 0.7.0_AE_CloudOps~FBL ack on record before the induce (an agent-side ack, not a delivery receipt) | the ack message id and read time |  | OPEN |
+| L1 | verify | restore actor 0.7.0_AE_CloudOps~FBL ack on record before the induce (an agent-side ack, not a delivery receipt) | the ack message id and read time | FBL's CROSSBOX-ACK of XB-20261012T135310Z-0cab is ON RECORD: 0.7.0_AE_CloudOps~FBL read the order (body CROSSBOX_ORDER_FBL_HG_T10_RESTORE_20261012.md @bca2e54003) at 2026-10-12T14:16:37Z; recorded and pushed by 0.0.0_AB_MSTR~DELL1 (box/dell1 87935f312e, ls-remote read), reported to this seat in msg 4405 at 14:21Z. FBL's text: it reads rule cot-bronze-complete / target cot-rebalancer-runner-reattempt at 12:30Z on 2026-10-13, restores {mode:pull} only if induce is still present, touches nothing else; it holds NO timer (it acts at 12:30Z only if the seat is live then); hard backstop before 10:30Z on 2026-10-14. NAMED RESIDUAL: the actor is not a timer, so the restore is as live as the lane; this seat's own step-3 restore and read-back is the first line, FBL the second, the unexercised next sentinel the failure mode (a second induced day). | CLOSED 20261012T142129Z |
 | L2 | activation | induce set on target cot-rebalancer-runner-reattempt only, by PutTargets, read back | list-targets-by-rule input carries induce; hg_t10_exercise.py target prints TARGET-INDUCED; the 12:45Z target input still {mode:pull} |  | OPEN |
 | L3 | verify | the induced hole read: result PARTIAL, accounts missing, no stamp, no accounts keys, no silver REPORT | hg_t10_exercise.py partial --date 2026-10-13 prints PARTIAL-OK |  | OPEN |
 | L4 | activation | the sentinel target restored to {mode:pull}, read back | hg_t10_exercise.py target prints TARGET-CLEAR; terraform plan -target on the target reads no change |  | OPEN |
@@ -23,3 +23,4 @@
 ## Log
 
 - 20261012T135344Z OPENED by 2.0.0_SA_COO~G1 with 7 leg(s)
+- 20261012T142129Z LEG L1 closed: FBL's CROSSBOX-ACK of XB-20261012T135310Z-0cab is ON RECORD: 0.7.0_AE_CloudOps~FBL read the order (body CROSSBOX_ORDER_F

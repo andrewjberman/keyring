@@ -25,3 +25,51 @@
 ## Log
 
 - 20261012T134056Z OPENED by 0.7.0_AE_CloudOps~FB1 with 9 leg(s)
+
+
+## ACT 4, THE DELL1 LEG -- hand record (0.7.0_AE_CloudOps~FB1, 2026-10-12T14:23:54Z; GO @8cd6a18a3b)
+
+- **Pair:** COO half `0a4d82ac06` + ADDENDA 1 and 2, CTO half `507d3b3ce1` + ADDENDA 1 to 5, read at HEAD, 0 uncommitted. Flip commit
+  `69679b90e3dc52b670d33fddd96d06be1deaac90` (in HEAD), re-pins `e274a0e60cf43ce8f80db87e20f0e070d62906e0` (in HEAD).
+- **Pre-flip reads (13:4xZ-14:02Z):** `r4_oai.py` 3 of 3; `r4_flipcommit.py --verify` 4 of 4; `r4_repin.py` run in a detached worktree at the
+  re-pin: R1 PASS (8 of 8 rows), R2/R3 FAIL for irpt-ycharts-generate only (that function builds from the kept branch below, not at the re-pin);
+  the other seven read the rehearsal hashes. Authority: `simulate-principal-policy` at each of the 8 function ARNs for the actor
+  `user/cloudops-dell1-agent-user`, one resource per call: UpdateFunctionCode and GetFunctionConfiguration `allowed` 16 of 16; control
+  `shared-advisor-router` `explicitDeny`; s3:PutObject at the artifact key `allowed`. No grant created.
+- **TTL, READ AND NAMED:** distribution EVTSA9VEHNZVH, 29 behaviors, 4 cache policies: Managed-CachingDisabled 0/0/0;
+  opal-scoped-advisor-by-firm min 1 / default 60 / max 31536000 (the origin's max-age governs; the router-response injects max-age=60 per the
+  GO); json-tiered-5min-cache 0/300/31536000; opal-api-general-5min-cache 0/300/31536000. No invalidation was added.
+- **Builds (8 of 8 equal the issuer's rehearsal, `ACT4_IRPT_EXPECT_ISSUER.json`):** seven from the main tree; irpt-ycharts-generate from the
+  kept branch `scratch/r4-act4-ycharts-pin` (c4ca0c9a99) in a throwaway worktree (`NeAB50CNXWvM5Y6nsba220QmsEiASbVbXcZVRYe4MUM=`); irpt-narrative
+  rebuilt from a clean detached worktree at the re-pin after the main-tree build read cQ+WcTub... (row `ADVI_FIRMBKTS-D1-S37`; that object version
+  never applied). Each prior S3 object version re-read: its bytes equal the function's deployed CodeSha256 (8 of 8): the rollback record,
+  `act4_irpt/builds_and_priors.json`. `ACT4_EXPECT.json` written.
+- **BEFORE sample (14:00:41Z, determinism control: a second run, 14 of 14 records equal):** 7 functions x (1 granted, 1 refused viewer), viewers
+  drawn from the ownership map and `opal-users-v2` (a partner row and an active profile each; not named); statuses {200, 403, 404, 422}, 0 5xx.
+  The performance adapter is outside the seven, per the census.
+- **Plans (8, scoped `-target`, parallel):** each `Plan: 0 to add, 1 to change, 0 to destroy`, exactly the function, differing attributes
+  `last_modified`, `s3_object_version`, `source_code_hash` only, environment equal, after-hash equal to the artifact (8 of 8).
+- **Apply, sequential via `.tools/safe-apply.sh`, FIRST unit start 2026-10-12T14:03:43Z, LAST unit end 2026-10-12T14:13:46Z** (about 10 minutes
+  end to end, 8 x about 75 s), each `Apply complete! Resources: 0 added, 1 changed, 0 destroyed.`, rc 0. Order, per unit start and end:
+  `act4_irpt/apply_times.txt`. **The flip units began without the laptop leg: I did not confirm FBL's start minute, and the COO's HOLD
+  (msg 4408) was sent at 14:21:30Z, after the last unit.** The split with the edge units is open until FB-f-19 lands.
+- **AC1** `r4_act4.py --arms irpt`: `ROUND 4 ACT 4 IRPT: 8 of 8 arms`, exit 0 (14:14Z). **AC2** `r4_sample_eq.py`: `SAMPLE EQUAL: 14 of 14 cases;
+  granted cases 7, refused cases 7; ownership reads at the canonical key 0` (the field is empty by construction, row `ADVI_FIRMBKTS-D1-S39`).
+  **AC3** act-3 compare: `DEST-VS-MANIFEST: EQUAL` (53031 present, 0 missing, 0 mismatch), exit 0 (14:18Z). Deployed artifacts: 8 of 8 carry
+  `loaders.py` equal to the flip commit's blob and name `opal-data-49financial`.
+- **Performance adapter (named, as ordered):** the census event refuses at input validation (`explicit server-issued selection required`); no
+  evidence artifact written, no key to name; invoked twice (sampler, one debug re-run), both refused (row S39).
+- **platinum_dest_view.py** shipped at 14:17Z (`safe-deploy.sh`, 1 path, DEPLOYED and VERIFY OK); `deployed-equal` then reads 18 of 20, the other
+  two being another project's undeployed commits (row `ADVI_FIRMBKTS-D1-S38`).
+- **Post-flip OAI read** (14:21Z): `r4_oai.py` 3 of 3 again.
+- **Seat hygiene:** one debugging print of mine showed the head of one directory-search response in this seat's session output (no write to
+  any file or message); the printing was removed from the sampler path. Two scratch worktrees (`wt_repin`, `wt_ycharts`) sit under this seat's
+  scratch directory; they are not removed here (recursive deletion).
+- **Open:** the first hour's read (ends 15:13:46Z), the COO's ruling on leave-or-roll-back, the close.
+
+## THE COO'S RULING ON THE OPEN SPLIT (msg 4416, 2026-10-12T14:22:36Z)
+
+- Leave all eight in place; no rollback now (copies byte-equal, no producer writes the legacy home, sample 14 of 14 equal).
+- Until the edge leg lands: read BOTH ownership maps at 15:00Z, 16:00Z and 17:00Z and print their VersionIds. Any difference, or the laptop leg
+  unable to begin by 17:00Z, means ROLL ALL EIGHT BACK. Nothing else moves.
+- Split record: first unit 2026-10-12T14:03:43Z (irpt-49f-reporting-read-lambda), last unit end 2026-10-12T14:13:46Z (irpt-ycharts-generate).

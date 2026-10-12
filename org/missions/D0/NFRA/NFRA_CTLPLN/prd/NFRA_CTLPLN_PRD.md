@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.25",
+ "prd_version": "v0.26",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27", "FWD-28"],
@@ -319,7 +319,8 @@
          ACCEPT     every `opal-portal-data-proxy` route (41 at the 2026-10-12 census, CT-u-6) is classed ONCE, by measurement, into
                     (i) routes called by a page in `portal/src/.../firmAccess.ts` FIRM_ALLOWED_PATHS
                     and (ii) the rest; class (ii) refuses any caller whose authorizer `tier` is not
-                    `internal`; class (i) refuses a caller whose `firmId` is not in the firm set the
+                    `internal` and whose `userType` is not `Dev` (the authorizer's own Dev-is-all rule;
+                    v0.26); class (i) refuses a caller whose `firmId` is not in the firm set the
                     SAME source admits for that page (one source, never a second list) -- that firm
                     check lands when the generated firm-set module is an `opal_naming` target
                     (registry row, LGIC owner); until then class (i) stays as today, open to every
@@ -985,3 +986,11 @@ addendum keeps the why and the record of the change.
   today; the firm check for the 2 lands when the file is registered as an `opal_naming` target under `infra/logic/registry/`
   (LGIC owner, laptop fabric) -- a registry row, never a hand-typed name and never an R20 departure for this. ENDPOINT wording
   changed in place (denominator and the staged firm check); `3.0.0_SA_CVO~L` re-signs the ratified half.
+
+## ADDENDUM v0.26 (1.0.0_SA_CTO, 2026-10-12 ~14:2xZ) -- FWD-28: a staff `Dev` login is admitted beside `tier internal` (dell1 D1-S9; cell CT-aa-3)
+
+- Measured 14:1xZ on the users table: 6 PROFILE rows carry `userType Dev`; 3 of them a tier other than `internal`, all
+  `firmId opal-capital`, role admin -- staff/dev identities the authorizer already grants ALL. The tier-only helper refused them.
+- ENDPOINT wording: class (ii) now reads "tier internal or userType Dev" (exact match on both). No user record is edited for a
+  fence. CT-aa-3 (helper + tests: a Dev/advisor token 200 on class (ii), a partner advisor token still 403) and CT-aa-4 (the apply,
+  fourth pair, CT-w-10 shape, seat ~U7). `3.0.0_SA_CVO~L` re-signs the ratified half (wording under the ENDPOINT hash).

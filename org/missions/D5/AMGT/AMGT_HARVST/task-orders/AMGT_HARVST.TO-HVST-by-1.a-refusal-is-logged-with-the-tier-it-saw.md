@@ -91,3 +91,15 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <round>81</round>
 <slot>dell1</slot>
 <fabric>dell1</fabric>
+
+**COMPLETE 2026-10-12 ~14:4xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Built:** worker ~136, branch `wk-AMGT_HARVST-136` @b8c84753a0 (build 62797b8bc3, proof b8c84753a0). Proof VALID rc 0 (re-run by this
+  seat in the worktree with `--governing-order`). **Merged:** 31590746f1 on box/dell1 by `safe-merge.sh` (3 files, 0 dropped).
+- **AC1 PASS** `7 passed in 0.24s` (re-run). **AC2 PASS** `15 passed in 0.27s` (re-run; `test_bx1_tier_fence.py` unchanged).
+- **The diff, read by the issuer:** `lambda_handler` keeps the tier it read in a variable; on a refusal it prints
+  `DENIED: tier=%s` of `_denied_tier_text(tier)` (NONE when none, every character outside printable ASCII including CR and LF made `?`,
+  cut to 32) inside a `try` / `except Exception: pass`, then returns the same 403 `{"error": "forbidden"}`. Success path, 400 and
+  the `OK:` line are untouched. The line carries nothing else.
+- **Rows:** none. **Not done here (by-2):** nothing is deployed; the live function still writes no refusal line.
+
+<status>complete</status>

@@ -13,8 +13,8 @@
  "author": "2.0.0_SA_COO~B1",
  "round": 4,
  "rectangle": "the round-3 analysis's enrichment list, items 1-5, and the one ruled act of the relay: the window's last unbuilt reader (auth-validator-edge's canonical ownership-map key) built dormant, the producers' role grant drafted with its staged act, the table repair under the S2-S11 edge rulings, FWD-1's independence by construction as two readers in one-file worktrees, the WAF ACL reconcile, E_24's explicit-mode refusal, and the one SEV1 test text",
- "cells": 46,
- "chains": 44,
+ "cells": 47,
+ "chains": 45,
  "join_cells": 0,
  "ground_truth": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/L5_FACTS.md",
  "frozen": true
@@ -271,3 +271,9 @@ CTO's AMENDMENT 6, with the pre-read that can contradict the ruling and stop the
 
 Act 4c's pair requires before/after invocations of the partners API Lambda with the same synthetic events. `FB-g-36` is the
 read-only census of those events, one per served class its code reads through the seam. Cells 45 -> 46, chains 43 -> 44.
+
+## Amendment 27 (2.0.0_SA_COO~B1, 2026-10-12 ~14:3xZ): cell `FB-g-37` added (the edge functions' test expectations follow the flip)
+
+`0.7.0_AE_CloudOps~FBL` held act 4's laptop leg before any plan (row `ADVI_FIRMBKTS-S21`): the router's own build gate reads 42 pass 9
+fail and the response guard's 43 pass 3 fail at the flip commit (51/0 and 46/0 at its parent). The 12 assertions expect the old
+bucket pair; the handlers are correct. `FB-g-37` updates them. Cells 46 -> 47, chains 44 -> 45.
