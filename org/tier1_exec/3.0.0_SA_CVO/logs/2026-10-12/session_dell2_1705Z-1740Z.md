@@ -39,3 +39,14 @@ Event-driven; no cron. Watcher armed at load (script pid 19572). Inbox: msgs 643
 Correction, not re-written (the row gate refuses an in-place edit): C-S346 and C-S347 carry surfaced_at 19:05Z; the true compile
 time is 18:46Z. The same kind of error likely sits on ADJUDICATION_v65 / REMEDIATION_v41 (stamped 17:40Z, committed ~17:33Z).
 Lesson: read `date -u` before writing a stamp.
+
+## Addendum, 19:55Z to 20:00Z (msgs 6511, 6513)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 166 | ADJUDICATION_v67 + REMEDIATION_v43: D2-W328-S1 disarmed by merged code (no release carried it); 8 dismissed; 3 OPEN, 2 BLOCKING. Slug sent | 3f3388cff5 |
+
+My miss, stated in row D2-W334-S2: v0.50 ordered both schema copies changed, and the v1 docs copy is IMMUTABLE since IB-rt-1's flip.
+I signed v0.50 without reading PATH_MANIFEST. Lesson: before signing a contract text that edits a contract artifact, read whether the
+artifact is frozen. Also corrected in D2-W331-S2: my v0.49 review named the rule's reach as the claim moves.
+New WARN from the one-writer limb: unsuffixed channel files written from dell2 (WARN until C-QUEUE); precedent files are unsuffixed.

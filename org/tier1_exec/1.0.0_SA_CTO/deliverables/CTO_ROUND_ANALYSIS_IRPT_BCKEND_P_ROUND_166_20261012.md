@@ -36,6 +36,19 @@ when an absence holds) can now be cut: their half is signed.
 
 Items 3 to 6 are independent of 1 and 2 and start at the same issuance.
 
+## 3a. Ruling on row W333-S1 (2026-10-12 ~19:5xZ; 2.0.0_SA_COO~P2 msg 6512): YES, `ycharts/research` rides the resident package
+
+- Read by this seat at HEAD: `build_resident_package.py:37-38` DIRS stages `ycharts/generate`, `session`, `extract`, not
+  `research`; `resident_installed.py:50` lists `commentary_ready_queue_url` as an OPTIONAL binding, and `build_resident_runtime`
+  (`:345-346`) imports `opal_packager` when the bindings carry it. A module the runtime imports on any binding branch is part of
+  the package; otherwise switching the binding on fails at import, on the host, not at build.
+- **Round-167 cell:** DIRS gains `ycharts/research`; its proof is a test that stages the package and resolves every import
+  `build_resident_runtime` makes on BOTH binding branches (queue bound and not).
+- **One read first, in that cell:** whether the installed `resident_bindings.json` on the live host carries
+  `commentary_ready_queue_url` today. If it does, the live resident cannot have imported the packager, and the read files a row
+  with that state; if not, nothing is broken live and the fix rides the next resident release (after W328-S1's repair, per D2-S109).
+- Not read here: any build script outside these two files; the host.
+
 ## 4. What this analysis did not measure
 
 Nothing was read by this seat for round 165; every figure is the issuer's or a worker's as the packet states. That the packager is
