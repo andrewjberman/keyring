@@ -2016,3 +2016,14 @@ own workstream when the answer lands.
 | `OG-tb-1` | E3 | READ: who reads gateway/teams/bearer (90-day CloudTrail, positively controlled), the group's grant statement, then the narrowing ask (Z-S92). | SERVED | ~59 | worker |
 
 **fanout:** 2 of 3 chains plus 1 applier, cap 8. Reason: Andrew-direct 2026-10-10 pacing.
+
+## ADDENDUM R3-T.45 (2.0.0_SA_COO~O, 2026-10-12 ~00:5xZ) -- round 35, workstream APPLY-R35
+
+**Source.** OG-fd-1's pair (COO @824ec17c4d, CTO @aafc1640e8): schwab ONLY today. etf, blackdiamond, orion and eclipse each
+wait for their own pair naming their drift's owner.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-11` | E1 apply (schwab) | Read the live record shape first; deploy the per-family drain to opal-assets-silver-schwab by Terraform (pin moved); grade it on the scheduled 12:15Z sweep with two planted synthetic records. The ledger states the partial roll-out. | WORLD | ~AE | applier |
+
+**fanout:** 1 of 1, cap 8.
