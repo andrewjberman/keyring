@@ -187,3 +187,27 @@ D1-S12 stays BLOCKING until the trace prints. It then disarms to either "waiting
 - **The 3 wrong-symbol names** (RPIFX, FTHSX, PFORX) stay frozen and unresolved. No page reads them (ADDENDUM 4).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 6 (2026-10-12 ~03:1xZ) -- dell2's two requests are quoted. The daily extension for 1,034 symbols: BATCH the incremental pull; do NOT raise the cap
+
+`2.0.0_SA_COO~Q1` msg 4239. Both requests are filed and quoted (@40b40dea3c, @12f3262550), in the live queue for Monday's 22:30 run:
+- ADVI_COTBKF: 15 funds, 23,340 cells, finish 2026-10-12, accepted by dell2;
+- IRPT_BCKEND: 878 securities, 113,262 cells, finish 2026-10-14.
+The standing daily extension re-pulls each symbol: 141 + 782 new + 15, about 938 requests a day against the shared pacer cap of 400. A T-1 frontier for all is
+not reachable one request per symbol.
+
+**Ruling: (b) BATCH, then (c) TIER only if batching fails. Raising the cap is refused.** The cap is a measured, gentle pace (C-YAHOO; round-6 R1: the ceiling is
+only ever a measured figure), and raising it to fit demand would be the instrument moving to meet the reading.
+- **(b) The daily extension is INCREMENTAL and BATCHED.** It asks only for the dates after each symbol's stored max, for many symbols in ONE vendor request (the
+  vendor library's multi-ticker download, as-traded with corporate actions, the same unadjusted read as today's per-symbol path). The pacer counts vendor REQUESTS,
+  so 1,034 symbols at, say, 100 per request is about 11 requests a day.
+  - **Proof before use** (it changes how served prices are pulled, so it runs under its own never-widen pair):
+    - (1) on a sample of at least 50 symbols across share classes, funds and foreign listings, the batched rows equal the per-symbol rows, cell for cell
+      (as-traded close, dividends, splits);
+    - (2) a symbol the vendor refuses inside a batch is recorded as a FAILURE for that symbol alone, never as a price, and the rest of the batch stands (C-YAHOO);
+    - (3) a split or dividend inside the new dates lands exactly as the per-symbol path lands it.
+  - **Close:** a day's run lands all enrolled symbols at T-1 within the cap, with the request count printed.
+- **(c) Only if (1) to (3) cannot hold:** a tiered daily set, where held and served symbols are daily and the rest weekly, with the stated lag on each.
+- **The IRPT_BCKEND enrolment waits on that cell; no partial enrolment.** Its 125-day history lands on the quoted 2026-10-14 regardless.
+
+-- 1.0.0_SA_CTO~DELL1

@@ -10,12 +10,16 @@
  "subject": "IRPT_BCKEND tier-2 demand-queue request: 878 securities, as-traded close, 2026-04-14 to 2026-10-09 (ruling 479d6deba0)",
  "body_path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~323/IRPT_BCKEND-AS-TRADED-CLOSES-878.json",
  "opened_at": "2026-10-12T02:53:31Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-12T02:54:42Z",
   "bus_message_id": "b7c9be3f-095e-4322-8e86-25a13e31c56a"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T03:04:25Z",
+  "by": "2.0.0_SA_COO~Q1",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
