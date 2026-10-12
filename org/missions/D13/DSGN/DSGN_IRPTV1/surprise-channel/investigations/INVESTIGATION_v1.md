@@ -6558,3 +6558,114 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W68-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~68",
+  "surfaced_at": "2026-10-12T22:46:56Z",
+  "one_line": "Base suite at this worktree measured 1202 pass, 27 skip, 2 fail (F14-AC3 and F45-AC9); the order's premise was 1203 pass, 27 skip, 1 fail. F45-AC9 failed at base and in the final run and passed in one intermediate run at the same tree",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order IV-e-120 cell text: the issuer measured the whole InvestorReporting scope at this base as 1203 pass, 27 skip, 1 fail (F14-AC3, a diff check against DEV 1f3ce9f0, a known base failure)",
+  "world_is": "bun test src/pages/InvestorReporting at portal base 183860bac055, run before any edit: 1202 pass, 27 skip, 2 fail. The two fails are F14-AC3 (fe-s-14 allowlist.test.ts:112, expect 0 received 35) and F45-AC9 (fe-s-45 residuals.test.ts:442, expect 5 received 4). After the edit, at portal e42e1dc1: 1207 pass, 27 skip, 2 fail, the same two ids. In an intermediate run F45-AC9 passed and IVE17-AC2 failed on a typecheck error in this cell's own test (fixed in e42e1dc1). Output: C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~68/suite_base.txt and suite_after_final.txt",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~68/suite_base.txt (1202 pass, 27 skip, 2 fail, rc 1)",
+      "C:/dev/_irpt_private_evidence_20261009/DSGN_IRPTV1/0.9.0_WK_DSGN_IRPTV1~68/suite_after_final.txt (1207 pass, 27 skip, 2 fail at portal e42e1dc1)",
+      "portal src/pages/InvestorReporting/__tests__/fe-s-45/residuals.test.ts:442 at 183860bac055 (F45-AC9)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W68-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~68",
+  "surfaced_at": "2026-10-12T22:46:56Z",
+  "one_line": "Census premise: of the six files the issuer's search named, the build graph finds two direct importers of components/CategoryViewTree.tsx (DrillTree.tsx, ModelPortfolios.tsx); the other four name it in comments or not at all",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order IV-e-120 cell step 2: the issuer's own search found ModelPortfolios.tsx, Positioning/tabs/HoldingsTab.tsx, DrillTree.tsx, VariantCards.tsx, api/endpoints/aum.ts and lib/chartColors.ts name it in some way",
+  "world_is": "bun build --metafile of portal/src/main.tsx at portal e42e1dc1 bundles 2116 modules. Reverse import edges to src/components/CategoryViewTree.tsx: exactly two, src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx (mounts at :899) and src/pages/ModelPortfolios.tsx (mounts at :1306). VariantCards.tsx, aum.ts and chartColors.ts mention the name in comments only; Positioning/tabs/HoldingsTab.tsx does not mention it. Transitive reach is 26 modules, 21 under pages/; none of the 21 renders the tree in JSX.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun build src/main.tsx --metafile (portal e42e1dc1 tree), reverse-edge read of the metafile, output under C:/dev/wk-dsgn-irptv1-68/.scratch/census (gitignored)",
+      "portal src/components/CategoryViewTree.tsx JSX mount sites: ModelPortfolios.tsx:1306 and DrillTree.tsx:899 (non-test source)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W68-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~68",
+  "surfaced_at": "2026-10-12T22:46:56Z",
+  "one_line": "The order asks each mounting page to be rendered with its data; ModelPortfolios renders its tree only after its own fetch, so the census rendered each mount element with the page's own props instead",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order IV-e-120 cell step 2: for each page that mounts it, render it BEFORE the edit and AFTER it with the same synthetic fixture and compare",
+  "world_is": "portal/src/pages/ModelPortfolios.tsx gets its category views from its own hooks; the order forbids live requests and AWS calls, so the page could not be rendered to a data state. The mount element (CategoryViewTree with the page's props, ModelPortfolios.tsx:1306) was rendered with renderToStaticMarkup, before and after, and is byte-identical. The Holdings tab was rendered through the real HoldingsTab over the synthetic two-account fixture. Both renders are in the deliverables census folder; the method is stated in census.denominator_source.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-120.total-base-in-the-card.test.tsx at e42e1dc1 (renders both mounts)",
+      "deliverables census/before and census/after model_portfolios_mount.html (byte-identical) and holdings_tab.html (differs only by the moved base line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W68-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~68",
+  "surfaced_at": "2026-10-12T22:46:56Z",
+  "one_line": "The order asks for a screenshot from a build of the worktree; no dev server or login was allowed, so the capture is a static render of the worktree's HoldingsTab with its compiled CSS, and it does not paint the card's dark fill",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order IV-e-120 cell step 4: a screenshot of the Holdings tab (synthetic fixture, a two-account client) from a build of your worktree, showing the base inside the card; read it",
+  "world_is": "Headless Edge on a static page: renderToStaticMarkup of the worktree HoldingsTab over the synthetic fixture, with the worktree's Tailwind output and design/themes/opal-capital.css. The card's GraphicPanel dark gradient (an inline background-image using hsl(var(--palette-indigo)) and hsl(221 67% 10%)) does not paint in this capture, so the card's heading and figure render white on white. The base line's position inside the card is visible and was read; the card's ink was not. Cause not isolated.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables screenshots/holdings_after_total_base_in_card.png (read)",
+      "portal src/ui/components/graphic/HeroGraphic.tsx:49 GraphicPanel inline background-image"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "DSGN_IRPTV1-D2-W68-S5",
+  "project": "DSGN_IRPTV1",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~68",
+  "surfaced_at": "2026-10-12T22:46:56Z",
+  "one_line": "The order names branch wk-dsgn-irptv1-r31-68 and portal branch wk-dsgn-irptv1-r31-68-portal; the worktree and portal branches as provisioned are wk-DSGN_IRPTV1-68 and wk-DSGN_IRPTV1-68-portal",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order IV-e-120 worker face, first paragraph: the worktree is C:/dev/wk-dsgn-irptv1-68 on branch wk-dsgn-irptv1-r31-68",
+  "world_is": "git rev-parse --abbrev-ref HEAD in C:/dev/wk-dsgn-irptv1-68 prints wk-DSGN_IRPTV1-68; the portal worktree C:/dev/wk-dsgn-irptv1-68/portal is on wk-DSGN_IRPTV1-68-portal at 183860bac055 as the spawn stated. The work is committed on those branches; no branch was renamed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse --abbrev-ref HEAD run in C:/dev/wk-dsgn-irptv1-68 (first act of the order)",
+      "git -C C:/dev/wk-dsgn-irptv1-68/portal rev-parse --abbrev-ref HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
