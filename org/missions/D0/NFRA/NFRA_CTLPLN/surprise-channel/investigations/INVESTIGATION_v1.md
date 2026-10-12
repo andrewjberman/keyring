@@ -8418,3 +8418,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Carry for any later apply of the data proxy: the PRE-1 invariant. The matrix note for the packet: acked=11 at ~15:2xZ because the dell1->sitez pair's newest file (XB-20261012T141128Z-5f49, another project's) opened after the 12 of 12 read."
 }
 ```
+
+## NFRA_CTLPLN-S9117 -- kill-agent.ps1 tree kill crosses seat boundaries: killing CTO~DELL2 ended five parked dell2 COOs
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9117",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-12T17:08:18Z",
+  "one_line": "kill-agent.ps1's recursive tree kill crosses seat boundaries: killing 1.0.0_SA_CTO~DELL2 on dell2 (MSTR msg 108626, bus 47b3ea16) also ended five parked COOs (~C2, ~G2, ~V2, ~Y2, ~O2; 12 pids) that were descendants of the CTO's claude.exe; their conversation context is gone, files untouched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR msg 108626 (relay of ~DELL2 bus 47b3ea16): 'kill-agent.ps1 on 1.0.0_SA_CTO~DELL2 stopped its whole process tree. Five parked COOs were children of it'",
+      ".tools/kill-agent.ps1:158-167 Stop-ProcessTree walks Win32_Process ParentProcessId recursively with no serial check; :178 applies it to the target claude.exe",
+      ".tools/ajb.ps1:213-232 spawns via wt.exe new-tab when wt.exe is on PATH (the new tab is not the caller's child) and falls through to an in-tab path otherwise; dell2's five COOs were measured as descendants of the CTO's process, so a spawn path there parents the seat under the caller"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR (interim, same turn: before any kill-agent.ps1 run a manager lists the target tree's claude.exe command lines and leaves any descendant carrying another serial, killing the seat's own pid and marker children only); 2.0.0_SA_COO~C (permanent: a cell at the round-12 recut)",
+  "spec_asserts": "NFRA_CTLPLN C-SEATS: a seat is killed by its serial and the kill ends that seat; a parked seat keeps its context until Oct 17 or Andrew's word (fc10).",
+  "world_is": "A seat spawned from inside another seat's session is a descendant of that session's claude.exe; Stop-ProcessTree has no seat boundary, so one kill by serial ends every seat beneath it. Measured once, on dell2, 5 of the 8 fc10-parked seats lost.",
+  "notes": "Fix shape for the cell: (1) Stop-ProcessTree stops at a descendant claude.exe whose command line carries a different serial, prints it and the kill log names it; (2) the launcher's non-wt path spawns detached so a seat is never another seat's child. The five ended COOs respawn from files on Oct 17 or Andrew's word (fc10 unchanged); nothing of theirs waits on a file edit. Not a cell this round: the round-11 decomp is frozen."
+}
+```
