@@ -7745,3 +7745,89 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The flip is a write to the order file, which is outside <paths>. The worker did not edit the order. The COO flips the order on its own word; the design and the proof are committed and graded as they stand."
 }
 ```
+
+## NFRA_CTLPLN-W65-S1 -- lib/opal_naming.py classifies the firm-access module UNCLASSIFIED; targets exits 1 and two selftests fail
+
+```json
+{
+  "id": "NFRA_CTLPLN-W65-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~65",
+  "surfaced_at": "2026-10-12T08:42:39Z",
+  "one_line": "The new data-proxy module infra/aws/lambda/portal_data_proxy/firm_page_access.py is UNCLASSIFIED in targets: lambda_plane_consumers skips a function's own source directory, and that is where the module lives. targets now exits 1 and two existing selftests fail.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO: rule on the own-source-directory skip in lib/opal_naming.py lambda_plane_consumers, or on the two selftests in lib/tests/test_opal_naming.py (lines 352 and 408)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I lib/opal_naming.py targets, worktree after module commit 005a093bfa: TARGETS: 18; line 'UNCLASSIFIED - infra/aws/lambda/portal_data_proxy/firm_page_access.py measured: no plane claims it'; exit code 1",
+      "lib/opal_naming.py at a99d7e584c, lambda_plane_consumers: 'if own == target_abs: continue' fires before the files list is read, because opal-portal-data-proxy's source_dir (lambda-source-map.json line 678) is infra/aws/lambda/portal_data_proxy, the module's own directory",
+      "python -m pytest -q lib/tests/test_opal_naming.py: 2 failed, 104 passed. test_targets_report_covers_every_known_target_exactly_once asserts nothing UNCLASSIFIED (line 352); test_cmd_targets_exit_code_tracks_unclassified asserts exit 0 (line 408)",
+      "PROPOSAL_FIRM_ACCESS_REGISTRY_ROW.md section 3 (0.9.0_WK_NFRA_CTLPLN~64) says targets then lists the module as SHIP lambda. The lambda-source-map.json entry (its section 7 step 3) is outside this order's paths, and it does not reach the skip because the skip comes first"
+    ]
+  },
+  "spec_asserts": "CT-w-1 T6 and CTw1-AC2: the target list names the new module as SHIP lambda. CTO ruling CT-v-2 point 1: the generator's own selftests pass after the builder edit.",
+  "world_is": "The module classifies UNCLASSIFIED, targets exits 1, and two existing selftests fail on branch wk-NFRA_CTLPLN-65 from commit a99d7e584c onward. T6 asserts presence only (one row for the module), not SHIP lambda. The order did not edit lib/tests/test_opal_naming.py or lambda-source-map.json: both are outside its paths."
+}
+```
+
+## NFRA_CTLPLN-W65-S2 -- portal firm-display carriers do not reproduce byte for byte under generate
+
+```json
+{
+  "id": "NFRA_CTLPLN-W65-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~65",
+  "surfaced_at": "2026-10-12T08:42:39Z",
+  "one_line": "Two portal carriers (firmDisplayNames.generated.ts and vendorDisplayNames.generated.ts) do not reproduce byte for byte from generate: the first carries a stale mark hash over an identical body; the second differs only in CRLF line endings on disk. Neither was changed by this order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO (the regenerating owner of these carriers at portal commit 2ed4373d): regenerate both in the portal repository on DEV before any portal drift test lands",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I lib/opal_naming.py generate --out .scratch/gen_all at worktree commit 005a093bfa: 18 written; 15 of 18 targets byte-identical to the repo; firmDisplayNames line 1 differs (generated registry@9f1cc0a3d5a5997b, committed registry@063240d10e857a3b), body identical",
+      "scopes.json is unchanged against HEAD (git status empty). registry_hash(only=['scopes.json'])[:16] = 9f1cc0a3d5a5997b, so the committed mark is stale against the current registry",
+      "vendorDisplayNames.generated.ts: equal after CRLF normalisation; the portal checkout holds CRLF bytes where generate writes LF",
+      "the portal is a gitlink (c96efe1714 pinned, checkout 2ed4373d); the carriers sit outside this order's paths"
+    ]
+  },
+  "spec_asserts": "CT-w-1 BUILD step 2: after the generator edit, generate for ALL targets must reproduce every already-committed carrier byte for byte except the one new target (print the diff count).",
+  "world_is": "Two portal carriers do not reproduce byte for byte: one by its mark hash, one by CRLF on disk. The diff count for the all-targets check is 1 differing (firmDisplayNames, mark only), 1 normalised-equal, 15 identical, plus the one new target."
+}
+```
+
+## NFRA_CTLPLN-W65-S3 -- the own-directory classifier edit also re-counts two pre-existing platinum_dest_view.py targets
+
+```json
+{
+  "id": "NFRA_CTLPLN-W65-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~65",
+  "surfaced_at": "2026-10-12T09:07:32Z",
+  "one_line": "The classifier edit in commit 22169e24fb (AMENDMENT 1) gives two pre-existing targets a new consumer each: both platinum_dest_view.py copies now name their own function as a consumer. Classification stays SHIP lambda; the consumer lists change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO: rule whether the own-directory self-consumer is intended for infra/aws/lambda/exec-summary-generator/platinum_dest_view.py and infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/platinum_dest_view.py (both literally inside the rule's scope), or narrow the rule",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I .scratch/consumer_diff.py <worktree> (old function = lambda_plane_consumers text at a99d7e584c, new = worktree HEAD): 'DENOMINATOR: 18 targets' and 'CONSUMER-LIST CHANGED: 3 of 18 targets'",
+      "CHANGED infra/aws/lambda/exec-summary-generator/platinum_dest_view.py old=['opal-partners-data'] new=['exec-summary-generator', 'opal-partners-data']",
+      "CHANGED infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/platinum_dest_view.py old=['exec-summary-generator'] new=['exec-summary-generator', 'opal-partners-data']",
+      "CHANGED infra/aws/lambda/portal_data_proxy/firm_page_access.py old=[] new=['opal-portal-data-proxy'] (the intended effect of AMENDMENT 1)",
+      "python -I lib/opal_naming.py targets (worktree, after e84eaff941): exit 0, 'SHIP lambda infra/aws/lambda/exec-summary-generator/platinum_dest_view.py measured: lambda-source-map.json (2 consumer(s): exec-summary-generator, opal-partners-data)'"
+    ]
+  },
+  "spec_asserts": "CTO ruling msg 108498 option 1 (AMENDMENT 1 of CT-w-1): a function whose own source directory holds the target AND lists its basename in files is a consumer of that target; nothing else in lambda_plane_consumers changes.",
+  "world_is": "Measured over the 18 targets: 3 consumer lists change. The intended one is firm_page_access.py (none -> opal-portal-data-proxy). Two pre-existing targets also gain a self-entry: exec-summary-generator/platinum_dest_view.py and opal-partners-data/platinum_dest_view.py now each list both functions. Every target still classifies SHIP lambda. Whether a downstream reader of the consumer count acts on the new self-entries is not measured by this order."
+}
+```
+
