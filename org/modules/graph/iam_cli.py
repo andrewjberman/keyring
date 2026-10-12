@@ -443,13 +443,52 @@ def cmd_service(args):
         print()
 
 
+def _live_role_read(role_name):
+    """One live `iam get-role` of the EXACT name after a TF-index miss (S27). Prints one of three
+    verdicts, never a bare absence: FOUND-LIVE (the role exists; the index could not see its computed
+    name), NOT-LIVE (NoSuchEntity: absent in the index AND in the account), or LIVE-READ-FAILED
+    (transport/credential error: absence NOT established). Names, dates and counts only."""
+    try:
+        import boto3  # lazy, as cmd_simulate does
+        from botocore.config import Config
+        client = boto3.client("iam", config=Config(connect_timeout=20, read_timeout=20))
+        role = client.get_role(RoleName=role_name)["Role"]
+    except Exception as exc:  # noqa: BLE001 -- every failure class must print, never pass as absence
+        code = getattr(exc, "response", {}).get("Error", {}).get("Code", "") if hasattr(exc, "response") else ""
+        if code == "NoSuchEntity":
+            print(f"  NOT-LIVE: aws iam get-role '{role_name}' -> NoSuchEntity (absent in the index and in the account)")
+        else:
+            print(f"  LIVE-READ-FAILED: aws iam get-role '{role_name}' -> {type(exc).__name__}: {exc}")
+            print("  absence NOT established -- run `aws iam get-role --role-name <name>` yourself before calling it absent")
+        return
+    created = role.get("CreateDate")
+    created_s = created.strftime("%Y-%m-%dT%H:%M:%SZ") if hasattr(created, "strftime") else str(created)
+    attached = inline = "?"
+    try:
+        attached = len(client.list_attached_role_policies(RoleName=role_name).get("AttachedPolicies", []))
+        inline = len(client.list_role_policies(RoleName=role_name).get("PolicyNames", []))
+    except Exception as exc:  # noqa: BLE001 -- the counts are a courtesy; the FOUND-LIVE verdict stands
+        print(f"  (policy counts unread: {type(exc).__name__})")
+    print(f"  FOUND-LIVE: {role.get('RoleName')}  created {created_s}  attached_policies={attached}  inline_policies={inline}")
+    print("  The role EXISTS; this index cannot see a computed `name =` (LGIC rule 30 form). Its grants: "
+          "`comp-iam simulate --role <name> ...` or `aws iam list-attached-role-policies`.")
+
+
 def cmd_role(args):
     _, roles, _ = _build()
     name = args.name.lower()
 
     matches = {k: v for k, v in roles.items() if name in k.lower()}
     if not matches:
-        print(f"No role matching '{args.name}'")
+        # NFRA_TRNSPT-D2-S27 (2026-10-11): this index holds only roles whose Terraform `name` is a
+        # LITERAL; a name computed through a local + jsondecode(file(NAMES.json)) -- the form LGIC
+        # rule 30 mandates -- is invisible here, so "No role matching" used to fail SILENT and GREEN
+        # on roles that exist and are applied. The index miss is now followed by ONE live read of
+        # the exact name (aws iam get-role, one resource), so an existing role is never reported
+        # absent, and a failed read says so instead of passing as absence.
+        print(f"No role matching '{args.name}' in the TF index (literal `name =` only; a computed "
+              f"name is invisible to this index -- S27)")
+        _live_role_read(args.name)
         return
 
     for role_name, role in sorted(matches.items()):
