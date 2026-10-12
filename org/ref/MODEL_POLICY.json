@@ -2,8 +2,9 @@
   "policy_id": "MP-20261010",
   "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261010_23xxZ_MODEL_POLICY_BY_ROLE_AND_TEST_PLAN.md",
   "why": "Workers execute a fully specified order and prove it, so they need little reasoning (Haiku). MSTR, COO and Tier-2/3 seats coordinate and handle issues (Sonnet). CTO, CVO and CRO do architecture, governance and validation (Opus).",
-  "treatment_devices": ["laptop", "dell1"],
-  "control_devices": ["sitez", "dell2"],
+  "treatment_devices": ["laptop", "dell1", "dell2"],
+  "control_devices": ["sitez"],
+  "amendment_20261012": "dell2 moved to treatment on Andrew-direct 2026-10-12 ~13:0xZ (\"bring them back in our designated model format\", record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261012_130xZ_DELL2_RELAUNCHES_IN_THE_MODEL_POLICY_FORMAT.md); site Z is the only control device from this point",
   "control_behaviour": "unchanged pre-policy launcher defaults (ajb.ps1 per-serial table + tier rule, spawn-agent.ps1 tier default, worker frontmatter)",
   "roles": [
     {"role": "TIER1_OPUS", "serial_regex": "^(1|3|4)\\.0\\.0_", "model": "claude-opus-5-5", "effort": "high"},
