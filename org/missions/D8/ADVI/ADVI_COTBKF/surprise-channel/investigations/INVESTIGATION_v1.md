@@ -7406,3 +7406,51 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W152-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~152",
+  "surfaced_at": "2026-10-12T02:18:33Z",
+  "one_line": "Off-task, found while sizing CB-ca-2: for three silver-priced held securities (APH, CTVA, KLAC) the r34/after build price on the last day the store holds is 0.5000, 0.1500 and 0.1000 of the store's own row, where a security with no split after that day should sit at 1.0 (1,258 of 1,263 silver-priced securities sit within 0.1 percent of 1.0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Split scaling (commonwealth_daily_valuation.py:663-677) multiplies closes dated BEFORE a split day by the split ratio, so a close on or after the last split day is unscaled and the last store day of a security with no later split equals the store's row.",
+  "world_is": "On 2026-06-05 (last common date) the build's price over the store's row, for the silver-priced CUSIP of each ticker: APH 69.40 / 138.81 = 0.5000; CTVA 11.56 / 77.03 = 0.1500; KLAC 192.92 / 1929.20 = 0.1000. For APH the ratio is 0.5200 in 2021 falling to 0.5000 by 2026 (the dividend-adjusted store against the vendor close drift) on all 1,974 days, so the whole series is scaled by one factor below 1. Cause not established: the split plan of the served build (repair_plan.md, the split store entries) was not read, and a factor below 1 means the build applied a ratio below 1 (a reverse split) or a split dated after the store's last day. Not examined: whether any account-day is valued on these prices, and the other 1,260 securities beyond their last-day ratio.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-cotbkf-84/.scratch/w152/check7.py output 2026-10-12: last-day build/store ratio over 1,263 silver-priced CUSIPs: 1,258 within 0.999..1.001, APH 0.5000, CTVA 0.1500, KLAC 0.1000, one at 0.9..0.999, one at 1.001..1.2",
+      "C:/dev/wk-cotbkf-84/.scratch/w152/check6.py output 2026-10-12: APH build/store ratio by year 0.5200 to 0.5000 over 1,974 days",
+      "inputs: C:/dev/ajb_workspace/.scratch/advi_cotbkf/r34/after/security_day_price.parquet and C:/dev/wk-cotbkf-84/.scratch/w149/store/canonical_prices.parquet"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W153-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~153",
+  "surfaced_at": "2026-10-12T02:19:59Z",
+  "one_line": "The live price store object is the 2026-06-09 version minus 1,623 rows; its scoped_override rows and missing source_firm are the June shape, and no file in the cot tree can assign scoped_override.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row D2-W149-S1 and the order read the live object as a shape the HEAD writer would not produce, to be matched to an earlier version of the writer; deliverables/0.9.0_WK_ADVI_COTBKF~63/bd_txn_provenance.md section 4 grades the earlier version class shared_builder_run (a cot builder run with the injector).",
+  "world_is": "The object has two versions. The live one (2026-10-09T13:41:04Z) differs from the earlier one (2026-06-09T20:42:16Z) by 1,623 bd_txn_price rows only (sha256 equals the CB-aj-1 manifest, put by 0.7.0_AE_CloudOps~CB2, ledger 20261009T1320Z leg W1). The earlier version carries scoped_override (12,042 rows) and bd_txn_price, which only data/black_diamond/scripts/silver/inject_scoped_overrides.py assigns; the cot tree holds no injector at 6b0be4337e or HEAD, and commit 319a716cb4 (2026-06-12) says a cot S_00 dispatch would hard-crash for lack of one. The earlier version and 37 daily files share a two-second window, and the cot builder writes no daily files. So the class shared_builder_run is not supported by the tree; a copy from another firm's store is also not shown. Not read: the deployed code/gold and code/silver mirrors; CloudTrail; any other firm's object.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~153/STORE_WRITER.json (versions, changed_between_versions, writers_in_the_tree, code_that_matches_the_live_shape)",
+      "this worker's reads at 2026-10-12T02:19:59Z: s3api list-object-versions (2 entries, exact key) and one get-object --version-id on opal-data-cot; sha256 of the live local copy 51a1f1f7e19a0ce3d8332484dd53aec431f061d51b1279c9dc020990a17087fa",
+      "git show 319a716cb4 (message: cot has NO inject_scoped_overrides.py) and git ls-tree -r 6b0be4337e data/cot/scripts/silver (0 files named inject)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

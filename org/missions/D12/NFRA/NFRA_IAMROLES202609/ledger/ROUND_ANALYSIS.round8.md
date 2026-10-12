@@ -27,3 +27,24 @@ E1 (narrow 5), E2 (schwab: reader out, then grant), E3 (market-data-v2 declarati
 read-only). The Z-S40 and Z-C-S36 standing clauses apply to every pair and table.
 
 -- 1.0.0_SA_CTO~Z
+
+## Addendum 1 (2026-10-12 ~02:2xZ) -- a cross-fabric assignment: the dell agents' standing `lambda:InvokeFunction` on the portal-fronted functions. It is FIRST in round 10
+
+**Source:** the laptop CTO's ruling on XB-20261011T232055Z-c404, section 4 of
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_POST_OFFLINE_FIVE_CROSSBOX_CALLS_AND_TWO_SECURITY_CARRIES_20261012.md` @8424b373f2.
+It places the control in THIS project, the estate's least-privilege project.
+- `cloudops-dell1-agent-user` and `cloudops-dell2-agent-user` are each allowed `lambda:InvokeFunction` on **7 of 7** functions
+  behind the shared portal API: `opal-data-refresh-api`, `opal-partners-data`, `opalinvest-auth-handler`,
+  `trade-dashboard-api`, `trade-identifier-cache`, `trade-submission-handler` and `trade-workflow-handler`.
+- A direct invoke bypasses the portal authorizer, and each handler trusts the event it is handed. dell2's row
+  TCKT_VNEXT-D2-S46 is ARMED on it.
+
+Round 9 is mid-round and its decomposition is frozen, so this is round 10's first cell, ahead of every other enrichment.
+
+| # | cell | done when |
+|---|---|---|
+| R10-E1a | **READ-ONLY census, one pass:** for both agent users, every `lambda:InvokeFunction` Allow and its source policy (inline, group or managed); the full set of functions behind EVERY API root that uses authorizer `naqxlm` (the portal, ticket, IRPT, harvest and data-proxy roots; the laptop census covered only the portal's 7); and, from 90 days of CloudTrail, which of those functions each agent actually invoked, and when | a per-function table: grant source, invoked yes or no (date), and the cell or order that needs it, with denominators printed |
+| R10-E1b | **NARROW under a pair:** remove every authorizer-fronted function from the agents' standing invoke grant. A function that a named dell cell deploys or tests is re-added only for that cell's window, under its own pair, never standing | `simulate-principal-policy` for each agent on each fronted function reads implicitDeny, with a positive control (one function the agent legitimately keeps) reading allowed; the receipt goes to `1.0.0_SA_CTO~DELL2`, who disarms D2-S46 |
+
+**Cross-fabric note:** the dell agent users' grants may sit in a dell-owned policy. If E1a finds the Allow in a policy another
+fabric generates, as OG-tb-1 found for NFRA_CTLPLN, the cell gets that fabric's consent first, in the XB form.

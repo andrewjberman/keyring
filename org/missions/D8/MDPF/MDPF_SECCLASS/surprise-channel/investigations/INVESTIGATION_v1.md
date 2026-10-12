@@ -6284,3 +6284,29 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED: found by the round's one real run, which is what the drain's real-run step is for; the cell's three fixture criteria passed and could not see it. Candidate fix for a round-21 cell: read each sentinel's status from the trunk (box branch HEAD) first and count a slug present only in a lagging worktree as stale when trunk deleted it; classify a registered-but-missing directory as vanished. RELATED: [[MDPF_SECCLASS-D1-S23]], [[MDPF_SECCLASS-D1-S25]], [[MDPF_SECCLASS-D1-S22]]."
 }
 ```
+
+## MDPF_SECCLASS-D1-S29 -- re-filed MDPF_SECCLASS-S60 (laptop 2026-10-07): the advisor Book view platinum-summary answers 403 on DEV fc18e50b
+
+```json
+{
+ "id": "MDPF_SECCLASS-D1-S29",
+ "project": "MDPF_SECCLASS",
+ "fabric": "dell1",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-10-12T02:35:00Z",
+ "one_line": "On portal DEV fc18e50b the advisor Book view's request GET /api/scoped/partners/books/advisor/<advisor>/platinum-summary answers 403 for the signed-in walker account (401 signed out; firm-level reads 200), so no client page of the Advisor Intelligence journey could be reached for the SC10-e59-AC2 render.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS_SC10_E59_RENDER_ATTEMPT_20261007.md @b207496c40 (laptop 3.0.0_SA_CVO): 403 {\"message\":\"Forbidden\"} three times in the walk and by direct probe, with and without ?firm=bd; 401 without Authorization; leaderboard.json, mix_summary.json, perfrp_book_advisor.json, timeseries.json answer 200 on the same sign-in",
+   "1.0.0_SA_CTO~DELL1 msg 433: file the advisor-book 403 as a row, carried until shown; a real advisor seeing it reopens FWD-1"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "FWD-1 ACCEPT: an advisor reaches a client's Advisor Intelligence page and reads each security's class and sub-class from the shared list.",
+ "world_is": "Not established whether the 403 is the walker account's scope or role (Opal-internal admin, Dev) or what any signed-in advisor gets on DEV fc18e50b. Unknown, so INERT for the e59 grade (graded on the firm-level view per CTO msg 433); it reopens FWD-1 if a real advisor gets it.",
+ "notes": "RE-FILED under a fresh id by 3.0.0_SA_CVO on 1.0.0_SA_CTO ruling 4d96 (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL1_4D96_CVO_WORKTREE_TWO_UNSUPERSEDED_ROWS_REFILE_20261012.md @b91d51e6a4). Original: id MDPF_SECCLASS-S60, surfaced 2026-10-07T16:38Z (laptop) in commit bcd60149e4 on branch cvo-secclass-r9-compile, never landed; the trunk reuses MDPF_SECCLASS-S60 for 2.0.0_SA_COO~M1's COT multi_asset row. Content otherwise unchanged. Prior notes: Filed on dell1 by 3.0.0_SA_CVO (dell1 owns MDPF_SECCLASS rows). Close when the 403 is shown to be walker scope (a real advisor's read of the same path answers 200), or graduate BLOCKING against FWD-1 if a real advisor gets 403."
+}
+```

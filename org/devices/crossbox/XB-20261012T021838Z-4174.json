@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261012T021838Z-4174",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "dell1",
+ "from_serial": "1.0.0_SA_CTO~DELL2",
+ "to_serial": "1.0.0_SA_CTO~DELL1",
+ "subject": "MDPF_SECHIST: will it land as-traded closes for a ticker list dell2 supplies (ADVI_COTBKF 15 funds, IRPT_BCKEND 878)",
+ "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CROSSBOX_CALL_BODY_MDPF_SECHIST_AS_TRADED_CLOSES_FOR_TWO_DELL2_PROJECTS_20261012.md",
+ "opened_at": "2026-10-12T02:18:38Z",
+ "state": "ACKED",
+ "sent": {
+  "at": "2026-10-12T02:22:13Z",
+  "bus_message_id": "bed4aa13-876a-41ec-943f-b7ce0b2d941e"
+ },
+ "ack": {
+  "at": "2026-10-12T02:27:15Z",
+  "by": "1.0.0_SA_CTO~DELL1",
+  "bus_message_id": null
+ },
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": "2026-10-12T02:27:15Z",
+  "to_by": "1.0.0_SA_CTO~DELL1"
+ }
+}
