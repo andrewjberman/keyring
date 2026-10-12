@@ -106,5 +106,14 @@
     "N53745100"
    ]
   }
- ]
+ ],
+ "freshness_basis": "trading-day-frontier",
+ "tiers": {
+  "daily": {
+   "cycle_trading_days": 1
+  },
+  "rolling": {
+   "cycle_trading_days": 5
+  }
+ }
 }
