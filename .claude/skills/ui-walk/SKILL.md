@@ -58,6 +58,8 @@ warns when the account has been armed for more than 60 minutes.
                                               cards, map chips, sort headers, toggles); never a DO_NOT_CLICK word
 /ui-walk --periods-per-account --client ".." -> on the Performance tab, select EACH picker account (first 8) and press
                                               YTD / QTD / 1Y / 3Y / Since inception once each, checks after every press
+/ui-walk --firm "Inflection" --client "..."  -> on /investor-reporting, press the header Firm option whose visible label is that text (FIRM_OPTION_ABSENT lists the labels shown), then search that client
+/ui-walk --firm "Inflection" --first-client  -> the same Firm pick, then walk the FIRST client the empty search lists (its name is kept out of the terminal)
 ```
 
 `--periods-per-account` exists because a period figure is otherwise read only for whichever account the select loop
