@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~75</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own reads on the worker branch and the merged tree (merge 96c4f5f063): CTaa3-AC1 963 passed over all 41 routes, CTaa3-AC2 965 passed (fence unchanged), CTaa3-AC3 1012 passed; ruff clean; proof instance VALID; the diff to lambda_function.py is the docstring and two lines of _require_route_access (user_type read from the same claims; admit when tier == internal or user_type == Dev); control arm (pre-edit handler) fails 402 of 963. The worker could not flip this file (outside its grant), so the issuer flips. Nothing is deployed: CT-aa-4 applies it under the fourth pair.</status_reason>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
