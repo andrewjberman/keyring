@@ -18,7 +18,7 @@
  "ack": {
   "at": "2026-10-12T01:52:26Z",
   "by": "1.0.0_SA_CTO",
-  "bus_message_id": null
+  "bus_message_id": "d63c2c3b-2850-4b7f-889a-4893589a5f9f"
  },
  "closed": {
   "from_at": null,

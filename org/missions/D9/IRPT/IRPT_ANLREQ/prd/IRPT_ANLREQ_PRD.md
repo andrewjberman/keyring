@@ -5,7 +5,7 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.3",
+ "prd_version": "v0.4",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -175,3 +175,55 @@ FWD-2's ACCEPT changed, so the CVO's ratified-text half re-opens too.
 - **C-ABSORB (b):** IRPT_YCDGEN's engine is absorbed; its YCharts path is retired by FWD-7, and its cells S31 and S32 are filled by C-SWAP.
 - **ENDPOINT and CONTRACTS changed.** Both halves re-open.
 
+
+## ADDENDUM v0.4 -- what a stored input is bound to when the reader changes; and the round-16 analysis for workstream Y (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Author:** `1.0.0_SA_CTO~DELL2`, 2026-10-12 ~02:0xZ. **Answers:** the reviewer's slug for rounds 14 and 15
+  (`surprise-channel/remediations/REMEDIATION_v8.md` @ff1c8da149, grade file `IRPT_ANLREQ_ROUNDS_14_15_Y_L9_GRADE_20261011.md`) and
+  `2.0.0_SA_COO~Y2` msg 6285. **This analysis is two hours late: the slug was cut at 23:38Z and this seat did not answer it; the
+  lane sat idle with four free slots meanwhile.**
+- **Read by this seat:** `infra/aws/lambda/investor-reporting/intake/uploads.py:516-555` at HEAD; the grade file's first two
+  sections; the revert's message (@114c77fb01). NOT read: the reverted reader, the form, the tests.
+
+**CONTRACT C-STOREDINPUT.**
+
+1. **What is there today (`uploads.py:532-539`).** For a template upload, reading a stored input re-reads the retained original
+   with the RUNNING reader and requires the result to EQUAL the template stored at acceptance. So any change to what the reader
+   returns refuses every input stored before it. That is why the round-14 reader was taken off the trunk.
+2. **"Compare the holdings alone" is refused as the repair.** The new reader stops counting a totals row as a holding and refuses
+   a sheet holding two accounts, so the holdings themselves differ on exactly the sheets it exists to catch.
+3. **THE CONTRACT. The template stored at acceptance records the reader's version.** One member, written at acceptance from a
+   constant in the reader's own file, changed in the same commit as any change to what the reader returns. A stored input with
+   no such member is read as the version before this contract.
+   - **Version equal to the running reader's:** the re-read must equal the stored template, as today.
+   - **Version different, or absent:** the re-read is NOT compared. The input stays bound by what `read_input` already checks and
+     this contract leaves in place: the original's bytes against its stored digest (`:537`), the frozen document against its own
+     (`:522-524`), the artifact references, the owner and the source (`:550`).
+   - **The reader's new findings apply at the upload door only.** They never refuse an input already accepted.
+4. **What this gives up, said plainly:** for an input stored under an earlier reader, nothing re-derives the template from the
+   original at read time. Its template is what the earlier reader made of it, held by digest. A defect of the earlier reader on
+   that sheet (two accounts merged; a totals row counted) stays in that stored input until the person uploads again. The count
+   of stored template inputs is item 1 of the list below, so that this is a number and not a phrase.
+5. **The proof, driven offline on the product code:** an input stored by the reader at the round's base is read by the new reader
+   and returns its document unchanged; an input stored by the new reader, with one byte of its stored template altered, is
+   refused; an original whose bytes are altered is refused under both versions.
+
+**ROUND-16 ENRICHMENT LIST (workstream Y), in this order.**
+1. **A count first, read-only:** stored inputs by lane, and for the template lane how many originals the NEW reader would read
+   differently from their stored template, by cause (totals row; repeated header; account column). Counts only, no account
+   value, no holding. This is the census that should have preceded round 14's build; it precedes this one.
+2. **The reader's re-land, as one cell, on C-STOREDINPUT**, with the reviewer's two repairs made first (row D2-S64): the
+   account-header list built from header forms in real use or matched on the leading word with the named exclusions kept, and
+   checked against a population that holds account columns; and the repeated-header words say what is seen and ask, never tell a
+   person to split.
+3. Row TCKT_VNEXT-D2-S48, the investor-reporting internal reader and a caller with no users row: one read, then a cell in the
+   shape TCKT_VNEXT round 7 used.
+4. `commentary_sent` on the ticket page; arm F2 on the original-file route. As parked, each under its own pair.
+5. NOT cut: SUBTOTAL, SUM, ALL (stays parked; `Subtotal` was left out of the totals list on this seat's earlier ruling); the form sending `commentary_requested` (waits on
+   IRPT_BCKEND's release, which waits on Andrew's sitting or his allow-list word).
+
+- **Row D2-W53-S9** (four unpinned members of the generate function differ from live and ship on any rebuild): no rebuild of that
+  function is cut by any lane until each of the four is either pinned or released under its own pair. Owner this seat.
+- **Acts only Andrew can do:** none new.
+
+-- 1.0.0_SA_CTO~DELL2
