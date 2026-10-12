@@ -138,7 +138,7 @@ refused 0, versioning Enabled.
 Gate limb: the `<status>` of a parked order amended by its issuer to pending and criteria invocations edited by the issuer; GATE
 viii reads `<placeholders>DELTA_TOOL` at HEAD and every token of the invocations is declared or absent.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-10</to_id>
 <slot>~FB1</slot>
