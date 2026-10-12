@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-12T02:29:03Z",
+ "written_at": "2026-10-12T02:41:49Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -1782,7 +1782,7 @@
    "source": "org/tier1_exec/3.0.0_SA_CVO/deliverables/CTO_TICK21_CALLS_36C6_40F5_EXECUTION_20261012.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-12T02:00:20Z",
    "kind": "fork",
    "context": "Per CTO tick-21 s.1, the cherry proof found 5 of 7 commits superseded and 2 not: row S60 (advisor Book view 403) and its dismissal C-S78 lost to an id collision (trunk reuses both ids). 0 of 236 project files carry the 403 text (control 5). Gates only the worktree removal.",
@@ -1818,7 +1818,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-12T02:41:49Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/critical_paths/cross_adjudication/20261012T0234Z_XA-20261012T022902Z-e28e.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261012T022902Z-e28e"
+   },
    "escalation": {
     "to": "xadj",
     "ref": "XA-20261012T022902Z-e28e",
