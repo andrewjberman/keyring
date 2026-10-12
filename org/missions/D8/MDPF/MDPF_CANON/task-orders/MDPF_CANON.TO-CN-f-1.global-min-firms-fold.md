@@ -237,7 +237,7 @@ D1-W8-S5 (disarms on this cell's read-back); open call dell1-20261011T053810Z-fe
 - **Checks at base (dry-run from `round6/checks/` before the cut):** `r6_cn_f_1.py contract` 0 of 10, `seams` 0 of 6, `r6_cn_f_1_comparator.py`
   1 of 11 (K0 is a control). A reference tree reads 10 of 10, 6 of 6 and 11 of 11; three planted defects turn it red.
 
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <to_id>MDPF_CANON.TO-CN-f-1</to_id>
 <slot>~16</slot>
