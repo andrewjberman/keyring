@@ -5,6 +5,7 @@
                        the variable keeps no default; the header no longer says the readers are not applied
   cl23  TR23-cl23-AC1  the drafter's prompt carries only closed-list values: five named tests pass with the commentary suites
   ca23  TR23-ca23-AC1  LIVE read-only: the three functions run ONE digest, the built dist zip's, and not the pre-act zip
+  sw23  TR23-sw23-AC1  the drafter posts its draft to the request's ticket and leaves a census: six named tests pass with every commentary test file
   mp23  TR23-mp23-AC1  LIVE read-only: all three functions of the transcripts root read ONE CodeSha256, the Teams pull's
 
 Prints R23-<TOKEN>-OK or R23-<TOKEN>-FAIL <reason> and exits 0 / 1. Run from the repo root (or a worktree root).
@@ -102,6 +103,25 @@ def cl23():
     return (rc == 0 and passed >= len(CL_NAMES)), tail
 
 
+SW_FILE = TESTS / "test_commentary_route_switch.py"
+SW_NAMES = ["test_persist_answer_carries_ticket_id_when_the_store_names_one",
+            "test_post_goes_to_the_named_ticket_with_exactly_two_body_keys", "test_no_ticket_id_means_no_post",
+            "test_refused_post_is_logged_and_not_handed_back_to_the_queue", "test_replay_of_a_stored_draft_posts_nothing",
+            "test_census_counts_unposted_drafts"]
+
+
+def sw23():
+    if not SW_FILE.exists():
+        return False, "absent: %s" % SW_FILE.as_posix()
+    text = SW_FILE.read_text(encoding="utf-8")
+    missing = [n for n in SW_NAMES if "def %s(" % n not in text]
+    if missing:
+        return False, "missing %s" % ", ".join(missing)
+    suite = sorted(TESTS.glob("test_commentary_*.py"))
+    rc, passed, tail = _pytest(suite)
+    return (rc == 0 and passed >= len(SW_NAMES)), "%s (%d commentary test files)" % (tail, len(suite))
+
+
 def mp23():
     import boto3
 
@@ -140,9 +160,9 @@ def ca23():
 
 
 if __name__ == "__main__":
-    fns = {"tt23": tt23, "tv23": tv23, "mp23": mp23, "cl23": cl23, "ca23": ca23}
+    fns = {"tt23": tt23, "tv23": tv23, "mp23": mp23, "cl23": cl23, "ca23": ca23, "sw23": sw23}
     if len(sys.argv) != 2 or sys.argv[1] not in fns:
-        print("usage: r23_checks.py {tt23|tv23|mp23|cl23|ca23}")
+        print("usage: r23_checks.py {tt23|tv23|mp23|cl23|ca23|sw23}")
         sys.exit(2)
     ok, why = fns[sys.argv[1]]()
     print("R23-%s-%s %s" % (sys.argv[1].upper(), "OK" if ok else "FAIL", why))
