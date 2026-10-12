@@ -13,12 +13,12 @@
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- no cron, task or cadence.
 comp-iam: DECLARED-NOT-APPLICABLE -- portal source only; no AWS call.
-comp-adversary: RUN by the issuer at the cut on portal origin/DEV ad774c6f -- ay2_check.cjs: `ay2 build 0/8 control 2/2` at the base (every build arm fails, both controls pass), `build 8/8 control 2/2` on the issuer's reference patch applied to a fresh tree at that ref (`git apply` clean; `bun run typecheck` rc 0). Blind spot: pure-function level and a string read of `ModelTab.tsx`; the rendered read over every served name is the issuer's (CRPS-ay-5), after the API serves the new fields.
+comp-adversary: RUN by the issuer at the cut on portal origin/DEV ad774c6f -- ay2_check.cjs: `ay2 build 0/8 control 2/2` at the base (every build arm fails, both controls pass), `build 8/8 control 2/2` on the issuer's reference patch applied to a fresh tree at that ref (AMENDMENT 2: `build 8/10 control 2/2` at portal `0a06280a`, `10/10 control 2/2` with the amendment patch, harness 21 of 21, typecheck rc 0) (`git apply` clean; `bun run typecheck` rc 0). Blind spot: pure-function level and a string read of `ModelTab.tsx`; the rendered read over every served name is the issuer's (CRPS-ay-5), after the API serves the new fields.
 EGRESS CLASS, declared: NONE. Portal source only. NO push of any portal branch: the DEV landing follows the CTO's review of the candidate.
 </preflight>
 
 **You are `0.9.0_WK_AMGT_CORPUS~2`**, slot `~2` of round 49.
-**Your portal.** The nested `portal/` directory in your worktree is a portal git worktree on branch `wk-AMGT_CORPUS-49-2-portal`, based on portal `origin/DEV` `ad774c6f`.
+**Your portal.** The nested `portal/` directory in your worktree is a portal git worktree on branch `wk-AMGT_CORPUS-49-2-portal`, based on portal `origin/DEV` `ad774c6f`. **AMENDMENT 2 (below) re-seats you: your branch is then `wk-AMGT_CORPUS-49-6-portal`, based on portal DEV `0a06280a`, which already carries your landed change.**
 Portal files commit INSIDE `portal/` on that branch; the outer commit holds only the outer files. Never commit the portal gitlink. NEVER run `bun install`.
 **Colour law** (`portal/CLAUDE.md`): navy ink on the light canvas; reuse the file's classes.
 
@@ -71,6 +71,21 @@ A payload captured before this cell carries neither.
      block row's number) and the block's `why`, and never a value. Keys are unique (`sheet-block-<firstRow>-<rowNumber>`).
 3. Add NO other behaviour. If a hunk does not apply, apply it by hand from the patch text; report which.
 
+**AMENDMENT 2 (issuer, 2026-10-12 ~03:5xZ; the CTO's ruling, round-48 analysis ADDENDUM 2, msg 4255; this order is REOPENED and you are re-seated).** Your change is landed on portal DEV
+(`46926677c1`). The live walk found two things in the served blocks, and the CTO ruled both: (1) a block cell of an OWN-class sheet that holds a spreadsheet error token (`#N/A`, `#VALUE!`, ...)
+printed the raw token (322 cells on 7 names): print it in words; (2) a MASTER sheet's blocks print the template's sample company's content (3,024 error tokens; the template's years): "error in team sheet"
+would be false on a name with no team sheet, so master block cells print NO content: each BLOCK row prints its label and the template why, and nothing else.
+Your new base is portal DEV `0a06280a` (your worktree is already on it; branch `wk-AMGT_CORPUS-49-6-portal`). The issuer's reference patch for this amendment, a diff from the landed code, is
+`org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round49/ay2_reference_amendment2.patch.txt` (2 files: `modelSheet.ts` +25 -?, `tabs/ModelTab.tsx` 15 lines; 29 insertions, 11 deletions).
+**Do:** `cd portal && git apply --whitespace=nowarn ../org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round49/ay2_reference_amendment2.patch.txt`; `git diff --stat` shows those two files. Read it and the
+header comment of the issuer's check (`ay2_check.cjs`, arms d9 and d10 are new). What the patch does:
+- `modelSheet.ts`: a block text cell of an own-class sheet is `{text, textKind}` with `textKind` `'error'` when the text starts with `#`, else `'word'`; a master sheet's blocks keep `kind`, `columns`, `rowNumber` and
+  `blockRow` but every row carries `cells: []`; `MASTER_TEAM_ROW_WHY` is exported; `teamCensus.blocks` ends with `errorCells` (own block cells with `textKind` error) then `masterCells` (cells printed from master blocks, 0).
+- `tabs/ModelTab.tsx`: a block cell with `textKind` error prints `error in team sheet` with the grid's error title (`The research team's own sheet shows an error ("<text>") here, so no value is shown.`); for a
+  master sheet each BLOCK row of a block prints one line, the row's label (the team sheet's `rows[i]` where `row_numbers[i]` equals the block row's number) and `MASTER_TEAM_ROW_WHY`, exactly as an unread block prints
+  label + `why`, and no title, years or cell; `MASTER_TEAM_ROW_WHY` is imported from `modelSheet`.
+The decision is keyed on `teamSheet.class === 'master'` (and on `own_new` / `own_model` for the error words); no served-shape change, no method bump. Add NO other behaviour.
+
 ## 2. BOUNDS
 
 1. Only the files in `<paths>` change. Never edit the issuer's check, snapshot or patch. No `__harness__/` edit.
@@ -98,14 +113,15 @@ with `ay2_base_snapshot.json`, and the reference patch beside them.
 ## 4. PROOF OF SPEC (literal; timeout 120)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="CRPS-ay-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round49/ay2_check.cjs" portal 2&gt;&amp;1 | tail -1</invocation><expect>(?m)^ay2 build 8/8 control 2/2$</expect></criterion>
+  <criterion id="AC1" cell_refs="CRPS-ay-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round49/ay2_check.cjs" portal 2&gt;&amp;1 | tail -1</invocation><expect>(?m)^ay2 build 10/10 control 2/2$</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-ay-2"><invocation>cd "$(git rev-parse --show-toplevel)/portal" &amp;&amp; node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs 2&gt;&amp;1 | tail -1</invocation><expect>(?m)^CHECKS-OK 21 of 21$</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-ay-2"><invocation>cd "$(git rev-parse --show-toplevel)/portal" &amp;&amp; grep -c "data-sheet-block" src/pages/SecurityAnalysis/tabs/ModelTab.tsx</invocation><expect>(?m)^[1-9]\d*$</expect></criterion>
 </proof_of_spec>
 
-- AC1: blocks (period, case, unread) with their own header cells and the display strings by the cell's own format; BLOCK rows in no period group; the three-way text cell and its census; a
+- AC1 (AMENDMENT 2: ten arms): blocks (period, case, unread) with their own header cells and the display strings by the cell's own format; BLOCK rows in no period group; the three-way text cell and its census; a
   figure row holding `NA`, `#N/A` and a range stays a FIGURE row; without `blocks` the sheet is byte-equal to the base's (except the added `teamCensus.text`); an inconsistent payload does not throw;
-  the unread block prints no value; a block headed by `1Q26..4Q26` is a period block; `ModelTab.tsx` carries the render strings.
+  the unread block prints no value; a block headed by `1Q26..4Q26` is a period block; `ModelTab.tsx` carries the render strings; an own-class block error token is `textKind` error (d9); a master sheet's blocks carry
+  no cell and print the template why (d10).
 - AC2: the page's tab harness still passes (`CHECKS-OK 21 of 21`, the control round 47's order carried). AMENDMENT 1 (issuer, 2026-10-11 ~23:4xZ): the first text pinned a failing set of three checks at `ad774c6f`; that came from a STANDALONE portal tree (the harness reads files of the outer repo beside `portal/`). In a full worktree the harness reads 21 of 21 at base and patched. Gate limb: none graded this amendment (the order declares no `<placeholders>`).
 - AC3: the Model tab renders a block.
 
@@ -114,7 +130,7 @@ with `ay2_base_snapshot.json`, and the reference patch beside them.
 1. Run `bun run typecheck` inside `portal/` and report its exit code (the reference reads rc 0).
 2. Write the instance at the proof path (genre BUILD), with its mutant control; run `python .tools/proof-of-spec-check.py <instance>
    AC1,AC2,AC3 --governing-order <this order>` AFTER your final commit; rc 0.
-3. Only if AC1-AC3 pass, append a new status tag reading complete at the END of this file, in the SAME outer commit as your instance.
+3. Only if AC1-AC3 pass, append a new status tag reading complete at the END of this file, in the SAME outer commit as your instance. Your portal commit is on `wk-AMGT_CORPUS-49-6-portal`; report its FULL 40-character hash.
 4. Report ONCE: the change, AC1's, AC2's and AC3's lines, the typecheck exit code, the portal branch and FULL 40-character portal commit, your outer commit hash, any row.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
@@ -128,4 +144,3 @@ aw-2). AMENDMENT 1 (2026-10-11 ~23:4xZ): the tabs harness reads 21 of 21 at that
 <round>49</round>
 <slot>~2</slot>
 <fabric>dell1</fabric>
-<status>complete</status>
