@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-12T02:29:39Z",
+ "written_at": "2026-10-12T13:16:18Z",
  "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
@@ -1611,7 +1611,7 @@
    "source": "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~59/NEVER_WIDEN_ASK_OG-tb-1.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-12T02:29:39Z",
    "kind": "fork",
    "context": "nfra-ctlpln-identity/iam.tf:236-248 grants cloudops-dell-agents-group the whole PLATFORM-KEY class, including gateway bearers, on Andrew's 2026-10-08 'WIDEN THE TWO GRANTS, YES'. A 90-day CloudTrail census shows the group never read this one bearer (186 reads, 4 principals, 0 by the group). Narrowing it narrows a class Andrew widened, so it is his word.",
@@ -1647,7 +1647,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-12T13:16:18Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_CLUSTER_TICK1_RULINGS_20261012.md",
+    "crossbox": null,
+    "ruled_by": "cluster-lead",
+    "xadj": null
+   }
   }
  ]
 }
