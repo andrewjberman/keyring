@@ -6,6 +6,8 @@
   cl23  TR23-cl23-AC1  the drafter's prompt carries only closed-list values: five named tests pass with the commentary suites
   ca23  TR23-ca23-AC1  LIVE read-only: the three functions run ONE digest, the built dist zip's, and not the pre-act zip
   sw23  TR23-sw23-AC1  the drafter posts its draft to the request's ticket and leaves a census: six named tests pass with every commentary test file
+  sa23  TR23-sa23-AC1  LIVE read-only: three functions on ONE digest (the built zip's, not the pre-act zip) and the drafter's
+                       ticket base is the front door
   mp23  TR23-mp23-AC1  LIVE read-only: all three functions of the transcripts root read ONE CodeSha256, the Teams pull's
 
 Prints R23-<TOKEN>-OK or R23-<TOKEN>-FAIL <reason> and exits 0 / 1. Run from the repo root (or a worktree root).
@@ -159,10 +161,44 @@ def ca23():
     return True, facts
 
 
+PRE_SA23_SHA = "auyn4IvltKLLl6yw+SsMWGi3VVlYZKnmJKFssjJaVNY="
+RUNNER_CONFIG = Path("integrations/ticketing/intake/runner_config.json")
+
+
+def sa23():
+    """Live read-only: three functions on ONE digest, the built dist zip's, not the pre-act zip; the commentary function's
+    ticket base is the front door named by the ticketing intake's own config."""
+    import base64
+    import hashlib
+    import json
+
+    import boto3
+
+    if not DIST_ZIP.exists():
+        return False, "absent: %s" % DIST_ZIP.as_posix()
+    local = base64.b64encode(hashlib.sha256(DIST_ZIP.read_bytes()).digest()).decode()
+    front = json.loads(RUNNER_CONFIG.read_text(encoding="utf-8"))["portal_base"]
+    lam = boto3.client("lambda", region_name="us-east-1")
+    cfg = {f: lam.get_function_configuration(FunctionName=f) for f in (PULL_FN, MAIL_FN, COMMENTARY_FN)}
+    shas = {f: c["CodeSha256"] for f, c in cfg.items()}
+    base = cfg[COMMENTARY_FN].get("Environment", {}).get("Variables", {}).get("TICKET_API_BASE")
+    facts = "digests=%d live=%s local_zip=%s base_is_front_door=%s" % (
+        len(set(shas.values())), sorted({s[:8] for s in shas.values()}), local[:8], base == front)
+    if PRE_SA23_SHA in shas.values():
+        return False, "a function still runs the pre-act zip; " + facts
+    if len(set(shas.values())) != 1:
+        return False, "the three functions are not on one digest; " + facts
+    if next(iter(shas.values())) != local:
+        return False, "the live digest is not the local dist zip's; " + facts
+    if base != front:
+        return False, "the commentary function's ticket base is not the front door; " + facts
+    return True, facts
+
+
 if __name__ == "__main__":
-    fns = {"tt23": tt23, "tv23": tv23, "mp23": mp23, "cl23": cl23, "ca23": ca23, "sw23": sw23}
+    fns = {"tt23": tt23, "tv23": tv23, "mp23": mp23, "cl23": cl23, "ca23": ca23, "sw23": sw23, "sa23": sa23}
     if len(sys.argv) != 2 or sys.argv[1] not in fns:
-        print("usage: r23_checks.py {tt23|tv23|mp23|cl23|ca23|sw23}")
+        print("usage: r23_checks.py {tt23|tv23|mp23|cl23|ca23|sw23|sa23}")
         sys.exit(2)
     ok, why = fns[sys.argv[1]]()
     print("R23-%s-%s %s" % (sys.argv[1].upper(), "OK" if ok else "FAIL", why))
