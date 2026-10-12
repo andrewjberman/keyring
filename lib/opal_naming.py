@@ -2802,7 +2802,11 @@ def lambda_plane_consumers(t):
         files = f.get("files") or []
         own = os.path.normpath(os.path.join(REPO, *sd.split("/"), bn))
         if own == target_abs:
-            continue  # the function IS the shared file's own location, not a consumer
+            # the function's own source dir holds `t`: a consumer only when its build lists the basename (the VIEWS
+            # target inside a function's own dir, CTO ruling msg 108498); held but unlisted stays unclaimed
+            if bn in files:
+                consumers.append(fname)
+            continue
         if bn in files and not os.path.isfile(own):
             consumers.append(fname)
             continue
