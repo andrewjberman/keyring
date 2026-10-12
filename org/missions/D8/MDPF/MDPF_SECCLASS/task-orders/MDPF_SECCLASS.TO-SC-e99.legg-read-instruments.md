@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~88</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-12</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -63,11 +63,11 @@ text below; **no dollar figure is typed into the script** except the two Reach b
 `NEVER_WIDEN_CTO_HALF_SECCLASS_C06_ROLLING_REDERIVE_20261012.md` ADDENDUM 2 and the COO half's addendum 1):
 - Reads the live `mix_daily_summary.json`; if it carries no `restated_through` key, print `E97-ACCEPT shipped=False ok=False` and exit 3 (the
   ship has not read back). Otherwise grade ALL of these and print one line per criterion then the summary:
-  1. `unclassified_window`: for each of 2026-09-30..2026-10-06, the D_04 remainder lies in `0 .. 53010.45` (the bound is the largest per-date rebuilt
+  1. `unclassified_window`: for each of 2026-09-30..2026-10-06, the D_04 remainder lies in `-250 .. bound+250` (amendment 1; the bound is the largest per-date rebuilt
      Unclassified of the SC-e-96 record, `WINDOW_READ_C06_ROLLING_20261012.json`, `per_date[].rebuilt_unclassified`: read the maximum from that file
      rather than typing it) plus $250;
-  2. `w86_s5_remainder`: for 2026-10-03, 10-04, 10-05 the absolute difference between the stored `unclassified` key and the D_04 remainder is under $1.00
-     (it was about $6.5M);
+  2. `w86_s5_remainder`: for 2026-10-03, 10-04, 10-05 the absolute difference between the stored `unclassified` key and the D_04 remainder is under $250 (amendment 1;
+     it was about $6.5M);
   3. `totals_equal_aua`: for each of the 15 window dates 2026-09-25..2026-10-09, `firm[date].total` equals the AUA within $1.00. The AUA is the
      `client_performance` source the request names (`gold/timeseries/client_performance.parquet`; read it with pyarrow or pandas the way D_03 builds
      `cp_daily_total`, citing the file:line you replicated, and state the column you used);
@@ -108,6 +108,31 @@ negatives=<n of n>`.
 
 Dry-run at the base (dell1 box/dell1 HEAD, 2026-10-12 ~21:0xZ): all three FAIL as expected (the script is absent). The served objects read the baseline
 versions (`mix_daily_summary.json` VersionId `VrrTn2RrESHBImlLOMHQbNP6Fvzi9NZD`, no `restated_through` key), so AC2 and AC3 are reachable.
+
+### AMENDMENT 1 -- the tolerances are the rounding the code carries, and the idempotence count is C_06's keys only (issuer 2.0.0_SA_COO~M1, 2026-10-12 ~21:3xZ; answers your rows MDPF_SECCLASS-D1-W88-S1..S6)
+
+Your stop was right and your report is exact: the order's own positive fixture cannot pass the order's own criteria, so the fault is in the order, not
+in your script. The cause is one thing I wrote twice: I took the six-place rounding the code carries (row D1-W85-S6: up to $128.58 per snapshot) as
+if it were absent from the post-act objects. It is not, and it moves the remainder and the key by a few dollars to about $170 a day.
+1. **`unclassified_window` (your S2).** The lower bound is `-250`, not `0`: the criterion is `-250 <= remainder <= bound_max + 250` for each of
+   2026-09-30..2026-10-06. A rebuild that places every dollar leaves a remainder of a few dollars either side of zero (the radius shows -$42.15 on 10-06,
+   whose rebuilt Unclassified is $0.00). The CTO's "$0 to $53,010.45" is read with that rounding, as every other tolerance in the pair is.
+2. **`w86_s5` (your S3).** The tolerance is `$250`, not `$1.00`: the criterion is `|stored unclassified key - D_04 remainder| < 250` on 2026-10-03,
+   10-04 and 10-05. The defect it guards is about $6.5M; the post-act key and remainder still differ by the same rounding ($3.94 to $166.72 in your
+   fixture, $69.72 at 10-09 in the radius). Keep your fixture's key set to the remainder only if that is what you did; say which in the report.
+3. **`--since` idempotence count (your S5).** Count only the keys C_06 writes: under `gold/entities/clients/` and under `gold/client_timeseries/`
+   the keys whose name after the prefix has NO further `/` and ends `.json` and does not end `_composition.json` (so `{rid}.json` and `{rid}_views.json`
+   only). The subdirectory keys (`{rid}/detail.json`, `{rid}/aua_timeseries.json`, written by D_02 on every fire) are not C_06's and must not count.
+   Print the count per prefix, the denominator per prefix and the page counts. The expected value of a second fire is still 0.
+4. **Accepted as read:** S1 (the bound is the maximum of `per_date.rebuilt_unclassified` over the seven dates 2026-09-30..10-06, $53,010.45; 10-09's
+   $883,483.05 is not in that window), S4 (the five per-class bar figures come from the request's `Period bars` table because `bars.json` holds
+   Unclassified only; name that section in the script), S6 (10-09's Reach is $653,857.12 and the re-derive's move is $962,919.40; both are right,
+   they are different acts). Your row S2 (BLOCKING) is dispositioned by items 1 and 2.
+5. **Re-run, then finish.** With items 1 to 3 the e97 positive fixture grades `ok=True` and every negative fails on exactly its own criterion
+   (strict reading). Re-run AC1 to AC3, validate the proof instance (the `controls.mutant` check must fire), flip `complete` only when all three
+   pass, commit with the same paths and report.
+6. **Gate limb.** The issuer amends its own criteria without a CTO ruling; no gate limb grades an amendment to an existing order's criteria and
+   `<status>` (this order declares `<placeholders>NONE`).
 
 ## BOUNDS
 
