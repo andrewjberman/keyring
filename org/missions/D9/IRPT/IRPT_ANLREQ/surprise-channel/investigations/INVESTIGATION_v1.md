@@ -3942,3 +3942,87 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W52-S23 -- a closed whole-cell exclusion list cannot pass an attribute form it does not name, so the rule also reads the words after the account word
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S23",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T22:44:44Z",
+  "one_line": "The order asks for the five measured attribute forms to be whole-cell exclusions AND for one new attribute form, not in the seeds, to be handled right. A closed list cannot do the second. The rule therefore also treats an account word followed by a non-identifier word as an attribute (Account Balance is not turned back), with the five forms still listed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py@ccbed3339b (_is_account_header, ACCOUNT_TAIL_WORDS, ACCOUNT_HEADER_EXCLUDED)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r17/ACCOUNT_HEADER_POPULATION.json@632f24f159 (new_attribute_form Account Balance)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r17/CLOSED_LISTS_RULE24.json@632f24f159 (exclusion_note)"
+    ]
+  },
+  "spec_asserts": "Point 2 of IRPT_ANLREQ.TO-AR-y-171: the five attribute forms are added to the whole-cell exclusions with reason and census line. AC1: one new form of each class not in the seeds is handled right.",
+  "world_is": "A whole-cell list names only the forms it is given, so an unseen attribute header (Account Balance) would be turned back as several accounts under the leading-word rule. The repair adds an identifier-tail test (only identifier words may follow the account word). That is a rule shape the cell did not name. Whether the tail vocabulary is the right one is a judgment for L9.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S24 -- four account-naming headers are not matched by the repaired rule: Brokerage Account, Subaccount, Account Seq, Account Sequence
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S24",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T22:44:44Z",
+  "one_line": "The repaired rule admits a modifier only from custodian, client, sub, or no. of, and an identifier tail only from a closed word list. Brokerage Account, Subaccount, Account Seq and Account Sequence name accounts and are not matched, so a multi-account file under one of them passes as one account. The leading-word rule before the repair missed them too, so this is not a regression.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py@ccbed3339b (ACCOUNT_MODIFIERS, ACCOUNT_TAIL_WORDS, _is_account_header)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~52/r17/CLOSED_LISTS_RULE24.json@632f24f159 (subtraction.identifier_like_not_matched)",
+      "scratch run .scratch/subtract_r17.py against the committed rule: Brokerage Account False, Subaccount False, Account Seq False, Account Sequence False"
+    ]
+  },
+  "spec_asserts": "Point 2 of IRPT_ANLREQ.TO-AR-y-171 and the CVO's FAIL clause 1: the rule must not miss an account-identifier header (the costly direction, a two-account file passes as one silently).",
+  "world_is": "Four identifier-like headers outside the stated modifier and identifier vocabularies are not matched. The reader is built and not released; the release pair would carry this gap. Widening the vocabularies is a ruling for the issuer or the CTO, not a choice made by the worker.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W52-S25 -- the client-account gate could not check this worker's commits: its hashed account-id list is absent on this device
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W52-S25",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~52",
+  "surfaced_at": "2026-10-12T22:44:44Z",
+  "one_line": "Every safe-commit of this order printed 'client-data-check: hashed account-id list ABSENT ... this commit was NOT checked for client account ids'. The commits carry synthetic labels only (ACCT-ONE, ACCT-TWO, Client Acct No.). The gate's client-account read is therefore not evidence for these commits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for 350497c220, ccbed3339b and 632f24f159 (WARN: client-data-check ... ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt)",
+      "the same WARN text says absent is not empty; the list is set by OPAL_ACCOUNT_ID_HASHES or the path above"
+    ]
+  },
+  "spec_asserts": "The commit path (.tools/safe-commit.sh) checks each commit for client account ids.",
+  "world_is": "On this device the hashed list is not present, so the check reports NOT CHECKED rather than clean. No account id is known to be in these commits; the synthetic test labels are the only account-shaped strings the worker added.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
