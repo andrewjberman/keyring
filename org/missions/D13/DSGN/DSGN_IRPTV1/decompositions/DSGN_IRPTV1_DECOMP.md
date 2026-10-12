@@ -767,3 +767,20 @@ at its Amendment 1; TO-TX-v-3 only reads it). The second condition, the census w
 own criterion.
 
 fanout: 3 of 3 chains, cap 8.
+
+## v32 -- round 32 (issuer 2.0.0_SA_COO~D2, 2026-10-12 ~23:4xZ), over PRD v0.18 (ADMITTED; no addendum), on 1.0.0_SA_CTO~DELL2 msg 6671
+
+The round-31 candidate landed on portal DEV as cf52fdbf00f2 (0.0.0_AB_MSTR~DELL2 receipt msg 6669, CI success); the CTO's round-32 analysis
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_DSGN_IRPTV1_ROUND_32_20261012.md` @933fc4d8f7) answers the round-31 slug (REMEDIATION_v11).
+Its list: items 1 and 2 below; item 3 (rows D2-W60-S1 and D2-S21 close when the candidate lands) is satisfied by that landing and needs no cell.
+The vendor-name question (row D2-W70-S2) is held for Andrew; the view keeps adding no provider. The account-pick start (row D2-W69-S1) is the producer's entry kind,
+routed to IRPT_BCKEND ~P.
+
+| cell | item | rows | risk | chain / slot | key files |
+|---|---|---|---|---|---|
+| IV-e-123 | one read of the holdings producer: is an ACCOUNT node's id equal to the account id on every served path (denominator printed); where it is not, the page maps the node ref to the account id before the focus post (a product change only then) | D2-W69-S2 | SERVED | A ~72 | tabs/holdings/ (read: infra/aws/lambda/investor-reporting/holdings/) |
+| IV-e-124 | the unsupported-card reason on an UNCERTIFIED vendor report is a plain sentence in the register of the face's one validation sentence, with no producer status word; an Opal report unchanged | D2-W70-S4 | SERVED | B ~73 | tabs/analysis/NativeSections.tsx |
+
+The two write sets are disjoint (a shared hookup is the issuer's at the drain).
+
+fanout: 2 of 2 chains, cap 8.
