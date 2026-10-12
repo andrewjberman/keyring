@@ -7286,3 +7286,51 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W149-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~149",
+  "surfaced_at": "2026-10-12T01:13:03Z",
+  "one_line": "The live price store object is not the output of the writer at HEAD: it has 5 columns (no source_firm) and carries a source value the HEAD writer never assigns (scoped_override, 12,042 rows).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/build_canonical_prices_v2.py:873 writes date, asset_name, ticker, price, source, source_firm and :902 stores opal_input_resolution metadata; its docstring :23-28 says cot runs no scoped-override inject step",
+      "this seat's one get of s3://opal-data-cot/silver/prices/canonical_prices.parquet, LastModified 2026-10-09T13:41:04Z, 97,443,387 bytes: pyarrow schema date, asset_name, ticker, price, source (5 columns); source value counts over 11,289,398 rows: linear_interpolation 7,831,140; yahoo_finance 3,396,067; transaction_observed 50,143; scoped_override 12,042; transaction_observed_capped 6; no carry_forward",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~149/STORE_UNADJUSTED_FIELD.json"
+    ]
+  },
+  "spec_asserts": "The writer at HEAD (build_canonical_prices_v2.py:873, :23-28) is the store's writer and writes 6 columns with no scoped_override source.",
+  "world_is": "The object's last-modified is 2026-10-09 yet it has no source_firm column and holds scoped_override rows: it was written by a different version of the writer (or another writer) than the file at HEAD. Which writer wrote it was not read; the writer is not in the live step list, so the object is not rebuilt by a schedule.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W149-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~149",
+  "surfaced_at": "2026-10-12T01:13:03Z",
+  "one_line": "The price store's ticker key is not one security: 308 of 4,000 tickers carry more than one asset_name, 5,748,151 of 11,289,398 rows carry no ticker, and VGHAX (one of the 15 funds) carries 3 names (VANGUARD HEALTH CARE INV, INVESCO HEALTH CARE INVSTOR, VANGUARD HEALTH CARE ADM) with the same Yahoo series under all three.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's one get of the store object (LastModified 2026-10-09T13:41:04Z): ticker x asset_name distinct pairs over the whole object: 4,000 tickers, 308 with more than one asset_name (AMD 9, SOXL 8, SPY 8, TSLA 8, QYLD 7), 5,748,151 null-ticker rows of 11,289,398",
+      "VGHAX in the store: 4,926 rows on 2,095 distinct dates, asset_name VANGUARD HEALTH CARE INV 2020-09-14 to 2026-06-09, INVESCO HEALTH CARE INVSTOR 2021-12-17 to 2026-06-09, VANGUARD HEALTH CARE ADM 2023-03-03 to 2026-06-09; on the 817 dates all three have, one price value per date",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~149/STORE_UNADJUSTED_FIELD.json"
+    ]
+  },
+  "spec_asserts": "ADVI_COTBKF.TO-CB-bz-2 and the round-77 records treat the store as keyed by ticker, one fund per key (the census read key = ticker).",
+  "world_is": "A reader that keys the store by ticker takes one series for several asset names; for VGHAX the 2,095 held dates from 2020-09-14 come from rows of three names. Whether the held CUSIP is the Admiral class (the ADM name starts 2023-03-03) was not read; any figure that joins this store by ticker alone carries that ambiguity.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
