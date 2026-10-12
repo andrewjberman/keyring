@@ -79,6 +79,23 @@ what it answers for such a window. The CTO writes the producer's addendum from t
   If no account in the served gold has a non-OK day, say so with the count of rows and statuses read, and plant ONE in a COPY
   in memory (never in S3) to read the reader's behaviour: then `planted: true` and the claim is `inferred`.
 
+**AMENDMENT 1 (2026-10-11 ~23:5xZ, issuer, on CTO msg 6162).** Measurement 1 reports PER FUND CLASS, not one figure. Another
+project measured this same store today against the price paid on trades: for funds whose stored close the build did NOT
+replace, the close is more than 20 percent off the price paid on 3,205 of 3,614 trades (median ratio 0.742); for funds whose
+close it DID replace, within 1 percent on 10,411 of 10,636. Read
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_76_L9_GRADE_20261011.md` and
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_ADVI_COTBKF_ROUND_77_20261011.md` (sections 1 and 2), and find
+in the records they cite HOW a fund is marked replaced or not (the flag, and where it lives: a column of the store, a list,
+or the build's own table; cite file:line; if you cannot find it, say so and do not guess). Then add to the json
+`by_fund_class`: for each class you can form (`replaced`, `not_replaced`, `not_a_fund_or_unmarked`), the tickers of the 878
+in it, and the SAME five ticker outcomes and the same ticker-days `compared` / `equal` / `not_equal` as the whole, each
+summing with no remainder to the whole's; and the median ratio of the store's point to the reader's unadjusted Close on
+unequal ticker-days per class. And `admitted_types_holding_not_replaced_funds`: for each of the NINE admitted type pairs
+(PRD v0.39 and v0.42; the product module `date_basis_grading.py` lists them), how many of its securities among the 878 are
+`not_replaced`, and how many of those show unequal ticker-days. The CTO's sentence governs the reading: an adjusted close
+dates nothing. The one word `the_store_holds_the_unadjusted_close` is then given PER CLASS as well
+(`the_store_holds_the_unadjusted_close_by_class`). The checks do not grade this amendment; the issuer reads it at the drain.
+
 **Outputs** in `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~315/`: `IB155-1_two_measurements.json` with the
 members named above plus `base_commit`, `fetch:{call_count, distinct_tickers_asked, tickers_asked_more_than_once: 0,
 counted_before_fetching}`, `not_established`, `aws_writes_made: 0`, `sign_ins_made: 0`, `functions_invoked: 0`,
