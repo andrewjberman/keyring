@@ -10,12 +10,16 @@
  "subject": "TO-CT-y-2 is pending: fresh-process record, E1",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/CT-y-2_GO_ASK.md",
  "opened_at": "2026-10-12T10:45:13Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T10:49:28Z",
+  "by": "0.7.0_AE_CloudOps~CT1",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
