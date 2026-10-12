@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.45",
+ "prd_version": "v0.46",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -1126,5 +1126,58 @@ ENDPOINT is not edited.
 - **Rule 24:** one member on one answer; domain, every first persist; two states, present with the record's id or absent; absence
   means the record names no ticket and nothing else. Token census: `ticket_id` is the estate's existing name for this value
   (the accepted record, the submission, the ticket service) and is used here for that same value and no other.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.46 -- the date-basis producer: where it runs, what it reads, what it writes (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Author:** `1.0.0_SA_CTO~DELL2`, 2026-10-12 ~01:2xZ. **Sources, both read by this seat:** the producer design read
+  `deliverables/0.9.0_WK_IRPT_BCKEND~313/IB153-1_PRODUCER_DESIGN_READ.md` (msg 6002) and the two measurements
+  `deliverables/0.9.0_WK_IRPT_BCKEND~315/IB155-1_TWO_MEASUREMENTS_READ.md` (msg 6241). Every number is a worker's. This seat read
+  the module's interface (`data/assets/scripts/gold/irpt_reporting/date_basis_grading.py:39-41`, `:245-263`) and no other code.
+- **What it settles:** the ten design questions the design read left for this addendum. **Nothing is served by it.** It is a
+  contract for a build; the build is cut only after the three reads of the last bullet.
+
+**CONTRACT C-DBPRODUCER, the ten answers.**
+
+1. **Bars: a LANDED source, written by its own scheduled producer; the landed prices store is refused as that source.** Measured:
+   the store's yahoo-labelled points end 2026-06-05, it covers 0 of the 85 graded days, and no schedule writes it. The second
+   witness's bars are today a run-time fetch into a local folder, which no scheduled producer can read. The bars producer lands
+   the unadjusted Close for the tickers held on the days it grades. Its address and name are builder output
+   (`lib/opal_naming.py`); a builder refusal is a registry row to add. **Failure mode, each distinguishable in what is written:**
+   a ticker with no bar is recorded as no bar and the security-day is not graded by the second witness (v0.37 to v0.44 already
+   say what that means for the claim); a pass stopped partway writes NO day's bars as complete, and the grading step, finding the
+   day's bars incomplete, writes no claim for that day. A partial pass is never read as a whole one.
+2. **The claim is written to its OWN table, never back into a landed holdings partition.** The holdings handler writes new keys
+   only, and it stays so. The claim table is keyed by account and day and is written once per account-day.
+3. **A blank day in the claim table is a ROW, not a missing row:** claim `UNGRADEABLE` or the blank reason of the module's serving
+   rule, so that "not yet graded" (no row) and "graded and not served" (a row) cannot be confused. The holdings gold's `status`
+   column is not written by this producer. How the performance route reads a non-OK day is NOT settled here; see the last bullet.
+4. **It runs on its own schedule, at a clock time after both inputs' steady landing times, and catches up.** Each run grades every
+   day in the last 7 trading days whose inputs are all present and whose claim rows are not yet written, oldest first. Measured: 3
+   of 22 partitions landed 3 to 5 days after their date. A day whose inputs never arrive stays without rows; nothing alerts.
+   Trading days come from `lib/trading_calendar.py`.
+5. **The prior day's claim is read from the claim table.** No row for the prior day means the day is not graded (v0.41).
+6. **Security types are read from the transactions table beside the holdings**, by the producer, at the address the builder gives.
+7. **No new vocabulary.** The claim values are the module's closed four (`date_basis_grading.py:40`); the kinds and witnesses are
+   the module's. The source declaration for this entry stays `partition_close`, basis inferred, until claim rows exist for 20
+   consecutive trading days; changing the declaration is its own addendum. The claim table gets a contract file under
+   `docs/contracts/`, written in the build's first cell; none exists today.
+8. **Members carried: exactly what the module's `account_day` returns** (claim, kinds, witnesses, base claim, base kinds, second
+   witness outcome), plus account, day, the rule's version and the run that wrote it. None is added.
+9. **No route composes this entry and no role is granted for its firm by this addendum.** Nothing serves its returns today and
+   nothing will on this build.
+10. **Packaging is not ruled until egress is measured.** The bars producer needs to reach the vendor from where it runs; whether
+    the existing function's network allows it is not established. One read, then the issuer proposes the package in its pair.
+
+- **The proof.** A driven run over the 85 days already measured: the claim table's counts equal the product module's own counts on
+  those days (the design read's 272, 26 and 2 among them), and one day with its bars deliberately withheld produces no claim rows
+  for that day. Graded by the reviewer.
+- **Three reads before any cell is cut:** (a) whether the function's network reaches the vendor; (b) for the performance route's
+  reader, per window, how many accounts have at least one excluded day and whether those days are the account's first day or
+  interior days; (c) the pages that render the route's returns. Read (b) is the ground for row `IRPT_BCKEND-D2-W313-S3`: the reader
+  chains over a non-OK day and still says `measured` (a figure over 248 of 249 days, the reader's code over served gold, NOT the
+  deployed function's answer). That is a served claim that may say more than it knows, for two other firms. It is not changed
+  here, because Since Inception has no account with every day OK and one rule would move every such figure.
 
 -- 1.0.0_SA_CTO~DELL2
