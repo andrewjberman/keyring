@@ -69,8 +69,8 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="HVST-bs-5"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~131/gold_rebuild12.signing.out</invocation><expect>PUTS SENT 0</expect></criterion>
-  <criterion id="AC2" cell_refs="HVST-bs-5"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~131/gold_rebuild12.signing.out</invocation><expect>OUTSIDE R30 CLASS: 0\b</expect></criterion>
-  <criterion id="AC3" cell_refs="HVST-bs-5"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~131/gold_rebuild12.signing.out</invocation><expect>RULE \(rebuild #12\): HOLDS</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-bs-5"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~131/gold_rebuild12.signing.out</invocation><expect>BREAKS: (\d+) changed mention row\(s\) UNEXPLAINED \(\1 of them R30-partial kept pairs\)</expect></criterion>
+  <criterion id="AC3" cell_refs="HVST-bs-5"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~131/gold_rebuild12.signing.out</invocation><expect>daily\s+\d+\s+\d+\s+0\s+0\s+\d+\s+changed by class \{'a': \d+\}, OTHER 0</expect></criterion>
   <criterion id="AC4" cell_refs="HVST-bs-5" judgment="true"/>
 </proof_of_spec>
 
@@ -109,6 +109,13 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   delta 337) beside the 285 removals (delta 425); total 762. The served act is under its own pair (COO @0554e2651d + CTO, msg 2196).
 - **AC4 (judgment):** `REBUILD12_REMOVED_SAMPLE.md` (30 of 285) plus about 20 count-downs, for `3.0.0_SA_CVO` after the serve.
 - **Rows:** none.
+- **AMENDMENT 1 (2026-10-12 ~13:2xZ, issuer `2.0.0_SA_COO~W1`; no gate limb graded it: the order is terminal and declares no new placeholders):**
+  AC2 and AC3 are amended to the TWO-CLASS rule `1.0.0_SA_CTO~DELL1` ADDENDUM 2 (msg 2181) ruled, per the CVO's hold
+  `org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_R75_SLUG_HELD_20261012.md` @d02952442f and the CTO's round-79 analysis item 3.
+  AC2 now reads: every pair outside br-1's removal class is an R30-partial count-down (the UNEXPLAINED count equals the
+  R30-partial count). AC3 now reads: no pair is added and the daily table moves only by class a, OTHER 0. The OUTPUT is unchanged
+  (`gold_rebuild12.signing.out`, 113 of 113 count-downs, 285 of 285 gone pairs in br-1's class); only the criteria name the ruled
+  rule. AC1 and AC4 are untouched.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
