@@ -58,6 +58,11 @@ face. Walk A shows the lookup wired before publish with 0 calls, walk B one INFE
 is continuous against a gapping control. No published page carries an INFERRED adjustment; the amendment says this cannot
 be observed. Row D1-C-S14. Row D1-S15 stays ARMED on wd-1 (HELD).**
 
+**ADDENDUM 14 (2026-10-12 ~14:52Z, on COO~V1 msg 4441 and this seat's own parse of the served 2026-10-12 audit.html): RIV-wd-1
+J1 NOT MET on its repeat clause, on the first page rendered with RIV-wf-1. BIDD, CGIC and SCHY each show a trade window
+ending 2026-10-02 (2, 16 and 4 trades) beside a 10-02 cell marked repeat. The page names its second date axis only in each
+cell's hover title, which this seat does not read as 'shown as different'. Row D1-C-S15. D1-S15 stays ARMED on wa-1 (HELD).**
+
 ```json
 [
   {
@@ -370,6 +375,28 @@ be observed. Row D1-C-S14. Row D1-S15 stays ARMED on wd-1 (HELD).**
         "data/etfs/scripts/rivalfunds/sweep.py:467-471 at HEAD (lookup inside run_one for publish-page)",
         "aws s3api list-objects-v2 opal-data-etfs rivalfunds/etfs/gold/corporate_actions/date=2026-10-12/ -> null; date=2026-10-09/ -> 1 key (control), 2026-10-12 14:35Z",
         "2.0.0_SA_COO~V1 msg 4426; this file ETFS_RIVALS-D1-C-S13; INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S15"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S15",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-12T14:52Z",
+    "one_line": "ETFS_RIVALS.TO-RIV-wd-1.no-trade-below-tolerance-or-on-a-repeat-day J1 NOT MEASURED -> HELD -> NOT MET on its repeat clause, on the first page rendered with RIV-wf-1 (2026-10-12 audit.html, written 13:07:08Z). Three funds show a trade window ending 2026-10-02 beside a 10-02 calendar cell marked repeat. The page states the second date axis only in per-cell hover titles. The other two clauses stand as graded MET in D1-C-S1 and were not re-read on this page.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "wd-1 J1: no trade sits on a day the calendar marks repeat. Row D1-C-S2 named the grade's two branches: the two date axes are shown to a reader as different, OR no repeat-marked day coincides with a window end that carries a trade.",
+    "world_is": "- Subject, this seat's parse: s3://opal-data-etfs/rivalfunds/etfs/platinum/page/date=2026-10-12/audit.html (head-object: 1,088,720 bytes, LastModified 2026-10-12T13:07:08Z), copied to this seat's scratchpad and parsed with python -I.\n- Second branch, NOT met: three headings read 'Window 2026-09-30 to 2026-10-02' with 16, 2 and 4 trades. Of 13 cells with data-day 2026-10-02, 5 carry data-status repeat: three titled 'report dated 2026-09-30' and two 'report dated 2026-10-01'. The issuer's per-fund attribution (BIDD 2, CGIC 16, SCHY 4; TSEL and WCMG repeat with no windows; ETFT's 10-02 window beside a new cell) agrees with these counts and was not re-derived per fund here.\n- First branch, NOT met: the visible text (scripts, styles and tags stripped; attributes excluded) holds 0 occurrences of 'requested', 'expected day', 'as-of', 'as of' and 'report dated'. The legend reads 'new / repeat / regressed (older than the previous report) / gap / periodic per day', and it does not say which day. The second axis appears only in each cell's title attribute, for example '2026-10-02: repeat, source bloomberg, report dated 2026-09-30'.\n- Why the hover title is not 'shown as different': a title is read one cell at a time, only on hover, and only on a pointer device. It reports that cell's report date, but nothing on the page says the calendar's columns are REQUESTED days while the window headings are REPORT as-of days. A reader of what the page displays sees trades in a window ending on a day the calendar marks repeat, which is the case the clause forbids. The trades are real (D1-C-S2): the page misleads, the data does not.\n- Not done: the page was not rendered in a browser (Playwright), so whether any CSS surfaces the titles is not read. The issuer's record also leaves this unmeasured. The bytes are the served object.\n- Remedy, for the CTO's round-29 analysis (not cut here): a labelled axis on the calendar ('requested day' vs the windows' 'report date'), or a calendar keyed by report date, so that no repeat-marked column coincides with a window end.\n- Round 28 terminal verdicts: tc-1 MET, wi-1 MET (amended), wc-1 MET, wc-2 MET, wg-1 MET, wh-1 MET, aw-1 NOT MET, wd-1 NOT MET. wa-1 is HELD for the first PUBLISHED page with the split-adjusted code. Row D1-S15 stays ARMED on wa-1, and round-close-check's GRADED count still includes the two NOT MET verdicts.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-etfs/rivalfunds/etfs/platinum/page/date=2026-10-12/audit.html (1,088,720 bytes, 2026-10-12T13:07:08Z), parsed by this seat 14:5xZ",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/WD1_PAGE_READ_20261012.md @d7d52927cc",
+        "task-orders/ETFS_RIVALS.TO-RIV-wd-1...md:107 (J1 face); this file ETFS_RIVALS-D1-C-S1, D1-C-S2",
+        "2.0.0_SA_COO~V1 msg 4441; INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S15"
       ]
     },
     "disposition": "GRADUATED"
