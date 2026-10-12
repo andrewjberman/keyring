@@ -7297,3 +7297,163 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The handler does not gate the two class-(i) routes, so a request whose authorizer context is missing, empty or 'null' reaches them, as it did before the fence. Their only login check is the API Gateway authorizer, which is outside this order. The fail-closed rule therefore holds for class (ii) and not for these two routes, by the ruling's own design. The CTO should confirm that reading before CT-u-7 applies, because the test pins it."
 }
 ```
+
+## NFRA_CTLPLN-W63-S1 -- pip on this Windows interpreter cannot have its per-user config redirected by environment, so candidate (b) is measured as the PIP_CONFIG_FILE config file, not as the per-user file.
+
+```json
+{
+  "id": "NFRA_CTLPLN-W63-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~63",
+  "surfaced_at": "2026-10-12T07:18:23Z",
+  "one_line": "pip on this Windows interpreter cannot have its per-user config redirected by environment, so candidate (b) is measured as the PIP_CONFIG_FILE config file, not as the per-user file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "installed pip 26.0.1 package, vendored platformdirs windows module: get_win_folder_via_ctypes calls SHGetFolderPathW, so the per-user config directory is not read from the APPDATA environment variable on this path",
+      "installed pip 26.0.1 package, _internal/configuration.py iter_config_files: the per-user config is not loaded when PIP_CONFIG_FILE names an existing file (lines 357-359)",
+      "measure output of org/devices/kit_pip_no_egress.py: NOTE line 'candidate (b) is measured as the config file pip reads from PIP_CONFIG_FILE ... was not written'",
+      "the cell rules forbid touching the machine's real pip config, so no per-user file was planted and the redirect was not attempted at the real path"
+    ]
+  },
+  "spec_asserts": "TO CT-v-1 BUILD candidate (b): 'a user-level pip config file with no-index = true' is one of the four disarms, each run with the same command and then with the explicit loopback index after the disarm.",
+  "world_is": "On this interpreter pip locates the per-user file through the shell API, so no environment variable sends that lookup into the harness, and the real file may not be written. Candidate (b) is therefore measured as the config file pip reads from PIP_CONFIG_FILE, the same option parser with a different file location; a per-user file of identical content is inferred to behave the same, not measured. The real per-user file on this box was neither read nor changed, so its content is BLIND to this measurement."
+}
+```
+
+## NFRA_CTLPLN-W63-S2 -- the dead-loopback index candidate (c) is graded FAIL by the zero-request rule: under the proxy redirect its attempt is logged by the proxy listener, so the rule cannot pass it.
+
+```json
+{
+  "id": "NFRA_CTLPLN-W63-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~63",
+  "surfaced_at": "2026-10-12T07:18:23Z",
+  "one_line": "the dead-loopback index candidate (c) is graded FAIL by the zero-request rule: under the proxy redirect its attempt is logged by the proxy listener, so the rule cannot pass it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measure run of org/devices/kit_pip_no_egress.py: 'ARM config:index-url-dead-loopback role=candidate index=0 proxy=1 rc=1 named=True verdict=FAIL'",
+      "the same run: 'ARM config:index-url-dead-loopback +explicit-index role=explicit index=0 proxy=1 rc=1 named=True verdict=FAIL'",
+      "the same run's summary: leaked_public=0, so the proxy line names a loopback host and no public host was attempted",
+      "TO CT-v-1 BUILD: 'a candidate passes only when the same command makes ZERO requests to either listener'"
+    ]
+  },
+  "spec_asserts": "TO CT-v-1 BUILD candidate (c): 'a user-level config index-url pointed at a dead loopback port' is a disarm; and a candidate passes only when the same command makes ZERO requests to either listener.",
+  "world_is": "Redirect B is on for every pip process, so pip sends the dead-port index request to the proxy listener, which logs it before answering 502. A dead loopback port therefore cannot make zero requests on this redirect: the zero rule fails (c) by construction, though no public host is contacted. The tool records FAIL and does not reclassify it; whether the rule should count proxy lines to loopback hosts as requests is for the owner to decide, not this worker."
+}
+```
+
+## NFRA_CTLPLN-W63-S3 -- the positive arm reaches the PROXY listener, and no pip arm reaches the index listener: pip routes the loopback index through HTTP_PROXY.
+
+```json
+{
+  "id": "NFRA_CTLPLN-W63-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~63",
+  "surfaced_at": "2026-10-12T07:18:23Z",
+  "one_line": "the positive arm reaches the PROXY listener, and no pip arm reaches the index listener: pip routes the loopback index through HTTP_PROXY.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measure run: 'ARM positive role=positive index=0 proxy=1 rc=1 named=True' and 'STEP 1 positive arm ... index=0 proxy=1'",
+      "every ARM line of the same run reads index=0: the index listener was reached by no pip process",
+      "summary: positive_requests=1 counts the proxy line that names 127.0.0.1, which satisfies the positive bound",
+      "TO CT-v-1 BUILD: the positive arm 'MUST reach the counting listener (positive_requests >= 1)'"
+    ]
+  },
+  "spec_asserts": "TO CT-v-1 BUILD positive arm: 'plain python -m pip download <random> --index-url http://127.0.0.1:<port>/simple/ MUST reach the counting listener (positive_requests >= 1)'.",
+  "world_is": "The positive arm met the bound through the proxy listener, which also names loopback, and the index listener logged nothing in any pip arm. Redirect A (the index URL) is therefore set but not exercised by a pip process on this box: its own counting is proven only by the Python-made selfcheck. The bound holds; the independence of the two redirects is weaker than the cell describes."
+}
+```
+
+## NFRA_CTLPLN-W63-S4 -- read literally, the wrapper's allowed list lets four argument shapes make requests (list --outdated, direct URL requirements, VCS sources, requirement files), so the kit refuses them beyond the list.
+
+```json
+{
+  "id": "NFRA_CTLPLN-W63-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~63",
+  "surfaced_at": "2026-10-12T07:18:23Z",
+  "one_line": "read literally, the wrapper's allowed list lets four argument shapes make requests (list --outdated, direct URL requirements, VCS sources, requirement files), so the kit refuses them beyond the list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test file run: classify(['list', '--outdated']) = REFUSE, and the install --no-index direct-URL, 'name @ https' and git+https rows refuse (71 of 71 pass)",
+      "org/devices/kit_pip_no_egress.py classify(): REFUSE for list --outdated, -o, --uptodate, -u; REFUSE for any scheme other than file, anywhere in an argument; REFUSE for -r and -e",
+      "TO CT-v-1 BUILD: 'Allowed unchanged: list, show, freeze, check, --version, --help, and install --no-index --no-deps <local file>'"
+    ]
+  },
+  "spec_asserts": "TO CT-v-1 BUILD wrap: refuse install, download, wheel, index and search without --no-index, and http(s) index flags; 'allowed unchanged: list, show, freeze, check, --version, --help'.",
+  "world_is": "pip list --outdated and -u/--uptodate ask the index for newer versions; install --no-index still downloads a direct URL argument or a 'name @ URL' requirement, and a git+ VCS source; -r and -e can name URLs. Each would egress under the allowed-list reading. The kit refuses them, and additionally refuses --proxy and any non-file URL scheme, and default-denies unlisted verbs such as uninstall and config. The owner should confirm the wider refusal, since the order names the allowed list."
+}
+```
+
+## NFRA_CTLPLN-W63-S5 -- the verbatim wrapper refusal text names the laptop, which collides with the rule that no box name is typed into the files.
+
+```json
+{
+  "id": "NFRA_CTLPLN-W63-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~63",
+  "surfaced_at": "2026-10-12T07:18:23Z",
+  "one_line": "the verbatim wrapper refusal text names the laptop, which collides with the rule that no box name is typed into the files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_pip_no_egress.py REFUSAL constant: the required text, carrying the word laptop, verbatim",
+      "test file run: refusal-text case PASS, equal to the required line (71 of 71)",
+      "TO CT-v-1 RULES FOR THIS CELL: 'No box name, user name or path under a user's home is typed into the files.'",
+      "the kit source otherwise carries no user path (source-no-user-path case PASS)"
+    ]
+  },
+  "spec_asserts": "TO CT-v-1 RULES: 'No box name, user name or path under a user's home is typed into the files.' and the wrap refusal 'is exactly' the required REFUSED line naming the laptop.",
+  "world_is": "The two rules collide on one word. The tool keeps the verbatim text, because the order fixes the product string, and files this row so the owner decides the collision rather than the worker deciding it silently."
+}
+```
+
+## NFRA_CTLPLN-W63-S6 -- pip retries a 502 answer by default, so the kit appends --retries 0 --timeout 5 to every pip command it starts, and the commands differ from the order's text by those two options.
+
+```json
+{
+  "id": "NFRA_CTLPLN-W63-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~63",
+  "surfaced_at": "2026-10-12T07:18:23Z",
+  "one_line": "pip retries a 502 answer by default, so the kit appends --retries 0 --timeout 5 to every pip command it starts, and the commands differ from the order's text by those two options.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_pip_no_egress.py RETRY_ARGS = ['--retries', '0', '--timeout', '5'], applied in download_args() to every arm",
+      "measure run: every arm completes within the bound (AC2 rc=0)",
+      "arm records carry command_tail, so the appended options are audited per arm"
+    ]
+  },
+  "spec_asserts": "TO CT-v-1 BUILD measure: each candidate runs 'the same command', and the explicit arm is 'the same command plus --index-url ...'; the run is bounded by timeout 120.",
+  "world_is": "The default pip retry sleeps on a 502 would exceed the bound across roughly fourteen pip arms. Every arm carries the same two options, so the comparison between arms holds; the commands are not the order's literal text. Owner may ratify or remove the options."
+}
+```
