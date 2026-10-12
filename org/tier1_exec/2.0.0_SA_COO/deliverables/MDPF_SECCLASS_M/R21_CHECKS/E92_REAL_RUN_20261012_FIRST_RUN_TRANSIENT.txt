@@ -1,0 +1,275 @@
+# SC-e-92 real run at close, 2026-10-12T09:39:26Z, box/dell1 @e270f70be4, serial 2.0.0_SA_COO~M1
+# python .tools/crossbox-deploy-check.py --root data/black_diamond --files D_04 C_06 D_03 (the three BD gold files, the ship of round 20)
+CROSSBOX-DEPLOY-CHECK device=dell1 (AGENTBUS_DEVICE=dell1 (process environment)) root=data/black_diamond targets=0 files=3 now=2026-10-12T09:39:26Z serial=2.0.0_SA_COO~M1
+OPEN-CALL: clear
+  files mode: a call or row hits only if it names one of the 3 carried file(s) or a project covering one, not the shared root
+  org/devices/crossbox/XB-20261008T203134Z-a3f0.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T042421Z-897f.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T042736Z-eb6d.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T052023Z-bf16.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T054219Z-fbb0.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T054248Z-aff1.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T054315Z-f12c.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T054600Z-3bf7.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T054601Z-99e4.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T060524Z-7b40.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T063322Z-fda4.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T073627Z-d88b.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T075001Z-6a34.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T075001Z-fc8b.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T075017Z-68ae.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T075018Z-cf96.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T075056Z-abf4.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T075133Z-9bec.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T084334Z-101d.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T090208Z-c071.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T090208Z-c4e7.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T090909Z-a28e.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T092601Z-cb23.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T093642Z-9ec5.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T094814Z-3eb7.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T094932Z-e176.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T100730Z-a3db.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T101310Z-51a0.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T105147Z-ac80.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T105156Z-1c53.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T110410Z-adcf.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T113054Z-9452.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T114242Z-c9ce.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T125323Z-c442.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T131421Z-cfce.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T132014Z-ebb9.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T133033Z-7a23.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T140758Z-6151.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T141705Z-b0d1.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T143530Z-4849.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T145753Z-977e.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T150208Z-7534.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T150208Z-dcce.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T150554Z-2fd7.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T152001Z-00c3.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T152001Z-db6a.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T152158Z-cae7.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T163036Z-d84f.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T165641Z-1f87.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T165905Z-c46b.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T172645Z-2ed2.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T173811Z-4315.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T175102Z-f170.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T180040Z-a009.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T180350Z-0655.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T181651Z-b4e2.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T183312Z-e563.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T183422Z-7f48.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T184023Z-ffaf.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T184024Z-13a1.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T192607Z-5772.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T192626Z-2921.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261009T202047Z-8c6d.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261009T205724Z-7dd9.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261010T222733Z-73c5.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261010T225240Z-dcb5.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T022524Z-5e9a.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T030021Z-b98e.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T032959Z-ea7f.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T033014Z-ae79.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T051234Z-3e48.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T055035Z-c5aa.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T055037Z-dea7.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T055045Z-2c8e.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T055046Z-b8ec.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T055134Z-bd43.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T055148Z-00a7.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T055236Z-0989.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T062718Z-c908.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T071438Z-764b.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T073442Z-d39e.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T080600Z-ba12.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T082334Z-282f.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T083249Z-0565.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T083249Z-bace.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T085819Z-cb1e.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T091309Z-2a2e.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T091321Z-5756.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T093421Z-e8e0.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T093632Z-2789.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T095749Z-6fe4.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T103038Z-6cb7.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T104936Z-073c.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T105655Z-d065.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T111210Z-4102.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T112408Z-a6cc.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T122144Z-e318.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T124003Z-7f65.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T134211Z-b1a5.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T134529Z-ad8b.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T141307Z-3739.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T143409Z-d00e.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T144412Z-ca7a.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T145549Z-0c52.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T150025Z-6f1a.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T152108Z-7884.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T152214Z-0162.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T154015Z-5c6f.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T154128Z-5cf5.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T160229Z-b717.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T160627Z-53a9.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T160945Z-282e.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T163203Z-3fc2.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T164930Z-d701.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T170830Z-7056.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T170848Z-99a0.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T171509Z-c5ce.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T171837Z-74e2.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T175203Z-1e74.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261011T181755Z-617c.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T193844Z-2cce.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T194408Z-e588.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T205428Z-abb6.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T211128Z-f139.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261011T232055Z-c404.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261012T004641Z-4c5d.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261012T021838Z-4174.json: state CLOSED-BOTH -- not live
+  org/devices/crossbox/XB-20261012T023834Z-5414.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261012T023834Z-c4eb.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261012T024226Z-0dce.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261012T024430Z-8522.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261012T025331Z-3e07.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261012T030539Z-5556.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261012T033435Z-54b6.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261012T054136Z-c411.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261012T055135Z-6c76.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261012T060346Z-3b70.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261012T070501Z-cb95.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261012T073248Z-0853.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261012T073824Z-48a2.json: live (state ACKED) but does not name the root or its projects
+  org/devices/crossbox/XB-20261012T082300Z-b312.json: live (state OPEN) but does not name the root or its projects
+  org/devices/crossbox/XB-20261012T082300Z-d5e7.json: live (state OPEN) but does not name the root or its projects
+  org/devices/state/dell1/open_calls.json: device=dell1 written_by=3.0.0_SA_CVO age 4h10m rows=39
+  org/devices/state/dell2/open_calls.json: device=dell2 written_by=2.0.0_SA_COO~P2 age 30h13m rows=17
+  org/devices/state/sitez/open_calls.json: device=sitez written_by=1.0.0_SA_CTO~Z age 7h09m rows=34
+OVERLAP: clear
+  files mode: 3 file(s) carried (the list the caller passed)
+  no live project's write set shares a path with the 3 carried file(s) (placement-check read_projects/overlaps)
+UPSET: clear
+  notice opal-assets-cot-rebalancer-until-20261008T0620Z EXPIRED at 2026-10-08T06:20:00Z (now 2026-10-12T09:39:26Z) -- ignored
+OPEN-DEPLOY: hit (1)
+  files mode: a sentinel hits only if it names one of the 3 carried file(s), not the shared root
+  worktree C:/dev/ajb_workspace: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/ct1-readback-20261012T0608Z: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-24: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-25: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-26: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-29: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-30: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-31: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-32: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-33: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-34: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-35: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-36: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-37: 22 file(s) at HEAD, 21 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-38: 25 file(s) at HEAD, 24 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-39: 25 file(s) at HEAD, 24 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-40: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-41: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-42: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-43: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-44: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-45: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-46: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-47: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-48: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-49: 18 file(s) at HEAD, 17 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-50: 18 file(s) at HEAD, 17 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-51: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-52: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-53: 21 file(s) at HEAD, 20 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-54: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-r4-reader-a: 0 file(s) at HEAD, 0 sentinel(s) read
+  worktree C:/dev/wk-firmbkts-r4-reader-b: 0 file(s) at HEAD, 0 sentinel(s) read
+  worktree C:/dev/wk-secclass-44: 17 file(s) at HEAD, 16 sentinel(s) read
+  worktree C:/tmp/aa5-build: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/tmp/ay1-ref-wt: 21 file(s) at HEAD, 20 sentinel(s) read
+  worktree C:/tmp/ay2-am3: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/tmp/bd2-build: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/tmp/be1-build: 21 file(s) at HEAD, 20 sentinel(s) read
+  worktree C:/tmp/ff4-build: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/tmp/ff5-ac1: 21 file(s) at HEAD, 20 sentinel(s) read
+  worktree C:/tmp/ff5-run: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/tmp/qq4-ac1: 21 file(s) at HEAD, 20 sentinel(s) read
+  worktree C:/tmp/qq4-run: 19 file(s) at HEAD, 18 sentinel(s) read
+  HIT worktree C:/tmp/qq5-build: ls-tree rc=128 (not readable, not clear)
+  worktree C:/tmp/ss4-run: 20 file(s) at HEAD, 19 sentinel(s) read
+  worktree C:/tmp/ss5-run: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/tmp/ss6-ac1: 22 file(s) at HEAD, 21 sentinel(s) read
+  worktree C:/tmp/ss6-run: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/tmp/wk-AMGT_CORPUS-47-1: 18 file(s) at HEAD, 17 sentinel(s) read
+  worktree C:/tmp/wk-AMGT_CORPUS-47-2: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/tmp/wk-AMGT_CORPUS-48-1: 22 file(s) at HEAD, 21 sentinel(s) read
+  worktree C:/Users/Test/AppData/Local/Temp/smcont_ezapql3c/a: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/Users/Test/AppData/Local/Temp/smcont_ezapql3c/b: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/Users/Test/AppData/Local/Temp/smcont_ezapql3c/c: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/a: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/b: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/c: 19 file(s) at HEAD, 18 sentinel(s) read
+  worktree C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/d: 19 file(s) at HEAD, 18 sentinel(s) read
+  STALE slug advi-firmbkts-fb-f-9-act2-producers-mode-move-dell1-20261011: org/critical_paths/.open_deploys/advi-firmbkts-fb-f-9-act2-producers-mode-move-dell1-20261011.json deleted at trunk by commit f1455eef109a9f2863d54c9702efba1c6c69cbe2, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug secclass-e87-bd-served-path-reach-sc1-20261011: org/critical_paths/.open_deploys/secclass-e87-bd-served-path-reach-sc1-20261011.json deleted at trunk by commit 49bff125c603c2ca3f6b004fda2cb3d443f2b45f, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug healgap-r3-act1-satellites-stamp-gated-v2-20261011: org/critical_paths/.open_deploys/healgap-r3-act1-satellites-stamp-gated-v2-20261011.json deleted at trunk by commit a6cec2f072345e1b17bdc6e7d2ae3f60394bc0b9, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug mdpf-demque-zq-t27-standing: org/critical_paths/.open_deploys/mdpf-demque-zq-t27-standing.json deleted at trunk by commit 2df691f2274fb625f77967b0f8f22ef9afff0d59, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug nfra-oplgtw-gateway-release-e2: org/critical_paths/.open_deploys/nfra-oplgtw-gateway-release-e2.json deleted at trunk by commit ae728f06808c9df0b0d5ddba79a889b4e5b769c7, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug tckt-vnext-r3-tr1-fwd1-fourth-run-20261011: org/critical_paths/.open_deploys/tckt-vnext-r3-tr1-fwd1-fourth-run-20261011.json deleted at trunk by commit a6cec2f072345e1b17bdc6e7d2ae3f60394bc0b9, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug amgt-corpus-r46-av3: org/critical_paths/.open_deploys/amgt-corpus-r46-av3.json deleted at trunk by commit 231219c1f48abcdeaccd5ce8e1840aebc010f37a, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug amgt-resapp-r94-ff5-sap-rescale-dell1: org/critical_paths/.open_deploys/amgt-resapp-r94-ff5-sap-rescale-dell1.json deleted at trunk by commit 1051a1eba08bc7751d5c1f12968475434dc935be, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug iamroles-r7-smartx-deploy: org/critical_paths/.open_deploys/iamroles-r7-smartx-deploy.json deleted at trunk by commit 231219c1f48abcdeaccd5ce8e1840aebc010f37a, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug advi-firmbkts-fb-g-8-act0-grant-20261011: org/critical_paths/.open_deploys/advi-firmbkts-fb-g-8-act0-grant-20261011.json deleted at trunk by commit 0db7244334e1c392bd2aad6daf2746c86970a127, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug irpt-resident-st31-20261011: org/critical_paths/.open_deploys/irpt-resident-st31-20261011.json deleted at trunk by commit 231219c1f48abcdeaccd5ce8e1840aebc010f37a, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug nfra-mcpindex-r9-ops-readers-release: org/critical_paths/.open_deploys/nfra-mcpindex-r9-ops-readers-release.json deleted at trunk by commit dac36a19d8ab904f5b71a62ffef0389085232f67, read at HEAD of 2 worktree(s): closed at trunk, draws no hit
+  STALE slug tckt-vnext-r3-rf2-creator-records-report-20261011: org/critical_paths/.open_deploys/tckt-vnext-r3-rf2-creator-records-report-20261011.json deleted at trunk by commit 231219c1f48abcdeaccd5ce8e1840aebc010f37a, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug amgt-resapp-r94-ff4-name-redeploy-dell1: org/critical_paths/.open_deploys/amgt-resapp-r94-ff4-name-redeploy-dell1.json deleted at trunk by commit aa0c7f90fc347a58fd825782b3fc740c8c284eb7, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug advi-firmbkts-fb-f-14-act3b-admission-20261011: org/critical_paths/.open_deploys/advi-firmbkts-fb-f-14-act3b-admission-20261011.json deleted at trunk by commit 35044a21aaa7187ecd35fcb1ae564befeb4352cb, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug tckt-vnext-r4-pk2-package-door-env-list-20261011: org/critical_paths/.open_deploys/tckt-vnext-r4-pk2-package-door-env-list-20261011.json deleted at trunk by commit 975fb09fcae5e4020d5b97fef7983704b7b5535e, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug irpt-jobs-eight-reconciling-writes-xb-0162: org/critical_paths/.open_deploys/irpt-jobs-eight-reconciling-writes-xb-0162.json deleted at trunk by commit 1961d4ee7af07f4a3497cd04eecdac09eceef69e, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug advi-firmbkts-fb-f-16-act0-delete-statement-20261011: org/critical_paths/.open_deploys/advi-firmbkts-fb-f-16-act0-delete-statement-20261011.json deleted at trunk by commit ad0dcd177654c1afac6ec6321222991c9741e23b, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug irpt-anlreq-r6-composition-read-ready-gate-20261011: org/critical_paths/.open_deploys/irpt-anlreq-r6-composition-read-ready-gate-20261011.json deleted at trunk by commit ca0e108aba2404ade490eb1519db9ce6f44b9de8, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug advi-firmbkts-fb-f-10-act3-delta-copy-20261012: org/critical_paths/.open_deploys/advi-firmbkts-fb-f-10-act3-delta-copy-20261012.json deleted at trunk by commit 49bff125c603c2ca3f6b004fda2cb3d443f2b45f, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug amgt-corpus-r39-ao2: org/critical_paths/.open_deploys/amgt-corpus-r39-ao2.json deleted at trunk by commit abdbb3038ea9d4c20836ae46ff3f351c87fc3cfa, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug bd-securities-cot-new-p1-m-20260926: org/critical_paths/.open_deploys/bd-securities-cot-new-p1-m-20260926.json deleted at trunk by commit b35f41c391f1a61623b19f5042a6439abdec0237, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug cot-cash-admission-m-20260925: org/critical_paths/.open_deploys/cot-cash-admission-m-20260925.json deleted at trunk by commit b35f41c391f1a61623b19f5042a6439abdec0237, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug d12-sms-tfn-registration-and-production-access: org/critical_paths/.open_deploys/d12-sms-tfn-registration-and-production-access.json deleted at trunk by commit b35f41c391f1a61623b19f5042a6439abdec0237, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug etfs-rivalfunds-pk1-al1: org/critical_paths/.open_deploys/etfs-rivalfunds-pk1-al1.json deleted at trunk by commit abdbb3038ea9d4c20836ae46ff3f351c87fc3cfa, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug inf-fact-assets-0929-admission-20261007: org/critical_paths/.open_deploys/inf-fact-assets-0929-admission-20261007.json deleted at trunk by commit abdbb3038ea9d4c20836ae46ff3f351c87fc3cfa, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug irpt-ycdgen-r6-branch-b2-20261006: org/critical_paths/.open_deploys/irpt-ycdgen-r6-branch-b2-20261006.json deleted at trunk by commit b35f41c391f1a61623b19f5042a6439abdec0237, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug leadpanel-price-producer-schedule: org/critical_paths/.open_deploys/leadpanel-price-producer-schedule.json deleted at trunk by commit b35f41c391f1a61623b19f5042a6439abdec0237, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug secclass-bd-residual-cusip-rows-m-20261002: org/critical_paths/.open_deploys/secclass-bd-residual-cusip-rows-m-20261002.json deleted at trunk by commit b35f41c391f1a61623b19f5042a6439abdec0237, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug secclass-bd-thread-r2-and-irpt-narrowed-m-20260930: org/critical_paths/.open_deploys/secclass-bd-thread-r2-and-irpt-narrowed-m-20260930.json deleted at trunk by commit b35f41c391f1a61623b19f5042a6439abdec0237, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug secclass-bd-thread-r3-m-20261001: org/critical_paths/.open_deploys/secclass-bd-thread-r3-m-20261001.json deleted at trunk by commit b35f41c391f1a61623b19f5042a6439abdec0237, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug secclass-cot-cusip-rows-m-20261002: org/critical_paths/.open_deploys/secclass-cot-cusip-rows-m-20261002.json deleted at trunk by commit b35f41c391f1a61623b19f5042a6439abdec0237, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug secclass-cot-repoint-m-20261002: org/critical_paths/.open_deploys/secclass-cot-repoint-m-20261002.json deleted at trunk by commit b35f41c391f1a61623b19f5042a6439abdec0237, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug secclass-multi-asset-remap-b-m-20261007: org/critical_paths/.open_deploys/secclass-multi-asset-remap-b-m-20261007.json deleted at trunk by commit c0b286f51c580f4ea6611ed086991520a5842f99, read at HEAD of 2 worktree(s): closed at trunk, draws no hit
+  STALE slug nfra-oplgtw-gateway-release-cti11: org/critical_paths/.open_deploys/nfra-oplgtw-gateway-release-cti11.json deleted at trunk by commit f6a53d0e1f0ea03a297b0ecf3a8a97735e00255a, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug tckt-vnext-r4-tr1-fwd1-fifth-run-20261011: org/critical_paths/.open_deploys/tckt-vnext-r4-tr1-fwd1-fifth-run-20261011.json deleted at trunk by commit 2df4bd537bdeb1cc1e729c59e0d2355636b5c547, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug iamroles-r9-market-data-v2: org/critical_paths/.open_deploys/iamroles-r9-market-data-v2.json deleted at trunk by commit 30938182e8fa17794a53cd045ab37cd4c5ea3f83, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug amgt-corpus-r44-at10: org/critical_paths/.open_deploys/amgt-corpus-r44-at10.json deleted at trunk by commit 7aa373487b43c3746fbb6ee708dbc9b99f786333, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug amgt-resapp-r92-qq4-stored-driver-dell1: org/critical_paths/.open_deploys/amgt-resapp-r92-qq4-stored-driver-dell1.json deleted at trunk by commit 9be8f1c36046ec563a8729e5e7c6a3c1babac4f4, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug harvst-bw1-zw-repin-20261009: org/critical_paths/.open_deploys/harvst-bw1-zw-repin-20261009.json deleted at trunk by commit 9bb6681873c793d83df79860a609fa43894c3b3b, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug tckt-vnext-r2-pk2-package-route-narrows-run2-20261011: org/critical_paths/.open_deploys/tckt-vnext-r2-pk2-package-route-narrows-run2-20261011.json deleted at trunk by commit 22f2a3e0dcd2fbe13c1ea56c4b09976b0f557060, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug iamroles-r7-narrow-portal-s3: org/critical_paths/.open_deploys/iamroles-r7-narrow-portal-s3.json deleted at trunk by commit e6645ff9cda788e91bfe8891d6e695be1ee977c4, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug advi-firmbkts-fb-f-12-sms-delivery-status-logging-20261011: org/critical_paths/.open_deploys/advi-firmbkts-fb-f-12-sms-delivery-status-logging-20261011.json deleted at trunk by commit a0d48cb33c45e1a3d9f3b7d6613427bec76d5285, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug amgt-resapp-r93-ss6-peers-rebuild-dell1: org/critical_paths/.open_deploys/amgt-resapp-r93-ss6-peers-rebuild-dell1.json deleted at trunk by commit e6645ff9cda788e91bfe8891d6e695be1ee977c4, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug irpt-anlreq-r5-rollback-irpt-status-20261011: org/critical_paths/.open_deploys/irpt-anlreq-r5-rollback-irpt-status-20261011.json deleted at trunk by commit d4fa29cbe13445a2efe2ac09bbdb538fc5220763, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug advi-firmbkts-fb-f-18-exec-summary-canonical-put-20261011: org/critical_paths/.open_deploys/advi-firmbkts-fb-f-18-exec-summary-canonical-put-20261011.json deleted at trunk by commit 74ab0b7be9cb7808a3524783a5110728debea1f6, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug amgt-resapp-r97-bd2-listing-sector-redeploy-dell1: org/critical_paths/.open_deploys/amgt-resapp-r97-bd2-listing-sector-redeploy-dell1.json deleted at trunk by commit 805af73ebbb057abf8b3a0b19d428d7c2ce6d236, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug adhoc-partner-roster-t1: org/critical_paths/.open_deploys/adhoc-partner-roster-t1.json deleted at trunk by commit c0b286f51c580f4ea6611ed086991520a5842f99, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug irpt-anlreq-r1-irpt-status-20261009: org/critical_paths/.open_deploys/irpt-anlreq-r1-irpt-status-20261009.json deleted at trunk by commit c0b286f51c580f4ea6611ed086991520a5842f99, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug irpt-ycdgen-served-read-20261009: org/critical_paths/.open_deploys/irpt-ycdgen-served-read-20261009.json deleted at trunk by commit c0b286f51c580f4ea6611ed086991520a5842f99, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug secclass-e60-d04-unclassified-sc1-20261009: org/critical_paths/.open_deploys/secclass-e60-d04-unclassified-sc1-20261009.json deleted at trunk by commit c0b286f51c580f4ea6611ed086991520a5842f99, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug secclass-e79-bd-lib-ship-sc1-20261009: org/critical_paths/.open_deploys/secclass-e79-bd-lib-ship-sc1-20261009.json deleted at trunk by commit c0b286f51c580f4ea6611ed086991520a5842f99, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug secclass-e84-cot-name-port-sc1-20261009: org/critical_paths/.open_deploys/secclass-e84-cot-name-port-sc1-20261009.json deleted at trunk by commit c0b286f51c580f4ea6611ed086991520a5842f99, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  STALE slug tckt-vnext-sa-r1-fwd1-seat-arm-20261009: org/critical_paths/.open_deploys/tckt-vnext-sa-r1-fwd1-seat-arm-20261009.json deleted at trunk by commit c0b286f51c580f4ea6611ed086991520a5842f99, read at HEAD of 1 worktree(s): closed at trunk, draws no hit
+  denominator: 59 worktree(s), 1052 sentinel read(s), 85 distinct (path, blob), 18 distinct slug(s), vanished=0, stale=54
+STOP: 1 hit(s) in OPEN-DEPLOY -- first: OPEN-DEPLOY: worktree C:/tmp/qq5-build: ls-tree rc=128 (not readable, not clear)
+ROUTE: do not deploy this on the strength of this box alone; raise a cross-box call to the box that owns the work (cell CT-s-6's tool), or wait for the notice to expire.
+CROSSBOX-DEPLOY device=dell1 root=black_diamond open_call=clear overlap=clear upset=clear open_deploy=hit verdict=STOP
+# rc=1
