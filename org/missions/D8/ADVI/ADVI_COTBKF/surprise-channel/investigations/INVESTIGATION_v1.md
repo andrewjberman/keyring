@@ -7381,3 +7381,28 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W151-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~151",
+  "surfaced_at": "2026-10-12T02:04:30Z",
+  "one_line": "C-BASIS names the securities history MDPF_SECHIST owns as the source of the as-traded close, but the tree shows SECHIST's series writer switched off with no landing record, and the live as-traded writer is MDPF_DEMQUE's price_store; its as_traded_close is already split-scaled upstream.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ADVI_COTBKF PRD ADDENDUM v0.8 C-BASIS item 3 and v0.9 item 2: the source is the securities history MDPF_SECHIST owns (C-SERIES), where prices land once per security; the history's as_traded_close is a column of its own writers, and the build applies its split scaling on top of the vendor Close.",
+  "world_is": "In the tree at 1a27c8cc13: data/mdpf/scripts/silver/security_series_writer.py writes nothing unless switch=True (:21,:119-125) and no non-test caller passes it; the CTO ruling ADDENDUM 1 and SECHIST ROUND_ANALYSIS.round2.md:55-57 say price_store (MDPF_DEMQUE, dell1) is the only live writer until a later port window. yahoo_pull.py:130-136 already multiplies the vendor Close (auto_adjust=False) by every later split to make as_traded_close, so a build that scales again would scale twice. Not measured: the data (another fabric's; not read), and whether the switch has since been turned on.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/silver/security_series_writer.py:21,37,75,119-125 @1a27c8cc13",
+      "data/mdpf/scripts/demque/yahoo_pull.py:63,130-136 @1a27c8cc13",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_YAHOO_BACKFILL_OWNER_DEMQUE_VS_SECHIST_20261009.md ADDENDUM 1",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~151/SECHIST_AS_IT_STANDS.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
