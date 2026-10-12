@@ -108,3 +108,20 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <round>80</round>
 <slot>dell1</slot>
 <fabric>dell1</fabric>
+
+**COMPLETE 2026-10-12 ~14:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Built:** worker ~134, branch `wk-AMGT_HARVST-134` @b8857b573f (build 12e8e945ae, row 21a9a8b230, churn repair 3d777ea110, proof
+  b8857b573f). Proof VALID rc 0 (re-run by this seat in the worktree with `--governing-order`).
+- **Merged:** 824bdb355b on box/dell1 by `safe-merge.sh` (fast lane; 5 files, 0 dropped). The channel file kept both rows (D1-S7 and
+  D1-W134-S1).
+- **AC1 PASS** `15 passed in 0.34s` (re-run). **AC2 PASS** `1 passed, 14 deselected in 0.27s` (re-run). The mutant arm fired.
+- **The fence, read by the issuer in the diff:** `_caller_tier` returns the `tier` string at `requestContext.authorizer.lambda.tier`
+  when a `lambda` level exists, else at `requestContext.authorizer.tier`, and `None` for every other shape; `lambda_handler`
+  returns 403 `{"error": "forbidden"}` unless it is exactly `internal`, before the ticker read and before any S3 or SQS call.
+- **Row D1-W134-S1** (INERT): `utcnow()` emits a DeprecationWarning, so a bare `pytest` summary reads `passed, N warnings in`, which
+  AC1's regex does not match; the worker added a filterwarnings mark in its test file only. The handler's `utcnow()` is untouched.
+- **Not done here (bx-2):** nothing is deployed. The deployed Lambda still admits every authorizer-verified caller until bx-2.
+- **Hygiene:** the worker's row commit rewrote the channel file's 408 CRLF lines to LF and a later commit restored them (net diff on
+  the file: the row plus one comma); both commits are in history, the same tool trap this seat hit at b6398b7735.
+
+<status>complete</status>
