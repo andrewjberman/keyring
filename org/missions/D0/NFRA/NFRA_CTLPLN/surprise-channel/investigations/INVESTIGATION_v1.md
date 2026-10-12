@@ -8230,3 +8230,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Counts and key names only; no cookie or token value was printed or stored."
 }
 ```
+
+## NFRA_CTLPLN-W73-S1 -- round 9's dell1 order TO-CT-y-2 has no task-order file, so thread-trace cannot read it by name
+
+```json
+{
+  "id": "NFRA_CTLPLN-W73-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~73",
+  "surfaced_at": "2026-10-12T12:38:25Z",
+  "one_line": "The round-9 dell1 seat order NFRA_CTLPLN.TO-CT-y-2 exists in no task-order file in any ref or in history, so `thread-trace.py --order TO-CT-y-2` reads 0/5 (orders=NONE, rc=1) and cannot name its seat serial 0.7.0_AE_CloudOps~CT1.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log --all --name-only --format='%h %an %s' -- ':(glob)org/**/task-orders/*CT-y-2*' printed no path (rc=0), at worktree HEAD b45bc96b69 and across every ref; the task-orders directory at HEAD and at origin/CLOUD lists TO-CT-y-1 and TO-CT-z-1 and no TO-CT-y-2",
+      "commit 1a677233f3 (author 0.7.0_AE_CloudOps~CT1, record of NFRA_CTLPLN.TO-CT-y-2) adds only org/tier2_senior/0.7.0_AE_CloudOps~CT1/deliverables/ proof and record files, org/tier2_senior/0.7.0_AE_CloudOps~CT1/logs/2026-10-12/ct_y_2_fresh_process_record.md, and an INVESTIGATION_v1.md append",
+      "at b45bc96b69: `python .tools/thread-trace.py --project NFRA_CTLPLN --round 9 --order TO-CT-y-2` prints HOP 1-5 ABSENT and `THREAD project=NFRA_CTLPLN round=9 orders=NONE hops=0/5 pushed_by_working_box=- elapsed=-`, rc=1; the unfiltered round-9 read is `hops=4/5 pushed_by_working_box=True`, built from TO-CT-y-1 alone"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-z-1 cell and CTz1-AC2: round 9 holds the dell1 seat order TO-CT-y-2 (seat 0.7.0_AE_CloudOps~CT1), so `--order TO-CT-y-2` prints a THREAD line with orders=TO-CT-y-2 and a HOP 2 naming that serial.",
+  "world_is": "No task-order file for TO-CT-y-2 exists, so find_orders (which scans org/missions/D*/*/<CODE>/task-orders/*.md) cannot return it. The seat's proof and record sit under org/tier2_senior/<serial>/deliverables, and HOP 2 closes only on <projdir>/deliverables, so even a filed order would not see its close. The filter behaves as specified (an --order matching no order reads 0/5, non-zero) and was not widened.",
+  "notes": "Not fixed in this order: filing the seat order and the tier2 deliverables path are outside this order's <paths> grant (the tool file and this channel only). CTz1-AC2 recorded FAIL on substance; its expect string is absent from the output (orders=NONE, not orders=TO-CT-y-2)."
+}
+```

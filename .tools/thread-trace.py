@@ -2,8 +2,14 @@
 """thread-trace.py -- read one round's five hops from git, each with its start and end time.
 (NFRA_CTLPLN round 6 THREAD, cell CT-t-1; PRD FWD-1 re-based in v0.22, FWD-4.)
 
-    python .tools/thread-trace.py --project <CODE> --round <n> [--fetch]
+    python .tools/thread-trace.py --project <CODE> --round <n> [--order <id>]... [--fetch]
     python .tools/thread-trace.py --selftest
+
+--order <id> (repeatable; NFRA_CTLPLN round 10 CT-z-1, PRD FWD-1) reads only the named orders of the round. <id> is the
+order's <to_id> or its file stem, with or without the <CODE>. prefix (TO-CT-y-2 and NFRA_CTLPLN.TO-CT-y-2 both name one
+order). Every hop then uses only those orders: HOP 1 their issuance, HOP 2 their issued_to serial's commits on their
+paths, order file and proof instance, and HOP 4 and HOP 5 the rest as above. An <id> that names no order of the round
+makes the read a zero-hops read (orders=NONE, 0/5, exit 1); it never falls back to the whole round.
 
 A round is planned on one box, worked and pushed on a box branch, merged into CLOUD by the integrator, and graded. Every hop
 leaves commits, so every hop can be read from git with no live seat asked. The round's orders are the files
@@ -27,8 +33,9 @@ superseded / cancelled / withdrawn / retired orders are not part of the thread).
                    surprise-channel/adjudications/, or adds a dep_stage line to project.json while naming one.
 
 Line per hop:   HOP <n> <name> start=<UTC> end=<UTC> commit=<h> by=<serial> where=<ref>     or    HOP <n> <name> ABSENT
-LAST line:      THREAD project=<CODE> round=<n> hops=<found>/5 pushed_by_working_box=<True|False|-> elapsed=<h m s | ->
-Exit 0 when the round has orders; 1 when it has none (0/5); 2 on a usage, fetch or git error.
+LAST line:      THREAD project=<CODE> round=<n> orders=<ids, comma-separated | ALL | NONE> hops=<found>/5 pushed_by_working_box=<True|False|-> elapsed=<h m s | ->
+                 orders=ALL when no --order was given; orders=NONE when an --order matched no order of the round.
+Exit 0 when the read found orders; 1 when the round has none (0/5) or an --order matches none (0/5); 2 on a usage, fetch or git error.
 BLIND (stated): time a seat spent thinking, polling or waiting leaves no commit and is inside the hop that holds it; the
 publish time is a commit time (git records no push time); a serial shared by two boxes cannot tell their seats apart, so
 pushed_by_working_box compares serials, not machines. It READS git and writes nothing in the repository.
@@ -229,20 +236,40 @@ def find_orders(root: str, code: str, rnd: str) -> list:
     return out
 
 
+def _unprefixed(name: str, code: str) -> str:
+    return name[len(code) + 1:] if name.startswith(code + ".") else name
+
+
+def order_names(order: dict, code: str) -> set:
+    """The spellings an --order value may take: the to_id and the file stem, each with and without the CODE. prefix."""
+    names = set()
+    for raw in (order["id"], order["stem"]):
+        names.update({raw, _unprefixed(raw, code)})
+    return names
+
+
 def _touches(path: str, pathspec: str) -> bool:
     return path == pathspec or fnmatch.fnmatch(path, pathspec) or path.startswith(pathspec.rstrip("/") + "/")
 
 
 # ---------------------------------------------------------------- the hops
 
-def trace(root: str, code: str, rnd: str):
-    """Return (rc, lines). The last line is the THREAD summary."""
+def trace(root: str, code: str, rnd: str, only=None):
+    """Return (rc, lines). The last line is the THREAD summary. only: the --order values, or None for the whole round."""
     repo = Repo(root)
-    orders = find_orders(root, code, rnd)
+    every = find_orders(root, code, rnd)
     absent = ["HOP %d %s ABSENT" % (i + 1, n) for i, n in enumerate(HOPS)]
-    summary = "THREAD project=%s round=%s hops=%d/5 pushed_by_working_box=%s elapsed=%s"
+    summary = "THREAD project=%s round=%s orders=%s hops=%d/5 pushed_by_working_box=%s elapsed=%s"
+    orders, shown = every, "ALL"
+    if only:
+        wanted = set(only)
+        known = set().union(*(order_names(o, code) for o in every))
+        orders = [o for o in every if order_names(o, code) & wanted]
+        if not orders or wanted - known:
+            return 1, absent + [summary % (code, rnd, "NONE", 0, "-", "-")]
+        shown = ",".join(_unprefixed(o["id"], code) for o in orders)
     if not orders:
-        return 1, absent + [summary % (code, rnd, 0, "-", "-")]
+        return 1, absent + [summary % (code, rnd, "ALL", 0, "-", "-")]
     refs = repo.refs()
     if not refs:
         raise GitError("no %s/* or %s/CLOUD refs to read" % (BOX_PATTERN, REMOTE))
@@ -344,7 +371,7 @@ def trace(root: str, code: str, rnd: str):
     if hop1 and graded:
         secs = max(0, graded[1] - hop1[0])
         elapsed = "%dh%02dm%02ds" % (secs // 3600, secs % 3600 // 60, secs % 60)
-    lines.append(summary % (code, rnd, found, pushed, elapsed))
+    lines.append(summary % (code, rnd, shown, found, pushed, elapsed))
     return 0, lines
 
 
@@ -385,11 +412,13 @@ PROOF = MAC + "/deliverables/0.9.0_WK_PRJ~1/PRJ.TO-1.proof_of_spec.json"
 ADJ = MAC + "/surprise-channel/adjudications/ADJUDICATION_v1.md"
 
 
-def _order_text(status: str) -> str:
-    return ("# TO PRJ.TO-1\n\n<to_id>PRJ.TO-1</to_id>\n<issued_to>0.9.0_WK_PRJ~1</issued_to>\n"
+def _order_text(status: str, to: str = "TO-1", worker: str = "0.9.0_WK_PRJ~1", crit: str = "T1-AC1",
+                path: str = "src/a.txt") -> str:
+    return ("# TO PRJ.%s\n\n<to_id>PRJ.%s</to_id>\n<issued_to>%s</issued_to>\n"
             "<issued_by>2.0.0_SA_COO~A</issued_by>\n<status>%s</status>\n<round>1</round>\n\n"
-            "<proof_of_spec>\n<criterion id=\"T1-AC1\" cell_refs=\"X\"><invocation>true</invocation>"
-            "<expect>ok</expect></criterion>\n</proof_of_spec>\n\n<paths>\nsrc/a.txt\n</paths>\n" % status)
+            "<proof_of_spec>\n<criterion id=\"%s\" cell_refs=\"X\"><invocation>true</invocation>"
+            "<expect>ok</expect></criterion>\n</proof_of_spec>\n\n<paths>\n%s\n</paths>\n"
+            % (to, to, worker, status, crit, path))
 
 
 class Lab:
@@ -442,6 +471,45 @@ def build_thread(root: str, grade: bool, integrator: str, box_mstr: bool):
         lab.run("x", T0, "update-ref", "refs/remotes/%s/%s" % (REMOTE, name), "refs/heads/" + ref)
 
 
+TO2_ORDER = MAC + "/task-orders/PRJ.TO-2.md"
+TO2_PROOF = MAC + "/deliverables/0.7.0_AE_OPS~2/PRJ.TO-2.proof_of_spec.json"
+TO2_SERIAL = "0.7.0_AE_OPS~2"
+
+
+def build_pair(root: str):
+    """Two orders in one round: TO-1 issued on box/alpha to a worker, TO-2 issued on box/gamma to a seat. Each is worked on
+    its own branch, drained into its own box, and both are integrated into CLOUD and graded. Times: TO-1 issued T0+100,
+    TO-2 issued T0+150, TO-1 worked T0+300..T0+500 and drained T0+600, TO-2 worked T0+200..T0+400 and drained T0+650,
+    box/alpha integrated T0+700, box/gamma integrated T0+750, graded T0+1000."""
+    lab = Lab(root)
+    lab.run("init", T0, "init", "-q", "-b", "CLOUD")
+    lab.commit("0.0.0_AB_MSTR", T0, "base", {"README.md": "base\n"})
+    lab.run("x", T0, "checkout", "-q", "-b", "box/alpha")
+    lab.commit("2.0.0_SA_COO~A", T0 + 100, "issue(PRJ round 1): TO-1", {ORDER: _order_text("pending")})
+    lab.run("x", T0, "checkout", "-q", "-b", "wk-PRJ-1")
+    lab.commit("0.9.0_WK_PRJ~1", T0 + 300, "work 1", {"src/a.txt": "1\n"})
+    lab.commit("0.9.0_WK_PRJ~1", T0 + 500, "work 2 and close", {"src/a.txt": "2\n", ORDER: _order_text("complete"),
+                                                                 PROOF: "{}\n"})
+    lab.run("x", T0, "checkout", "-q", "box/alpha")
+    lab.merge("2.0.0_SA_COO~A", T0 + 600, "drain wk-PRJ-1", "wk-PRJ-1")
+    lab.run("x", T0, "checkout", "-q", "CLOUD")
+    lab.run("x", T0, "checkout", "-q", "-b", "box/gamma")
+    lab.commit("2.0.0_SA_COO~A", T0 + 150, "issue(PRJ round 1): TO-2", {TO2_ORDER: _order_text(
+        "pending", "TO-2", TO2_SERIAL, "T2-AC1", "src/b.txt")})
+    lab.run("x", T0, "checkout", "-q", "-b", "seat-PRJ-2")
+    lab.commit(TO2_SERIAL, T0 + 200, "seat work 1", {"src/b.txt": "1\n"})
+    lab.commit(TO2_SERIAL, T0 + 400, "seat work 2 and close", {"src/b.txt": "2\n", TO2_ORDER: _order_text(
+        "complete", "TO-2", TO2_SERIAL, "T2-AC1", "src/b.txt"), TO2_PROOF: "{}\n"})
+    lab.run("x", T0, "checkout", "-q", "box/gamma")
+    lab.merge("2.0.0_SA_COO~C", T0 + 650, "drain seat-PRJ-2", "seat-PRJ-2")
+    lab.run("x", T0, "checkout", "-q", "CLOUD")
+    lab.merge("0.0.0_AB_MSTR", T0 + 700, "integrate(0.0.0_AB_MSTR): box/alpha @x into CLOUD (box-sync)", "box/alpha")
+    lab.merge("0.0.0_AB_MSTR", T0 + 750, "integrate(0.0.0_AB_MSTR): box/gamma @x into CLOUD (box-sync)", "box/gamma")
+    lab.commit("3.0.0_SA_CVO", T0 + 1000, "adjudicate PRJ round 1", {ADJ: "T1-AC1 MET\nT2-AC1 MET\n"})
+    for name, ref in (("CLOUD", "CLOUD"), ("box/alpha", "box/alpha"), ("box/gamma", "box/gamma")):
+        lab.run("x", T0, "update-ref", "refs/remotes/%s/%s" % (REMOTE, name), "refs/heads/" + ref)
+
+
 def selftest() -> int:
     results = []
 
@@ -485,10 +553,52 @@ def selftest() -> int:
         rc, lines = trace(tmp, "PRJ", "9")
         return rc != 0 and "hops=0/5" in lines[-1] and all(ln.endswith("ABSENT") for ln in lines[:5]), "rc=%d %s" % (rc, lines[-1])
 
+    def only_first(tmp):
+        build_pair(tmp)
+        rc, lines = trace(tmp, "PRJ", "1", ["TO-1"])
+        ok = rc == 0 and lines[0].startswith("HOP 1 PLAN start=%s end=%s" % (utc(T0 + 100), utc(T0 + 100)))
+        ok = ok and "where=%s/box/alpha" % REMOTE in lines[0]
+        ok = ok and lines[1].startswith("HOP 2 WORK start=%s end=%s" % (utc(T0 + 300), utc(T0 + 500)))
+        ok = ok and "by=0.9.0_WK_PRJ~1 where=%s/box/alpha" % REMOTE in lines[1]
+        ok = ok and not any(TO2_SERIAL in ln for ln in lines)
+        return ok and lines[-1] == "THREAD project=PRJ round=1 orders=TO-1 hops=5/5 pushed_by_working_box=False elapsed=0h15m00s", lines[-1]
+
+    def only_second(tmp):
+        build_pair(tmp)
+        rc, lines = trace(tmp, "PRJ", "1", ["TO-2"])
+        ok = rc == 0 and lines[0].startswith("HOP 1 PLAN start=%s end=%s" % (utc(T0 + 150), utc(T0 + 150)))
+        ok = ok and "where=%s/box/gamma" % REMOTE in lines[0]
+        ok = ok and lines[1].startswith("HOP 2 WORK start=%s end=%s" % (utc(T0 + 200), utc(T0 + 400)))
+        ok = ok and "by=%s where=%s/box/gamma" % (TO2_SERIAL, REMOTE) in lines[1]
+        ok = ok and not any("0.9.0_WK_PRJ~1" in ln for ln in lines)
+        return ok and lines[-1] == "THREAD project=PRJ round=1 orders=TO-2 hops=5/5 pushed_by_working_box=False elapsed=0h14m10s", lines[-1]
+
+    def whole_round(tmp):
+        build_pair(tmp)
+        rc, lines = trace(tmp, "PRJ", "1")
+        ok = rc == 0 and lines[0].startswith("HOP 1 PLAN start=%s end=%s" % (utc(T0 + 100), utc(T0 + 150)))
+        ok = ok and "where=%s/box/alpha" % REMOTE in lines[0]
+        ok = ok and lines[1].startswith("HOP 2 WORK start=%s end=%s" % (utc(T0 + 200), utc(T0 + 500)))
+        ok = ok and "by=0.9.0_WK_PRJ~1 where=%s/box/alpha,%s/box/gamma" % (REMOTE, REMOTE) in lines[1]
+        ok = ok and lines[2].startswith("HOP 3 PUBLISH start=%s end=%s" % (utc(T0 + 500), utc(T0 + 600)))
+        ok = ok and lines[3].startswith("HOP 4 INTEGRATE start=%s end=%s" % (utc(T0 + 600), utc(T0 + 700)))
+        ok = ok and lines[4].startswith("HOP 5 GRADE start=%s end=%s" % (utc(T0 + 700), utc(T0 + 1000)))
+        return ok and lines[-1] == "THREAD project=PRJ round=1 orders=ALL hops=5/5 pushed_by_working_box=False elapsed=0h15m00s", lines[-1]
+
+    def unknown_order(tmp):
+        build_pair(tmp)
+        rc, lines = trace(tmp, "PRJ", "1", ["TO-9"])
+        ok = rc == 1 and all(ln.endswith("ABSENT") for ln in lines[:5])
+        return ok and lines[-1] == "THREAD project=PRJ round=1 orders=NONE hops=0/5 pushed_by_working_box=- elapsed=-", lines[-1]
+
     case("full thread reads 5/5", full)
     case("no grade reads 4/5", nograde)
     case("working box pushed CLOUD itself", pushed)
     case("round with no orders reads 0/5, non-zero", noorders)
+    case("--order first reads the first order's hops only", only_first)
+    case("--order second reads the second order's hops only", only_second)
+    case("no --order reads the whole round, orders=ALL", whole_round)
+    case("--order matching no order reads 0/5, non-zero", unknown_order)
     ok = all(results)
     print("THREAD-TRACE-SELFTEST cases=%d/%d ok=%s" % (sum(results), len(results), ok))
     return 0 if ok else 1
@@ -498,6 +608,8 @@ def main(argv: list) -> int:
     ap = argparse.ArgumentParser(description="Read one round's five hops from git.")
     ap.add_argument("--project")
     ap.add_argument("--round")
+    ap.add_argument("--order", action="append", default=[], metavar="ID",
+                    help="read only this order of the round (its to_id or file stem; repeatable)")
     ap.add_argument("--fetch", action="store_true", help="git fetch origin before reading")
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--root", default=ROOT, help=argparse.SUPPRESS)
@@ -505,12 +617,12 @@ def main(argv: list) -> int:
     if a.selftest:
         return selftest()
     if not a.project or a.round is None:
-        sys.stderr.write("usage: thread-trace.py --project <CODE> --round <n> [--fetch] | --selftest\n")
+        sys.stderr.write("usage: thread-trace.py --project <CODE> --round <n> [--order <id>]... [--fetch] | --selftest\n")
         return 2
     try:
         if a.fetch:
             git(a.root, "fetch", "-q", REMOTE)
-        rc, lines = trace(a.root, a.project, a.round)
+        rc, lines = trace(a.root, a.project, a.round, a.order or None)
     except GitError as exc:
         sys.stderr.write("ERROR: %s\n" % exc)
         return 2
