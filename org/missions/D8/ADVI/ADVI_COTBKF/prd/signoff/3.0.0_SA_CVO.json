@@ -1,13 +1,12 @@
 {
   "prd": "ADVI_COTBKF_PRD.md",
-  "prd_version": "v0.8",
-  "prd_pin": "fab39b5beb3107d367348e4c24f7465225930693",
+  "prd_version": "v0.9",
+  "prd_pin": "95da777fbf36b23bd4fd70edc9457813bb9b588c",
   "half": "ratified-text",
-  "half_hash": "a99081327c26f6bc9c6e05972179639d9b0a34fefbe081a1c4a8af475a7c6197",
+  "half_hash": "044139f7befd8758687f0c3a8b908da54e0c4a2a18ef4a4524247b34c0cd3f03",
   "endpoint_hash": "d0930e2c138b4eb287c6e12290ff4f8b268741db8d904fd6fdd20b06f58792f7",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_PRD_v0.8_RATIFIED_TEXT_REVIEW_20261012.md@118f800793e7ce5476d3b18e94412ea5776cdf6b",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_PRD_v0.9_RATIFIED_TEXT_REVIEW_20261012.md@9ec84220b84a73f7daf8c428261d139516cd519a",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-12T01:45:48Z",
-  "reason": "C-BASIS's two-value basis enum arrives without its token census (rule 24): AS_TRADED is already a served reason token with another meaning; the build's four existing basis classes are unmapped; a split-adjusted close is not covered"
+  "signed_at": "2026-10-12T01:50:12Z"
 }
