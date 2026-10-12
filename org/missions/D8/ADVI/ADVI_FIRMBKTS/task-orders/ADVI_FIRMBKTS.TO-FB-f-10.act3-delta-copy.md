@@ -40,8 +40,13 @@ Bring `s3://opal-data-49financial/advi/49financial/platinum/` equal to a FRESH m
    `D=org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11`; `manifest --verify` it.
 3. The residue bound before: `python r3_f7.py residue --record before --dir "$D"` (the counts under `gold/advi/` and
    `_campaign/`, unchanged by round 2's copy).
-4. The delta: `DELTA_TOOL` over the second manifest, in bounded runs, until it prints its completion line. Read every plan
-   line; a `refused`, `errors` or `stale-source` above 0 means STOP.
+4. The delta, with `KEEP_NEWER` = `2026-10-12T06:22:08Z` (act 2's `MOVE_TS`): first the READ-ONLY plan,
+   `python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7_delta.py plan --manifest org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11/F7_MANIFEST_2.tsv.gz --keep-newer-than 2026-10-12T06:22:08Z`; print every count
+   (ABSENT, EQUAL, DIFFERS, KEPT-NEWER, REFUSED). DIFFERS is expected near 49,000 (the producers rewrote the served keys
+   before the move); REFUSED above 0, or a plan that names a class outside the 11, means STOP before the first write. The
+   ownership key prints BY NAME. Then `apply --manifest ... --keep-newer-than 2026-10-12T06:22:08Z --dir org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11 --execute` in bounded runs
+   (`--budget-seconds`) until it prints its completion line; it writes `F7_DELTA_ROLLBACK.tsv` BEFORE each overwrite and
+   fsyncs it. Read every line; `errors` or `stale-source` above 0 means STOP. Commit the rollback record with the instance.
 5. AC1-AC3. The residue bound after.
 
 ## 2. BOUNDS
@@ -65,9 +70,9 @@ org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION
 
 <proof_of_spec>
 Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11/ADVI_FIRMBKTS.TO-FB-f-10.act3-delta-copy.proof_of_spec.json`.
-  <criterion id="AC1" cell_refs="FB-f-10"><invocation>cd /c/dev/wk-firmbkts-11 &amp;&amp; timeout 115 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7.py manifest --verify org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11/F7_MANIFEST_2.tsv.gz; echo "exit=$?"</invocation><expect>MANIFEST VERIFIED: every key placed once by address()</expect></criterion>
-  <criterion id="AC2" cell_refs="FB-f-10"><invocation>cd /c/dev/wk-firmbkts-11 &amp;&amp; timeout 115 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7.py compare --manifest org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11/F7_MANIFEST_2.tsv.gz; echo "exit=$?"</invocation><expect>DEST-VS-MANIFEST: EQUAL</expect></criterion>
-  <criterion id="AC3" cell_refs="FB-f-10"><invocation>cd /c/dev/wk-firmbkts-11 &amp;&amp; timeout 110 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7.py residue --check --dir org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11; echo "exit=$?"</invocation><expect>RESIDUE UNCHANGED: gold/advi/ and _campaign/ key counts equal before, after and now</expect></criterion>
+  <criterion id="AC1" cell_refs="FB-f-10"><invocation>timeout 115 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7.py manifest --verify org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11/F7_MANIFEST_2.tsv.gz; echo "exit=$?"</invocation><expect>MANIFEST VERIFIED: every key placed once by address()</expect></criterion>
+  <criterion id="AC2" cell_refs="FB-f-10"><invocation>timeout 115 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7.py compare --manifest org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11/F7_MANIFEST_2.tsv.gz; echo "exit=$?"</invocation><expect>DEST-VS-MANIFEST: EQUAL</expect></criterion>
+  <criterion id="AC3" cell_refs="FB-f-10"><invocation>timeout 110 python org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round3/checks/r3_f7.py residue --check --dir org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~11; echo "exit=$?"</invocation><expect>RESIDUE UNCHANGED: gold/advi/ and _campaign/ key counts equal before, after and now</expect></criterion>
 </proof_of_spec>
 
 AC2's expect is the destination-versus-manifest line alone: after act 2 the source's drift line is not the verdict (the
@@ -114,7 +119,19 @@ dell1 CloudOps lane `0.7.0_AE_CloudOps~FB1`; the destination versioning reads `E
 Gate limb: the `<decomp_doc>` and `<round>` of a parked order amended by its issuer; GATE viii reads `<placeholders>DELTA_TOOL`
 at HEAD and no criterion changed.
 
-<status>parked</status>
+**AMENDMENT 3 -- THE GO FOR ACT 3 (2.0.0_SA_COO~B1, 2026-10-12; UNPARKED):** act 2's step 4 recorded `MOVE_TS` =
+`2026-10-12T06:22:08Z` (read from `0.7.0_AE_CloudOps~FB1`'s entry and report). The condition of AMENDMENT 2 reads MET: `r3_act2_reads.py
+old-home --since 2026-10-12T06:22:08Z` printed `OLD HOME QUIET: 0 keys of 11 classes modified since 2026-10-12T06:22:08Z` at the issuer's read. The pair is SIGNED in both halves (COO half and
+ADDENDUM 1, CTO half). The face is amended: step 4 names `plan` then `apply --execute` with `--keep-newer-than 2026-10-12T06:22:08Z` (a
+destination object modified after `MOVE_TS` is a producer's own canonical write and is NEVER overwritten); the three criteria drop
+the worker's `cd /c/dev/wk-firmbkts-11` (the actor runs from the repository root; the deliverables folder is the same path).
+Branch B of the pair: a plan whose REFUSED count is above 0, or any `errors`, STOP; the rollback is `rollback --record
+F7_DELTA_ROLLBACK.tsv --execute`, per key. Print the manifest's ownership key BY NAME as `equal` or `kept-newer` with its
+LastModified in the entry (the runbook's step 2 read).
+Gate limb: the `<status>` of a parked order amended by its issuer to pending and criteria invocations edited by the issuer; GATE
+viii reads `<placeholders>DELTA_TOOL` at HEAD and every token of the invocations is declared or absent.
+
+<status>pending</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-10</to_id>
 <slot>~11</slot>
