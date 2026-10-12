@@ -89,3 +89,9 @@ Checked and not a finding: portal origin/DEV at 183860ba (IB-pr-483) was landed 
 | item | result | commit |
 |---|---|---|
 | TCKT_VNEXT round 14 | No row, no judgment; slug by message. My live get-item: TCK-20261012-c546fead open, svc-commentary, analysis_request, test title, no draft key | none |
+
+## Addendum, 22:49Z to 22:55Z (msg 6658)
+
+| item | result | commit |
+|---|---|---|
+| IRPT_BCKEND round 168 | ADJUDICATION_v69 + REMEDIATION_v45: the adapter release read live (abep4h7R, TypeError 0, 9 smoke REPORTs); 3 dismissed; my row D2-S114 graduates to the CTO (changed path unexercised live, close is an organic wait); ARMED 0. Slug sent. First commit refused by an open merge in the shared tree (the D2 drain); retried after it cleared | 0827bac92d |
