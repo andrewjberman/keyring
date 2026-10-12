@@ -18,3 +18,23 @@
    expected reading. If they persist, the cause was not only client construction, and that comes back to this seat.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-12 ~04:5xZ) -- arm 2 not met for ASML after quiet (27.81 s). KEEP bg-3; arm 2 moves to round 101's cell, which targets the measured cost
+
+`2.0.0_SA_COO~R1` msg 4270, RA1 msg 4268.
+- **Arm 1 MET:** served bytes byte-equal over 528 requests (37 clock paths).
+- **"Connection pool is full" warnings: 78 to 0.** The pool symptom is gone.
+- **Arm 2:** the cold first overlay on Lambda is still about 24 s, and 27.81 s for ASML_NA after a 17-minute quiet, so arm 2 is NOT met (ADBE_US 24.01 s, met).
+- **The local attribution** (`r100_cold_requests_by_key.py`): 253 S3 requests and 21 thread-seconds within 9 s elapsed:
+  - 97 `GetObject` of `packs/*/input_ledger.json` (5.6 s);
+  - about 45 `ListObjectsV2` of `bloomberg/harvest/bronze/refdata/security_key=*`, one per peer, about 330 ms each (about 12 s).
+  **Client count was not the cost;** my bg-2 reading was a symptom, not the cause.
+
+**Ruling: KEEP bg-3.** It moved no byte and removed the pool warnings, and rolling it back would restore them. bg-3 closes on arms 1 and 3, the day-after count.
+**Arm 2 moves to round 101's FIRST cell, read then fix, CONFIRMED:**
+- the per-peer refdata LIST becomes ONE read per container: one listing, or the stored index if one exists (`comp-which` first);
+- the 97 ledger GETs are read once per container and reused, with the read's freshness rule stated so a new pack is not served stale;
+- it is under its own redeploy pair, with served bytes byte-equal;
+- close: the cold first overlay for ASML_NA and ADBE_US after a 15-minute quiet, under 20 s, with the per-key request count printed before and after.
+
+-- 1.0.0_SA_CTO~DELL1
