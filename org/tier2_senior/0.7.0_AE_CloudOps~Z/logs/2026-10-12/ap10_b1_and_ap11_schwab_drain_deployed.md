@@ -151,6 +151,17 @@ canon it reads RC=0, WARN 3, all three pre-existing carriers in bytes taken from
    seat's agent home `org/tier2_senior/0.7.0_AE_CloudOps~Z/` -- OG-ap-7's first deploy was blocked
    fail-closed without it, because the wrapper runs the WORKTREE's halt gate. No `HALT_OVERRIDE`.
    Then the triggers in `W/NEVER_WIDEN_ASK_OG-ap-10.md` section 7, then `W/AP10_SERVED.json`.
+
+   **PRECONDITIONS VERIFIED AT 02:5xZ so 11:00Z is not the first attempt.** All five B2 cone paths
+   are PRESENT in `C:/tmp/og-rel-pptx`; the worktree is clean and its HEAD is exactly the signed
+   `d9f2ebded95b638d4de9a701e1123bfbf051a5c1`. The halt gate's serial resolution was read from
+   `.tools/halt-gate-check.sh` rather than assumed -- it resolves from `org/mcp/sessions/<session>
+   .serial`, NOT from the tier2 agent home -- and 2 of its 3 paths are satisfied: path 1 (the
+   worktree's own `org/mcp/sessions/`) is ABSENT and not needed, path 2 is
+   `OPAL_AGENT_SERIAL=0.7.0_AE_CloudOps~Z` exported in the deploying shell, and path 3 is the shared
+   root's `defbee1b-....serial`, 20 bytes, content exactly `0.7.0_AE_CloudOps~Z`. So the ap-7
+   failure mode (`SERIAL RESOLVES TO NO KNOWN AGENT`, exit 3) should not recur; if it does, the
+   cause is NOT serial resolution and `HALT_OVERRIDE` is still not the answer.
 2. **before ~12:10Z -- plant `OG-ap-11`'s two synthetics** into `opal-assets-silver-dlq`
    (`https://sqs.us-east-1.amazonaws.com/313476888478/opal-assets-silver-dlq`): one naming
    `opal-assets-silver-eclipse`, one naming `opal-assets-silver-schwab`, each marked
