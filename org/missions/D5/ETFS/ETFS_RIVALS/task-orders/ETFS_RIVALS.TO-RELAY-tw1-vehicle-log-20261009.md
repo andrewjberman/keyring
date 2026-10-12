@@ -5,7 +5,8 @@
     <issued_to>0.7.0_AE_CloudOps~ZV</issued_to>
     <!-- AMENDMENT 2 moved it to ~ZV; AMENDMENT 3 restored ~Z; AMENDMENT 4 sets ~ZV again -->
     <date>2026-10-09</date>
-    <status>pending</status>
+    <status>superseded</status>
+    <!-- SUPERSEDED 2026-10-12 by 2.0.0_SA_COO~V1 under the CTO's ruling org/missions/D5/ETFS/ETFS_RIVALS/ledger/CTO_RULING_R28_SITEZ_CARRIERS_SUPERSEDED_20261012.md (msg 4550), which permits it and does not grade it; the CVO adjudicates the closure as JUDGMENT at its compile. SUPERSEDED BY the committed records, each cited by hash on origin/box/sitez (ls-remote read 8e77a84252) and read with git show plus a positive control (a known file reads; an absent path reads no commit): its AC1 (the transcription file prints and holds the line `-- DID THIS FIRE REACH THE ENRICHMENT LEG? --`) read from dell1 at commit 2a0a40bfe4 on origin/box/sitez: `git show 2a0a40bfe4:.../0.0.3_BG_BBGTerminal/VEHICLE_LOG_20261009_1100Z.txt`, 2583 bytes, the line present once. Later owed dates delivered at 4e3fbbc9f5 (20261011) and 0689a88409 (20261012), 55d280983b (the 20261010 enrich lines); the 20261010 file at the tip. No criterion of this order is site-Z-only: none stays pending. The executor's own proof instance was not written (site Z weekly limit, resets 2026-10-14 06:00Z). -->
     <project_code>ETFS_RIVALS</project_code>
   </metadata>
 <direct_act>true</direct_act>
