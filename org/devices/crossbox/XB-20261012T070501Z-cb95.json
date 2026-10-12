@@ -10,12 +10,16 @@
  "subject": "FWD-3 matrix: laptop->dell2 pair, ack only",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_LAPTOP_TO_DELL2_MATRIX_PAIR.md",
  "opened_at": "2026-10-12T07:05:01Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-12T07:08:28Z",
   "bus_message_id": "19b42958-16eb-4158-9361-27ae77eff711"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T12:28:01Z",
+  "by": "0.0.0_AB_MSTR~DELL2",
+  "bus_message_id": "c694f86c-92ad-4dee-a625-30215404865d"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
