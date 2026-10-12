@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261012T144357Z-843a",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~B1",
+ "to_serial": "0.7.0_AE_CloudOps~FBL",
+ "subject": "RESUME TO-FB-f-19 after FB-g-37 (d0a1f93043): begin by 21:00Z, you close the split",
+ "body_path": "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~B1/round4/GO_FB_F_19_RESUME_AFTER_FB_G_37.md",
+ "opened_at": "2026-10-12T14:43:57Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
