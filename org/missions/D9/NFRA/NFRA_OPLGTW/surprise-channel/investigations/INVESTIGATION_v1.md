@@ -12655,3 +12655,32 @@ name the one known failure instead of silently inheriting it.
   "notes": "FOR THE ISSUER, before B2: the instruction is the thing to adjust, not the release. Either scope step 2 to the two tests that are self-contained in the release tree and run the mu-1 parity test in the main tree (what I did, and what proves the claim for the shipped bytes), or state that the mu-1 test is a main-tree check. A generalised form worth keeping: A TEST THAT ASSERTS PARITY BETWEEN TWO SYSTEMS CANNOT LIVE INSIDE A RELEASE CUT OF ONE OF THEM -- its dependency is by construction outside the release boundary, so 'run it in the release tree' is unsatisfiable whenever the other system moved after the base ref. Also recorded against myself: my first reading was 'sparse cone too narrow', which had already been true FOUR times this session (lib, infra/logic, org/standards, data/transcripts/scripts), and that prior made me widen the cone twice before asking the cheaper question -- does the file exist in the commit at all. A repeated true cause is not the next cause."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S97",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-12T12:33:57Z",
+  "one_line": "OG-ap-11's deployed per-family DLQ drain CANNOT COMPLETE: opal-assets-silver-schwab-role is not authorized for sqs:ChangeMessageVisibility on opal-assets-silver-dlq, so drain_dlq raises when it tries to RETURN a foreign family's message and the whole scheduled sweep fails. The order's preflight declared comp-iam NOT-APPLICABLE because the role 'already holds receive/delete/change-visibility' -- the live plane says it does not hold the third. The 12:15Z sweep failed 3 times (one RequestId, retries now exhausted) AFTER completing its conversion lanes.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch, /aws/lambda/opal-assets-silver-schwab, verbatim: 'AccessDenied ... assumed-role/opal-assets-silver-schwab-role/opal-assets-silver-schwab is not authorized to perform: sqs:changemessagevisibility on resource: arn:aws:sqs:us-east-1:313476888478:opal-assets-silver-dlq because no identity-based policy allows the sqs:changemessagevisibility action', traceback at schwab_runtime.py:319 in drain_dlq, reached from run_sweep at :443 and lambda_entry at :454.",
+      "Three REPORT lines at 12:18:28Z, 12:22:00Z and 12:26:32Z carrying ONE RequestId 6379f5ee-3d60-451e-bfc8-2ee244a603ca -- the same invocation retried twice, not three sweeps. No fourth as of 12:30:47Z, so the async retry budget is exhausted.",
+      "The queue read agrees with a PARTIAL drain: a non-destructive receive at 12:20Z returned exactly one distinct message, the ECLIPSE synthetic 48264f89, while the SCHWAB synthetic f9b6edfc is gone. So the drain deleted its own family and then raised on the foreign one.",
+      "BLAST RADIUS IS BOUNDED AND WAS MEASURED, not assumed: run_sweep builds `lanes` for every declared master BEFORE calling drain_dlq, so conversions completed on each attempt; and lambda_entry routes S3 ObjectCreated events to run_event, NOT run_sweep, so per-object conversion is unaffected. Only the daily scheduled sweep path is broken.",
+      "The permission became load-bearing exactly at this deploy and could not have surfaced earlier: the OLD code drained the whole queue by DELETING and never called change_message_visibility."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-11 preflight: 'comp-iam: DECLARED-NOT-APPLICABLE -- the converter's role already holds receive/delete/change-visibility on the DLQ (opal-assets-silver-dlq-access).' And step 4: after the sweep the foreign record is absent from the schwab sweep's report and the schwab record is present in it.",
+  "world_is": "The role holds receive and delete but NOT change-visibility, so the per-family drain raises on its first foreign message. There is therefore NO sweep report at all for the 12:15Z run, which makes two of AC2's four fields unobservable rather than true: foreign_absent_from_schwab_report is recorded NULL (absent from a report that does not exist is a vacuous pass) and schwab_drained_and_reported is FALSE on the conjunction -- drained yes, reported no. AP11_GRADE.json records RESULT FAIL.",
+  "notes": "WHAT THIS SEAT DID NOT DO, and why each would be the wrong act. (1) No IAM change: granting sqs:ChangeMessageVisibility is a POLICY act that this order excludes -- comp-iam is DECLARED-NOT-APPLICABLE and the bounds say the schwab converter only -- so it needs its own never-widen pair; a seat quietly widening a role to make its own deploy pass is the exact shape the halves exist to prevent. (2) No rollback yet: an apply right now would land inside the order's OWN forbidden window [12:00,12:50)Z, and the failure is not data-destructive -- conversions complete, retries are exhausted, and the next scheduled sweep is a day away -- so there is no case for breaking the window. THE CALL IS THE ISSUER'S and it is a real fork: grant the one action (smallest, and the code is correct as written), or roll back to b3e481b261 + prior code at 12:50Z (restores a working whole-queue sweep but loses the per-family behaviour this round delivered). Rolling back is also what the order's own rollback clause describes. A useful detail for either path: the eclipse synthetic is still in the queue and can be removed by its own receipt handle, so nothing is stranded there."
+}
+```
