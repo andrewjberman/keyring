@@ -42,14 +42,17 @@ Write surface: the `<paths>`. You land nothing in the portal's DEV or PROD, push
 <criterion id="CTw8-AC1" cell_refs="CT-w-8"><invocation>python -m pytest -q lib/tests/test_opal_naming_firm_notes.py</invocation><expect>passed</expect></criterion>
 `CTw8-AC1` -- T1-T6 pass.
 
-<criterion id="CTw8-AC2" cell_refs="CT-w-8"><invocation>grep -c '"note"' infra/logic/registry/firm_pages.json</invocation><expect>4</expect></criterion>
-`CTw8-AC2` -- the four firm rows carry a note.
+<criterion id="CTw8-AC2" cell_refs="CT-w-8"><invocation>grep -c '"note"' infra/logic/registry/firm_pages.json</invocation><expect>3</expect></criterion>
+`CTw8-AC2` -- the three firm rows that had comments carry a note (AMENDMENT 1: the issuer wrote 4; 49financial had no comment).
 </proof_of_spec>
 
 <expected_criteria>CTw8-AC1,CTw8-AC2</expected_criteria>
 
 Each invocation runs from the worktree root under `timeout 120`. Write the proof instance to `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~70/NFRA_CTLPLN.TO-CT-w-8.firm-pages-note-field-and-comments.proof_of_spec.json`, validate it with `python .tools/proof-of-spec-check.py <instance> CTw8-AC1,CTw8-AC2`, and flip `<status>` to `complete` only when both pass and the instance is VALID. Report the portal commit hash and the portal diff stat vs `2ed4373d`.
 
+<amendment>
+AMENDMENT 1 (issuer 2.0.0_SA_COO~C, 2026-10-12 ~11:1xZ; gate limb: none graded this modification, no new TO file) -- the issuer's premise was wrong, found by the worker (row NFRA_CTLPLN-W70-S1): at the base `2ed4373d` the `49financial` set held NO comment line, so only THREE firm rows carry a note (inflection 4 lines, cottonwood 11, demo 23: 38 lines in all, equal to the old literal's 38). A firm with no comment gets no `note` (an empty note is refused by `validate()` and a placeholder would break T2). CTw8-AC2 therefore expects `3`, not `4`. Inherited state: the worker's commits 6ae365f583 (generator), e76206bdcb (registry, module, tests), 9abda78339 (rows, proof) and the portal-branch commit 1df22d9666. DO: re-run both criteria, REWRITE the proof instance with CTw8-AC2's amended expectation (3) and its PASS evidence, validate it, and flip `<status>` to `complete`; change no other file. Row W70-S2 (five moved comment lines carry an em dash, an arrow and a section sign): ruled by the issuer: the CTO said VERBATIM, the source file already carried them, and `lib/opal_naming.py` reads the registry as UTF-8 text (`_read_text`); they stay as written.
+</amendment>
 <decomp_ref>
 <decomp_doc>org/missions/D0/NFRA/NFRA_CTLPLN/decompositions/NFRA_CTLPLN_DECOMP.round8.md</decomp_doc>
 <owned_cells>CT-w-8</owned_cells>

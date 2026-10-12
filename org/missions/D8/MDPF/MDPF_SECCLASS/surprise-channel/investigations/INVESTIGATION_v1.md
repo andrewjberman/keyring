@@ -6730,3 +6730,161 @@ by dell1 or by this seat.
   "world_is": "The hazard is bounded to the retained dates whose canonical bytes moved after first build: 2026-10-06, 07 and 08 (2026-10-09 is the watermark date and the page's latest as_of). Each new canonical partition adds one date that C_06 builds once and then freezes; a date joins the bound only if B_00 later moves its bytes, so the bound can grow by at most one date per trading day until the ruling, and it is not growing today because no canonical partition after 2026-10-09 exists. The dollars per date and class, the cost of re-deriving a window and the mover's reach are NOT yet read: SC-e-95 reads them."
 }
 ```
+
+## MDPF_SECCLASS-D1-W85-S1 -- control date 2026-09-04 does not reproduce (rebuild minus served +1,106,337.63 total; class split moved by up to 87 M on unchanged bytes); the SC-e-95 read stops, no record written
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W85-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~85",
+  "surfaced_at": "2026-10-12T10:14:38Z",
+  "one_line": "TO item 2 control date 2026-09-04 (one version, one ETag, bytes unchanged since first build) does not reproduce its served firm snapshot: rebuild minus served = +1,106,337.63 in total and per-class moves up to 87.1 M; the order's stop rule applies and the read stops before the record is written.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e95.c06-freeze-residual-read.md @4d2c87a73b, item 2 (control date must reproduce within $1.00; if not, the harness is moving: stop and file a row).",
+      "Served: gold/views/mix_daily_summary.json firm['2026-09-04'] read by get_object on opal-data-bd, 2026-10-12 (worker read). Rebuilt: data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py process_date (:587) with load_static_tables (:541) @4d2c87a73b, run from worktree 0.9.0_WK_MDPF_SECCLASS~85 (figures in .scratch/out/main.json, uncommitted).",
+      "list_object_versions of gold/canonical/holdings/2026-09-04.parquet: 1 version, 1 ETag, LastModified 2026-09-22T23:15:37Z (paginated, 1 page)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A control date whose canonical partition did not change after its first build reproduces its served firm snapshot within $1.00 when re-derived by C_06's own per-partition path (SC-e-95 item 2); if it does not, the harness is moving, not the data, and the read stops.",
+  "world_is": "2026-09-04: served total 1,967,661,945.18; rebuilt 1,968,768,282.81; delta +1,106,337.63 over 3,020 relationships. Delta by class: structured +87,132,412.42; alternatives -86,447,843.27; equity -10,008,820.84; cash +4,649,298.34; fixed_income +3,825,913.57; commodities +1,897,080.89; unclassified +58,321.38 (sum equals the total delta). The partition bytes did not move, yet the class split moved by about 87 M, so the reference inputs the rebuild reads live (the ETFClassifier table, read at run time) and/or the static tables (accounts_dimension, AP gate, insurance and ghost lists) differ from those at first build. This read does not separate the two. The other dates carry the same class movement: 2026-10-06 delta -1,348,850.60 total with unclassified -140,161,795.27 and equity +64,197,892.86; 2026-10-07 -1,491,834.79; 2026-10-08 -1,933,181.74; 2026-10-09 total delta 0.00 with class split moved (unclassified -962,916.42, equity +876,265.04, fixed_income +86,654.36).",
+  "notes": "SURFACED, NOT CHASED. The rebuild machinery is the C_06 path itself (same process_date arguments as build()); the control failure is the measured fact. Whether served retained dates should track current classifier reference data is a CTO question; the record is not written so no residual figure is presented as validated."
+}
+```
+
+## MDPF_SECCLASS-D1-W85-S2 -- TO line citations and the per-relationship key count are stale at 4d2c87a73b
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W85-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~85",
+  "surfaced_at": "2026-10-12T10:14:38Z",
+  "one_line": "The SC-e-95 order cites C_06 build() at :649-, _list_positions_cube_keys at :324-332, the accumulation at :754-760 and three keys per relationship; at 4d2c87a73b they sit at :724, :393-401, :901-907 and four keys (the _views.json is written to both prefixes).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py @4d2c87a73b: def build at :724; def _list_positions_cube_keys at :393 (paginated list, :397-401); incremental firm accumulation at :901-907; _write_relationship_json :434-447 (new and legacy key); _write_relationship_views :450-464 (new key and legacy key).",
+      "TO org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e95.c06-freeze-residual-read.md @4d2c87a73b, items 1, 3."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's line references and its enumeration (gold/entities/clients/{id}.json, legacy gold/client_timeseries/{id}.json, _views.json: three keys per relationship) locate the code it reads.",
+  "world_is": "The formula the order quotes (mix times total_mv, accumulated per class and in total) is unchanged; only the line numbers differ. C_06 writes four keys per relationship: the new and legacy JSON and the new and legacy _views.json. The order's key count omits the legacy _views.json copy."
+}
+```
+
+## MDPF_SECCLASS-D1-W85-S3 -- the runner stop is not an API event; launch-to-stop is bounded by telemetry, not measured
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W85-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~85",
+  "surfaced_at": "2026-10-12T10:14:38Z",
+  "one_line": "TO item 3 asks for the 04:00:46Z fire's launch-to-stop from 'the stop event' of runner i-01003b035d2988dfb; no StopInstances event exists (the stop is an instance-initiated shutdown), so the stop instant is bounded by the last telemetry sample of the chain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudTrail lookup-events ResourceName=i-01003b035d2988dfb, 2026-10-12T04:00Z to 12:00Z: StartInstances by bd-gold-trigger at 2026-10-12T00:00:46-04:00 (= 04:00:46Z), STS AssumeRole events, one CreateImage; no StopInstances event.",
+      "ec2 describe-instances i-01003b035d2988dfb (2026-10-12): State stopped; StateReason Client.InstanceInitiatedShutdown; LaunchTime 2026-10-12T04:00:46+00:00.",
+      "Runner telemetry objects under logs/gold-layer/telemetry/bd-gold-layer-runner/ with LastModified >= 2026-10-12T04:00Z (29 files): last sample D_00f at 2026-10-12T06:10:12.689Z (the last sample of the chain)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The launch-to-stop of the 04:00:46Z fire is read from describe-instances and the stop event.",
+  "world_is": "Launch is confirmed at 04:00:46Z (bd-gold-trigger). The stop has no API event: the instance halted itself, and describe-instances records only the reason. The last telemetry sample of that chain is 06:10:12.689Z, so launch-to-last-sample is 7,766.7 seconds, a lower bound on launch-to-stop."
+}
+```
+
+## MDPF_SECCLASS-D1-W85-S4 -- the latest C_06 run is 15.5 s with 16 telemetry samples, which cannot be the 3,793-JSON no-new-partition read the order cites
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W85-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~85",
+  "surfaced_at": "2026-10-12T10:14:38Z",
+  "one_line": "The latest C_06 runner run (2026-10-12 05:20Z) spans 15.5 seconds in telemetry, while the order and NEVER_WIDEN_HALF_REQUEST_SECCLASS_C06_RETAINED_UNCLASSIFIED_20261012.md cite a no-new-partition fire that reads 3,793 relationship JSONs; the run's exit status is not in telemetry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-bd/logs/gold-layer/telemetry/bd-gold-layer-runner/C_06/4850986714c5.jsonl (LastModified 2026-10-12T05:20:30Z): 16 samples, first ts 2026-10-12T05:20:12.948Z, last ts 2026-10-12T05:20:28.446Z, memory_mb 172.3 at first sample and 7.2 at last (read by get_object, not downloaded to the tree).",
+      "s3://opal-data-bd/logs/gold-layer/telemetry/bd-gold-layer-runner/C_06/369ae428cbb7.jsonl (2026-10-11): 217 samples, 05:19:48.676Z to 05:23:28.642Z (a new-partition run). Short runs of about 4.5 KB recur at 2026-10-11 21:37 and 2026-10-12 01:37 (ET-rendered listing).",
+      "No C_06 run log under s3://opal-data-bd/logs/gold-layer/ for 2026-10-11 or 2026-10-12 (listing filtered on C_06 and the two dates returned telemetry objects only).",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py build() :835-843 and :772-822 (the retained pass) @4d2c87a73b."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A no-new-partition C_06 fire re-reads 3,793 relationship JSONs (about 4.77 GB) through the SC-e-91 retained pass (TO item 3; NEVER_WIDEN record).",
+  "world_is": "The 2026-10-12 05:20Z C_06 run lasted 15.5 seconds with 16 samples and ended at 7.2 MB resident memory. A run of that length cannot have read 3,793 objects. Telemetry does not record how the run ended, and no run log exists in the bucket for it. Which path it took, and whether the retained pass ran, is not established by this read."
+}
+```
+
+## MDPF_SECCLASS-D1-W85-S5 -- writer confirmed as B_00; content changes sit on the 04:15Z nightly fire (10 partitions each), not the 23:15Z fire; reach 20 trading days
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W85-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~85",
+  "surfaced_at": "2026-10-12T10:14:38Z",
+  "one_line": "TO item 4 asks the mover's writer and cadence; the writer is B_00 (confirmed), its content-changing fire is the nightly 04:15Z catalog run with --force-recent-days 14 (a 10-partition rolling window), and the 23:15Z fire re-puts identical bytes; the oldest content change reaches 20 trading days back (2026-09-11).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/gold_dispatch.sh:99 @4d2c87a73b: B_00 catalog line '--upload --force-recent-days 14'; data/black_diamond/scripts/gold/B_00.canonical_holdings.py put_object at :860, :1004, :1352 and the force-recent window at :1116-1137 @4d2c87a73b.",
+      "list_object_versions of gold/canonical/holdings/ keys 2026-08-03..2026-10-09 (49 trading days, one page each; ETag and LastModified per version, worker read 2026-10-12).",
+      "W78 record org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/W78_PARTITION_REWRITE_WRITER_20261012.json @4d2c87a73b (writer and 23:15Z identical-bytes finding)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The W78 record names the writer as B_00 run 608de09d26a6 in a 23:15Z rewrite window; the SC-e-95 read confirms or corrects the writer and states the cadence and reach of content changes.",
+  "world_is": "Writer: B_00 is the only writer of the canonical holdings prefix (three put_object sites). Nightly catalog: B_00 --upload --force-recent-days 14 re-includes sealed dates within 14 calendar days of the newest cube date, so each nightly fire rewrites about 11 partitions (10 history plus the new one). Content changes: the 04:14-04:16Z nightly fires changed 10 partitions each on 2026-09-27, 09-30, 10-01, 10-02, 10-03, 10-04, 10-07, 10-08, 10-09, 10-10 and 10-11; the 04:xx fires of 09-28, 09-29, 10-05 and 10-06 wrote identical bytes. The 23:15Z fires re-put the same partitions with identical ETags (the W78 finding holds). Off-cycle content changes of 1-2 partitions at 09-30 16:51, 10-02 14:53, 10-03 10:17, 10-07 23:14 and 10-09 23:15, and an 11-partition change at 2026-10-12 00:33Z (B_00 run 44f5204c24e3). Mover, 2026-10-02..10-09 (versions / content changes / last content change): 16/7, 11/6, 11/6, 11/6, 9/4, 7/4, 5/2, 3/1; every last content change is at 2026-10-12T00:33:47-49Z. Reach: the oldest content change is on 2026-09-11, 20 trading days before the watermark 2026-10-09; under the 14-calendar-day window the current reach is 10 trading days (from 2026-09-25)."
+}
+```
+
+## MDPF_SECCLASS-D1-W85-S6 -- C_06's firm class dollars do not sum to the firm total field (up to 128.58 on the served snapshot); the record takes totals as class sums
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W85-S6",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~85",
+  "surfaced_at": "2026-10-12T10:50:52Z",
+  "one_line": "The firm snapshot's eight class dollars and its total field disagree by up to 128.58 on served, first-build and rebuilt snapshots alike; the amended checker needs class sums to equal totals to the cent, so the record takes each total as the class sum and carries the total field beside it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py:686 @4d2c87a73b: mix[ac] = round(mix_agg / total_mv, 6) per relationship; the firm total accumulates total_mv (:901-907 incremental path), so class dollars (mix times total_mv) do not sum to total_mv exactly.",
+      "gold/views/mix_daily_summary.json firm entries read 2026-10-12 (served): class sum minus total field = 4.71 (2026-10-06), -128.07 (10-07), 128.58 (10-08), 66.73 (10-09); control 2026-09-04 13.52.",
+      "Worker snapshot reads .scratch/out/v2_snap.json (uncommitted): first-build class sum minus total = -43.76, 55.72, 36.96, 69.72; rebuilt = 42.15, -63.14, 25.92, 69.72."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The amended checker rule (Amendment 1 item 5, r22_residual_read_check.py _entry_ok) expects the by-class dollars of a snapshot to sum to its total to the cent.",
+  "world_is": "C_06 rounds each relationship's class share to six places before multiplying by total_mv, so the class dollars of every firm snapshot differ from its total field by tens to a hundred-odd dollars (largest 128.58 on the served 2026-10-08 snapshot). The same gap appears on the first-build and rebuilt snapshots, so it is arithmetic, not drift. The record states each total as the class sum and keeps the snapshot's own total field beside it."
+}
+```

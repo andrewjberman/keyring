@@ -30,6 +30,9 @@ Plan of record: `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTL
 
 | `CT-w-8` | ADDED on the CTO's ruling (msg 108504, ~10:0xZ, after the cut): a `note` field on each firm row of `firm_pages.json` carrying Andrew's hand comments VERBATIM, rendered by the generator above each firm's entry in the generated portal block; regenerate, re-prove set-equality and byte-identical hand-kept lines; fix the stale evidence line ranges (W65-S6, S7). The regenerated portal commit is landed on portal DEV by the issuer, not the worker. | FWD-28 | WORLD by path floor (lands nothing) | `~70` |
 
+| `CT-w-9` | ADDED on the CTO's ruling (msg 108509, ~10:2xZ): the data proxy stops writing callers' bearer tokens into its log group (row S9110, ruled ARMED): remove the whole-event print, log method, path and request id only, audit every other logging site, tests over all 41 routes and three callers that no credential-shaped bytes reach the log. | FWD-28 (security hygiene) | WORLD by path floor (deploys nothing) | `~71` |
+| `CT-w-10` | ADDED, staged: measure the log group (counts only; a long-lived credential is a STOP and an ask to Andrew for a purge), apply the fixed code under a THIRD signed pair with a NEVER-2 ledger, read the new log lines. | FWD-28 (security hygiene) | WORLD | `0.7.0_AE_CloudOps~U7`, staged until `CT-w-9` and `CT-w-8` are merged and the pair is signed |
+
 E9 (FWD-27): `CT-u-1`/`CT-u-2` are complete; the per-box cells are re-cut ACTIVE with their GO when Andrew's public keys land (the withdrawn orders' text is the template). It stays a qualified essential wait on Andrew's word (decomposition `NFRA_CTLPLN_DECOMP.remote1.md`).
 E11: the CVO graduates D1-S8 and D1-S10 at this round's drain (no staged FWD-27 order remains).
 
