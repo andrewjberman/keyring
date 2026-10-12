@@ -29161,3 +29161,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The arm accounts can be chosen offline (ib166_measure.py reads the served gold), but the deployed function reads a selection record, and no record whose members are exactly that account is known to exist or can be read or made by this seat. Without the arms the signed after-read limb (and the Branch B trigger that depends on it) cannot run, and AC3 cannot pass. I did not upload or apply a WORLD change whose signed verification I cannot perform, and I did not weaken the arms. Needs from the issuer, one of: (a) selection references for accounts fitting arms 1 to 3 (created by the owner of the selection flow, not this seat), (b) a named, bounded grant to read or write the selection records for this act, or (c) an amended order and a re-signed pair that names a different after-read. Not established: whether any existing selection already covers an arm account."
 }
 ```
+
+## IRPT_BCKEND-D2-S113 -- TO-IB-pr-487 AMENDMENT 1: none of the 9 kept refs reads through the deployed function (49financial is PATH A retired, cottonwood has no holdings source); apply stopped before the upload
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S113",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-12T22:08:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-IB-pr-487 AMENDMENT 1 step 4: 0 of the 9 kept refs reads through the deployed irpt-performance-adapter (8 are 49financial and answer PathARetiredForFirm, 1 is cottonwood and answers VendorEgressRefused), so there is no before-read and the apply stopped before the upload; the 49financial cells of the signed MOVES table are not answers this function serves.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured 2026-10-12 22:04Z to 22:07Z by this seat, 10 direct invokes of the deployed function (live CodeSha256 kMB8xCI93/..., unchanged) with the Opal internal principal and the firm and window of D2's file (INFERRED by D2): refs 1-6, 8, 9 at 49financial -> 8 of 8 answer ok:false OBJECT_NOT_COVERED; the function log irpt_internal line and irpt_retained_phases path read PathARetiredForFirm 8 of 8 (denominator: 8 irpt_internal lines for 8 invokes, counted by exception_type). Ref 7 at cottonwood -> VendorEgressRefused. Ref 1 re-probed at inflection (the wrong firm) -> SelectionRefused, which is the control: the right-firm probes reached the retained compute and the wrong-firm probe did not.",
+      "retained.py:171-177 (HEAD; the deployed log names the same class): _compute raises PathARetiredForFirm for owner firm 49financial before any pointer, gold, storage or write; retained.py:77-78 COMPOSED_FIRMS = (cottonwood, inflection) and the comment 'PATH A is retired for it (P-6, CTO batch 201): 49 Financial Performance is served from the reporting route (PATH B)'. Cottonwood has no holdings source, so it is refused at the vendor-egress guard.",
+      "persisted retained revisions: 0 of 10 invokes (all answered ok:false; irpt_retained_phases path refused:* for each; no ok answer). Wrong-firm and refused probes counted per COO msg 6621: not_established, not persisted_retained_revisions.",
+      "done and not done: ledger irpt-perf-adapter-claim-chain-ib-pr-487-20261012-r2 opened (ea4830d828), re-pin 3381c42f13 verified (entry equals candidate; the commit touched one file), BUILD_ONLY abep4h7RngMS9JomQUdkcOT3EZ+W953OdxeK0HkdzFo= matched, rollback S3 version F.G7ZDSNMeGR4mwkm7hElyoh1tLuNpGf re-confirmed (content-sha256 kMB8xCI9, 64 versions listed). NOT done: upload, plan, apply. Reads 22:07:17Z: versions 64, latest F.G7ZDSN, live kMB8xCI93/9QLUnzglVIs0EIRY07SSLBiU5ln8iJwUc= LastModified 2026-10-12T14:11:01Z."
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: read the nine kept selections before the upload and after; at least one readable; arm 1 live on one readable ref; if no ref reads before the upload, STOP, file a row, apply nothing. The signed MOVES table lists 49F SI 23, YTD 19, QTD 2, 1Y 20 and orion SI 750, YTD 76, QTD 7, 1Y 106 as the accounts whose served claim moves.",
+  "world_is": "No kept ref can be read through the deployed function. This function answers performance only for a firm in COMPOSED_FIRMS with a holdings source, which today is Inflection (orion) alone; 49financial is refused by design and cottonwood has no holdings source. D2's refs are 8 49financial and 1 cottonwood, none inflection. So the after-read cannot be run on these refs, and the 49financial MOVES (64 accounts across four windows) describe the reader's output over the gold, not an answer this function serves; whether another function serves 49financial performance through holdings_gold.py is not established here. I did not upload or apply, and I did not substitute an offline read for the live before-read. Needs from the issuer: an Inflection single-account selection reference at the current directory revision with its window (from the owner of the selection flow; this seat cannot read or write the store), or an amended after-read and a re-signed pair that states what is served for 49financial. Not established: whether a current Inflection selection exists; the PATH B route's use of this reader."
+}
+```
