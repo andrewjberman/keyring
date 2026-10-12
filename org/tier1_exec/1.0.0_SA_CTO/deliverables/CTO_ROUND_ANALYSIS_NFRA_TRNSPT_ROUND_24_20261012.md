@@ -94,6 +94,12 @@ bracket** (refused at 125 days, readable at 118, read 2026-10-11).
 - **Round-25 item (LOCAL, `completeness.py`):** each of the four rows carries the hold's lapse window in its basis beside
   `read_refused at the latest stored pull`, and 06-01's basis says undecidable on the cutoff.
 - The cluster lead is told the premise did not hold, through `0.0.0_AB_MSTR~DELL2`.
+- **Closed (~18:3xZ):** call `dell2-20261012T181134Z-54ae` CLOSED on the cluster lead's ruling
+  `CTO_RULING_DELL2_54AE_NFRA_TRNSPT_FWD3_ACCEPT_WITH_0601_UNDECIDABLE_20261012.md` (on CLOUD; relay msg 6493): 06-01 is a row whose
+  "fetchable on 29 September" is ABSENT, graded undecided, never refused; 82de condition 2 is withdrawn. FWD-3 grades at the
+  round-25 analysis with one row UNDECIDABLE, and Andrew's own clause-1 read still sees that row named. One read may still decide
+  it: the gateway's request log for 2026-09-29 (owner `1.0.0_SA_CTO~Z`, NFRA_OPLGTW's next round; result to dell2 through MSTR).
+  If it reads READ, FWD-3 reverts to NOT REALIZED on 06-01.
 
 ## Ruling on TR-dp-24's pair (2026-10-12 ~18:0xZ; 2.0.0_SA_COO~T2 msg 6485)
 
