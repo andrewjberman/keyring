@@ -1,12 +1,12 @@
 {
   "prd": "IRPT_BCKEND_PRD.md",
-  "prd_version": "v0.45",
-  "prd_pin": "9de9ab8cf2d7e2f03e5791e52018dd9f00697fd5",
+  "prd_version": "v0.46",
+  "prd_pin": "3f577ef37f72c322a1a380672bb5e22b01943bb5",
   "half": "ratified-text",
-  "half_hash": "ed3366783b19ee3e971960d1f5e55869f85b75d0647bdba090fdf064279620e5",
+  "half_hash": "afc0699eb53dcd17c20c84936615a8ec743179e9b0e9d34da7a1f60d1adc4f31",
   "endpoint_hash": "49fba5e1559c5b9a5fe672bfd7eefacb190bb90690e6c152df5ea2480aaabe23",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_PRD_v0.45_RATIFIED_TEXT_REVIEW_20261011.md@9fb687e61d0bd746bced5467ec1b47635b0fed11",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_PRD_v0.46_RATIFIED_TEXT_REVIEW_20261012.md@8e1d66b0a4eab3ca4c4e3c894de79787f6ec68f1",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-11T23:30:33Z"
+  "signed_at": "2026-10-12T01:16:42Z"
 }
