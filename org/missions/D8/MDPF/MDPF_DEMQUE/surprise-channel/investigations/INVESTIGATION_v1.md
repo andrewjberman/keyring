@@ -1222,6 +1222,69 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "candidate preserved: MDPF_DEMQUE_ZQ_T34_CANDIDATE.patch and MDPF_DEMQUE_ZQ_T34_test_close.py.candidate; standing_drawer.py reverted to HEAD blob d3be03d854a72d7b639a4ef677acb189dbdd9461; 11 passed on the reverted tree"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W32-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~32",
+    "surfaced_at": "2026-10-12T03:27:24Z",
+    "one_line": "The order's 130-request cap assumes one vendor HTTP request per symbol; measured with the counter, a nonexistent ticker costs 8 HTTP requests and each process pays one crumb request, so this order's all-HTTP total is 132 (chart-level 116) and the COO must rule which unit the cap counts.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "batch_equality.py run @ worktree HEAD e2e74649a2 + this commit: per-symbol arm 51 HTTP (50 chart, 1 auth, 0 other); batched arm 58 HTTP (52 chart of which 2 planted, 2 auth, 4 other, statuses 200 x54 and 404 x4), EQUALITY_REPORT.json http_requests and http_detail",
+        "exploration (2 symbols AMLP + ZZNOSUCH9Q, default download): 10 HTTP; AMLP alone history(period=max): 2 HTTP = 1 auth (/v1/test/getcrumb) + 1 chart",
+        "dq_t40_equal.py AC2 run: spot 5 of 5, http_per_symbol 6 (5 chart + 1 auth), http_batched 5 chart; order total 12 + 109 + 11 = 132 all-HTTP, 116 chart-level",
+        "yfinance 1.7.0 data.py _make_request: a status >= 400 switches cookie strategy and re-requests (extra auth + chart), so a 404 costs about four requests"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO BOUNDS: at most 130 symbol-requests across the whole order; cell text: about 938 requests a day, one vendor request per enrolled symbol. The budget arithmetic (20 + 100 + 10) assumes one HTTP request per symbol-call.",
+    "world_is": "One real symbol costs one chart request in steady state; the cookie/crumb pair is paid once per process; a nonexistent ticker costs about eight requests (404 retries, quoteSummary timezone lookups). Under the strict all-HTTP unit this order's runs total 132, above 130; under the one-chart-request-per-symbol unit they total 116."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W32-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~32",
+    "surfaced_at": "2026-10-12T03:27:24Z",
+    "one_line": "yfinance download() does not return a symbol's error to its caller: it logs the error on the yfinance logger and returns an empty or NaN frame, so a batched fetch_many must capture errors from the logger to classify FAILED_EMPTY versus FAILED_REFUSED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "yfinance 1.7.0 multi.py _download_impl: _download_one catches the exception into ctx.errors and sets ctx.dfs[sym] to an empty frame; errors are logged with logger.error('[syms]: err') and not raised",
+        "live exploration 2026-10-12: download(['AMLP','ZZNOSUCH9Q'], start=2025-10-01) logged ERROR:yfinance:['ZZNOSUCH9Q']: possibly delisted; no timezone found; the planted symbol came back None, AMLP returned 258 rows",
+        "batch_pull.py _ErrorTap (logging handler on 'yfinance') maps 'no data' / 'delist' / 'possibly' to FAILED_EMPTY and any other logged error to FAILED_REFUSED; test_a_symbol_the_vendor_refuses_is_a_failure_for_that_symbol_alone_never_a_price PASSED"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO build item 1: fetch_many is the library's multi-ticker download; a symbol the vendor errors on is a FAILED_REFUSED result for that symbol alone.",
+    "world_is": "The library returns the error only through its log and through a missing or empty frame; the error text is not in the return value. The capture is a logging handler on the yfinance logger for the duration of one call, and a later wiring must keep it."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W32-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~32",
+    "surfaced_at": "2026-10-12T03:27:24Z",
+    "one_line": "The 10-symbol measurement in build item 2 was not run as written: the separate 10-symbol download (ii) was dropped to fit the request budget, and the per-symbol count (i) was taken from the proof's first 10 real symbols; the 51-symbol multi-ticker call answers ONE-or-n.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "EQUALITY_REPORT.json http_probe_10: per_symbol_history_calls_first10 chart_requests 10 (ACTHX, LCEYX, VADDX, CNSDX, FFMMX, BISOX, MADVX, FFBOX, CDSIX, CVMIX); one_multi_ticker_call_of_51_symbols chart_requests_total 52, one_per_symbol true",
+        "the report's note field: the separate 10-symbol download was not run (request budget)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO build item 2: record, for 10 symbols, the request count of (i) 10 per-symbol history() calls and (ii) ONE multi-ticker download; state whether the multi-ticker call is ONE request or n requests.",
+    "world_is": "The multi-ticker call is n requests: one chart request per symbol (yfinance multi.py calls Ticker.history() per symbol), measured on 50 real symbols plus the planted ticker. The 10-symbol download is not in the report; the COO reads the 51-symbol measurement instead."
   }
 ]
 ```
