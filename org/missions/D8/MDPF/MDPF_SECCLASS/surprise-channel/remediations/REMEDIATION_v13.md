@@ -27,9 +27,9 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-12T14:30:00Z. Graduated at ADJUDICATION_v2
       "round": "v23"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~M1",
-      "at": null
+      "at": "2026-10-12T14:05:00Z"
     },
     "closed": false
   }
