@@ -39,6 +39,9 @@ An ABSENT file or directory reads clear, said so ("none recorded"). A file that 
 this reader does not know, is NOT clear: it reads hit with the reason.
 LAST line: CROSSBOX-DEPLOY device=<d> root=<name> open_call=<clear|hit> overlap=<clear|hit> upset=<clear|hit>
            open_deploy=<clear|hit> verdict=<CLEAR|STOP>
+SC-e-92 (OPEN-DEPLOY): a sentinel that trunk (the HEAD of --repo-root) deleted, read stale at a lagging worktree HEAD, is STALE and
+draws no hit (one STALE line per slug, with the deleting commit); a registered worktree whose directory is gone is VANISHED in the
+denominator (vanished=), never a hit. A sentinel trunk never carried is a deploy open on a branch and still counts.
 Exit: 0 CLEAR, 1 STOP, 2 a usage error. CLEAR means this box acts and tells the laptop; STOP names what it hit and routes a
 cross-box call (cell CT-s-6's tool).
 """
@@ -339,6 +342,11 @@ def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
     found = []
     vanished = 0
     for tree in trees:
+        if not os.path.isdir(tree):
+            # SC-e-92 limb e: a registration whose directory is gone (prunable) is VANISHED in the denominator, never a hit.
+            vanished += 1
+            lines.append("  worktree %s: VANISHED (registered, directory absent)" % tree.replace("\\", "/"))
+            continue
         rc, listing = git_lines(tree, "ls-tree", "-r", "HEAD", "org/critical_paths/.open_deploys/")
         if rc != 0:
             rc2, out2 = git_lines(repo_root, "worktree", "list", "--porcelain")
@@ -358,14 +366,45 @@ def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
         sentinels = [e for e in entries if len(e) == 4 and not os.path.basename(e[3].split("\t")[-1]).startswith(".")]
         lines.append("  worktree %s: %d file(s) at HEAD, %d sentinel(s) read" % (tree.replace("\\", "/"), len(entries), len(sentinels)))
         found.extend((e[2], e[3].strip(), tree) for e in sentinels)
+    # SC-e-92 limb d, TRUNK FIRST: the HEAD of repo_root is trunk. A sentinel that trunk does not carry, at a path trunk's history DOES
+    # carry, was deleted at trunk: a worktree that has not taken the closing commit still reads it, so it is STALE and draws no hit.
+    # A path trunk never carried is a deploy open on a worker's branch until the drain (CLAUDE.md NEVER-2) and counts as before. A
+    # stale reading must also be a blob trunk once carried at that path: a sentinel re-opened on a branch under the same name carries
+    # a blob trunk never had, so it stays a hit.
+    stale_at = {}  # path -> (the trunk commit that deleted it, {blob shas trunk carried at that path})
+    rc, trunk = git_lines(repo_root, "ls-tree", "-r", "HEAD", "org/critical_paths/.open_deploys/")
+    if rc != 0:
+        hits.append("trunk HEAD ls-tree rc=%d: a stale sentinel cannot be told from a live one, so this is not clear" % rc)
+        lines.append("  HIT %s" % hits[-1])
+    else:
+        at_trunk = {e[3].strip() for e in (ln.split(None, 3) for ln in trunk.splitlines() if ln.strip()) if len(e) == 4}
+        for path in sorted({f[1] for f in found} - at_trunk):
+            rc, log = git_lines(repo_root, "log", "-m", "--no-abbrev", "--raw", "--format=%H", "--", path)
+            if rc != 0:
+                hits.append("%s: git log at trunk HEAD rc=%d: not clear" % (path, rc))
+                lines.append("  HIT %s" % hits[-1])
+                continue
+            commits, blobs_then = [], set()
+            for ln in log.splitlines():
+                if ln.startswith(":"):
+                    blobs_then.update(ln[1:].split("\t")[0].split()[2:4])
+                elif ln.strip():
+                    commits.append(ln.strip())
+            blobs_then.discard("0" * 40)
+            if commits:
+                stale_at[path] = (commits[0], blobs_then)
     blobs = read_blobs(repo_root, sorted({f[0] for f in found}))
     seen = set()
     readings = []  # one per distinct (path, blob) that parses: (slug, doc, why, path)
+    stale = []  # (slug, path, deleting trunk commit, tree) for each stale reading
     for sha, path, tree in found:
         if (path, sha) in seen:
             continue
         seen.add((path, sha))
         text = blobs.get(sha)
+        if path in stale_at and sha in stale_at[path][1]:
+            stale.append((sentinel_slug(loaded_doc(text), path), path, stale_at[path][0], tree))
+            continue
         if text is None:
             hits.append("%s (blob %s, first seen in %s) unreadable: not clear" % (path, sha[:10], tree))
             lines.append("  HIT %s" % hits[-1])
@@ -400,8 +439,20 @@ def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
         hits.append("open deploy %s (author %s, status %s, opened %s) %s" % (
             doc.get("slug", path), doc.get("author"), doc.get("status"), doc.get("opened_at"), why))
         lines.append("  HIT %s" % hits[-1])
-    lines.append("  denominator: %d worktree(s), %d sentinel read(s), %d distinct (path, blob), %d distinct slug(s), vanished=%d" % (
-        len(trees), len(found), len(seen), len(order), vanished))
+    stale_by_slug, stale_count = {}, 0
+    for slug, path, commit, tree in stale:
+        stale_by_slug.setdefault(slug, []).append((path, commit, tree))
+    for slug, rows in stale_by_slug.items():
+        path, commit = rows[0][0], rows[0][1]
+        if slug in by_slug:
+            lines.append("  NOTE slug %s: a lagging HEAD reads %s, deleted at trunk by commit %s; the slug's other reading(s) are "
+                         "judged as today, not counted as stale" % (slug, path, commit))
+        else:
+            stale_count += 1
+            lines.append("  STALE slug %s: %s deleted at trunk by commit %s, read at HEAD of %d worktree(s): closed at trunk, "
+                         "draws no hit" % (slug, path, commit, len({r[2] for r in rows})))
+    lines.append("  denominator: %d worktree(s), %d sentinel read(s), %d distinct (path, blob), %d distinct slug(s), vanished=%d, "
+                 "stale=%d" % (len(trees), len(found), len(seen), len(order), vanished, stale_count))
     return hits, lines
 
 
@@ -487,6 +538,15 @@ def resolve_serial(arg: str, repo_root: str = REPO) -> str:
             if text:
                 return text
     return os.environ.get("GIT_AUTHOR_NAME", "")
+
+
+def loaded_doc(text) -> dict:
+    """The sentinel's parsed JSON object, or {} when it does not parse (a stale reading needs only its slug)."""
+    try:
+        doc = json.loads(text) if text else {}
+    except ValueError:
+        return {}
+    return doc if isinstance(doc, dict) else {}
 
 
 def sentinel_slug(doc: dict, path: str) -> str:
