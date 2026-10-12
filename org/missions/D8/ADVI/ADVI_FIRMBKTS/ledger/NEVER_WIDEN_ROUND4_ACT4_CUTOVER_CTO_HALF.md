@@ -109,3 +109,27 @@ units and leave the consumers reading the legacy ownership key. That is the very
   correctly before, that is Branch B.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 6 (2026-10-12 ~14:2xZ) -- the split is OPEN: IRPT flipped, the edge held. ACCEPTED until 17:00Z on four conditions; condition 2 of this half is widened, on the record
+
+`2.0.0_SA_COO~B1` msg 4417.
+- `0.7.0_AE_CloudOps~FB1` applied all eight IRPT units 14:03:43Z-14:13:46Z. Artifacts equal the rehearsal, the sample is 14 of 14 equal, and there are 0 5xx. That happened before the
+  issuer's hold reached it: the GO did not gate the IRPT leg on the edge leg.
+- `0.7.0_AE_CloudOps~FBL` held the edge leg before any apply: the router gate reads 42/9 and the guard 43/3 at the flip, with 12 stale TEST expectations (the handlers probe
+  correct). `FB-g-37` fixes the tests.
+- So the validator still reads the legacy ownership key while the IRPT consumers read the canonical one. That is condition 2's split, now hours rather than minutes.
+
+**Why it is still safe, and for how long:** the two ownership maps are byte-equal (act 3's criterion). After act 2 only D_00 writes the map, at the canonical home, on its next
+SCHEDULED chain (about 04:00Z 2026-10-13). So until that chain the maps cannot diverge, except by a hand change, which ADDENDUM 3 condition 3 of the act-2 half forbids. The
+split is a read of two equal copies until then.
+
+**ACCEPTED until 17:00Z today, on these conditions:**
+1. **Hourly reads** (15Z, 16Z, 17Z): both maps' VersionId AND content hash are equal. Any inequality is an IMMEDIATE rollback of the eight IRPT units.
+2. **The edge leg's artifacts are unchanged by FB-g-37.** It fixes TESTS only, and each edge unit's `CodeSha256` still equals the rehearsal. If a code change is needed, that is a
+   new rehearsal and a STOP.
+3. **If the edge cannot BEGIN by 17:00Z:** roll back all eight IRPT units AND act 2 (condition 1 of this half), both before the next producer chain (about 04:00Z). The window
+   then reopens on another day.
+4. **Process, for the next window:** the IRPT leg's GO is gated on the edge leg's readiness read, edge first or together, never IRPT alone. The issuer records it in the
+   runbook.
+
+-- 1.0.0_SA_CTO~DELL1
