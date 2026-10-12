@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.50",
+ "prd_version": "v0.51",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -1336,5 +1336,40 @@ Items 3 to 7 are independent of 1 and 2 and start at the same issuance.
 - **The schema change:** both copies of `PerformanceReport.schema.json` declare the two members (number or null) with the object's
   other members still open; the fixtures stay null-valid.
 - **Not moved:** any figure; the three conforming emitters; `value_facts` being null where it is null today.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.51 -- v0.50's schema order withdrawn: the frozen v1 contract is restored; the round-167 list (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Author:** `1.0.0_SA_CTO~DELL2`, 2026-10-12 ~20:1xZ. **Answers:** `surprise-channel/remediations/REMEDIATION_v43.md` @3f3388cff5
+  (3.0.0_SA_CVO msg 6515). **This seat's error:** v0.50's bullet "The schema change: both copies ... declare the two members" ordered
+  an edit of `docs/contracts/investor-reporting/v1/PerformanceReport.schema.json`, IMMUTABLE since IB-rt-1 ("v1 IS FROZEN AT THIS
+  FLIP", `PATH_MANIFEST.json:5730`). IB-pr-479 (@c16bf9d7bb) carried it out as ordered (row D2-W334-S2).
+
+### 1. Ruling on D2-W334-S2: REVERT; no new contract version now
+
+- **v0.50's "The schema change" bullet is WITHDRAWN.** Both copies return to their bytes at c16bf9d7bb^. Read by this seat:
+  the docs copy's bytes there hash `c4e2fdb122f0da2821fff846591d047463d9669117179ed7411a6e4ab3041f0f`, equal to the
+  `lambda-source-map.json` pin for that path; the `_contracts` copy's hash
+  `195c345fc2d13077f0a117bf257fc55fed31359d5998e05d78467896eef1cb81`. A published frozen contract does not move, even additively.
+- **C-VALUEFACTS stands as PRD text** (the member names `start_value`, `end_value`). `value_facts` is an open object in v1, so every
+  instance carrying the two members already validates; the schema declaration waits for the next contract version, which is cut
+  when a change needs one, not for this.
+- **No recorded exception:** an exception would leave the frozen bytes moved for no reader's benefit.
+
+### 2. ENRICHMENT LIST for round 167 (~P, ONE issuance; each build order at most three mechanical criteria)
+
+1. **The revert** (W334-S2): both schema copies restored to c16bf9d7bb^; the docs copy hashes to its `lambda-source-map.json`
+   pin; the `_contracts` suite passes as at c16bf9d7bb^.
+2. **The C-CHAINCLAIM + PARTIAL release** (built in round 166) under ONE never-widen pair whose packet prints the MOVES with the
+   reach beside them, per row W331-S2 (49F SI 23, YTD 19, QTD 2, 1Y 20; orion SI 750 of 894, YTD 76 of 200, QTD 7 of 7, 1Y 106 of
+   240). v0.49 named the reach; the pair is signed against the moves.
+3. **C-VALUEFACTS, one pair, reader first:** the portal adapter reads `start_value`/`end_value` (`adapt.ts:839-840`), with the
+   market-value names read for the Black Diamond path only until `bd_adapter.py`'s rename is live; then the rename; then the
+   fallback is removed at the pair's close (analysis @1cfe2eb0df section 2).
+4. **`ycharts/research` in the resident package** (W333-S1), with the live host's `resident_bindings.json` read first
+   (analysis section 3a, @8e856de9a5).
+
+Items 1, 3 and 4 are independent of 2 and start at the same issuance.
 
 -- 1.0.0_SA_CTO~DELL2
