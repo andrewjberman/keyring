@@ -10402,3 +10402,57 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order
 ```
+
+## 108. ROUND 100 -- THE /15 THIRD REDEPLOY (STAGED); THE ONE-S3-CLIENT BUILD (A CANDIDATE); ITS REDEPLOY (STAGED, SECOND APPLY). Two staged seat orders, one worker order, two staged cells
+
+**Input:** the CTO~DELL1 round-99 analysis `ledger/ROUND_ANALYSIS.round99.md` section 2 (msg 4198; CVO ADJUDICATION_v120, MAY-CLOSE, C-S97 to C-S99), the AMGT_CORPUS `ay-4` CTO half
+(msg 4191) and the bf-1 CTO half (msg 4184, the tail's cause as a round-100 cell). Prep in `deliverables/2.0.0_SA_COO~R1/round100_prep/` (checks `r100_pool_peak.py`, `r100_cold_request.py`,
+`r100_cold_check.py`, base NO and against a candidate YES). The cells are prefixed `bg`.
+
+### 108a. MEASURED AT THE CUT
+
+- **Item 1:** the live function is `oEDHTRPq..` (round 99's bf-1, built at the merged pin `b3d4856531`); its dossier METHOD is /14. AMGT_CORPUS's /15 dossiers are stored for 95 of 95
+  (ay-3 closed, leg v Branch A). `ay4_compare.py` on a base capture against itself reads `team_sheet_equals_stored15 0/95`, build 0/1. `box/dell1` differs from `b3d4856531` in TWO lib members
+  (`dossier.py` `6c4529c51a13` -> `7b67bf62afdd`, `team_sheet.py` `3ba68a99a22f` -> `ef4da7cdc85a`); only `dossier.py` reaches the request path; bd-1's blobs are byte-equal.
+- **Item 2:** the first overlay request of a fresh process, against the live pool: 146 S3 clients (151 `_s3_client()` calls from `_pool_client`), 242 S3 requests, 11.1 to 11.5 s (warm: 14
+  clients, 2.0 s); one client peaks at 16 simultaneous requests on a pool of 10. Arms: pool 10 -> 32 alone 11.1 -> 11.4 s (no effect); ONE shared client alone 7.8 s, peaking at 20; one shared
+  client on a pool of 32 7.7 to 8.1 s. The round-99 log reading: 53 of 32,528 invocations over 20 s, 49 with a pool-full warning, none naming a route.
+- **Item 3 (pp-4):** staged on the DEMQUE answer; no quote, no answer.
+
+### 108b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bg-1` | the /15 third redeploy from a merged pin, bd-1's blobs unchanged -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger | AMGT_CORPUS FWD-20's served grade, C-S64 |
+| `AMGT-bg-2` | `_s3_client()` is ONE client per container with a pool of 32 (a build, not served) | `~397` | worker (build) | LOCAL | `scoped_amgt.py`, one new test | the slow-tail cell |
+| `AMGT-bg-3` | the SECOND apply: the function carries `AMGT-bg-2`'s build -- STAGED seat order | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger | the slow-tail cell |
+| `AMGT-bg-4` | the DEMQUE answer's reader and wiring (pp-4) -- STAGED, no order | -- | worker | LOCAL until a redeploy | `lib/research/api/scoped_amgt.py` | D1-S14 |
+
+**Uncovered, with its owner:** the CLOSE of the slow-tail cell (the day-after count of invocations over 20 s and pool warnings against 53 and 49) -- the issuer, a read in a later round after
+`AMGT-bg-3`'s apply; the portal PROD promote (call `dell1-20261011T033643Z-e7f2`) and the API's drop of the top-level `fiscal_year_figures` (step 3) -- Andrew, then a later pair; FWD-16 and the
+model API key -- Andrew; whether a first request after idle should be warmed (a scheduled ping) -- not built: the standing moratorium on alarms and monitors, and a CTO call.
+
+### 108c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: analysis section 2 items 1-3 (item 2 split in build and apply). 1 -> bg-1; 2 -> bg-2 + bg-3; 3 -> bg-4. Printed denominator 3 of 3 items placed (2 staged seat orders,
+  1 worker order, 1 staged cell).
+- **(ii) Same grain.** bg-1 and bg-3 each one code leg; bg-2 one function of one module and its test.
+- **(iii) Intent coherence.** bg-1 serves the third corpus change; bg-2 changes no served byte by itself (a candidate); bg-3 serves it; bg-4 waits on an answer.
+- **(iv) What a cell does NOT move.** bg-1 moves only `model.team_sheet`'s block rows (the dossier pick moves to /15; bd-1's sector, the classifications, names, scores, ranks and peer members
+  are byte-equal); bg-2 moves no served field and no thread-pool width and no other client factory; bg-3 moves NO served byte (the compare of pre and post reads equal), only the function's S3
+  connection handling; the two applies are never folded.
+
+### 108d. EDGES AND FAN-OUT
+```
+bg-1 independent of bg-2   (bg-1 needs no code cell: every blob is already merged; its pair is measured at the pin)
+bg-3 after bg-1's apply and read, after bg-2 merged and reviewed   (the CTO: never folded)
+bg-4 on the DEMQUE answer
+fanout:
+  cap: 8
+  orders_total: 3          (bg-1 and bg-3 staged seat orders; bg-2 a worker order)
+  chains_total: 3          (bg-1 ; bg-2 -> bg-3 ; bg-4)
+  wave_0: [bg-2 ~397]
+  wave_1 staged: [bg-1 RA1 (the pair from the route-by-route measurement at the pin; AMGT_CORPUS's ay-4 half is signed), bg-3 RA1 (after bg-1's read and bg-2's merge), bg-4 (on the DEMQUE answer)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```
