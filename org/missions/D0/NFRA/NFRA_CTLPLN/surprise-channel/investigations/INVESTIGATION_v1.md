@@ -8474,3 +8474,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Fix shape for the one cell: a shared seat-boundary check (walk the tree, refuse the kill and print the serial found when a descendant claude.exe carries a serial other than the target's) used by both tools; the wrapper rationale of :696 stands for native children, which carry no serial. The laptop-dark window saw no reaper target, so nothing here aged."
 }
 ```
+
+## NFRA_CTLPLN-S9119 -- broker heartbeats without a process on dell2: a dead seat reads LIVE
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9119",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-12T20:40:01Z",
+  "one_line": "Broker heartbeats without a process: on dell2, 2.0.0_SA_COO~D2 and CloudOps ~CB2/~TR2/~DELL2 have no tab and no process under any image (unstick -DryRun NOT FOUND, all-image scan empty), yet their broker heartbeats read ~2 minutes old at 20:3xZ (MSTR msgs 108663/108664); a liveness reader sees LIVE for a dead seat.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR msg 108664 (relay of ~DELL2 bus c478e3b6): 'A process scan over ALL images for the serials and D2's tab title (DSGN_IRPTV1) returns nothing ... the fresh heartbeat age is not from a live session of theirs (source unread, possibly a stale writer)'",
+      "CLAUDE.md 22a: liveness / PID / Working on are per-lane limbs of get_agent_status; only an agent-side ACK is a sound delivery oracle",
+      "the same shape, sign reversed, as the orphan-watcher case (a dead agent reads REACHABLE); here a dead seat reads LIVE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR (the broker's lane, org/mcp/server.py): one read of the broker's own heartbeat log for those four serials -- the PID and source per heartbeat line -- names the writer; until named, a dell2 liveness read is confirmed by process, never by heartbeat",
+  "spec_asserts": "NFRA_CTLPLN C-SEATS / 22a: a LIVE liveness reads a running seat; a heartbeat is written by the seat's own session (register_agent/heartbeat identity guard refuses a PID holding another serial).",
+  "world_is": "Four dell2 serials with no process carried heartbeats ~2 min old. Either a second process heartbeats on their behalf (a relaunch wrapper, an orphaned watcher, a stale writer) or the liveness clock is not the seat's. Source UNREAD.",
+  "notes": "Found while dell2 confirmed the four seats gone (nine dell2 seats ended today: five by the S9117 tree kill, four with no kill line, cause unread). Not a cell this round; the round-12 recut may fold it into the seat-boundary cell if the writer is the kill/launch path, else it is its own row for the broker's owner."
+}
+```
