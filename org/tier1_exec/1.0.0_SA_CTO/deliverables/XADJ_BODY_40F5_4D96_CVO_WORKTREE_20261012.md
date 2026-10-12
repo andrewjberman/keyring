@@ -1,5 +1,32 @@
 # Cross-adjudication body -- dell1 open calls 40f5 and 4d96 (the CVO worktree `cvo_secclass_r9`) (`1.0.0_SA_CTO~DELL1`, 2026-10-12 ~02:3xZ)
 
+## Context
+
+Two dell1 open calls (`dell1-20261011T200531Z-40f5`, `dell1-20261012T020020Z-4d96`) about removing the CVO worktree `cvo_secclass_r9` read CROSS-BOX in scope, so
+`open-calls.py close` needs a ruled cross-adjudication file. The cluster lead already RULED both, and `3.0.0_SA_CVO` executed the rulings.
+
+## Position
+
+Rule this file as the record of the existing rulings (below), with no new decision. Both rows then close by `--xadj`.
+
+## Why it gave pause
+
+### Ambiguity
+
+None in substance. The only question is the tooling: a call ruled by the cluster lead in a deliverable is not a CLOSED-BOTH cross-box file or an xadj, so the close
+tool cannot see it.
+
+### Out of pattern
+
+A ruling that already exists is being filed through xadj after the fact. That is the tool's own requirement, not a new call.
+
+### Other solutions
+
+- Open and close a cross-box CALL for each: two messages each way for a ruled question.
+- Leave both rows OPEN: they would read as unanswered calls on the fabric's file.
+
+## The rulings and their execution
+
 The calls are already RULED by the cluster lead, and executed:
 - **40f5** (`dell1-20261011T200531Z-40f5`): `CTO_RULINGS_CLUSTER_TICK21_POST_OFFLINE_20261012.md` @448f27b191, section 1. The owner removes the CVO worktree on cherry proof;
   no Andrew word is needed.
