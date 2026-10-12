@@ -1366,6 +1366,47 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "DQ-t-41 build item 2: daily = every other indexed name, including the daily_extra funds once landed; rolling = the 782 IRPT names not stored at enrolment.",
     "world_is": "The two rules overlap on the ten funds. The build takes daily precedence, so those funds are requested every day and still count in rolling_names; the ruling on that precedence is the issuer's to confirm."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W34-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~34",
+    "surfaced_at": "2026-10-12T04:15:45Z",
+    "one_line": "The cell names the index row's valid_to as the stored max date and asks the report to print as_of beside it, but as_of is a different column: the max date of the prices rows, not the lock window end.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/price_store.py@1eedfa615e write(): lock.json carries valid_to as the lock window; prices are kept only where date <= valid_to (line 142)",
+        "data/mdpf/scripts/demque/price_store.py@1eedfa615e index() lines 170-174: as_of = max(prices.parquet date); valid_to = lk.get('valid_to') from lock.json",
+        "read-only ps.index(s3 root) at this order's build, 141 rows: valid_to == as_of on 141 of 141 (127 at 2026-10-09, 14 at 2026-06-23); zero nulls"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-42 build item 2: the stored max date is the index row's valid_to; as_of is printed beside it, and if as_of holds something else the report says so and files a row.",
+    "world_is": "The lag is measured from valid_to as specified and the report prints both. The two columns agree on the served store today, so the lag is unaffected now. They differ when a vendor's last bar predates the window end: as_of is then the earlier date and the valid_to lag understates the staleness. The report's docstring states this. Whether the lag basis should be as_of is the issuer's ruling."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W34-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~34",
+    "surfaced_at": "2026-10-12T04:15:45Z",
+    "one_line": "On the served store the rolling tier measures zero names: all 141 indexed names are daily, and the 782 not-stored IRPT names have not landed, so the declared rolling cycle of 5 is checked against no real name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python extend_frontier.py --lag-report at 1eedfa615e (S3 read only), frontier 2026-10-12: indexed 141, daily names 141 (within 127, over 14), rolling names 0, rolling_not_landed 782",
+        "lag_report in extend_frontier.py: each name in _tiers' daily list is daily; rolling = the landed names of the rolling request not stored at enrolment, and none has landed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DQ-t-42 AC2: the two tiers partition the indexed names, and the declared rolling cycle is read against the rolling names.",
+    "world_is": "The partition holds (141 + 0 = 141), but the rolling tier is unmeasured on real data until the rolling names land. The rolling branch of the report is exercised only by the three tests and the stub store. Nothing was extended or drawn to change this."
   }
 ]
 ```
