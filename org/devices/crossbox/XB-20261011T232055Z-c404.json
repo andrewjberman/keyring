@@ -10,7 +10,7 @@
  "subject": "FINDING row TCKT_VNEXT-D2-S46: who holds lambda:InvokeFunction on the functions behind the portal authorizer",
  "body_path": "org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md",
  "opened_at": "2026-10-11T23:20:55Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T23:21:40Z",
   "bus_message_id": "be4fb89c-7f36-45b3-8079-53826599640a"
@@ -21,8 +21,8 @@
   "bus_message_id": "53dc76bd-fb00-480d-a021-5a80ecd95e6e"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-12T02:23:35Z",
+  "from_by": "1.0.0_SA_CTO~DELL2",
   "to_at": "2026-10-12T02:10:23Z",
   "to_by": "1.0.0_SA_CTO"
  }
