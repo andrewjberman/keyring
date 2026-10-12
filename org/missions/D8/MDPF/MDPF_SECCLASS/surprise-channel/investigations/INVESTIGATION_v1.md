@@ -6914,3 +6914,58 @@ by dell1 or by this seat.
   "world_is": "The partition at read time is version DY7h_n97HK6oypextGdn38ietQKp16in, last modified 2026-10-12T04:16:42Z, a newer version than SC-e-95 names. The rebuilt Unclassified is 883,483.05 (equal to SC-e-95 to the cent) and the unlisted list is the same 22 positions for 210,486.42, so no unclassified dollar moved on this date. A record that names a partition by version reads stale once a newer version exists, even when its figures still agree."
 }
 ```
+
+## MDPF_SECCLASS-D1-W86-S1 -- the served firm unclassified figure is absent for 2026-09-25 to 2026-09-29, so the SC-e-96 record cannot be written as ordered
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W86-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~86",
+  "surfaced_at": "2026-10-12T11:44:17Z",
+  "one_line": "gold/views/mix_daily_summary.json firm[date] has no unclassified key for 2026-09-25 to 2026-09-29 (5 of the 15 window dates); the served unclassified figure cannot be read for those dates, so the SC-e-96 record was not written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-bd/gold/views/mix_daily_summary.json head-object VersionId VrrTn2RrESHBImlLOMHQbNP6Fvzi9NZD, LastModified 2026-10-11T05:23:28Z (read-only): firm[2026-09-25] through firm[2026-09-29] carry keys alternatives, equity, fixed_income, total; no unclassified key. firm[2026-09-30] through firm[2026-10-09] (10 dates) also carry cash, commodities, other, structured, unclassified.",
+      "Control: firm[2026-10-09].unclassified = 1846399.46 is present in the same object; every firm day from 2026-09-01 through 2026-09-29 lacks the key.",
+      "Read path: get-object copy in .scratch/served_mix_daily_summary.json (uncommitted scratch); C_06 platinum_source(MIX_DAILY_SUMMARY) resolves to the legacy key in bucket opal-data-bd because BD_PLATINUM_MODE is unset (lib/platinum_dest.py, mode legacy).",
+      "Stop line: .scratch/cost_run.log 11:42:22 (rebuilt values read for all 15 dates) then .scratch/stage2.out SystemExit STOP at the served read, run at HEAD 028fab8273 under worktree wk-MDPF_SECCLASS-86."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-96 item 4 (the order file, RECORD FACE): per_date carries served_unclassified, the stored firm figure firm[date].unclassified in gold/views/mix_daily_summary.json, for every window date, and the record must be filled from figures read, never estimated.",
+  "world_is": "The served snapshot stores the unclassified key only for 2026-09-30 through 2026-10-09. For 2026-09-25 through 2026-09-29 the figure is absent, not zero. Those five served figures cannot be read as written, so per_date, delta_unclassified and gap_if_truncated cannot be completed without estimating; SC23-e96-AC1 is not met and the order stays pending.",
+  "notes": "Measured before the stop, not recorded as the record: cold wall 735.05 s (static load 11.07 s) and warm wall 631.87 s over the 15 window dates in one process each (cost_run.log 11:31:46 and 11:42:19), cold within the 1800 s budget; cold and warm per-date outputs identical. The relationship JSON scan (relationships_rewritten, keys_written, bytes_written) and peak memory were not reached in this run."
+}
+```
+
+## MDPF_SECCLASS-D1-W86-S2 -- the cost run reads each window partition from S3 inside process_date; the build's bulk cube_cache preload is not on that path
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W86-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~86",
+  "surfaced_at": "2026-10-12T11:44:17Z",
+  "one_line": "The order names process_date per date as the build's path; build() preloads every partition into _shared cube_cache before process_date, so a process_date-only cost run includes per-date S3 reads that the build amortises.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py:845-863 @028fab8273: build() bulk-loads every keys_to_process partition into cube_cache with a thread pool, then sets _shared['cube_cache'].",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py:607-613 @028fab8273: process_date reads from cube_cache when the key is present, otherwise one get_object per date.",
+      "Cost run: .scratch/c06_window_stage2.py sets _shared without cube_cache, so each of the 15 process_date calls read its partition from S3 (cold per-date walls 40 to 132 s, .scratch/cost_run.log)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-96 cost: cold and warm walls through the code path the build uses (load_static_tables once, then process_date per date, imported not copied).",
+  "world_is": "The build's bulk path and the ordered per-date path differ in where partition bytes come from. The recorded cold and warm walls are the ordered per-date path with per-date S3 reads and are labelled as such in the instrument field; the build's bulk path would differ by the preload time.",
+  "notes": "Recorded here so the SC-e-97 wall budget is read against the path measured, not against the build's preloaded run."
+}
+```
