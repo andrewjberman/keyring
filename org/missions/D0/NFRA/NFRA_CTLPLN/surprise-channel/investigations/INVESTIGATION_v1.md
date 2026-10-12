@@ -7510,3 +7510,184 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The receiving tool's install verb cannot honour either bound: it targets the interpreter that runs it, in the user site, and installs every wheel in the pack. Run with the venv's python it fails (--user is refused in a venv); run with the box's python it shadows click 8.5.0 for the user and installs rpds_py. The route's last step therefore needs a --target or --venv argument and a per-wheel selector before a Dell can use the tool's own install verb. The CTO or the tool's owner should rule which."
 }
 ```
+
+## NFRA_CTLPLN-W68-S1 -- receive writes no crossbox file; DELIVERED is printed and stored nowhere
+
+```json
+{
+  "id": "NFRA_CTLPLN-W68-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~68",
+  "surfaced_at": "2026-10-12T08:43:27Z",
+  "one_line": "The order says the recipient's receive edit lands in the same crossbox JSON as the ack and close; the tool's receive verb writes only the inbox file, so the recipient never writes the JSON at receive time.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/crossbox-call.py@2fbb74e87d:476-519 receive(): the only write is write_text(inbox / name, content) at :518; no self.save() call in the method (the seven save sites are :300 open, :452 sent, :566 ack, :587 acked, :604 close, :631 withdraw, :705 merge)",
+      ".tools/crossbox-call.py@2fbb74e87d:519 prints DELIVERED <id> to <serial>; DELIVERED is not a value of STATES (:67) and no key of KEYS (:61-62) records it",
+      "scratch probe 2026-10-12 08:4xZ: the selftest case receive-lands-one-file-in-the-seats-watched-inbox (:868-869) asserts the inbox file only"
+    ]
+  },
+  "spec_asserts": "TO CT-w-6 THE CELL: the recipient's ack, receive and close edits land in the SAME crossbox JSON file, which is the measured source of the conflicts.",
+  "world_is": "Only ack (receiver), acked (sender) and close/withdraw/merge write the JSON. receive writes an inbox file on the recipient box and no byte of org/devices/crossbox/. The design (DESIGN_CROSSBOX_ACK_PER_BOX_FILE.md section 2) therefore treats receive as a read in v2 unless the CTO approves recording DELIVERED (Q3)."
+}
+```
+
+## NFRA_CTLPLN-W68-S2 -- the lane NFRA_CTLPLN_FAST_C admits no manager; the crossbox manager lane is DEVICES_CROSSBOX
+
+```json
+{
+  "id": "NFRA_CTLPLN-W68-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~68",
+  "surfaced_at": "2026-10-12T08:43:27Z",
+  "one_line": "The order names NFRA_CTLPLN_FAST_C as the lane that says which paths a manager may commit; that lane lists only the CTO and the COO, and the manager grant for org/devices/crossbox/** is DEVICES_CROSSBOX.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".owned-paths.yaml@2fbb74e87d:702-706 NFRA_CTLPLN_FAST_C permitted_agents = 1.0.0_SA_CTO, 2.0.0_SA_COO~C only; its description (:706) says the lane is for org/devices/** and lib/devices.py",
+      ".owned-paths.yaml@2fbb74e87d:822-827 DEVICES_CROSSBOX permitted_agents = 0.0.0_AB_MSTR, 1.0.0_SA_CTO, 2.0.0_SA_COO~C; description: org/devices/** admits no manager",
+      ".owned-paths.yaml@2fbb74e87d:2944-2950 path entries: org/devices/crossbox/** -> DEVICES_CROSSBOX; org/devices/** -> NFRA_CTLPLN_FAST_C"
+    ]
+  },
+  "spec_asserts": "TO CT-w-6 WHAT THE DESIGN MUST CONTAIN item 4: lane NFRA_CTLPLN_FAST_C in .owned-paths.yaml (which paths a manager may commit).",
+  "world_is": "FAST_C admits no manager (its own description at :822-827 and :2948-2950 says so). The manager commit grant for the crossbox folder is DEVICES_CROSSBOX, the lane the design must change. The order's premise named the wrong lane."
+}
+```
+
+## NFRA_CTLPLN-W68-S3 -- the one-writer check has no rule for crossbox files; the only per-box admission is GS-f-4 for the exact receiving serial
+
+```json
+{
+  "id": "NFRA_CTLPLN-W68-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~68",
+  "surfaced_at": "2026-10-12T08:43:27Z",
+  "one_line": "The order lists the one-writer check as a file to change for crossbox single-writer; its APPEND_ONLY patterns match no org/devices/crossbox path, and the only per-box write admission for a crossbox record is the GS-f-4 clause in owned-paths-validate, which matches only org/devices/crossbox/XB-*.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/one-writer-check.py@2fbb74e87d:29-33 APPEND_ONLY holds three patterns (surprise_channel, missions surprise-channel, *-audit logs); none matches org/devices/crossbox/",
+      ".tools/owned-paths-validate.py@2fbb74e87d:290 _XBOX_RE = ^org/devices/crossbox/XB-[^/]+\\.json$ and :381-384 the GS-f-4 clause admitting only agent == to_serial of that record",
+      ".owned-paths.yaml@2fbb74e87d:822-827 DEVICES_CROSSBOX admits 0.0.0_AB_MSTR for every box lane, so any box manager can commit any box's crossbox path"
+    ]
+  },
+  "spec_asserts": "TO CT-w-6 WHAT THE DESIGN MUST CONTAIN item 4: the one-writer check (.tools/git-hooks/one-writer-check.py) as a file that must change for the crossbox split.",
+  "world_is": "one-writer-check.py does not grade crossbox files at all, and no check binds a crossbox path to its box. A split that puts one writer per path needs a new rule there (design item 7); until it lands, the lane admits any box manager to any box's crossbox path."
+}
+```
+
+## NFRA_CTLPLN-W68-S4 -- box-sync's conflict classes: the resolver header says two, its body enumerates four
+
+```json
+{
+  "id": "NFRA_CTLPLN-W68-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~68",
+  "surfaced_at": "2026-10-12T08:43:27Z",
+  "one_line": "The order refers to box-sync.sh's two known conflict classes; the resolver that box-sync delegates to says 'the two KNOWN' in its header and then enumerates four classes, one of them the crossbox fold.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/merge-resolve-known.py@2fbb74e87d:1 'resolve the two KNOWN multi-writer conflict classes'",
+      ".tools/merge-resolve-known.py@2fbb74e87d:7, :20, :24, :30 the numbered classes 1 (surprise-channel section union), 2 (generated index regen), 4 (crossbox fold, GS-f-4 R5), 3 (append-only line union)",
+      ".tools/box-sync.sh@2fbb74e87d:190-192 resolve_known is the box-sync entry to these classes; :58 CROSSBOX_RE and :507-512 the crossbox dispatch in the resolver"
+    ]
+  },
+  "spec_asserts": "TO CT-w-6 item 4: box-sync.sh's two known conflict classes are the change surface for the crossbox split.",
+  "world_is": "Four classes are live in merge-resolve-known.py, and the crossbox class (fold_crossbox, :344-383) is one of them. The design treats the crossbox fold as the v1-only path and changes it, not box-sync.sh (zero lines)."
+}
+```
+
+## NFRA_CTLPLN-W68-S5 -- the census header counts two investigation files and says RESOLVED-OTHER includes them; the body shows three files, and none is RESOLVED-OTHER
+
+```json
+{
+  "id": "NFRA_CTLPLN-W68-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~68",
+  "surfaced_at": "2026-10-12T08:43:27Z",
+  "one_line": "The E8 census header says the recurring RESOLVED-OTHER paths include two surprise-channel INVESTIGATION files; the census body has 6 investigation rows across three distinct files, all classed CHANNEL-UNION, and all 61 RESOLVED-OTHER rows are crossbox files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~C/E8_BOX_SYNC_CONFLICTS_SINCE_20261009.txt header line 3: 'RESOLVED-OTHER 61, CHANNEL-UNION 6, GENERATED-REGEN 2 ... and two surprise-channel INVESTIGATION files'",
+      "the same census body: 6 PATH rows over INVESTIGATION files: org/missions/D5/AMGT/AMGT_HARVST (3), org/missions/D8/ADVI/ADVI_FIRMBKTS (2), org/missions/D8/MDPF/MDPF_DEMQUE (1); each class=CHANNEL-UNION",
+      "recount of the body: 36 MERGE lines, 69 PATH lines, 61 class=RESOLVED-OTHER (all 61 on org/devices/crossbox/), 6 CHANNEL-UNION, 2 GENERATED-REGEN; tail reads paths=64 (distinct paths: 64)"
+    ]
+  },
+  "spec_asserts": "E8 census header: the recurring RESOLVED-OTHER paths are crossbox JSON files and two surprise-channel INVESTIGATION files.",
+  "world_is": "The census's crossbox counts are right (61 rows, 59 distinct crossbox files). The investigation part is wrong on count (three files, not two) and on class (CHANNEL-UNION, not RESOLVED-OTHER). The design uses the body counts."
+}
+```
+
+## NFRA_CTLPLN-W68-S6 -- the crossbox selftest proves the two-copy exchange with the tool's own fold, never with git merge, so it cannot see the conflict git reports
+
+```json
+{
+  "id": "NFRA_CTLPLN-W68-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~68",
+  "surfaced_at": "2026-10-12T08:43:27Z",
+  "one_line": "The crossbox-call selftest case merge-folds-the-other-boxs-fields-in passes while a real git merge of the same two copies (one box writes the sender side, the other the ack side in the same file) reports a conflict.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/crossbox-call.py@2fbb74e87d:905-906 the selftest pulls the other copy with h.pull(ff=False) (a fetch, no merge) and calls b.merge(cid, FETCH_HEAD), the tool's fold; :917 repeats it for a",
+      "scratch simulation .scratch/xb_sim.py 2026-10-12 08:4xZ (raw git, no crossbox verb run): V1 single-file shape: git merge rc=1 conflicted=['org/devices/crossbox/XB-SIM-0001.json']; V1b ordinary order rc=1 the same file; V2 split shape rc=0 conflicted=[]"
+    ]
+  },
+  "spec_asserts": "crossbox-call.py --selftest 'merge-folds-the-other-boxs-fields-in' (:908) asserts that the two copies reach CLOSED-BOTH by git carrying the file, never by one box writing the other's (module docstring :34-35).",
+  "world_is": "The selftest reaches CLOSED-BOTH through the tool's fold, so the case cannot detect the git-level conflict that the same two copies produce. The design's test plan adds a real git merge case (T15)."
+}
+```
+
+## NFRA_CTLPLN-W68-S7 -- the order's status flip to complete edits a file outside the order's <paths> grant
+
+```json
+{
+  "id": "NFRA_CTLPLN-W68-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~68",
+  "surfaced_at": "2026-10-12T08:43:27Z",
+  "one_line": "The worker standard says flip the order's status to complete on a valid proof; the order file NFRA_CTLPLN.TO-CT-w-6 is not in the order's own <paths> grant, which names only the investigation channel file, so the flip is a write the lane gate does not admit to this worker.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-w-6.crossbox-ack-per-box-file-design.md @2fbb74e87d:8 <status>pending</status>, and :63-65 <paths> lists only org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md",
+      "the worker standard: a path the order needs and lacks is a BLOCKING row on that criterion, never an override; the order's own acceptance text (:56) says flip <status> to complete only when CTw6-AC1 passes and the instance is VALID",
+      "the proof instance is VALID (validated by proof-of-spec-check.py, section of the commit report); CTw6-AC1 PASS by output; <status> left pending in this commit"
+    ]
+  },
+  "spec_asserts": "TO CT-w-6 ACCEPTANCE: flip <status> to complete only when the mechanical criterion passes and the instance is VALID; the worker standard commits instance, deliverables and flip together.",
+  "world_is": "The flip is a write to the order file, which is outside <paths>. The worker did not edit the order. The COO flips the order on its own word; the design and the proof are committed and graded as they stand."
+}
+```
