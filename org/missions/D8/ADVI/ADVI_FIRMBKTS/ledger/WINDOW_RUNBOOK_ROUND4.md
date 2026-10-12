@@ -10,7 +10,7 @@ BEFORE act 4) and eight conditions added to the steps they belong to.
 |---|---|
 | act 0 (producers' grant), its Delete addendum (`FB-f-16` @2658e9ff96) | APPLIED |
 | act 1 (advTenant, `FB-f-8`) | APPLIED, complete |
-| act 3b (readers' admission, `FB-f-14` @0acccf7d8e) | APPLIED; close simulation `FB-f-15` re-run owed by ~FBL (crossbox b717) |
+| act 3b (readers' admission, `FB-f-14` @0acccf7d8e) | APPLIED; close simulation `FB-f-15` re-run DONE by ~FBL from the committed `r4_sim.py` @408768aae2 (laptop commit d6093ad983, 2026-10-11 16:20Z): 9 of 9 admitted allowed, 2 of 2 negatives explicitDeny, OAI statement ok; graded by the issuer from the instance (dell1 cannot simulate); crossbox b717 from-side closed 06:06:52Z |
 | act 3c (exec-summary fence row, `FB-f-17` @5a8c78f135) and 4b's identity policy (`FB-f-18` @ee0fed864d) | APPLIED |
 | dormant builds `FB-g-1`..`FB-g-29`, `FB-g-19`..`-28` | merged and graded |
 | pairs: act 2 (ADDENDA 1-4), act 3, act 4 (+ ADDENDA 1-5), 4b/4c, 3b, 3c | SIGNED in both halves |
