@@ -127,7 +127,7 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
   - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 - Pre-cut: ap10.AC1 and ap10.AC2 base FAIL as expected (records absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>35</round>
 <slot>~AE</slot>
 <fabric>site-z</fabric>
