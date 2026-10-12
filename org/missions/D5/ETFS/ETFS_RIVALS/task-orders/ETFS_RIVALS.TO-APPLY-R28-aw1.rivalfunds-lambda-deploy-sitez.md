@@ -7,7 +7,7 @@
     <issued_to>0.7.0_AE_CloudOps~DELL1</issued_to>
     <!-- re-addressed by AMENDMENT 2 from 0.7.0_AE_CloudOps~Z (site Z) -->
     <date>2026-10-08</date>
-    <status>pending</status>
+    <status>complete</status>
     <project_code>ETFS_RIVALS</project_code>
   </metadata>
   <amendment id="6" date="2026-10-12" by="2.0.0_SA_COO~V1">
