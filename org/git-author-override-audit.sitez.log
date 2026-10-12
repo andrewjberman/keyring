@@ -1749,3 +1749,30 @@
 2026-10-12T21:40:29Z PASS  2.0.0_SA_COO~O  1  (all paths in-lane) act=59b69cb9fbfa paths=1:org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-12.dlq-visibility-grant-apply.md
 2026-10-12T21:40:56Z LANDED-2P  2.0.0_SA_COO~O  d78be8e6c2  paths=1  validate=52.48s  wait=0.50s  hold=4.54s  build=2.04s  ref=2.45s  post-commit=7.37s  attempt=1
 2026-10-12T21:42:29Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=5.83  graded=n/a  args=(--verify-merge a172a9fe8e5faf601ac89cf3ea1ac4b03cd9e3b7)  first=(none)
+2026-10-12T21:42:37Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=34.66  took=72d1392cfa hold=2.68s graded=0/25 pushed=a172a9fe8e  phases: t_fetch=3.49s t_merge_cloud=16.65s t_land=2.71s t_push=4.84s
+2026-10-12T21:42:43Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-12T21:42:50Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=0a265a7ecd00 paths=1:org/git-author-override-audit.sitez.log
+2026-10-12T21:43:12Z LANDED-2P  0.0.0_AB_MSTR~Z  7e2042a36e  paths=1  validate=29.29s  wait=0.15s  hold=4.55s  build=1.42s  ref=1.49s  post-commit=7.09s  attempt=1
+2026-10-12T21:43:27Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=10.64  took=already-current pushed=7e2042a36e  phases: t_fetch=1.05s t_push=5.89s
+2026-10-12T21:44:00Z PASS  0.7.0_AE_CloudOps~IR  1  (all paths in-lane) act=e15d57983c74 paths=1:org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round9/schwab/POST_APPLY.md
+2026-10-12T21:44:07Z PASS  0.7.0_AE_CloudOps~IR  1  (all paths in-lane) act=e15d57983c74 paths=1:org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~IR/round9/schwab/POST_APPLY.md
+2026-10-12T21:44:28Z LANDED-2P  0.7.0_AE_CloudOps~IR  ce651af171  paths=1  validate=28.25s  wait=1.17s  hold=2.82s  build=1.83s  ref=0.76s  post-commit=7.76s  attempt=1
+2026-10-12T21:52:25Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=3.62  graded=n/a  args=(--verify-merge 664910617a7806223fa06c189729474042ea18c3)  first=(none)
+2026-10-12T21:52:33Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=30.17  took=0c08bb20d7 hold=2.07s graded=0/21 pushed=664910617a  phases: t_fetch=5.64s t_merge_cloud=12.09s t_land=2.10s t_push=4.29s
+2026-10-12T22:02:45Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=4.14  graded=n/a  args=(--verify-merge f8aa9c50faf58f4bf5bed132c6b66761b336c070)  first=(none)
+2026-10-12T22:02:54Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=47.77  took=6e194a1464 hold=3.87s graded=0/10 pushed=f8aa9c50fa  phases: t_fetch=4.51s t_merge_cloud=23.81s t_land=3.92s t_push=4.19s
+2026-10-12T22:11:16Z PASS  0.7.0_AE_CloudOps~Z  1  (all paths in-lane) act=f48e2d44ee46 paths=1:org/critical_paths/change_management/20261012T1349Z_nfra-oplgtw-ap12-dlq-visibility_deploy_completion.md
+2026-10-12T22:11:20Z PASS  0.7.0_AE_CloudOps~Z  1  (all paths in-lane) act=f48e2d44ee46 paths=1:org/critical_paths/change_management/20261012T1349Z_nfra-oplgtw-ap12-dlq-visibility_deploy_completion.md
+2026-10-12T22:11:34Z LANDED-2P  0.7.0_AE_CloudOps~Z  d83f59f602  paths=1  validate=18.97s  wait=0.15s  hold=1.35s  build=0.79s  ref=0.50s  post-commit=7.96s  attempt=1
+2026-10-12T22:12:30Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=8.88  graded=n/a  args=(--verify-merge da757b04d1d3c6eb6edf5eaebacbb2f773409b09)  first=(none)
+2026-10-12T22:12:45Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=39.48  took=d56689b37e hold=2.65s graded=0/18 pushed=da757b04d1  phases: t_fetch=2.63s t_merge_cloud=18.85s t_land=2.70s t_push=9.38s
+2026-10-12T22:16:38Z BLOCK  0.0.0_AB_MSTR~Z  1  (1 violation(s): VIOLATION: org/devices/state/sitez/ssh_enable_20261012T220151241Z.json -- lane=NFRA_CTLPLN_FAST_C (CTO grantor, IRPT RULINGS batch 284, 2026-10-06 (2.0.0_SA_COO~C msg 105616): NFRA_CTLPLN FWD-2, the device register. org/devices/** (the register and its schema test) and ONE new reader, lib/devices.py. The .tools readers are lane ANY and need no grant. Struck when NFRA_CTLPLN closes.); agent=0.0.0_AB_MSTR~Z not in permitted_agents;) act=8acab77cbc4d paths=1:org/devices/state/sitez/ssh_enable_20261012T220151241Z.json
+2026-10-12T22:17:04Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=4.82  graded=n/a  args=(--verify-merge a374eadb3581349ceac20f18f8cf82e0119c5746)  first=(none)
+2026-10-12T22:17:11Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=28.14  took=21e0c0839f hold=1.49s graded=0/0 pushed=a374eadb35  phases: t_fetch=3.30s t_merge_cloud=14.38s t_land=1.52s t_push=4.78s
+2026-10-12T22:20:16Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=b1f5de4e59cc paths=1:org/devices/crossbox/XB-20261012T162317Z-d0aa.json
+2026-10-12T22:20:21Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane) act=b1f5de4e59cc paths=1:org/devices/crossbox/XB-20261012T162317Z-d0aa.json
+2026-10-12T22:20:32Z LANDED-2P  0.0.0_AB_MSTR~Z  dbfb89df2f  paths=1  validate=18.69s  wait=0.16s  hold=1.67s  build=1.15s  ref=0.45s  post-commit=4.44s  attempt=1
+2026-10-12T22:22:27Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=5.96  graded=n/a  args=(--verify-merge de8a019f2e82cb8cad90524209a5a6fdf4729658)  first=(none)
+2026-10-12T22:22:40Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=36.86  took=18ea1b7fc4 hold=4.74s graded=1/18 pushed=de8a019f2e  phases: t_fetch=2.62s t_merge_cloud=17.00s t_land=4.77s t_push=6.71s
+2026-10-12T22:32:43Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=9.93  graded=n/a  args=(--verify-merge 6aafd06954b694c70f82f3160d7f01fbe48a2f05)  first=(none)
+2026-10-12T22:33:02Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=57.22  took=7059fff2b5 hold=5.62s graded=0/27 pushed=6aafd06954  phases: t_fetch=4.57s t_merge_cloud=25.07s t_land=5.64s t_push=9.20s

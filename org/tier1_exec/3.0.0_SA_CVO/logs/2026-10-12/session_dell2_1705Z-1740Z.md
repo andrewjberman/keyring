@@ -83,3 +83,9 @@ Checked and not a finding: portal origin/DEV at 183860ba (IB-pr-483) was landed 
 | item | result | commit |
 |---|---|---|
 | IRPT_ANLREQ round 16 (Y) | L9: AR161-y-AC2J PASS, AR162-y-AC3J FAIL (clause 1: the account-header rule misses Account-Number and Account/Number and turns back Account Value), AR164-y-AC2J PASS; ADJUDICATION_v17 + REMEDIATION_v9: 7 dismissed, 3 OPEN. Slug sent. YS rows left for YS's close | 54382c3f9d |
+
+## Addendum, 22:27Z (msg 6653)
+
+| item | result | commit |
+|---|---|---|
+| TCKT_VNEXT round 14 | No row, no judgment; slug by message. My live get-item: TCK-20261012-c546fead open, svc-commentary, analysis_request, test title, no draft key | none |
