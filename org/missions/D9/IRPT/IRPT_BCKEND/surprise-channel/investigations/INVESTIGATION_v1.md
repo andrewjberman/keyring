@@ -28538,3 +28538,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  "notes": "Read row for ADJUDICATION_v65. Digests, counts and paths only."
 }
 ```
+
+## IRPT_BCKEND-D2-W329-S1 -- IB165-4-AC3 reads the unrelated portal gitlink drift as a change outside the grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W329-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~329",
+  "surfaced_at": "2026-10-12T18:07:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB165-4-AC3 cannot read PASS in this worktree: its changed_outside() diffs the worktree against base_commit and lists the portal gitlink, which this worktree carries at another commit, as a change outside the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py . IB165-4-AC3 -> FAIL: changed outside the grant: ['portal'] | IB165-4-AC3 FAIL | rc=1 (record complete, deployed false, aws_calls_made 0 all read before that line)",
+      "git diff --name-only 2d923d0564 lists exactly two paths: infra/aws/lambda/ci/build-and-upload.sh and portal; git diff 2d923d0564 -- portal: Subproject commit 53506d4903... (index, base) vs dbeb6764ea... (the portal checkout HEAD); git ls-files -s portal reads 160000 53506d4903",
+      "the order text and the spawn message both state the worktree is clean except the portal gitlink line, not the worker's, to be left alone; the worker did not touch portal"
+    ]
+  },
+  "spec_asserts": "AC3 grades that nothing outside infra/aws/lambda/ci/ and the worker's deliverables changed against base_commit (p165_cells.py changed_outside, lines 87-95), and the order says the portal gitlink line is not the worker's.",
+  "world_is": "The check reads the portal gitlink drift as a worker change because it runs git diff --name-only against base_commit with no exclusion for a gitlink the worker did not touch; with the portal checkout at dbeb6764ea instead of the indexed 53506d4903 the check reads FAIL whatever the worker does. The worker did not edit the check (barred) and did not move the portal checkout (outside the grant). The work itself (AC1, AC2, record fields) is read separately.",
+  "notes": "Disarm owner not needed (INERT). Resolving option for the issuer: align the portal checkout to the indexed commit, or have changed_outside skip a gitlink path that equals the index entry's drift."
+}
+```
