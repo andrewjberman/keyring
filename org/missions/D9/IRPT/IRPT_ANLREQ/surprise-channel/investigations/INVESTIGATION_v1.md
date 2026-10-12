@@ -3852,3 +3852,30 @@
   }
 }
 ```
+
+## IRPT_ANLREQ-D2-W54-S9 -- the rule-revert mutant fires 3 of the 5 named status tests, not 5: the active-row arm and the service-and-client arm assert behaviour the revert does not change
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W54-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~54",
+  "surfaced_at": "2026-10-12T23:22:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AMENDMENT 3 point 2 premise: under the rule-revert mutant the five named status tests do not all FAIL. Three refusal tests fail (disabled row, row with no status, no row); test_internal_caller_with_an_active_row_is_admitted and test_service_and_client_callers_are_unchanged pass, because the revert does not change what they assert",
+  "spec_asserts": "AMENDMENT 3 point 2 (order IRPT_ANLREQ.TO-AR-y-172, section AMENDMENT 3): in a scratch copy outside the product tree, with _internal_allowed_firms put back to the pre-AR-y-172 behaviour, the five named status tests FAIL, and that is recorded as the control.",
+  "world_is": "Measured in the scratch copy .scratch/mutant_y172 (outside infra/aws/lambda/investor-reporting/_authz/served.py of the worktree). Unmutated copy: test_internal_status_active.py 17 passed, rc=0 (the control). Mutated copy, served.py lines 1157-1161 replaced by the single pre-AR-y-172 line: 15 failed, 2 passed, rc=1. Failing: the disabled-row test (8 parameters), the row-and-no-status test (6 parameters), the no-row test. Passing: the active-row test (its four assertions admit under both behaviours) and the service-and-client test (the service branch and the client branch are not the function the revert changes). A revert of the internal reader cannot make an arm that asserts unchanged behaviour fail. The control is recorded with the corrected expectation (the three refusal tests fire, so the mutant fires); the five-FAIL wording was not forced. The full _authz folder was not run in the scratch copy: 5 test modules raise FileNotFoundError at collection there, because the copy holds only the investor-reporting folder.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_internal_status_active.py:79-82 @c557f59211 (the active-row arm: four admissions)",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_internal_status_active.py:110-122 @c557f59211 (the service-and-client arm)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1157-1162 @72f9b2bb1a (the rule the mutant reverts; AR-y-172 block added at 9b9c573ce7)",
+      "git show 9b9c573ce7 -- infra/aws/lambda/investor-reporting/_authz/served.py (the removed pre-AR-y-172 line: if row is None or \"allowedFirmIds\" not in row: return None)"
+    ]
+  }
+}
+```
