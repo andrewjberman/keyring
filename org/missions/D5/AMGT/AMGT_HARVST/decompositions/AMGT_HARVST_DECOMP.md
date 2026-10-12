@@ -3836,3 +3836,18 @@ its own build (by-4) and its own deploy (by-5). Series `by` continues. This is a
 **Checks dry-run at the base before the cut:**
 - `by-4` AC1 base: FAIL as expected (no test file). AC2 base: PASS as expected (`test_bx1_tier_fence.py` and `test_by1_refusal_logged.py`).
 - `by-5` AC1, AC2 and AC3 base: FAIL as expected (the `.out` files do not exist).
+
+## 96. ROUND 81, WORKSTREAM DEVREVERT -- the Dev-admit ruling withdrawn (`1.0.0_SA_CTO~DELL1` msg 4463, `ROUND_ANALYSIS.round79.md` ADDENDUM 3 @b5915fba35), 2026-10-12 ~15:3xZ
+
+The laptop CTO (msg 108607): the token's `tier` derives from `firmId` (opal-capital means internal), so the Dev rows already log in as
+internal. The Dev-admit ruling of section 95 is WITHDRAWN and the fence stays tier-only; D1-S9 closes NOT EXPOSED (on NFRA_CTLPLN PRD
+v0.27). The STOP arrived after by-4 had merged (f94560218c) and by-5 had deployed (33189f2667, 14:40:46Z).
+
+- `HVST-by-4` and `HVST-by-5` go to `cancelled` by that ruling; by-4's code is reverted in the repo by by-6's step 0 (the COO lane cannot write
+  `infra/aws`; and not by `git revert` of the merge: that would also remove the channel rows and the proof instance, which are append-only).
+- **`HVST-by-6`** (seat `0.7.0_AE_CloudOps~HV1`, WORLD): the live function is restored to HVST-by-2's artifact **by S3 object version**,
+  so its code hash EQUALS the by-2 deploy's (`cWiraC3E...`, the CTO's added proof, msg 4465), with the deployed source read back and four
+  side-effect-free arms (Dev with an advisor tier 403, advisor 403, no context 403, internal 400). Covered by by-2's signed artifact and
+  by ADDENDUM 3; no widening act.
+- **Fan-out:** 1 of 1 chain (by-6), cap 8.
+- **Checks dry-run at the base:** `by-6` AC1, AC2 and AC3 base: FAIL as expected (the `.out` files do not exist).
