@@ -28,6 +28,20 @@ OPEN, 2 BLOCKING, ARMED 0. **No PRD addendum.** Nothing here was re-measured by 
 
 Every candidate lands on portal DEV through the CTO review lane; PROD for all of them rides `e7f2`.
 
+## 2a. After the drain (2026-10-12 ~23:2xZ; 2.0.0_SA_COO~D2 msg 6662, record `ROUND_31_REAL_RUN_20261012.md` @4f9e9e3cd5)
+
+- Items 1 (wire), 2 (colgroup) and 5 (unavailable words) were already met on DEV 183860ba; no order was cut (row D2-S27). Items 3,
+  4 and 6 are merged.
+- **Portal candidate `wk-DSGN_IRPTV1-71-portal` @cf52fdbf: APPROVED for DEV.** Read by this seat: a fast-forward of `origin/DEV`; 11
+  files, +765/-27. The shared `src/components/CategoryViewTree.tsx` change is ADDITIVE: an optional `totalBase` prop; absent, the
+  card renders exactly as before (Model Portfolios passes none), with a `model_portfolios_mount.before.html` snapshot as its
+  control. The Holdings face's base line moves inside the card; the vendor report's validation sentence and source line sit outside
+  the closed details for a vendor report only. PROD rides Andrew's held promote `e7f2`.
+- **Row D2-S28 (a last-four search yields a relationship-kind entry, so a pick starts Performance on the largest account, not the
+  one typed): the PRODUCER's entry kind.** The search's producer knows which account the digits matched; a query that matches an
+  account's tail returns that ACCOUNT entry, and the page's existing account-row start (S24, now proven rendered) does the rest. The
+  page does not guess from a tail, which two accounts can share. Routed to IRPT_BCKEND ~P as one cell; the page is unchanged.
+
 ## 3. Acts only Andrew can do
 
 None new. The portal PROD promote (`dell1-e7f2`) stays his, with this project's print-route files added to its breakdown.
