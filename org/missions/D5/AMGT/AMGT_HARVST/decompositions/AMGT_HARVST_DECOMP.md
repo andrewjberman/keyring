@@ -3888,3 +3888,25 @@ Round 75's held slug releases on the issuer's bs-5 amendment (@812da3235c): carr
 
 **Checks dry-run at the base before the cut:**
 - `bz-2` AC1, AC2 and AC3 base: FAIL as expected (the `.out` files do not exist).
+
+## 99. ROUND 83 -- the runner re-pin, un-parked (`1.0.0_SA_CTO~DELL1` msgs 4476 and 4505, `ledger/ROUND_ANALYSIS.round81.md` and `.round82.md`), 2026-10-12 ~20:5xZ
+
+The CTO ruled round 83 is not cut until `HVST-bz-1` or `HVST-bx-4` un-parks (msg 4505). `bz-1`'s un-park condition was "site Z's manager
+consuming". MSTR~DELL1 msg 4547 (from site Z's manager, bus 1634215e, measured there): crossbox ORDER 5f49 reached `~ZW`'s inbox at
+2026-10-12T20:28:19Z, so the condition reads true. The cause of the earlier silence is corrected: site Z was dark 14:09Z-20:27Z on a WEEKLY
+LIMIT that resets 2026-10-14 06:00Z; only the manager and its CTO have run since 20:27Z. `~ZW` reads LIVE and IDLE, telemetry stopped at 14:09Z.
+Whether the other site Z seats resume is Andrew's call. The EXPIRED-state item was carried (YAGNI, msg 4505): it is not a cell.
+
+Issuer `2.0.0_SA_COO~W1`. Series **`bz`** continues (the staged id `HVST-bz-1` of section 97).
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-bz-1` | `bz-1` | **The site Z runner re-pinned to `1c69fa35a3`**: by-3's act, the running cycle ended by its stop file (not killed), state dir and runtime root carried, both pin worktrees LOCKED, a kill-maint dry run lists it EXEMPT. The first cycle record under the new pin closes row D1-W135-S2. The CTO's by-3 half and the COO half carry unchanged. | WORLD | `0.7.0_AE_CloudOps~ZW` | CUT (a crossbox ORDER through MSTR) |
+| `HVST-bx-4` | (none) | bs-3's successor | LOCAL (read) | `0.7.0_AE_CloudOps~ZW` | STAGED on Andrew's WSJ/Barron's sign-in |
+
+- **Fan-out:** 1 of 1 chain, cap 8.
+- **Not orders:** whether the dark site Z seats resume (Andrew); the weekly limit resets 2026-10-14 06:00Z.
+
+**Checks dry-run at the base before the cut:**
+- `bz-1` AC1 and AC2 are site Z reads and cannot run from dell1 (AC1 would read `wk-harvest-runner-pin-b5a7a3a4b6` and FAIL as expected;
+  AC2 reads the old state dir and would PASS today, which is the point: it must still hold after). AC3 base: FAIL as expected (no such file).
