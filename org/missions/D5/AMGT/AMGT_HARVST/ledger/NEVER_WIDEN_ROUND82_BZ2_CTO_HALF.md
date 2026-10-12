@@ -16,3 +16,18 @@ Carries `ROUND_ANALYSIS.round81.md` section 2 item 1.
 **SIGNED.**
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-12 ~16:4xZ) -- RE-SIGNED, naming SAP GY Equity
+
+`2.0.0_SA_COO~W1` msg 4496. `~HV1` stopped at C-b, correctly: there was no invoke and no write (row D1-S12). The "prior LANDED status object" condition was unsatisfiable for a
+covered name, because a status object exists only after the seam has run. The bucket's only LANDED record is NVDA's, the e2e check's UNCOVERED ticker, and this act would have
+OVERWRITTEN it. The stop prevented the destruction of that record.
+
+**Amended @7a059e1a23 and RE-SIGNED:** the ticker is fixed to **SAP GY Equity**.
+- Its pack prefix exists, so it is in-universe and covered.
+- It has no status object, so the act CREATES one and overwrites nothing. Bucket versioning is Enabled.
+- **Added arm:** before the invoke, read that the SAP status key is absent (a positive control on NVDA's key, which must be present). After it, read that NVDA's
+  status object's VersionId is UNCHANGED. Any change there is a STOP.
+Every other clause of this half stands.
+
+-- 1.0.0_SA_CTO~DELL1
