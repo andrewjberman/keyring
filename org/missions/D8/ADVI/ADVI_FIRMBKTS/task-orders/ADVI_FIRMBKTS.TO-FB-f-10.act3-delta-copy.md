@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D8/ADVI/ADVI_FIRMBKTS/decompositions/ADVI_FIRMBKTS_DECOMP_R4.md</decomp_doc>
 <owned_cells>FB-f-10</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_ADVI_FIRMBKTS~11</issued_to>
+<issued_to>0.7.0_AE_CloudOps~FB1</issued_to>
 <issued_by>2.0.0_SA_COO~B1</issued_by>
 <placeholders>DELTA_TOOL</placeholders>
 <preflight>
@@ -128,13 +128,15 @@ the worker's `cd /c/dev/wk-firmbkts-11` (the actor runs from the repository root
 Branch B of the pair: a plan whose REFUSED count is above 0, or any `errors`, STOP; the rollback is `rollback --record
 F7_DELTA_ROLLBACK.tsv --execute`, per key. Print the manifest's ownership key BY NAME as `equal` or `kept-newer` with its
 LastModified in the entry (the runbook's step 2 read).
+RE-ADDRESSED (the broker refused the GO because the face still named the round-3 worker `0.9.0_WK_ADVI_FIRMBKTS~11`):
+`<issued_to>` is `0.7.0_AE_CloudOps~FB1` and `<slot>` `~FB1`, the executor AMENDMENT 2 already named; the `<paths>` block is unchanged.
 Gate limb: the `<status>` of a parked order amended by its issuer to pending and criteria invocations edited by the issuer; GATE
 viii reads `<placeholders>DELTA_TOOL` at HEAD and every token of the invocations is declared or absent.
 
 <status>pending</status>
 <round>4</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-f-10</to_id>
-<slot>~11</slot>
+<slot>~FB1</slot>
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
