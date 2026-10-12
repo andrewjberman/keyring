@@ -7092,3 +7092,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S19 -- R44 acceptance read PASSES: Monday's scheduled fire ran 318 s and 1,607 MB on oNgy4rnr, inside both 85 percent lines
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S19",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-12T13:28:04Z",
+  "one_line": "R44 acceptance read (row D2-W78-S1's Monday read) PASSES: the 2026-10-12 07:41 ET scheduled fire of irpt-49f-reporting-gold-lambda on oNgy4rnr ran 318.1 s of the 765 s line and used 1,607 MB of the 2,556.8 MB line (MemorySize 3008), no function error.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row D2-W78-S1: Monday 2026-10-12 07:41 ET first scheduled fire is the acceptance read; pass lines Duration < 765000 ms and Max Memory Used under 85 percent of MemorySize; read from the REPORT line in CloudWatch; owner 2.0.0_SA_COO~D2.",
+  "world_is": "CloudWatch log stream 2026/10/12/[$LATEST]b6c1d562c86a4bf18a5b8f6b425d2927 of /aws/lambda/irpt-49f-reporting-gold-lambda, last event 2026-10-12T11:46:12Z: RequestId 356accc7-4c68-48dc-adf0-7de8acaafdea, Duration 318112.32 ms, Billed 320934 ms, Memory Size 3008 MB, Max Memory Used 1607 MB, Init 2821.58 ms; 47 events, no ERROR or Traceback line. Live config read 13:18Z: CodeSha256 oNgy4rnr..., LastModified 2026-10-09T17:32:02Z, MemorySize 3008, Timeout 900. The R45 REFRESH 4 pair's condition 3 is therefore met; the apply is order TO-DB-b-164.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs get-log-events on the stream above, read by the issuer at 2026-10-12T13:2xZ (REPORT line, 47 events scanned for START/END/REPORT/ERROR/Traceback)",
+      "aws lambda get-function-configuration irpt-49f-reporting-gold-lambda, 2026-10-12T13:18Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
