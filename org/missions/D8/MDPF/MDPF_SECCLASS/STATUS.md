@@ -17,11 +17,11 @@ Claim words: `measured` = read this session against the served artifact; `held` 
 
 ## Deploy ledgers
 
-All MDPF_SECCLASS ledgers are CLOSED except two (both HELD):
+All MDPF_SECCLASS ledgers are CLOSED except one (HELD):
 
 | Ledger | State |
 |---|---|
-| e87b BD three-file ship (SC1) | SHIPPED 06:20Z (legs V, P, D CLOSED, `E87-SHIPPED ok=True`); HELD on MY leg G after the next scheduled BD fire (23:00Z fallback Mon-Sat, else 04:00Z). 2026-10-11 is a Sunday, so no 23:00Z fire tonight: the next is Mon 2026-10-12 04:00Z, chain end about 06:20Z, leg G read after that. (Measured 23:4xZ: the runner stopped, launched 12:45Z; mix_summary.json / mix_daily_summary.json / firm_composition.json unchanged since the 04:00Z fire, so the 12:45Z run, which wrote only A_00 / A_02 / S_00 telemetry, did not touch them.) **A post-ship run DID happen (measured 2026-10-12 03:4xZ):** `bd-gold-trigger` (the same Lambda that launched the 04:00:46Z and 23:00:11Z fires; CloudTrail StartInstances) launched the runner at 00:18:09Z, not a ledger time; C_06 ran 01:37Z, D_03 01:39Z, D_04 02:01Z. It rewrote `platinum/firm/mix_summary.json` (generated 02:01:02Z, `data_as_of` 2026-10-09: Unclassified $1,846,332.73, 0.0916 pct) and `firm_composition.json` (unclassified count 66, $2,760,199.32); `mix_daily_summary.json` was NOT rewritten. **CORRECTION and FIRST READ (04:4xZ, from the S3 object versions): a pre-fix 10-09 value DID exist** (the 05:45:16Z 10-11 version, written before the ship). Same as-of 2026-10-09, identical firm total: `mix_summary.json` Unclassified $1,846,332.73 BEFORE and AFTER the ship, equal to the cent (D_04's key, the one leg G names); `firm_composition.json` unclassified 92 / $3,325,002.64 -> 66 / $2,760,199.32 (D_03 moved, -26 securities, -$564,803.32). Mechanism, at HEAD: C_06 runs incremental and its `reclassify_retained` (:278-311) skips retained holdings whose class is in `SERVED_HOLDING_CLASSES`, which includes `unclassified` (:274-275); D_04 reads C_06's snapshot (:486). So the fix reaches D_04 only for a date C_06 builds NEW; retained dates keep the securities in Unclassified. Row **D1-S30** filed. **Leg G stays OPEN for one more read:** today's 04:00:46Z fire (chain end about 06:20Z) and whether it builds a new date; then I close G with both reads. Whether the 00:18Z `bd-gold-trigger` run is the ledger's "scheduled fire" no longer decides the read. Served ETags re-read by me 06:3xZ: D_04 304573cf, C_06 1aa6e3b5, D_03 6238716b = the signed digests, lib eb9bb852 unmoved. Leg G, stated at the 10-08 as-of, should read about $6,335.94 left Unclassified, not zero |
+| e87b BD three-file ship (SC1) | CLOSED 2026-10-12 06:4xZ, leg G NOT MET: shipped as signed (06:20Z, `E87-SHIPPED ok=True`, ETags = signed digests) but D_04's served `mix_summary.json` Unclassified is unchanged at the same as-of (2026-10-09, identical firm total): $1,846,332.73 before the ship, after the 00:18Z `bd-gold-trigger` run and after the 04:00:46Z nightly fire, equal to the cent. D_03's `firm_composition.json` did move (92 / $3,325,002.64 -> 66 / $2,760,199.32). Cause (code at HEAD): C_06 is incremental and `reclassify_retained` (:274-311) skips retained `unclassified` holdings; D_04 reads C_06's snapshot (:486). Row D1-S30 |
 | e57e61 FWD-10 apply (~S) | HELD on the first scheduled new-security run that plans US stocks |
 | e60 D_04 Unclassified line | CLOSED (SC1): AC1 ok, arm 2 closed as non-e60 drift by the CTO (ADDENDUM 1 @4cac828d3c) |
 | e79 BD lib ship | CLOSED, leg G NOT MET: the lib is inert on the served path (row D1-S26) |
@@ -32,8 +32,7 @@ All MDPF_SECCLASS ledgers are CLOSED except two (both HELD):
 
 - **D1-S26:** the three BD classify sites (D_04, C_06, D_03) called `classify_with_identity` with an empty ticker only, so e79's
   ticker-no-row branch never ran. FIXED IN CODE by round 20's SC-e-87 (23 of 23 placed, $966,285.46 on the live table, CVO's own
-  run, ADJUDICATION_v16 D1-C-S2); SHIPPED 06:20Z by `TO-SC-e87b` (served ETags measured 06:3xZ); NOT yet proven on the served table: leg G is the proof,
-  after the next scheduled BD fire.
+  run, ADJUDICATION_v16 D1-C-S2); SHIPPED 06:20Z by `TO-SC-e87b`; leg G NOT MET at D_04 (row D1-S30): the fix reaches D_04 only on a date C_06 builds new.
 - **D1-S27:** C_06's firm-daily `total` differs from its class sum by about $128 with a flipping sign; e60's `Unclassified` carries
   it. EXPLAINED by SC-e-88 as 6-decimal share rounding (2026-10-08 reproduces to the cent). Only the owner's acceptability ruling
   is open (remediation owner `1.0.0_SA_CTO~DELL1`).
@@ -43,9 +42,12 @@ All MDPF_SECCLASS ledgers are CLOSED except two (both HELD):
 ## Next, in order
 
 1. Round 20 is closed at my seat (3 of 3 orders complete, `round-close-check` MAY-CLOSE, `dep_stage` ROUND_CLOSE) and graded by the
-   CVO (L8 packet READ 04:12Z; L9 @eb33d5d466, MAY-CLOSE). The L10 slug is HELD at the CVO until `TO-SC-e87b`'s leg G reads, which
-   is mine after the next scheduled BD fire (`3.0.0_SA_CVO/deliverables/MDPF_SECCLASS_R20_SLUG_HELD_REMEDIATION_v11.md`). Then the CTO's round-20 analysis; cut round 21 in
-   ONE issuance the tick it lands.
+   CVO (L8 packet READ 04:12Z; L9 @eb33d5d466, MAY-CLOSE). `TO-SC-e87b` is now terminal (leg G closed NOT MET 2026-10-12 06:4xZ; ledger
+   CLOSED), which was the hold on the CVO's L10 slug (`3.0.0_SA_CVO/deliverables/MDPF_SECCLASS_R20_SLUG_HELD_REMEDIATION_v11.md`). Next, the
+   CVO's slug and the CTO's round-20 analysis; cut round 21 in ONE issuance the tick it lands.
+   - **Round-21 candidate, from row D1-S30:** retained-date reclassification in C_06 (`reclassify_retained` must revisit retained
+     `unclassified` holdings that carry a ticker or name), a SERVED build plus a pair-gated ship, then a leg G read on a date C_06 rebuilds.
+     The expected figure is stated at that as-of, never at 10-08.
    - **Carried into that issuance, `SC-e-90` (CTO msg 4167):** the portal test `iv-e-46.class-readers.test.ts` reads 1 pass 1 fail at origin/DEV
      (its `NAMED` entries cite file:line; two lines moved). Repair: locate by content, plus a negative arm; the test file only. Draft:
      `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R21_DRAFTS/TO-SC-e90_DRAFT_class-readers-test-locate-by-content.md`. Not cut in
