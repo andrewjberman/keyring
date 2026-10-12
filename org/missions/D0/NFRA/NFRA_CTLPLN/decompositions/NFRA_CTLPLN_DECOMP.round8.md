@@ -28,6 +28,8 @@ Plan of record: `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTL
 
 | `CT-w-7` | ADDED on the CTO's ruling (msg 108501, 2026-10-12 ~09:3xZ, after the cut; the decomposition is otherwise frozen): retire the legacy `infra/aws/lambda/portal_data_proxy/deploy.sh` (it copies two files, calls `aws lambda update-function-code`, which the law forbids, and would now ship a zip that cannot import) and leave a one-line README pointer to the source-map build and `safe-apply`. A DIRECT-ACT cell (LOCAL, under 300 lines). | FWD-28 hygiene | LOCAL | `~69` |
 
+| `CT-w-8` | ADDED on the CTO's ruling (msg 108504, ~10:0xZ, after the cut): a `note` field on each firm row of `firm_pages.json` carrying Andrew's hand comments VERBATIM, rendered by the generator above each firm's entry in the generated portal block; regenerate, re-prove set-equality and byte-identical hand-kept lines; fix the stale evidence line ranges (W65-S6, S7). The regenerated portal commit is landed on portal DEV by the issuer, not the worker. | FWD-28 | WORLD by path floor (lands nothing) | `~70` |
+
 E9 (FWD-27): `CT-u-1`/`CT-u-2` are complete; the per-box cells are re-cut ACTIVE with their GO when Andrew's public keys land (the withdrawn orders' text is the template). It stays a qualified essential wait on Andrew's word (decomposition `NFRA_CTLPLN_DECOMP.remote1.md`).
 E11: the CVO graduates D1-S8 and D1-S10 at this round's drain (no staged FWD-27 order remains).
 
