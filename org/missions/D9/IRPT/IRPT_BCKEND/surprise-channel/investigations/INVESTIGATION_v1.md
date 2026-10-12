@@ -28762,3 +28762,85 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "STILL a defect in the code (a challenged stored-bundle probe signs in again), NOT introduced by IB-pr-473 and NOT reachable today. It stays ARMED in the sense that a resident release would make it reachable. RULING by the issuer (inside its own decomposition): (1) the repair is a cell of round 166 beside the CTO's items 1 and 2: in withAuthenticatedPage a probe whose reason is WAF_CHALLENGE ends the run with the same challenge ending acquireSession uses, and does NOT call refreshSession; an arm for it in probe_challenge_and_pair.js; (2) NO resident release carrying ycharts_session.js is to be cut until that cell is merged, and the issuer will refuse to pass a release packet for it before then; (3) the disarm of W328-S1 is complete when the round-166 cell reads merged. Owner of (1)-(3): 2.0.0_SA_COO~P2. Not measured: any live capture run (none is allowed)."
 }
 ```
+
+## IRPT_BCKEND-D2-W329-S1 -- IB165-4-AC3 reads the unrelated portal gitlink drift as a change outside the grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W329-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~329",
+  "surfaced_at": "2026-10-12T18:07:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB165-4-AC3 cannot read PASS in this worktree: its changed_outside() diffs the worktree against base_commit and lists the portal gitlink, which this worktree carries at another commit, as a change outside the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py . IB165-4-AC3 -> FAIL: changed outside the grant: ['portal'] | IB165-4-AC3 FAIL | rc=1 (record complete, deployed false, aws_calls_made 0 all read before that line)",
+      "git diff --name-only 2d923d0564 lists exactly two paths: infra/aws/lambda/ci/build-and-upload.sh and portal; git diff 2d923d0564 -- portal: Subproject commit 53506d4903... (index, base) vs dbeb6764ea... (the portal checkout HEAD); git ls-files -s portal reads 160000 53506d4903",
+      "the order text and the spawn message both state the worktree is clean except the portal gitlink line, not the worker's, to be left alone; the worker did not touch portal"
+    ]
+  },
+  "spec_asserts": "AC3 grades that nothing outside infra/aws/lambda/ci/ and the worker's deliverables changed against base_commit (p165_cells.py changed_outside, lines 87-95), and the order says the portal gitlink line is not the worker's.",
+  "world_is": "The check reads the portal gitlink drift as a worker change because it runs git diff --name-only against base_commit with no exclusion for a gitlink the worker did not touch; with the portal checkout at dbeb6764ea instead of the indexed 53506d4903 the check reads FAIL whatever the worker does. The worker did not edit the check (barred) and did not move the portal checkout (outside the grant). The work itself (AC1, AC2, record fields) is read separately.",
+  "notes": "Disarm owner not needed (INERT). Resolving option for the issuer: align the portal checkout to the indexed commit, or have changed_outside skip a gitlink path that equals the index entry's drift."
+}
+```
+
+## IRPT_BCKEND-D2-W329-S2 -- proof checker INVALID: the recorded absolute check path differs from the order's relative one (issuer correction never reached the order file)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W329-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~329",
+  "surfaced_at": "2026-10-12T18:12:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The issuer's mid-task correction (run the amended check by its absolute path) reached the spawn prompt and not the task-order file, so the proof checker reads the recorded absolute invocation as not equal to the order's relative one and returns INVALID; it also supersedes row D2-W329-S1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python \"C:/dev/ajb_workspace/org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py\" . IB165-4-AC1/AC2/AC3 -> IB165-4-AC1 PASS, IB165-4-AC2 PASS, IB165-4-AC3 PASS (rc 0 each) at worktree HEAD e6067ab123",
+      "python .tools/proof-of-spec-check.py <instance> IB165-4-AC1,IB165-4-AC2,IB165-4-AC3 -> VIOLATION invocation-alignment[IB165-4-AC1..AC3]: TO-CRITERION relative path 'p165_cells.py\" . IB165-4-ACn' vs INSTANCE-RECORD absolute path; INVALID (rc=1)",
+      "the same relative invocation run in this worktree against its OLD check copy reads IB165-4-AC3 FAIL (changed outside the grant: ['portal']) - that is row D2-W329-S1, now explained by the issuer's correction (fix at 04e6040b0c on box/dell2)"
+    ]
+  },
+  "spec_asserts": "The order's criteria name the relative check path and the proof checker requires the recorded invocation to equal the order's criterion invocation (IRPT_FNTEND-S31).",
+  "world_is": "The worktree holds the old check; the amended one lives only at the absolute path in the base checkout. Recording the order's relative invocation would record a command whose output in this worktree is a FAIL, so the instance records the absolute invocation that actually ran and is INVALID until the order file's criteria are amended by the issuer (or the fix reaches this branch). The worker did not edit the order's criteria, the check or the portal gitlink. Row D2-W329-S1 is superseded by the correction: AC3 reads PASS on the amended check.",
+  "notes": "Not a work failure: all three criteria PASS by output on the amended check; the order stays status pending only because the checker rc is 1."
+}
+```
+
+## IRPT_BCKEND-D2-W329-S3 -- IB165-4-AC3 FAIL on the order's relative invocation: the issuer's delivery commit 64d6ae536f puts p165_cells.py itself outside the check's own allowlist
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W329-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~329",
+  "surfaced_at": "2026-10-12T18:27:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Run from the worktree root with the order's relative invocation, IB165-4-AC1 and AC2 PASS and IB165-4-AC3 FAILs: changed_outside lists the issuer-delivered check script, because 64d6ae536f is a commit on this branch whose path is under deliverables/2.0.0_SA_COO~P2/, not under the allowlist.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python \"org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py\" . IB165-4-AC1 -> OK: 5 arms PASS / IB165-4-AC1 PASS (rc 0)",
+      "same, IB165-4-AC2 -> OK: staging test 5 passed; test_build_only.sh exits 0 / IB165-4-AC2 PASS (rc 0)",
+      "same, IB165-4-AC3 -> FAIL: changed outside the grant: ['org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r165/p165_cells.py'] / IB165-4-AC3 FAIL (rc 1), on a clean tree (git status shows only the portal gitlink)",
+      "p165_cells.py lines 87-99 (changed_outside): git diff --name-only <record base_commit 2d923d0564> includes the file changed by 64d6ae536f; the allowlist is the worker deliverables, INV and the task-orders folder only; the gitlink amendment does not cover a regular file"
+    ]
+  },
+  "spec_asserts": "AC3 expects PASS on the order's relative invocation run in the worker's worktree after the issuer delivered the amended check (issuer message: 64d6ae536f makes the relative invocation run the amended check).",
+  "world_is": "The delivery commit itself is a change against base_commit outside the grant, so the amended check fails its own AC3 on any branch that carries it. The worker stopped as ordered: it did not edit p165_cells.py, the record's base_commit, the order's criteria or any threshold, and did not flip the order. The proof instance was not rewritten, since it would have to record a FAIL for AC3.",
+  "notes": "Resolving options for the issuer: add the check's own folder (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/) to the allowlist in changed_outside, or deliver the check without a commit on the worker branch. Not a build failure: AC1 and AC2 PASS and the record satisfies every other AC3 field."
+}
+```
