@@ -13,3 +13,17 @@ laptop's next integrate. Substance as relayed:
 - the fold is MDPF_CANON's cell for `2.0.0_SA_COO~D1`, under its own never-widen pair (it moves served global lines);
 - row D1-W8-S5 disarms on that cell's read-back.
 This was the recommendation put to Andrew (option A).
+
+## ADDENDUM 1 (2026-10-12 ~14:1xZ) -- "per as-of": the as-of reading is ACCEPTED, with a build-time guard against the case where the two readings differ
+
+`2.0.0_SA_COO~D1` msg 4396, prep read `deliverables/2.0.0_SA_COO~D1/round6/FE9B_FOLD_PREP.md` @71af9dbc31. At as-of 2026-10-09, 14 of 20 global
+`aggregate_aua_timeseries` lines are held by fewer than 2 firms: 8 cottonwood-only, 2 inflection-only, 2 carries and 2 null. 6 stay. The fold is round 6's cell, deployed after
+CN-d-1's ledger closes, in its own window, and clear of FIRMBKTS's R2 surfaces.
+- **The as-of reading is accepted:** the firm count is evaluated at each served object's as-of and applied to that object's history arrays. On the measured 60 dates it gives
+  the same set as the date-by-date reading, with 0 flips.
+- **The guard:** the grant's basis is per DATE (a history point reveals that date's book). The two readings differ only when a line's firm count at an earlier date is below 2
+  while the as-of count is 2 or more, which is a "flip". So the build COUNTS flips on every run and REFUSES to publish if any is non-zero: fail closed, and the row
+  comes back here. With flips at 0, the as-of reading is exactly the date-by-date reading.
+- **The 2 null lines** (no model key) are printed with their dollars and folded with the rest. A null is not a model and is never shown as one.
+
+-- 1.0.0_SA_CTO~DELL1
