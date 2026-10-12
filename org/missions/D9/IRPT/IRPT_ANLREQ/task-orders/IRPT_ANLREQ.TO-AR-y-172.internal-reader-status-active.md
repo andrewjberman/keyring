@@ -48,6 +48,21 @@ ruling `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_ANLREQ_
 3. **In your report:** the changed lines; the tests whose expectation changed; which of the 24 routes this narrows (from the AR-y-163 read) and which it does not; and what
    a refused caller sees (the public reason code; no change to the envelope).
 
+### AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-12, after the first worker's BLOCKING row `IRPT_ANLREQ-D2-W54-S4`)
+
+The first run built the rule, the five status tests (17 pass) and moved fixtures in `test_allowed_firm_ids.py`, and found FIVE tests outside the grant that now fail because their fixture
+gives an internal caller NO active users row, which the new rule refuses: `tests/test_interactive_entry.py` (4 tests: `test_other_creator_record_reaches_compute_with_real_viewer`
+[both params], `test_opal_prospect_create_is_prospect_not_custody_or_partner`, `test_foreign_creator_input_keeps_both_identities_for_submitter_contract`) and `tests/test_svc_custody_statement.py`
+(`test_svc_custody_statement_does_not_change_opal_or_dev_admission`, whose `_ALL_ROW` has no status). I reproduced the five (332 pass, 5 fail). The rule is the CTO's, so the tests are what
+changes. **The grant now includes those two test files.** Do exactly this:
+1. FIXTURES ONLY: where such a test's internal caller reads a default profile with no row or no status, give that row `status: "active"` (nothing else); each test's ASSERTIONS stay
+   exactly as they are, because each test is about what happens AFTER the fence, not about the fence. In `test_svc_custody_statement.py` set `status: "active"` on the row the test means to be admitted
+   and leave any row that is MEANT to be refused without one. If a test's assertion would have to change, STOP on that test, leave it failing, and file a row naming it.
+2. Say, per test, which fixture line you changed and why that caller is meant to be admitted (one sentence each).
+3. Re-run `y172-status` and `y172-keep` (332 + 5 = 337 collected, all passing is the aim), re-validate the proof, flip `<status>` to `complete` only when VALID, and commit as a NEW commit.
+4. Your first run's rows S4 and S5 stay. S4 is answered by this amendment (say so in your report); S5 (the narrative test runs a PINNED `served.py`, so its green run is no evidence) is
+   the CTO's and stays ARMED: say in the report what narrative's pin means for the release pair.
+
 ### ACCEPTANCE
 
 <criterion id="AR172-y-AC1" cell_refs="AR-y-172"><invocation>python C:/dev/wk-irpt-anlreq-54/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r17/ar17_checks.py y172-status --root C:/dev/wk-irpt-anlreq-54</invocation><expect>Y172-STATUS-OK</expect></criterion>
@@ -70,6 +85,8 @@ ruling `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_ANLREQ_
 infra/aws/lambda/investor-reporting/_authz/served.py
 infra/aws/lambda/investor-reporting/_authz/tests/test_internal_status_active.py
 infra/aws/lambda/investor-reporting/_authz/tests/test_allowed_firm_ids.py
+infra/aws/lambda/investor-reporting/_authz/tests/test_interactive_entry.py
+infra/aws/lambda/investor-reporting/_authz/tests/test_svc_custody_statement.py
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
