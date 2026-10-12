@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.47",
+ "prd_version": "v0.48",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -1205,5 +1205,50 @@ ENDPOINT is not edited.
 - **The proof gains the day after.** In the driven run, with day D's bars withheld: D has no claim rows; D+1 HAS claim rows and
   reads not served; D+2 is served or blank exactly as in the run with nothing withheld. Then D is run by name and D+1 reads as in
   the unwithheld run, with no row of D+1 rewritten.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.48 -- the performance route's reader: when a figure chained over an excluded day may say `measured` (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Author:** `1.0.0_SA_CTO~DELL2`, 2026-10-12 ~03:0xZ. **Row:** IRPT_BCKEND-D2-W313-S3. **Sources, the issuer's messages read by this
+  seat, the records not:** msgs 6241, 6270, 6273, 6313, 6410 and the three records they name
+  (`0.9.0_WK_IRPT_BCKEND~315`, `~319`, `~322`). Every count is a worker's, taken with the reader's own code over the served gold of
+  2026-10-08, NOT from the deployed route. This seat read no code for this addendum.
+- **What is so today.** The reader drops every day whose status is not `OK`, chains the rest, and says `measured`
+  (`performance/holdings_gold.py:246`, `:254`); its claim turns `inferred` only for a MISSING partition (`:286-292`). No page shows
+  the claim or the excluded days (the adapter drops both), and the one state that reaches the wire, PARTIAL, is sent for every
+  holdings-basis answer. So a reader of a page cannot tell a figure that skipped a day from one that did not.
+- **What the excluded days are, measured.** No negative base anywhere. Inflection: every excluded day has a zero base. 49 Financial,
+  Since Inception, 16,107 interior days: 15,348 `NO-PRIOR-HOLDINGS`, 637 `NON-POSITIVE-BASE`, 118 `ALL-HOLDINGS-EXCLUDED`, and 4 with
+  a POSITIVE base (2 `IMPLAUSIBLE-RETURN`, 2 `FOLLOWS-DISCONTINUITY`, in 2 accounts). A further 33,472 non-OK days at 49 Financial
+  follow an account's last OK day and were outside the worker's day rule (row W322-S2). **Limit, the issuer's and kept:** a zero
+  base is the included BASKET being zero, not proof the account was empty; the 118 are accounts that held securities, every one of
+  them excluded.
+
+**CONTRACT C-CHAINCLAIM.**
+
+1. **One rule, by the excluded day's STATUS, wherever the day sits in the window** (first, interior, last, or after the last OK
+   day). The position decides nothing.
+2. **Two statuses mean there was no base to earn a return on: `NO-PRIOR-HOLDINGS` and `NON-POSITIVE-BASE`.** A figure chained over
+   only such days keeps `measured`. Linking the periods either side of a day with no base is the method.
+3. **Every other non-OK status means the day had a base, and so a return the figure leaves out.** A figure chained over at least
+   one such day says `inferred`. Named from the measure: `ALL-HOLDINGS-EXCLUDED`, `IMPLAUSIBLE-RETURN`, `FOLLOWS-DISCONTINUITY`.
+   **A status this contract does not name falls here:** the rule lists the two that keep `measured` and treats all else, seen or
+   not yet seen, as leaving a return out. One remedy (a corrected day in the gold) moves a day from this class to `OK`; it does
+   not move the two of item 2.
+4. **The answer carries, for the window, the count of days of each class** (no base; a return left out) beside `days_linked`. Two
+   integers. The claim is the field a consumer rejects on; the counts say why.
+5. **Not ruled here:** what a page shows. The adapter drops the claim today; whether a page must show an `inferred` figure
+   differently is DSGN_IRPTV1's cell after this is live, on a read of which pages a client firm's login opens.
+
+- **This MOVES a served value** (the claim on some answers goes `measured` to `inferred`); the figures themselves do not move. It
+  ships under a never-widen pair. The packet states, per firm and window, the count of ACCOUNTS whose claim moves, from the
+  reader's own rule at the build's pin, and names every consumer of the claim with one read through each.
+- **The proof, driven.** Offline on the product code over the served gold: an account with only no-base excluded days reads
+  `measured` with its count; an account with one `ALL-HOLDINGS-EXCLUDED` day reads `inferred`; a day carrying a status the rule
+  does not name reads `inferred`. After the release, the same three by direct invoke under the instrument already signed for
+  this function family, with the figure of each unchanged from before.
+- **One read before the cell is cut:** the closed set of status tokens the gold's producer can write, from its code, with the
+  count of each over the served gold. It is the denominator item 3's default rests on.
 
 -- 1.0.0_SA_CTO~DELL2
