@@ -10,7 +10,7 @@
  "subject": "DSGN_IRPTV1: read-only walk of a served vendor report on portal DEV 1bf9e1f3 or later, five questions",
  "body_path": "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D2/LAPTOP_WALK_ASK_2_VENDOR_REPORT_20261011.md",
  "opened_at": "2026-10-11T20:54:28Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-11T20:55:27Z",
   "bus_message_id": "855ddc45-504a-449d-9df4-5e6a5af3c946"
@@ -21,9 +21,9 @@
   "bus_message_id": "af8590a9-a0aa-405a-947b-72c5b5e7d214"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "from_at": "2026-10-12T02:14:01Z",
+  "from_by": "2.0.0_SA_COO~D2",
+  "to_at": "2026-10-12T02:11:12Z",
+  "to_by": "4.0.0_SA_CRO"
  }
 }

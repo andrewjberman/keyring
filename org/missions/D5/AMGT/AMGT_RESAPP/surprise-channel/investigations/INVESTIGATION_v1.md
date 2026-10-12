@@ -25090,3 +25090,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~396 at AMGT-bf-3. The worktree has no committer identity configured; the worker set the committer per call through the environment and changed no git config. The issuer decides whether worker worktrees need a committer identity provisioned."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W397-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~397",
+  "surfaced_at": "2026-10-12T01:56:39Z",
+  "one_line": "AC3 (r94_other_routes_table.py --after local) printed only the 'thesis corpus' line (663 paths); the order's expected 'thesis noise' line (2 clock paths at the base) did not print, because the script emits a kind line only when its count is above zero.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bg-2 worker face section 4, AC3: the control that no served byte moved prints exactly two lines, '  thesis     corpus' (663 paths at the base) and '  thesis     noise' (2 clock paths at the base), and no name, timeline or collected row; exit=0.",
+  "world_is": "Run in C:/dev/wk-resapp-397 with the order's invocation: the grep printed '  thesis     corpus    663 path(s)' and no noise line; the unfiltered run printed 'reads 27 | statuses [\"(200, 200)\", \"(404, 404)\"] | changed paths 663' and the same single by-kind line; exit=0. The total of 663 changed paths equals the corpus count, so the noise kind held zero changed paths this run; no name, timeline or collected line printed. The noise count is time-dependent (generation clocks), so its base value of 2 is not a fixed expectation.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round94_prep/checks/r94_other_routes_table.py@aa58e5e113 lines 81 and 85-87: kind is noise, corpus or name per path; the by-kind print loops over Counter keys, so a kind with zero paths is never printed",
+      "AC3 invocation run in C:/dev/wk-resapp-397 (grep output): '  thesis     corpus    663 path(s)' ; exit=0",
+      "unfiltered run in C:/dev/wk-resapp-397: 'reads 27 | statuses [\"(200, 200)\", \"(404, 404)\"] | changed paths 663' followed by the same single line '  thesis     corpus    663 path(s)' ; exit=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~397 at AMGT-bg-2. The served-byte control holds in the measured sense (no name, timeline or collected rows; exit 0), but the literal expected output names two lines and one printed. The worker did not rerun the criterion to find a 2-path noise reading and did not rewrite it; the issuer decides whether the noise expectation is a count, a presence, or dropped."
+}
+```

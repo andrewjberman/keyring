@@ -52,6 +52,13 @@ one is absent, that is the refusal clause.**
    unscaled, path by path; for which security types the signed sentence holds). If the PRD has been amended on it by the time you
    run (a heading past `## ADDENDUM v0.9`), quote the amendment with its line beside it. This record too is in the tree when you
    start.
+   **AMENDMENT 2 (issuer, 2026-10-12T02:15Z):** cell 1 read the tree only, because MDPF_SECHIST is dell1's; its ask went through
+   `0.0.0_AB_MSTR~DELL2` and dell1's answer came back as a relay (msg 6334). Under `sechist`, beside cell 1's record, add a key
+   `owning_fabric_answer` quoting the relay file `org/tier0_exec/0.0.0_AB_MSTR/deliverables/relays/RELAY_DELL1_H1_SECHIST_ANSWER_FOR_C2_20261012T0213Z.md` (if it is in your tree; if it is absent, write `relay file not in this tree`
+   and quote nothing): the count of objects in the series store, the price store's object count, what `as_traded_close` is there
+   and its columns, which of the 15 funds it holds and with how many dates, and the writer's switch and schedule. It is the OWNING
+   fabric's own measurement, relayed: label it so, with its record path and commit as the relay states them; it is not this
+   project's measurement. Cell 1's `not_established` values stay as that record wrote them.
 3. **What C-BASIS changes in earlier items:** the unreconciled item saying a corrected basis has no store to come from is answered
    by C-BASIS item 3 (the source is named: the securities history) and stays open to the extent cell 1 shows the history does not
    yet hold it: reword it with both, in the records' words. The item about the 15 funds classed with the flat-charge allowance is

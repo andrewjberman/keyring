@@ -7381,3 +7381,52 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W151-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~151",
+  "surfaced_at": "2026-10-12T02:04:30Z",
+  "one_line": "C-BASIS names the securities history MDPF_SECHIST owns as the source of the as-traded close, but the tree shows SECHIST's series writer switched off with no landing record, and the live as-traded writer is MDPF_DEMQUE's price_store; its as_traded_close is already split-scaled upstream.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ADVI_COTBKF PRD ADDENDUM v0.8 C-BASIS item 3 and v0.9 item 2: the source is the securities history MDPF_SECHIST owns (C-SERIES), where prices land once per security; the history's as_traded_close is a column of its own writers, and the build applies its split scaling on top of the vendor Close.",
+  "world_is": "In the tree at 1a27c8cc13: data/mdpf/scripts/silver/security_series_writer.py writes nothing unless switch=True (:21,:119-125) and no non-test caller passes it; the CTO ruling ADDENDUM 1 and SECHIST ROUND_ANALYSIS.round2.md:55-57 say price_store (MDPF_DEMQUE, dell1) is the only live writer until a later port window. yahoo_pull.py:130-136 already multiplies the vendor Close (auto_adjust=False) by every later split to make as_traded_close, so a build that scales again would scale twice. Not measured: the data (another fabric's; not read), and whether the switch has since been turned on.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/silver/security_series_writer.py:21,37,75,119-125 @1a27c8cc13",
+      "data/mdpf/scripts/demque/yahoo_pull.py:63,130-136 @1a27c8cc13",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_YAHOO_BACKFILL_OWNER_DEMQUE_VS_SECHIST_20261009.md ADDENDUM 1",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~151/SECHIST_AS_IT_STANDS.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W152-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~152",
+  "surfaced_at": "2026-10-12T02:18:33Z",
+  "one_line": "Off-task, found while sizing CB-ca-2: for three silver-priced held securities (APH, CTVA, KLAC) the r34/after build price on the last day the store holds is 0.5000, 0.1500 and 0.1000 of the store's own row, where a security with no split after that day should sit at 1.0 (1,258 of 1,263 silver-priced securities sit within 0.1 percent of 1.0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Split scaling (commonwealth_daily_valuation.py:663-677) multiplies closes dated BEFORE a split day by the split ratio, so a close on or after the last split day is unscaled and the last store day of a security with no later split equals the store's row.",
+  "world_is": "On 2026-06-05 (last common date) the build's price over the store's row, for the silver-priced CUSIP of each ticker: APH 69.40 / 138.81 = 0.5000; CTVA 11.56 / 77.03 = 0.1500; KLAC 192.92 / 1929.20 = 0.1000. For APH the ratio is 0.5200 in 2021 falling to 0.5000 by 2026 (the dividend-adjusted store against the vendor close drift) on all 1,974 days, so the whole series is scaled by one factor below 1. Cause not established: the split plan of the served build (repair_plan.md, the split store entries) was not read, and a factor below 1 means the build applied a ratio below 1 (a reverse split) or a split dated after the store's last day. Not examined: whether any account-day is valued on these prices, and the other 1,260 securities beyond their last-day ratio.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-cotbkf-84/.scratch/w152/check7.py output 2026-10-12: last-day build/store ratio over 1,263 silver-priced CUSIPs: 1,258 within 0.999..1.001, APH 0.5000, CTVA 0.1500, KLAC 0.1000, one at 0.9..0.999, one at 1.001..1.2",
+      "C:/dev/wk-cotbkf-84/.scratch/w152/check6.py output 2026-10-12: APH build/store ratio by year 0.5200 to 0.5000 over 1,974 days",
+      "inputs: C:/dev/ajb_workspace/.scratch/advi_cotbkf/r34/after/security_day_price.parquet and C:/dev/wk-cotbkf-84/.scratch/w149/store/canonical_prices.parquet"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
