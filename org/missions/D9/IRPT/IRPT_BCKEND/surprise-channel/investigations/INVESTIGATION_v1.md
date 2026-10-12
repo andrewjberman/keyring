@@ -28844,3 +28844,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Resolving options for the issuer: add the check's own folder (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/) to the allowlist in changed_outside, or deliver the check without a commit on the worker branch. Not a build failure: AC1 and AC2 PASS and the record satisfies every other AC3 field."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W333-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~333",
+  "surfaced_at": "2026-10-12T19:15:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "No package list in the repo carries ycharts/research/opal_packager.py: lambda-source-map.json names it in no function, and build_resident_package.py stages ycharts/{generate,session,extract} but not ycharts/research, though resident_installed.build_resident_runtime imports opal_packager when the bindings carry commentary_ready_queue_url.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:37-38 DIRS = [_scope, _ids, _keys, _authz, _contracts, intake, ops, reports, ycharts/generate, ycharts/session, ycharts/extract] -- no ycharts/research",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:423-428 appends _ROOT/ycharts/research to sys.path only if the directory exists, then import opal_packager",
+      "comp-find --files 'ycharts/research|opal_packager' over infra/aws/lambda/ci and infra/aws/lambda/investor-reporting/reports: 10 hits in 2 files (resident_installed.py, tests/test_resident_packager_binding.py), 0 in lambda-source-map.json",
+      "python walk of lambda-source-map.json functions: no function lists opal_packager or a ycharts/research path; acceptance.py is carried by irpt-ycharts-generate (files[], native to source_dir, no staged_from pin), irpt-status, irpt-commentary-draft-store-lambda and irpt-commentary-composition-read-lambda (the last three pinned to older commits 361c44fa9d, 283f7e7700, 090c819803)"
+    ]
+  },
+  "spec_asserts": "The order expects to state which Lambda or resident package carries opal_packager.py, acceptance.py and resident_installed.py, or that none does.",
+  "world_is": "acceptance.py and resident_installed.py are carried (resident package; four Lambdas for acceptance.py); opal_packager.py is carried by no list read. So the packager reads the sibling attribute correctly after IB-pr-478, but a resident package built by build_resident_package.py at this tree would not contain the module that build_resident_runtime imports when commentary_ready_queue_url is bound. Not measured: any build script outside the two read that adds ycharts/research, or a host that already holds the directory.",
+  "notes": "INERT: nothing is built or deployed under this order, and the failure on a bound queue would be a loud ModuleNotFoundError at runtime construction, not a silent wrong answer. The fix (add ycharts/research to the resident DIRS) is outside this order's paths and is not made."
+}
+```
