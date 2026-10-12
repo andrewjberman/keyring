@@ -28407,3 +28407,108 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The weak place is the whole of one entry: every orion NON-POSITIVE-BASE day (539402 of 539402 in SI) is in an account with a position row the day before (by the producer's conditions, included rows valued zero or negative keys, with cash zero), and in 49F 5 of 1223 SI days are. Under the reading that moves a NON-POSITIVE-BASE day with a prior position, orion's claim moves for 894 of 926 accounts with a figure in SI (0 as the contract is written). The count of days in accounts with no figure is separate."
 }
 ```
+
+## IRPT_BCKEND-D2-S104 -- cottonwood REFUSED at the Monday 14:15Z fire: account_lost 9, its served index stays at 2026-10-08
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S104",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-12T14:38:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The narrow gate refused cottonwood at the 2026-10-12 14:15Z fire (account_lost 9 of 851 candidate accounts), so cottonwood still serves business_date 2026-10-08; the gate did its job and the freshness cost is real.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/publish_refusal.json version mnSH2dxWDUhKE_lEBifVmZ_dsZcutcur, outcome REFUSED, refused_at 2026-10-12T14:17:38Z, schema irpt-holdings-publish-refusal-v1, served.index_version lQMhNnImgj0ikICMdhFeasBGJKSbl55s (unchanged)",
+      "conditions: account_lost count 9, ids_truncated false; listed.closed_accounts_not_refused count 8; listed.new_unclassified count 0; candidate account_count 851, node_count 17916, business_date 2026-10-09",
+      "SSM command 56493a28-5cec-488f-881e-a336c5d8cce7 started 14:15:27Z and ended 14:18:32Z, rc 0; 49financial and inflection published at the same fire (new index versions 14:20:43Z and 14:18:38Z)"
+    ]
+  },
+  "spec_asserts": "IB-pr-402 packet: a refusal keeps the firm's last good publication and writes the record; a refusal record newer than the last index move means that firm stays (no rollback through a worse window).",
+  "world_is": "cottonwood's gate refused on 9 lost accounts while 8 closed accounts were listed as not refused. The record names the account ids; the cause of the 9 is not read here (9 may or may not overlap the 8 closed). Cottonwood's index stays 2026-10-08 until a fire clears the gate. No rollback was made on this lane."
+}
+```
+
+## IRPT_BCKEND-D2-S105 -- the holdings fire's verdict line cannot be read from SSM: the output is cut at 24000 characters before it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S105",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-12T14:38:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "SSM returns only the first 24000 characters of the holdings command's stdout, which are all \"Classification not found\" lines, so no OK:/REFUSED: verdict line or rc line is retrievable for any of the three firms; the orders' \"output line\" criterion can pass on a statement of absence.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get-command-invocation for f1460299 (49financial), 56493a28 (cottonwood), 4be49976 (inflection): StandardOutputContent length 24000 each, last line ends \"--output truncated--\"; 485, 477 and 509 lines retained",
+      "grep over the retained text: 0 lines starting OK: or REFUSED:, 0 lines containing \"irpt-holdings] rc=\" for 3 of 3 commands",
+      "list-commands: OutputS3BucketName empty and CloudWatchOutputEnabled false on the command, so no second carrier of stdout exists",
+      "p105_cells.py:75 and p114_cells.py:65 test only that output_line is non-empty"
+    ]
+  },
+  "spec_asserts": "IB-pr-402/417 packets and CTO ADDENDUM 19.1: the fire is read from the producer's output line and its refusal record, never the SSM status.",
+  "world_is": "The output line is not retrievable by that route at this volume of classification warnings. The outcome was proved from the served records instead (index manifest versions and publish_refusal.json). AC3 of IB-pr-404 and IB-pr-413 pass on output_line holding a statement that the line was not retained, with output_line_claim absent; the check does not test that the string is a verdict line."
+}
+```
+
+## IRPT_BCKEND-D2-S106 -- IB-pr-413 AC2 asks for an arm named fwd14_gate_unchanged that the IB-pr-417 replay never produced
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S106",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-12T14:38:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB114-1-AC2 reads arm names fwd14_gate_unchanged and smartx_class_parity, but the replay on the uploaded IB-pr-417 bytes names the first arm fwd14_gate_vs_b410, so AC2 fails on a name although the property was measured identical.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB114-1_replay_on_uploaded.json arms: fwd14_gate_vs_b410 identical, smartx_class_parity identical, real_49financial_nodes_vs_b410 identical, two negative controls expected-diff",
+      "p114_cells.py:59 loops over (\"fwd14_gate_unchanged\", \"smartx_class_parity\")",
+      "run 2026-10-12 against IB114-1_49f_bundle_after_reads.json: IB114-1-AC2 FAIL \"fwd14_gate_unchanged reads None\"; AC1 and AC3 PASS"
+    ]
+  },
+  "spec_asserts": "IB-pr-413 face: fwd14_gate_unchanged and smartx_class_parity must read identical.",
+  "world_is": "A check-side name that IB-pr-417's replay does not use (IB-pr-410's cut named it; AMENDMENT 5 re-cut the constants but not this name). The arm was recorded under its real name and not renamed to fit. The issuer amends its own criterion; this lane then re-runs it."
+}
+```
+
+## IRPT_BCKEND-D2-S107 -- IB-pr-404 AC1 expects the 49financial key to still hold IB-pr-404's bytes, which IB-pr-413 moved on purpose
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S107",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-12T14:38:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB105-1-AC1 requires the 49financial key ETag to equal 01387cef (IB-pr-404's bytes), but the key now holds IB-pr-417's bytes (8b482c8d) landed under IB-pr-413, so AC1 fails on a correct state.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "head-object 2026-10-12 opal-data-49financial investor-reporting-holdings.tar.gz: ETag 8b482c8db26c2e913aeee72023bacc7e, version fMLoOI6a8ZwNFWZCJjjP90ZadyRg9nFg, LastModified 2026-10-11T02:56:45Z; inflection 5daec38f and cottonwood 01387cef still equal the BUILT table",
+      "p105_cells.py:20-21 BUILT[\"49financial\"] md5 01387cef54b9e15e10023f05029e357d",
+      "run 2026-10-12: IB105-1-AC1 FAIL on the 49financial ETag; AC2 and AC3 PASS"
+    ]
+  },
+  "spec_asserts": "IB-pr-404 AMENDMENT 2: 49financial stays as landed until the Monday fire; IB-pr-413 AMENDMENT 3-4 then apply IB-pr-417's artifact on that key.",
+  "world_is": "The two orders write the same key in sequence and AC1 of the earlier order was never re-cut for the later one. The honest state is: 404's bytes landed on all three keys, then 413 moved the 49F key forward. The issuer amends AC1 (for example, 49financial's ETag equals either landed value) and this lane re-runs it."
+}
+```
