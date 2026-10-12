@@ -28538,3 +28538,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  "notes": "Read row for ADJUDICATION_v65. Digests, counts and paths only."
 }
 ```
+
+## IRPT_BCKEND-D2-W326-S1 -- IB165-1-AC2 counts the worktree's dirty portal gitlink as a changed product file
+
+```json
+{
+ "id": "IRPT_BCKEND-D2-W326-S1",
+ "project": "IRPT_BCKEND",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_IRPT_BCKEND~326",
+ "surfaced_at": "2026-10-12T18:05:00Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "IB165-1-AC2 (non-rename arm) greps 'git diff --name-only <base>' and the worktree's dirty portal gitlink (index 53506d4903, checkout dbeb6764ea) is listed as a changed product file, so the arm FAILs for a decision that edited no file.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python p165_cells.py . IB165-1-AC2 -> 'FAIL: decision CONTRACT_NAMES_NONE edits no product file, but changed: ['portal']' rc=1",
+   "git diff --name-only a7e7a53715 -> 'portal' only; git status --short -> ' M portal' plus the untracked deliverables folder",
+   "git ls-files -s portal -> gitlink 53506d4903; git -C portal rev-parse HEAD -> dbeb6764ea; the worker order stated the portal gitlink line is not the worker's and is to be left"
+  ]
+ },
+ "spec_asserts": "IB165-1-AC2: for any decision other than PRODUCER_RENAMED the check passes when NO product file is changed against base_commit (changed_outside() allows only the deliverables folder, the investigation file and the task-orders folder).",
+ "world_is": "changed_outside() runs 'git diff --name-only <base>' over the working tree, which includes the pre-existing dirty portal gitlink of this worktree; the worker did not edit it and may not (outside its paths). The arm cannot PASS in this worktree as it stands, whatever the decision. AC1 and AC3 pass; the record is complete.",
+ "notes": "Check not edited and not weakened. A fix is the issuer's: restore the gitlink checkout or exclude gitlinks in changed_outside()."
+}
+```
