@@ -7567,3 +7567,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+## NFRA_CTLPLN-W65-S3 -- the own-directory classifier edit also re-counts two pre-existing platinum_dest_view.py targets
+
+```json
+{
+  "id": "NFRA_CTLPLN-W65-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~65",
+  "surfaced_at": "2026-10-12T09:07:32Z",
+  "one_line": "The classifier edit in commit 22169e24fb (AMENDMENT 1) gives two pre-existing targets a new consumer each: both platinum_dest_view.py copies now name their own function as a consumer. Classification stays SHIP lambda; the consumer lists change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO: rule whether the own-directory self-consumer is intended for infra/aws/lambda/exec-summary-generator/platinum_dest_view.py and infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/platinum_dest_view.py (both literally inside the rule's scope), or narrow the rule",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I .scratch/consumer_diff.py <worktree> (old function = lambda_plane_consumers text at a99d7e584c, new = worktree HEAD): 'DENOMINATOR: 18 targets' and 'CONSUMER-LIST CHANGED: 3 of 18 targets'",
+      "CHANGED infra/aws/lambda/exec-summary-generator/platinum_dest_view.py old=['opal-partners-data'] new=['exec-summary-generator', 'opal-partners-data']",
+      "CHANGED infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/platinum_dest_view.py old=['exec-summary-generator'] new=['exec-summary-generator', 'opal-partners-data']",
+      "CHANGED infra/aws/lambda/portal_data_proxy/firm_page_access.py old=[] new=['opal-portal-data-proxy'] (the intended effect of AMENDMENT 1)",
+      "python -I lib/opal_naming.py targets (worktree, after e84eaff941): exit 0, 'SHIP lambda infra/aws/lambda/exec-summary-generator/platinum_dest_view.py measured: lambda-source-map.json (2 consumer(s): exec-summary-generator, opal-partners-data)'"
+    ]
+  },
+  "spec_asserts": "CTO ruling msg 108498 option 1 (AMENDMENT 1 of CT-w-1): a function whose own source directory holds the target AND lists its basename in files is a consumer of that target; nothing else in lambda_plane_consumers changes.",
+  "world_is": "Measured over the 18 targets: 3 consumer lists change. The intended one is firm_page_access.py (none -> opal-portal-data-proxy). Two pre-existing targets also gain a self-entry: exec-summary-generator/platinum_dest_view.py and opal-partners-data/platinum_dest_view.py now each list both functions. Every target still classifies SHIP lambda. Whether a downstream reader of the consumer count acts on the new self-entries is not measured by this order."
+}
+```
+
