@@ -10,12 +10,16 @@
  "subject": "SECURITY FINDING: three functions examine no caller (research-pull-enqueue, portal-data-proxy, portal-content-api)",
  "body_path": "org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/0.9.0_WK_NFRA_OPSWKF~7/FOUR_FUNCTIONS_WHAT_A_NON_INTERNAL_CALLER_CAN_DO.md",
  "opened_at": "2026-10-11T19:44:08Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-11T19:49:11Z",
   "bus_message_id": "f33c419f-08a2-4e55-9574-96f64c21c698"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T01:52:25Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": "c1a1442e-95d5-4851-8433-b13900929d48"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

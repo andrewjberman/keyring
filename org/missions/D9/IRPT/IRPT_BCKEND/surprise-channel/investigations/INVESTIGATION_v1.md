@@ -27997,3 +27997,214 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The marker is the build's census and the unmarked class (220 tickers, 214 not in the store) holds funds as well as non-funds. The store has no yahoo-labelled point on any graded day, so the per-class equality (replaced 18,537 of 18,870; not_replaced 5,059 of 5,106) is read on the store's newest weeks, where an adjusted close and the unadjusted one differ least; it neither confirms nor refutes the round-76 finding about older points. A comparison over the store's older dates was not made (the Yahoo cache holds bars from 2026-01-30 only)."
 }
 ```
+
+## IRPT_BCKEND-D2-W318-S1 -- The live authorizer package is a 4-line bun bundle, so the face's content comparison of its index.mjs to a git blob of the source cannot match any revision; the match was made by string-literal and property-name features instead
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W318-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~318",
+  "surfaced_at": "2026-10-12T01:23:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The live authorizer package is a 4-line bun bundle, so the face's content comparison of its index.mjs to a git blob of the source cannot match any revision; the match was made by string-literal and property-name features instead",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "zipfile read of the downloaded package under python -I: one member index.mjs, 65,333 bytes, 4 lines (4823, 27, 60480 characters and a final empty line); base64 sha256 of the package bytes equals CodeSha256",
+      "git show of the file at 26ffa22b79, 4bca50737e, 18971693ad, 972976ebca, ee822c425f (263, 367, 427, 435, 451 lines) against the live member after line-ending normalisation: equal for none; raw differing-line counts 265, 369, 429, 437, 453",
+      "feature test: ee822c425f has 63 string literals of 3 or more characters, 60 are in the live member, the 3 absent are inlined import specifiers; infra/aws/lambda/ci/build-nodejs-lambda.sh header: the build is a bun --format=esm single-file bundle",
+      "deliverable org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~318/IB159-1_authorizer_render_token_gap.json, live_source_matches"
+    ]
+  },
+  "spec_asserts": "The face of IRPT_BCKEND.TO-IB-pr-463 item 2 reads the live index.mjs compared by content to the file's blob at each commit, matched at one commit or at none with the nearest by line diff.",
+  "world_is": "The deployed member is a minified bundle of the source plus its libraries, so a raw comparison is false for every revision and the line-diff nearness is meaningless (the smallest count, 265, belongs to the oldest revision). matched is recorded false with the feature-test result beside it (nearest ee822c425f, claim inferred). A byte comparison needs a build of the tree, which the order bars."
+}
+```
+
+## IRPT_BCKEND-D2-W318-S2 -- The four authorizer commits after the source map's last_deployed_commit 26ffa22b79 are not unreleased: two CLOSED deploy ledgers record them applied (2026-09-25 and 2026-10-03), and the live package carries them; the map's commit and date fields were not advanced
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W318-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~318",
+  "surfaced_at": "2026-10-12T01:23:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The four authorizer commits after the source map's last_deployed_commit 26ffa22b79 are not unreleased: two CLOSED deploy ledgers record them applied (2026-09-25 and 2026-10-03), and the live package carries them; the map's commit and date fields were not advanced",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/critical_paths/change_management/20260925T1546Z_irpt-render-v2-a2-20260925_deploy_completion.md: CLOSED, authorizer CodeSha256 sgQWoygZ... == artifact, bun bundle of CLOUD @972976ebca",
+      "org/critical_paths/change_management/20261003T1946Z_irpt-authorizer-series-render-20261003_deploy_completion.md: CLOSED, authorizer CodeSha256 gQp2IooA... == artifact, built from CLOUD @ca49283ff1; live CodeSha256 read 2026-10-12 is the same value",
+      "git log -S on infra/aws/lambda/ci/lambda-source-map.json: 80ba60328c (2026-10-03) moved artifact_sha256 only; the entry still reads last_deployed_commit 26ffa22b79 and last_deployed_at 2026-09-09T18:50:07Z at base ffbb53b4a4",
+      "inferred, not measured: the live bundle was matched to ee822c425f by string-literal features (row IRPT_BCKEND-D2-W318-S1), not byte-for-byte"
+    ]
+  },
+  "spec_asserts": "Row TCKT_VNEXT-D2-S52 and the face of IRPT_BCKEND.TO-IB-pr-463 describe the tree's authorizer source as ahead of its recorded build input, with four commits not yet released.",
+  "world_is": "Both ledgers are CLOSED and the live bytes carry the render path; what is behind is the map's last_deployed_commit and last_deployed_at, which record-terraform-deploy.sh writes and which still name the 2026-09-09 release. Why that recorder left the row was not established. The read proposes no act on it."
+}
+```
+
+## IRPT_BCKEND-D2-W320-S1 -- The producer function is outside a VPC and carries no yfinance, but another function's note says the shared layer's size leaves no room for it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W320-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~320",
+  "surfaced_at": "2026-10-12T01:28:52Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The producer function is outside a VPC and carries no yfinance, but another function's note says the shared layer's size leaves no room for it",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "live lambda get-function-configuration of irpt-holdings-performance-lambda, irpt-inf-holdings-performance-lambda, irpt-49f-reporting-gold-lambda and irpt-49f-reporting-publish-lambda at 2026-10-12: VpcConfig null in 4 of 4; the same irpt-performance-native-layer:1 (69,899,991 bytes zipped) in 4 of 4; no Environment block, so the order's keys(Environment.Variables) query errors on null and was run without the key-names member",
+      "infra/aws/lambda/bd-pipeline/bd-price-update/lambda_function.py:29-34: a note that pandas, pyarrow, numpy and boto3 already consume about 230 MB of the 250 MB unzipped limit, leaving no room for yfinance (another function's note; the irpt layer's unzipped size was not measured)"
+    ]
+  },
+  "spec_asserts": "PRD v0.46 item 10: whether the existing function's network allows the bars producer to reach the vendor is not established; the order asks only for the network.",
+  "world_is": "The network is open (no VPC), so egress is not the obstacle the item names; what the configuration shows instead is that the packaged function does not carry yfinance and that whether it fits beside the existing layer is not established. Packaging was not ruled or proposed here."
+}
+```
+
+## IRPT_BCKEND-D2-W321-S1 -- The holdings producer writes the opening and closing value as start_value and end_value; the portal adapter reads beginning_market_value and ending_market_value, so by the code the two value tiles read 'not supplied' for a holdings-basis answer
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W321-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~321",
+  "surfaced_at": "2026-10-12T01:31:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The holdings producer writes the opening and closing value as start_value and end_value; the portal adapter reads beginning_market_value and ending_market_value, so by the code the two value tiles read 'not supplied' for a holdings-basis answer",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/holdings_gold.py:273: value_facts = {start_value, end_value, days_linked, days_observed, days_excluded, currency, period_start, period_end, basis}",
+      "C:/dev/ajb_workspace/portal/src/pages/InvestorReporting/contracts/adapt.ts:797-799 and :839-840 (portal commit dbeb6764eaa688230f44cfcc1763bd73db6e1142): the adapter reads beginning_market_value and ending_market_value; the only producer writing those names is performance/bd_adapter.py:194-195 (grep of infra/aws/lambda/investor-reporting)",
+      "C:/dev/ajb_workspace/portal/src/pages/InvestorReporting/tabs/reporting/PerformanceHeadline.tsx:110-111, :146-147, :185-194: a missing value renders as a 'not supplied' line, never a tile",
+      "INFERRED: two code reads only; no served response was fetched and the portal checkout may be ahead of or behind what is served"
+    ]
+  },
+  "spec_asserts": "The portal's PerformanceReport wire type and adapter treat optional_facts.value_facts as the carrier of the opening and closing value, and the order's read assumes the figure's facts reach a page.",
+  "world_is": "The names differ between the holdings producer and the adapter. By the code the Reporting tab's ending and beginning value tiles are absent for a holdings-basis answer; whether a served response shows the same was not read."
+}
+```
+
+## IRPT_BCKEND-D2-W321-S2 -- By the code every holdings-basis performance answer is state PARTIAL, because three absences are added unconditionally, so the only trace of absences the portal shows does not tell a window with a non-OK day from one without
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W321-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~321",
+  "surfaced_at": "2026-10-12T01:31:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "By the code every holdings-basis performance answer is state PARTIAL, because three absences are added unconditionally, so the only trace of absences the portal shows does not tell a window with a non-OK day from one without",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/holdings_gold.py:308-313: accrual_basis, fees_and_income and money_weighted_return are appended on every call; :314-317 adds excluded_rows only when excluded > 0",
+      "infra/aws/lambda/investor-reporting/performance/entry.py:279-288: partial = bool(outcome.get('absences') or outcome.get('refusals')); state PARTIAL, public_reason_code PERFORMANCE_PARTIAL; :301 returns only the report, retained_ref and _status (no absences list)",
+      "C:/dev/ajb_workspace/portal/src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx:831, :877-879 and render/Page.tsx:323-345: PARTIAL gives the amber 'qualified' presentation and 'Reason: PERFORMANCE_PARTIAL' on the print band",
+      "INFERRED: read from code at base 7c00a44b5a and portal dbeb6764eaa688230f44cfcc1763bd73db6e1142; no served response was read"
+    ]
+  },
+  "spec_asserts": "PRD ADDENDUM v0.46 reads the route's claim, absences and days_excluded as what separates a window with a non-OK day from one with none.",
+  "world_is": "The absences list is not on the wire, and the state that stands for it is PARTIAL on every holdings-basis answer by the code, so on screen the qualified presentation appears with or without an excluded day. Not seen on a served response."
+}
+```
+
+## IRPT_BCKEND-D2-W319-S1 -- The reader's claim is inferred, not measured, for 124 to 144 of orion's accounts with an excluded day, for the reason of a missing trading day and not of the excluded day
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W319-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~319",
+  "surfaced_at": "2026-10-12T01:51:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The face says the reader skips a non-OK day and still gives the claim measured; for the 49F entry that holds in every cell, but for orion the claim is inferred for 144 of 894 (SI), 124 of 200 (YTD) and 134 of 240 (1Y) accounts with an excluded day, because of a different PARTIAL absence",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~319/IB160-1_reader_excluded_days.json: orion SI claim_the_reader_gives {inferred 144, measured 750}; orion YTD {inferred 124, measured 76}; orion 1Y {inferred 134, measured 106}; the accounts with none: inferred 32 in each of the three windows",
+      "infra/aws/lambda/investor-reporting/performance/holdings_gold.py:288-295 and :343: claim is inferred iff missing_trading_days is non-empty; absences_named of the same json: every inferred account carries missing_trading_days:PARTIAL (orion SI 21 + 51 + 72 = 144)",
+      "control: the same orion account with no excluded day, read again with one in-memory day set non-OK, keeps its claim in every cell"
+    ]
+  },
+  "spec_asserts": "The face (and PRD v0.46) states that the reader skips a non-OK day, chains the rest and still gives the claim measured.",
+  "world_is": "The claim follows missing trading days only (holdings_gold.py:288-295); an excluded day never changes it. For orion the claim is also inferred for accounts with none (32), so the claim value alone does not tell an excluded-day account from another."
+}
+```
+
+## IRPT_BCKEND-D2-W319-S2 -- A figure is served for accounts whose last row in the window is non-OK: 105 of orion's 200 YTD accounts with an excluded day, 125 of 894 in SI, 178 of 3736 for the 49F entry in SI
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W319-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~319",
+  "surfaced_at": "2026-10-12T01:51:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The face asks for a last_day_involved class and does not say how large it would be; the largest class for orion YTD and 1Y is the account whose last row is non-OK, not a first-day or an interior exclusion",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB160-1_reader_excluded_days.json: position_of_the_excluded_days last_day_involved: orion SI 125, YTD 105, QTD 4, 1Y 115; the 49F entry SI 178, YTD 114, QTD 4, 1Y 122",
+      "holdings_gold.py:246-250: the chain runs over the OK rows only, so a figure ends at the last OK day while the window's end is the latest landed day; the reader's period_end in value_facts (holdings_gold.py:275) names that day",
+      "not separated here: an account that left the book versus a late fault (counts only; the producer's inputs were not read)"
+    ]
+  },
+  "spec_asserts": "The face expects the position classes to be dominated by first-day and interior exclusions.",
+  "world_is": "A non-OK final row is common: the reader returns a figure that ends before the window's end for those accounts, with the same claim as for any other."
+}
+```
+
+## IRPT_BCKEND-D2-W319-S3 -- The reader refuses 1,296 of the 49F entry's Since Inception accounts (506 YTD, 714 1Y) as 'mapping missing or duplicate' because the account key list is read from the window's LAST partition only
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W319-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~319",
+  "surfaced_at": "2026-10-12T01:51:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The face splits accounts_read into with, none and refused and names refusal codes in refusals; it does not say a second refusal exists beside 'no OK row' that depends on the account being present on the latest day",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB160-1_reader_excluded_days.json: the 49F entry refusals SI {mapping missing or duplicate 1296, no OK row 724}; YTD {506, 788}; QTD {1, 898}; 1Y {714, 780}; orion has only 'no OK row' (53, 73, 174, 63)",
+      "holdings_gold.py:238 and :198-209: map_account matches the account against source.account_keys(days[-1]); an account with rows earlier in the window and none on the last partition is refused by name",
+      "driver choices that are not the reader's: a stand-in for the S3 transport and a memoised ids.opaque_account; the sample of 50 accounts per entry on SI and YTD gave identical outcomes in 200 of 200 comparisons (4 cells of 50)"
+    ]
+  },
+  "spec_asserts": "The face counts accounts_read as every account with one or more rows in the window.",
+  "world_is": "Those 1,296 accounts have rows in the window but cannot be served at all; they are counted in accounts_the_reader_refuses and carry no position class."
+}
+```

@@ -7334,3 +7334,75 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W148-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~148",
+  "surfaced_at": "2026-10-12T01:22:40Z",
+  "one_line": "The served close the order names for the 19 funds (r34/after security_day_price) is not their unadjusted close: it agrees with the cache Close on 6 of 1,878 units, so the flat-charge gap fits 2 of 936 on it and 936 of 936 on round 76's own close (w129 variant).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's DATA line: served close = r34/after/security_day_price.parquet, and the face's P3 and 'the 19 funds' read against the served close; the test text defines close as the UNADJUSTED close.",
+  "world_is": "For the 19 funds r34/after is the stored series that round 77 left on the store (not substituted); only the 73 substituted funds carry the unadjusted vendor close there. Round 76's unadjusted close for the 19 is the w129 variant series (agrees with the cache Close on 25,236 of 25,311 series dates). I ran the unit build on r34/after first (in-sample fit 2 of 936), saw it, then used the w129 variant for the 19 (IN, P3) as the test text's 'unadjusted close' requires; P1 uses r34/after (31 funds, 10,633 of 10,636 units agree with the cache Close within a cent) and P2 the cache Close. No constant, window, threshold or order was changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-cotbkf-83/.scratch/w148/chk1.py output at 2026-10-12T01:22:40Z: baseline 1687 of 25333 and variant 25236 of 25311 series dates agree with the cache Close; r34/after close of the 19 vs cache Close: 6 of 1878 units agree",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~148/PRICE_PAID_CAUSES.json close_source_for_the_nineteen"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S132",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-12T01:39:54Z",
+  "one_line": "L9 round 78: CB78bz1-AC2 MET and CB78bz2-AC2 MET. The flat-charge reading fails the bar written before the run: of held-out units that have a gap, 71 and 43 percent fit a figure against a bar of 90, with chance under 0.5 percent; real and incomplete. The price store has one price column and holds no unadjusted close for the 15 funds; the right close exists for every held trading day only in a vendor cache on one box. Two worker rows matter more: the live store is not what the tree's writer produces, and its ticker key is not one security.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_78_DRAIN_END_20261012.md @7af967bc1b (msg 6268)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_78_L9_GRADE_20261012.md",
+      "this seat's reads 2026-10-12T01:39:54Z: data/mdpf/scripts/demque/land_cot.py printed at lines 21 to 24 and 146 to 152 (the landing declares one price column, close, and fills it from a field named as_traded_close); and, from this seat's own script of round 77 over the same local data, two of the record's counts: 29,834 held dates for the 15 funds in the build's price table and 20,718 of them with a cached unadjusted close, with the build's close at a per-fund median of 0.5647 to 0.9179 of it. The writer's cited line was not printed by this seat"
+    ]
+  },
+  "spec_asserts": "CB78bz1-AC2 and CB78bz2-AC2 (JUDGMENT, graded by the CVO at L9, never self-graded), as written in the two orders.",
+  "world_is": "Not re-derived: the held-out fit counts; the store object's schema and row counts. The writer's cited line was not printed by this seat. Nothing was built, applied, served or fetched.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W151-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~151",
+  "surfaced_at": "2026-10-12T02:04:30Z",
+  "one_line": "C-BASIS names the securities history MDPF_SECHIST owns as the source of the as-traded close, but the tree shows SECHIST's series writer switched off with no landing record, and the live as-traded writer is MDPF_DEMQUE's price_store; its as_traded_close is already split-scaled upstream.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ADVI_COTBKF PRD ADDENDUM v0.8 C-BASIS item 3 and v0.9 item 2: the source is the securities history MDPF_SECHIST owns (C-SERIES), where prices land once per security; the history's as_traded_close is a column of its own writers, and the build applies its split scaling on top of the vendor Close.",
+  "world_is": "In the tree at 1a27c8cc13: data/mdpf/scripts/silver/security_series_writer.py writes nothing unless switch=True (:21,:119-125) and no non-test caller passes it; the CTO ruling ADDENDUM 1 and SECHIST ROUND_ANALYSIS.round2.md:55-57 say price_store (MDPF_DEMQUE, dell1) is the only live writer until a later port window. yahoo_pull.py:130-136 already multiplies the vendor Close (auto_adjust=False) by every later split to make as_traded_close, so a build that scales again would scale twice. Not measured: the data (another fabric's; not read), and whether the switch has since been turned on.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/silver/security_series_writer.py:21,37,75,119-125 @1a27c8cc13",
+      "data/mdpf/scripts/demque/yahoo_pull.py:63,130-136 @1a27c8cc13",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_YAHOO_BACKFILL_OWNER_DEMQUE_VS_SECHIST_20261009.md ADDENDUM 1",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~151/SECHIST_AS_IT_STANDS.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

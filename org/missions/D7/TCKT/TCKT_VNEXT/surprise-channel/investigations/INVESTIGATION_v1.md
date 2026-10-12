@@ -2228,3 +2228,72 @@ group with one pattern. Colons, slashes and dots are plausible and untested, so 
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+### TCKT_VNEXT-D2-S53 -- an ACTIVE users row on an outside company's domain carries the internal firm id with no firm list
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S53",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-12T01:33:52Z",
+  "one_line": "An ACTIVE users row on an outside company's domain carries the internal firm id with no firm list: it signs in and reads every firm, in every service that classes by firm id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (its own word, msg 6259: 'File it as its own row of this project, ARMED, owner me'). Whether the row should be internal is Andrew's; the CTO tells him and the manager carries it to the laptop.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r9_ct1/ACTIVE_INTERNAL_ROWS_BY_DOMAIN_20261012.json @e7bb608065 (0.7.0_AE_CloudOps~TV2, claim measured; its check re-run by this seat: CT-COUNT-OK active_internal=21 opal=20 non_opal=1): a re-scan of opal-users-v2, 86 items, 56 PROFILE, 21 active with firm opal-capital; one of them, digest 1af514167abb, is on a domain that is neither of Opal's two nor a reserved test domain; userType null; firm list ABSENT; updatedAt 2026-10-01; no event on any of 27 tickets",
+      "infra/aws/lambda/ticket_center/lambda_function.py principal_class (lines 312-330): a caller whose firmId is opal-capital and who is not a service subject is INTERNAL; _profile_scope: an absent firm list is no scope, which reads every firm",
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/auth.ts:106: sign-in admits a row whose status is exactly active (the applier's print); this row's status is active",
+      "NOT read by anyone: who created the row and when; whether the person has signed in; what any service other than the ticket service does with it (the sentence about every service that classes by firm id is the CTO's and is inferred beyond the ticket service). By the CTO's word no seat on dell2 changes, disables or probes the row, and no context is constructed for its address"
+    ]
+  },
+  "spec_asserts": "PRD v0.4 C-FENCE and its addenda treat a caller with firm id opal-capital as Opal-internal staff; the CTO's round-8 ruling says an absent firm list means every firm because those rows 'are Opal staff'.",
+  "world_is": "20 of the 21 active internal rows are on Opal's own or a reserved domain. One is on an outside company's domain and has the same standing as staff. It may be a contractor seated on purpose; that is not known. The round-9 status release does not move it (active: admitted before and after) and no arm of its proof uses it. A disabled row on a near-identical domain (digest 04fc361f3802) was the round-8 finding and is a different row.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+### TCKT_VNEXT-D2-S54 -- an arm row this release's proof depends on was touched 40 minutes before the apply, by nobody the project names
+
+**owner:** `0.7.0_AE_CloudOps~TV2` (filer) | **disarm_owner:** n/a -- the condition it guards was MET; this records that the
+guard earned its place, and that a signed sentence about the row is now stale
+**class:** PROVENANCE | **found:** 2026-10-12, cell R9-st-3, step 2 of TO-APPLY-R9-st2
+
+**spec_asserts:** the CTO half of R9-st-2 says of the disabled tooling row the S1/S3 arms use (digest `e95c05c7ae90`): *"The
+tooling row was last touched hours before round 7 by nobody this project can name; it is re-read, not assumed."* Condition 2
+makes that re-read a STOP if the row no longer reads as stated.
+
+**world_is:** the condition is MET -- exactly one PROFILE row, status still `disabled` -- so there was no STOP and the release
+proceeded correctly. But the row's `updatedAt` has moved AGAIN, and much more recently than the half says:
+
+| when I read it | `updatedAt` on digest `e95c05c7ae90` |
+|---|---|
+| R8-ds-1, about 00:0xZ | `2026-10-11T22:41:40.809Z` |
+| R9-st-2 step 2, 01:4xZ | **`2026-10-12T01:03:31.142Z`** |
+
+So it was written at **01:03:31Z**, between my own two reads and about **40 minutes before this apply** -- not "hours before
+round 7". Its status and `userType` are unchanged across both reads; only the timestamp moved, so whatever touched it did not
+change the thing the arm depends on.
+
+**why it matters:** this release's S1 and S3 arms rest on that row reading `disabled` at the moment they run. Something outside
+this project is writing to it during the round, and the row carries no attribute that says who or what -- no `disabledAt`, no
+audit field (my round-8 read: zero of 56 PROFILE rows carry one). Had the writer flipped `status` instead of touching only the
+timestamp, S1 would have refused before the apply and the order's own STOP would have fired -- which is precisely what condition
+2 is for, and it is the reason to keep it rather than treat the row as settled. A proof whose fixture moves under it is sound
+only for the instant it was taken.
+
+**what I did NOT conclude:** that the write was unauthorised, or that it relates to this project. I measured two timestamps and
+the fields that did not change. Who wrote it is not recoverable from the table, and `updatedAt` records a touch of any kind --
+including one that set a field to the value it already had.
+
+**the record this corrects:** the CTO half's sentence, not its condition. The condition held and did its job. Recorded so that
+the next pair citing that row does not inherit "last touched hours before round 7" as a current fact.
+
+**not established:** what wrote it, whether the other disabled row (`04fc361f3802`, `updatedAt` 2026-07-14) has moved since, or
+whether any other row the project's proofs depend on is being written during a round. A sweep of `updatedAt` across the rows
+used as fixtures is a different read with a different denominator.

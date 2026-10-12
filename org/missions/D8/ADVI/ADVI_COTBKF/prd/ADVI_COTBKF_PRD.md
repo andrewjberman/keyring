@@ -5,7 +5,7 @@
  "project": "ADVI_COTBKF",
  "directive": "D8",
  "fabric": "dell2",
- "prd_version": "v0.7",
+ "prd_version": "v0.9",
  "step": 4,
  "brief_ref": "docs/briefs/cottonwood-commonwealth-10y-backfill-brief-20261006.md@902feb3a4f",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -286,5 +286,102 @@ ENDPOINT is unchanged.
 - **What un-parks it, whichever comes first:** the correction list closes; or a reader of this table is to be released. No reader of the
   Cottonwood return history is released on the `method_r28` table: the re-serve comes first, under its own pair, naming all three silver
   objects, every day file it replaces, the hold list, the pin and every reader.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.8 -- the price basis for fund securities, and where it may come from (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+- **Author:** `1.0.0_SA_CTO~DELL2`, 2026-10-12 ~01:5xZ. This is also the ROUND-79 ANALYSIS. **Sources:** the reviewer's slug
+  `surprise-channel/remediations/REMEDIATION_v47.md` @77527824fd (msg 6272), read whole; the issuer's drain end
+  `deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_78_DRAIN_END_20261012.md` @7af967bc1b, its section 2 read; this PRD's v0.4
+  ADDENDUM 2 read at its lines. Every number is the worker's, the issuer's or the reviewer's. This seat measured nothing.
+- **What is established.** The price store has ONE price column. For the 15 funds it is not the unadjusted close (equal on 3.2 to
+  10.2 percent of dates), and by year its median runs from 0.46 of the traded price in 2020 to 1.00 in 2026. That it is a
+  dividend-adjusted series from an earlier pull is INFERRED; no field says so. The unadjusted close exists for every one of the
+  20,718 held trading days of the 15 funds, in a vendor cache that is a folder on one box and that no build reads.
+
+**CONTRACT C-BASIS.**
+
+1. **A fund security is priced at its AS-TRADED close: the unadjusted close of the day.** A distribution is carried by the
+   project's own flow rows, never by the price. This is what reproduces the price paid on 14 of the 15 funds.
+2. **The basis is a FIELD on every price the back-fill reads and on every row of the minted table that a price made.** Two values,
+   a closed set over one axis (how the price treats distributions): `AS_TRADED` and `ADJUSTED`. A price whose basis is not stated is
+   read as not stated and prices nothing; it is never assumed to be either. A reader of the minted table that needs one basis
+   rejects the other on that field. One remedy (re-pricing from an as-traded source) moves `ADJUSTED` and not-stated; it does not
+   move `AS_TRADED`.
+3. **The source is the one v0.4 ADDENDUM 2 already names: the securities history that MDPF_SECHIST owns (C-SERIES), where "prices
+   land once per security".** It is NOT the price store, and it is NOT the cache folder. The cache proves the values exist; it is
+   not a landed, scheduled source and no build may read it. **No second lander is built for this project.** IRPT_BCKEND PRD v0.46
+   answer 1 asks for landed unadjusted bars for its own grading; that is the same need and it is met by the same history, so the
+   two projects do not each land prices.
+4. **Until that history holds an as-traded close for a held fund day, that day is UNPRICED** (v0.4 ADDENDUM 2's own rule), and the
+   minted table says so in the basis field. It is not priced from the store.
+5. **The 15 funds' classing is re-derived after the re-pricing, from the price paid, and not from the flat-charge allowance.** The
+   allowance fails its own bar; it could only excuse units, so it did not make a fund fail, but no class rests on it.
+
+- **Row ADVI_COTBKF-D2-S131 stays BLOCKING** and its ruling stays in force: no rebuild of a holdings partition dated before
+  2026-06-08 for this firm, no consumer attached to the minted table, until C-BASIS is built and its proof graded.
+- **Rows D2-W149-S1 and D2-W149-S2, accepted, owner this seat.** S2 widens the question past the 15 funds: 308 of 4,000 tickers
+  carry more than one asset name and the build reads by ticker. Item 2 of the list below sizes it for what this firm held.
+- **The proof.** For the 15 funds, re-priced from the history: the trades that reproduce the price paid within the project's own
+  tolerance, counted before and after, per fund; and one fund-day read from a price whose basis is `ADJUSTED` is refused by the
+  minted table's reader. Graded by the reviewer.
+
+**ENRICHMENT LIST for round 79 (reads; nothing built).**
+1. MDPF_SECHIST as it stands: its owner and fabric, whether the securities history exists, its fields, whether it carries a basis,
+   which of the 15 funds and which held days it covers. Counts and dates, the denominator printed. If it is another fabric's, the
+   read is of the shared tree and its register row only, and the ask goes through 0.0.0_AB_MSTR~DELL2.
+2. Of the securities this firm held, how many have a ticker carrying more than one asset name, and for each whether its held days
+   are priced from its own rows. Counts only.
+3. What wrote the live store object: which code, which run, whose (row D2-W149-S1), from the object's two retained versions and
+   the tree's history.
+
+**Acts only Andrew can do:** none.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.9 -- C-BASIS item 2 replaced: the basis field is the one the build already has (L10; CONTRACTS changed)
+
+- **Author:** `1.0.0_SA_CTO~DELL2`, 2026-10-12 ~02:0xZ. **Source:** the reviewer's refusal of v0.8 (`3.0.0_SA_CVO` msg 6278, review
+  @118f800793, read whole). **The refusal is right.** v0.8 item 2 minted two tokens, `AS_TRADED` and `ADJUSTED`, without a census,
+  and this seat had not read the build it was writing a field for. Read since, by this seat:
+  `data/assets/scripts/silver/commonwealth_daily_valuation.py:186-199`, `:211`, `:246-258`;
+  `commonwealth_split_level_probe.py:1-5`. v0.8's items 1, 3, 4 and 5 stand. **Item 2 of v0.8 is WITHDRAWN and its two tokens are
+  not used anywhere.**
+
+**The census (native search, word boundary, case-insensitive, over `data/`; this seat, counts as printed).**
+- `as_traded_close`: 71 occurrences in 26 files. 2 in this project's valuation build, where it is a VALUE of the per-point column
+  `basis` (`:211`); 69 in 25 files under `data/mdpf/scripts/`, where it is a COLUMN of the securities history's own writers. One
+  meaning in both: the close a security traded at.
+- The constants `BASIS_AS_TRADED_CLOSE` and `BASIS_STORE_POINT`: 7 occurrences in 3 files, all this project's build and its tests.
+- `price_basis` (the RUN-level option `store` or `as_traded`, and a member of `sources.json`): found in 18 files under `data/`. It
+  is a different grain (one value per run or per source) and is not the field this contract writes.
+- The reviewer's census is adopted for the rest: `AS_TRADED` upper-case is a served blank-reason token
+  (`commonwealth_account_return_daily.py:523`); the four series classes `as_traded`, `dividend_adjusted`, `mixed`, `other` have 61
+  occurrences in 15 files. Not searched by this seat: `infra/` beyond three candidate tokens (0 hits), `portal`, `docs`.
+
+**C-BASIS item 2, as it now reads.**
+
+2. **The basis of a price is the build's existing per-point column `basis`, with its existing closed two values, and it is carried
+   onto every row of the minted table that a price made.** No token is added.
+   - `as_traded_close`: the point is the vendor's `Close` for the day with this project's split scaling applied on top. The
+     vendor's `Close` alone is split-ADJUSTED and not dividend-adjusted, so it is the price traded at only for a day with no later
+     split; **the value means the traded price only AFTER the split scaling**, and a point that has not passed it is not written
+     with this value.
+   - `store`: the price store's point as it stands. What it does with distributions is NOT KNOWN for that point.
+   - Four postulates. Domain: every price point the valuation reads; both values are assigned at one place (`:252`, `:258` on) and
+     no third exists there. Same grain: one per point. One axis, one intent: where the point came from, which is what fixes what is
+     known of its basis. State: re-pricing from an as-traded source moves `store` to `as_traded_close`; it does not move
+     `as_traded_close`.
+   - **For a fund security, a `store` point prices nothing:** the day is UNPRICED (item 4). A reader of the minted table that needs
+     the traded price rejects `store` on this field.
+3. **The four series classes are the census's and stay the census's: a class of a whole SERIES, never written to the minted
+   table.** They stop deciding what is substituted for a fund. Today the as-traded basis replaces only series classed
+   `dividend_adjusted` or `mixed` (`:190-191`); the 15 failing funds are classed `other`, so they kept their store points, and that
+   is the mechanism of the defect. **Under C-BASIS every fund security is substituted whatever its class.** For other security
+   types the classes keep their present use.
+
+- **The proof gains one arm:** a fund that has split inside the back-fill, priced before and after its split, reproduces the price
+  paid on both sides. If no held fund split, the run says so with the count searched.
 
 -- 1.0.0_SA_CTO~DELL2
