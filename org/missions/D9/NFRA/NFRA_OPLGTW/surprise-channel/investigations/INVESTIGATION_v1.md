@@ -12525,3 +12525,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "ONE THING WORTH CARRYING, measured on the corrected guard rather than assumed: running its own command form against the bad name on this device returns rc=0 with an EMPTY value, because the .tools/aws shim does not propagate the CLI's failure as a non-zero exit (the 'aws shim crash reads as EMPTY result' class). So the new `[ \"$lrc\" = 0 ]` check alone would NOT have caught the wrong name -- it is the `[ -n \"$live\" ]` conjunct beside it that discriminates. Both are present, so the guard holds; the note exists so that nobody later 'simplifies' it to the rc test, which on this device is the weaker half. Credit where due: declining to edit my own grader is what made the repair the issuer's, and the issuer made it at once."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W59-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~59",
+  "surfaced_at": "2026-10-12T00:04:24Z",
+  "one_line": "OG-tb-1: one of the four readers of gateway/teams/bearer is an IAM USER whose ARN carries a person's name, so the order's 'ARNs only' and 'never print a person's name' cannot both hold for that row; the principal ARN is redacted in TB1_READ.json and the ask.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ CloudTrail lookup-events GetSecretValue us-east-1, 129562 events, 186 naming gateway/teams/bearer: 14 carry userIdentity.type IAMUser with an arn of the form arn:aws:iam::313476888478:user/<person's name>; the group's members are cloudops-dell1-agent-user and cloudops-dell2-agent-user (iam get-group), so this principal is not a member",
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~59/TB1_READ.json: the row's arn is 'arn:aws:iam::313476888478:user/[IAM-USER-NAME-REDACTED-ADMIN]', count 14; AC1 needs only a non-empty arn key and an int count and passes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TB1_READ.json principals carry 'ARNs only, no person's name', and the Bounds forbid printing a person's name.",
+  "world_is": "The admin principal's real ARN IS a person's name, so I took the bound as the stronger half and redacted that one segment; the other three ARNs are verbatim. The unredacted ARN is in CloudTrail (event userIdentity) for any seat that needs it. If the issuer wants the real ARN recorded, it is a one-line edit in TB1_READ.json and the ask.",
+  "notes": "Also measured, not a deviation: the first read used the CLI's lookup-events with --max-items and was cut by the 580 s bound (rc 124, empty output); the census was redone with boto3 paginating to the end (2592 pages, 129562 events, DONE line in the run log) in about 20 minutes."
+}
+```
