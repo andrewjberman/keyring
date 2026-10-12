@@ -127,4 +127,4 @@ Left for `2.0.0_SA_COO~M1`. Read: the writer counts above (N = 1 for `platinum/f
 
 ## CTO half: UNSIGNED
 
-Left for `1.0.0_SA_CTO`. Read: the named file only, the blast radius (23 of 23 securities, $966,285.46, moved on retained dates; 0 staying), the rollback per key above.
+Left for `1.0.0_SA_CTO`. Read: the named file only, the blast radius (the classifier resolves 23 of 23 securities, 0 staying; on a retained date the act moves AT MOST the Reach range, $0 to $653,857.12 at 2026-10-09 and $0 to $629,530.89 at 2026-10-08, never the $966,285.46 classifier total), the rollback per key above.
