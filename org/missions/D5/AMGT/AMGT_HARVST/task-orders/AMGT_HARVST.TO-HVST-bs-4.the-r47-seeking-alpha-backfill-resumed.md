@@ -111,3 +111,18 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <workstream>R47</workstream>
 <slot>site-z</slot>
 <fabric>dell1</fabric>
+
+**COMPLETE 2026-10-12 ~12:5xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** `0.7.0_AE_CloudOps~ZW` @11270dbfe6 (on box/dell1 HEAD at this flip), under AMENDMENT 1. The r47 sa leg resumed from its
+  checkpoint on 2026-10-11T04:01Z (135 of 242 unplanned, 107 planned) and ran to 2026-10-12T12:08:48Z (32h07m). The driver's own line:
+  `PAIRS sa: collected 237 retry 4 gave_up 1 never_started 0 of 242`; stopped null, interrupted false, JOB-EXIT rc 0, 8221 articles,
+  101 uploads, 0 failed. Proof VALID rc 0 at box/dell1 HEAD (`proof-of-spec-check.py --governing-order`, run by this seat).
+- **AC1 PASS, AC2 PASS.** AC2's regex `PAIRS` matches any driver line, so the mechanical pass is read with `bs4_completed.out`:
+  `STATUS: COMPLETED`, never_started 0, 237 + 4 + 1 = 242. **AC3 is the CVO's judgment and is NOT graded here:** both clauses measure
+  satisfied (resumed from its checkpoint; a completion, not a stop).
+- **Not collected, named:** 4 pairs at retry 1 of 3, every one `contract_unavailable`; 1 gave_up (security-e62f47b923e0af71, from
+  2026-10-08). Ruled: NOT re-run on a one-off (a re-ask is a new Seeking Alpha draw); the cycle runner re-asks failed pairs once sa is on it.
+- **Carried, round 80:** adding sa to the cycle runner's --publishers (a deploy with its own pair and ledger); row Z-S113 (the driver labels
+  a local launch failure transport-class). The bo-1/bp-1 merge pair's C-a ("no backfill_driver process") is now measurable; it is ~H's order.
+
+<status>complete</status>

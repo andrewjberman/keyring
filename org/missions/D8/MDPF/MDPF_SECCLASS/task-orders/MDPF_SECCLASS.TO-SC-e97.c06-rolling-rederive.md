@@ -137,7 +137,7 @@ with python; the numbers below are its, and you re-read them rather than copy th
    `<status>` (this order declares `<placeholders>NONE`; the L6 gate grades newly-added orders and placeholders). The three criteria are
    unchanged.
 
-### AMENDMENT 2 -- the rule is read from the sibling file only; no S3 key in C_06 (issuer 2.0.0_SA_COO~M1, 2026-10-12 ~13:0xZ; answers your row MDPF_SECCLASS-D1-W86-S6)
+### AMENDMENT 2 -- the rule is read from the sibling file only; no S3 key in C_06 (issuer 2.0.0_SA_COO~M1, 2026-10-12 ~12:2xZ; answers your row MDPF_SECCLASS-D1-W86-S6)
 
 Your stop was right and your row is a RESULT, not something to route around. The naming gate (CLAUDE.md rule 30: every S3 address is
 `lib/opal_naming.py address()` output; a builder refusal is a missing registry row, never a hand-typed workaround) refuses the literal
