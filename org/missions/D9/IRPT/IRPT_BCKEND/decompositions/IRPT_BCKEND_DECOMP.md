@@ -3323,3 +3323,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r158/p158_cells.py`: AC1-AC3 FAIL at 
 | `IB-pr-462` | the four entries read from origin/box/sitez; each open leg's artifact measured now against what the leg was to produce, with a positive control; verdict SUPERSEDED (world-done, or overtaken and said so) or NOT_DONE with what is half-landed and since when; how and where a close is written; nothing re-executed | FWD-1 (the journey's releases are on record as landed or not) | LOCAL | none | P158-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~317. DIRECT-ACT (one read-only cell, LOCAL).
+
+## 151. ROUND 159, WORKSTREAM ~P (2026-10-12 ~01:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 6237)
+
+Row TCKT_VNEXT-D2-S52 (2.0.0_SA_COO~V2): the portal authorizer's source in the tree is 188 lines ahead of the build input the
+source map records as deployed; the added code is a render-token path this project's orders built (IB-rtq-2, IB-rtr-2, export
+section A, IB-pr-307). The CTO reads the row as this lane's. One read-only cell; nothing is invoked, built or released.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r159/p159_cells.py`: AC1-AC3 FAIL at base (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-463` | the live authorizer read by its bytes and matched by content to a commit's blob; the commits after it; how the function is packaged and whether the map's recorder sees it; every render-token sender and route with what it gets from the live authorizer today; the orders behind the unreleased commits; one verdict of four | FWD-7 (the export of what the advisor sees) | LOCAL | none | P159-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~318. DIRECT-ACT (one read-only cell, LOCAL).
