@@ -6823,3 +6823,215 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Done: this row points at the CLOSED entry above."
 }
 ```
+
+## NFRA_CTLPLN-W62-S1 -- portal partner reads hit the CT-u-6 tier fence
+
+```json
+{
+  "id": "NFRA_CTLPLN-W62-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~62",
+  "surfaced_at": "2026-10-12T02:45Z",
+  "one_line": "Portal pages a partner-firm login can open read the content-api GET and data-proxy routes; the CT-u-6 tier fence answers those reads 403 for a partner, so the partner pages lose those reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C (issuer) relays this row to 1.0.0_SA_CTO before CT-u-7 applies the fence; the CTO rules whether the partner read path keeps the content GET or the fence scope narrows",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/App.tsx:239-243 at worktree base edef413890 (portal gitlink c96efe1714): usePortalContent() runs on every page for every logged-in user; the comment says the GET is 'readable by every portal user'",
+      "portal/src/api/portal-proxy.ts:2472 apiRequest('/api/scoped/portal-content') is the content GET; portal/src/hooks/usePortalContent.ts:26-35 (retry 1) and :47-49 (a failed query is an answer: the surface falls back to the repo baseline)",
+      "portal/src/lib/firmAccess.ts:45-67 FIRM_ALLOWED_PATHS: 49financial, inflection and cottonwood may open /market, /portfolios, /positioning, /valuations, /macro, /philosophy and /advisor-intelligence; App.tsx:341-344 filters the nav by it and ProtectedRoute.tsx:111 gates the route",
+      "data-proxy callers on those pages (imports only, routes not traced in this cell): portal/src/pages/Macroeconomics/tabs/YieldCurveTab.tsx:28 getMacroData; portal/src/pages/Valuation/tabs/RiskPremiumTab.tsx:19 getRiskPremiumData; portal/src/pages/ModelPortfolios.tsx:41 getModelPortfolioBenchmarks, getETFBenchmarkReturns, getPeerPerformance; portal/src/pages/Positioning/Positioning.tsx:46 getPositioningData",
+      "lambda_function.py:2088-2146 (worktree, after this cell's edit): the one tier gate sits before every route, so each of those reads answers 403 for a non-internal tier"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CT-u-6 BUILD: the two functions 'examine no caller today, so a verified partner-firm login can read what they serve'; the fence answers 403 to any tier other than internal. RECORD FACE: 'if a portal page ... a PARTNER-firm login can open, name the page and the route in a row: the fence will break it and the issuer must tell the CTO.'",
+  "world_is": "Partner-openable pages call the fenced reads: the content GET on every page (App.tsx:243), and the data-proxy reads on /market, /portfolios, /positioning, /valuations, /macro and /philosophy. After the fence the content read falls back to the repo baseline with no error surfaced, so a partner loses the Opal-edited prose override. The data-proxy reads have no fallback measured here. Partner access is read from FIRM_ALLOWED_PATHS, not from a live partner login; no page was rendered in this cell."
+}
+```
+
+## NFRA_CTLPLN-W61-S1 -- the laptop admits SSH (22/TCP) from ANY address through the Tailscale-only rule, with password login on
+
+```json
+{
+  "id": "NFRA_CTLPLN-W61-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~61",
+  "surfaced_at": "2026-10-12T02:50:00Z",
+  "one_line": "On this laptop 22/TCP is admitted from ANY address by the rule named OpenSSH Server (Tailscale only), sshd is Running, and password login is at its default (on); the tailnet scoping that FWD-27 needs is not in place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "Andrew (the laptop's owner): run the elevated apply of .tools/ssh-tailnet-enable.ps1 with -PublicKey on this laptop, or set the rule's remote address to 100.64.0.0/10",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "-Plan run unelevated in worktree wk-NFRA_CTLPLN-61 at edef413890, 2026-10-12 ~02:46Z, BEFORE line: sshd_status=Running sshd_start_type=Automatic tailnet_rule_remote_address=Any default_rule_enabled=False key_lines=0 password_auth=default",
+      "Get-NetFirewallRule -DisplayName 'OpenSSH Server (Tailscale only)' Enabled read, 2026-10-12 ~02:48Z (read-only): True",
+      "sshd_config read-only Select-String, 2026-10-12 ~02:48Z: line 51 '#PasswordAuthentication yes' is commented; line 87 'Match Group administrators'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-27 / CT-u-1 cell: every box on the tailnet answers an SSH login from the laptop by key, and nothing else; the rule OpenSSH Server (Tailscale only) scopes 22/TCP to 100.64.0.0/10.",
+  "world_is": "22/TCP is admitted from RemoteAddress Any by an enabled rule, sshd is Running, and no PasswordAuthentication line is set, so password login is in effect. Whether the laptop's network reaches port 22 from outside the tailnet is NOT measured here.",
+  "notes": "Found by the read-only -Plan. Nothing was changed on the laptop. Sibling row NFRA_CTLPLN-S1 is the same class of exposure for Remote Desktop. The apply step's rewrite of this rule to 100.64.0.0/10 is what disarms it."
+}
+```
+
+## NFRA_CTLPLN-W61-S2 -- the unelevated -Plan cannot read the sshd capability state, so it reports null and infers from the service
+
+```json
+{
+  "id": "NFRA_CTLPLN-W61-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~61",
+  "surfaced_at": "2026-10-12T02:50:00Z",
+  "one_line": "Get-WindowsCapability -Online refuses without elevation, so the -Plan BEFORE reports the OpenSSH capability as unknown; the script infers installed from the sshd service, and an unreadable key file gives key_lines null.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "powershell probe on this laptop, unelevated, 2026-10-12 ~02:44Z: Get-WindowsCapability -Online -Name 'OpenSSH.Server~~~~0.0.1.0' output 'CAP-ERR The requested operation requires elevation.'",
+      "-Plan stdout 2026-10-12 ~02:46Z: 'BEFORE sshd_capability= elevated=False' (blank = unknown)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-u-1 BUILD: -Plan runs the same reads as a real run, prints BEFORE, and runs UNELEVATED; the receipt's key_lines is a count.",
+  "world_is": "The capability state cannot be read unelevated, so the plan path falls back to the presence of the sshd service. When the key file exists but cannot be read, key_lines is written as null, a value the spec's count type does not state.",
+  "notes": "The apply run is elevated and reads the capability directly; the fallback only affects the plan's view. Null is the honest value for an unreadable count."
+}
+```
+
+## NFRA_CTLPLN-W61-S3 -- the receipt's exact before/after keys omit the key file's exists and ACL, which the prose asks for
+
+```json
+{
+  "id": "NFRA_CTLPLN-W61-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~61",
+  "surfaced_at": "2026-10-12T02:50:00Z",
+  "one_line": "The order's receipt prose asks before and after to hold the key file's exists and ACL, but its exact-key rule lists six keys with neither; the built receipt keeps the six and prints exists and ACL to the console only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "-Plan stdout 2026-10-12 ~02:46Z: 'BEFORE key_file exists=False readable=True acl_ok= key_lines=0' and the receipt's before object carries six keys only",
+      "order step 6 prose lists 'the key file (exists, line count, ACL)'; the exact-key sentence lists sshd_status, sshd_start_type, tailnet_rule_remote_address, default_rule_enabled, key_lines, password_auth"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 6: the receipt holds the key file (exists, line count, ACL); the before and after objects 'hold these exact keys' (six names).",
+  "world_is": "The receipt keeps the six exact keys. Exists and ACL appear in the console BEFORE line only, not in the receipt.",
+  "notes": "Chosen because the exact-key sentence is the stricter contract and a consumer can reject a seventh key. The issuer should say which one it meant."
+}
+```
+
+## NFRA_CTLPLN-W61-S4 -- the branch's task order carries the pre-amendment CTu1-AC2 invocation and lacks the -DisablePassword parameter
+
+```json
+{
+  "id": "NFRA_CTLPLN-W61-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~61",
+  "surfaced_at": "2026-10-12T02:50:00Z",
+  "one_line": "The task order file on this worktree branch is the pre-amendment text: CTu1-AC2 says -ReceiptDir $env:TEMP and the parameter list has no -DisablePassword; the worker followed the amended face.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-u-1.ssh-tailnet-enable-script.md read at worktree HEAD edef413890: CTu1-AC2 invocation -ReceiptDir $env:TEMP",
+      "issuer amendment commit 3127ac561e is named by the face as not on this branch"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order file is the cell's spec: CTu1-AC2 is -Plan -ReceiptDir $env:TEMP, and the parameters are -PublicKey, -Plan, -Rollback, -SelfTest, -ReceiptDir.",
+  "world_is": "The face (the amended text, from amendment 3127ac561e) asks for -ReceiptDir .tmp-ssh-plan-receipts and adds -DisablePassword; the file on this branch does neither. The proof uses the face's invocation.",
+  "notes": "The two texts disagree only where the amendment changed them. Flagged so the record of the order matches the amended text."
+}
+```
+
+## NFRA_CTLPLN-W61-S5 -- step 5 refuses after steps A to D have already run, and the order does not say which comes first
+
+```json
+{
+  "id": "NFRA_CTLPLN-W61-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~61",
+  "surfaced_at": "2026-10-12T02:50:00Z",
+  "one_line": "A -DisablePassword run with no key present refuses at step 5 after steps A to D have changed the service, the firewall, the default shell and the keys; the order does not say whether the refusal comes before them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "self-test case 2 (no-key-refuses-password), 2026-10-12 ~02:44Z: exit 2, PasswordAuthentication untouched, Do.WriteSshdConfig not in the mutation log; the apply run applies A to D first"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 5: with no key present it REFUSES (prints REFUSED: no key present, password auth left on, exits 2); the order orders steps A to D and says nothing about a refusal before them.",
+  "world_is": "The apply run completes A to D (service, firewall, default shell, key install), then refuses at step 5 with exit 2. The restart still runs when a key was written. A refusal is therefore not a no-op on the machine.",
+  "notes": "Chosen so a box is not left with no key and no service, and because -Plan shows the refusal before any change. A stricter reading (refuse before any change) is a one-line move if the issuer wants it."
+}
+```
+
+## NFRA_CTLPLN-W61-S6 -- the order's icacls line adds grants and uses locale-bound names; the build replaces it with grant-replace and SIDs
+
+```json
+{
+  "id": "NFRA_CTLPLN-W61-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~61",
+  "surfaced_at": "2026-10-12T02:50:00Z",
+  "one_line": "The order's icacls line uses /grant, which adds to explicit entries already on the file, and names the groups by English name; the build uses /grant:r with the SIDs S-1-5-18 and S-1-5-32-544.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "icacls semantics: /grant merges with existing explicit entries; /grant:r replaces them; '*SID' names are locale-proof",
+      "the built Do.SetKeyAcl in .tools/ssh-tailnet-enable.ps1 at worktree HEAD (uncommitted at time of row)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 4: icacls ... /inheritance:r /grant 'SYSTEM:F' /grant 'Administrators:F' sets the ACL of administrators_authorized_keys to SYSTEM and Administrators only.",
+  "world_is": "The build's icacls is /inheritance:r /grant:r '*S-1-5-18:F' /grant:r '*S-1-5-32-544:F'. Same intent: SYSTEM and Administrators only, with explicit extras removed.",
+  "notes": "The read-back of the ACL (Get-Acl SIDs) is what decides whether the step runs again, so the build's check and its icacls use the same identities."
+}
+```
+
+## NFRA_CTLPLN-W61-S7 -- sshd_config ends global options in a Match Group administrators block, so a naive append would be scoped to it
+
+```json
+{
+  "id": "NFRA_CTLPLN-W61-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~61",
+  "surfaced_at": "2026-10-12T02:50:00Z",
+  "one_line": "The laptop's sshd_config has a Match Group administrators block at line 87; a PasswordAuthentication line appended to the end of the file would fall inside that block and not apply globally.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only Select-String on the laptop's sshd_config, 2026-10-12 ~02:48Z: '51:#PasswordAuthentication yes', '87:Match Group administrators', '38:AuthorizedKeysFile .ssh/authorized_keys'",
+      "self-test case 2 and case 3 exercise the global-section placement through the fake config (the built Get-NewSshdConfig)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 5: sets PasswordAuthentication no in sshd_config.",
+  "world_is": "The built script writes the directive before the first Match line, and copies sshd_config to a dated .bak beside it before any write. A directive after the Match block would be scoped to that block only.",
+  "notes": "Handled in the build, so the hazard is INERT in the artifact. Recorded because the order did not name the placement or the backup."
+}
+```
