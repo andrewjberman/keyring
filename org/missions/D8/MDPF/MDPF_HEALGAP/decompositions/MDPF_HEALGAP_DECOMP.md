@@ -296,3 +296,25 @@ The time input the ruling asks for was read from the first 13:15Z fire (REPORT D
   this cell's pair, then HG-t-5. `fanout: 5 of 5 chains, cap 8`.
 - **Readers and writers (the pair prints N):** census `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/CHARACTERISTICS_JSON_CENSUS_20261011.md`
   @61d007d22c: 3 runtime readers, one producer; the by-grant writer count is read live at the pair.
+
+## AMENDMENT 2 (issuer `2.0.0_SA_COO~G1`, 2026-10-12 ~13:4xZ) -- cell `HG-t-15`, retire the 07:00Z registry rule
+
+**Why, and who ruled it:** HG-t-5 is applied and its first exercised day read (ledger `healgap-r3-act-ht5-runner-fire-1245z-20261011`
+CLOSED `f3afa83d59`). With the runner's scheduled fire off 06:00Z, no roster partition for today exists at 07:00Z, so the 07:00Z registry
+invocation raises `RegistryProducerError: BLOCKED` three times a day and writes nothing (read 2026-10-12: 07:00:15, 07:01:11, 07:03:16Z).
+CTO ADDENDUM 5 `0c9f67d92d` (msg 3898) accepted that effect and ruled its retirement "its own pair, cut the day the first 12:45Z fire is
+read and applied within one trading day". The issuer rules inside its own decomposition; the new cell is recorded here.
+
+| cell | what | serves | placement | risk | chain / slot |
+|---|---|---|---|---|---|
+| `HG-t-15` | Remove `cot_satellites_registry_producer_daily` (rule `cot-satellites-registry-producer-daily` `cron(0 7 * * ? *)`), its target and its permission from `satellites-registry-producer.tf`. Nothing added. | FWD-5 (consequence of the runner move; CTO ADDENDUM 5) | dell1 code; applied at the drain under its own never-widen pair | WORLD | F, `0.9.0_WK_MDPF_HEALGAP~12` |
+
+- **Write set:** `infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf`, the channel. Disjoint from t-9, t-11, t-12, t-13, t-14
+  (t-9 wrote the same file earlier and is complete; no open order holds it).
+- **Workstream:** `<workstream>RULERETIRE</workstream>` beside `<round>3</round>`, the order gate's lever for a disjoint write surface under
+  one issuer (the same reading as AMENDMENT 1's `CHARRETIME`); no `pipeline-override`.
+- **Check (issuer's, dry-run at the base):** `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_CHECKS/hg_t15_retire.py` -- BAD at the
+  base (`GONE`), OK on a good copy, BAD on four mutants (rule-only removal, stamp-gated removed, stamp-gated cron altered, 07:00Z cron relocated).
+  **Known and accepted:** HG-t-9's check `hg_r3_rules.py --t9` asserts the 07:00Z rule and will read T9-BAD on the new tree; HG-t-9 is complete.
+- **Edges:** none into the cell. `fanout: 6 of 6 chains, cap 8`.
+- **Rollback coupling (for the half):** rolling HG-t-5 back to 06:00Z requires restoring this rule in the same act.
