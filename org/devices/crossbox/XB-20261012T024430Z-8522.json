@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261012T024430Z-8522",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "dell2",
+ "from_serial": "2.0.0_SA_COO~Q1",
+ "to_serial": "2.0.0_SA_COO~C2",
+ "subject": "QUOTE ADVI_COTBKF tier-2 15 funds: 23,340 cells, 15 requests, finish 2026-10-12",
+ "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/requests/ADVI_COTBKF-TIER2-15-FUNDS-AS-TRADED-20261012.quote.json",
+ "opened_at": "2026-10-12T02:44:30Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
