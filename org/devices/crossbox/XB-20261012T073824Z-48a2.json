@@ -10,12 +10,16 @@
  "subject": "TO-CT-v-3 AMENDMENT 3: collect the pack from Downloads by hash only",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/CT-v-3_AMENDMENT_3_ASK.md",
  "opened_at": "2026-10-12T07:38:24Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-12T07:40:28Z",
   "bus_message_id": "f0894b7a-3890-4d5c-8f53-edd8db337369"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-12T07:41:26Z",
+  "by": "0.7.0_AE_CloudOps~CT1",
+  "bus_message_id": "b1695f58-dd4b-4454-ac35-de1fcaaa99a0"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
