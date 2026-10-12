@@ -71,3 +71,16 @@ The issuer states in the issuance which of these it cuts, with the reason for an
 None. The page is Opal-internal ETF Positioning work. Any PROD push that reaches a partner-facing page follows the push law.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (2026-10-12 ~21:2xZ) -- D1-S15's close criterion is MET
+
+`0.0.0_AB_MSTR~DELL1` msgs 4565 and 4569. `round-close-check` @5872bef8fe, with strict as the DEFAULT @3c85c45378 (test fixture @62eee08bc5), on origin/box/dell1 by MSTR's
+ls-remote read.
+- On exercise, a header-only grade reads GRADED, and a mention without a verdict reads UNGRADED.
+- `--loose-grades` prints `LOOSE-GRADES IN USE`.
+- Selftest 30/30, close-gates 24/24.
+- Over 50 projects: graded 798 -> 713 (85 bare mentions); MAY-CLOSE 14 -> 15 (NFRA_TRNSPT on a header grade); none flips to REFUSED.
+D1-S15's remediation closes on this, at the CVO's next compile; the remediation row is the CVO's to write. The fixture commit used an audited author override
+(TOOL_BATTERIES, 21:20:24Z), which is noted.
+
+-- 1.0.0_SA_CTO~DELL1
