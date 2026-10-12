@@ -1408,3 +1408,127 @@ terminal, proofs VALID). The slug is `remediations/REMEDIATION_v8.Z.md`.
 ```
 
 -- 3.0.0_SA_CVO~Z
+
+---
+
+## ROUND 9 -- early L9 (5 of 6 orders)
+
+**By:** `3.0.0_SA_CVO~Z`, 2026-10-12 ~05:4xZ, on `2.0.0_SA_COO~ZI` msg 33455. Graded now: z-1, z-3, z-4,
+z-5 and z-6. z-2 is NOT graded here: its real run waits on the 2026-10-13 ~04:00Z bd chain. The L8 compile and the slug follow
+COMPLETION_REPORT.round9.
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S45",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-12T05:40Z",
+    "one_line": "L9 grade, TO-IAM-z-1 AC4 (judgment): PASS -- only the dead ARNs left (CloudTrail: one policy write per changed role; 0 dead names in any live document, the opal-data-smartx DynamoDB grant kept), every reference found is filed (Z-S46, Z-S49, Z-S51), and the one changed role with a working consumer ran clean after the act.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-z-1 AC4: did only the dead ARNs leave, with every reference found filed as a row, and did a real run on each changed role succeed afterwards?",
+    "world_is": "CloudTrail since 2026-10-11T00Z, by ResourceName: FredIngestionLambdaRole 1 DeleteRolePolicy; workspace-sync-lambda-role, infrastructure-ops-lambda-role, smartx-exporter-role-20251218220948293500000001 and smartx-ingestion-lambda-role 1 PutRolePolicy each, and nothing else. Live documents read now: 0 occurrences of ajb-workflow, opal-data-portal-s3, opal-data-smartx-v2, arn:aws:s3:::opal-data-smartx or opal-market-update in any of the 5 changed documents. smartx-dynamodb-access still names table/opal-data-smartx once, so the name-sharing DynamoDB table was not touched. The references the census found are filed as rows Z-S46, Z-S49 and Z-S51 (and Z-S45/Z-S48 for the FRED side). RUN CLAUSE: FredIngestionLambdaRole ran clean AFTER the 02:03Z delete; this seat's driven invocations at ~05:2xZ give weekly 3/3 and monthly 13/13 series, 0 errors (see C-S49). The other three changed roles have NO working consumer, so the clause has no referent there: workspace-sync-lambda-role and infrastructure-ops-lambda-role are assumed by 0 Lambda functions (RoleLastUsed 2025-12-30 and None); the two smartx roles' consumers (EC2 exporter, last used 2026-06-01; opal-smartx-ingestion-pipeline, last used 2026-08-14) already fail against the 404 bucket (Z-S51). The narrowing could not break a working holder because none exists; that is stated, not assumed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cloudtrail lookup-events ResourceName=<each role>, since 2026-10-11T00Z",
+        "iam get-role-policy on the 5 changed documents, grep of the 5 dead names",
+        "lambda list-functions filtered by role ARN; iam get-role RoleLastUsed",
+        "deliverables/0.7.0_AE_CloudOps~IR/round9/narrow_dead/POST_APPLY.md @ad42350eca"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-z-1 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S46",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-12T05:40Z",
+    "one_line": "L9 grade, TO-IAM-z-3 AC4 (judgment): PASS -- the ruled deletion of opal-market-data-v2 is complete on every plane: no declaration, no state, no grant, the tombstone closed, and the name not re-created (404 against a 403 control).",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-z-3 AC4: is the ruled deletion now complete on every plane (declaration, state, grant, tombstone), with nothing re-created?",
+    "world_is": "BUCKET: s3api head-bucket opal-market-data-v2 reads 404; the control 'test' reads 403, so the instrument separates an absent name from a foreign one; nothing has been re-created. DECLARATION: tracked Terraform carries the name only in comments (market-overview/s3.tf:5 'DECLARATION REMOVED', shared-infra/infra-monitor.tf:122). STATE: s3://opal-313476888478-terraform-state/market-overview/tfstate (serial 95, 51 resources) holds 0 resources mentioning it. GRANT: the account-wide iam get-account-authorization-details (35.2 MB) has 0 occurrences of 'opal-market-data-v2', against 110 for the control 'opal-data-portal-v2'. TOMBSTONE: infra/aws/terraform/tombstones.json reads declaration_removed '2026-10-12 @96c735a39c'.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "head-bucket opal-market-data-v2 404; control 'test' 403",
+        "git grep over tracked .tf (comments only)",
+        "market-overview tfstate (serial 95): 0 of 51 resources",
+        "get-account-authorization-details: 0 hits vs 110 control hits",
+        "tombstones.json entry"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-z-3 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S47",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-12T05:40Z",
+    "one_line": "L9 grade, TO-IAM-z-4 AC4 (judgment): FAIL, narrow -- every unreadable plane IS named, plane by plane, but two of the three addressed lists cannot replace their wildcard without breaking the holder: opal-* is a declared FLOOR (dell2 never read, dell1 a partial 2000-event sample) and opal* is a CreateBucket grant no list can replace.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-z-4 AC4: is each addressed list complete enough to replace its wildcard without breaking the holder, and is every unreadable plane named?",
+    "world_is": "WILDCARD_CENSUS.md @2d89c21256, read whole. PLANES: every grant names what it read and what it did not (S3 data events, workstation key use, the dell2 trail, deployed Lambda bytes), and that half holds. COMPLETENESS: opal-data-* (partners-lambda-role, read-only) lists 6 buckets from the firm table opal-users-v2 and the function's code; that is plausibly complete for today's firms, though a new firm's bucket would need adding. opal-* (cloudops-dell-agent-deploy-policy, PutObject) lists 4, which the census itself calls 'a floor' from a 2000-event sample of dell1 with dell2 not read; replacing the wildcard with it would cut the agents off every other opal-* bucket they deploy to. opal* (cloudops-dell-agent-create-policy) is CreateBucket plus bucket-configuration writes, whose purpose is FUTURE names, so no addressed list can replace it; a condition or naming-builder constraint is the shape. This seat tried to widen the opal-* sample from dell2's trail and could not: lookup-events surfaces no S3 bucket names in Resources for these management events (control: dell1, also 0), so the floor stands as the census states. The census is honest; the outcome the criterion asks for is not reached.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/.../WILDCARD_CENSUS.md @2d89c21256",
+        "cloudtrail lookup-events Username=cloudops-dell2-agent-user and dell1 (control): 0 S3 bucket names surfaced in Resources"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S48",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-12T05:40Z",
+    "one_line": "L9 grade, TO-IAM-z-5 AC4 (judgment): PASS -- no code path of the orchestrator lets a claimant's bucket choose the build date (the legacy SRC_BUCKET is gone; every silver and gold script reads opal-data-bd or the monolith), and dates_to_build() is unchanged in behaviour (its enumeration moved verbatim into the shared helper).",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-z-5 AC4: does any code path of the orchestrator still let a claimant's bucket choose the build date, and is dates_to_build() unchanged in behaviour?",
+    "world_is": "Drain 7411ca0892, diffed against its first parent: SRC_BUCKET='opal-data-schwab' is deleted, and latest_rps_date() now reads _monolith_partitions() over MONOLITH_BUCKET (opal-data-assets, set in silver/_canonical_silver_lib.py:41). dates_to_build()'s raw enumeration is the SAME comprehension, moved byte-for-byte into _monolith_partitions() and called from both. Every *_BUCKET constant under data/canonical/schwab/ (35 assignments across silver/ and gold/) is opal-data-bd, or opal-data-assets for the monolith; opal-data-schwab survives only in comments and tests. tests/test_canonical_daily_date_axis.py re-run here: 16 passed, including the behavioural pin that asserts the bucket read is never opal-data-schwab. No deployed copy runs older bytes: comp-find --corpus aws 'build_canonical_daily' reads 0 of 2926 nodes, so the orchestrator runs from the repo.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff 7411ca0892^1 7411ca0892 -- data/canonical/schwab/build_canonical_daily.py",
+        "Grep of *_BUCKET assignments under data/canonical/schwab (35, none opal-data-schwab)",
+        "pytest data/canonical/schwab/tests/test_canonical_daily_date_axis.py: 16 passed",
+        "comp-find --corpus aws: 0 of 2926 nodes"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-z-5 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S49",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-12T05:40Z",
+    "one_line": "L9 grade, TO-IAM-z-6 AC4 (judgment): PASS, bounded -- the served yield curve carries 10 valued tenors as of 2026-10-08, which IS FRED's latest published date (10Y 5.22, 1M 4.14, read from FRED itself); and no other run frequency fails: weekly 3/3 and monthly 13/13 on the post-change code and role, 0 errors.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-z-6 AC4: does the served yield curve carry 10 valued tenors as of the last trading day, and did no other run frequency start failing?",
+    "world_is": "s3://opal-data-portal-v2/json/macro/yield_curve_fred.json (LastModified 2026-10-11T23:00:58Z): series lists 10 tenors (1M..30Y), each with 497 valued points, every last point 2026-10-08. lib/trading_calendar.expected_last_trading_day(2026-10-11) is 2026-10-09, but FRED's own fredgraph.csv for DGS10 and DGS1MO ends at 2026-10-08 (5.22 and 4.14, equal to the served values): FRED's publication lag, not the pipeline. FREQUENCIES: five EventBridge rules feed fred-data-ingestion (daily 23:00Z; weekly Thu 14:00Z; monthly on the 1st Friday, 15th and 25th), with inputs {frequency: daily|weekly|monthly}. Since the change only the daily rule has fired, so this seat drove the other two once each on the deployed code (CodeSha256 KdzPgI23..., LastModified 2026-10-11T22:41:47Z), whose weekly and monthly paths are download-only (process_frequency writes nothing): 4 invocations in all (the first pair duplicated by a local output-path error; disclosed), each 'Successfully processed' (weekly 3/3, monthly 13/13), 0 ERROR, Traceback or AccessDenied lines. CARRIED, not grounds: data_as_of reads '2026-10-11' (the run's UTC date, a Sunday) while the newest datum is 2026-10-08, so the field does not carry what it names.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3 cp of the served yield_curve_fred.json; per-tenor last valued date",
+        "fredgraph.csv DGS10 and DGS1MO (public FRED), last row 2026-10-08",
+        "lib/trading_calendar.expected_last_trading_day",
+        "events list-rule-names-by-target + list-targets-by-rule inputs",
+        "lambda invoke frequency=weekly and monthly at ~05:2xZ; logs: 2x 'Successfully processed 3/3 series for weekly', 2x '13/13 ... monthly', 0 errors"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-z-6 AC4 PASS."
+  }
+]
+```
+
+-- 3.0.0_SA_CVO~Z
