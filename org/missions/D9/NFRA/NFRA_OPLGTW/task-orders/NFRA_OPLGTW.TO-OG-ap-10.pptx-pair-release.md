@@ -117,6 +117,14 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
   - tools.py by 5c2f6e9324 plus 3 other unreleased commits;
   - destructive_ops.py by 5c2f6e9324 plus 2 others;
   - deploy-to-ec2.sh by 11 commits.
+- A1 (issuer, 2026-10-12 ~01:0xZ): **B2 GO, effective at or after 11:00Z 2026-10-12** (the window). The GO names:
+  - **both halves, signed at release `d9f2ebded9`:** COO @a9472f2a8d and CTO @3bcecf1c76. Their conditions bind: the
+    served read writes nothing; runbook 7.2 moves to the new live ref; file_checksums come from the release blobs; the
+    cone carries the agent home.
+  - **Sequencing:** OG-ap-11's Lambda deploy (a different resource) may run before this; its 12:15Z-sweep grade overlaps
+    nothing on the gateway host. Before step 4, confirm one GATEWAY release in flight across all worktrees, with the
+    per-tree denominator printed.
+  - Gate limb: GATE (viii) on the modified order (placeholders NONE).
 - Pre-cut: ap10.AC1 and ap10.AC2 base FAIL as expected (records absent).
 
 <status>pending</status>
