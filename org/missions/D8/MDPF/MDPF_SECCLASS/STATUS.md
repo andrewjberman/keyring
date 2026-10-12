@@ -1,7 +1,7 @@
 # MDPF_SECCLASS -- one canonical security classification -- status
 
 Seat `2.0.0_SA_COO~M1` (dell1), successor to `2.0.0_SA_COO~M`. Contract `org/standards/MDPF_SECCLASS_CONTRACT.json`. Lease **FULL**
-(`drive-mode.py read`); `/canonical-drive` armed at 60m (Andrew-direct 2026-10-10 ~23:3xZ). As of **2026-10-11 ~04:5xZ** (each table row carries its own measure time).
+(`drive-mode.py read`); `/canonical-drive` armed at 60m (Andrew-direct 2026-10-10 ~23:3xZ). As of **2026-10-12 ~09:4xZ** (each table row carries its own measure time).
 History is in git and the drive logs (`org/tier1_exec/2.0.0_SA_COO~M1/drive_log_*Z_*.md`).
 
 Claim words: `measured` = read this session against the served artifact; `held` = cited from a record.
@@ -41,17 +41,17 @@ All MDPF_SECCLASS ledgers are CLOSED except one (HELD):
 
 ## Next, in order
 
-1. Round 20 is closed at my seat (3 of 3 orders complete, `round-close-check` MAY-CLOSE, `dep_stage` ROUND_CLOSE) and graded by the
-   CVO (L8 packet READ 04:12Z; L9 @eb33d5d466, MAY-CLOSE). `TO-SC-e87b` is now terminal (leg G closed NOT MET 2026-10-12 06:4xZ; ledger
-   CLOSED), which was the hold on the CVO's L10 slug (`3.0.0_SA_CVO/deliverables/MDPF_SECCLASS_R20_SLUG_HELD_REMEDIATION_v11.md`). Next, the
-   CVO's slug and the CTO's round-20 analysis; cut round 21 in ONE issuance the tick it lands.
-   - **Round-21 candidate, from row D1-S30:** retained-date reclassification in C_06 (`reclassify_retained` must revisit retained
-     `unclassified` holdings that carry a ticker or name), a SERVED build plus a pair-gated ship, then a leg G read on a date C_06 rebuilds.
-     The expected figure is stated at that as-of, never at 10-08.
-   - **Carried into that issuance, `SC-e-90` (CTO msg 4167):** the portal test `iv-e-46.class-readers.test.ts` reads 1 pass 1 fail at origin/DEV
-     (its `NAMED` entries cite file:line; two lines moved). Repair: locate by content, plus a negative arm; the test file only. Draft:
-     `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R21_DRAFTS/TO-SC-e90_DRAFT_class-readers-test-locate-by-content.md`. Not cut in
-     round 20: `to-pipeline-gate` refuses a new order there (one issuance per round; `dep_stage` ROUND_CLOSE).
+1. **Round 21 is EXECUTING** (one issuance `2f215ca75a`, 2026-10-12 ~09:4xZ, on the CTO's round-20 analysis @e5adc667e2, msg 4321; `dep_stage` EXECUTING; fanout 5 of 5, cap 8). Round 20 stays graded MAY-CLOSE (CVO L9 @eb33d5d466; `TO-SC-e87b` terminal, leg G NOT MET). DECOMP `decompositions/MDPF_SECCLASS_DECOMP_R21.md`.
+   | cell | what | risk | slot | state |
+   |---|---|---|---|---|
+   | `SC-e-91` | C_06 retained pass revisits retained `unclassified` holdings on every fire (also with no new partition); firm and advisor snapshots follow; never-widen half request, both halves unsigned (row D1-S30) | SERVED | ~80 `worker` | running |
+   | `SC-e-92` | cross-box deploy check: trunk-first sentinel status; a vanished worktree is not a hit; a branch-only sentinel still hits (row D1-S28) | LOCAL | ~81 `worker` | running |
+   | `SC-e-93` | read: served BD positions with the literal ticker NAN / NONE, denominator printed (row D1-W77-S1) | LOCAL | ~82 `worker-light` | running |
+   | `SC-e-94` | read: the writer of the 2026-10-06/07 holdings partition rewrite at 2026-10-10T23:15Z, writer count, whether C_06 re-serves those dates (row D1-W78-S1) | LOCAL | ~83 `worker-light` | running |
+   | `SC-e-90` | portal test `iv-e-46.class-readers.test.ts` locates each named reader by content, plus a negative arm (CTO msg 4167); direct act, portal worktree at origin/DEV `62507dae67` | LOCAL | ~84 `worker-light` | running |
+   - **Carried, not a cell:** leg G of SC-e-87 and D1-S30, read on the first post-ship as_of (Tuesday 2026-10-13's fire or later), the expected
+     figure stated at THAT as-of, never at 10-08. SC-e-91 must also ship (a pair-gated act by a CloudOps lane) before that read can pass.
+   - Drain per chain end (`/dispatch` Step 5), then the real run of each outcome, the L8 packet to the CVO, the `round-close-check`.
 2. **e57e61:** release when a scheduled new-security run plans US stocks.
 3. **p1 residue** (11 keys outside FWD-15's plan): waits on a ruling.
 4. **IB-pr-417:** the COO half on the e56 member is SIGNED (@ced2704270, due Mon 2026-10-12 13:00Z at dell2); push of that commit

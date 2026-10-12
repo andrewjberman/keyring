@@ -1,0 +1,23 @@
+{
+  "claim": "measured: read-only, partition gold/canonical/holdings/2026-10-09.parquet, 2026-10-12T09:09:20Z",
+  "partition": {
+    "key": "gold/canonical/holdings/2026-10-09.parquet",
+    "date": "2026-10-09"
+  },
+  "positions_total": 114554,
+  "dollars_total": 2015391646.72,
+  "nan_none": {
+    "NAN": {
+      "positions": 0,
+      "dollars": 0.0
+    },
+    "NONE": {
+      "positions": 0,
+      "dollars": 0.0
+    }
+  },
+  "nan_none_positions": 0,
+  "nan_none_dollars": 0.0,
+  "verdict": "NOT_EXPOSED",
+  "read_only": true
+}
