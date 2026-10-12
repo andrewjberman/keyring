@@ -29003,3 +29003,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Under the built rule the number of accounts the rule applies to equals the CTO's in every cell, and the number whose served claim changes does not in orion SI (750 vs 894), YTD (76 vs 200) and 1Y (106 vs 240). The record carries both under separate names (claim_move_counts literal; rule_fires_counts) and criterion IB166-1-AC3 grades claim_move_counts, so it FAILs on the literal. I did not edit a threshold or relabel; the issuer rules which number the release packet's never-widen pair names (accounts that change, or accounts the rule reaches). Nothing is deployed."
 }
 ```
+
+## IRPT_BCKEND-D2-W337-S1 -- TO-IB-pr-482 tells the worker to read the reader record 'and its READ file'; deliverables/0.9.0_WK_IRPT_BCKEND~331 holds no READ file, only the record, the proof instance and the two scripts.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W337-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~337",
+  "surfaced_at": "2026-10-12T20:49:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-IB-pr-482 tells the worker to read the reader record 'and its READ file'; deliverables/0.9.0_WK_IRPT_BCKEND~331 holds no READ file, only the record, the proof instance and the two scripts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~331/ at 05219b8444: IB166-1_reader_record.json, the proof_of_spec instance, ib166_assemble.py, ib166_measure.py (4 entries, no file named READ)",
+      "the record IB166-1_reader_record.json carries the rule in words (rule_as_built), the absences and the consumers, which is what a READ file would hold; it was read whole"
+    ]
+  },
+  "spec_asserts": "The worker face: read IB166-1_reader_record.json whole, and its READ file (deliverables/0.9.0_WK_IRPT_BCKEND~331).",
+  "world_is": "The folder has no READ file. I read the record whole and the two scripts and proceeded; nothing the build needed was missing. Whether a READ file was meant (the ~334 or ~325 folders carry named read notes) is the issuer's to say."
+}
+```
+
+## IRPT_BCKEND-D2-W337-S2 -- lambda-source-map.json still pins irpt-performance-adapter's holdings_gold.py at 361c44fa9d (sha256 d41e861212a7); a build from the REAL map reproduces the live bytes, not the signed ones, until the apply order lands the one re-pin.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W337-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~337",
+  "surfaced_at": "2026-10-12T20:49:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "lambda-source-map.json still pins irpt-performance-adapter's holdings_gold.py at 361c44fa9d (sha256 d41e861212a7); a build from the REAL map reproduces the live bytes, not the signed ones, until the apply order lands the one re-pin.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json (sha256 cecf1e8ff824..., byte-identical before and after both builds): irpt-performance-adapter staged_from holdings_gold.py pin 361c44fa9d, sha256 d41e861212a7; this equals the live zip's member (live member sha256 d41e861212a7...)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~337/candidate_source_map_482.json: the same entry with that one row at 05219b8444, sha256 5be3ce009412...; BUILD_ONLY with BAU_SOURCE_MAP_OVERRIDE gives zip sha256 (base64) abep4h7RngMS9JomQUdkcOT3EZ+W953OdxeK0HkdzFo=, built twice identical; the live zip is kMB8xCI93/9QLUnzglVIs0EIRY07SSLBiU5ln8iJwUc=",
+      "reader record ~331 hash_pins already said the holdings_gold.py pin is stale until the next package build; same shape as row IRPT_BCKEND-D2-W278-S2"
+    ]
+  },
+  "spec_asserts": "The order: build with BAU_SOURCE_MAP_OVERRIDE=<candidate map>, edit no file under infra/, and apply later by an order to 0.7.0_AE_CloudOps~IB2.",
+  "world_is": "The signed digest exists only through the candidate map. If the apply order runs the build against the real map without landing the holdings_gold.py re-pin first, the zip it builds equals the live one (the merged claim change does not ship) while the order reads as done, and the digest gate against abep4h7R... aborts. The packet's Branch A step 3 names the re-pin; the order that carries the apply must too. Nothing was edited or applied here."
+}
+```
