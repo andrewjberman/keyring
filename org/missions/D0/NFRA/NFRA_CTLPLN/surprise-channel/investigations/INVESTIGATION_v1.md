@@ -8338,3 +8338,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Disarm of W73-S2: no standing hazard (the tool reads and writes nothing). Candidate for the round-10 analysis's enrichment list: read the order set from origin/CLOUD (git ls-tree) and print the denominator of orders found beside the hops."
 }
 ```
+
+## NFRA_CTLPLN-W74-S1 -- the seat-order mission directory was a working-tree glob too (the W73-S2 gap in a second place)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W74-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~74",
+  "surfaced_at": "2026-10-12T13:53:09Z",
+  "one_line": "_mission_dir, which sets the projdir of every seat order, globbed the reading checkout's working tree; it now reads the same git listing as find_orders, in the same edit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/thread-trace.py@6c3c63c05d before this order: _mission_dir(root, code) ran glob.glob over the working-tree path org/missions/D*/*/<CODE>, and its result became projdir for every seat order, which HOP 2 and HOP 5 use as a path spec",
+      "after this order (worktree wk-NFRA_CTLPLN-74): _mission_dir(names, code) matches the git ls-tree listing of org/missions and org/tier2_senior on HEAD and origin/CLOUD; CTaa1-AC1 selftest 12/12 ok=True, the seat_order case reads HOP 2 by 0.7.0_AE_OPS~2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTaa1 cell, BUILD item 1: find_orders reads the order files from git, and the cell names no other working-tree read of the round's order set.",
+  "world_is": "A seat order's projdir came from a working-tree glob, so a checkout that lacks the project's mission directory returned (no mission directory) and HOP 2 and HOP 5 searched a wrong path. This order moved that lookup to the git listing as well, a judgment beyond the literal BUILD item. The round-9 read is unchanged: orders_found=2, all tree orders.",
+  "notes": "For the issuer: confirm that widening _mission_dir is in scope of CT-aa-1 (the order set comes from git), or record it as a separate enrichment. Hazard INERT: the tool reads and writes nothing, and the widened lookup is read-only."
+}
+```

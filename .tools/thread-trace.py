@@ -19,8 +19,12 @@ org/missions/D*/*/<CODE>/task-orders/*.md AND the seat orders org/tier2_senior/*
 Amendment 1: a seat order is an order of the round too), whose <round> tag is <n> (the LAST line-anchored <status> tag is the
 order's status; superseded / cancelled / withdrawn / retired orders are not part of the thread). A seat order's mission
 directory is found by its <CODE> (org/missions/D*/*/<CODE>). DELIBERATE CHANGE: the unfiltered whole-round read (no --order)
-now also includes the seat orders of the round; the tree orders are read exactly as before. The refs read are origin/box/*
-and origin/CLOUD.
+now also includes the seat orders of the round. DELIBERATE CHANGE (round 11, CT-aa-1): the order set is read FROM GIT, not from
+the working tree. Each order file is listed by git ls-tree on HEAD and on origin/CLOUD and read by git show; a ref that does not
+resolve is skipped, and when neither HEAD nor origin/CLOUD resolves the tool prints an ERROR line and exits 2 (never a silent
+zero). A path present on both refs is read from HEAD; a path on only one ref is read from that ref; an uncommitted working-tree
+file is NOT read. So an order file origin/CLOUD holds is no longer dropped by a checkout that lacks it. The refs read for the
+hops are origin/box/* and origin/CLOUD.
 
   HOP 1 PLAN       the commit that first ADDED each order (earliest = start, latest = end); its author; the box branch it is
                    first-parent history of (fewest commits behind that tip), else any ref that holds it.
@@ -39,9 +43,11 @@ and origin/CLOUD.
                    surprise-channel/adjudications/, or adds a dep_stage line to project.json while naming one.
 
 Line per hop:   HOP <n> <name> start=<UTC> end=<UTC> commit=<h> by=<serial> where=<ref>     or    HOP <n> <name> ABSENT
-LAST line:      THREAD project=<CODE> round=<n> orders=<ids, comma-separated | ALL | NONE> hops=<found>/5 pushed_by_working_box=<True|False|-> elapsed=<h m s | ->
+LAST line:      THREAD project=<CODE> round=<n> orders=<ids, comma-separated | ALL | NONE> orders_found=<k> hops=<found>/5 pushed_by_working_box=<True|False|-> elapsed=<h m s | ->
                  orders=ALL when no --order was given; orders=NONE when an --order matched no order of the round.
-Exit 0 when the read found orders; 1 when the round has none (0/5) or an --order matches none (0/5); 2 on a usage, fetch or git error.
+                 orders_found=<k> is the number of the round's orders that are part of the thread, counted BEFORE --order.
+Exit 0 when the read found orders; 1 when the round has none (0/5) or an --order matches none (0/5); 2 on a usage, fetch or git error
+(including neither HEAD nor origin/CLOUD resolving).
 BLIND (stated): time a seat spent thinking, polling or waiting leaves no commit and is inside the hop that holds it; the
 publish time is a commit time (git records no push time); a serial shared by two boxes cannot tell their seats apart, so
 pushed_by_working_box compares serials, not machines. It READS git and writes nothing in the repository.
@@ -51,7 +57,6 @@ from __future__ import annotations
 
 import argparse
 import fnmatch
-import glob
 import importlib.util
 import os
 import re
@@ -86,6 +91,15 @@ def git(root: str, *args: str, ok=(0,)) -> str:
                        encoding="utf-8", errors="replace")
     if p.returncode not in ok:
         raise GitError("git %s -> rc=%d: %s" % (" ".join(args[:4]), p.returncode, p.stderr.strip()[:300]))
+    return p.stdout
+
+
+def git_bytes(root: str, *args: str) -> bytes:
+    """git's raw blob bytes (no newline translation); the caller decodes."""
+    p = subprocess.run(["git", "-c", "core.quotepath=false", *args], cwd=root, capture_output=True)
+    if p.returncode != 0:
+        raise GitError("git %s -> rc=%d: %s" % (" ".join(args[:4]), p.returncode,
+                                                 p.stderr.decode("utf-8", errors="replace").strip()[:300]))
     return p.stdout
 
 
@@ -222,19 +236,34 @@ def _last_status(text: str) -> str:
     return got
 
 
-def _mission_dir(root: str, code: str) -> str:
+ORDER_REFS = ("HEAD", TRUNK_REF)  # the order set is read from these, in this order; a path on both reads from HEAD
+ORDER_SCOPE = ("org/missions", "org/tier2_senior")
+
+
+def _mission_dir(names, code: str) -> str:
     """The project's mission directory (org/missions/D*/*/<CODE>), for an order that lives outside it (a seat order)."""
-    hits = sorted(h for h in glob.glob(os.path.join(root, "org", "missions", "D*", "*", code)) if os.path.isdir(h))
-    return os.path.relpath(hits[0], root).replace(os.sep, "/") if hits else "(no mission directory)"
+    pat = re.compile(r"^(org/missions/D[^/]*/[^/]*/%s)/" % re.escape(code))
+    hits = sorted({m.group(1) for m in (pat.match(n) for n in names) if m})
+    return hits[0] if hits else "(no mission directory)"
 
 
 def find_orders(root: str, code: str, rnd: str) -> list:
+    """The round's orders, read FROM GIT: the file list is git ls-tree on HEAD and origin/CLOUD, the text is git show.
+    A ref that does not resolve is skipped; neither resolving is a GitError (exit 2), never a silent zero. An uncommitted
+    working-tree file is not read."""
+    refs = [r for r in ORDER_REFS if git(root, "rev-parse", "--verify", "-q", r + "^{commit}", ok=(0, 1)).strip()]
+    if not refs:
+        raise GitError("neither HEAD nor %s resolves; the round's order set cannot be read from git" % short(TRUNK_REF))
+    names: dict = {}  # path -> the ref it is read from; HEAD is first, so setdefault keeps HEAD's copy
+    for ref in refs:
+        for name in git(root, "ls-tree", "-r", "--name-only", ref, "--", *ORDER_SCOPE).splitlines():
+            names.setdefault(name, ref)
+    tree_re = re.compile(r"^org/missions/D[^/]*/[^/]*/%s/task-orders/[^/]*\.md$" % re.escape(code))
+    seat_re = re.compile(r"^org/tier2_senior/[^/]*/task_orders/%s\.[^/]*\.md$" % re.escape(code))
     out = []
-    tree = os.path.join(root, "org", "missions", "D*", "*", code, "task-orders", "*.md")
-    seat = os.path.join(root, "org", "tier2_senior", "*", "task_orders", code + ".*.md")
-    for pattern, is_seat in ((tree, False), (seat, True)):
-        for path in sorted(glob.glob(pattern)):
-            text = open(path, encoding="utf-8", errors="replace").read()
+    for pat, is_seat in ((tree_re, False), (seat_re, True)):
+        for path in sorted(n for n in names if pat.match(n)):
+            text = git_bytes(root, "show", "%s:%s" % (names[path], path)).decode("utf-8", errors="replace")
             if str(_tag(text, "round")) != str(rnd):
                 continue
             status = _last_status(text)
@@ -243,8 +272,8 @@ def find_orders(root: str, code: str, rnd: str) -> list:
             block = re.search(r"^<paths>\s*\n(.*?)^</paths>", text, re.M | re.S)
             paths = [ln.split()[0] for ln in (block.group(1).splitlines() if block else []) if ln.strip()]
             crits = [dict(ATTR.findall(m.group(1))).get("id") for m in CRIT_TAG.finditer(text)]
-            rel = os.path.relpath(path, root).replace(os.sep, "/")
-            projdir = _mission_dir(root, code) if is_seat else rel.rsplit("/task-orders/", 1)[0]
+            rel = path
+            projdir = _mission_dir(names, code) if is_seat else rel.rsplit("/task-orders/", 1)[0]
             out.append({"rel": rel, "stem": os.path.basename(path)[:-3],
                         "id": _tag(text, "to_id") or os.path.basename(path)[:-3],
                         "issued_to": _tag(text, "issued_to") or "", "paths": paths, "status": status,
@@ -282,17 +311,17 @@ def trace(root: str, code: str, rnd: str, only=None):
     repo = Repo(root)
     every = find_orders(root, code, rnd)
     absent = ["HOP %d %s ABSENT" % (i + 1, n) for i, n in enumerate(HOPS)]
-    summary = "THREAD project=%s round=%s orders=%s hops=%d/5 pushed_by_working_box=%s elapsed=%s"
+    summary = "THREAD project=%s round=%s orders=%s orders_found=%d hops=%d/5 pushed_by_working_box=%s elapsed=%s"
     orders, shown = every, "ALL"
     if only:
         wanted = set(only)
         known = set().union(*(order_names(o, code) for o in every))
         orders = [o for o in every if order_names(o, code) & wanted]
         if not orders or wanted - known:
-            return 1, absent + [summary % (code, rnd, "NONE", 0, "-", "-")]
+            return 1, absent + [summary % (code, rnd, "NONE", len(every), 0, "-", "-")]
         shown = ",".join(dict.fromkeys(_slugless(o["id"], code) for o in orders))
     if not orders:
-        return 1, absent + [summary % (code, rnd, "ALL", 0, "-", "-")]
+        return 1, absent + [summary % (code, rnd, "ALL", len(every), 0, "-", "-")]
     refs = repo.refs()
     if not refs:
         raise GitError("no %s/* or %s/CLOUD refs to read" % (BOX_PATTERN, REMOTE))
@@ -394,7 +423,7 @@ def trace(root: str, code: str, rnd: str, only=None):
     if hop1 and graded:
         secs = max(0, graded[1] - hop1[0])
         elapsed = "%dh%02dm%02ds" % (secs // 3600, secs % 3600 // 60, secs % 60)
-    lines.append(summary % (code, rnd, shown, found, pushed, elapsed))
+    lines.append(summary % (code, rnd, shown, len(every), found, pushed, elapsed))
     return 0, lines
 
 
@@ -569,6 +598,36 @@ def build_ten(root: str):
     lab.run("x", T0, "update-ref", "refs/remotes/%s/CLOUD" % REMOTE, "refs/heads/CLOUD")
 
 
+def build_cloud_only(root: str):
+    """Round 1 as build_pair's TO-1, but the checkout's HEAD is DETACHED at CLOUD's first parent (the base), so HEAD lacks the
+    order file; origin/CLOUD holds the merge of box/alpha, which carries it. Times as in build_thread: issued T0+100, worked
+    T0+300..T0+500, drained T0+600, integrated into CLOUD at T0+700."""
+    lab = Lab(root)
+    lab.run("init", T0, "init", "-q", "-b", "CLOUD")
+    lab.commit("0.0.0_AB_MSTR", T0, "base", {"README.md": "base\n"})
+    lab.run("x", T0, "checkout", "-q", "-b", "box/alpha")
+    lab.commit("2.0.0_SA_COO~A", T0 + 100, "issue(PRJ round 1): TO-1", {ORDER: _order_text("pending")})
+    lab.run("x", T0, "checkout", "-q", "-b", "wk-PRJ-1")
+    lab.commit("0.9.0_WK_PRJ~1", T0 + 300, "work 1", {"src/a.txt": "1\n"})
+    lab.commit("0.9.0_WK_PRJ~1", T0 + 500, "work 2 and close", {"src/a.txt": "2\n", ORDER: _order_text("complete"),
+                                                                 PROOF: "{}\n"})
+    lab.run("x", T0, "checkout", "-q", "box/alpha")
+    lab.merge("2.0.0_SA_COO~A", T0 + 600, "drain wk-PRJ-1", "wk-PRJ-1")
+    lab.run("x", T0, "checkout", "-q", "CLOUD")
+    lab.merge("0.0.0_AB_MSTR", T0 + 700, "integrate(0.0.0_AB_MSTR): box/alpha @x into CLOUD (box-sync)", "box/alpha")
+    lab.run("x", T0, "checkout", "-q", "--detach", "CLOUD~1")
+    for name, ref in (("CLOUD", "CLOUD"), ("box/alpha", "box/alpha")):
+        lab.run("x", T0, "update-ref", "refs/remotes/%s/%s" % (REMOTE, name), "refs/heads/" + ref)
+
+
+def build_base(root: str):
+    """One commit on CLOUD and no order file anywhere in git."""
+    lab = Lab(root)
+    lab.run("init", T0, "init", "-q", "-b", "CLOUD")
+    lab.commit("0.0.0_AB_MSTR", T0, "base", {"README.md": "base\n"})
+    lab.run("x", T0, "update-ref", "refs/remotes/%s/CLOUD" % REMOTE, "refs/heads/CLOUD")
+
+
 def selftest() -> int:
     results = []
 
@@ -620,7 +679,7 @@ def selftest() -> int:
         ok = ok and lines[1].startswith("HOP 2 WORK start=%s end=%s" % (utc(T0 + 300), utc(T0 + 500)))
         ok = ok and "by=0.9.0_WK_PRJ~1 where=%s/box/alpha" % REMOTE in lines[1]
         ok = ok and not any(TO2_SERIAL in ln for ln in lines)
-        return ok and lines[-1] == "THREAD project=PRJ round=1 orders=TO-1 hops=5/5 pushed_by_working_box=False elapsed=0h15m00s", lines[-1]
+        return ok and lines[-1] == "THREAD project=PRJ round=1 orders=TO-1 orders_found=2 hops=5/5 pushed_by_working_box=False elapsed=0h15m00s", lines[-1]
 
     def only_second(tmp):
         build_pair(tmp)
@@ -630,7 +689,7 @@ def selftest() -> int:
         ok = ok and lines[1].startswith("HOP 2 WORK start=%s end=%s" % (utc(T0 + 200), utc(T0 + 400)))
         ok = ok and "by=%s where=%s/box/gamma" % (TO2_SERIAL, REMOTE) in lines[1]
         ok = ok and not any("0.9.0_WK_PRJ~1" in ln for ln in lines)
-        return ok and lines[-1] == "THREAD project=PRJ round=1 orders=TO-2 hops=5/5 pushed_by_working_box=False elapsed=0h14m10s", lines[-1]
+        return ok and lines[-1] == "THREAD project=PRJ round=1 orders=TO-2 orders_found=2 hops=5/5 pushed_by_working_box=False elapsed=0h14m10s", lines[-1]
 
     def whole_round(tmp):
         build_pair(tmp)
@@ -642,13 +701,13 @@ def selftest() -> int:
         ok = ok and lines[2].startswith("HOP 3 PUBLISH start=%s end=%s" % (utc(T0 + 500), utc(T0 + 600)))
         ok = ok and lines[3].startswith("HOP 4 INTEGRATE start=%s end=%s" % (utc(T0 + 600), utc(T0 + 700)))
         ok = ok and lines[4].startswith("HOP 5 GRADE start=%s end=%s" % (utc(T0 + 700), utc(T0 + 1000)))
-        return ok and lines[-1] == "THREAD project=PRJ round=1 orders=ALL hops=5/5 pushed_by_working_box=False elapsed=0h15m00s", lines[-1]
+        return ok and lines[-1] == "THREAD project=PRJ round=1 orders=ALL orders_found=2 hops=5/5 pushed_by_working_box=False elapsed=0h15m00s", lines[-1]
 
     def unknown_order(tmp):
         build_pair(tmp)
         rc, lines = trace(tmp, "PRJ", "1", ["TO-9"])
         ok = rc == 1 and all(ln.endswith("ABSENT") for ln in lines[:5])
-        return ok and lines[-1] == "THREAD project=PRJ round=1 orders=NONE hops=0/5 pushed_by_working_box=- elapsed=-", lines[-1]
+        return ok and lines[-1] == "THREAD project=PRJ round=1 orders=NONE orders_found=2 hops=0/5 pushed_by_working_box=- elapsed=-", lines[-1]
 
     def seat_order(tmp):
         build_seat(tmp)
@@ -656,15 +715,15 @@ def selftest() -> int:
         ok = rc == 0 and lines[0].startswith("HOP 1 PLAN start=%s end=%s" % (utc(T0 + 100), utc(T0 + 100)))
         ok = ok and lines[1].startswith("HOP 2 WORK start=%s end=%s" % (utc(T0 + 200), utc(T0 + 400)))
         ok = ok and "by=%s where=%s/box/seat" % (SEAT_SERIAL, REMOTE) in lines[1]
-        ok = ok and lines[-1].startswith("THREAD project=PRJ round=1 orders=TO-3 hops=4/5 ")
+        ok = ok and lines[-1].startswith("THREAD project=PRJ round=1 orders=TO-3 orders_found=1 hops=4/5 ")
         return ok, lines[1] + " || " + lines[-1]
 
     def prefix_no_collision(tmp):
         build_ten(tmp)
         rc1, lines1 = trace(tmp, "PRJ", "1", ["TO-1"])
         rc10, lines10 = trace(tmp, "PRJ", "1", ["TO-10"])
-        ok = rc1 == 1 and lines1[-1] == "THREAD project=PRJ round=1 orders=NONE hops=0/5 pushed_by_working_box=- elapsed=-"
-        ok = ok and rc10 == 0 and lines10[-1].startswith("THREAD project=PRJ round=1 orders=TO-10 hops=1/5 ")
+        ok = rc1 == 1 and lines1[-1] == "THREAD project=PRJ round=1 orders=NONE orders_found=1 hops=0/5 pushed_by_working_box=- elapsed=-"
+        ok = ok and rc10 == 0 and lines10[-1].startswith("THREAD project=PRJ round=1 orders=TO-10 orders_found=1 hops=1/5 ")
         return ok, "TO-1: rc=%d %s || TO-10: rc=%d %s" % (rc1, lines1[-1], rc10, lines10[-1])
 
     case("full thread reads 5/5", full)
@@ -677,6 +736,29 @@ def selftest() -> int:
     case("--order matching no order reads 0/5, non-zero", unknown_order)
     case("seat order found; --order by its slug-less id reads its hops", seat_order)
     case("--order TO-1 does not match TO-10 (exact id, no prefix match)", prefix_no_collision)
+
+    def cloud_only(tmp):
+        build_cloud_only(tmp)
+        rc0, lines0 = trace(tmp, "PRJ", "1")
+        rc, lines = trace(tmp, "PRJ", "1", ["TO-1"])
+        ok = rc0 == 0 and lines0[-1].startswith("THREAD project=PRJ round=1 orders=ALL orders_found=1 hops=4/5 ")
+        ok = ok and rc == 0 and lines[0].startswith("HOP 1 PLAN start=%s end=%s" % (utc(T0 + 100), utc(T0 + 100)))
+        ok = ok and lines[1].startswith("HOP 2 WORK start=%s end=%s" % (utc(T0 + 300), utc(T0 + 500)))
+        ok = ok and lines[-1].startswith("THREAD project=PRJ round=1 orders=TO-1 orders_found=1 hops=4/5 ")
+        return ok, lines[-1] + " || " + lines[1]
+
+    def uncommitted(tmp):
+        build_base(tmp)
+        path = os.path.join(tmp, *ORDER.split("/"))
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(_order_text("pending"))
+        rc, lines = trace(tmp, "PRJ", "1")
+        ok = rc == 1 and lines[-1] == "THREAD project=PRJ round=1 orders=ALL orders_found=0 hops=0/5 pushed_by_working_box=- elapsed=-"
+        return ok, lines[-1]
+
+    case("order committed only on origin/CLOUD (HEAD lacks it) is found; --order reads its hops", cloud_only)
+    case("order present only as an uncommitted working-tree file is not found", uncommitted)
     ok = all(results)
     print("THREAD-TRACE-SELFTEST cases=%d/%d ok=%s" % (sum(results), len(results), ok))
     return 0 if ok else 1
