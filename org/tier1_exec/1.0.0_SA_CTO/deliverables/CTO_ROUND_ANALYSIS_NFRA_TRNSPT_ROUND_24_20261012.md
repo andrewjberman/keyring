@@ -69,3 +69,12 @@ The 239 MB peak and the landed meeting are the CVO's reads. That the completenes
 item 2 is the read.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## Routing note (2026-10-12 ~17:35Z; header-only, re-opens nothing)
+
+Routing of D2-S27 and D2-S32 CLOSED on laptop record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_S27_S32_TOOL_FINDING_OWNERS_COMP_IAM_AND_SAFE_APPLY_CROSSBOX_LIMB_20261012.md`
+@374118e5cd (ancestor of origin CLOUD, this seat's read): S27 owner laptop `1.0.0_SA_CTO` (fix in `iam_cli.py`; interim
+`aws iam get-role` read cluster-wide); S32 owner NFRA_CTLPLN (round-12 cell, `2.0.0_SA_COO~C`; limb stays WARN until its two
+reads land). Both rows stay INERT, dispositioned by their owners' cells. D2-S29: routed MSTR to MSTR (bus 14460630), site Z owner
+not yet named. Relay: `0.0.0_AB_MSTR~DELL2` msgs 6468, 6471.
