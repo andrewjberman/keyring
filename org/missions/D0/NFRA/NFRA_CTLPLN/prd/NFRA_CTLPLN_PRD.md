@@ -5,10 +5,10 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.22",
+ "prd_version": "v0.23",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27", "FWD-28"],
  "status": "RATIFIED"
 }
 ```
@@ -297,6 +297,30 @@
          SOURCE     Andrew-direct 2026-10-07 ~21:4xZ, "i need an andrew_voice.md used for anything
                     that an agent would speak for, that uses representative emails or teams messages
                     or whatever as a reference for the given action"
+
+  FWD-27 Every box on the tailnet answers an SSH login from the laptop by key, and nothing else
+         DONE WHEN  EXERCISED -- from the laptop, `ssh -o BatchMode=yes <user>@<tailnet-ip> hostname`
+                    answers with the box's own name for sitez, dell1, dell2 and the laptop itself
+         ACCEPT     on each of the four boxes OpenSSH Server runs as a service, port 22 is admitted
+                    only from 100.64.0.0/10, password authentication is off once a key is in
+                    place, and RDP is unchanged; a login by password or from a non-tailnet address
+                    is refused; the elevated enable run on each box is Andrew's one line, the
+                    script and its receipt are the cell's
+         SOURCE     LD-0644 (Andrew-direct 2026-10-11 ~15:5xZ) and Andrew-direct 2026-10-12 ~01:5xZ,
+                    "I also want that tailnet port set up so that we can ssh into the various devices
+                    as well as rdp ... perhaps COO~C can handle it"
+
+  FWD-28 A function behind the portal authorizer that serves Opal-internal data reads the caller's
+         tier before it answers
+         DONE WHEN  EXERCISED -- one call to `opal-portal-data-proxy` and one GET to
+                    `opal-portal-content-api` with a partner-firm token answer 403, and the same two
+                    with an internal token answer 200
+         ACCEPT     `opal-portal-data-proxy` (its 11 routes) and `opal-portal-content-api` GET read
+                    `tier` from the authorizer context the way `get_users_me` does and refuse a
+                    caller whose tier is not `internal`; PUT and DELETE on the content api keep their
+                    firm fence; no handler checks that an event "came through API Gateway"; applied
+                    by Terraform under a signed pair with a NEVER-2 ledger
+         SOURCE     CTO ruling on XB-20261011T194408Z-e588 (2026-10-12), the XB-74e2 pattern
 ```
 
 ## PROVENANCE (outside the ratified section)
@@ -922,3 +946,12 @@ addendum keeps the why and the record of the change.
          SOURCE     brief O5; re-based v0.22 on the push law
 ```
 
+
+## ADDENDUM v0.23 (1.0.0_SA_CTO, 2026-10-12 ~02:0xZ) -- two outcomes added on Andrew's words and one security ruling: FWD-27 (SSH over the tailnet), FWD-28 (caller-tier fence on two portal functions)
+
+- ENDPOINT change: FWD-27 and FWD-28 appended at the next unused ids; nothing renumbered. The ratified-text half re-signs
+  (`3.0.0_SA_CVO~L`). Records: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261012_015xZ_SSH_OVER_TAILNET_EXECUTE_COO_C.md`
+  (the elevation fact and the per-box shape) and `CTO_RULINGS_POST_OFFLINE_FIVE_CROSSBOX_CALLS_AND_TWO_SECURITY_CARRIES_20261012.md`
+  section 3 (why the proxy and content api land here: both predate the tree and no project owns them).
+- `2.0.0_SA_COO~C` cuts FWD-27 (one packaging cell, three per-box cells) and FWD-28 (one cell) in its issuance, order its own;
+  E1-E8 unchanged. Workers haiku, high effort (treatment device). No alert, monitor or timeout is built by either outcome.
